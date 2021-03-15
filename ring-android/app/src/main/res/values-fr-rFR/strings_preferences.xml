@@ -17,5 +17,6 @@
   <string name="pref_clearHistory_title">Vider l\'historique</string>
   <string name="pref_persistNotification_title">Exécuter en tâche de fond</string>
   <string name="pref_persistNotification_summary">Autorisé l\'exécution en tâche de fond pour recevoir les appels et les messages.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

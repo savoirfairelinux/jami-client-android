@@ -25,5 +25,6 @@
   <string name="pref_delete_account_title">Odstrániť účet</string>
   <string name="pref_persistNotification_title">Spustiť na pozadí</string>
   <string name="pref_persistNotification_summary">Povoliť spustenie na pozadí na prijímanie hovorov a spáv.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

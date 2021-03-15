@@ -30,6 +30,7 @@
   <string name="pref_delete_account_title">アカウントの削除</string>
   <string name="pref_persistNotification_title">バックグラウンドで実行</string>
   <string name="pref_persistNotification_summary">通話とメッセージの受信をバックグラウンドでも許可する</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">プラグイン</string>
   <string name="pref_plugins_summary">プラグインを有効にしてパラメータを設定</string>

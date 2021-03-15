@@ -36,6 +36,7 @@
   <string name="pref_typing_summary">Sende und empfange Bestätigungen, wenn eine Nachricht geschrieben wird.</string>
   <string name="pref_read_title">aktiviere Lesebestätigungen</string>
   <string name="pref_read_summary">Sende und empfange Bestätigungen, dass eine Nachricht gelesen wurde.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Zusatzmodule</string>
   <string name="pref_plugins_summary">Aktivieren von Zusatzmodulen und Konfiguration von deren Einstellungen</string>

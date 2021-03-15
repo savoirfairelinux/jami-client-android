@@ -32,6 +32,7 @@
   <string name="pref_delete_account_summary">Izbrišite svoj račun s te naprave</string>
   <string name="pref_persistNotification_title">Zagon v ozadju</string>
   <string name="pref_persistNotification_summary">Dovoli izvajanje v ozadju za sprejemanje klicev in sporočil.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Vtičniki</string>
   <string name="pref_plugins_summary">Vklopite vtičnike in določite njihove parametre</string>

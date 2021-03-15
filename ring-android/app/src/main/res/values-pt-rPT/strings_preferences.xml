@@ -25,5 +25,6 @@
   <string name="pref_delete_account_title">Eliminar conta</string>
   <string name="pref_persistNotification_title">Executar em segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ser executado em segundo plano para receber chamadas e mensagens</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

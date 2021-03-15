@@ -29,6 +29,7 @@
   <string name="pref_delete_account_title">Odstranit účet</string>
   <string name="pref_persistNotification_title">Běžet na pozadí</string>
   <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Zásuvné moduly</string>
   <string name="pref_plugins_summary">Povolit zásuvné moduly a nastavit jejich parametry</string>

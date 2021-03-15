@@ -38,6 +38,7 @@
   <string name="pref_read_summary">Enviar e recibir notificación de que unha mensaxe foi mostrada.</string>
   <string name="pref_block_record_title">Bloquear captura de pantalla e gravación</string>
   <string name="pref_block_record_summary">Bloquear a captura de pantalla ou gravación de vídeo.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Plugins</string>
   <string name="pref_plugins_summary">Activar plugins e establecer os seus parámetros</string>

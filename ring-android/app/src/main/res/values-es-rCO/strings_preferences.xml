@@ -14,6 +14,7 @@
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles de quien llama.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
   <string name="pref_delete_account_title">Borrar cuenta</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Complementos</string>
 </resources>

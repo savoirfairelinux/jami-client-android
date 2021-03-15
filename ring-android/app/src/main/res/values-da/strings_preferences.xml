@@ -23,5 +23,6 @@
   <string name="pref_delete_account_title">Slet konto</string>
   <string name="pref_persistNotification_title">Kør i baggrunden</string>
   <string name="pref_persistNotification_summary">Tillad at køre i baggrunden for at modtage opkald og beskeder.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

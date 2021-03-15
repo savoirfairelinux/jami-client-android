@@ -24,5 +24,6 @@
   <string name="pref_delete_account_title">Kontua ezabatu</string>
   <string name="pref_persistNotification_title">Aritu bigarren planoan</string>
   <string name="pref_persistNotification_summary">Baimendu bigarren planoan aritzea deiak eta mezuak jasotzeko.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

@@ -305,4 +305,5 @@
   <string name="wizard_profile_button">Salvează Profilul</string>
   <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
   <string name="fab_path_choose">Alege alt fișier</string>
+  <string name="chat_plugins">Extensii pentru Discuții</string>
 </resources>

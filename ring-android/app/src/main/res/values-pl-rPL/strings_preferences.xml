@@ -13,6 +13,7 @@
   <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
   <string name="pref_delete_account_title">Usuń konto</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Dodatki</string>
   <string name="fab_plugins_add">Dodaj nowy plugin</string>

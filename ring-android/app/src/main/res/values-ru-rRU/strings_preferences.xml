@@ -25,6 +25,7 @@
   <string name="pref_delete_account_title">Удалить аккаунт</string>
   <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Плагины</string>
   <string name="pref_plugins_summary">Включить плагины и установить их параметры</string>

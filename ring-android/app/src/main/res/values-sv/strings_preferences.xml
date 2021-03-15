@@ -22,6 +22,7 @@
   <string name="pref_delete_account_title">Ta bort konto</string>
   <string name="pref_persistNotification_title">Kör i bakgrunden</string>
   <string name="pref_persistNotification_summary">Tillåt bakgrundskörning för inkommande samtal och meddelanden.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Insticksmoduler</string>
 </resources>

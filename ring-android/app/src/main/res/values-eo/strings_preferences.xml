@@ -9,5 +9,6 @@
   <string name="pref_systemContacts_title">Uzi sistemajn kontaktojn</string>
   <string name="pref_systemContacts_summary">Uzi sistemajn kontaktojn por montri detalojn de la vokanto.</string>
   <string name="pref_clearHistory_title">Vakigi historion</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

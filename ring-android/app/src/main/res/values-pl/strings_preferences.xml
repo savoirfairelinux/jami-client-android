@@ -23,5 +23,6 @@
   <string name="pref_delete_account_title">Usuń konto</string>
   <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
   <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

@@ -32,6 +32,7 @@
   <string name="pref_delete_account_summary">Hesabınızı bu aygıttan silin</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>
   <string name="pref_persistNotification_summary">Arka planda çalışan çağrı  ve iletileri almak için izin ver</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Eklentiler</string>
   <string name="pref_plugins_summary">Eklentileri etkinleştirin ve değişkenlerini ayarlayın</string>

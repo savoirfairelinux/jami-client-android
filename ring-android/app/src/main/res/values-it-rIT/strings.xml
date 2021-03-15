@@ -304,4 +304,5 @@
   <string name="wizard_profile_button">Salva il profilo</string>
   <string name="wizard_profile_skip">Salta e fallo più tardi</string>
   <string name="fab_path_choose">Scegli un altro file</string>
+  <string name="chat_plugins">Plugin Chat</string>
 </resources>

@@ -25,5 +25,6 @@
   <string name="pref_delete_account_title">Account verwijderen</string>
   <string name="pref_persistNotification_title">Uitvoeren in achtergrond</string>
   <string name="pref_persistNotification_summary">Maakt het mogelijk om in de achtergrond oproepen en berichten te ontvangen.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

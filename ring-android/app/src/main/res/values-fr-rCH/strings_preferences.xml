@@ -2,5 +2,6 @@
 <resources>
   <string name="pref_category_contacts">Contacts</string>
   <string name="pref_category_video">Vidéo</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

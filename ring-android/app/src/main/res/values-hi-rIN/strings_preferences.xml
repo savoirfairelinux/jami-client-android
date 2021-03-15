@@ -3,5 +3,6 @@
   <string name="pref_category_contacts">संपर्क</string>
   <string name="pref_category_video">वीडियो</string>
   <string name="pref_delete_account_title">खाता मिटाये</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

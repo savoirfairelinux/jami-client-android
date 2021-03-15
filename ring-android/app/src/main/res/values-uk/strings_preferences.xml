@@ -15,5 +15,6 @@
   <string name="pref_startOnBoot_summary">Дозволити Джамі працювати на задньому плані, коли вмикається пристрій.</string>
   <string name="pref_clearHistory_title">Видалити історію</string>
   <string name="pref_delete_account_title">Видалити обліковий запис</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

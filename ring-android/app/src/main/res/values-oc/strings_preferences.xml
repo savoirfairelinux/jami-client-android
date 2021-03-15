@@ -4,6 +4,7 @@
   <string name="pref_category_system">Sistèma</string>
   <string name="pref_clearHistory_title">Escafar l’istoric</string>
   <string name="pref_delete_account_title">Suprimir lo compte</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Extensions</string>
 </resources>

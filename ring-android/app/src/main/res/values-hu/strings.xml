@@ -304,4 +304,5 @@
   <string name="wizard_profile_button">Profil mentése</string>
   <string name="wizard_profile_skip">Későbbre halasztás</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
+  <string name="chat_plugins">Csevegési beépülő modulok</string>
 </resources>

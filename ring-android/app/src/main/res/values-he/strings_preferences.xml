@@ -2,5 +2,6 @@
 <resources>
   <string name="pref_category_contacts">אנשי קשר</string>
   <string name="pref_category_video">וידאו</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

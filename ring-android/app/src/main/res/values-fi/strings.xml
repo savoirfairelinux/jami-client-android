@@ -304,4 +304,5 @@
   <string name="wizard_profile_button">Tallenna profiili</string>
   <string name="wizard_profile_skip">Ohita ja tee tämä myöhemmin</string>
   <string name="fab_path_choose">Valitse toinen tiedosto</string>
+  <string name="chat_plugins">Chatti lisäosat</string>
 </resources>

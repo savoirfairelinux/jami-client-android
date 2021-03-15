@@ -303,4 +303,5 @@
   <string name="wizard_profile_button">儲存個人檔案</string>
   <string name="wizard_profile_skip">略過並在稍後執行此動作</string>
   <string name="fab_path_choose">選擇其他檔案</string>
+  <string name="chat_plugins">聊天外掛程式</string>
 </resources>

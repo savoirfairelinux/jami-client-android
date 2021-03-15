@@ -32,6 +32,7 @@
   <string name="pref_delete_account_summary">Meine Benutzerkennung auf diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
   <string name="pref_persistNotification_summary">Jami erlauben im Hintergrund zu laufen, um Anrufe und Nachrichten zu empfangen.</string>
+  <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Plugins</string>
   <string name="pref_plugins_summary">Aktivierung des Plugins und Einstellen der Parameter</string>

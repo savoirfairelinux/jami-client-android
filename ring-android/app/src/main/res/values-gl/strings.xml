@@ -90,6 +90,7 @@
   <string name="action_call_hangup">Colgar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
+  <string name="action_call_mute">Acalar</string>
   <string name="ongoing_call">Chamada en curso</string>
   <string name="hist_in_call">Chamada de %1$s</string>
   <string name="hist_out_call">Chamada a %1$s</string>
@@ -302,4 +303,5 @@
   <string name="wizard_profile_button">Gardar perfil</string>
   <string name="wizard_profile_skip">Saltar e facer esto máis tarde</string>
   <string name="fab_path_choose">Escolle outro ficheiro</string>
+  <string name="chat_plugins">Complementos do chat</string>
 </resources>
