@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52596f82_15fddf7e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-15T20:39:39Z",
+      "side": 1,
+      "message": "to remove",
+      "range": {
+        "startLine": 725,
+        "startChar": 0,
+        "endLine": 726,
+        "endChar": 81
+      },
+      "revId": "ee7b52bac164fb7b9c01be40782a3b46bc33ac09",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
