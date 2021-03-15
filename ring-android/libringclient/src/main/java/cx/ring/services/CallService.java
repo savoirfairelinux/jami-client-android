@@ -721,6 +721,10 @@ public class CallService {
             currentConferences.put(confId, conf);
         }
         StringVect participants = Ringservice.getParticipantList(confId);
+        StringMap map = Ringservice.getConferenceDetails(confId);
+        for (Map.Entry<String, String> e : map.entrySet())
+            Log.d(TAG, "conference detail: " + e.getKey() + "->" + e.getValue());
+        conf.setState(map.get("STATE"));
         for (String callId : participants) {
             SipCall call = getCurrentCallForId(callId);
             if (call != null) {

@@ -101,11 +101,7 @@ public class Conference {
     }
 
     public String getId() {
-        if (mParticipants.size() == 1) {
-            return mParticipants.get(0).getDaemonIdString();
-        } else {
-            return mId;
-        }
+        return mId;
     }
 
     public void setMaximizedCall(SipCall call) {
@@ -125,10 +121,21 @@ public class Conference {
     }
 
     public SipCall.CallStatus getState() {
+        if (isSimpleCall()) {
+            return mParticipants.get(0).getCallStatus();
+        }
+        return mConfState;
+    }
+
+    public SipCall.CallStatus getConfState() {
         if (mParticipants.size() == 1) {
             return mParticipants.get(0).getCallStatus();
         }
         return mConfState;
+    }
+
+    public boolean isSimpleCall() {
+        return mParticipants.size() == 1 && mId.equals(mParticipants.get(0).getDaemonIdString());
     }
 
     public void setState(String state) {

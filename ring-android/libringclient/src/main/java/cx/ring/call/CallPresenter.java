@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -464,10 +465,12 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void confUpdate(Conference call) {
         Log.w(TAG, "confUpdate " + call.getId());
 
-        mConference = call;
-        SipCall.CallStatus status = mConference.getState();
-        if (status == SipCall.CallStatus.HOLD && mCallService.getConferenceList().size() == 1) {
-            mCallService.unhold(mConference.getId());
+        SipCall.CallStatus status = call.getState();
+        if (status == SipCall.CallStatus.HOLD) {
+            if (call.isSimpleCall())
+                mCallService.unhold(call.getId());
+            else
+                Ringservice.addMainParticipant(call.getConfId());
         }
         mAudioOnly = !call.hasVideo();
         CallView view = getView();
@@ -480,7 +483,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
-                mHardwareService.updatePreviewVideoSurface(mConference);
+                mHardwareService.updatePreviewVideoSurface(call);
                 videoSurfaceUpdateId(call.getId());
                 pluginSurfaceUpdateId(call.getPluginId());
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
