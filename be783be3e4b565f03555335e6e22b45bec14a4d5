@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821a653d_95a6cfc9",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-18T15:07:11Z",
+      "side": 1,
+      "message": "The fact the display name is empty reflects the fact that contact profile and username are not fully loaded. Wait for contact loading with rx instead of ignoring contacts loading.",
+      "range": {
+        "startLine": 797,
+        "startChar": 0,
+        "endLine": 801,
+        "endChar": 0
+      },
+      "revId": "be783be3e4b565f03555335e6e22b45bec14a4d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
