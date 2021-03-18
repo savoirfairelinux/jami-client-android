@@ -78,6 +78,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
 import cx.ring.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
@@ -88,6 +89,7 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import cx.ring.utils.StringUtils;
 import cx.ring.views.SwitchButton;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -138,6 +140,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
+    @Inject
+    ContactService mContactService;
 
     private ActivityHomeBinding mBinding;
 
@@ -364,7 +368,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                             return new ArrayList<>(conversations);
                         }
                     })
-                    .subscribe(this::setShareShortcuts, e -> Log.e(TAG, "Error generating conversation shortcuts", e))));
+                    .subscribe(this::initShareShortcuts, e -> Log.e(TAG, "Error generating conversation shortcuts", e))));
         }
 
         int newOrientation = getResources().getConfiguration().orientation;
@@ -772,7 +776,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         return mBinding.accountSwitch;
     }
 
-    private void setShareShortcuts(Collection<Conversation> conversations) {
+    private void initShareShortcuts(Collection<Conversation> conversations) {
+        List<CallContact> contactList = new ArrayList<>(conversations.size());
+        String accountId = conversations.iterator().next().getAccountId();
+
+        for (Conversation conversation : conversations) {
+            contactList.add(conversation.getContact());
+        }
+
+        mDisposable.add(mContactService.getLoadedContact(accountId, contactList)
+                .observeOn(Schedulers.io())
+                .subscribe(contacts -> setShortcuts(conversations, contacts), e -> cx.ring.utils.Log.e(TAG, "Can't get contact", e)));
+    }
+
+    private void setShortcuts(Collection<Conversation> conversations, List<CallContact> contacts) {
         int targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
         int i = 0;
         int maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this);
@@ -785,14 +802,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
-            if (++i == maxCount)
+            if (++i == maxCount) {
                 break;
+            }
         }
         List<ShortcutInfoCompat> shortcutInfoList = new ArrayList<>(futureIcons.size());
 
         i = 0;
         for (Conversation conversation : conversations) {
-            CallContact contact = conversation.getContact();
             IconCompat icon = null;
             try {
                 icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
@@ -800,16 +817,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 Log.w(TAG, "Failed to load icon", e);
             }
 
-            Bundle bundle = ConversationPath.toBundle(conversation.getAccountId(), contact.getPrimaryNumber());
-            String key = ConversationPath.toKey(conversation.getAccountId(), contact.getPrimaryNumber());
+            Bundle bundle = ConversationPath.toBundle(conversation.getAccountId(), contacts.get(i).getPrimaryNumber());
+            String key = ConversationPath.toKey(conversation.getAccountId(), contacts.get(i).getPrimaryNumber());
 
             Person person = new Person.Builder()
-                    .setName(contact.getDisplayName())
+                    .setName(contacts.get(i).getDisplayName())
                     .setKey(key)
                     .build();
 
             ShortcutInfoCompat shortcutInfo = new ShortcutInfoCompat.Builder(this, key)
-                    .setShortLabel(contact.getDisplayName())
+                    .setShortLabel(contacts.get(i).getDisplayName())
                     .setPerson(person)
                     .setLongLived(true)
                     .setIcon(icon)
