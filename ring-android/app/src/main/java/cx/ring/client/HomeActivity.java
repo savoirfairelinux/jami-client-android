@@ -88,6 +88,7 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import cx.ring.utils.StringUtils;
 import cx.ring.views.SwitchButton;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -793,6 +794,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         i = 0;
         for (Conversation conversation : conversations) {
             CallContact contact = conversation.getContact();
+
+            if (StringUtils.isEmpty(contact.getDisplayName())) {
+                continue;
+            }
+
             IconCompat icon = null;
             try {
                 icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
