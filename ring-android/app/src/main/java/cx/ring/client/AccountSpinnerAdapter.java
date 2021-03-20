@@ -29,11 +29,13 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import net.jami.model.Account;
+
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.databinding.ItemToolbarSelectedBinding;
 import cx.ring.databinding.ItemToolbarSpinnerBinding;
-import net.jami.model.Account;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -58,27 +60,25 @@ public class AccountSpinnerAdapter extends ArrayAdapter<Account> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         int type = getItemViewType(position);
 
-        ViewHolder holder;
+        ViewHolderHeader holder;
         if (convertView == null) {
-            holder = new ViewHolder();
-            holder.binding = ItemToolbarSpinnerBinding.inflate(mInflater, parent, false);
+            holder = new ViewHolderHeader();
+            holder.binding = ItemToolbarSelectedBinding.inflate(mInflater, parent, false);
             convertView = holder.binding.getRoot();
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolderHeader) convertView.getTag();
             holder.loader.clear();
         }
 
-        holder.binding.logo.setVisibility(View.GONE);
-        holder.binding.subtitle.setVisibility(View.GONE);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.binding.title.getLayoutParams();
-        params.leftMargin = 0;
-        holder.binding.title.setLayoutParams(params);
         if (type == TYPE_ACCOUNT) {
             Account account = getItem(position);
+            holder.loader.add(AvatarDrawable.load(getContext(), account)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(avatar -> holder.binding.logo.setImageDrawable(avatar), e -> Log.e(TAG, "Error loading avatar", e)));
             holder.loader.add(account.getAccountAlias()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(alias -> holder.binding.title.setText(alias)));
+                    .subscribe(alias -> holder.binding.title.setText(alias), e -> Log.e(TAG, "Error loading title", e)));
         }
 
         return convertView;
@@ -163,6 +163,10 @@ public class AccountSpinnerAdapter extends ArrayAdapter<Account> {
 
     private static class ViewHolder {
         ItemToolbarSpinnerBinding binding;
+        final CompositeDisposable loader = new CompositeDisposable();
+    }
+    private static class ViewHolderHeader {
+        ItemToolbarSelectedBinding binding;
         final CompositeDisposable loader = new CompositeDisposable();
     }
 
