@@ -171,14 +171,15 @@
     </style>
 
     <style name="WizardButton" parent="ButtonColored">
+        <item name="android:textColor">@color/white</item>
         <item name="android:padding">@dimen/wizard_button_padding</item>
         <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
     </style>
 
     <!-- AndroidTV Style -->
-    <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep"></style>
+    <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep" />
 
-    <style name="Theme.Ring.Leanback.GuidedStep.First"></style>
+    <style name="Theme.Ring.Leanback.GuidedStep.First" />
 
     <style name="Theme.Ring.LeanbackBrowse" parent="Theme.Leanback.Browse">
         <item name="defaultSearchColor">@color/color_primary_light</item>
