@@ -171,6 +171,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lpjlib-util-${PJ_TARGET} \
                 -lpj-${PJ_TARGET} \
                 -lupnp -lixml \
+                -lgit2 \
                 -larchive \
                 -lsecp256k1 \
                 -lgnutls -lhogweed -lnettle -lgmp \

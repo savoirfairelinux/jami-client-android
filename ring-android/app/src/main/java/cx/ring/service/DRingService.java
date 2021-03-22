@@ -143,7 +143,7 @@ public class DRingService extends Service {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mConversationFacade.placeCall(account, number, video).blockingGet().getDaemonIdString();
+            return mConversationFacade.placeCall(account, Uri.fromString(number), video).blockingGet().getDaemonIdString();
         }
 
         @Override
@@ -621,9 +621,7 @@ public class DRingService extends Service {
             case ACTION_TRUST_REQUEST_ACCEPT:
             case ACTION_TRUST_REQUEST_REFUSE:
             case ACTION_TRUST_REQUEST_BLOCK:
-                if (extras != null) {
-                    handleTrustRequestAction(action, extras);
-                }
+                handleTrustRequestAction(intent.getData(), action);
                 break;
             case ACTION_CALL_ACCEPT:
             case ACTION_CALL_HOLD_ACCEPT:
@@ -639,12 +637,12 @@ public class DRingService extends Service {
             case ACTION_CONV_ACCEPT:
             case ACTION_CONV_DISMISS:
             case ACTION_CONV_REPLY_INLINE:
-                handleConvAction(intent, action, extras);
+                handleConvAction(intent, action);
                 break;
             case ACTION_FILE_ACCEPT:
             case ACTION_FILE_CANCEL:
                 if (extras != null) {
-                    handleFileAction(action, extras);
+                    handleFileAction(intent.getData(), action, extras);
                 }
                 break;
             default:
@@ -652,30 +650,30 @@ public class DRingService extends Service {
         }
     }
 
-    private void handleFileAction(String action, Bundle extras) {
-        Long id = extras.getLong(KEY_TRANSFER_ID);
+    private void handleFileAction(android.net.Uri uri, String action, Bundle extras) {
+        long id = extras.getLong(KEY_TRANSFER_ID);
+        ConversationPath path = ConversationPath.fromUri(uri);
         if (action.equals(ACTION_FILE_ACCEPT)) {
-            mAccountService.acceptFileTransfer(id);
+            mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
-            mConversationFacade.cancelFileTransfer(id);
+            mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         }
     }
 
-    private void handleTrustRequestAction(String action, Bundle extras) {
-        String account = extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
-        Uri from = new Uri(extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_FROM));
-        if (account != null) {
-            mNotificationService.cancelTrustRequestNotification(account);
+    private void handleTrustRequestAction(android.net.Uri uri, String action) {
+        ConversationPath path = ConversationPath.fromUri(uri);
+        if (path != null) {
+            mNotificationService.cancelTrustRequestNotification(path.getAccountId());
             switch (action) {
                 case ACTION_TRUST_REQUEST_ACCEPT:
-                    mConversationFacade.acceptRequest(account, from);
+                    mConversationFacade.acceptRequest(path.getAccountId(), path.getConversationUri());
                     break;
                 case ACTION_TRUST_REQUEST_REFUSE:
-                    mConversationFacade.discardRequest(account, from);
+                    mConversationFacade.discardRequest(path.getAccountId(), path.getConversationUri());
                     break;
                 case ACTION_TRUST_REQUEST_BLOCK:
-                    mConversationFacade.discardRequest(account, from);
-                    mAccountService.removeContact(account, from.getRawRingId(), true);
+                    mConversationFacade.discardRequest(path.getAccountId(), path.getConversationUri());
+                    mAccountService.removeContact(path.getAccountId(), path.getConversationUri().getRawRingId(), true);
                     break;
             }
         }
@@ -740,16 +738,15 @@ public class DRingService extends Service {
         }
     }
 
-    private void handleConvAction(Intent intent, String action, Bundle extras) {
+    private void handleConvAction(Intent intent, String action) {
         ConversationPath path = ConversationPath.fromIntent(intent);
-
         if (path == null || path.getConversationId().isEmpty()) {
             return;
         }
 
         switch (action) {
             case ACTION_CONV_READ:
-                mConversationFacade.readMessages(path.getAccountId(), new Uri(path.getConversationId()));
+                mConversationFacade.readMessages(path.getAccountId(), path.getConversationUri());
                 break;
             case ACTION_CONV_DISMISS:
                 break;
@@ -758,11 +755,11 @@ public class DRingService extends Service {
                 if (remoteInput != null) {
                     CharSequence reply = remoteInput.getCharSequence(KEY_TEXT_REPLY);
                     if (!TextUtils.isEmpty(reply)) {
-                        Uri uri = new Uri(path.getConversationId());
+                        Uri uri = path.getConversationUri();
                         String message = reply.toString();
                         mConversationFacade.startConversation(path.getAccountId(), uri)
-                                .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
-                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(path.getAccountId(), c)))
+                                .flatMapCompletable(c -> mConversationFacade.sendTextMessage(c, uri, message)
+                                        .doOnComplete(() -> mNotificationService.showTextNotification(path.getAccountId(), c)))
                                 .subscribe();
                     }
                 }
