@@ -175,7 +175,7 @@ public class CallActivity extends AppCompatActivity {
     }
 
     private void hideSystemUI() {
-        KeyboardVisibilityManager.hideKeyboard(this, 0);
+        KeyboardVisibilityManager.hideKeyboard(this);
         if (mMainView != null) {
             mMainView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
