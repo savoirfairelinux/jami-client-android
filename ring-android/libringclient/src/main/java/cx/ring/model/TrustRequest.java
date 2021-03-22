@@ -21,46 +21,53 @@
 package cx.ring.model;
 
 import java.util.Map;
-import java.util.Random;
 
+import cx.ring.utils.StringUtils;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
 public class TrustRequest {
     private static final String TAG = TrustRequest.class.getSimpleName();
 
-    private String mAccountId;
+    private final String mAccountId;
     private String mContactUsername = null;
-    private String mContactId;
+    private final Uri mRequestUri;
+    private String mConversationId;
     private VCard mVcard;
     private String mMessage;
-    private long mTimestamp;
-    private int mUuid;
+    private final long mTimestamp;
     private boolean mUsernameResolved = false;
 
-    public TrustRequest(String accountId, String contact, long received, String payload) {
+    public TrustRequest(String accountId, Uri uri, long received, String payload, String conversationId) {
         mAccountId = accountId;
-        mContactId = contact;
+        mRequestUri = uri;
+        mConversationId = StringUtils.isEmpty(conversationId) ? null : conversationId;
         mTimestamp = received;
         mVcard = Ezvcard.parse(payload).first();
         mMessage = null;
-        mUuid = new Random().nextInt();
     }
 
     public TrustRequest(String accountId, Map<String, String> info) {
-        this(accountId, info.get("from"), Long.decode(info.get("received")) * 1000L, info.get("payload"));
+        this(accountId, Uri.fromId(info.get("from")), Long.decode(info.get("received")) * 1000L, info.get("payload"), info.get("conversationId"));
     }
 
-    public int getUuid() {
-        return mUuid;
+    public TrustRequest(String accountId, Uri contactUri, String conversationId) {
+        mAccountId = accountId;
+        mRequestUri = contactUri;
+        mConversationId = conversationId;
+        mTimestamp = 0;
     }
 
     public String getAccountId() {
         return mAccountId;
     }
 
-    public String getContactId() {
-        return mContactId;
+    public Uri getUri() {
+        return mRequestUri;
+    }
+
+    public String getConversationId() {
+        return mConversationId;
     }
 
     public String getFullname() {
@@ -73,7 +80,7 @@ public class TrustRequest {
 
     public String getDisplayname() {
         boolean hasUsername = mContactUsername != null && !mContactUsername.isEmpty();
-        return hasUsername ? mContactUsername : mContactId;
+        return hasUsername ? mContactUsername : mRequestUri.toString();
     }
 
     public boolean isNameResolved() {
@@ -103,5 +110,9 @@ public class TrustRequest {
 
     public void setMessage(String message) {
         mMessage = message;
+    }
+
+    public void setConversationId(String conversationId) {
+        mConversationId = conversationId;
     }
 }
