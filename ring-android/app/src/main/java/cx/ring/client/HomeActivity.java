@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private ActivityHomeBinding mBinding;
 
     private AlertDialog mMigrationDialog;
-    private String mAccountWithPendingrequests = null;
+    //private String mAccountWithPendingrequests = null;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -197,30 +197,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             });
         }
 
-        // if app opened from notification display trust request fragment when mService will connected
-        /*Intent intent = getIntent();
-        Bundle extra = intent.getExtras();
-        String action = intent.getAction();
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
-            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
-                return;
-            }
-            mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
-        } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
-            handleShareIntent(intent);
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
-            fContent = new SmartListFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_frame, fContent, HOME_TAG)
-                    .commitNow();
-        }
-        if (mAccountWithPendingrequests != null) {
-            presentTrustRequestFragment(mAccountWithPendingrequests);
-            mAccountWithPendingrequests = null;
-        }*/
         handleIntent(getIntent());
     }
 
@@ -237,39 +213,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mBinding = null;
     }
 
-    private void handleShareIntent(Intent intent) {
-        String action = intent.getAction();
-        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
-            Bundle extra = intent.getExtras();
-            if (extra != null) {
-                if (ConversationPath.fromBundle(extra) != null) {
-                    intent.setClass(this, ConversationActivity.class);
-                    startActivity(intent);
-                }
-            }
-        }
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        /*Log.d(TAG, "onNewIntent: " + intent);
-        String action = intent.getAction();
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
-            Bundle extra = intent.getExtras();
-            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
-                return;
-            }
-            presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
-        } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
-            handleShareIntent(intent);
-        } else if (Intent.ACTION_SEARCH.equals(action)) {
-            if (fContent instanceof SmartListFragment) {
-                ((SmartListFragment)fContent).handleIntent(intent);
-            }
-        } else if (DRingService.ACTION_CONV_ACCEPT.equals(action) || Intent.ACTION_VIEW.equals(action))  {
-            startConversation(ConversationPath.fromIntent(intent));
-        }*/
+        handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
@@ -285,15 +232,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             ConversationPath path = ConversationPath.fromBundle(extra);
             if (path != null) {
-
-                intent.setClass(this, ConversationActivity.class);
+                startConversation(path);
+            } else {
+                intent.setClass(getApplicationContext(), ShareActivity.class);
                 startActivity(intent);
             }
         } else if (DRingService.ACTION_CONV_ACCEPT.equals(action) || Intent.ACTION_VIEW.equals(action))  {
             startConversation(ConversationPath.fromIntent(intent));
-            /*if (DeviceUtils.isTablet(this)) {
-                startConversationTablet(ConversationPath.fromIntent(intent).toBundle());
-            }*/
         } //else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
@@ -395,15 +340,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mDisposable.add((mAccountService
                     .getCurrentAccountSubject()
+                    .flatMap(Account::getConversationsSubject)
                     .observeOn(Schedulers.io())
-                    .map(account -> {
-                        Collection<Conversation> conversations = account.getConversations();
-                        synchronized (conversations) {
-                            return new ArrayList<>(conversations);
-                        }
-                    })
                     .subscribe(this::setShareShortcuts, e -> Log.e(TAG, "Error generating conversation shortcuts", e))));
         }
+
+        if (fConversation == null)
+            fConversation = (ConversationFragment) getSupportFragmentManager().findFragmentByTag(ConversationFragment.class.getSimpleName());
 
         int newOrientation = getResources().getConfiguration().orientation;
         if (mOrientation != newOrientation) {
@@ -414,12 +357,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 showTabletToolbar();
             } else {
                 // Remove ConversationFragment that might have been restored after an orientation change
-                if (fConversation == null)
-                    fConversation = (ConversationFragment) getSupportFragmentManager().findFragmentByTag(ConversationFragment.class.getSimpleName());
                 if (fConversation != null) {
-                   // fConversation = null;
-                   // getSupportFragmentManager().findFragmentByTag(ConversationFragment.class.getSimpleName());
-                    getSupportFragmentManager().beginTransaction().remove(fConversation).commitNow();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .remove(fConversation)
+                            .commitNow();
                     fConversation = null;
                 }
             }
@@ -834,8 +776,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         List<Future<Bitmap>> futureIcons = new ArrayList<>(Math.min(conversations.size(),maxCount));
         for (Conversation conversation : conversations) {
-            Contact contact = conversation.getContact();
-            futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
+            futureIcons.add(AvatarFactory.getBitmapAvatar(this, conversation, targetSize, false)
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
             if (++i == maxCount)
@@ -845,7 +786,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         i = 0;
         for (Conversation conversation : conversations) {
-            Contact contact = conversation.getContact();
             IconCompat icon = null;
             try {
                 icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
@@ -853,21 +793,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 Log.w(TAG, "Failed to load icon", e);
             }
 
-            Bundle bundle = ConversationPath.toBundle(conversation.getAccountId(), contact.getPrimaryNumber());
-            String key = ConversationPath.toKey(conversation.getAccountId(), contact.getPrimaryNumber());
+            ConversationPath path = new ConversationPath(conversation);
+            String key = path.toKey();
 
             Person person = new Person.Builder()
-                    .setName(contact.getDisplayName())
+                    .setName(conversation.getTitle())
                     .setKey(key)
                     .build();
 
             ShortcutInfoCompat shortcutInfo = new ShortcutInfoCompat.Builder(this, key)
-                    .setShortLabel(contact.getDisplayName())
+                    .setShortLabel(conversation.getTitle())
                     .setPerson(person)
                     .setLongLived(true)
                     .setIcon(icon)
                     .setCategories(Collections.singleton(CONVERSATIONS_CATEGORY))
-                    .setIntent(new Intent(Intent.ACTION_SEND, Uri.EMPTY, this, ShareActivity.class).putExtras(bundle))
+                    .setIntent(new Intent(Intent.ACTION_SEND, Uri.EMPTY, this, HomeActivity.class)
+                            .putExtras(path.toBundle()))
                     .build();
 
             shortcutInfoList.add(shortcutInfo);
