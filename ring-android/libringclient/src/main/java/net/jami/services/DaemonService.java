@@ -26,8 +26,8 @@ import net.jami.daemon.ConversationCallback;
 import net.jami.daemon.DataTransferCallback;
 import net.jami.daemon.IntVect;
 import net.jami.daemon.IntegerMap;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.PresenceCallback;
-import net.jami.daemon.Ringservice;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.StringVect;
 import net.jami.daemon.UintVect;
@@ -100,7 +100,7 @@ public class DaemonService {
             mConfigurationCallback = new DaemonConfigurationCallback();
             mDataCallback = new DaemonDataTransferCallback();
             mConversationCallback = new ConversationCallbackImpl();
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback, mConversationCallback);
+            JamiService.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback, mConversationCallback);
             Log.i(TAG, "DaemonService started");
         }
     }
@@ -109,7 +109,7 @@ public class DaemonService {
         mExecutor.shutdown();
         if (mDaemonStarted) {
             Log.i(TAG, "stopping daemon ...");
-            Ringservice.fini();
+            JamiService.fini();
             mDaemonStarted = false;
             Log.i(TAG, "DaemonService stopped");
         }
