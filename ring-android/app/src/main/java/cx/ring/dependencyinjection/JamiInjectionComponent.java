@@ -60,7 +60,6 @@ import cx.ring.service.DRingService;
 import cx.ring.service.JamiJobService;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
-import net.jami.services.ConferenceService;
 import cx.ring.services.ContactServiceImpl;
 import net.jami.services.DaemonService;
 import cx.ring.services.DataTransferService;
@@ -150,8 +149,6 @@ public interface JamiInjectionComponent {
     void inject(DaemonService service);
 
     void inject(CallService service);
-
-    void inject(ConferenceService service);
 
     void inject(AccountService service);
 
