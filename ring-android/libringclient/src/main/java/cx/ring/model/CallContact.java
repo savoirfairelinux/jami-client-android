@@ -38,11 +38,11 @@ public class CallContact {
 
     public enum Status {BANNED, REQUEST_SENT, CONFIRMED, NO_REQUEST}
 
-    private long mId;
-    private String mKey;
+    private final Uri mUri;
+
     private String mUsername = null;
     private long mPhotoId;
-    private final ArrayList<Phone> mPhones;
+    private final ArrayList<Phone> mPhones = new ArrayList<>();
     private final boolean isUser;
     private boolean stared = false;
     private boolean isFromSystem = false;
@@ -50,8 +50,13 @@ public class CallContact {
     private Date mAddedDate = null;
     private boolean mOnline = false;
 
+    private long mId;
+    private String mLookupKey;
+
     private boolean usernameLoaded = false;
     public boolean detailsLoaded = false;
+    //private Uri mConversationUri = null;
+    private final BehaviorSubject<Uri> mConversationUri;
 
     // Profile
     private String mDisplayName;
@@ -63,38 +68,44 @@ public class CallContact {
     private Observable<Boolean> mContactPresenceObservable;
     private Emitter<Boolean> mContactPresenceEmitter;
 
-    public CallContact(long cID) {
-        this(cID, null, null, UNKNOWN_ID);
+    public CallContact(Uri uri) {
+        this(uri, false);
     }
 
-    public CallContact(long cID, String k, String displayName, long photoID) {
-        this(cID, k, displayName, photoID, new ArrayList<>(), false);
+    public CallContact(Uri uri, boolean user) {
+        this(uri, null, user);
     }
 
-    private CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, boolean user) {
-        mId = cID;
-        mKey = k;
+    private CallContact(Uri uri, String displayName, boolean user) {
+        mUri = uri;
         mDisplayName = displayName;
-        mPhones = p;
-        mPhotoId = photoID;
         isUser = user;
-        if (cID != UNKNOWN_ID && (displayName == null || !displayName.contains(PREFIX_RING))) {
+        mConversationUri = BehaviorSubject.createDefault(mUri);
+        /*if (cID != UNKNOWN_ID && (displayName == null || !displayName.contains(PREFIX_RING))) {
             mStatus = Status.CONFIRMED;
-        }
+        }*/
+    }
+
+    public void setConversationUri(Uri conversationUri) {
+        mConversationUri.onNext(conversationUri);
+        //mConversationUri = conversationUri;
+    }
+
+    public Observable<Uri> getConversationUri() {
+        return mConversationUri;
     }
 
     public static CallContact buildSIP(Uri to) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(to, 0));
-        CallContact contact = new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
+        CallContact contact = new CallContact(to);
         contact.usernameLoaded = true;
         return contact;
     }
 
-    public static CallContact build(String to) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
+    public static CallContact build(String uri, boolean isUser) {
+        return new CallContact(Uri.fromString(uri), isUser);
+    }
+    public static CallContact build(String uri) {
+        return build(uri, false);
     }
 
     public Observable<CallContact> getUpdatesSubject() {
@@ -137,8 +148,13 @@ public class CallContact {
         mContactUpdates.onNext(this);
     }
 
-    public void setContactInfos(String k, String displayName, long photo_id) {
-        mKey = k;
+    public void setSystemId(long id) {
+        mId = id;
+    }
+
+    public void setSystemContactInfo(long id, String k, String displayName, long photo_id) {
+        mId = id;
+        mLookupKey = k;
         mDisplayName = displayName;
         this.mPhotoId = photo_id;
         if (mUsername == null && displayName.contains(PREFIX_RING)) {
@@ -149,7 +165,7 @@ public class CallContact {
     public static String canonicalNumber(String number) {
         if (number == null || number.isEmpty())
             return null;
-        return new Uri(number).getRawUriString();
+        return Uri.fromString(number).getRawUriString();
     }
 
     public ArrayList<String> getIds() {
@@ -192,7 +208,7 @@ public class CallContact {
     }
 
     public boolean hasNumber(String number) {
-        return hasNumber(new Uri(number));
+        return hasNumber(Uri.fromString(number));
     }
 
     public boolean hasNumber(Uri number) {
@@ -213,15 +229,15 @@ public class CallContact {
         this.mId = id;
     }
 
-    public String getKey() {
+    /*public String getKey() {
         return mKey;
-    }
+    }*/
 
     public String getPrimaryNumber() {
-        return getPrimaryUri().getRawRingId();
+        return getUri().getRawRingId();
     }
-    public Uri getPrimaryUri() {
-        return getPhones().get(0).getNumber();
+    public Uri getUri() {
+        return mUri;
     }
 
     public void setStared() {
@@ -304,8 +320,8 @@ public class CallContact {
     public String getRingUsername() {
         if (!StringUtils.isEmpty(mUsername)) {
             return mUsername;
-        } else if (usernameLoaded && !mPhones.isEmpty()) {
-            return getPrimaryUri().getRawUriString();
+        } else if (usernameLoaded) {
+            return getUri().getRawUriString();
         } else {
             return "";
         }
