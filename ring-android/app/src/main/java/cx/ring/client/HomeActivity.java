@@ -75,6 +75,9 @@ import cx.ring.interfaces.Colorable;
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
 import cx.ring.service.DRingService;
+
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
 import net.jami.services.AccountService;
 import net.jami.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
@@ -778,7 +781,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         List<Future<Bitmap>> futureIcons = new ArrayList<>(Math.min(conversations.size(),maxCount));
         for (Conversation conversation : conversations) {
-            CallContact contact = conversation.getContact();
+            Contact contact = conversation.getContact();
             futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
@@ -789,7 +792,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         i = 0;
         for (Conversation conversation : conversations) {
-            CallContact contact = conversation.getContact();
+            Contact contact = conversation.getContact();
             IconCompat icon = null;
             try {
                 icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
