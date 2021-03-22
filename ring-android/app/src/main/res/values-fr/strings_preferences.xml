@@ -26,6 +26,7 @@
   <string name="pref_startOnBoot_summary">Lancer Jami en arrière plan au démarrage de l\'appareil.</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
   <string name="pref_clearHistory_summary">Effacer tous les historiques de conversation. L\'action est irréversible.</string>
+  <string name="pref_notification_title">Mode d\'affichage des notifications</string>
   <string name="pref_blackList_title">Liste  des comptes bloqués</string>
   <string name="pref_blackList_summary">Vérifier votre liste des comptes bloqués</string>
   <string name="pref_delete_account_title">Supprimer le compte</string>

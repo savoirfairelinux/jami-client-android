@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">開機時在背景啟動 Jami</string>
   <string name="pref_clearHistory_title">清除記錄</string>
   <string name="pref_clearHistory_summary">清除所有對話歷史。此動作無法復原。</string>
+  <string name="pref_notification_title">通知可見性</string>
+  <string name="pref_notification_summary">設定鎖定畫面上的應用程式通知可見性。</string>
   <string name="pref_blackList_title">封鎖清單</string>
   <string name="pref_blackList_summary">檢查您的封鎖清單。</string>
   <string name="pref_delete_account_title">刪除帳號</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">封鎖螢幕截圖與錄製</string>
   <string name="pref_block_record_summary">靜止拍攝螢幕截圖或錄製影片。</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">公開 \n（在鎖定畫面上顯示通知及其內容）\n</string>
+  <string name="notification_private">私人 \n（在鎖定畫面上顯示通知但隱藏其內容）\n</string>
+  <string name="notification_secret">祕密 \n（不要在鎖定畫面上顯示通知）\n</string>
   <!--Plugin-->
   <string name="pref_plugins_title">外掛程式</string>
   <string name="pref_plugins_summary">啟用外掛程式並設定其參數</string>

@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">Alkalmazás háttérfuttatása rendszerindításkor</string>
   <string name="pref_clearHistory_title">Előzmények törlése</string>
   <string name="pref_clearHistory_summary">Minden beszélgetés előzmény törlése. Ez a művelet nem vonható vissza.</string>
+  <string name="pref_notification_title">Az értesítés láthatósága </string>
+  <string name="pref_notification_summary">Állítsa be az alkalmazás értesítéseinek láthatóságát a zárolási képernyőn.</string>
   <string name="pref_blackList_title">Tiltólista</string>
   <string name="pref_blackList_summary">Letiltási lista ellenőrzése</string>
   <string name="pref_delete_account_title">Fiók törlése</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">Képernyőkép és felvétel letiltása</string>
   <string name="pref_block_record_summary">Letiltsa a képernyőkép készítését vagy a videók rögzítését.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Nyilvános\n(az értesítések és azok tartalmának megjelenítése a zárolási képernyőn)\n</string>
+  <string name="notification_private">Magán\n(értesítések megjelenítése, de tartalmuk elrejtése a zárolási képernyőn)\n</string>
+  <string name="notification_secret">Titkos\n(ne jelenítsen meg értesítéseket a zárolási képernyőn) </string>
   <!--Plugin-->
   <string name="pref_plugins_title">Beépülő modulok</string>
   <string name="pref_plugins_summary">Beépülő modulok engedélyezése és a paramétereik beállítása</string>

@@ -23,6 +23,7 @@
   <string name="ringtones_by">Klingeltöne von</string>
   <!--RingActivity-->
   <string name="error_no_network">Keine Netzwerkverbindung</string>
+  <string name="error_account_offline">Das Konto ist offline</string>
   <string name="error_mobile_network_available_but_disabled">Bitte erlaube den Zugang zum Mobilfunknetz in den Einstellungen</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textnachrichten</string>
@@ -89,6 +90,8 @@
   <string name="action_call_hangup">Auflegen</string>
   <string name="action_call_maximize">Maximiere</string>
   <string name="action_call_minimize">Reduziere</string>
+  <string name="action_call_mute">Stummschalten</string>
+  <string name="action_call_unmute">Stummschalten aufheben</string>
   <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
@@ -114,6 +117,7 @@
   <string name="qr_code">QR-Code</string>
   <string name="ab_action_flipcamera">Kamerabild kippen</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
+  <string name="remote_recording">%s aufnehmen…</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
@@ -299,5 +303,6 @@
   <string name="wizard_profile_info">Profil wird nur mit Kontakten geteilt</string>
   <string name="wizard_profile_button">Profil speichern</string>
   <string name="wizard_profile_skip">Überspringen und später durchführen</string>
-  <string name="fab_path_choose">Wählen Sie eine andere Datei</string>
+  <string name="fab_path_choose">Andere Datei auswählen</string>
+  <string name="chat_plugins">Chat-Plugins</string>
 </resources>

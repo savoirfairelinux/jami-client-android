@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">Deschide Jami în ascuns la pornirea aparatului.</string>
   <string name="pref_clearHistory_title">Șterge cronologia</string>
   <string name="pref_clearHistory_summary">Șterge cronologia  conversațiilor. Această acțiune este ireversibilă.</string>
+  <string name="pref_notification_title">Vizibilitatea notificării</string>
+  <string name="pref_notification_summary">Decide vizibilitatea notificărilor aplicației pe ecranul blocat.</string>
   <string name="pref_blackList_title">Lista de Blocate</string>
   <string name="pref_blackList_summary">Verifică lista de Blocate.</string>
   <string name="pref_delete_account_title">Șterge contul</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
   <string name="pref_block_record_summary">Blochează captura de ecran sau înregistrarea video.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Public \n(arată notificările și conținutul lor pe ecranul blocat)\n</string>
+  <string name="notification_private">Privat \n(arată notificările, dar ascunde conținutul lor pe ecranul blocat)\n</string>
+  <string name="notification_secret">Secret \n(nu arăta notificările pe ecranul blocat)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Extensii</string>
   <string name="pref_plugins_summary">Activează extensiile și reglează-le parametrii</string>
