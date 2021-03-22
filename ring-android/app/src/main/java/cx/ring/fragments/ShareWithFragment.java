@@ -24,33 +24,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import net.jami.facades.ConversationFacade;
+import net.jami.services.ContactService;
+import net.jami.smartlist.SmartListViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
-import net.jami.facades.ConversationFacade;
-import net.jami.services.ContactService;
-import net.jami.smartlist.SmartListViewModel;
+import cx.ring.databinding.FragSharewithBinding;
 import cx.ring.utils.ConversationPath;
 import cx.ring.viewholders.SmartListViewHolder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -58,7 +55,6 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class ShareWithFragment extends Fragment {
     private final static String TAG = ShareWithFragment.class.getSimpleName();
-    private final static String SHORTCUT_ID = "android.intent.extra.shortcut.ID";
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -73,9 +69,7 @@ public class ShareWithFragment extends Fragment {
     private Intent mPendingIntent = null;
     private SmartListAdapter adapter;
 
-    private TextView previewText;
-    private ImageView previewImage;
-    private VideoView previewVideo;
+    private FragSharewithBinding binding;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -90,20 +84,15 @@ public class ShareWithFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_sharewith, container, false);
-        RecyclerView list = view.findViewById(R.id.shareList);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        previewText = view.findViewById(R.id.previewText);
-        previewImage = view.findViewById(R.id.previewImage);
-        previewVideo = view.findViewById(R.id.previewVideo);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = FragSharewithBinding.inflate(inflater);
 
-        Context context = view.getContext();
+        Context context = binding.getRoot().getContext();
         Activity activity = getActivity();
         if (activity instanceof AppCompatActivity) {
             AppCompatActivity compatActivity = (AppCompatActivity) activity;
-            compatActivity.setSupportActionBar(toolbar);
+            compatActivity.setSupportActionBar(binding.toolbar);
             ActionBar ab = compatActivity.getSupportActionBar();
             if (ab != null)
                 ab.setDisplayHomeAsUpEnabled(true);
@@ -113,25 +102,25 @@ public class ShareWithFragment extends Fragment {
             String type = mPendingIntent.getType();
             ClipData clip = mPendingIntent.getClipData();
             if (type.startsWith("text/")) {
-                previewText.setText(mPendingIntent.getStringExtra(Intent.EXTRA_TEXT));
-                previewText.setVisibility(View.VISIBLE);
+                binding.previewText.setText(mPendingIntent.getStringExtra(Intent.EXTRA_TEXT));
+                binding.previewText.setVisibility(View.VISIBLE);
             } else if (type.startsWith("image/")) {
                 Uri data = mPendingIntent.getData();
                 if (data == null && clip != null && clip.getItemCount() > 0)
                     data = clip.getItemAt(0).getUri();
-                previewImage.setImageURI(data);
-                previewImage.setVisibility(View.VISIBLE);
+                binding.previewImage.setImageURI(data);
+                binding.previewImage.setVisibility(View.VISIBLE);
             } else if (type.startsWith("video/")) {
                 Uri data = mPendingIntent.getData();
                 if (data == null && clip != null && clip.getItemCount() > 0)
                     data = clip.getItemAt(0).getUri();
                 try {
-                    previewVideo.setVideoURI(data);
-                    previewVideo.setVisibility(View.VISIBLE);
+                    binding.previewVideo.setVideoURI(data);
+                    binding.previewVideo.setVisibility(View.VISIBLE);
                 } catch (NullPointerException | InflateException | NumberFormatException e) {
                     Log.e(TAG, e.getMessage());
                 }
-                previewVideo.setOnCompletionListener(mediaPlayer -> previewVideo.start());
+                binding.previewVideo.setOnCompletionListener(mediaPlayer -> binding.previewVideo.start());
             }
         }
 
@@ -143,7 +132,7 @@ public class ShareWithFragment extends Fragment {
                     mPendingIntent = null;
                     String type = intent.getType();
                     if (type != null && type.startsWith("text/")) {
-                        intent.putExtra(Intent.EXTRA_TEXT, previewText.getText().toString());
+                        intent.putExtra(Intent.EXTRA_TEXT, binding.previewText.getText().toString());
                     }
                     intent.putExtras(ConversationPath.toBundle(smartListViewModel.getAccountId(), smartListViewModel.getUri()));
                     intent.setClass(requireActivity(), ConversationActivity.class);
@@ -156,9 +145,9 @@ public class ShareWithFragment extends Fragment {
 
             }
         }, mDisposable);
-        list.setLayoutManager(new LinearLayoutManager(context));
-        list.setAdapter(adapter);
-        return view;
+        binding.shareList.setLayoutManager(new LinearLayoutManager(context));
+        binding.shareList.setAdapter(adapter);
+        return binding.getRoot();
     }
 
     @Override
@@ -174,8 +163,8 @@ public class ShareWithFragment extends Fragment {
                     if (adapter != null)
                         adapter.update(list);
                 }));
-        if (previewVideo != null && previewVideo.getVisibility() != View.GONE) {
-            previewVideo.start();
+        if (binding != null && binding.previewVideo.getVisibility() != View.GONE) {
+            binding.previewVideo.start();
         }
     }
 
@@ -186,24 +175,16 @@ public class ShareWithFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle bundle) {
+    public void onCreate(@Nullable Bundle bundle) {
         super.onCreate(bundle);
-        Intent intent = getActivity().getIntent();
+        /*Intent intent = getActivity().getIntent();
         Bundle extra = intent.getExtras();
-        if (extra != null) {
-            if (ConversationPath.fromBundle(extra) != null) {
-                intent.setClass(getActivity(), ConversationActivity.class);
-                startActivity(intent);
-                return;
-            } else if (intent.hasExtra(SHORTCUT_ID)) {
-                ConversationPath conversationPath = ConversationPath.fromKey(extra.getString(SHORTCUT_ID));
-                intent.setClass(getActivity(), ConversationActivity.class)
-                        .putExtras(conversationPath.toBundle());
-                startActivity(intent);
-                return;
-            }
-        }
-        mPendingIntent = intent;
+        if (ConversationPath.fromBundle(extra) != null) {
+            intent.setClass(getActivity(), ConversationActivity.class);
+            startActivity(intent);
+            return;
+        }*/
+        mPendingIntent = getActivity().getIntent();
     }
 
     @Override
