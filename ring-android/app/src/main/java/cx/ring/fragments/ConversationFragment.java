@@ -87,6 +87,8 @@ import net.jami.conversation.ConversationPresenter;
 import net.jami.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
+
+import net.jami.daemon.JamiService;
 import net.jami.model.Account;
 import net.jami.model.Contact;
 import net.jami.model.Conversation;
@@ -419,26 +421,21 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         PopupMenu popup = new PopupMenu(context, v);
         popup.inflate(R.menu.conversation_share_actions);
         popup.setOnMenuItemClickListener(item -> {
-            switch(item.getItemId()) {
-                case R.id.conv_send_audio:
-                    sendAudioMessage();
-                    break;
-                case R.id.conv_send_video:
-                    sendVideoMessage();
-                    break;
-                case R.id.conv_send_file:
-                    presenter.selectFile();
-                    break;
-                case R.id.conv_share_location:
-                    shareLocation();
-                    break;
-                case R.id.chat_plugins:
-                    presenter.showPluginListHandlers();
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.conv_send_audio) {
+                sendAudioMessage();
+            } else if (itemId == R.id.conv_send_video) {
+                sendVideoMessage();
+            } else if (itemId == R.id.conv_send_file) {
+                presenter.selectFile();
+            } else if (itemId == R.id.conv_share_location) {
+                shareLocation();
+            } else if (itemId == R.id.chat_plugins) {
+                presenter.showPluginListHandlers();
             }
             return false;
         });
-        popup.getMenu().findItem(R.id.chat_plugins).setVisible(Ringservice.getPluginsEnabled() && Ringservice.getChatHandlers().size() > 0);
+        popup.getMenu().findItem(R.id.chat_plugins).setVisible(JamiService.getPluginsEnabled() && !JamiService.getChatHandlers().isEmpty());
         MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);
         menuHelper.show();
@@ -450,7 +447,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         FragmentManager fragmentManager = getChildFragmentManager();
         PluginHandlersListFragment fragment = PluginHandlersListFragment.newInstance(accountId, contactId);
         fragmentManager.beginTransaction()
-                .add(R.id.pluginListHandlers, fragment, fragment.TAG)
+                .add(R.id.pluginListHandlers, fragment, PluginHandlersListFragment.TAG)
                 .commit();
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
