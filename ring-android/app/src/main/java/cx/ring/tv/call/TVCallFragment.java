@@ -81,12 +81,13 @@ import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
+
+import net.jami.daemon.JamiService;
 import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.model.Call;
 import cx.ring.mvp.BaseSupportFragment;
 
-import net.jami.daemon.RingserviceJNI;
 import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
@@ -699,7 +700,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void toggleCallMediaHandler(String id, String callId, boolean toggle) {
-        RingserviceJNI.toggleCallMediaHandler(id, callId, toggle);
+        JamiService.toggleCallMediaHandler(id, callId, toggle);
     }
 
     @Override
