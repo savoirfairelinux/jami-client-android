@@ -25,7 +25,33 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import net.jami.daemon.Blob;
+import net.jami.daemon.DataTransferInfo;
+import net.jami.daemon.JamiService;
+import net.jami.daemon.StringMap;
+import net.jami.daemon.StringVect;
+import net.jami.daemon.UintVect;
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
+import net.jami.model.Call;
+import net.jami.model.Codec;
+import net.jami.model.ConfigKey;
+import net.jami.model.Contact;
+import net.jami.model.ContactEvent;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.DataTransferError;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.TextMessage;
+import net.jami.model.TrustRequest;
+import net.jami.model.Uri;
 import net.jami.smartlist.SmartListViewModel;
+import net.jami.utils.FileUtils;
+import net.jami.utils.Log;
+import net.jami.utils.StringUtils;
+import net.jami.utils.SwigNativeConverter;
+import net.jami.utils.VCardUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,32 +74,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.jami.daemon.Blob;
-import net.jami.daemon.DataTransferInfo;
-import net.jami.daemon.Ringservice;
-import net.jami.daemon.StringMap;
-import net.jami.daemon.StringVect;
-import net.jami.daemon.UintVect;
-import net.jami.model.Account;
-import net.jami.model.AccountConfig;
-import net.jami.model.Contact;
-import net.jami.model.Codec;
-import net.jami.model.ConfigKey;
-import net.jami.model.ContactEvent;
-import net.jami.model.Conversation;
-import net.jami.model.DataTransfer;
-import net.jami.model.DataTransferError;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.Call;
-import net.jami.model.TextMessage;
-import net.jami.model.TrustRequest;
-import net.jami.model.Uri;
-import net.jami.utils.FileUtils;
-import net.jami.utils.Log;
-import net.jami.utils.StringUtils;
-import net.jami.utils.SwigNativeConverter;
-import net.jami.utils.VCardUtils;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import io.reactivex.Completable;
@@ -113,7 +113,7 @@ public class AccountService {
     DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
-    net.jami.services.VCardService mVCardService;
+    VCardService mVCardService;
 
     private Account mCurrentAccount;
     private List<Account> mAccountList = new ArrayList<>();
@@ -179,7 +179,7 @@ public class AccountService {
 
     private final Observable<TextMessage> incomingTextMessageSubject = incomingMessageSubject
             .flatMapMaybe(msg -> {
-                String message = msg.messages.get(net.jami.services.CallService.MIME_TEXT_PLAIN);
+                String message = msg.messages.get(CallService.MIME_TEXT_PLAIN);
                 if (message != null) {
                     return mHistoryService
                             .incomingMessage(msg.accountId, msg.messageId, msg.author, message)
@@ -255,8 +255,8 @@ public class AccountService {
             return query;
         }
 
-        public List<Observable<net.jami.smartlist.SmartListViewModel>> getResultsViewModels() {
-            List<Observable<net.jami.smartlist.SmartListViewModel>> vms = new ArrayList<>(results.size());
+        public List<Observable<SmartListViewModel>> getResultsViewModels() {
+            List<Observable<SmartListViewModel>> vms = new ArrayList<>(results.size());
             for (Contact user : results) {
                 vms.add(Observable.just(new SmartListViewModel(accountId, user, null)));
             }
@@ -347,7 +347,7 @@ public class AccountService {
         Log.w(TAG, "refreshAccountsCacheFromDaemon");
         boolean hasSip = false, hasJami = false;
         List<Account> curList = mAccountList;
-        List<String> accountIds = new ArrayList<>(Ringservice.getAccountList());
+        List<String> accountIds = new ArrayList<>(JamiService.getAccountList());
         List<Account> newAccounts = new ArrayList<>(accountIds.size());
         for (String id : accountIds) {
             for (Account acc : curList)
@@ -366,9 +366,9 @@ public class AccountService {
 
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
-            Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
-            List<Map<String, String>> credentials = Ringservice.getCredentials(accountId).toNative();
-            Map<String, String> volatileAccountDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
+            Map<String, String> details = JamiService.getAccountDetails(accountId).toNative();
+            List<Map<String, String>> credentials = JamiService.getCredentials(accountId).toNative();
+            Map<String, String> volatileAccountDetails = JamiService.getVolatileAccountDetails(accountId).toNative();
             if (account == null) {
                 account = new Account(accountId, details, credentials, volatileAccountDetails);
                 newAccounts.add(account);
@@ -384,24 +384,24 @@ public class AccountService {
                 hasJami = true;
                 boolean enabled = account.isEnabled();
 
-                account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
-                account.setContacts(Ringservice.getContacts(accountId).toNative());
-                List<Map<String, String>> requests = Ringservice.getTrustRequests(accountId).toNative();
+                account.setDevices(JamiService.getKnownRingDevices(accountId).toNative());
+                account.setContacts(JamiService.getContacts(accountId).toNative());
+                List<Map<String, String>> requests = JamiService.getTrustRequests(accountId).toNative();
                 for (Map<String, String> requestInfo : requests) {
                     TrustRequest request = new TrustRequest(accountId, requestInfo);
                     account.addRequest(request);
                 }
                 Log.w(TAG, accountId + " loading conversations");
-                List<String> conversations = Ringservice.getConversations(account.getAccountID());
+                List<String> conversations = JamiService.getConversations(account.getAccountID());
                 for (String conversationId : conversations) {
-                    Map<String, String> info = Ringservice.conversationInfos(accountId, conversationId);
+                    Map<String, String> info = JamiService.conversationInfos(accountId, conversationId);
                     /*for (Map.Entry<String, String> i : info.entrySet()) {
                         Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                     }*/
                     Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
                     Conversation conversation = account.newSwarm(conversationId, mode);
                     conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
-                    for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
+                    for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
 /*
                         for (Map.Entry<String, String> minfo : member.entrySet()) {
                             Log.w(TAG, accountId + " " + conversationId + " member " + minfo.getKey() + " -> " + minfo.getValue());
@@ -418,7 +418,7 @@ public class AccountService {
                     account.conversationStarted(conversation);
                     //account.addSwarmConversation(conversationId, members);
                 }
-                for (Map<String, String> requestData : Ringservice.getConversationRequests(account.getAccountID()).toNative()) {
+                for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
                     /*for (Map.Entry<String, String> e : requestData.entrySet()) {
                         Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
                     }*/
@@ -433,13 +433,13 @@ public class AccountService {
                 }
                 mExecutor.execute(() -> {
                     for (String conversationId : conversations)
-                        Ringservice.loadConversationMessages(accountId, conversationId, "", 2);
+                        JamiService.loadConversationMessages(accountId, conversationId, "", 2);
                 });
 
                 if (enabled) {
                     for (Contact contact : account.getContacts().values()) {
                         if (!contact.isUsernameLoaded())
-                            Ringservice.lookupAddress(accountId, "", contact.getUri().getRawRingId());
+                            JamiService.lookupAddress(accountId, "", contact.getUri().getRawRingId());
                     }
                 }
             }
@@ -488,16 +488,16 @@ public class AccountService {
      */
     public Observable<Account> addAccount(final Map<String, String> map) {
         return Observable.fromCallable(() -> {
-            String accountId = Ringservice.addAccount(StringMap.toSwig(map));
+            String accountId = JamiService.addAccount(StringMap.toSwig(map));
             if (StringUtils.isEmpty(accountId)) {
                 throw new RuntimeException("Can't create account.");
             }
             Account account = getAccount(accountId);
             if (account == null) {
-                Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
-                List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
-                Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
-                Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
+                Map<String, String> accountDetails = JamiService.getAccountDetails(accountId).toNative();
+                List<Map<String, String>> accountCredentials = JamiService.getCredentials(accountId).toNative();
+                Map<String, String> accountVolatileDetails = JamiService.getVolatileAccountDetails(accountId).toNative();
+                Map<String, String> accountDevices = JamiService.getKnownRingDevices(accountId).toNative();
                 account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
                 account.setDevices(accountDevices);
                 if (account.isSip()) {
@@ -634,7 +634,7 @@ public class AccountService {
     }
 
     public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {
-        mExecutor.execute(() -> Ringservice.subscribeBuddy(accountID, uri, flag));
+        mExecutor.execute(() -> JamiService.subscribeBuddy(accountID, uri, flag));
     }
 
     /**
@@ -659,7 +659,7 @@ public class AccountService {
                         String keyHashMap = VCardUtils.MIME_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
                         String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
                         chunk.put(keyHashMap, message);
-                        Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
+                        JamiService.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
                         if (stringVCard.length() > VCARD_CHUNK_SIZE) {
                             stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
                         }
@@ -669,35 +669,35 @@ public class AccountService {
     }
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
-        mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 3));
+        mExecutor.execute(() -> JamiService.setMessageDisplayed(accountId, contactId, messageId, 3));
     }
 
     public Single<Conversation> startConversation(String accountId, Collection<String> initialMembers) {
         Account account = getAccount(accountId);
         return Single.fromCallable(() -> {
             Log.w(TAG, "startConversation");
-            String id = Ringservice.startConversation(accountId);
+            String id = JamiService.startConversation(accountId);
             Conversation conversation = account.getSwarm(id);//new Conversation(accountId, new Uri(id));
             for (String member : initialMembers) {
                 Log.w(TAG, "addConversationMember " + member);
-                Ringservice.addConversationMember(accountId, id, member);
+                JamiService.addConversationMember(accountId, id, member);
                 conversation.addContact(account.getContactFromCache(member));
             }
             account.conversationStarted(conversation);
             Log.w(TAG, "loadConversationMessages");
-            Ringservice.loadConversationMessages(accountId, id, id, 2);
+            JamiService.loadConversationMessages(accountId, id, id, 2);
             return conversation;
         }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void loadConversationHistory(String accountId, Uri conversationUri, String root, long n) {
-        Ringservice.loadConversationMessages(accountId, conversationUri.getRawRingId(), root, n);
+        JamiService.loadConversationMessages(accountId, conversationUri.getRawRingId(), root, n);
     }
 
     public void sendConversationMessage(String accountId, Uri conversationUri, String txt) {
         mExecutor.execute(() -> {
             Log.w(TAG, "sendConversationMessages " + conversationUri.getRawRingId() + " : " + txt);
-            Ringservice.sendMessage(accountId, conversationUri.getRawRingId(), txt, "");
+            JamiService.sendMessage(accountId, conversationUri.getRawRingId(), txt, "");
         });
     }
 
@@ -705,7 +705,7 @@ public class AccountService {
      * @return Account Ids list from Daemon
      */
     public Single<List<String>> getAccountList() {
-        return Single.fromCallable(() -> (List<String>)new ArrayList<>(Ringservice.getAccountList()))
+        return Single.fromCallable(() -> (List<String>)new ArrayList<>(JamiService.getAccountList()))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -721,7 +721,7 @@ public class AccountService {
                 order.append(accountId);
                 order.append(File.separator);
             }
-            Ringservice.setAccountsOrder(order.toString());
+            JamiService.setAccountsOrder(order.toString());
         });
     }
 
@@ -730,7 +730,7 @@ public class AccountService {
      */
     public Map<String, String> getAccountDetails(final String accountId) {
         try {
-            return mExecutor.submit(() -> Ringservice.getAccountDetails(accountId).toNative()).get();
+            return mExecutor.submit(() -> JamiService.getAccountDetails(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getAccountDetails()", e);
         }
@@ -742,7 +742,7 @@ public class AccountService {
      */
     public void setAccountDetails(final String accountId, final Map<String, String> map) {
         Log.i(TAG, "setAccountDetails() " + accountId);
-        mExecutor.execute(() -> Ringservice.setAccountDetails(accountId, StringMap.toSwig(map)));
+        mExecutor.execute(() -> JamiService.setAccountDetails(accountId, StringMap.toSwig(map)));
     }
 
     public Single<String> migrateAccount(String accountId, String password) {
@@ -754,20 +754,20 @@ public class AccountService {
                     final Account account = getAccount(accountId);
                     HashMap<String, String> details = account.getDetails();
                     details.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
-                    mExecutor.execute(() -> Ringservice.setAccountDetails(accountId, StringMap.toSwig(details)));
+                    mExecutor.execute(() -> JamiService.setAccountDetails(accountId, StringMap.toSwig(details)));
                 })
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void setAccountEnabled(final String accountId, final boolean active) {
-        mExecutor.execute(() -> Ringservice.sendRegister(accountId, active));
+        mExecutor.execute(() -> JamiService.sendRegister(accountId, active));
     }
 
     /**
      * Sets the activation state of the account in the Daemon
      */
     public void setAccountActive(final String accountId, final boolean active) {
-        mExecutor.execute(() -> Ringservice.setAccountActive(accountId, active));
+        mExecutor.execute(() -> JamiService.setAccountActive(accountId, active));
     }
 
     /**
@@ -780,9 +780,9 @@ public class AccountService {
                 // If the proxy is enabled we can considered the account
                 // as always active
                 if (a.isDhtProxyEnabled()) {
-                    Ringservice.setAccountActive(a.getAccountID(), true);
+                    JamiService.setAccountActive(a.getAccountID(), true);
                 } else {
-                    Ringservice.setAccountActive(a.getAccountID(), active);
+                    JamiService.setAccountActive(a.getAccountID(), active);
                 }
             }
         });
@@ -802,7 +802,7 @@ public class AccountService {
      */
     public Map<String, String> getVolatileAccountDetails(final String accountId) {
         try {
-            return mExecutor.submit(() -> Ringservice.getVolatileAccountDetails(accountId).toNative()).get();
+            return mExecutor.submit(() -> JamiService.getVolatileAccountDetails(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getVolatileAccountDetails()", e);
         }
@@ -814,7 +814,7 @@ public class AccountService {
      */
     public Single<HashMap<String, String>> getAccountTemplate(final String accountType) {
         Log.i(TAG, "getAccountTemplate() " + accountType);
-        return Single.fromCallable(() -> Ringservice.getAccountTemplate(accountType).toNative())
+        return Single.fromCallable(() -> JamiService.getAccountTemplate(accountType).toNative())
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -823,7 +823,7 @@ public class AccountService {
      */
     public void removeAccount(final String accountId) {
         Log.i(TAG, "removeAccount() " + accountId);
-        mExecutor.execute(() -> Ringservice.removeAccount(accountId));
+        mExecutor.execute(() -> JamiService.removeAccount(accountId));
         mHistoryService.clearHistory(accountId).subscribe();
     }
 
@@ -848,7 +848,7 @@ public class AccountService {
                 })
                 .doOnSubscribe(l -> {
                     Log.i(TAG, "exportOnRing() " + accountId);
-                    mExecutor.execute(() -> Ringservice.exportOnRing(accountId, password));
+                    mExecutor.execute(() -> JamiService.exportOnRing(accountId, password));
                 })
                 .subscribeOn(Schedulers.io());
     }
@@ -859,7 +859,7 @@ public class AccountService {
     public Map<String, String> getKnownRingDevices(final String accountId) {
         Log.i(TAG, "getKnownRingDevices() " + accountId);
         try {
-            return mExecutor.submit(() -> Ringservice.getKnownRingDevices(accountId).toNative()).get();
+            return mExecutor.submit(() -> JamiService.getKnownRingDevices(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getKnownRingDevices()", e);
         }
@@ -876,7 +876,7 @@ public class AccountService {
                 .filter(r -> r.accountId.equals(accountId) && r.deviceId.equals(deviceId))
                 .firstOrError()
                 .map(r -> r.code)
-                .doOnSubscribe(l -> mExecutor.execute(() -> Ringservice.revokeDevice(accountId, password, deviceId)))
+                .doOnSubscribe(l -> mExecutor.execute(() -> JamiService.revokeDevice(accountId, password, deviceId)))
                 .subscribeOn(Schedulers.io());
     }
 
@@ -888,17 +888,17 @@ public class AccountService {
         final Account account = getAccount(accountId);
         mExecutor.execute(() -> {
             Log.i(TAG, "renameDevice() thread running... " + newName);
-            StringMap details = Ringservice.getAccountDetails(accountId);
+            StringMap details = JamiService.getAccountDetails(accountId);
             details.put(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
-            Ringservice.setAccountDetails(accountId, details);
+            JamiService.setAccountDetails(accountId, details);
             account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
-            account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
+            account.setDevices(JamiService.getKnownRingDevices(accountId).toNative());
         });
     }
 
     public Completable exportToFile(String accountId, String absolutePath, String password) {
         return Completable.fromAction(() -> {
-            if (!Ringservice.exportToFile(accountId, absolutePath, password))
+            if (!JamiService.exportToFile(accountId, absolutePath, password))
                 throw new IllegalArgumentException("Can't export archive");
         }).subscribeOn(Schedulers.from(mExecutor));
     }
@@ -909,7 +909,7 @@ public class AccountService {
      */
     public Completable setAccountPassword(final String accountId, final String oldPassword, final String newPassword) {
         return Completable.fromAction(() -> {
-            if (!Ringservice.changeAccountPassword(accountId, oldPassword, newPassword))
+            if (!JamiService.changeAccountPassword(accountId, oldPassword, newPassword))
                 throw new IllegalArgumentException("Can't change password");
         }).subscribeOn(Schedulers.from(mExecutor));
     }
@@ -922,7 +922,7 @@ public class AccountService {
             UintVect list = new UintVect();
             list.reserve(codecs.size());
             list.addAll(codecs);
-            Ringservice.setActiveCodecList(accountId, list);
+            JamiService.setActiveCodecList(accountId, list);
             accountSubject.onNext(getAccount(accountId));
         });
     }
@@ -933,10 +933,10 @@ public class AccountService {
     public Single<List<Codec>> getCodecList(final String accountId) {
         return Single.fromCallable(() -> {
             List<Codec> results = new ArrayList<>();
-            UintVect payloads = Ringservice.getCodecList();
-            UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
+            UintVect payloads = JamiService.getCodecList();
+            UintVect activePayloads = JamiService.getActiveCodecList(accountId);
             for (int i = 0; i < payloads.size(); ++i) {
-                StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
+                StringMap details = JamiService.getCodecDetails(accountId, payloads.get(i));
                 if (details.size() > 1) {
                     results.add(new Codec(payloads.get(i), details.toNative(), activePayloads.contains(payloads.get(i))));
                 } else {
@@ -951,7 +951,7 @@ public class AccountService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "validateCertificatePath() running...");
-                return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative();
+                return JamiService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running validateCertificatePath()", e);
@@ -963,7 +963,7 @@ public class AccountService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "validateCertificate() running...");
-                return Ringservice.validateCertificate(accountId, certificate).toNative();
+                return JamiService.validateCertificate(accountId, certificate).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running validateCertificate()", e);
@@ -975,7 +975,7 @@ public class AccountService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCertificateDetailsPath() running...");
-                return Ringservice.getCertificateDetails(certificatePath).toNative();
+                return JamiService.getCertificateDetails(certificatePath).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getCertificateDetailsPath()", e);
@@ -987,7 +987,7 @@ public class AccountService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCertificateDetails() running...");
-                return Ringservice.getCertificateDetails(certificateRaw).toNative();
+                return JamiService.getCertificateDetails(certificateRaw).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getCertificateDetails()", e);
@@ -1000,7 +1000,7 @@ public class AccountService {
      */
     public List<String> getTlsSupportedMethods() {
         Log.i(TAG, "getTlsSupportedMethods()");
-        return SwigNativeConverter.toJava(Ringservice.getSupportedTlsMethod());
+        return SwigNativeConverter.toJava(JamiService.getSupportedTlsMethod());
     }
 
     /**
@@ -1010,7 +1010,7 @@ public class AccountService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCredentials() running...");
-                return Ringservice.getCredentials(accountId).toNative();
+                return JamiService.getCredentials(accountId).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getCredentials()", e);
@@ -1023,7 +1023,7 @@ public class AccountService {
      */
     public void setCredentials(final String accountId, final List<Map<String, String>> credentials) {
         Log.i(TAG, "setCredentials() " + accountId);
-        mExecutor.execute(() -> Ringservice.setCredentials(accountId, SwigNativeConverter.toSwig(credentials)));
+        mExecutor.execute(() -> JamiService.setCredentials(accountId, SwigNativeConverter.toSwig(credentials)));
     }
 
     /**
@@ -1053,7 +1053,7 @@ public class AccountService {
      */
     public void registerName(final String account, final String password, final String name) {
         Log.i(TAG, "registerName()");
-        mExecutor.execute(() -> Ringservice.registerName(account, password, name));
+        mExecutor.execute(() -> JamiService.registerName(account, password, name));
     }
 
     /* contact requests */
@@ -1063,7 +1063,7 @@ public class AccountService {
      */
     public List<Map<String, String>> getTrustRequests(final String accountId) {
         try {
-            return mExecutor.submit(() -> Ringservice.getTrustRequests(accountId).toNative()).get();
+            return mExecutor.submit(() -> JamiService.getTrustRequests(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getTrustRequests()", e);
         }
@@ -1087,7 +1087,7 @@ public class AccountService {
             account.removeRequest(from);
             //handleTrustRequest(accountId, from, null, ContactType.INVITATION_ACCEPTED);
         }
-        mExecutor.execute(() -> Ringservice.acceptTrustRequest(accountId, from.getRawRingId()));
+        mExecutor.execute(() -> JamiService.acceptTrustRequest(accountId, from.getRawRingId()));
     }
 
 
@@ -1134,7 +1134,7 @@ public class AccountService {
             removed = account.removeRequest(contactUri);
             mHistoryService.clearHistory(contactUri.getRawRingId(), accountId, true).subscribe();
         }
-        mExecutor.execute(() -> Ringservice.discardTrustRequest(accountId, contactUri.getRawRingId()));
+        mExecutor.execute(() -> JamiService.discardTrustRequest(accountId, contactUri.getRawRingId()));
         return removed;
     }
 
@@ -1144,7 +1144,7 @@ public class AccountService {
     public void sendTrustRequest(Conversation conversation, final Uri to, final Blob message) {
         Log.i(TAG, "sendTrustRequest() " + conversation.getAccountId() + " " + to);
         handleTrustRequest(conversation, to, null, ContactType.ADDED);
-        mExecutor.execute(() -> Ringservice.sendTrustRequest(conversation.getAccountId(), to.getRawRingId(), message == null ? new Blob() : message));
+        mExecutor.execute(() -> JamiService.sendTrustRequest(conversation.getAccountId(), to.getRawRingId(), message == null ? new Blob() : message));
     }
 
     /**
@@ -1153,7 +1153,7 @@ public class AccountService {
     public void addContact(final String accountId, final String uri) {
         Log.i(TAG, "addContact() " + accountId + " " + uri);
         //handleTrustRequest(accountId, Uri.fromString(uri), null, ContactType.ADDED);
-        mExecutor.execute(() -> Ringservice.addContact(accountId, uri));
+        mExecutor.execute(() -> JamiService.addContact(accountId, uri));
     }
 
     /**
@@ -1161,7 +1161,7 @@ public class AccountService {
      */
     public void removeContact(final String accountId, final String uri, final boolean ban) {
         Log.i(TAG, "removeContact() " + accountId + " " + uri + " ban:" + ban);
-        mExecutor.execute(() -> Ringservice.removeContact(accountId, uri, ban));
+        mExecutor.execute(() -> JamiService.removeContact(accountId, uri, ban));
     }
 
     /**
@@ -1169,7 +1169,7 @@ public class AccountService {
      */
     public List<Map<String, String>> getContacts(final String accountId) {
         try {
-            return mExecutor.submit(() -> Ringservice.getContacts(accountId).toNative()).get();
+            return mExecutor.submit(() -> JamiService.getContacts(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getContacts()", e);
         }
@@ -1181,7 +1181,7 @@ public class AccountService {
      */
     public void lookupName(final String account, final String nameserver, final String name) {
         Log.i(TAG, "lookupName() " + account + " " + nameserver + " " + name);
-        mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name));
+        mExecutor.execute(() -> JamiService.lookupName(account, nameserver, name));
     }
 
     public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
@@ -1191,7 +1191,7 @@ public class AccountService {
         return getRegisteredNames()
                 .filter(r -> account.equals(r.accountId) && name.equals(r.name))
                 .firstOrError()
-                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name)))
+                .doOnSubscribe(s -> mExecutor.execute(() -> JamiService.lookupName(account, nameserver, name)))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -1208,7 +1208,7 @@ public class AccountService {
         return getSearchResults()
                 .filter(r -> account.equals(r.accountId) && encodedUrl.equals(r.query))
                 .firstOrError()
-                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.searchUser(account, encodedUrl)))
+                .doOnSubscribe(s -> mExecutor.execute(() -> JamiService.searchUser(account, encodedUrl)))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -1216,17 +1216,17 @@ public class AccountService {
      * Reverse looks up the address in the blockchain to find the name
      */
     public void lookupAddress(final String account, final String nameserver, final String address) {
-        mExecutor.execute(() -> Ringservice.lookupAddress(account, nameserver, address));
+        mExecutor.execute(() -> JamiService.lookupAddress(account, nameserver, address));
     }
 
     public void pushNotificationReceived(final String from, final Map<String, String> data) {
         // Log.i(TAG, "pushNotificationReceived()");
-        mExecutor.execute(() -> Ringservice.pushNotificationReceived(from, StringMap.toSwig(data)));
+        mExecutor.execute(() -> JamiService.pushNotificationReceived(from, StringMap.toSwig(data)));
     }
 
     public void setPushNotificationToken(final String pushNotificationToken) {
         //Log.i(TAG, "setPushNotificationToken()");
-        mExecutor.execute(() -> Ringservice.setPushNotificationToken(pushNotificationToken));
+        mExecutor.execute(() -> JamiService.setPushNotificationToken(pushNotificationToken));
     }
 
     void volumeChanged(String device, int value) {
@@ -1252,10 +1252,10 @@ public class AccountService {
         String oldState = account.getRegistrationState();
         if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
                 !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-            account.setDetails(Ringservice.getAccountDetails(account.getAccountID()).toNative());
-            account.setCredentials(Ringservice.getCredentials(account.getAccountID()).toNative());
-            account.setDevices(Ringservice.getKnownRingDevices(account.getAccountID()).toNative());
-            account.setVolatileDetails(Ringservice.getVolatileAccountDetails(account.getAccountID()).toNative());
+            account.setDetails(JamiService.getAccountDetails(account.getAccountID()).toNative());
+            account.setCredentials(JamiService.getCredentials(account.getAccountID()).toNative());
+            account.setDevices(JamiService.getKnownRingDevices(account.getAccountID()).toNative());
+            account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.getAccountID()).toNative());
         } else {
             account.setRegistrationState(newState, code);
         }
@@ -1366,7 +1366,7 @@ public class AccountService {
         }
 
         acc.registeringUsername = false;
-        acc.setVolatileDetails(Ringservice.getVolatileAccountDetails(acc.getAccountID()).toNative());
+        acc.setVolatileDetails(JamiService.getVolatileAccountDetails(acc.getAccountID()).toNative());
         if (state == 0) {
             acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
         }
@@ -1517,10 +1517,12 @@ public class AccountService {
                 break;
             case "application/data-transfer+json": {
                 String transferId = message.get("tid");
+                String fileName = message.get("displayName");
+                long fileSize = Long.parseLong(message.get("totalSize"));
                 long tid = Long.parseUnsignedLong(transferId);
                 interaction = account.getDataTransfer(tid);
                 if (interaction == null) {
-                    interaction = new DataTransfer(tid, account.getAccountID(), author, contact.isUser(), timestamp, 0, 0);
+                    interaction = new DataTransfer(tid, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
                 }
                 break;
             }
@@ -1601,7 +1603,7 @@ public class AccountService {
             Log.w(TAG, "conversationReady: can't find account");
             return;
         }
-        StringMap info = Ringservice.conversationInfos(accountId, conversationId);
+        StringMap info = JamiService.conversationInfos(accountId, conversationId);
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
@@ -1609,7 +1611,7 @@ public class AccountService {
         Conversation.Mode mode = Conversation.Mode.values()[modeInt];
         Conversation conversation = account.newSwarm(conversationId, mode);
 
-        for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
+        for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
             Uri uri = Uri.fromId(member.get("uri"));
             Contact contact = conversation.findContact(uri);
             if (contact == null) {
@@ -1666,7 +1668,7 @@ public class AccountService {
             dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
 
             Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-            DataTransferError err = getDataTransferError(Ringservice.sendFile(dataTransferInfo, 0));
+            DataTransferError err = getDataTransferError(JamiService.sendFile(dataTransferInfo, 0));
             if (err != DataTransferError.SUCCESS) {
                 throw new IOException(err.name());
             }
@@ -1675,7 +1677,7 @@ public class AccountService {
 
     public List<net.jami.daemon.Message> getLastMessages(String accountId, long baseTime) {
         try {
-            return mExecutor.submit(() -> SwigNativeConverter.toJava(Ringservice.getLastMessages(accountId, baseTime))).get();
+            return mExecutor.submit(() -> SwigNativeConverter.toJava(JamiService.getLastMessages(accountId, baseTime))).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1700,12 +1702,12 @@ public class AccountService {
 
     private void acceptFileTransfer(final String accountId, final String conversationId, final Long dataTransferId, final String filePath, long offset) {
         Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath + ", offset=" + offset);
-        mExecutor.execute(() -> Ringservice.acceptFileTransfer(accountId, conversationId, dataTransferId, filePath, offset));
+        mExecutor.execute(() -> JamiService.acceptFileTransfer(accountId, conversationId, dataTransferId, filePath, offset));
     }
 
     public void cancelDataTransfer(final String accountId, final String conversationId, long dataTransferId) {
         Log.i(TAG, "cancelDataTransfer() id=" + dataTransferId);
-        mExecutor.execute(() -> Ringservice.cancelDataTransfer(accountId, conversationId, dataTransferId));
+        mExecutor.execute(() -> JamiService.cancelDataTransfer(accountId, conversationId, dataTransferId));
     }
 
     private class DataTransferRefreshTask implements Runnable {
@@ -1748,7 +1750,7 @@ public class AccountService {
         Interaction.InteractionStatus transferStatus = getDataTransferEventCode(eventCode);
         Log.d(TAG, "Data Transfer " + transferStatus);
         DataTransferInfo info = new DataTransferInfo();
-        if (getDataTransferError(Ringservice.dataTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), transferId, info)) != DataTransferError.SUCCESS)
+        if (getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), transferId, info)) != DataTransferError.SUCCESS)
             return;
 
         boolean outgoing = info.getFlags() == 0;
@@ -1838,9 +1840,9 @@ public class AccountService {
                 if (acc.isJami() && (acc.isDhtProxyEnabled() != enabled)) {
                     Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
                     acc.setDhtProxyEnabled(enabled);
-                    StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
+                    StringMap details = JamiService.getAccountDetails(acc.getAccountID());
                     details.put(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
-                    Ringservice.setAccountDetails(acc.getAccountID(), details);
+                    JamiService.setAccountDetails(acc.getAccountID(), details);
                 }
             }
         });
