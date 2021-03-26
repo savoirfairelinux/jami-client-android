@@ -68,7 +68,7 @@ public class SmartListViewModel
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         showPresence = true;
-        //isOnline = contact.isOnline();
+        isOnline = contact.isOnline();
         title = Title.None;
     }
     public SmartListViewModel(String accountId, Contact contact, String id, Interaction lastEvent) {
@@ -102,7 +102,6 @@ public class SmartListViewModel
                 break;
             }
         }
-        //isOnline = contact.isOnline();
         showPresence = presence;
         title = Title.None;
     }
@@ -126,7 +125,7 @@ public class SmartListViewModel
         return uri;
     }
 
-    public List<Contact> getContact() {
+    public List<Contact> getContacts() {
         return contact;
     }
 
@@ -161,6 +160,10 @@ public class SmartListViewModel
 
     public boolean showPresence() {
         return showPresence;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
     }
 
     public boolean isChecked() { return isChecked; }

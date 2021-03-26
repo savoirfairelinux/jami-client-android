@@ -20,13 +20,6 @@
  */
 package net.jami.smartlist;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
 import net.jami.model.Uri;
@@ -34,6 +27,14 @@ import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.services.ContactService;
 import net.jami.utils.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -101,11 +102,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         }
     }
 
-    public void conversationClicked(net.jami.smartlist.SmartListViewModel viewModel) {
+    public void conversationClicked(SmartListViewModel viewModel) {
         startConversation(viewModel.getAccountId(), viewModel.getUri());
     }
 
-    public void conversationLongClicked(net.jami.smartlist.SmartListViewModel smartListViewModel) {
+    public void conversationLongClicked(SmartListViewModel smartListViewModel) {
         getView().displayConversationDialog(smartListViewModel);
     }
 
@@ -129,11 +130,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().goToConversation(mAccount.getAccountID(), uri);
     }
 
-    public void copyNumber(net.jami.smartlist.SmartListViewModel smartListViewModel) {
+    public void copyNumber(SmartListViewModel smartListViewModel) {
         getView().copyNumber(smartListViewModel.getUri());
     }
 
-    public void clearConversation(net.jami.smartlist.SmartListViewModel smartListViewModel) {
+    public void clearConversation(SmartListViewModel smartListViewModel) {
         getView().displayClearDialog(smartListViewModel.getUri());
     }
 
@@ -143,30 +144,33 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
 
-    public void removeConversation(net.jami.smartlist.SmartListViewModel smartListViewModel) {
+    public void removeConversation(SmartListViewModel smartListViewModel) {
         getView().displayDeleteDialog(smartListViewModel.getUri());
     }
 
     public void removeConversation(Uri uri) {
         mConversationDisposable.add(mConversationFacade
                 .removeConversation(mAccount.getAccountID(), uri)
-                .subscribeOn(Schedulers.computation()).subscribe());
+                .subscribe());
     }
 
+    public void banContact(SmartListViewModel smartListViewModel) {
+        mConversationFacade.banConversation(smartListViewModel.getAccountId(), smartListViewModel.getUri());
+    }
     public void clickQRSearch() {
         getView().goToQRFragment();
     }
 
-    void showConversations(Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> conversations) {
+    void showConversations(Observable<List<Observable<SmartListViewModel>>> conversations) {
         mConversationDisposable.clear();
         getView().setLoading(true);
 
         mConversationDisposable.add(conversations
-                .switchMap(viewModels -> viewModels.isEmpty() ? net.jami.smartlist.SmartListViewModel.EMPTY_RESULTS
+                .switchMap(viewModels -> viewModels.isEmpty() ? SmartListViewModel.EMPTY_RESULTS
                         : Observable.combineLatest(viewModels, obs -> {
-                            List<net.jami.smartlist.SmartListViewModel> vms = new ArrayList<>(obs.length);
+                            List<SmartListViewModel> vms = new ArrayList<>(obs.length);
                             for (Object ob : obs)
-                                vms.add((net.jami.smartlist.SmartListViewModel) ob);
+                                vms.add((SmartListViewModel) ob);
                             return vms;
                         }))
                 .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
@@ -188,9 +192,4 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true));
     }
 
-    public void banContact(SmartListViewModel smartListViewModel) {
-        //CallContact contact = smartListViewModel.getContact();
-        if (smartListViewModel.getContact().size() == 1)
-            mAccountService.removeContact(mAccount.getAccountID(), smartListViewModel.getContact().get(0).getPrimaryNumber(), true);
-    }
 }

@@ -57,6 +57,17 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
+import net.jami.conversation.ConversationPresenter;
+import net.jami.model.Call;
+import net.jami.model.Contact;
+import net.jami.model.ContactEvent;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.Interaction.InteractionType;
+import net.jami.model.TextMessage;
+import net.jami.utils.StringUtils;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -67,22 +78,12 @@ import java.util.concurrent.TimeUnit;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
-import net.jami.conversation.ConversationPresenter;
-import net.jami.model.Contact;
-import net.jami.model.ContactEvent;
-import net.jami.model.DataTransfer;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.Interaction.InteractionType;
-import net.jami.model.Call;
-import net.jami.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
-import net.jami.utils.StringUtils;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -103,9 +104,9 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
 
     private int expandedItemPosition = -1;
     private int lastDeliveredPosition = -1;
-    private Observable<Long> timestampUpdateTimer;
+    private final Observable<Long> timestampUpdateTimer;
 
-    private static int[] msgBGLayouts = new int[] {
+    private static final int[] msgBGLayouts = new int[] {
             R.drawable.textmsg_bg_out_last,
             R.drawable.textmsg_bg_out_middle,
             R.drawable.textmsg_bg_out_first,
@@ -216,7 +217,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         }
 
         Interaction interaction = mInteractions.get(position);
-
         if (interaction != null) {
             switch (interaction.getType()) {
                 case CONTACT:
@@ -557,12 +557,9 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         } else if (type == TransferMsgType.AUDIO) {
             Context context = viewHolder.itemView.getContext();
 
-            viewHolder.itemView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    viewHolder.itemView.setBackgroundResource(hasFocus? R.drawable.tv_item_selected_background : R.drawable.tv_item_unselected_background);
-                    viewHolder.mAudioInfoLayout.animate().scaleY(hasFocus? 1.1f : 1f).scaleX(hasFocus? 1.1f : 1f);
-                }
+            viewHolder.itemView.setOnFocusChangeListener((v, hasFocus) -> {
+                viewHolder.itemView.setBackgroundResource(hasFocus? R.drawable.tv_item_selected_background : R.drawable.tv_item_unselected_background);
+                viewHolder.mAudioInfoLayout.animate().scaleY(hasFocus? 1.1f : 1f).scaleX(hasFocus? 1.1f : 1f);
             });
 
             try {

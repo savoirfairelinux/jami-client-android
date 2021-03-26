@@ -23,15 +23,16 @@ package cx.ring.tv.main;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
-import androidx.fragment.app.FragmentActivity;
+
+import net.jami.services.AccountService;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import net.jami.services.AccountService;
 import cx.ring.tv.account.TVAccountWizard;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
