@@ -49,6 +49,7 @@ public class SmartListViewModel
     private final boolean showPresence;
     private boolean isOnline = false;
     private boolean isChecked = false;
+    private Observable<Boolean> isSelected = null;
     private final Interaction lastEvent;
 
     public enum Title {
@@ -94,6 +95,7 @@ public class SmartListViewModel
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
+        isSelected = conversation.getVisible();
         for (Contact contact : contacts) {
             if (contact.isUser())
                 continue;
@@ -171,6 +173,8 @@ public class SmartListViewModel
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    public Observable<Boolean> getSelected() { return isSelected; }
 
     public void setHasOngoingCall(boolean hasOngoingCall) {
         this.hasOngoingCall = hasOngoingCall;
