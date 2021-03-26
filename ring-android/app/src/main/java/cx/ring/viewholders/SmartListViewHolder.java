@@ -24,7 +24,7 @@ import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import net.jami.model.ContactEvent;
 import net.jami.model.Interaction;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.smartlist.SmartListViewModel;
 
 import cx.ring.utils.ResourceMapper;
@@ -120,7 +120,7 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 return context.getText(R.string.you_txt_prefix) + " " + e.getBody();
             }
         } else if (e.getType() == (Interaction.InteractionType.CALL)) {
-            SipCall call = (SipCall) e;
+            Call call = (Call) e;
             if (call.isMissed())
                 return call.isIncoming() ?
                         context.getString(R.string.notif_missed_incoming_call) :
