@@ -86,6 +86,7 @@ import net.jami.model.Conference;
 import net.jami.model.Call;
 import cx.ring.mvp.BaseSupportFragment;
 
+import net.jami.model.Uri;
 import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
@@ -705,7 +706,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void goToConversation(String accountId, String conversationId) {
+    public void goToConversation(String accountId, Uri conversationId) {
 
     }
 

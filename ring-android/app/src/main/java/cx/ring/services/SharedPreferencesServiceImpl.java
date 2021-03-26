@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import net.jami.model.Settings;
+import net.jami.model.Uri;
 import net.jami.services.PreferencesService;
 
 import cx.ring.utils.DeviceUtils;
@@ -193,6 +194,10 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         return mContext.getSharedPreferences(PREFS_ACCOUNT+accountId, Context.MODE_PRIVATE)
                 .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024;
 	}
+
+	public static SharedPreferences getConversationPreferences(@NonNull Context context, String accountId, Uri conversationUri) {
+        return context.getSharedPreferences(accountId + "_" + conversationUri.getUri(), Context.MODE_PRIVATE);
+    }
 
     private void applyDarkMode(boolean enabled) {
         AppCompatDelegate.setDefaultNightMode(
