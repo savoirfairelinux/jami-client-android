@@ -75,6 +75,7 @@ public class Conversation extends ConversationHistory {
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
+    private final Subject<Boolean> mVisibleSubject = BehaviorSubject.createDefault(mVisible);
 
     // indicate the list needs sorting
     private boolean mDirty = false;
@@ -294,6 +295,10 @@ public class Conversation extends ConversationHistory {
         return mVisible;
     }
 
+    public Observable<Boolean> getVisible()  {
+        return mVisibleSubject;
+    }
+
     public void setLoaded(Single<Conversation> loaded) {
         isLoaded = loaded;
     }
@@ -304,6 +309,7 @@ public class Conversation extends ConversationHistory {
 
     public void setVisible(boolean visible) {
         mVisible = visible;
+        mVisibleSubject.onNext(mVisible);
     }
 
     public List<Contact> getContacts() {
