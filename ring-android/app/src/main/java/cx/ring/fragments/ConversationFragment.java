@@ -59,8 +59,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
@@ -73,12 +71,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.application.JamiApplication;
@@ -86,13 +82,13 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.contacts.AvatarFactory;
+import cx.ring.views.AvatarFactory;
 import net.jami.conversation.ConversationPresenter;
 import net.jami.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.model.DataTransfer;
@@ -949,7 +945,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void updateContact(CallContact contact) {
+    public void updateContact(Contact contact) {
         String contactKey = contact.getPrimaryNumber();
         AvatarDrawable a = mSmallParticipantAvatars.get(contactKey);
         if (a != null) {
@@ -1009,8 +1005,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void goToAddContact(CallContact callContact) {
-        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact), REQ_ADD_CONTACT);
+    public void goToAddContact(Contact contact) {
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact), REQ_ADD_CONTACT);
     }
 
     @Override

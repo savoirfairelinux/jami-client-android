@@ -24,10 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import cx.ring.R;
-import cx.ring.contacts.AvatarFactory;
 
 /**
  * Custom title view to be used in {@link androidx.leanback.app.BrowseFragment}.

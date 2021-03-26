@@ -19,7 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.contacts;
+package cx.ring.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -33,7 +33,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
@@ -48,11 +48,11 @@ public class AvatarFactory {
 
     private AvatarFactory() {}
 
-    public static void loadGlideAvatar(ImageView view, CallContact contact) {
+    public static void loadGlideAvatar(ImageView view, Contact contact) {
         getGlideAvatar(view.getContext(), contact).into(view);
     }
 
-    public static Single<Drawable> getAvatar(Context context, CallContact contact, boolean presence) {
+    public static Single<Drawable> getAvatar(Context context, Contact contact, boolean presence) {
         return Single.fromCallable(() ->
                 new AvatarDrawable.Builder()
                         .withContact(contact)
@@ -75,18 +75,18 @@ public class AvatarFactory {
                         .withCircleCrop(true)
                         .build(context));
     }
-    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
+    public static Single<Drawable> getAvatar(Context context, Contact contact) {
         return getAvatar(context, contact, true);
     }
     public static Single<Bitmap> getBitmapAvatar(Context context, Conversation conversation, int size, boolean presence) {
         return getAvatar(context, conversation, presence)
                 .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
-    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size, boolean presence) {
+    public static Single<Bitmap> getBitmapAvatar(Context context, Contact contact, int size, boolean presence) {
         return getAvatar(context, contact, presence)
                 .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
-    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
+    public static Single<Bitmap> getBitmapAvatar(Context context, Contact contact, int size) {
         return getBitmapAvatar(context, contact, size, true);
     }
 
@@ -111,11 +111,11 @@ public class AvatarFactory {
         return request.load(getDrawable(context, photo, profileName, username, id));
     }
 
-    private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
+    private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, Contact contact) {
         return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
-    private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
+    private static RequestBuilder<Drawable> getGlideAvatar(Context context, Contact contact) {
         return getGlideAvatar(context, Glide.with(context), contact);
     }
 }
