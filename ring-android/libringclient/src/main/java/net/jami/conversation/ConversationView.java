@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.List;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Error;
 import net.jami.model.Interaction;
@@ -37,7 +37,7 @@ public interface ConversationView extends BaseView {
 
     void scrollToEnd();
 
-    void updateContact(CallContact contact);
+    void updateContact(Contact contact);
 
     void displayContact(Conversation conversation);
 
@@ -53,7 +53,7 @@ public interface ConversationView extends BaseView {
 
     void goToHome();
 
-    void goToAddContact(CallContact callContact);
+    void goToAddContact(Contact contact);
 
     void goToCallActivity(String conferenceId);
 

@@ -81,9 +81,9 @@ import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import cx.ring.mvp.BaseSupportFragment;
 
 import net.jami.daemon.RingserviceJNI;
@@ -407,12 +407,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void updateContactBubble(@NonNull final List<SipCall> calls) {
+    public void updateContactBubble(@NonNull final List<Call> calls) {
         mConferenceMode = calls.size() > 1;
         String username = mConferenceMode ? "Conference with " + calls.size() + " people" : calls.get(0).getContact().getRingUsername();
         String displayName = mConferenceMode ? null : calls.get(0).getContact().getDisplayName();
 
-        CallContact contact = calls.get(0).getContact();
+        Contact contact = calls.get(0).getContact();
         String ringId = contact.getIds().get(0);
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
 
@@ -472,7 +472,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void updateCallStatus(final SipCall.CallStatus callStatus) {
+    public void updateCallStatus(final Call.CallStatus callStatus) {
         switch (callStatus) {
             case NONE:
                 binding.callStatusTxt.setText("");
@@ -662,7 +662,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void goToContact(String accountId, CallContact contact) {
+    public void goToContact(String accountId, Contact contact) {
         startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contact.getPrimaryNumber()))
                 .setClass(requireContext(), ContactDetailsActivity.class));
     }
@@ -693,7 +693,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void updateParticipantRecording(Set<CallContact> contacts) {
+    public void updateParticipantRecording(Set<Contact> contacts) {
 
     }
 
@@ -708,8 +708,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void goToAddContact(CallContact callContact) {
-        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact),
+    public void goToAddContact(Contact contact) {
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact),
                 ConversationFragment.REQ_ADD_CONTACT);
     }
 
