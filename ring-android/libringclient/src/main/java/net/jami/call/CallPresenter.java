@@ -24,8 +24,9 @@ import net.jami.daemon.Ringservice;
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.Uri;
+import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
 import net.jami.services.ContactService;
@@ -41,8 +42,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import net.jami.mvp.RootPresenter;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
@@ -65,8 +64,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     private ConversationFacade mConversationFacade;
 
     private Conference mConference;
-    private final List<SipCall> mPendingCalls = new ArrayList<>();
-    private final Subject<List<SipCall>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
+    private final List<Call> mPendingCalls = new ArrayList<>();
+    private final Subject<List<Call>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
 
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
@@ -260,7 +259,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mConference == null || mConference.getParticipants().isEmpty()) {
             return;
         }
-        net.jami.model.SipCall firstCall = mConference.getParticipants().get(0);
+        Call firstCall = mConference.getParticipants().get(0);
         if (firstCall == null
                 || firstCall.getContact() == null
                 || firstCall.getContact().getIds() == null
@@ -312,7 +311,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             else
                 mCallService.hangUp(mConference.getId());
         }
-        for (SipCall call : mPendingCalls) {
+        for (Call call : mPendingCalls) {
             mCallService.hangUp(call.getDaemonIdString());
         }
         finish();
@@ -426,19 +425,19 @@ public class CallPresenter extends RootPresenter<CallView> {
                 return;
 
             // Updates of participant (and  pending participant) list
-            Observable<List<net.jami.model.SipCall>> callsObservable = mPendingSubject
+            Observable<List<Call>> callsObservable = mPendingSubject
                     .map(pendingList -> {
                         net.jami.utils.Log.w(TAG, "mPendingSubject onNext " + pendingList.size() + " " + conference.getParticipants().size());
                         if (pendingList.isEmpty())
                             return conference.getParticipants();
-                        List<net.jami.model.SipCall> newList = new ArrayList<>(conference.getParticipants().size() + pendingList.size());
+                        List<Call> newList = new ArrayList<>(conference.getParticipants().size() + pendingList.size());
                         newList.addAll(conference.getParticipants());
                         newList.addAll(pendingList);
                         return newList;
                     });
 
             // Updates of individual contacts
-            Observable<List<Observable<net.jami.model.SipCall>>> contactsObservable = callsObservable
+            Observable<List<Observable<Call>>> contactsObservable = callsObservable
                     .flatMapSingle(calls -> Observable
                             .fromIterable(calls)
                             .map(call -> mContactService.observeContact(call.getAccount(), call.getContact(), false)
@@ -446,14 +445,14 @@ public class CallPresenter extends RootPresenter<CallView> {
                             .toList(calls.size()));
 
             // Combined updates of contacts as participant list updates
-            Observable<List<net.jami.model.SipCall>> contactUpdates = contactsObservable
+            Observable<List<Call>> contactUpdates = contactsObservable
                     .switchMap(list -> Observable
                             .combineLatest(list, objects -> {
                                 net.jami.utils.Log.w(TAG, "flatMapObservable " + objects.length);
-                                ArrayList<net.jami.model.SipCall> calls = new ArrayList<>(objects.length);
+                                ArrayList<Call> calls = new ArrayList<>(objects.length);
                                 for (Object call : objects)
-                                    calls.add((net.jami.model.SipCall)call);
-                                return (List<net.jami.model.SipCall>)calls;
+                                    calls.add((Call)call);
+                                return (List<Call>)calls;
                             }))
                     .filter(list -> !list.isEmpty());
 
@@ -468,8 +467,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void confUpdate(Conference call) {
         Log.w(TAG, "confUpdate " + call.getId());
 
-        SipCall.CallStatus status = call.getState();
-        if (status == SipCall.CallStatus.HOLD) {
+        Call.CallStatus status = call.getState();
+        if (status == Call.CallStatus.HOLD) {
             if (call.isSimpleCall())
                 mCallService.unhold(call.getId());
             else
@@ -499,7 +498,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
         } else if (call.isRinging()) {
-            SipCall scall = call.getCall();
+            Call scall = call.getCall();
 
             view.handleCallWakelock(mAudioOnly);
             if (scall.isIncoming()) {
@@ -519,7 +518,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
-    public void maximizeParticipant(SipCall call) {
+    public void maximizeParticipant(Call call) {
         if (mConference.getMaximizedCall() == call)
             call = null;
         mConference.setMaximizedCall(call);
@@ -643,13 +642,13 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .map(Conversation::getCurrentCalls)
                 .subscribe(confs -> {
                     if (confs.isEmpty()) {
-                        final Observer<SipCall> pendingObserver = new Observer<SipCall>() {
-                            private SipCall call = null;
+                        final Observer<Call> pendingObserver = new Observer<Call>() {
+                            private Call call = null;
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {}
 
                             @Override
-                            public void onNext(@NonNull SipCall sipCall) {
+                            public void onNext(@NonNull Call sipCall) {
                                 if (call == null) {
                                     call = sipCall;
                                     mPendingCalls.add(sipCall);
@@ -671,9 +670,9 @@ public class CallPresenter extends RootPresenter<CallView> {
                         };
 
                         // Place new call, join to conference when answered
-                        Maybe<SipCall> newCall = mCallService.placeCallObservable(accountId, null, contactUri, mAudioOnly)
+                        Maybe<Call> newCall = mCallService.placeCallObservable(accountId, null, contactUri, mAudioOnly)
                                 .doOnEach(pendingObserver)
-                                .filter(SipCall::isOnGoing)
+                                .filter(Call::isOnGoing)
                                 .firstElement()
                                 .delay(1, TimeUnit.SECONDS)
                                 .doOnEvent((v, e) -> pendingObserver.onComplete());
@@ -709,15 +708,15 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().startAddParticipant(mConference.getId());
     }
 
-    public void hangupParticipant(SipCall call) {
+    public void hangupParticipant(Call call) {
         mCallService.hangUp(call.getDaemonIdString());
     }
 
-    public void muteParticipant(SipCall call, boolean mute) {
+    public void muteParticipant(Call call, boolean mute) {
         mCallService.muteParticipant(call.getConfId(), call.getContact().getPrimaryNumber(), mute);
     }
 
-    public void openParticipantContact(SipCall call) {
+    public void openParticipantContact(Call call) {
         getView().goToContact(call.getAccount(), call.getContact());
     }
 
@@ -733,7 +732,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mHardwareService.stopScreenShare();
     }
 
-    public boolean isMaximized(SipCall call) {
+    public boolean isMaximized(Call call) {
         return mConference.getMaximizedCall() == call;
     }
 

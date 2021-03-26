@@ -20,6 +20,15 @@
  */
 package net.jami.facades;
 
+import net.jami.model.Account;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.model.TextMessage;
+import net.jami.model.Uri;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
 import net.jami.services.ContactService;
@@ -29,6 +38,9 @@ import net.jami.services.HistoryService;
 import net.jami.services.NotificationService;
 import net.jami.services.PreferencesService;
 import net.jami.smartlist.SmartListViewModel;
+import net.jami.utils.FileUtils;
+import net.jami.utils.Log;
+import net.jami.utils.Tuple;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,20 +52,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import net.jami.model.Account;
-import net.jami.model.CallContact;
-import net.jami.model.Conference;
-import net.jami.model.Conversation;
-import net.jami.model.DataTransfer;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.Interaction.InteractionType;
-import net.jami.model.SipCall;
-import net.jami.model.TextMessage;
-import net.jami.model.Uri;
-import net.jami.utils.Log;
-import net.jami.utils.FileUtils;
-import net.jami.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -66,30 +64,24 @@ public class ConversationFacade {
 
     private final static String TAG = ConversationFacade.class.getSimpleName();
 
-    private final net.jami.services.AccountService mAccountService;
-    private final net.jami.services.HistoryService mHistoryService;
-    private final net.jami.services.CallService mCallService;
-    private final net.jami.services.ContactService mContactService;
-    private final net.jami.services.NotificationService mNotificationService;
-
+    private final AccountService mAccountService;
+    private final HistoryService mHistoryService;
+    private final CallService mCallService;
+    private final ContactService mContactService;
+    private final NotificationService mNotificationService;
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+    private final Observable<Account> currentAccountSubject;
+    private final Subject<Conversation> conversationSubject = PublishSubject.create();
     @Inject
     HardwareService mHardwareService;
-
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
-
     @Inject
     PreferencesService mPreferencesService;
 
-    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
-
-    private final Observable<net.jami.model.Account> currentAccountSubject;
-
-    private final Subject<net.jami.model.Conversation> conversationSubject = PublishSubject.create();
-
     public ConversationFacade(HistoryService historyService,
                               CallService callService,
-                              net.jami.services.AccountService accountService,
+                              AccountService accountService,
                               ContactService contactService,
                               NotificationService notificationService) {
         mHistoryService = historyService;
@@ -148,7 +140,7 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService.getObservableAccountList()
                 .switchMap(accounts -> {
-                    List<Observable<Tuple<Account, net.jami.model.Account.ContactLocationEntry>>> r = new ArrayList<>(accounts.size());
+                    List<Observable<Tuple<Account, Account.ContactLocationEntry>>> r = new ArrayList<>(accounts.size());
                     for (Account a : accounts)
                         r.add(a.getLocationUpdates().map(s -> new Tuple<>(a, s)));
                     return Observable.merge(r);
@@ -175,16 +167,16 @@ public class ConversationFacade {
                         e -> Log.e(TAG, "Error adding data transfer", e)));
     }
 
-    public Observable<net.jami.model.Conversation> getUpdatedConversation() {
+    public Observable<Conversation> getUpdatedConversation() {
         return conversationSubject;
     }
 
-    public Single<net.jami.model.Conversation> startConversation(String accountId, final Uri contactId) {
+    public Single<Conversation> startConversation(String accountId, final Uri contactId) {
         return getAccountSubject(accountId)
                 .map(account -> account.getByUri(contactId));
     }
 
-    public Observable<net.jami.model.Account> getCurrentAccountSubject() {
+    public Observable<Account> getCurrentAccountSubject() {
         return currentAccountSubject;
     }
 
@@ -202,10 +194,10 @@ public class ConversationFacade {
     public String readMessages(String accountId, Uri contact) {
         Account account = mAccountService.getAccount(accountId);
         return account != null ?
-             readMessages(account, account.getByUri(contact), true) : null;
+                readMessages(account, account.getByUri(contact), true) : null;
     }
 
-    public String readMessages(Account account, net.jami.model.Conversation conversation, boolean cancelNotification) {
+    public String readMessages(Account account, Conversation conversation, boolean cancelNotification) {
         if (conversation != null) {
             String lastMessage = readMessages(conversation);
             if (lastMessage != null) {
@@ -222,7 +214,7 @@ public class ConversationFacade {
         return null;
     }
 
-    private String readMessages(net.jami.model.Conversation conversation) {
+    private String readMessages(Conversation conversation) {
         String lastRead = null;
         if (conversation.isSwarm()) {
             lastRead = conversation.readMessages();
@@ -231,7 +223,7 @@ public class ConversationFacade {
         } else {
             NavigableMap<Long, Interaction> messages = conversation.getRawHistory();
             for (Interaction e : messages.descendingMap().values()) {
-                if (!(e.getType().equals(InteractionType.TEXT)))
+                if (!(e.getType().equals(Interaction.InteractionType.TEXT)))
                     continue;
                 if (e.isRead()) {
                     break;
@@ -253,7 +245,7 @@ public class ConversationFacade {
         }
         return mCallService.sendAccountTextMessage(c.getAccountId(), to.getRawUriString(), txt)
                 .map(id -> {
-                    net.jami.model.TextMessage message = new net.jami.model.TextMessage(null, c.getAccountId(), Long.toHexString(id), c, txt);
+                    TextMessage message = new TextMessage(null, c.getAccountId(), Long.toHexString(id), c, txt);
                     if (c.isVisible())
                         message.read();
                     mHistoryService.insertInteraction(c.getAccountId(), c, message).subscribe();
@@ -265,7 +257,7 @@ public class ConversationFacade {
 
     public void sendTextMessage(Conversation c, Conference conf, String txt) {
         mCallService.sendTextMessage(conf.getId(), txt);
-        net.jami.model.TextMessage message = new TextMessage(null, c.getAccountId(), conf.getId(), c, txt);
+        TextMessage message = new TextMessage(null, c.getAccountId(), conf.getId(), c, txt);
         message.read();
         mHistoryService.insertInteraction(c.getAccountId(), c, message).subscribe();
         c.addTextMessage(message);
@@ -303,10 +295,10 @@ public class ConversationFacade {
     }
 
 
-    public void deleteConversationItem(net.jami.model.Conversation conversation, Interaction element) {
-        if (element.getType() == InteractionType.DATA_TRANSFER) {
-            DataTransfer transfer = (net.jami.model.DataTransfer) element;
-            if (transfer.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+    public void deleteConversationItem(Conversation conversation, Interaction element) {
+        if (element.getType() == Interaction.InteractionType.DATA_TRANSFER) {
+            DataTransfer transfer = (DataTransfer) element;
+            if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_ONGOING) {
                 mAccountService.cancelDataTransfer(conversation.getAccountId(), conversation.getUri().getRawRingId(), transfer.getDaemonId());
             } else {
                 File file = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
@@ -340,7 +332,7 @@ public class ConversationFacade {
      * @param account the user account
      * @return an account single
      */
-    private Single<net.jami.model.Account> loadSmartlist(final Account account) {
+    private Single<Account> loadSmartlist(final Account account) {
         synchronized (account) {
             if (account.historyLoader == null) {
                 net.jami.utils.Log.d(TAG, "loadSmartlist(): start loading");
@@ -353,25 +345,25 @@ public class ConversationFacade {
     /**
      * Loads history for a specific conversation from cache or database
      *
-     * @param account    the user account
+     * @param account         the user account
      * @param conversationUri the conversation
      * @return a conversation single
      */
     public Single<Conversation> loadConversationHistory(final Account account, final Uri conversationUri) {
-        net.jami.model.Conversation conversation = account.getByUri(conversationUri);
+        Conversation conversation = account.getByUri(conversationUri);
         if (conversation == null)
             return Single.error(new RuntimeException("Can't get conversation"));
         synchronized (conversation) {
             if (conversation.isSwarm()) {
                 loadMore(conversation);
-                Single<net.jami.model.Conversation> ret = Single.just(conversation);
+                Single<Conversation> ret = Single.just(conversation);
                 conversation.setLoaded(ret);
                 return ret;
             }
             if (conversation.getId() == null) {
                 return Single.just(conversation);
             }
-            Single<net.jami.model.Conversation> ret = conversation.getLoaded();
+            Single<Conversation> ret = conversation.getLoaded();
             if (ret == null) {
                 ret = getConversationHistory(conversation);
                 conversation.setLoaded(ret);
@@ -380,13 +372,13 @@ public class ConversationFacade {
         }
     }
 
-    private Observable<net.jami.smartlist.SmartListViewModel> observeConversation(Account account, net.jami.model.Conversation conversation, boolean hasPresence) {
+    private Observable<net.jami.smartlist.SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
         return Observable.merge(account.getConversationSubject()
-                .filter(c -> c == conversation)
-                .startWith(conversation),
+                        .filter(c -> c == conversation)
+                        .startWith(conversation),
                 mContactService
                         .observeContact(conversation.getAccountId(), conversation.getContacts(), hasPresence))
-        .map(e -> new net.jami.smartlist.SmartListViewModel(conversation, hasPresence));
+                .map(e -> new net.jami.smartlist.SmartListViewModel(conversation, hasPresence));
         /*return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
@@ -394,19 +386,22 @@ public class ConversationFacade {
                         .observeContact(c.getAccountId(), c.getContacts(), hasPresence)
                         .map(contact -> new SmartListViewModel(c, hasPresence)));*/
     }
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(Observable<net.jami.model.Account> currentAccount, boolean hasPresence) {
+
+    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conversation -> observeConversation(account, conversation, hasPresence))
                         .toList()));
     }
+
     public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .filter(conversation -> !conversation.isSwarm())
-                        .map(conversation -> new net.jami.smartlist.SmartListViewModel(conversation,false))
+                        .map(conversation -> new net.jami.smartlist.SmartListViewModel(conversation, false))
                         .toList()));
     }
+
     public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getPendingSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
@@ -417,9 +412,11 @@ public class ConversationFacade {
     public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(boolean hasPresence) {
         return getSmartList(mAccountService.getCurrentAccountSubject(), hasPresence);
     }
+
     public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList() {
         return getPendingList(mAccountService.getCurrentAccountSubject());
     }
+
     public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList() {
         return getContactList(mAccountService.getCurrentAccountSubject());
     }
@@ -427,7 +424,7 @@ public class ConversationFacade {
     private Single<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = Uri.fromString(query);
         if (account.isSip()) {
-            CallContact contact = account.getContactFromCache(uri);
+            Contact contact = account.getContactFromCache(uri);
             return mContactService.loadContactData(contact, account.getAccountID())
                     .andThen(Single.just(Collections.singletonList(Observable.just(new net.jami.smartlist.SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
         } else if (uri.isHexId()) {
@@ -441,12 +438,14 @@ public class ConversationFacade {
                     .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address), false)) : Collections.emptyList());
         }
     }
+
     private Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
         return query.switchMapSingle(q -> q.isEmpty()
-                        ? net.jami.smartlist.SmartListViewModel.EMPTY_LIST
-                        : getSearchResults(account, q))
+                ? net.jami.smartlist.SmartListViewModel.EMPTY_LIST
+                : getSearchResults(account, q))
                 .distinctUntilChanged();
     }
+
     public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
         return currentAccount.switchMap(account -> Observable.combineLatest(
                 account.getConversationsSubject(),
@@ -460,7 +459,7 @@ public class ConversationFacade {
                     }
                     if (!conversations.isEmpty()) {
                         if (q.isEmpty()) {
-                            for (net.jami.model.Conversation conversation : conversations)
+                            for (Conversation conversation : conversations)
                                 newList.add(observeConversation(account, conversation, hasPresence));
                         } else {
                             String lq = q.toLowerCase();
@@ -485,7 +484,7 @@ public class ConversationFacade {
      *
      * @param account the user account
      */
-    private Single<net.jami.model.Account> getSmartlist(final Account account) {
+    private Single<Account> getSmartlist(final Account account) {
         return mHistoryService.getSmartlist(account.getAccountID())
                 .map(conversationHistoryList -> {
                     List<Conversation> conversations = new ArrayList<>();
@@ -509,7 +508,7 @@ public class ConversationFacade {
      * @param conversation a conversation object with a valid conversation ID
      * @return a conversation single
      */
-    private Single<net.jami.model.Conversation> getConversationHistory(final net.jami.model.Conversation conversation) {
+    private Single<Conversation> getConversationHistory(final Conversation conversation) {
         Log.d(TAG, "getConversationHistory() " + conversation.getAccountId() + " " + conversation.getUri());
 
         return mHistoryService.getConversationHistory(conversation.getAccountId(), conversation.getId())
@@ -547,15 +546,15 @@ public class ConversationFacade {
                 });
     }
 
-    public void updateTextNotifications(String accountId, List<net.jami.model.Conversation> conversations) {
+    public void updateTextNotifications(String accountId, List<Conversation> conversations) {
         net.jami.utils.Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size());
 
-        for (net.jami.model.Conversation conversation : conversations) {
+        for (Conversation conversation : conversations) {
             mNotificationService.showTextNotification(accountId, conversation);
         }
     }
 
-    private void parseNewMessage(final net.jami.model.TextMessage txt) {
+    private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
             if (txt.getMessageId() == null) {
                 mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
@@ -589,8 +588,8 @@ public class ConversationFacade {
     }
 
     private void handleDataTransferEvent(DataTransfer transfer) {
-        net.jami.model.Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
-        if (transfer.getStatus() == InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
+        Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
+        if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
                 mAccountService.acceptFileTransfer(conversation, transfer);
             }
@@ -599,34 +598,34 @@ public class ConversationFacade {
     }
 
     private void onConfStateChange(Conference conference) {
-        net.jami.utils.Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().getId());
+        Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().getId());
     }
 
-    private void onCallStateChange(SipCall call) {
-        net.jami.utils.Log.d(TAG, "onCallStateChange Thread id: " + Thread.currentThread().getId());
-        SipCall.CallStatus newState = call.getCallStatus();
-        boolean incomingCall = newState == SipCall.CallStatus.RINGING && call.isIncoming();
+    private void onCallStateChange(Call call) {
+        Log.d(TAG, "onCallStateChange Thread id: " + Thread.currentThread().getId());
+        Call.CallStatus newState = call.getCallStatus();
+        boolean incomingCall = newState == Call.CallStatus.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
 
         Account account = mAccountService.getAccount(call.getAccount());
         if (account == null)
             return;
-        net.jami.model.CallContact contact = call.getContact();
+        Contact contact = call.getContact();
         String conversationId = call.getConversationId();
-        net.jami.utils.Log.w(TAG, "CallStateChange " + call.getId() + " conversationId:" + conversationId);
+        Log.w(TAG, "CallStateChange " + call.getId() + " conversationId:" + conversationId);
 
         Conversation conversation = account == null
                 ? null
                 : (conversationId == null
-                    ? (contact == null
-                        ? null
-                        : account.getByUri(contact.getUri()))
-                    : account.getSwarm(conversationId));
+                ? (contact == null
+                ? null
+                : account.getByUri(contact.getUri()))
+                : account.getSwarm(conversationId));
         Conference conference = null;
         if (conversation != null) {
             conference = conversation.getConference(call.getDaemonIdString());
             if (conference == null) {
-                if (newState == SipCall.CallStatus.OVER)
+                if (newState == Call.CallStatus.OVER)
                     return;
                 conference = new Conference(call);
                 conversation.addConference(conference);
@@ -635,28 +634,28 @@ public class ConversationFacade {
         }
 
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
-        if ((call.isRinging() || newState == SipCall.CallStatus.CURRENT) && call.getTimestamp() == 0) {
+        if ((call.isRinging() || newState == Call.CallStatus.CURRENT) && call.getTimestamp() == 0) {
             call.setTimestamp(System.currentTimeMillis());
         }
 
         if (incomingCall) {
             mNotificationService.handleCallNotification(conference, false);
             mHardwareService.setPreviewSettings();
-        } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())
-                || newState == SipCall.CallStatus.RINGING && !call.isIncoming()) {
+        } else if ((newState == Call.CallStatus.CURRENT && call.isIncoming())
+                || newState == Call.CallStatus.RINGING && !call.isIncoming()) {
             mNotificationService.handleCallNotification(conference, false);
             mAccountService.sendProfile(call.getDaemonIdString(), call.getAccount());
-        } else if (newState == SipCall.CallStatus.HUNGUP
-                || newState == SipCall.CallStatus.BUSY
-                || newState == SipCall.CallStatus.FAILURE
-                || newState == SipCall.CallStatus.OVER) {
+        } else if (newState == Call.CallStatus.HUNGUP
+                || newState == Call.CallStatus.BUSY
+                || newState == Call.CallStatus.FAILURE
+                || newState == Call.CallStatus.OVER) {
             mNotificationService.handleCallNotification(conference, true);
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
             if (call.getTimestamp() == 0) {
                 call.setTimestamp(now);
             }
-            if (newState == SipCall.CallStatus.HUNGUP || call.getTimestampEnd() == 0) {
+            if (newState == Call.CallStatus.HUNGUP || call.getTimestampEnd() == 0) {
                 call.setTimestampEnd(now);
             }
             if (conference != null && conference.removeParticipant(call) && !conversation.isSwarm()) {
@@ -675,7 +674,7 @@ public class ConversationFacade {
         }
     }
 
-    public Single<SipCall> placeCall(String accountId, Uri contactUri, boolean video) {
+    public Single<Call> placeCall(String accountId, Uri contactUri, boolean video) {
         //String rawId = contactUri.getRawRingId();
         return getAccountSubject(accountId).flatMap(account -> {
             //CallContact contact = account.getContact(rawId);
@@ -688,7 +687,7 @@ public class ConversationFacade {
     public void cancelFileTransfer(String accountId, Uri conversationId, long id) {
         mAccountService.cancelDataTransfer(accountId, conversationId.isSwarm() ? conversationId.getRawRingId() : "", id);
         mNotificationService.removeTransferNotification(id);
-        net.jami.model.DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(id);
+        DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(id);
         if (transfer != null)
             deleteConversationItem((Conversation) transfer.getConversation(), transfer);
     }
@@ -703,14 +702,14 @@ public class ConversationFacade {
                 });
     }
 
-    public Single<net.jami.model.Conversation> createConversation(String accountId, Collection<net.jami.model.CallContact> currentSelection) {
+    public Single<Conversation> createConversation(String accountId, Collection<Contact> currentSelection) {
         List<String> contactIds = new ArrayList<>(currentSelection.size());
-        for (CallContact contact : currentSelection)
+        for (Contact contact : currentSelection)
             contactIds.add(contact.getPrimaryNumber());
         return mAccountService.startConversation(accountId, contactIds);
     }
 
-    public void loadMore(net.jami.model.Conversation conversation) {
+    public void loadMore(Conversation conversation) {
         Collection<String> roots = conversation.getSwarmRoot();
         if (roots.isEmpty())
             mAccountService.loadConversationHistory(conversation.getAccountId(), conversation.getUri(), "", 16);
