@@ -156,7 +156,7 @@ public class ShareWithFragment extends Fragment {
             public void onItemLongClick(SmartListViewModel smartListViewModel) {
 
             }
-        });
+        }, mDisposable);
         list.setLayoutManager(new LinearLayoutManager(context));
         list.setAdapter(adapter);
         return view;
