@@ -89,7 +89,6 @@ public class Contact {
 
     public void setConversationUri(Uri conversationUri) {
         mConversationUri.onNext(conversationUri);
-        //mConversationUri = conversationUri;
     }
 
     public Observable<Uri> getConversationUri() {
@@ -143,10 +142,9 @@ public class Contact {
     }
 
     public void setOnline(boolean present) {
+        mOnline = present;
         if (mContactPresenceEmitter != null)
             mContactPresenceEmitter.onNext(present);
-        mOnline = present;
-        mContactUpdates.onNext(this);
     }
 
     public void setSystemId(long id) {
