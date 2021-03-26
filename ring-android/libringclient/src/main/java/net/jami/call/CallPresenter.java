@@ -25,6 +25,7 @@ import net.jami.facades.ConversationFacade;
 import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
+import net.jami.model.ConversationHistory;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -152,8 +153,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));*/
     }
 
-    public void initOutGoing(String accountId, Uri conversationUri, String contactId, boolean audioOnly) {
-        if (accountId == null || contactId == null) {
+    public void initOutGoing(String accountId, Uri conversationUri, String contactUri, boolean audioOnly) {
+        if (accountId == null || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact");
             hangupCall();
             return;
@@ -164,9 +165,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         //getView().blockScreenRotation();
 
         Observable<Conference> callObservable = mCallService
-                .placeCall(accountId, conversationUri, Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
+                .placeCall(accountId, conversationUri, Uri.fromString(StringUtils.toNumber(contactUri)), audioOnly)
                 //.map(mCallService::getConference)
-                .flatMapObservable(call -> mCallService.getConfUpdates(call))
+                .flatMapObservable(mCallService::getConfUpdates)
                 .share();
 
         mCompositeDisposable.add(callObservable
@@ -176,7 +177,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     confUpdate(conference);
                 }, e -> {
                     hangupCall();
-                    net.jami.utils.Log.e(TAG, "Error with initOutgoing: " + e.getMessage());
+                    Log.e(TAG, "Error with initOutgoing: " + e.getMessage());
                 }));
 
         showConference(callObservable);
@@ -210,7 +211,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     }
                 }, e -> {
                     hangupCall();
-                    net.jami.utils.Log.e(TAG, "Error with initIncoming, preparing call flow :" , e);
+                    Log.e(TAG, "Error with initIncoming, preparing call flow :" , e);
                 }));
 
         // Handles retrieving call updates. Items emitted are only used if call is already in process or if user is returning to a call.
@@ -222,7 +223,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     }
                 }, e -> {
                     hangupCall();
-                    net.jami.utils.Log.e(TAG, "Error with initIncoming, action view flow: ", e);
+                    Log.e(TAG, "Error with initIncoming, action view flow: ", e);
                 }));
 
         showConference(callObservable);
@@ -260,13 +261,16 @@ public class CallPresenter extends RootPresenter<CallView> {
             return;
         }
         Call firstCall = mConference.getParticipants().get(0);
-        if (firstCall == null
-                || firstCall.getContact() == null
-                || firstCall.getContact().getIds() == null
-                || firstCall.getContact().getIds().isEmpty()) {
+        if (firstCall == null) {
             return;
         }
-        getView().goToConversation(firstCall.getAccount(), firstCall.getContact().getIds().get(0));
+        ConversationHistory c = firstCall.getConversation();
+        if (c instanceof Conversation) {
+            Conversation conversation = ((Conversation) c);
+            getView().goToConversation(conversation.getAccountId(), conversation.getUri());
+        } else if (firstCall.getContact() != null) {
+            getView().goToConversation(firstCall.getAccount(), firstCall.getContact().getConversationUri().blockingFirst());
+        }
     }
 
     public void speakerClick(boolean checked) {
@@ -427,7 +431,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             // Updates of participant (and  pending participant) list
             Observable<List<Call>> callsObservable = mPendingSubject
                     .map(pendingList -> {
-                        net.jami.utils.Log.w(TAG, "mPendingSubject onNext " + pendingList.size() + " " + conference.getParticipants().size());
+                        Log.w(TAG, "mPendingSubject onNext " + pendingList.size() + " " + conference.getParticipants().size());
                         if (pendingList.isEmpty())
                             return conference.getParticipants();
                         List<Call> newList = new ArrayList<>(conference.getParticipants().size() + pendingList.size());
@@ -448,7 +452,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             Observable<List<Call>> contactUpdates = contactsObservable
                     .switchMap(list -> Observable
                             .combineLatest(list, objects -> {
-                                net.jami.utils.Log.w(TAG, "flatMapObservable " + objects.length);
+                                Log.w(TAG, "flatMapObservable " + objects.length);
                                 ArrayList<Call> calls = new ArrayList<>(objects.length);
                                 for (Object call : objects)
                                     calls.add((Call)call);
@@ -458,7 +462,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
             contactDisposable = contactUpdates
                     .observeOn(mUiScheduler)
-                    .subscribe(cs -> getView().updateContactBubble(cs), e -> net.jami.utils.Log.e(TAG, "Error updating contact data", e));
+                    .subscribe(cs -> getView().updateContactBubble(cs), e -> Log.e(TAG, "Error updating contact data", e));
             mCompositeDisposable.add(contactDisposable);
         }
         mPendingSubject.onNext(mPendingCalls);
