@@ -343,6 +343,10 @@ public abstract class JamiApplication extends Application {
         return mHardwareService;
     }
 
+    public ConversationFacade getFacade() {
+        return mConversationFacade;
+    }
+
     private void setupActivityListener() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 

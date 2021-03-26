@@ -74,6 +74,7 @@ import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,
@@ -391,11 +392,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void updateList(@Nullable final List<SmartListViewModel> smartListViewModels) {
+    public void updateList(@Nullable final List<SmartListViewModel> smartListViewModels, CompositeDisposable parentDisposable) {
         if (binding == null)
             return;
         if (binding.confsList.getAdapter() == null) {
-            mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
+            mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this, parentDisposable);
             binding.confsList.setAdapter(mSmartListAdapter);
             binding.confsList.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
