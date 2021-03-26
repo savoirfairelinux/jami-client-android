@@ -35,11 +35,11 @@ import io.reactivex.subjects.Subject;
 public class Conference {
 
     public static class ParticipantInfo {
-        public CallContact contact;
+        public Contact contact;
         public int x, y, w, h;
         public boolean videoMuted, audioMuted, isModerator;
 
-        public ParticipantInfo(CallContact c, Map<String, String> i) {
+        public ParticipantInfo(Contact c, Map<String, String> i) {
             contact = c;
             x = Integer.parseInt(i.get("x"));
             y = Integer.parseInt(i.get("y"));
@@ -52,16 +52,16 @@ public class Conference {
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
 
-    private final Set<CallContact> mParticipantRecordingSet = new HashSet<>();
-    private final Subject<Set<CallContact>> mParticipantRecording = BehaviorSubject.createDefault(Collections.emptySet());
+    private final Set<Contact> mParticipantRecordingSet = new HashSet<>();
+    private final Subject<Set<Contact>> mParticipantRecording = BehaviorSubject.createDefault(Collections.emptySet());
 
     private final String mId;
-    private SipCall.CallStatus mConfState;
-    private final ArrayList<SipCall> mParticipants;
+    private Call.CallStatus mConfState;
+    private final ArrayList<Call> mParticipants;
     private boolean mRecording;
-    private SipCall mMaximizedCall;
+    private Call mMaximizedCall;
 
-    public Conference(SipCall call) {
+    public Conference(Call call) {
         this(call.getDaemonIdString());
         mParticipants.add(call);
     }
@@ -87,13 +87,13 @@ public class Conference {
         return mParticipants.size() > 1;
     }
 
-    public SipCall getCall() {
+    public Call getCall() {
         if (!isConference()) {
             return getFirstCall();
         }
         return null;
     }
-    public SipCall getFirstCall() {
+    public Call getFirstCall() {
         if (!mParticipants.isEmpty()) {
             return mParticipants.get(0);
         }
@@ -104,11 +104,11 @@ public class Conference {
         return mId;
     }
 
-    public void setMaximizedCall(net.jami.model.SipCall call) {
+    public void setMaximizedCall(Call call) {
         mMaximizedCall = call;
     }
 
-    public net.jami.model.SipCall getMaximizedCall() {
+    public Call getMaximizedCall() {
         return mMaximizedCall;
     }
 
@@ -120,14 +120,14 @@ public class Conference {
         return mId;
     }
 
-    public SipCall.CallStatus getState() {
+    public Call.CallStatus getState() {
         if (isSimpleCall()) {
             return mParticipants.get(0).getCallStatus();
         }
         return mConfState;
     }
 
-    public SipCall.CallStatus getConfState() {
+    public Call.CallStatus getConfState() {
         if (mParticipants.size() == 1) {
             return mParticipants.get(0).getCallStatus();
         }
@@ -139,39 +139,39 @@ public class Conference {
     }
 
     public void setState(String state) {
-        mConfState = SipCall.CallStatus.fromConferenceString(state);
+        mConfState = Call.CallStatus.fromConferenceString(state);
     }
 
-    public List<SipCall> getParticipants() {
+    public List<Call> getParticipants() {
         return mParticipants;
     }
 
-    public void addParticipant(SipCall part) {
+    public void addParticipant(Call part) {
         mParticipants.add(part);
     }
 
-    public boolean removeParticipant(SipCall toRemove) {
+    public boolean removeParticipant(Call toRemove) {
         return mParticipants.remove(toRemove);
     }
 
     public boolean contains(String callID) {
-        for (SipCall participant : mParticipants) {
+        for (Call participant : mParticipants) {
             if (participant.getDaemonIdString().contentEquals(callID))
                 return true;
         }
         return false;
     }
 
-    public SipCall getCallById(String callID) {
-        for (SipCall participant : mParticipants) {
+    public Call getCallById(String callID) {
+        for (Call participant : mParticipants) {
             if (participant.getDaemonIdString().contentEquals(callID))
                 return participant;
         }
         return null;
     }
 
-    public SipCall findCallByContact(Uri uri) {
-        for (SipCall call : mParticipants) {
+    public Call findCallByContact(Uri uri) {
+        for (Call call : mParticipants) {
             if (call.getContact().getUri().toString().equals(uri.toString()))
                 return call;
         }
@@ -187,7 +187,7 @@ public class Conference {
     }
 
     public boolean hasVideo() {
-        for (net.jami.model.SipCall call : mParticipants)
+        for (Call call : mParticipants)
             if (!call.isAudioOnly())
                 return true;
         return false;
@@ -195,7 +195,7 @@ public class Conference {
 
     public long getTimestampStart() {
         long t = Long.MAX_VALUE;
-        for (SipCall call : mParticipants)
+        for (Call call : mParticipants)
             t = Math.min(call.getTimestamp(), t);
         return t;
     }
@@ -211,11 +211,11 @@ public class Conference {
     public Observable<List<ParticipantInfo>> getParticipantInfo() {
         return mParticipantInfo;
     }
-    public Observable<Set<CallContact>> getParticipantRecording() {
+    public Observable<Set<Contact>> getParticipantRecording() {
         return mParticipantRecording;
     }
 
-    public void setParticipantRecording(CallContact contact, boolean state) {
+    public void setParticipantRecording(Contact contact, boolean state) {
         if (state) {
             mParticipantRecordingSet.add(contact);
         } else {

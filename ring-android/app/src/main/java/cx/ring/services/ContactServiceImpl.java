@@ -37,8 +37,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import cx.ring.contacts.AvatarFactory;
-import net.jami.model.CallContact;
+import cx.ring.views.AvatarFactory;
+import net.jami.model.Contact;
 import net.jami.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
 
@@ -116,12 +116,12 @@ public class ContactServiceImpl extends ContactService {
     Context mContext;
 
     @Override
-    public Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts) {
+    public Map<Long, Contact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts) {
 
-        Map<Long, CallContact> systemContacts = new HashMap<>();
+        Map<Long, Contact> systemContacts = new HashMap<>();
         ContentResolver contentResolver = mContext.getContentResolver();
         StringBuilder contactsIds = new StringBuilder();
-        LongSparseArray<CallContact> cache;
+        LongSparseArray<Contact> cache;
 
         Cursor contactCursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, CONTACTS_DATA_PROJECTION,
                 ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
@@ -145,10 +145,10 @@ public class ContactServiceImpl extends ContactService {
                 String contactLabel = contactCursor.getString(indexLabel);
                 Uri uri = Uri.fromString(contactNumber);
 
-                CallContact contact = cache.get(contactId);
+                Contact contact = cache.get(contactId);
                 boolean isNewContact = false;
                 if (contact == null) {
-                    contact = new CallContact(uri);
+                    contact = new Contact(uri);
                     contact.setSystemId(contactId);
                     isNewContact = true;
                     contact.setFromSystem(true);
@@ -195,7 +195,7 @@ public class ContactServiceImpl extends ContactService {
 
             while (contactCursor.moveToNext()) {
                 long contactId = contactCursor.getLong(indexId);
-                CallContact contact = cache.get(contactId);
+                Contact contact = cache.get(contactId);
                 if (contact == null)
                     Log.w(TAG, "Can't find contact with ID " + contactId);
                 else {
@@ -210,8 +210,8 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    protected CallContact findContactByIdFromSystem(Long id, String key) {
-        CallContact contact = null;
+    protected Contact findContactByIdFromSystem(Long id, String key) {
+        Contact contact = null;
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
@@ -244,7 +244,7 @@ public class ContactServiceImpl extends ContactService {
 
                 Log.d(TAG, "Contact name: " + result.getString(indexName) + " id:" + contactId + " key:" + result.getString(indexKey));
 
-                contact = new CallContact(Uri.fromString(contentUri.toString()));
+                contact = new Contact(Uri.fromString(contentUri.toString()));
                 contact.setSystemContactInfo(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
 
                 if (result.getInt(indexStared) != 0) {
@@ -266,14 +266,14 @@ public class ContactServiceImpl extends ContactService {
         return contact;
     }
 
-    private void fillContactDetails(@NonNull CallContact callContact) {
+    private void fillContactDetails(@NonNull Contact contact) {
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
             Cursor cursorPhones = contentResolver.query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     CONTACTS_PHONES_PROJECTION, ID_SELECTION,
-                    new String[]{String.valueOf(callContact.getId())}, null);
+                    new String[]{String.valueOf(contact.getId())}, null);
 
             if (cursorPhones != null) {
                 final int indexNumber = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
@@ -281,14 +281,14 @@ public class ContactServiceImpl extends ContactService {
                 final int indexLabel = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
 
                 while (cursorPhones.moveToNext()) {
-                    callContact.addNumber(cursorPhones.getString(indexNumber), cursorPhones.getInt(indexType), cursorPhones.getString(indexLabel), Phone.NumberType.TEL);
+                    contact.addNumber(cursorPhones.getString(indexNumber), cursorPhones.getInt(indexType), cursorPhones.getString(indexLabel), Phone.NumberType.TEL);
                     Log.d(TAG, "Phone:" + cursorPhones.getString(cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
                 }
 
                 cursorPhones.close();
             }
 
-            android.net.Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
+            android.net.Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.getId());
             android.net.Uri targetUri = android.net.Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
 
             Cursor cursorSip = contentResolver.query(
@@ -308,7 +308,7 @@ public class ContactServiceImpl extends ContactService {
                     String contactNumber = cursorSip.getString(indexSip);
 
                     if (!contactMime.contentEquals(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) || Uri.fromString(contactNumber).isHexId() || "ring".equalsIgnoreCase(cursorSip.getString(indexLabel))) {
-                        callContact.addNumber(contactNumber, cursorSip.getInt(indexType), cursorSip.getString(indexLabel), Phone.NumberType.SIP);
+                        contact.addNumber(contactNumber, cursorSip.getInt(indexType), cursorSip.getString(indexLabel), Phone.NumberType.SIP);
                     }
                     Log.d(TAG, "SIP phone:" + contactNumber + " " + contactMime + " ");
                 }
@@ -319,8 +319,8 @@ public class ContactServiceImpl extends ContactService {
         }
     }
 
-    public CallContact findContactBySipNumberFromSystem(String number) {
-        CallContact contact = null;
+    public Contact findContactBySipNumberFromSystem(String number) {
+        Contact contact = null;
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
@@ -331,7 +331,7 @@ public class ContactServiceImpl extends ContactService {
 
             if (result == null) {
                 Log.d(TAG, "findContactBySipNumberFromSystem: " + number + " can't find contact.");
-                return CallContact.buildSIP(Uri.fromString(number));
+                return Contact.buildSIP(Uri.fromString(number));
             }
 
             int indexId = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID);
@@ -342,7 +342,7 @@ public class ContactServiceImpl extends ContactService {
 
             if (result.moveToFirst()) {
                 long contactId = result.getLong(indexId);
-                contact = new CallContact(Uri.fromString(number));
+                contact = new Contact(Uri.fromString(number));
                 contact.setSystemContactInfo(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
 
                 if (result.getInt(indexStared) != 0) {
@@ -363,8 +363,8 @@ public class ContactServiceImpl extends ContactService {
         return contact;
     }
 
-    public CallContact findContactByNumberFromSystem(String number) {
-        CallContact callContact = null;
+    public Contact findContactByNumberFromSystem(String number) {
+        Contact contact = null;
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
@@ -379,33 +379,33 @@ public class ContactServiceImpl extends ContactService {
                 int indexKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
                 int indexName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                 int indexPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
-                callContact = new CallContact(Uri.fromString(number));
-                callContact.setSystemContactInfo(result.getLong(indexId), result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
-                fillContactDetails(callContact);
-                Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + callContact.getDisplayName());
+                contact = new Contact(Uri.fromString(number));
+                contact.setSystemContactInfo(result.getLong(indexId), result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
+                fillContactDetails(contact);
+                Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + contact.getDisplayName());
             }
             result.close();
         } catch (Exception e) {
             Log.d(TAG, "findContactByNumber: Error while searching for contact number=" + number, e);
         }
 
-        if (callContact == null) {
+        if (contact == null) {
             Log.d(TAG, "findContactByNumberFromSystem: " + number + " can't find contact.");
-            callContact = findContactBySipNumberFromSystem(number);
+            contact = findContactBySipNumberFromSystem(number);
         }
 
-        if (callContact != null)
-            callContact.setFromSystem(true);
-        return callContact;
+        if (contact != null)
+            contact.setFromSystem(true);
+        return contact;
     }
 
     @Override
-    public Completable loadContactData(CallContact callContact, String accountId) {
-        if (!callContact.detailsLoaded) {
-            Single<Tuple<String, Object>> profile = callContact.isFromSystem() ? loadSystemContactData(callContact) : loadVCardContactData(callContact, accountId);
+    public Completable loadContactData(Contact contact, String accountId) {
+        if (!contact.detailsLoaded) {
+            Single<Tuple<String, Object>> profile = contact.isFromSystem() ? loadSystemContactData(contact) : loadVCardContactData(contact, accountId);
             return profile
-                    .doOnSuccess(p -> callContact.setProfile(p.first, p.second))
-                    .doOnError(e -> callContact.setProfile(null, null))
+                    .doOnSuccess(p -> contact.setProfile(p.first, p.second))
+                    .doOnError(e -> contact.setProfile(null, null))
                     .ignoreElement()
                     .onErrorComplete();
         }
@@ -413,7 +413,7 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public void saveVCardContactData(CallContact contact, String accountId, VCard vcard) {
+    public void saveVCardContactData(Contact contact, String accountId, VCard vcard) {
         if (vcard != null) {
             Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
             contact.setProfile(profileData.first, profileData.second);
@@ -435,8 +435,8 @@ public class ContactServiceImpl extends ContactService {
         });
     }
 
-    private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact, String accountId) {
-        String id = callContact.getPrimaryNumber();
+    private Single<Tuple<String, Object>> loadVCardContactData(Contact contact, String accountId) {
+        String id = contact.getPrimaryNumber();
         if (id != null) {
             return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf", accountId))
                     .map(VCardServiceImpl::readData)
@@ -445,9 +445,9 @@ public class ContactServiceImpl extends ContactService {
         return Single.error(new IllegalArgumentException());
     }
 
-    private Single<Tuple<String, Object>> loadSystemContactData(CallContact callContact) {
-        String contactName = callContact.getDisplayName();
-        android.net.Uri photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
+    private Single<Tuple<String, Object>> loadSystemContactData(Contact contact) {
+        String contactName = contact.getDisplayName();
+        android.net.Uri photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.getId());
         return AndroidFileUtils
                 .loadBitmap(mContext, android.net.Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
                 .map(bitmap -> new Tuple<String, Object>(contactName, bitmap))

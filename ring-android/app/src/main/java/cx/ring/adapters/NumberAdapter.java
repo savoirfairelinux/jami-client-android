@@ -32,7 +32,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Phone;
 
 public class NumberAdapter extends BaseAdapter {
@@ -40,7 +40,7 @@ public class NumberAdapter extends BaseAdapter {
     final private ArrayList<Phone> mNumbers;
     private boolean mUseFullCellForGetView = false;
 
-    public NumberAdapter(Context context, CallContact c, boolean useFullCellForGetView) {
+    public NumberAdapter(Context context, Contact c, boolean useFullCellForGetView) {
         mContext = context;
         mNumbers = (c != null && c.getPhones() != null) ?
                 c.getPhones() : new ArrayList<>();
