@@ -25,6 +25,7 @@ import java.util.Set;
 import net.jami.model.Call;
 import net.jami.model.Contact;
 import net.jami.model.Conference;
+import net.jami.model.Uri;
 import net.jami.services.HardwareService;
 
 public interface CallView {
@@ -62,7 +63,7 @@ public interface CallView {
     void resetPluginPreviewVideoSize(int previewWidth, int previewHeight, int rot);
     void resetVideoSize(int videoWidth, int videoHeight);
 
-    void goToConversation(String accountId, String conversationId);
+    void goToConversation(String accountId, Uri conversationId);
 
     void goToAddContact(Contact contact);
 

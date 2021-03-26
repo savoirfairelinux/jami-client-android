@@ -35,8 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 public class BluetoothWrapper {
-
-    private static String TAG = BluetoothWrapper.class.getSimpleName();
+    private static final String TAG = BluetoothWrapper.class.getSimpleName();
     private static final boolean DBG = false;
 
     private final Context mContext;

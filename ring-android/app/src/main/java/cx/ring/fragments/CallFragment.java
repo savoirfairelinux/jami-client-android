@@ -92,6 +92,7 @@ import net.jami.daemon.JamiService;
 import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Contact;
+import net.jami.model.Uri;
 import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import net.jami.services.NotificationService;
@@ -1237,7 +1238,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void goToConversation(String accountId, String conversationId) {
+    public void goToConversation(String accountId, Uri conversationId) {
         Context context = requireContext();
         if (DeviceUtils.isTablet(context)) {
             startActivity(new Intent(DRingService.ACTION_CONV_ACCEPT, ConversationPath.toUri(accountId, conversationId), context, HomeActivity.class));
