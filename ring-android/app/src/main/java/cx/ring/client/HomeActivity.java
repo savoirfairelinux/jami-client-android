@@ -54,6 +54,7 @@ import net.jami.model.Account;
 import net.jami.model.AccountConfig;
 import net.jami.model.Conversation;
 import net.jami.services.AccountService;
+import net.jami.services.ContactService;
 import net.jami.services.NotificationService;
 import net.jami.smartlist.SmartListViewModel;
 
@@ -72,6 +73,8 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
+import cx.ring.services.ContactServiceImpl;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarFactory;
 import cx.ring.databinding.ActivityHomeBinding;
 import cx.ring.fragments.ConversationFragment;
@@ -136,7 +139,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private int mOrientation;
 
     @Inject
+    ContactService mContactService;
+    @Inject
     AccountService mAccountService;
+    @Inject
+    ConversationFacade mConversationFacade;
     @Inject
     NotificationService mNotificationService;
 
@@ -774,9 +781,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (maxCount == 0)
             maxCount = 4;
 
-        List<Future<Bitmap>> futureIcons = new ArrayList<>(Math.min(conversations.size(),maxCount));
+        List<Future<Bitmap>> futureIcons = new ArrayList<>(Math.min(conversations.size(), maxCount));
         for (Conversation conversation : conversations) {
-            futureIcons.add(AvatarFactory.getBitmapAvatar(this, conversation, targetSize, false)
+            futureIcons.add(((ContactServiceImpl)mContactService).loadConversationAvatar(this, conversation)
+                    .map(d -> BitmapUtils.drawableToBitmap(d, targetSize))
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
             if (++i == maxCount)
