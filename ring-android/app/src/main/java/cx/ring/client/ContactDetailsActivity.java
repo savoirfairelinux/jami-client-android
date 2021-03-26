@@ -53,15 +53,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.views.AvatarFactory;
 import cx.ring.databinding.ActivityContactDetailsBinding;
 import cx.ring.databinding.ItemContactActionBinding;
 import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.Uri;
 import net.jami.services.AccountService;
 import net.jami.services.NotificationService;
@@ -258,7 +259,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     adapter.actions.add(symbolAction);
 
                     if (mConversation.getContacts().size() <= 2) {
-                        CallContact contact = mConversation.getContact();
+                        Contact contact = mConversation.getContact();
                         adapter.actions.add(new ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call), () ->
                                 goToCallActivity(mConversation.getAccountId(), contact.getPrimaryNumber(), true)));
                         adapter.actions.add(new ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call), () ->
@@ -314,8 +315,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null
                 && !conf.getParticipants().isEmpty()
-                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
-                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.INACTIVE
+                && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.FAILURE) {
             startActivity(new Intent(Intent.ACTION_VIEW)
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra(NotificationService.KEY_CALL_ID, conf.getId()));
