@@ -43,6 +43,16 @@ import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
 
+import net.jami.daemon.JamiService;
+import net.jami.facades.ConversationFacade;
+import net.jami.services.AccountService;
+import net.jami.services.CallService;
+import net.jami.services.ContactService;
+import net.jami.services.DaemonService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.PreferencesService;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,22 +64,14 @@ import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.contacts.AvatarFactory;
+import cx.ring.views.AvatarFactory;
 import net.jami.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerJamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
-import net.jami.facades.ConversationFacade;
 import cx.ring.service.DRingService;
 import cx.ring.service.JamiJobService;
-import net.jami.services.AccountService;
-import net.jami.services.CallService;
-import net.jami.services.ContactService;
-import net.jami.services.DaemonService;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.HardwareService;
-import net.jami.services.PreferencesService;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;

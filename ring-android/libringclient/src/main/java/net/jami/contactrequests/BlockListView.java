@@ -19,13 +19,13 @@
 
 package net.jami.contactrequests;
 
+import net.jami.model.Contact;
+
 import java.util.Collection;
 
-import net.jami.model.CallContact;
+public interface BlockListView {
 
-public interface BlackListView {
-
-    void updateView(Collection<CallContact> list);
+    void updateView(Collection<Contact> list);
 
     void hideListView();
 
