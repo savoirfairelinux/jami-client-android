@@ -20,21 +20,16 @@
  */
 package net.jami.conversation;
 
-import java.io.File;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.daemon.Blob;
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
-import net.jami.model.Contact;
+import net.jami.model.Call;
 import net.jami.model.Conference;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
 import net.jami.model.Error;
 import net.jami.model.Interaction;
-import net.jami.model.Call;
 import net.jami.model.TrustRequest;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
@@ -48,6 +43,12 @@ import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
 import net.jami.utils.VCardUtils;
+
+import java.io.File;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -96,33 +97,22 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mCompositeDisposable.add(mVisibilityDisposable);
     }
 
-    /*@Override
-    public void bindView(ConversationView view) {
-        super.bindView(view);
-        mCompositeDisposable.add(mVisibilityDisposable);
-        if (mConversationDisposable == null && mConversation != null)
-            initView(mAccountService.getAccount(mConversation.getAccountId()), mConversation, view);
-    }*/
-
     public void init(Uri conversationUri, String accountId) {
         Log.w(TAG, "init " + conversationUri + " " + accountId);
         if (conversationUri.equals(mConversationUri))
             return;
         mConversationUri = conversationUri;
-        Account account = mAccountService.getAccount(accountId);
-        if (account != null) {
-            initContact(account, account.getByUri(mConversationUri), getView());
-            mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, conversationUri)
-                    .observeOn(mUiScheduler)
-                    .subscribe(c -> setConversation(account, c), e -> {
-                        Log.e(TAG, "Error loading conversation", e);
-                        getView().goToHome();
-                    }));
-        } else {
-            getView().goToHome();
-            return;
-        }
-
+        mCompositeDisposable.add(mConversationFacade.getAccountSubject(accountId)
+                .observeOn(mUiScheduler)
+                .flatMap(account -> mConversationFacade.loadConversationHistory(account, conversationUri)
+                            .map(c -> {
+                                setConversation(account, c);
+                                return c;
+                            }))
+                .subscribe(c -> {}, e -> {
+                    Log.e(TAG, "Error loading conversation", e);
+                    getView().goToHome();
+                }));
         getView().setReadIndicatorStatus(showReadIndicator());
     }
 
@@ -186,11 +176,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.clear();
         view.hideNumberSpinner();
 
-        if (account.isJami() && !c.isSwarm()) {
-            String accountId = account.getAccountID();
-            mConversationDisposable.add(c.getContact().getConversationUri()
+        if (account.isJami()) {
+            mConversationDisposable.add(c.getContact()
+                    .getConversationUri()
                     .observeOn(mUiScheduler)
-                    .subscribe(uri -> init(uri, accountId)));
+                    .subscribe(uri -> init(uri, account.getAccountID())));
         }
 
         mConversationDisposable.add(Observable.combineLatest(
@@ -277,7 +267,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void loadMore() {
-        mConversationFacade.loadMore(mConversation);
+        mConversationDisposable.add(mAccountService.loadMore(mConversation)
+                .subscribe(c -> {}, e-> {}));
     }
 
     public void openContact() {
@@ -354,12 +345,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     private void sendTrustRequest() {
-        //final Uri contactId = mConversationUri;
-        Contact contact = mConversation.getContact();//mAccountService.getAccount(accountId).getContactFromCache(contactId);
+        Contact contact = mConversation.getContact();
         if (contact != null) {
             contact.setStatus(Contact.Status.REQUEST_SENT);
         }
-        mVCardService.loadSmallVCard(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
+        mVCardService.loadSmallVCardWithDefault(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
                 .subscribe(vCard -> mAccountService.sendTrustRequest(mConversation, contact.getUri(), Blob.fromString(VCardUtils.vcardToString(vCard))),
                         e -> mAccountService.sendTrustRequest(mConversation, contact.getUri(), null));
@@ -462,7 +452,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void showPluginListHandlers() {
-        getView().showPluginListHandlers(mAccountId, mContactUri.getUri());
+        getView().showPluginListHandlers(mConversation.getAccountId(), mConversationUri.getUri());
     }
 
     public Tuple<String, String> getPath() {

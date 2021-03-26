@@ -8,12 +8,14 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
+import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
 
 public class ConversationPath {
@@ -33,11 +35,19 @@ public class ConversationPath {
         conversationId = path.second;
     }
 
+    public ConversationPath(Conversation conversation) {
+        accountId = conversation.getAccountId();
+        conversationId = conversation.getUri().getUri();
+    }
+
     public String getAccountId() {
         return accountId;
     }
     public String getConversationId() {
         return conversationId;
+    }
+    public net.jami.model.Uri getConversationUri() {
+        return net.jami.model.Uri.fromString(conversationId);
     }
 
     @Deprecated
@@ -64,7 +74,10 @@ public class ConversationPath {
         return toUri(conversation.getAccountId(), conversation.getUri());
     }
     public static Uri toUri(@NonNull Interaction interaction) {
-        return toUri(interaction.getAccount(), net.jami.model.Uri.fromString(interaction.getConversation().getParticipant()));
+        if (interaction.getConversation() instanceof Conversation)
+            return toUri(interaction.getAccount(), ((Conversation) interaction.getConversation()).getUri());
+        else
+            return toUri(interaction.getAccount(), net.jami.model.Uri.fromString(interaction.getConversation().getParticipant()));
     }
 
     public Bundle toBundle() {
@@ -74,6 +87,7 @@ public class ConversationPath {
         bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
     }
+
     public static Bundle toBundle(String accountId, String uri) {
         Bundle bundle = new Bundle();
         bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, uri);
@@ -87,7 +101,9 @@ public class ConversationPath {
     public static String toKey(String accountId, String uri) {
         return TextUtils.join(",", Arrays.asList(accountId, uri));
     }
-
+    public String toKey() {
+        return toKey(accountId, conversationId);
+    }
     public static ConversationPath fromKey(String key) {
         if (key != null) {
             String[] keys = TextUtils.split(key, ",");
@@ -160,7 +176,4 @@ public class ConversationPath {
         return Objects.hash(accountId, conversationId);
     }
 
-    public net.jami.model.Uri getConversationUri() {
-        return net.jami.model.Uri.fromString(conversationId);
-    }
 }

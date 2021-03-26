@@ -51,11 +51,11 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
         SmartListViewModel newItem = mNewList.get(newItemPosition);
         if (newItem.getHeaderTitle() != oldItem.getHeaderTitle())
             return false;
-        if (newItem.getContact() != oldItem.getContact()) {
-            if (newItem.getContact().size() != oldItem.getContact().size())
+        if (newItem.getContacts() != oldItem.getContacts()) {
+            if (newItem.getContacts().size() != oldItem.getContacts().size())
                 return false;
-            for (int i = 0; i < newItem.getContact().size(); i++) {
-                if (newItem.getContact().get(i) != oldItem.getContact().get(i))
+            for (int i = 0; i < newItem.getContacts().size(); i++) {
+                if (newItem.getContacts().get(i) != oldItem.getContacts().get(i))
                     return false;
             }
         }
