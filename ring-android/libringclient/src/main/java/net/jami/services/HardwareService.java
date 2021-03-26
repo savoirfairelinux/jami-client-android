@@ -33,7 +33,7 @@ import net.jami.daemon.RingserviceJNI;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.UintVect;
 import net.jami.model.Conference;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.utils.Log;
 import net.jami.utils.Tuple;
 import io.reactivex.Completable;
@@ -109,7 +109,7 @@ public abstract class HardwareService {
 
     public abstract boolean isVideoAvailable();
 
-    public abstract void updateAudioState(SipCall.CallStatus state, boolean incomingCall, boolean isOngoingVideo);
+    public abstract void updateAudioState(Call.CallStatus state, boolean incomingCall, boolean isOngoingVideo);
 
     public abstract void closeAudioState();
 

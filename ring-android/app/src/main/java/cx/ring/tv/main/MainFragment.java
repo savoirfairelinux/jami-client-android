@@ -64,8 +64,8 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.contacts.AvatarFactory;
-import cx.ring.fragments.ConversationFragment;
+import cx.ring.views.AvatarFactory;
+
 import net.jami.model.Account;
 import net.jami.navigation.HomeNavigationViewModel;
 import cx.ring.services.VCardServiceImpl;

@@ -46,22 +46,22 @@ public class Conversation extends ConversationHistory {
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
-    private final net.jami.model.Uri mKey;
-    private final List<net.jami.model.CallContact> mContacts;
+    private final Uri mKey;
+    private final List<Contact> mContacts;
 
     private final NavigableMap<Long, Interaction> mHistory = new TreeMap<>();
-    private final ArrayList<net.jami.model.Conference> mCurrentCalls = new ArrayList<>();
+    private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
     private final ArrayList<Interaction> mAggregateHistory = new ArrayList<>(32);
     private Interaction lastDisplayed = null;
 
-    private final Subject<net.jami.utils.Tuple<Interaction, ElementStatus>> updatedElementSubject = PublishSubject.create();
+    private final Subject<Tuple<Interaction, ElementStatus>> updatedElementSubject = PublishSubject.create();
     private final Subject<Interaction> lastDisplayedSubject = BehaviorSubject.create();
     private final Subject<List<Interaction>> clearedSubject = PublishSubject.create();
-    private final Subject<List<net.jami.model.Conference>> callsSubject = BehaviorSubject.create();
-    private final Subject<net.jami.model.Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(net.jami.model.Account.ComposingStatus.Idle);
+    private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
+    private final Subject<Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(Account.ComposingStatus.Idle);
     private final Subject<Integer> color = BehaviorSubject.create();
     private final Subject<CharSequence> symbol = BehaviorSubject.create();
-    private final Subject<List<net.jami.model.CallContact>> mContactSubject = BehaviorSubject.create();
+    private final Subject<List<Contact>> mContactSubject = BehaviorSubject.create();
 
     private Single<Conversation> isLoaded = null;
 
@@ -77,7 +77,7 @@ public class Conversation extends ConversationHistory {
     // indicate the list needs sorting
     private boolean mDirty = false;
 
-    public Conversation(String accountId, net.jami.model.CallContact contact) {
+    public Conversation(String accountId, Contact contact) {
         mAccountId = accountId;
         mContacts = Collections.singletonList(contact);
         mKey = contact.getUri();
@@ -86,37 +86,37 @@ public class Conversation extends ConversationHistory {
         mMode = null;
     }
 
-    public Conversation(String accountId, net.jami.model.Uri uri, Mode mode) {
+    public Conversation(String accountId, Uri uri, Mode mode) {
         mAccountId = accountId;
         mKey = uri;
         mContacts = new ArrayList<>(3);
         mMode = mode;
     }
 
-    public net.jami.model.Conference getConference(String id) {
-        for (net.jami.model.Conference c : mCurrentCalls)
+    public Conference getConference(String id) {
+        for (Conference c : mCurrentCalls)
             if (c.getId().contentEquals(id) || c.getCallById(id) != null) {
                 return c;
             }
         return null;
     }
 
-    public void composingStatusChanged(net.jami.model.CallContact contact, net.jami.model.Account.ComposingStatus composing) {
+    public void composingStatusChanged(Contact contact, Account.ComposingStatus composing) {
         composingStatusSubject.onNext(composing);
     }
 
-    public net.jami.model.Uri getUri() {
+    public Uri getUri() {
         return mKey;
     }
 
     public Mode getMode() { return mMode; }
 
     public boolean isSwarm() {
-        return net.jami.model.Uri.SWARM_SCHEME.equals(getUri().getScheme());
+        return Uri.SWARM_SCHEME.equals(getUri().getScheme());
     }
 
     public boolean matches(String query) {
-        for (net.jami.model.CallContact contact : getContacts()) {
+        for (Contact contact : getContacts()) {
             if (contact.matches(query))
                 return true;
         }
@@ -127,12 +127,12 @@ public class Conversation extends ConversationHistory {
         return mContacts.get(0).getDisplayName();
     }
 
-    public void addContact(net.jami.model.CallContact contact) {
+    public void addContact(Contact contact) {
         mContacts.add(contact);
         mContactSubject.onNext(mContacts);
     }
 
-    public void removeContact(net.jami.model.CallContact contact)  {
+    public void removeContact(Contact contact)  {
         mContacts.remove(contact);
         mContactSubject.onNext(mContacts);
     }
@@ -146,7 +146,7 @@ public class Conversation extends ConversationHistory {
         StringBuilder ret = new StringBuilder();
         ArrayList<String> names = new ArrayList<>(mContacts.size());
         int target = mContacts.size();
-        for (net.jami.model.CallContact c : mContacts) {
+        for (Contact c : mContacts) {
             if (c.isUser()) {
                 target--;
                 continue;
@@ -173,9 +173,9 @@ public class Conversation extends ConversationHistory {
             return mContacts.get(0).getRingUsername();
         }
         StringBuilder ret = new StringBuilder();
-        Iterator<net.jami.model.CallContact> it = mContacts.iterator();
+        Iterator<Contact> it = mContacts.iterator();
         while (it.hasNext()) {
-            net.jami.model.CallContact c = it.next();
+            Contact c = it.next();
             if (c.isUser())
                 continue;
             ret.append(c.getRingUsername());
@@ -185,7 +185,7 @@ public class Conversation extends ConversationHistory {
         return ret.toString();
     }
 
-    public Observable<List<net.jami.model.CallContact>> getContactUpdates() {
+    public Observable<List<Contact>> getContactUpdates() {
         return mContactSubject;
     }
 
@@ -238,12 +238,12 @@ public class Conversation extends ConversationHistory {
         return composingStatusSubject;
     }
 
-    public void addConference(final net.jami.model.Conference conference) {
+    public void addConference(final Conference conference) {
         if (conference == null) {
             return;
         }
         for (int i = 0; i < mCurrentCalls.size(); i++) {
-            final net.jami.model.Conference currentConference = mCurrentCalls.get(i);
+            final Conference currentConference = mCurrentCalls.get(i);
             if (currentConference == conference) {
                 return;
             }
@@ -256,7 +256,7 @@ public class Conversation extends ConversationHistory {
         callsSubject.onNext(mCurrentCalls);
     }
 
-    public void removeConference(net.jami.model.Conference c) {
+    public void removeConference(Conference c) {
         mCurrentCalls.remove(c);
         callsSubject.onNext(mCurrentCalls);
     }
@@ -277,7 +277,7 @@ public class Conversation extends ConversationHistory {
         mVisible = visible;
     }
 
-    public List<net.jami.model.CallContact> getContacts() {
+    public List<Contact> getContacts() {
         return mContacts;
     }
 
@@ -288,14 +288,14 @@ public class Conversation extends ConversationHistory {
             if (mContacts.size() > 2)
                 throw new IllegalStateException("getContact() called for group conversation of size " + mContacts.size());
         }
-        for (net.jami.model.CallContact contact : mContacts) {
+        for (Contact contact : mContacts) {
             if (!contact.isUser())
                 return contact;
         }
         return null;
     }
 
-    public void addCall(net.jami.model.SipCall call) {
+    public void addCall(Call call) {
         if (!isSwarm() && getCallHistory().contains(call)) {
             return;
         }
@@ -310,12 +310,12 @@ public class Conversation extends ConversationHistory {
             if (mContacts.size() == 1)
                 interaction.setContact(mContacts.get(0));
             else
-                interaction.setContact(findContact(net.jami.model.Uri.fromString(interaction.getAuthor())));
+                interaction.setContact(findContact(Uri.fromString(interaction.getAuthor())));
         }
     }
 
-    public net.jami.model.CallContact findContact(net.jami.model.Uri uri) {
-        for (net.jami.model.CallContact contact : mContacts)  {
+    public Contact findContact(Uri uri) {
+        for (Contact contact : mContacts)  {
             if (contact.getUri().equals(uri)) {
                 return contact;
             }
@@ -323,7 +323,7 @@ public class Conversation extends ConversationHistory {
         return null;
     }
 
-    public void addTextMessage(net.jami.model.TextMessage txt) {
+    public void addTextMessage(TextMessage txt) {
         if (mVisible) {
             txt.read();
         }
@@ -337,7 +337,7 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new net.jami.utils.Tuple<>(txt, ElementStatus.ADD));
     }
 
-    public void addRequestEvent(TrustRequest request, net.jami.model.CallContact contact) {
+    public void addRequestEvent(TrustRequest request, Contact contact) {
         if (isSwarm())
             return;
         ContactEvent event = new ContactEvent(contact, request);
@@ -346,7 +346,7 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new net.jami.utils.Tuple<>(event, ElementStatus.ADD));
     }
 
-    public void addContactEvent(CallContact contact) {
+    public void addContactEvent(Contact contact) {
         ContactEvent event = new ContactEvent(contact);
         mDirty = true;
         mAggregateHistory.add(event);
@@ -368,9 +368,9 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new net.jami.utils.Tuple<>(dataTransfer, ElementStatus.ADD));
     }
 
-    public void updateTextMessage(net.jami.model.TextMessage text) {
+    public void updateTextMessage(TextMessage text) {
         if (isSwarm()) {
-            net.jami.model.TextMessage txt = (net.jami.model.TextMessage) mMessages.get(text.getMessageId());
+            TextMessage txt = (TextMessage) mMessages.get(text.getMessageId());
             if (txt != null) {
                 txt.setStatus(text.getStatus());
                 updatedElementSubject.onNext(new net.jami.utils.Tuple<>(txt, ElementStatus.UPDATE));
@@ -434,42 +434,42 @@ public class Conversation extends ConversationHistory {
         return mAggregateHistory.get(mAggregateHistory.size() - 1);
     }
 
-    public net.jami.model.Conference getCurrentCall() {
+    public Conference getCurrentCall() {
         if (mCurrentCalls.isEmpty()) {
             return null;
         }
         return mCurrentCalls.get(0);
     }
 
-    public ArrayList<net.jami.model.Conference> getCurrentCalls() {
+    public ArrayList<Conference> getCurrentCalls() {
         return mCurrentCalls;
     }
 
-    public Collection<net.jami.model.SipCall> getCallHistory() {
-        List<net.jami.model.SipCall> result = new ArrayList<>();
+    public Collection<Call> getCallHistory() {
+        List<Call> result = new ArrayList<>();
         for (Interaction interaction : mAggregateHistory) {
             if (interaction.getType() == Interaction.InteractionType.CALL) {
-                result.add((net.jami.model.SipCall) interaction);
+                result.add((Call) interaction);
             }
         }
         return result;
     }
 
-    public TreeMap<Long, net.jami.model.TextMessage> getUnreadTextMessages() {
-        TreeMap<Long, net.jami.model.TextMessage> texts = new TreeMap<>();
+    public TreeMap<Long, TextMessage> getUnreadTextMessages() {
+        TreeMap<Long, TextMessage> texts = new TreeMap<>();
         if (isSwarm()) {
             for(int j = mAggregateHistory.size() - 1; j >= 0; j--) {
                 Interaction i = mAggregateHistory.get(j);
                 if (i.isRead())
                     break;
-                if (i instanceof net.jami.model.TextMessage)
-                    texts.put(i.getTimestamp(), (net.jami.model.TextMessage) i);
+                if (i instanceof TextMessage)
+                    texts.put(i.getTimestamp(), (TextMessage) i);
             }
         } else {
             for (Map.Entry<Long, Interaction> entry : mHistory.descendingMap().entrySet()) {
                 Interaction value = entry.getValue();
                 if (value.getType() == Interaction.InteractionType.TEXT) {
-                    net.jami.model.TextMessage message = (net.jami.model.TextMessage) value;
+                    TextMessage message = (TextMessage) value;
                     if (message.isRead())
                         break;
                     texts.put(entry.getKey(), message);
@@ -495,6 +495,14 @@ public class Conversation extends ConversationHistory {
         return null;
     }
 
+    private boolean removeSwarmInteraction(String messageId) {
+        Interaction i = mMessages.remove(messageId);
+        if (i != null) {
+            mAggregateHistory.remove(i);
+            return true;
+        }
+        return false;
+    }
 
     private boolean removeInteraction(long interactionId) {
         Iterator<Interaction> it = mAggregateHistory.iterator();
@@ -525,13 +533,13 @@ public class Conversation extends ConversationHistory {
     static private Interaction getTypedInteraction(Interaction interaction) {
         switch (interaction.getType()) {
             case TEXT:
-                return new net.jami.model.TextMessage(interaction);
+                return new TextMessage(interaction);
             case CALL:
-                return new net.jami.model.SipCall(interaction);
+                return new Call(interaction);
             case CONTACT:
                 return new ContactEvent(interaction);
             case DATA_TRANSFER:
-                return new net.jami.model.DataTransfer(interaction);
+                return new DataTransfer(interaction);
         }
         return interaction;
     }
@@ -557,16 +565,16 @@ public class Conversation extends ConversationHistory {
     public void addElement(Interaction interaction) {
         setInteractionProperties(interaction);
         if (interaction.getType() == Interaction.InteractionType.TEXT) {
-            net.jami.model.TextMessage msg = new TextMessage(interaction);
+            TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
         } else if (interaction.getType() == Interaction.InteractionType.CALL) {
-            SipCall call = new net.jami.model.SipCall(interaction);
+            Call call = new Call(interaction);
             addCall(call);
         } else if (interaction.getType() == Interaction.InteractionType.CONTACT) {
             ContactEvent event = new ContactEvent(interaction);
             addContactEvent(event);
         } else if (interaction.getType() == Interaction.InteractionType.DATA_TRANSFER) {
-            net.jami.model.DataTransfer dataTransfer = new net.jami.model.DataTransfer(interaction);
+            DataTransfer dataTransfer = new DataTransfer(interaction);
             addFileTransfer(dataTransfer);
         }
     }
@@ -624,8 +632,8 @@ public class Conversation extends ConversationHistory {
         return mRoots;
     }
 
-    public void updateFileTransfer(net.jami.model.DataTransfer transfer, Interaction.InteractionStatus eventCode) {
-        net.jami.model.DataTransfer dataTransfer = (net.jami.model.DataTransfer) findConversationElement(transfer.getId());
+    public void updateFileTransfer(DataTransfer transfer, Interaction.InteractionStatus eventCode) {
+        DataTransfer dataTransfer = (DataTransfer) findConversationElement(transfer.getId());
         if (dataTransfer != null) {
             dataTransfer.setStatus(eventCode);
             updatedElementSubject.onNext(new net.jami.utils.Tuple<>(dataTransfer, ElementStatus.UPDATE));
@@ -633,10 +641,14 @@ public class Conversation extends ConversationHistory {
     }
 
     public void removeInteraction(Interaction interaction) {
-        if (removeInteraction(interaction.getId()))
-            updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.REMOVE));
+        if (isSwarm()) {
+            if (removeSwarmInteraction(interaction.getMessageId()))
+                updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.REMOVE));
+        } else {
+            if (removeInteraction(interaction.getId()))
+                updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.REMOVE));
+        }
     }
-
 
     public void removeAll() {
         mAggregateHistory.clear();
@@ -674,7 +686,7 @@ public class Conversation extends ConversationHistory {
 
     public interface ConversationActionCallback {
 
-        void removeConversation(net.jami.model.Uri callContact);
+        void removeConversation(Uri callContact);
 
         void clearConversation(Uri callContact);
 

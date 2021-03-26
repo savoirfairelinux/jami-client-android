@@ -35,9 +35,9 @@ public class DataTransfer extends Interaction {
     //private String mTransferId;
     public File destination;
 
-    private static final Set<String> IMAGE_EXTENSIONS = net.jami.utils.HashUtils.asSet("jpg", "jpeg", "png", "gif");
-    private static final Set<String> AUDIO_EXTENSIONS = net.jami.utils.HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
-    private static final Set<String> VIDEO_EXTENSIONS = net.jami.utils.HashUtils.asSet("webm", "mp4", "mkv");
+    private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
+    private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
+    private static final Set<String> VIDEO_EXTENSIONS = HashUtils.asSet("webm", "mp4", "mkv");
     private static final int MAX_SIZE = 32 * 1024 * 1024;
     private static final int UNLIMITED_SIZE = 256 * 1024 * 1024;
 
@@ -92,7 +92,7 @@ public class DataTransfer extends Interaction {
         if (mBody == null)
             return null;
         if (mExtension == null)
-            mExtension = net.jami.utils.StringUtils.getFileExtension(mBody).toLowerCase();
+            mExtension = StringUtils.getFileExtension(mBody).toLowerCase();
         return mExtension;
     }
 
