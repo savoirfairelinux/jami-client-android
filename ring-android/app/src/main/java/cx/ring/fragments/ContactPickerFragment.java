@@ -107,7 +107,7 @@ public class ContactPickerFragment extends BottomSheetDialogFragment {
                 adapter.update(item);
 
                 Runnable remover = () -> {
-                    mCurrentSelection.remove(item.getContact().get(0));
+                    mCurrentSelection.remove(item.getContacts().get(0));
                     if (mCurrentSelection.isEmpty())
                         binding.createGroupBtn.setEnabled(false);
                     item.setChecked(false);
@@ -118,7 +118,7 @@ public class ContactPickerFragment extends BottomSheetDialogFragment {
                 };
 
                 if (checked) {
-                    if (mCurrentSelection.add(item.getContact().get(0))) {
+                    if (mCurrentSelection.add(item.getContacts().get(0))) {
                         Chip chip = new Chip(requireContext(), null, R.style.Widget_MaterialComponents_Chip_Entry);
                         chip.setText(item.getContactName());
                         chip.setChipIcon(new AvatarDrawable.Builder()

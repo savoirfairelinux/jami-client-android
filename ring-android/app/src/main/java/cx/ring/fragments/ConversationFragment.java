@@ -102,6 +102,7 @@ import cx.ring.service.DRingService;
 import cx.ring.services.LocationSharingService;
 import net.jami.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -248,7 +249,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         View layout = binding.conversationLayout;
 
         // remove action bar height for tablet layout
-        if (DeviceUtils.isTablet(getContext())) {
+        if (DeviceUtils.isTablet(layout.getContext())) {
             layout.setPadding(layout.getPaddingLeft(), 0, layout.getPaddingRight(), layout.getPaddingBottom());
         }
 
@@ -799,7 +800,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         try {
             fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
+            Log.e(TAG, "The selected file can't be shared: " + path.getName());
         }
         if (fileUri != null) {
             Intent sendIntent = new Intent();
@@ -861,28 +862,28 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                startActivity(new Intent(getActivity(), HomeActivity.class));
-                return true;
-            case R.id.conv_action_audiocall:
-                presenter.goToCall(true);
-                return true;
-            case R.id.conv_action_videocall:
-                presenter.goToCall(false);
-                return true;
-            case R.id.conv_contact_details:
-                presenter.openContact();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            startActivity(new Intent(getActivity(), HomeActivity.class));
+            return true;
+        } else if (itemId == R.id.conv_action_audiocall) {
+            presenter.goToCall(true);
+            return true;
+        } else if (itemId == R.id.conv_action_videocall) {
+            presenter.goToCall(false);
+            return true;
+        } else if (itemId == R.id.conv_contact_details) {
+            presenter.openContact();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         ConversationPath path = ConversationPath.fromBundle(getArguments());
         mIsBubble = getArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE);
+        Log.w(TAG, "initPresenter " + path);
         if (path == null)
             return;
 
@@ -890,7 +891,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         mAdapter = new ConversationAdapter(this, presenter);
         presenter.init(uri, path.getAccountId());
         try {
-            mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + uri.getUri(), Context.MODE_PRIVATE);
+            mPreferences = SharedPreferencesServiceImpl.getConversationPreferences(requireContext(), path.getAccountId(), uri);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
             presenter.setConversationSymbol(mPreferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getText(R.string.conversation_default_emoji).toString()));
@@ -955,7 +956,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(avatar -> {
                         mParticipantAvatars.put(contactKey, (AvatarDrawable) avatar);
-                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable((AvatarDrawable) avatar));
+                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable.Builder()
+                                .withContact(contact)
+                                .withCircleCrop(true)
+                                .withPresence(false)
+                                .build(requireContext()));
                         mAdapter.setPhoto();
                     }));
         }
@@ -996,6 +1001,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void goToHome() {
+
         if (getActivity() instanceof ConversationActivity) {
             getActivity().finish();
         }
