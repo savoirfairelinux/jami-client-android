@@ -66,7 +66,7 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.contacts.AvatarFactory;
+import cx.ring.views.AvatarFactory;
 import cx.ring.databinding.ActivityHomeBinding;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;

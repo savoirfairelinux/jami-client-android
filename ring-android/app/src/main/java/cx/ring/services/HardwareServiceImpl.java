@@ -49,8 +49,8 @@ import net.jami.daemon.IntVect;
 import net.jami.daemon.Ringservice;
 import net.jami.daemon.UintVect;
 import net.jami.model.Conference;
-import net.jami.model.SipCall;
-import net.jami.model.SipCall.CallStatus;
+import net.jami.model.Call;
+import net.jami.model.Call.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
 
 import net.jami.services.HardwareService;
@@ -178,7 +178,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    synchronized public void updateAudioState(final SipCall.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
+    synchronized public void updateAudioState(final Call.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
         Log.d(TAG, "updateAudioState: Call state updated to " + state + " Call is incoming: " + incomingCall + " Call is video: " + isOngoingVideo);
         boolean callEnded = state.equals(CallStatus.HUNGUP) || state.equals(CallStatus.FAILURE) || state.equals(CallStatus.OVER);
         try {
@@ -531,7 +531,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         final Conference conf = mCameraPreviewCall.get();
         boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin;
         if (conf != null && useHardwareCodec) {
-            SipCall call = conf.getCall();
+            Call call = conf.getCall();
             if (call != null) {
                 call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
                 videoParams.codec = call.getVideoCodec();
