@@ -53,9 +53,6 @@ export API=21
 export ANDROID_API=android-$API
 export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/$platform-$arch
 export TARGET
-export HAVE_ARM
-export HAVE_X86
-export HAVE_64
 
 if [ -z "$DAEMON_DIR" ]; then
     DAEMON_DIR="$(pwd)/../daemon"
