@@ -8,8 +8,8 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Es konnte keine E-Mail-Anwendung gefunden werden, installiere eine, um uns einen Bericht zu senden</string>
-  <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installiere einen, um die Webseite anzusehen</string>
+  <string name="no_email_app_installed">Keine E-Mail-App gefunden, installiere eine, um uns einen Bericht zu senden</string>
+  <string name="no_browser_app_installed">Keine Webbrowser-App gefunden, installiere einen, um diese Seite anzuzeigen</string>
   <string name="email_chooser_title">E-Mail wird gesendet mit...</string>
   <string name="website_chooser_title">Webseite anzeigen mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>

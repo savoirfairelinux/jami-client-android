@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- Call error -->
     <string name="call_error_no_microphone">Anruf abgebrochen. Kein Mikrofon erkannt.</string>
-    <string name="call_error_no_camera_no_microphone">Anruf abgebrochen. Keine Kamera oder kein Mikrofon. </string>
+    <string name="call_error_no_camera_no_microphone">Anruf abgebrochen. Keine Kamera oder kein Mikrofon erkannt. </string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Suchen</string>

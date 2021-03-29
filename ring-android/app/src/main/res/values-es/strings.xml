@@ -304,4 +304,5 @@
   <string name="wizard_profile_button">Guardar perfil</string>
   <string name="wizard_profile_skip">Omitir y hacerlo más tarde</string>
   <string name="fab_path_choose">Elegir otro archivo</string>
+  <string name="chat_plugins">Complementos del chat</string>
 </resources>

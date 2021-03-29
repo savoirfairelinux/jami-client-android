@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">اجرای جمی در پس‌زمینه هنگام آغاز به کار سیستم.</string>
   <string name="pref_clearHistory_title">پاک‌سازی تاریخچه</string>
   <string name="pref_clearHistory_summary">پاک‌سازی تمام سابقه گفت‌وگوها. این کار قابل بازگشت نیست.</string>
+  <string name="pref_notification_title">قابلیت مشاهده اعلان</string>
+  <string name="pref_notification_summary">قابلیت مشاهده اعلان‌های برنامه را در صفحه قفل تنظیم کنید</string>
   <string name="pref_blackList_title">لیست مسدودی</string>
   <string name="pref_blackList_summary">لیست مسدودی خود را بررسی کنید.</string>
   <string name="pref_delete_account_title">حذف حساب</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <string name="pref_block_record_summary">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">عمومی \n(نمایش اعلان‌ها و محتوای آنها در صفحه قفل)\n</string>
+  <string name="notification_private">خضوصی \n(نمایش اعلان‌ها و مخفی‌کردن محتوای آنها در صفحه قفل)\n</string>
+  <string name="notification_secret">محرمانه \n(عدم نمایش اعلان‌ها و محتوای آنها در صفحه قفل)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">افزونه‌ها</string>
   <string name="pref_plugins_summary">فعال‌سازی افزونه‌ها و تنظیم پارامترهای آنها</string>

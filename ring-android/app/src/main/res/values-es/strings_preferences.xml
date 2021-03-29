@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano cuando se inicie el sistema.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
   <string name="pref_clearHistory_summary">Limpiar el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
+  <string name="pref_notification_title">Visibilidad de notificaciones</string>
+  <string name="pref_notification_summary">Establece la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
   <string name="pref_blackList_title">Lista de bloqueos</string>
   <string name="pref_blackList_summary">Revisa tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Borrar cuenta</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>
   <string name="pref_block_record_summary">Impedir que se hagan capturas de pantalla o se graben videos.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Público \n(mostrar notificaciones y contenido en la pantalla bloqueada)\n</string>
+  <string name="notification_private">Privado \n(mostrar notificaciones pero ocultar su contenido en la pantalla bloqueada)\n</string>
+  <string name="notification_secret">Secreto \n(no mostrar notificaciones en pantalla bloqueada)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Complementos</string>
   <string name="pref_plugins_summary">Habilitar complementos y establecer sus parámetros</string>

@@ -23,6 +23,7 @@
   <string name="ringtones_by">铃声来自</string>
   <!--RingActivity-->
   <string name="error_no_network">无网络连接</string>
+  <string name="error_account_offline">账户离线</string>
   <string name="error_mobile_network_available_but_disabled">请前往“设置”界面开启移动数据使用权限。</string>
   <!--AB menus-->
   <string name="ab_action_chat">文字消息</string>
@@ -115,6 +116,7 @@
   <string name="qr_code">二维码</string>
   <string name="ab_action_flipcamera">翻转摄像头</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
+  <string name="remote_recording">%s录制中...</string>
   <!--Text messages-->
   <string name="send_message">发消息</string>
   <string name="message_sending">正在发送消息…</string>
@@ -301,4 +303,5 @@
   <string name="wizard_profile_button">保存资料</string>
   <string name="wizard_profile_skip">跳过此步骤稍后进行</string>
   <string name="fab_path_choose">选择另一个文件</string>
+  <string name="chat_plugins">聊天插件</string>
 </resources>

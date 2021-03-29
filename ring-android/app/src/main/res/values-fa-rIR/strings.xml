@@ -90,6 +90,8 @@
   <string name="action_call_hangup">قطع‌کردن</string>
   <string name="action_call_maximize">به حداکثر رساندن</string>
   <string name="action_call_minimize">کاهش دادن</string>
+  <string name="action_call_mute">بی‌صدا کردن</string>
+  <string name="action_call_unmute">خروج از حالت بی‌صدا</string>
   <string name="ongoing_call">تماس جاری</string>
   <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
@@ -302,4 +304,5 @@
   <string name="wizard_profile_button">ذخیره نمایه</string>
   <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
   <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
+  <string name="chat_plugins">افزونه‌های گفتگو</string>
 </resources>
