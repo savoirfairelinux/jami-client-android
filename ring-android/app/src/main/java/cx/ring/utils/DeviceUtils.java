@@ -24,7 +24,11 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import androidx.annotation.NonNull;
+
 import net.jami.utils.Log;
+
+import cx.ring.R;
 
 import static android.content.Context.UI_MODE_SERVICE;
 
@@ -32,26 +36,15 @@ public class DeviceUtils {
 
     private static final String TAG = DeviceUtils.class.getSimpleName();
 
-    private static final int MIN_SIZE_TABLET = 720;
-
     private DeviceUtils() {
     }
 
-    public static boolean isTv(Context context) {
-        if (context == null) {
-            net.jami.utils.Log.e(TAG, "null context");
-            return false;
-        }
+    public static boolean isTv(@NonNull Context context) {
         UiModeManager uiModeManager = (UiModeManager) context.getSystemService(UI_MODE_SERVICE);
         return (uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
     }
 
-    public static boolean isTablet(Context context) {
-        if (context == null) {
-            Log.e(TAG, "null context");
-            return false;
-        }
-        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
+    public static boolean isTablet(@NonNull Context context) {
+        return context.getResources().getBoolean(R.bool.isTablet);
     }
 }
