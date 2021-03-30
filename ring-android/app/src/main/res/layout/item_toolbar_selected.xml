@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/list_small_icon_size"
+        android:layout_height="@dimen/list_medium_icon_size"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        tools:src="@drawable/baseline_account_circle_white_36"
+        tools:tint="@color/black"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/logo"
+        tools:text="Account Name"/>
+
+</RelativeLayout>
