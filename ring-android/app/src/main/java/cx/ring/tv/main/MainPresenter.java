@@ -97,11 +97,10 @@ public class MainPresenter extends RootPresenter<MainView> {
     }
 
     public void reloadAccountInfos() {
-        mCompositeDisposable.add(mAccountService.getProfileAccountList()
+        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
                 .observeOn(mUiScheduler)
                 .subscribe(
-                        accounts -> getView().displayAccountInfos(
-                                new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), null)),
+                        account -> getView().displayAccountInfos(new HomeNavigationViewModel(account, null)),
                         e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
