@@ -594,7 +594,7 @@ public class NotificationServiceImpl implements NotificationService {
             unreadConvBuilder.addMessage(last.getBody());
         } else {
             Account account = mAccountService.getAccount(accountId);
-            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account).blockingGet();
+            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(mContext, account).blockingGet();
             Bitmap myPic = account == null ? null : getContactPicture(account);
             Person userPerson = new Person.Builder()
                     .setKey(accountId)

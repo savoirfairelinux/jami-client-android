@@ -576,32 +576,6 @@ public class AccountService {
         return accountsSubject;
     }
 
-    private Single<List<Account>> loadAccountProfiles(List<Account> accounts) {
-        if (accounts.isEmpty())
-            return Single.just(accounts);
-        List<Single<Account>> loadedAccounts = new ArrayList<>(accounts.size());
-        for (Account account : accounts)
-            loadedAccounts.add(loadAccountProfile(account));
-        return Single.concatEager(loadedAccounts).toList(accounts.size());
-    }
-
-    public Observable<List<Account>> getProfileAccountList() {
-        return accountsSubject.concatMapSingle(this::loadAccountProfiles);
-    }
-
-    private Single<Account> loadAccountProfile(Account account) {
-        if (account.getProfile() == null)
-            return VCardUtils.loadLocalProfileFromDiskWithDefault(mDeviceRuntimeService.provideFilesDir(), account.getAccountID())
-                    .subscribeOn(Schedulers.io())
-                    .map(vCard -> {
-                        account.setProfile(vCard);
-                        return account;
-                    })
-                    .onErrorReturn(e -> account);
-        else
-            return Single.just(account);
-    }
-
     public Subject<Account> getObservableAccounts() {
         return accountSubject;
     }
@@ -621,6 +595,10 @@ public class AccountService {
 
     public Observable<Account> getCurrentAccountSubject() {
         return currentAccountSubject;
+    }
+
+    public Observable<Account> getCurrentProfileAccountSubject() {
+        return currentAccountSubject.flatMapSingle(a -> mVCardService.loadProfile(a).map(p -> a));
     }
 
     public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {
@@ -1343,7 +1321,7 @@ public class AccountService {
             return;
         mVCardService.saveVCardProfile(accountId, account.getUri(), name, photo)
                 .subscribeOn(Schedulers.io())
-                .subscribe(account::setProfile, e -> Log.e(TAG, "Error saving profile", e));
+                .subscribe(vcard -> account.resetProfile(), e -> Log.e(TAG, "Error saving profile", e));
     }
 
     void profileReceived(String accountId, String peerId, String vcardPath) {

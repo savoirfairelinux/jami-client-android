@@ -91,7 +91,7 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
 
     private void getUserAvatar(Account account) {
         disposable.add(VCardServiceImpl
-                .loadProfile(account)
+                .loadProfile(requireContext(), account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(profile -> {
                     if (binding != null) {
