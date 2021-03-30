@@ -21,6 +21,7 @@ package net.jami.services;
 
 import java.io.File;
 
+import net.jami.model.Account;
 import net.jami.utils.Tuple;
 import ezvcard.VCard;
 import io.reactivex.Maybe;
@@ -30,6 +31,8 @@ public abstract class VCardService {
 
     public static final int MAX_SIZE_SIP = 256 * 1024;
     public static final int MAX_SIZE_REQUEST = 16 * 1024;
+
+    public abstract Single<Tuple<String, Object>> loadProfile(Account account);
 
     public abstract Maybe<VCard> loadSmallVCard(String accountId, int maxSize);
     public Single<VCard> loadSmallVCardWithDefault(String accountId, int maxSize) {
