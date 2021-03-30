@@ -392,7 +392,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         String address = account.getDisplayUsername();
         mDisposable.clear();
         mDisposable.add(VCardServiceImpl
-                .loadProfile(account)
+                .loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(profile -> {
                     if (profile.first != null && !profile.first.isEmpty()) {
