@@ -19,52 +19,52 @@
  */
 package cx.ring.dependencyinjection;
 
+import net.jami.facades.ConversationFacade;
+import net.jami.services.AccountService;
+import net.jami.services.CallService;
+import net.jami.services.DaemonService;
+import net.jami.services.HardwareService;
+
 import javax.inject.Singleton;
 
 import cx.ring.account.AccountEditionFragment;
-import cx.ring.account.JamiAccountPasswordFragment;
-import cx.ring.account.JamiAccountUsernameFragment;
-import cx.ring.account.JamiLinkAccountPasswordFragment;
-import cx.ring.contactrequests.BlockListFragment;
-import cx.ring.fragments.GeneralAccountFragment;
-import cx.ring.fragments.LinkDeviceFragment;
-import cx.ring.fragments.ContactPickerFragment;
-import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.JamiAccountConnectFragment;
+import cx.ring.account.JamiAccountPasswordFragment;
+import cx.ring.account.JamiAccountSummaryFragment;
+import cx.ring.account.JamiAccountUsernameFragment;
+import cx.ring.account.JamiLinkAccountPasswordFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
-import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
+import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.RingtoneActivity;
+import cx.ring.contactrequests.BlockListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
+import cx.ring.fragments.ContactPickerFragment;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.client.ConversationSelectionActivity;
+import cx.ring.fragments.GeneralAccountFragment;
+import cx.ring.fragments.LinkDeviceFragment;
+import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.ShareWithFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.history.DatabaseHelper;
-import cx.ring.launch.LaunchActivity;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.service.JamiJobService;
-import net.jami.services.AccountService;
-import net.jami.services.CallService;
 import cx.ring.services.ContactServiceImpl;
-import net.jami.services.DaemonService;
 import cx.ring.services.DataTransferService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
-import net.jami.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationServiceImpl;
@@ -76,17 +76,17 @@ import cx.ring.share.ShareFragment;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.account.TVAccountWizard;
 import cx.ring.tv.account.TVHomeAccountCreationFragment;
-import cx.ring.tv.account.TVProfileCreationFragment;
-import cx.ring.tv.account.TVProfileEditingFragment;
 import cx.ring.tv.account.TVJamiAccountCreationFragment;
 import cx.ring.tv.account.TVJamiLinkAccountFragment;
+import cx.ring.tv.account.TVProfileCreationFragment;
+import cx.ring.tv.account.TVProfileEditingFragment;
 import cx.ring.tv.account.TVSettingsFragment;
 import cx.ring.tv.account.TVShareFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.call.TVCallFragment;
 import cx.ring.tv.cards.iconcards.IconCardPresenter;
-import cx.ring.tv.conversation.TvConversationFragment;
 import cx.ring.tv.contact.TVContactFragment;
+import cx.ring.tv.conversation.TvConversationFragment;
 import cx.ring.tv.main.MainFragment;
 import cx.ring.tv.search.ContactSearchFragment;
 import dagger.Component;
@@ -179,8 +179,6 @@ public interface JamiInjectionComponent {
     void inject(JamiLinkAccountPasswordFragment fragment);
 
     void inject(JamiAccountConnectFragment fragment);
-
-    void inject(LaunchActivity activity);
 
     //    AndroidTV section
     void inject(TVCallFragment fragment);

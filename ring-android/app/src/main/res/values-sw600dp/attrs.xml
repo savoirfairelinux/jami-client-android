@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="drawer_content_padding">320dp</dimen>
+
+    <bool name="isTablet">true</bool>
+
 </resources>
