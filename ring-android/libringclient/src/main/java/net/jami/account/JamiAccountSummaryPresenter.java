@@ -20,6 +20,7 @@
 
 package net.jami.account;
 
+import net.jami.model.Account;
 import net.jami.services.AccountService;
 import net.jami.services.DeviceRuntimeService;
 
@@ -29,13 +30,11 @@ import java.net.SocketException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.jami.model.Account;
 import net.jami.mvp.RootPresenter;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.VCardUtils;
-import ezvcard.VCard;
-import ezvcard.property.FormattedName;
+
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
@@ -159,7 +158,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<net.jami.account.
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     mAccountService.refreshAccounts();
                     getView().updateUserView(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
@@ -184,7 +183,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<net.jami.account.
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     mAccountService.refreshAccounts();
                     getView().updateUserView(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
@@ -210,33 +209,6 @@ public class JamiAccountSummaryPresenter extends RootPresenter<net.jami.account.
         } else {
             getView().askGalleryPermission();
         }
-    }
-
-    public String getAlias(Account account) {
-        if (account == null) {
-            Log.e(TAG, "Not able to get alias");
-            return null;
-        }
-        VCard vcard = account.getProfile();
-        if (vcard != null) {
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String name_value = name.getValue();
-                if (name_value != null && !name_value.isEmpty()) {
-                    return name_value;
-                }
-            }
-        }
-        return null;
-    }
-
-    public String getAccountAlias(net.jami.model.Account account) {
-        if (account == null) {
-            Log.e(TAG, "Not able to get account alias");
-            return null;
-        }
-        String alias = getAlias(account);
-        return (alias == null) ? account.getAlias() : alias;
     }
 
     public void goToAccount() {

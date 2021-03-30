@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ezvcard.VCard;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -89,6 +88,37 @@ public class Account {
     private final Observable<Integer> unreadPendingCount = unreadPendingSubject.distinctUntilChanged();
 
     private final BehaviorSubject<Collection<Contact>> contactListSubject = BehaviorSubject.create();
+
+    private final Map<Contact, Observable<ContactLocation>> contactLocations = new HashMap<>();
+    private final Subject<Map<Contact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
+    private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
+
+    public Single<Account> historyLoader;
+    //sprivate VCard mProfile;
+    private Single<Tuple<String, Object>> mLoadedProfile = null;
+
+    public Account(String bAccountID) {
+        accountID = bAccountID;
+        mDetails = new AccountConfig();
+        mVolatileDetails = new AccountConfig();
+    }
+
+    public Account(String bAccountID, final Map<String, String> details,
+                   final List<Map<String, String>> credentials,
+                   final Map<String, String> volDetails) {
+        accountID = bAccountID;
+        setDetails(details);
+        mVolatileDetails = new AccountConfig(volDetails);
+        setCredentials(credentials);
+    }
+
+    public void cleanup() {
+        conversationSubject.onComplete();
+        conversationsSubject.onComplete();
+        pendingSubject.onComplete();
+        contactListSubject.onComplete();
+        //trustRequestsSubject.onComplete();
+    }
 
     public boolean canSearch() {
         return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
@@ -168,37 +198,6 @@ public class Account {
         public static ComposingStatus fromInt(int status) {
             return status == 1 ? Active : Idle;
         }
-    }
-
-    private final Map<Contact, Observable<ContactLocation>> contactLocations = new HashMap<>();
-    private final Subject<Map<Contact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
-    private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
-
-    public Single<Account> historyLoader;
-    private VCard mProfile;
-    private Single<Tuple<String, Object>> mLoadedProfile = null;
-
-    public Account(String bAccountID) {
-        accountID = bAccountID;
-        mDetails = new AccountConfig();
-        mVolatileDetails = new AccountConfig();
-    }
-
-    public Account(String bAccountID, final Map<String, String> details,
-                   final List<Map<String, String>> credentials,
-                   final Map<String, String> volDetails) {
-        accountID = bAccountID;
-        setDetails(details);
-        mVolatileDetails = new AccountConfig(volDetails);
-        setCredentials(credentials);
-    }
-
-    public void cleanup() {
-        conversationSubject.onComplete();
-        conversationsSubject.onComplete();
-        pendingSubject.onComplete();
-        contactListSubject.onComplete();
-        //trustRequestsSubject.onComplete();
     }
 
     public Observable<List<Conversation>> getConversationsSubject() {
@@ -1109,13 +1108,8 @@ public class Account {
             return registeredName;
     }
 
-    public void setProfile(VCard vcard) {
-        mProfile = vcard;
+    public void resetProfile() {
         mLoadedProfile = null;
-    }
-
-    public VCard getProfile() {
-        return mProfile;
     }
 
     public Single<Tuple<String, Object>> getLoadedProfile() {

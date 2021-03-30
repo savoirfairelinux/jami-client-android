@@ -253,7 +253,7 @@ public class AvatarDrawable extends Drawable {
     }
 
     public static Single<AvatarDrawable> load(Context context, Account account, boolean crop) {
-        return VCardServiceImpl.loadProfile(account)
+        return VCardServiceImpl.loadProfile(context, account)
                 .map(data -> new Builder()
                         .withPhoto((Bitmap) data.second)
                         .withNameData(data.first, account.getRegisteredName())
