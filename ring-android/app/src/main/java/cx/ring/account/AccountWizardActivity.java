@@ -122,7 +122,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         File filedir = getFilesDir();
         return accountCreationModel.toVCard()
                 .flatMap(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     return VCardUtils.saveLocalProfileToDisk(vcard, account.getAccountID(), filedir);
                 })
                 .subscribeOn(Schedulers.io());
