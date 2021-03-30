@@ -18,33 +18,23 @@ arch=`uname -m`
 ANDROID_TOPLEVEL_DIR="`pwd`"
 ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
 
-HAVE_ARM=0
-HAVE_X86=0
-HAVE_64=0
-
 # Set up ABI variables
 if [ ${ANDROID_ABI} = "x86" ] ; then
     TARGET="i686-linux-android"
     PJ_TARGET="i686-pc-linux-android"
-    HAVE_X86=1
     PLATFORM_SHORT_ARCH="x86"
 elif [ ${ANDROID_ABI} = "x86_64" ] ; then
     TARGET="x86_64-linux-android"
     PJ_TARGET="x86_64-pc-linux-android"
-    HAVE_X86=1
-    HAVE_64=1
     PLATFORM_SHORT_ARCH="x86_64"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     TARGET="aarch64-linux-android"
     PJ_TARGET="aarch64-unknown-linux-android"
-    HAVE_ARM=1
-    HAVE_64=1
     PLATFORM_SHORT_ARCH="arm64"
 else
     TARGET_CC="armv7a-linux-androideabi"
     TARGET="arm-linux-androideabi"
     PJ_TARGET="arm-unknown-linux-androideabi"
-    HAVE_ARM=1
     PLATFORM_SHORT_ARCH="arm"
 fi
 TARGET_CC=${TARGET_CC:-$TARGET}
