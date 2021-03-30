@@ -23,6 +23,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.provider.ContactsContract;
 import android.util.Base64;
 import android.util.Log;
@@ -30,21 +31,21 @@ import android.util.LongSparseArray;
 
 import androidx.annotation.NonNull;
 
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
 import net.jami.model.Phone;
+import net.jami.model.Uri;
+import net.jami.services.ContactService;
+import net.jami.utils.Tuple;
+import net.jami.utils.VCardUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import cx.ring.views.AvatarFactory;
-import net.jami.model.Contact;
-import net.jami.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
-
-import net.jami.services.ContactService;
-import net.jami.utils.Tuple;
-import net.jami.utils.VCardUtils;
+import cx.ring.views.AvatarFactory;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -455,4 +456,8 @@ public class ContactServiceImpl extends ContactService {
                 .subscribeOn(Schedulers.io());
     }
 
+    public Single<Drawable> loadConversationAvatar(@NonNull Context context, @NonNull Conversation conversation) {
+        return getLoadedContact(conversation.getAccountId(), conversation.getContacts(), false)
+                .flatMap(contacts -> AvatarFactory.getAvatar(context, conversation, false));
+    }
 }
