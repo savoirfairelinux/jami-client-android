@@ -167,7 +167,7 @@ public abstract class ContactService {
         if (contacts.isEmpty())
             return Single.just(Collections.emptyList());
         return Observable.fromIterable(contacts)
-                .flatMapSingle(contact -> getLoadedContact(accountId, contact, withPresence))
+                .concatMapEager(contact -> getLoadedContact(accountId, contact, withPresence).toObservable())
                 .toList(contacts.size());
     }
 
