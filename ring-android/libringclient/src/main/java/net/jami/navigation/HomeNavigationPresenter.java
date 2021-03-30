@@ -42,7 +42,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomeNavigationPresenter extends RootPresenter<net.jami.navigation.HomeNavigationView> {
+public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
 
     private static final String TAG = HomeNavigationPresenter.class.getSimpleName();
 
@@ -64,14 +64,13 @@ public class HomeNavigationPresenter extends RootPresenter<net.jami.navigation.H
     }
 
     @Override
-    public void bindView(net.jami.navigation.HomeNavigationView view) {
+    public void bindView(HomeNavigationView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getProfileAccountList()
-                .filter(accounts -> !accounts.isEmpty())
-                .switchMapSingle(accounts -> accounts.get(0).getAccountAlias().map(alias -> new Tuple<>(accounts.get(0), alias)))
+        mCompositeDisposable.add(mAccountService.getCurrentProfileAccountSubject()
+                .switchMapSingle(account -> account.getAccountAlias().map(alias -> new Tuple<>(account, alias)))
                 .observeOn(mUiScheduler)
                 .subscribe(alias -> {
-                    net.jami.navigation.HomeNavigationView v = getView();
+                    HomeNavigationView v = getView();
                     if (v != null)
                         v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second));
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
@@ -109,7 +108,7 @@ public class HomeNavigationPresenter extends RootPresenter<net.jami.navigation.H
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     mAccountService.refreshAccounts();
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
@@ -128,7 +127,7 @@ public class HomeNavigationPresenter extends RootPresenter<net.jami.navigation.H
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     mAccountService.refreshAccounts();
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
@@ -152,7 +151,7 @@ public class HomeNavigationPresenter extends RootPresenter<net.jami.navigation.H
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.setProfile(vcard);
+                    account.resetProfile();
                     mAccountService.refreshAccounts();
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
