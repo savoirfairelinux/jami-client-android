@@ -38,8 +38,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             app:contentInsetStart="16dp">
 
             <cx.ring.views.SwitchButton
@@ -59,51 +57,11 @@ along with this program; if not, write to the Free Software
             <Spinner
                 android:id="@+id/spinner_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:dropDownWidth="260dp"
-                android:paddingStart="-60dp" />
-
-            <!--
-            <RelativeLayout
-                android:id="@+id/tablet_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="100dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/contact_image"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    tools:src="@drawable/ic_contact_picture_fallback" />
-
-                <TextView
-                    android:id="@+id/contact_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/contact_image"
-                    android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/contact_image"
-                    android:singleLine="true"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="16sp"
-                    tools:text="Thomas" />
-
-                <TextView
-                    android:id="@+id/contact_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/contact_title"
-                    android:layout_alignStart="@id/contact_title"
-                    android:layout_toEndOf="@+id/contact_image"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp"
-                    tools:text="tom" />
-
-            </RelativeLayout>-->
+                android:paddingStart="-60dp"
+                tools:listitem="@layout/item_toolbar_selected"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
