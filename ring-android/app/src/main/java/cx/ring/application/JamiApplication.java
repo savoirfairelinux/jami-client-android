@@ -101,8 +101,6 @@ public abstract class JamiApplication extends Application {
     DeviceRuntimeService mDeviceRuntimeService;
     @Inject
     ContactService mContactService;
-    @Inject
-    ConversationFacade mConversationFacade;
 
     private JamiInjectionComponent mJamiInjectionComponent;
     private final Map<String, Boolean> mPermissionsBeingAsked = new HashMap<>();;
@@ -341,10 +339,6 @@ public abstract class JamiApplication extends Application {
 
     public HardwareService getHardwareService() {
         return mHardwareService;
-    }
-
-    public ConversationFacade getFacade() {
-        return mConversationFacade;
     }
 
     private void setupActivityListener() {
