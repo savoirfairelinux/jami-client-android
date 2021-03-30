@@ -25,6 +25,7 @@ along with this program; if not, write to the Free Software
     <dimen name="padding_large">16dp</dimen>
 
     <dimen name="list_medium_icon_size">40dp</dimen>
+    <dimen name="list_small_icon_size">32dp</dimen>
 
     <dimen name="conversation_message_padding_top">7dp</dimen>
     <dimen name="conversation_message_padding_bottom">7dp</dimen>

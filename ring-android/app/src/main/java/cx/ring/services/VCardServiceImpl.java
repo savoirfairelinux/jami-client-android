@@ -50,17 +50,23 @@ public class VCardServiceImpl extends VCardService {
         this.mContext = context;
     }
 
-    public static Single<Tuple<String, Object>> loadProfile(@NonNull Account account) {
+    public static Single<Tuple<String, Object>> loadProfile(@NonNull Context context, @NonNull Account account) {
         synchronized (account) {
             Single<Tuple<String, Object>> ret = account.getLoadedProfile();
             if (ret == null) {
-                ret = Single.fromCallable(() -> readData(account.getProfile()))
+                ret = VCardUtils.loadLocalProfileFromDiskWithDefault(context.getFilesDir(), account.getAccountID())
+                        .map(VCardServiceImpl::readData)
                         .subscribeOn(Schedulers.computation())
                         .cache();
                 account.setLoadedProfile(ret);
             }
             return ret;
         }
+    }
+
+    @Override
+    public Single<Tuple<String, Object>> loadProfile(@NonNull Account account) {
+        return loadProfile(mContext, account);
     }
 
     @Override
