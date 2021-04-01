@@ -537,6 +537,10 @@ public class Account {
         return mDetails.getBool(ConfigKey.ACCOUNT_AUTOANSWER);
     }
 
+    public boolean isRendezvousEnabled() {
+        return mDetails.getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS);
+    }
+
     public ArrayList<AccountCredentials> getCredentials() {
         return credentialsDetails;
     }

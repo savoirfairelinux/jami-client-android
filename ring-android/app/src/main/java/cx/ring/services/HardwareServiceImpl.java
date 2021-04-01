@@ -84,6 +84,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private String mCapturingId = null;
     private boolean mIsCapturing = false;
     private boolean mIsScreenSharing = false;
+    private boolean mIsRendezvousEnabled = false;
 
     private boolean mShouldCapture = false;
     private boolean mShouldSpeakerphone = false;
@@ -529,7 +530,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
         final Conference conf = mCameraPreviewCall.get();
-        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin;
+        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin && !mIsRendezvousEnabled;
         if (conf != null && useHardwareCodec) {
             SipCall call = conf.getCall();
             if (call != null) {
@@ -672,10 +673,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void addPreviewVideoSurface(Object oholder, Conference conference) {
+    public void addPreviewVideoSurface(Object oholder, Conference conference, boolean isRendezvousEnabled) {
         if (!(oholder instanceof TextureView)) {
             return;
         }
+        mIsRendezvousEnabled = isRendezvousEnabled;
         TextureView holder = (TextureView) oholder;
         Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId);
         if (mCameraPreviewSurface.get() == oholder)

@@ -147,7 +147,7 @@ public abstract class HardwareService {
     public abstract void updateVideoSurfaceId(String currentId, String newId);
     public abstract void removeVideoSurface(String id);
 
-    public abstract void addPreviewVideoSurface(Object holder, Conference conference);
+    public abstract void addPreviewVideoSurface(Object holder, Conference conference, boolean isRendezvousEnabled);
     public abstract void updatePreviewVideoSurface(Conference conference);
     public abstract void removePreviewVideoSurface();
 

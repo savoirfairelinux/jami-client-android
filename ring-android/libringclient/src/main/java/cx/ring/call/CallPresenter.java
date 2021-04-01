@@ -364,7 +364,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void previewVideoSurfaceCreated(Object holder) {
-        mHardwareService.addPreviewVideoSurface(holder, mConference);
+        boolean isRendezvousEnabled = mAccountService.getAccount(mConference.getCall().getAccount()).isRendezvousEnabled();
+        mHardwareService.addPreviewVideoSurface(holder, mConference, isRendezvousEnabled);
         //mHardwareService.startCapture(null);
     }
 
