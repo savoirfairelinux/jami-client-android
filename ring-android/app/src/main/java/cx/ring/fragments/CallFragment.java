@@ -1353,6 +1353,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public void micClicked() {
         presenter.muteMicrophoneToggled(binding.callMicBtn.isChecked());
+        binding.callMicBtn.setImageResource(binding.callMicBtn.isChecked()? R.drawable.baseline_mic_off_24 : R.drawable.baseline_mic_24);
     }
 
     public void hangUpClicked() {

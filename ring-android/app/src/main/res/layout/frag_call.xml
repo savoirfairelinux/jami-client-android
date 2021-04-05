@@ -303,7 +303,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:onClick="@{() -> presenter.micClicked()}"
                     android:padding="16dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/baseline_mic_off_24"
+                    app:srcCompat="@drawable/baseline_mic_24"
                     tools:visibility="visible" />
 
                 <cx.ring.views.CheckableImageButton
