@@ -157,7 +157,7 @@ U kunt uw account later bewerken</string>
   <string name="account_link_export_info">Om dit account op andere apparaten te gebruiken dient u deze eerst op Jami bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>
-  <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Maak een nieuw account aan met ‘Dit apparaat aan een account koppelen’. Uw pincode is 10 minuten geldig.</string>
+  <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Voeg een Jami-account toe met ‘Dit apparaat koppelen’. Uw pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken dient u deze eerst op Ring bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_export_title">Apparaten toevoegen</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
@@ -172,6 +172,7 @@ U kunt uw account later bewerken</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam</string>
+  <string name="register_recommended">Aanbevolen</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
   <string name="unknown_error">Onbekende fout. Controleer uw netwerkverbinding!</string>

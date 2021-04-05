@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">Aja Jami taustalle, kun järjestelmä käynnistyy.</string>
   <string name="pref_clearHistory_title">Tyhjennä historia</string>
   <string name="pref_clearHistory_summary">Tyhjennä koko keskusteluhistoria. Tätä toimintoa ei voi peruuttaa.</string>
+  <string name="pref_notification_title">Ilmoituksen näkyvyys</string>
+  <string name="pref_notification_summary">Aseta ilmoitusten näkyvyys lukitusruudulle.</string>
   <string name="pref_blackList_title">Estolista</string>
   <string name="pref_blackList_summary">Tarkista estolistasi.</string>
   <string name="pref_delete_account_title">Poista tili</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
   <string name="pref_block_record_summary">Estä ruudunkaappaus tai tallennus.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Julkinen \n(näytä ilmoitukset ja niiden sisältö lukitusruudulla)\n</string>
+  <string name="notification_private">Yksityinen \n(näytä ilmoitukset, mutta piilottaa sisältö lukitusnäytöllä)\n</string>
+  <string name="notification_secret">Salainen \n(älä näytä ilmoituksia lukitusnäytöllä)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Lisäosat</string>
   <string name="pref_plugins_summary">Salli lisäosat ja aseta niiden parametrit</string>

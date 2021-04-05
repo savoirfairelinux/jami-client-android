@@ -23,6 +23,7 @@
   <string name="ringtones_by">Suonerie di</string>
   <!--RingActivity-->
   <string name="error_no_network">Connessione di rete assente</string>
+  <string name="error_account_offline">L\'account è non in linea</string>
   <string name="error_mobile_network_available_but_disabled">Consenti l\'acceso alla rete cellulare dalla schermata impostazioni.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messaggio di testo</string>
@@ -31,6 +32,7 @@
   <string name="menu_item_accounts">Gestisci profili</string>
   <string name="menu_item_account">Gestione account</string>
   <string name="menu_item_settings">Impostazioni</string>
+  <string name="menu_item_plugin_list">Impostazioni plugin</string>
   <string name="menu_item_share">Condividi il mio contatto</string>
   <string name="menu_item_about">Informazioni su Jami</string>
   <!--Dialing Fragment-->
@@ -79,9 +81,16 @@
   <string name="location_share_contact">%1$s sta condividendo la posizione con te. </string>
   <string name="notif_location_multi_title">Condivisione posizione con %1$d contatti</string>
   <string name="notif_location_remaining">%1$d minuti rimanenti</string>
+  <string name="notif_location_action_stop">Ferma condivisione della posizione</string>
+  <string name="location_share_action_start">Inizia condivisione</string>
+  <string name="location_share_action_stop">Ferma condivisione</string>
+  <string name="location_share_about_title">Informazioni mappa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Riattacca</string>
+  <string name="action_call_maximize">Massimizza</string>
+  <string name="action_call_minimize">Riduci</string>
+  <string name="action_call_mute">Muto</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata a %1$s</string>

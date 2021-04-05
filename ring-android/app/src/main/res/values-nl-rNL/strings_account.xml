@@ -2,41 +2,117 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Verwijderen</string>
+  <string name="ic_advanced_menu">Uitgebreide instellingen</string>
+  <string name="ic_blacklist_menu">Geblokkeerde contacten</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Jami-account toevoegen</string>
+  <string name="add_sip_account_title">SIP-account toevoegen</string>
+  <string name="ring_account_default_name">Jami account %1$s</string>
+  <string name="prompt_alias">Alias</string>
   <string name="prompt_username">Gebruikersnaam</string>
   <string name="prompt_password">Wachtwoord</string>
+  <string name="action_create">Account aanmaken</string>
+  <string name="action_create_short">Aanmaken</string>
   <string name="action_register">Registreren</string>
   <string name="action_settings">Instellingen</string>
   <string name="error_field_required">Dit invulveld is vereist</string>
   <string name="dialog_wait_create">Account aan het toevoegen</string>
+  <string name="dialog_wait_create_details">Uw nieuwe account wordt toegevoegd. Een moment geduld a.u.b.</string>
+  <string name="dialog_wait_update">Account wordt bijgewerkt</string>
+  <string name="dialog_wait_update_details">Uw nieuwe account wordt bijgewerkt. Een moment geduld a.u.b.</string>
+  <string name="dialog_warn_ip2ip_account_title">Een leeg SIP account aanmaken?</string>
+  <string name="dialog_warn_ip2ip_account_message">U staat op het punt een SIP account aan te maken zonder valide hostname.
+        U zult alleen in staat zijn directe IP gesprekken te starten of te ontvangen.
+        U kunt het account ook later bijwerken</string>
+  <string name="help_ring">Een Jami-account maakt het mogelijk om peer-to-peer met mensen te bereiken in een volledig gedistribueerde netwerk.</string>
   <string name="help_sip_title">Voeg je SIP account toe</string>
+  <string name="help_sip">Configureer een bestaand SIP account</string>
+  <string name="create_sip_account">SIP-account toevoegen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Account verwijderen?</string>
   <string name="account_delete_dialog_message">Deze actie kan niet ongedaan worden</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Geen account geregistreerd</string>
   <string name="normal_accounts_titles">Accounts</string>
+  <string name="normal_devices_titles">Gekoppelde apparaten</string>
+  <string name="account_device_revoke">Apparaat ontkoppelen</string>
+  <string name="account_device_revocation_success">Het apparaat is nu ontkoppeld!</string>
+  <string name="account_device_revocation_error_title">Apparaat ontkoppelen is niet mogelijk</string>
+  <string name="account_device_revocation_wrong_password">Verkeerd wachtwoord.</string>
+  <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
+  <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
+  <string name="account_password_change">Wachtwoord Wijzigen</string>
+  <string name="account_password_set">Wachtwoord Instellen</string>
+  <string name="account_password_summary">Beheer het wachtwoord van uw account</string>
+  <string name="account_password_change_wait_message">Account wachtwoord wordt gewijzigd</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
+  <string name="account_basic_category">Basis Instellingen</string>
   <string name="account_alias_label">Naam account</string>
   <string name="account_username_label">Gebruikersnaam</string>
   <string name="account_password_label">Wachtwoord</string>
+  <string name="account_optionnal_category">Optionele instellingen</string>
+  <string name="account_autoanswer_label">Automatisch opnemen</string>
+  <string name="account_rendezvous_summary">In Rendezvous mode, worden inkomende oproepen aan een conferentie toegevoegd</string>
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
   <string name="account_preferences_media_tab">Media</string>
   <string name="account_ringtone_label">Ringtones</string>
+  <string name="account_ringtone_enabled_label">Ringtones inschakelen </string>
+  <string name="account_ringtone_title">Ringtone kiezen</string>
+  <string name="account_ringtone_summary">Selecteer een ringtone of kies er zelf een</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Gevorderd</string>
+  <string name="account_call_settings_title">Bel instellingen</string>
+  <string name="account_dht_public_in_calls_label">Sta inkomende oproepen van onbekende contacten toe</string>
+  <string name="account_accept_files">Automatisch inkomende bestanden accepteren</string>
+  <string name="account_conversation_settings_title">Gespreksinstellingen</string>
+  <string name="account_accept_files_max_size">Maximale bestandsgrootte wat automatisch geaccepteerd wordt</string>
+  <string name="account_accept_files_never">Nooit automatisch accepteren</string>
+  <string name="account_accept_files_always">Altijd automatisch accepteren</string>
+  <string name="account_peer_discovery_label">Lokale verwanten ontdekken</string>
+  <string name="account_peer_discovery_enable_label">Lokale verwanten ontdekken inschakelen</string>
+  <string name="account_peer_discovery_enable_summary">Verbinden met andere DHT nodes die zich kenbaar maken binnen het LAN waar u zich bevind</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="export_account_wait_title">Een moment a.u.b...</string>
+  <string name="account_export_end_error_title">Fout</string>
+  <string name="account_enter_password">Wachtwoord invoeren</string>
+  <string name="account_link_device">Dit apparaat koppelen</string>
+  <string name="account_link_export_button">Koppel een nieuw apparaat</string>
+  <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
+  <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
+  <string name="account_link_export_info">Om dit account op andere apparaten te gebruiken, dient u Jami een PIN te laten genereren. Deze PIN kunt u op het andere apparaat invoeren tijdens het toevoegen van een Jami-account door te koppelen met een apparaat. De PIN is 10 minuten geldig.</string>
+  <string name="account_end_export_infos">Uw PIN is:\n\n%%\n\nU dient nu op uw nieuwe apparaat Jami te openen. Daar kunt u een account toevoegen door te selecteren \"Dit apparaat koppelen\". Uw PIN is 10 minuten geldig.</string>
+  <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken, dient u Jami een PIN te laten genereren. Deze PIN kunt u op het andere apparaat invoeren tijdens het toevoegen van een Jami-account door te koppelen met een apparaat. De PIN is 10 minuten geldig.</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
+  <string name="account_status_error">Fout</string>
   <!--Create account-->
+  <string name="account_creation_home">Welkom bij Jami</string>
+  <string name="account_creation_profile">Maak uw profiel aan</string>
+  <string name="account_creation_ring">Maak uw Jami-account aan</string>
+  <string name="account_link_title">Dit apparaat koppelen</string>
+  <string name="account_sip_cannot_be_registered">Kan het account niet registreren</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Profiel bewerken</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Wachtwoord ter controle nogmaals invoeren</string>
+  <string name="enter_password">Wachtwoord invoeren</string>
+  <string name="revoke_device_title">Apparaat terugtrekken</string>
+  <string name="revoke_device_message">Weet u zeker dat u %1$s wilt ontkoppelen ?</string>
+  <string name="revoke_device_wait_title">Een moment a.u.b...</string>
+  <string name="revoke_device_wait_message">Apparaat aan het ontkoppelen</string>
+  <string name="rename_device_title">Dit apparaat hernoemen</string>
+  <string name="rename_device_message">Kies een nieuwe naam om dit apparaat te herkennen in uw Jami-account</string>
+  <string name="rename_device_button">Apparaat hernoemen</string>
+  <string name="account_rename_device_hint">Kies een nieuwe apparaat-naam</string>
+  <string name="account_device_name_empty">Apparaat naam mag niet leeg zijn</string>
 </resources>

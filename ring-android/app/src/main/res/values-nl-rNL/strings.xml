@@ -13,6 +13,9 @@
   <string name="email_chooser_title">Stuur ons een e-mail met...</string>
   <string name="website_chooser_title">Bekijk onze website met...</string>
   <!--About dialog-->
+  <string name="developed_by">Ontwikkeld door</string>
+  <string name="designed_by">Ontworpen door</string>
+  <string name="ringtones_by">Beltonen door</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
   <!--AB menus-->
@@ -34,6 +37,7 @@
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">Fout</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -45,8 +49,11 @@
   <string name="conversation_action_select_peer_number">Selecteer een nummer</string>
   <!--Contacts-->
   <string name="prompt_hint_username">Gebruikersnaam</string>
+  <string name="wizard_back">Terug</string>
   <!--Account Summary-->
+  <string name="link_new_device">Koppel een nieuw apparaat</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Fout</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <!--Blacklist-->
@@ -57,4 +64,5 @@
   <!--TV-->
   <string name="tv_audio_play">Spelen</string>
   <!--Wizard-->
+  <string name="wizard_password_skip">Account aanmaken</string>
 </resources>
