@@ -456,6 +456,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
             presenter.uiVisibilityChanged(ui);
         });
+        boolean ui = (view.getSystemUiVisibility() & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
+        presenter.uiVisibilityChanged(ui);
+
         view.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
                 resetVideoSize(mVideoWidth, mVideoHeight));
 
@@ -1119,6 +1122,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callMicBtn.setChecked(isMuted);
 
         requireActivity().invalidateOptionsMenu();
+        CallActivity callActivity = (CallActivity) getActivity();
+        callActivity.showSystemUI();
     }
 
     @Override
@@ -1428,7 +1433,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         } else {
             movePreview(false);
-            displayHangupButton(true);
         }
     }
 

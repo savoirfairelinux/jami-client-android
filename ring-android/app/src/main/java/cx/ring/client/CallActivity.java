@@ -21,14 +21,17 @@
  */
 package cx.ring.client;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,7 +41,6 @@ import androidx.fragment.app.Fragment;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
@@ -54,6 +56,7 @@ public class CallActivity extends AppCompatActivity {
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private View mMainView;
+    private Handler handler;
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
     private boolean dimmed = false;
 
@@ -75,6 +78,8 @@ public class CallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_call_layout);
         setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
+        handler = new Handler(Looper.getMainLooper());
+
         mMainView = findViewById(R.id.main_call_layout);
         mMainView.setOnClickListener(v -> {
             dimmed = !dimmed;
@@ -88,6 +93,20 @@ public class CallActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null)
             handleNewIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restartNoInteractionTimer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (handler != null) {
+            handler.removeCallbacks(onNoInteraction);
+        }
     }
 
     @Override
@@ -120,8 +139,22 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
+    private final Runnable onNoInteraction = () -> {
+        if (!dimmed) {
+            dimmed = true;
+            hideSystemUI();
+        }
+    };
+
+    public void restartNoInteractionTimer() {
+        if (handler != null) {
+            handler.removeCallbacks(onNoInteraction);
+            handler.postDelayed(onNoInteraction, 4 * 1000);
+        }
+    }
+
     @Override
-    public void onUserLeaveHint () {
+    public void onUserLeaveHint() {
         CallFragment callFragment = getCallFragment();
         if (callFragment != null) {
             callFragment.onUserLeave();
@@ -129,19 +162,21 @@ public class CallActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onUserInteraction() {
+        restartNoInteractionTimer();
+    }
 
-        currentOrientation = newConfig.orientation;
-
-        // Checks the orientation of the screen
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            dimmed = true;
-            hideSystemUI();
-        } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-            dimmed = false;
-            showSystemUI();
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        if (currentOrientation != newConfig.orientation) {
+            currentOrientation = newConfig.orientation;
+            if (dimmed)
+                hideSystemUI();
+            else
+                showSystemUI();
+        } else {
+            restartNoInteractionTimer();
         }
-
         super.onConfigurationChanged(newConfig);
     }
 
@@ -160,6 +195,8 @@ public class CallActivity extends AppCompatActivity {
             if(callFragment != null && !callFragment.isChoosePluginMode()) {
                 callFragment.toggleVideoPluginsCarousel(false);
             }
+            if (handler != null)
+                handler.removeCallbacks(onNoInteraction);
         }
     }
 
@@ -175,16 +212,7 @@ public class CallActivity extends AppCompatActivity {
             if(callFragment != null) {
                 callFragment.toggleVideoPluginsCarousel(true);
             }
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideSystemUI();
-        } else {
-            showSystemUI();
+            restartNoInteractionTimer();
         }
     }
 
