@@ -21,7 +21,7 @@
   <string name="dialog_wait_create_details">Așteaptă în timp ce noul tău cont este adăugat...</string>
   <string name="dialog_wait_update">Se actualizează contul</string>
   <string name="dialog_wait_update_details">Așteaptă în timp ce noul tău cont este actualizat...</string>
-  <string name="dialog_warn_ip2ip_account_title">Creezi un cont SIP gol ?</string>
+  <string name="dialog_warn_ip2ip_account_title">Creezi un cont SIP gol?</string>
   <string name="dialog_warn_ip2ip_account_message">Ești pe cale să creezi un cont SIP fără nume de server valabil.
         Vei putea face și primi doar apeluri IP directe.
         Îți vei putea modifica contul mai tîrziu</string>
@@ -44,21 +44,21 @@
   <string name="account_device_revocation_wrong_password">Parolă greșită.</string>
   <string name="account_device_revocation_unknown_device">Aparat necunoscut.</string>
   <string name="account_device_revocation_error_unknown">Eroare necunoscută.</string>
-  <string name="account_password_change">Schimbă Parola</string>
+  <string name="account_password_change">Schimbă parola</string>
   <string name="account_password_set">Pune o parolă</string>
   <string name="account_password_summary">Gestionează parola contului tău.</string>
   <string name="account_password_change_wait_message">Se schimbă parola contului </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
-  <string name="account_basic_category">Reglări Simple</string>
+  <string name="account_basic_category">Reglări simple</string>
   <string name="account_alias_label">Numele contului</string>
   <string name="account_hostname_label">Numele serverului</string>
   <string name="account_bootstrap_label">Server de conectare</string>
-  <string name="account_username_label">Nume de Utilizator</string>
+  <string name="account_username_label">Nume de utilizator</string>
   <string name="account_password_label">Parola</string>
-  <string name="account_optionnal_category">Reglări Facultative</string>
+  <string name="account_optionnal_category">Reglări facultative</string>
   <string name="account_useragent_label">User Agent</string>
-  <string name="account_autoanswer_label">Răspuns Automat</string>
+  <string name="account_autoanswer_label">Răspuns automat</string>
   <string name="account_rendezvous_label">Modalitate Întîlnire</string>
   <string name="account_rendezvous_summary">În modalitatea Întîlnire, apelurile primite vor fi adăugate la o sală de conferințe.</string>
   <string name="account_upnp_label">Activează UPnP</string>
@@ -67,7 +67,7 @@
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Media</string>
   <string name="account_ringtone_label">Sonerii</string>
-  <string name="account_ringtone_enabled_label">Activează Sonerii</string>
+  <string name="account_ringtone_enabled_label">Activează sonerii</string>
   <string name="account_ringtone_path_label">Parcursul soneriei</string>
   <string name="account_ringtone_custom_label">Folosește o sonerie personalizată</string>
   <string name="account_ringtone_title">Alege o sonerie</string>
@@ -146,15 +146,15 @@
   <string name="account_export_end_error_title">Eroare</string>
   <string name="account_export_end_error_message">Contul nu poate fi exportat. A apărut o eroare necunoscută.</string>
   <string name="account_enter_password">Introdu parola</string>
-  <string name="account_share_body">Contactează-mă folosind \'%1$s\' pe platforma distribuită de comunicare Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contactează-mă folosind \'%1$s\' sau numele meu public de utilizator  \'%2$s\' pe platforma distribuită de comunicare Jami: %3$s </string>
+  <string name="account_share_body">Contactează-mă folosind „%1$s” pe platforma distribuită de comunicare Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contactează-mă folosind „%1$s” sau numele meu public de utilizator „%2$s” pe platforma distribuită de comunicare Jami: %3$s </string>
   <string name="account_contact_me">Contactează-mă pe Jami !</string>
   <string name="update_account">Actualizează contul</string>
   <string name="account_migration">Contul tău Jami poate fi actualizat.\nIntrodu parola ta.</string>
   <string name="ring_account">Cont Jami</string>
   <string name="ring_account_identity">Identitate</string>
   <string name="account_migration_title_dialog">Transferul contului</string>
-  <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la \"Gestionează contul\" pentru a face acest lucru ?</string>
+  <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la „Gestionează contul” pentru a face acest lucru?</string>
   <string name="account_update_needed">Actualizare necesară</string>
   <string name="account_cannot_be_found_title">Nu pot găsi contul</string>
   <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami.\nAsigură-te că a fost exportat pe Jami dintr-un aparat existent și datele de autentificare sînt corecte.</string>
@@ -188,15 +188,15 @@
   <string name="prompt_server">URL-ul serverului de administrare Jami</string>
   <string name="help_credentials_enter">Introdu datele de autentificare ale organizației tale</string>
   <string name="help_connect_password_enter">Introdu parola organizației tale</string>
-  <string name="account_connect_prompt_username">Nume de Utilizator</string>
+  <string name="account_connect_prompt_username">Nume de utilizator</string>
   <!--Name registration-->
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Niciun nume înscris</string>
-  <string name="username_available">Nume de utilizator disponibil !</string>
+  <string name="username_available">Nume de utilizator disponibil!</string>
   <string name="register_name">Înscrie numele</string>
   <string name="trying_to_register_name">Se înscrie numele</string>
   <string name="registered_username">Nume de utilizator înscris</string>
-  <string name="register_username">Înscrie numele de utilizator public</string>
+  <string name="register_username">Înscrie numele public de utilizator</string>
   <string name="register_recommended">Recomandat</string>
   <string name="username_already_taken">Nume de utilizator ales deja</string>
   <string name="invalid_username">Nume greșit</string>
@@ -221,13 +221,13 @@
   <string name="enter_password">Introdu parola</string>
   <string name="revoke_device_title">Elimină aparatul</string>
   <string name="revoke_device_message">Sigur vrei să elimini %1$s ?</string>
-  <string name="revoke_device_wait_title">Te rog așteaptă...</string>
+  <string name="revoke_device_wait_title">Așteaptă...</string>
   <string name="revoke_device_wait_message">Se elimină aparatul</string>
   <string name="rename_device_title">Redenumește acest aparat</string>
   <string name="rename_device_message">Alege un nume nou pentru a identifica acest aparat în contul tău Jami</string>
   <string name="rename_device_button">Redenumește aparatul</string>
   <string name="account_rename_device_hint">Alege un nume nou pentru aparat</string>
-  <string name="account_device_name_empty">Numele aparatului nu poate fi gol</string>
+  <string name="account_device_name_empty">Numele aparatului trebuie pus</string>
   <string name="account_device_this_indicator">Acest aparat</string>
   <string name="account_disabled_indicator">dezactivat</string>
 </resources>
