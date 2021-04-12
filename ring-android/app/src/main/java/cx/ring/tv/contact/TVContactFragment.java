@@ -26,7 +26,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.widget.Action;
@@ -40,9 +42,12 @@ import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.SparseArrayObjectAdapter;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Interaction;
 import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
 import cx.ring.smartlist.SmartListViewModel;
@@ -61,6 +66,9 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private static final int ACTION_BLOCK = 4;
     private static final int ACTION_ADD_CONTACT = 5;
     private static final int ACTION_CLEAR_HISTORY = 6;
+
+    private static final int DIALOG_WIDTH = 900;
+    private static final int DIALOG_HEIGHT = 400;
 
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
@@ -136,7 +144,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             if (action.getId() == ACTION_CALL) {
                 presenter.contactClicked();
             } else if (action.getId() == ACTION_DELETE) {
-                presenter.removeContact();
+                createDeleteDialog();
             } else if (action.getId() == ACTION_CLEAR_HISTORY) {
                 presenter.clearHistory();
             } else if (action.getId() == ACTION_ADD_CONTACT) {
@@ -219,4 +227,24 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             activity.finish();
         }
     }
+
+    private void createDeleteDialog() {
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
+                .setTitle(R.string.conversation_action_remove_this_title)
+                .setMessage("")
+                .setPositiveButton(R.string.menu_delete, (dialog, whichButton) -> presenter.removeContact())
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+        alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
+        alertDialog.setOwnerActivity(requireActivity());
+        alertDialog.setOnShowListener(dialog -> {
+            Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positive.setFocusable(true);
+            positive.setFocusableInTouchMode(true);
+            positive.requestFocus();
+        });
+
+        alertDialog.show();
+    }
+
 }
