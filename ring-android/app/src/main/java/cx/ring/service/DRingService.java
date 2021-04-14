@@ -488,16 +488,6 @@ public class DRingService extends Service {
         }
 
         @Override
-        public int backupAccounts(final List accountIDs, final String toDir, final String password) {
-            return mAccountService.backupAccounts(accountIDs, toDir, password);
-        }
-
-        @Override
-        public int restoreAccounts(final String archivePath, final String password) {
-            return mAccountService.restoreAccounts(archivePath, password);
-        }
-
-        @Override
         public void connectivityChanged() {
             mHardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected());
         }

@@ -973,34 +973,6 @@ public class AccountService {
     }
 
     /**
-     * Backs  up all the accounts into to an archive in the path
-     */
-    public int backupAccounts(final List<String> accountIds, final String toDir, final String password) {
-        try {
-            return mExecutor.submit(() -> {
-                StringVect ids = new StringVect();
-                ids.addAll(accountIds);
-                return Ringservice.exportAccounts(ids, toDir, password);
-            }).get();
-        } catch (Exception e) {
-            Log.e(TAG, "Error running backupAccounts()", e);
-        }
-        return 1;
-    }
-
-    /**
-     * Restores the saved accounts from a path
-     */
-    public int restoreAccounts(final String archivePath, final String password) {
-        try {
-            return mExecutor.submit(() -> Ringservice.importAccounts(archivePath, password)).get();
-        } catch (Exception e) {
-            Log.e(TAG, "Error running restoreAccounts()", e);
-        }
-        return 1;
-    }
-
-    /**
      * Registers a new name on the blockchain for the account
      */
     public void registerName(final Account account, final String password, final String name) {

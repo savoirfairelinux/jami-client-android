@@ -114,8 +114,5 @@ interface IDRingService {
 
     Map getConference(in String id);
 
-    int backupAccounts(in List accountIDs, in String toDir, in String password);
-    int restoreAccounts(in String archivePath, in String password);
-
     void connectivityChanged();
 }
