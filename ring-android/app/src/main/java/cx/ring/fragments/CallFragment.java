@@ -276,6 +276,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 Rect videoBounds = new Rect(x, y, x + w, y + h);
                 paramBuilder.setAspectRatio(new Rational(w, h));
                 paramBuilder.setSourceRectHint(videoBounds);
+            } else {
+                return;
             }
             ArrayList<RemoteAction> actions = new ArrayList<>(1);
             actions.add(new RemoteAction(
@@ -287,7 +289,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                                     .setClass(context, DRingService.class)
                                     .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
-            requireActivity().enterPictureInPictureMode(paramBuilder.build());
+            try {
+                requireActivity().enterPictureInPictureMode(paramBuilder.build());
+            } catch (Exception e) {
+                Log.w(TAG, "Can't enter  PIP mode", e);
+            }
         } else if (DeviceUtils.isTv(context)) {
             requireActivity().enterPictureInPictureMode();
         }
