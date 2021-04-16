@@ -48,12 +48,14 @@ public class JamiLinkAccountPresenter extends RootPresenter<JamiLinkAccountView>
     }
 
     public void passwordChanged(String password) {
-        mAccountCreationModel.setPassword(password);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setPassword(password);
         showHideLinkButton();
     }
 
     public void pinChanged(String pin) {
-        mAccountCreationModel.setPin(pin);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setPin(pin);
         showHideLinkButton();
     }
 

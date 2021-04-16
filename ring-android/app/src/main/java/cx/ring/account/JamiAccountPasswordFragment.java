@@ -63,6 +63,10 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        if (savedInstanceState != null && model == null) {
+            model = (AccountCreationModelImpl) savedInstanceState.getSerializable(KEY_MODEL);
+        }
         binding = FragAccJamiPasswordBinding.inflate(inflater, container, false);
         ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
@@ -77,10 +81,6 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRetainInstance(true);
-        if (savedInstanceState != null) {
-            model = (AccountCreationModelImpl) savedInstanceState.getSerializable(KEY_MODEL);
-        }
 
         binding.createAccount.setOnClickListener(v -> presenter.createAccount());
         binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {

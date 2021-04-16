@@ -24,7 +24,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +32,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.databinding.FragAccJamiLinkBinding;
 import cx.ring.databinding.FragAccJamiLinkPasswordBinding;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
@@ -60,6 +55,8 @@ public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLin
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (model == null)
+            return null;
         mBinding = FragAccJamiLinkPasswordBinding.inflate(inflater, container, false);
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return mBinding.getRoot();
@@ -74,7 +71,6 @@ public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLin
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mBinding.linkButton.setOnClickListener(v -> presenter.linkClicked());
         mBinding.ringAddPin.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
