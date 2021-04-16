@@ -65,16 +65,24 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
         }
     };
 
-
     public static JamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiLinkAccountFragment fragment = new JamiLinkAccountFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable("model", model);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        if (savedInstanceState != null && model == null) {
+            model = (AccountCreationModel) savedInstanceState.getSerializable("model");
+        }
         mBinding = FragAccJamiLinkBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
     }
@@ -109,7 +117,6 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
 
             }
         });
-
     }
 
     @Override
@@ -132,7 +139,6 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
     }
 
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-
         AccountCreationModelImpl ringAccountViewModel;
         SparseArray<Fragment> mRegisteredFragments = new SparseArray<>();
 

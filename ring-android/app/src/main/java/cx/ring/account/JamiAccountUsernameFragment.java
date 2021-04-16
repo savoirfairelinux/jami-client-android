@@ -49,6 +49,7 @@ import cx.ring.utils.RegisteredNameFilter;
 public class JamiAccountUsernameFragment extends BaseSupportFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
 
+    private static final String KEY_MODEL = "model";
     private AccountCreationModel model;
     private FragAccJamiUsernameBinding binding;
 
@@ -58,9 +59,19 @@ public class JamiAccountUsernameFragment extends BaseSupportFragment<JamiAccount
         return fragment;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (model != null)
+            outState.putSerializable(KEY_MODEL, model);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        if (savedInstanceState != null && model == null) {
+            model = (AccountCreationModelImpl) savedInstanceState.getSerializable(KEY_MODEL);
+        }
         binding = FragAccJamiUsernameBinding.inflate(inflater, container, false);
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();

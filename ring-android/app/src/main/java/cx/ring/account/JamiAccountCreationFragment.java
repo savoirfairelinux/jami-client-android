@@ -23,7 +23,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -38,7 +37,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import cx.ring.databinding.FragAccJamiCreateBinding;
 import cx.ring.mvp.AccountCreationModel;
-import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.views.WizardViewPager;
 
 public class JamiAccountCreationFragment extends Fragment {
@@ -104,12 +102,7 @@ public class JamiAccountCreationFragment extends Fragment {
 
         LinearLayout tabStrip = ((LinearLayout) mBinding.indicator.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
-            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return true;
-                }
-            });
+            tabStrip.getChildAt(i).setOnTouchListener((v, event) -> true);
         }
     }
 
@@ -142,6 +135,7 @@ public class JamiAccountCreationFragment extends Fragment {
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
@@ -157,7 +151,6 @@ public class JamiAccountCreationFragment extends Fragment {
                     fragment = ProfileCreationFragment.newInstance(ringAccountViewModel);
                     break;
             }
-
             return fragment;
         }
 
