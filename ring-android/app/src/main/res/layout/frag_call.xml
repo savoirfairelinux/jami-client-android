@@ -144,6 +144,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 app:flexDirection="column"
                 app:flexWrap="wrap"
+                app:alignItems="stretch"
                 tools:visibility="visible">
 
                 <RelativeLayout
