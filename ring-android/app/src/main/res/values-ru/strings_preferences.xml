@@ -26,6 +26,8 @@
   <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
   <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
+  <string name="pref_notification_title">Видимость уведомлений</string>
+  <string name="pref_notification_summary">Установить видимость уведомлений приложения на экране блокировки. </string>
   <string name="pref_blackList_title">Черный список</string>
   <string name="pref_blackList_summary">Проверить список блокировок</string>
   <string name="pref_delete_account_title">Удалить аккаунт</string>
@@ -39,6 +41,9 @@
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Показать всё \n(отображать уведомления и их содержимое на экране блокировки)\n</string>
+  <string name="notification_private">Скрыть содержимое \n(отображать уведомления на экране блокировки, но скрывать их содержимое)\n</string>
+  <string name="notification_secret">Не показывать \n(не отображать уведомления на экране блокировки)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Плагины</string>
   <string name="pref_plugins_summary">Включить плагины и установить их параметры</string>
