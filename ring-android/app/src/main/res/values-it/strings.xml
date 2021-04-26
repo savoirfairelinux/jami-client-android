@@ -223,14 +223,14 @@
   <string name="not_able_to_write_file">Impossibile scrivere il file</string>
   <string name="file_transfer_status_created">inizializzazione trasferimento</string>
   <string name="file_transfer_status_unsupported">non supportato</string>
-  <string name="file_transfer_status_wait_peer_acceptance">in attesa approvazione del peer</string>
+  <string name="file_transfer_status_wait_peer_acceptance">in attesa di accettazione</string>
   <string name="file_transfer_status_wait_host_acceptance">in attesa approvazione del host</string>
   <string name="file_transfer_status_ongoing">in corso</string>
   <string name="file_transfer_status_finished">finito</string>
   <string name="file_transfer_status_closed_by_host">chiuso dal host</string>
-  <string name="file_transfer_status_closed_by_peer">chiuso dal peer</string>
+  <string name="file_transfer_status_closed_by_peer">chiusa dall\'interlocutore</string>
   <string name="file_transfer_status_invalid_pathname">percorso non valido</string>
-  <string name="file_transfer_status_unjoinable_peer">peer non collegabile</string>
+  <string name="file_transfer_status_unjoinable_peer">utente irraggiungibile</string>
   <string name="file_transfer_status_cancelled">annullato</string>
   <string name="file_transfer_status_error">fallito a causa di un errore</string>
   <string name="file_saved_in">File salvato in %s</string>
@@ -257,4 +257,5 @@
   <string name="tv_dialog_send">Invia</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Crea account</string>
+  <string name="wizard_password_switch">Cifra l\'account con password</string>
 </resources>

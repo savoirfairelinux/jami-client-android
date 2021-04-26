@@ -95,15 +95,15 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
   <string name="account_published_same_as_local_label">Indirizzo pubblico uguale a quello locale</string>
-  <string name="account_published_port_label">Porta Pubblica</string>
+  <string name="account_published_port_label">Porta pubblica</string>
   <string name="account_published_address_label">Indirizzo Pubblico</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_proxy_server_list_label">DHT proxy list URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Rilevamento peer locali</string>
-  <string name="account_peer_discovery_enable_label">Abilita rilevamento peer locale</string>
+  <string name="account_peer_discovery_label">Scopri utenti locali</string>
+  <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
   <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT pubblicizzati sulla nostra rete locale</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>

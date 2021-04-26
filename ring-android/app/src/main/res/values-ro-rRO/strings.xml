@@ -8,11 +8,11 @@
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
-  <string name="no_email_app_installed">Nu a fost găsită o app e-mail. Instalează una pentru a ne putea trimite un raport.</string>
-  <string name="no_browser_app_installed">Nu a fost găsită o aplicație navigator web. Instalează una pentru a vedea această pagină.</string>
+  <string name="no_email_app_installed">Nu a fost găsită o aplicație de e-mail. Instalează una pentru a ne putea trimite un raport.</string>
+  <string name="no_browser_app_installed">Nu a fost găsită o aplicație de navigare în internet. Instalează una pentru a vedea această pagină.</string>
   <string name="email_chooser_title">Trimite e-mail folosind...</string>
   <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
-  <string name="license">Acest program este furnizat \"așa cum este\", fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau următoarele</u></string>
+  <string name="license">Acest program este furnizat „așa cum este”, fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau următoarele</u></string>
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
   <string name="credits">Merite</string>
   <string name="call_service_description">Acest serviciu este necesar pentru a vă menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
@@ -70,7 +70,7 @@
   <string name="notif_channel_background_service">Serviciu ascuns</string>
   <string name="notif_channel_background_service_descr">Permite mereu primirea de apeluri și mesaje.</string>
   <string name="notif_group_calls">Apeluri</string>
-  <string name="notif_background_service">Jami funcționează ascuns acum</string>
+  <string name="notif_background_service">Acum Jami funcționează ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
   <string name="notif_reply">Răspunde</string>
@@ -114,7 +114,7 @@
   <string name="ab_action_change_screen_orientation">Rotește ecranul</string>
   <string name="share_via">Distribuie prin</string>
   <string name="write_a_message">Scrie un mesaj</string>
-  <string name="scan_qr">Scanează Codul QR</string>
+  <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
   <string name="ab_action_flipcamera">Schimbă videocamera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
@@ -141,9 +141,9 @@
   <string name="ringtone_custom_label">Personalizat</string>
   <string name="ringtone_jami_tones">Tonuri Jami</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami are nevoie de permisiunea \"Citește contacte\" pentru a activa această caracteristică. Permite.</string>
+  <string name="permission_dialog_read_contacts_message">Jami are nevoie de permisiunea „Citește contacte” pentru a activa această caracteristică. Permite.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami are nevoie de permisiunea \"Scrie în registrul de apeluri\" pentru a activa această caracteristică. Permite.</string>
+  <string name="permission_dialog_write_call_log_message">Jami are nevoie de permisiunea „Scrie în registrul de apeluri” pentru a activa această caracteristică. Permite.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanează Codul QR al contului pe care vrei să-l adaugi.</string>
   <string name="title_activity_qrcode">Distribuie contul meu</string>
@@ -173,7 +173,7 @@
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
   <string name="block_contact_dialog_title">Blochezi %1$s?</string>
-  <string name="block_contact_dialog_message">%1$s nu te va putea contacta până cînd nu îl deblochezi.</string>
+  <string name="block_contact_dialog_message">%1$s nu te va putea contacta cît timp va fi blocat.</string>
   <string name="block_contact_completed">%1$s a fost blocat.</string>
   <string name="conversation_contact_is_typing">Contactul tău scrie...</string>
   <!--Contacts-->
@@ -183,11 +183,11 @@
   <string name="prompt_new_password_repeat">Repetă parola nouă</string>
   <string name="account_create_title">Creează un cont Jami</string>
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
-  <string name="prompt_hint_username">Nume de Utilizator</string>
+  <string name="prompt_hint_username">Nume de utilizator</string>
   <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
   <string name="help_password_enter">Introdu parola principală a contului tău Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
-  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea \"Exportă contul Jami\" pentru a obține codul PIN.</string>
+  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea„ Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
@@ -198,7 +198,7 @@
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Fă o poză</string>
   <string name="profile_name_hint">Introdu numele tău</string>
-  <string name="registered_name">Nume Înscris</string>
+  <string name="registered_name">Nume înscris</string>
   <string name="no_registered_name">Niciun nume înscris</string>
   <string name="identity">Identitate</string>
   <string name="account">Cont</string>
@@ -212,7 +212,7 @@
   <string name="share_label">Distribuie</string>
   <string name="generic_error_migration">Eroare</string>
   <string name="generic_error_migration_message">A apărut o eroare în timpul transferului</string>
-  <string name="title_share_with">Distribuie-i lui...</string>
+  <string name="title_share_with">Distribuie către...</string>
   <!--Pending contact requests-->
   <string name="accept">Acceptă</string>
   <string name="refuse">Refuză</string>

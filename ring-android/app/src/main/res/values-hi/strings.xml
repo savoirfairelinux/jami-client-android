@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">फीड्बैक</string>
+  <string name="report"><u>हमें ईमेल भेजें</u></string>
+  <string name="section_license">लाइसेंस</string>
+  <string name="sponsor_section">जामी एक मुफ्त सॉफ्टवेयर है </string>
+  <string name="copyright_section">कॉपीराइट </string>
+  <string name="contribute_section">सहयोग करें</string>
+  <string name="version_section">संस्करण</string>
+  <string name="no_email_app_installed">कोई ईमेल ऐप नहीं मिला</string>
+  <string name="no_browser_app_installed">कोई वेब ब्राउज़र ऐप नहीं मिला, इस पृष्ठ को देखने के लिए एक ब्राउज़र इंस्टॉल  करें</string>
+  <string name="email_chooser_title">...  का उपयोग कर मेल भेजें </string>
+  <string name="website_chooser_title">...  का उपयोग कर वेबसाइट देखे </string>
+  <string name="license">यह सॉफ़्टवेयर किसी भी प्रकार की वारंटी के बिना प्रदान किया जाता है। विवरण के लिए, <u>जीएनयू जनरल पब्लिक लाइसेंस संस्करण 3 या बाद के संस्करण देखे</u></string>
+  <string name="description">जामी सर्व-जन संचार के लिए मुफ्त सॉफ्टवेयर है जो अपने उपयोगकर्ताओं की स्वतंत्रता और गोपनीयता का सम्मान करता है।</string>
+  <string name="credits">श्रेय</string>
+  <string name="call_service_description">यह सेवा आपके कॉल को अग्रभूमि में चलाने के लिए आवश्यक है। यह केवल कॉल के दौरान चलता है।</string>
+  <string name="data_transfer_service_description">फ़ाइल स्थानान्तरण के दौरान लगातार अधिसूचनाओं को प्रदर्शित करने के लिए यह सेवा आवश्यक है। यह केवल फ़ाइल स्थानान्तरण के दौरान चलता है।</string>
+  <!--About dialog-->
+  <string name="developed_by">के द्वारा विकसित</string>
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <string name="tv_audio_play"> चलाएँ</string>
+  <!--Wizard-->
+</resources>

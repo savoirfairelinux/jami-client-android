@@ -3,8 +3,8 @@
   <!--About-->
   <string name="feedback_section">Visszajelzés</string>
   <string name="report"><u>Küldjön nekünk e-mailt</u></string>
-  <string name="section_license">Licensz</string>
-  <string name="sponsor_section">A Jami egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
+  <string name="section_license">Licenc</string>
+  <string name="sponsor_section">A Jami szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Közreműködés</string>
   <string name="version_section">Verzió</string>
@@ -291,7 +291,7 @@
   <string name="wizard_status_recommended">Ajánlott</string>
   <string name="wizard_status_optional">Választható</string>
   <string name="wizard_status_required">Szükséges</string>
-  <string name="wizard_username_info">Válassz egy felhasználónevet fiókja</string>
+  <string name="wizard_username_info">Válasszon felhasználónevet a fiókjához</string>
   <string name="wizard_username_button">Felhasználónév kiválasztása</string>
   <string name="wizard_username_skip">Felhasználónév kihagyása</string>
   <string name="wizard_password_info">Fiók jelszava</string>
