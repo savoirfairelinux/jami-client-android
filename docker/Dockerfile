@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Android SDK tools
 ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
 	mkdir -p ${ANDROID_HOME} && \
 	unzip -q -d ${ANDROID_HOME} /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
