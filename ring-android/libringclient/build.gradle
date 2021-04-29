@@ -2,28 +2,28 @@ apply plugin: 'java'
 
 dependencies {
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // VCard parsing
-    compile 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.2'
 
     // QRCode encoding
-    compile 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.zxing:core:3.3.3'
 
     // dependency injection
-    compile 'javax.inject:javax.inject:1'
+    implementation 'javax.inject:javax.inject:1'
 
     // ORM
-    compile 'com.j256.ormlite:ormlite-core:5.3'
+    implementation 'com.j256.ormlite:ormlite-core:5.3'
 
     // Required -- JUnit 4 framework
-    testCompile 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
 
     // RxJava
-    compile 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
     // gson
-    compile 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
 }
 
