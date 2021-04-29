@@ -88,13 +88,13 @@ cd $JNIDIR
 PACKAGEDIR=$ANDROID_APP_DIR/libringclient/src/main/java/cx/ring/daemon $JNIDIR/make-swig.sh
 
 # Setup cross-compilation build environemnt
-export AR=$TOOLCHAIN/bin/$TARGET-ar
+export AR=$TOOLCHAIN/bin/llvm-ar
 export AS=$TOOLCHAIN/bin/$TARGET-as
 export CC=$TOOLCHAIN/bin/$TARGET_CC$API-clang
 export CXX=$TOOLCHAIN/bin/$TARGET_CC$API-clang++
-export LD=$TOOLCHAIN/bin/$TARGET-ld
-export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
-export STRIP=$TOOLCHAIN/bin/$TARGET-strip
+export LD=$TOOLCHAIN/bin/ld
+export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
+export STRIP=$TOOLCHAIN/bin/llvm-strip
 
 FLAGS_COMMON="-fPIC -g"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} ${FLAGS_COMMON}"
@@ -199,6 +199,7 @@ ${CXX} --shared \
        -Wno-unused-variable \
        -Wno-unused-function \
        -Wno-unused-parameter \
+       -Wl,-Bsymbolic \
        ${JNIDIR}/ring_wrapper.cpp \
        ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
        -isystem ${DAEMON_DIR}/contrib/${TARGET}/include \
