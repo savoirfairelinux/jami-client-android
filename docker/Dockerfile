@@ -56,13 +56,13 @@ RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.1.tar.
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
-RUN (while sleep 1; do echo "y"; done) | sdkmanager --sdk_root=${ANDROID_HOME} 'build-tools;30.0.3' \
+RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${ANDROID_HOME} 'build-tools;30.0.3' \
 	'platforms;android-30'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
-	'ndk;21.3.6528147'
+	'ndk;23.0.7272597'
 ENV ANDROID_SDK=${ANDROID_HOME}
-ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.3.6528147
+ENV ANDROID_NDK=${ANDROID_HOME}/ndk/23.0.7272597
 
 # Fastlane
 RUN gem install fastlane -NV
