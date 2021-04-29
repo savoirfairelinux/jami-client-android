@@ -5,7 +5,7 @@ def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStart
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
-    ndkVersion "21.3.6528147"
+    ndkVersion '23.0.7272597 rc3'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
@@ -77,7 +77,7 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.33'
+    def dagger_version = '2.35.1'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:5.3'
 
     // Barcode scanning
-    implementation('com.journeyapps:zxing-android-embedded:4.0.2@aar') { transitive = false }
+    implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
     implementation 'com.google.zxing:core:3.3.3'
 
     // RxBindings
@@ -123,6 +123,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     implementation 'com.jsibbold:zoomage:1.2.0'
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.2'
 
     withFirebaseImplementation('com.google.firebase:firebase-messaging:21.1.0') {
         exclude group: 'com.google.firebase', module: 'firebase-core'
