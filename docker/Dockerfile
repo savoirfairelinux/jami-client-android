@@ -1,4 +1,4 @@
-FROM gradle:jdk8
+FROM gradle:jdk12
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
