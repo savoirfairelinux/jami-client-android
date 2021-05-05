@@ -22,14 +22,14 @@ package cx.ring.viewholders;
 import cx.ring.R;
 import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
-import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
 import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
-import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 import android.content.Context;
@@ -40,35 +40,38 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jakewharton.rxbinding3.view.RxView;
-
 import java.util.concurrent.TimeUnit;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
-    public ItemSmartlistBinding binding;
-    public ItemSmartlistHeaderBinding headerBinding;
+    public final ItemSmartlistBinding binding;
+    public final ItemSmartlistHeaderBinding headerBinding;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
         super(b.getRoot());
         binding = b;
+        headerBinding = null;
     }
 
     public SmartListViewHolder(@NonNull ItemSmartlistHeaderBinding b) {
         super(b.getRoot());
+        binding = null;
         headerBinding = b;
     }
 
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
+        //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear();
 
         if (binding != null) {
-            compositeDisposable.add(RxView.clicks(itemView)
+            compositeDisposable.add(Observable.create(e -> itemView.setOnClickListener(e::onNext))
                     .throttleFirst(1000, TimeUnit.MILLISECONDS)
                     .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
-            compositeDisposable.add(RxView.longClicks(itemView)
-                    .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));
+            itemView.setOnLongClickListener(v -> {
+                clickListener.onItemLongClick(smartListViewModel);
+                return true;
+            });
 
             binding.convParticipant.setText(smartListViewModel.getContactName());
 
@@ -95,11 +98,10 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL);
             }
 
-            binding.photo.setImageDrawable(
-                    new AvatarDrawable.Builder()
-                            .withContact(smartListViewModel.getContact())
-                            .withCircleCrop(true)
-                            .build(binding.photo.getContext()));
+            binding.photo.setImageDrawable(new AvatarDrawable.Builder()
+                    .withViewModel(smartListViewModel)
+                    .withCircleCrop(true)
+                    .build(binding.photo.getContext()));
         } else if (headerBinding != null) {
             headerBinding.headerTitle.setText(smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.Conversations
                     ? R.string.navigation_item_conversation : R.string.search_results_public_directory);
