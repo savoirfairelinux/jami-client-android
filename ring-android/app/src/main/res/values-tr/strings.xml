@@ -82,6 +82,7 @@
   <string name="notif_location_action_stop">Konum paylaşmayı durdur</string>
   <string name="location_share_action_start">Paylaşmayı başlat</string>
   <string name="location_share_action_stop">Paylaşmayı durdur</string>
+  <string name="location_share_about_title">Harita bilgisi</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Siz:</string>
   <string name="action_call_hangup">Kapat</string>
@@ -94,6 +95,8 @@
   <string name="start_error_title">Jami başlatılamıyor !</string>
   <string name="start_error_mic_required">Jami\'nin çalışması için mikrofon izni gerekli.</string>
   <string name="action_call_accept">Aramayı yanıtla</string>
+  <string name="action_call_hold_accept">Beklet ve aramayı al</string>
+  <string name="action_call_end_accept">Bitir ve aramayı al</string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofon sessiz</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
@@ -109,6 +112,7 @@
   <string name="scan_qr">Kare Kod Tara</string>
   <string name="qr_code">QR kod</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
+  <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>
   <!--Text messages-->
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>
@@ -170,27 +174,31 @@
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_optional">Yeni parola (isteğe bağlı)</string>
-  <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
-  <string name="account_create_title">Bir Jami hesabı oluştur</string>
+  <string name="prompt_new_password_repeat">Yeni parolayı yinele</string>
+  <string name="account_create_title">Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
   <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü parola seçin.</string>
   <string name="help_password_enter">Jami ana hesabınızın parolasını girin.</string>
+  <string name="help_server_enter">Yönetim sunucusunun URL\'sini gir.</string>
   <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <string name="wizard_skip">Atla</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Profiliniz yalnızca kayıtlı kişilerinizle paylaşılıyor</string>
+  <string name="profile_name">Profil Adı</string>
+  <string name="profile_message_warning">Profiliniz yalnızca kişilerinizle paylaşılır</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">Adınızı girin</string>
   <string name="registered_name">Kayıtlı Ad</string>
+  <string name="no_registered_name">Kayıtlı ad yok</string>
   <string name="identity">Kimlik</string>
   <string name="account">Hesap</string>
-  <string name="link_new_device">Yeni bir aygıt bağlayın</string>
+  <string name="link_new_device">Yeni aygıt bağla</string>
   <string name="devices">Bağlı Aygıtlar</string>
+  <string name="total_devices">Toplam aygıt:</string>
   <!--Share fragment-->
   <string name="share_message">Bu kodu Jami ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
@@ -206,6 +214,7 @@
   <string name="contact_request_title">Yeni letişim isteği</string>
   <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
+  <string name="no_requests">İletişim isteğiniz yok</string>
   <string name="message_contact_not_trusted_yet">%s henüz bağlantınız değil.\nBu bağlantı isteğini kabul etmek ister misiniz? </string>
   <string name="message_contact_not_trusted">%s kişilerinizde yok.\n yeni bir kişi eklensin mi?</string>
   <!--Send contact requests-->
@@ -216,6 +225,7 @@
   <string name="no_blocked_contact">Engellenmiş kişi yok</string>
   <!--Smartlist-->
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
+  <string name="conversation_placeholder">Henüz konuşmanız yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
   <string name="start_conversation">Konuşma başlat </string>
   <string name="search_results">Arama Sonuçları</string>
@@ -276,13 +286,16 @@
   <string name="wizard_status_recommended">Önerilen</string>
   <string name="wizard_status_optional">İsteğe bağlı</string>
   <string name="wizard_status_required">Gerekli</string>
-  <string name="wizard_username_info">Hesabınız için bir kullanıcı adı seçin</string>
+  <string name="wizard_username_info">Hesabınız için kullanıcı adı seçin</string>
   <string name="wizard_username_button">Kullanıcı adı seç</string>
+  <string name="wizard_username_skip">Kullanıcı adı seçmeyi atla</string>
   <string name="wizard_password_info">Hesap parolası</string>
+  <string name="wizard_password_placeholder">Bu aygıttaki hesap anahtarını şifrelemek için parola seç</string>
   <string name="wizard_password_button">Parola seçin</string>
   <string name="wizard_password_skip">Hesap oluştur</string>
   <string name="wizard_password_switch">Hesabı parola ile şifrele</string>
-  <string name="wizard_profile_info">Profil yalnızca kişilerle paylaşılıyor</string>
+  <string name="wizard_password_warning">Unutmayın ki parola kurtarılamaz</string>
+  <string name="wizard_profile_info">Profil, yalnızca kişilerle paylaşılır</string>
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>
