@@ -190,11 +190,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable ConversationPath path, @Nullable String contactId, boolean audioOnly) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
-        bundle.putString(KEY_ACCOUNT_ID, accountID);
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId);
+        if (path != null)
+            path.toBundle(bundle);
+        bundle.putString(Intent.EXTRA_PHONE_NUMBER, contactId);
         bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
@@ -240,7 +241,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     protected void initPresenter(CallPresenter presenter) {
-        super.initPresenter(presenter);
         Bundle args = getArguments();
         if (args != null) {
             String action = args.getString(KEY_ACTION);
@@ -808,7 +808,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if (resultCode == Activity.RESULT_OK && data != null) {
                 ConversationPath path = ConversationPath.fromUri(data.getData());
                 if (path != null) {
-                    presenter.addConferenceParticipant(path.getAccountId(), path.getConversationId());
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getConversationUri());
                 }
             }
         } else if (requestCode == REQUEST_CODE_SCREEN_SHARE) {
@@ -1315,9 +1315,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             Bundle args;
             args = getArguments();
             if (args != null) {
-                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                ConversationPath conversation = ConversationPath.fromBundle(args);
+                presenter.initOutGoing(conversation.getAccountId(),
+                        conversation.getConversationUri(),
+                        args.getString(Intent.EXTRA_PHONE_NUMBER),
+                        args.getBoolean(KEY_AUDIO_ONLY));
             }
         }
     }

@@ -322,7 +322,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             if (resultCode == Activity.RESULT_OK && data != null) {
                 ConversationPath path = ConversationPath.fromUri(data.getData());
                 if (path != null) {
-                    presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getConversationUri());
                 }
             }
         }
@@ -650,9 +650,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             Bundle args;
             args = getArguments();
             if (args != null) {
-                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                        getArguments().getString(KEY_CONTACT_RING_ID),
-                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                ConversationPath conversation = ConversationPath.fromBundle(args);
+                presenter.initOutGoing(conversation.getAccountId(),
+                        conversation.getConversationUri(),
+                        args.getString(Intent.EXTRA_PHONE_NUMBER),
+                        args.getBoolean(KEY_AUDIO_ONLY));
             }
         }
     }
