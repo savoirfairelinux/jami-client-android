@@ -29,7 +29,6 @@ import net.jami.daemon.Blob;
 import net.jami.daemon.DataTransferInfo;
 import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
-import net.jami.daemon.StringVect;
 import net.jami.daemon.UintVect;
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
@@ -1723,12 +1722,12 @@ public class AccountService {
             return;
         File path = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
         String conversationId = conversation.getUri().getRawRingId();
-        acceptFileTransfer(conversation.getAccountId(), conversationId, transfer.getDaemonId(), path.getAbsolutePath(), 0);
+        acceptFileTransfer(conversation.getAccountId(), conversationId, transfer.getMessageId(), path.getAbsolutePath());
     }
 
-    private void acceptFileTransfer(final String accountId, final String conversationId, final Long dataTransferId, final String filePath, long offset) {
-        Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath + ", offset=" + offset);
-        mExecutor.execute(() -> JamiService.acceptFileTransfer(accountId, conversationId, dataTransferId, filePath, offset));
+    private void acceptFileTransfer(final String accountId, final String conversationId, final String dataTransferId, final String filePath) {
+        Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath);
+        mExecutor.execute(() -> JamiService.downloadFile(accountId, conversationId, dataTransferId, filePath));
     }
 
     public void cancelDataTransfer(final String accountId, final String conversationId, long dataTransferId) {
@@ -1776,7 +1775,7 @@ public class AccountService {
         Interaction.InteractionStatus transferStatus = getDataTransferEventCode(eventCode);
         Log.d(TAG, "Data Transfer " + transferStatus);
         DataTransferInfo info = new DataTransferInfo();
-        if (getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), transferId, info)) != DataTransferError.SUCCESS)
+        if (getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), transferId, info)) != DataTransferError.SUCCESS)
             return;
 
         boolean outgoing = info.getFlags() == 0;
