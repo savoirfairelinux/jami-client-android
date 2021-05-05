@@ -6,16 +6,16 @@
   <string name="ic_blacklist_menu">Contatti bloccati</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Aggiungi account Jami</string>
-  <string name="add_sip_account_title">Aggiungi SIP account</string>
+  <string name="add_sip_account_title">Aggiungi account SIP</string>
   <string name="ring_account_default_name">Account Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Hostname</string>
-  <string name="prompt_username">Utente</string>
+  <string name="prompt_hostname">Nome Host</string>
+  <string name="prompt_username">Nome utente</string>
   <string name="prompt_password">Password</string>
   <string name="action_create">Crea account</string>
   <string name="action_create_short">Crea</string>
   <string name="action_register">Salva</string>
-  <string name="action_settings">Opzioni</string>
+  <string name="action_settings">Impostazioni</string>
   <string name="error_field_required">Questo dato è obbligatorio</string>
   <string name="dialog_wait_create">Aggiungi account</string>
   <string name="dialog_wait_create_details">Aspetta mentre aggiungo il tuo nuovo account...</string>
@@ -95,15 +95,15 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
   <string name="account_published_same_as_local_label">Indirizzo pubblico uguale a quello locale</string>
-  <string name="account_published_port_label">Porta Pubblica</string>
+  <string name="account_published_port_label">Porta pubblica</string>
   <string name="account_published_address_label">Indirizzo Pubblico</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_proxy_server_list_label">DHT proxy list URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Rilevamento peer locali</string>
-  <string name="account_peer_discovery_enable_label">Abilita rilevamento peer locale</string>
+  <string name="account_peer_discovery_label">Scopri utenti locali</string>
+  <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
   <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT pubblicizzati sulla nostra rete locale</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>

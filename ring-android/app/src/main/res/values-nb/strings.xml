@@ -8,9 +8,9 @@
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
-  <string name="no_email_app_installed">Fant ingen e-postprogram.  Installer en for å sende oss en rapport</string>
-  <string name="no_browser_app_installed">Ingen nettleser funnet, installer en for å vise denne siden</string>
-  <string name="email_chooser_title">Send e-post ved bruk av…</string>
+  <string name="no_email_app_installed">Fant ingen epost-app.  Installér en for å sende oss en rapport</string>
+  <string name="no_browser_app_installed">Ingen nettleser funnet, installér en for å vise denne siden</string>
+  <string name="email_chooser_title">Send epost med…</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
   <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
   <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
