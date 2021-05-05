@@ -53,11 +53,9 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
 
     public static QRCodeFragment newInstance(int startPage) {
         QRCodeFragment fragment = new QRCodeFragment();
-
         Bundle args = new Bundle();
         args.putInt(ARG_START_PAGE_INDEX, startPage);
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -75,7 +73,6 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
         mBinding = FragQrcodeBinding.inflate(inflater, container, false);
         mBinding.viewPager.setAdapter(new SectionsPagerAdapter(getContext(), getChildFragmentManager()));
         mBinding.tabs.setupWithViewPager(mBinding.viewPager);
-
         return mBinding.getRoot();
     }
 
