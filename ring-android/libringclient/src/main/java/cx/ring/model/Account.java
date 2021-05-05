@@ -65,6 +65,8 @@ public class Account {
     private final Map<String, CallContact> mContacts = new HashMap<>();
     private final Map<String, TrustRequest> mRequests = new HashMap<>();
     private final Map<String, CallContact> mContactCache = new HashMap<>();
+    private final Map<String, Conversation> swarmConversations = new HashMap<>();
+    private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
 
     private final Map<String, Conversation> conversations = new HashMap<>();
     private final Map<String, Conversation> pending = new HashMap<>();
@@ -83,15 +85,62 @@ public class Account {
     private final Subject<List<Conversation>> pendingSubject = BehaviorSubject.create();
     private final Subject<Integer> unreadConversationsSubject = BehaviorSubject.create();
     private final Subject<Integer> unreadPendingSubject = BehaviorSubject.create();
-    private final Observable<Integer> unreadConversationsCount = unreadConversationsSubject.distinct();
-    private final Observable<Integer> unreadPendingCount = unreadPendingSubject.distinct();
+    private final Observable<Integer> unreadConversationsCount = unreadConversationsSubject.distinctUntilChanged();
+    private final Observable<Integer> unreadPendingCount = unreadPendingSubject.distinctUntilChanged();
 
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
-    private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
 
     public boolean canSearch() {
         return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
     }
+
+    public boolean isContact(Conversation conversation) {
+        CallContact contact = conversation.getContact();
+        return contact != null && getContact(contact.getUri().getRawRingId()) != null;
+    }
+
+    public void conversationStarted(Conversation conversation) {
+        Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size());
+        synchronized (conversations) {
+            if (conversation.isSwarm() && conversation.getMode() == Conversation.Mode.OneToOne) {
+                CallContact contact = conversation.getContact();
+                String key = contact.getUri().getUri();
+                Conversation removed = cache.remove(key);
+                conversations.remove(key);
+                //Conversation contactConversation = getByUri(contact.getPrimaryUri());
+                //Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " contact " + key + " " + removed);
+                /*if (contactConversation != null) {
+                    conversations.remove(contactConversation.getUri().getUri());
+                }*/
+                contact.setConversationUri(conversation.getUri());
+            }
+            conversations.put(conversation.getUri().getUri(), conversation);
+        }
+        conversationChanged();
+    }
+    public Conversation getSwarm(String conversationId) {
+        return swarmConversations.get(conversationId);
+    }
+
+    public Conversation newSwarm(String conversationId, Conversation.Mode mode) {
+        Conversation c = swarmConversations.get(conversationId);
+        if (c == null) {
+            c = new Conversation(accountID, new Uri(Uri.SWARM_SCHEME, conversationId), mode);
+            swarmConversations.put(conversationId, c);
+        }
+        return c;
+    }
+
+    public void removeSwarm(String conversationId) {
+        Conversation conversation = swarmConversations.remove(conversationId);
+        if (conversation != null) {
+            synchronized (conversations) {
+                conversations.remove(conversation.getUri().getUri());
+            }
+            conversationChanged();
+        }
+    }
+
 
     public static class ContactLocation {
         public double latitude;
@@ -140,7 +189,7 @@ public class Account {
         conversationsSubject.onComplete();
         pendingSubject.onComplete();
         contactListSubject.onComplete();
-        trustRequestsSubject.onComplete();
+        //trustRequestsSubject.onComplete();
     }
 
     public Observable<List<Conversation>> getConversationsSubject() {
@@ -159,10 +208,6 @@ public class Account {
 
     public Observable<Conversation> getConversationSubject() {
         return conversationSubject;
-    }
-
-    public Observable<SmartListViewModel> getConversationViewModel() {
-        return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
     }
 
     public Observable<List<Conversation>> getPendingSubject() {
@@ -217,7 +262,7 @@ public class Account {
         }
     }
 
-    private void conversationChanged() {
+    public void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded) {
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
@@ -243,13 +288,15 @@ public class Account {
 
     private void updateUnreadConversations() {
         int unread = 0;
-        for (Conversation model : sortedConversations) {
-            Interaction last = model.getLastEvent();
-            if (last != null && !last.isRead())
-                unread++;
+        synchronized (sortedConversations) {
+            for (Conversation model : sortedConversations) {
+                Interaction last = model.getLastEvent();
+                if (last != null && !last.isRead())
+                    unread++;
+            }
+            // Log.w(TAG, "updateUnreadConversations " + unread);
+            unreadConversationsSubject.onNext(unread);
         }
-        // Log.w(TAG, "updateUnreadConversations " + unread);
-        unreadConversationsSubject.onNext(unread);
     }
 
     private void updateUnreadPending() {
@@ -282,13 +329,17 @@ public class Account {
     }
 
     public void updated(Conversation conversation) {
-        String key = conversation.getContact().getPrimaryUri().getUri();
+        String key = conversation.getUri().getUri();
         if (conversation == conversations.get(key))
             conversationUpdated(conversation);
         else if (conversation == pending.get(key))
             pendingUpdated(conversation);
         else if (conversation == cache.get(key)) {
+            if (isJami() && !conversation.isSwarm() && conversation.getContacts().size() == 1 && !conversation.getContact().getConversationUri().blockingFirst().equals(conversation.getUri()))  {
+                return;
+            }
             if (mContacts.containsKey(key) || !isJami()) {
+                Log.w(TAG, "updated " + conversation.getAccountId() + " contact " + key);
                 conversations.put(key, conversation);
                 conversationChanged();
             } else {
@@ -320,7 +371,7 @@ public class Account {
     }
 
     public Conversation onDataTransferEvent(DataTransfer transfer) {
-        Conversation conversation = getByUri(new Uri(transfer.getPeerId()));
+        Conversation conversation = (Conversation) transfer.getConversation();
         InteractionStatus transferEventCode = transfer.getStatus();
         if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
             conversation.addFileTransfer(transfer);
@@ -342,13 +393,18 @@ public class Account {
             CallContact contact = mContactCache.get(key);
             if (contact == null) {
                 if (isSip())
-                    contact = CallContact.buildSIP(new Uri(key));
+                    contact = CallContact.buildSIP(Uri.fromString(key));
                 else
-                    contact = CallContact.build(key);
+                    contact = CallContact.build(key, isMe(key));
                 mContactCache.put(key, contact);
             }
             return contact;
         }
+    }
+
+    boolean isMe(String uri) {
+        //Log.w(TAG, "isMe " + uri + " " + getUsername());
+        return getUsername().equals(uri);
     }
 
     public CallContact getContactFromCache(Uri uri) {
@@ -357,7 +413,7 @@ public class Account {
 
     public void dispose() {
         contactListSubject.onComplete();
-        trustRequestsSubject.onComplete();
+        //trustRequestsSubject.onComplete();
     }
 
     public Map<String, String> getDevices() {
@@ -610,7 +666,7 @@ public class Account {
     public void addContact(String id, boolean confirmed) {
         CallContact callContact = mContacts.get(id);
         if (callContact == null) {
-            callContact = getContactFromCache(new Uri(id));
+            callContact = getContactFromCache(Uri.fromId(id));
             mContacts.put(id, callContact);
         }
         callContact.setAddedDate(new Date());
@@ -622,7 +678,7 @@ public class Account {
         TrustRequest req = mRequests.get(id);
         if (req != null) {
             mRequests.remove(id);
-            trustRequestsSubject.onNext(mRequests.values());
+            //trustRequestsSubject.onNext(mRequests.values());
         }
         contactAdded(callContact);
         //contactSubject.onNext(new ContactEvent(callContact, true));
@@ -633,7 +689,7 @@ public class Account {
         CallContact callContact = mContacts.get(id);
         if (banned) {
             if (callContact == null) {
-                callContact = getContactFromCache(new Uri(id));
+                callContact = getContactFromCache(Uri.fromId(id));
                 mContacts.put(id, callContact);
             }
             callContact.setStatus(CallContact.Status.BANNED);
@@ -643,10 +699,10 @@ public class Account {
         TrustRequest req = mRequests.get(id);
         if (req != null) {
             mRequests.remove(id);
-            trustRequestsSubject.onNext(mRequests.values());
+            //trustRequestsSubject.onNext(mRequests.values());
         }
         if (callContact != null) {
-            contactRemoved(callContact.getPrimaryUri());
+            contactRemoved(callContact.getUri());
             //contactSubject.onNext(new ContactEvent(callContact, false));
         }
         contactListSubject.onNext(mContacts.values());
@@ -656,7 +712,7 @@ public class Account {
         String contactId = contact.get(CONTACT_ID);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
-            callContact = getContactFromCache(new Uri(contactId));
+            callContact = getContactFromCache(Uri.fromId(contactId));
         }
         String addedStr = contact.get(CONTACT_ADDED);
         if (!StringUtils.isEmpty(addedStr)) {
@@ -696,21 +752,31 @@ public class Account {
     }
 
     public TrustRequest getRequest(Uri uri) {
-        return mRequests.get(uri.getRawRingId());
+        return mRequests.get(uri.getUri());
     }
 
     public void addRequest(TrustRequest request) {
+        //Log.w(TAG, "addRequest start");
         synchronized (pending) {
-            mRequests.put(request.getContactId(), request);
-            //trustRequestSubject.onNext(new RequestEvent(request, true));
-            trustRequestsSubject.onNext(mRequests.values());
+            //boolean isSwarm = request.getConversationId() != null;
+            String key = request.getUri().getUri();
+            //if (!isSwarm) {
+            mRequests.put(key, request);
+                //trustRequestSubject.onNext(new RequestEvent(request, true));
+                //trustRequestsSubject.onNext(mRequests.values());
+            //}
 
-            String key = new Uri(request.getContactId()).getUri();
             Conversation conversation = pending.get(key);
             if (conversation == null) {
-                conversation = getByKey(key);
+                /*if (isSwarm) {
+                    Log.w(TAG, "new public swarm request");
+                }*/
+                conversation = /*isSwarm ? newSwarm(key, Conversation.Mode.Public) : */getByKey(key);
                 pending.put(key, conversation);
-                conversation.addRequestEvent(request);
+                if (!conversation.isSwarm()) {
+                    CallContact contact = getContactFromCache(request.getUri());
+                    conversation.addRequestEvent(request, contact);
+                }
                 pendingChanged();
             }
         }
@@ -720,17 +786,18 @@ public class Account {
         Log.w(TAG, "setRequests " + requests.size());
         synchronized (pending) {
             for (TrustRequest request : requests) {
-                mRequests.put(request.getContactId(), request);
-                String key = new Uri(request.getContactId()).getUri();
+                String key = request.getUri().getUri();
+                mRequests.put(key, request);
                 Conversation conversation = pending.get(key);
                 if (conversation == null) {
                     conversation = getByKey(key);
                     pending.put(key, conversation);
-                    conversation.addRequestEvent(request);
+                    CallContact contact = getContactFromCache(request.getUri());
+                    conversation.addRequestEvent(request, contact);
                 }
                 //trustRequestSubject.onNext(new RequestEvent(request, true));
             }
-            trustRequestsSubject.onNext(mRequests.values());
+            //trustRequestsSubject.onNext(mRequests.values());
             pendingChanged();
         }
     }
@@ -741,7 +808,7 @@ public class Account {
             TrustRequest request = mRequests.remove(contactUri);
             if (request != null) {
                 //trustRequestSubject.onNext(new RequestEvent(request, true));
-                trustRequestsSubject.onNext(mRequests.values());
+                //trustRequestsSubject.onNext(mRequests.values());
             }
             if (pending.remove(contactUri) != null) {
                 pendingChanged();
@@ -751,11 +818,11 @@ public class Account {
         return false;
     }
 
-    public void registeredNameFound(int state, String address, String name) {
-        Uri uri = new Uri(address);
-        CallContact contact = getContactFromCache(uri);
+    public boolean registeredNameFound(int state, String address, String name) {
+        Uri uri = Uri.fromString(address);
+        String key = uri.getUri();
+        CallContact contact = getContactFromCache(key);
         if (contact.setUsername(state == 0 ? name : null)) {
-            String key = uri.getUri();
             synchronized (conversations) {
                 Conversation conversation = conversations.get(key);
                 if (conversation != null)
@@ -765,18 +832,22 @@ public class Account {
                 if (pending.containsKey(key))
                     pendingRefreshed();
             }
+            return true;
         }
+        return false;
     }
 
     public Conversation getByUri(Uri uri) {
-        if (uri != null && !uri.isEmpty()) {
-            return getByKey(uri.getUri());
-        }
-        return null;
+        //Log.w(TAG, "getByUri " + getAccountID() + " " + uri);
+        if (uri == null || uri.isEmpty())
+            return null;
+        return uri.isSwarm()
+                ? getSwarm(uri.getRawRingId())
+                : getByKey(uri.getUri());
     }
 
     public Conversation getByUri(String uri) {
-        return getByUri(new Uri(uri));
+        return getByUri(Uri.fromString(uri));
     }
 
     private Conversation getByKey(String key) {
@@ -786,6 +857,7 @@ public class Account {
         }
         CallContact contact = getContactFromCache(key);
         conversation = new Conversation(getAccountID(), contact);
+        //Log.w(TAG, "getByKey " + getAccountID() + " contact " + key);
         cache.put(key, conversation);
         return conversation;
     }
@@ -793,16 +865,19 @@ public class Account {
     public void setHistoryLoaded(List<Conversation> conversations) {
         if (historyLoaded)
             return;
-        Log.w(TAG, "setHistoryLoaded() " + conversations.size());
-        for (Conversation c : conversations)
-            updated(c);
+        //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());
+        for (Conversation c : conversations) {
+            CallContact contact = c.getContact();
+            if (!c.isSwarm() && contact != null && contact.getConversationUri().blockingFirst().equals(c.getUri()))
+                updated(c);
+        }
         historyLoaded = true;
         conversationChanged();
         pendingChanged();
     }
 
     private List<Conversation> getSortedConversations() {
-        Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
+        //Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
         synchronized (sortedConversations) {
             if (conversationsChanged) {
                 sortedConversations.clear();
@@ -836,10 +911,15 @@ public class Account {
 
 
     private void contactAdded(CallContact contact) {
-        Uri uri = contact.getPrimaryUri();
+        Uri uri = contact.getUri();
         String key = uri.getUri();
+        //Log.w(TAG, "contactAdded " + getAccountID() + " " + key + " " + contact.getConversationUri());
+        if (!contact.getConversationUri().blockingFirst().equals(contact.getUri())) {
+            // Don't add conversation if we have a swarm conversation
+            return;
+        }
         synchronized (conversations) {
-            if (conversations.get(key) != null)
+            if (conversations.containsKey(key))
                 return;
             synchronized (pending) {
                 Conversation pendingConversation = pending.get(key);
@@ -851,7 +931,7 @@ public class Account {
                     conversations.put(key, pendingConversation);
                     pendingChanged();
                 }
-                pendingConversation.addContactEvent();
+                pendingConversation.addContactEvent(contact);
             }
             conversationChanged();
         }
@@ -880,6 +960,7 @@ public class Account {
     }
 
     public void presenceUpdate(String contactUri, boolean isOnline) {
+        Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
         CallContact contact = getContactFromCache(contactUri);
         if (contact.isOnline() == isOnline)
             return;
@@ -896,10 +977,15 @@ public class Account {
         }
     }
 
-    public void composingStatusChanged(Uri contactUri, ComposingStatus status) {
-        Conversation conversation = getByUri(contactUri);
-        if (conversation != null)
-            conversation.composingStatusChanged(getContactFromCache(contactUri), status);
+    public void composingStatusChanged(String conversationId, Uri contactUri, ComposingStatus status) {
+        boolean isSwarm = !StringUtils.isEmpty(conversationId);
+        Conversation conversation = isSwarm ? getSwarm(conversationId) : getByUri(contactUri);
+        if (conversation != null) {
+            CallContact contact = isSwarm ? conversation.findContact(contactUri) : getContactFromCache(contactUri);
+            if (contact != null) {
+                conversation.composingStatusChanged(contact, status);
+            }
+        }
     }
 
     synchronized public long onLocationUpdate(AccountService.Location location) {
@@ -980,6 +1066,8 @@ public class Account {
     public Observable<Observable<ContactLocation>> getLocationUpdates(Uri contactId) {
         CallContact contact = getContactFromCache(contactId);
         Log.w(TAG, "getLocationUpdates " + contactId + " " + contact);
+        if (contact == null || contact.isUser())
+            return Observable.empty();
         return mLocationSubject
                 .flatMapMaybe(locations -> {
                     Observable<ContactLocation> r = locations.get(contact);
@@ -1027,6 +1115,14 @@ public class Account {
 
     public void setLoadedProfile(Single<Tuple<String, Object>> profile) {
         mLoadedProfile = profile;
+    }
+
+    public DataTransfer getDataTransfer(long id) {
+        return mDataTransfers.get(id);
+    }
+
+    public void putDataTransfer(long transferId, DataTransfer transfer) {
+        mDataTransfers.put(transferId, transfer);
     }
 
     private static class ConversationComparator implements Comparator<Conversation> {
