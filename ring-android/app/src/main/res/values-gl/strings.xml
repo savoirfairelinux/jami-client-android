@@ -91,6 +91,7 @@
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
   <string name="action_call_mute">Acalar</string>
+  <string name="action_call_unmute">Activar audio</string>
   <string name="ongoing_call">Chamada en curso</string>
   <string name="hist_in_call">Chamada de %1$s</string>
   <string name="hist_out_call">Chamada a %1$s</string>
