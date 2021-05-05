@@ -120,7 +120,6 @@ public class SwitchButton extends CompoundButton {
         setClickable(true);
 
         mStatus = status;
-
         mBackColor = backColor;
 
         float margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_THUMB_MARGIN_DP, getResources().getDisplayMetrics());

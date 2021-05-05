@@ -43,6 +43,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -128,7 +129,7 @@ public class CallService {
             List<Conference.ParticipantInfo> newInfo = new ArrayList<>(info.size());
             if (conference.isConference()) {
                 for (Map<String, String> i : info) {
-                    SipCall call = conference.findCallByContact(new Uri(i.get("uri")));
+                    SipCall call = conference.findCallByContact(Uri.fromString(i.get("uri")));
                     if (call != null) {
                         newInfo.add(new Conference.ParticipantInfo(call.getContact(), i));
                     } else {
@@ -138,7 +139,7 @@ public class CallService {
             } else {
                 Account account = mAccountService.getAccount(conference.getCall().getAccount());
                 for (Map<String, String> i : info)
-                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(new Uri(i.get("uri"))), i));
+                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(Uri.fromString(i.get("uri"))), i));
             }
             conference.setInfo(newInfo);
         }
@@ -226,25 +227,27 @@ public class CallService {
         return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
     }*/
 
-    public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
-        return placeCall(accountId, number, audioOnly)
+    public Observable<SipCall> placeCallObservable(final String accountId, final Uri conversationUri, final Uri number, final boolean audioOnly) {
+        return placeCall(accountId, conversationUri, number, audioOnly)
                 .flatMapObservable(this::getCallUpdates);
     }
 
-    public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
+    public Single<SipCall> placeCall(final String account, final Uri conversationUri, final Uri number, final boolean audioOnly) {
         return Single.fromCallable(() -> {
             Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
 
             HashMap<String, String> volatileDetails = new HashMap<>();
             volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
 
-            String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
+            String callId = Ringservice.placeCall(account, number.getUri(), StringMap.toSwig(volatileDetails));
             if (callId == null || callId.isEmpty())
                 return null;
             if (audioOnly) {
                 Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+            if (conversationUri.isSwarm())
+                call.setSwarmInfo(conversationUri.getRawRingId());
             call.muteVideo(audioOnly);
             updateConnectionCount();
             return call;
@@ -445,7 +448,7 @@ public class CallService {
 
     public SipCall getCurrentCallForContactId(String contactId) {
         for (SipCall call : currentCalls.values()) {
-            if (contactId.contains(call.getContact().getPhones().get(0).getNumber().toString())) {
+            if (contactId.contains(call.getContact().getPrimaryNumber())) {
                 return call;
             }
         }
@@ -459,15 +462,15 @@ public class CallService {
         }
     }
 
-    private SipCall addCall(String accountId, String callId, String from, SipCall.Direction direction) {
+    private SipCall addCall(String accountId, String callId, Uri from, SipCall.Direction direction) {
         synchronized (currentCalls) {
             SipCall call = currentCalls.get(callId);
             if (call == null) {
                 Account account = mAccountService.getAccount(accountId);
-                Uri fromUri = new Uri(from);
-                Conversation conversation = account.getByUri(fromUri);
-                CallContact contact = mContactService.findContact(account, fromUri);
-                call = new SipCall(callId, new Uri(from).getUri(), accountId, conversation, contact, direction);
+                CallContact contact = mContactService.findContact(account, from);
+                Uri conversationUri = contact.getConversationUri().blockingFirst();
+                Conversation conversation = conversationUri.equals(from) ? account.getByUri(from) : account.getSwarm(conversationUri.getRawRingId());
+                call = new SipCall(callId, from.getUri(), accountId, conversation, contact, direction);
                 currentCalls.put(callId, call);
             } else {
                 Log.w(TAG, "Call already existed ! " + callId + " " + from);
@@ -486,8 +489,6 @@ public class CallService {
             conference = new Conference(call);
             currentConferences.put(confId, conference);
             conferenceSubject.onNext(conference);
-        } else {
-            Log.w(TAG, "Conference already existed ! " + confId);
         }
         return conference;
     }
@@ -499,23 +500,24 @@ public class CallService {
             sipCall.setCallState(callState);
             sipCall.setDetails(Ringservice.getCallDetails(callId).toNative());
         } else if (callState !=  SipCall.CallStatus.OVER && callState !=  SipCall.CallStatus.FAILURE) {
-            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+            Map<String, String> callDetails = Ringservice.getCallDetails(callId);
             sipCall = new SipCall(callId, callDetails);
-            if (!callDetails.containsKey(SipCall.KEY_PEER_NUMBER)) {
+            if (StringUtils.isEmpty(sipCall.getContactNumber())) {
                 Log.w(TAG, "No number");
                 return null;
             }
+
             sipCall.setCallState(callState);
 
-            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), new Uri(sipCall.getContactNumber()));
-            String registeredName = callDetails.get("REGISTERED_NAME");
+            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), Uri.fromString(sipCall.getContactNumber()));
+            String registeredName = callDetails.get(SipCall.KEY_REGISTERED_NAME);
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
             }
             sipCall.setContact(contact);
 
             Account account = mAccountService.getAccount(sipCall.getAccount());
-            sipCall.setConversation(account.getByUri(contact.getPrimaryUri()));
+            sipCall.setConversation(account.getByUri(contact.getUri()));
 
             currentCalls.put(callId, sipCall);
             updateConnectionCount();
@@ -560,7 +562,7 @@ public class CallService {
     void incomingCall(String accountId, String callId, String from) {
         Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
-        SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
+        SipCall call = addCall(accountId, callId, Uri.fromStringWithName(from).first, SipCall.Direction.INCOMING);
         callSubject.onNext(call);
         updateConnectionCount();
     }

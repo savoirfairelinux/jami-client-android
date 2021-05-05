@@ -66,10 +66,13 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +83,6 @@ import java.util.Map;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
-import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
@@ -101,6 +103,7 @@ import cx.ring.model.Phone;
 import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.service.DRingService;
 import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
@@ -112,9 +115,11 @@ import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -129,6 +134,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
     public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
+    public static final String KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead";
     public static final String EXTRA_SHOW_MAP = "showMap";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
@@ -163,6 +169,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private final Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
     private final Map<String, AvatarDrawable> mSmallParticipantAvatars = new HashMap<>();
     private int mapWidth, mapHeight;
+    private String mLastRead;
+
+    private boolean loading = true;
 
     public AvatarDrawable getConversationAvatar(String uri) {
         return mParticipantAvatars.get(uri);
@@ -190,6 +199,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             binding.pbLoading.setVisibility(View.GONE);
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
+            loading = false;
         }
         requireActivity().invalidateOptionsMenu();
     }
@@ -326,6 +336,25 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     animation.cancel();
                 animation.setIntValues(binding.histList.getPaddingBottom(), (currentBottomView == null ? 0 : currentBottomView.getHeight()) + marginPxTotal);
                 animation.start();
+            }
+        });
+
+        binding.histList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            // The minimum amount of items to have below current scroll position
+            // before loading more.
+            static private final int visibleThreshold = 3;
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (!loading && layoutManager.findFirstVisibleItemPosition() < visibleThreshold) {
+                    loading = true;
+                    presenter.loadMore();
+                }
             }
         });
 
@@ -697,8 +726,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void addElement(Interaction element) {
-        mAdapter.add(element);
-        scrollToEnd();
+        if (mLastRead != null && mLastRead.equals(element.getMessageId()))
+            element.read();
+        if (mAdapter.add(element))
+            scrollToEnd();
+        loading = false;
     }
 
     @Override
@@ -721,6 +753,24 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void setLastDisplayed(Interaction interaction) {
         mAdapter.setLastDisplayed(interaction);
+    }
+
+    @Override
+    public void acceptFile(String accountId, Uri conversationUri, DataTransfer transfer) {
+        File cacheDir = requireContext().getCacheDir();
+        long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
+        if (spaceLeft == -1L || transfer.getTotalSize() > spaceLeft) {
+            presenter.noSpaceLeft();
+            return;
+        }
+        requireActivity().startService(new Intent(DRingService.ACTION_FILE_ACCEPT, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+    }
+
+    @Override
+    public void refuseFile(String accountId, Uri conversationUri, DataTransfer transfer) {
+        requireActivity().startService(new Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
     }
 
     @Override
@@ -841,13 +891,15 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (path == null)
             return;
 
-        Uri contactUri = path.getConversationUri();
+        Uri uri = path.getConversationUri();
         mAdapter = new ConversationAdapter(this, presenter);
-        presenter.init(contactUri, path.getAccountId());
+        presenter.init(uri, path.getAccountId());
         try {
-            mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
+            mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + uri.getUri(), Context.MODE_PRIVATE);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
+            mLastRead = mPreferences.getString(KEY_PREFERENCE_CONVERSATION_LAST_READ, null);
+            Log.w(TAG, "Loaded last read " + mLastRead);
         } catch (Exception e) {
             Log.e(TAG, "Can't load conversation preferences");
         }
@@ -861,7 +913,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     LocationSharingService locationService = binder.getService();
                     ConversationPath path = new ConversationPath(presenter.getPath());
                     if (locationService.isSharing(path)) {
-                        showMap(path.getAccountId(), contactUri.getUri(), false);
+                        showMap(path.getAccountId(), uri.getUri(), false);
                     }
                     try {
                         requireContext().unbindService(locationServiceConnection);
@@ -892,35 +944,33 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void displayContact(final CallContact contact) {
-        mCompositeDisposable.clear();
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
-                .doOnSuccess(d -> {
-                    mConversationAvatar = (AvatarDrawable) d;
-                    mParticipantAvatars.put(contact.getPrimaryNumber(),
-                            new AvatarDrawable((AvatarDrawable) d));
-                })
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+    public void updateContact(CallContact contact) {
+        String contactKey = contact.getPrimaryNumber();
+        AvatarDrawable a = mSmallParticipantAvatars.get(contactKey);
+        if (a != null) {
+            a.update(contact);
+            mParticipantAvatars.get(contactKey).update(contact);
+            mAdapter.setPhoto();
+        } else {
+            mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(avatar -> {
+                        mParticipantAvatars.put(contactKey, (AvatarDrawable) avatar);
+                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable((AvatarDrawable) avatar));
+                        mAdapter.setPhoto();
+                    }));
+        }
+    }
+
+    @Override
+    public void displayContact(Conversation conversation) {
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(c -> {
-                    mConversationAvatar.update(c);
-                    String uri = contact.getPrimaryNumber();
-                    AvatarDrawable ad = mParticipantAvatars.get(uri);
-                    if (ad != null)
-                        ad.update(c);
-                    setupActionbar(contact);
-                    mAdapter.setPhoto();
-                }));
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, false)
-                .doOnSuccess(d -> mSmallParticipantAvatars.put(contact.getPrimaryNumber(), new AvatarDrawable((AvatarDrawable) d)))
-                .flatMapObservable(d -> contact.getUpdatesSubject())
-                .subscribe(c -> {
-                    synchronized (mSmallParticipantAvatars) {
-                        String uri = contact.getPrimaryNumber();
-                        AvatarDrawable ad = mSmallParticipantAvatars.get(uri);
-                        if (ad != null)
-                            ad.update(c);
-                    }
+                .subscribe(d -> {
+                    mConversationAvatar = (AvatarDrawable) d;
+                    mParticipantAvatars.put(conversation.getUri().getRawRingId(), new AvatarDrawable((AvatarDrawable) d));
+                    setupActionbar(conversation);
                 }));
     }
 
@@ -932,8 +982,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
         binding.numberSelector.setVisibility(View.VISIBLE);
-        binding.numberSelector.setAdapter(new NumberAdapter(getActivity(),
-                conversation.getContact(), false));
+        //binding.numberSelector.setAdapter(new NumberAdapter(getActivity(), conversation.getContact(), false));
         binding.numberSelector.setSelection(getIndex(binding.numberSelector, number));
     }
 
@@ -967,22 +1016,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactId) {
-        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId),
-                requireActivity().getApplicationContext(), ContactDetailsActivity.class));
+    public void goToContactActivity(String accountId, Uri uri) {
+        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
+                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
-        Intent intent = new Intent(CallActivity.ACTION_CALL)
-                .setClass(requireActivity().getApplicationContext(), CallActivity.class)
-                .putExtra(KEY_ACCOUNT_ID, accountId)
-                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
-                .putExtra(KEY_CONTACT_RING_ID, contactRingId);
+    public void goToCallActivityWithResult(String accountId, Uri conversationUri, Uri contactUri, boolean audioOnly) {
+        Intent intent = new Intent(Intent.ACTION_CALL)
+                .setClass(requireContext(), CallActivity.class)
+                .putExtras(ConversationPath.toBundle(accountId, conversationUri))
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.getUri())
+                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 
-    private void setupActionbar(CallContact contact) {
+    private void setupActionbar(Conversation conversation) {
         if (!isVisible()) {
             return;
         }
@@ -993,8 +1042,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
 
         Context context = actionBar.getThemedContext();
-        String displayName = contact.getDisplayName();
-        String identity = contact.getRingUsername();
+
+        String displayName = conversation.getTitle();
+        String identity = conversation.getUriTitle();
 
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {
@@ -1003,12 +1053,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             TextView subtitle = toolbar.findViewById(R.id.contact_subtitle);
             ImageView logo = toolbar.findViewById(R.id.contact_image);
 
-            if (!((HomeActivity) activity).isConversationSelected()) {
+            /*if (!((HomeActivity) activity).isConversationSelected()) {
                 title.setText("");
                 subtitle.setText("");
                 logo.setImageDrawable(null);
                 return;
-            }
+            }*/
 
             logo.setVisibility(View.VISIBLE);
             title.setText(displayName);
@@ -1215,6 +1265,14 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (mAdapter != null) {
             mAdapter.setReadIndicatorStatus(show);
         }
+    }
+
+    @Override
+    public void updateLastRead(String last) {
+        Log.w(TAG, "Updated last read " + mLastRead);
+        mLastRead = last;
+        if (mPreferences != null)
+            mPreferences.edit().putString(KEY_PREFERENCE_CONVERSATION_LAST_READ, last).apply();
     }
 
     @Override

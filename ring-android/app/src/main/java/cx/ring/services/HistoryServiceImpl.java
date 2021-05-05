@@ -22,6 +22,7 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
@@ -37,12 +38,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
 import cx.ring.history.DatabaseHelper;
+import cx.ring.model.Conversation;
 import cx.ring.model.ConversationHistory;
 import cx.ring.model.Interaction;
+import cx.ring.model.Uri;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+
+import static cx.ring.fragments.ConversationFragment.KEY_PREFERENCE_CONVERSATION_LAST_READ;
 
 /**
  * Implements the necessary Android related methods for the {@link HistoryService}
@@ -181,6 +187,18 @@ public class HistoryServiceImpl extends HistoryService {
         File accountDir = new File(mContext.getFilesDir(), accountId);
         if (accountDir.exists())
             deleteFolder(accountDir);
+    }
+
+    @Override
+    public void setMessageRead(String accountId, Uri conversationUri, String lastId) {
+        SharedPreferences preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri.getUri(), Context.MODE_PRIVATE);
+        preferences.edit().putString(KEY_PREFERENCE_CONVERSATION_LAST_READ, lastId).apply();
+    }
+
+    @Override
+    public String getLastMessageRead(String accountId, Uri conversationUri) {
+        SharedPreferences preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri.getUri(), Context.MODE_PRIVATE);
+        return preferences.getString(KEY_PREFERENCE_CONVERSATION_LAST_READ, null);
     }
 
     /**

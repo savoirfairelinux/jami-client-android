@@ -52,6 +52,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import androidx.annotation.RequiresApi;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -238,7 +240,7 @@ public abstract class JamiApplication extends Application {
         super.onCreate();
         sInstance = this;
 
-        RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
+        //RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
 
         // building injection dependency tree
         mJamiInjectionComponent = DaggerJamiInjectionComponent.builder()
