@@ -74,6 +74,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.Error;
 import cx.ring.model.Interaction;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.service.DRingService;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -605,15 +606,16 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void displayContact(CallContact contact) {
+    public void displayContact(Conversation conversation) {
+        List<CallContact> contacts = conversation.getContacts();
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
                 .doOnSuccess(d -> {
                     mConversationAvatar = (AvatarDrawable) d;
-                    mParticipantAvatars.put(contact.getPrimaryNumber(),
+                    mParticipantAvatars.put(contacts.get(0).getPrimaryNumber(),
                             new AvatarDrawable((AvatarDrawable) d));
                 })
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+                .flatMapObservable(d -> contacts.get(0).getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> {
                     String id = c.getRingUsername();
@@ -624,7 +626,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                     else
                         binding.subtitle.setVisibility(View.GONE);
                     mConversationAvatar.update(c);
-                    String uri = contact.getPrimaryNumber();
+                    String uri = contacts.get(0).getPrimaryNumber();
                     AvatarDrawable a = mParticipantAvatars.get(uri);
                     if (a != null)
                         a.update(c);
@@ -653,6 +655,16 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     @Override
     public void scrollToEnd() {
 
+    }
+
+    @Override
+    public void updateContact(CallContact contact) {
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(avatar -> {
+                    mParticipantAvatars.put(contact.getPrimaryNumber(), (AvatarDrawable) avatar);
+                    mAdapter.setPhoto();
+                }));
     }
 
     @Override
@@ -710,6 +722,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
+    public void updateLastRead(String last) {
+
+    }
+
+    @Override
     public void displayOnGoingCallPane(boolean display) {
 
     }
@@ -745,12 +762,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+    public void goToCallActivityWithResult(String accountId, cx.ring.model.Uri conversationUri, cx.ring.model.Uri contactRingId, boolean audioOnly) {
 
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactRingId) {
+    public void goToContactActivity(String accountId, cx.ring.model.Uri contactRingId) {
 
     }
 
@@ -772,6 +789,28 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     @Override
     public void openFilePicker() {
 
+    }
+
+    @Override
+    public void acceptFile(String accountId, net.jami.model.Uri conversationUri, DataTransfer transfer) {
+        File cacheDir = requireContext().getCacheDir();
+        long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
+        if (spaceLeft == -1L || transfer.getTotalSize() > spaceLeft) {
+            presenter.noSpaceLeft();
+            return;
+        }
+        requireActivity().startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
+                .setClass(requireContext(), DRingService.class)
+                .setData(ConversationPath.toUri(accountId, conversationUri))
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+    }
+
+    @Override
+    public void refuseFile(String accountId, net.jami.model.Uri conversationUri, DataTransfer transfer) {
+        requireActivity().startService(new Intent(DRingService.ACTION_FILE_CANCEL)
+                .setClass(requireContext(), DRingService.class)
+                .setData(ConversationPath.toUri(accountId, conversationUri))
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
     }
 
 }

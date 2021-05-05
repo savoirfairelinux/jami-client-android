@@ -330,8 +330,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
         mBinding.groupRegisteringName.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
         mBinding.btnShare.setOnClickListener(v -> shareAccount(hasRegisteredName? username : account.getUsername()));
-        mBinding.registerName.setVisibility(hasRegisteredName? View.GONE : View.VISIBLE);
-        mBinding.registeredName.setText(hasRegisteredName? username : getResources().getString(R.string.no_registered_name_for_account));
+        mBinding.registerName.setVisibility(hasRegisteredName ? View.GONE : View.VISIBLE);
+        mBinding.registeredName.setText(hasRegisteredName ? username : getResources().getString(R.string.no_registered_name_for_account));
         mBinding.btnQr.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
         mBinding.username.setOnFocusChangeListener((v, hasFocus) -> {
             Editable name = mBinding.username.getText();

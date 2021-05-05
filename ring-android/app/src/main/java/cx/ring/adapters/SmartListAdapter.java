@@ -26,6 +26,7 @@ import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -90,6 +91,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     public void update(List<SmartListViewModel> viewModels) {
+        //Log.w("SmartListAdapter", "update " + (viewModels == null ? null : viewModels.size()));
         final List<SmartListViewModel> old = mSmartListViewModels;
         mSmartListViewModels = viewModels == null ? new ArrayList<>() : viewModels;
         if (old != null && viewModels != null) {
