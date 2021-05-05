@@ -29,12 +29,12 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_incoming">In arrivo</string>
     <string name="call_human_state_connecting">Collegamento</string>
     <string name="call_human_state_ringing">Squilla</string>
-    <string name="call_human_state_current">Parla</string>
-    <string name="call_human_state_hungup">Riaggancia</string>
+    <string name="call_human_state_current">In chiamata</string>
+    <string name="call_human_state_hungup">Terminata</string>
     <string name="call_human_state_busy">Occupato</string>
     <string name="call_human_state_failure">Errore</string>
-    <string name="call_human_state_hold">Pausa</string>
+    <string name="call_human_state_hold">Attesa</string>
     <string name="call_human_state_unhold">Riprendi</string>
-    <string name="call_human_state_over">Over</string>
+    <string name="call_human_state_over">Terminata</string>
     <!-- Conferences -->
 </resources>

@@ -10,12 +10,12 @@
   <string name="pref_pushNotifications_title">推送通知</string>
   <string name="pref_pushNotifications_summary">使用 Google 服务从而允许在后台接受到电话或消息</string>
   <string name="pref_video_advanced_title">高级视频设置</string>
-  <string name="pref_video_advanced_summary">更改视频比特率，分辨率以及访问实验性功能</string>
+  <string name="pref_video_advanced_summary">更改视频比特率、分辨率以及访问实验性功能</string>
   <string name="pref_hd_summary">启用发送高清视频</string>
   <string name="pref_hwEncode_title">启用加速编码</string>
   <string name="pref_hwEncode_summary">实验性功能</string>
   <string name="pref_videoBitrate_title">视频比特率</string>
-  <string name="pref_videoBitrate_summary">选择默认传出视频比特率 (KB/s)</string>
+  <string name="pref_videoBitrate_summary">选择发出视频默认比特率 (KB/s)</string>
   <string name="pref_videoResolution_title">视频分辨率</string>
   <string name="pref_videoResolution_summary">选择默认传出视频分辨率</string>
   <string name="pref_systemContacts_title">使用系统通讯录</string>
@@ -23,22 +23,27 @@
   <string name="pref_systemDialer_title">用 Jami 代替系统拨号</string>
   <string name="pref_systemDialer_summary">在可用时使用 Jami 代替系统通话。</string>
   <string name="pref_startOnBoot_title">启动时运行 Jami</string>
-  <string name="pref_startOnBoot_summary">系统启动时在后台运行 Jami。</string>
+  <string name="pref_startOnBoot_summary">系统启动时，在后台启动 Jami。</string>
   <string name="pref_clearHistory_title">清除历史记录</string>
   <string name="pref_clearHistory_summary">清除所有会话历史记录。该操作无法撤销。</string>
+  <string name="pref_notification_title">通知可见性</string>
+  <string name="pref_notification_summary">设置锁定屏幕上的应用通知可见性。</string>
   <string name="pref_blackList_title">屏蔽列表</string>
   <string name="pref_blackList_summary">检查您的屏蔽列表</string>
   <string name="pref_delete_account_title">删除账户</string>
-  <string name="pref_delete_account_summary">将您的账户从该设备删除</string>
+  <string name="pref_delete_account_summary">将您的账户从本设备删除</string>
   <string name="pref_persistNotification_title">后台运行</string>
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
   <string name="pref_typing_title">启用输入状态显示</string>
-  <string name="pref_typing_summary">接收并发送输入状态显示是否正在输入消息。</string>
+  <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
   <string name="pref_read_title">启用已读回执</string>
   <string name="pref_read_summary">接收并发送显示一个消息已读的回执。</string>
   <string name="pref_block_record_title">阻止截屏和录屏</string>
   <string name="pref_block_record_summary">阻止截屏或录屏</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">公开\n（在锁定屏幕上显示通知与内容）\n</string>
+  <string name="notification_private">隐私\n（在锁定屏幕上显示通知，但隐藏内容）\n</string>
+  <string name="notification_secret">秘密\n（不在锁定屏幕上显示通知） </string>
   <!--Plugin-->
   <string name="pref_plugins_title">插件</string>
   <string name="pref_plugins_summary">启用插件并设置它们的参数</string>

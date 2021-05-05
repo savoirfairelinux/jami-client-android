@@ -50,7 +50,7 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Chiamata in entrata persa</string>
+  <string name="notif_missed_incoming_call">Chiamata in arrivo persa</string>
   <string name="notif_missed_outgoing_call">Chiamata in uscita persa</string>
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
   <string name="notif_incoming_call">Chiamata in arrivo</string>
@@ -77,7 +77,7 @@
   <string name="notif_outgoing_file_transfer_title">Invio file a %1$s</string>
   <string name="notif_incoming_picture">Foto da %1$s</string>
   <string name="notif_sync_title">Sincronizzazione dati in corso...</string>
-  <string name="notif_location_title">Condividi la posizione con %1$s</string>
+  <string name="notif_location_title">Condivisione della posizione con %1$s</string>
   <string name="location_share_contact">%1$s sta condividendo la posizione con te. </string>
   <string name="notif_location_multi_title">Condivisione posizione con %1$d contatti</string>
   <string name="notif_location_remaining">%1$d minuti rimanenti</string>
@@ -120,8 +120,8 @@
   <string name="send_file">Invia file</string>
   <string name="hist_file_sent">File inviato</string>
   <string name="hist_file_received">File ricevuto</string>
-  <string name="conversation_send_audio">Registra un messaggio audio</string>
-  <string name="conversation_send_video">Registra un messaggio video</string>
+  <string name="conversation_send_audio">Registra messaggio vocale</string>
+  <string name="conversation_send_video">Registra videomessaggio</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate richiedono l\'autorizzazione Fotocamera per funzionare. Per favore attivala.</string>
@@ -223,14 +223,14 @@
   <string name="not_able_to_write_file">Impossibile scrivere il file</string>
   <string name="file_transfer_status_created">inizializzazione trasferimento</string>
   <string name="file_transfer_status_unsupported">non supportato</string>
-  <string name="file_transfer_status_wait_peer_acceptance">in attesa approvazione del peer</string>
+  <string name="file_transfer_status_wait_peer_acceptance">in attesa di accettazione</string>
   <string name="file_transfer_status_wait_host_acceptance">in attesa approvazione del host</string>
   <string name="file_transfer_status_ongoing">in corso</string>
   <string name="file_transfer_status_finished">finito</string>
   <string name="file_transfer_status_closed_by_host">chiuso dal host</string>
-  <string name="file_transfer_status_closed_by_peer">chiuso dal peer</string>
+  <string name="file_transfer_status_closed_by_peer">chiusa dall\'interlocutore</string>
   <string name="file_transfer_status_invalid_pathname">percorso non valido</string>
-  <string name="file_transfer_status_unjoinable_peer">peer non collegabile</string>
+  <string name="file_transfer_status_unjoinable_peer">utente irraggiungibile</string>
   <string name="file_transfer_status_cancelled">annullato</string>
   <string name="file_transfer_status_error">fallito a causa di un errore</string>
   <string name="file_saved_in">File salvato in %s</string>
@@ -251,10 +251,15 @@
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversazioni</string>
   <string name="navigation_item_contact_request">Richieste di contatto</string>
-  <string name="navigation_item_account">Profilo</string>
+  <string name="navigation_item_account">Account</string>
+  <string name="search_results_public_directory">Cartella pubblica</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Inviare un messaggio vocale?</string>
+  <string name="tv_send_video_dialog_message">Inviare il video?</string>
   <string name="tv_audio_play">Play</string>
   <string name="tv_dialog_send">Invia</string>
+  <string name="tv_send_audio">Invia audio</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Crea account</string>
+  <string name="wizard_password_switch">Cifra l\'account con password</string>
 </resources>

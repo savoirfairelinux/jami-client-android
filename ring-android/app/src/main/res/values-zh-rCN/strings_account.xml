@@ -26,7 +26,7 @@
         这样的话，您只能拨打和接听 ip 通话。
         您可以稍后编辑该账户。</string>
   <string name="account_type_ip2ip">IP 账户</string>
-  <string name="help_ring">使用 Jami 账户您可以通过完全分布式的网络以点对点的方式安全地与其他人联系。</string>
+  <string name="help_ring">Jami 账户允许您通过完全分布式的网络与其他人进行安全的点对点通信。</string>
   <string name="help_sip_title">添加您的 SIP 账户</string>
   <string name="help_sip">配置已有的 SIP 账户。</string>
   <string name="create_sip_account">添加 SIP 账户</string>
@@ -34,7 +34,7 @@
   <string name="account_delete_dialog_title">是否删除账户？</string>
   <string name="account_delete_dialog_message">该操作不可撤销。</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">没有已注册账户</string>
+  <string name="empty_account_list">没有注册的账户</string>
   <string name="normal_accounts_titles">账户</string>
   <string name="normal_devices_titles">关联设备</string>
   <string name="account_device_revoke">吊销设备</string>
@@ -147,7 +147,7 @@
   <string name="account_export_end_error_message">无法导出账户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
   <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
-  <string name="account_share_body_with_username">使用 \"%1$s\"或我的公共用户名 \"%2$s\" 在 Ring 分布式通讯平台上联系我：%3$s</string>
+  <string name="account_share_body_with_username">使用 \"%1$s\"或我的公开用户名 \"%2$s\" 在 Ring 分布式通讯平台上联系我：%3$s</string>
   <string name="account_contact_me">在 Jami 上联系我！</string>
   <string name="update_account">更新账户</string>
   <string name="account_migration">您的 Jami 账户可以被更新。\n请输入您的密码。</string>
@@ -191,12 +191,12 @@
   <string name="account_connect_prompt_username">用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
-  <string name="no_registered_name_for_account">无已注册的名称</string>
+  <string name="no_registered_name_for_account">没有注册名称</string>
   <string name="username_available">用户名可用！</string>
   <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>
-  <string name="registered_username">已注册的用户名</string>
-  <string name="register_username">注册公共用户名</string>
+  <string name="registered_username">注册用户名</string>
+  <string name="register_username">注册公开用户名</string>
   <string name="register_recommended">推荐</string>
   <string name="username_already_taken">用户名已被占用</string>
   <string name="invalid_username">非法用户名</string>
@@ -223,11 +223,11 @@
   <string name="revoke_device_message">您确定要吊销设备 %1$s 吗？</string>
   <string name="revoke_device_wait_title">请稍等…</string>
   <string name="revoke_device_wait_message">正在吊销设备</string>
-  <string name="rename_device_title">重命名该设备</string>
+  <string name="rename_device_title">重命名本设备</string>
   <string name="rename_device_message">选择一个新名称以在您的 Jami 账户中标识此设备</string>
   <string name="rename_device_button">重命名设备</string>
   <string name="account_rename_device_hint">输入新的设备名</string>
   <string name="account_device_name_empty">设备名不可为空</string>
-  <string name="account_device_this_indicator">该设备</string>
+  <string name="account_device_this_indicator">本设备</string>
   <string name="account_disabled_indicator">已禁用</string>
 </resources>

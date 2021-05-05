@@ -35,7 +35,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_delete_dialog_message">Questa azione è irreversibilie.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
-  <string name="normal_accounts_titles">Accounts</string>
+  <string name="normal_accounts_titles">Account</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_wrong_password">Password errata.</string>
@@ -69,6 +69,7 @@ Si potra modificare questo account più tardi.</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzato</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
+  <string name="account_dht_public_in_calls_label">Consenti chiamate in arrivo da contatti sconosciuti</string>
   <string name="account_registration_exp_label">Registrazione scaduta</string>
   <string name="account_local_interface_label">Interfaccia locale</string>
   <string name="account_local_port_label">Porto locale</string>
@@ -85,6 +86,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_proxy_enable_label">Usa proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_peer_discovery_label">Scopri utenti locali</string>
+  <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>
   <string name="account_credentials_edit">Modifica credenziali</string>
@@ -137,6 +140,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
+  <string name="account_connect_button">Connetti</string>
   <string name="account_connect_prompt_username">Nome utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserisci un nome utente</string>
@@ -166,5 +170,6 @@ Si potra modificare questo account più tardi.</string>
   <string name="rename_device_button">Rinomina dispositivo</string>
   <string name="account_rename_device_hint">Scegli il nuovo nome del dispositivo</string>
   <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto</string>
+  <string name="account_device_this_indicator">Questo dispositivo</string>
   <string name="account_disabled_indicator">disattivato</string>
 </resources>
