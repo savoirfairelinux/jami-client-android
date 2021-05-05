@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Izbriši</string>
+  <string name="ic_advanced_menu">Napredna podešavanja</string>
+  <string name="ic_blacklist_menu">Blokirani kontakti</string>
+  <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Dodaj Jami nalog</string>
+  <string name="add_sip_account_title">Dodaj SIP nalog</string>
+  <string name="ring_account_default_name">Jami naloga %1$s</string>
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Ime hosta</string>
+  <string name="prompt_username">Korisničko ime</string>
+  <string name="prompt_password">Šifra</string>
+  <string name="action_create">Napravi nalog</string>
+  <string name="action_create_short">Napravi</string>
+  <string name="action_register">Registruj se</string>
+  <string name="action_settings">Podešavanja</string>
+  <string name="error_field_required">Ovo polje je neophodno</string>
+  <string name="dialog_wait_create">Dodavanje naloga</string>
+  <string name="dialog_wait_create_details">Sačekajte dok se dodaje Vaš nalog...</string>
+  <string name="dialog_wait_update">Ažuriranje naloga</string>
+  <string name="dialog_wait_update_details">Sačekajte dok se ažurira Vaš nalog...</string>
+  <string name="dialog_warn_ip2ip_account_title">Napravite prazan SIP nalog</string>
+  <string name="dialog_warn_ip2ip_account_message">Napravićete SIP nalog bez važećeg imena hosta.
+Moći ćete da upućujete i primate samo direktne ip pozive.
+Kasnije možete da uredite svoj nalog</string>
+  <string name="account_type_ip2ip">Ip nalog</string>
+  <string name="help_ring">Jami nalog vam omogućava da putem potpuno distribuirane mreže sigurno dosegnete ljude u ravnopravnoj mreži.</string>
+  <string name="help_sip_title">Dodajte Vaš SIP nalog</string>
+  <string name="help_sip">Podestite već postoječi SIP nalog</string>
+  <string name="create_sip_account">Dodaj SIP nalog</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Izbrišite nalog?</string>
+  <string name="account_delete_dialog_message">Ova akcija je nepovratna</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">Nema registrovanog naloga</string>
+  <string name="normal_accounts_titles">Nalozi</string>
+  <string name="normal_devices_titles">Povezni uređaji</string>
+  <string name="account_device_revoke">Opozvati uređaj</string>
+  <string name="account_device_revocation_success_title">Usprešno</string>
+  <string name="account_device_revocation_success">Uređaj je opozvan!</string>
+  <string name="account_device_revocation_error_title">Ne može da se opozove uređaj</string>
+  <string name="account_device_revocation_wrong_password">Pogrešna šifra.</string>
+  <string name="account_device_revocation_unknown_device">Nepoznat uređaj.</string>
+  <string name="account_device_revocation_error_unknown">Nepoznata greška.</string>
+  <string name="account_password_change">Promenite šifru</string>
+  <string name="account_password_set">Postavite šifru</string>
+  <string name="account_password_summary">Podesite šifru naloga</string>
+  <string name="account_password_change_wait_message">Promenite šifru naloga</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">General</string>
+  <string name="account_basic_category">Osnovna podešavanja</string>
+  <string name="account_alias_label">Ime naloga</string>
+  <string name="account_hostname_label">ime hosta</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_username_label">Korisničko ime</string>
+  <string name="account_password_label">šifra</string>
+  <string name="account_optionnal_category">Opciona podešavanja</string>
+  <string name="account_useragent_label">Korisnički agent</string>
+  <string name="account_autoanswer_label">Automatski odgovor</string>
+  <string name="account_rendezvous_label">Režimu sastanka</string>
+  <string name="account_rendezvous_summary">U režimu sastanka, dolazni pozivi će se dodavati u konferencijsku sobu.</string>
+  <string name="account_upnp_label">Omogući UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Zvuk</string>
+  <string name="account_preferences_media_tab">Medija</string>
+  <string name="account_ringtone_label">Melodija zvona</string>
+  <string name="account_ringtone_enabled_label">Aktiviraj melodiju zvona</string>
+  <string name="account_ringtone_path_label">Put melodiju zvona</string>
+  <string name="account_ringtone_custom_label">Koristite prilagođenu melodiju zvona</string>
+  <string name="account_ringtone_title">Izaberite melodiju zvona</string>
+  <string name="account_ringtone_summary">Izaberite melodiju zvona ili Vašu</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Omogući video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Napredna</string>
+  <string name="account_call_settings_title">Podešavanje poziva</string>
+  <string name="account_dht_public_in_calls_label">Omogućite dolazne pozive nepoznatih kontakata</string>
+  <string name="account_registration_exp_label">Itekla registracija</string>
+  <string name="account_local_interface_label">Lokalni intefejs</string>
+  <string name="account_local_port_label">Lokalni port</string>
+  <string name="account_stun_enable_label">Koristi Stun</string>
+  <string name="account_stun_server_label">Stun server</string>
+  <string name="account_accept_files">Automatsko prihvati podatke</string>
+  <string name="account_conversation_settings_title">Podešavanje četa</string>
+  <string name="account_sip_proxy_label">Proxy</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <string name="account_export_end_error_title">Greška</string>
+  <string name="ring_account_identity">Identitet</string>
+  <string name="account_new_button">Kreirajte Jami nalog</string>
+  <string name="account_link_export_button">Povežite novi uređaj</string>
+  <string name="account_connect_prompt_username">Korisničko ime</string>
+  <!--Name registration-->
+  <string name="register_recommended">Preporučeno</string>
+  <string name="account_status_error">Greška</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <string name="revoke_device_title">Opozvati uređaj</string>
+</resources>

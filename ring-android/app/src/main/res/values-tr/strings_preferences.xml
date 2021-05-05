@@ -27,7 +27,7 @@
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
   <string name="pref_clearHistory_summary">Tüm konuşma geçmişini temizle. Bu işlem geri alınamaz.</string>
   <string name="pref_blackList_title">Engelleme listesi</string>
-  <string name="pref_blackList_summary">Engelleme listenizi kontrol edin.</string>
+  <string name="pref_blackList_summary">Engelleme listenizi denetleyin.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>
   <string name="pref_delete_account_summary">Hesabınızı bu aygıttan silin</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>

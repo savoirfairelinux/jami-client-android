@@ -22,14 +22,14 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- Call error -->
     <string name="call_error_no_microphone">Apel anulat. Nu a fost găsit niciun microfon.</string>
-    <string name="call_error_no_camera_no_microphone">Apel anulat. Nu a fost găsită nicio  videocameră sau microfon.</string>
+    <string name="call_error_no_camera_no_microphone">Apel anulat. Nu a fost găsită nicio videocameră sau microfon.</string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Căutare</string>
     <string name="call_human_state_incoming">Sosește</string>
     <string name="call_human_state_connecting">Se conectează</string>
     <string name="call_human_state_ringing">Sună</string>
-    <string name="call_human_state_current">Convorbire</string>
+    <string name="call_human_state_current">În convorbire</string>
     <string name="call_human_state_hungup">Terminat</string>
     <string name="call_human_state_busy">Ocupat</string>
     <string name="call_human_state_failure">Eșec</string>
