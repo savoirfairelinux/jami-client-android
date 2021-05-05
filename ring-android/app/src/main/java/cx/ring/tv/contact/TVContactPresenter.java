@@ -26,6 +26,7 @@ import cx.ring.daemon.Blob;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -98,9 +99,10 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     }
 
     private void sendTrustRequest(String accountId, Uri conversationUri) {
+        Conversation conversation = mAccountService.getAccount(accountId).getByUri(conversationUri);
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
-                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, conversationUri.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard))),
-                        e -> mAccountService.sendTrustRequest(accountId, conversationUri.getRawRingId(), null));
+                .subscribe(vCard -> mAccountService.sendTrustRequest(conversation, conversationUri, Blob.fromString(VCardUtils.vcardToString(vCard))),
+                        e -> mAccountService.sendTrustRequest(conversation, conversationUri, null));
     }
 
     public void acceptTrustRequest() {

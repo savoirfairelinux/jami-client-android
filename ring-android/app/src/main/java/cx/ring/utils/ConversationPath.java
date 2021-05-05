@@ -8,13 +8,11 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.Contract;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
 
 public class ConversationPath {
@@ -23,6 +21,10 @@ public class ConversationPath {
     public ConversationPath(String account, String contact) {
         accountId = account;
         conversationId = contact;
+    }
+    public ConversationPath(String account, net.jami.model.Uri conversationUri) {
+        accountId = account;
+        conversationId = conversationUri.getUri();
     }
 
     public ConversationPath(@NonNull Tuple<String, String> path) {
@@ -57,8 +59,11 @@ public class ConversationPath {
                 .appendEncodedPath(conversationUri.getUri())
                 .build();
     }
+    public static Uri toUri(@NonNull Conversation conversation) {
+        return toUri(conversation.getAccountId(), conversation.getUri());
+    }
     public static Uri toUri(@NonNull Interaction interaction) {
-        return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getConversation().getParticipant()));
+        return toUri(interaction.getAccount(), cx.ring.model.Uri.fromString(interaction.getConversation().getParticipant()));
     }
 
     public Bundle toBundle() {
@@ -108,7 +113,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromBundle(@Nullable Bundle bundle) {
         if (bundle != null) {
             String accountId = bundle.getString(ConversationFragment.KEY_ACCOUNT_ID);
@@ -120,7 +124,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromIntent(@Nullable Intent intent) {
         if (intent != null) {
             Uri uri = intent.getData();
@@ -133,10 +136,18 @@ public class ConversationPath {
     }
 
     @Override
+    public @NonNull String toString() {
+        return "ConversationPath{" +
+                "accountId='" + accountId + '\'' +
+                ", conversationId='" + conversationId + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(@Nullable Object obj) {
         if (obj == this)
             return true;
-        if (obj == null || obj.getClass() != getClass())
+        if (!(obj instanceof ConversationPath))
             return false;
         ConversationPath o = (ConversationPath) obj;
         return Objects.equals(o.accountId, accountId)
@@ -149,6 +160,6 @@ public class ConversationPath {
     }
 
     public cx.ring.model.Uri getConversationUri() {
-        return new cx.ring.model.Uri(conversationId);
+        return cx.ring.model.Uri.fromString(conversationId);
     }
 }
