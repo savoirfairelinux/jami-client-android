@@ -37,7 +37,7 @@ public class JamiInjectionModule {
     }
 
     @Provides
-    JamiApplication provideRingApplication() {
+    JamiApplication provideJamiApplication() {
         return mJamiApplication;
     }
 

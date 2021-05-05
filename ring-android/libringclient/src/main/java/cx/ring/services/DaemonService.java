@@ -156,11 +156,11 @@ public class DaemonService {
 
         @Override
         public void accountProfileReceived(String account_id, String name, String photo) {
-            mExecutor.submit(() -> mAccountService.accountProfileReceived(account_id, name, photo));
+            mAccountService.accountProfileReceived(account_id, name, photo);
         }
 
         @Override
-        public void incomingAccountMessage(String accountId, String messageId, String from, StringMap messages) {
+        public void incomingAccountMessage(String accountId, String from, String messageId, StringMap messages) {
             if (messages == null || messages.isEmpty())
                 return;
             Map<String, String> jmessages = messages.toNativeFromUtf8();
@@ -168,13 +168,13 @@ public class DaemonService {
         }
 
         @Override
-        public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mExecutor.submit(() -> mAccountService.accountMessageStatusChanged(accountId, messageId, to, status));
+        public void accountMessageStatusChanged(String accountId, String conversationId, String peer, String messageId, int status) {
+            mExecutor.submit(() -> mAccountService.accountMessageStatusChanged(accountId, conversationId, messageId, peer, status));
         }
 
         @Override
-        public void composingStatusChanged(String accountId, String contactUri, int status) {
-            mExecutor.submit(() -> mAccountService.composingStatusChanged(accountId, contactUri, status));
+        public void composingStatusChanged(String accountId, String conversationId, String contactUri, int status) {
+            mExecutor.submit(() -> mAccountService.composingStatusChanged(accountId, conversationId, contactUri, status));
         }
 
         @Override
@@ -234,9 +234,9 @@ public class DaemonService {
         }
 
         @Override
-        public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
+        public void incomingTrustRequest(String accountId, String conversationId, String from, Blob message, long received) {
             String jmessage = message.toJavaString();
-            mExecutor.submit(() -> mAccountService.incomingTrustRequest(accountId, from, jmessage, received));
+            mExecutor.submit(() -> mAccountService.incomingTrustRequest(accountId, conversationId, from, jmessage, received));
         }
 
         @Override
@@ -269,7 +269,7 @@ public class DaemonService {
 
         @Override
         public void remoteRecordingChanged(String call_id, String peer_number, boolean state) {
-            mCallService.remoteRecordingChanged(call_id, new Uri(peer_number), state);
+            mCallService.remoteRecordingChanged(call_id, Uri.fromString(peer_number), state);
         }
 
         @Override
@@ -380,35 +380,42 @@ public class DaemonService {
 
     class DaemonDataTransferCallback extends DataTransferCallback {
         @Override
-        public void dataTransferEvent(long transferId, int eventCode) {
-            Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
-            mAccountService.dataTransferEvent(transferId, eventCode);
+        public void dataTransferEvent(String accountId, String conversationId, long transferId, int eventCode) {
+            Log.d(TAG, "dataTransferEvent: conversationId=" + conversationId + ", transferId=" + transferId + ", eventCode=" + eventCode);
+            mAccountService.dataTransferEvent(accountId, conversationId, transferId, eventCode);
         }
     }
 
     class ConversationCallbackImpl extends ConversationCallback {
         @Override
         public void conversationLoaded(long id, String accountId, String conversationId, VectMap messages) {
+            mAccountService.conversationLoaded(accountId, conversationId, messages.toNative());
         }
 
         @Override
         public void conversationReady(String accountId, String conversationId) {
+            mAccountService.conversationReady(accountId, conversationId);
         }
 
         @Override
         public void conversationRemoved(String accountId, String conversationId) {
+            mAccountService.conversationRemoved(accountId, conversationId);
         }
 
         @Override
         public void conversationRequestReceived(String accountId, String conversationId, StringMap metadata) {
+            mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNative());
         }
 
         @Override
         public void conversationMemberEvent(String accountId, String conversationId, String uri, int event) {
+            mAccountService.conversationMemberEvent(accountId, conversationId, uri, event);
         }
 
         @Override
         public void messageReceived(String accountId, String conversationId, StringMap message) {
+            mAccountService.messageReceived(accountId, conversationId, message.toNative());
         }
     }
+
 }
