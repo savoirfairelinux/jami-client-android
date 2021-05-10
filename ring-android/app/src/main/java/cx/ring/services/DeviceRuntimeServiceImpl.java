@@ -71,7 +71,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void loadNativeLibrary() {
-        mExecutor.execute(() -> {
+        //mExecutor.execute(() -> {
             try {
                 System.loadLibrary("ring");
             } catch (Exception e) {
@@ -79,7 +79,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(0);
             }
-        });
+        //});
     }
 
     @Override
