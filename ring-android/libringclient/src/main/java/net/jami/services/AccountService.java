@@ -29,7 +29,6 @@ import net.jami.daemon.Blob;
 import net.jami.daemon.DataTransferInfo;
 import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
-import net.jami.daemon.StringVect;
 import net.jami.daemon.UintVect;
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
@@ -1525,10 +1524,11 @@ public class AccountService {
                     String transferId = message.get("tid");
                     long tid = Long.parseLong(transferId);
                     String fileName = message.get("displayName");
+                    String fileId = message.get("fileId");
                     long fileSize = Long.parseLong(message.get("totalSize"));
-                    interaction = account.getDataTransfer(tid);
+                    interaction = account.getDataTransfer(fileId);
                     if (interaction == null) {
-                        interaction = new DataTransfer(tid, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
+                        interaction = new DataTransfer(account.getAccountID(), fileId, author, fileName, contact.isUser(), timestamp, fileSize, 0);
                         File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), ((DataTransfer) interaction).getStoragePath());
                         boolean exists = path.exists();
                         if (exists)
@@ -1690,7 +1690,7 @@ public class AccountService {
 
             Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
             long[] id = new long[1];
-            DataTransferError err = getDataTransferError(JamiService.sendFile(dataTransferInfo, id));
+            DataTransferError err = getDataTransferError(JamiService.sendFileLegacy(dataTransferInfo, id));
             if (err != DataTransferError.SUCCESS) {
                 throw new IOException(err.name());
             } else {
@@ -1699,6 +1699,10 @@ public class AccountService {
             }
             return dataTransfer;
         }).subscribeOn(Schedulers.from(mExecutor));
+    }
+
+    public void sendFile(Conversation conversation, final File file) {
+        mExecutor.execute(() -> JamiService.sendFile(conversation.getAccountId(), conversation.getUri().getRawRingId(), file.getAbsolutePath(), file.getName(), ""));
     }
 
     public List<net.jami.daemon.Message> getLastMessages(String accountId, long baseTime) {
@@ -1710,11 +1714,11 @@ public class AccountService {
         return new ArrayList<>();
     }
 
-    public void acceptFileTransfer(final String accountId, final Uri conversationUri, long id) {
+    public void acceptFileTransfer(final String accountId, final Uri conversationUri, String fileId) {
         Account account = getAccount(accountId);
         if (account != null) {
             Conversation conversation = account.getByUri(conversationUri);
-            acceptFileTransfer(conversation, account.getDataTransfer(id));
+            acceptFileTransfer(conversation, account.getDataTransfer(fileId));
         }
     }
 
@@ -1722,18 +1726,18 @@ public class AccountService {
         if (transfer == null)
             return;
         File path = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
-        String conversationId = conversation.getUri().getRawRingId();
-        acceptFileTransfer(conversation.getAccountId(), conversationId, transfer.getDaemonId(), path.getAbsolutePath(), 0);
+        Log.i(TAG, "acceptFileTransfer() id=" + transfer.getFileId() + ", path=" + path.getAbsolutePath());
+        if (conversation.isSwarm()) {
+            String conversationId = conversation.getUri().getRawRingId();
+            JamiService.downloadFile(conversation.getAccountId(), conversationId, transfer.getFileId(), path.getAbsolutePath());
+        } else {
+            JamiService.acceptFileTransfer(conversation.getAccountId(), transfer.getFileId(), path.getAbsolutePath());
+        }
     }
 
-    private void acceptFileTransfer(final String accountId, final String conversationId, final Long dataTransferId, final String filePath, long offset) {
-        Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath + ", offset=" + offset);
-        mExecutor.execute(() -> JamiService.acceptFileTransfer(accountId, conversationId, dataTransferId, filePath, offset));
-    }
-
-    public void cancelDataTransfer(final String accountId, final String conversationId, long dataTransferId) {
-        Log.i(TAG, "cancelDataTransfer() id=" + dataTransferId);
-        mExecutor.execute(() -> JamiService.cancelDataTransfer(accountId, conversationId, dataTransferId));
+    public void cancelDataTransfer(final String accountId, final String conversationId, final String fileId) {
+        Log.i(TAG, "cancelDataTransfer() id=" + fileId);
+        mExecutor.execute(() -> JamiService.cancelDataTransfer(accountId, conversationId, fileId));
     }
 
     private class DataTransferRefreshTask implements Runnable {
@@ -1752,7 +1756,7 @@ public class AccountService {
         public void run() {
             synchronized (mToUpdate) {
                 if (mToUpdate.getStatus() == Interaction.InteractionStatus.TRANSFER_ONGOING) {
-                    dataTransferEvent(mAccount, mConversation, mToUpdate.getDaemonId(), 5);
+                    dataTransferEvent(mAccount, mConversation, mToUpdate.getFileId(), 5);
                 } else {
                     scheduledTask.cancel(false);
                     scheduledTask = null;
@@ -1761,7 +1765,7 @@ public class AccountService {
         }
     }
 
-    void dataTransferEvent(String accountId, String conversationId, final long transferId, int eventCode) {
+    void dataTransferEvent(String accountId, String conversationId, final String fileId, int eventCode) {
         Account account = getAccount(accountId);
         if (account != null) {
             Conversation conversation = StringUtils.isEmpty(conversationId) ? null : account.getSwarm(conversationId);
@@ -1769,33 +1773,37 @@ public class AccountService {
                 conversation = account.getByUri(conversationId);
             if (conversation == null)
                 return;
-            dataTransferEvent(account, conversation, transferId, eventCode);
+            dataTransferEvent(account, conversation, fileId, eventCode);
         }
     }
-    void dataTransferEvent(Account account, Conversation conversation, final long transferId, int eventCode) {
+    void dataTransferEvent(Account account, Conversation conversation, final String fileId, int eventCode) {
         Interaction.InteractionStatus transferStatus = getDataTransferEventCode(eventCode);
         Log.d(TAG, "Data Transfer " + transferStatus);
         DataTransferInfo info = new DataTransferInfo();
-        if (getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), transferId, info)) != DataTransferError.SUCCESS)
+        DataTransferError err = getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), fileId, info));
+        if (err != DataTransferError.SUCCESS) {
+            Log.d(TAG, "Data Transfer error getting details " + err);
             return;
+        }
 
         boolean outgoing = info.getFlags() == 0;
-        DataTransfer transfer = account.getDataTransfer(transferId);
+        DataTransfer transfer = account.getDataTransfer(fileId);
         if (transfer == null) {
             if (outgoing && mStartingTransfer != null) {
+                Log.d(TAG, "Data Transfer mStartingTransfer");
                 transfer = mStartingTransfer;
                 mStartingTransfer = null;
             } else {
                 transfer = new DataTransfer(conversation, info.getPeer(), account.getAccountID(), info.getDisplayName(),
                         outgoing, info.getTotalSize(),
-                        info.getBytesProgress(), transferId);
+                        info.getBytesProgress(), fileId);
                 if (conversation.isSwarm()) {
                     transfer.setSwarmInfo(conversation.getUri().getRawRingId(), null, null);
                 } else {
                     mHistoryService.insertInteraction(account.getAccountID(), conversation, transfer).blockingAwait();
                 }
             }
-            account.putDataTransfer(transferId, transfer);
+            account.putDataTransfer(fileId, transfer);
         } else synchronized (transfer) {
             InteractionStatus oldState = transfer.getStatus();
             if (oldState != transferStatus) {
@@ -1824,6 +1832,7 @@ public class AccountService {
             }
         }
 
+        Log.d(TAG, "Data Transfer dataTransferSubject.onNext");
         dataTransferSubject.onNext(transfer);
     }
 

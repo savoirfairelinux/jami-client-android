@@ -759,13 +759,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         }
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_ACCEPT, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
     @Override
     public void refuseFile(String accountId, Uri conversationUri, DataTransfer transfer) {
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
     @Override

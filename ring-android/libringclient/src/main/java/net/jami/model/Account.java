@@ -65,7 +65,7 @@ public class Account {
     private final Map<String, TrustRequest> mRequests = new HashMap<>();
     private final Map<String, Contact> mContactCache = new HashMap<>();
     private final Map<String, Conversation> swarmConversations = new HashMap<>();
-    private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
+    private final HashMap<String, DataTransfer> mDataTransfers = new HashMap<>();
 
     private final Map<String, Conversation> conversations = new HashMap<>();
     private final Map<String, Conversation> pending = new HashMap<>();
@@ -379,6 +379,7 @@ public class Account {
     }
 
     public Conversation onDataTransferEvent(DataTransfer transfer) {
+        Log.d(TAG, "Accoount onDataTransferEvent");
         Conversation conversation = (Conversation) transfer.getConversation();
         Interaction.InteractionStatus transferEventCode = transfer.getStatus();
         if (transferEventCode == Interaction.InteractionStatus.TRANSFER_CREATED) {
@@ -1120,12 +1121,12 @@ public class Account {
         mLoadedProfile = profile;
     }
 
-    public DataTransfer getDataTransfer(long id) {
+    public DataTransfer getDataTransfer(String id) {
         return mDataTransfers.get(id);
     }
 
-    public void putDataTransfer(long transferId, DataTransfer transfer) {
-        mDataTransfers.put(transferId, transfer);
+    public void putDataTransfer(String fileId, DataTransfer transfer) {
+        mDataTransfers.put(fileId, transfer);
     }
 
     private static class ConversationComparator implements Comparator<Conversation> {
