@@ -32,7 +32,7 @@ public class DataTransfer extends Interaction {
     private long mBytesProgress;
     //private final String mPeerId;
     private String mExtension;
-    //private String mTransferId;
+    private String mFileId;
     public File destination;
 
     private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
@@ -41,7 +41,8 @@ public class DataTransfer extends Interaction {
     private static final int MAX_SIZE = 32 * 1024 * 1024;
     private static final int UNLIMITED_SIZE = 256 * 1024 * 1024;
 
-    public DataTransfer(ConversationHistory conversation, String peer, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
+    /* Legacy constructor */
+    public DataTransfer(ConversationHistory conversation, String peer, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String fileId) {
         mAuthor = isOutgoing ? null : peer;
         mAccount = account;
         mConversation = conversation;
@@ -52,8 +53,15 @@ public class DataTransfer extends Interaction {
         mType = InteractionType.DATA_TRANSFER.toString();
         mTimestamp = System.currentTimeMillis();
         mIsRead = 1;
-        mDaemonId = daemonId;
         mIsIncoming = !isOutgoing;
+        if (fileId != null) {
+            mFileId = fileId;
+            try {
+                mDaemonId = Long.parseUnsignedLong(fileId);
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     public DataTransfer(Interaction interaction) {
@@ -72,18 +80,15 @@ public class DataTransfer extends Interaction {
         mIsIncoming = interaction.mIsIncoming;//mAuthor != null;
     }
 
-    public DataTransfer(long transferId, String accountId, String peerUri, String displayName, boolean isOutgoing, long timestamp, long totalSize, long bytesProgress) {
-        mDaemonId = transferId;
+    public DataTransfer(String fileId, String accountId, String peerUri, String displayName, boolean isOutgoing, long timestamp, long totalSize, long bytesProgress) {
         mAccount = accountId;
-        //mTransferId = transferId;
-        //mPeerId = peerUri;
+        mFileId = fileId;
         mBody = displayName;
         mAuthor = peerUri;
         mIsIncoming = !isOutgoing;
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
         mTimestamp = timestamp;
-        //mDaemonId = Long.parseUnsignedLong(transferId);
         mType = InteractionType.DATA_TRANSFER.toString();
     }
 
@@ -159,5 +164,8 @@ public class DataTransfer extends Interaction {
         return maxSize == UNLIMITED_SIZE || getTotalSize() <= maxSize;
     }
 
+    public String getFileId() {
+        return mFileId;
+    }
 
 }
