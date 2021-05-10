@@ -21,6 +21,7 @@
 package cx.ring.tv.call;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.app.PictureInPictureParams;
@@ -44,6 +45,8 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.percentlayout.widget.PercentFrameLayout;
 
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Rational;
@@ -125,6 +128,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     private int mVideoHeight = -1;
 
     private final AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
+
+    private MediaSessionCompat mSession;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -435,7 +440,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                         }
                         return true;
                     });
-                    MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
+                    @SuppressLint("RestrictedApi") MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
                     menuHelper.setForceShowIcon(true);
                     menuHelper.show();
                 });
@@ -709,6 +714,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void finish() {
+        mSession.release();
+        mSession = null;
         Activity activity = getActivity();
         if (activity != null) {
             if (mBackstackLost) {
@@ -732,6 +739,14 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
+
+        mSession = new MediaSessionCompat(requireContext(), TAG);
+        MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, getString(R.string.pip_title))
+                .build();
+        mSession.setActive(true);
+        mSession.setMetadata(metadata);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PictureInPictureParams.Builder paramBuilder = new PictureInPictureParams.Builder();
             if (binding.videoSurface.getVisibility() == View.VISIBLE) {
