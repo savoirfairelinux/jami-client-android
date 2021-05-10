@@ -23,6 +23,7 @@
   <string name="ringtones_by">Zil seslerini hazırlayan</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
+  <string name="error_account_offline">Hesap çevrim dışı</string>
   <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Metin ileti</string>

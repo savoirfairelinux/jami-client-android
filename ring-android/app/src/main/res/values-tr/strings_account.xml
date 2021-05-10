@@ -69,7 +69,7 @@
   <string name="account_ringtone_path_label">Zil sesi yolu</string>
   <string name="account_ringtone_custom_label">Özel zil sesi kullan</string>
   <string name="account_ringtone_title">Zil sesi seç</string>
-  <string name="account_ringtone_summary">Zil sesi terchi et veya kendininkini seç</string>
+  <string name="account_ringtone_summary">Zil sesi yeğle veya kendininkini seç</string>
   <!--Video Details-->
   <string name="account_video_label">Görüntü</string>
   <string name="account_video_enable">Görüntüyü Etkinleştir</string>

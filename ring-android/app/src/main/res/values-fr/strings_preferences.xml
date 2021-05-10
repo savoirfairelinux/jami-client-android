@@ -27,6 +27,7 @@
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
   <string name="pref_clearHistory_summary">Effacer tous les historiques de conversation. L\'action est irréversible.</string>
   <string name="pref_notification_title">Mode d\'affichage des notifications</string>
+  <string name="pref_notification_summary">Options d\'affichage des notifications sur les écrans verrouillés.</string>
   <string name="pref_blackList_title">Liste  des comptes bloqués</string>
   <string name="pref_blackList_summary">Vérifier votre liste des comptes bloqués</string>
   <string name="pref_delete_account_title">Supprimer le compte</string>
@@ -40,6 +41,9 @@
   <string name="pref_block_record_title">Bloquer la capture d\'écran et l\'enregistrement</string>
   <string name="pref_block_record_summary">Bloquer la capture d\'écran et l\'enregistrement vidéo</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Public \n(montre les notifications et leurs contenus sur l\'écran verrouillé )\n</string>
+  <string name="notification_private">Privé\n(montre les notifications mais cache le contenu sur l\'écran verrouillé)\n</string>
+  <string name="notification_secret">Secret \n(ne pas montrer les notifications sur l\'écran verrouillé)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Modules d\'extension</string>
   <string name="pref_plugins_summary">Activer les modules d\'extension et les paramétrer</string>
