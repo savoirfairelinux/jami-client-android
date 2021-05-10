@@ -651,7 +651,7 @@ public class DRingService extends Service {
     }
 
     private void handleFileAction(android.net.Uri uri, String action, Bundle extras) {
-        long id = extras.getLong(KEY_TRANSFER_ID);
+        String id = extras.getString(KEY_TRANSFER_ID);
         ConversationPath path = ConversationPath.fromUri(uri);
         if (action.equals(ACTION_FILE_ACCEPT)) {
             mNotificationService.removeTransferNotification(path.getAccountId(), path.getConversationUri(), id);
