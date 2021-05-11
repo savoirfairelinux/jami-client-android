@@ -3,6 +3,16 @@ FROM gradle:jdk11
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
 
+RUN apt-get update && apt-get install -y  --no-install-recommends \
+	apt-transport-https \
+	ca-certificates \
+	gnupg \
+	software-properties-common \
+	wget
+
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
+	apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	asciidoc \
 	autogen \
@@ -24,7 +34,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	locales \
 	m4 \
 	pkg-config \
-	software-properties-common \
 	python-is-python3 \
 	ssh \
 	unzip \
