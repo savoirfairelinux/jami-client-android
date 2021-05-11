@@ -75,6 +75,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private boolean isIncomingRequest = false;
     private boolean isOutgoingRequest = false;
 
+    private BackgroundManager mBackgroundManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
@@ -107,9 +109,17 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBackgroundManager != null) {
+            mBackgroundManager.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.tv_background));
+        }
+    }
+
     private void prepareBackgroundManager() {
         Activity activity = requireActivity();
-        BackgroundManager mBackgroundManager = BackgroundManager.getInstance(activity);
+        mBackgroundManager = BackgroundManager.getInstance(activity);
         mBackgroundManager.attach(activity.getWindow());
     }
 
