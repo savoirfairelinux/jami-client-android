@@ -18,9 +18,6 @@
  */
 package cx.ring.contactrequests;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,14 +35,15 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
-import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragPendingContactRequestsBinding;
-import cx.ring.model.Uri;
+
+import net.jami.contactrequests.ContactRequestsPresenter;
+import net.jami.contactrequests.ContactRequestsView;
+import net.jami.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.smartlist.SmartListViewModel;
-import cx.ring.utils.ConversationPath;
-import cx.ring.utils.DeviceUtils;
+import net.jami.smartlist.SmartListViewModel;
+
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class ContactRequestsFragment extends BaseSupportFragment<ContactRequestsPresenter> implements ContactRequestsView,

@@ -24,15 +24,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.Uri;
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
+import net.jami.model.Uri;
 
 public class ActionHelper {
 

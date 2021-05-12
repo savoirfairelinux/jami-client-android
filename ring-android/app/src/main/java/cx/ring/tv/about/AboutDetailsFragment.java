@@ -36,7 +36,7 @@ import cx.ring.R;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
-import cx.ring.utils.Log;
+import net.jami.utils.Log;
 
 public class AboutDetailsFragment extends DetailsFragment {
     private static final String TAG = "AboutDetailsFragment";

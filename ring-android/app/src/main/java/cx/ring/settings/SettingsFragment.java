@@ -45,9 +45,10 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragSettingsBinding;
-import cx.ring.model.Settings;
+import net.jami.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.GenericView;
+import net.jami.mvp.GenericView;
+import net.jami.settings.SettingsPresenter;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
