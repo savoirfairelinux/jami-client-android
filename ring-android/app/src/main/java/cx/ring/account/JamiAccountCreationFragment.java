@@ -36,7 +36,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import cx.ring.databinding.FragAccJamiCreateBinding;
-import cx.ring.mvp.AccountCreationModel;
+import net.jami.mvp.AccountCreationModel;
+
 import cx.ring.views.WizardViewPager;
 
 public class JamiAccountCreationFragment extends Fragment {

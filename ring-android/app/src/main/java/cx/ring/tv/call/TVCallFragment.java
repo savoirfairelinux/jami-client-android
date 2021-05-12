@@ -70,8 +70,8 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallPresenter;
-import cx.ring.call.CallView;
+import net.jami.call.CallPresenter;
+import net.jami.call.CallView;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.ItemParticipantLabelBinding;
@@ -79,12 +79,14 @@ import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.SipCall;
+import net.jami.model.CallContact;
+import net.jami.model.Conference;
+import net.jami.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
+
+import net.jami.daemon.RingserviceJNI;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -698,7 +700,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void toggleCallMediaHandler(String id, String callId, boolean toggle) {
-        cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler(id, callId, toggle);
+        RingserviceJNI.toggleCallMediaHandler(id, callId, toggle);
     }
 
     @Override
