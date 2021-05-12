@@ -21,7 +21,6 @@ package cx.ring.account;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -42,7 +41,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiUsernameBinding;
-import cx.ring.mvp.AccountCreationModel;
+
+import net.jami.account.JamiAccountCreationPresenter;
+import net.jami.account.JamiAccountCreationView;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
 

@@ -21,6 +21,20 @@ package cx.ring.dependencyinjection;
 
 import android.content.Context;
 
+import net.jami.facades.ConversationFacade;
+import net.jami.services.AccountService;
+import net.jami.services.CallService;
+import net.jami.services.ContactService;
+import net.jami.services.DaemonService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.HistoryService;
+import net.jami.services.LogService;
+import net.jami.services.NotificationService;
+import net.jami.services.PreferencesService;
+import net.jami.services.VCardService;
+import net.jami.utils.Log;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -28,27 +42,14 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.facades.ConversationFacade;
-import cx.ring.services.AccountService;
-import cx.ring.services.CallService;
-import cx.ring.services.ContactService;
 import cx.ring.services.ContactServiceImpl;
-import cx.ring.services.DaemonService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
-import cx.ring.services.HardwareService;
 import cx.ring.services.HardwareServiceImpl;
-import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
-import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
-import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
-import cx.ring.services.PreferencesService;
 import cx.ring.services.SharedPreferencesServiceImpl;
-import cx.ring.services.VCardService;
 import cx.ring.services.VCardServiceImpl;
-import cx.ring.utils.Log;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;

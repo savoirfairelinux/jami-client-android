@@ -19,8 +19,8 @@
  */
 package cx.ring.tv.cards.contacts;
 
-import cx.ring.model.CallContact;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.model.CallContact;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.Card;
 
 public class ContactCard extends Card {
