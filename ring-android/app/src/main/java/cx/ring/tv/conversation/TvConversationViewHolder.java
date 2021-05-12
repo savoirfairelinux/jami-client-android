@@ -53,7 +53,6 @@ public class TvConversationViewHolder extends RecyclerView.ViewHolder {
     public MediaPlayer player;
     public TextureView video;
     public Surface surface = null;
-    public String mCid;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
     public ValueAnimator animator;
 
