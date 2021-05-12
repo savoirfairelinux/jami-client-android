@@ -259,7 +259,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void enterPipMode(String callId) {
+    public void enterPipMode(Conference conference) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
@@ -287,7 +287,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     PendingIntent.getService(context, new Random().nextInt(),
                             new Intent(DRingService.ACTION_CALL_END)
                                     .setClass(context, DRingService.class)
-                                    .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)));
+                                    .putExtra(NotificationService.KEY_CALL_ID, conference.getId()), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
             try {
                 requireActivity().enterPictureInPictureMode(paramBuilder.build());

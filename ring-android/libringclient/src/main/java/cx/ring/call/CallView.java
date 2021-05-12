@@ -74,7 +74,7 @@ public interface CallView {
 
     void onUserLeave();
 
-    void enterPipMode(String callId);
+    void enterPipMode(Conference callId);
 
     void prepareCall(boolean isIncoming);
 

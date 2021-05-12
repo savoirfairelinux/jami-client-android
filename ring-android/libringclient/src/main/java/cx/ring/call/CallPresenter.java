@@ -600,7 +600,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void requestPipMode() {
         if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
-            getView().enterPipMode(mConference.getId());
+            getView().enterPipMode(mConference);
         }
     }
 
