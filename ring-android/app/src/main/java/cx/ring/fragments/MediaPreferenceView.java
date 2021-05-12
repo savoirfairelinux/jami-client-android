@@ -21,8 +21,8 @@ package cx.ring.fragments;
 
 import java.util.ArrayList;
 
-import cx.ring.model.Account;
-import cx.ring.model.Codec;
+import net.jami.model.Account;
+import net.jami.model.Codec;
 
 public interface MediaPreferenceView {
 

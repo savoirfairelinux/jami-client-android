@@ -36,7 +36,10 @@ import androidx.annotation.Nullable;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiPasswordBinding;
-import cx.ring.mvp.AccountCreationModel;
+
+import net.jami.account.JamiAccountCreationPresenter;
+import net.jami.account.JamiAccountCreationView;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccountCreationPresenter>

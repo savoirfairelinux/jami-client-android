@@ -38,7 +38,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.model.Codec;
+import net.jami.model.Codec;
 
 class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
