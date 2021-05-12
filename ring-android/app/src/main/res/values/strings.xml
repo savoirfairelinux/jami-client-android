@@ -45,6 +45,7 @@ along with this program; if not, write to the Free Software
     <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see <u>GNU General Public License version 3 or later</u></string>
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
     <string name="credits">Credits</string>
+    <string name="pip_title">Jami Conference</string>
 
 
     <string name="call_service_description">This service is necessary to keep your calls running in the foreground. It only runs during calls.</string>
