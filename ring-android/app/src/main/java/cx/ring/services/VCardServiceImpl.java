@@ -28,10 +28,12 @@ import androidx.annotation.NonNull;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-import cx.ring.model.Account;
+import net.jami.model.Account;
 import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.Tuple;
-import cx.ring.utils.VCardUtils;
+
+import net.jami.services.VCardService;
+import net.jami.utils.Tuple;
+import net.jami.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
