@@ -533,7 +533,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             } else {
                 viewHolder.btnAccept.setOnClickListener(null);
                 viewHolder.btnRefuse.setOnClickListener(null);
-                viewHolder.updater = null;
             }
         } catch (IllegalStateException | NullPointerException e) {
             Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
