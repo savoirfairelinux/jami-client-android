@@ -671,7 +671,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
             }
         });
 
-        convViewHolder.mCid = textMessage.getConversation().getParticipant();
         String message = textMessage.getBody().trim();
 
         View longPressView = convViewHolder.itemView;
@@ -837,7 +836,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                     context.getString(R.string.notif_outgoing_call);
         }
 
-        convViewHolder.mCid = call.getConversation().getParticipant();
         convViewHolder.mIcon.setImageResource(pictureResID);
         convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()
