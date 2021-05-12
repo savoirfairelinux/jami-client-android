@@ -22,19 +22,19 @@ package cx.ring.tv.contact;
 
 import javax.inject.Inject;
 
-import cx.ring.daemon.Blob;
-import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Account;
-import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.VCardService;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.daemon.Blob;
+import net.jami.facades.ConversationFacade;
+import net.jami.model.Account;
+import net.jami.model.Conference;
+import net.jami.model.Conversation;
+import net.jami.model.SipCall;
+import net.jami.model.Uri;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.VCardService;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
-import cx.ring.utils.VCardUtils;
+import net.jami.utils.VCardUtils;
 import io.reactivex.Scheduler;
 
 public class TVContactPresenter extends RootPresenter<TVContactView> {

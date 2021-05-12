@@ -36,7 +36,10 @@ import androidx.annotation.Nullable;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiLinkPasswordBinding;
-import cx.ring.mvp.AccountCreationModel;
+
+import net.jami.account.JamiLinkAccountPresenter;
+import net.jami.account.JamiLinkAccountView;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLinkAccountPresenter>
@@ -105,7 +108,7 @@ public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLin
     }
 
     @Override
-    protected void initPresenter(JamiLinkAccountPresenter presenter) {
+    protected void initPresenter(net.jami.account.JamiLinkAccountPresenter presenter) {
         presenter.init(model);
     }
 

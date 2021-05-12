@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Conversation;
-import cx.ring.model.Interaction;
+import net.jami.model.Conversation;
+import net.jami.model.Interaction;
+import net.jami.utils.Tuple;
 
 public class ConversationPath {
     private final String accountId;
@@ -53,7 +54,7 @@ public class ConversationPath {
                 .appendEncodedPath(contactId)
                 .build();
     }
-    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri conversationUri) {
+    public static Uri toUri(String accountId, @NonNull net.jami.model.Uri conversationUri) {
         return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(conversationUri.getUri())
@@ -63,7 +64,7 @@ public class ConversationPath {
         return toUri(conversation.getAccountId(), conversation.getUri());
     }
     public static Uri toUri(@NonNull Interaction interaction) {
-        return toUri(interaction.getAccount(), cx.ring.model.Uri.fromString(interaction.getConversation().getParticipant()));
+        return toUri(interaction.getAccount(), net.jami.model.Uri.fromString(interaction.getConversation().getParticipant()));
     }
 
     public Bundle toBundle() {
@@ -79,7 +80,7 @@ public class ConversationPath {
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
         return bundle;
     }
-    public static Bundle toBundle(String accountId, cx.ring.model.Uri uri) {
+    public static Bundle toBundle(String accountId, net.jami.model.Uri uri) {
         return toBundle(accountId, uri.getUri());
     }
 
@@ -159,7 +160,7 @@ public class ConversationPath {
         return Objects.hash(accountId, conversationId);
     }
 
-    public cx.ring.model.Uri getConversationUri() {
-        return cx.ring.model.Uri.fromString(conversationId);
+    public net.jami.model.Uri getConversationUri() {
+        return net.jami.model.Uri.fromString(conversationId);
     }
 }

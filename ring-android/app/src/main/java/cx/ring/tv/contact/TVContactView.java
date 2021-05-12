@@ -20,9 +20,9 @@
  */
 package cx.ring.tv.contact;
 
-import cx.ring.model.Uri;
-import cx.ring.mvp.BaseView;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.model.Uri;
+import net.jami.mvp.BaseView;
+import net.jami.smartlist.SmartListViewModel;
 
 public interface TVContactView extends BaseView {
     void showContact(SmartListViewModel model);
