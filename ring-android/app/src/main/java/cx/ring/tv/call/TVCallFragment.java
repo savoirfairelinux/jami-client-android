@@ -44,6 +44,8 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.percentlayout.widget.PercentFrameLayout;
 
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Rational;
@@ -126,6 +128,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     private final AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
 
+    private MediaSessionCompat mSession;
+
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
@@ -206,15 +210,24 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     };
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        PowerManager powerManager = (PowerManager) view.getContext().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
-        mScreenWakeLock.setReferenceCounted(false);
-
+    public void onStart() {
+        super.onStart();
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSession = new MediaSessionCompat(requireContext(), TAG);
+        mSession.setMetadata(new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, getString(R.string.pip_title))
+                .build());
+
+        PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+        mScreenWakeLock.setReferenceCounted(false);
 
         binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         binding.videoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -255,6 +268,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         mCompositeDisposable.clear();
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
+        }
+        mScreenWakeLock = null;
+        if (mSession != null) {
+            mSession.release();
+            mSession = null;
         }
         presenter.hangupCall();
         runnable = null;
@@ -397,6 +415,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         String ringId = contact.getIds().get(0);
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
 
+        if (mSession != null) {
+            mSession.setMetadata(new MediaMetadataCompat.Builder()
+                    .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, displayName)
+                    .build());
+        }
+
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
         if (hasProfileName) {
             binding.contactBubbleNumTxt.setVisibility(View.VISIBLE);
@@ -466,6 +490,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void initNormalStateDisplay(boolean audioOnly, boolean muted) {
+        mSession.setActive(true);
+
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
@@ -481,6 +507,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void initIncomingCallDisplay() {
+        mSession.setActive(true);
+
         binding.callAcceptBtn.setVisibility(View.VISIBLE);
         binding.callAcceptBtn.requestFocus();
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
@@ -710,6 +738,9 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public void finish() {
         Activity activity = getActivity();
+        if (mSession != null) {
+            mSession.setActive(false);
+        }
         if (activity != null) {
             if (mBackstackLost) {
                 activity.finishAndRemoveTask();
