@@ -42,7 +42,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.CallFragment;
-import cx.ring.services.NotificationService;
+import net.jami.services.NotificationService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;

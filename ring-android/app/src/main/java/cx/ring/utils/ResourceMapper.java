@@ -23,7 +23,7 @@ package cx.ring.utils;
 import android.content.Context;
 
 import cx.ring.R;
-import cx.ring.model.Interaction.InteractionStatus;
+import net.jami.model.Interaction.InteractionStatus;
 
 public class ResourceMapper {
 

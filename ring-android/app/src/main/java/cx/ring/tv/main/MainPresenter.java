@@ -29,11 +29,11 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.facades.ConversationFacade;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.navigation.HomeNavigationViewModel;
-import cx.ring.services.AccountService;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.facades.ConversationFacade;
+import net.jami.mvp.RootPresenter;
+import net.jami.navigation.HomeNavigationViewModel;
+import net.jami.services.AccountService;
+import net.jami.smartlist.SmartListViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 

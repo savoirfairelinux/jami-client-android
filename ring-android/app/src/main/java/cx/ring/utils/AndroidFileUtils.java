@@ -52,6 +52,8 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
+import net.jami.utils.FileUtils;
+
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -156,7 +158,7 @@ public class AndroidFileUtils {
     public static boolean copyAsset(AssetManager assetManager, String fromAssetPath, File toPath) {
         try (InputStream in = assetManager.open(fromAssetPath);
              OutputStream out = new FileOutputStream(toPath)) {
-            FileUtils.copyFile(in, out);
+            net.jami.utils.FileUtils.copyFile(in, out);
             out.flush();
             return true;
         } catch (IOException e) {
@@ -308,7 +310,7 @@ public class AndroidFileUtils {
                   FileOutputStream output = new FileOutputStream(file)) {
                 if (inputStream == null)
                     throw new FileNotFoundException();
-                FileUtils.copyFile(inputStream, output);
+                net.jami.utils.FileUtils.copyFile(inputStream, output);
                 output.flush();
             }
             return file;
@@ -338,7 +340,7 @@ public class AndroidFileUtils {
     public static Completable copyFileToUri(ContentResolver cr, File input, Uri outUri){
         return Completable.fromAction(() -> {
             try (InputStream inputStream = new FileInputStream(input); OutputStream outputStream = cr.openOutputStream(outUri)) {
-                FileUtils.copyFile(inputStream, outputStream);
+                net.jami.utils.FileUtils.copyFile(inputStream, outputStream);
             }
         }).subscribeOn(Schedulers.io());
     }
@@ -347,7 +349,7 @@ public class AndroidFileUtils {
         File file = getConversationPath(context, conversationId, name);
         FileOutputStream output = new FileOutputStream(file);
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        FileUtils.copyFile(inputStream, output);
+        net.jami.utils.FileUtils.copyFile(inputStream, output);
         return file;
     }
 
@@ -401,7 +403,7 @@ public class AndroidFileUtils {
         Log.d(TAG, "writeCacheFileToExtStorage: finalFile=" + finalFile + ",exists=" + finalFile.exists());
         try (InputStream inputStream = context.getContentResolver().openInputStream(cacheFile);
              FileOutputStream output = new FileOutputStream(finalFile)) {
-            FileUtils.copyFile(inputStream, output);
+            net.jami.utils.FileUtils.copyFile(inputStream, output);
         }
         return finalFile.toString();
     }

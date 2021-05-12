@@ -38,7 +38,9 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.model.Settings;
+import net.jami.model.Settings;
+import net.jami.services.PreferencesService;
+
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.NetworkUtils;
 
