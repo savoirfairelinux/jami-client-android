@@ -21,22 +21,15 @@
 package cx.ring.client;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
-import androidx.appcompat.widget.ActionMenuView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
@@ -160,43 +153,9 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     public void setColor(@ColorInt int color) {
-        colouriseToolbar(binding.mainToolbar, color);
+        //colouriseToolbar(binding.mainToolbar, color);
         //mToolbar.setBackground(new ColorDrawable(color));
         //getWindow().setStatusBarColor(color);
-    }
-
-    public static void colouriseToolbar(@NonNull Toolbar toolbar, @ColorInt int foreground) {
-        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(foreground, PorterDuff.Mode.MULTIPLY);
-
-        for (int i = 0; i < toolbar.getChildCount(); i++) {
-            final View view = toolbar.getChildAt(i);
-            if (view instanceof ImageButton) {
-                ((ImageButton)view).getDrawable().setColorFilter(colorFilter);
-            } else if (view instanceof ActionMenuView) {
-                for (int j = 0; j < ((ActionMenuView) view).getChildCount(); j++) {
-                    final View innerView = ((ActionMenuView)view).getChildAt(j);
-                    //Any ActionMenuViews - icons that are not back button, text or overflow menu
-                    if (innerView instanceof ActionMenuItemView) {
-                        final Drawable[] drawables = ((ActionMenuItemView)innerView).getCompoundDrawables();
-                        for (int k = 0; k < drawables.length; k++) {
-                            final Drawable drawable = drawables[k];
-                            if (drawable != null) {
-                                final int drawableIndex = k;
-                                //Set the color filter in separate thread
-                                //by adding it to the message queue - won't work otherwise
-                                innerView.post(() -> ((ActionMenuItemView) innerView).getCompoundDrawables()[drawableIndex].setColorFilter(colorFilter));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        Drawable overflowIcon = toolbar.getOverflowIcon();
-        if (overflowIcon != null) {
-            overflowIcon.setColorFilter(colorFilter);
-            toolbar.setOverflowIcon(overflowIcon);
-        }
     }
 
 }
