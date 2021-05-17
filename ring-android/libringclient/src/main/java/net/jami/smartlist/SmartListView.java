@@ -24,13 +24,15 @@ import java.util.List;
 import net.jami.model.Uri;
 import net.jami.mvp.BaseView;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public interface SmartListView extends BaseView {
 
-    void displayChooseNumberDialog(CharSequence numbers[]);
+    void displayChooseNumberDialog(CharSequence[] numbers);
 
     void displayNoConversationMessage();
 
-    void displayConversationDialog(net.jami.smartlist.SmartListViewModel smartListViewModel);
+    void displayConversationDialog(SmartListViewModel smartListViewModel);
 
     void displayClearDialog(Uri callContact);
 
@@ -46,7 +48,7 @@ public interface SmartListView extends BaseView {
 
     void hideNoConversationMessage();
 
-    void updateList(List<net.jami.smartlist.SmartListViewModel> smartListViewModels);
+    void updateList(List<SmartListViewModel> smartListViewModels, CompositeDisposable parentDisposable);
     void update(SmartListViewModel model);
     void update(int position);
 

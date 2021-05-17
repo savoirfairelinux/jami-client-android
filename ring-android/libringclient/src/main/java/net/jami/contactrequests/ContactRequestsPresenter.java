@@ -64,7 +64,7 @@ public class ContactRequestsPresenter extends RootPresenter<net.jami.contactrequ
                     return vms;
                 }))
                 .observeOn(mUiScheduler)
-                .subscribe(viewModels -> getView().updateView(viewModels),
+                .subscribe(viewModels -> getView().updateView(viewModels, mCompositeDisposable),
                         e -> Log.d(TAG, "updateList subscribe onError", e)));
     }
 
