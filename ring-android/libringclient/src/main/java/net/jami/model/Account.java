@@ -16,7 +16,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package net.jami.model;
@@ -94,7 +94,6 @@ public class Account {
     private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
 
     public Single<Account> historyLoader;
-    //sprivate VCard mProfile;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
 
     public Account(String bAccountID) {
@@ -145,27 +144,31 @@ public class Account {
                 contact.setConversationUri(conversation.getUri());
             }
             conversations.put(conversation.getUri().getUri(), conversation);
+            conversationChanged();
         }
-        conversationChanged();
     }
     public Conversation getSwarm(String conversationId) {
-        return swarmConversations.get(conversationId);
+        synchronized (conversations) {
+            return swarmConversations.get(conversationId);
+        }
     }
 
     public Conversation newSwarm(String conversationId, Conversation.Mode mode) {
-        Conversation c = swarmConversations.get(conversationId);
-        if (c == null) {
-            c = new Conversation(accountID, new Uri(Uri.SWARM_SCHEME, conversationId), mode);
-            swarmConversations.put(conversationId, c);
+        synchronized (conversations) {
+            Conversation c = swarmConversations.get(conversationId);
+            if (c == null) {
+                c = new Conversation(accountID, new Uri(Uri.SWARM_SCHEME, conversationId), mode);
+                swarmConversations.put(conversationId, c);
+            }
+            return c;
         }
-        return c;
     }
 
     public void removeSwarm(String conversationId) {
         Log.w(TAG, "removeSwarm " + conversationId);
-        Conversation conversation = swarmConversations.remove(conversationId);
-        if (conversation != null) {
-            synchronized (conversations) {
+        synchronized (conversations) {
+            Conversation conversation = swarmConversations.remove(conversationId);
+            if (conversation != null) {
                 Conversation c = conversations.remove(conversation.getUri().getUri());
                 try {
                     Contact contact = c.getContact();
@@ -174,10 +177,9 @@ public class Account {
                         contact.setConversationUri(contact.getUri());
                         contactAdded(contact);
                     }
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
+                conversationChanged();
             }
-            conversationChanged();
         }
     }
 
@@ -271,17 +273,19 @@ public class Account {
     }
 
     public void conversationChanged() {
-        conversationsChanged = true;
-        if (historyLoaded) {
-            conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
+        synchronized (conversations) {
+            conversationsChanged = true;
+            if (historyLoaded) {
+                conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
+            }
+            updateUnreadConversations();
         }
-        updateUnreadConversations();
     }
 
     public void conversationUpdated(Conversation conversation) {
-        if (!historyLoaded)
-            return;
-        synchronized (sortedConversations) {
+        synchronized (conversations) {
+            if (!historyLoaded)
+                return;
             if (conversationsChanged) {
                 getSortedConversations();
             } else {
@@ -296,15 +300,13 @@ public class Account {
 
     private void updateUnreadConversations() {
         int unread = 0;
-        synchronized (sortedConversations) {
-            for (Conversation model : sortedConversations) {
-                Interaction last = model.getLastEvent();
-                if (last != null && !last.isRead())
-                    unread++;
-            }
-            // Log.w(TAG, "updateUnreadConversations " + unread);
-            unreadConversationsSubject.onNext(unread);
+        for (Conversation model : sortedConversations) {
+            Interaction last = model.getLastEvent();
+            if (last != null && !last.isRead())
+                unread++;
         }
+        // Log.w(TAG, "updateUnreadConversations " + unread);
+        unreadConversationsSubject.onNext(unread);
     }
 
     private void updateUnreadPending() {
@@ -338,11 +340,19 @@ public class Account {
 
     public void updated(Conversation conversation) {
         String key = conversation.getUri().getUri();
-        if (conversation == conversations.get(key))
-            conversationUpdated(conversation);
-        else if (conversation == pending.get(key))
-            pendingUpdated(conversation);
-        else if (conversation == cache.get(key)) {
+        synchronized (conversations) {
+            if (conversation == conversations.get(key)) {
+                conversationUpdated(conversation);
+                return;
+            }
+        }
+        synchronized (pending) {
+            if (conversation == pending.get(key)) {
+                pendingUpdated(conversation);
+                return;
+            }
+        }
+        if (conversation == cache.get(key)) {
             if (isJami() && !conversation.isSwarm() && conversation.getContacts().size() == 1 && !conversation.getContact().getConversationUri().blockingFirst().equals(conversation.getUri()))  {
                 return;
             }
@@ -358,10 +368,16 @@ public class Account {
     }
 
     public void refreshed(Conversation conversation) {
-        if (conversations.containsValue(conversation))
-            conversationRefreshed(conversation);
-        else if (pending.containsValue(conversation))
-            pendingRefreshed();
+        synchronized (conversations) {
+            if (conversations.containsValue(conversation)) {
+                conversationRefreshed(conversation);
+                return;
+            }
+        }
+        synchronized (pending) {
+            if (pending.containsValue(conversation))
+                pendingRefreshed();
+        }
     }
 
     public void addTextMessage(TextMessage txt) {
@@ -687,10 +703,8 @@ public class Account {
         TrustRequest req = mRequests.get(id);
         if (req != null) {
             mRequests.remove(id);
-            //trustRequestsSubject.onNext(mRequests.values());
         }
         contactAdded(contact);
-        //contactSubject.onNext(new ContactEvent(callContact, true));
         contactListSubject.onNext(mContacts.values());
     }
 
@@ -708,11 +722,9 @@ public class Account {
         TrustRequest req = mRequests.get(id);
         if (req != null) {
             mRequests.remove(id);
-            //trustRequestsSubject.onNext(mRequests.values());
         }
         if (contact != null) {
             contactRemoved(contact.getUri());
-            //contactSubject.onNext(new ContactEvent(callContact, false));
         }
         contactListSubject.onNext(mContacts.values());
     }
@@ -756,31 +768,17 @@ public class Account {
         return requests;
     }
 
-    public Map<String, TrustRequest> getRequestsMigration() {
-        return mRequests;
-    }
-
     public TrustRequest getRequest(Uri uri) {
         return mRequests.get(uri.getUri());
     }
 
     public void addRequest(TrustRequest request) {
-        //Log.w(TAG, "addRequest start");
         synchronized (pending) {
-            //boolean isSwarm = request.getConversationId() != null;
             String key = request.getUri().getUri();
-            //if (!isSwarm) {
             mRequests.put(key, request);
-                //trustRequestSubject.onNext(new RequestEvent(request, true));
-                //trustRequestsSubject.onNext(mRequests.values());
-            //}
-
             Conversation conversation = pending.get(key);
             if (conversation == null) {
-                /*if (isSwarm) {
-                    Log.w(TAG, "new public swarm request");
-                }*/
-                conversation = /*isSwarm ? newSwarm(key, Conversation.Mode.Public) : */getByKey(key);
+                conversation = getByKey(key);
                 pending.put(key, conversation);
                 if (!conversation.isSwarm()) {
                     Contact contact = getContactFromCache(request.getUri());
@@ -804,9 +802,7 @@ public class Account {
                     Contact contact = getContactFromCache(request.getUri());
                     conversation.addRequestEvent(request, contact);
                 }
-                //trustRequestSubject.onNext(new RequestEvent(request, true));
             }
-            //trustRequestsSubject.onNext(mRequests.values());
             pendingChanged();
         }
     }
@@ -815,10 +811,6 @@ public class Account {
         synchronized (pending) {
             String contactUri = contact.getUri();
             TrustRequest request = mRequests.remove(contactUri);
-            if (request != null) {
-                //trustRequestSubject.onNext(new RequestEvent(request, true));
-                //trustRequestsSubject.onNext(mRequests.values());
-            }
             if (pending.remove(contactUri) != null) {
                 pendingChanged();
                 return true;
@@ -872,52 +864,44 @@ public class Account {
     }
 
     public void setHistoryLoaded(List<Conversation> conversations) {
-        if (historyLoaded)
-            return;
-        //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());
-        for (Conversation c : conversations) {
-            Contact contact = c.getContact();
-            if (!c.isSwarm() && contact != null && contact.getConversationUri().blockingFirst().equals(c.getUri()))
-                updated(c);
+        synchronized (this.conversations) {
+            if (historyLoaded)
+                return;
+            //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());
+            for (Conversation c : conversations) {
+                Contact contact = c.getContact();
+                if (!c.isSwarm() && contact != null && contact.getConversationUri().blockingFirst().equals(c.getUri()))
+                    updated(c);
+            }
+            historyLoaded = true;
+            conversationChanged();
+            pendingChanged();
         }
-        historyLoaded = true;
-        conversationChanged();
-        pendingChanged();
     }
 
     private List<Conversation> getSortedConversations() {
-        //Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
-        synchronized (sortedConversations) {
-            if (conversationsChanged) {
-                sortedConversations.clear();
-                synchronized (conversations) {
-                    sortedConversations.addAll(conversations.values());
-                }
-                for (Conversation c : sortedConversations)
-                    c.sortHistory();
-                Collections.sort(sortedConversations, new ConversationComparator());
-                conversationsChanged = false;
-            }
+        if (conversationsChanged) {
+            sortedConversations.clear();
+                sortedConversations.addAll(conversations.values());
+            for (Conversation c : sortedConversations)
+                c.sortHistory();
+            Collections.sort(sortedConversations, new ConversationComparator());
+            conversationsChanged = false;
         }
         return sortedConversations;
     }
 
     private List<Conversation> getSortedPending() {
-        synchronized (sortedPending) {
-            if (pendingsChanged) {
-                sortedPending.clear();
-                synchronized (pending) {
-                    sortedPending.addAll(pending.values());
-                }
-                for (Conversation c : sortedPending)
-                    c.sortHistory();
-                Collections.sort(sortedPending, new ConversationComparator());
-                pendingsChanged = false;
-            }
+        if (pendingsChanged) {
+            sortedPending.clear();
+            sortedPending.addAll(pending.values());
+            for (Conversation c : sortedPending)
+                c.sortHistory();
+            Collections.sort(sortedPending, new ConversationComparator());
+            pendingsChanged = false;
         }
         return sortedPending;
     }
-
 
     private void contactAdded(Contact contact) {
         Uri uri = contact.getUri();
