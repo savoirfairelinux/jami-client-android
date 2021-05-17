@@ -24,9 +24,11 @@ import java.util.List;
 import net.jami.model.Uri;
 import net.jami.smartlist.SmartListViewModel;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public interface ContactRequestsView {
 
-    void updateView(List<SmartListViewModel> list);
+    void updateView(List<SmartListViewModel> list, CompositeDisposable disposable);
     void updateItem(SmartListViewModel item);
 
     void goToConversation(String accountId, Uri contactId);

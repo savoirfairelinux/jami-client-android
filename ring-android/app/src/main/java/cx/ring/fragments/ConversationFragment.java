@@ -834,15 +834,27 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.resume(mIsBubble);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.pause();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        presenter.pause();
+        //presenter.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.resume(mIsBubble);
+        //presenter.resume(mIsBubble);
     }
 
     @Override
