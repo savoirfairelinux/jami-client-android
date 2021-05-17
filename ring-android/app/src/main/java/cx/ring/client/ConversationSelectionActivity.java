@@ -53,7 +53,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public class ConversationSelectionActivity extends AppCompatActivity {
     private final static String TAG = ConversationSelectionActivity.class.getSimpleName();
 
-    private CompositeDisposable mDisposable = new CompositeDisposable();
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Inject
     @Singleton
@@ -90,7 +90,7 @@ public class ConversationSelectionActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(SmartListViewModel smartListViewModel) {
             }
-        });
+        }, mDisposable);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
     }
