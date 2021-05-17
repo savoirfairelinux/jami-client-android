@@ -47,16 +47,18 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public final ItemSmartlistHeaderBinding headerBinding;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
+    public SmartListViewHolder(@NonNull ItemSmartlistBinding b, @NonNull CompositeDisposable parentDisposable) {
         super(b.getRoot());
         binding = b;
         headerBinding = null;
+        parentDisposable.add(compositeDisposable);
     }
 
-    public SmartListViewHolder(@NonNull ItemSmartlistHeaderBinding b) {
+    public SmartListViewHolder(@NonNull ItemSmartlistHeaderBinding b, @NonNull CompositeDisposable parentDisposable) {
         super(b.getRoot());
         binding = null;
         headerBinding = b;
+        parentDisposable.add(compositeDisposable);
     }
 
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
@@ -67,6 +69,10 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
             compositeDisposable.add(Observable.create(e -> itemView.setOnClickListener(e::onNext))
                     .throttleFirst(1000, TimeUnit.MILLISECONDS)
                     .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
+            Observable<Boolean> isSelected = smartListViewModel.getSelected();
+            if (isSelected != null) {
+                compositeDisposable.add(isSelected.subscribe(binding.itemLayout::setActivated));
+            }
             itemView.setOnLongClickListener(v -> {
                 clickListener.onItemLongClick(smartListViewModel);
                 return true;
@@ -101,6 +107,7 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                     .withViewModel(smartListViewModel)
                     .withCircleCrop(true)
                     .build(binding.photo.getContext()));
+
         } else if (headerBinding != null) {
             headerBinding.headerTitle.setText(smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.Conversations
                     ? R.string.navigation_item_conversation : R.string.search_results_public_directory);

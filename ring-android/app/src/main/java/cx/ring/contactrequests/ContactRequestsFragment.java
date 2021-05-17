@@ -45,6 +45,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import net.jami.smartlist.SmartListViewModel;
 
 import cx.ring.viewholders.SmartListViewHolder;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class ContactRequestsFragment extends BaseSupportFragment<ContactRequestsPresenter> implements ContactRequestsView,
         SmartListViewHolder.SmartListListeners {
@@ -100,7 +101,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void updateView(final List<SmartListViewModel> list) {
+    public void updateView(final List<SmartListViewModel> list, CompositeDisposable disposable) {
         if (binding == null) {
             return;
         }
@@ -114,7 +115,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         if (binding.requestsList.getAdapter() != null) {
             mAdapter.update(list);
         } else {
-            mAdapter = new SmartListAdapter(list, ContactRequestsFragment.this);
+            mAdapter = new SmartListAdapter(list, ContactRequestsFragment.this, disposable);
             binding.requestsList.setAdapter(mAdapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             binding.requestsList.setLayoutManager(mLayoutManager);
