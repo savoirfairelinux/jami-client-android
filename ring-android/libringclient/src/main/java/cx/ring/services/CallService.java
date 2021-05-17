@@ -453,23 +453,27 @@ public class CallService {
     }
 
     public void removeCallForId(String callId) {
-        currentCalls.remove(callId);
-        currentConferences.remove(callId);
+        synchronized (currentCalls) {
+            currentCalls.remove(callId);
+            currentConferences.remove(callId);
+        }
     }
 
     private SipCall addCall(String accountId, String callId, String from, SipCall.Direction direction) {
-        SipCall call = currentCalls.get(callId);
-        if (call == null) {
-            Account account = mAccountService.getAccount(accountId);
-            Uri fromUri = new Uri(from);
-            Conversation conversation = account.getByUri(fromUri);
-            CallContact contact = mContactService.findContact(account, fromUri);
-            call = new SipCall(callId, new Uri(from).getUri(), accountId, conversation, contact, direction);
-            currentCalls.put(callId, call);
-        } else {
-            Log.w(TAG, "Call already existed ! " + callId + " " + from);
+        synchronized (currentCalls) {
+            SipCall call = currentCalls.get(callId);
+            if (call == null) {
+                Account account = mAccountService.getAccount(accountId);
+                Uri fromUri = new Uri(from);
+                Conversation conversation = account.getByUri(fromUri);
+                CallContact contact = mContactService.findContact(account, fromUri);
+                call = new SipCall(callId, new Uri(from).getUri(), accountId, conversation, contact, direction);
+                currentCalls.put(callId, call);
+            } else {
+                Log.w(TAG, "Call already existed ! " + callId + " " + from);
+            }
+            return call;
         }
-        return call;
     }
 
     private Conference addConference(SipCall call) {
@@ -537,13 +541,15 @@ public class CallService {
     void callStateChanged(String callId, String newState, int detailCode) {
         Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
         try {
-            SipCall call = parseCallState(callId, newState);
-            if (call != null) {
-                callSubject.onNext(call);
-                if (call.getCallStatus() == SipCall.CallStatus.OVER) {
-                    currentCalls.remove(call.getDaemonIdString());
-                    currentConferences.remove(call.getDaemonIdString());
-                    updateConnectionCount();
+            synchronized (currentCalls) {
+                SipCall call = parseCallState(callId, newState);
+                if (call != null) {
+                    callSubject.onNext(call);
+                    if (call.getCallStatus() == SipCall.CallStatus.OVER) {
+                        currentCalls.remove(call.getDaemonIdString());
+                        currentConferences.remove(call.getDaemonIdString());
+                        updateConnectionCount();
+                    }
                 }
             }
         } catch (Exception e) {
