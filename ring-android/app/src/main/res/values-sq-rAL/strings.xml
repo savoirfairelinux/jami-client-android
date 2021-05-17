@@ -304,4 +304,5 @@
   <string name="wizard_profile_button">Ruaje Profilin</string>
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
   <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
+  <string name="chat_plugins">Shtojca Fjalosjeje</string>
 </resources>

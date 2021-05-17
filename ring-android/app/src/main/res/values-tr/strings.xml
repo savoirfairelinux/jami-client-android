@@ -32,6 +32,7 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
+  <string name="menu_item_plugin_list">Eklenti Ayarları</string>
   <string name="menu_item_share">Bilgimi paylaş</string>
   <string name="menu_item_about">Jami Hakkında</string>
   <!--Dialing Fragment-->
@@ -100,6 +101,7 @@
   <string name="action_call_end_accept">Bitir ve aramayı al</string>
   <string name="action_call_decline">Reddet</string>
   <string name="action_call_mic_mute">Mikrofon sessiz</string>
+  <string name="action_load_plugin">Eklenti Yükleme</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
@@ -300,4 +302,5 @@
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>
+  <string name="chat_plugins">Sohbet Eklentileri</string>
 </resources>

@@ -59,8 +59,8 @@
   <string name="account_optionnal_category">Reglări facultative</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Răspuns automat</string>
-  <string name="account_rendezvous_label">Modalitate Întîlnire</string>
-  <string name="account_rendezvous_summary">În modalitatea Întîlnire, apelurile primite vor fi adăugate la o sală de conferințe.</string>
+  <string name="account_rendezvous_label">Modalitatea Conferință</string>
+  <string name="account_rendezvous_summary">În modalitatea Conferință, apelurile primite vor fi adăugate la o sală de conferințe.</string>
   <string name="account_upnp_label">Activează UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -138,7 +138,7 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
-  <string name="account_export_file">Copie de rezervă a contului</string>
+  <string name="account_export_file">Cont din copie de rezervă</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>

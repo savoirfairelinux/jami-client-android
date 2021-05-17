@@ -59,8 +59,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_optionnal_category">Impostazioni aggiuntive</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Risposta automatica</string>
-  <string name="account_rendezvous_label">Modalità Rendezvous </string>
-  <string name="account_rendezvous_summary">In modalità Rendezvous, le chiamate in arrivo verranno aggiunte a una sala conferenze.</string>
+  <string name="account_rendezvous_label">Modalità Riunione</string>
+  <string name="account_rendezvous_summary">In modalità Riunione, le chiamate in arrivo saranno aggiunte a una sala conferenze.</string>
   <string name="account_upnp_label">Attiva UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -138,7 +138,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
-  <string name="account_export_file">Account di backup</string>
+  <string name="account_export_file">Account dal backup</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>

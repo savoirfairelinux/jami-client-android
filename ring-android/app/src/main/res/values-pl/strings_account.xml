@@ -46,6 +46,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
   <string name="account_password_change">Zmień Hasło</string>
   <string name="account_password_set">Ustaw hasło</string>
+  <string name="account_password_summary">Zarządzaj hasłem swojego konta.</string>
   <string name="account_password_change_wait_message">Zmienianie hasła do konta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
@@ -58,6 +59,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_optionnal_category">Ustawienia Opcjonalne</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatyczna Odpowiedź</string>
+  <string name="account_rendezvous_label">Tryb Rendezvous</string>
+  <string name="account_rendezvous_summary">W trybie Rendezvous przychodzące połączenia będą dodawane do pokoju konferencyjnego.</string>
   <string name="account_upnp_label">Włącz UPnP</string>
   <string name="account_proxy_field">Pełnomocnik</string>
   <!--Audio Details-->
@@ -67,6 +70,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_ringtone_enabled_label">Aktywuj dzwonki</string>
   <string name="account_ringtone_path_label">Ścieżka do dzwonka</string>
   <string name="account_ringtone_custom_label">użyj własnego dzwonka</string>
+  <string name="account_ringtone_title">Wybierz dzwonek</string>
+  <string name="account_ringtone_summary">Wybierz dzwonek lub wybierz swój własny</string>
   <!--Video Details-->
   <string name="account_video_label">Wideo</string>
   <string name="account_video_enable">Włącz video</string>
@@ -79,6 +84,12 @@ Możesz edytować swoje konto później</string>
   <string name="account_local_port_label">Port Lokalny</string>
   <string name="account_stun_enable_label">Użyj Stun</string>
   <string name="account_stun_server_label">Serwer Stun</string>
+  <string name="account_accept_files">Akceptuj przychodzące pliki automatycznie</string>
+  <string name="account_conversation_settings_title">Ustawienia konwersacji</string>
+  <string name="account_accept_files_max_size">Maksymalny rozmiar pliku akceptowany automatycznie</string>
+  <string name="account_accept_files_never">Nigdy nie akceptuj automatycznie</string>
+  <string name="account_accept_files_always">Zawsze akceptuj automatycznie</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Użyj TURN</string>
   <string name="account_turn_server_label">Serwer TURN</string>
   <string name="account_turn_username_label">Nazwa użytkownika TURN</string>
@@ -90,6 +101,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
   <string name="account_proxy_server_label">Adres proxy DHT</string>
   <string name="account_sip_proxy_label">Pełnomocnik</string>
+  <string name="account_peer_discovery_label">Wyszukiwanie lokalnych partnerów</string>
   <string name="account_peer_discovery_enable_label">Aktywuj wyszukiwanie lokalnych partnerów</string>
   <!--Security Details-->
   <string name="account_credentials_label">Detale</string>
@@ -121,6 +133,8 @@ Możesz edytować swoje konto później</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
   <string name="export_account_wait_message">Eksportowanie informacji o koncie</string>
+  <string name="account_export_file">Kopia zapasowa Konta</string>
+  <string name="account_export_file_summary">Utwórz kopię zapasową swojego konta na tym urządzeniu by przywrócić ją później.</string>
   <string name="account_export_end_decryption_message">Nie można było odblokować twojego konta podanym hasłem.</string>
   <string name="account_export_end_network_title">Błąd sieci</string>
   <string name="account_export_end_network_message">Nie można eksportować konta w tej sieci. Sprawdź swoje połączenie.</string>
@@ -150,6 +164,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_title">konto SIP zarejestrowane</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
+  <string name="account_link_device">Połącz z innego urządzenia</string>
   <string name="account_link_button">Połącz z sieci</string>
   <string name="account_link_archive_button">Połącz z kopii zapasowej</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>

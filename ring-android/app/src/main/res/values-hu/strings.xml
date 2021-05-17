@@ -273,7 +273,7 @@
   <string name="navigation_item_conversation">Beszélgetések</string>
   <string name="navigation_item_contact_request">Kapcsolatkérelmek</string>
   <string name="navigation_item_account">Fiók</string>
-  <string name="search_results_public_directory">Nyilvános könyvtár</string>
+  <string name="search_results_public_directory">Nyilvános címtár</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Hangüzenet küldése?</string>
   <string name="tv_send_image_dialog_message">Küldd el a képet?</string>

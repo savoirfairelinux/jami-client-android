@@ -52,6 +52,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_optionnal_category">Impostazione facoltative</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Risposta automatica</string>
+  <string name="account_rendezvous_label">Modalità Riunione</string>
+  <string name="account_rendezvous_summary">In modalità Riunione, le chiamate in arrivo saranno aggiunte a una sala conferenze.</string>
   <string name="account_upnp_label">Attivare UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -75,6 +77,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_local_port_label">Porto locale</string>
   <string name="account_stun_enable_label">Usare STUN</string>
   <string name="account_stun_server_label">Server STUN</string>
+  <string name="account_accept_files">Accetta automaticamente i file in arrivo</string>
   <string name="account_turn_enable_label">Usa TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
@@ -118,6 +121,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="export_account_wait_title">Aspettare</string>
   <string name="export_account_wait_message">Esportazione informazioni account in corso</string>
+  <string name="account_export_file">Account dal backup</string>
+  <string name="account_export_file_summary">Esegui un backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare il tuo account con la password inserita</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Verifica la connettività.</string>
@@ -135,6 +140,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
   <string name="account_no_network_title">Impossibile connettersi alla rete</string>
   <string name="account_sip_success_title">Account SIP registrato</string>
+  <string name="account_link_archive_button">Connetti dal backup</string>
   <string name="account_link_prompt_pin">Inserisci PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
   <string name="account_start_export_button">Genera PIN</string>
