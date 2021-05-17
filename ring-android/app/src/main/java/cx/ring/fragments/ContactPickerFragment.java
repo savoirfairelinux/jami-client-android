@@ -141,7 +141,7 @@ public class ContactPickerFragment extends BottomSheetDialogFragment {
             public void onItemLongClick(SmartListViewModel item) {
 
             }
-        });
+        }, mDisposableBag);
         binding.createGroupBtn.setOnClickListener(v -> mDisposableBag.add(mConversationFacade.createConversation(mAccountId, mCurrentSelection)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(conversation -> {

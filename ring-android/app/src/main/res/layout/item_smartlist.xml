@@ -19,10 +19,10 @@ along with this program; if not, write to the Free Software
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/call_entry"
+    android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@drawable/background_item_smartlist"
     android:descendantFocusability="blocksDescendants"
     android:paddingLeft="16dp"
     android:paddingTop="8dp"
