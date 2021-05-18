@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background_conference_label"
-    android:gravity="center_vertical"
-    android:padding="12dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/participant_name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Georges Longnom de Chateaubrillant"
-        android:textColor="@color/white"
-        android:ellipsize="marquee"
-        android:singleLine="true" />
+        android:layout_margin="4dp"
+        android:background="@drawable/background_conference_label"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/moderator"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:src="@drawable/baseline_moderateur"
-        android:tint="@color/white"
-        android:layout_marginLeft="4dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        />
+        <TextView
+            android:id="@+id/participant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            tools:text="Georges Longname of Chateaubrillant" />
 
-    <ImageView
-        android:id="@+id/mute"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="4dp"
-        android:src="@drawable/baseline_mic_off_24"
-        android:visibility="gone"
-        tools:visibility="visible"
-        />
+        <ImageView
+            android:id="@+id/moderator"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/call_moderator"
+            android:src="@drawable/baseline_moderateur"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/mute"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/call_muted"
+            android:src="@drawable/baseline_mic_off_24"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+</FrameLayout>
