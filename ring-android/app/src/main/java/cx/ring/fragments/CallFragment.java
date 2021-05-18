@@ -96,7 +96,6 @@ import net.jami.model.Uri;
 import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import net.jami.services.NotificationService;
-import net.jami.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -138,7 +137,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public static final String ACTION_GET_CALL = "GET_CALL";
 
     public static final String KEY_ACTION = "action";
-    public static final String KEY_ACCOUNT_ID = "accountId";
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
@@ -344,7 +342,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         return binding.getRoot();
     }
 
-    private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+    private final TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             mPreviewSurfaceWidth = width;
@@ -380,7 +378,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.pluginPreviewHandle.setAlpha(hiddenState);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout"})
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -741,6 +739,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      *
      * @param isAudioOnly true if it is an audio call
      */
+    @SuppressLint("WakelockTimeout")
     @Override
     public void handleCallWakelock(boolean isAudioOnly) {
         if (isAudioOnly) {
@@ -841,15 +840,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                presenter.chatClick();
-                break;
-            case R.id.menuitem_dialpad:
-                presenter.dialpadClick();
-                break;
-            case R.id.menuitem_video_plugins:
-                displayVideoPluginsCarousel();
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            presenter.chatClick();
+        } else if (itemId == R.id.menuitem_dialpad) {
+            presenter.dialpadClick();
+        } else if (itemId == R.id.menuitem_video_plugins) {
+            displayVideoPluginsCarousel();
         }
         return true;
     }
@@ -949,9 +946,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void updateContactBubble(@NonNull final List<Call> contacts) {
         Log.w(TAG, "updateContactBubble " + contacts.size());
 
-        mConferenceMode = contacts.size() > 1;
-        String username = mConferenceMode ? "Conference with " + contacts.size() + " people" : contacts.get(0).getContact().getRingUsername();
-        String displayName = mConferenceMode ? null : contacts.get(0).getContact().getDisplayName();
+        String username = contacts.size() > 1 ? "Conference with " + contacts.size() + " people" : contacts.get(0).getContact().getDisplayName();
+        String displayName = contacts.size() > 1 ? null : contacts.get(0).getContact().getDisplayName();
 
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
@@ -987,78 +983,18 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .build(getActivity())
         );
 
-        if (!mConferenceMode) {
-            binding.confControlGroup.setVisibility(View.GONE);
-        } else {
-            binding.confControlGroup.setVisibility(View.VISIBLE);
-            if (confAdapter == null) {
-                confAdapter = new ConfParticipantAdapter((view, call) -> {
-                    if (presenter == null)
-                        return;
-                    boolean maximized = presenter.isMaximized(call);
-                    PopupMenu popup = new PopupMenu(view.getContext(), view);
-                    popup.inflate(R.menu.conference_participant_actions);
-                    MenuBuilder menu = (MenuBuilder) popup.getMenu();
-                    MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
-                    MenuItem muteItem = menu.findItem(R.id.conv_mute);
-                    if (maximized) {
-                        maxItem.setTitle(R.string.action_call_minimize);
-                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
-                    } else {
-                        maxItem.setTitle(R.string.action_call_maximize);
-                        maxItem.setIcon(R.drawable.baseline_open_in_full_24);
-                    }
-                    if (!call.isAudioMuted()) {
-                        muteItem.setTitle(R.string.action_call_mute);
-                        muteItem.setIcon(R.drawable.baseline_mic_off_24);
-                    } else {
-                        muteItem.setTitle(R.string.action_call_unmute);
-                        muteItem.setIcon(R.drawable.baseline_mic_24);
-                    }
-                    popup.setOnMenuItemClickListener(item -> {
-                        if (presenter == null)
-                            return false;
-                        switch (item.getItemId()) {
-                            case R.id.conv_contact_details:
-                                presenter.openParticipantContact(call);
-                                break;
-                            case R.id.conv_contact_hangup:
-                                presenter.hangupParticipant(call);
-                                break;
-                            case R.id.conv_mute:
-                                if (!call.isAudioMuted()) {
-                                    call.muteAudio(true);
-                                    presenter.muteParticipant(call, true);
-                                } else {
-                                    call.muteAudio(false);
-                                    presenter.muteParticipant(call, false);
-                                }
-                                break;
-                            case R.id.conv_contact_maximize:
-                                presenter.maximizeParticipant(call);
-                                break;
-                            default:
-                                return false;
-                        }
-                        return true;
-                    });
-                    MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), menu, view);
-                    menuHelper.setForceShowIcon(true);
-                    menuHelper.show();
-                });
-            }
-            confAdapter.updateFromCalls(contacts);
-            if (binding.confControlGroup.getAdapter() == null)
-                binding.confControlGroup.setAdapter(confAdapter);
-        }
     }
 
     @Override
-    public void updateConfInfo(List<Conference.ParticipantInfo> info) {
+    public void updateConfInfo(List<Conference.ParticipantInfo> participantInfo) {
+        Log.w(TAG, "updateConfInfo " + participantInfo);
+
+        mConferenceMode = participantInfo.size() > 1;
+
         binding.participantLabelContainer.removeAllViews();
-        if (!info.isEmpty()) {
+        if (!participantInfo.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(binding.participantLabelContainer.getContext());
-            for (Conference.ParticipantInfo i : info) {
+            for (Conference.ParticipantInfo i : participantInfo) {
                 String displayName = i.contact.getDisplayName();
                 if (!TextUtils.isEmpty(displayName)) {
                     ItemParticipantLabelBinding label = ItemParticipantLabelBinding.inflate(inflater);
@@ -1072,7 +1008,63 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
             }
         }
-        binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
+        binding.participantLabelContainer.setVisibility(participantInfo.isEmpty() ? View.GONE : View.VISIBLE);
+
+        if (participantInfo.isEmpty() || participantInfo.size() < 2) {
+            binding.confControlGroup.setVisibility(View.GONE);
+        } else {
+            binding.confControlGroup.setVisibility(View.VISIBLE);
+            if (confAdapter == null) {
+                confAdapter = new ConfParticipantAdapter((view, info) -> {
+                    if (presenter == null)
+                        return;
+                    boolean maximized = presenter.isMaximized(info);
+                    PopupMenu popup = new PopupMenu(view.getContext(), view);
+                    popup.inflate(R.menu.conference_participant_actions);
+                    MenuBuilder menu = (MenuBuilder) popup.getMenu();
+                    MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
+                    MenuItem muteItem = menu.findItem(R.id.conv_mute);
+                    if (maximized) {
+                        maxItem.setTitle(R.string.action_call_minimize);
+                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
+                    } else {
+                        maxItem.setTitle(R.string.action_call_maximize);
+                        maxItem.setIcon(R.drawable.baseline_open_in_full_24);
+                    }
+                    if (!info.audioMuted) {
+                        muteItem.setTitle(R.string.action_call_mute);
+                        muteItem.setIcon(R.drawable.baseline_mic_off_24);
+                    } else {
+                        muteItem.setTitle(R.string.action_call_unmute);
+                        muteItem.setIcon(R.drawable.baseline_mic_24);
+                    }
+                    popup.setOnMenuItemClickListener(item -> {
+                        if (presenter == null)
+                            return false;
+                        int itemId = item.getItemId();
+                        if (itemId == R.id.conv_contact_details) {
+                            presenter.openParticipantContact(info);
+                        } else if (itemId == R.id.conv_contact_hangup) {
+                            presenter.hangupParticipant(info);
+                        } else if (itemId == R.id.conv_mute) {
+                            //call.muteAudio(!info.audioMuted);
+                            presenter.muteParticipant(info, !info.audioMuted);
+                        } else if (itemId == R.id.conv_contact_maximize) {
+                            presenter.maximizeParticipant(info);
+                        } else {
+                            return false;
+                        }
+                        return true;
+                    });
+                    MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), menu, view);
+                    menuHelper.setForceShowIcon(true);
+                    menuHelper.show();
+                });
+            }
+            confAdapter.updateFromCalls(participantInfo);
+            if (binding.confControlGroup.getAdapter() == null)
+                binding.confControlGroup.setAdapter(confAdapter);
+        }
     }
 
     @Override
@@ -1131,7 +1123,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         requireActivity().invalidateOptionsMenu();
         CallActivity callActivity = (CallActivity) getActivity();
-        callActivity.showSystemUI();
+        if (callActivity != null) {
+            callActivity.showSystemUI();
+        }
     }
 
     @Override
@@ -1471,6 +1465,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     /**
      * Function that is called to show/hide the plugins recycler viewer and update UI
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void displayVideoPluginsCarousel() {
         choosePluginMode = !choosePluginMode;
 
@@ -1488,7 +1483,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             for (String callMediaHandler : callMediaHandlers) {
                 Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
                 String drawablePath = details.get("iconPath");
-                if (drawablePath.endsWith("svg"))
+                if (drawablePath != null && drawablePath.endsWith("svg"))
                     drawablePath = drawablePath.replace(".svg", ".png");
                 Drawable handlerIcon = Drawable.createFromPath(drawablePath);
                 if (handlerIcon == null) {
@@ -1513,17 +1508,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if(callMediaHandlers.size() > 0) {
                 // If no previous plugin was active, take the first, else previous
                 int position;
-                if(previousPluginPosition < 1) {
+                if (previousPluginPosition < 1) {
                     rp.scrollToPosition(1);
                     position = 1;
                     previousPluginPosition = 1;
                 } else {
                     position = previousPluginPosition;
                 }
-                if (position > 0) {
-                    String callMediaId = callMediaHandlers.get(position-1);
-                    presenter.startPlugin(callMediaId);
-                }
+                String callMediaId = callMediaHandlers.get(position-1);
+                presenter.startPlugin(callMediaId);
             }
 
         } else {
@@ -1546,12 +1539,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     /**
      * Called whenever a plugin drawable in the recycler picker is clicked or scrolled to
-     * @param position
      */
     @Override
     public void onItemSelected(int position) {
         Log.i(TAG, "selected position: " + position);
-        /** If there was a different plugin before, unload it
+        /* If there was a different plugin before, unload it
          * If previousPluginPosition = -1 or 0, there was no plugin
          */
         if (previousPluginPosition > 0) {
@@ -1569,13 +1561,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     /**
      * Called whenever a plugin drawable in the recycler picker is clicked
-     * @param position
      */
     @Override
     public void onItemClicked(int position) {
         Log.i(TAG, "selected position: " + position);
         if (position == 0) {
-            /** If there was a different plugin before, unload it
+            /* If there was a different plugin before, unload it
              * If previousPluginPosition = -1 or 0, there was no plugin
              */
             if (previousPluginPosition > 0) {
@@ -1585,7 +1576,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
 
             CallActivity callActivity = (CallActivity) getActivity();
-            callActivity.showSystemUI();
+            if (callActivity != null) {
+                callActivity.showSystemUI();
+            }
 
             toggleVideoPluginsCarousel(false);
             displayVideoPluginsCarousel();
