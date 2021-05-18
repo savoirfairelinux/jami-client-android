@@ -436,7 +436,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                         .build(getActivity())
         );
 
-        if (!mConferenceMode) {
+        /*if (!mConferenceMode) {
             binding.confControlGroup.setVisibility(View.GONE);
         } else {
             binding.confControlGroup.setVisibility(View.VISIBLE);
@@ -464,7 +464,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             confAdapter.updateFromCalls(calls);
             if (binding.confControlGroup.getAdapter() == null)
                 binding.confControlGroup.setAdapter(confAdapter);
-        }
+        }*/
     }
 
     @Override
