@@ -73,6 +73,16 @@ public class Interaction {
     /* Needed by ORMLite */
     public Interaction() {
     }
+    public Interaction(String accountId) {
+        mAccount = accountId;
+        setType(InteractionType.INVALID);
+    }
+
+    public Interaction(Conversation conversation, InteractionType type) {
+        mConversation = conversation;
+        mAccount = conversation.getAccountId();
+        mType = type.toString();
+    }
 
     public Interaction(String id, String author, ConversationHistory conversation, String timestamp, String body, String type, String status, String daemonId, String isRead, String extraFlag) {
         mId = Integer.parseInt(id);
@@ -152,6 +162,8 @@ public class Interaction {
     }
 
     public void setStatus(InteractionStatus status) {
+        if (status == InteractionStatus.DISPLAYED)
+            mIsRead = 1;
         mStatus = status.toString();
     }
 
@@ -173,6 +185,10 @@ public class Interaction {
 
     public String getDaemonIdString() {
         return mDaemonId == null ? null : Long.toString(mDaemonId);
+    }
+
+    public void setDaemonId(long daemonId) {
+        mDaemonId = daemonId;
     }
 
     public String getMessageId() {
@@ -237,7 +253,7 @@ public class Interaction {
             return INVALID;
         }
 
-        static InteractionStatus fromIntTextMessage(int n) {
+        public static InteractionStatus fromIntTextMessage(int n) {
             try {
                 return values()[n];
             } catch (ArrayIndexOutOfBoundsException e) {

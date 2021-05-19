@@ -29,7 +29,7 @@ public class TVContactRequestDetailPresenter extends AbstractDetailsDescriptionP
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
         SmartListViewModel viewModel = (SmartListViewModel) item;
         if (viewModel != null) {
-            String id = viewModel.getContact().get(0).getRingUsername();
+            String id = viewModel.getContacts().get(0).getRingUsername();
             String displayName = viewModel.getContactName();
             viewHolder.getTitle().setText(displayName);
             if (!displayName.equals(id))

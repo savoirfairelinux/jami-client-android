@@ -117,11 +117,11 @@ public class ConversationSelectionActivity extends AppCompatActivity {
                         return vm;
                     List<SmartListViewModel> filteredVms = new ArrayList<>(vm.size());
                     models: for (SmartListViewModel v : vm) {
-                        List<Contact> contacts = v.getContact();
+                        List<Contact> contacts = v.getContacts();
                         if (contacts.size() != 1)
                             continue;
                         for (Call call : conf.getParticipants()) {
-                            if (call.getContact() == v.getContact().get(0)) {
+                            if (call.getContact() == v.getContacts().get(0)) {
                                 continue models;
                             }
                         }

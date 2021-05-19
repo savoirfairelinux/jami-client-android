@@ -19,44 +19,30 @@
  */
 package cx.ring.utils;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import cx.ring.BuildConfig;
+import cx.ring.R;
 
 public class ClipboardHelper {
     public static final String TAG = ClipboardHelper.class.getSimpleName();
-    public static final String COPY_CALL_CONTACT_NUMBER_CLIP_LABEL =
-            BuildConfig.APPLICATION_ID + ".clipboard.contactNumber";
 
-    public static void copyNumberToClipboard(final Activity activity,
-                                             final String number,
-                                             final ClipboardHelperCallback callback) {
-        if (TextUtils.isEmpty(number)) {
+    public static void copyToClipboard(final @NonNull Context context,
+                                       final String text) {
+        if (TextUtils.isEmpty(text)) {
             Log.d(TAG, "copyNumberToClipboard: number is null");
             return;
         }
 
-        if (activity == null) {
-            Log.d(TAG, "copyNumberToClipboard: activity is null");
-            return;
-        }
-
-        ClipboardManager clipboard = (ClipboardManager) activity
+        ClipboardManager clipboard = (ClipboardManager) context
                 .getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = android.content.ClipData.newPlainText(COPY_CALL_CONTACT_NUMBER_CLIP_LABEL,
-                number);
+        ClipData clip = android.content.ClipData.newPlainText(context.getText(R.string.clip_contact_uri), text);
         clipboard.setPrimaryClip(clip);
-        if (callback != null) {
-            callback.clipBoardDidCopyNumber(number);
-        }
-    }
-
-    public interface ClipboardHelperCallback {
-        void clipBoardDidCopyNumber(String copiedNumber);
     }
 }
