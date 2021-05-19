@@ -43,7 +43,7 @@ public interface MainView {
     void displayAccountInfos(HomeNavigationViewModel viewModel);
     void updateModel(Account account);
 
-    void showExportDialog(String pAccountID);
+    void showExportDialog(String pAccountID, boolean hasPassword);
 
     void showProfileEditing();
 

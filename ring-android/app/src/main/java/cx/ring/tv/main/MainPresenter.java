@@ -113,7 +113,7 @@ public class MainPresenter extends RootPresenter<MainView> {
     }
 
     public void onExportClicked() {
-        getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID());
+        getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID(), mAccountService.getCurrentAccount().hasPassword());
     }
 
     public void onLicenceClicked(int aboutType) {

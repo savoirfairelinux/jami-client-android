@@ -418,8 +418,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void showExportDialog(String pAccountID) {
-        GuidedStepSupportFragment wizard = TVAccountExport.createInstance(pAccountID);
+    public void showExportDialog(String pAccountID, boolean hasPassword) {
+        GuidedStepSupportFragment wizard = TVAccountExport.createInstance(pAccountID, hasPassword);
         GuidedStepSupportFragment.add(getParentFragmentManager(), wizard, R.id.main_browse_fragment);
     }
 

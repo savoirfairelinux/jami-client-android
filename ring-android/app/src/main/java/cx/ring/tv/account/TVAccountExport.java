@@ -53,12 +53,16 @@ public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPr
         implements JamiAccountSummaryView {
 
     private static final long PASSWORD = 1L;
+    private static final long ACTION = 2L;
+
     private ProgressDialog mWaitDialog;
     private String mIdAccount;
+    private boolean mHasPassword;
 
-    public static TVAccountExport createInstance(String idAccount) {
+    public static TVAccountExport createInstance(String idAccount, boolean hasPassword) {
         TVAccountExport fragment = new TVAccountExport();
         fragment.mIdAccount = idAccount;
+        fragment.mHasPassword = hasPassword;
         return fragment;
     }
 
@@ -82,7 +86,16 @@ public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPr
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.account_enter_password), "", "");
+        if (mHasPassword) {
+            addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.account_enter_password), "", "");
+        } else {
+            addAction(getContext(), actions, ACTION, R.string.account_start_export_button);
+        }
+    }
+
+    @Override
+    public void onGuidedActionClicked(GuidedAction action) {
+        presenter.startAccountExport("");
     }
 
     @Override
