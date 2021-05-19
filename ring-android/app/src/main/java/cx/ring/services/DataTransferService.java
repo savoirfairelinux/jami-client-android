@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
@@ -34,58 +35,72 @@ import javax.inject.Inject;
 import cx.ring.application.JamiApplication;
 
 import net.jami.services.NotificationService;
-import net.jami.utils.Log;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class DataTransferService extends Service {
     private final String TAG = DataTransferService.class.getSimpleName();
+    public static final String ACTION_START = "startTransfer";
+    public static final String ACTION_STOP = "stopTransfer";
+    private static final int NOTIF_FILE_SERVICE_ID = 1002;
 
     @Inject
     NotificationService mNotificationService;
     private NotificationManagerCompat notificationManager;
+    private boolean started = false;
 
-    private boolean isFirst = true;
-    private static final int NOTIF_FILE_SERVICE_ID = 1002;
-    private int serviceNotificationId;
+    private int serviceNotificationId = 0;
+    private final Set<Integer> serviceNotifications = new HashSet<>();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-
         int notificationId = intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1);
-        Notification notification = (Notification) mNotificationService.getDataTransferNotification(notificationId);
-
-        if (notification == null) {
-            stopSelf();
-            return START_NOT_STICKY;
+        String action = intent.getAction();
+        if (ACTION_START.equals(action)) {
+            serviceNotifications.add(notificationId);
+            Notification notification = (Notification) mNotificationService.getDataTransferNotification(notificationId);
+            // Log.w(TAG, "Updating notification " + intent);
+            if (!started) {
+                Log.w(TAG, "starting transfer service " + intent);
+                serviceNotificationId = notificationId;
+                started = true;
+            }
+            if (notificationId == serviceNotificationId) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                    startForeground(NOTIF_FILE_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                else
+                    startForeground(NOTIF_FILE_SERVICE_ID, notification);
+            } else {
+                notificationManager.notify(notificationId, notification);
+            }
         }
-
-        //if (isFirst) {
-        //    isFirst = false;
-            mNotificationService.cancelFileNotification(notificationId, true);
-            serviceNotificationId = notificationId;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                startForeground(NOTIF_FILE_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-            else
-                startForeground(NOTIF_FILE_SERVICE_ID, notification);
-        //}
-
-        if (mNotificationService.getDataTransferNotification(serviceNotificationId) == null) {
-            mNotificationService.cancelFileNotification(notificationId, true);
-            serviceNotificationId = notificationId;
+        else if (ACTION_STOP.equals(action)) {
+            serviceNotifications.remove(notificationId);
+            if (notificationId == serviceNotificationId) {
+                // The service notification is removed. Migrate service to other notification or stop it
+                serviceNotificationId = serviceNotifications.isEmpty() ? 0 : serviceNotifications.iterator().next();
+                if (serviceNotificationId == 0) {
+                    Log.w(TAG, "stopping transfer service " + intent);
+                    stopForeground(true);
+                    stopSelf();
+                    started = false;
+                } else {
+                    // migrate notification to service
+                    notificationManager.cancel(serviceNotificationId);
+                    Notification notification = (Notification) mNotificationService.getDataTransferNotification(serviceNotificationId);
+                    notificationManager.notify(NOTIF_FILE_SERVICE_ID, notification);
+                }
+            } else {
+                notificationManager.cancel(notificationId);
+            }
         }
-
-        if (notificationId == serviceNotificationId)
-            notificationManager.notify(NOTIF_FILE_SERVICE_ID, notification);
-        else
-            notificationManager.notify(notificationId, notification);
-
-
         return START_NOT_STICKY;
     }
 
     @Override
     public void onCreate() {
-        Log.d(TAG, "OnCreate(), Service has been initialized");
+        Log.d(TAG, "OnCreate(), DataTransferService has been initialized");
         ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
         notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
@@ -94,7 +109,7 @@ public class DataTransferService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "OnDestroy(), Service has been destroyed");
+        Log.d(TAG, "OnDestroy(), DataTransferService has been destroyed");
         super.onDestroy();
     }
 

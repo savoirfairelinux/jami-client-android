@@ -508,23 +508,24 @@ public class CallService {
             }
 
             call.setCallState(callState);
+            Account account = mAccountService.getAccount(call.getAccount());
 
-            Contact contact = mContactService.findContact(mAccountService.getAccount(call.getAccount()), Uri.fromString(call.getContactNumber()));
+            Contact contact = mContactService.findContact(account, Uri.fromString(call.getContactNumber()));
             String registeredName = callDetails.get(Call.KEY_REGISTERED_NAME);
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
             }
-            call.setContact(contact);
 
-            Account account = mAccountService.getAccount(call.getAccount());
-            call.setConversation(account.getByUri(contact.getUri()));
+            Conversation conversation = account.getByUri(contact.getConversationUri().blockingFirst());
+            call.setContact(contact);
+            call.setConversation(conversation);
+            Log.w(TAG, "parseCallState " + contact + " " + contact.getConversationUri().blockingFirst() + " " + conversation + " " + conversation.getParticipant());
 
             currentCalls.put(callId, call);
             updateConnectionCount();
         }
         return call;
     }
-
 
     public void connectionUpdate(String id, int state) {
         // Log.d(TAG, "connectionUpdate: " + id + " " + state);

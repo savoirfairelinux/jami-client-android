@@ -132,15 +132,24 @@ public class Account {
     }
 
     public void removeSwarm(String conversationId) {
+        Log.w(TAG, "removeSwarm " + conversationId);
         Conversation conversation = swarmConversations.remove(conversationId);
         if (conversation != null) {
             synchronized (conversations) {
-                conversations.remove(conversation.getUri().getUri());
+                Conversation c = conversations.remove(conversation.getUri().getUri());
+                try {
+                    Contact contact = c.getContact();
+                    Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact.getConversationUri().blockingFirst() + " " + c.getUri());
+                    if (contact.getConversationUri().blockingFirst().equals(c.getUri()))  {
+                        contact.setConversationUri(contact.getUri());
+                        contactAdded(contact);
+                    }
+                } catch (Exception ignored) {
+                }
             }
             conversationChanged();
         }
     }
-
 
     public static class ContactLocation {
         public double latitude;
@@ -913,8 +922,8 @@ public class Account {
     private void contactAdded(Contact contact) {
         Uri uri = contact.getUri();
         String key = uri.getUri();
-        //Log.w(TAG, "contactAdded " + getAccountID() + " " + key + " " + contact.getConversationUri());
-        if (!contact.getConversationUri().blockingFirst().equals(contact.getUri())) {
+        //Log.w(TAG, "contactAdded " + getAccountID() + " " + uri + " " + contact.getConversationUri().blockingFirst());
+        if (!contact.getConversationUri().blockingFirst().equals(uri)) {
             // Don't add conversation if we have a swarm conversation
             return;
         }

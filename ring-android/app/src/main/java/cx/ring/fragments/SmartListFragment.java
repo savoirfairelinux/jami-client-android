@@ -27,21 +27,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
@@ -55,6 +40,24 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import net.jami.model.Conversation;
+import net.jami.services.AccountService;
+import net.jami.smartlist.SmartListPresenter;
+import net.jami.smartlist.SmartListView;
+import net.jami.smartlist.SmartListViewModel;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,12 +68,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragSmartlistBinding;
-import net.jami.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
-import net.jami.services.AccountService;
-import net.jami.smartlist.SmartListPresenter;
-import net.jami.smartlist.SmartListView;
-import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ConversationPath;
@@ -80,12 +78,9 @@ import cx.ring.viewholders.SmartListViewHolder;
 public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback,
-        SmartListView
-{
+        SmartListView {
     private static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
-    public static final String KEY_ACCOUNT_ID = "accountId";
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
@@ -148,7 +143,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void onStart() {
         super.onStart();
-        Activity  activity = getActivity();
+        Activity activity = getActivity();
         Intent intent = activity == null ? null : activity.getIntent();
         if (intent != null)
             handleIntent(intent);
@@ -177,30 +172,29 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_contact_search:
-                mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT
-                        | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                );
-                return false;
-            case R.id.menu_contact_dial:
-                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE) {
-                    mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-                    mDialpadMenuItem.setIcon(R.drawable.baseline_dialpad_24);
-                } else {
-                    mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-                    mDialpadMenuItem.setIcon(R.drawable.baseline_keyboard_24);
-                }
-                return true;
-            case R.id.menu_settings:
-                ((HomeActivity) getActivity()).goToSettings();
-                return true;
-            case R.id.menu_about:
-                ((HomeActivity) getActivity()).goToAbout();
-                return true;
-            default:
-                return false;
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_contact_search) {
+            mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT
+                    | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            );
+            return false;
+        } else if (itemId == R.id.menu_contact_dial) {
+            if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE) {
+                mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                mDialpadMenuItem.setIcon(R.drawable.baseline_dialpad_24);
+            } else {
+                mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                mDialpadMenuItem.setIcon(R.drawable.baseline_keyboard_24);
+            }
+            return true;
+        } else if (itemId == R.id.menu_settings) {
+            ((HomeActivity) requireActivity()).goToSettings();
+            return true;
+        } else if (itemId == R.id.menu_about) {
+            ((HomeActivity) requireActivity()).goToAbout();
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -228,7 +222,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragSmartlistBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -244,15 +238,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         super.onViewCreated(view, savedInstanceState);
 
         binding.qrCode.setOnClickListener(v -> presenter.clickQRSearch());
-
         //binding.newGroup.setOnClickListener(v -> startNewGroup());
 
         binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 boolean canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP);
@@ -307,8 +295,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void removeConversation(net.jami.model.Uri callContact) {
-        presenter.removeConversation(callContact);
+    public void removeConversation(net.jami.model.Uri conversationUri) {
+        presenter.removeConversation(conversationUri);
     }
 
     @Override
@@ -318,13 +306,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
+        ClipboardHelper.copyToClipboard(requireContext(), contactNumber);
         String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                ActionHelper.getShortenedNumber(copiedNumber));
+                ActionHelper.getShortenedNumber(contactNumber));
         Snackbar.make(binding.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
     }
 
@@ -496,7 +480,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         if (binding == null || binding.separator == null)
             return;
 
-        if (DeviceUtils.isTablet(getContext())) {
+        if (DeviceUtils.isTablet(binding.getRoot().getContext())) {
             int margin = 0;
 
             if (open) {
@@ -514,21 +498,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         }
     }
 
-    private void selectFirstItem() {
-        if (mSmartListAdapter != null && mSmartListAdapter.getItemCount() > 0) {
-            new Handler().postDelayed(() -> {
-                if (binding != null) {
-                    RecyclerView.ViewHolder holder = binding.confsList.findViewHolderForAdapterPosition(0);
-                    if (holder != null)
-                        holder.itemView.performClick();
-                }
-
-            }, 100);
-        }
-    }
-
     private void setTabletQRLayout(boolean show) {
-        if (!DeviceUtils.isTablet(getContext()))
+        Context context = requireContext();
+        if (!DeviceUtils.isTablet(context))
             return;
 
         RelativeLayout.LayoutParams params =
@@ -539,8 +511,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         } else {
             params.removeRule(RelativeLayout.BELOW);
             TypedValue value = new TypedValue();
-            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true)) {
-                params.topMargin = TypedValue.complexToDimensionPixelSize(value.data, getResources().getDisplayMetrics());
+            if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true)) {
+                params.topMargin = TypedValue.complexToDimensionPixelSize(value.data, context.getResources().getDisplayMetrics());
             }
         }
         binding.listCoordinator.setLayoutParams(params);

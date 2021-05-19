@@ -238,6 +238,7 @@ along with this program; if not, write to the Free Software
     <string name="block_contact_dialog_message">%1$s won\'t be able to contact you until you unblock it.</string>
     <string name="block_contact_completed">%1$s was blocked.</string>
     <string name="conversation_contact_is_typing">Contact is typing…</string>
+    <string name="conversation_info_contact_you">You</string>
 
     <string name="conversation_preference_color">Change conversation color</string>
     <string name="conversation_preference_emoji">Change conversation emoji</string>

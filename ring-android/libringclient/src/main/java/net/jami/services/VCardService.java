@@ -23,6 +23,7 @@ import java.io.File;
 
 import net.jami.utils.Tuple;
 import ezvcard.VCard;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 public abstract class VCardService {
@@ -30,7 +31,12 @@ public abstract class VCardService {
     public static final int MAX_SIZE_SIP = 256 * 1024;
     public static final int MAX_SIZE_REQUEST = 16 * 1024;
 
-    public abstract Single<VCard> loadSmallVCard(String accountId, int maxSize);
+    public abstract Maybe<VCard> loadSmallVCard(String accountId, int maxSize);
+    public Single<VCard> loadSmallVCardWithDefault(String accountId, int maxSize) {
+        return loadSmallVCard(accountId, maxSize)
+                .switchIfEmpty(Single.fromCallable(VCard::new));
+    }
+
     public abstract Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture);
     public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
     public abstract Single<Tuple<String, Object>> peerProfileReceived(String accountId, String peerId, File vcard);
