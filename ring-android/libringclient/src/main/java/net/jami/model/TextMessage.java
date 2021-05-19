@@ -77,13 +77,4 @@ public class TextMessage extends Interaction {
     public void setNotified(boolean notified) {
         mNotified = notified;
     }
-
-    public void setStatus(int status) {
-        if (status == 3)
-            mIsRead = 1;
-
-        mStatus = InteractionStatus.fromIntTextMessage(status).toString();
-    }
-
-
 }

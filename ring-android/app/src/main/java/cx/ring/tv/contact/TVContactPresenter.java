@@ -100,7 +100,7 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
 
     private void sendTrustRequest(String accountId, Uri conversationUri) {
         Conversation conversation = mAccountService.getAccount(accountId).getByUri(conversationUri);
-        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
+        mVCardService.loadSmallVCardWithDefault(accountId, VCardService.MAX_SIZE_REQUEST)
                 .subscribe(vCard -> mAccountService.sendTrustRequest(conversation, conversationUri, Blob.fromString(VCardUtils.vcardToString(vCard))),
                         e -> mAccountService.sendTrustRequest(conversation, conversationUri, null));
     }

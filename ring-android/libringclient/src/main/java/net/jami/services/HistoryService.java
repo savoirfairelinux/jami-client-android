@@ -220,7 +220,7 @@ public abstract class HistoryService {
     }
 
 
-    Single<TextMessage> accountMessageStatusChanged(String accountId, String daemonId, String peer, int status) {
+    Single<TextMessage> accountMessageStatusChanged(String accountId, String daemonId, String peer, Interaction.InteractionStatus status) {
         return Single.fromCallable(() -> {
             List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId);
             if (textList == null || textList.isEmpty()) {

@@ -43,13 +43,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import cx.ring.R;
-import cx.ring.account.AccountEditionFragment;
 import net.jami.account.LinkDevicePresenter;
 import net.jami.account.LinkDeviceView;
+import net.jami.model.Account;
+
+import cx.ring.R;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragLinkDeviceBinding;
-import net.jami.model.Account;
 import cx.ring.mvp.BaseBottomSheetFragment;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
@@ -76,10 +77,8 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         mBinding = FragLinkDeviceBinding.inflate(inflater, container, false);
-
         return mBinding.getRoot();
     }
 
@@ -110,7 +109,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(dialogINterface -> {
-            if (DeviceUtils.isTablet(getContext())) {
+            if (DeviceUtils.isTablet(requireContext())) {
                 dialog.getWindow().setLayout(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
@@ -122,7 +121,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
     @Override
     public void onResume() {
         super.onResume();
-        addGlobalLayoutListener(getView());
+        addGlobalLayoutListener(requireView());
     }
 
     private void addGlobalLayoutListener(final View view) {
@@ -145,12 +144,11 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
     }
 
     private BottomSheetBehavior<?> getBottomSheetBehaviour() {
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) ((View) getView().getParent()).getLayoutParams();
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) ((View) requireView().getParent()).getLayoutParams();
         CoordinatorLayout.Behavior<?> behavior = layoutParams.getBehavior();
         if (behavior instanceof BottomSheetBehavior) {
             return (BottomSheetBehavior<?>) behavior;
         }
-
         return null;
     }
 

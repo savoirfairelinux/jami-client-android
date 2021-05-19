@@ -30,16 +30,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import cx.ring.R;
-import cx.ring.application.JamiApplication;
-import cx.ring.databinding.FragShareBinding;
-import cx.ring.mvp.BaseSupportFragment;
 import net.jami.mvp.GenericView;
 import net.jami.share.SharePresenter;
 import net.jami.share.ShareViewModel;
 import net.jami.utils.QRCodeUtils;
 
-public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<net.jami.share.ShareViewModel> {
+import cx.ring.R;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragShareBinding;
+import cx.ring.mvp.BaseSupportFragment;
+
+public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
     private String mUriToShow;
     private boolean isShareLocked = false;
