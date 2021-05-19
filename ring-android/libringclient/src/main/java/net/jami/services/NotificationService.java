@@ -37,38 +37,30 @@ public interface NotificationService {
     String KEY_NOTIFICATION_ID = "notificationId";
 
     Object showCallNotification(int callId);
+    void cancelCallNotification();
+    void handleCallNotification(Conference conference, boolean remove);
+    void showMissedCallNotification(Call call);
 
     void showTextNotification(String accountId, Conversation conversation);
-
-    void cancelCallNotification();
-
-    void cancelTextNotification(Uri contact);
-
-    void cancelTextNotification(String accountId, Uri conversationUri);
+    void cancelTextNotification(String accountId, Uri contact);
 
     void cancelAll();
 
     void showIncomingTrustRequestNotification(Account account);
-
     void cancelTrustRequestNotification(String accountID);
 
     void showFileTransferNotification(Conversation conversation, DataTransfer info);
-
-    void showMissedCallNotification(Call call);
-
     void cancelFileNotification(int id, boolean isMigratingToService);
+    void handleDataTransferNotification(DataTransfer transfer, Conversation contact, boolean remove);
+    void removeTransferNotification(String accountId, Uri conversationUri, long transferId);
+    Object getDataTransferNotification(int notificationId);
 
     void updateNotification(Object notification, int notificationId);
 
     Object getServiceNotification();
 
-    void handleCallNotification(Conference conference, boolean remove);
 
-    void handleDataTransferNotification(DataTransfer transfer, Conversation contact, boolean remove);
 
-    void removeTransferNotification(long transferId);
-
-    Object getDataTransferNotification(int notificationId);
 
     void onConnectionUpdate(Boolean b);
 

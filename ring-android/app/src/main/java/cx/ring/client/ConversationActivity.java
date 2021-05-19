@@ -24,14 +24,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.ViewCompat;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
@@ -85,7 +82,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
             mConversationFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame, mConversationFragment, null)
-                    .commit();
+                    .commitNow();
         }
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action) || Intent.ACTION_VIEW.equals(action)) {
             mPendingIntent = intent;
