@@ -24,6 +24,7 @@ import net.jami.daemon.JamiService;
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Call;
 import net.jami.model.Conference;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.ConversationHistory;
 import net.jami.model.Uri;
@@ -401,7 +402,8 @@ public class CallPresenter extends RootPresenter<CallView> {
 
 
     public void uiVisibilityChanged(boolean displayed) {
-        net.jami.call.CallView view = getView();
+        Log.w(TAG, "uiVisibilityChanged " + mOnGoingCall + " "  + displayed);
+        CallView view = getView();
         if (view != null)
             view.displayHangupButton(mOnGoingCall && displayed);
     }
@@ -469,7 +471,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void confUpdate(Conference call) {
-        Log.w(TAG, "confUpdate " + call.getId());
+        Log.w(TAG, "confUpdate " + call.getId() + " " + call.getState());
 
         Call.CallStatus status = call.getState();
         if (status == Call.CallStatus.HOLD) {
@@ -522,12 +524,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
-    public void maximizeParticipant(Call call) {
-        if (mConference.getMaximizedCall() == call)
-            call = null;
-        mConference.setMaximizedCall(call);
-        if (call != null) {
-            mCallService.setConfMaximizedParticipant(mConference.getConfId(), call.getDaemonIdString());
+    public void maximizeParticipant(Conference.ParticipantInfo info) {
+        Contact contact = info == null ? null : info.contact;
+        if (mConference.getMaximizedParticipant() == contact)
+            info = null;
+        mConference.setMaximizedParticipant(contact);
+        if (info != null) {
+            mCallService.setConfMaximizedParticipant(mConference.getConfId(), info.contact.getUri());
         } else {
             mCallService.setConfGridLayout(mConference.getConfId());
         }
@@ -648,6 +651,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     if (confs.isEmpty()) {
                         final Observer<Call> pendingObserver = new Observer<Call>() {
                             private Call call = null;
+
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {}
 
@@ -712,16 +716,18 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().startAddParticipant(mConference.getId());
     }
 
-    public void hangupParticipant(Call call) {
-        mCallService.hangUp(call.getDaemonIdString());
+    public void hangupParticipant(Conference.ParticipantInfo info) {
+        //mCallService.
+        if (info.call != null)
+            mCallService.hangUp(info.call.getDaemonIdString());
     }
 
-    public void muteParticipant(Call call, boolean mute) {
-        mCallService.muteParticipant(call.getConfId(), call.getContact().getPrimaryNumber(), mute);
+    public void muteParticipant(Conference.ParticipantInfo info, boolean mute) {
+        mCallService.muteParticipant(mConference.getId(), info.contact.getPrimaryNumber(), mute);
     }
 
-    public void openParticipantContact(Call call) {
-        getView().goToContact(call.getAccount(), call.getContact());
+    public void openParticipantContact(Conference.ParticipantInfo info) {
+        getView().goToContact(mConference.getFirstCall().getAccount(), info.contact);
     }
 
     public void stopCapture() {
@@ -736,8 +742,8 @@ public class CallPresenter extends RootPresenter<CallView> {
         mHardwareService.stopScreenShare();
     }
 
-    public boolean isMaximized(Call call) {
-        return mConference.getMaximizedCall() == call;
+    public boolean isMaximized(Conference.ParticipantInfo info) {
+        return mConference.getMaximizedParticipant() == info.contact;
     }
 
     public void startPlugin(String mediaHandlerId) {

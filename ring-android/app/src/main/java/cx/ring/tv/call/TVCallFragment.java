@@ -436,7 +436,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                         .build(getActivity())
         );
 
-        if (!mConferenceMode) {
+        /*if (!mConferenceMode) {
             binding.confControlGroup.setVisibility(View.GONE);
         } else {
             binding.confControlGroup.setVisibility(View.VISIBLE);
@@ -464,7 +464,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             confAdapter.updateFromCalls(calls);
             if (binding.confControlGroup.getAdapter() == null)
                 binding.confControlGroup.setAdapter(confAdapter);
-        }
+        }*/
     }
 
     @Override
@@ -686,6 +686,36 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             }
         }
         binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
+
+        if (!mConferenceMode) {
+            binding.confControlGroup.setVisibility(View.GONE);
+        } else {
+            binding.confControlGroup.setVisibility(View.VISIBLE);
+            if (confAdapter  == null) {
+                confAdapter = new ConfParticipantAdapter((view, call) -> {
+                    Context context = requireContext();
+                    PopupMenu popup = new PopupMenu(context, view);
+                    popup.inflate(R.menu.conference_participant_actions);
+                    popup.setOnMenuItemClickListener(item -> {
+                        int itemId = item.getItemId();
+                        if (itemId == R.id.conv_contact_details) {
+                            presenter.openParticipantContact(call);
+                        } else if (itemId == R.id.conv_contact_hangup) {
+                            presenter.hangupParticipant(call);
+                        } else {
+                            return false;
+                        }
+                        return true;
+                    });
+                    MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
+                    menuHelper.setForceShowIcon(true);
+                    menuHelper.show();
+                });
+            }
+            confAdapter.updateFromCalls(info);
+            if (binding.confControlGroup.getAdapter() == null)
+                binding.confControlGroup.setAdapter(confAdapter);
+        }
     }
 
     @Override
