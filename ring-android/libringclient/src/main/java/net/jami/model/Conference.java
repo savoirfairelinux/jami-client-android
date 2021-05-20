@@ -35,11 +35,13 @@ import io.reactivex.subjects.Subject;
 public class Conference {
 
     public static class ParticipantInfo {
-        public Contact contact;
+        public final Call call;
+        public final Contact contact;
         public int x, y, w, h;
         public boolean videoMuted, audioMuted, isModerator;
 
-        public ParticipantInfo(Contact c, Map<String, String> i) {
+        public ParticipantInfo(Call call, Contact c, Map<String, String> i) {
+            this.call = call;
             contact = c;
             x = Integer.parseInt(i.get("x"));
             y = Integer.parseInt(i.get("y"));
@@ -48,6 +50,10 @@ public class Conference {
             videoMuted = Boolean.parseBoolean(i.get("videoMuted"));
             audioMuted = Boolean.parseBoolean(i.get("audioMuted"));
             isModerator = Boolean.parseBoolean(i.get("isModerator"));
+        }
+
+        public boolean isEmpty() {
+            return x == 0 && y == 0 && w == 0 && h == 0;
         }
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
@@ -59,7 +65,8 @@ public class Conference {
     private Call.CallStatus mConfState;
     private final ArrayList<Call> mParticipants;
     private boolean mRecording;
-    private Call mMaximizedCall;
+    private Contact mMaximizedParticipant;
+    private boolean isModerator;
 
     public Conference(Call call) {
         this(call.getDaemonIdString());
@@ -104,12 +111,12 @@ public class Conference {
         return mId;
     }
 
-    public void setMaximizedCall(Call call) {
-        mMaximizedCall = call;
+    public void setMaximizedParticipant(Contact contact) {
+        mMaximizedParticipant = contact;
     }
 
-    public Call getMaximizedCall() {
-        return mMaximizedCall;
+    public Contact getMaximizedParticipant() {
+        return mMaximizedParticipant;
     }
 
     public String getPluginId() {
@@ -118,6 +125,14 @@ public class Conference {
 
     public String getConfId() {
         return mId;
+    }
+
+    public void setIsModerator(boolean isModerator) {
+        this.isModerator = isModerator;
+    }
+
+    public boolean getIsModerator() {
+        return isModerator;
     }
 
     public Call.CallStatus getState() {
