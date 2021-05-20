@@ -124,30 +124,53 @@ public class CallService {
     }
 
     public void onConferenceInfoUpdated(String confId, List<Map<String, String>> info) {
+        Log.w(TAG, "onConferenceInfoUpdated " + confId + " " + info);
         Conference conference = getConference(confId);
+        boolean isModerator = false;
         if (conference != null) {
             List<Conference.ParticipantInfo> newInfo = new ArrayList<>(info.size());
             if (conference.isConference()) {
                 for (Map<String, String> i : info) {
                     Call call = conference.findCallByContact(Uri.fromString(i.get("uri")));
                     if (call != null) {
-                        newInfo.add(new Conference.ParticipantInfo(call.getContact(), i));
+                        Conference.ParticipantInfo confInfo = new Conference.ParticipantInfo(call, call.getContact(), i);
+                        if (confInfo.isEmpty()) {
+                            Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry " + i);
+                            continue;
+                        }
+                        if (confInfo.contact.isUser() && confInfo.isModerator) {
+                            isModerator = true;
+                        }
+                        newInfo.add(confInfo);
                     } else {
+                        Log.w(TAG, "onConferenceInfoUpdated " + confId + " can't find call for " + i);
                         // TODO
                     }
                 }
             } else {
                 Account account = mAccountService.getAccount(conference.getCall().getAccount());
-                for (Map<String, String> i : info)
-                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(Uri.fromString(i.get("uri"))), i));
+                for (Map<String, String> i : info) {
+                    Conference.ParticipantInfo confInfo = new Conference.ParticipantInfo(null, account.getContactFromCache(Uri.fromString(i.get("uri"))), i);
+                    if (confInfo.isEmpty()) {
+                        Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry " + i);
+                        continue;
+                    }
+                    if (confInfo.contact.isUser() && confInfo.isModerator) {
+                        isModerator = true;
+                    }
+                    newInfo.add(confInfo);
+                }
             }
+            conference.setIsModerator(isModerator);
             conference.setInfo(newInfo);
+        } else {
+            Log.w(TAG, "onConferenceInfoUpdated can't find conference" + confId);
         }
     }
 
-    public void setConfMaximizedParticipant(String confId, String callId) {
+    public void setConfMaximizedParticipant(String confId, Uri uri) {
         mExecutor.execute(() -> {
-            JamiService.setActiveParticipant(confId, callId);
+            JamiService.setActiveParticipant(confId, uri == null ? "" : uri.getRawRingId());
             JamiService.setConferenceLayout(confId, 1);
         });
     }
@@ -246,7 +269,7 @@ public class CallService {
                 JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             Call call = addCall(account, callId, number, Call.Direction.OUTGOING);
-            if (conversationUri.isSwarm())
+            if (conversationUri != null && conversationUri.isSwarm())
                 call.setSwarmInfo(conversationUri.getRawRingId());
             call.muteVideo(audioOnly);
             updateConnectionCount();
@@ -446,14 +469,14 @@ public class CallService {
         return currentCalls.get(callId);
     }
 
-    public Call getCurrentCallForContactId(String contactId) {
+    /*public Call getCurrentCallForContactId(String contactId) {
         for (Call call : currentCalls.values()) {
             if (contactId.contains(call.getContact().getPrimaryNumber())) {
                 return call;
             }
         }
         return null;
-    }
+    }*/
 
     public void removeCallForId(String callId) {
         synchronized (currentCalls) {
