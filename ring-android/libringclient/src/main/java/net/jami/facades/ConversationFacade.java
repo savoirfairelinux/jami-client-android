@@ -614,7 +614,7 @@ public class ConversationFacade {
             return;
         Contact contact = call.getContact();
         String conversationId = call.getConversationId();
-        Log.w(TAG, "CallStateChange " + call.getId() + " conversationId:" + conversationId);
+        Log.w(TAG, "CallStateChange " + call.getDaemonIdString() + " conversationId:" + conversationId);
 
         Conversation conversation = conversationId == null
                 ? (contact == null ? null : account.getByUri(contact.getUri()))
