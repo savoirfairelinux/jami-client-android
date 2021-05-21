@@ -165,7 +165,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -182,7 +182,10 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     public boolean onBackPressed() {
+        if (mBinding == null)
+            return false;
         mIsVisible = false;
+
         if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).setToolbarOutlineState(true);
         if (mBinding.fragmentContainer.getVisibility() != View.VISIBLE) {
@@ -213,14 +216,15 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     private void setBackListenerEnabled(boolean enable) {
-        if (getActivity() instanceof HomeActivity)
-            ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(enable ? this : null);
+        Activity activity = getActivity();
+        if (activity instanceof HomeActivity)
+            ((HomeActivity) activity).setAccountFragmentOnBackPressedListener(enable ? this : null);
     }
 
     private static class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
-        private Context mContext;
-        private String accountId;
-        private boolean isJamiAccount;
+        private final Context mContext;
+        private final String accountId;
+        private final boolean isJamiAccount;
 
         PreferencesPagerAdapter(FragmentManager fm, Context mContext, String accountId, boolean isJamiAccount) {
             super(fm);
