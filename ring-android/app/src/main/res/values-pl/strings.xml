@@ -85,6 +85,7 @@
   <string name="notif_location_action_stop">Zatrzymaj udostępnianie lokalizacji</string>
   <string name="location_share_action_start">Rozpocznij udostępnianie</string>
   <string name="location_share_action_stop">Zatrzymaj udostępnianie</string>
+  <string name="location_share_about_title">Informacje o mapie</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>

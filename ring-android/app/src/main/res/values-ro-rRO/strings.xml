@@ -52,7 +52,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Apel pierdut</string>
-  <string name="notif_missed_outgoing_call">Apelul efectuat a fost pierdut</string>
+  <string name="notif_missed_outgoing_call">Apel efectuat nepreluat</string>
   <string name="notif_incoming_call_title">Apel primit de la %1$s</string>
   <string name="notif_incoming_call">Apel primit</string>
   <string name="notif_outgoing_call_title">Apel efectuat către %1$s</string>
@@ -109,7 +109,7 @@
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
   <string name="hist_contact_added">Contact adăugat</string>
   <string name="hist_invitation_received">Invitație primită</string>
-  <string name="ab_action_audio_call">Apel audio</string>
+  <string name="ab_action_audio_call">Apel vocal</string>
   <string name="ab_action_video_call">Apel video</string>
   <string name="ab_action_change_screen_orientation">Rotește ecranul</string>
   <string name="share_via">Distribuie prin</string>

@@ -12,7 +12,7 @@
   <string name="no_browser_app_installed">Nem található webböngésző app. Telepítsen egyet az oldal megtekintéséhez!</string>
   <string name="email_chooser_title">Levél küldése a következővel…</string>
   <string name="website_chooser_title">Honlap megtekintése a következővel…</string>
-  <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a<u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
+  <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a <u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
   <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
@@ -223,7 +223,7 @@
   <string name="message_contact_not_trusted_yet">%s még nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
   <string name="message_contact_not_trusted">%s nincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
-  <string name="send_request_button">Elküld</string>
+  <string name="send_request_button">Küldés</string>
   <string name="send_request_title">Kapcsolatkérelem küldése</string>
   <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő kapcsolat nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
   <!--Blacklist-->
@@ -276,12 +276,12 @@
   <string name="search_results_public_directory">Nyilvános címtár</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Hangüzenet küldése?</string>
-  <string name="tv_send_image_dialog_message">Küldd el a képet?</string>
-  <string name="tv_send_video_dialog_message">Küldd el a videót?</string>
+  <string name="tv_send_image_dialog_message">Kép küldése?</string>
+  <string name="tv_send_video_dialog_message">Videó küldése?</string>
   <string name="tv_media_preview">Előnézet</string>
   <string name="tv_audio_play">Lejátszás</string>
   <string name="tv_audio_pause">Megállítás</string>
-  <string name="tv_dialog_send">Elküld</string>
+  <string name="tv_dialog_send">Küldés</string>
   <string name="tv_audio_recording">Felvétel…</string>
   <string name="tv_send_text">Szöveg küldése</string>
   <string name="tv_send_audio">Hang küldése</string>
