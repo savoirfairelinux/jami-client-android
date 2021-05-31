@@ -105,7 +105,9 @@
   <!--Contacts-->
   <string name="prompt_new_password">Kata sandi baru</string>
   <string name="prompt_new_password_repeat">Ulangi kata sandi baru</string>
+  <string name="account_create_title">Buat akun Jami</string>
   <string name="prompt_new_username">Masukkan username baru</string>
+  <string name="prompt_hint_username">Nama pengguna</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
   <!--Account Summary-->
@@ -113,6 +115,7 @@
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
+  <string name="identity">Identitas</string>
   <string name="account">Akun</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
@@ -131,6 +134,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontak</string>
   <!--File Transfer-->
+  <string name="menu_delete">Hapus</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">Contact requests</string>
   <string name="navigation_item_account">Akun</string>
@@ -138,4 +142,6 @@
   <string name="tv_audio_play">Mainkan</string>
   <string name="tv_dialog_send">Kirim</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Rekomendasi</string>
+  <string name="wizard_password_skip">Buat akun</string>
 </resources>

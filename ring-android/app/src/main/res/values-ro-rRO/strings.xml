@@ -15,6 +15,7 @@
   <string name="license">Acest program este furnizat „așa cum este”, fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau următoarele</u></string>
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
   <string name="credits">Merite</string>
+  <string name="pip_title">Conferința Jami</string>
   <string name="call_service_description">Acest serviciu este necesar pentru a vă menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
   <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
@@ -91,8 +92,8 @@
   <string name="action_call_hangup">Închide</string>
   <string name="action_call_maximize">Mărește</string>
   <string name="action_call_minimize">Micșorează</string>
-  <string name="action_call_mute">Mut</string>
-  <string name="action_call_unmute">Vorbește</string>
+  <string name="action_call_mute">Oprește</string>
+  <string name="action_call_unmute">Pornește</string>
   <string name="ongoing_call">Apel în curs</string>
   <string name="hist_in_call">Apel primit de la %1$s</string>
   <string name="hist_out_call">Apel efectuat de %1$s</string>

@@ -138,7 +138,7 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
-  <string name="account_export_file">Cont din copie de rezervă</string>
+  <string name="account_export_file">Copiază contul</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>
@@ -171,7 +171,7 @@
   <string name="account_sip_register_anyway">Înscrie-te oricum</string>
   <string name="account_link_device">Conectează-te de la alt aparat</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
-  <string name="account_link_archive_button">Conectează-te de la o copie de rezervă</string>
+  <string name="account_link_archive_button">Conectare din copia de rezervă</string>
   <string name="account_link_prompt_pin">Introdu codul PIN</string>
   <string name="account_new_button">Creează un cont Jami</string>
   <string name="account_link_export_button">Asociază un nou aparat</string>

@@ -21,13 +21,13 @@
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor.</string>
   <string name="pref_systemDialer_title">Configurar el sistema para llamar usando Jami</string>
-  <string name="pref_systemDialer_summary">Usa a Jami para hacer llamadas al sistema cuando sea posible.</string>
+  <string name="pref_systemDialer_summary">Usar Jami para hacer llamadas al sistema cuando sea posible.</string>
   <string name="pref_startOnBoot_title">Ejecutar Jami al inicio</string>
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano cuando se inicie el sistema.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
   <string name="pref_clearHistory_summary">Limpiar el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
   <string name="pref_notification_title">Visibilidad de notificaciones</string>
-  <string name="pref_notification_summary">Establece la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
+  <string name="pref_notification_summary">Establecer la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
   <string name="pref_blackList_title">Lista de bloqueos</string>
   <string name="pref_blackList_summary">Revisa tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Borrar cuenta</string>
@@ -35,7 +35,7 @@
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ejecutar en segundo plano para recibir llamadas y mensajes.</string>
   <string name="pref_typing_title">Habilitar indicadores de tipeo</string>
-  <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que un mensaje se está escribiendo.</string>
+  <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que se está escribiendo un mensaje.</string>
   <string name="pref_read_title">Habilitar confirmaciones de lectura</string>
   <string name="pref_read_summary">Enviar y recibir confirmaciones de lectura indicando que se ha visto un mensaje.</string>
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>

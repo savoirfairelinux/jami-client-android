@@ -15,6 +15,7 @@
   <string name="license">Bu yazılım, hiçbir garanti olmadan \"olduğu gibi\" sağlanmıştır. Ayrıntılar için bakınız <u>GNU Genel Kamu Lisansı 3.sürüm ve sonrası</u></string>
   <string name="description">Jami, kullanıcılarının özgürlüklerine ve gizliliğine önem veren, evrensel iletişim için özgür yazılımdır.</string>
   <string name="credits">Emeği geçenler</string>
+  <string name="pip_title">Jami Toplantı Görüşmesi</string>
   <string name="call_service_description">Bu hizmet, aramalarınızı ön planda tutmak için gereklidir. Yalnızca aramalar sırasında çalışır.</string>
   <string name="data_transfer_service_description">Bu hizmet, dosya aktarımları sırasında kalıcı bildirimleri görüntülemek için gereklidir. Yalnızca dosya aktarımları sırasında çalışır.</string>
   <!--About dialog-->
@@ -116,6 +117,7 @@
   <string name="qr_code">QR kod</string>
   <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <string name="ab_action_hidepreview">Ön izlemeyi gizle</string>
+  <string name="remote_recording">%s kaydediliyor...</string>
   <!--Text messages-->
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>

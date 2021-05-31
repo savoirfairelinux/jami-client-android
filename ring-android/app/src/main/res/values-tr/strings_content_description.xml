@@ -5,4 +5,5 @@
   <string name="contact_picture_description">Kişi Resmi</string>
   <string name="dial_numeric_pad">Sayısal tuşlar</string>
   <string name="contact_unblock">Engeli kaldır</string>
+  <string name="video_plugins">Görüntü Eklentileri</string>
 </resources>

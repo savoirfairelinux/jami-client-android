@@ -15,6 +15,7 @@
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a <u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
   <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
+  <string name="pip_title">Jami-konferencia</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
   <string name="data_transfer_service_description">Ez a szolgáltatás szükséges az állandó értesítések megjelenítéséhez fájlátvitel közben. Csak fájlátvitelek alatt fut.</string>
   <!--About dialog-->

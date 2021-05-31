@@ -15,6 +15,7 @@
   <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
   <string name="description">Jami on vapaa ja universaali viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
+  <string name="pip_title">Jami-konferenssi</string>
   <string name="call_service_description">Tämä palvelu on välttämätön puhelusi pitämiseksi etualalla. Se toimii vain puheluiden aikana.</string>
   <string name="data_transfer_service_description">Tämä palvelu on välttämätön pysyvien ilmoitusten näyttämiseksi tiedostojen siirron aikana. Se toimii vain tiedostojen siirron aikana.</string>
   <!--About dialog-->

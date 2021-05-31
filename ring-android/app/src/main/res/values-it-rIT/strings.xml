@@ -15,6 +15,7 @@
   <string name="license">Questo software è fornito \"così come è\", senza alcuna garanzia di sorta. Per dettagli consultare la GNU General Public License versione 3 o successiva</string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
+  <string name="pip_title">Conferenza Jami</string>
   <string name="call_service_description">Questo servizio è necessario per mantenere le chiamate in esecuzione in primo piano. Funziona solo durante le chiamate.</string>
   <string name="data_transfer_service_description">Questo servizio è necessario per visualizzare notifiche persistenti durante i trasferimenti di file. Funziona solo durante i trasferimenti di file.</string>
   <!--About dialog-->
@@ -90,8 +91,8 @@
   <string name="action_call_hangup">Chiudi</string>
   <string name="action_call_maximize">Massimizza</string>
   <string name="action_call_minimize">Riduci</string>
-  <string name="action_call_mute">Muto</string>
-  <string name="action_call_unmute">Non mutato</string>
+  <string name="action_call_mute">Disattiva</string>
+  <string name="action_call_unmute">Attiva</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata in uscita di %1$s</string>
@@ -101,14 +102,14 @@
   <string name="action_call_hold_accept">Attendi e rispondi alla chiamata</string>
   <string name="action_call_end_accept">Termina e rispondi alla chiamata</string>
   <string name="action_call_decline">Rifiuta</string>
-  <string name="action_call_mic_mute">Microfono muto</string>
+  <string name="action_call_mic_mute">Disattiva microfono</string>
   <string name="action_load_plugin">Carica plugin</string>
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>
   <string name="hist_contact_added">Contatto aggiunto</string>
   <string name="hist_invitation_received">Invito ricevuto</string>
-  <string name="ab_action_audio_call">Chiamata</string>
+  <string name="ab_action_audio_call">Chiamata vocale</string>
   <string name="ab_action_video_call">Videochiamata</string>
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
   <string name="share_via">Condividi con</string>
@@ -126,12 +127,12 @@
   <string name="send_file">Invia File</string>
   <string name="hist_file_sent">File inviato</string>
   <string name="hist_file_received">File recevuto</string>
-  <string name="conversation_send_audio">Registra audio</string>
-  <string name="conversation_send_video">Registra video</string>
+  <string name="conversation_send_audio">Registra messaggio vocale</string>
+  <string name="conversation_send_video">Registra videomessaggio</string>
   <string name="conversation_share_location">Condividi posizione</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>
-  <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivalo.</string>
+  <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivala.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>

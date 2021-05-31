@@ -15,6 +15,7 @@
   <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
   <string name="description">Jami është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
   <string name="credits">Kredite</string>
+  <string name="pip_title">Konferencë Jami</string>
   <string name="call_service_description">Ky shërbim është i nevojshëm për t\’i mbajtur thirrjet tuaja në funksionim në pjesën e përparme. Ai xhiron vetëm gjatë thirrjesh.</string>
   <string name="data_transfer_service_description">Ky shërbim është i domosdoshëm për të shfaqur mesazhe gjatë shpërnguljesh kartelash. Xhiron vetëm gjatë shpërnguljesh kartelash.</string>
   <!--About dialog-->

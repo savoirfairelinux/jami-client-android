@@ -15,6 +15,7 @@
   <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅 <u>GNU 通用公共许可证版本 3 或更新</u></string>
   <string name="description">Jami 是一种自由通信软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致谢</string>
+  <string name="pip_title">Jami 会议</string>
   <string name="call_service_description">这项服务对于保持您的通话在前台运行是必要的。它仅在您通话时运行。</string>
   <string name="data_transfer_service_description">这项服务对于在文件传输过程中显示持久通知是必要的。它仅在传输文件时运行。</string>
   <!--About dialog-->
