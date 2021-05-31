@@ -212,7 +212,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     mContact = contact;
                 }));
 
-            colorAction = new ContactAction(R.drawable.item_color_background, 0, "Choose color", () -> {
+            colorAction = new ContactAction(R.drawable.item_color_background, 0, getText(R.string.ab_action_choose_color), () -> {
                 ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
                 frag.setCallback(color -> {
                     collapsingToolbarLayout.setBackgroundColor(color);
