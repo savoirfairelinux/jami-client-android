@@ -1521,19 +1521,17 @@ public class AccountService {
                 break;
             case "application/data-transfer+json": {
                 try {
-                    String transferId = message.get("tid");
-                    long tid = Long.parseLong(transferId);
                     String fileName = message.get("displayName");
                     String fileId = message.get("fileId");
                     long fileSize = Long.parseLong(message.get("totalSize"));
                     interaction = account.getDataTransfer(fileId);
                     if (interaction == null) {
-                        interaction = new DataTransfer(account.getAccountID(), fileId, author, fileName, contact.isUser(), timestamp, fileSize, 0);
-                        File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), ((DataTransfer) interaction).getStoragePath());
+                        File path = mDeviceRuntimeService.getConversationPath(account.getAccountID(), conversation.getUri().getRawRingId(), fileId);
+                        interaction = new DataTransfer(fileId, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
                         boolean exists = path.exists();
                         if (exists)
                             ((DataTransfer) interaction).setBytesProgress(path.length());
-                        interaction.setStatus(exists ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.TRANSFER_TIMEOUT_EXPIRED);
+                        interaction.setStatus(exists ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.FILE_AVAILABLE);
                     }
                 } catch (Exception e) {
                     interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
@@ -1718,20 +1716,22 @@ public class AccountService {
         Account account = getAccount(accountId);
         if (account != null) {
             Conversation conversation = account.getByUri(conversationUri);
-            acceptFileTransfer(conversation, account.getDataTransfer(fileId));
+            acceptFileTransfer(conversation, fileId, account.getDataTransfer(fileId));
         }
     }
 
-    public void acceptFileTransfer(Conversation conversation, DataTransfer transfer) {
-        if (transfer == null)
-            return;
-        File path = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
-        Log.i(TAG, "acceptFileTransfer() id=" + transfer.getFileId() + ", path=" + path.getAbsolutePath());
+    public void acceptFileTransfer(Conversation conversation, String fileId, DataTransfer transfer) {
         if (conversation.isSwarm()) {
             String conversationId = conversation.getUri().getRawRingId();
-            JamiService.downloadFile(conversation.getAccountId(), conversationId, transfer.getFileId(), path.getAbsolutePath());
+            Log.i(TAG, "downloadFile() id=" + conversation.getAccountId() + ", path=" + conversationId + " " + fileId);
+            JamiService.downloadFile(conversation.getAccountId(), conversationId, fileId, "");
         } else {
-            JamiService.acceptFileTransfer(conversation.getAccountId(), transfer.getFileId(), path.getAbsolutePath());
+            if (transfer == null) {
+                return;
+            }
+            File path = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
+            Log.i(TAG, "acceptFileTransfer() id=" + fileId + ", path=" + path.getAbsolutePath());
+            JamiService.acceptFileTransfer(conversation.getAccountId(), fileId, path.getAbsolutePath());
         }
     }
 
@@ -1769,34 +1769,55 @@ public class AccountService {
         Account account = getAccount(accountId);
         if (account != null) {
             Conversation conversation = StringUtils.isEmpty(conversationId) ? null : account.getSwarm(conversationId);
-            if (conversation == null)
-                conversation = account.getByUri(conversationId);
-            if (conversation == null)
-                return;
             dataTransferEvent(account, conversation, fileId, eventCode);
         }
     }
     void dataTransferEvent(Account account, Conversation conversation, final String fileId, int eventCode) {
         Interaction.InteractionStatus transferStatus = getDataTransferEventCode(eventCode);
         Log.d(TAG, "Data Transfer " + transferStatus);
-        DataTransferInfo info = new DataTransferInfo();
-        DataTransferError err = getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), fileId, info));
-        if (err != DataTransferError.SUCCESS) {
-            Log.d(TAG, "Data Transfer error getting details " + err);
-            return;
+
+        String from;
+        long total, progress;
+        String displayName;
+        DataTransfer transfer = account.getDataTransfer(fileId);
+        boolean outgoing = false;
+        if (conversation == null) {
+            DataTransferInfo info = new DataTransferInfo();
+            DataTransferError err = getDataTransferError(JamiService.dataTransferInfo(account.getAccountID(), fileId, info));
+            if (err != DataTransferError.SUCCESS) {
+                Log.d(TAG, "Data Transfer error getting details " + err);
+                return;
+            }
+            from = info.getPeer();
+            total = info.getTotalSize();
+            progress = info.getBytesProgress();
+            conversation = account.getByUri(from);
+            outgoing = info.getFlags() == 0;
+            displayName = info.getDisplayName();
+        } else {
+            String[] paths = new String[1];
+            long[] progressA = new long[1];
+            long[] totalA = new long[1];
+            JamiService.fileTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), fileId, paths, totalA, progressA);
+            progress = progressA[0];
+            total = totalA[0];
+            if (transfer == null) {
+                String[] parts = fileId.split("_");
+                transfer = (DataTransfer) conversation.getMessage(parts[0]);
+            }
+            from = transfer.getAuthor();
+            displayName = transfer.getDisplayName();
         }
 
-        boolean outgoing = info.getFlags() == 0;
-        DataTransfer transfer = account.getDataTransfer(fileId);
         if (transfer == null) {
             if (outgoing && mStartingTransfer != null) {
                 Log.d(TAG, "Data Transfer mStartingTransfer");
                 transfer = mStartingTransfer;
                 mStartingTransfer = null;
             } else {
-                transfer = new DataTransfer(conversation, info.getPeer(), account.getAccountID(), info.getDisplayName(),
-                        outgoing, info.getTotalSize(),
-                        info.getBytesProgress(), fileId);
+                transfer = new DataTransfer(conversation, from, account.getAccountID(), displayName,
+                        outgoing, total,
+                        progress, fileId);
                 if (conversation.isSwarm()) {
                     transfer.setSwarmInfo(conversation.getUri().getRawRingId(), null, null);
                 } else {
@@ -1818,7 +1839,7 @@ public class AccountService {
                         tmpPath.delete();
                     }
                 } else if (transferStatus == (Interaction.InteractionStatus.TRANSFER_FINISHED)) {
-                    if (!transfer.isOutgoing()) {
+                    if (!conversation.isSwarm() && !transfer.isOutgoing()) {
                         File tmpPath = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
                         File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
                         FileUtils.moveFile(tmpPath, path);
@@ -1826,7 +1847,7 @@ public class AccountService {
                 }
             }
             transfer.setStatus(transferStatus);
-            transfer.setBytesProgress(info.getBytesProgress());
+            transfer.setBytesProgress(progress);
             if (!conversation.isSwarm()) {
                 mHistoryService.updateInteraction(transfer, account.getAccountID()).subscribe();
             }

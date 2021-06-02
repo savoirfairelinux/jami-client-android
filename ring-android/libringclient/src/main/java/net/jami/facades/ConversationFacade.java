@@ -594,7 +594,7 @@ public class ConversationFacade {
         Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
         if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
-                mAccountService.acceptFileTransfer(conversation, transfer);
+                mAccountService.acceptFileTransfer(conversation, transfer.getFileId(), transfer);
                 return;
             }
         }

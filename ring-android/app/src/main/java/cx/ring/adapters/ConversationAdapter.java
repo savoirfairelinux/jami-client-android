@@ -442,31 +442,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (interaction.getType() == (InteractionType.CONTACT))
             return false;
 
-        switch (item.getItemId()) {
-            case R.id.conv_action_download: {
-                presenter.saveFile(interaction);
-                break;
-            }
-            case R.id.conv_action_share: {
-                presenter.shareFile(interaction);
-                break;
-            }
-            case R.id.conv_action_open: {
-                presenter.openFile(interaction);
-                break;
-            }
-            case R.id.conv_action_delete: {
-                presenter.deleteConversationItem(interaction);
-                break;
-            }
-            case R.id.conv_action_cancel_message: {
-                presenter.cancelMessage(interaction);
-                break;
-            }
-            case R.id.conv_action_copy_text: {
-                addToClipboard((interaction).getBody());
-                break;
-            }
+        int itemId = item.getItemId();
+        if (itemId == R.id.conv_action_download) {
+            presenter.saveFile(interaction);
+        } else if (itemId == R.id.conv_action_share) {
+            presenter.shareFile(interaction);
+        } else if (itemId == R.id.conv_action_open) {
+            presenter.openFile(interaction);
+        } else if (itemId == R.id.conv_action_delete) {
+            presenter.deleteConversationItem(interaction);
+        } else if (itemId == R.id.conv_action_cancel_message) {
+            presenter.cancelMessage(interaction);
+        } else if (itemId == R.id.conv_action_copy_text) {
+            addToClipboard((interaction).getBody());
         }
         return true;
     }
@@ -628,23 +616,25 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForFileInfo(@NonNull final ConversationViewHolder viewHolder,
                                       @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = presenter.getDeviceRuntimeService().getConversationPath(interaction.getConversationId() == null ? interaction.getConversation().getParticipant() : interaction.getConversationId(), file.getStoragePath());
+        File path = interaction.getConversationId() == null
+                ? presenter.getDeviceRuntimeService().getConversationPath(interaction.getConversation().getParticipant(), file.getStoragePath())
+                : presenter.getDeviceRuntimeService().getConversationPath(interaction.getAccount(), interaction.getConversationId(), file.getFileId());
         if (file.isComplete())
             file.setSize(path.length());
-
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
-        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
-            if (file.getStatus() == InteractionStatus.TRANSFER_FINISHED) {
+        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(time -> {
+            InteractionStatus status = file.getStatus();
+            if (status == InteractionStatus.TRANSFER_FINISHED) {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize())));
-            } else if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+            } else if (status == InteractionStatus.TRANSFER_ONGOING) {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s / %s - %s",
                         Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getBytesProgress()), Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
-                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
+                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), status)));
             } else {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
-                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
+                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), status)));
             }
         }));
 
@@ -731,7 +721,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         } else if (type == TransferMsgType.AUDIO) {
             configureAudio(viewHolder, path);
         } else {
-            if (file.getStatus().isError()) {
+            InteractionStatus status = file.getStatus();
+            if (status.isError()) {
                 viewHolder.mIcon.setImageResource(R.drawable.baseline_warning_24);
             } else {
                 viewHolder.mIcon.setImageResource(R.drawable.baseline_attach_file_24);
@@ -739,13 +730,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
             viewHolder.mMsgTxt.setText(file.getDisplayName());
 
-            if (file.getStatus() == InteractionStatus.TRANSFER_AWAITING_HOST) {
+            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
+                viewHolder.btnRefuse.setVisibility(View.VISIBLE);
                 viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
                 viewHolder.btnAccept.setOnClickListener(v -> presenter.acceptFile(file));
                 viewHolder.btnRefuse.setOnClickListener(v -> presenter.refuseFile(file));
+            } else if (status == InteractionStatus.FILE_AVAILABLE) {
+                viewHolder.btnRefuse.setVisibility(View.GONE);
+                viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+                viewHolder.btnAccept.setOnClickListener(v -> presenter.acceptFile(file));
             } else {
                 viewHolder.mAnswerLayout.setVisibility(View.GONE);
-                if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+                if (status == InteractionStatus.TRANSFER_ONGOING) {
                     viewHolder.progress.setMax((int) (file.getTotalSize() / 1024));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         viewHolder.progress.setProgress((int) (file.getBytesProgress() / 1024), true);
