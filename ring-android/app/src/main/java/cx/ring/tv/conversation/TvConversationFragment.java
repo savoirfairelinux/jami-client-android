@@ -379,7 +379,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void shareFile(File path) {
+    public void shareFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;
@@ -400,7 +400,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void openFile(File path) {
+    public void openFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;

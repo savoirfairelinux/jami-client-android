@@ -307,21 +307,21 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void saveFile(Interaction interaction) {
         DataTransfer transfer = (DataTransfer) interaction;
         String fileAbsolutePath = getDeviceRuntimeService().
-                getConversationPath(mConversation.getUri().getRawRingId(), transfer.getStoragePath())
+                getConversationPath(mConversation, transfer)
                 .getAbsolutePath();
         getView().startSaveFile(transfer, fileAbsolutePath);
     }
 
     public void shareFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
-        getView().shareFile(path);
+        File path = getDeviceRuntimeService().getConversationPath(mConversation, file);
+        getView().shareFile(path, file.getDisplayName());
     }
 
     public void openFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
-        getView().openFile(path);
+        File path = getDeviceRuntimeService().getConversationPath(mConversation, file);
+        getView().openFile(path, file.getDisplayName());
     }
 
     public void acceptFile(DataTransfer transfer) {

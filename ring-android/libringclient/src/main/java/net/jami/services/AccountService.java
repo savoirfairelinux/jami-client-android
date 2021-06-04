@@ -1494,16 +1494,11 @@ public class AccountService {
 
     private Interaction addMessage(Account account, Conversation conversation, Map<String, String> message)  {
         String id = message.get("id");
-        //List<String> parents = Arrays.asList(message.get("parents").split(","));
-        //if (parents.size() == 1 && parents.get(0).isEmpty())
-        //    parents = Collections.emptyList();
         String type = message.get("type");
         String author = message.get("author");
         String parent = message.get("linearizedParent");
         List<String> parents = StringUtils.isEmpty(parent) ? Collections.emptyList() : Collections.singletonList(parent);
         Uri authorUri = Uri.fromId(author);
-
-        //Log.w(TAG, "addMessage2 " + type + " " + author + " id:" + id + " parents:" + parents);
 
         long timestamp = Long.parseLong(message.get("timestamp")) * 1000;
         Contact contact = conversation.findContact(authorUri);
@@ -1806,6 +1801,7 @@ public class AccountService {
             }
             if (transfer == null)
                 return;
+            transfer.setConversation(conversation);
             from = transfer.getAuthor();
             displayName = transfer.getDisplayName();
         }

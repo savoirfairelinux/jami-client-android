@@ -475,8 +475,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         viewHolder.mImage.setOnClickListener(v -> {
             Uri contentUri = ContentUriHandler.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
-            Intent i = new Intent(context, MediaViewerActivity.class);
-            i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent i = new Intent(context, MediaViewerActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setDataAndType(contentUri, "image/*")
+                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mImage, "picture");
             conversationFragment.startActivityForResult(i, 3006, options.toBundle());
@@ -616,9 +618,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForFileInfo(@NonNull final ConversationViewHolder viewHolder,
                                       @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = interaction.getConversationId() == null
-                ? presenter.getDeviceRuntimeService().getConversationPath(interaction.getConversation().getParticipant(), file.getStoragePath())
-                : presenter.getDeviceRuntimeService().getConversationPath(interaction.getAccount(), interaction.getConversationId(), file.getFileId());
+
+        File path = presenter.getDeviceRuntimeService().getConversationPath(file);
         if (file.isComplete())
             file.setSize(path.length());
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
@@ -1190,14 +1191,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         FIRST,
         MIDDLE,
         LAST,
-        SINGLE;
+        SINGLE
     }
 
     private enum TransferMsgType {
         FILE,
         IMAGE,
         AUDIO,
-        VIDEO;
+        VIDEO
     }
     public enum MessageType {
         INCOMING_FILE(R.layout.item_conv_file_peer),
