@@ -325,10 +325,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void acceptFile(DataTransfer transfer) {
-        if (!getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
-            getView().askWriteExternalStoragePermission();
-            return;
-        }
         getView().acceptFile(mConversation.getAccountId(), mConversationUri, transfer);
     }
 

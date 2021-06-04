@@ -153,7 +153,8 @@ public class DataTransfer extends Interaction {
         return mBytesProgress;
     }
 
-    public void setBytesProgress(long bytesProgress) { mBytesProgress = bytesProgress;
+    public void setBytesProgress(long bytesProgress) {
+        mBytesProgress = bytesProgress;
     }
 
     public boolean isError() {

@@ -30,6 +30,8 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract File getFilePath(String name);
     public abstract File getConversationPath(String conversationId, String name);
+    public abstract File getConversationPath(String accountId, String conversationId, String name);
+
     public abstract File getTemporaryPath(String conversationId, String name);
     public abstract File getConversationDir(String conversationId);
 
