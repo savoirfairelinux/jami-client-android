@@ -79,7 +79,7 @@
   <string name="account_preferences_advanced_tab">Haladó</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
   <string name="account_dht_public_in_calls_label">Az ismeretlen kapcsolatoktól érkező bejövő hívások engedélyezése</string>
-  <string name="account_registration_exp_label">Regisztráció lejárata</string>
+  <string name="account_registration_exp_label">Bejegyeztetés lejárata</string>
   <string name="account_local_interface_label">Helyi csatoló</string>
   <string name="account_local_port_label">Helyi kikötő</string>
   <string name="account_stun_enable_label">STUN használata</string>

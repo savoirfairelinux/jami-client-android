@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Mengelola akun</string>
   <string name="menu_item_account">Mengelola akun</string>
   <string name="menu_item_settings">Setelan</string>
+  <string name="menu_item_plugin_list">Pengaturan Plugin</string>
   <string name="menu_item_share">Bagikan kontak saya</string>
   <string name="menu_item_about">Tentang Jami</string>
   <!--Dialing Fragment-->
@@ -62,66 +63,116 @@
   <string name="notif_channel_messages">Pesan</string>
   <string name="notif_channel_requests">Permintaan</string>
   <string name="notif_channel_file_transfer">Mengirim berkas</string>
+  <string name="notif_channel_sync">Sinkronisasi data</string>
   <string name="notif_channel_background_service">Layanan latar belakang</string>
   <string name="notif_group_calls">Panggilan</string>
+  <string name="notif_mark_as_read">Tandai sudah dibaca</string>
+  <string name="notif_dismiss">Abaikan</string>
+  <string name="notif_reply">Balas</string>
+  <string name="notif_incoming_file_transfer_title">Berkas masuk dari %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Mengirim berkas ke %1$s</string>
+  <string name="notif_incoming_picture">Gambar dari %1$s</string>
+  <string name="notif_sync_title">Mensinkronisasi data...</string>
+  <string name="notif_location_title">Berbagi lokasi dengan %1$s</string>
+  <string name="notif_location_remaining">%1$dmenit tersisa</string>
+  <string name="notif_location_action_stop">Berhenti bagikan lokasi</string>
+  <string name="location_share_action_start">Mulai berbagi</string>
+  <string name="location_share_action_stop">Berhenti berbagi</string>
+  <string name="location_share_about_title">Informasi peta</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Anda:</string>
+  <string name="action_call_hangup">Angkat</string>
+  <string name="action_call_maximize">Maksimalkan</string>
+  <string name="action_call_mute">Senyapkan</string>
   <string name="ongoing_call">Panggilan berlangsung</string>
+  <string name="start_error_title">Tidak dapat memulai Jami !</string>
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Tolak</string>
+  <string name="action_call_mic_mute">Senyapkan mikrofon</string>
+  <string name="action_load_plugin">Muat plugin</string>
   <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
+  <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
+  <string name="hist_contact_added">Kontak ditambahkan</string>
   <string name="ab_action_audio_call">Panggilan suara</string>
   <string name="ab_action_video_call">Panggilan video</string>
   <string name="ab_action_change_screen_orientation">Ganti orientasi layar</string>
   <string name="share_via">Bagikan melalui</string>
   <string name="write_a_message">Tulis pesan</string>
   <string name="scan_qr">Pindai QR Code</string>
+  <string name="qr_code">Kode QR</string>
   <string name="ab_action_flipcamera">Tukar kamera</string>
+  <string name="remote_recording">%smerekam...</string>
   <!--Text messages-->
   <string name="send_message">Kirim pesan</string>
   <string name="message_sending">Mengirimkan pesan...</string>
   <string name="message_failed">Gagal</string>
   <string name="time_just_now">Baru saja</string>
+  <string name="send_file">Kirim berkas</string>
+  <string name="hist_file_sent">Berkas dikirim</string>
+  <string name="hist_file_received">Berkas diterima</string>
+  <string name="conversation_send_audio">Rekam klip audio</string>
+  <string name="conversation_send_video">Rekam klip video</string>
+  <string name="conversation_share_location">Berbagi lokasi</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Izin kamera</string>
   <string name="permission_dialog_camera_message">Percakapan video memerlukan izin kamera agar dapat bekerja.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Galat</string>
   <string name="ringtone_error_format_not_supported">Format tidak didukung.</string>
+  <string name="ringtone_error_size_too_big">Berkas terlalu besar. Maksimal ukuran yang diterima adalah %1$d kB.</string>
+  <string name="ringtone_custom_label">Kustom</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
+  <string name="tab_code">Kode Saya</string>
+  <string name="tab_scan">Pindai Kode</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Bersihkan riwayat?</string>
   <string name="clear_history_completed">Riwayat telah dihapus.</string>
   <!--Conversation-->
+  <string name="conversation_details">Rincian kontak</string>
   <string name="conversation_action_delete_this">Hapus percakapan ini</string>
   <string name="conversation_action_delete_this_title">Hapus percakapan ini ?</string>
   <string name="conversation_action_delete_this_message">Aksi ini tidak dapat dibatalkan.</string>
+  <string name="conversation_action_history_clear">Bersihkan riwayat</string>
   <string name="conversation_action_remove_this">Hapus kontak</string>
   <string name="conversation_action_copy_peer_number">Salin nomor</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
+  <string name="clip_contact_uri">Alamat kontak</string>
+  <string name="block_contact_dialog_title">Blokir %1$s?</string>
+  <string name="block_contact_completed">%1$stelah diblokir.</string>
+  <string name="conversation_contact_is_typing">Kontak sedang mengetik...</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>
+  <string name="prompt_new_password_optional">Kata sandi baru (opsional)</string>
   <string name="prompt_new_password_repeat">Ulangi kata sandi baru</string>
   <string name="account_create_title">Buat akun Jami</string>
   <string name="prompt_new_username">Masukkan username baru</string>
   <string name="prompt_hint_username">Nama pengguna</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
+  <string name="wizard_skip">Lewat</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Nama Profil</string>
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
+  <string name="profile_name_hint">Masukkan nama anda</string>
+  <string name="registered_name">Nama terdaftar</string>
   <string name="identity">Identitas</string>
   <string name="account">Akun</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
+  <string name="share_label">Bagikan</string>
   <string name="generic_error_migration">Galat</string>
   <string name="generic_error_migration_message">Galat terjadi selama proses migrasi</string>
+  <string name="title_share_with">Bagikan dengan...</string>
   <!--Pending contact requests-->
   <string name="accept">Terima</string>
   <string name="refuse">Tolak</string>
@@ -132,10 +183,13 @@
   <string name="send_request_title">Kirim permintaan kontak</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="start_conversation">Mulai obrolan</string>
+  <string name="search_results">Hasil Pencarian</string>
   <string name="tv_contact_row_header">Kontak</string>
   <!--File Transfer-->
   <string name="menu_delete">Hapus</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Obrolan</string>
   <string name="navigation_item_contact_request">Contact requests</string>
   <string name="navigation_item_account">Akun</string>
   <!--TV-->
@@ -144,4 +198,5 @@
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomendasi</string>
   <string name="wizard_password_skip">Buat akun</string>
+  <string name="wizard_profile_button">Simpan Profil</string>
 </resources>

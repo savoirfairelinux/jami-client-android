@@ -292,7 +292,7 @@
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerido</string>
-  <string name="wizard_username_info">Elija un nombre de usuario para su cuenta</string>
+  <string name="wizard_username_info">Elegir un nombre de usuario para tu cuenta</string>
   <string name="wizard_username_button">Eligí tu nombre de usuario</string>
   <string name="wizard_username_skip">Omitir elección de nombre de usuario</string>
   <string name="wizard_password_info">Contraseña de cuenta</string>

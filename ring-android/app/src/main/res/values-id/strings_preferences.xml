@@ -1,7 +1,61 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Jaringan</string>
   <string name="pref_category_contacts">Kontak</string>
   <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">Sistem</string>
+  <string name="pref_category_privacy">Privasi</string>
+  <string name="pref_mobileData_title">Data ponsel</string>
+  <string name="pref_mobileData_summary">Izinkan Jami pada jaringan 3G/LTE tambahan ke Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Notifikasi push</string>
+  <string name="pref_pushNotifications_summary">Gunakan server Google untuk menerima panggilan/pesan di latar belakang</string>
+  <string name="pref_video_advanced_title">Pengaturan video lanjutan</string>
+  <string name="pref_video_advanced_summary">Ubah bitrate video, resolusi, serta akses fitur eksperimental</string>
+  <string name="pref_hd_summary">Mengirim Video HD</string>
+  <string name="pref_hwEncode_title">Aktifkan pengkodean yang dipercepat</string>
+  <string name="pref_hwEncode_summary">Fitur Eksperimental</string>
+  <string name="pref_videoBitrate_title">Bitrate video</string>
+  <string name="pref_videoBitrate_summary">Pilih bitrate video keluar default (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolusi video</string>
+  <string name="pref_videoResolution_summary">Pilih resolusi keluaran video default</string>
+  <string name="pref_systemContacts_title">Gunakan kontak sistem</string>
+  <string name="pref_systemContacts_summary">Gunakan kontak sistem untuk menampilkan detail penelepon.</string>
+  <string name="pref_systemDialer_title">Lakukan panggilan sistem menggunakan Jami</string>
+  <string name="pref_systemDialer_summary">Gunakan Jami untuk melakukan panggilan sistem jika memungkinkan.</string>
+  <string name="pref_startOnBoot_title">Mulai Jami saat Startup</string>
+  <string name="pref_startOnBoot_summary">Mulai Jami di latar belakang ketika sistem berjalan.</string>
+  <string name="pref_clearHistory_title">Bersihkan riwayat</string>
+  <string name="pref_clearHistory_summary">Hapus semua riwayat percakapan. Tindakan ini tidak dapat diurungkan.</string>
+  <string name="pref_notification_title">Visibilitas notifikasi</string>
+  <string name="pref_notification_summary">Atur visibilitas notifikasi aplikasi di layar kunci.</string>
+  <string name="pref_blackList_title">Daftar blokir</string>
+  <string name="pref_blackList_summary">Periksa daftar blokir anda</string>
+  <string name="pref_delete_account_title">Hapus akun</string>
+  <string name="pref_delete_account_summary">Hapus akun anda dari perangkat ini</string>
+  <string name="pref_persistNotification_title">Berjalan di latar belakang</string>
+  <string name="pref_persistNotification_summary">Izinkan berjalan di latar belakang untuk menerima telepon dan pesan.</string>
+  <string name="pref_typing_title">Aktifkan indikator pengetikan</string>
+  <string name="pref_typing_summary">Kirim dan terima indikator pengetikan yang menunjukkan bahwa pesan sedang diketik.</string>
+  <string name="pref_read_title">Aktifkan tanda terima telah dibaca</string>
+  <string name="pref_read_summary">Kirim dan terima tanda terima yang menunjukkan bahwa pesan telah ditampilkan.</string>
+  <string name="pref_block_record_title">Cegah tangkapan layar dan rekaman</string>
+  <string name="pref_block_record_summary">Cegah pengambilan tangkapan layar atau rekaman video.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Publik \n(tampilkan notifikasi dan kontennya di layar kunci)\n</string>
+  <string name="notification_private">Pribadi \n(tampilkan notifikasi tetapi sembunyikan kontennya di layar kunci)\n</string>
+  <string name="notification_secret">Rahasia \n(jangan tampilkan notifikasi di layar kunci)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Plugin</string>
+  <string name="pref_plugins_summary">Aktifkan plugin dan atur parameternya</string>
+  <string name="fab_plugins_add">Tambah plugin baru?</string>
+  <string name="plugin_uninstall_title">Copot Plugin?</string>
+  <string name="plugin_reset_preferences">Setel ulang pengaturan plugin</string>
+  <string name="plugin_reset_preferences_summary">Pengaturan plugin anda akan kembali seperti semula</string>
+  <string name="plugin_reset_preferences_ask">Apakah anda ingin menyetel ulang pengaturan plugin?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b>berhasil dipasang</string>
+  <string name="plugin_install_failure">Gagal memasang plugin: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Anda memiliki versi terbaru dari: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Anda memiliki versi yang sama<b>%1$s</b> terpasang</string>
+  <string name="plugin_force_install">Paksa \n pemasangan</string>
+  <string name="plugin_path_image_add">Tambah gambar baru</string>
 </resources>

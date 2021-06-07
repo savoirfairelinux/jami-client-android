@@ -128,7 +128,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_tls_verify_server_label">Verifica Server</string>
   <string name="account_tls_verify_client_label">Verifica Client</string>
   <string name="account_require_client_certificate_label">TLS Richiede certificato Client</string>
-  <string name="account_tls_negotiation_timeout_sec">Timeout negoziazione (sec)</string>
+  <string name="account_tls_negotiation_timeout_sec">Tempo di negoziazione (sec)</string>
   <string name="account_rtp_max_port">Massimo</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porte audio RTP</string>

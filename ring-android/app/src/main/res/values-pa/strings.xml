@@ -15,6 +15,7 @@
   <string name="license">ਇਹ ਸਾਫ਼ਟਵੇਅਰ \"ਜਿਵੇਂ ਵੀ ਐ\", ਕਿਸੇ ਵੀ ਵਰੰਟੀ ਦੇ ਬਿਨਾਂ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਵੇਰਵਿਆਂ ਲਈ, <u>GNU General Public License version 3 ਜਾਂ ਬਾਅਦ ਵਾਲੇ ਲਾਇਸੰਸ</u> ਵੇਖੋ</string>
   <string name="description">Jami ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
   <string name="credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
+  <string name="pip_title">Jami ਸੰਮੇਲਨ</string>
   <string name="call_service_description">ਇਹ ਸੇਵਾ ਤੁਹਾਡੀਆਂ ਕਾਲਾਂ ਮੂਹਰੇ ਜਾਰੀ ਰੱਖਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਕਾਲਾਂ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <string name="data_transfer_service_description">ਇਹ ਸੇਵਾ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਸਥਾਈ ਸੂਚਨਾਵਾਂ ਵਿਖਾਉਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ। ਇਹ ਸਿਰਫ਼ ਫ਼ਾਈਲਾਂ ਦੇ ਤਬਾਦਲੇ ਵੇਲੇ ਚੱਲਦੀ ਹੈ।</string>
   <!--About dialog-->
