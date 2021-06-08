@@ -76,22 +76,22 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.35.1'
+    def dagger_version = '2.36'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
 
-    implementation 'androidx.core:core:1.3.2'
-    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation 'androidx.core:core:1.5.0'
+    implementation "androidx.appcompat:appcompat:1.3.0"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "androidx.legacy:legacy-support-core-utils:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.preference:preference:1.1.1"
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.leanback:leanback:1.1.0-rc01"
     implementation "androidx.leanback:leanback-preference:1.1.0-rc01"
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
-    implementation "androidx.media:media:1.3.0"
+    implementation "androidx.media:media:1.3.1"
     implementation "androidx.percentlayout:percentlayout:1.0.0"
     implementation "com.google.android.material:material:1.3.0"
     implementation 'com.google.android:flexbox:2.0.1'
@@ -99,7 +99,7 @@ dependencies {
     implementation "androidx.sharetarget:sharetarget:1.1.0"
 
     // ORM
-    implementation 'com.j256.ormlite:ormlite-android:5.3'
+    implementation 'com.j256.ormlite:ormlite-android:5.5'
 
     // Barcode scanning
     implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
