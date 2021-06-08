@@ -379,7 +379,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void shareFile(File path) {
+    public void shareFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;
@@ -400,7 +400,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void openFile(File path) {
+    public void openFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;
@@ -807,7 +807,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
                 .setClass(requireContext(), DRingService.class)
                 .setData(ConversationPath.toUri(accountId, conversationUri))
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.getMessageId())
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
     @Override
@@ -815,7 +816,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_CANCEL)
                 .setClass(requireContext(), DRingService.class)
                 .setData(ConversationPath.toUri(accountId, conversationUri))
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getDaemonId()));
+                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.getMessageId())
+                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
 }

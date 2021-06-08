@@ -632,13 +632,15 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                 }
                 context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
                         .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
+                        .putExtra(DRingService.KEY_MESSAGE_ID, file.getMessageId())
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getFileId()));
             });
             viewHolder.btnRefuse.setOnClickListener(v -> {
                 Context context = v.getContext();
                 context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
                         .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
+                        .putExtra(DRingService.KEY_MESSAGE_ID, file.getMessageId())
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getFileId()));
             });
         } else {
             viewHolder.mAnswerLayout.setVisibility(View.GONE);

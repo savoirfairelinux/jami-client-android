@@ -694,7 +694,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void updateFileTransfer(DataTransfer transfer, Interaction.InteractionStatus eventCode) {
-        DataTransfer dataTransfer = (DataTransfer) findConversationElement(transfer.getId());
+        DataTransfer dataTransfer = (DataTransfer) (isSwarm() ? transfer : findConversationElement(transfer.getId()));
         if (dataTransfer != null) {
             dataTransfer.setStatus(eventCode);
             updatedElementSubject.onNext(new Tuple<>(dataTransfer, ElementStatus.UPDATE));

@@ -39,6 +39,7 @@ import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import net.jami.services.PreferencesService;
 import net.jami.services.VCardService;
+import net.jami.utils.FileUtils;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
@@ -307,28 +308,24 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void saveFile(Interaction interaction) {
         DataTransfer transfer = (DataTransfer) interaction;
         String fileAbsolutePath = getDeviceRuntimeService().
-                getConversationPath(mConversation.getUri().getRawRingId(), transfer.getStoragePath())
+                getConversationPath(transfer)
                 .getAbsolutePath();
         getView().startSaveFile(transfer, fileAbsolutePath);
     }
 
     public void shareFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
-        getView().shareFile(path);
+        File path = getDeviceRuntimeService().getConversationPath(file);
+        getView().shareFile(path, file.getDisplayName());
     }
 
     public void openFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
-        getView().openFile(path);
+        File path = getDeviceRuntimeService().getConversationPath(file);
+        getView().openFile(path, file.getDisplayName());
     }
 
     public void acceptFile(DataTransfer transfer) {
-        if (!getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
-            getView().askWriteExternalStoragePermission();
-            return;
-        }
         getView().acceptFile(mConversation.getAccountId(), mConversationUri, transfer);
     }
 

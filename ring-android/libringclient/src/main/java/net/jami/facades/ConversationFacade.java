@@ -38,6 +38,7 @@ import net.jami.services.HistoryService;
 import net.jami.services.NotificationService;
 import net.jami.services.PreferencesService;
 import net.jami.smartlist.SmartListViewModel;
+import net.jami.utils.FileUtils;
 import net.jami.utils.Log;
 import net.jami.utils.Tuple;
 
@@ -267,18 +268,21 @@ public class ConversationFacade {
     }
 
     public Completable sendFile(Conversation conversation, Uri to, File file) {
-        return Single.fromCallable(() -> {
-            if (file == null || !file.exists() || !file.canRead()) {
-                Log.w(TAG, "sendFile: file not found or not readable: " + file);
-                return null;
-            }
+        if (file == null || !file.exists() || !file.canRead()) {
+            Log.w(TAG, "sendFile: file not found or not readable: " + file);
+            return null;
+        }
 
-            DataTransfer transfer = new DataTransfer(conversation, to.getRawRingId(), conversation.getAccountId(), file.getName(), true, file.length(), 0, 0L);
-            if (conversation.isSwarm()) {
-                transfer.setSwarmInfo(conversation.getUri().getRawRingId(), null, null);
-            } else {
-                mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
-            }
+        if (conversation.isSwarm()) {
+            File destPath = mDeviceRuntimeService.getNewConversationPath(conversation.getAccountId(), conversation.getUri().getRawRingId(), file.getName());
+            FileUtils.moveFile(file, destPath);
+            mAccountService.sendFile(conversation, destPath);
+            return Completable.complete();
+        }
+
+        return Single.fromCallable(() -> {
+            DataTransfer transfer = new DataTransfer(conversation, to.getRawRingId(), conversation.getAccountId(), file.getName(), true, file.length(), 0, null);
+            mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
 
             transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId());
             return transfer;
@@ -297,7 +301,7 @@ public class ConversationFacade {
         if (element.getType() == Interaction.InteractionType.DATA_TRANSFER) {
             DataTransfer transfer = (DataTransfer) element;
             if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_ONGOING) {
-                mAccountService.cancelDataTransfer(conversation.getAccountId(), conversation.getUri().getRawRingId(), transfer.getDaemonId());
+                mAccountService.cancelDataTransfer(conversation.getAccountId(), conversation.getUri().getRawRingId(), transfer.getMessageId(), transfer.getFileId());
             } else {
                 File file = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
                 mDisposableBag.add(Completable.mergeArrayDelayError(
@@ -588,7 +592,7 @@ public class ConversationFacade {
         Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
         if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
-                mAccountService.acceptFileTransfer(conversation, transfer);
+                mAccountService.acceptFileTransfer(conversation, transfer.getFileId(), transfer);
                 return;
             }
         }
@@ -678,10 +682,10 @@ public class ConversationFacade {
         });
     }
 
-    public void cancelFileTransfer(String accountId, Uri conversationId, long id) {
-        mAccountService.cancelDataTransfer(accountId, conversationId.isSwarm() ? conversationId.getRawRingId() : "", id);
-        mNotificationService.removeTransferNotification(accountId, conversationId, id);
-        DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(id);
+    public void cancelFileTransfer(String accountId, Uri conversationId, String messageId, String fileId) {
+        mAccountService.cancelDataTransfer(accountId, conversationId.isSwarm() ? conversationId.getRawRingId() : "", messageId, fileId);
+        mNotificationService.removeTransferNotification(accountId, conversationId, fileId);
+        DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(fileId);
         if (transfer != null)
             deleteConversationItem((Conversation) transfer.getConversation(), transfer);
     }

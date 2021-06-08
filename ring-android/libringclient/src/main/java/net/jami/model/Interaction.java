@@ -242,7 +242,8 @@ public class Interaction {
         TRANSFER_AWAITING_PEER,
         TRANSFER_AWAITING_HOST,
         TRANSFER_TIMEOUT_EXPIRED,
-        TRANSFER_FINISHED;
+        TRANSFER_FINISHED,
+        FILE_AVAILABLE;
 
         static InteractionStatus fromString(String str) {
             for (InteractionStatus s : values()) {

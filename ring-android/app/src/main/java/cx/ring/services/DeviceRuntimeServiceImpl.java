@@ -98,6 +98,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     }
 
     @Override
+    public File getConversationPath(String accountId, String conversationId, String name) {
+        return AndroidFileUtils.getConversationPath(mContext, accountId, conversationId, name);
+    }
+
+    @Override
     public File getTemporaryPath(String conversationId, String name) {
         return AndroidFileUtils.getTempPath(mContext, conversationId, name);
     }

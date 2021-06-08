@@ -52,7 +52,7 @@ public interface NotificationService {
     void showFileTransferNotification(Conversation conversation, DataTransfer info);
     void cancelFileNotification(int id, boolean isMigratingToService);
     void handleDataTransferNotification(DataTransfer transfer, Conversation contact, boolean remove);
-    void removeTransferNotification(String accountId, Uri conversationUri, long transferId);
+    void removeTransferNotification(String accountId, Uri conversationUri, String fileId);
     Object getDataTransferNotification(int notificationId);
 
     void updateNotification(Object notification, int notificationId);
