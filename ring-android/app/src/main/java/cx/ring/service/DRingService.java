@@ -97,6 +97,7 @@ public class DRingService extends Service {
 
     static public final String ACTION_FILE_ACCEPT = BuildConfig.APPLICATION_ID + ".action.FILE_ACCEPT";
     static public final String ACTION_FILE_CANCEL = BuildConfig.APPLICATION_ID + ".action.FILE_CANCEL";
+    static public final String KEY_MESSAGE_ID = "messageId";
     static public final String KEY_TRANSFER_ID = "transferId";
     static public final String KEY_TEXT_REPLY = "textReply";
 
@@ -651,13 +652,14 @@ public class DRingService extends Service {
     }
 
     private void handleFileAction(android.net.Uri uri, String action, Bundle extras) {
-        long id = extras.getLong(KEY_TRANSFER_ID);
+        String messageId = extras.getString(KEY_MESSAGE_ID);
+        String id = extras.getString(KEY_TRANSFER_ID);
         ConversationPath path = ConversationPath.fromUri(uri);
         if (action.equals(ACTION_FILE_ACCEPT)) {
             mNotificationService.removeTransferNotification(path.getAccountId(), path.getConversationUri(), id);
-            mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), id);
+            mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), messageId, id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
-            mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), id);
+            mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), messageId, id);
         }
     }
 

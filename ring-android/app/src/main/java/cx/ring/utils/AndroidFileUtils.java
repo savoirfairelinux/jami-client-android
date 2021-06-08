@@ -52,6 +52,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
+import net.jami.model.Conversation;
 import net.jami.utils.FileUtils;
 
 import io.reactivex.Completable;
@@ -317,6 +318,22 @@ public class AndroidFileUtils {
         }).subscribeOn(Schedulers.io());
     }
 
+    public static @NonNull Single<File> getFileToSend(@NonNull Context context, @NonNull Conversation conversation, @NonNull Uri uri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        File cacheDir = context.getCacheDir();
+        return Single.fromCallable(() -> {
+            File file = new File(cacheDir, getFilename(contentResolver, uri));
+            try (InputStream inputStream = contentResolver.openInputStream(uri);
+                 FileOutputStream output = new FileOutputStream(file)) {
+                if (inputStream == null)
+                    throw new FileNotFoundException();
+                net.jami.utils.FileUtils.copyFile(inputStream, output);
+                output.flush();
+            }
+            return file;
+        }).subscribeOn(Schedulers.io());
+    }
+
     public static Completable moveToUri(@NonNull ContentResolver cr, @NonNull File input, @NonNull Uri outUri) {
         return Completable.fromAction(() -> {
             try (InputStream inputStream = new FileInputStream(input);
@@ -363,7 +380,6 @@ public class AndroidFileUtils {
 
     public static File getConversationDir(Context context, String conversationId) {
         File conversationsDir = getFilePath(context, "conversation_data");
-
         if (!conversationsDir.exists())
             conversationsDir.mkdir();
 
@@ -374,8 +390,27 @@ public class AndroidFileUtils {
         return conversationDir;
     }
 
+    public static File getConversationDir(Context context, String accountId, String conversationId) {
+        File conversationsDir = getFilePath(context, "conversation_data");
+        if (!conversationsDir.exists())
+            conversationsDir.mkdir();
+
+        File accountDir = new File(conversationsDir, accountId);
+        if (!accountDir.exists())
+            accountDir.mkdir();
+
+        File conversationDir = new File(accountDir, conversationId);
+        if (!conversationDir.exists())
+            conversationDir.mkdir();
+
+        return conversationDir;
+    }
+
     public static File getConversationPath(Context context, String conversationId, String name) {
         return new File(getConversationDir(context, conversationId), name);
+    }
+    public static File getConversationPath(Context context, String accountId, String conversationId, String name) {
+        return new File(getConversationDir(context, accountId, conversationId), name);
     }
 
     public static File getTempPath(Context context, String conversationId, String name) {

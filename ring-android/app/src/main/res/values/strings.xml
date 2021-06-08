@@ -241,8 +241,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_info_contact_you">You</string>
     <string name="conversation_members">Members</string>
 
-    <string name="conversation_preference_color">Change conversation color</string>
-    <string name="conversation_preference_emoji">Change conversation emoji</string>
+    <string name="conversation_preference_color">Conversation color</string>
+    <string name="conversation_preference_emoji">Conversation emoji</string>
     <string name="conversation_type_contact">Jami contact</string>
     <string name="conversation_type_private">Private swarm</string>
     <string name="conversation_type_group">Group swarm</string>
@@ -337,6 +337,7 @@ along with this program; if not, write to the Free Software
     <string name="file_transfer_status_timed_out">timed out</string>
     <string name="file_saved_in">File saved in %s</string>
     <string name="file_saved_successfully">File saved successfully</string>
+    <string name="file_download">Download</string>
     <string name="no_space_left_on_device">No space left on device</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>

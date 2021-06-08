@@ -471,12 +471,12 @@ public class NotificationServiceImpl implements NotificationService {
         if (!remove) {
             showFileTransferNotification(conversation, transfer);
         } else {
-            removeTransferNotification(ConversationPath.toUri(conversation), transfer.getDaemonId());
+            removeTransferNotification(ConversationPath.toUri(conversation), transfer.getFileId());
         }
     }
 
     @Override
-    public void removeTransferNotification(String accountId, Uri conversationUri, long transferId) {
+    public void removeTransferNotification(String accountId, Uri conversationUri, String transferId) {
         removeTransferNotification(ConversationPath.toUri(accountId, conversationUri), transferId);
     }
 
@@ -485,7 +485,7 @@ public class NotificationServiceImpl implements NotificationService {
      *
      * @param transferId the transfer id which is required to generate the notification id
      */
-    public void removeTransferNotification(android.net.Uri path, long transferId) {
+    public void removeTransferNotification(android.net.Uri path, String transferId) {
         int id = getFileTransferNotificationId(path, transferId);
         dataTransferNotifications.remove(id);
         cancelFileNotification(id, false);
@@ -749,7 +749,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
         android.net.Uri path = ConversationPath.toUri(conversation);
         Log.d(TAG, "showFileTransferNotification " + path);
-        long dataTransferId = info.getDaemonId();
+        String dataTransferId = info.getFileId();
         int notificationId = getFileTransferNotificationId(path, dataTransferId);
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
@@ -955,7 +955,7 @@ public class NotificationServiceImpl implements NotificationService {
         return (NOTIF_MSG + accountId + contact.toString()).hashCode();
     }
 
-    private int getFileTransferNotificationId(android.net.Uri path, long dataTransferId) {
+    private int getFileTransferNotificationId(android.net.Uri path, String dataTransferId) {
         return (NOTIF_FILE_TRANSFER + path.toString() + dataTransferId).hashCode();
     }
 
