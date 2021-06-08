@@ -19,6 +19,9 @@
  */
 package net.jami.services;
 
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+
 import java.io.File;
 
 public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCallbacks {
@@ -30,6 +33,24 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract File getFilePath(String name);
     public abstract File getConversationPath(String conversationId, String name);
+    public abstract File getConversationPath(String accountId, String conversationId, String name);
+
+    public File getConversationPath(DataTransfer interaction) {
+        return interaction.getConversationId() == null
+                ? getConversationPath(interaction.getConversation().getParticipant(), interaction.getStoragePath())
+                : interaction.getPublicPath();
+    }
+    public File getNewConversationPath(String accountId, String conversationId, String name) {
+        int prefix = 0;
+        File destPath;
+        do {
+            String fileName = prefix == 0 ? name : prefix + '_' + name;
+            destPath = getConversationPath(accountId, conversationId, fileName);
+            prefix++;
+        } while (destPath.exists());
+        return destPath;
+    }
+
     public abstract File getTemporaryPath(String conversationId, String name);
     public abstract File getConversationDir(String conversationId);
 

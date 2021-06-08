@@ -24,6 +24,7 @@ import net.jami.utils.HashUtils;
 import net.jami.utils.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 public class DataTransfer extends Interaction {
@@ -34,6 +35,7 @@ public class DataTransfer extends Interaction {
     private String mExtension;
     private String mFileId;
     public File destination;
+    private File mDaemonPath;
 
     private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
     private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
@@ -120,7 +122,7 @@ public class DataTransfer extends Interaction {
 
     public String getStoragePath() {
         if (StringUtils.isEmpty(mBody)) {
-            return getMessageId();
+            return getFileId();
         } else {
             String ext = StringUtils.getFileExtension(mBody);
             if (ext.length() > 8)
@@ -153,7 +155,8 @@ public class DataTransfer extends Interaction {
         return mBytesProgress;
     }
 
-    public void setBytesProgress(long bytesProgress) { mBytesProgress = bytesProgress;
+    public void setBytesProgress(long bytesProgress) {
+        mBytesProgress = bytesProgress;
     }
 
     public boolean isError() {
@@ -168,4 +171,22 @@ public class DataTransfer extends Interaction {
         return mFileId;
     }
 
+    public void setDaemonPath(File file) {
+        mDaemonPath = file;
+    }
+
+    public File getDaemonPath() {
+        return mDaemonPath;
+    }
+
+    public File getPublicPath() {
+        if (mDaemonPath == null) {
+            return  null;
+        }
+        try {
+            return mDaemonPath.getCanonicalFile();
+        } catch (IOException e) {
+            return null;
+        }
+    }
 }

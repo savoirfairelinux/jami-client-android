@@ -395,7 +395,7 @@ public class Account {
     }
 
     public Conversation onDataTransferEvent(DataTransfer transfer) {
-        Log.d(TAG, "Accoount onDataTransferEvent");
+        Log.d(TAG, "Account onDataTransferEvent " + transfer.getMessageId());
         Conversation conversation = (Conversation) transfer.getConversation();
         Interaction.InteractionStatus transferEventCode = transfer.getStatus();
         if (transferEventCode == Interaction.InteractionStatus.TRANSFER_CREATED) {
