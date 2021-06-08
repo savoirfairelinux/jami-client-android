@@ -380,9 +380,9 @@ public class DaemonService {
 
     class DaemonDataTransferCallback extends DataTransferCallback {
         @Override
-        public void dataTransferEvent(String accountId, String conversationId, String fileId, int eventCode) {
+        public void dataTransferEvent(String accountId, String conversationId, String interactionId, String fileId, int eventCode) {
             Log.d(TAG, "dataTransferEvent: conversationId=" + conversationId + ", fileId=" + fileId + ", eventCode=" + eventCode);
-            mAccountService.dataTransferEvent(accountId, conversationId, fileId, eventCode);
+            mAccountService.dataTransferEvent(accountId, conversationId, interactionId, fileId, eventCode);
         }
     }
 

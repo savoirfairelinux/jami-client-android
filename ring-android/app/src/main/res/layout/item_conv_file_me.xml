@@ -141,7 +141,7 @@
                         android:layout_weight="0.5"
                         android:background="?attr/selectableItemBackground"
                         android:gravity="center"
-                        android:text="@string/accept"
+                        android:text="@string/file_download"
                         android:textColor="@color/color_primary_dark" />
 
                 </LinearLayout>

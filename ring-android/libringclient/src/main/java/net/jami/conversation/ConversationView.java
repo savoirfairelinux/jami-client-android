@@ -73,8 +73,8 @@ public interface ConversationView extends BaseView {
 
     void acceptFile(String accountId, Uri conversationUri, DataTransfer transfer);
     void refuseFile(String accountId, Uri conversationUri, DataTransfer transfer);
-    void shareFile(File path);
-    void openFile(File path);
+    void shareFile(File path, String displayName);
+    void openFile(File path, String displayName);
 
     void addElement(Interaction e);
     void updateElement(Interaction e);

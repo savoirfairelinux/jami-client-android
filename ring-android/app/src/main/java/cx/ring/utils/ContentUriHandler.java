@@ -24,12 +24,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import net.jami.utils.FileUtils;
-import net.jami.utils.Log;
 
 import java.io.File;
 
@@ -75,28 +76,33 @@ public class ContentUriHandler {
     }
 
     public static Uri getUriForFile(@NonNull Context context, @NonNull String authority, @NonNull File file) {
-        if (HUAWEI_MANUFACTURER.equalsIgnoreCase(Build.MANUFACTURER)) {
-            try {
-                return FileProvider.getUriForFile(context, authority, file);
-            } catch (IllegalArgumentException e) {
+        return getUriForFile(context, authority, file, null);
+    }
+    public static Uri getUriForFile(@NonNull Context context, @NonNull String authority, @NonNull File file, @Nullable String displayName) {
+        try {
+            return displayName == null ? FileProvider.getUriForFile(context, authority, file)
+                    : FileProvider.getUriForFile(context, authority, file, displayName);
+        } catch (IllegalArgumentException e) {
+            if (HUAWEI_MANUFACTURER.equalsIgnoreCase(Build.MANUFACTURER)) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    net.jami.utils.Log.w(TAG, "Returning Uri.fromFile to avoid Huawei 'external-files-path' bug for pre-N devices", e);
+                    Log.w(TAG, "Returning Uri.fromFile to avoid Huawei 'external-files-path' bug for pre-N devices", e);
                     return Uri.fromFile(file);
                 } else {
-                    net.jami.utils.Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e);
+                    Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e);
                     // Note: Periodically clear this cache
                     final File cacheFolder = new File(context.getCacheDir(), HUAWEI_MANUFACTURER);
                     final File cacheLocation = new File(cacheFolder, file.getName());
                     if (FileUtils.copyFile(file, cacheLocation)) {
                         Log.i(TAG, "Completed Android N+ Huawei file copy. Attempting to return the cached file");
-                        return FileProvider.getUriForFile(context, authority, cacheLocation);
+                        return displayName == null ? FileProvider.getUriForFile(context, authority, cacheLocation)
+                                : FileProvider.getUriForFile(context, authority, cacheLocation, displayName);
                     }
-                    net.jami.utils.Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception");
+                    Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception");
                     throw new IllegalArgumentException("Huawei devices are unsupported for Android N");
                 }
+            } else {
+                throw e;
             }
-        } else {
-            return FileProvider.getUriForFile(context, authority, file);
         }
     }
 }

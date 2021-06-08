@@ -759,23 +759,25 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         }
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_ACCEPT, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
+                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.getMessageId())
                 .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
     @Override
     public void refuseFile(String accountId, Uri conversationUri, DataTransfer transfer) {
         requireActivity().startService(new Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(accountId, conversationUri), requireContext(), DRingService.class)
+                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.getMessageId())
                 .putExtra(DRingService.KEY_TRANSFER_ID, transfer.getFileId()));
     }
 
     @Override
-    public void shareFile(File path) {
+    public void shareFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName);
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }
@@ -783,7 +785,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = c.getContentResolver().getType(fileUri);
+            String type = c.getContentResolver().getType(fileUri.buildUpon().appendPath(displayName).build());
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             startActivity(Intent.createChooser(sendIntent, null));
@@ -791,13 +793,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void openFile(File path) {
+    public void openFile(File path, String displayName) {
         Context c = getContext();
         if (c == null)
             return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "The selected file can't be shared: " + path.getName());
         }
@@ -805,7 +807,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_VIEW);
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = c.getContentResolver().getType(fileUri);
+            String type = c.getContentResolver().getType(fileUri.buildUpon().appendPath(displayName).build());
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             //startActivity(Intent.createChooser(sendIntent, null));
