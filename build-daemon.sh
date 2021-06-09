@@ -153,7 +153,7 @@ if [ ${ANDROID_API} = "android-21" ] ; then
     export ac_cv_header_sys_shm_h=no
 fi
 
-echo "Building dring ${MAKEFLAGS}"
+echo "Building jamid ${MAKEFLAGS}"
 V=99 make $MAKEFLAGS
 
 ######################
