@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc2292b_3ec49da7",
+        "filename": "build-daemon.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-09T18:01:31Z",
+      "side": 1,
+      "message": "I think it\u0027s not related to datatransfer",
+      "range": {
+        "startLine": 185,
+        "startChar": 22,
+        "endLine": 185,
+        "endChar": 25
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c79b3e_2ac30feb",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-09T18:01:31Z",
+      "side": 1,
+      "message": "still wanted?",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028a2cc6_487a1d04",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/facades/ConversationFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-09T18:01:31Z",
+      "side": 1,
+      "message": "way more simple :D",
+      "range": {
+        "startLine": 275,
+        "startChar": 18,
+        "endLine": 277,
+        "endChar": 19
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ff9aa2_73808642",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/facades/ConversationFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-09T18:01:31Z",
+      "side": 1,
+      "message": "to remove",
+      "range": {
+        "startLine": 281,
+        "startChar": 14,
+        "endLine": 284,
+        "endChar": 15
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
