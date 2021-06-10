@@ -103,6 +103,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         if (conversationUri.equals(mConversationUri))
             return;
         mConversationUri = conversationUri;
+
+        try {
+            Account account = mConversationFacade.getAccountSubject(accountId).blockingGet();
+            Conversation conversation = mConversationFacade.loadConversationHistory(account, conversationUri).blockingGet();
+            setConversation(account, conversation);
+        }catch (Exception e) {
+            Log.e(TAG, "Error loading conversation", e);
+            getView().goToHome();
+        }
+
+        /*
         mCompositeDisposable.add(mConversationFacade.getAccountSubject(accountId)
                 .observeOn(mUiScheduler)
                 .flatMap(account -> mConversationFacade.loadConversationHistory(account, conversationUri)
@@ -113,7 +124,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(c -> {}, e -> {
                     Log.e(TAG, "Error loading conversation", e);
                     getView().goToHome();
-                }));
+                }));*/
         getView().setReadIndicatorStatus(showReadIndicator());
     }
 
