@@ -19,13 +19,6 @@
         android:visible="false"
         app:showAsAction="always" />
 
-    <!--
-    Created by Rohith M S from Noun Project
-    Licensed under Creative Commons :
-    http://creativecommons.org/licenses/by/3.0/us/legalcode
-    Used without any modification.
-    -->
-
     <item
         android:id="@+id/menu_overflow"
         android:orderInCategory="101"

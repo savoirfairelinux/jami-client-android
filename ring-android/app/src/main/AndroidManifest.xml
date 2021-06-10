@@ -100,12 +100,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
+        <activity
+            android:name=".client.LogsActivity"
+            android:label="@string/pref_logs_title"
+            android:theme="@style/AppTheme.Navigation"
+            />
 
         <activity
             android:name=".client.HomeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize">
@@ -139,14 +144,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
-            <meta-data android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".client.ShareActivity"
-            android:label="@string/title_share_with"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/title_share_with"
             android:parentActivityName=".client.HomeActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -164,10 +169,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".account.AccountWizardActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/AppThemeBase.Light"
             android:icon="@mipmap/ic_launcher"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="adjustResize"/>
+            android:theme="@style/AppThemeBase.Light"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -186,7 +191,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.ACTION_MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
@@ -207,8 +212,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:foregroundServiceType="dataSync" />
         <service
             android:name=".services.LocationSharingService"
-            android:foregroundServiceType="location"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="location" />
 
         <activity
             android:name=".client.CallActivity"
@@ -280,8 +285,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ConversationActivity"
             android:allowEmbedded="true"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.Fullscreen"
@@ -293,34 +298,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>
-        </service>
-
-        <!-- AndroidTV section -->
+        </service> <!-- AndroidTV section -->
         <activity
             android:name=".tv.main.HomeActivity"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/Theme.Jami.Leanback.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
-                    android:scheme="jamitv"
                     android:host="cx.ring"
-                    android:path="/home" />
+                    android:path="/home"
+                    android:scheme="jamitv" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".tv.main.ChannelActionHandler"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.media.tv.ACTION_INITIALIZE_PROGRAMS" />
                 <action android:name="android.media.tv.ACTION_PREVIEW_PROGRAM_BROWSABLE_DISABLED" />
                 <action android:name="android.media.tv.ACTION_PREVIEW_PROGRAM_ADDED_TO_WATCH_NEXT" />
@@ -330,30 +338,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".tv.account.TVAccountWizard"
-            android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".tv.search.SearchActivity"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/Theme.Leanback" />
         <activity
             android:name=".tv.about.AboutActivity"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/Theme.Leanback" />
         <activity
             android:name=".tv.account.TVShareActivity"
-            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:theme="@style/Theme.Ring.Leanback" />
         <activity
             android:name=".tv.call.TVCallActivity"
-            android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:resizeableActivity="true"
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
@@ -366,9 +374,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".tv.camera.CustomCameraActivity"
-            android:theme="@style/AppTheme"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
 
@@ -377,20 +385,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".tv.contact.TVContactActivity"
-            android:theme="@style/Theme.Leanback.Details"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:theme="@style/Theme.Leanback.Details">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
-                    android:scheme="jamitv"
                     android:host="cx.ring"
-                    android:pathPrefix="/conversation/" />
+                    android:pathPrefix="/conversation/"
+                    android:scheme="jamitv" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".tv.account.TVSettingsActivity"
             android:theme="@style/LeanbackPreferences" />
@@ -408,8 +417,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.MediaViewerActivity"
             android:exported="false"
-            android:label="@string/title_media_viewer"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/title_media_viewer"
             android:theme="@style/AppThemeBase.Dark" />
 
         <service
@@ -419,16 +428,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.ContactDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/conversation_details"
             android:icon="@mipmap/ic_launcher"
+            android:label="@string/conversation_details"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.Fullscreen"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".client.ConversationSelectionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:label="Choose a contact or conversation"
             android:icon="@mipmap/ic_launcher"
+            android:label="Choose a contact or conversation"
             android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert"
             android:windowSoftInputMode="adjustResize" />
     </application>
