@@ -47,8 +47,8 @@ import net.jami.services.CallService;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
 import cx.ring.viewholders.SmartListViewHolder;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ConversationSelectionActivity extends AppCompatActivity {
     private final static String TAG = ConversationSelectionActivity.class.getSimpleName();

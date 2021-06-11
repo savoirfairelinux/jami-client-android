@@ -55,9 +55,9 @@ import androidx.annotation.NonNull;
 import net.jami.model.Conversation;
 import net.jami.utils.FileUtils;
 
-import io.reactivex.Completable;
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AndroidFileUtils {
 
@@ -310,7 +310,8 @@ public class AndroidFileUtils {
      * @param uri uri of the
      * @return Single<File> which points to the newly created copy in the cache
      */
-    public static @NonNull Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
+    public static @NonNull
+    Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
         ContentResolver contentResolver = context.getContentResolver();
         File cacheDir = context.getCacheDir();
         return Single.fromCallable(() -> {

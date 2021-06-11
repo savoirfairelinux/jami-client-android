@@ -41,7 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccHomeCreateBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
     private static final int ARCHIVE_REQUEST_CODE = 42;

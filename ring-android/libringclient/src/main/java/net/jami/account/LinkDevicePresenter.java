@@ -30,7 +30,7 @@ import javax.inject.Named;
 import net.jami.model.Account;
 import net.jami.mvp.RootPresenter;
 
-import io.reactivex.Scheduler;
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class LinkDevicePresenter extends RootPresenter<LinkDeviceView> {
 

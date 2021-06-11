@@ -22,7 +22,7 @@ package net.jami.account;
 import net.jami.model.Account;
 import net.jami.mvp.AccountCreationModel;
 import ezvcard.VCard;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public interface AccountWizardView {
 

@@ -22,6 +22,7 @@ package cx.ring.viewholders;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -32,15 +33,12 @@ import net.jami.model.ContactEvent;
 import net.jami.model.Interaction;
 import net.jami.smartlist.SmartListViewModel;
 
-import java.util.concurrent.TimeUnit;
-
 import cx.ring.R;
 import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public final ItemSmartlistBinding binding;
@@ -66,13 +64,11 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
         compositeDisposable.clear();
 
         if (binding != null) {
-            compositeDisposable.add(Observable.create(e -> itemView.setOnClickListener(e::onNext))
-                    .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                    .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
-            Observable<Boolean> isSelected = smartListViewModel.getSelected();
-            if (isSelected != null) {
-                compositeDisposable.add(isSelected.subscribe(binding.itemLayout::setActivated));
-            }
+            itemView.setOnClickListener(v -> clickListener.onItemClick(smartListViewModel));
+            compositeDisposable.add(smartListViewModel.getSelected().subscribe(selected -> {
+                Log.w("SmartListViewHolder", "selected " + selected + " " + smartListViewModel.getContactName());
+                binding.itemLayout.setActivated(selected);
+            }));
             itemView.setOnLongClickListener(v -> {
                 clickListener.onItemLongClick(smartListViewModel);
                 return true;

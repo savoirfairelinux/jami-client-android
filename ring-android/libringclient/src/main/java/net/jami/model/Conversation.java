@@ -36,13 +36,13 @@ import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.SingleSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.SingleSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class Conversation extends ConversationHistory {
     private static final String TAG = Conversation.class.getSimpleName();

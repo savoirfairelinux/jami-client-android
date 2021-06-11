@@ -34,8 +34,9 @@ import net.jami.mvp.RootPresenter;
 import net.jami.navigation.HomeNavigationViewModel;
 import net.jami.services.AccountService;
 import net.jami.smartlist.SmartListViewModel;
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class MainPresenter extends RootPresenter<MainView> {
 

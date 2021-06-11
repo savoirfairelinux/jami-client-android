@@ -36,9 +36,9 @@ import net.jami.model.Uri;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import ezvcard.VCard;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 /**
  * This service handles the contacts
