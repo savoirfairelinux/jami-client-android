@@ -41,6 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.client.LogsActivity;
 import cx.ring.client.RingtoneActivity;
 import cx.ring.contactrequests.BlockListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -232,4 +233,7 @@ public interface JamiInjectionComponent {
     void inject(LinkDeviceFragment linkDeviceFragment);
 
     void inject(ContactPickerFragment contactPickerFragment);
+
+    void inject(LogsActivity logsActivity);
+
 }
