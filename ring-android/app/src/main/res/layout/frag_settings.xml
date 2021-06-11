@@ -71,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_toEndOf="@id/theme_image"
                     android:layout_below="@id/theme_title" />
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_dark_theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_plugins_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -285,7 +285,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_typing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -336,7 +336,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_read"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -387,7 +387,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_block_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -525,7 +525,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_push_notifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -575,7 +575,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_place_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -625,7 +625,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_startup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -675,7 +675,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settings_persistNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -683,6 +683,56 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:checked="false"
                     android:layout_marginStart="16dp"
                     android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/pref_category_diagnostic"
+                android:textColor="@color/textColorAccent"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
+
+            <RelativeLayout
+                android:id="@+id/settings_logs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_diagnostics_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/pref_persistNotification_summary"
+                    android:src="@drawable/baseline_article_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/system_diagnostics_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/pref_logs_title" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_logs_summary" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

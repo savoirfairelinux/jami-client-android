@@ -248,6 +248,11 @@ public class DaemonService {
         public void contactRemoved(String accountId, String uri, boolean banned) {
             mExecutor.submit(() -> mAccountService.contactRemoved(accountId, uri, banned));
         }
+
+        @Override
+        public void messageSend(String message) {
+            mHardwareService.logMessage(message);
+        }
     }
 
     class DaemonCallAndConferenceCallback extends Callback {
