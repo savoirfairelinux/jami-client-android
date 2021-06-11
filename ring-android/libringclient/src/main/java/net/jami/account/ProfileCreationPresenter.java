@@ -27,8 +27,9 @@ import javax.inject.Inject;
 
 import net.jami.mvp.RootPresenter;
 import net.jami.utils.Log;
-import io.reactivex.Scheduler;
-import io.reactivex.Single;
+
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.Single;
 
 public class ProfileCreationPresenter extends RootPresenter<net.jami.account.ProfileCreationView> {
 

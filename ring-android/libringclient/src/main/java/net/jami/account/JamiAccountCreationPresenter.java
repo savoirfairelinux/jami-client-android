@@ -30,8 +30,9 @@ import javax.inject.Named;
 import net.jami.mvp.AccountCreationModel;
 import net.jami.mvp.RootPresenter;
 import net.jami.utils.StringUtils;
-import io.reactivex.Scheduler;
-import io.reactivex.subjects.PublishSubject;
+
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account.JamiAccountCreationView> {
 

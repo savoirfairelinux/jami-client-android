@@ -42,8 +42,8 @@ import cx.ring.databinding.FragRegisterNameBinding;
 import net.jami.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
-import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class RegisterNameDialog extends DialogFragment {
     static final String TAG = RegisterNameDialog.class.getSimpleName();

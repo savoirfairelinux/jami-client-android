@@ -73,13 +73,13 @@ import net.jami.daemon.StringMap;
 import net.jami.daemon.UintVect;
 import net.jami.utils.Tuple;
 import cx.ring.views.AutoFitTextureView;
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class CameraService {
     private static final String TAG = CameraService.class.getSimpleName();

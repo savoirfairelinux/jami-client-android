@@ -25,10 +25,10 @@ import java.io.File;
 import java.io.Serializable;
 
 import ezvcard.VCard;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public abstract class AccountCreationModel implements Serializable {
 
@@ -44,7 +44,7 @@ public abstract class AccountCreationModel implements Serializable {
     transient private net.jami.model.Account newAccount = null;
     transient private Object photo = null;
 
-    transient private Observable<net.jami.model.Account> account;
+    transient private Observable<Account> account;
     transient protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
 
     public AccountCreationModel() {

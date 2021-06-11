@@ -81,10 +81,10 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Completable;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class TvConversationFragment extends BaseSupportFragment<ConversationPresenter> implements ConversationView {
     private static final String TAG = TvConversationFragment.class.getSimpleName();

@@ -30,7 +30,7 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public class AccountCreationModelImpl extends AccountCreationModel implements Serializable {
 

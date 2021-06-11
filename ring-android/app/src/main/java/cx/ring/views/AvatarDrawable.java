@@ -35,7 +35,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
@@ -55,7 +54,7 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.DeviceUtils;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public class AvatarDrawable extends Drawable {
     private static final String TAG = AvatarDrawable.class.getSimpleName();

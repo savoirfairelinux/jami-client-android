@@ -31,7 +31,8 @@ import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.services.HardwareService;
 import net.jami.services.PreferencesService;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 

@@ -74,7 +74,7 @@ import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,

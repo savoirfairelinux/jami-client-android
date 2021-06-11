@@ -50,12 +50,12 @@ import java.io.File;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> {
 
