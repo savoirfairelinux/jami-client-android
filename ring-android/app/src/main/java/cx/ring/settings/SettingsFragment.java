@@ -20,10 +20,9 @@
 package cx.ring.settings;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -43,6 +42,7 @@ import android.widget.Toast;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.client.LogsActivity;
 import cx.ring.databinding.FragSettingsBinding;
 
 import net.jami.daemon.JamiService;
@@ -142,18 +142,15 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
         binding.settingsNotification.setOnClickListener(v -> new MaterialAlertDialogBuilder(view.getContext())
                 .setTitle(getString(R.string.pref_notification_title))
-                .setSingleChoiceItems(singleItems, mNotificationVisibility, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        checkedItem[0] = i;
-                    }
-                })
+                .setSingleChoiceItems(singleItems, mNotificationVisibility, (dialogInterface, i) -> checkedItem[0] = i)
                 .setPositiveButton(android.R.string.ok, (dialog, id) -> {
                     mNotificationVisibility = checkedItem[0];
                     saveSettings();
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, id) -> {})
                 .show());
+
+        binding.settingsLogs.setOnClickListener(v -> startActivity(new Intent(v.getContext(), LogsActivity.class)));
     }
 
     @Override

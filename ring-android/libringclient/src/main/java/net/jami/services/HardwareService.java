@@ -23,6 +23,7 @@ package net.jami.services;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,10 +35,14 @@ import net.jami.daemon.UintVect;
 import net.jami.model.Conference;
 import net.jami.model.Call;
 import net.jami.utils.Log;
+import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
 import io.reactivex.Completable;
+import io.reactivex.Emitter;
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -209,4 +214,52 @@ public abstract class HardwareService {
     public abstract void setDeviceOrientation(int rotation);
 
     protected abstract List<String> getVideoDevices();
+
+    private Observable<String> logs = null;
+    private Emitter<String> logEmitter = null;
+
+    synchronized public boolean isLogging() {
+        return logs != null;
+    }
+
+    synchronized public Observable<String> startLogs() {
+        if (logs == null) {
+            logs = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+                Log.w(TAG, "ObservableOnSubscribe JamiService.monitor(true)");
+                logEmitter = emitter;
+                JamiService.monitor(true);
+                emitter.setCancellable(() -> {
+                    Log.w(TAG, "ObservableOnSubscribe CANCEL JamiService.monitor(false)");
+                    synchronized (HardwareService.this) {
+                        JamiService.monitor(false);
+                        logEmitter = null;
+                        logs = null;
+                    }
+                });
+            })
+                    .observeOn(Schedulers.io())
+                    .scan(new StringBuffer(1024), (sb, message) -> sb.append(message).append('\n'))
+                    .throttleLatest(500, TimeUnit.MILLISECONDS)
+                    .map(StringBuffer::toString)
+                    .replay(1)
+                    .autoConnect();
+        }
+        return logs;
+    }
+
+    synchronized public void stopLogs() {
+        if (logEmitter != null) {
+            Log.w(TAG, "stopLogs JamiService.monitor(false)");
+            JamiService.monitor(false);
+            logEmitter.onComplete();
+            logEmitter = null;
+            logs = null;
+        }
+    }
+
+    void logMessage(String message) {
+        if (logEmitter != null && !StringUtils.isEmpty(message)) {
+            logEmitter.onNext(message);
+        }
+    }
 }

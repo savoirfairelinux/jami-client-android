@@ -5,6 +5,7 @@
     <string name="pref_category_video">Video</string>
     <string name="pref_category_system">System</string>
     <string name="pref_category_privacy">Privacy</string>
+    <string name="pref_category_diagnostic">Diagnostics</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
     <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
@@ -52,6 +53,11 @@
 
     <string name="pref_persistNotification_title">Run in background</string>
     <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
+
+    <string name="pref_logs_title">Diagnostic logs</string>
+    <string name="pref_logs_summary">Open diagnostic log settings</string>
+    <string name="pref_logs_start">Start Logging</string>
+    <string name="pref_logs_stop">Stop logging</string>
 
     <string name="pref_typing_title">Enable typing indicators</string>
     <string name="pref_typing_summary">Send and receive typing indicators showing that a message is being typed.</string>
