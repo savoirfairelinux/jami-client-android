@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "83a4f983_5ccd86fb",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-06-11T21:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c79b3e_2ac30feb",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "028a2cc6_487a1d04",
         "filename": "ring-android/libringclient/src/main/java/net/jami/facades/ConversationFacade.java",
         "patchSetId": 10
@@ -91,6 +115,30 @@
       "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f498cf_c7448eee",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/facades/ConversationFacade.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-06-11T21:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ff9aa2_73808642",
+      "range": {
+        "startLine": 281,
+        "startChar": 14,
+        "endLine": 284,
+        "endChar": 15
+      },
+      "revId": "b93547bbafd9658ef84214dbec775f4e21506223",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
