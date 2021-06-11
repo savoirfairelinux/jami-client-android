@@ -38,7 +38,7 @@ import net.jami.model.Conversation;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public class AvatarFactory {
 

@@ -59,9 +59,10 @@ import net.jami.model.ConfigKey;
 import net.jami.model.Ringtone;
 import net.jami.services.AccountService;
 import cx.ring.utils.AndroidFileUtils;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 import net.jami.utils.Log;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 
 public class RingtoneActivity extends AppCompatActivity {
 
@@ -366,7 +367,7 @@ public class RingtoneActivity extends AppCompatActivity {
                 cr.takePersistableUriPermission(uri, takeFlags);
                 AndroidFileUtils.getCacheFile(this, uri)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(file -> onFileFound(file),
+                        .subscribe(this::onFileFound,
                                 err -> Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show());
             }
         }

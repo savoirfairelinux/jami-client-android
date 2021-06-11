@@ -30,7 +30,8 @@ import net.jami.model.Contact;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.utils.Log;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class BlockListPresenter extends RootPresenter<BlockListView> {
     static private final String TAG = BlockListPresenter.class.getSimpleName();

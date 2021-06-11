@@ -74,7 +74,7 @@ import net.jami.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class DRingService extends Service {
     private static final String TAG = DRingService.class.getSimpleName();

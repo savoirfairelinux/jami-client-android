@@ -32,7 +32,8 @@ import net.jami.model.ConfigKey;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.services.DeviceRuntimeService;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
 {

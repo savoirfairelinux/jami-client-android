@@ -24,8 +24,8 @@ import android.content.Context;
 import cx.ring.application.JamiApplication;
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
 
 @Module
 public class JamiInjectionModule {

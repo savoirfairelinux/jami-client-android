@@ -94,7 +94,6 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class TVCallFragment extends BaseSupportFragment<CallPresenter> implements CallView {
 
@@ -112,7 +111,6 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     // Screen wake lock for incoming call
     private Runnable runnable;
-    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
     private PowerManager.WakeLock mScreenWakeLock;
@@ -264,7 +262,6 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCompositeDisposable.clear();
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }

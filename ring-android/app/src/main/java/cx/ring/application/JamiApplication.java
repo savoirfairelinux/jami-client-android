@@ -72,8 +72,8 @@ import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.service.DRingService;
 import cx.ring.service.JamiJobService;
 import cx.ring.utils.AndroidFileUtils;
-import io.reactivex.Completable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public abstract class JamiApplication extends Application {
     private static final String TAG = JamiApplication.class.getSimpleName();

@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ConversationAdapter.MessageType type;

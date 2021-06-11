@@ -31,8 +31,8 @@ import net.jami.model.Contact;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ContactPickerFragment extends BottomSheetDialogFragment {
 
