@@ -295,6 +295,14 @@ public class AndroidFileUtils {
         // Save a file: path for use with ACTION_VIEW intents
         return File.createTempFile(imageFileName, ".webm", getTempShareDir(context));
     }
+    public static File createLogFile(@NonNull Context context) throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String imageFileName = "log_" + timeStamp + "_";
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(imageFileName, ".log", getTempShareDir(context));
+    }
 
     /**
      * Copies a file from a uri whether locally on a remote location to the local cache
