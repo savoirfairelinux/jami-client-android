@@ -52,13 +52,13 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class ConversationFacade {
 
@@ -370,7 +370,7 @@ public class ConversationFacade {
     private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
         return Observable.merge(account.getConversationSubject()
                         .filter(c -> c == conversation)
-                        .startWith(conversation),
+                        .startWithItem(conversation),
                 mContactService
                         .observeContact(conversation.getAccountId(), conversation.getContacts(), hasPresence))
                 .map(e -> new SmartListViewModel(conversation, hasPresence));

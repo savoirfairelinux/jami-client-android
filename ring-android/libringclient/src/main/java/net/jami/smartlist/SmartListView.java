@@ -24,7 +24,7 @@ import java.util.List;
 import net.jami.model.Uri;
 import net.jami.mvp.BaseView;
 
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public interface SmartListView extends BaseView {
 

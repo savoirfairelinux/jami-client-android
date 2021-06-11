@@ -32,9 +32,10 @@ import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.smartlist.SmartListViewModel;
 import net.jami.utils.Log;
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.subjects.BehaviorSubject;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class ContactRequestsPresenter extends RootPresenter<net.jami.contactrequests.ContactRequestsView> {
 

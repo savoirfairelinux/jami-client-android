@@ -19,10 +19,6 @@
  */
 package net.jami.account;
 
-import net.jami.services.AccountService;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.PreferencesService;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,20 +31,24 @@ import net.jami.model.ConfigKey;
 import net.jami.model.Settings;
 import net.jami.mvp.AccountCreationModel;
 import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.PreferencesService;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.Single;
-import io.reactivex.subjects.BehaviorSubject;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class AccountWizardPresenter extends RootPresenter<net.jami.account.AccountWizardView> {
 
     public static final String TAG = AccountWizardPresenter.class.getSimpleName();
 
-    private final net.jami.services.AccountService mAccountService;
-    private final net.jami.services.PreferencesService mPreferences;
-    private final net.jami.services.DeviceRuntimeService mDeviceService;
+    private final AccountService mAccountService;
+    private final PreferencesService mPreferences;
+    private final DeviceRuntimeService mDeviceService;
     private final Scheduler mUiScheduler;
 
     //private boolean mCreationError = false;
@@ -56,7 +56,7 @@ public class AccountWizardPresenter extends RootPresenter<net.jami.account.Accou
     private String mAccountType;
     private AccountCreationModel mAccountCreationModel;
 
-    private Observable<net.jami.model.Account> newAccount;
+    private Observable<Account> newAccount;
 
     @Inject
     public AccountWizardPresenter(AccountService accountService,

@@ -25,7 +25,8 @@ import javax.inject.Named;
 import net.jami.model.Account;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     private final AccountService mAccountService;

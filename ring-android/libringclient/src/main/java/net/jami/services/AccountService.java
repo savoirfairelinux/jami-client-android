@@ -74,15 +74,15 @@ import javax.inject.Named;
 
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.SingleSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.SingleSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 /**
  * This service handles the accounts
@@ -500,7 +500,7 @@ public class AccountService {
         })
                 .flatMap(account -> accountSubject
                         .filter(acc -> acc.getAccountID().equals(account.getAccountID()))
-                        .startWith(account))
+                        .startWithItem(account))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -1895,7 +1895,7 @@ public class AccountService {
     public Observable<DataTransfer> observeDataTransfer(DataTransfer transfer) {
         return dataTransferSubject
                 .filter(t -> t == transfer)
-                .startWith(transfer);
+                .startWithItem(transfer);
     }
 
     public void setProxyEnabled(boolean enabled) {

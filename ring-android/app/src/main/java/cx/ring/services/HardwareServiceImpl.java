@@ -56,9 +56,10 @@ import cx.ring.utils.BluetoothWrapper;
 import net.jami.services.HardwareService;
 import net.jami.utils.Log;
 import cx.ring.utils.Ringer;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 import net.jami.utils.Tuple;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 

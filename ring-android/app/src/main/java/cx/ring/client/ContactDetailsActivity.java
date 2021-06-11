@@ -71,8 +71,8 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Single;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ContactDetailsActivity extends AppCompatActivity {
     private static final String TAG = ContactDetailsActivity.class.getName();

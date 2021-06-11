@@ -29,7 +29,8 @@ import net.jami.mvp.GenericView;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.PreferencesService;
 import net.jami.utils.Log;
-import io.reactivex.Scheduler;
+
+import io.reactivex.rxjava3.core.Scheduler;
 
 public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
 

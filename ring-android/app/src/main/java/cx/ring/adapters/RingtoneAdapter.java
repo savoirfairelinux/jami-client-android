@@ -37,24 +37,24 @@ import java.io.IOException;
 import java.util.List;
 
 import cx.ring.R;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.Subject;
+
 import net.jami.model.Ringtone;
 import net.jami.utils.Log;
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
 
 public class RingtoneAdapter extends RecyclerView.Adapter<RingtoneAdapter.RingtoneViewHolder> {
 
     private final String TAG = RingtoneAdapter.class.getSimpleName();
-    private List<Ringtone> ringtoneList;
+    private final List<Ringtone> ringtoneList;
     private int currentlySelectedPosition = 1; // default item
-    private MediaPlayer mp = new MediaPlayer();
-    private Subject<Ringtone> ringtoneSubject = PublishSubject.create();
+    private final MediaPlayer mp = new MediaPlayer();
+    private final Subject<Ringtone> ringtoneSubject = PublishSubject.create();
 
-    class RingtoneViewHolder extends RecyclerView.ViewHolder {
-        private TextView name;
-        private ImageView isSelected, isPlaying, ringtoneIcon;
-
+    static class RingtoneViewHolder extends RecyclerView.ViewHolder {
+        private final TextView name;
+        private final ImageView isSelected, isPlaying, ringtoneIcon;
 
         RingtoneViewHolder(View view) {
             super(view);

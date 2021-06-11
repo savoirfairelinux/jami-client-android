@@ -33,8 +33,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -56,8 +56,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
@@ -71,6 +69,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import net.jami.conversation.ConversationPresenter;
+import net.jami.conversation.ConversationView;
+import net.jami.daemon.JamiService;
+import net.jami.model.Account;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.Error;
+import net.jami.model.Interaction;
+import net.jami.model.Phone;
+import net.jami.model.Uri;
+import net.jami.services.NotificationService;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -83,39 +96,26 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.views.AvatarFactory;
-import net.jami.conversation.ConversationPresenter;
-import net.jami.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
-
-import net.jami.daemon.JamiService;
-import net.jami.model.Account;
-import net.jami.model.Contact;
-import net.jami.model.Conversation;
-import net.jami.model.Interaction;
-import net.jami.model.DataTransfer;
-import net.jami.model.Phone;
-import net.jami.model.Error;
-import net.jami.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.service.DRingService;
-import cx.ring.services.LocationSharingService;
-import net.jami.services.NotificationService;
+import cx.ring.service.LocationSharingService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.ConversationPath;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Completable;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import cx.ring.views.AvatarFactory;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 

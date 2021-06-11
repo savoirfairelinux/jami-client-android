@@ -45,7 +45,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import net.jami.smartlist.SmartListViewModel;
 
 import cx.ring.viewholders.SmartListViewHolder;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class ContactRequestsFragment extends BaseSupportFragment<ContactRequestsPresenter> implements ContactRequestsView,
         SmartListViewHolder.SmartListListeners {

@@ -71,15 +71,15 @@ import net.jami.services.AccountService;
 import net.jami.services.CallService;
 
 import cx.ring.utils.ConversationPath;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class LocationSharingService extends Service implements LocationListener {
     private static final String TAG = "LocationSharingService";
@@ -103,7 +103,7 @@ public class LocationSharingService extends Service implements LocationListener 
     private boolean started = false;
 
     private LocationManager mLocationManager;
-    private NotificationManager mNoticationManager;
+    private NotificationManager mNotificationManager;
     private SharedPreferences mPreferences;
     private Handler mHandler;
 
@@ -126,10 +126,10 @@ public class LocationSharingService extends Service implements LocationListener 
 
     public Observable<Long> getContactSharingExpiration(ConversationPath path) {
         return Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .startWith(0L)
+                .startWithItem(0L)
                 .repeat()
                 .map(i -> contactLocationShare.get(path).getTime() - SystemClock.elapsedRealtime())
-                .onErrorResumeNext((ObservableSource<Long>) Observer::onComplete);
+                .onErrorComplete();
     }
 
     @Override
@@ -137,7 +137,7 @@ public class LocationSharingService extends Service implements LocationListener 
         ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mNoticationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mPreferences = getSharedPreferences(PREFERENCES_LOCATION, Context.MODE_PRIVATE);
         mHandler = new Handler(getMainLooper());
         String posLongitude = mPreferences.getString(PREFERENCES_KEY_POS_LONG, null);
@@ -220,7 +220,7 @@ public class LocationSharingService extends Service implements LocationListener 
                         }));
             } else {
                 mDisposableBag.add(getNotification(now)
-                        .subscribe(notification -> mNoticationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
+                        .subscribe(notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
             }
         }
         else if (ACTION_STOP.equals(action)) {
@@ -253,7 +253,7 @@ public class LocationSharingService extends Service implements LocationListener 
                 started = false;
             } else {
                 mDisposableBag.add(getNotification(now)
-                        .subscribe(notification -> mNoticationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
+                        .subscribe(notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
             }
         }
         return START_NOT_STICKY;
@@ -382,7 +382,7 @@ public class LocationSharingService extends Service implements LocationListener 
             started = false;
         } else if (changed) {
             mDisposableBag.add(getNotification(now.getTime())
-                    .subscribe(notification -> mNoticationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
+                    .subscribe(notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
         }
     }
 
@@ -391,7 +391,7 @@ public class LocationSharingService extends Service implements LocationListener 
             return;
         long now = SystemClock.uptimeMillis();
         mDisposableBag.add(getNotification(now)
-                .subscribe(notification -> mNoticationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
+                .subscribe(notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification)));
         mHandler.postAtTime(this::refreshNotificationTimer, now + (30 * 1000));
     }
 
