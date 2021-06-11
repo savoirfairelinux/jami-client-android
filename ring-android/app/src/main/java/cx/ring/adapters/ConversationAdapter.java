@@ -93,8 +93,8 @@ import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.views.ConversationViewHolder;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -144,7 +144,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 .override(mPictureMaxSize)
                 .transform(new RoundedCorners(corner));
         timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .startWith(0L);
+                .startWithItem(0L);
     }
 
     /**
@@ -513,7 +513,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
                 });
                 viewHolder.compositeDisposable.add(Observable.interval(1L, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                        .startWith(0L)
+                        .startWithItem(0L)
                         .subscribe(t -> {
                             int pS = player.getCurrentPosition() / 1000;
                             int dS = player.getDuration() / 1000;

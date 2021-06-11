@@ -119,7 +119,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
     implementation 'com.jsibbold:zoomage:1.2.0'
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.2'

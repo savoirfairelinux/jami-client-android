@@ -25,9 +25,10 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import net.jami.model.Settings;
-import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public abstract class PreferencesService {
 

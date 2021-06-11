@@ -53,7 +53,7 @@ import net.jami.mvp.AccountCreationModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public class TVProfileCreationFragment extends JamiGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {

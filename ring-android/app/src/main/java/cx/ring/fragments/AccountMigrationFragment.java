@@ -45,12 +45,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccountMigrationBinding;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
 import net.jami.model.ConfigKey;
 import net.jami.services.AccountService;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class AccountMigrationFragment extends Fragment {
     public static final String ACCOUNT_ID = "ACCOUNT_ID";

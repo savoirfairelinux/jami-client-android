@@ -28,8 +28,9 @@ import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.model.Uri;
-import io.reactivex.Observable;
-import io.reactivex.Single;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class SmartListViewModel
 {

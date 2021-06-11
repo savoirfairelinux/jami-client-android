@@ -33,7 +33,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class TvConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgTxt;

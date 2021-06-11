@@ -54,8 +54,8 @@ import cx.ring.mvp.BaseActivity;
 import net.jami.mvp.AccountCreationModel;
 import net.jami.utils.VCardUtils;
 import ezvcard.VCard;
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
     static final String TAG = AccountWizardActivity.class.getName();

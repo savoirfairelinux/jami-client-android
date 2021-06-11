@@ -34,8 +34,8 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.tv.account.TVAccountWizard;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class HomeActivity extends FragmentActivity {
     private BackgroundManager mBackgroundManager;

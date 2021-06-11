@@ -33,8 +33,9 @@ import net.jami.services.AccountService;
 import net.jami.services.HardwareService;
 import net.jami.services.VCardService;
 import net.jami.smartlist.SmartListViewModel;
-import io.reactivex.Scheduler;
-import io.reactivex.subjects.PublishSubject;
+
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
 

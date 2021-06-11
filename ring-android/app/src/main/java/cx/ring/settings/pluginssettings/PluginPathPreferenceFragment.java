@@ -43,7 +43,7 @@ import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragPluginsPathPreferenceBinding;
 import cx.ring.utils.AndroidFileUtils;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class PluginPathPreferenceFragment extends Fragment implements PathListAdapter.PathListItemListener {
 

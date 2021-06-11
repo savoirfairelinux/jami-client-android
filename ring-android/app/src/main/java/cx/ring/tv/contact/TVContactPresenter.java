@@ -34,8 +34,9 @@ import net.jami.services.AccountService;
 import net.jami.services.VCardService;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
+import io.reactivex.rxjava3.core.Scheduler;
+
 import net.jami.utils.VCardUtils;
-import io.reactivex.Scheduler;
 
 public class TVContactPresenter extends RootPresenter<TVContactView> {
 

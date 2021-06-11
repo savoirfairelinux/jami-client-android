@@ -21,7 +21,7 @@ package net.jami.mvp;
 
 import java.lang.ref.WeakReference;
 
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public abstract class RootPresenter<T> {
 

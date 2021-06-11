@@ -24,8 +24,8 @@ import java.io.File;
 import net.jami.model.Account;
 import net.jami.utils.Tuple;
 import ezvcard.VCard;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.Single;
 
 public abstract class VCardService {
 
