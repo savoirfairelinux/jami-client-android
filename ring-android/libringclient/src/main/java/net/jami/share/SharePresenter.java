@@ -27,8 +27,8 @@ import javax.inject.Inject;
 import net.jami.mvp.GenericView;
 import net.jami.mvp.RootPresenter;
 
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
     private final net.jami.services.AccountService mAccountService;

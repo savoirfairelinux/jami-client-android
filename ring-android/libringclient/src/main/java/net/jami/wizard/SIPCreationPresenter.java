@@ -40,8 +40,9 @@ import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
-import io.reactivex.Scheduler;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 
 public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
 
@@ -78,7 +79,6 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
      * Attempts to register the account specified by the form. If there are form errors (invalid or missing fields, etc.), the
      * errors are presented and no actual creation attempt is made.
      *
-     * @param alias         Alias account value
      * @param hostname      hostname account value
      * @param username      username account value
      * @param password      password account value
@@ -137,7 +137,7 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
                 .observeOn(mUiScheduler)
                 .subscribeWith(new DisposableObserver<Account>() {
                     @Override
-                    public void onNext(Account account) {
+                    public void onNext(@NonNull Account account) {
                         mAccount = account;
                         switch (account.getRegistrationState()) {
                             case AccountConfig.STATE_REGISTERED:
@@ -162,7 +162,7 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(@NonNull Throwable e) {
                         getView().showRegistrationError();
                         dispose();
                     }

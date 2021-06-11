@@ -40,8 +40,8 @@ import net.jami.share.ShareViewModel;
 import net.jami.utils.Log;
 import net.jami.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class TVShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
 

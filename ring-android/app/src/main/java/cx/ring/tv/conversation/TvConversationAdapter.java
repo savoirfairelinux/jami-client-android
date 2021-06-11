@@ -84,9 +84,9 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationViewHolder> {
     private final static String TAG = TvConversationAdapter.class.getSimpleName();
@@ -134,7 +134,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .startWith(0L);
+                .startWithItem(0L);
     }
 
     /**
@@ -584,7 +584,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                     viewHolder.compositeDisposable.add(Observable.interval(1L, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .startWith(0L)
+                            .startWithItem(0L)
                             .subscribe(t -> {
                                 int pS = player.getCurrentPosition() / 1000;
                                 int dS = player.getDuration() / 1000;

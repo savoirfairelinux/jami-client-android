@@ -56,7 +56,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Single;
+import io.reactivex.rxjava3.core.Single;
 
 public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();

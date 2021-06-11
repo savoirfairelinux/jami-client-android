@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.databinding.ItemConferenceParticipantBinding;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class ParticipantView extends RecyclerView.ViewHolder {
     public final ItemConferenceParticipantBinding binding;

@@ -25,10 +25,10 @@ import net.jami.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Date;
 
-import io.reactivex.Emitter;
-import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Emitter;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class Contact {
     protected static final String TAG = Contact.class.getSimpleName();

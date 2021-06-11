@@ -45,11 +45,11 @@ import net.jami.model.Uri;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import ezvcard.VCard;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class CallService {
 
@@ -93,12 +93,12 @@ public class CallService {
 
         return conferenceSubject
                 .filter(c -> c == conf)
-                .startWith(conf)
+                .startWithItem(conf)
                 .map(Conference::getParticipants)
                 .switchMap(list -> Observable.fromIterable(list)
                         .flatMap(call -> callSubject.filter(c -> c == call)))
                 .map(call -> conf)
-                .startWith(conf);
+                .startWithItem(conf);
     }
 
     public Observable<Conference> getConfUpdates(final String confId) {
@@ -213,7 +213,7 @@ public class CallService {
 
         ConferenceEntity conferenceEntity = new ConferenceEntity(conference);
         return conferenceSubject
-                .startWith(conference)
+                .startWithItem(conference)
                 .filter(conf -> {
                     Log.w(TAG, "getConfUpdates filter " + conf.getConfId() + " " + conf.getParticipants().size() + " (tracked " + conferenceEntity.conference.getConfId() + " " + conferenceEntity.conference.getParticipants().size() + ")");
                     if (conf == conferenceEntity.conference) {
@@ -242,7 +242,7 @@ public class CallService {
     }
     private Observable<Call> getCallUpdates(final Call call) {
         return callSubject.filter(c -> c == call)
-                .startWith(call)
+                .startWithItem(call)
                 .takeWhile(c -> c.getCallStatus() != Call.CallStatus.OVER);
     }
     /*public Observable<SipCall> getCallUpdates(final String callId) {
@@ -457,12 +457,10 @@ public class CallService {
     }
 
     public Completable cancelMessage(final String accountId, final long messageID) {
-        return Completable
-                .fromAction(() -> {
-                    Log.i(TAG, "CancelMessage() running...   Account ID:  " + accountId + " " + "Message ID " + " " + messageID);
-                    JamiService.cancelMessage(accountId, messageID);
-                })
-                .subscribeOn(Schedulers.from(mExecutor));
+        return Completable.fromAction(() -> {
+            Log.i(TAG, "CancelMessage() running...   Account ID:  " + accountId + " " + "Message ID " + " " + messageID);
+            JamiService.cancelMessage(accountId, messageID);
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     private Call getCurrentCallForId(String callId) {
