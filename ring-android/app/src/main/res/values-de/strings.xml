@@ -15,6 +15,7 @@
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
   <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
   <string name="credits">Würdigung</string>
+  <string name="pip_title">Jami-Konferenz</string>
   <string name="call_service_description">Dieser Dienst ist notwendig, um Anrufe im Vordergrund zu halten. Er läuft nur während eines Anrufs.</string>
   <string name="data_transfer_service_description">Dieser Dienst ist notwendig, um permanente Benachrichtigungen während der Dateiübertragung anzuzeigen. Es läuft nur während der Dateiübertragung.</string>
   <!--About dialog-->

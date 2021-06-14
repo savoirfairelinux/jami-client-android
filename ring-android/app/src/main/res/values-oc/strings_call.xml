@@ -23,5 +23,4 @@ along with this program; if not, write to the Free Software
     <!-- SipCalls -->
     <string name="call_human_state_searching">Recèrca</string>
     <string name="call_human_state_connecting">Connexion</string>
-    <!-- Conferences -->
-</resources>
+    </resources>

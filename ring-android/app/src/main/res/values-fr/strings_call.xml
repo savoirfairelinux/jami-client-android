@@ -37,4 +37,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Reprendre</string>
     <string name="call_human_state_over">Terminé</string>
     <!-- Conferences -->
-</resources>
+    <string name="call_moderator">Modérateur</string>
+    </resources>

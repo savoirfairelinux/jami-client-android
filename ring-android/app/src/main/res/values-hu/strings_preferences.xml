@@ -15,9 +15,9 @@
   <string name="pref_hwEncode_title">Hardveres gyorsítás</string>
   <string name="pref_hwEncode_summary">Kísérleti jellemző</string>
   <string name="pref_videoBitrate_title">Videó átviteli sebessége</string>
-  <string name="pref_videoBitrate_summary">Alapértelmezett kimenő videó átviteli sebesség választása (KB/mp)</string>
+  <string name="pref_videoBitrate_summary">Alapértelmezett kimenő videó átviteli sebesség kijelölése (KB/mp)</string>
   <string name="pref_videoResolution_title">Videó felbontás</string>
-  <string name="pref_videoResolution_summary">Alapértelmezett kimenő videó felbontás választása</string>
+  <string name="pref_videoResolution_summary">Alapértelmezett kimenő videofelbontás kijelölése</string>
   <string name="pref_systemContacts_title">Rendszer kapcsolatainak használata</string>
   <string name="pref_systemContacts_summary">A rendszer kapcsolatainak használata a hívó adatainak megjelenítéséhez.</string>
   <string name="pref_systemDialer_title">Jami használata telefonhívásokhoz</string>

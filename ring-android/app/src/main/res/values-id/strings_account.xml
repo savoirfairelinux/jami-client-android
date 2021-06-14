@@ -59,6 +59,9 @@
   <string name="account_stun_server_label">Peladen Stun</string>
   <string name="account_conversation_settings_title">Pengaturan obrolan</string>
   <string name="size_mb">%1$d MB</string>
+  <string name="account_turn_enable_label">Gunakan TURN</string>
+  <string name="account_turn_username_label">Nama pengguna TURN</string>
+  <string name="account_turn_password_label">Kata sandi TURN</string>
   <string name="account_sip_proxy_label">Proksi</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredensial</string>

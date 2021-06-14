@@ -266,4 +266,5 @@
   <!--Wizard-->
   <string name="wizard_password_skip">Crea account</string>
   <string name="wizard_password_switch">Cifra l\'account con password</string>
+  <string name="wizard_profile_info">Il profilo è condiviso solo con i contatti</string>
 </resources>

@@ -23,5 +23,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">Ühendab</string>
     <string name="call_human_state_ringing">Heliseb</string>
     <string name="call_human_state_busy">Kinni</string>
-    <!-- Conferences -->
-</resources>
+    </resources>

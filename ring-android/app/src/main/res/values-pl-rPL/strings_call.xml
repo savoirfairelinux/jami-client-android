@@ -36,5 +36,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Czekanie</string>
     <string name="call_human_state_unhold">Wznów</string>
     <string name="call_human_state_over">Koniec</string>
-    <!-- Conferences -->
-</resources>
+    </resources>
