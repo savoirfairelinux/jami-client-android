@@ -302,8 +302,15 @@ public class CallService {
 
     public void muteParticipant(String confId, String peerId, boolean mute) {
         mExecutor.execute(() -> {
-            Log.i(TAG, "mute() participant... " + peerId);
+            Log.i(TAG, "mute participant... " + peerId);
             JamiService.muteParticipant(confId, peerId, mute);
+        });
+    }
+
+    public void hangupParticipant(String confId, String peerId) {
+        mExecutor.execute(() -> {
+            Log.i(TAG, "hangup participant... " + peerId);
+            JamiService.hangupParticipant(confId, peerId);
         });
     }
 

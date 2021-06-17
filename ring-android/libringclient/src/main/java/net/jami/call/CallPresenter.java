@@ -717,9 +717,10 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupParticipant(Conference.ParticipantInfo info) {
-        //mCallService.
         if (info.call != null)
             mCallService.hangUp(info.call.getDaemonIdString());
+        else
+            mCallService.hangupParticipant(mConference.getId(), info.contact.getPrimaryNumber());
     }
 
     public void muteParticipant(Conference.ParticipantInfo info, boolean mute) {
@@ -727,7 +728,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void openParticipantContact(Conference.ParticipantInfo info) {
-        getView().goToContact(mConference.getFirstCall().getAccount(), info.contact);
+        Call call = info.call == null ? mConference.getFirstCall() : info.call;
+        getView().goToContact(call.getAccount(), info.contact);
     }
 
     public void stopCapture() {
