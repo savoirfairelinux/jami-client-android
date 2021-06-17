@@ -11,22 +11,24 @@
         android:background="@drawable/background_conference_label"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/participant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textColor="@color/white"
+            android:textSize="12sp"
             tools:text="Georges Longname of Chateaubrillant" />
 
         <ImageView
             android:id="@+id/moderator"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_margin="4dp"
             android:contentDescription="@string/call_moderator"
             android:src="@drawable/baseline_moderateur"
@@ -35,8 +37,8 @@
 
         <ImageView
             android:id="@+id/mute"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_margin="4dp"
             android:contentDescription="@string/call_muted"
             android:src="@drawable/baseline_mic_off_24"
