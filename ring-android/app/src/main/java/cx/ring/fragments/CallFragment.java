@@ -1250,7 +1250,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void goToContact(String accountId, Contact contact) {
-        startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contact.getPrimaryNumber()))
+        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.getUri()))
                 .setClass(requireContext(), ContactDetailsActivity.class));
     }
 
