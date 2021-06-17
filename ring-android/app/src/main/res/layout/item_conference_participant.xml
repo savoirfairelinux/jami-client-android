@@ -58,7 +58,9 @@ along with this program; if not, write to the Free Software
         android:contentDescription="@string/contact_picture_description"
         android:tintMode="multiply"
         android:enabled="false"
-        app:maxImageSize="56dp"
+        app:maxImageSize="64dp"
+        app:useCompatPadding="true"
+
         tools:src="@drawable/ic_contact_picture_fallback" />
 
 </LinearLayout>

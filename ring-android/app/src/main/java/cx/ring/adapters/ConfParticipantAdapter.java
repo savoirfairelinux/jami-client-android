@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cx.ring.fragments.CallFragment;
+import cx.ring.views.AvatarDrawable;
 import cx.ring.views.AvatarFactory;
 import cx.ring.databinding.ItemConferenceParticipantBinding;
 
@@ -69,8 +70,15 @@ public class ConfParticipantAdapter extends RecyclerView.Adapter<ParticipantView
 
         if (holder.disposable != null)
             holder.disposable.dispose();
+
+        holder.binding.photo.setImageDrawable(new AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(context));
+        /*;
         holder.disposable = AvatarFactory.getAvatar(context, contact)
-                .subscribe(holder.binding.photo::setImageDrawable);
+                .subscribe(holder.binding.photo::setImageDrawable);*/
         holder.itemView.setOnClickListener(view -> onSelectedCallback.onParticipantSelected(view, info));
     }
 

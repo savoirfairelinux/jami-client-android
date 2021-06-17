@@ -985,6 +985,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void updateConfInfo(List<Conference.ParticipantInfo> participantInfo) {
         Log.w(TAG, "updateConfInfo " + participantInfo);
@@ -1001,6 +1002,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     PercentFrameLayout.LayoutParams params = new PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     params.getPercentLayoutInfo().leftMarginPercent = i.x / (float) mVideoWidth;
                     params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
+                    params.getPercentLayoutInfo().rightMarginPercent = 1.f - (i.x + i.w) / (float) mVideoWidth;
+                    //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
                     label.participantName.setText(displayName);
                     label.moderator.setVisibility(i.isModerator ? View.VISIBLE : View.GONE);
                     label.mute.setVisibility(i.audioMuted ? View.VISIBLE : View.GONE);
@@ -1021,23 +1024,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     boolean maximized = presenter.isMaximized(info);
                     PopupMenu popup = new PopupMenu(view.getContext(), view);
                     popup.inflate(R.menu.conference_participant_actions);
-                    MenuBuilder menu = (MenuBuilder) popup.getMenu();
-                    MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
-                    MenuItem muteItem = menu.findItem(R.id.conv_mute);
-                    if (maximized) {
-                        maxItem.setTitle(R.string.action_call_minimize);
-                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
-                    } else {
-                        maxItem.setTitle(R.string.action_call_maximize);
-                        maxItem.setIcon(R.drawable.baseline_open_in_full_24);
-                    }
-                    if (!info.audioMuted) {
-                        muteItem.setTitle(R.string.action_call_mute);
-                        muteItem.setIcon(R.drawable.baseline_mic_off_24);
-                    } else {
-                        muteItem.setTitle(R.string.action_call_unmute);
-                        muteItem.setIcon(R.drawable.baseline_mic_24);
-                    }
                     popup.setOnMenuItemClickListener(item -> {
                         if (presenter == null)
                             return false;
@@ -1056,7 +1042,25 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         }
                         return true;
                     });
+                    MenuBuilder menu = (MenuBuilder) popup.getMenu();
+                    MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
+                    MenuItem muteItem = menu.findItem(R.id.conv_mute);
+                    if (maximized) {
+                        maxItem.setTitle(R.string.action_call_minimize);
+                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
+                    } else {
+                        maxItem.setTitle(R.string.action_call_maximize);
+                        maxItem.setIcon(R.drawable.baseline_open_in_full_24);
+                    }
+                    if (!info.audioMuted) {
+                        muteItem.setTitle(R.string.action_call_mute);
+                        muteItem.setIcon(R.drawable.baseline_mic_off_24);
+                    } else {
+                        muteItem.setTitle(R.string.action_call_unmute);
+                        muteItem.setIcon(R.drawable.baseline_mic_24);
+                    }
                     MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), menu, view);
+                    menuHelper.setGravity(Gravity.END);
                     menuHelper.setForceShowIcon(true);
                     menuHelper.show();
                 });
@@ -1223,7 +1227,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
         }
-        if(!choosePluginMode) {
+        if (!choosePluginMode) {
 //            binding.pluginPreviewSurface.setTransform(matrix);
 //        }
 //        else {
