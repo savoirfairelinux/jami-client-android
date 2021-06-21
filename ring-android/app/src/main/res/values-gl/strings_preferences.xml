@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vídeo</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidade</string>
+  <string name="pref_category_diagnostic">Diagnósticos</string>
   <string name="pref_mobileData_title">Datos móbiles</string>
   <string name="pref_mobileData_summary">Permitir que Jami acceda a redes 3G/LTE ademáis de a Wi-Fi.</string>
   <string name="pref_pushNotifications_title">Notificacións Push</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Elimina a túa conta deste dispositivo.</string>
   <string name="pref_persistNotification_title">Executar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permitir a execución en segundo plano para recibir mensaxe e chamadas.</string>
+  <string name="pref_logs_title">Rexistros do diagnóstico</string>
+  <string name="pref_logs_summary">Abrir axustes do rexistro dos diagnósticos</string>
+  <string name="pref_logs_start">Comezar a rexistrar</string>
+  <string name="pref_logs_stop">Deter o rexistro</string>
   <string name="pref_typing_title">Activar indicadores de escritura</string>
   <string name="pref_typing_summary">Enviar e recibir indicadores de escritura mostrando que se está a escribir unha mensaxe.</string>
   <string name="pref_read_title">Activar notificación de lectura</string>

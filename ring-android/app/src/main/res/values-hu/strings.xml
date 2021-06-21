@@ -176,6 +176,13 @@
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s tiltva lett.</string>
   <string name="conversation_contact_is_typing">Kapcsolat gépel…</string>
+  <string name="conversation_info_contact_you">Ön</string>
+  <string name="conversation_members">Tagok</string>
+  <string name="conversation_preference_color">Beszélgetés színe</string>
+  <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
+  <string name="conversation_type_contact">Jami-kapcsolat</string>
+  <string name="conversation_type_private">Privát rajcsoport</string>
+  <string name="conversation_type_group">Rajcsoport</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
@@ -245,10 +252,10 @@
   <string name="file_transfer_status_created">Átvitel előkészítése</string>
   <string name="file_transfer_status_unsupported">nem támogatott</string>
   <string name="file_transfer_status_wait_peer_acceptance">várakozó egyenrangú elfogadás</string>
-  <string name="file_transfer_status_wait_host_acceptance">várakozó gazdagép elfogadása</string>
+  <string name="file_transfer_status_wait_host_acceptance">várakozó gazda elfogadása</string>
   <string name="file_transfer_status_ongoing">folyamatban lévő</string>
   <string name="file_transfer_status_finished">befejezett</string>
-  <string name="file_transfer_status_closed_by_host">gazdagép bezárta</string>
+  <string name="file_transfer_status_closed_by_host">gazda bezárta</string>
   <string name="file_transfer_status_closed_by_peer">bezárva a egyenrangúról</string>
   <string name="file_transfer_status_invalid_pathname">érvénytelen elérési útvonala</string>
   <string name="file_transfer_status_unjoinable_peer">egyenrangú nem csatlakoztatható</string>
@@ -257,6 +264,7 @@
   <string name="file_transfer_status_timed_out">időtúllépés</string>
   <string name="file_saved_in">A fájl mentve%s</string>
   <string name="file_saved_successfully">Fájl sikeresen mentve</string>
+  <string name="file_download">Letöltés</string>
   <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>
   <string name="menu_file_open">Fájl megnyitása</string>

@@ -176,6 +176,13 @@
   <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
   <string name="block_contact_completed">%1$s u bllokua.</string>
   <string name="conversation_contact_is_typing">Kontakti po shtyp…</string>
+  <string name="conversation_info_contact_you">Ju</string>
+  <string name="conversation_members">Anëtarë</string>
+  <string name="conversation_preference_color">Ngjyrë bisede</string>
+  <string name="conversation_preference_emoji">Emoji bisede</string>
+  <string name="conversation_type_contact">Kontakt Jami</string>
+  <string name="conversation_type_private">Zgjua privat</string>
+  <string name="conversation_type_group">Zgjua grupi</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
@@ -257,6 +264,7 @@
   <string name="file_transfer_status_timed_out">i mbaroi koha</string>
   <string name="file_saved_in">Kartela u ruajt te %s</string>
   <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
+  <string name="file_download">Shkarkoje</string>
   <string name="no_space_left_on_device">S\’ka më hapësirë në pajisje</string>
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_open">Hap kartelë</string>

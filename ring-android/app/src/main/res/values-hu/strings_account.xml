@@ -9,7 +9,7 @@
   <string name="add_sip_account_title">SIP-fiók hozzáadása</string>
   <string name="ring_account_default_name">Jami-fiók: %1$s</string>
   <string name="prompt_alias">Álnév</string>
-  <string name="prompt_hostname">Kiszolgálónév</string>
+  <string name="prompt_hostname">Állomásnév</string>
   <string name="prompt_username">Felhasználónév</string>
   <string name="prompt_password">Jelszó</string>
   <string name="action_create">Fiók létrehozása</string>
@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Fiók frissítése</string>
   <string name="dialog_wait_update_details">Várjon, amíg a fiókja frissül…</string>
   <string name="dialog_warn_ip2ip_account_title">Létrehoz egy üres SIP-fiókot?</string>
-  <string name="dialog_warn_ip2ip_account_message">Egy üres SIP-fiók készítésére készül, érvényes kiszolgálónév nélkül.
+  <string name="dialog_warn_ip2ip_account_message">Egy üres SIP-fiók készítésére készül, érvényes állomásnév nélkül.
         Csak közvetlen IP-hívásokat tud majd indítani és fogadni.
         A fiókját később is módosíthatja</string>
   <string name="account_type_ip2ip">IP-fiók</string>
@@ -52,7 +52,7 @@
   <string name="account_preferences_basic_tab">Általános</string>
   <string name="account_basic_category">Alapbeállítások</string>
   <string name="account_alias_label">Fióknév</string>
-  <string name="account_hostname_label">Kiszolgálónév</string>
+  <string name="account_hostname_label">Állomásnév</string>
   <string name="account_bootstrap_label">Rendszerindítás</string>
   <string name="account_username_label">Felhasználónév</string>
   <string name="account_password_label">Jelszó</string>

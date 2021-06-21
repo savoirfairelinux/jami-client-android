@@ -176,6 +176,13 @@
   <string name="block_contact_dialog_message">%1$s non poderá contactar contigo ata que o desbloquees.</string>
   <string name="block_contact_completed">%1$s foi bloqueada.</string>
   <string name="conversation_contact_is_typing">O contacto está a escribir...</string>
+  <string name="conversation_info_contact_you">Ti</string>
+  <string name="conversation_members">Membresía</string>
+  <string name="conversation_preference_color">Cor da conversa</string>
+  <string name="conversation_preference_emoji">Emojis da conversa</string>
+  <string name="conversation_type_contact">Contacto Jami</string>
+  <string name="conversation_type_private">Swarm privado</string>
+  <string name="conversation_type_group">Swarm en grupo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Engadir %1$s?</string>
   <string name="prompt_new_password">Novo contrasinal</string>
@@ -257,6 +264,7 @@
   <string name="file_transfer_status_timed_out">caducada</string>
   <string name="file_saved_in">Ficheiro gardado en %s</string>
   <string name="file_saved_successfully">Ficheiro gardado</string>
+  <string name="file_download">Descargar</string>
   <string name="no_space_left_on_device">Non queda espazo no dispositivo</string>
   <string name="title_media_viewer">Visor de multimedia</string>
   <string name="menu_file_open">Abrir ficheiro</string>

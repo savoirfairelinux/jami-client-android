@@ -177,6 +177,13 @@
   <string name="block_contact_dialog_message">%1$s nu te va putea contacta cît timp va fi blocat.</string>
   <string name="block_contact_completed">%1$s a fost blocat.</string>
   <string name="conversation_contact_is_typing">Contactul tău scrie...</string>
+  <string name="conversation_info_contact_you">Tu</string>
+  <string name="conversation_members">Membri</string>
+  <string name="conversation_preference_color">Culoarea conversației</string>
+  <string name="conversation_preference_emoji">Emoji de conversație</string>
+  <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Grup privat</string>
+  <string name="conversation_type_group">Grup</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adaugi %1$s?</string>
   <string name="prompt_new_password">Parolă nouă</string>
@@ -186,7 +193,7 @@
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
   <string name="prompt_hint_username">Nume de utilizator</string>
   <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
-  <string name="help_password_enter">Introdu parola principală a contului tău Jami.</string>
+  <string name="help_password_enter">Introdu parola contului tău principal Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea„ Exportă contul Jami” pentru a obține codul PIN.</string>
   <string name="wizard_next">Înainte</string>
@@ -258,6 +265,7 @@
   <string name="file_transfer_status_timed_out">pauză</string>
   <string name="file_saved_in">Fișier salvat în %s</string>
   <string name="file_saved_successfully">Fișier salvat cu succes</string>
+  <string name="file_download">Descarcă</string>
   <string name="no_space_left_on_device">Spațiu de stocare insuficient</string>
   <string name="title_media_viewer">Vizualizator Media</string>
   <string name="menu_file_open">Deschide fișierul</string>

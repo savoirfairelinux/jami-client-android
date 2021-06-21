@@ -176,6 +176,13 @@
   <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä kunnes poistat hänen estonsa.</string>
   <string name="block_contact_completed">%1$s estettiin.</string>
   <string name="conversation_contact_is_typing">Hän kirjoittaa...</string>
+  <string name="conversation_info_contact_you">Sinä</string>
+  <string name="conversation_members">Jäsenet</string>
+  <string name="conversation_preference_color">Keskustelun väri</string>
+  <string name="conversation_preference_emoji">Keskustelun hymiö</string>
+  <string name="conversation_type_contact">Jami kontakti</string>
+  <string name="conversation_type_private">Yksityinen parvi</string>
+  <string name="conversation_type_group">Ryhmän parvi</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
@@ -257,6 +264,7 @@
   <string name="file_transfer_status_timed_out">aika loppui</string>
   <string name="file_saved_in">Tiedosto tallennettu %s</string>
   <string name="file_saved_successfully">Tiedosto tallennettu onnistuneesti</string>
+  <string name="file_download">Lataa</string>
   <string name="no_space_left_on_device">laitteessa ei ole tilaa jäljellä</string>
   <string name="title_media_viewer">Median katseluohjelma</string>
   <string name="menu_file_open">Avaa tiedosto</string>

@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Confidențialitate</string>
+  <string name="pref_category_diagnostic">Diagnoză</string>
   <string name="pref_mobileData_title">Date mobile</string>
   <string name="pref_mobileData_summary">Permite Jami pe rețelele 3G/LTE în plus față de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificări</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Șterge contul tău de pe acest aparat.</string>
   <string name="pref_persistNotification_title">Folosește în ascuns</string>
   <string name="pref_persistNotification_summary">Permite funcționarea în ascuns pentru a primi apeluri și mesaje.</string>
+  <string name="pref_logs_title">Jurnalul diagnozei</string>
+  <string name="pref_logs_summary">Deschide reglările diagnozei</string>
+  <string name="pref_logs_start">Pornește diagnoza</string>
+  <string name="pref_logs_stop">Oprește diagnoza</string>
   <string name="pref_typing_title">Arată indicatorul de scriere</string>
   <string name="pref_typing_summary">Trimite și primește indicatori de scriere care arată că se scrie un mesaj.</string>
   <string name="pref_read_title">Arată confirmarea de citire</string>

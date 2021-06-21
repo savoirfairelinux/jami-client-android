@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacy</string>
+  <string name="pref_category_diagnostic">Diagnostica</string>
   <string name="pref_mobileData_title">Dati mobili</string>
   <string name="pref_mobileData_summary">Permetti Jami su reti 3G/LTE in aggiunta al Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifiche</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Elimina il tuo account da questo dispositivo</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
+  <string name="pref_logs_title">Registri di diagnostica</string>
+  <string name="pref_logs_summary">Apri le impostazioni di diagnostica</string>
+  <string name="pref_logs_start">Inizia la diagnostica</string>
+  <string name="pref_logs_stop">Ferma la diagnostica</string>
   <string name="pref_typing_title">Abilita gli indicatori di digitazione</string>
   <string name="pref_typing_summary">Invia e ricevi indicatori di digitazione quando si sta scrivendo un messagio.</string>
   <string name="pref_read_title">Abilita conferme di lettura</string>

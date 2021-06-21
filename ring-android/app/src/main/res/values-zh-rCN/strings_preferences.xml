@@ -5,6 +5,7 @@
   <string name="pref_category_video">视频</string>
   <string name="pref_category_system">系统</string>
   <string name="pref_category_privacy">隐私</string>
+  <string name="pref_category_diagnostic">诊断</string>
   <string name="pref_mobileData_title">移动数据</string>
   <string name="pref_mobileData_summary">允许 Jami 使用 3G/LTE 网络作为 Wi-Fi 的补充</string>
   <string name="pref_pushNotifications_title">推送通知</string>
@@ -34,6 +35,8 @@
   <string name="pref_delete_account_summary">将您的账户从本设备删除</string>
   <string name="pref_persistNotification_title">后台运行</string>
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
+  <string name="pref_logs_title">诊断日志</string>
+  <string name="pref_logs_summary">打开诊断日志设置</string>
   <string name="pref_typing_title">启用输入状态显示</string>
   <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
   <string name="pref_read_title">启用已读回执</string>

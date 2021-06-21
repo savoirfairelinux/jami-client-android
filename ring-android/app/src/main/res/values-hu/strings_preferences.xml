@@ -5,6 +5,7 @@
   <string name="pref_category_video">Videó</string>
   <string name="pref_category_system">Rendszer</string>
   <string name="pref_category_privacy">Adatvédelem</string>
+  <string name="pref_category_diagnostic">Diagnosztika</string>
   <string name="pref_mobileData_title">Adathasználat</string>
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Push-értesítések</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Fiók törlése erről az eszközről</string>
   <string name="pref_persistNotification_title">Háttérfolyamat engedélyezése</string>
   <string name="pref_persistNotification_summary">Háttérfolyamat engedélyezése hívások és üzenetek fogadásához.</string>
+  <string name="pref_logs_title">Diagnosztikai naplók</string>
+  <string name="pref_logs_summary">Diagnosztikai naplóbeállítások megnyitása</string>
+  <string name="pref_logs_start">Naplózás indítása</string>
+  <string name="pref_logs_stop">Naplózás leállítása</string>
   <string name="pref_typing_title">Gépelésjelző megjelenítése</string>
   <string name="pref_typing_summary">Küldjön és fogadjon gépelési mutatókat, amelyek azt mutatják, hogy egy üzenetet gépel.</string>
   <string name="pref_read_title">Olvasási visszaigazolások küldése</string>

@@ -175,6 +175,8 @@
   <string name="block_contact_dialog_message">您将不能联系%1$s直到您解除屏蔽。</string>
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
   <string name="conversation_contact_is_typing">联系人正在输入...</string>
+  <string name="conversation_members">成员</string>
+  <string name="conversation_type_contact">Jami 联系人</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密码</string>
@@ -256,6 +258,7 @@
   <string name="file_transfer_status_timed_out">超时</string>
   <string name="file_saved_in">文件已保存到%s</string>
   <string name="file_saved_successfully">文件保存成功</string>
+  <string name="file_download">下载</string>
   <string name="no_space_left_on_device">设备无剩余空间</string>
   <string name="title_media_viewer">媒体播放器</string>
   <string name="menu_file_open">打开文件</string>

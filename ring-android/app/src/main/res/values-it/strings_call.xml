@@ -36,4 +36,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Attesa</string>
     <string name="call_human_state_unhold">Riprendi</string>
     <string name="call_human_state_over">Terminata</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderatore</string>
+    <string name="call_muted">Disattivato</string>
+</resources>

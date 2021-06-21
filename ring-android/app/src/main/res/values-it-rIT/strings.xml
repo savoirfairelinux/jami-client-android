@@ -152,13 +152,13 @@
   <string name="tab_scan"> Scansiona Codice</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Azzerate la cronologia?</string>
-  <string name="clear_history_dialog_message">Questa azione non può essere annullata</string>
+  <string name="clear_history_dialog_message">Questa azione è irreversibile.</string>
   <string name="clear_history_completed">La cronologia è stata cancellata.</string>
   <!--Conversation-->
   <string name="conversation_details">Dettagli contatto</string>
   <string name="conversation_action_delete_this">Cancella questa conversazione</string>
   <string name="conversation_action_delete_this_title">Cancellare questa conversazione?</string>
-  <string name="conversation_action_delete_this_message">Questa operazione non può essere annullata.</string>
+  <string name="conversation_action_delete_this_message">Questa azione è irreversibile.</string>
   <string name="conversation_action_history_clear">Elimina cronologia</string>
   <string name="conversation_action_history_clear_title">Cancellare la cronologia delle conversazioni?</string>
   <string name="conversation_action_history_clear_message">Questo cancellerà definitivamente la cronologia delle conversazioni.</string>
@@ -176,18 +176,25 @@
   <string name="block_contact_dialog_message">%1$s non sara\' in grado di contattare l\'utente fino a sbloccarlo.</string>
   <string name="block_contact_completed">%1$sè bloccato.</string>
   <string name="conversation_contact_is_typing">Il contatto sta scrivendo...</string>
+  <string name="conversation_info_contact_you">Tu</string>
+  <string name="conversation_members">Membri</string>
+  <string name="conversation_preference_color">Colore della conversazione</string>
+  <string name="conversation_preference_emoji">Emoji conversazione</string>
+  <string name="conversation_type_contact">Contatto Jami</string>
+  <string name="conversation_type_private">Gruppo privato</string>
+  <string name="conversation_type_group">Gruppo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s?</string>
   <string name="prompt_new_password">Nuova password</string>
   <string name="prompt_new_password_optional">Nuova password (opzionale)</string>
   <string name="prompt_new_password_repeat">Ripeti nuova password</string>
   <string name="account_create_title">Crea un account Jami</string>
-  <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
+  <string name="prompt_new_username">Inserire il nuovo nome utente</string>
   <string name="prompt_hint_username">Utente</string>
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
-  <string name="help_password_enter">Inserisci la password del tuo account Jami principale.</string>
-  <string name="help_server_enter">Immettere l\'URL del server di gestione.</string>
-  <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"esporta account Jami\" per ottenere un PIN.</string>
+  <string name="help_password_enter">Inserire la password del tuo account principale Jami.</string>
+  <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
+  <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"Esporta account Jami\" per ottenere un PIN.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
@@ -197,7 +204,7 @@
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="profile_name_hint">Inserisci il tuo nome</string>
+  <string name="profile_name_hint">Inserire il tuo nome</string>
   <string name="registered_name">Nome Registrato</string>
   <string name="no_registered_name">Nessun nome registrato</string>
   <string name="identity">Indentità</string>
@@ -257,6 +264,7 @@
   <string name="file_transfer_status_timed_out">in pausa</string>
   <string name="file_saved_in">File salvato in %s</string>
   <string name="file_saved_successfully">File salvato con successo</string>
+  <string name="file_download">Scarica</string>
   <string name="no_space_left_on_device">Nessuno spazio lasciato sul dispositivo</string>
   <string name="title_media_viewer">Visualizzatore di media</string>
   <string name="menu_file_open">Apri file</string>
@@ -296,10 +304,10 @@
   <string name="wizard_username_button">Scegli un nome utente</string>
   <string name="wizard_username_skip">Salta la scelta del nome utente</string>
   <string name="wizard_password_info">Password dell\'account</string>
-  <string name="wizard_password_placeholder">Scegli una password per crittografare la chiave dell\'account su questo dispositivo</string>
+  <string name="wizard_password_placeholder">Scegli una password per cifrare il tuo account su questo dispositivo.</string>
   <string name="wizard_password_button">Scegli password</string>
   <string name="wizard_password_skip">Crea account</string>
-  <string name="wizard_password_switch">Crittografa account con password</string>
+  <string name="wizard_password_switch">Cifrare l\'account con una password</string>
   <string name="wizard_password_warning">Si noti che la password non può essere recuperata</string>
   <string name="wizard_profile_info">Il profilo è condiviso solo con i contatti</string>
   <string name="wizard_profile_button">Salva il profilo</string>

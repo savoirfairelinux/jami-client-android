@@ -104,7 +104,7 @@
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descoperă utilizatori locali</string>
   <string name="account_peer_discovery_enable_label">Activează descoperirea utilizatorilor locali</string>
-  <string name="account_peer_discovery_enable_summary">Conectează-te la alte noduri DHT afișate în rețeaua locală</string>
+  <string name="account_peer_discovery_enable_summary">Conectează-te la alte noduri DHT din rețeaua ta locală.</string>
   <!--Security Details-->
   <string name="account_credentials_label">Date de autentificare</string>
   <string name="account_credentials_edit">Modifică datele de autentificare</string>

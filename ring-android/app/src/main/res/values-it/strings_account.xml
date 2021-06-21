@@ -9,7 +9,7 @@
   <string name="add_sip_account_title">Aggiungi account SIP</string>
   <string name="ring_account_default_name">Account Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Nome Host</string>
+  <string name="prompt_hostname">Nome host</string>
   <string name="prompt_username">Nome utente</string>
   <string name="prompt_password">Password</string>
   <string name="action_create">Crea account</string>
@@ -31,8 +31,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="help_sip">Importare un account SIP esistente</string>
   <string name="create_sip_account">Aggiungi account SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Rimuovere l\'account?</string>
-  <string name="account_delete_dialog_message">Questa azione è irreversibilie.</string>
+  <string name="account_delete_dialog_title">Eliminare l\'account?</string>
+  <string name="account_delete_dialog_message">Questa azione è irreversibile.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Account</string>
@@ -45,7 +45,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>
   <string name="account_alias_label">Nome dell\'account</string>
-  <string name="account_hostname_label">Nome Host</string>
+  <string name="account_hostname_label">Nome host</string>
   <string name="account_bootstrap_label">Innesco</string>
   <string name="account_username_label">Nome utente</string>
   <string name="account_password_label">Password</string>
@@ -72,13 +72,13 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_preferences_advanced_tab">Avanzato</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
   <string name="account_dht_public_in_calls_label">Consenti chiamate in arrivo da utenti sconosciuti</string>
-  <string name="account_registration_exp_label">Registrazione scaduta</string>
+  <string name="account_registration_exp_label">Scadenza registrazione</string>
   <string name="account_local_interface_label">Interfaccia locale</string>
   <string name="account_local_port_label">Porto locale</string>
-  <string name="account_stun_enable_label">Usare STUN</string>
+  <string name="account_stun_enable_label">Utilizza STUN</string>
   <string name="account_stun_server_label">Server STUN</string>
   <string name="account_accept_files">Accetta automaticamente i file in arrivo</string>
-  <string name="account_turn_enable_label">Usa TURN</string>
+  <string name="account_turn_enable_label">Utilizza TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
@@ -91,13 +91,14 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Scopri utenti locali</string>
   <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
+  <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT nella tua rete locale.</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>
   <string name="account_credentials_edit">Modifica credenziali</string>
   <string name="account_credentials_add">Aggiungi credenziali</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicurezza</string>
-  <string name="account_srtp_switch_label">Cifrare i flussi media (SRTP)</string>
+  <string name="account_srtp_switch_label">Cifrare i flussi multimediali (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usare il trasporto TLS</string>
@@ -116,7 +117,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porti audio RTP</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Inserisci la password principale per sbloccare l\'account</string>
+  <string name="account_new_device_password">Inserire la password principale per sbloccare l\'account</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="export_account_wait_title">Aspettare</string>
@@ -128,11 +129,12 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Verifica la connettività.</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_export_end_error_message">Impossibile esportare l\'account. Errore sconosciuto.</string>
-  <string name="account_enter_password">Inserisci la password</string>
+  <string name="account_enter_password">Inserire la password</string>
   <string name="account_share_body">Contattami con \'%1$s\' sulla piattaforma di comunicazione distribuita Jami: %2$s</string>
   <string name="account_share_body_with_username">Contattami con \'%1$s\' o utilizzando il mio nome pubblico \'%2$s\' disponibile sulla piattaforma di comunicazione distribuita Jami: %3$s</string>
   <string name="account_contact_me">Contattami su Jami !</string>
   <string name="update_account">Aggiorna account</string>
+  <string name="account_migration">Il tuo account Jami può essere aggiornato.\nInserisci la tua password.</string>
   <string name="ring_account">Account Jami</string>
   <string name="ring_account_identity">Identità</string>
   <string name="account_migration_title_dialog">Migrazione account</string>
@@ -141,15 +143,19 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_no_network_title">Impossibile connettersi alla rete</string>
   <string name="account_sip_success_title">Account SIP registrato</string>
   <string name="account_link_archive_button">Connetti dal backup</string>
-  <string name="account_link_prompt_pin">Inserisci PIN</string>
+  <string name="account_link_prompt_pin">Inserire il PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
+  <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
+  <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
   <string name="account_connect_button">Connetti</string>
+  <string name="help_credentials_enter">Inserire le credenziali della tua organizzazione</string>
+  <string name="help_connect_password_enter">Inserire la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Nome utente</string>
   <!--Name registration-->
-  <string name="error_username_empty">Inserisci un nome utente</string>
+  <string name="error_username_empty">Inserire un nome utente</string>
   <string name="username_available">Nome utente disponibile !</string>
   <string name="registered_username">Nome utente registrato</string>
   <string name="username_already_taken">Nome utente già utilizzato</string>
@@ -167,8 +173,8 @@ Si potra modificare questo account più tardi.</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifica il tuo profilo</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">Inserisci la password per confermare</string>
-  <string name="enter_password">Inserisci la password</string>
+  <string name="account_revoke_device_hint">Inserire la password per confermare</string>
+  <string name="enter_password">Inserire la password</string>
   <string name="revoke_device_title">Revoca dispositivo</string>
   <string name="revoke_device_wait_title">Aspettare</string>
   <string name="rename_device_title">Rinomina questo dispositivo</string>

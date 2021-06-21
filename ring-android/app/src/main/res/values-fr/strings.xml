@@ -15,6 +15,7 @@
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
+  <string name="pip_title">Conférence Jami</string>
   <string name="call_service_description">Ce service est nécessaire pour que vos appels continuent de fonctionner en arrière-plan. Il ne fonctionne que pendant les appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher les notifications persistantes pendant un transfert de fichier. Il ne fonctionne que pendant le transfert de fichiers.</string>
   <!--About dialog-->
@@ -175,6 +176,13 @@
   <string name="block_contact_dialog_message">%1$s ne pourra pas vous contacter tant que vous ne l\'aurez pas débloqué.</string>
   <string name="block_contact_completed">%1$s a été bloqué.</string>
   <string name="conversation_contact_is_typing">Votre interlocuteur est en train d\'écrire...</string>
+  <string name="conversation_info_contact_you">Vous</string>
+  <string name="conversation_members">Membres</string>
+  <string name="conversation_preference_color">Couleur de la conversation</string>
+  <string name="conversation_preference_emoji">Émoji de conversation</string>
+  <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Swarm privé</string>
+  <string name="conversation_type_group">Swarm</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -256,6 +264,7 @@
   <string name="file_transfer_status_timed_out">délai dépassé</string>
   <string name="file_saved_in">Fichier sauvegardé dans %s</string>
   <string name="file_saved_successfully">Le fichier a été sauvegardé</string>
+  <string name="file_download">Télécharger</string>
   <string name="no_space_left_on_device">Espace de stockage insuffisant sur l\'appareil</string>
   <string name="title_media_viewer">Application de consultation de média</string>
   <string name="menu_file_open">Ouvrir le fichier</string>

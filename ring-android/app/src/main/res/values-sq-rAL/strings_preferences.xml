@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privatësi</string>
+  <string name="pref_category_diagnostic">Diagnostikime</string>
   <string name="pref_mobileData_title">Të dhëna celulare</string>
   <string name="pref_mobileData_summary">Lejoni Jami në rrjete 3G/LTE, si shtesë ndaj atyre Wi-Fi</string>
   <string name="pref_pushNotifications_title">Njoftime push</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Fshini llogarinë tuaj prej kësaj pajisjeje</string>
   <string name="pref_persistNotification_title">Xhiro në prapaskenë</string>
   <string name="pref_persistNotification_summary">Lejoni xhirimin në prapaskenë që të merrni thirrje dhe mesazhe.</string>
+  <string name="pref_logs_title">Regjistra diagnostikimesh</string>
+  <string name="pref_logs_summary">Hapni rregullime regjistrash diagnostikimi</string>
+  <string name="pref_logs_start">Fillo Regjistrim</string>
+  <string name="pref_logs_stop">Ndale regjistrimin</string>
   <string name="pref_typing_title">Aktivizo tregues shtypjeje</string>
   <string name="pref_typing_summary">Dërgoni dhe merrni shenja shtypjeje që tregojnë se po shtypet një mesazh.</string>
   <string name="pref_read_title">Aktivizo dëshmi leximi</string>

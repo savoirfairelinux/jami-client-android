@@ -5,6 +5,7 @@
   <string name="pref_category_video">視訊</string>
   <string name="pref_category_system">系統</string>
   <string name="pref_category_privacy">隱私</string>
+  <string name="pref_category_diagnostic">診斷</string>
   <string name="pref_mobileData_title">行動數據</string>
   <string name="pref_mobileData_summary">除了 Wi-Fi 之外，允許 Jami 在 3G/LTE 網路上使用</string>
   <string name="pref_pushNotifications_title">推播通知</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">從此裝置刪除您的帳號</string>
   <string name="pref_persistNotification_title">在背景執行</string>
   <string name="pref_persistNotification_summary">允許在背景中執行以接收通話與訊息。</string>
+  <string name="pref_logs_title">診斷紀錄檔</string>
+  <string name="pref_logs_summary">開啟診斷紀錄檔設定</string>
+  <string name="pref_logs_start">開始記錄</string>
+  <string name="pref_logs_stop">停止記錄</string>
   <string name="pref_typing_title">啟用輸入指示器</string>
   <string name="pref_typing_summary">傳送與接收輸入指示器，表明正在輸入訊息。</string>
   <string name="pref_read_title">啟用讀取回條</string>

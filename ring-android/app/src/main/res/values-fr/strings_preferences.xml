@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vidéo</string>
   <string name="pref_category_system">Système</string>
   <string name="pref_category_privacy">Confidentialité</string>
+  <string name="pref_category_diagnostic">Diagnostiques</string>
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_mobileData_summary">Autoriser Jami sur les réseaux mobiles en plus du Wi-fi.</string>
   <string name="pref_pushNotifications_title">Notifications poussées</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Supprimer votre compte de cet appareil</string>
   <string name="pref_persistNotification_title">Fonctionne en arrière-plan</string>
   <string name="pref_persistNotification_summary">Permet de fonctionner en arrière-plan pour recevoir des appels ou des messages</string>
+  <string name="pref_logs_title">Journaux de diagnostiques</string>
+  <string name="pref_logs_summary">Ouvrir les paramètres  des journaux de diagnostiques</string>
+  <string name="pref_logs_start">Démarrer la journalisation</string>
+  <string name="pref_logs_stop">Arrêter la journalisation</string>
   <string name="pref_typing_title">Activer les indicateurs de frappe</string>
   <string name="pref_typing_summary">Envoyer et recevoir les indicateurs de frappe montrant qu\'un message est cours de rédaction.</string>
   <string name="pref_read_title">Activer les accusés de réception de messages lus</string>
