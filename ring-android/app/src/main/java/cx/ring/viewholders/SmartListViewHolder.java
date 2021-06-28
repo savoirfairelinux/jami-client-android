@@ -38,6 +38,7 @@ import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
@@ -65,10 +66,10 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
 
         if (binding != null) {
             itemView.setOnClickListener(v -> clickListener.onItemClick(smartListViewModel));
-            compositeDisposable.add(smartListViewModel.getSelected().subscribe(selected -> {
-                Log.w("SmartListViewHolder", "selected " + selected + " " + smartListViewModel.getContactName());
-                binding.itemLayout.setActivated(selected);
-            }));
+            Observable<Boolean> selected = smartListViewModel.getSelected();
+            if (selected != null) {
+                compositeDisposable.add(smartListViewModel.getSelected().subscribe(binding.itemLayout::setActivated));
+            }
             itemView.setOnLongClickListener(v -> {
                 clickListener.onItemLongClick(smartListViewModel);
                 return true;

@@ -344,8 +344,13 @@ public class Conversation extends ConversationHistory {
         if (interaction.getContact() == null) {
             if (mContacts.size() == 1)
                 interaction.setContact(mContacts.get(0));
-            else
-                interaction.setContact(findContact(Uri.fromString(interaction.getAuthor())));
+            else {
+                if (interaction.getAuthor() == null)  {
+                    Log.e(TAG, "Can't set interaction properties: no author for type:" + interaction.getType() + " id:" + interaction.getId() + " status:" + interaction.mStatus);
+                } else {
+                    interaction.setContact(findContact(Uri.fromString(interaction.getAuthor())));
+                }
+            }
         }
     }
 
