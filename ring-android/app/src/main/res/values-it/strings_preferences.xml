@@ -39,9 +39,9 @@
   <string name="pref_logs_summary">Apri le impostazioni di diagnostica</string>
   <string name="pref_logs_start">Inizia la diagnostica</string>
   <string name="pref_logs_stop">Ferma la diagnostica</string>
-  <string name="pref_typing_title">Mostra indicazioni di scrittura</string>
+  <string name="pref_typing_title">Attiva gli indicatori di scrittura</string>
   <string name="pref_typing_summary">Invia e ricevi indicatori di scrittura quando si sta scrivendo un messagio.</string>
-  <string name="pref_read_title">Mostra conferme di lettura</string>
+  <string name="pref_read_title">Mostra conferma di lettura</string>
   <string name="pref_read_summary">Invia e ricevi conferme indicanti che un messaggio è stato visualizzato.</string>
   <string name="pref_block_record_title">Blocca screenshot e registrazione</string>
   <string name="pref_block_record_summary">Blocca l\'acquisizione di screenshot o registrazione video.</string>

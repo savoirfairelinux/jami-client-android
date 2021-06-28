@@ -36,6 +36,7 @@ Si potra modificare questo account più tardi.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Account</string>
+  <string name="normal_devices_titles">Dispositivi collegati</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_wrong_password">Password errata.</string>
@@ -54,7 +55,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_autoanswer_label">Risposta automatica</string>
   <string name="account_rendezvous_label">Modalità Riunione</string>
   <string name="account_rendezvous_summary">In modalità Riunione, le chiamate in arrivo saranno aggiunte a una sala conferenze.</string>
-  <string name="account_upnp_label">Attivare UPnP</string>
+  <string name="account_upnp_label">Attiva UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
@@ -67,7 +68,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_ringtone_summary">Seleziona una suoneria o sceglie tra le tue</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
-  <string name="account_video_enable">Attivare Video</string>
+  <string name="account_video_enable">Attiva Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzato</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
@@ -90,7 +91,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Scopri utenti locali</string>
-  <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
+  <string name="account_peer_discovery_enable_label">Attiva il rilevamento di utenti locali</string>
   <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT nella tua rete locale.</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>
@@ -99,6 +100,7 @@ Si potra modificare questo account più tardi.</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicurezza</string>
   <string name="account_srtp_switch_label">Cifrare i flussi multimediali (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Attiva SDES per il protocollo di scambio chiavi</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usare il trasporto TLS</string>
@@ -151,13 +153,14 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
   <string name="account_connect_button">Connetti</string>
-  <string name="help_credentials_enter">Inserire le credenziali della tua organizzazione</string>
-  <string name="help_connect_password_enter">Inserire la password della tua organizzazione</string>
+  <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
+  <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Nome utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
-  <string name="username_available">Nome utente disponibile !</string>
+  <string name="username_available">Nome utente disponibile!</string>
   <string name="registered_username">Nome utente registrato</string>
+  <string name="register_recommended">Consigliato</string>
   <string name="username_already_taken">Nome utente già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="account_status_connecting">Connessione in corso </string>

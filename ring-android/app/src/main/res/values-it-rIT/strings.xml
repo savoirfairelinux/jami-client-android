@@ -192,7 +192,7 @@
   <string name="prompt_new_username">Inserire il nuovo nome utente</string>
   <string name="prompt_hint_username">Utente</string>
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
-  <string name="help_password_enter">Inserire la password del tuo account principale Jami.</string>
+  <string name="help_password_enter">Inserisci la password del tuo account principale Jami.</string>
   <string name="help_server_enter">Inserire l\'URL del server di gestione.</string>
   <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"Esporta account Jami\" per ottenere un PIN.</string>
   <string name="wizard_next">Prossimo</string>
@@ -204,7 +204,7 @@
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="profile_name_hint">Inserire il tuo nome</string>
+  <string name="profile_name_hint">Inserisci il tuo nome</string>
   <string name="registered_name">Nome Registrato</string>
   <string name="no_registered_name">Nessun nome registrato</string>
   <string name="identity">Indentità</string>
@@ -298,7 +298,7 @@
   <string name="conversation_input_speech_hint">Di\' qualcosa…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Consigliato</string>
-  <string name="wizard_status_optional">Opzionale</string>
+  <string name="wizard_status_optional">Facoltativo</string>
   <string name="wizard_status_required">Necessario</string>
   <string name="wizard_username_info">Scegli un nome utente per il tuo account</string>
   <string name="wizard_username_button">Scegli un nome utente</string>

@@ -119,8 +119,8 @@
   <string name="account_tls_transport_switch_label">Folosește Transportul TLS</string>
   <string name="account_tls_port_label">Port de Recepție TLS</string>
   <string name="account_tls_certificate_list_label">Autoritate de certificare</string>
-  <string name="account_tls_certificate_file_label">Certificat</string>
-  <string name="account_tls_private_key_file_label">Cheie Privată</string>
+  <string name="account_tls_certificate_file_label">Fișierul certificatului</string>
+  <string name="account_tls_private_key_file_label">Fișierul cheii private</string>
   <string name="account_tls_password_label">Parola Cheii Private</string>
   <string name="account_tls_method_label">Metoda TLS</string>
   <string name="account_tls_ciphers_label">Cifrare TLS</string>

@@ -51,7 +51,7 @@
   <string name="notification_secret">Segreto \n(non mostrare le notifiche nella schermata di blocco)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Plugin</string>
-  <string name="pref_plugins_summary">Abilita i plugin e imposta i loro parametri</string>
+  <string name="pref_plugins_summary">Attiva i plugin e imposta i loro parametri</string>
   <string name="fab_plugins_add">Aggiungi un nuovo plugin</string>
   <string name="plugin_uninstall_title">Disinstallare il plugin?</string>
   <string name="plugin_reset_preferences">Ripristina le preferenze del plugin</string>

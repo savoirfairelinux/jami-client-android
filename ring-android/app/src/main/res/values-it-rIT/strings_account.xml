@@ -35,7 +35,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_delete_dialog_message">Questa azione è irreversibile.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
-  <string name="normal_accounts_titles">Accounts</string>
+  <string name="normal_accounts_titles">Account</string>
   <string name="normal_devices_titles">Dispositivi collegati</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
@@ -56,9 +56,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_bootstrap_label">Avvio</string>
   <string name="account_username_label">Nome utente</string>
   <string name="account_password_label">Password</string>
-  <string name="account_optionnal_category">Impostazioni aggiuntive</string>
+  <string name="account_optionnal_category">Impostazioni facoltative</string>
   <string name="account_useragent_label">User Agent</string>
-  <string name="account_autoanswer_label">Risposta automatica</string>
+  <string name="account_autoanswer_label">Risposta automatica alle chiamate</string>
   <string name="account_rendezvous_label">Modalità Riunione</string>
   <string name="account_rendezvous_summary">In modalità Riunione, le chiamate in arrivo saranno aggiunte a una sala conferenze.</string>
   <string name="account_upnp_label">Attiva UPnP</string>
@@ -120,7 +120,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_tls_port_label">Porta ricezione TLS</string>
   <string name="account_tls_certificate_list_label">Autorità di Certificazione</string>
   <string name="account_tls_certificate_file_label">File del Certificato</string>
-  <string name="account_tls_private_key_file_label">File della Chiave Privata</string>
+  <string name="account_tls_private_key_file_label">File della chiave privata</string>
   <string name="account_tls_password_label">Password della Chiave Privata</string>
   <string name="account_tls_method_label">Metodo TLS</string>
   <string name="account_tls_ciphers_label">Cifratura TLS</string>
@@ -186,8 +186,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_connect_server_button">Connessione al server di gestione</string>
   <string name="account_connect_button">Connetti</string>
   <string name="prompt_server">URL del server di gestione Jami</string>
-  <string name="help_credentials_enter">Inserire le credenziali della tua organizzazione</string>
-  <string name="help_connect_password_enter">Inserire la password della tua organizzazione</string>
+  <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
+  <string name="help_connect_password_enter">Inserisci la password della tua organizzazione</string>
   <string name="account_connect_prompt_username">Utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
