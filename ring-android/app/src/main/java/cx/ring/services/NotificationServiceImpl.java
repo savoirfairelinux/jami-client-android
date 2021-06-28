@@ -744,7 +744,7 @@ public class NotificationServiceImpl implements NotificationService {
             return;
         }
         InteractionStatus event = info.getStatus();
-        if (event == null) {
+        if (event == null || event == InteractionStatus.FILE_AVAILABLE) {
             return;
         }
         android.net.Uri path = ConversationPath.toUri(conversation);

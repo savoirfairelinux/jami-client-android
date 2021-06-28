@@ -66,9 +66,9 @@ public class Interaction {
     String mExtraFlag = new JsonObject().toString();
 
     // Swarm
-    private String mConversationId;
-    private String mMessageId;
-    private List<String> mParentIds;
+    private String mConversationId = null;
+    private String mMessageId = null;
+    private List<String> mParentIds = null;
 
     /* Needed by ORMLite */
     public Interaction() {
