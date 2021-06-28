@@ -1553,6 +1553,7 @@ public class AccountService {
         }
         interaction.setContact(contact);
         interaction.setSwarmInfo(conversation.getUri().getRawRingId(), id, parents);
+        interaction.setConversation(conversation);
         if (conversation.addSwarmElement(interaction)) {
             if (conversation.isVisible())
                 mHistoryService.setMessageRead(account.getAccountID(), conversation.getUri(), interaction.getMessageId());
@@ -1670,6 +1671,8 @@ public class AccountService {
             boolean isIncoming = !interaction.getContact().isUser();
             if (isIncoming) {
                 incomingSwarmMessageSubject.onNext(interaction);
+                if (interaction instanceof DataTransfer)
+                    dataTransferSubject.onNext((DataTransfer)interaction);
             }
         }
     }
