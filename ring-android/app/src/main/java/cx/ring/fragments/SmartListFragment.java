@@ -465,7 +465,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(requireContext(), CallActivity.class)
                 .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-                .putExtra(CallFragment.KEY_AUDIO_ONLY, false)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, true)
                 .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
