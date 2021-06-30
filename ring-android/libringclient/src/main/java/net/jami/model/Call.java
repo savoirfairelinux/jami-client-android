@@ -27,6 +27,7 @@ import net.jami.utils.ProfileChunk;
 import net.jami.utils.StringUtils;
 import net.jami.utils.VCardUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -69,10 +70,11 @@ public class Call extends Interaction {
     private String mVideoCodec;
     private String mContactNumber;
     private String mConfId;
+    private ArrayList<Map<String, String>> mMediaList;
 
     private ProfileChunk mProfileChunk = null;
 
-    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction) {
+    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction, ArrayList<Map<String, String>> mediaList) {
         mIdDaemon = daemonId;
         try {
             mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
@@ -87,6 +89,7 @@ public class Call extends Interaction {
         mType = InteractionType.CALL.toString();
         mContact = contact;
         mIsRead = 1;
+        mMediaList = mediaList;
     }
 
     public Call(Interaction interaction) {
@@ -287,6 +290,28 @@ public class Call extends Interaction {
             }
         }
         return null;
+    }
+
+    public void setMediaList(ArrayList<Map<String, String>> mMediaList) {
+        this.mMediaList = mMediaList;
+    }
+
+    public boolean hasAudioMedia() {
+        return hasMedia("MEDIA_TYPE_AUDIO");
+    }
+
+    public boolean hasVideoMedia() {
+        return hasMedia("MEDIA_TYPE_VIDEO");
+    }
+
+    private boolean hasMedia(String mediaKey) {
+        if (mMediaList == null) return false;
+        for (Map<String, String> media : mMediaList) {
+            if (media.containsKey("MEDIA_TYPE") && media.get("MEDIA_TYPE").equals(mediaKey)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public enum CallStatus {
