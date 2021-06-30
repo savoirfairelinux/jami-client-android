@@ -122,7 +122,6 @@ import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
 import cx.ring.utils.ActionHelper;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
@@ -138,7 +137,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public static final String KEY_ACTION = "action";
     public static final String KEY_CONF_ID = "confId";
-    public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
+    public static final String KEY_HAS_VIDEO = "HAS_VIDEO";
 
     private static final int REQUEST_CODE_ADD_PARTICIPANT = 6;
     private static final int REQUEST_PERMISSION_INCOMING = 1003;
@@ -188,22 +187,23 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable ConversationPath path, @Nullable String contactId, boolean audioOnly) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable ConversationPath path, @Nullable String contactId, boolean hasVideo) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         if (path != null)
             path.toBundle(bundle);
         bundle.putString(Intent.EXTRA_PHONE_NUMBER, contactId);
-        bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
+        bundle.putBoolean(KEY_HAS_VIDEO, hasVideo);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
     }
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable String confId) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable String confId, boolean hasVideo) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_CONF_ID, confId);
+        bundle.putBoolean(KEY_HAS_VIDEO, hasVideo);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
@@ -241,6 +241,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     protected void initPresenter(CallPresenter presenter) {
         Bundle args = getArguments();
         if (args != null) {
+            presenter.setHasVideo(args.getBoolean(KEY_HAS_VIDEO));
             String action = args.getString(KEY_ACTION);
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
@@ -301,7 +302,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void onStart() {
         super.onStart();
         if (restartVideo && restartPreview) {
-            displayVideoSurface(true, !presenter.isPipMode());
+            displayVideoSurface(true, !presenter.isPipMode() && presenter.hasVideo());
             restartVideo = false;
             restartPreview = false;
         } else if (restartVideo) {
@@ -1118,6 +1119,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callAcceptAudioBtn.setVisibility(View.GONE);
         binding.callRefuseBtn.setVisibility(View.GONE);
         binding.callControlGroup.setVisibility(View.VISIBLE);
         binding.callHangupBtn.setVisibility(View.VISIBLE);
@@ -1133,10 +1135,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void initIncomingCallDisplay() {
+    public void initIncomingCallDisplay(boolean hasVideo) {
         Log.w(TAG, "initIncomingCallDisplay");
 
-        binding.callAcceptBtn.setVisibility(View.VISIBLE);
+        binding.callAcceptBtn.setVisibility(hasVideo ? View.VISIBLE : View.GONE);
+        binding.callAcceptAudioBtn.setVisibility(View.VISIBLE);
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
         binding.callControlGroup.setVisibility(View.GONE);
         binding.callHangupBtn.setVisibility(View.GONE);
@@ -1150,6 +1153,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         Log.w(TAG, "initOutGoingCallDisplay");
 
         binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callAcceptAudioBtn.setVisibility(View.GONE);
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
         binding.callControlGroup.setVisibility(View.GONE);
         binding.callHangupBtn.setVisibility(View.GONE);
@@ -1268,18 +1272,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void prepareCall(boolean isIncoming) {
         boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
-        boolean audioOnly;
-        int permissionType;
+        boolean hasVideo = presenter.hasVideo();
+        int permissionType = isIncoming ? REQUEST_PERMISSION_INCOMING : REQUEST_PERMISSION_OUTGOING;
 
-        if (isIncoming) {
-            audioOnly = presenter.isAudioOnly();
-            permissionType = REQUEST_PERMISSION_INCOMING;
-        } else {
-            Bundle args = getArguments();
-            audioOnly = args != null && args.getBoolean(KEY_AUDIO_ONLY);
-            permissionType = REQUEST_PERMISSION_OUTGOING;
-        }
-        if (!audioOnly) {
+        binding.previewContainer.setVisibility(hasVideo ? View.VISIBLE : View.GONE);
+        if (hasVideo) {
             boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
             if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1309,18 +1306,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * @param isIncoming true if call is incoming, false for outgoing
      */
     private void initializeCall(boolean isIncoming) {
+        Bundle args = getArguments();
+        if (args == null) {
+            Log.d(TAG, "initializeCall: not able to retrieve arguments");
+            return;
+        }
+        boolean hasVideo = args.getBoolean(KEY_HAS_VIDEO);
         if (isIncoming) {
-            presenter.acceptCall();
+            presenter.acceptCall(hasVideo);
         } else {
-            Bundle args;
-            args = getArguments();
-            if (args != null) {
                 ConversationPath conversation = ConversationPath.fromBundle(args);
                 presenter.initOutGoing(conversation.getAccountId(),
                         conversation.getConversationUri(),
                         args.getString(Intent.EXTRA_PHONE_NUMBER),
-                        args.getBoolean(KEY_AUDIO_ONLY));
-            }
+                        !hasVideo);
         }
     }
 
@@ -1375,6 +1374,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public void refuseClicked() {
         presenter.refuseCall();
+    }
+
+    public void acceptAudioClicked() {
+        prepareCall(true);
     }
 
     public void acceptClicked() {
@@ -1538,7 +1541,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         //change preview image
-        displayVideoSurface(true,true);
+        displayVideoSurface(true, presenter.hasVideo());
     }
 
     /**

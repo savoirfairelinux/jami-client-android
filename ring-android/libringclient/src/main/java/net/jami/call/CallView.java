@@ -55,7 +55,7 @@ public interface CallView {
 
     void initNormalStateDisplay(boolean audioOnly, boolean muted);
 
-    void initIncomingCallDisplay();
+    void initIncomingCallDisplay(boolean hasVideo);
 
     void initOutGoingCallDisplay();
 
