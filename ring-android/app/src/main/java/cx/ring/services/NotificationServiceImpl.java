@@ -52,6 +52,24 @@ import androidx.core.util.Pair;
 
 import com.bumptech.glide.Glide;
 
+import net.jami.model.Account;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.TextMessage;
+import net.jami.model.Uri;
+import net.jami.services.AccountService;
+import net.jami.services.ContactService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HistoryService;
+import net.jami.services.NotificationService;
+import net.jami.services.PreferencesService;
+import net.jami.utils.Tuple;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -67,18 +85,8 @@ import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.views.AvatarFactory;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.Account;
-import net.jami.model.Contact;
-import net.jami.model.Conference;
-import net.jami.model.Conversation;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.DataTransfer;
-import net.jami.model.Call;
-import net.jami.model.TextMessage;
-import net.jami.model.Uri;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.settings.SettingsFragment;
@@ -86,14 +94,7 @@ import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.ResourceMapper;
-
-import net.jami.services.AccountService;
-import net.jami.services.ContactService;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.HistoryService;
-import net.jami.services.NotificationService;
-import net.jami.services.PreferencesService;
-import net.jami.utils.Tuple;
+import cx.ring.views.AvatarFactory;
 
 public class NotificationServiceImpl implements NotificationService {
 
@@ -291,15 +292,41 @@ public class NotificationServiceImpl implements NotificationService {
                                         new Intent(DRingService.ACTION_CALL_REFUSE)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
-                                        PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
-                                        mContext.getText(R.string.action_call_accept) : mContext.getText(R.string.action_call_end_accept),
+                                        PendingIntent.FLAG_ONE_SHOT));
+                if (conference.hasAudioMedia() || conference.hasVideoMedia()) {
+                    if (conference.hasAudioMedia()) {
+                        messageNotificationBuilder.addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
+                                        mContext.getText(R.string.action_call_accept_audio) : mContext.getText(R.string.action_call_end_accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_END_ID, ongoingCallId)
-                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                                .putExtra(CallFragment.KEY_HAS_VIDEO, false)
+                                        ,
                                         PendingIntent.FLAG_ONE_SHOT));
+                    }
+                    if (conference.hasVideoMedia()) {
+                        messageNotificationBuilder.addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
+                                        mContext.getText(R.string.action_call_accept_video) : mContext.getText(R.string.action_call_end_accept),
+                                PendingIntent.getService(mContext, random.nextInt(),
+                                        new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtra(KEY_END_ID, ongoingCallId)
+                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                                .putExtra(CallFragment.KEY_HAS_VIDEO, true),
+                                        PendingIntent.FLAG_ONE_SHOT));
+                    }
+                } else {
+                        messageNotificationBuilder.addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
+                                    mContext.getText(R.string.action_call_accept) : mContext.getText(R.string.action_call_end_accept),
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(KEY_END_ID, ongoingCallId)
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+                }
                 if (ongoingCallId != null) {
                     messageNotificationBuilder.addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_hold_accept),
                             PendingIntent.getService(mContext, random.nextInt(),

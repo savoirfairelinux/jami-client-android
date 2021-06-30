@@ -264,7 +264,13 @@ public class DaemonService {
 
         @Override
         public void incomingCall(String accountId, String callId, String from) {
-            mCallService.incomingCall(accountId, callId, from);
+            // Should be kept while multi-stream is not enabled for Android by default
+            mCallService.incomingCallWithMedia(accountId, callId, from, null);
+        }
+
+        @Override
+        public void incomingCallWithMedia(String accountId, String callId, String from, VectMap mediaList) {
+            mCallService.incomingCallWithMedia(accountId, callId, from, mediaList);
         }
 
         @Override
