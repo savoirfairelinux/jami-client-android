@@ -1051,7 +1051,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .setClass(requireContext(), CallActivity.class)
                 .putExtras(ConversationPath.toBundle(accountId, conversationUri))
                 .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.getUri())
-                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
+                .putExtra(CallFragment.KEY_HAS_VIDEO, audioOnly);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 

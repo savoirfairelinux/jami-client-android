@@ -430,7 +430,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         binding = null;
     }
 
-    private void goToCallActivity(Conversation conversation, Uri contactUri, boolean audioOnly) {
+    private void goToCallActivity(Conversation conversation, Uri contactUri, boolean hasVideo) {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null
                 && !conf.getParticipants().isEmpty()
@@ -444,7 +444,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtras(ConversationPath.toBundle(conversation))
                     .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.getUri())
-                    .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
+                    .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo);
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }

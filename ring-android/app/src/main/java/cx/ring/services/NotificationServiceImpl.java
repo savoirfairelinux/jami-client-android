@@ -37,6 +37,8 @@ import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -51,6 +53,24 @@ import androidx.core.graphics.drawable.IconCompat;
 import androidx.core.util.Pair;
 
 import com.bumptech.glide.Glide;
+
+import net.jami.model.Account;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.TextMessage;
+import net.jami.model.Uri;
+import net.jami.services.AccountService;
+import net.jami.services.ContactService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HistoryService;
+import net.jami.services.NotificationService;
+import net.jami.services.PreferencesService;
+import net.jami.utils.Tuple;
 
 import java.io.File;
 import java.util.Collection;
@@ -67,18 +87,8 @@ import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.views.AvatarFactory;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.Account;
-import net.jami.model.Contact;
-import net.jami.model.Conference;
-import net.jami.model.Conversation;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.DataTransfer;
-import net.jami.model.Call;
-import net.jami.model.TextMessage;
-import net.jami.model.Uri;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.settings.SettingsFragment;
@@ -86,14 +96,7 @@ import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.ResourceMapper;
-
-import net.jami.services.AccountService;
-import net.jami.services.ContactService;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.HistoryService;
-import net.jami.services.NotificationService;
-import net.jami.services.PreferencesService;
-import net.jami.utils.Tuple;
+import cx.ring.views.AvatarFactory;
 
 public class NotificationServiceImpl implements NotificationService {
 
@@ -277,29 +280,62 @@ public class NotificationServiceImpl implements NotificationService {
                                             .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (conference.isRinging()) {
+            RemoteViews collapsedView = new RemoteViews(mContext.getPackageName(), R.layout.call_notification);
+            collapsedView.setTextViewText(R.id.tvNotificationTitle, mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()));
+            collapsedView.setTextViewText(R.id.tvNotificationContent, mContext.getText(R.string.notif_incoming_call));
+
+            Bitmap contactPicture = getContactPicture(contact);
+            if (contactPicture != null)
+                collapsedView.setImageViewBitmap(R.id.ivAvatar, contactPicture);
+
             if (conference.isIncoming()) {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL);
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                messageNotificationBuilder
                         .setPriority(NotificationCompat.PRIORITY_MAX)
-                        .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
                         .setSound(null)
+                        .setCustomHeadsUpContentView(collapsedView)
                         .setVibrate(null)
-                        .setFullScreenIntent(gotoIntent, true)
-                        .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
-                                PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_CALL_REFUSE)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
-                                        PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
-                                        mContext.getText(R.string.action_call_accept) : mContext.getText(R.string.action_call_end_accept),
-                                PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_END_ID, ongoingCallId)
-                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
-                                        PendingIntent.FLAG_ONE_SHOT));
+                        .setFullScreenIntent(gotoIntent, true);
+                collapsedView.setOnClickPendingIntent(R.id.btnRefuse, PendingIntent.getService(mContext, random.nextInt(),
+                        new Intent(DRingService.ACTION_CALL_REFUSE)
+                                .setClass(mContext, DRingService.class)
+                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                        PendingIntent.FLAG_ONE_SHOT));
+
+                if (conference.hasAudioMedia() || conference.hasVideoMedia()) {
+                    if (conference.hasAudioMedia()) {
+                        collapsedView.setViewVisibility(R.id.btnAcceptAudio, View.VISIBLE);
+                        collapsedView.setTextViewText(R.id.btnAcceptAudio, ongoingCallId == null ? mContext.getText(R.string.action_call_accept_audio) : mContext.getText(R.string.action_call_end_accept));
+                        collapsedView.setOnClickPendingIntent(R.id.btnAcceptAudio, PendingIntent.getService(mContext, random.nextInt(),
+                                new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
+                                        .setClass(mContext, DRingService.class)
+                                        .putExtra(KEY_END_ID, ongoingCallId)
+                                        .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                        .putExtra(CallFragment.KEY_HAS_VIDEO, false)
+                                , PendingIntent.FLAG_ONE_SHOT));
+                    }
+                    if (conference.hasVideoMedia()) {
+                        collapsedView.setViewVisibility(R.id.btnAcceptVideo, View.VISIBLE);
+                        collapsedView.setTextViewText(R.id.btnAcceptVideo, ongoingCallId == null ? mContext.getText(R.string.action_call_accept_video) : mContext.getText(R.string.action_call_end_accept));
+                        collapsedView.setOnClickPendingIntent(R.id.btnAcceptVideo, PendingIntent.getService(mContext, random.nextInt(),
+                                new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
+                                        .setClass(mContext, DRingService.class)
+                                        .putExtra(KEY_END_ID, ongoingCallId)
+                                        .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                        .putExtra(CallFragment.KEY_HAS_VIDEO, true),
+                                PendingIntent.FLAG_ONE_SHOT));
+                    }
+                } else {
+                    messageNotificationBuilder.addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
+                                    mContext.getText(R.string.action_call_accept) : mContext.getText(R.string.action_call_end_accept),
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(KEY_END_ID, ongoingCallId)
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+                }
                 if (ongoingCallId != null) {
                     messageNotificationBuilder.addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_hold_accept),
                             PendingIntent.getService(mContext, random.nextInt(),
@@ -362,12 +398,12 @@ public class NotificationServiceImpl implements NotificationService {
                 .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, 0))
                 .setAutoCancel(false)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
-        notificationManager.notify(Objects.hash( "Location", path), messageNotificationBuilder.build());
+        notificationManager.notify(Objects.hash("Location", path), messageNotificationBuilder.build());
     }
 
     @Override
     public void cancelLocationNotification(Account first, Contact contact) {
-        notificationManager.cancel(Objects.hash( "Location", ConversationPath.toUri(first.getAccountID(), contact.getUri())));
+        notificationManager.cancel(Objects.hash("Location", ConversationPath.toUri(first.getAccountID(), contact.getUri())));
     }
 
     /**
@@ -378,14 +414,14 @@ public class NotificationServiceImpl implements NotificationService {
      */
     @Override
     public void updateNotification(Object notification, int notificationId) {
-        if(notification != null)
+        if (notification != null)
             notificationManager.notify(notificationId, (Notification) notification);
     }
 
     /**
      * Starts a service (data transfer or call)
      *
-     * @param id            the notification id
+     * @param id the notification id
      */
     private void startForegroundService(int id, Class serviceClass) {
         ContextCompat.startForegroundService(mContext, new Intent(mContext, serviceClass)
@@ -458,9 +494,9 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Handles the creation and destruction of services associated with transfers as well as displaying notifications.
      *
-     * @param transfer the data transfer object
-     * @param conversation  the contact to whom the data transfer is being sent
-     * @param remove   true if it should be removed from current calls
+     * @param transfer     the data transfer object
+     * @param conversation the contact to whom the data transfer is being sent
+     * @param remove       true if it should be removed from current calls
      */
     @Override
     public void handleDataTransferNotification(DataTransfer transfer, Conversation conversation, boolean remove) {
@@ -491,7 +527,7 @@ public class NotificationServiceImpl implements NotificationService {
         cancelFileNotification(id, false);
         if (dataTransferNotifications.isEmpty()) {
             mContext.startService(new Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService.class)
-            .putExtra(KEY_NOTIFICATION_ID, id));
+                    .putExtra(KEY_NOTIFICATION_ID, id));
         } else {
             ContextCompat.startForegroundService(mContext, new Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService.class)
                     .putExtra(KEY_NOTIFICATION_ID, id));
@@ -534,7 +570,7 @@ public class NotificationServiceImpl implements NotificationService {
         Pair<Bitmap, String> conversationProfile = getProfile(conversation);
 
         int notificationVisibility = mPreferencesService.getSettings().getNotificationVisibility();
-        switch (notificationVisibility){
+        switch (notificationVisibility) {
             case SettingsFragment.NOTIFICATION_PUBLIC:
                 notificationVisibility = Notification.VISIBILITY_PUBLIC;
                 break;
@@ -929,15 +965,17 @@ public class NotificationServiceImpl implements NotificationService {
         callNotifications.clear();
     }
 
-    /**\
+    /**
+     * \
      * Cancels a notification
-     * @param notificationId the notification ID
+     *
+     * @param notificationId       the notification ID
      * @param isMigratingToService true if the notification is being updated to be a part of the foreground service
      */
     @Override
     public void cancelFileNotification(int notificationId, boolean isMigratingToService) {
         notificationManager.cancel(notificationId);
-        if(!isMigratingToService)
+        if (!isMigratingToService)
             mNotificationBuilders.remove(notificationId);
     }
 
@@ -966,6 +1004,7 @@ public class NotificationServiceImpl implements NotificationService {
             return null;
         }
     }
+
     private Bitmap getContactPicture(Conversation conversation) {
         try {
             return AvatarFactory.getBitmapAvatar(mContext, conversation, avatarSize, false).blockingGet();

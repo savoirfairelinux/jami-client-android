@@ -27,6 +27,7 @@ import net.jami.model.Conference;
 import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.ConversationHistory;
+import net.jami.model.Media;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -70,7 +71,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private final Subject<List<Call>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
 
     private boolean mOnGoingCall = false;
-    private boolean mAudioOnly = true;
+    private boolean hasVideo = false;
     private boolean permissionChanged = false;
     private boolean pipIsActive = false;
     private boolean incomingIsFullIntent = true;
@@ -122,7 +123,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     @Override
     public void unbindView() {
-        if (!mAudioOnly) {
+        if (hasVideo) {
             mHardwareService.endCapture();
         }
         super.unbindView();
@@ -253,7 +254,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         // get the preferences
         boolean displayPluginsButton = getView().displayPluginsButton();
         boolean showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null;
-        boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
+        boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && hasVideo;
         getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall);
     }
 
@@ -302,11 +303,11 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().displayDialPadKeyboard();
     }
 
-    public void acceptCall() {
+    public void acceptCall(boolean hasVideo) {
         if (mConference == null) {
             return;
         }
-        mCallService.accept(mConference.getId());
+        mCallService.accept(mConference.getId(), hasVideo);
     }
 
     public void hangupCall() {
@@ -480,16 +481,15 @@ public class CallPresenter extends RootPresenter<CallView> {
             else
                 JamiService.addMainParticipant(call.getConfId());
         }
-        mAudioOnly = !call.hasVideo();
         CallView view = getView();
         if (view == null)
             return;
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
+            view.initNormalStateDisplay(!call.hasVideoMedia(), isMicrophoneMuted());
             view.updateMenu();
-            if (!mAudioOnly) {
+            if (call.hasVideoMedia()) {
                 mHardwareService.setPreviewSettings();
                 mHardwareService.updatePreviewVideoSurface(call);
                 videoSurfaceUpdateId(call.getId());
@@ -506,13 +506,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         } else if (call.isRinging()) {
             Call scall = call.getCall();
 
-            view.handleCallWakelock(mAudioOnly);
+            view.handleCallWakelock(!call.hasVideo());
             if (scall.isIncoming()) {
                 if (mAccountService.getAccount(scall.getAccount()).isAutoanswerEnabled()) {
                     mCallService.accept(scall.getDaemonIdString());
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
-                    view.initIncomingCallDisplay();
+                    view.initIncomingCallDisplay(call.hasVideo());
                 }
             } else {
                 mOnGoingCall = false;
@@ -554,9 +554,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
 
         if (event.start) {
-            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo);
         } else if (mConference != null && mConference.getId().equals(event.callId)) {
-            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo);
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
@@ -583,7 +583,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void positiveButtonClicked() {
         if (mConference.isRinging() && mConference.isIncoming()) {
-            acceptCall();
+            acceptCall(true);
         } else {
             hangupCall();
         }
@@ -603,8 +603,12 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
-    public boolean isAudioOnly() {
-        return mAudioOnly;
+    public boolean hasVideo() {
+        return hasVideo;
+    }
+
+    public void setHasVideo(boolean hasVideo) {
+        this.hasVideo = hasVideo;
     }
 
     public void requestPipMode() {
@@ -625,7 +629,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             getView().displayVideoSurface(true, false);
         } else {
             getView().displayPreviewSurface(true);
-            getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && !hasVideo);
         }
     }
 
@@ -678,7 +682,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                         };
 
                         // Place new call, join to conference when answered
-                        Maybe<Call> newCall = mCallService.placeCallObservable(accountId, null, contactUri, mAudioOnly)
+                        Maybe<Call> newCall = mCallService.placeCallObservable(accountId, null, contactUri, !hasVideo)
                                 .doOnEach(pendingObserver)
                                 .filter(Call::isOnGoing)
                                 .firstElement()
