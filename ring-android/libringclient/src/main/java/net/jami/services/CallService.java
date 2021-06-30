@@ -20,6 +20,21 @@
  */
 package net.jami.services;
 
+import net.jami.daemon.Blob;
+import net.jami.daemon.JamiService;
+import net.jami.daemon.StringMap;
+import net.jami.daemon.StringVect;
+import net.jami.daemon.VectMap;
+import net.jami.model.Account;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.Media;
+import net.jami.model.Uri;
+import net.jami.utils.Log;
+import net.jami.utils.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,18 +47,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.jami.daemon.Blob;
-import net.jami.daemon.JamiService;
-import net.jami.daemon.StringMap;
-import net.jami.daemon.StringVect;
-import net.jami.model.Account;
-import net.jami.model.Contact;
-import net.jami.model.Conference;
-import net.jami.model.Conversation;
-import net.jami.model.Call;
-import net.jami.model.Uri;
-import net.jami.utils.Log;
-import net.jami.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -268,7 +271,7 @@ public class CallService {
             if (audioOnly) {
                 JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
-            Call call = addCall(account, callId, number, Call.Direction.OUTGOING);
+            Call call = addCall(account, callId, number, Call.Direction.OUTGOING, new ArrayList<>());
             if (conversationUri != null && conversationUri.isSwarm())
                 call.setSwarmInfo(conversationUri.getRawRingId());
             call.muteVideo(audioOnly);
@@ -286,10 +289,43 @@ public class CallService {
     }
 
     public void accept(final String callId) {
+        accept(callId, true);
+    }
+
+    public void accept(final String callId, boolean hasVideo) {
         mExecutor.execute(() -> {
             Log.i(TAG, "accept() running... " + callId);
+
+            Call call = currentCalls.get(callId);
+            if (call == null) {
+                return;
+            }
+
+            ArrayList<Media> mediaList = call.getMediaList();
+            ArrayList<Media> targetMediaList = new ArrayList<>();
+            for (Media media : mediaList) {
+                if (media.getLabel().startsWith("audio")) {
+                    targetMediaList.add(media);
+                    break;
+                }
+            }
+            if (hasVideo) {
+                for (Media media : mediaList) {
+                    if (media.getLabel().startsWith("video")) {
+                        targetMediaList.add(media);
+                        break;
+                    }
+                }
+            } else {
+                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+            }
+            VectMap vectMapMedia = new VectMap();
+            for (Media media : targetMediaList) {
+                vectMapMedia.add(StringMap.toSwig(media.toMap()));
+            }
             JamiService.muteCapture(false);
             JamiService.accept(callId);
+            JamiService.acceptWithMedia(callId, vectMapMedia);
         });
     }
 
@@ -490,7 +526,7 @@ public class CallService {
         }
     }
 
-    private Call addCall(String accountId, String callId, Uri from, Call.Direction direction) {
+    private Call addCall(String accountId, String callId, Uri from, Call.Direction direction, ArrayList<Media> mediaList) {
         synchronized (currentCalls) {
             Call call = currentCalls.get(callId);
             if (call == null) {
@@ -498,10 +534,11 @@ public class CallService {
                 Contact contact = mContactService.findContact(account, from);
                 Uri conversationUri = contact.getConversationUri().blockingFirst();
                 Conversation conversation = conversationUri.equals(from) ? account.getByUri(from) : account.getSwarm(conversationUri.getRawRingId());
-                call = new Call(callId, from.getUri(), accountId, conversation, contact, direction);
+                call = new Call(callId, from.getUri(), accountId, conversation, contact, direction, mediaList);
                 currentCalls.put(callId, call);
             } else {
                 Log.w(TAG, "Call already existed ! " + callId + " " + from);
+                call.setMediaList(mediaList);
             }
             return call;
         }
@@ -588,10 +625,16 @@ public class CallService {
         }
     }
 
-    void incomingCall(String accountId, String callId, String from) {
-        Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
+    void incomingCallWithMedia(String accountId, String callId, String from, VectMap mediaList) {
+        Log.d(TAG, "incoming call with media: " + accountId + ", " + callId + ", " + from);
 
-        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING);
+        ArrayList<Map<String, String>> nMediaList = mediaList == null ? new ArrayList<>() : mediaList.toNative();
+        ArrayList<Media> medias = new ArrayList<>();
+        for (Map<String, String> mediaMap : nMediaList) {
+            medias.add(new Media(mediaMap));
+        }
+
+        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias);
         callSubject.onNext(call);
         updateConnectionCount();
     }

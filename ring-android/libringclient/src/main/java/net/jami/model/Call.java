@@ -27,6 +27,7 @@ import net.jami.utils.ProfileChunk;
 import net.jami.utils.StringUtils;
 import net.jami.utils.VCardUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -69,10 +70,11 @@ public class Call extends Interaction {
     private String mVideoCodec;
     private String mContactNumber;
     private String mConfId;
+    private ArrayList<Media> mMediaList;
 
     private ProfileChunk mProfileChunk = null;
 
-    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction) {
+    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction, ArrayList<Media> mediaList) {
         mIdDaemon = daemonId;
         try {
             mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
@@ -87,6 +89,7 @@ public class Call extends Interaction {
         mType = InteractionType.CALL.toString();
         mContact = contact;
         mIsRead = 1;
+        mMediaList = mediaList;
     }
 
     public Call(Interaction interaction) {
@@ -287,6 +290,24 @@ public class Call extends Interaction {
             }
         }
         return null;
+    }
+
+    public ArrayList<Media> getMediaList() {
+        return mMediaList;
+    }
+
+    public void setMediaList(ArrayList<Media> mediaList) {
+        this.mMediaList = mediaList;
+    }
+
+    public boolean hasMedia(String label) {
+        if (mMediaList == null) return false;
+        for (Media media : mMediaList) {
+            if (media.getLabel().startsWith(label)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public enum CallStatus {

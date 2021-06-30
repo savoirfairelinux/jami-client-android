@@ -208,6 +208,20 @@ public class Conference {
         return false;
     }
 
+    public boolean hasAudioMedia() {
+        return mParticipants.size() == 1 && mParticipants.get(0).hasMedia("audio");
+    }
+
+    public ArrayList<Media> getMediaList() {
+        if (mParticipants.size() == 1)
+            return mParticipants.get(0).getMediaList();
+        return new ArrayList<>();
+    }
+
+    public boolean hasVideoMedia() {
+        return mParticipants.size() == 1 && mParticipants.get(0).hasMedia("video");
+    }
+
     public long getTimestampStart() {
         long t = Long.MAX_VALUE;
         for (Call call : mParticipants)
