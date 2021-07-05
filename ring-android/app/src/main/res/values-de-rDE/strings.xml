@@ -218,7 +218,6 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="refuse">Ablehnen</string>
   <string name="block">Blockieren</string>
   <string name="contact_request_title">Neue Kontaktanfrage</string>
-  <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">Du hast keine neuen Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in deiner Kontaktliste.\nWillst du diese Kontaktanfrage annehmen oder ablehnen?</string>

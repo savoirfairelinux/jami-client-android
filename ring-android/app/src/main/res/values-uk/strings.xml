@@ -197,7 +197,6 @@
   <string name="refuse">Скидання</string>
   <string name="block">Заблокувати</string>
   <string name="contact_request_title">Новий запит контакту</string>
-  <string name="contact_request_msg">У вас є %1$s запитів контактів</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="message_contact_not_trusted_yet">%s ще не серед ваших контактів.\nВи приймаєте чи відхиляєте цей запит контакту?</string>
   <string name="message_contact_not_trusted">%s немає серед ваших контактів.\nДодати новий контакт?</string>

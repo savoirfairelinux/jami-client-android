@@ -218,7 +218,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="refuse">Recusar</string>
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Nova requisição de contato</string>
-  <string name="contact_request_msg">Você tem %1$s requisição de contato</string>
   <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">Você não tem nenhum pedido de contato</string>
   <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>

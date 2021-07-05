@@ -216,7 +216,6 @@
   <string name="refuse">Afwijzen</string>
   <string name="block">Blokkeren</string>
   <string name="contact_request_title">Nieuw contactverzoek</string>
-  <string name="contact_request_msg">U heeft %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">U heeft geen contactverzoeken</string>
   <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek accepteren of weigeren?</string>

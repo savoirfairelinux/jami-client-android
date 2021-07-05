@@ -84,9 +84,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_local_port_label">Porta locale</string>
   <string name="account_stun_enable_label">Utilizza STUN</string>
   <string name="account_stun_server_label">Server Stun</string>
-  <string name="account_accept_files">Accetta i file in arrivo automaticamente</string>
+  <string name="account_accept_files">Accetta automaticamente i file in arrivo</string>
   <string name="account_conversation_settings_title">Impostazioni di conversazione</string>
-  <string name="account_accept_files_max_size">Dimensione massima del file da accettare automaticamente</string>
+  <string name="account_accept_files_max_size">Dimensione massima del file accettato automaticamente</string>
   <string name="account_accept_files_never">Non accettare mai automaticamente</string>
   <string name="account_accept_files_always">Accetta sempre automaticamente</string>
   <string name="size_mb">%1$d MB</string>

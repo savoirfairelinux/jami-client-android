@@ -217,7 +217,6 @@
   <string name="refuse">Avslå</string>
   <string name="block">Blokker</string>
   <string name="contact_request_title">Ny kontaktforespørsel</string>
-  <string name="contact_request_msg">Du har %1$s kontaktforspørsler</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">Du har ingen kontaktforespørsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>

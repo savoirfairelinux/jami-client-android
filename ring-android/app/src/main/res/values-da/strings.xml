@@ -213,7 +213,6 @@
   <string name="refuse">Afvis</string>
   <string name="block">Blokér</string>
   <string name="contact_request_title">Ny kontakt-anmodning</string>
-  <string name="contact_request_msg">Du har %1$s kontakt-anmodninger</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">Du har ingen kontakt-anmodninger</string>
   <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>

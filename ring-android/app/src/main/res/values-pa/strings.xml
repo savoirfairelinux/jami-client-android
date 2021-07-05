@@ -209,7 +209,6 @@
   <string name="refuse">ਨਾ-ਮਨਜ਼ੂਰ ਕਰੋ</string>
   <string name="block">ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="contact_request_title">ਨਵੀਂ ਸੰਪਰਕ ਬੇਨਤੀ</string>
-  <string name="contact_request_msg">ਤੁਹਾਡੇ ਕੋਲ %1$s ਸੰਪਰਕ ਬੇਨਤੀਆਂ ਹਨ</string>
   <string name="contact_request_account">%1$s ਲਈ</string>
   <string name="no_requests">ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਸੰਪਰਕ ਬੇਨਤੀ ਨਹੀਂ ਹੈ</string>
   <string name="message_contact_not_trusted_yet">%s ਫਿਲਹਾਲ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਵਿੱਚ ਨਹੀਂ ਹਨ।\nਕੀ ਤੁਸੀਂ ਇਹ ਸੰਪਰਕ ਬੇਨਤੀ ਮਨਜ਼ੂਰ ਜਾਂ ਨਾ-ਮਨਜ਼ੂਰ ਕਰਨੀ ਹੈ?</string>

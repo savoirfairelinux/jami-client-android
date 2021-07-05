@@ -14,7 +14,7 @@
   <string name="prompt_password">Password</string>
   <string name="action_create">Crea account</string>
   <string name="action_create_short">Crea</string>
-  <string name="action_register">Registra</string>
+  <string name="action_register">Registrati</string>
   <string name="action_settings">Impostazioni</string>
   <string name="error_field_required">Questo campo è richiesto</string>
   <string name="dialog_wait_create">Aggiunta account </string>
@@ -79,6 +79,9 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_stun_enable_label">Utilizza STUN</string>
   <string name="account_stun_server_label">Server STUN</string>
   <string name="account_accept_files">Accetta automaticamente i file in arrivo</string>
+  <string name="account_accept_files_max_size">Dimensione massima del file accettato automaticamente</string>
+  <string name="account_accept_files_never">Non accettare mai automaticamente</string>
+  <string name="account_accept_files_always">Accetta sempre automaticamente</string>
   <string name="account_turn_enable_label">Utilizza TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
@@ -147,6 +150,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_archive_button">Connetti dal backup</string>
   <string name="account_link_prompt_pin">Inserire il PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
+  <string name="account_link_export_button">Collega un nuovo dispositivo</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>

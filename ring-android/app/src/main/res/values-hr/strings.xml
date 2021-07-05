@@ -155,7 +155,6 @@
   <string name="refuse">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="contact_request_title">Zahtjev za novi kontakt</string>
-  <string name="contact_request_msg">Imate %1$s zahtjeva za kontakt</string>
   <string name="contact_request_account">Za %1$s</string>
   <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima.\Prihvaćate li ili odbijate zahtjev ovog kontakta?</string>
   <!--Send contact requests-->

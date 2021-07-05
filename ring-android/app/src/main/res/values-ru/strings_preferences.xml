@@ -5,6 +5,7 @@
   <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Конфиденциальность</string>
+  <string name="pref_category_diagnostic">Диагностика</string>
   <string name="pref_mobileData_title">Мобильные данные</string>
   <string name="pref_mobileData_summary">Разрешить Jami использовать 3G/LTE сети в дополнение к Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-уведомления</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Удалить ваш аккаунт с этого устройства</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
+  <string name="pref_logs_title">Диагностические логи</string>
+  <string name="pref_logs_summary">Открыть настройки диагностических логов</string>
+  <string name="pref_logs_start">Начать логирование</string>
+  <string name="pref_logs_stop">Остановить логирование</string>
   <string name="pref_typing_title">Включить оповещения о наборе текста</string>
   <string name="pref_typing_summary">Оповещения о наборе текста показывают что пользователь набирает сообщение</string>
   <string name="pref_read_title">Включить подтверждения прочтения</string>

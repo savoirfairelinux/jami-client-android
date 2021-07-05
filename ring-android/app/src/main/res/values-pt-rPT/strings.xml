@@ -199,7 +199,6 @@
   <string name="refuse">Recusar</string>
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Novo pedido de contacto</string>
-  <string name="contact_request_msg">Tem %1$s pedidos de contacto</string>
   <string name="contact_request_account">Para %1$s</string>
   <string name="message_contact_not_trusted_yet">%s ainda não está nos seus contactos.\nAceita ou recusa este pedido de contacto?</string>
   <string name="message_contact_not_trusted">%s não está nos seus contactos.\nAdicionar o novo contacto?</string>

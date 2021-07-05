@@ -218,7 +218,6 @@
   <string name="refuse">Verweigern</string>
   <string name="block">Sperren</string>
   <string name="contact_request_title">Neue Kontaktanfrage</string>
-  <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">Du hast keine Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in deiner Kontaktliste.\nDiese Kontaktanfrage annehmen oder ablehnen?</string>

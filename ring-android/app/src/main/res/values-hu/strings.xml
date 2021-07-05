@@ -225,7 +225,6 @@
   <string name="refuse">Elutasítás</string>
   <string name="block">Letiltás</string>
   <string name="contact_request_title">Új kapcsolatkérelem</string>
-  <string name="contact_request_msg">%1$s kapcsolatkérelme van</string>
   <string name="contact_request_account">Ehhez: %1$s</string>
   <string name="no_requests">Nincs kapcsolatfelvételi kérelem</string>
   <string name="message_contact_not_trusted_yet">%s még nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>

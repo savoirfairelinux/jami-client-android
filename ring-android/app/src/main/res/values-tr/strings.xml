@@ -217,7 +217,6 @@
   <string name="refuse">Geri Çevir</string>
   <string name="block">Engelleme</string>
   <string name="contact_request_title">Yeni letişim isteği</string>
-  <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
   <string name="no_requests">İletişim isteğiniz yok</string>
   <string name="message_contact_not_trusted_yet">%s henüz bağlantınız değil.\nBu bağlantı isteğini kabul etmek ister misiniz? </string>

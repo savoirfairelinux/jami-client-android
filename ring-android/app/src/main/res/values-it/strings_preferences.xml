@@ -52,7 +52,7 @@
   <!--Plugin-->
   <string name="pref_plugins_title">Plugin</string>
   <string name="pref_plugins_summary">Attiva i plugin e imposta i loro parametri</string>
-  <string name="fab_plugins_add">Aggiungi un nuovo plugin</string>
+  <string name="fab_plugins_add">Aggiungi nuovo plugin</string>
   <string name="plugin_uninstall_title">Disinstallare il plugin?</string>
   <string name="plugin_reset_preferences">Ripristina le preferenze del plugin</string>
   <string name="plugin_reset_preferences_summary">Le impostazioni del tuo plugin saranno ripristinate</string>
@@ -62,5 +62,5 @@
   <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Hai la stessa versione di <b>%1$s</b> installata</string>
   <string name="plugin_force_install">forza \n installazione</string>
-  <string name="plugin_path_image_add">Aggiungi una nuova immagine</string>
+  <string name="plugin_path_image_add">Aggiungi nuova immagine</string>
 </resources>

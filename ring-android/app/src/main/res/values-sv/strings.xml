@@ -182,7 +182,6 @@
   <string name="refuse">Neka</string>
   <string name="block">Blockera</string>
   <string name="contact_request_title">Ny kontaktförfrågan</string>
-  <string name="contact_request_msg">Du har %1$s kontaktförfrågningar</string>
   <string name="contact_request_account">För %1$s</string>
   <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <string name="message_contact_not_trusted">%s finns inte i dina kontakter.\nVill du lägga till ny kontakt?</string>

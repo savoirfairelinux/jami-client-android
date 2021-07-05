@@ -15,6 +15,7 @@
   <string name="license">Это программное обеспечение предоставляется «как есть», без каких-либо гарантий. Для получения дополнительной информации смотрите <u>GNU General Public License версии 3 или выше</u></string>
   <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
   <string name="credits">Благодарности</string>
+  <string name="pip_title">Конференция Jami</string>
   <string name="call_service_description">Эта служба необходима для поддержания ваших звонков на переднем плане. Она будет запущена только во время звонков.</string>
   <string name="data_transfer_service_description">Эта служба необходима для отображения постоянных уведомлений во время передачи файлов. Она будет запущена только во время передачи файлов.</string>
   <!--About dialog-->
@@ -119,6 +120,7 @@
   <string name="qr_code">QR-код</string>
   <string name="ab_action_flipcamera">Переключить камеру</string>
   <string name="ab_action_hidepreview">Скрыть предпросмотр</string>
+  <string name="remote_recording">%s запись...</string>
   <!--Text messages-->
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
@@ -176,6 +178,13 @@
   <string name="block_contact_dialog_message">%1$s не сможет связаться с вами, пока вы не разблокируете его.</string>
   <string name="block_contact_completed">%1$s заблокирован.</string>
   <string name="conversation_contact_is_typing">Контакт печатает...</string>
+  <string name="conversation_info_contact_you">Ты</string>
+  <string name="conversation_members">Члены</string>
+  <string name="conversation_preference_color">Цвет беседы</string>
+  <string name="conversation_preference_emoji">Эмоджи беседы</string>
+  <string name="conversation_type_contact">Контакт Jami</string>
+  <string name="conversation_type_private">Частный рой</string>
+  <string name="conversation_type_group">Групповой рой</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -218,7 +227,6 @@
   <string name="refuse">Отклонить</string>
   <string name="block">Заблокировать</string>
   <string name="contact_request_title">Новый запрос на добавление в контакты</string>
-  <string name="contact_request_msg">%1$s запросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">Нет запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%s еще не в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
@@ -257,6 +265,7 @@
   <string name="file_transfer_status_timed_out">время вышло</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
   <string name="file_saved_successfully">Файл успешно сохранён</string>
+  <string name="file_download">Загрузить</string>
   <string name="no_space_left_on_device">На устройстве не осталось свободного места</string>
   <string name="title_media_viewer">Просмотрщик медиа</string>
   <string name="menu_file_open">Открыть файл</string>

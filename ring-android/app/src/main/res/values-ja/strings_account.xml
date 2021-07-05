@@ -140,7 +140,7 @@
   <string name="account_share_body_with_username">Jami分散コミュニケーションプラットフォームで \'%1$s\' または公開ユーザー名 \'%2$s\' を使用してご連絡ください: %3$s</string>
   <string name="account_contact_me">Jamiでご連絡ください。</string>
   <string name="update_account">アカウントの更新</string>
-  <string name="account_migration">Jamiアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
+  <string name="account_migration">Jamiアカウントが更新可能です。\nあなたの暗証語を入力してください。</string>
   <string name="ring_account">Jamiアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
@@ -197,24 +197,24 @@
   <string name="account_status_error">エラー</string>
   <!--Create account-->
   <string name="account_creation_home">Jamiへようこそ</string>
-  <string name="account_creation_profile">プロフィールを作成</string>
+  <string name="account_creation_profile">個人情報を作成する</string>
   <string name="account_creation_ring">Jamiアカウントを作成</string>
-  <string name="account_link_title">このデバイスをリンク</string>
+  <string name="account_link_title">この機器を関連付ける</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">プロフィールを編集</string>
+  <string name="account_edit_profile">個人情報を編集</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">確認のパスワードを入力</string>
-  <string name="enter_password">パスワードを入力してください</string>
-  <string name="revoke_device_title">デバイスを取り消し</string>
-  <string name="revoke_device_message">%1$s を取り消してもよろしいですか？</string>
+  <string name="account_revoke_device_hint">確認の暗証語を入力</string>
+  <string name="enter_password">暗証語を入力してください</string>
+  <string name="revoke_device_title">機器の破棄</string>
+  <string name="revoke_device_message">%1$s を破棄してもよろしいですか？</string>
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
-  <string name="revoke_device_wait_message">デバイスを取り消し中</string>
-  <string name="rename_device_title">このデバイスの名前を変更</string>
+  <string name="revoke_device_wait_message">機器を破棄しています</string>
+  <string name="rename_device_title">この機器の名前を変更</string>
   <string name="rename_device_message">Jamiアカウントでこのデバイスだとわかる名前を設定しましょう</string>
-  <string name="rename_device_button">デバイスの名前を変更</string>
-  <string name="account_rename_device_hint">新しいデバイス名</string>
-  <string name="account_device_name_empty">デバイス名は空にできません</string>
-  <string name="account_device_this_indicator">このデバイス</string>
+  <string name="rename_device_button">機器の名前を変更</string>
+  <string name="account_rename_device_hint">新しい機器名</string>
+  <string name="account_device_name_empty">機器名は空にできません</string>
+  <string name="account_device_this_indicator">この機器</string>
   <string name="account_disabled_indicator">無効</string>
 </resources>

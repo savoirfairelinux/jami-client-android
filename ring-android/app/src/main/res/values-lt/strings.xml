@@ -172,7 +172,6 @@
   <string name="refuse">Atmesti</string>
   <string name="block">Užblokuoti</string>
   <string name="contact_request_title">Nauja adresato užklausa</string>
-  <string name="contact_request_msg">Jūs turite %1$s adresatų užklausų</string>
   <string name="contact_request_account">Skirta %1$s</string>
   <string name="message_contact_not_trusted_yet">%s kol kas nėra jūsų adresatų sąraše.\nJūs priimate ar atmetate šią adresato užklausą?</string>
   <string name="message_contact_not_trusted">%s nėra jūsų adresatų sąraše.\nPridėti naują adresatą?</string>

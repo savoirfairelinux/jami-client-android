@@ -225,7 +225,6 @@
   <string name="refuse">Kieltäydy</string>
   <string name="block">Estä</string>
   <string name="contact_request_title">Uusi yhteyspyyntö</string>
-  <string name="contact_request_msg">Sinulla on %1$s yhteyspyyntöjä</string>
   <string name="contact_request_account">%1$s:tä</string>
   <string name="no_requests">Sinulla ei ole yhteyspyyntöjä</string>
   <string name="message_contact_not_trusted_yet">%s ei ole vielä yhteystiedoissasi.\nHaluatko hyväksyä tai hylätä tämän yhteyspyynnön?</string>

@@ -206,7 +206,7 @@
   <string name="account_status_connection_error">Kapcsolódási hiba</string>
   <string name="account_status_online">Elérhető</string>
   <string name="account_status_unknown">Ismeretlen</string>
-  <string name="account_status_offline">Nem érhető el</string>
+  <string name="account_status_offline">Nem elérhető</string>
   <string name="account_status_error">Hiba</string>
   <!--Create account-->
   <string name="account_creation_home">Üdvözli a Jami</string>

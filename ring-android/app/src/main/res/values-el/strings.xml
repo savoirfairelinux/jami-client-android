@@ -155,7 +155,6 @@
   <string name="refuse">Άρνηση</string>
   <string name="block">Μπλοκάρισμα</string>
   <string name="contact_request_title">Νέο αίτημα επαφής</string>
-  <string name="contact_request_msg">Έχετε %1$sαίτημα(τα) επαφής</string>
   <string name="contact_request_account">Για %1$s</string>
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>

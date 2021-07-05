@@ -213,7 +213,6 @@
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
   <string name="contact_request_title">Nouvelle demande de contact</string>
-  <string name="contact_request_msg">Vous avez %1$s demandes de contact</string>
   <string name="contact_request_account">Pour %1$s</string>
   <string name="no_requests">Vous n\'avez pas de demande de contact</string>
   <string name="message_contact_not_trusted_yet">%s n\'est pas encore dans vos contacts.\nAcceptez-vous ou non cette demande de contact ?</string>

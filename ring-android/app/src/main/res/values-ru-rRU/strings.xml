@@ -96,6 +96,7 @@
   <string name="action_call_accept">Совершить звонок</string>
   <string name="action_call_decline">Отказаться</string>
   <string name="action_call_mic_mute">Отключить микрофон</string>
+  <string name="action_load_plugin">Загрузить плагин</string>
   <string name="ab_action_speakerphone">Включить звук</string>
   <string name="ab_action_contact_add">Добавить контакт</string>
   <string name="ab_action_contact_add_question">Добавить в контакты? </string>
@@ -166,6 +167,7 @@
   <string name="block_contact_dialog_message">%1$sне сможет связаться с вами, пока вы его не разблокируете. </string>
   <string name="block_contact_completed">%1$sбыл заблокирован. </string>
   <string name="conversation_contact_is_typing">Собеседник печатает...</string>
+  <string name="conversation_info_contact_you">Ты</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -200,7 +202,6 @@
   <string name="refuse">Отказать</string>
   <string name="block">Заблокировать</string>
   <string name="contact_request_title">Запрос на добавление в контакты</string>
-  <string name="contact_request_msg">У вас %1$sзапросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="message_contact_not_trusted_yet">%sеще нет в ваших контактах.\nВы хотите принять или отклонить запрос?</string>
   <string name="message_contact_not_trusted">%sеще нет в ваших контактах.\nДобавить его в контакты?</string>

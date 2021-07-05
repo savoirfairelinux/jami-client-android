@@ -225,7 +225,6 @@
   <string name="refuse">Hidhe tej</string>
   <string name="block">Bllokoje</string>
   <string name="contact_request_title">Kërkesë kontakti të ri</string>
-  <string name="contact_request_msg">Keni %1$s kërkesa kontakti</string>
   <string name="contact_request_account">Për %1$s</string>
   <string name="no_requests">S’keni kërkesa për kontakt</string>
   <string name="message_contact_not_trusted_yet">%s s\’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>

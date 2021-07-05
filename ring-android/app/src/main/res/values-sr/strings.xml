@@ -218,7 +218,6 @@
   <string name="refuse">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="contact_request_title">Novi zahtev za konkat </string>
-  <string name="contact_request_msg">Imate %1$s zahteva za kontakte</string>
   <string name="contact_request_account">Za %1$s</string>
   <string name="no_requests">Nemate nove zahteve za kontakt</string>
   <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima. \nDa li prihvatate ili odbijate ovaj zahtev za kontakt?</string>

@@ -196,7 +196,6 @@
   <string name="refuse">Rebutja</string>
   <string name="block">Bloca</string>
   <string name="contact_request_title">Petició nova de contacte</string>
-  <string name="contact_request_msg">Teniu %1$s peticions de contacte</string>
   <string name="contact_request_account">Per %1$s</string>
   <string name="message_contact_not_trusted_yet">%s no està als seus contactes encara.\nVoleu acceptar o rebutjar aquesta petició de contacte?</string>
   <string name="message_contact_not_trusted">%s no està als seus contactes.\n Afegir un nou contacte?</string>

@@ -202,7 +202,6 @@
   <string name="refuse">Odmietnuť</string>
   <string name="block">Blokovať</string>
   <string name="contact_request_title">Nová žiadosť o kontakt</string>
-  <string name="contact_request_msg">Počet nových žiadostí o kontakt: %1$s</string>
   <string name="contact_request_account">Pre %1$s</string>
   <string name="message_contact_not_trusted_yet">%s zatiaľ nie je vo vašich kontaktoch.\nChcete prijať alebo odmietnuť jeho žiadosť o kontakt?</string>
   <string name="message_contact_not_trusted">%s zatiaľ nie je vo vašich kontaktoch.\nPridať nový kontakt?</string>

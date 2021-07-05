@@ -195,7 +195,6 @@
   <string name="refuse">Ukatu</string>
   <string name="block">Bloketu</string>
   <string name="contact_request_title">Kontaktu-eskaera berria</string>
-  <string name="contact_request_msg"> %1$s kontaktu eskaera dituzu</string>
   <string name="contact_request_account">%1$s(r)entzat</string>
   <string name="message_contact_not_trusted_yet">%s ez dago zure kontaktuen artean oraindik.\nKontaktu eskaera hau onartu ala ukatzen duzu?</string>
   <string name="message_contact_not_trusted">%s ez dago zure kontaktuen artean oraindik.\nGehitu kontaktua?</string>

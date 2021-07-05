@@ -217,7 +217,6 @@
   <string name="refuse">أرفض</string>
   <string name="block">حظر</string>
   <string name="contact_request_title">طلب جهة إتصال جديد</string>
-  <string name="contact_request_msg">لديك %1$s طلبات جهة إتصال</string>
   <string name="contact_request_account">لـ%1$s</string>
   <string name="no_requests">لا يوجد لديك طلبات جهة إتصال جديدة</string>
   <string name="message_contact_not_trusted_yet">%s ليس في جهات إتصالك بعد.\nهل تقبل أم ترفض جهة الإتصال هذه؟</string>

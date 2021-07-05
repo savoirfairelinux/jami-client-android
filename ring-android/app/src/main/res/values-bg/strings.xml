@@ -167,7 +167,6 @@
   <string name="refuse">Отказ</string>
   <string name="block">Блокиране</string>
   <string name="contact_request_title">Заявка за свързване с нов контакт</string>
-  <string name="contact_request_msg">Имате %1$s заявки за свързване с нови контакти</string>
   <string name="contact_request_account">За %1$s</string>
   <string name="message_contact_not_trusted_yet">%sвсе още не е в контактите ви.\nПриемате ли или отказвате тази заявка за контакт? </string>
   <string name="message_contact_not_trusted">%s не е в контактите ви.\nДобавяне на контакт?</string>

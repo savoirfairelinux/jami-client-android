@@ -167,7 +167,6 @@
   <string name="refuse">Odmów</string>
   <string name="block">Blokuj</string>
   <string name="contact_request_title">Nowe zaproszenie</string>
-  <string name="contact_request_msg">Masz %1$s zaproszeń do dodania kontaktu</string>
   <string name="contact_request_account">Dla %1$s</string>
   <string name="message_contact_not_trusted_yet">%s nie jest jeszcze w kontaktach. Chcesz zaakceptować, czy odrzucić prośbę zaproszenia?</string>
   <string name="message_contact_not_trusted">%s nie jest jeszcze w kontaktach.\nDodać do kontaktów?</string>
