@@ -71,6 +71,8 @@ import net.jami.services.HardwareService;
 import net.jami.services.HistoryService;
 import net.jami.services.NotificationService;
 import net.jami.services.PreferencesService;
+
+import cx.ring.fragments.CallFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
@@ -84,6 +86,7 @@ public class DRingService extends Service {
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
 
     static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    static public final String ACTION_CALL_ACCEPT_AUDIO = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT_AUDIO";
     static public final String ACTION_CALL_HOLD_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_HOLD_ACCEPT";
     static public final String ACTION_CALL_END_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_END_ACCEPT";
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
@@ -694,6 +697,15 @@ public class DRingService extends Service {
                 mNotificationService.cancelCallNotification();
                 startActivity(new Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
+                        .putExtra(CallFragment.KEY_AUDIO_ONLY, true)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case ACTION_CALL_ACCEPT_AUDIO:
+                mNotificationService.cancelCallNotification();
+                startActivity(new Intent(ACTION_CALL_ACCEPT)
+                        .putExtras(extras)
+                        .putExtra(CallFragment.KEY_AUDIO_ONLY, true)
                         .setClass(getApplicationContext(), CallActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;

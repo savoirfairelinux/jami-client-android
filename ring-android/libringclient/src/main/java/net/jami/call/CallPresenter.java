@@ -302,11 +302,11 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().displayDialPadKeyboard();
     }
 
-    public void acceptCall() {
+    public void acceptCall(boolean audioOnly) {
         if (mConference == null) {
             return;
         }
-        mCallService.accept(mConference.getId());
+        mCallService.accept(mConference.getId(), audioOnly);
     }
 
     public void hangupCall() {
@@ -583,7 +583,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void positiveButtonClicked() {
         if (mConference.isRinging() && mConference.isIncoming()) {
-            acceptCall();
+            acceptCall(false);
         } else {
             hangupCall();
         }

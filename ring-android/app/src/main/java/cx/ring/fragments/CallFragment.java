@@ -200,10 +200,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         return countDownFragment;
     }
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable String confId) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable String confId, boolean audioOnly) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_CONF_ID, confId);
+        bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
@@ -1309,18 +1310,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * @param isIncoming true if call is incoming, false for outgoing
      */
     private void initializeCall(boolean isIncoming) {
+        Bundle args;
+        args = getArguments();
+        if (args == null) {
+            Log.d(TAG, "initializeCall: not able to retrieve arguments");
+            return;
+        }
         if (isIncoming) {
-            presenter.acceptCall();
+            presenter.acceptCall(args.getBoolean(KEY_AUDIO_ONLY));
         } else {
-            Bundle args;
-            args = getArguments();
-            if (args != null) {
                 ConversationPath conversation = ConversationPath.fromBundle(args);
                 presenter.initOutGoing(conversation.getAccountId(),
                         conversation.getConversationUri(),
                         args.getString(Intent.EXTRA_PHONE_NUMBER),
                         args.getBoolean(KEY_AUDIO_ONLY));
-            }
         }
     }
 
