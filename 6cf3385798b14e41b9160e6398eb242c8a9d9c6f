@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "511cd1f7_bcc21fcb",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-07T19:35:05Z",
+      "side": 1,
+      "message": "I\u0027m not really convinced by these labels. Those are the ones in the mockups.\nThey are too long for notification and are ellipsized even on the Galaxy S7 I\u0027m using.",
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
