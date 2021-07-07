@@ -302,11 +302,11 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().displayDialPadKeyboard();
     }
 
-    public void acceptCall() {
+    public void acceptCall(boolean audioOnly) {
         if (mConference == null) {
             return;
         }
-        mCallService.accept(mConference.getId());
+        mCallService.accept(mConference.getId(), audioOnly);
     }
 
     public void hangupCall() {
@@ -480,7 +480,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             else
                 JamiService.addMainParticipant(call.getConfId());
         }
-        mAudioOnly = !call.hasVideo();
+        mAudioOnly |= !call.hasVideo();
         CallView view = getView();
         if (view == null)
             return;
@@ -554,9 +554,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
 
         if (event.start) {
-            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && !mAudioOnly);
         } else if (mConference != null && mConference.getId().equals(event.callId)) {
-            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && !mAudioOnly);
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
@@ -583,7 +583,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void positiveButtonClicked() {
         if (mConference.isRinging() && mConference.isIncoming()) {
-            acceptCall();
+            acceptCall(false);
         } else {
             hangupCall();
         }
@@ -607,6 +607,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         return mAudioOnly;
     }
 
+    public void setAudioOnly(boolean audioOnly) {
+        this.mAudioOnly = audioOnly;
+    }
+
     public void requestPipMode() {
         if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
             getView().enterPipMode(mConference.getId());
@@ -625,7 +629,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             getView().displayVideoSurface(true, false);
         } else {
             getView().displayPreviewSurface(true);
-            getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
+            getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && !mAudioOnly);
         }
     }
 

@@ -200,10 +200,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         return countDownFragment;
     }
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable String confId) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable String confId, boolean audioOnly) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_CONF_ID, confId);
+        bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
@@ -241,6 +242,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     protected void initPresenter(CallPresenter presenter) {
         Bundle args = getArguments();
         if (args != null) {
+            presenter.setAudioOnly(args.getBoolean(KEY_AUDIO_ONLY));
             String action = args.getString(KEY_ACTION);
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
@@ -301,7 +303,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void onStart() {
         super.onStart();
         if (restartVideo && restartPreview) {
-            displayVideoSurface(true, !presenter.isPipMode());
+            displayVideoSurface(true, !presenter.isPipMode() && !presenter.isAudioOnly());
             restartVideo = false;
             restartPreview = false;
         } else if (restartVideo) {
@@ -1268,17 +1270,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void prepareCall(boolean isIncoming) {
         boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
-        boolean audioOnly;
-        int permissionType;
+        boolean audioOnly = presenter.isAudioOnly();;
+        int permissionType = isIncoming ? REQUEST_PERMISSION_INCOMING : REQUEST_PERMISSION_OUTGOING;
 
-        if (isIncoming) {
-            audioOnly = presenter.isAudioOnly();
-            permissionType = REQUEST_PERMISSION_INCOMING;
-        } else {
-            Bundle args = getArguments();
-            audioOnly = args != null && args.getBoolean(KEY_AUDIO_ONLY);
-            permissionType = REQUEST_PERMISSION_OUTGOING;
-        }
+        binding.previewContainer.setVisibility(audioOnly ? View.GONE : View.VISIBLE);
         if (!audioOnly) {
             boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
@@ -1309,18 +1304,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * @param isIncoming true if call is incoming, false for outgoing
      */
     private void initializeCall(boolean isIncoming) {
+        Bundle args = getArguments();
+        if (args == null) {
+            Log.d(TAG, "initializeCall: not able to retrieve arguments");
+            return;
+        }
+        boolean audioOnly = args.getBoolean(KEY_AUDIO_ONLY);
         if (isIncoming) {
-            presenter.acceptCall();
+            presenter.acceptCall(audioOnly);
         } else {
-            Bundle args;
-            args = getArguments();
-            if (args != null) {
                 ConversationPath conversation = ConversationPath.fromBundle(args);
                 presenter.initOutGoing(conversation.getAccountId(),
                         conversation.getConversationUri(),
                         args.getString(Intent.EXTRA_PHONE_NUMBER),
-                        args.getBoolean(KEY_AUDIO_ONLY));
-            }
+                        audioOnly);
         }
     }
 
@@ -1538,7 +1535,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         //change preview image
-        displayVideoSurface(true,true);
+        displayVideoSurface(true, !presenter.isAudioOnly());
     }
 
     /**

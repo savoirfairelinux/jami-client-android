@@ -639,17 +639,17 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
      * @param isIncoming true if call is incoming, false for outgoing
      */
     public void initializeCall(boolean isIncoming) {
-        if (isIncoming) {
-            presenter.acceptCall();
-        } else {
-            Bundle args;
-            args = getArguments();
-            if (args != null) {
-                ConversationPath conversation = ConversationPath.fromBundle(args);
-                presenter.initOutGoing(conversation.getAccountId(),
-                        conversation.getConversationUri(),
-                        args.getString(Intent.EXTRA_PHONE_NUMBER),
-                        args.getBoolean(KEY_AUDIO_ONLY));
+        Bundle args;
+        args = getArguments();
+        if (args != null) {
+            if (isIncoming) {
+                presenter.acceptCall(args.getBoolean(KEY_AUDIO_ONLY));
+            } else {
+                    ConversationPath conversation = ConversationPath.fromBundle(args);
+                    presenter.initOutGoing(conversation.getAccountId(),
+                            conversation.getConversationUri(),
+                            args.getString(Intent.EXTRA_PHONE_NUMBER),
+                            args.getBoolean(KEY_AUDIO_ONLY));
             }
         }
     }
