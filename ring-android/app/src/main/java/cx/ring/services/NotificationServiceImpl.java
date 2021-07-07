@@ -85,6 +85,7 @@ import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
@@ -299,7 +300,9 @@ public class NotificationServiceImpl implements NotificationService {
                                     new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
                                             .setClass(mContext, DRingService.class)
                                             .putExtra(KEY_END_ID, ongoingCallId)
-                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                            .putExtra(CallFragment.KEY_HAS_VIDEO, false)
+                                    ,
                                     PendingIntent.FLAG_ONE_SHOT))
                             .addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
                                             mContext.getText(R.string.action_call_accept_video) : mContext.getText(R.string.action_call_end_accept),
@@ -307,7 +310,8 @@ public class NotificationServiceImpl implements NotificationService {
                                     new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
                                             .setClass(mContext, DRingService.class)
                                             .putExtra(KEY_END_ID, ongoingCallId)
-                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                                            .putExtra(CallFragment.KEY_HAS_VIDEO, true),
                                     PendingIntent.FLAG_ONE_SHOT));
                 } else {
                         messageNotificationBuilder.addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
