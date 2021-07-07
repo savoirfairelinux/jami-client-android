@@ -487,9 +487,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
+            view.initNormalStateDisplay(!call.hasVideoMedia(), isMicrophoneMuted());
             view.updateMenu();
-            if (!mAudioOnly) {
+            if (call.hasVideoMedia()) {
                 mHardwareService.setPreviewSettings();
                 mHardwareService.updatePreviewVideoSurface(call);
                 videoSurfaceUpdateId(call.getId());
