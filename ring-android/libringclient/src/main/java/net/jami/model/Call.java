@@ -70,11 +70,11 @@ public class Call extends Interaction {
     private String mVideoCodec;
     private String mContactNumber;
     private String mConfId;
-    private ArrayList<Map<String, String>> mMediaList;
+    private ArrayList<Media> mMediaList;
 
     private ProfileChunk mProfileChunk = null;
 
-    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction, ArrayList<Map<String, String>> mediaList) {
+    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction, ArrayList<Media> mediaList) {
         mIdDaemon = daemonId;
         try {
             mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
@@ -292,22 +292,22 @@ public class Call extends Interaction {
         return null;
     }
 
-    public void setMediaList(ArrayList<Map<String, String>> mMediaList) {
-        this.mMediaList = mMediaList;
+    public void setMediaList(ArrayList<Media> mediaList) {
+        this.mMediaList = mediaList;
     }
 
     public boolean hasAudioMedia() {
-        return hasMedia("MEDIA_TYPE_AUDIO");
+        return hasMedia(Media.MediaType.AUDIO);
     }
 
     public boolean hasVideoMedia() {
-        return hasMedia("MEDIA_TYPE_VIDEO");
+        return hasMedia(Media.MediaType.VIDEO);
     }
 
-    private boolean hasMedia(String mediaKey) {
+    private boolean hasMedia(Media.MediaType mediaType) {
         if (mMediaList == null) return false;
-        for (Map<String, String> media : mMediaList) {
-            if (media.containsKey("MEDIA_TYPE") && media.get("MEDIA_TYPE").equals(mediaKey)) {
+        for (Media media : mMediaList) {
+            if (media.getMediaType() == mediaType) {
                 return true;
             }
         }
