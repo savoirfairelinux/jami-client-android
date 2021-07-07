@@ -30,6 +30,7 @@ import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Contact;
 import net.jami.model.Conversation;
+import net.jami.model.Media;
 import net.jami.model.Uri;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
@@ -500,7 +501,7 @@ public class CallService {
         }
     }
 
-    private Call addCall(String accountId, String callId, Uri from, Call.Direction direction, ArrayList<Map<String, String>> mediaList) {
+    private Call addCall(String accountId, String callId, Uri from, Call.Direction direction, ArrayList<Media> mediaList) {
         synchronized (currentCalls) {
             Call call = currentCalls.get(callId);
             if (call == null) {
@@ -603,7 +604,12 @@ public class CallService {
         Log.d(TAG, "incoming call with media: " + accountId + ", " + callId + ", " + from);
 
         ArrayList<Map<String, String>> nMediaList = mediaList == null ? new ArrayList<>() : mediaList.toNative();
-        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, nMediaList);
+        ArrayList<Media> medias = new ArrayList<>();
+        for (Map<String, String> mediaMap : nMediaList) {
+            medias.add(new Media(mediaMap));
+        }
+
+        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias);
         callSubject.onNext(call);
         updateConnectionCount();
     }
