@@ -288,8 +288,16 @@ public class CallService {
     }
 
     public void accept(final String callId) {
+        accept(callId, false);
+    }
+
+    public void accept(final String callId, boolean audioOnly) {
         mExecutor.execute(() -> {
             Log.i(TAG, "accept() running... " + callId);
+
+            if (audioOnly) {
+                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+            }
             JamiService.muteCapture(false);
             JamiService.accept(callId);
         });
