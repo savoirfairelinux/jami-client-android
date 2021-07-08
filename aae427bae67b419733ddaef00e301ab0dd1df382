@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45220adc_d2645d7c",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-07-08T19:05:21Z",
+      "side": 1,
+      "message": "cant we get rid of the audioOnly concept, and use hasVideo instead (as in the other patches)",
+      "range": {
+        "startLine": 203,
+        "startChar": 100,
+        "endLine": 203,
+        "endChar": 109
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c42ea68b_5c4fe6e1",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-07-08T19:05:21Z",
+      "side": 1,
+      "message": "hasVideo ?",
+      "range": {
+        "startLine": 1273,
+        "startChar": 16,
+        "endLine": 1273,
+        "endChar": 25
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb1d4b1c_e33187b5",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-07-08T19:05:21Z",
+      "side": 1,
+      "message": "hasVideo ?",
+      "range": {
+        "startLine": 1538,
+        "startChar": 45,
+        "endLine": 1538,
+        "endChar": 56
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
