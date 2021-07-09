@@ -75,6 +75,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private boolean pipIsActive = false;
     private boolean incomingIsFullIntent = true;
     private boolean callInitialized = false;
+    private boolean hasVideoMedia = false;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -227,6 +228,17 @@ public class CallPresenter extends RootPresenter<CallView> {
                     Log.e(TAG, "Error with initIncoming, action view flow: ", e);
                 }));
 
+        // Handle media changes
+        mCompositeDisposable.add(callObservable
+                .subscribe(call -> {
+                    boolean hasVideoMedia = call.hasVideoMedia();
+                    if (hasVideoMedia != this.hasVideoMedia) {
+
+                    }
+                }, e -> {
+                    Log.e(TAG, "Error with initIncoming, media change flow: ", e);
+                }));
+
         showConference(callObservable);
     }
 
@@ -285,6 +297,12 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public boolean isMicrophoneMuted() {
         return mCallService.isCaptureMuted();
+    }
+
+    public void switchCamera() {
+        Call call = mConference.getCall();
+        if (call == null) return;
+        mCallService.muteVideo(mConference.getId(), !call.hasVideoMedia());
     }
 
     public void switchVideoInputClick() {
