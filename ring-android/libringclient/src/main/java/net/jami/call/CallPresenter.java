@@ -27,7 +27,6 @@ import net.jami.model.Conference;
 import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.ConversationHistory;
-import net.jami.model.Media;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -72,6 +71,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private boolean mOnGoingCall = false;
     private boolean hasVideo = false;
+    private boolean muteVideo = false;
     private boolean permissionChanged = false;
     private boolean pipIsActive = false;
     private boolean incomingIsFullIntent = true;
@@ -255,7 +255,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         boolean displayPluginsButton = getView().displayPluginsButton();
         boolean showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null;
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && hasVideo;
-        getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall);
+        getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, mConference.hasVideoMedia());
     }
 
     public void chatClick() {
@@ -286,6 +286,13 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public boolean isMicrophoneMuted() {
         return mCallService.isCaptureMuted();
+    }
+
+    public void switchCamera() {
+        Call call = mConference.getCall();
+        if (call == null) return;
+        muteVideo = !muteVideo;
+        mCallService.muteVideo(mConference.getId(), muteVideo);
     }
 
     public void switchVideoInputClick() {
@@ -494,7 +501,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 mHardwareService.updatePreviewVideoSurface(call);
                 videoSurfaceUpdateId(call.getId());
                 pluginSurfaceUpdateId(call.getPluginId());
-                view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
+                view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && !muteVideo);
                 if (permissionChanged) {
                     mHardwareService.switchInput(mConference.getId(), permissionChanged);
                     permissionChanged = false;
@@ -554,9 +561,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
 
         if (event.start) {
-            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo);
+            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo && !muteVideo);
         } else if (mConference != null && mConference.getId().equals(event.callId)) {
-            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo);
+            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission() && hasVideo && !muteVideo);
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;

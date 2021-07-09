@@ -34,6 +34,7 @@ import net.jami.model.Media;
 import net.jami.model.Uri;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
+import net.jami.utils.SwigNativeConverter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -262,14 +263,19 @@ public class CallService {
         return Single.fromCallable(() -> {
             Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
 
-            HashMap<String, String> volatileDetails = new HashMap<>();
-            volatileDetails.put(Call.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
-
-            String callId = JamiService.placeCall(account, number.getUri(), StringMap.toSwig(volatileDetails));
+            ArrayList<Media> mediaList = new ArrayList<>();
+            mediaList.add(new Media("camera://1", Media.MediaType.MEDIA_TYPE_VIDEO, "video_0", true, false, false));
+            mediaList.add(new Media("camera://1", Media.MediaType.MEDIA_TYPE_AUDIO, "audio_0", true, false, !audioOnly));
+            String callId = JamiService.placeCallWithMedia(account, number.getUri(), SwigNativeConverter.convert(mediaList));
             if (callId == null || callId.isEmpty())
                 return null;
             if (audioOnly) {
-                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+                Call call = currentCalls.get(callId);
+                if (call != null) {
+                    VectMap vectMapMedia = getMuteVideoMedia(call, true);
+                    JamiService.requestMediaChange(callId, vectMapMedia);
+                    JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+                }
             }
             Call call = addCall(account, callId, number, Call.Direction.OUTGOING, new ArrayList<>());
             if (conversationUri != null && conversationUri.isSwarm())
@@ -297,25 +303,9 @@ public class CallService {
             Log.i(TAG, "accept() running... " + callId);
 
             Call call = currentCalls.get(callId);
-            if (call == null) {
-                return;
-            }
-
-            ArrayList<Media> mediaList = call.getMediaList();
-            if (!hasVideo) {
-                for (Media media : mediaList) {
-                    if (media.getLabel().startsWith("video")) {
-                        media.setMuted(true);
-                    }
-                }
-                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-            }
-            VectMap vectMapMedia = new VectMap();
-            for (Media media : mediaList) {
-                vectMapMedia.add(StringMap.toSwig(media.toMap()));
-            }
+            if (call == null) return;
+            VectMap vectMapMedia = getMuteVideoMedia(call, !hasVideo);
             JamiService.muteCapture(false);
-            JamiService.accept(callId);
             JamiService.acceptWithMedia(callId, vectMapMedia);
         });
     }
@@ -421,6 +411,24 @@ public class CallService {
 
     public boolean isCaptureMuted() {
         return JamiService.isCaptureMuted();
+    }
+
+    public void muteVideo(final String callId, final boolean mute) {
+        Call call = currentCalls.get(callId);
+        if (call == null) return;
+        VectMap vectMapMedia = getMuteVideoMedia(call, mute);
+        JamiService.requestMediaChange(callId, vectMapMedia);
+        JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", mute);
+    }
+
+    private VectMap getMuteVideoMedia(final Call call, final boolean mute) {
+        ArrayList<Media> mediaList = call.getMediaList();
+        for (Media media : mediaList) {
+            if (media.getLabel().startsWith("video")) {
+                media.setMuted(mute);
+            }
+        }
+        return SwigNativeConverter.convert(mediaList);
     }
 
     public void transfer(final String callId, final String to) {
@@ -535,6 +543,16 @@ public class CallService {
         }
     }
 
+    private Call updateMediaList(String callId, ArrayList<Media> mediaList) {
+        synchronized (currentCalls) {
+            Call call = currentCalls.get(callId);
+            if (call != null && call.isConferenceParticipant()) {
+                call.setMediaList(mediaList);
+            }
+            return call;
+        }
+    }
+
     private Conference addConference(Call call) {
         String confId = call.getConfId();
         if (confId == null) {
@@ -619,13 +637,17 @@ public class CallService {
     void incomingCallWithMedia(String accountId, String callId, String from, VectMap mediaList) {
         Log.d(TAG, "incoming call with media: " + accountId + ", " + callId + ", " + from);
 
-        ArrayList<Map<String, String>> nMediaList = mediaList == null ? new ArrayList<>() : mediaList.toNative();
-        ArrayList<Media> medias = new ArrayList<>();
-        for (Map<String, String> mediaMap : nMediaList) {
-            medias.add(new Media(mediaMap));
-        }
-
+        ArrayList<Media> medias = SwigNativeConverter.convert(mediaList);
         Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias);
+        callSubject.onNext(call);
+        updateConnectionCount();
+    }
+
+    void mediaChangeRequested(String callId, VectMap mediaList) {
+        Log.d(TAG, "media change requested: " + callId);
+
+        ArrayList<Media> medias = SwigNativeConverter.convert(mediaList);
+        Call call = updateMediaList(callId, medias);
         callSubject.onNext(call);
         updateConnectionCount();
     }
