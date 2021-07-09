@@ -308,7 +308,6 @@ public class CallService {
                         media.setMuted(true);
                     }
                 }
-                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             VectMap vectMapMedia = new VectMap();
             for (Media media : mediaList) {
@@ -423,6 +422,21 @@ public class CallService {
         return JamiService.isCaptureMuted();
     }
 
+    public void muteVideo(final String callId, final boolean mute) {
+        Call call = currentCalls.get(callId);
+        ArrayList<Media> mediaList = call.getMediaList();
+        for (Media media : mediaList) {
+            if (media.getLabel().startsWith("video")) {
+                media.setMuted(mute);
+            }
+        }
+        VectMap vectMapMedia = new VectMap();
+        for (Media media : mediaList) {
+            vectMapMedia.add(StringMap.toSwig(media.toMap()));
+        }
+        JamiService.requestMediaChange(callId, vectMapMedia);
+    }
+
     public void transfer(final String callId, final String to) {
         mExecutor.execute(() -> {
             Log.i(TAG, "transfer() thread running...");
@@ -535,6 +549,16 @@ public class CallService {
         }
     }
 
+    private Call updateMediaList(String callId, ArrayList<Media> mediaList) {
+        synchronized (currentCalls) {
+            Call call = currentCalls.get(callId);
+            if (call != null) {
+                call.setMediaList(mediaList);
+            }
+            return call;
+        }
+    }
+
     private Conference addConference(Call call) {
         String confId = call.getConfId();
         if (confId == null) {
@@ -619,15 +643,28 @@ public class CallService {
     void incomingCallWithMedia(String accountId, String callId, String from, VectMap mediaList) {
         Log.d(TAG, "incoming call with media: " + accountId + ", " + callId + ", " + from);
 
+        ArrayList<Media> medias = getNativeMediaList(mediaList);
+        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias);
+        callSubject.onNext(call);
+        updateConnectionCount();
+    }
+
+    void mediaChangeRequested(String callId, VectMap mediaList) {
+        Log.d(TAG, "media change requested: " + callId);
+
+        ArrayList<Media> medias = getNativeMediaList(mediaList);
+        Call call = updateMediaList(callId, medias);
+        callSubject.onNext(call);
+        updateConnectionCount();
+    }
+
+    private ArrayList<Media> getNativeMediaList(VectMap mediaList) {
         ArrayList<Map<String, String>> nMediaList = mediaList == null ? new ArrayList<>() : mediaList.toNative();
         ArrayList<Media> medias = new ArrayList<>();
         for (Map<String, String> mediaMap : nMediaList) {
             medias.add(new Media(mediaMap));
         }
-
-        Call call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias);
-        callSubject.onNext(call);
-        updateConnectionCount();
+        return medias;
     }
 
     public void incomingMessage(String callId, String from, Map<String, String> messages) {
