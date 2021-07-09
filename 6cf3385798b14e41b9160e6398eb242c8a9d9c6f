@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7316af7d_17e64755",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T14:51:17Z",
+      "side": 1,
+      "message": "Can we add intents incrementally?\n\nif (hasaudio)\n    new intent...\nif (hasvideo)\n    new intent ...\n\n?",
+      "range": {
+        "startLine": 295,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 17
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "511cd1f7_bcc21fcb",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
@@ -14,6 +37,70 @@
       "writtenOn": "2021-07-07T19:35:05Z",
       "side": 1,
       "message": "I\u0027m not really convinced by these labels. Those are the ones in the mockups.\nThey are too long for notification and are ellipsized even on the Galaxy S7 I\u0027m using.",
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a10f1eb5_3078c43b",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T14:51:17Z",
+      "side": 1,
+      "message": "To be confirmed with charlotte.",
+      "parentUuid": "511cd1f7_bcc21fcb",
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "694dae71_5b8f0874",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T14:51:17Z",
+      "side": 1,
+      "message": "I think we should verify media by it\u0027s label, not by it\u0027s type.\nAlso if media is enabled too should be looked",
+      "range": {
+        "startLine": 310,
+        "startChar": 12,
+        "endLine": 312,
+        "endChar": 13
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd1770c4_928a5c8f",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T14:51:17Z",
+      "side": 1,
+      "message": "hasMedia(String mediaLabel) ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 36
+      },
       "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
