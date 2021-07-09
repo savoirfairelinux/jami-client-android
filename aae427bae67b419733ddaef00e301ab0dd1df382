@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e83752_bbe22df2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T15:00:49Z",
+      "side": 1,
+      "message": "c",
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45220adc_d2645d7c",
@@ -97,6 +114,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e7ec230a_d230d9e6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T15:00:49Z",
+      "side": 1,
+      "message": "duplicated ;",
+      "range": {
+        "startLine": 1273,
+        "startChar": 49,
+        "endLine": 1273,
+        "endChar": 53
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb1d4b1c_e33187b5",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
         "patchSetId": 1
@@ -137,6 +177,75 @@
         "startChar": 45,
         "endLine": 1538,
         "endChar": 56
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1376898_b877d466",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T15:00:49Z",
+      "side": 1,
+      "message": "We should be using acceptWithMedia already",
+      "range": {
+        "startLine": 309,
+        "startChar": 7,
+        "endLine": 309,
+        "endChar": 60
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e00499c0_613ec397",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T15:00:49Z",
+      "side": 1,
+      "message": "acceptwithmedia",
+      "range": {
+        "startLine": 586,
+        "startChar": 12,
+        "endLine": 586,
+        "endChar": 30
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4539ae90_b66cd142",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/services/CallService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-09T15:00:49Z",
+      "side": 1,
+      "message": "We should be using acceptWithMedia",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 5
       },
       "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
