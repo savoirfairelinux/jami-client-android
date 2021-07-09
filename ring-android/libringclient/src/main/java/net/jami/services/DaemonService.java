@@ -274,6 +274,11 @@ public class DaemonService {
         }
 
         @Override
+        public void mediaChangeRequested(String accountId, String callId, VectMap mediaList) {
+            mCallService.mediaChangeRequested(callId, mediaList);
+        }
+
+        @Override
         public void connectionUpdate(String id, int state) {
             mCallService.connectionUpdate(id, state);
         }
