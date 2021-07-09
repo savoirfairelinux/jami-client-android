@@ -51,7 +51,7 @@ public interface CallView {
 
     void updateCallStatus(Call.CallStatus callState);
 
-    void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean showPluginBtn, boolean onGoingCall);
+    void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean showPluginBtn, boolean onGoingCall, boolean hasVideo);
 
     void initNormalStateDisplay(boolean audioOnly, boolean muted);
 

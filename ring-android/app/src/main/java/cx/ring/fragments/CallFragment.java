@@ -791,12 +791,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 case Manifest.permission.CAMERA:
                     presenter.cameraPermissionChanged(granted);
                     if (audioGranted) {
-                        initializeCall(requestCode == REQUEST_PERMISSION_INCOMING);
+                        initializeCall(requestCode == REQUEST_PERMISSION_INCOMING, presenter.hasVideo());
                     }
                     break;
                 case Manifest.permission.RECORD_AUDIO:
                     presenter.audioPermissionChanged(granted);
-                    initializeCall(requestCode == REQUEST_PERMISSION_INCOMING);
+                    initializeCall(requestCode == REQUEST_PERMISSION_INCOMING, presenter.hasVideo());
                     break;
             }
         }
@@ -1099,9 +1099,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial,
-                         boolean showPluginBtn, boolean onGoingCall) {
+                         boolean showPluginBtn, boolean onGoingCall, boolean hasVideo) {
         if (binding != null) {
             binding.callCameraFlipBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
+            binding.callCameraBtn.setVisibility(hasVideo ? View.VISIBLE : View.GONE);
         }
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(canDial);
@@ -1267,7 +1268,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * Initializes the call if permissions are accepted.
      *
      * @param isIncoming true if call is incoming, false for outgoing
-     * @see #initializeCall(boolean) initializeCall
+     * @see #initializeCall(boolean, boolean) initializeCall
      */
     @Override
     public void prepareCall(boolean isIncoming) {
@@ -1289,13 +1290,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 requestPermissions(perms.toArray(new String[perms.size()]), permissionType);
             } else if (audioGranted && videoGranted) {
-                initializeCall(isIncoming);
+                initializeCall(isIncoming, true);
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, permissionType);
             } else if (audioGranted) {
-                initializeCall(isIncoming);
+                initializeCall(isIncoming, false);
             }
         }
     }
@@ -1304,22 +1305,23 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * Starts a call. Takes into account whether call is incoming or outgoing.
      *
      * @param isIncoming true if call is incoming, false for outgoing
+     * @param hasVideo true if we already know that conversation has video
      */
-    private void initializeCall(boolean isIncoming) {
+    private void initializeCall(boolean isIncoming, boolean hasVideo) {
         Bundle args = getArguments();
         if (args == null) {
             Log.d(TAG, "initializeCall: not able to retrieve arguments");
             return;
         }
-        boolean hasVideo = args.getBoolean(KEY_HAS_VIDEO);
+        boolean hasVideoExtra = args.getBoolean(KEY_HAS_VIDEO);
         if (isIncoming) {
-            presenter.acceptCall(hasVideo);
+            presenter.acceptCall(hasVideoExtra || hasVideo);
         } else {
                 ConversationPath conversation = ConversationPath.fromBundle(args);
                 presenter.initOutGoing(conversation.getAccountId(),
                         conversation.getConversationUri(),
                         args.getString(Intent.EXTRA_PHONE_NUMBER),
-                        !hasVideo);
+                        !hasVideoExtra && !hasVideo);
         }
     }
 
@@ -1377,15 +1379,22 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void acceptAudioClicked() {
+        presenter.setHasVideo(false);
         prepareCall(true);
     }
 
     public void acceptClicked() {
+        presenter.setHasVideo(true);
         prepareCall(true);
     }
 
     public void cameraFlip() {
         presenter.switchVideoInputClick();
+    }
+
+    public void switchCamera() {
+        presenter.switchCamera();
+        binding.callCameraBtn.setImageResource(binding.callCameraBtn.isChecked()? R.drawable.baseline_videocam_off_24 : R.drawable.baseline_videocam_24);
     }
 
     public void addParticipant() {

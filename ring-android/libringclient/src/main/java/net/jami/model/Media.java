@@ -12,7 +12,7 @@ public class Media {
     private static final String ON_HOLD_KEY = "ON_HOLD";
     private static final String MUTED_KEY = "MUTED";
 
-    enum MediaType {
+    public enum MediaType {
         MEDIA_TYPE_AUDIO,
         MEDIA_TYPE_VIDEO;
 
@@ -37,6 +37,15 @@ public class Media {
     private final boolean enabled;
     private final boolean onHold;
     private boolean muted;
+
+    public Media(String source, MediaType mediaType, String label, boolean enabled, boolean onHold, boolean muted) {
+        this.source = source;
+        this.mediaType = mediaType;
+        this.label = label;
+        this.enabled = enabled;
+        this.onHold = onHold;
+        this.muted = muted;
+    }
 
     public Media(Map<String, String> mediaMap) {
         this.source = mediaMap.get(SOURCE_KEY);
