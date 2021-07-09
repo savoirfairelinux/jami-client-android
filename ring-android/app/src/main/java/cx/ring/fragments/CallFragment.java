@@ -1388,6 +1388,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         presenter.switchVideoInputClick();
     }
 
+    public void switchCamera() {
+        presenter.switchCamera();
+        binding.callCameraBtn.setImageResource(binding.callCameraBtn.isChecked()? R.drawable.baseline_videocam_off_24 : R.drawable.baseline_videocam_24);
+    }
+
     public void addParticipant() {
         presenter.startAddParticipant();
     }

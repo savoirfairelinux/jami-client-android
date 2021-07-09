@@ -313,6 +313,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:srcCompat="@drawable/baseline_person_add_24" />
 
                 <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_camera_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/call_button_background"
+                    android:contentDescription="@string/ab_action_flipcamera"
+                    android:onClick="@{() -> presenter.switchCamera()}"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/baseline_videocam_24"
+                    app:tint="@color/white" />
+
+                <cx.ring.views.CheckableImageButton
                     android:id="@+id/call_mic_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

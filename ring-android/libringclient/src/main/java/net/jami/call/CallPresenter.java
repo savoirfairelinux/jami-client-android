@@ -27,7 +27,6 @@ import net.jami.model.Conference;
 import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.ConversationHistory;
-import net.jami.model.Media;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -72,10 +71,12 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private boolean mOnGoingCall = false;
     private boolean hasVideo = false;
+    private boolean muteVideo = false;
     private boolean permissionChanged = false;
     private boolean pipIsActive = false;
     private boolean incomingIsFullIntent = true;
     private boolean callInitialized = false;
+    private boolean hasVideoMedia = false;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -228,6 +229,17 @@ public class CallPresenter extends RootPresenter<CallView> {
                     Log.e(TAG, "Error with initIncoming, action view flow: ", e);
                 }));
 
+        // Handle media changes
+        mCompositeDisposable.add(callObservable
+                .subscribe(call -> {
+                    boolean hasVideoMedia = call.hasVideoMedia();
+                    if (hasVideoMedia != this.hasVideoMedia) {
+
+                    }
+                }, e -> {
+                    Log.e(TAG, "Error with initIncoming, media change flow: ", e);
+                }));
+
         showConference(callObservable);
     }
 
@@ -286,6 +298,13 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public boolean isMicrophoneMuted() {
         return mCallService.isCaptureMuted();
+    }
+
+    public void switchCamera() {
+        Call call = mConference.getCall();
+        if (call == null) return;
+        muteVideo = !muteVideo;
+        mCallService.muteVideo(mConference.getId(), muteVideo);
     }
 
     public void switchVideoInputClick() {
