@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.jami.daemon.Message;
+import net.jami.model.Media;
 
 public class SwigNativeConverter {
 
@@ -54,4 +55,20 @@ public class SwigNativeConverter {
         return toReturn;
     }
 
+    public static VectMap convert(List<Media> mediaList) {
+        VectMap vectMapMedia = new VectMap();
+        for (Media media : mediaList) {
+            vectMapMedia.add(StringMap.toSwig(media.toMap()));
+        }
+        return vectMapMedia;
+    }
+
+    public static ArrayList<Media> convert(VectMap mediaList) {
+        ArrayList<Map<String, String>> nMediaList = mediaList == null ? new ArrayList<>() : mediaList.toNative();
+        ArrayList<Media> medias = new ArrayList<>();
+        for (Map<String, String> mediaMap : nMediaList) {
+            medias.add(new Media(mediaMap));
+        }
+        return medias;
+    }
 }
