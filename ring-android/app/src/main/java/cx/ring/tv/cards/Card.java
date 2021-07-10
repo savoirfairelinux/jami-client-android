@@ -136,20 +136,17 @@ public class Card {
     }
 
     public enum Type {
-        ABOUT_VERSION,
         DEFAULT,
         SEARCH_RESULT,
-        ABOUT_CONTRIBUTOR,
         ACCOUNT_ADD_DEVICE,
         ACCOUNT_EDIT_PROFILE,
         ACCOUNT_SHARE_ACCOUNT,
-        ABOUT_LICENCES,
+        ADD_CONTACT,
         CONTACT,
         CONTACT_ONLINE,
         CONTACT_WITH_USERNAME,
         CONTACT_WITH_USERNAME_ONLINE,
         CONTACT_REQUEST,
-        ACCOUNT_SETTINGS,
         CONTACT_REQUEST_WITH_USERNAME
     }
 

@@ -562,7 +562,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private void stopRecording() {
         releaseRecorder();
-        binding.buttonAudio.setImageResource(R.drawable.baseline_mic_24);
+        binding.buttonAudio.setImageResource(R.drawable.baseline_androidtv_message_audio);
         binding.textAudio.setText(R.string.tv_send_audio);
         binding.textAudio.clearAnimation();
         createAudioDialog();

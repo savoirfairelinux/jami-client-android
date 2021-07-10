@@ -101,6 +101,8 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
     implementation 'org.osmdroid:osmdroid-android:6.1.10'
     implementation "androidx.sharetarget:sharetarget:1.1.0"
+    implementation "androidx.camera:camera-view:1.0.0-alpha25"
+    implementation group: 'androidx.leanback', name: 'leanback', version: '1.0.0'
 
     // ORM
     implementation 'com.j256.ormlite:ormlite-android:5.5'
