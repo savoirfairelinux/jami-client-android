@@ -188,6 +188,10 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
+        setPhoto(account);
+    }
+
+    public void setPhoto(Account account) {
         AvatarDrawable.load(getContext(), account)
                 .map(avatar -> {
                     avatar.setInSize(iconSize);

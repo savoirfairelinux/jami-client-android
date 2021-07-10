@@ -70,11 +70,6 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
                 .subscribe(c -> getView().showContact(c)));
     }
 
-    public void removeContact() {
-        mConversationService.removeConversation(mAccountId, mUri).subscribe();
-        getView().finishView();
-    }
-
     public void contactClicked() {
         Account account = mAccountService.getAccount(mAccountId);
         if (account != null) {
@@ -93,10 +88,6 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
                 }
             }
         }
-    }
-
-    public void clearHistory() {
-        mConversationService.clearHistory(mAccountId, mUri).subscribe();
     }
 
     public void onAddContact() {
