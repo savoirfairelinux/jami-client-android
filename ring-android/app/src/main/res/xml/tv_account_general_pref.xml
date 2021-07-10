@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings">
+
+    <PreferenceCategory android:title="@string/about">
+        <Preference
+            android:key="Account.about"
+            android:title="@string/account_tv_about"
+            android:selectable="true"
+            android:fragment="cx.ring.tv.settings.TVAboutFragment"
+            android:icon="@drawable/ic_jami"/>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/account_basic_category">
         <SwitchPreference
             android:defaultValue="false"

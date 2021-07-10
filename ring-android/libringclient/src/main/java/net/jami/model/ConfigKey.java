@@ -45,6 +45,7 @@ public enum ConfigKey {
     ACCOUNT_USERAGENT("Account.useragent"),
     ACCOUNT_UPNP_ENABLE("Account.upnpEnabled", true),
     ACCOUNT_ROUTESET("Account.routeset"),
+    ACCOUNT_ABOUT("Account.about", true),
     ACCOUNT_AUTOANSWER("Account.autoAnswer", true),
     ACCOUNT_ISRENDEZVOUS("Account.rendezVous", true),
     ACCOUNT_ALIAS("Account.alias"),
@@ -101,7 +102,9 @@ public enum ConfigKey {
     PROXY_SERVER_LIST("Account.dhtProxyListUrl"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
     MANAGER_URI("Account.managerUri"),
-    MANAGER_USERNAME("Account.managerUsername");
+    MANAGER_USERNAME("Account.managerUsername"),
+    CONTACT_DELETE("Contact.delete"),
+    CONTACT_CLEAR("Contact.clear");
 
     private final String mKey;
     private final boolean mIsBool;
