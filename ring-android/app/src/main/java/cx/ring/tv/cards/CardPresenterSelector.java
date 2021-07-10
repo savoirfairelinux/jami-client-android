@@ -46,18 +46,13 @@ public class CardPresenterSelector extends PresenterSelector {
         Presenter presenter = presenters.get(card.getType());
         if (presenter == null) {
             switch (card.getType()) {
-                case ABOUT_VERSION:
-                case ABOUT_CONTRIBUTOR:
-                case ABOUT_LICENCES:
                 case ACCOUNT_ADD_DEVICE:
                 case ACCOUNT_EDIT_PROFILE:
                 case ACCOUNT_SHARE_ACCOUNT:
-                case ACCOUNT_SETTINGS:
+                case ADD_CONTACT:
                     presenter = new IconCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
-                    presenter = new ContactCardPresenter(mContext, R.style.SearchCardTheme);
-                    break;
                 case CONTACT:
                     presenter = new ContactCardPresenter(mContext, R.style.ContactCardTheme);
                     break;

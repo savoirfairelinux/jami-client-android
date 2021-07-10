@@ -81,13 +81,15 @@ import cx.ring.tv.account.TVJamiAccountCreationFragment;
 import cx.ring.tv.account.TVJamiLinkAccountFragment;
 import cx.ring.tv.account.TVProfileCreationFragment;
 import cx.ring.tv.account.TVProfileEditingFragment;
-import cx.ring.tv.account.TVSettingsFragment;
+import cx.ring.tv.account.TVJamiAccountCreationFragment;
+import cx.ring.tv.account.TVJamiLinkAccountFragment;
+import cx.ring.tv.settings.TVSettingsFragment;
 import cx.ring.tv.account.TVShareFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.call.TVCallFragment;
-import cx.ring.tv.cards.iconcards.IconCardPresenter;
-import cx.ring.tv.contact.TVContactFragment;
+import cx.ring.tv.contact.more.TVContactMoreFragment;
 import cx.ring.tv.conversation.TvConversationFragment;
+import cx.ring.tv.contact.TVContactFragment;
 import cx.ring.tv.main.MainFragment;
 import cx.ring.tv.search.ContactSearchFragment;
 import dagger.Component;
@@ -216,6 +218,10 @@ public interface JamiInjectionComponent {
 
     void inject(TVSettingsFragment.PrefsFragment prefsFragment);
 
+    void inject(TVContactMoreFragment tvContactMoreFragment);
+
+    void inject(TVContactMoreFragment.PrefsFragment prefsFragment);
+
     void inject(LocationSharingFragment service);
 
     void inject(JamiJobService service);
@@ -223,8 +229,6 @@ public interface JamiInjectionComponent {
     void inject(ShareWithFragment fragment);
 
     void inject(ContactDetailsActivity fragment);
-
-    void inject(IconCardPresenter presenter);
 
     void inject(LocationSharingService service);
 
