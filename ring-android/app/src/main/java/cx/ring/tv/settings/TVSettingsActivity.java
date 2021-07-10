@@ -18,7 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.tv.account;
+package cx.ring.tv.settings;
 
 import android.os.Bundle;
 
