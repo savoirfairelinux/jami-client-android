@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abe9e5ac_9f245a67",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T19:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e176f637_006c9030",
+      "range": {
+        "startLine": 295,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 17
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "511cd1f7_bcc21fcb",
@@ -130,6 +154,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dffdf4be_7866adb2",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T19:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974014b0_7680d99e",
+      "range": {
+        "startLine": 310,
+        "startChar": 12,
+        "endLine": 312,
+        "endChar": 13
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd1770c4_928a5c8f",
@@ -167,6 +215,30 @@
       "side": 1,
       "message": "done in patch 18734",
       "parentUuid": "bd1770c4_928a5c8f",
+      "range": {
+        "startLine": 211,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 36
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dcc2565_e353f6ef",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T19:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83610d14_e74b5ce7",
       "range": {
         "startLine": 211,
         "startChar": 18,
