@@ -66,7 +66,7 @@ public class Interaction {
     String mExtraFlag = new JsonObject().toString();
 
     // Swarm
-    private String mConversationId;
+    private String mConversationId; // TODO, remove, mConversation already does the job.
     private String mMessageId;
     private List<String> mParentIds;
 

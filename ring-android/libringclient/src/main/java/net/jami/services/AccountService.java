@@ -1521,22 +1521,19 @@ public class AccountService {
                 try {
                     String fileName = message.get("displayName");
                     String fileId = message.get("fileId");
-                    //interaction = account.getDataTransfer(fileId);
-                    //if (interaction == null) {
-                        String[] paths = new String[1];
-                        long[] progressA = new long[1];
-                        long[] totalA = new long[1];
-                        JamiService.fileTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), fileId, paths, totalA, progressA);
-                        if (totalA[0] == 0) {
-                            totalA[0] = Long.parseLong(message.get("totalSize"));
-                        }
-                        File path = new File(paths[0]);
-                        interaction = new DataTransfer(fileId, account.getAccountID(), author, fileName, contact.isUser(), timestamp, totalA[0], progressA[0]);
-                        ((DataTransfer)interaction).setDaemonPath(path);
-                        boolean isComplete = path.exists() && progressA[0] == totalA[0];
-                        Log.w(TAG, "add DataTransfer at " + paths[0] + " with progress " + progressA[0] + "/" + totalA[0]);
-                        interaction.setStatus(isComplete ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.FILE_AVAILABLE);
-                    //}
+                    String[] paths = new String[1];
+                    long[] progressA = new long[1];
+                    long[] totalA = new long[1];
+                    JamiService.fileTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), fileId, paths, totalA, progressA);
+                    if (totalA[0] == 0) {
+                        totalA[0] = Long.parseLong(message.get("totalSize"));
+                    }
+                    File path = new File(paths[0]);
+                    interaction = new DataTransfer(fileId, account.getAccountID(), author, fileName, contact.isUser(), timestamp, totalA[0], progressA[0]);
+                    ((DataTransfer)interaction).setDaemonPath(path);
+                    boolean isComplete = path.exists() && progressA[0] == totalA[0];
+                    Log.d(TAG, "add DataTransfer at " + paths[0] + " with progress " + progressA[0] + "/" + totalA[0]);
+                    interaction.setStatus(isComplete ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.FILE_AVAILABLE);
                 } catch (Exception e) {
                     interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
                 }
@@ -1551,8 +1548,13 @@ public class AccountService {
                 interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
                 break;
         }
+        interaction.setConversation(conversation);
         interaction.setContact(contact);
         interaction.setSwarmInfo(conversation.getUri().getRawRingId(), id, parents);
+        if (type.equals("application/data-transfer+json")) {
+            // This will trigger auto acceptation
+            dataTransferSubject.onNext(((DataTransfer)interaction));
+        }
         if (conversation.addSwarmElement(interaction)) {
             if (conversation.isVisible())
                 mHistoryService.setMessageRead(account.getAccountID(), conversation.getUri(), interaction.getMessageId());
