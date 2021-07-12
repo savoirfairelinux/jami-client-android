@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Datenschutz</string>
+  <string name="pref_category_diagnostic">Diagnose</string>
   <string name="pref_mobileData_title">Mobile Daten</string>
   <string name="pref_mobileData_summary">Jami die Nutzung von 3G/LTE zusätzlich zu WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Löschen des Benutzerkontos auf diesem Gerät</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund zulassen, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_logs_title">Diagnoseprotokolle</string>
+  <string name="pref_logs_summary">Einstellungen für das Diagnoseprotokoll öffnen</string>
+  <string name="pref_logs_start">Start der Aufzeichnung</string>
+  <string name="pref_logs_stop">Stoppen der Aufzeichnung</string>
   <string name="pref_typing_title">Tipp-Indikatoren aktivieren</string>
   <string name="pref_typing_summary">Sende und empfange Bestätigungen, wenn eine Nachricht geschrieben wird.</string>
   <string name="pref_read_title">Lesebestätigungen aktivieren</string>

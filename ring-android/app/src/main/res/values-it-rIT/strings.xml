@@ -225,6 +225,7 @@
   <string name="refuse">Rifiuto</string>
   <string name="block">Blocca</string>
   <string name="contact_request_title">Nuova richiesta di contatto</string>
+  <string name="contact_request_msg">Hai %1$d richieste di contatto</string>
   <string name="contact_request_account">Per %1$s</string>
   <string name="no_requests">Non hai richieste di contatto</string>
   <string name="message_contact_not_trusted_yet">%s non è ancora nei tuoi contatti \n Accetti o rifiuti questo richiesta di contatto?</string>

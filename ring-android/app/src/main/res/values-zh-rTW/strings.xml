@@ -224,6 +224,7 @@
   <string name="refuse">拒覺</string>
   <string name="block">阻擋</string>
   <string name="contact_request_title">新聯絡人請求</string>
+  <string name="contact_request_msg">您有 %1$d 聯絡人請求</string>
   <string name="contact_request_account">給 %1$s</string>
   <string name="no_requests">您沒有聯絡人請求</string>
   <string name="message_contact_not_trusted_yet">%s 不在您的聯絡人清單裡。\n您要接受或是回絕此聯絡人請求？</string>

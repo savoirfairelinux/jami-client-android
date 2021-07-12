@@ -227,6 +227,7 @@
   <string name="refuse">Отклонить</string>
   <string name="block">Заблокировать</string>
   <string name="contact_request_title">Новый запрос на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$dзапросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">Нет запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%s еще не в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>

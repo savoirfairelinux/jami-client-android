@@ -16,6 +16,7 @@
   <string name="description">Jami ist Freie Software für universelle Kommunikation.
 Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="credits">Mitwirkende</string>
+  <string name="pip_title">Jami-Konferenz</string>
   <string name="call_service_description">Dieser Dienst ist erforderlich, damit Ihre Anrufe im Vordergrund bleiben. Er wird nur während eines Anrufs ausgeführt.</string>
   <string name="data_transfer_service_description">Dieser Dienst ist erforderlich, um dauerhafte Benachrichtigungen während der Dateiübertragung anzuzeigen. Er wird nur während der Dateiübertragung ausgeführt.</string>
   <!--About dialog-->
@@ -176,6 +177,11 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="block_contact_dialog_message">%1$s kann Sie nicht kontaktieren, bis Sie die Blockierung aufheben.</string>
   <string name="block_contact_completed">%1$s wurde blockiert.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt etwas ...</string>
+  <string name="conversation_info_contact_you">Du</string>
+  <string name="conversation_members">Teilnehmer</string>
+  <string name="conversation_preference_color">Unterhaltungs Farbe</string>
+  <string name="conversation_preference_emoji">Unterhaltungs Emoji</string>
+  <string name="conversation_type_contact">Jami Kontakt</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -218,6 +224,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="refuse">Ablehnen</string>
   <string name="block">Blockieren</string>
   <string name="contact_request_title">Neue Kontaktanfrage</string>
+  <string name="contact_request_msg">Du hast %1$d Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">Du hast keine neuen Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in deiner Kontaktliste.\nWillst du diese Kontaktanfrage annehmen oder ablehnen?</string>
@@ -256,6 +263,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="file_transfer_status_timed_out">Zeitüberschreitung</string>
   <string name="file_saved_in">Datei gespeichert unter %s</string>
   <string name="file_saved_successfully">Die Datei wurde erfolgreich gespeichert</string>
+  <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr frei!</string>
   <string name="title_media_viewer">Dateibetrachter</string>
   <string name="menu_file_open">Datei öffnen</string>
