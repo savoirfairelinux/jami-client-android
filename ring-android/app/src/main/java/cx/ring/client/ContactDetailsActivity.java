@@ -367,17 +367,19 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     goToCallActivity(conversation, contact.getUri(), true)));
             adapter.actions.add(new ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call), () ->
                     goToCallActivity(conversation, contact.getUri(), false)));
-            adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
-                    new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
-                            .setTitle(R.string.clear_history_dialog_title)
-                            .setMessage(R.string.clear_history_dialog_message)
-                            .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
-                                mConversationFacade.clearHistory(conversation.getAccountId(), contact.getUri()).subscribe();
-                                Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
-                            })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create()
-                            .show()));
+            if (!conversation.isSwarm()) {
+                adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
+                        new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
+                                .setTitle(R.string.clear_history_dialog_title)
+                                .setMessage(R.string.clear_history_dialog_message)
+                                .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
+                                    mConversationFacade.clearHistory(conversation.getAccountId(), contact.getUri()).subscribe();
+                                    Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create()
+                                .show()));
+            }
             adapter.actions.add(new ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this), () ->
                     new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
                             .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))

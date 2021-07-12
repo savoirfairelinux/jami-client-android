@@ -344,24 +344,42 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void displayConversationDialog(final SmartListViewModel smartListViewModel) {
-        new MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.conversation_actions, (dialog, which) -> {
-                    switch (which) {
-                        case ActionHelper.ACTION_COPY:
-                            presenter.copyNumber(smartListViewModel);
-                            break;
-                        case ActionHelper.ACTION_CLEAR:
-                            presenter.clearConversation(smartListViewModel);
-                            break;
-                        case ActionHelper.ACTION_DELETE:
-                            presenter.removeConversation(smartListViewModel);
-                            break;
-                        case ActionHelper.ACTION_BLOCK:
-                            presenter.banContact(smartListViewModel);
-                            break;
-                    }
-                })
-                .show();
+        if (smartListViewModel.isSwarm()) {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.swarm_actions, (dialog, which) -> {
+                        switch (which) {
+                            case 0:
+                                presenter.copyNumber(smartListViewModel);
+                                break;
+                            case 1:
+                                presenter.removeConversation(smartListViewModel);
+                                break;
+                            case 2:
+                                presenter.banContact(smartListViewModel);
+                                break;
+                        }
+                    })
+                    .show();
+        } else {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.conversation_actions, (dialog, which) -> {
+                        switch (which) {
+                            case ActionHelper.ACTION_COPY:
+                                presenter.copyNumber(smartListViewModel);
+                                break;
+                            case ActionHelper.ACTION_CLEAR:
+                                presenter.clearConversation(smartListViewModel);
+                                break;
+                            case ActionHelper.ACTION_DELETE:
+                                presenter.removeConversation(smartListViewModel);
+                                break;
+                            case ActionHelper.ACTION_BLOCK:
+                                presenter.banContact(smartListViewModel);
+                                break;
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override
