@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "974014b0_7680d99e",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T18:56:07Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "694dae71_5b8f0874",
+      "range": {
+        "startLine": 310,
+        "startChar": 12,
+        "endLine": 312,
+        "endChar": 13
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd1770c4_928a5c8f",
         "filename": "ring-android/libringclient/src/main/java/net/jami/model/Conference.java",
         "patchSetId": 1
@@ -95,6 +119,30 @@
       "writtenOn": "2021-07-09T14:51:17Z",
       "side": 1,
       "message": "hasMedia(String mediaLabel) ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 36
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83610d14_e74b5ce7",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/model/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T18:56:07Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "bd1770c4_928a5c8f",
       "range": {
         "startLine": 211,
         "startChar": 18,
