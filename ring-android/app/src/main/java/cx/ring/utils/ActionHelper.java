@@ -101,10 +101,10 @@ public class ActionHelper {
     }
 
     public static void launchCopyNumberToClipboardFromContact(final Context context,
-                                                              final Uri callContact,
+                                                              final Uri uri,
                                                               final Conversation.ConversationActionCallback callback) {
-        /*if (callContact == null) {
-            Log.d(TAG, "launchCopyNumberToClipboardFromContact: callContact is null");
+        if (uri == null) {
+            Log.d(TAG, "launchCopyNumberToClipboardFromContact: uri is null");
             return;
         }
 
@@ -113,31 +113,9 @@ public class ActionHelper {
             return;
         }
 
-        if (callContact.getPhones().isEmpty()) {
-            Log.d(TAG, "launchCopyNumberToClipboardFromContact: no number to copy");
-            return;
+        if (callback != null) {
+            callback.copyContactNumberToClipboard(uri.toString());
         }
-
-        if (callContact.getPhones().size() == 1 && callback != null) {
-            String number = callContact.getPhones().get(0).getNumber().toString();
-            callback.copyContactNumberToClipboard(number);
-        } else {
-            final NumberAdapter adapter = new NumberAdapter(context, callContact, true);
-            AlertDialog alertDialog = new MaterialAlertDialogBuilder(context)
-                    .setTitle(R.string.conversation_action_select_peer_number)
-                    .setAdapter(adapter, (dialog, which) -> {
-                        if (callback != null) {
-                            Phone selectedPhone = (Phone) adapter.getItem(which);
-                            callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
-                        }
-                    })
-                    .create();
-            final int listViewSidePadding = (int) context
-                    .getResources()
-                    .getDimension(R.dimen.alert_dialog_side_padding_list_view);
-            alertDialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
-            alertDialog.show();
-        }*/
     }
 
     public static Intent getAddNumberIntentForContact(Contact contact) {

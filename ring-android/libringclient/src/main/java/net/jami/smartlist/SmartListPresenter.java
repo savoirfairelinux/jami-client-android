@@ -22,6 +22,7 @@ package net.jami.smartlist;
 
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
+import net.jami.model.Contact;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -131,7 +132,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void copyNumber(SmartListViewModel smartListViewModel) {
-        getView().copyNumber(smartListViewModel.getUri());
+        if (smartListViewModel.isSwarm()) {
+            // Copy first contact's URI for a swarm
+            // TODO other modes
+            Contact contact = smartListViewModel.getContacts().get(0);
+            getView().copyNumber(contact.getUri());
+        } else {
+            getView().copyNumber(smartListViewModel.getUri());
+        }
     }
 
     public void clearConversation(SmartListViewModel smartListViewModel) {
