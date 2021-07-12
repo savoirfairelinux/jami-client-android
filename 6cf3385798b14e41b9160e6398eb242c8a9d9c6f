@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e176f637_006c9030",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-12T19:02:03Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "7316af7d_17e64755",
+      "range": {
+        "startLine": 295,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 17
+      },
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "511cd1f7_bcc21fcb",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 1
