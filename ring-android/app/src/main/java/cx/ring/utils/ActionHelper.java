@@ -47,8 +47,8 @@ public class ActionHelper {
     }
 
     public static void launchClearAction(final Context context,
-                                                 final Uri uri,
-                                                 final Conversation.ConversationActionCallback callback) {
+                                         final Uri uri,
+                                         final Conversation.ConversationActionCallback callback) {
         if (context == null) {
             Log.d(TAG, "launchClearAction: activity is null");
             return;

@@ -25,6 +25,11 @@ along with this program; if not, write to the Free Software
         <item>@string/conversation_action_remove_this</item>
         <item>@string/conversation_action_block_this</item>
     </string-array>
+    <string-array name="swarm_actions">
+        <item>@string/conversation_action_copy_peer_number</item>
+        <item>@string/conversation_action_remove_this</item>
+        <item>@string/conversation_action_block_this</item>
+    </string-array>
 
     <string-array name="video_bitrates">
         <item>0</item>
