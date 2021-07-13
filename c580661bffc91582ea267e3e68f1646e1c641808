@@ -16,6 +16,24 @@
       "message": "Algo ok?",
       "revId": "c580661bffc91582ea267e3e68f1646e1c641808",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dba05247_2d335cb8",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/services/CallService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-07-13T20:33:45Z",
+      "side": 1,
+      "message": "no. Number of media in the answer must be the same as in the requisition.\nIf you\u0027re accepting the call as is, there is no change. If you are accepting a audio/video call with only the audio, you should set video stream to mute and answer. You cannot ignore the other media in the answer.\n\n\nwhen a call is stablished, you receive medianegotiationstatus signal. With that you will update the medialist.",
+      "parentUuid": "2fce3a94_bd901496",
+      "revId": "c580661bffc91582ea267e3e68f1646e1c641808",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
