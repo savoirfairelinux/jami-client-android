@@ -1640,6 +1640,7 @@ public class AccountService {
             }
         }
         account.conversationStarted(conversation);
+        loadMore(conversation, 2);
     }
 
     public void conversationRemoved(String accountId, String conversationId) {
