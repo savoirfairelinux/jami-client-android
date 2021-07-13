@@ -301,6 +301,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb0e17cb_db6fcd15",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-13T20:09:16Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "d1376898_b877d466",
+      "range": {
+        "startLine": 309,
+        "startChar": 7,
+        "endLine": 309,
+        "endChar": 60
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e00499c0_613ec397",
@@ -324,6 +348,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d50d4d1b_3d593cdb",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-13T20:09:16Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "e00499c0_613ec397",
+      "range": {
+        "startLine": 586,
+        "startChar": 12,
+        "endLine": 586,
+        "endChar": 30
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4539ae90_b66cd142",
@@ -337,6 +385,30 @@
       "writtenOn": "2021-07-09T15:00:49Z",
       "side": 1,
       "message": "We should be using acceptWithMedia",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 5
+      },
+      "revId": "aae427bae67b419733ddaef00e301ab0dd1df382",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67a554f1_6d9b0c41",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/services/CallService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-13T20:09:16Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "4539ae90_b66cd142",
       "range": {
         "startLine": 290,
         "startChar": 4,
