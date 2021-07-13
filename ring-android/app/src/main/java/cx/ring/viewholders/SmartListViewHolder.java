@@ -83,8 +83,10 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
 
             binding.convLastTime.setText(lastInteractionStr);
             if (smartListViewModel.hasOngoingCall()) {
+                binding.convLastItem.setVisibility(View.VISIBLE);
                 binding.convLastItem.setText(itemView.getContext().getString(R.string.ongoing_call));
             } else if (smartListViewModel.getLastEvent() != null) {
+                binding.convLastItem.setVisibility(View.VISIBLE);
                 binding.convLastItem.setText(getLastEventSummary(smartListViewModel.getLastEvent(), itemView.getContext()));
             } else {
                 binding.convLastItem.setVisibility(View.GONE);
