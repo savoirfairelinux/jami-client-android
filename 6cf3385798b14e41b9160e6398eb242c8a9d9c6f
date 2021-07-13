@@ -107,6 +107,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d7e9bb7_fbb8a359",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-13T17:39:37Z",
+      "side": 1,
+      "message": "done in patch 18734",
+      "parentUuid": "a10f1eb5_3078c43b",
+      "revId": "6cf3385798b14e41b9160e6398eb242c8a9d9c6f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "694dae71_5b8f0874",
