@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fce3a94_bd901496",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/services/CallService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-13T20:17:50Z",
+      "side": 1,
+      "message": "Algo ok?",
+      "revId": "c580661bffc91582ea267e3e68f1646e1c641808",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
