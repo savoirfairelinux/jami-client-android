@@ -25,8 +25,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.TwoStatePreference;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
@@ -103,6 +105,25 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
                 }
             }
         }
+
+        boolean isJamiAccount = config.get(ConfigKey.ACCOUNT_TYPE).equals(AccountConfig.ACCOUNT_TYPE_RING);
+        Preference bootstrap = findPreference(ConfigKey.ACCOUNT_HOSTNAME.key());
+        bootstrap.setVisible(isJamiAccount);
+        Preference sipLocalPort = findPreference(ConfigKey.LOCAL_PORT.key());
+        sipLocalPort.setVisible(!isJamiAccount);
+        Preference sipLocalInterface = findPreference(ConfigKey.LOCAL_INTERFACE.key());
+        sipLocalInterface.setVisible(!isJamiAccount);
+        Preference registrationExpire = findPreference(ConfigKey.REGISTRATION_EXPIRE.key());
+        registrationExpire.setVisible(!isJamiAccount);
+        Preference publishedSameAsLocal = findPreference(ConfigKey.PUBLISHED_SAMEAS_LOCAL.key());
+        publishedSameAsLocal.setVisible(!isJamiAccount);
+        Preference publishedPort = findPreference(ConfigKey.PUBLISHED_PORT.key());
+        publishedPort.setVisible(!isJamiAccount);
+        Preference publishedAddress = findPreference(ConfigKey.PUBLISHED_ADDRESS.key());
+        publishedAddress.setVisible(!isJamiAccount);
+        Preference dhtproxy = findPreference(ConfigKey.PROXY_ENABLED.key());
+        PreferenceGroup dhtGroup = dhtproxy.getParent();
+        dhtGroup.setVisible(isJamiAccount);
     }
 
     @Override
