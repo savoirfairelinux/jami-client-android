@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStartParameter().getTaskRequests().toString().contains('Firebase')
 
@@ -16,7 +17,6 @@ android {
         main {
             aidl.srcDirs = ['src/main/java']
             jniLibs.srcDir 'src/main/libs'
-            jni.srcDirs = []
         }
     }
 
