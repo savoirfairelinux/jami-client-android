@@ -37,20 +37,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragRegisterNameBinding;
 import net.jami.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
-import io.reactivex.rxjava3.core.Scheduler;
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+@AndroidEntryPoint
 public class RegisterNameDialog extends DialogFragment {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
     @Inject
     AccountService mAccountService;
-    @Inject
-    Scheduler mUiScheduler;
 
     private TextWatcher mUsernameTextWatcher;
     private RegisterNameDialogListener mListener = null;
@@ -96,9 +95,6 @@ public class RegisterNameDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         binding = FragRegisterNameBinding.inflate(getActivity().getLayoutInflater());
         View view = binding.getRoot();
-
-        // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
 
         String accountId = "";
         boolean hasPassword = true;
@@ -155,7 +151,7 @@ public class RegisterNameDialog extends DialogFragment {
         super.onResume();
         mDisposableListener = mAccountService
                 .getRegisteredNames()
-                .observeOn(mUiScheduler)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(r -> onLookupResult(r.state, r.name));
     }
 

@@ -41,16 +41,16 @@ import net.jami.model.AccountConfig;
 import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseActivity;
 import net.jami.utils.VCardUtils;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import ezvcard.VCard;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+@AndroidEntryPoint
 public class TVAccountWizard
         extends BaseActivity<AccountWizardPresenter>
         implements AccountWizardView {
-    static final String TAG = TVAccountWizard.class.getName();
-    private TVHomeAccountCreationFragment mHomeFragment = new TVHomeAccountCreationFragment();
-
     private ProgressDialog mProgress = null;
     private boolean mLinkAccount = false;
     private String mAccountType;
@@ -58,7 +58,6 @@ public class TVAccountWizard
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
 
@@ -71,7 +70,7 @@ public class TVAccountWizard
         }
 
         if (savedInstanceState == null) {
-            GuidedStepSupportFragment.addAsRoot(this, mHomeFragment, android.R.id.content);
+            GuidedStepSupportFragment.addAsRoot(this, new TVHomeAccountCreationFragment(), android.R.id.content);
         } else {
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
         }

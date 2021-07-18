@@ -27,6 +27,8 @@ import net.jami.mvp.RootPresenter;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragmentCompat {
     @Inject
     protected T presenter;

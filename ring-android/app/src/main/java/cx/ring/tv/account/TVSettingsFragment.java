@@ -44,8 +44,11 @@ import cx.ring.fragments.GeneralAccountView;
 import net.jami.model.Account;
 import net.jami.model.ConfigKey;
 import cx.ring.services.SharedPreferencesServiceImpl;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.utils.Tuple;
 
+@AndroidEntryPoint
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
     @Override
@@ -78,7 +81,6 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
         @Override
         public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-            ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
             super.onViewCreated(view, savedInstanceState);
             presenter.init();
         }

@@ -29,7 +29,6 @@ import android.widget.ImageView;
 
 
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 
@@ -43,7 +42,6 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     @Override
     protected ImageCardView onCreateView() {
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
         ImageCardView imageCardView = new ImageCardView(getContext());
         final ImageView image = imageCardView.getMainImageView();
         image.setBackgroundResource(R.drawable.icon_focused);

@@ -72,6 +72,7 @@ public class ConversationFacade {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final Observable<Account> currentAccountSubject;
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
+
     @Inject
     HardwareService mHardwareService;
     @Inject
