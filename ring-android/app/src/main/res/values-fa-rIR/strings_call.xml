@@ -36,4 +36,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">نگه‌داشتن</string>
     <string name="call_human_state_unhold">رها کردن</string>
     <string name="call_human_state_over">پایان</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">مدیر</string>
+    <string name="call_muted">بی‌صدا</string>
+</resources>

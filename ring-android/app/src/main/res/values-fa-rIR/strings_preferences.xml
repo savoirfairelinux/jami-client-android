@@ -5,6 +5,7 @@
   <string name="pref_category_video">ویدیو</string>
   <string name="pref_category_system">سیستم</string>
   <string name="pref_category_privacy">حریم خصوصی</string>
+  <string name="pref_category_diagnostic">عیب‌یابی</string>
   <string name="pref_mobileData_title">داده همراه</string>
   <string name="pref_mobileData_summary">اجازه فعالیت جمی روی شبکه‌های 3G و LTE، علاوه بر وای‌فای</string>
   <string name="pref_pushNotifications_title">اعلان‌های پرتابی</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">حساب خود را از روی این دستگاه حذف کنید.</string>
   <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
   <string name="pref_persistNotification_summary">اجازه اجرا در پس‌زمینه برای دریافت تماس‌ها و پیام‌ها.</string>
+  <string name="pref_logs_title">گزارش‌های عیب‌یابی</string>
+  <string name="pref_logs_summary">نتظیمات گزارش عیب‌یابی را باز کن</string>
+  <string name="pref_logs_start">شروع گزارش‌گیری</string>
+  <string name="pref_logs_stop">توقف گزارش‌گیری</string>
   <string name="pref_typing_title">فعال‌سازی نمایش در‌حال‌نوشتن</string>
   <string name="pref_typing_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
   <string name="pref_read_title">فعال‌سازی رسیدهای خواندن</string>

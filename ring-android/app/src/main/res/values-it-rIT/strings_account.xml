@@ -45,12 +45,12 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
-  <string name="account_password_set">Impostare  password</string>
+  <string name="account_password_set">Imposta password</string>
   <string name="account_password_summary">Gestisci la password del tuo account.</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
-  <string name="account_basic_category">Impostazioni base</string>
+  <string name="account_basic_category">Impostazioni di base</string>
   <string name="account_alias_label">Nome account</string>
   <string name="account_hostname_label">Nome host</string>
   <string name="account_bootstrap_label">Avvio</string>
@@ -76,7 +76,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Attiva Video</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">Avanzato</string>
+  <string name="account_preferences_advanced_tab">Avanzate</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
   <string name="account_dht_public_in_calls_label">Consenti chiamate in arrivo da utenti sconosciuti</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>
@@ -94,13 +94,13 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
-  <string name="account_published_same_as_local_label">Indirizzo pubblico uguale a quello locale</string>
+  <string name="account_published_same_as_local_label">Pubblico uguale a quello locale</string>
   <string name="account_published_port_label">Porta pubblica</string>
   <string name="account_published_address_label">Indirizzo Pubblico</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
-  <string name="account_proxy_server_list_label">DHT proxy list URL</string>
+  <string name="account_proxy_server_list_label">URL della lista proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Scopri utenti locali</string>
   <string name="account_peer_discovery_enable_label">Abilita il rilevamento di utenti locali</string>
@@ -136,9 +136,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_new_device_password">Inserire la password principale per sbloccare l\'account</string>
   <string name="error_password_char_count">Minimo 6 caratteri</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
-  <string name="export_account_wait_title">Prego attendere...</string>
+  <string name="export_account_wait_title">Attendere…</string>
   <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
-  <string name="account_export_file">Account dal backup</string>
+  <string name="account_export_file">Backup dell\'account</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
@@ -163,9 +163,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_no_network_message">Impossibile aggiungere account perché Jami non è riuscito a connettersi alla rete distribuita. Controlla la connettività del dispositivo.</string>
   <string name="account_device_added_title">Il dispositivo è stato aggiunto</string>
   <string name="account_device_added_message">Hai configurato correttamente il tuo account Jami su questo dispositivo.</string>
-  <string name="account_device_updated_title">Il dispositivo è stato aggiunto</string>
+  <string name="account_device_updated_title">Dispositivo aggiornato</string>
   <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Jami.</string>
-  <string name="account_cannot_be_updated_message">Non è stato possibile aggiornare l\'account del dispositivo. Controlla la password.</string>
+  <string name="account_cannot_be_updated_message">L\'aggiornamento del dispositivo collegato a questo account non è riuscito. Controlla la password.</string>
   <string name="account_sip_success_title">Account Sip registrato</string>
   <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
@@ -176,14 +176,14 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_new_button">Crea un account Jami</string>
   <string name="account_link_export_button">Collega un nuovo dispositivo</string>
   <string name="account_link_show_button">Mostra %d altri dispositivi collegati</string>
-  <string name="account_link_hide_button">Nascondi dispositivo collegato</string>
+  <string name="account_link_hide_button">Nascondi dispositivi collegati</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_end_export_infos">Il tuo PIN è: \ n \ n%%\ n\nPer completare la procedura, è necessario aprire Jami sul nuovo dispositivo. Crea un nuovo account con \"Collega questo dispositivo a un account\". Il tuo PIN è valido per 10 minuti.</string>
   <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
-  <string name="account_connect_server_button">Connessione al server di gestione</string>
+  <string name="account_connect_server_button">Connetti al server di gestione</string>
   <string name="account_connect_button">Connetti</string>
   <string name="prompt_server">URL del server di gestione Jami</string>
   <string name="help_credentials_enter">Inserisci le credenziali della tua organizzazione</string>
@@ -212,7 +212,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_creation_home">Benvenuto in Jami</string>
   <string name="account_creation_profile">Crea il tuo profilo</string>
   <string name="account_creation_ring">Crea il tuo account Jami</string>
-  <string name="account_link_title">Collega il dispositivo</string>
+  <string name="account_link_title">Collega questo dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossibile registrare l\'account</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifica il tuo profilo</string>
@@ -220,8 +220,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_revoke_device_hint">Inserire la password per confermare</string>
   <string name="enter_password">Inserire password</string>
   <string name="revoke_device_title">Revoca dispositivo</string>
-  <string name="revoke_device_message">Sei sicuro di voler procedere con la revoca %1$s ?</string>
-  <string name="revoke_device_wait_title">Prego attendere...</string>
+  <string name="revoke_device_message">Sei sicuro di voler revocare %1$s ?</string>
+  <string name="revoke_device_wait_title">Prego attendere…</string>
   <string name="revoke_device_wait_message">Revoca in corso</string>
   <string name="rename_device_title">Rinomina questo dispositivo</string>
   <string name="rename_device_message">Scegli un nuovo nome per identificare il tuo dispositivo nel tuo account Jami</string>

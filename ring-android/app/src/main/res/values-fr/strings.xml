@@ -225,6 +225,7 @@
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
   <string name="contact_request_title">Nouvelle demande de contact  </string>
+  <string name="contact_request_msg">Vous avez %1$d demande(s) de contact</string>
   <string name="contact_request_account">Pour %1$s</string>
   <string name="no_requests">Vous n\'avez pas de demande de contact</string>
   <string name="message_contact_not_trusted_yet">%sne fait pas partie actuellement de vos contacts.\n Acceptez-vous ou refusez-vous cette invitation ?</string>

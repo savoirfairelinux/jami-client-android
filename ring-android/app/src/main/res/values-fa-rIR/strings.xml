@@ -15,6 +15,7 @@
   <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزئیات بیش‌تر، <u>نگارش 3 یا جدیدتر پروانه عمومی همگانی GNU</u>را ببینید</string>
   <string name="description">جمی نرم‌افزاری آزاد برای ارتباط جهانی است؛ که به آزادی‌ها و حریم خصوصی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
+  <string name="pip_title">کنفرانس جامی</string>
   <string name="call_service_description">این سرویس برای ادامه تماس‌های شما در پیش‌زمینه ضروری است. فقط در طول تماس اجرا می‌شود.</string>
   <string name="data_transfer_service_description">این سرویس برای نمایش اعلان‌های مداوم در هنگام انتقال فایل ضروری است. فقط در زمان‌های انتقال فایل اجرا می‌شود.</string>
   <!--About dialog-->
@@ -175,6 +176,13 @@
   <string name="block_contact_dialog_message">تا وقتی %1$s از انسداد خارج نشود، نمی‌تواند با شما ارتباط برقرار کند.</string>
   <string name="block_contact_completed">%1$s مسدود شده است.</string>
   <string name="conversation_contact_is_typing">مخاطب در حال نوشتن است...</string>
+  <string name="conversation_info_contact_you">شما</string>
+  <string name="conversation_members">اعضا</string>
+  <string name="conversation_preference_color">رنگ گفتگو</string>
+  <string name="conversation_preference_emoji">شکلَک گفتگو</string>
+  <string name="conversation_type_contact">مخاطب جامی</string>
+  <string name="conversation_type_private">دسته خصوصی</string>
+  <string name="conversation_type_group">دسته گروهی</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
@@ -217,6 +225,7 @@
   <string name="refuse">رد کردن</string>
   <string name="block">مسدود</string>
   <string name="contact_request_title"> درخواست مخاطب جدید</string>
+  <string name="contact_request_msg">شما‫ %1$d درخواست ارتباط دارید</string>
   <string name="contact_request_account">برای %1$s</string>
   <string name="no_requests">شما هیچ درخواست تماسی ندارید</string>
   <string name="message_contact_not_trusted_yet">%s هنوز در مخاطبان شما نیست.\nآیا این درخواست ارتباط را قبول یا رد می‌کنید؟</string>
@@ -255,6 +264,7 @@
   <string name="file_transfer_status_timed_out">مهلت پایان یافت</string>
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
   <string name="file_saved_successfully">فایل با موفقیت ذخیره شد</string>
+  <string name="file_download">دانلود</string>
   <string name="no_space_left_on_device">هیچ فضایی در دستگاه وجود ندارد</string>
   <string name="title_media_viewer">نمایش‌دهنده رسانه</string>
   <string name="menu_file_open">باز کردن فایل</string>
@@ -272,7 +282,7 @@
   <string name="navigation_item_conversation">گفتگو‌ها</string>
   <string name="navigation_item_contact_request">درخواست‌های ارتباط</string>
   <string name="navigation_item_account">حساب</string>
-  <string name="search_results_public_directory">فهرست راهنمای عمومی</string>
+  <string name="search_results_public_directory">دایرکتوری عمومی</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">ارسال پیام صوتی؟</string>
   <string name="tv_send_image_dialog_message">ارسال تصویر؟</string>
