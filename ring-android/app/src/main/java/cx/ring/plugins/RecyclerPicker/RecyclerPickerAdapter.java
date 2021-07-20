@@ -17,13 +17,13 @@ import cx.ring.R;
 
 public class RecyclerPickerAdapter extends RecyclerView.Adapter<RecyclerPickerAdapter.ItemViewHolder> {
     private List<Drawable> mList;
-    private ItemClickListener mItemClickListener;
-    private int mItemLayoutResource;
+    private final ItemClickListener mItemClickListener;
+    private final int mItemLayoutResource;
     private final LayoutInflater mInflater;
 
     public RecyclerPickerAdapter(Context ctx, @LayoutRes int recyclerItemLayout, ItemClickListener itemClickListener) {
-        this.mItemLayoutResource = recyclerItemLayout;
-        this.mItemClickListener = itemClickListener;
+        mItemLayoutResource = recyclerItemLayout;
+        mItemClickListener = itemClickListener;
         mInflater = LayoutInflater.from(ctx);
     }
 
@@ -31,7 +31,7 @@ public class RecyclerPickerAdapter extends RecyclerView.Adapter<RecyclerPickerAd
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(mItemLayoutResource, parent, false);
-        view.setOnClickListener(v -> mItemClickListener.onItemClicked(v));
+        view.setOnClickListener(mItemClickListener::onItemClicked);
         return new ItemViewHolder(view);
     }
 
@@ -46,11 +46,7 @@ public class RecyclerPickerAdapter extends RecyclerView.Adapter<RecyclerPickerAd
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        if(mList != null) {
-            return mList.size();
-        } else {
-            return 0;
-        }
+        return mList != null ? mList.size() : 0;
     }
 
     public void updateData(List<Drawable> newlist) {
@@ -60,8 +56,8 @@ public class RecyclerPickerAdapter extends RecyclerView.Adapter<RecyclerPickerAd
 
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder{
-        private ImageView itemImageView;
-        private View view;
+        private final ImageView itemImageView;
+        private final View view;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view = itemView;
