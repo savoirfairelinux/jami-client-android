@@ -31,12 +31,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,21 +45,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.RemoteInput;
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import cx.ring.BuildConfig;
-import cx.ring.application.JamiApplication;
-import cx.ring.client.CallActivity;
-import cx.ring.client.ConversationActivity;
 import net.jami.facades.ConversationFacade;
-import net.jami.model.Codec;
 import net.jami.model.Settings;
 import net.jami.model.Uri;
 import net.jami.services.AccountService;
@@ -71,6 +57,14 @@ import net.jami.services.HardwareService;
 import net.jami.services.HistoryService;
 import net.jami.services.NotificationService;
 import net.jami.services.PreferencesService;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import cx.ring.BuildConfig;
+import cx.ring.application.JamiApplication;
+import cx.ring.client.CallActivity;
+import cx.ring.client.ConversationActivity;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
@@ -141,375 +135,6 @@ public class DRingService extends Service {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final Runnable mConnectivityChecker = this::updateConnectivityState;
     public static boolean isRunning = false;
-
-    protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
-
-        @Override
-        public String placeCall(final String account, final String number, final boolean video) {
-            return mConversationFacade.placeCall(account, Uri.fromString(number), video).blockingGet().getDaemonIdString();
-        }
-
-        @Override
-        public void refuse(final String callID) {
-            mCallService.refuse(callID);
-        }
-
-        @Override
-        public void accept(final String callID) {
-            mCallService.accept(callID);
-        }
-
-        @Override
-        public void hangUp(final String callID) {
-            mCallService.hangUp(callID);
-        }
-
-        @Override
-        public void hold(final String callID) {
-            mCallService.hold(callID);
-        }
-
-        @Override
-        public void unhold(final String callID) {
-            mCallService.unhold(callID);
-        }
-
-        public void sendProfile(final String callId, final String accountId) {
-            mAccountService.sendProfile(callId, accountId);
-        }
-
-        @Override
-        public boolean isStarted() throws RemoteException {
-            return mDaemonService.isStarted();
-        }
-
-        @Override
-        public Map<String, String> getCallDetails(final String callID) throws RemoteException {
-            return mCallService.getCallDetails(callID);
-        }
-
-        @Override
-        public void setAudioPlugin(final String audioPlugin) {
-            mCallService.setAudioPlugin(audioPlugin);
-        }
-
-        @Override
-        public String getCurrentAudioOutputPlugin() {
-            return mCallService.getCurrentAudioOutputPlugin();
-        }
-
-        @Override
-        public List<String> getAccountList() {
-            return mAccountService.getAccountList().blockingGet();
-        }
-
-        @Override
-        public void setAccountOrder(final String order) {
-            String[] accountIds = order.split(File.separator);
-            mAccountService.setAccountOrder(Arrays.asList(accountIds));
-        }
-
-        @Override
-        public Map<String, String> getAccountDetails(final String accountID) {
-            return mAccountService.getAccountDetails(accountID);
-        }
-
-        @SuppressWarnings("unchecked")
-        // Hashmap runtime cast
-        @Override
-        public void setAccountDetails(final String accountId, final Map map) {
-            mAccountService.setAccountDetails(accountId, map);
-        }
-
-        @Override
-        public void setAccountActive(final String accountId, final boolean active) {
-            mAccountService.setAccountActive(accountId, active);
-        }
-
-        @Override
-        public void setAccountsActive(final boolean active) {
-            mAccountService.setAccountsActive(active);
-        }
-
-        @Override
-        public Map<String, String> getVolatileAccountDetails(final String accountId) {
-            return mAccountService.getVolatileAccountDetails(accountId);
-        }
-
-        @Override
-        public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
-            return mAccountService.getAccountTemplate(accountType).blockingGet();
-        }
-
-        @SuppressWarnings("unchecked")
-        // Hashmap runtime cast
-        @Override
-        public String addAccount(final Map map) {
-            return mAccountService.addAccount((Map<String, String>) map).blockingFirst().getAccountID();
-        }
-
-        @Override
-        public void removeAccount(final String accountId) {
-            mAccountService.removeAccount(accountId);
-        }
-
-        @Override
-        public void exportOnRing(final String accountId, final String password) {
-            mAccountService.exportOnRing(accountId, password);
-        }
-
-        public Map<String, String> getKnownRingDevices(final String accountId) {
-            return mAccountService.getKnownRingDevices(accountId);
-        }
-
-        /*************************
-         * Transfer related API
-         *************************/
-
-        @Override
-        public void transfer(final String callID, final String to) throws RemoteException {
-            mCallService.transfer(callID, to);
-        }
-
-        @Override
-        public void attendedTransfer(final String transferID, final String targetID) throws RemoteException {
-            mCallService.attendedTransfer(transferID, targetID);
-        }
-
-        /*************************
-         * Conference related API
-         *************************/
-
-        @Override
-        public void removeConference(final String confID) throws RemoteException {
-            mCallService.removeConference(confID);
-        }
-
-        @Override
-        public void joinParticipant(final String selCallID, final String dragCallID) throws RemoteException {
-            mCallService.joinParticipant(selCallID, dragCallID);
-        }
-
-        @Override
-        public void addParticipant(final String callID, final String confID) throws RemoteException {
-            mCallService.addParticipant(callID, confID);
-        }
-
-        @Override
-        public void addMainParticipant(final String confID) throws RemoteException {
-            mCallService.addMainParticipant(confID);
-        }
-
-        @Override
-        public void detachParticipant(final String callID) throws RemoteException {
-            mCallService.detachParticipant(callID);
-        }
-
-        @Override
-        public void joinConference(final String selConfID, final String dragConfID) throws RemoteException {
-            mCallService.joinConference(selConfID, dragConfID);
-        }
-
-        @Override
-        public void hangUpConference(final String confID) throws RemoteException {
-            mCallService.hangUpConference(confID);
-        }
-
-        @Override
-        public void holdConference(final String confID) throws RemoteException {
-            mCallService.holdConference(confID);
-        }
-
-        @Override
-        public void unholdConference(final String confID) throws RemoteException {
-            mCallService.unholdConference(confID);
-        }
-
-        @Override
-        public boolean isConferenceParticipant(final String callID) throws RemoteException {
-            return mCallService.isConferenceParticipant(callID);
-        }
-
-        @Override
-        public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
-            return mCallService.getConferenceList();
-        }
-
-        @Override
-        public List<String> getParticipantList(final String confID) throws RemoteException {
-            return mCallService.getParticipantList(confID);
-        }
-
-        @Override
-        public String getConferenceId(String callID) throws RemoteException {
-            return mCallService.getConferenceId(callID);
-        }
-
-        @Override
-        public String getConferenceDetails(final String callID) throws RemoteException {
-            return mCallService.getConferenceState(callID);
-        }
-
-        @Override
-        public String getRecordPath() throws RemoteException {
-            return mCallService.getRecordPath();
-        }
-
-        @Override
-        public void setRecordPath(final String path) throws RemoteException {
-            mCallService.setRecordPath(path);
-        }
-
-        @Override
-        public boolean toggleRecordingCall(final String id) throws RemoteException {
-            return mCallService.toggleRecordingCall(id);
-        }
-
-        @Override
-        public boolean startRecordedFilePlayback(final String filepath) throws RemoteException {
-            return mCallService.startRecordedFilePlayback(filepath);
-        }
-
-        @Override
-        public void stopRecordedFilePlayback(final String filepath) throws RemoteException {
-            mCallService.stopRecordedFilePlayback();
-        }
-
-        @Override
-        public void sendTextMessage(final String callID, final String msg) throws RemoteException {
-            mCallService.sendTextMessage(callID, msg);
-        }
-
-        @Override
-        public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
-            return mCallService.sendAccountTextMessage(accountID, to, msg).blockingGet();
-        }
-
-        @Override
-        public List<Codec> getCodecList(final String accountID) throws RemoteException {
-            return mAccountService.getCodecList(accountID).blockingGet();
-        }
-
-        @Override
-        public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) throws RemoteException {
-            return mAccountService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass);
-        }
-
-        @Override
-        public Map<String, String> validateCertificate(final String accountID, final String certificate) throws RemoteException {
-            return mAccountService.validateCertificate(accountID, certificate);
-        }
-
-        @Override
-        public Map<String, String> getCertificateDetailsPath(final String certificatePath) throws RemoteException {
-            return mAccountService.getCertificateDetailsPath(certificatePath);
-        }
-
-        @Override
-        public Map<String, String> getCertificateDetails(final String certificateRaw) throws RemoteException {
-            return mAccountService.getCertificateDetails(certificateRaw);
-        }
-
-        @Override
-        public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
-            mAccountService.setActiveCodecList(accountID, codecs);
-        }
-
-        @Override
-        public void playDtmf(final String key) throws RemoteException {
-
-        }
-
-        @Override
-        public Map<String, String> getConference(final String id) throws RemoteException {
-            return mCallService.getConferenceDetails(id);
-        }
-
-        @Override
-        public void setMuted(final boolean mute) throws RemoteException {
-            mCallService.setMuted(mute);
-        }
-
-        @Override
-        public boolean isCaptureMuted() throws RemoteException {
-            return mCallService.isCaptureMuted();
-        }
-
-        @Override
-        public List<String> getTlsSupportedMethods() {
-            return mAccountService.getTlsSupportedMethods();
-        }
-
-        @Override
-        public List getCredentials(final String accountID) throws RemoteException {
-            return mAccountService.getCredentials(accountID);
-        }
-
-        @Override
-        public void setCredentials(final String accountID, final List creds) throws RemoteException {
-            mAccountService.setCredentials(accountID, creds);
-        }
-
-        @Override
-        public void registerAllAccounts() throws RemoteException {
-            mAccountService.registerAllAccounts();
-        }
-
-        @Override
-        @Deprecated
-        public void videoSurfaceAdded(String id) {
-
-        }
-
-        @Override
-        @Deprecated
-        public void videoSurfaceRemoved(String id) {
-
-        }
-
-        @Override
-        @Deprecated
-        public void videoPreviewSurfaceAdded() {
-
-        }
-
-        @Override
-        @Deprecated
-        public void videoPreviewSurfaceRemoved() {
-
-        }
-
-        @Override
-        @Deprecated
-        public void switchInput(final String id, final boolean front) {
-        }
-
-        @Override
-        @Deprecated
-        public void setPreviewSettings() {
-
-        }
-
-        @Override
-        public void connectivityChanged() {
-            mHardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected());
-        }
-
-        @Override
-        public void lookupName(final String account, final String nameserver, final String name) {
-            mAccountService.lookupName(account, nameserver, name);
-        }
-
-        @Override
-        public void lookupAddress(final String account, final String nameserver, final String address) {
-            mAccountService.lookupAddress(account, nameserver, address);
-        }
-
-        @Override
-        public void registerName(final String account, final String password, final String name) {
-            mAccountService.registerName(account, password, name);
-        }
-    };
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -586,10 +211,11 @@ public class DRingService extends Service {
         return START_STICKY; /* started and stopped explicitly */
     }
 
+    private final IBinder binder = new Binder();
+
     @Override
-    public IBinder onBind(Intent arg0) {
-        Log.i(TAG, "onBound");
-        return mBinder;
+    public IBinder onBind(Intent intent) {
+        return binder;
     }
 
     /* ************************************
@@ -681,7 +307,6 @@ public class DRingService extends Service {
 
     private void handleCallAction(String action, Bundle extras) {
         String callId = extras.getString(NotificationService.KEY_CALL_ID);
-
         if (callId == null || callId.isEmpty()) {
             return;
         }
