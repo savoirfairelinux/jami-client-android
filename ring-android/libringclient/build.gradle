@@ -20,7 +20,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     // RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.13'
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.7'
