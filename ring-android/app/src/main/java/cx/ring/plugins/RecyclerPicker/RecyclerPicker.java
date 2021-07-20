@@ -1,45 +1,37 @@
 package cx.ring.plugins.RecyclerPicker;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
-    private RecyclerView mRecyclerView;
-    private int mItemLayoutResource;
-    private RecyclerPickerAdapter mAdapter;
-    private RecyclerPickerLayoutManager mLayoutManager;
-    private int mOrientation;
-    private RecyclerPickerLayoutManager.ItemSelectedListener mItemSelectedListener;
+public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener {
+    private final RecyclerView mRecyclerView;
+    private final RecyclerPickerAdapter mAdapter;
+    private final RecyclerPickerLayoutManager mLayoutManager;
+    private final RecyclerPickerLayoutManager.ItemSelectedListener mItemSelectedListener;
     private int paddingLeft;
     private int paddingRight;
 
-    public RecyclerPicker(RecyclerView recyclerView,
+    public RecyclerPicker(@NonNull RecyclerView recyclerView,
                           @LayoutRes int recyclerItemLayout, int orientation,
                           RecyclerPickerLayoutManager.ItemSelectedListener listener) {
         mRecyclerView = recyclerView;
-        mItemLayoutResource = recyclerItemLayout;
-        mOrientation = orientation;
         mItemSelectedListener = listener;
-        init();
-    }
-
-    private void init() {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        mLayoutManager = new RecyclerPickerLayoutManager(mRecyclerView.getContext(), mOrientation,false,
+        mLayoutManager = new RecyclerPickerLayoutManager(mRecyclerView.getContext(), orientation,false,
                 mItemSelectedListener);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerPickerAdapter(mRecyclerView.getContext(), mItemLayoutResource, this);
+        mAdapter = new RecyclerPickerAdapter(mRecyclerView.getContext(), recyclerItemLayout, this);
         mRecyclerView.setAdapter(mAdapter);
         setRecyclerViewPadding();
     }
