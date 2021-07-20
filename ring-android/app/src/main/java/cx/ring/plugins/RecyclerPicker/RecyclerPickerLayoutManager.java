@@ -1,7 +1,6 @@
 package cx.ring.plugins.RecyclerPicker;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,14 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerPickerLayoutManager extends LinearLayoutManager {
     private RecyclerView recyclerView;
-    private LinearSnapHelper snapHelper;
-    private ItemSelectedListener listener;
+    private final ItemSelectedListener listener;
 
     public RecyclerPickerLayoutManager(Context context, int orientation, boolean reverseLayout, ItemSelectedListener listener) {
         super(context, orientation, reverseLayout);
         this.listener = listener;
     }
-
 
     @Override
     public void onAttachedToWindow(RecyclerView view) {
@@ -25,7 +22,7 @@ public class RecyclerPickerLayoutManager extends LinearLayoutManager {
         recyclerView = view;
 
         // Smart snapping
-        snapHelper = new LinearSnapHelper();
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
     }
 
@@ -73,8 +70,7 @@ public class RecyclerPickerLayoutManager extends LinearLayoutManager {
     }
 
     private int getRecyclerViewCenterX() {
-        Log.i("ZZZ", "recyclerView width: " + recyclerView.getWidth() + " Right-Left: " + (recyclerView.getRight()-recyclerView.getLeft()));
-        return (recyclerView.getWidth())/2 + recyclerView.getLeft();
+        return recyclerView.getWidth()/2 + recyclerView.getLeft();
     }
 
     private void scaleDownView() {
