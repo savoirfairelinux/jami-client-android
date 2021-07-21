@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
 import net.jami.model.ConversationHistory;
 import net.jami.model.DataTransfer;
 import net.jami.model.Interaction;
@@ -62,10 +64,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Inject
     HistoryService mHistoryService;
 
-    public DatabaseHelper(Context context, String dbDirectory) {
+    @Inject
+    public DatabaseHelper(@ApplicationContext Context context, String dbDirectory) {
         super(context, dbDirectory, null, DATABASE_VERSION);
         Log.d(TAG, "Helper initialized for " + dbDirectory);
-        ((JamiApplication) context.getApplicationContext()).getInjectionComponent().inject(this);
+        //((JamiApplication) context.getApplicationContext()).getInjectionComponent().inject(this);
     }
 
     /**

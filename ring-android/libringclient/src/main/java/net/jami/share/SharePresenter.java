@@ -23,6 +23,7 @@ package net.jami.share;
 import net.jami.services.AccountService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.jami.mvp.GenericView;
 import net.jami.mvp.RootPresenter;
@@ -35,7 +36,7 @@ public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
     private final Scheduler mUiScheduler;
 
     @Inject
-    public SharePresenter(AccountService accountService, Scheduler uiScheduler) {
+    public SharePresenter(AccountService accountService, @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mUiScheduler = uiScheduler;
     }

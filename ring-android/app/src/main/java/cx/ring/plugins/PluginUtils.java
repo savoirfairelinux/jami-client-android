@@ -35,15 +35,9 @@ public class PluginUtils {
         for (String pluginPath : pluginsPaths) {
             File pluginFolder = new File(pluginPath);
             if(pluginFolder.isDirectory()) {
-                //We use the absolute path of a plugin as a preference name for uniqueness
-                boolean enabled = false;
-
-                if (loadedPluginsPaths.contains(pluginPath)) {
-                    enabled = true;
-                }
                 pluginsList.add(new PluginDetails(
                         pluginFolder.getName(),
-                        pluginFolder.getAbsolutePath(), enabled));
+                        pluginFolder.getAbsolutePath(), loadedPluginsPaths.contains(pluginPath)));
             }
         }
         return pluginsList;

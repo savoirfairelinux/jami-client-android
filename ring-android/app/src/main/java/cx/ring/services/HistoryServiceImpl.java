@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 
 import cx.ring.history.DatabaseHelper;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 import net.jami.model.ConversationHistory;
 import net.jami.model.Interaction;
@@ -53,10 +54,10 @@ public class HistoryServiceImpl extends HistoryService {
 
     private final ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
 
-    @Inject
-    protected Context mContext;
+    private final Context mContext;
 
-    public HistoryServiceImpl() {
+    public HistoryServiceImpl(Context context) {
+        mContext = context;
     }
 
     @Override
