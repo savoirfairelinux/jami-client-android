@@ -217,12 +217,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     private void updateListPadding() {
-        if (currentBottomView != null && currentBottomView.getHeight() != 0) {
-            setBottomPadding(binding.histList, currentBottomView.getHeight() + marginPxTotal);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
-            params.bottomMargin = currentBottomView.getHeight() + marginPxTotal;
-            binding.mapCard.setLayoutParams(params);
-        }
+        int bottomViewHeight = currentBottomView != null ? currentBottomView.getHeight() : 0;
+        setBottomPadding(binding.histList, bottomViewHeight + marginPxTotal);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+        params.bottomMargin = bottomViewHeight + marginPxTotal;
+        binding.mapCard.setLayoutParams(params);
     }
 
     @Nullable
@@ -898,7 +897,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    protected void initPresenter(ConversationPresenter presenter) {
+    protected void initPresenter(@NonNull ConversationPresenter presenter) {
         ConversationPath path = ConversationPath.fromBundle(getArguments());
         mIsBubble = getArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE);
         Log.w(TAG, "initPresenter " + path);
@@ -1149,6 +1148,18 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.trustRequestPrompt.setVisibility(View.GONE);
         binding.trustRequestMessageLayout.setVisibility(View.GONE);
         currentBottomView = binding.cvMessageInput;
+        requireActivity().invalidateOptionsMenu();
+        updateListPadding();
+    }
+
+    @Override
+    public void switchToSyncingView() {
+        binding.cvMessageInput.setVisibility(View.GONE);
+        binding.unknownContactPrompt.setVisibility(View.GONE);
+        binding.trustRequestPrompt.setVisibility(View.GONE);
+        binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
+        binding.tvTrustRequestMessage.setText("Syncing conversation...");
+        currentBottomView = null;
         requireActivity().invalidateOptionsMenu();
         updateListPadding();
     }

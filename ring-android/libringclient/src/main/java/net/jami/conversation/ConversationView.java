@@ -67,6 +67,8 @@ public interface ConversationView extends BaseView {
 
     void switchToConversationView();
 
+    void switchToSyncingView();
+
     void askWriteExternalStoragePermission();
 
     void openFilePicker();
@@ -103,5 +105,4 @@ public interface ConversationView extends BaseView {
     void setReadIndicatorStatus(boolean show);
 
     void updateLastRead(String last);
-
 }
