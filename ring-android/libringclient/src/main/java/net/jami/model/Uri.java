@@ -70,7 +70,7 @@ public class Uri implements Serializable {
         }
     }
 
-    static public net.jami.utils.Tuple<Uri, String> fromStringWithName(String uriString) {
+    static public Tuple<Uri, String> fromStringWithName(String uriString) {
         Matcher m = ANGLE_BRACKETS_PATTERN.matcher(uriString);
         if (m.find()) {
             return new Tuple<>(fromString(m.group(2)), m.group(1));

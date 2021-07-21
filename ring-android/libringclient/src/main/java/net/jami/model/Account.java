@@ -808,11 +808,11 @@ public class Account {
         }
     }
 
-    public boolean removeRequest(Uri contact) {
+    public boolean removeRequest(Uri conversationUri) {
         synchronized (pending) {
-            String contactUri = contact.getUri();
-            TrustRequest request = mRequests.remove(contactUri);
-            if (pending.remove(contactUri) != null) {
+            String uri = conversationUri.getUri();
+            TrustRequest request = mRequests.remove(uri);
+            if (pending.remove(uri) != null) {
                 pendingChanged();
                 return true;
             }
