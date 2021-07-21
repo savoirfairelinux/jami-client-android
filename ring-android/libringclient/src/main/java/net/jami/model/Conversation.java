@@ -747,7 +747,7 @@ public class Conversation extends ConversationHistory {
         OneToOne,
         AdminInvitesOnly,
         InvitesOnly,
-        Public
+        Syncing, Public
     }
 
     public interface ConversationActionCallback {
