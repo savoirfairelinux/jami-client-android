@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import net.jami.daemon.IntVect;
 import net.jami.daemon.StringVect;
 import net.jami.services.DeviceRuntimeService;
+import net.jami.services.LogService;
 import net.jami.utils.FileUtils;
 import net.jami.utils.StringUtils;
 
@@ -49,6 +50,7 @@ import javax.inject.Named;
 import cx.ring.application.JamiApplication;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.NetworkUtils;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -56,11 +58,16 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     private static final String[] PROFILE_PROJECTION = new String[]{ContactsContract.Profile._ID,
             ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
             ContactsContract.Profile.PHOTO_ID};
-    @Inject
+    @ApplicationContext
     protected Context mContext;
     @Inject
     @Named("DaemonExecutor")
     ScheduledExecutorService mExecutor;
+
+    public DeviceRuntimeServiceImpl(Context context, ScheduledExecutorService executor, LogService logService) {
+        mContext = context;
+        mExecutor = executor;
+    }
 
     private void copyAssets() {
         File pluginsPath = new File(mContext.getFilesDir(), "plugins");
@@ -71,7 +78,9 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void loadNativeLibrary() {
+        Log.w(TAG, "loadNativeLibrary");
         mExecutor.execute(() -> {
+            Log.w(TAG, "System.loadLibrary");
             try {
                 System.loadLibrary("ring");
             } catch (Exception e) {
