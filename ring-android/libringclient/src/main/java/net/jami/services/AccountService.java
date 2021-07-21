@@ -1072,21 +1072,30 @@ public class AccountService {
      */
     public void acceptTrustRequest(final String accountId, final Uri from) {
         Log.i(TAG, "acceptRequest() " + accountId + " " + from);
+
         Account account = getAccount(accountId);
         if (account != null) {
             TrustRequest request = account.getRequest(from);
+            account.removeRequest(from);
+
             if (request != null) {
                 VCard vCard = request.getVCard();
                 if (vCard != null) {
                     VCardUtils.savePeerProfileToDisk(vCard, accountId, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
                 }
+                if (!StringUtils.isEmpty(request.getConversationId())
+                        && !request.getUri().isSwarm()
+                        && request.getUri().getRawRingId().equals(request.getConversationId())) {
+                    Contact contact = account.getContactFromCache(request.getUri());
+                    if (contact != null)  {
+                        contact.setConversationUri(new Uri(Uri.SWARM_SCHEME, request.getConversationId()));
+                    }
+                }
             }
-            account.removeRequest(from);
             //handleTrustRequest(accountId, from, null, ContactType.INVITATION_ACCEPTED);
         }
         mExecutor.execute(() -> JamiService.acceptTrustRequest(accountId, from.getRawRingId()));
     }
-
 
     /**
      * Handles adding contacts and is the initial point of conversation creation

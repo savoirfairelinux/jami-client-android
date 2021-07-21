@@ -177,6 +177,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.clear();
         view.hideNumberSpinner();
 
+        if (c.getMode() == Conversation.Mode.Syncing) {
+            view.switchToSyncingView();
+            return;
+        }
+
         if (account.isJami()) {
             mConversationDisposable.add(c.getContact()
                     .getConversationUri()
