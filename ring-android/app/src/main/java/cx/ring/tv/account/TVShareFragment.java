@@ -40,10 +40,12 @@ import net.jami.share.ShareViewModel;
 import net.jami.utils.Log;
 import net.jami.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class TVShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
+@AndroidEntryPoint
+public class TVShareFragment extends BaseSupportFragment<SharePresenter, GenericView<ShareViewModel>> implements GenericView<ShareViewModel> {
 
     private TvFragShareBinding binding;
     private final CompositeDisposable disposable = new CompositeDisposable();
@@ -52,7 +54,6 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TvFragShareBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -90,7 +91,7 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
     }
 
     private void getUserAvatar(Account account) {
-        disposable.add(VCardServiceImpl
+        disposable.add(VCardServiceImpl.Companion
                 .loadProfile(requireContext(), account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(profile -> {

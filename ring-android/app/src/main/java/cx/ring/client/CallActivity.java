@@ -91,7 +91,7 @@ public class CallActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if(intent != null)
+        if (intent != null)
             handleNewIntent(intent);
     }
 
@@ -203,7 +203,7 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             CallFragment callFragment = getCallFragment();
-            if(callFragment != null) {
+            if (callFragment != null) {
                 callFragment.toggleVideoPluginsCarousel(true);
             }
             restartNoInteractionTimer();
