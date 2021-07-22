@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c289bf3f_e1dc1b42",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SIPAccountCreationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-22T21:03:00Z",
+      "side": 1,
+      "message": "val TAG by lazy { SIPAccountCreationFragment::class.java.simpleName }",
+      "revId": "c93cf9c0330e04ead0b094aab69e3f322795b87c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "256e42c8_cc4141a4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-22T21:03:00Z",
+      "side": 1,
+      "message": "will crash if binding is not already instantiated, using binding?.qrCode.visibility \u003d View.GONE would just ignore this instruction in this case",
+      "revId": "c93cf9c0330e04ead0b094aab69e3f322795b87c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
