@@ -620,8 +620,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         DataTransfer file = (DataTransfer) interaction;
 
         File path = presenter.getDeviceRuntimeService().getConversationPath(file);
-        if (file.isComplete())
-            file.setSize(path.length());
+        //if (file.isComplete())
+        //    file.setSize(path.length());
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(time -> {
             InteractionStatus status = file.getStatus();
