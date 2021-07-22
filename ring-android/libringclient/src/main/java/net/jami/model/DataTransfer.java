@@ -121,8 +121,11 @@ public class DataTransfer extends Interaction {
     }
 
     public String getStoragePath() {
-        if (StringUtils.isEmpty(mBody)) {
-            return getFileId();
+        if (mBody == null) {
+            if (StringUtils.isEmpty(mFileId)) {
+                return "Error";
+            }
+            return mFileId;
         } else {
             String ext = StringUtils.getFileExtension(mBody);
             if (ext.length() > 8)
