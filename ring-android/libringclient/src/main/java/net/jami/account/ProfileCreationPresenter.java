@@ -20,12 +20,13 @@
 package net.jami.account;
 
 import net.jami.mvp.AccountCreationModel;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.HardwareService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.jami.mvp.RootPresenter;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
 import net.jami.utils.Log;
 
 import io.reactivex.rxjava3.core.Scheduler;
@@ -35,14 +36,16 @@ public class ProfileCreationPresenter extends RootPresenter<net.jami.account.Pro
 
     public static final String TAG = ProfileCreationPresenter.class.getSimpleName();
 
-    private final net.jami.services.DeviceRuntimeService mDeviceRuntimeService;
-    private final net.jami.services.HardwareService mHardwareService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final HardwareService mHardwareService;
     private final Scheduler mUiScheduler;
 
     private net.jami.mvp.AccountCreationModel mAccountCreationModel;
 
     @Inject
-    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService, HardwareService hardwareService, Scheduler uiScheduler) {
+    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService,
+                                    HardwareService hardwareService,
+                                    @Named("UiScheduler") Scheduler uiScheduler) {
         mDeviceRuntimeService = deviceRuntimeService;
         mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;

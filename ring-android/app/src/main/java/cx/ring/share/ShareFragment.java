@@ -36,11 +36,12 @@ import net.jami.share.ShareViewModel;
 import net.jami.utils.QRCodeUtils;
 
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragShareBinding;
 import cx.ring.mvp.BaseSupportFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
+@AndroidEntryPoint
+public class ShareFragment extends BaseSupportFragment<SharePresenter, GenericView<ShareViewModel>> implements GenericView<ShareViewModel> {
 
     private String mUriToShow;
     private boolean isShareLocked = false;
@@ -50,7 +51,6 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragShareBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 

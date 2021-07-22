@@ -31,23 +31,18 @@ import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
-import cx.ring.application.JamiApplication;
 import cx.ring.services.NotificationServiceImpl;
+import dagger.hilt.android.AndroidEntryPoint;
 
 import net.jami.services.NotificationService;
 
+@AndroidEntryPoint
 public class CallNotificationService extends Service {
     public static final String ACTION_START = "START";
     public static final String ACTION_STOP = "STOP";
 
     @Inject
     NotificationService mNotificationService;
-
-    @Override
-    public void onCreate() {
-        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
-        super.onCreate();
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

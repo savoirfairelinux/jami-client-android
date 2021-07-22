@@ -34,9 +34,11 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.tv.account.TVAccountWizard;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+@AndroidEntryPoint
 public class HomeActivity extends FragmentActivity {
     private BackgroundManager mBackgroundManager;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -47,7 +49,6 @@ public class HomeActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
         setContentView(R.layout.tv_activity_home);
         mBackgroundManager = BackgroundManager.getInstance(this);
         mBackgroundManager.attach(getWindow());

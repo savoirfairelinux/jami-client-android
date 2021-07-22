@@ -81,12 +81,14 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class TvConversationFragment extends BaseSupportFragment<ConversationPresenter> implements ConversationView {
+@AndroidEntryPoint
+public class TvConversationFragment extends BaseSupportFragment<ConversationPresenter, ConversationView> implements ConversationView {
     private static final String TAG = TvConversationFragment.class.getSimpleName();
 
     private static final String ARG_MODEL = "model";
@@ -151,7 +153,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragConversationTvBinding.inflate(inflater, container, false);
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -790,6 +791,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     public void switchToConversationView() {
         // todo
     }
+
+    @Override
+    public void switchToSyncingView() {
+        // todo
+    }
+
 
     @Override
     public void openFilePicker() {
