@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c52d3c56_3ddae236",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-07-22T21:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22d1691_755711d5",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e32c5e1e_06dcd988",
@@ -35,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7ecd76_51286dca",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-07-22T21:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e32c5e1e_06dcd988",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0030630_3d2f5fb6",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-07-22T20:51:15Z",
       "side": 1,
       "message": "probably better to stay on stable for such critical tool\n4.2.2 is the latest stable",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f63ce8c_46a9b6f3",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-07-22T21:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0030630_3d2f5fb6",
       "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
