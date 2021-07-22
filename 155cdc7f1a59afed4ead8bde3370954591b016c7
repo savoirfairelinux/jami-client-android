@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a22d1691_755711d5",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-22T20:51:15Z",
+      "side": 1,
+      "message": "plugins {\n    id \u0027com.android.application\u0027\n    id \u0027kotlin-android\u0027\n    id \u0027kotlin-kapt\u0027 // will likely be required to parse annotations\n}",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e32c5e1e_06dcd988",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-22T20:51:15Z",
+      "side": 1,
+      "message": "kotlinOptions {\n        jvmTarget \u003d \u00271.8\u0027\n    }",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0030630_3d2f5fb6",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-22T20:51:15Z",
+      "side": 1,
+      "message": "probably better to stay on stable for such critical tool\n4.2.2 is the latest stable",
+      "revId": "155cdc7f1a59afed4ead8bde3370954591b016c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
