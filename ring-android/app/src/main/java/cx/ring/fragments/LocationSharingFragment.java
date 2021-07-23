@@ -82,6 +82,7 @@ import cx.ring.databinding.FragLocationSharingBinding;
 import cx.ring.service.LocationSharingService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.TouchClickListener;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -89,6 +90,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 
+@AndroidEntryPoint
 public class LocationSharingFragment extends Fragment {
     private static final String TAG = LocationSharingFragment.class.getSimpleName();
     private static final int REQUEST_CODE_LOCATION = 47892;
@@ -153,8 +155,7 @@ public class LocationSharingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
         Bundle args = getArguments();
         if (args != null) {

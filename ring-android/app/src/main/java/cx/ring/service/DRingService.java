@@ -74,8 +74,10 @@ import net.jami.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+@AndroidEntryPoint
 public class DRingService extends Service {
     private static final String TAG = DRingService.class.getSimpleName();
 
@@ -532,11 +534,8 @@ public class DRingService extends Service {
     };
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreated");
         super.onCreate();
-
-        // dependency injection
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
+        Log.i(TAG, "onCreate");
         isRunning = true;
 
         if (mDeviceRuntimeService.hasContactPermission()) {
@@ -551,9 +550,7 @@ public class DRingService extends Service {
         registerReceiver(receiver, intentFilter);
         updateConnectivityState();
 
-        mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
-            showSystemNotification(s);
-        }));
+        mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(this::showSystemNotification));
 
         JamiApplication.getInstance().bindDaemon();
         JamiApplication.getInstance().bootstrapDaemon();

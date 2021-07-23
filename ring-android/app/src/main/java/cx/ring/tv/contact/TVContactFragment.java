@@ -57,7 +57,9 @@ import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> implements TVContactView {
 
     private static final int ACTION_CALL = 0;
@@ -76,12 +78,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     private boolean isIncomingRequest = false;
     private boolean isOutgoingRequest = false;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
