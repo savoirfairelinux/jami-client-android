@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c929ce_a0f73884",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2021-07-23T19:31:07Z",
+      "side": 1,
+      "message": "if (!::daemon.isInitialized) {\n    return\n}",
+      "revId": "736b66944bb37333fe85bf89e5c23bd4117c4ecc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
