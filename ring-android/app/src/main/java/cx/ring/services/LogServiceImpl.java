@@ -56,6 +56,4 @@ public class LogServiceImpl implements LogService {
     public void i(String tag, String message, Throwable e) {
         Log.i(tag, message, e);
     }
-
-
 }
