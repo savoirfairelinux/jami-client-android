@@ -279,8 +279,8 @@ public class Account {
             conversationsChanged = true;
             if (historyLoaded) {
                 conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
+                updateUnreadConversations();
             }
-            updateUnreadConversations();
         }
     }
 
