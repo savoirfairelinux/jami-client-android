@@ -55,12 +55,9 @@ public interface NotificationService {
     void removeTransferNotification(String accountId, Uri conversationUri, String fileId);
     Object getDataTransferNotification(int notificationId);
 
-    void updateNotification(Object notification, int notificationId);
+    //void updateNotification(Object notification, int notificationId);
 
     Object getServiceNotification();
-
-
-
 
     void onConnectionUpdate(Boolean b);
 
