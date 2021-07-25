@@ -592,7 +592,7 @@ public class ConversationFacade {
     private void handleDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
         Interaction.InteractionStatus status = transfer.getStatus();
-        if ((status == Interaction.InteractionStatus.TRANSFER_CREATED || status == Interaction.InteractionStatus.FILE_AVAILABLE) && !transfer.isOutgoing()) {
+        if (status == Interaction.InteractionStatus.TRANSFER_AWAITING_HOST || status == Interaction.InteractionStatus.FILE_AVAILABLE) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
                 mAccountService.acceptFileTransfer(conversation, transfer.getFileId(), transfer);
                 return;
