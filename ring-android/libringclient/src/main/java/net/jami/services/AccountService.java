@@ -390,9 +390,9 @@ public class AccountService {
                 List<String> conversations = JamiService.getConversations(account.getAccountID());
                 for (String conversationId : conversations) {
                     Map<String, String> info = JamiService.conversationInfos(accountId, conversationId);
-                    /*for (Map.Entry<String, String> i : info.entrySet()) {
+                    for (Map.Entry<String, String> i : info.entrySet()) {
                         Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                    }*/
+                    }
                     Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
                     Conversation conversation = account.newSwarm(conversationId, mode);
                     conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
@@ -406,7 +406,6 @@ public class AccountService {
                     }
                     conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
                     account.conversationStarted(conversation);
-                    //account.addSwarmConversation(conversationId, members);
                 }
                 for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
                     /*for (Map.Entry<String, String> e : requestData.entrySet()) {
