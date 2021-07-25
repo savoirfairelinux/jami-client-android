@@ -167,7 +167,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     public boolean add(Interaction e) {
         if (!TextUtils.isEmpty(e.getMessageId())) {
-            if (mInteractions.isEmpty() || e.getParentIds().contains(mInteractions.get(mInteractions.size()-1).getMessageId())) {
+            if (mInteractions.isEmpty() || mInteractions.get(mInteractions.size()-1).getMessageId().equals(e.getParentId())) {
                 boolean update = !mInteractions.isEmpty();
                 mInteractions.add(e);
                 notifyItemInserted(mInteractions.size()-1);
@@ -176,7 +176,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 return true;
             }
             for (int i = 0, n = mInteractions.size(); i<n; i++) {
-                if (mInteractions.get(i).getParentIds().contains(e.getMessageId())) {
+                if (e.getMessageId().equals(mInteractions.get(i).getParentId())) {
                     Log.w(TAG, "Adding message at " + i + " previous count " + n);
                     mInteractions.add(i, e);
                     notifyItemInserted(i);
