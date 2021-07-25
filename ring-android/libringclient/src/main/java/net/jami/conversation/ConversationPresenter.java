@@ -179,7 +179,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     private void initView(Account account, final Conversation c, final ConversationView view) {
-        Log.w(TAG, "initView " + c.getUri());
+        Log.w(TAG, "initView " + c.getUri() + " " + c.getMode());
         if (mConversationDisposable == null) {
             mConversationDisposable = new CompositeDisposable();
             mCompositeDisposable.add(mConversationDisposable);

@@ -52,6 +52,7 @@ public class Account {
     private static final String CONTACT_CONFIRMED = "confirmed";
     private static final String CONTACT_BANNED = "banned";
     private static final String CONTACT_ID = "id";
+    private static final String CONTACT_CONVERSATION = "conversationId";
     private static final int LOCATION_SHARING_EXPIRATION_MS = 1000 * 60 * 2;
 
     private final String accountID;
@@ -748,6 +749,12 @@ public class Account {
                     Contact.Status.CONFIRMED :
                     Contact.Status.REQUEST_SENT);
         }
+
+        String conversationUri = contact.get(CONTACT_CONVERSATION);
+        if (!StringUtils.isEmpty(conversationUri)) {
+            callContact.setConversationUri(new Uri(Uri.SWARM_SCHEME, conversationUri));
+        }
+
         mContacts.put(contactId, callContact);
         contactAdded(callContact);
     }

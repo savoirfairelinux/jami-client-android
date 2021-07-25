@@ -194,14 +194,14 @@ public class Conversation extends ConversationHistory {
 
     public synchronized String readMessages() {
         Interaction interaction = null;
-        //for (String branch : mBranches) {
+        if (!mAggregateHistory.isEmpty()) {
             Interaction i = mAggregateHistory.get(mAggregateHistory.size() - 1);
             if (i != null && !i.isRead()) {
                 i.read();
                 interaction = i;
                 lastRead = i.getMessageId();
             }
-        //}
+        }
         return interaction == null ? null : interaction.getMessageId();
     }
 
