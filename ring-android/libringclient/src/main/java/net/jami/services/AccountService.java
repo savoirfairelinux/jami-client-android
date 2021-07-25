@@ -1085,7 +1085,7 @@ public class AccountService {
                 }
                 if (!StringUtils.isEmpty(request.getConversationId())
                         && !request.getUri().isSwarm()
-                        && request.getUri().getRawRingId().equals(request.getConversationId())) {
+                        && !request.getUri().getRawRingId().equals(request.getConversationId())) {
                     Contact contact = account.getContactFromCache(request.getUri());
                     if (contact != null)  {
                         contact.setConversationUri(new Uri(Uri.SWARM_SCHEME, request.getConversationId()));
