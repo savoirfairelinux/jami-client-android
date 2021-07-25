@@ -131,7 +131,7 @@ class NotificationServiceImpl(
                 .setColorized(true)
                 .setUsesChronometer(true)
                 .setWhen(conference.timestampStart)
-                .setColor(mContext.resources.getColor(R.color.color_primary_light))
+                .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
                 .addAction(
                     R.drawable.baseline_call_end_24,
                     mContext.getText(R.string.action_call_hangup),
@@ -199,21 +199,15 @@ class NotificationServiceImpl(
                     )
                 }
             } else {
-                messageNotificationBuilder =
-                    NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
-                messageNotificationBuilder.setContentTitle(
-                    mContext.getString(
-                        R.string.notif_outgoing_call_title,
-                        contact.displayName
-                    )
-                )
+                messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
+                    .setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.displayName))
                     .setContentText(mContext.getText(R.string.notif_outgoing_call))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(gotoIntent)
                     .setSound(null)
                     .setVibrate(null)
                     .setColorized(true)
-                    .setColor(mContext.resources.getColor(R.color.color_primary_light))
+                    .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
                     .addAction(
                         R.drawable.baseline_call_end_24,
                         mContext.getText(R.string.action_call_hangup),
@@ -269,13 +263,11 @@ class NotificationServiceImpl(
                 )
             )
             .setAutoCancel(false)
-            .setColor(
-                ResourcesCompat.getColor(
+            .setColor(ResourcesCompat.getColor(
                     mContext.resources,
                     R.color.color_primary_dark,
                     null
-                )
-            )
+                ))
         notificationManager.notify(
             Objects.hash("Location", path),
             messageNotificationBuilder.build()
@@ -297,11 +289,8 @@ class NotificationServiceImpl(
      * @param notification   a built notification object
      * @param notificationId the notification's id
      */
-    override fun updateNotification(notification: Any, notificationId: Int) {
-        if (notification != null) notificationManager.notify(
-            notificationId,
-            (notification as Notification)
-        )
+    private fun updateNotification(notification: Notification, notificationId: Int) {
+        notificationManager.notify(notificationId, notification)
     }
 
     /**
@@ -476,9 +465,8 @@ class NotificationServiceImpl(
         }
         Log.w(TAG, "showTextNotification " + accountId + " " + conversation.uri)
         mContactService.getLoadedContact(accountId, conversation.contacts, false)
-            .subscribe(
-                { c: List<Contact?>? -> textNotification(accountId, texts, conversation) }
-            ) { e: Throwable? -> Log.w(TAG, "Can't load contact", e) }
+            .subscribe({ textNotification(accountId, texts, conversation) })
+            { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
     private fun textNotification(
@@ -496,7 +484,7 @@ class NotificationServiceImpl(
             SettingsFragment.NOTIFICATION_PRIVATE -> Notification.VISIBILITY_PRIVATE
             else -> Notification.VISIBILITY_PRIVATE
         }
-        val last = texts.lastEntry().value
+        val last = texts.lastEntry()?.value
         val intentConversation =
             Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService::class.java)
         val intentDelete =
@@ -510,8 +498,8 @@ class NotificationServiceImpl(
             .setVisibility(notificationVisibility)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setContentTitle(conversationProfile.second)
-            .setContentText(last.body)
-            .setWhen(last.timestamp)
+            .setContentText(last?.body)
+            .setWhen(last?.timestamp ?: 0)
             .setContentIntent(
                 PendingIntent.getService(
                     mContext,
@@ -534,39 +522,28 @@ class NotificationServiceImpl(
             .setKey(key)
             .setName(conversationProfile.second)
             .setIcon(
-                if (conversationProfile.first == null) null else IconCompat.createWithBitmap(
-                    conversationProfile.first
-                )
+                if (conversationProfile.first == null) null else IconCompat.createWithBitmap(conversationProfile.first)
             )
             .build()
         if (conversationProfile.first != null) {
             messageNotificationBuilder.setLargeIcon(conversationProfile.first)
-            val intentBubble =
-                Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
+            val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
             intentBubble.putExtra(EXTRA_BUBBLE, true)
-            messageNotificationBuilder.setBubbleMetadata(
-                NotificationCompat.BubbleMetadata.Builder()
+            messageNotificationBuilder
+                .setBubbleMetadata(NotificationCompat.BubbleMetadata.Builder(PendingIntent.getActivity(
+                    mContext, 0, intentBubble,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                ), IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
                     .setDesiredHeight(600)
-                    .setIcon(IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
-                    .setIntent(
-                        PendingIntent.getActivity(
-                            mContext, 0, intentBubble,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                        )
-                    )
-                    .build()
-            )
+                    .build())
+                .addPerson(conversationPerson)
                 .setShortcutId(key)
         }
-        val unreadConvBuilder =
-            NotificationCompat.CarExtender.UnreadConversation.Builder(conversationProfile.second)
-                .setLatestTimestamp(last.timestamp)
         if (texts.size == 1) {
-            last.isNotified = true
+            last!!.isNotified = true
             messageNotificationBuilder.setStyle(null)
-            unreadConvBuilder.addMessage(last.body)
         } else {
-            val account = mAccountService!!.getAccount(accountId)
+            val account = mAccountService.getAccount(accountId)
             val profile = if (account == null) null else VCardServiceImpl.loadProfile(
                 mContext, account
             ).blockingGet()
@@ -596,7 +573,6 @@ class NotificationServiceImpl(
                         if (textMessage.isIncoming) contactPerson else null
                     )
                 )
-                unreadConvBuilder.addMessage(textMessage.body)
             }
             messageNotificationBuilder.setStyle(history)
         }
@@ -640,15 +616,6 @@ class NotificationServiceImpl(
                     .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
                     .setShowsUserInterface(false)
                     .build()
-            )
-            .extend(
-                NotificationCompat.CarExtender()
-                    .setUnreadConversation(
-                        unreadConvBuilder
-                            .setReadPendingIntent(readPendingIntent)
-                            .setReplyAction(replyPendingIntent, remoteInput)
-                            .build()
-                    )
             )
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
         mNotificationBuilders.put(notificationId, messageNotificationBuilder)
@@ -698,7 +665,7 @@ class NotificationServiceImpl(
             }
             mContactService.getLoadedContact(account.accountID, request.contacts, false)
                 .subscribe(
-                    { c: List<Contact> ->
+                    {
                         val builder = getRequestNotificationBuilder(account.accountID)
                         mPreferencesService.saveRequestPreferences(account.accountID, contactKey)
                         val info = ConversationPath.toUri(account.accountID, request.uri)
@@ -880,14 +847,10 @@ class NotificationServiceImpl(
             ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
         val picture = getContactPicture(conversation)
         if (picture != null) messageNotificationBuilder.setLargeIcon(picture)
-        if (event.isOver) {
-            messageNotificationBuilder.setProgress(0, 0, false)
-        } else if (ongoing) {
-            messageNotificationBuilder.setProgress(
-                info.totalSize.toInt(), info.bytesProgress.toInt(), false
-            )
-        } else {
-            messageNotificationBuilder.setProgress(0, 0, true)
+        when {
+            event.isOver -> messageNotificationBuilder.setProgress(0, 0, false)
+            ongoing -> messageNotificationBuilder.setProgress(info.totalSize.toInt(), info.bytesProgress.toInt(), false)
+            else -> messageNotificationBuilder.setProgress(0, 0, true)
         }
         if (event == InteractionStatus.TRANSFER_CREATED) {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE)
@@ -1022,9 +985,6 @@ class NotificationServiceImpl(
     }
 
     override fun cancelTrustRequestNotification(accountID: String) {
-        if (accountID == null) {
-            return
-        }
         val notificationId = getIncomingTrustNotificationId(accountID)
         notificationManager.cancel(notificationId)
     }
