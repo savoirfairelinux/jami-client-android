@@ -24,8 +24,6 @@ import com.google.gson.JsonParser;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.List;
-
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 public class Interaction {
 
@@ -68,7 +66,7 @@ public class Interaction {
     // Swarm
     private String mConversationId = null;
     private String mMessageId = null;
-    private List<String> mParentIds = null;
+    private String mParentId = null;
 
     /* Needed by ORMLite */
     public Interaction() {
@@ -199,8 +197,8 @@ public class Interaction {
         return mConversationId;
     }
 
-    public List<String> getParentIds() {
-        return mParentIds;
+    public String getParentId() {
+        return mParentId;
     }
 
     public boolean isIncoming() {
@@ -222,12 +220,12 @@ public class Interaction {
     public void setSwarmInfo(String conversationId) {
         mConversationId = conversationId;
         mMessageId = null;
-        mParentIds = null;
+        mParentId = null;
     }
-    public void setSwarmInfo(String conversationId, String messageId, List<String> parents) {
+    public void setSwarmInfo(String conversationId, String messageId, String parent) {
         mConversationId = conversationId;
         mMessageId = messageId;
-        mParentIds = parents;
+        mParentId = parent;
     }
 
     public enum InteractionStatus {

@@ -1538,7 +1538,6 @@ public class AccountService {
         String type = message.get("type");
         String author = message.get("author");
         String parent = message.get("linearizedParent");
-        List<String> parents = StringUtils.isEmpty(parent) ? Collections.emptyList() : Collections.singletonList(parent);
         Uri authorUri = Uri.fromId(author);
 
         long timestamp = Long.parseLong(message.get("timestamp")) * 1000;
@@ -1590,7 +1589,7 @@ public class AccountService {
                 break;
         }
         interaction.setContact(contact);
-        interaction.setSwarmInfo(conversation.getUri().getRawRingId(), id, parents);
+        interaction.setSwarmInfo(conversation.getUri().getRawRingId(), id, StringUtils.isEmpty(parent) ? null : parent);
         interaction.setConversation(conversation);
         if (conversation.addSwarmElement(interaction)) {
             if (conversation.isVisible())
