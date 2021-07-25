@@ -217,11 +217,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     private void updateListPadding() {
-        int bottomViewHeight = currentBottomView != null ? currentBottomView.getHeight() : 0;
-        setBottomPadding(binding.histList, bottomViewHeight + marginPxTotal);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
-        params.bottomMargin = bottomViewHeight + marginPxTotal;
-        binding.mapCard.setLayoutParams(params);
+        if (currentBottomView != null && currentBottomView.getHeight() != 0) {
+            int bottomViewHeight = currentBottomView != null ? currentBottomView.getHeight() : 0;
+            setBottomPadding(binding.histList, bottomViewHeight + marginPxTotal);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+            params.bottomMargin = bottomViewHeight + marginPxTotal;
+            binding.mapCard.setLayoutParams(params);
+        }
     }
 
     @Nullable

@@ -56,7 +56,6 @@ public class Contact {
 
     private boolean usernameLoaded = false;
     public boolean detailsLoaded = false;
-    //private Uri mConversationUri = null;
     private final BehaviorSubject<Uri> mConversationUri;
 
     // Profile

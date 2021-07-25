@@ -1114,7 +1114,7 @@ public class AccountService {
                 }
                 /*if (!StringUtils.isEmpty(request.getConversationId())
                         && !request.getUri().isSwarm()
-                        && request.getUri().getRawRingId().equals(request.getConversationId())) {
+                        && !request.getUri().getRawRingId().equals(request.getConversationId())) {
                     Contact contact = account.getContactFromCache(request.getUri());
                     if (contact != null)  {
                         Conversation conversation = account.newSwarm(request.getConversationId(), Conversation.Mode.Syncing);
