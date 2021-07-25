@@ -417,10 +417,10 @@ public class Conversation extends ConversationHistory {
 
     boolean isAfter(Interaction previous, Interaction query) {
         if (isSwarm()) {
-            while (query != null && query.getParentIds() != null && !query.getParentIds().isEmpty()) {
-                if (query.getParentIds().contains(previous.getMessageId()))
+            while (query != null && query.getParentId() != null) {
+                if (query.getParentId().equals(previous.getMessageId()))
                     return true;
-                query = mMessages.get(query.getParentIds().get(0));
+                query = mMessages.get(query.getParentId());
             }
             return false;
         } else {
@@ -644,16 +644,15 @@ public class Conversation extends ConversationHistory {
         }
         mMessages.put(interaction.getMessageId(), interaction);
         mRoots.remove(interaction.getMessageId());
-        for (String parent : interaction.getParentIds())
-            if (!mMessages.containsKey(parent)) {
-                mRoots.add(parent);
-                // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
-            }
+        if (interaction.getParentId() != null && !mMessages.containsKey(interaction.getParentId())) {
+            mRoots.add(interaction.getParentId());
+            // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
+        }
         if (lastRead != null && lastRead.equals(interaction.getMessageId()))
             interaction.read();
         boolean newLeaf = false;
         boolean added = false;
-        if (mAggregateHistory.isEmpty() || interaction.getParentIds().contains(mAggregateHistory.get(mAggregateHistory.size()-1).getMessageId())) {
+        if (mAggregateHistory.isEmpty() || mAggregateHistory.get(mAggregateHistory.size()-1).getMessageId().equals(interaction.getParentId())) {
             // New leaf
             // Log.w(TAG, "@@@ New end LEAF");
             added = true;
@@ -663,7 +662,7 @@ public class Conversation extends ConversationHistory {
         } else {
             // New root or normal node
             for (int i = 0; i < mAggregateHistory.size(); i++) {
-                if (mAggregateHistory.get(i).getParentIds() != null && mAggregateHistory.get(i).getParentIds().contains(interaction.getMessageId())) {
+                if (interaction.getMessageId().equals(mAggregateHistory.get(i).getParentId())) {
                     //Log.w(TAG, "@@@ New root node at " + i);
                     mAggregateHistory.add(i, interaction);
                     updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
@@ -673,7 +672,7 @@ public class Conversation extends ConversationHistory {
             }
             if (!added) {
                 for (int i = mAggregateHistory.size()-1; i >= 0; i--) {
-                    if (interaction.getParentIds().contains(mAggregateHistory.get(i).getMessageId())) {
+                    if (mAggregateHistory.get(i).getMessageId().equals(interaction.getParentId())) {
                         //Log.w(TAG, "@@@ New leaf at " + (i+1));
                         added = true;
                         newLeaf = true;
@@ -692,7 +691,7 @@ public class Conversation extends ConversationHistory {
             }
         }
         if (!added) {
-            Log.e(TAG, "Can't attach interaction " + interaction.getMessageId() + " with parents " + interaction.getParentIds());
+            Log.e(TAG, "Can't attach interaction " + interaction.getMessageId() + " with parent " + interaction.getParentId());
         }
         return newLeaf;
     }
