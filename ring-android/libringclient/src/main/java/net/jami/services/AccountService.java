@@ -69,9 +69,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import io.reactivex.rxjava3.core.Completable;
@@ -91,7 +88,6 @@ import io.reactivex.rxjava3.subjects.Subject;
  * - handle the callbacks that are send by the daemon
  */
 public class AccountService {
-
     private static final String TAG = AccountService.class.getSimpleName();
 
     private static final int VCARD_CHUNK_SIZE = 1000;
@@ -101,18 +97,18 @@ public class AccountService {
     private static final int PIN_GENERATION_WRONG_PASSWORD = 1;
     private static final int PIN_GENERATION_NETWORK_ERROR = 2;
 
-    @Inject
-    @Named("DaemonExecutor")
-    ScheduledExecutorService mExecutor;
+    public AccountService(ScheduledExecutorService executor, HistoryService historyService, DeviceRuntimeService deviceRuntimeService, VCardService vCardService)
+    {
+        mExecutor = executor;
+        mHistoryService = historyService;
+        mDeviceRuntimeService = deviceRuntimeService;
+        mVCardService = vCardService;
+    }
 
-    @Inject
-    HistoryService mHistoryService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    VCardService mVCardService;
+    private final ScheduledExecutorService mExecutor;
+    private HistoryService mHistoryService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final VCardService mVCardService;
 
     private Account mCurrentAccount;
     private List<Account> mAccountList = new ArrayList<>();

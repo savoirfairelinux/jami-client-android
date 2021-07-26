@@ -111,6 +111,7 @@ import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import cx.ring.views.AvatarFactory;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
@@ -119,7 +120,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
+@AndroidEntryPoint
+public class ConversationFragment extends BaseSupportFragment<ConversationPresenter, ConversationView> implements
         MediaButtonsHelper.MediaButtonsHelperCallback,
         ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = ConversationFragment.class.getSimpleName();
@@ -226,7 +228,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         Resources res = getResources();
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin);
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width);

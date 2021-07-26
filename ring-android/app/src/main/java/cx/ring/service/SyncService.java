@@ -42,7 +42,9 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.services.NotificationServiceImpl;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SyncService extends Service {
     public static final int NOTIF_SYNC_SERVICE_ID = 1004;
 
@@ -57,12 +59,6 @@ public class SyncService extends Service {
 
     @Inject
     NotificationService mNotificationService;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

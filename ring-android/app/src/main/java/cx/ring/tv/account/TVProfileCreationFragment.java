@@ -53,8 +53,10 @@ import net.jami.mvp.AccountCreationModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Single;
 
+@AndroidEntryPoint
 public class TVProfileCreationFragment extends JamiGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
 
@@ -119,7 +121,6 @@ public class TVProfileCreationFragment extends JamiGuidedStepFragment<ProfileCre
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
         if (mModel == null) {

@@ -43,7 +43,9 @@ import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.contact.TVContactActivity;
 import cx.ring.utils.ConversationPath;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPresenter>
         implements SearchSupportFragment.SearchResultProvider, ContactSearchView {
     private SearchEditText mTextEditor;
@@ -55,9 +57,6 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSearchResultProvider(this);
-
-        // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
         setSearchQuery("", false);

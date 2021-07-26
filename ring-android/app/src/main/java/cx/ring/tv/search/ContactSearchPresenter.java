@@ -40,8 +40,6 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
 
     private final AccountService mAccountService;
-    private final HardwareService mHardwareService;
-    private final VCardService mVCardService;
 
     private Contact mContact;
     @Inject
@@ -51,12 +49,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
     private final PublishSubject<String> contactQuery = PublishSubject.create();
 
     @Inject
-    public ContactSearchPresenter(AccountService accountService,
-                                  HardwareService hardwareService,
-                                  VCardService vCardService) {
+    public ContactSearchPresenter(AccountService accountService) {
         mAccountService = accountService;
-        mHardwareService = hardwareService;
-        mVCardService = vCardService;
     }
 
     @Override

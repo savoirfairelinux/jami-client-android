@@ -38,8 +38,10 @@ import net.jami.account.JamiAccountConnectPresenter;
 import net.jami.account.JamiConnectAccountView;
 import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter> implements JamiConnectAccountView {
+@AndroidEntryPoint
+public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter, JamiConnectAccountView> implements JamiConnectAccountView {
     public static final String TAG = JamiAccountConnectFragment.class.getSimpleName();
 
     private AccountCreationModel model;
@@ -55,7 +57,6 @@ public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragAccJamiConnectBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return mBinding.getRoot();
     }
 

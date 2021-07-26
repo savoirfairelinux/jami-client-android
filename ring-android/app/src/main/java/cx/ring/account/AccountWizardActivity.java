@@ -53,10 +53,13 @@ import net.jami.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
 import net.jami.mvp.AccountCreationModel;
 import net.jami.utils.VCardUtils;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import ezvcard.VCard;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+@AndroidEntryPoint
 public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
     static final String TAG = AccountWizardActivity.class.getName();
 
@@ -66,8 +69,6 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // dependency injection
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         JamiApplication.getInstance().startDaemon();
@@ -155,7 +156,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         Fragment fragment = new SIPAccountCreationFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.wizard_container, fragment, SIPAccountCreationFragment.TAG)
+                .replace(R.id.wizard_container, fragment, SIPAccountCreationFragment.Companion.getTAG())
                 .commit();
     }
 

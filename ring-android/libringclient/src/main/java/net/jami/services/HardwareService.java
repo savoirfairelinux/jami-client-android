@@ -25,9 +25,6 @@ import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.daemon.IntVect;
 import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
@@ -52,19 +49,15 @@ public abstract class HardwareService {
 
     private static final String TAG = HardwareService.class.getSimpleName();
 
-    @Inject
-    @Named("DaemonExecutor")
-    ScheduledExecutorService mExecutor;
+    private final ScheduledExecutorService mExecutor;
+    protected final PreferencesService mPreferenceService;
+    protected final Scheduler mUiScheduler;
 
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    public PreferencesService mPreferenceService;
-
-    @Inject
-    @Named("UiScheduler")
-    protected Scheduler mUiScheduler;
+    public HardwareService(ScheduledExecutorService executor, PreferencesService preferenceService, Scheduler uiScheduler) {
+        mExecutor = executor;
+        mPreferenceService = preferenceService;
+        mUiScheduler = uiScheduler;
+    }
 
     public static class VideoEvent {
         public boolean start = false;

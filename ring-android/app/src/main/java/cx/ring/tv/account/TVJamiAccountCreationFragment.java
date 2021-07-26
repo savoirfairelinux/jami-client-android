@@ -36,10 +36,13 @@ import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.mvp.AccountCreationModel;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 
+@AndroidEntryPoint
 public class TVJamiAccountCreationFragment
         extends JamiGuidedStepFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
@@ -88,9 +91,6 @@ public class TVJamiAccountCreationFragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-
-        // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
 
         if (model == null) {

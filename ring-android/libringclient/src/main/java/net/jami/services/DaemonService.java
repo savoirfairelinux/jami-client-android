@@ -46,22 +46,11 @@ public class DaemonService {
 
     private static final String TAG = DaemonService.class.getSimpleName();
 
-    @Inject
     @Named("DaemonExecutor")
-    ScheduledExecutorService mExecutor;
-
-    @Inject
-    HistoryService mHistoryService;
-
-    @Inject
-    protected CallService mCallService;
-
-    @Inject
-    protected HardwareService mHardwareService;
-
-    @Inject
-    protected AccountService mAccountService;
-
+    private final ScheduledExecutorService mExecutor;
+    private final CallService mCallService;
+    private final HardwareService mHardwareService;
+    private final AccountService mAccountService;
     private final SystemInfoCallbacks mSystemInfoCallbacks;
 
     // references must be kept to avoid garbage collection while pointers are stored in the daemon.
@@ -74,8 +63,12 @@ public class DaemonService {
 
     private boolean mDaemonStarted = false;
 
-    public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
+    public DaemonService(SystemInfoCallbacks systemInfoCallbacks, ScheduledExecutorService executor, CallService callService, HardwareService hardwareService, AccountService accountService) {
         mSystemInfoCallbacks = systemInfoCallbacks;
+        mExecutor = executor;
+        mCallService = callService;
+        mHardwareService = hardwareService;
+        mAccountService = accountService;
     }
 
     public interface SystemInfoCallbacks {

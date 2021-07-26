@@ -127,9 +127,11 @@ import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
+@AndroidEntryPoint
+public class CallFragment extends BaseSupportFragment<CallPresenter, CallView> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
     public static final String TAG = CallFragment.class.getSimpleName();
 
@@ -332,7 +334,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
         rp = new RecyclerPicker(binding.recyclerPicker,

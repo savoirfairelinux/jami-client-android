@@ -21,14 +21,14 @@
 package cx.ring.share;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 
 import android.view.LayoutInflater;
@@ -43,7 +43,6 @@ import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,11 +50,9 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.QRCodeFragment;
-import cx.ring.mvp.BaseSupportFragment;
 
-public class ScanFragment extends BaseSupportFragment {
+public class ScanFragment extends Fragment {
     public static final String TAG = ScanFragment.class.getSimpleName();
 
     private DecoratedBarcodeView barcodeView;
@@ -68,7 +65,6 @@ public class ScanFragment extends BaseSupportFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_scan, container, false);
-
         barcodeView = rootView.findViewById(R.id.barcode_scanner);
         mErrorMessageTextView = rootView.findViewById(R.id.error_msg_txt);
 
@@ -96,7 +92,7 @@ public class ScanFragment extends BaseSupportFragment {
         }
     }
 
-    private void showErrorPanel(final int textResId) {
+    private void showErrorPanel(@StringRes final int textResId) {
         if (mErrorMessageTextView != null) {
             mErrorMessageTextView.setText(textResId);
             mErrorMessageTextView.setVisibility(View.VISIBLE);
