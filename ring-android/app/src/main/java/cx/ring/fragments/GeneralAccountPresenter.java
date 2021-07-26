@@ -38,16 +38,15 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     private static final String TAG = GeneralAccountPresenter.class.getSimpleName();
 
-    protected AccountService mAccountService;
+    private final AccountService mAccountService;
+    private final HardwareService mHardwareService;
+    private final PreferencesService mPreferenceService;
 
-    protected HardwareService mHardwareService;
-
-    protected PreferencesService mPreferenceService;
-
-    private Account mAccount;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
+
+    private Account mAccount;
 
     @Inject
     GeneralAccountPresenter(AccountService accountService, HardwareService hardwareService, PreferencesService preferencesService) {
