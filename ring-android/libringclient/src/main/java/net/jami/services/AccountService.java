@@ -1178,7 +1178,7 @@ public class AccountService {
     }
 
     /**
-     * Looks up for the availibility of the name on the blockchain
+     * Looks up for the availability of the name on the blockchain
      */
     public void lookupName(final String account, final String nameserver, final String name) {
         Log.i(TAG, "lookupName() " + account + " " + nameserver + " " + name);
