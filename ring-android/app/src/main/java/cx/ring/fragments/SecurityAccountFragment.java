@@ -52,7 +52,9 @@ import cx.ring.utils.AndroidFileUtils;
 import net.jami.utils.Tuple;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAccountPresenter> implements SecurityAccountView {
     public static final String TAG = SecurityAccountFragment.class.getSimpleName();
 
@@ -63,18 +65,18 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
 
     private PreferenceCategory credentialsCategory;
     private PreferenceCategory tlsCategory;
-    private Preference.OnPreferenceChangeListener editCredentialListener = (preference, newValue) -> {
+    private final Preference.OnPreferenceChangeListener editCredentialListener = (preference, newValue) -> {
         // We need the old and new value to correctly edit the list of credentials
         Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
         presenter.credentialEdited(new Tuple<>(result.first, result.second));
         return false;
     };
-    private Preference.OnPreferenceChangeListener addCredentialListener = (preference, newValue) -> {
+    private final Preference.OnPreferenceChangeListener addCredentialListener = (preference, newValue) -> {
         Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
         presenter.credentialAdded(new Tuple<>(result.first, result.second));
         return false;
     };
-    private Preference.OnPreferenceClickListener filePickerListener = preference -> {
+    private final Preference.OnPreferenceClickListener filePickerListener = preference -> {
         if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
             performFileSearch(SELECT_CA_LIST_RC);
         }
@@ -86,7 +88,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
         }
         return true;
     };
-    private Preference.OnPreferenceChangeListener tlsListener = (preference, newValue) -> {
+    private final Preference.OnPreferenceChangeListener tlsListener = (preference, newValue) -> {
         ConfigKey key = ConfigKey.fromString(preference.getKey());
 
         if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
@@ -110,8 +112,6 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);

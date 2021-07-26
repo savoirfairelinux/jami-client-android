@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
 
 import net.jami.daemon.IntVect;
 import net.jami.daemon.JamiService;
@@ -54,10 +55,12 @@ import net.jami.model.Call.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
 
 import net.jami.services.HardwareService;
+import net.jami.services.PreferencesService;
 import net.jami.utils.Log;
 import cx.ring.utils.Ringer;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
 
 import net.jami.utils.Tuple;
 
@@ -93,7 +96,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private String mMediaHandlerId = null;
     private String mPluginCallId = null;
 
-    public HardwareServiceImpl(Context context) {
+    public HardwareServiceImpl(Context context, ScheduledExecutorService executor, PreferencesService preferenceService, Scheduler uiScheduler) {
+        super(executor, preferenceService, uiScheduler);
         mContext = context;
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mHasSpeakerPhone = hasSpeakerphone();

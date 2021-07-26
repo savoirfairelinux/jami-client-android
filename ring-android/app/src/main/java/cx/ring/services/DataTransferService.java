@@ -32,13 +32,14 @@ import androidx.core.app.NotificationManagerCompat;
 
 import javax.inject.Inject;
 
-import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
 
 import net.jami.services.NotificationService;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@AndroidEntryPoint
 public class DataTransferService extends Service {
     private final String TAG = DataTransferService.class.getSimpleName();
     public static final String ACTION_START = "startTransfer";
@@ -47,6 +48,7 @@ public class DataTransferService extends Service {
 
     @Inject
     NotificationService mNotificationService;
+
     private NotificationManagerCompat notificationManager;
     private boolean started = false;
 
@@ -101,7 +103,6 @@ public class DataTransferService extends Service {
     @Override
     public void onCreate() {
         Log.d(TAG, "OnCreate(), DataTransferService has been initialized");
-        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
         notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
     }

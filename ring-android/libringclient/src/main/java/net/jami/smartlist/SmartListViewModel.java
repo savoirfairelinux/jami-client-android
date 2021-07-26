@@ -52,7 +52,6 @@ public class SmartListViewModel
     private boolean isChecked = false;
     private Observable<Boolean> isSelected = null;
     private final Interaction lastEvent;
-    private boolean isSwarm = false;
 
     public enum Title {
         None,
@@ -98,7 +97,6 @@ public class SmartListViewModel
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         isSelected = conversation.getVisible();
-        isSwarm = conversation.isSwarm();
         for (Contact contact : contacts) {
             if (contact.isUser())
                 continue;
@@ -131,7 +129,7 @@ public class SmartListViewModel
     }
 
     public boolean isSwarm() {
-        return isSwarm;
+        return uri.isSwarm();
     }
 
     public List<Contact> getContacts() {

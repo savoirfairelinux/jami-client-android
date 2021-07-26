@@ -50,8 +50,6 @@ import java.util.List;
 import java.util.NavigableMap;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
@@ -69,26 +67,30 @@ public class ConversationFacade {
     private final CallService mCallService;
     private final ContactService mContactService;
     private final NotificationService mNotificationService;
+    private final HardwareService mHardwareService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final PreferencesService mPreferencesService;
+
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final Observable<Account> currentAccountSubject;
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
-    @Inject
-    HardwareService mHardwareService;
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-    @Inject
-    PreferencesService mPreferencesService;
 
     public ConversationFacade(HistoryService historyService,
                               CallService callService,
                               AccountService accountService,
                               ContactService contactService,
-                              NotificationService notificationService) {
+                              NotificationService notificationService,
+                              HardwareService hardwareService,
+                              DeviceRuntimeService deviceRuntimeService,
+                              PreferencesService preferencesService) {
         mHistoryService = historyService;
         mCallService = callService;
         mAccountService = accountService;
         mContactService = contactService;
         mNotificationService = notificationService;
+        mHardwareService = hardwareService;
+        mDeviceRuntimeService = deviceRuntimeService;
+        mPreferencesService = preferencesService;
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
@@ -514,8 +516,6 @@ public class ConversationFacade {
 
         return mHistoryService.getConversationHistory(conversation.getAccountId(), conversation.getId())
                 .map(loadedConversation -> {
-                    /*if (loadedConversation.isEmpty())
-                        return conversation;*/
                     conversation.clearHistory(true);
                     conversation.setHistory(loadedConversation);
                     return conversation;

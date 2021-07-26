@@ -94,8 +94,10 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class TVCallFragment extends BaseSupportFragment<CallPresenter> implements CallView {
+@AndroidEntryPoint
+public class TVCallFragment extends BaseSupportFragment<CallPresenter, CallView> implements CallView {
 
     public static final String TAG = TVCallFragment.class.getSimpleName();
 
@@ -175,7 +177,6 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         binding = TvFragCallBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
         return binding.getRoot();

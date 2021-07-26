@@ -92,12 +92,14 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import net.jami.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+@AndroidEntryPoint
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
     private static final String TAG = MainFragment.class.getSimpleName();
@@ -129,13 +131,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private final CompositeDisposable mHomeChannelDisposable = new CompositeDisposable();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         titleView = view.findViewById(R.id.browse_title_group);
         super.onViewCreated(view, savedInstanceState);
         setupUIElements(requireActivity());
@@ -388,7 +384,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         Context context = requireContext();
         String address = account.getDisplayUsername();
         mDisposable.clear();
-        mDisposable.add(VCardServiceImpl
+        mDisposable.add(VCardServiceImpl.Companion
                 .loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(profile -> {

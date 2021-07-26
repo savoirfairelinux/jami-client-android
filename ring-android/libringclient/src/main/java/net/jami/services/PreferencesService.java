@@ -32,11 +32,13 @@ import io.reactivex.rxjava3.subjects.Subject;
 
 public abstract class PreferencesService {
 
-    @Inject
-    AccountService mAccountService;
+    private final AccountService mAccountService;
+    private final DeviceRuntimeService mDeviceService;
 
-    @Inject
-    DeviceRuntimeService mDeviceService;
+    public PreferencesService(AccountService accountService, DeviceRuntimeService deviceService) {
+        mAccountService = accountService;
+        mDeviceService = deviceService;
+    }
 
     private Settings mUserSettings;
     private final Subject<Settings> mSettingsSubject = BehaviorSubject.create();

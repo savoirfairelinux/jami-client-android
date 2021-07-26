@@ -82,12 +82,14 @@ import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.AvatarDrawable;
 import cx.ring.views.SwitchButton;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountSummaryPresenter> implements
+@AndroidEntryPoint
+public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView> implements
         RegisterNameDialog.RegisterNameDialogListener,
         JamiAccountSummaryView, ChangePasswordDialog.PasswordChangedListener,
         BackupAccountDialog.UnlockAccountListener,
@@ -134,7 +136,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragAccSummaryBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         mDisposableBag.add(mProfileDisposable);
         return mBinding.getRoot();
     }
@@ -698,7 +699,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     public void goToAccount(String accountId) {
-        changeFragment(AccountFragment.newInstance(accountId), MediaPreferenceFragment.TAG);
+        changeFragment(AccountFragment.newInstance(accountId), AccountFragment.TAG);
     }
 
     public void goToMedia(String accountId) {
@@ -710,7 +711,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     public void goToAdvanced(String accountId) {
-        changeFragment(fragmentWithBundle(new AdvancedAccountFragment(), accountId), SettingsFragment.TAG);
+        changeFragment(fragmentWithBundle(new AdvancedAccountFragment(), accountId), AdvancedAccountFragment.TAG);
     }
 
     public void goToBlackList(String accountId) {
@@ -718,7 +719,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         Bundle args = new Bundle();
         args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
         blockListFragment.setArguments(args);
-        changeFragment(blockListFragment, BlockListFragment.TAG);
+        changeFragment(blockListFragment, BlockListFragment.Companion.getTAG());
     }
 
     public void popBackStack() {

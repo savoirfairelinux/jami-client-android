@@ -29,9 +29,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.daemon.Blob;
 import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
@@ -52,28 +49,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class CallService {
-
     private final static String TAG = CallService.class.getSimpleName();
     public final static String MIME_TEXT_PLAIN = "text/plain";
     public static final String MIME_GEOLOCATION = "application/geo";
     public static final String MEDIA_TYPE_AUDIO = "MEDIA_TYPE_AUDIO";
     public static final String MEDIA_TYPE_VIDEO = "MEDIA_TYPE_VIDEO";
 
-    @Inject
-    @Named("DaemonExecutor")
-    ScheduledExecutorService mExecutor;
+    private final ScheduledExecutorService mExecutor;
+    private final ContactService mContactService;
+    private final AccountService mAccountService;
 
-    @Inject
-    ContactService mContactService;
-
-    @Inject
-    HistoryService mHistoryService;
-
-    @Inject
-    AccountService mAccountService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
+    public CallService(ScheduledExecutorService executor, ContactService contactService, AccountService accountService) {
+        mExecutor = executor;
+        mContactService = contactService;
+        mAccountService = accountService;
+    }
 
     private final Map<String, Call> currentCalls = new HashMap<>();
     private final Map<String, Conference> currentConferences = new HashMap<>();

@@ -32,9 +32,12 @@ import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.JamiLinkAccountPresenter;
 import net.jami.account.JamiLinkAccountView;
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.mvp.AccountCreationModel;
 import net.jami.utils.StringUtils;
 
+@AndroidEntryPoint
 public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAccountPresenter>
         implements JamiLinkAccountView {
     private static final long PASSWORD = 1L;
@@ -53,9 +56,7 @@ public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAc
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
-
         presenter.init(model);
         if (model != null && model.getPhoto() != null) {
             getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());

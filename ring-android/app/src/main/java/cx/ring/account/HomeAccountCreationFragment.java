@@ -41,9 +41,11 @@ import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccHomeCreateBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
-public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
+@AndroidEntryPoint
+public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter, HomeAccountCreationView> implements HomeAccountCreationView {
     private static final int ARCHIVE_REQUEST_CODE = 42;
 
     public static final String TAG = HomeAccountCreationFragment.class.getSimpleName();
@@ -54,7 +56,6 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragAccHomeCreateBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
