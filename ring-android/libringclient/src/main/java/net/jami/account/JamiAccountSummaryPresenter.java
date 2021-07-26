@@ -42,7 +42,7 @@ import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class JamiAccountSummaryPresenter extends RootPresenter<net.jami.account.JamiAccountSummaryView> {
+public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummaryView> {
 
     private static final String TAG = JamiAccountSummaryPresenter.class.getSimpleName();
 

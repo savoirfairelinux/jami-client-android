@@ -21,6 +21,7 @@
 package cx.ring.tv.contact;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import net.jami.daemon.Blob;
 import net.jami.facades.ConversationFacade;
@@ -51,7 +52,7 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     @Inject
     public TVContactPresenter(AccountService accountService,
                               ConversationFacade conversationService,
-                              Scheduler uiScheduler,
+                              @Named("UiScheduler") Scheduler uiScheduler,
                               VCardService vCardService) {
         mAccountService = accountService;
         mConversationService = conversationService;

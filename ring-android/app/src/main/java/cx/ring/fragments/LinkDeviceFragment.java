@@ -54,7 +54,9 @@ import cx.ring.databinding.FragLinkDeviceBinding;
 import cx.ring.mvp.BaseBottomSheetFragment;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresenter> implements LinkDeviceView {
 
     public static final String TAG = LinkDeviceFragment.class.getSimpleName();
@@ -77,7 +79,6 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         mBinding = FragLinkDeviceBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
     }

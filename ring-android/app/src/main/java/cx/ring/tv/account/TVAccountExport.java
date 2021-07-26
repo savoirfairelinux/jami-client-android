@@ -48,7 +48,9 @@ import net.jami.account.JamiAccountSummaryView;
 import cx.ring.application.JamiApplication;
 import net.jami.model.Account;
 import cx.ring.utils.AndroidFileUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPresenter>
         implements JamiAccountSummaryView {
 
@@ -68,8 +70,6 @@ public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPr
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-
         super.onViewCreated(view, savedInstanceState);
         presenter.setAccountId(mIdAccount);
     }

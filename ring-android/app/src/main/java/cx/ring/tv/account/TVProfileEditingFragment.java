@@ -49,10 +49,12 @@ import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+@AndroidEntryPoint
 public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigationPresenter>
         implements HomeNavigationView {
 
@@ -112,7 +114,6 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
         iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
     }
@@ -188,7 +189,7 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable.load(getContext(), account)
+        AvatarDrawable.load(requireContext(), account)
                 .map(avatar -> {
                     avatar.setInSize(iconSize);
                     return avatar;
