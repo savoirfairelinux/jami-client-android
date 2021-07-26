@@ -45,6 +45,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccountMigrationBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
@@ -53,6 +54,7 @@ import net.jami.model.AccountConfig;
 import net.jami.model.ConfigKey;
 import net.jami.services.AccountService;
 
+@AndroidEntryPoint
 public class AccountMigrationFragment extends Fragment {
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
@@ -77,7 +79,6 @@ public class AccountMigrationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         binding = FragAccountMigrationBinding.inflate(inflater, parent, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 

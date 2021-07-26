@@ -56,9 +56,11 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.core.Single;
 
-public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView {
+@AndroidEntryPoint
+public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter, ProfileCreationView> implements ProfileCreationView {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
 
     public static final int REQUEST_CODE_PHOTO = 1;
@@ -80,7 +82,6 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragAccProfileCreateBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 

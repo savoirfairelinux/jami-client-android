@@ -96,7 +96,7 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(dialogINterface -> {
-            if (DeviceUtils.isTablet(getContext())) {
+            if (DeviceUtils.isTablet(requireContext())) {
                 dialog.getWindow().setLayout(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);

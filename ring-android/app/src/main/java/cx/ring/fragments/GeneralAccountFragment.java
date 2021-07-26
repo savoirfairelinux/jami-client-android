@@ -50,7 +50,9 @@ import net.jami.utils.Tuple;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
 
     public static final String TAG = GeneralAccountFragment.class.getSimpleName();
@@ -152,7 +154,6 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         Bundle args = getArguments();
