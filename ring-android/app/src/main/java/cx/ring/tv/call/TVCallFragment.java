@@ -57,11 +57,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -718,7 +721,22 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter, CallView>
 
     @Override
     public void updateParticipantRecording(Set<Contact> contacts) {
-
+        if (contacts.size() == 0) {
+            binding.recordLayout.setVisibility(View.INVISIBLE);
+            binding.recordIndicator.clearAnimation();
+            return;
+        }
+        StringBuilder names = new StringBuilder();
+        Iterator<Contact> contact =  contacts.iterator();
+        for (int i = 0; i < contacts.size(); i++) {
+            names.append(" ").append(contact.next().getDisplayName());
+            if (i != contacts.size() - 1) {
+                names.append(",");
+            }
+        }
+        binding.recordLayout.setVisibility(View.VISIBLE);
+        binding.recordIndicator.setAnimation(getBlinkingAnimation());
+        binding.recordName.setText(getString(R.string.remote_recording, names));
     }
 
     @Override
@@ -824,6 +842,15 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter, CallView>
                 handler.postDelayed(r, 5000);
             }
         }
+    }
+
+    private Animation getBlinkingAnimation() {
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(400);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        return animation;
     }
 
 }
