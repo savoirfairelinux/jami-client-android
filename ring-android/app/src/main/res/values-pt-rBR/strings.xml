@@ -176,6 +176,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="block_contact_dialog_message">%1$snão conseguirá te contactar até que você o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
   <string name="conversation_contact_is_typing">Contato está digitando...</string>
+  <string name="conversation_info_contact_you">Você</string>
+  <string name="conversation_members">Membros</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
@@ -218,6 +220,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="refuse">Recusar</string>
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Nova requisição de contato</string>
+  <string name="contact_request_msg">Você possui %1$d solicitações de contato</string>
   <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">Você não tem nenhum pedido de contato</string>
   <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>
@@ -256,6 +259,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="file_transfer_status_timed_out">tempo esgotado</string>
   <string name="file_saved_in">Arquivo salvo em %s</string>
   <string name="file_saved_successfully">Arquivo salvo com sucesso</string>
+  <string name="file_download">Obter</string>
   <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
   <string name="title_media_viewer">Visualizador de mídia</string>
   <string name="menu_file_open">Abrir arquivo</string>
