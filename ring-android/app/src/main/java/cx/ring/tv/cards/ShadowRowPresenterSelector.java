@@ -14,9 +14,17 @@
  */
 package cx.ring.tv.cards;
 
+import android.content.Context;
+import android.view.ViewGroup;
+
+import androidx.core.content.res.ResourcesCompat;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.PresenterSelector;
+import androidx.leanback.widget.RowHeaderPresenter;
+import androidx.leanback.widget.RowHeaderView;
+
+import cx.ring.R;
 
 /**
  * This {@link PresenterSelector} will return a {@link ListRowPresenter} which has shadow support
@@ -24,8 +32,8 @@ import androidx.leanback.widget.PresenterSelector;
  */
 public class ShadowRowPresenterSelector extends PresenterSelector {
 
-    private ListRowPresenter mShadowEnabledRowPresenter = new ListRowPresenter();
-    private ListRowPresenter mShadowDisabledRowPresenter = new NoDimListRowPresenter();
+    private CustomListRowPresenter mShadowEnabledRowPresenter = new CustomListRowPresenter();
+    private CustomDimListRowPresenter mShadowDisabledRowPresenter = new CustomDimListRowPresenter();
 
     public ShadowRowPresenterSelector() {
         mShadowEnabledRowPresenter.setNumRows(1);
@@ -48,4 +56,30 @@ public class ShadowRowPresenterSelector extends PresenterSelector {
                 mShadowEnabledRowPresenter
         };
     }
+
+    private static class CustomListRowPresenter extends ListRowPresenter {
+        public CustomListRowPresenter() {
+            super();
+            setHeaderPresenter(new CustomRowHeaderPresenter());
+        }
+    }
+
+    private static class CustomDimListRowPresenter extends NoDimListRowPresenter {
+        public CustomDimListRowPresenter() {
+            super();
+            setHeaderPresenter(new CustomRowHeaderPresenter());
+        }
+    }
+
+    private static class CustomRowHeaderPresenter extends RowHeaderPresenter {
+        @Override
+        public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
+            super.onBindViewHolder(viewHolder, item);
+            RowHeaderView titleView = viewHolder.view.findViewById(R.id.row_header);
+            titleView.setTypeface(ResourcesCompat.getFont(titleView.getContext(), R.font.ubuntu_medium));
+            titleView.setTextSize(16);
+            viewHolder.view.setAlpha(1);
+        }
+    }
+
 }
