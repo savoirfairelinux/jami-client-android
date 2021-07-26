@@ -46,7 +46,9 @@ import net.jami.services.NotificationService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
     public static final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
@@ -91,7 +93,7 @@ public class CallActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if(intent != null)
+        if (intent != null)
             handleNewIntent(intent);
     }
 
@@ -203,7 +205,7 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             CallFragment callFragment = getCallFragment();
-            if(callFragment != null) {
+            if (callFragment != null) {
                 callFragment.toggleVideoPluginsCarousel(true);
             }
             restartNoInteractionTimer();

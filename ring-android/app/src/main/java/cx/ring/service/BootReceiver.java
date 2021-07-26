@@ -28,8 +28,11 @@ import androidx.core.content.ContextCompat;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.services.PreferencesService;
 
+@AndroidEntryPoint
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = BootReceiver.class.getSimpleName();
 
@@ -48,7 +51,7 @@ public class BootReceiver extends BroadcastReceiver {
                 Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
         {
             try {
-                ((JamiApplication) context.getApplicationContext()).getInjectionComponent().inject(this);
+                //((JamiApplication) context.getApplicationContext()).getInjectionComponent().inject(this);
                 if (mPreferencesService.getSettings().isAllowOnStartup()) {
                     try {
                         ContextCompat.startForegroundService(context, new Intent(SyncService.ACTION_START)

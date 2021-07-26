@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import net.jami.model.Account;
 import net.jami.model.Contact;
 import net.jami.model.Settings;
@@ -49,14 +47,9 @@ import io.reactivex.rxjava3.core.Single;
 public abstract class ContactService {
     private final static String TAG = ContactService.class.getSimpleName();
 
-    @Inject
-    PreferencesService mPreferencesService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    AccountService mAccountService;
+    final PreferencesService mPreferencesService;
+    final DeviceRuntimeService mDeviceRuntimeService;
+    final AccountService mAccountService;
 
     public abstract Map<Long, Contact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
@@ -69,7 +62,11 @@ public abstract class ContactService {
     public abstract void saveVCardContactData(Contact contact, String accountId, VCard vcard);
     public abstract Single<VCard> saveVCardContact(String accountId, String uri, String displayName, String pictureB64);
 
-    public ContactService() {}
+    public ContactService(PreferencesService preferencesService, DeviceRuntimeService deviceRuntimeService, AccountService accountService) {
+        mPreferencesService = preferencesService;
+        mDeviceRuntimeService = deviceRuntimeService;
+        mAccountService = accountService;
+    }
 
     /**
      * Load contacts from system and generate a local contact cache

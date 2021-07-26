@@ -35,10 +35,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import cx.ring.databinding.FragAccJamiLinkBinding;
-import cx.ring.mvp.BaseSupportFragment;
+
 import net.jami.mvp.AccountCreationModel;
 
-public class JamiLinkAccountFragment extends BaseSupportFragment {
+public class JamiLinkAccountFragment extends Fragment {
 
     public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
     private static final int NUM_PAGES = 2;

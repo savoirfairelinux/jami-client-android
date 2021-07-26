@@ -22,11 +22,9 @@ package net.jami.utils;
 import net.jami.services.LogService;
 
 public class Log {
+    private static LogService mLogService;
 
-
-    private static net.jami.services.LogService mLogService;
-
-    public static void injectLogService (LogService service) {
+    public static void injectLogService(LogService service) {
         mLogService = service;
     }
 
