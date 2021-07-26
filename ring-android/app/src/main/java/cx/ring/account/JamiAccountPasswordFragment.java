@@ -34,15 +34,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiPasswordBinding;
 
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
 import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccountCreationPresenter>
+@AndroidEntryPoint
+public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccountCreationPresenter, JamiAccountCreationView>
         implements JamiAccountCreationView {
 
     private static final String KEY_MODEL = "model";
@@ -71,7 +72,6 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
             model = (AccountCreationModelImpl) savedInstanceState.getSerializable(KEY_MODEL);
         }
         binding = FragAccJamiPasswordBinding.inflate(inflater, container, false);
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 

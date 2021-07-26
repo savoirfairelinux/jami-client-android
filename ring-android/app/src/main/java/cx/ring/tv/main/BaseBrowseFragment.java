@@ -20,6 +20,8 @@
 package cx.ring.tv.main;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.leanback.app.BrowseSupportFragment;
 import android.view.View;
 import android.widget.Toast;
@@ -39,7 +41,7 @@ public class BaseBrowseFragment<T extends RootPresenter> extends BrowseSupportFr
     protected T presenter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Be sure to do the injection in onCreateView method
         presenter.bindView(this);
