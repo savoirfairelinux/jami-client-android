@@ -41,8 +41,10 @@ import net.jami.account.JamiLinkAccountPresenter;
 import net.jami.account.JamiLinkAccountView;
 import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLinkAccountPresenter>
+@AndroidEntryPoint
+public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>
         implements JamiLinkAccountView {
 
     public static final String TAG = JamiLinkAccountPasswordFragment.class.getSimpleName();
@@ -61,7 +63,6 @@ public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLin
         if (model == null)
             return null;
         mBinding = FragAccJamiLinkPasswordBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return mBinding.getRoot();
     }
 

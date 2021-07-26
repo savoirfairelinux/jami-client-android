@@ -32,20 +32,15 @@ import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.HomeAccountCreationPresenter;
 import net.jami.account.HomeAccountCreationView;
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class TVHomeAccountCreationFragment
         extends JamiGuidedStepFragment<HomeAccountCreationPresenter>
         implements HomeAccountCreationView {
 
     private static final int LINK_ACCOUNT = 0;
     private static final int CREATE_ACCOUNT = 1;
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @Override
     public void goToAccountCreation() {

@@ -37,10 +37,12 @@ import cx.ring.application.JamiApplication;
 import net.jami.call.CallView;
 
 import cx.ring.utils.ConversationPath;
+import dagger.hilt.android.AndroidEntryPoint;
 
 import net.jami.services.NotificationService;
 import net.jami.utils.Log;
 
+@AndroidEntryPoint
 public class TVCallActivity extends FragmentActivity {
 
     static final String TAG = TVCallActivity.class.getSimpleName();
@@ -67,8 +69,6 @@ public class TVCallActivity extends FragmentActivity {
         setContentView(R.layout.tv_activity_call);
         setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
-        // dependency injection
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
         JamiApplication.getInstance().startDaemon();
 
         ConversationPath path = ConversationPath.fromIntent(intent);

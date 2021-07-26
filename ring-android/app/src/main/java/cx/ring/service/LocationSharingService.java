@@ -72,6 +72,7 @@ import net.jami.services.CallService;
 
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.utils.ConversationPath;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
@@ -80,6 +81,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 
+@AndroidEntryPoint
 public class LocationSharingService extends Service implements LocationListener {
     private static final String TAG = "LocationSharingService";
 
@@ -133,8 +135,6 @@ public class LocationSharingService extends Service implements LocationListener 
 
     @Override
     public void onCreate() {
-        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
-
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mPreferences = getSharedPreferences(PREFERENCES_LOCATION, Context.MODE_PRIVATE);
