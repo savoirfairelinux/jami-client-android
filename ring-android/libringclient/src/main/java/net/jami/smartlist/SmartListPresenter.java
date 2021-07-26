@@ -49,29 +49,22 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
     private static final String TAG = SmartListPresenter.class.getSimpleName();
 
-    private final AccountService mAccountService;
-    private final ContactService mContactService;
     private final ConversationFacade mConversationFacade;
-
-    private Account mAccount;
-    private final Subject<String> mCurrentQuery = BehaviorSubject.createDefault("");
-    private final Subject<String> mQuery = PublishSubject.create();
-    private final Observable<String> mDebouncedQuery = mQuery.debounce(350, TimeUnit.MILLISECONDS);
-
-    private final Observable<Account> accountSubject;
-
     private final Scheduler mUiScheduler;
 
     private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
     private Disposable mQueryDisposable = null;
 
+    private final Subject<String> mCurrentQuery = BehaviorSubject.createDefault("");
+    private final Subject<String> mQuery = PublishSubject.create();
+    private final Observable<String> mDebouncedQuery = mQuery.debounce(350, TimeUnit.MILLISECONDS);
+
+    private final Observable<Account> accountSubject;
+    private Account mAccount;
+
     @Inject
-    public SmartListPresenter(AccountService accountService,
-                              ContactService contactService,
-                              ConversationFacade conversationFacade,
+    public SmartListPresenter(ConversationFacade conversationFacade,
                               @Named("UiScheduler") Scheduler uiScheduler) {
-        mAccountService = accountService;
-        mContactService = contactService;
         mConversationFacade = conversationFacade;
         mUiScheduler = uiScheduler;
 
