@@ -389,23 +389,30 @@ public class AccountService {
                 Log.w(TAG, accountId + " loading conversations");
                 List<String> conversations = JamiService.getConversations(account.getAccountID());
                 for (String conversationId : conversations) {
-                    Map<String, String> info = JamiService.conversationInfos(accountId, conversationId);
-                    for (Map.Entry<String, String> i : info.entrySet()) {
-                        Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                    }
-                    Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
-                    Conversation conversation = account.newSwarm(conversationId, mode);
-                    conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
-                    for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
-                        Uri uri = Uri.fromId(member.get("uri"));
-                        Contact contact = conversation.findContact(uri);
-                        if (contact == null) {
-                            contact = account.getContactFromCache(uri);
-                            conversation.addContact(contact);
+                    try {
+                        Map<String, String> info = JamiService.conversationInfos(accountId, conversationId).toNative();
+                        for (Map.Entry<String, String> i : info.entrySet()) {
+                            Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                         }
+                        if ("true".equals(info.get("syncing"))) {
+                            continue;
+                        }
+                        Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
+                        Conversation conversation = account.newSwarm(conversationId, mode);
+                        //conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
+                        for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
+                            Uri uri = Uri.fromId(member.get("uri"));
+                            Contact contact = conversation.findContact(uri);
+                            if (contact == null) {
+                                contact = account.getContactFromCache(uri);
+                                conversation.addContact(contact);
+                            }
+                        }
+                        conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
+                        account.conversationStarted(conversation);
+                    } catch (Exception e) {
+                        Log.w(TAG, "Error loading conversation", e);
                     }
-                    conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
-                    account.conversationStarted(conversation);
                 }
                 for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
                     /*for (Map.Entry<String, String> e : requestData.entrySet()) {
