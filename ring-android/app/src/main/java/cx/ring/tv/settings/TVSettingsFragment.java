@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.account;
+package cx.ring.tv.settings;
 
 import android.content.Context;
 
@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
@@ -43,10 +44,11 @@ import cx.ring.fragments.GeneralAccountPresenter;
 import cx.ring.fragments.GeneralAccountView;
 import net.jami.model.Account;
 import net.jami.model.ConfigKey;
-import cx.ring.services.SharedPreferencesServiceImpl;
+import net.jami.utils.Tuple;
 import dagger.hilt.android.AndroidEntryPoint;
 
-import net.jami.utils.Tuple;
+import cx.ring.services.SharedPreferencesServiceImpl;
+import cx.ring.tv.account.JamiPreferenceFragment;
 
 @AndroidEntryPoint
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
@@ -58,7 +60,18 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragmentCompat preferenceFragment, Preference preference) {
-        return false;
+        final Bundle args = preference.getExtras();
+        final Fragment f = getChildFragmentManager().getFragmentFactory().instantiate(
+                requireActivity().getClassLoader(), preference.getFragment());
+        f.setArguments(args);
+        f.setTargetFragment(preferenceFragment, 0);
+        if (f instanceof PreferenceFragmentCompat
+                || f instanceof PreferenceDialogFragmentCompat) {
+            startPreferenceFragment(f);
+        } else {
+            startImmersiveFragment(f);
+        }
+        return true;
     }
 
     @Override
@@ -71,6 +84,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         return true;
     }
 
+    @AndroidEntryPoint
     public static class PrefsFragment extends JamiPreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
         private boolean autoAnswer;
         private boolean rendezvousMode;
@@ -152,7 +166,8 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
-            if (preference.getKey().equals(ConfigKey.ACCOUNT_AUTOANSWER.key())) {
+            if (preference.getKey().equals("Account.about")) {
+            } else if (preference.getKey().equals(ConfigKey.ACCOUNT_AUTOANSWER.key())) {
                 presenter.twoStatePreferenceChanged(ConfigKey.ACCOUNT_AUTOANSWER, !autoAnswer);
                 autoAnswer = !autoAnswer;
             } else if (preference.getKey().equals(ConfigKey.ACCOUNT_ISRENDEZVOUS.key())) {
@@ -161,5 +176,6 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
             }
             return super.onPreferenceTreeClick(preference);
         }
+
     }
 }
