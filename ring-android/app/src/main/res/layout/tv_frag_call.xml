@@ -246,5 +246,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:useCompatPadding="true"
             tools:visibility="visible" />
 
+        <LinearLayout
+            android:id="@+id/record_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="16dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <View
+                android:id="@+id/record_indicator"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:backgroundTint="#BF0046"
+                android:background="@drawable/item_color_background" />
+
+            <TextView
+                android:id="@+id/record_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"
+                tools:text="Thomas"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>

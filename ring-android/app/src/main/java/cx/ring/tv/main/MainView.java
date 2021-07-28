@@ -41,6 +41,7 @@ public interface MainView {
     void displayErrorToast(Error error);
 
     void displayAccountInfos(HomeNavigationViewModel viewModel);
+
     void updateModel(Account account);
 
     void showExportDialog(String pAccountID, boolean hasPassword);
@@ -49,7 +50,6 @@ public interface MainView {
 
     void showAccountShare();
 
-    void showLicence(int aboutType);
-
     void showSettings();
+
 }

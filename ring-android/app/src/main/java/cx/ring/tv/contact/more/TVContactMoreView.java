@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,22 +14,13 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.about;
+package cx.ring.tv.contact.more;
 
-import android.app.Activity;
-import android.os.Bundle;
+public interface TVContactMoreView {
 
-import cx.ring.R;
+    void finishView(boolean finishParent);
 
-public class AboutActivity extends Activity {
-
-    public static final String TAG = AboutActivity.class.getSimpleName();
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_activity_about);
-    }
 }

@@ -73,7 +73,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_account">Manage account</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_plugin_list">Plugins Settings</string>
-    <string name="menu_item_share">Share my contact</string>
+    <string name="menu_item_share">Share my account</string>
     <string name="menu_item_about">About Jami</string>
 
     <!-- Dialing Fragment -->
@@ -214,6 +214,7 @@ along with this program; if not, write to the Free Software
     <string name="clear_history_dialog_title">Clear history?</string>
     <string name="clear_history_dialog_message">This action cannot be undone.</string>
     <string name="clear_history_completed">History has been cleared.</string>
+    <string name="clear_history">Clear</string>
 
     <!-- Conversation -->
     <string name="conversation_details">Contact details</string>
@@ -370,6 +371,7 @@ along with this program; if not, write to the Free Software
     <string name="tv_send_text">Send Text</string>
     <string name="tv_send_audio">Send Audio</string>
     <string name="tv_send_video">Send Media</string>
+    <string name="tv_action_more">More</string>
     <string name="conversation_input_speech_hint">Say something…</string>
 
     <!-- Wizard -->

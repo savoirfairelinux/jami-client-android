@@ -348,11 +348,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/app_name"
             android:theme="@style/Theme.Leanback" />
         <activity
-            android:name=".tv.about.AboutActivity"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Leanback" />
-        <activity
             android:name=".tv.account.TVShareActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -401,7 +396,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
         <activity
-            android:name=".tv.account.TVSettingsActivity"
+            android:name=".tv.settings.TVSettingsActivity"
+            android:theme="@style/LeanbackPreferences" />
+        <activity
+            android:name=".tv.contact.more.TVContactMoreActivity"
             android:theme="@style/LeanbackPreferences" />
 
         <provider
