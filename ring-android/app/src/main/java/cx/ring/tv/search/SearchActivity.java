@@ -24,7 +24,9 @@ import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
 
 import cx.ring.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SearchActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

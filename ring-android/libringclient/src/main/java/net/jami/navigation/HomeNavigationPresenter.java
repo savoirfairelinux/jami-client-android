@@ -67,12 +67,12 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
     public void bindView(HomeNavigationView view) {
         super.bindView(view);
         mCompositeDisposable.add(mAccountService.getCurrentProfileAccountSubject()
-                .switchMapSingle(account -> account.getAccountAlias().map(alias -> new Tuple<>(account, alias)))
+                .switchMapSingle(account -> account.getLoadedProfile().map(alias -> new Tuple<>(account, alias)))
                 .observeOn(mUiScheduler)
                 .subscribe(alias -> {
                     HomeNavigationView v = getView();
                     if (v != null)
-                        v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second));
+                        v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second.first));
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
@@ -110,6 +110,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                 .subscribe(vcard -> {
                     account.resetProfile();
                     mAccountService.refreshAccounts();
+                    getView().setPhoto(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
@@ -129,6 +130,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                 .subscribe(vcard -> {
                     account.resetProfile();
                     mAccountService.refreshAccounts();
+                    bindView(getView());
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 

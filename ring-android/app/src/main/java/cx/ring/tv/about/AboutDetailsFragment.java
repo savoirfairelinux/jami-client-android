@@ -17,11 +17,12 @@
  */
 package cx.ring.tv.about;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.leanback.app.DetailsFragment;
-import androidx.leanback.app.DetailsFragmentBackgroundController;
+import androidx.leanback.app.DetailsSupportFragment;
+import androidx.leanback.app.DetailsSupportFragmentBackgroundController;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.ClassPresenterSelector;
 import androidx.leanback.widget.DetailsOverviewRow;
@@ -38,10 +39,10 @@ import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
 import net.jami.utils.Log;
 
-public class AboutDetailsFragment extends DetailsFragment {
+public class AboutDetailsFragment extends DetailsSupportFragment {
     private static final String TAG = "AboutDetailsFragment";
-    private final DetailsFragmentBackgroundController mDetailsBackground =
-            new DetailsFragmentBackgroundController(this);
+    private final DetailsSupportFragmentBackgroundController mDetailsBackground =
+            new DetailsSupportFragmentBackgroundController(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,26 +59,23 @@ public class AboutDetailsFragment extends DetailsFragment {
             cardType = Card.Type.values()[ordinal];
         }
 
-        IconCard card = IconCardHelper.getAboutCardByType(getActivity(), cardType);
+        Context context = requireContext();
+        IconCard card = IconCardHelper.getAboutCardByType(context, cardType);
 
         ClassPresenterSelector selector = new ClassPresenterSelector();
 
         FullWidthDetailsOverviewRowPresenter rowPresenter = new FullWidthDetailsOverviewRowPresenter(
-                new AboutDetailsPresenter(getActivity())) {
-
+                new AboutDetailsPresenter(context)) {
             @Override
             protected RowPresenter.ViewHolder createRowViewHolder(ViewGroup parent) {
                 // Customize Actionbar and Content by using custom colors.
                 RowPresenter.ViewHolder viewHolder = super.createRowViewHolder(parent);
 
-                View actionsView = viewHolder.view.
-                        findViewById(R.id.details_overview_actions_background);
-                actionsView.setBackgroundColor(getActivity().getResources().
-                        getColor(R.color.color_primary_dark));
+                View actionsView = viewHolder.view.findViewById(R.id.details_overview_actions_background);
+                actionsView.setBackgroundColor(getResources().getColor(R.color.color_primary_dark));
 
                 View detailsView = viewHolder.view.findViewById(R.id.details_frame);
-                detailsView.setBackgroundColor(
-                        getResources().getColor(R.color.color_primary_dark));
+                detailsView.setBackgroundColor(getResources().getColor(R.color.color_primary_dark));
                 return viewHolder;
             }
         };
@@ -86,7 +84,7 @@ public class AboutDetailsFragment extends DetailsFragment {
                 new ListRowPresenter());
         ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(selector);
 
-        Resources res = getActivity().getResources();
+        Resources res = getResources();
         DetailsOverviewRow detailsOverview = new DetailsOverviewRow(
                 card);
 
