@@ -32,7 +32,7 @@ import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
-    private final net.jami.services.AccountService mAccountService;
+    private final AccountService mAccountService;
     private final Scheduler mUiScheduler;
 
     @Inject

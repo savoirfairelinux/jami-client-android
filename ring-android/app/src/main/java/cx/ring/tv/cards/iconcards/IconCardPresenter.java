@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
  *  Author: Loïc Siret <loic.siret@savoirfairelinux.com>
+ *  Author: AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,49 +20,44 @@
  */
 package cx.ring.tv.cards.iconcards;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import androidx.leanback.widget.ImageCardView;
+import android.graphics.PorterDuff;
 
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.ImageView;
-
 
 import cx.ring.R;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
+import cx.ring.tv.cards.CardView;
 
-public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
+public class IconCardPresenter extends AbstractCardPresenter<CardView> {
 
-    private static final int ANIMATION_DURATION = 200;
+    private static final int IMAGE_PADDING = 35;
 
     public IconCardPresenter(Context context) {
-        super(new ContextThemeWrapper(context, R.style.IconCardTheme));
+        super(new ContextThemeWrapper(context, R.style.ContactCardTheme));
     }
 
     @Override
-    protected ImageCardView onCreateView() {
-        ImageCardView imageCardView = new ImageCardView(getContext());
-        final ImageView image = imageCardView.getMainImageView();
-        image.setBackgroundResource(R.drawable.icon_focused);
-        image.getBackground().setAlpha(0);
-        imageCardView.setOnFocusChangeListener((v, hasFocus) -> animateIconBackground(image.getBackground(), hasFocus));
-        return imageCardView;
+    protected CardView onCreateView() {
+        CardView cardView = new CardView(getContext());
+        cardView.setTitleSingleLine(false);
+        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.tv_transparent));
+        cardView.setInfoAreaBackgroundColor(getContext().getResources().getColor(R.color.transparent));
+        ImageView image = cardView.getMainImageView();
+        image.setPadding(IMAGE_PADDING, IMAGE_PADDING, IMAGE_PADDING, IMAGE_PADDING);
+        image.setColorFilter(getContext().getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
+        cardView.getTitleTextView().setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        return cardView;
     }
 
     @Override
-    public void onBindViewHolder(Card card, ImageCardView cardView) {
+    public void onBindViewHolder(Card card, CardView cardView) {
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
         cardView.setMainImage(card.getDrawable(cardView.getContext()));
     }
-
-    private void animateIconBackground(Drawable drawable, boolean hasFocus) {
-        if (hasFocus) {
-            ObjectAnimator.ofInt(drawable, "alpha", 0, 255).setDuration(ANIMATION_DURATION).start();
-        } else {
-            ObjectAnimator.ofInt(drawable, "alpha", 255, 0).setDuration(ANIMATION_DURATION).start();
-        }
-    }
+    
 }

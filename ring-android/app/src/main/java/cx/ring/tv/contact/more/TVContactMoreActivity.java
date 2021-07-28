@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2020 Savoir-faire Linux Inc.
  *
- * Author: Pierre Duchemin <pierre.duchemin@savoirfairelinux.com>
+ * Author: AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,23 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.tv.account;
+package cx.ring.tv.contact.more;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
 import cx.ring.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class TVSettingsActivity extends FragmentActivity {
+@AndroidEntryPoint
+public class TVContactMoreActivity extends FragmentActivity {
+
+    public static final String CONTACT_REQUEST_URI = "uri";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_activity_settings);
+        setContentView(R.layout.tv_activity_contact_more);
     }
 }
