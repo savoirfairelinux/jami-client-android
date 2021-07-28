@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.leanback.widget.Presenter;
 
@@ -59,7 +60,7 @@ public class TVContactDetailPresenter extends Presenter {
 
         void bind(SmartListViewModel object) {
             Fragment fragment = TvConversationFragment.newInstance(ConversationPath.toBundle(object.getAccountId(), object.getUri()));
-            FragmentManager fragmentManager = ((TVContactActivity) view.getContext()).getSupportFragmentManager();
+            FragmentManager fragmentManager = ((FragmentActivity) view.getContext()).getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
                     .replace(R.id.content, fragment, FRAGMENT_TAG)
