@@ -21,17 +21,17 @@ package cx.ring.tv.cards.contacts;
 
 import android.content.Context;
 
-import androidx.leanback.widget.ImageCardView;
 import android.view.ContextThemeWrapper;
 
-import cx.ring.R;
-
 import net.jami.smartlist.SmartListViewModel;
+
+import cx.ring.R;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
+import cx.ring.tv.cards.CardView;
 import cx.ring.views.AvatarDrawable;
 
-public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
+public class ContactCardPresenter extends AbstractCardPresenter<CardView> {
 
     private static final String TAG = ContactCardPresenter.class.getSimpleName();
 
@@ -40,32 +40,21 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
     }
 
     @Override
-    protected ImageCardView onCreateView() {
-        return new ImageCardView(getContext());
+    protected CardView onCreateView() {
+        return new CardView(getContext());
     }
 
     @Override
-    public void onBindViewHolder(Card card, ImageCardView cardView) {
+    public void onBindViewHolder(Card card, CardView cardView) {
         ContactCard contact = (ContactCard) card;
 
         SmartListViewModel model = contact.getModel();
-        /*String username = model.getContact().getUsername();
-
-        if (username == null) {
-            username = model.getUri().getRawUriString();
-        }
-
-        if (username != null && (username.isEmpty() || username.equals(model.getContactName()))) {
-            cardView.setTitleText(username);
-            cardView.setContentText("");
-        } else {
-            cardView.setTitleText(model.getContactName());
-            cardView.setContentText(username);
-        }*/
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
+        cardView.setTitleSingleLine(true);
+        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.tv_transparent));
+        cardView.setInfoAreaBackgroundColor(getContext().getResources().getColor(R.color.transparent));
 
-        cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
         cardView.setMainImage(
                 new AvatarDrawable.Builder()
                         .withViewModel(model)

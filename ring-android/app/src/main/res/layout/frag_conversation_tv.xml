@@ -11,14 +11,16 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+            android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/ubuntu_medium"/>
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="16sp"
+        android:fontFamily="@font/mulish_regular"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -77,12 +79,11 @@
 
                         <ImageButton
                             android:id="@+id/button_text"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:alpha="0.85"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_text"
-                            android:src="@drawable/baseline_chat_24"
+                            android:src="@drawable/baseline_androidtv_chat"
                             android:tint="@color/white" />
 
                         <TextView
@@ -106,12 +107,11 @@
 
                         <ImageButton
                             android:id="@+id/button_audio"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:alpha="0.85"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_audio"
-                            android:src="@drawable/baseline_mic_24"
+                            android:src="@drawable/baseline_androidtv_message_audio"
                             android:tint="@color/white" />
 
                         <TextView
@@ -136,12 +136,11 @@
 
                         <ImageButton
                             android:id="@+id/button_video"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:alpha="0.85"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/tv_button_shape"
                             android:contentDescription="@string/tv_send_video"
-                            android:src="@drawable/baseline_photo_camera_24"
+                            android:src="@drawable/baseline_androidtv_message_video"
                             android:tint="@color/white" />
 
                         <TextView

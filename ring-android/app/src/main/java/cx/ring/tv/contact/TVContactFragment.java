@@ -3,6 +3,7 @@
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,11 +26,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.widget.Action;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.ClassPresenterSelector;
@@ -41,37 +40,36 @@ import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.SparseArrayObjectAdapter;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.client.CallActivity;
-import cx.ring.client.HomeActivity;
-import cx.ring.fragments.CallFragment;
-import cx.ring.fragments.ConversationFragment;
+
 import net.jami.model.Uri;
 import net.jami.services.NotificationService;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.tv.contact.more.TVContactMoreActivity;
+import cx.ring.tv.contact.more.TVContactMoreFragment;
 import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 @AndroidEntryPoint
 public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> implements TVContactView {
 
-    private static final int ACTION_CALL = 0;
-    private static final int ACTION_DELETE = 1;
-    private static final int ACTION_ACCEPT = 2;
-    private static final int ACTION_REFUSE = 3;
-    private static final int ACTION_BLOCK = 4;
-    private static final int ACTION_ADD_CONTACT = 5;
-    private static final int ACTION_CLEAR_HISTORY = 6;
+    public static final String TAG = TVContactFragment.class.getSimpleName();
 
-    private static final int DIALOG_WIDTH = 900;
-    private static final int DIALOG_HEIGHT = 400;
+    private static final int ACTION_CALL = 0;
+    private static final int ACTION_ACCEPT = 1;
+    private static final int ACTION_REFUSE = 2;
+    private static final int ACTION_BLOCK = 3;
+    private static final int ACTION_ADD_CONTACT = 4;
+    private static final int ACTION_MORE = 5;
+    private static final int REQUEST_CODE = 100;
+
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
@@ -79,11 +77,21 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private boolean isIncomingRequest = false;
     private boolean isOutgoingRequest = false;
 
+    private ConversationPath mConversationPath;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String type = getActivity().getIntent().getType();
+        String type;
+        if (getArguments() != null) {
+            mConversationPath = ConversationPath.fromBundle(getArguments());
+            type = getArguments().getString("type");
+        } else {
+            mConversationPath = ConversationPath.fromIntent(requireActivity().getIntent());
+            type = getActivity().getIntent().getType();
+        }
+
         if (type != null) {
             switch (type) {
                 case TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING:
@@ -95,20 +103,10 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             }
         }
 
-        // Override down navigation as we do not use it in this screen
-        // Only the detailPresenter will be displayed
-
-        prepareBackgroundManager();
         setupAdapter();
         Resources res = getResources();
         iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size);
-        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
-    }
-
-    private void prepareBackgroundManager() {
-        Activity activity = requireActivity();
-        BackgroundManager mBackgroundManager = BackgroundManager.getInstance(activity);
-        mBackgroundManager.attach(activity.getWindow());
+        presenter.setContact(mConversationPath);
     }
 
     private void setupAdapter() {
@@ -124,7 +122,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                     new DetailsOverviewLogoPresenter());
         }
 
-        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_900));
+        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.tv_contact_background));
+        detailsPresenter.setActionsBackgroundColor(ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
 
         // Hook up transition element.
@@ -140,10 +139,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         detailsPresenter.setOnActionClickedListener(action -> {
             if (action.getId() == ACTION_CALL) {
                 presenter.contactClicked();
-            } else if (action.getId() == ACTION_DELETE) {
-                createDeleteDialog();
-            } else if (action.getId() == ACTION_CLEAR_HISTORY) {
-                presenter.clearHistory();
             } else if (action.getId() == ACTION_ADD_CONTACT) {
                 presenter.onAddContact();
             } else if (action.getId() == ACTION_ACCEPT) {
@@ -152,6 +147,10 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                 presenter.refuseTrustRequest();
             } else if (action.getId() == ACTION_BLOCK) {
                 presenter.blockTrustRequest();
+            } else if (action.getId() == ACTION_MORE) {
+                startActivityForResult(new Intent(getActivity(), TVContactMoreActivity.class)
+                        .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI),
+                        REQUEST_CODE);
             }
         });
 
@@ -162,14 +161,24 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         setAdapter(mAdapter);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == TVContactMoreFragment.DELETE)
+                finishView();
+        }
+    }
+
     public void showContact(SmartListViewModel model) {
+        Context context = requireContext();
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
         AvatarDrawable avatar =
                 new AvatarDrawable.Builder()
                         .withViewModel(model)
                         //.withPresence(false)
                         .withCircleCrop(false)
-                        .build(getActivity());
+                        .build(context);
         avatar.setInSize(iconSize);
         row.setImageDrawable(avatar);
 
@@ -183,9 +192,9 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             adapter.set(ACTION_ADD_CONTACT, new Action(ACTION_ADD_CONTACT, getResources().getString(R.string.ab_action_contact_add)));
         } else {
             adapter.set(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call),
-                    null, requireContext().getDrawable(R.drawable.baseline_videocam_24)));
-            adapter.set(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
-            adapter.set(ACTION_CLEAR_HISTORY, new Action(ACTION_CLEAR_HISTORY, getResources().getString(R.string.conversation_action_history_clear)));
+                    null, context.getDrawable(R.drawable.baseline_videocam_24)));
+            adapter.set(ACTION_MORE, new Action(ACTION_MORE, getResources().getString(R.string.tv_action_more),
+                    null, context.getDrawable(R.drawable.baseline_more_vert_24)));
         }
         row.setActionsAdapter(adapter);
 
@@ -211,34 +220,21 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         isIncomingRequest = false;
         isOutgoingRequest = false;
         setupAdapter();
-        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
+        presenter.setContact(mConversationPath);
     }
 
     @Override
     public void finishView() {
         Activity activity = getActivity();
         if (activity != null) {
-            activity.finish();
+            activity.onBackPressed();
         }
     }
 
-    private void createDeleteDialog() {
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
-                .setTitle(R.string.conversation_action_remove_this_title)
-                .setMessage("")
-                .setPositiveButton(R.string.menu_delete, (dialog, whichButton) -> presenter.removeContact())
-                .setNegativeButton(android.R.string.cancel, null)
-                .create();
-        alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
-        alertDialog.setOwnerActivity(requireActivity());
-        alertDialog.setOnShowListener(dialog -> {
-            Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            positive.setFocusable(true);
-            positive.setFocusableInTouchMode(true);
-            positive.requestFocus();
-        });
-
-        alertDialog.show();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDisposableBag.dispose();
     }
 
 }

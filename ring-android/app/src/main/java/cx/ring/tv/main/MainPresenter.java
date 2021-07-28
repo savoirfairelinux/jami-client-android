@@ -116,10 +116,6 @@ public class MainPresenter extends RootPresenter<MainView> {
         getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID(), mAccountService.getCurrentAccount().hasPassword());
     }
 
-    public void onLicenceClicked(int aboutType) {
-        getView().showLicence(aboutType);
-    }
-
     public void onEditProfileClicked() {
         getView().showProfileEditing();
     }
@@ -131,4 +127,5 @@ public class MainPresenter extends RootPresenter<MainView> {
     public void onSettingsClicked() {
         getView().showSettings();
     }
+
 }

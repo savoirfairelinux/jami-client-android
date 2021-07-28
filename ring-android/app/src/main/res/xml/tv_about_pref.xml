@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/about">
+
+    <PreferenceCategory android:title="@string/tv_about_version">
+        <Preference
+            android:key="About.version"
+            android:selectable="true"
+            android:enabled="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/tv_about_license">
+        <Preference
+            android:key="About.license"
+            android:selectable="true"
+            android:enabled="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/tv_about_author">
+        <Preference
+            android:key="About.rights"
+            android:selectable="true"
+            android:enabled="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/tv_about_credits">
+        <Preference
+            android:key="About.credits"
+            android:selectable="true"
+            android:enabled="true"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
