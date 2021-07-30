@@ -14,13 +14,13 @@ dependencies {
     implementation 'javax.inject:javax.inject:1'
 
     // ORM
-    implementation 'com.j256.ormlite:ormlite-core:5.5'
+    implementation 'com.j256.ormlite:ormlite-core:5.6'
 
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13.2'
 
     // RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.13'
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.7'
