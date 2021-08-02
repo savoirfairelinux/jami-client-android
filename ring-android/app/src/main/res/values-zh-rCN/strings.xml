@@ -219,6 +219,7 @@
   <string name="refuse">拒接</string>
   <string name="block">屏蔽</string>
   <string name="contact_request_title">新联系人请求</string>
+  <string name="contact_request_msg">您有 %1$d 个联系人请求</string>
   <string name="contact_request_account">为了 %1$s</string>
   <string name="no_requests">您没有联系人请求</string>
   <string name="message_contact_not_trusted_yet">%s还不是您的联系人。\n您接受还是拒绝此联系人请求？</string>
