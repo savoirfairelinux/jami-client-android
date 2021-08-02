@@ -94,13 +94,13 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter, Generic
         disposable.add(VCardServiceImpl.Companion
                 .loadProfile(requireContext(), account)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(profile -> {
+                .doOnNext(profile -> {
                     if (binding != null) {
                         binding.shareUri.setVisibility(View.VISIBLE);
                         binding.shareUri.setText(account.getDisplayUsername());
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(requireContext(), account))
+                .map(p -> AvatarDrawable.build(requireContext(), account, p, true))
                 .subscribe(a -> {
                     if (binding != null) {
                         binding.qrUserPhoto.setVisibility(View.VISIBLE);

@@ -615,7 +615,7 @@ public class AccountService {
     }
 
     public Observable<Account> getCurrentProfileAccountSubject() {
-        return currentAccountSubject.flatMapSingle(a -> mVCardService.loadProfile(a).map(p -> a));
+        return currentAccountSubject.flatMapSingle(a -> mVCardService.loadProfile(a).firstOrError().map(p -> a));
     }
 
     public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {

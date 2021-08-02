@@ -97,6 +97,8 @@ public class Account {
 
     public Single<Account> historyLoader;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
+    private final Subject<Single<Tuple<String, Object>>> mProfileSubject = BehaviorSubject.create();
+    private final Observable<Tuple<String, Object>> mLoadedProfileSubject = mProfileSubject.switchMapSingle(single -> single);
 
     public Account(String bAccountID) {
         accountID = bAccountID;
@@ -1079,15 +1081,8 @@ public class Account {
     }
 
     public Single<String> getAccountAlias() {
-        if (isJami()) {
-            if (mLoadedProfile == null)
-                return Single.just(getJamiAlias());
-            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getJamiAlias() : p.first);
-        } else {
-            if (mLoadedProfile == null)
-                return Single.just(getAlias());
-            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
-        }
+        return mLoadedProfileSubject.firstOrError()
+                .map(p -> StringUtils.isEmpty(p.first) ? (isJami() ? getJamiAlias() : getAlias()) : p.first);
     }
 
     /**
@@ -1105,12 +1100,17 @@ public class Account {
         mLoadedProfile = null;
     }
 
+    public Observable<Tuple<String, Object>> getLoadedProfileObservable() {
+        return mLoadedProfileSubject;
+    }
+
     public Single<Tuple<String, Object>> getLoadedProfile() {
         return mLoadedProfile;
     }
 
     public void setLoadedProfile(Single<Tuple<String, Object>> profile) {
         mLoadedProfile = profile;
+        mProfileSubject.onNext(profile);
     }
 
     public DataTransfer getDataTransfer(String id) {

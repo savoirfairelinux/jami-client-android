@@ -75,6 +75,7 @@ import cx.ring.fragments.LinkDeviceFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.QRCodeFragment;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.settings.AccountFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
@@ -232,12 +233,12 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             return;
 
         mProfileDisposable.clear();
-        mProfileDisposable.add(AvatarDrawable.load(context, account)
+        mProfileDisposable.add(VCardServiceImpl.Companion.loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(avatar -> {
+                .subscribe(profile -> {
                     if (mBinding != null) {
-                        mBinding.userPhoto.setImageDrawable(avatar);
-                        mBinding.username.setText(account.getLoadedProfile().blockingGet().first);
+                        mBinding.userPhoto.setImageDrawable(AvatarDrawable.build(context, account, profile, true));
+                        mBinding.username.setText(profile.first);
                     }
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
@@ -363,6 +364,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
         mProfilePhoto = view.findViewById(R.id.profile_photo);
         mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), account)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(a -> mProfilePhoto.setImageDrawable(a)));
 
         ImageButton cameraView = view.findViewById(R.id.camera);
@@ -549,7 +551,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                             .withNameData(null, account.getRegisteredName())
                             .withId(account.getUri())
                             .withCircleCrop(true)
-                            .build(getContext());
+                            .build(requireContext());
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));

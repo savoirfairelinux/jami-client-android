@@ -382,7 +382,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mDisposable.add(VCardServiceImpl.Companion
                 .loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(profile -> {
+                .doOnNext(profile -> {
                     if (profile.first != null && !profile.first.isEmpty()) {
                         mTitleView.setAlias(profile.first);
                         if (address != null) {
@@ -394,7 +394,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         mTitleView.setAlias(address);
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(context, account))
+                .map(p -> AvatarDrawable.build(context, account, p, true))
                 .subscribe(a -> {
                     mTitleView.getSettingsButton().setVisibility(View.VISIBLE);
                     mTitleView.getLogoView().setVisibility(View.VISIBLE);

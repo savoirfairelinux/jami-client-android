@@ -69,11 +69,9 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
         )
         /*;
         holder.disposable = AvatarFactory.getAvatar(context, contact)
-                .subscribe(holder.binding.photo::setImageDrawable);*/holder.itemView.setOnClickListener { view: View? ->
-            onSelectedCallback.onParticipantSelected(
-                view,
-                info
-            )
+                .subscribe(holder.binding.photo::setImageDrawable);*/
+        holder.itemView.setOnClickListener { view: View ->
+            onSelectedCallback.onParticipantSelected(view, info)
         }
     }
 
@@ -111,6 +109,6 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
     }
 
     interface ConfParticipantSelected {
-        fun onParticipantSelected(view: View?, contact: ParticipantInfo?)
+        fun onParticipantSelected(view: View, contact: ParticipantInfo?)
     }
 }

@@ -190,7 +190,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 startActivity(intent)
             }
         } else if (DRingService.ACTION_CONV_ACCEPT == action || Intent.ACTION_VIEW == action) {
-            startConversation(ConversationPath.fromIntent(intent))
+            startConversation(ConversationPath.fromIntent(intent)!!)
         } //else {
         val fragmentManager = supportFragmentManager
         fContent = fragmentManager.findFragmentById(R.id.main_frame)
@@ -348,7 +348,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDisposable.clear()
     }
 
-    fun startConversation(conversationId: String?) {
+    fun startConversation(conversationId: String) {
         mDisposable.add(
             mAccountService.currentAccountSubject
                 .firstElement()
@@ -356,7 +356,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 .subscribe { account -> startConversation(account.accountID, Uri.fromString(conversationId)) })
     }
 
-    fun startConversation(accountId: String?, conversationId: Uri?) {
+    fun startConversation(accountId: String, conversationId: Uri) {
         startConversation(ConversationPath(accountId, conversationId))
     }
 

@@ -17,32 +17,25 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.utils;
+package cx.ring.utils
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextUtils
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import cx.ring.R
 
-import androidx.annotation.NonNull;
-
-import cx.ring.BuildConfig;
-import cx.ring.R;
-
-public class ClipboardHelper {
-    public static final String TAG = ClipboardHelper.class.getSimpleName();
-
-    public static void copyToClipboard(final @NonNull Context context,
-                                       final String text) {
+object ClipboardHelper {
+    val TAG = ClipboardHelper::class.simpleName!!
+    fun copyToClipboard(
+        context: Context,
+        text: String?
+    ) {
         if (TextUtils.isEmpty(text)) {
-            Log.d(TAG, "copyNumberToClipboard: number is null");
-            return;
+            return
         }
-
-        ClipboardManager clipboard = (ClipboardManager) context
-                .getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = android.content.ClipData.newPlainText(context.getText(R.string.clip_contact_uri), text);
-        clipboard.setPrimaryClip(clip);
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(context.getText(R.string.clip_contact_uri), text)
+        clipboard.setPrimaryClip(clip)
     }
 }

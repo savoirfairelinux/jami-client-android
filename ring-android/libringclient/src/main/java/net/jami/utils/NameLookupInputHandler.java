@@ -26,12 +26,12 @@ import java.util.TimerTask;
 
 public class NameLookupInputHandler {
     private static final int WAIT_DELAY = 350;
-    private final WeakReference<net.jami.services.AccountService> mAccountService;
+    private final WeakReference<AccountService> mAccountService;
     private final String mAccountId;
     private final Timer timer = new Timer(true);
     private NameTask lastTask = null;
 
-    public NameLookupInputHandler(net.jami.services.AccountService accountService, String accountId) {
+    public NameLookupInputHandler(AccountService accountService, String accountId) {
         mAccountService = new WeakReference<>(accountService);
         mAccountId = accountId;
     }

@@ -92,6 +92,7 @@ public class AvatarFactory {
 
     public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
         return AvatarDrawable.load(context, account)
+                .firstOrError()
                 .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
 
