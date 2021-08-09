@@ -115,7 +115,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     }
 
     override fun isPushAllowed(): Boolean {
-        val token = JamiApplication.instance!!.pushToken
+        val token = JamiApplication.instance?.pushToken
         return settings.isAllowPushNotifications && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/
     }
 

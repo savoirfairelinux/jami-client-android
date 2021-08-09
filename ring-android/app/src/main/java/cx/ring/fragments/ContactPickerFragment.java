@@ -23,7 +23,6 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragContactPickerBinding;
 import net.jami.facades.ConversationFacade;

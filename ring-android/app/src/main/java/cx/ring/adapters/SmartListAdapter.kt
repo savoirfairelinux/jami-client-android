@@ -38,15 +38,14 @@ class SmartListAdapter(
 ) : RecyclerView.Adapter<SmartListViewHolder>() {
     private var mSmartListViewModels: MutableList<SmartListViewModel> = if (smartListViewModels != null) ArrayList(smartListViewModels) else ArrayList()
     private var recyclerView: RecyclerView? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SmartListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return if (viewType == 0) {
-            val itemBinding =
-                ItemSmartlistBinding.inflate(layoutInflater, parent, false)
+            val itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false)
             SmartListViewHolder(itemBinding, mDisposable)
         } else {
-            val itemBinding =
-                ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false)
+            val itemBinding = ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false)
             SmartListViewHolder(itemBinding, mDisposable)
         }
     }
@@ -75,14 +74,13 @@ class SmartListAdapter(
     }
 
     fun update(viewModels: MutableList<SmartListViewModel>?) {
-        //Log.w("SmartListAdapter", "update " + (viewModels == null ? null : viewModels.size()));
         val old: List<SmartListViewModel> = mSmartListViewModels
         mSmartListViewModels = viewModels ?: ArrayList()
         if (viewModels != null) {
-            val recyclerViewState = recyclerView!!.layoutManager!!.onSaveInstanceState()
+            val recyclerViewState = recyclerView?.layoutManager?.onSaveInstanceState()
             DiffUtil.calculateDiff(SmartListDiffUtil(old, viewModels))
                 .dispatchUpdatesTo(this)
-            recyclerView!!.layoutManager!!.onRestoreInstanceState(recyclerViewState)
+            recyclerView?.layoutManager?.onRestoreInstanceState(recyclerViewState)
         } else {
             notifyDataSetChanged()
         }

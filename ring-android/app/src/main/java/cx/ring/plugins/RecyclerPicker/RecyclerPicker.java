@@ -1,7 +1,11 @@
 package cx.ring.plugins.RecyclerPicker;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -53,14 +57,14 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener {
     }
 
     public void setFirstLastElementsWidths(int first, int last){
-        paddingLeft = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2 - RecyclerPickerUtils.dpToPx(mRecyclerView.getContext(), first/2);
-        paddingRight = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2 - RecyclerPickerUtils.dpToPx(mRecyclerView.getContext(), last/2);
+        paddingLeft = getScreenWidth(mRecyclerView.getContext())/2 - dpToPx(mRecyclerView.getContext(), first/2);
+        paddingRight = getScreenWidth(mRecyclerView.getContext())/2 - dpToPx(mRecyclerView.getContext(), last/2);
         updateRecyclerViewPadding();
     }
 
     private void setRecyclerViewPadding() {
-        paddingLeft = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2;
-        paddingRight = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2;
+        paddingLeft = getScreenWidth(mRecyclerView.getContext())/2;
+        paddingRight = getScreenWidth(mRecyclerView.getContext())/2;
         updateRecyclerViewPadding();
     }
 
@@ -70,5 +74,19 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener {
 
     public void scrollToPosition(int position){
         mLayoutManager.scrollToPositionWithOffset(position, 0);
+    }
+
+    private static int getScreenWidth(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        if (windowManager != null) {
+            windowManager.getDefaultDisplay().getMetrics(dm);
+        }
+        return dm.widthPixels;
+    }
+
+    private static int dpToPx(Context context, int value){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) value,
+                context.getResources().getDisplayMetrics());
     }
 }

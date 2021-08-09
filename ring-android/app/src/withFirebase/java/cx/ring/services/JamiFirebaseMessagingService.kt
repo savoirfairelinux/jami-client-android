@@ -26,6 +26,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.application.JamiApplicationFirebase
 
 class JamiFirebaseMessagingService : FirebaseMessagingService() {
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
             // Even if wakeLock is deprecated, without this part, some devices are blocking
@@ -42,6 +43,7 @@ class JamiFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(refreshedToken: String) {
+        Log.w("JamiFirebaseMessaging", "onNewToken $refreshedToken")
         val app = JamiApplication.instance as JamiApplicationFirebase?
         app?.pushToken = refreshedToken
     }

@@ -37,23 +37,20 @@ import cx.ring.utils.AndroidFileUtils;
 
 public class PathListAdapter extends RecyclerView.Adapter<PathListAdapter.PathViewHolder> {
     private List<String> mList;
-    private PathListItemListener listener;
-    private Drawable icon;
+    private PathListItemListener mListener;
     public static final String TAG = PathListAdapter.class.getSimpleName();
 
     PathListAdapter(List<String> pathList, PathListItemListener listener) {
-        this.mList = pathList;
-        this.listener = listener;
+        mList = pathList;
+        mListener = listener;
     }
-
 
     @NonNull
     @Override
     public PathViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.frag_path_list_item, parent, false);
-
-        return new PathViewHolder(view, listener);
+        return new PathViewHolder(view, mListener);
     }
 
     @Override
@@ -93,7 +90,7 @@ public class PathListAdapter extends RecyclerView.Adapter<PathListAdapter.PathVi
             if (file.exists()) {
                 if (AndroidFileUtils.isImage(s)) {
                     pathTextView.setVisibility(View.GONE);
-                    icon = Drawable.createFromPath(s);
+                    Drawable icon = Drawable.createFromPath(s);
                     if (icon != null) {
                         pathIcon.setImageDrawable(icon);
                     }

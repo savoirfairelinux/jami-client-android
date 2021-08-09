@@ -70,9 +70,9 @@ public class ContactRequestsPresenter extends RootPresenter<net.jami.contactrequ
     }
 
     @Override
-    public void unbindView() {
+    public void onDestroy() {
         mAccount.onComplete();
-        super.unbindView();
+        super.onDestroy();
     }
 
     public void updateAccount(String accountId) {

@@ -68,6 +68,7 @@ public interface ConversationView extends BaseView {
     void switchToConversationView();
 
     void switchToSyncingView();
+    void switchToEndedView();
 
     void askWriteExternalStoragePermission();
 

@@ -271,7 +271,12 @@ class ContactDetailsActivity : AppCompatActivity() {
             Log.w(TAG, e.getKey() + " -> " + e.getValue());
         }*/
         @StringRes val infoString =
-            if (conversation.isSwarm) if (conversation.mode == Conversation.Mode.OneToOne) R.string.conversation_type_private else R.string.conversation_type_group else R.string.conversation_type_contact
+            if (conversation.isSwarm)
+                if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
+                    R.string.conversation_type_private
+                else
+                    R.string.conversation_type_group
+            else R.string.conversation_type_contact
         /*@DrawableRes int infoIcon = conversation.isSwarm()
                 ? (conversation.getMode() == Conversation.Mode.OneToOne
                 ? R.drawable.baseline_person_24

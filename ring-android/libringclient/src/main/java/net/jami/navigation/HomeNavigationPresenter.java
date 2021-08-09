@@ -67,7 +67,8 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
     public void bindView(HomeNavigationView view) {
         super.bindView(view);
         mCompositeDisposable.add(mAccountService.getCurrentProfileAccountSubject()
-                .switchMapSingle(account -> account.getLoadedProfile().map(alias -> new Tuple<>(account, alias)))
+                .switchMap(account -> account.getLoadedProfileObservable()
+                        .map(alias -> new Tuple<>(account, alias)))
                 .observeOn(mUiScheduler)
                 .subscribe(alias -> {
                     HomeNavigationView v = getView();
@@ -94,10 +95,8 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
-                        .subscribeOn(Schedulers.io()),
-                photo
-                        .subscribeOn(Schedulers.io()),
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
+                photo.subscribeOn(Schedulers.io()),
                 (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     vcard.removeProperties(Photo.class);

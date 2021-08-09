@@ -27,14 +27,16 @@ import android.text.TextUtils
 import android.util.TypedValue
 import androidx.core.content.ContextCompat
 import cx.ring.R
-import cx.ring.services.VCardServiceImpl.Companion.loadProfile
+import cx.ring.services.VCardServiceImpl
 import cx.ring.utils.DeviceUtils.isTv
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.HashUtils
+import net.jami.utils.Tuple
 import java.util.*
 
 class AvatarDrawable : Drawable {
@@ -87,16 +89,19 @@ class AvatarDrawable : Drawable {
         private val drawPaint = Paint()
 
         @JvmStatic @JvmOverloads
-        fun load(context: Context, account: Account, crop: Boolean = true): Single<AvatarDrawable> {
-            return loadProfile(context, account)
-                .map { data ->
-                    Builder()
-                        .withPhoto(data.second as Bitmap?)
-                        .withNameData(data.first, account.registeredName)
+        fun load(context: Context, account: Account, crop: Boolean = true): Observable<AvatarDrawable> {
+            return VCardServiceImpl.loadProfile(context, account).map { profile ->
+                build(context, account, profile, crop)
+            }
+        }
+        @JvmStatic
+        fun build(context: Context, account: Account, profile: Tuple<String, Any>, crop: Boolean): AvatarDrawable {
+            return Builder()
+                        .withPhoto(profile.second as Bitmap?)
+                        .withNameData(profile.first, account.registeredName)
                         .withId(account.uri)
                         .withCircleCrop(crop)
                         .build(context)
-                }
         }
 
         private fun getSubBounds(bounds: Rect, total: Int, i: Int): Rect? {
@@ -684,10 +689,10 @@ class AvatarDrawable : Drawable {
     }
 
     private fun convertNameToAvatarText(name: String?): String? {
-        return if (TextUtils.isEmpty(name)) {
+        return if (name == null || name.isEmpty()) {
             null
         } else {
-            String(Character.toChars(name!!.codePointAt(0))).uppercase(Locale.getDefault())
+            String(Character.toChars(name.codePointAt(0))).uppercase(Locale.getDefault())
         }
     }
 }

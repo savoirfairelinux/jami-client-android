@@ -91,14 +91,14 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.preference:preference-ktx:1.1.1"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation "androidx.leanback:leanback:1.1.0-rc02"
-    implementation "androidx.leanback:leanback-preference:1.1.0-rc01"
+    implementation "androidx.leanback:leanback:1.2.0-alpha01"
+    implementation "androidx.leanback:leanback-preference:1.2.0-alpha01"
     implementation 'androidx.tvprovider:tvprovider:1.0.0'
     implementation "androidx.media:media:1.4.1"
     implementation "androidx.percentlayout:percentlayout:1.0.0"
     implementation "com.google.android.material:material:1.4.0"
     implementation 'com.google.android:flexbox:2.0.1'
-    implementation 'org.osmdroid:osmdroid-android:6.1.10'
+    implementation 'org.osmdroid:osmdroid-android:6.1.11'
     implementation "androidx.sharetarget:sharetarget:1.1.0"
 
     // ORM

@@ -27,10 +27,9 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
 
-    // Log.d(TAG, "setPushToken: " + token);
     override var pushToken: String? = null
         set(token) {
-            // Log.d(TAG, "setPushToken: " + token);
+            //Log.d(TAG, "setPushToken: $token");
             field = token
             if (mPreferencesService.settings.isAllowPushNotifications) {
                 mAccountService.setPushNotificationToken(token)
@@ -40,6 +39,7 @@ class JamiApplicationFirebase : JamiApplication() {
     override fun onCreate() {
         super.onCreate()
         try {
+            Log.w(TAG, "onCreate()")
             FirebaseApp.initializeApp(this)
             FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String? ->
                 Log.w(TAG, "Found push token")

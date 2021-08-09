@@ -23,7 +23,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -42,8 +41,8 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationBarView
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
@@ -73,9 +72,7 @@ import cx.ring.views.SwitchButton
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.Predicate
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.facades.ConversationFacade
 import net.jami.model.Account
@@ -87,10 +84,11 @@ import net.jami.services.ContactService
 import net.jami.services.NotificationService
 import net.jami.smartlist.SmartListViewModel
 import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     AdapterView.OnItemSelectedListener, Colorable {
     private var fContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
@@ -131,34 +129,29 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon()
-        mBinding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(mBinding!!.root)
-
-        // dependency injection
-        //JamiApplication.getInstance().getInjectionComponent().inject(this);
-        setSupportActionBar(mBinding!!.mainToolbar)
-        val ab = supportActionBar
-        if (ab != null) {
-            ab.title = ""
+        mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
+            setContentView(binding.root)
+            setSupportActionBar(binding.mainToolbar)
+            supportActionBar?.title = ""
+            binding.navigationView.setOnItemSelectedListener(this)
+            binding.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked = true
+            mOutlineProvider = binding.appBar.outlineProvider
+            binding.spinnerToolbar.onItemSelectedListener = this
+            binding.accountSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+                enableAccount(isChecked)
+            }
+            binding.contactImage?.setOnClickListener { fConversation?.openContact() }
         }
-        mBinding!!.navigationView.setOnNavigationItemSelectedListener(this)
-        mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked = true
-        mOutlineProvider = mBinding!!.appBar.outlineProvider
         if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.bottom_navigation)
         }
-        mBinding!!.spinnerToolbar.onItemSelectedListener = this
-        mBinding!!.accountSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            enableAccount(isChecked)
-        }
-        mBinding!!.contactImage?.setOnClickListener { fConversation?.openContact() }
         handleIntent(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mMigrationDialog != null) {
-            if (mMigrationDialog!!.isShowing) mMigrationDialog!!.dismiss()
+        mMigrationDialog?.apply {
+            if (isShowing) dismiss()
             mMigrationDialog = null
         }
         fContent = null
@@ -190,7 +183,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 startActivity(intent)
             }
         } else if (DRingService.ACTION_CONV_ACCEPT == action || Intent.ACTION_VIEW == action) {
-            startConversation(ConversationPath.fromIntent(intent))
+            startConversation(ConversationPath.fromIntent(intent)!!)
         } //else {
         val fragmentManager = supportFragmentManager
         fContent = fragmentManager.findFragmentById(R.id.main_frame)
@@ -232,7 +225,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun setToolbarState(title: String?, subtitle: String?) {
-        mBinding!!.mainToolbar.let { toolbar ->
+        mBinding?.mainToolbar?.let { toolbar ->
             toolbar.logo = null
             toolbar.title = title
             toolbar.subtitle = subtitle
@@ -240,9 +233,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun showProfileInfo() {
-        mBinding!!.spinnerToolbar.visibility = View.VISIBLE
-        mBinding!!.mainToolbar.title = null
-        mBinding!!.mainToolbar.subtitle = null
+        mBinding?.apply {
+            spinnerToolbar.visibility = View.VISIBLE
+            mainToolbar.title = null
+            mainToolbar.subtitle = null
+        }
     }
 
     override fun onStart() {
@@ -266,10 +261,10 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ accounts ->
                     if (mAccountAdapter == null) {
-                        mAccountAdapter =
-                            AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts))
-                        mAccountAdapter!!.setNotifyOnChange(false)
-                        mBinding!!.spinnerToolbar.adapter = mAccountAdapter
+                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts)).apply {
+                            setNotifyOnChange(false)
+                            mBinding?.spinnerToolbar?.adapter = this
+                        }
                     } else {
                         mAccountAdapter!!.clear()
                         mAccountAdapter!!.addAll(accounts)
@@ -295,14 +290,14 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mDisposable.add(mAccountService
                 .currentAccountSubject
-                .flatMap { obj: Account -> obj.conversationsSubject }
+                .switchMap { obj -> obj.conversationsSubject }
+                .debounce(10, TimeUnit.SECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe({ conversations -> setShareShortcuts(conversations) })
                 { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
         }
-        if (fConversation == null) fConversation = supportFragmentManager.findFragmentByTag(
-            ConversationFragment::class.java.simpleName
-        ) as ConversationFragment?
+        if (fConversation == null)
+            fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
         val newOrientation = resources.configuration.orientation
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation
@@ -348,29 +343,21 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         mDisposable.clear()
     }
 
-    fun startConversation(conversationId: String?) {
-        mDisposable.add(
-            mAccountService.currentAccountSubject
+    fun startConversation(conversationId: String) {
+        mDisposable.add(mAccountService.currentAccountSubject
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { account -> startConversation(account.accountID, Uri.fromString(conversationId)) })
     }
 
-    fun startConversation(accountId: String?, conversationId: Uri?) {
+    fun startConversation(accountId: String, conversationId: Uri) {
         startConversation(ConversationPath(accountId, conversationId))
     }
 
     private fun startConversation(path: ConversationPath) {
         Log.w(TAG, "startConversation $path")
         if (!DeviceUtils.isTablet(this)) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    path.toUri(),
-                    this,
-                    ConversationActivity::class.java
-                )
-            )
+            startActivity(Intent(Intent.ACTION_VIEW, path.toUri(), this, ConversationActivity::class.java))
         } else {
             startConversationTablet(path.toBundle())
         }
@@ -383,13 +370,8 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             selectNavigationItem(R.id.navigation_home)
         }
         showTabletToolbar()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.conversation_container,
-                fConversation!!,
-                ConversationFragment::class.java.simpleName
-            )
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.conversation_container, fConversation!!, ConversationFragment::class.java.simpleName)
             .commit()
     }
 
@@ -399,10 +381,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             (fContent as ContactRequestsFragment).presentForAccount(accountID)
             return
         }
-        val bundle = Bundle()
-        bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID)
-        val content = ContactRequestsFragment()
-        content.arguments = bundle
+        val content = ContactRequestsFragment().apply {
+            arguments = Bundle().apply { putString(ContactRequestsFragment.ACCOUNT_ID, accountID) }
+        }
         fContent = content
         mBinding!!.navigationView.menu.getItem(NAVIGATION_CONTACT_REQUESTS).isChecked = true
         supportFragmentManager.beginTransaction()
@@ -430,7 +411,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val fragmentManager = supportFragmentManager
         val entryCount = fragmentManager.backStackEntryCount
         for (i in 0 until entryCount) {
-            fragmentManager.popBackStack()
+            fragmentManager.popBackStackImmediate()
         }
         //fContent = fragmentManager.findFragmentById(R.id.main_frame);
         hideTabletToolbar()
@@ -505,6 +486,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             popCustomBackStack()
+            val fcontent = supportFragmentManager.findFragmentById(R.id.main_frame)
+            if (fcontent is SmartListFragment) {
+                fContent = fcontent
+                return true
+            }
             val content = SmartListFragment()
             fContent = content
             supportFragmentManager.beginTransaction()
@@ -519,12 +505,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
                 val intent = Intent()
                     .setClass(this, AccountWizardActivity::class.java)
-                    .setData(
-                        android.net.Uri.withAppendedPath(
-                            ContentUriHandler.ACCOUNTS_CONTENT_URI,
-                            account.accountID
-                        )
-                    )
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountID))
                 startActivityForResult(intent, 1)
             } else {
                 Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
@@ -729,6 +710,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val futureIcons: MutableList<Future<Bitmap>> =
             ArrayList(conversations.size.coerceAtMost(maxCount))
         for (conversation in conversations) {
+            val mode = conversation.mode.blockingFirst()
+            if (mode == Conversation.Mode.Syncing)
+                continue
             futureIcons.add(
                 (mContactService as ContactServiceImpl?)!!.loadConversationAvatar(this,conversation)
                     .map { d -> BitmapUtils.drawableToBitmap(d, targetSize) }
@@ -739,12 +723,17 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val shortcutInfoList: MutableList<ShortcutInfoCompat> = ArrayList(futureIcons.size)
         i = 0
         for (conversation in conversations) {
+            val mode = conversation.mode.blockingFirst()
+            if (mode == Conversation.Mode.Syncing)
+                continue
             var icon: IconCompat? = null
             try {
                 icon = IconCompat.createWithBitmap(futureIcons[i].get())
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to load icon", e)
             }
+            val title = conversation.title ?: continue
+            if (title.isEmpty()) continue
             val path = ConversationPath(conversation)
             val key = path.toKey()
             val person = Person.Builder()
@@ -758,12 +747,7 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
                 .setIntent(
-                    Intent(
-                        Intent.ACTION_SEND,
-                        android.net.Uri.EMPTY,
-                        this,
-                        HomeActivity::class.java
-                    )
+                    Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
                         .putExtras(path.toBundle())
                 )
                 .build()

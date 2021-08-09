@@ -35,13 +35,7 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
     RecyclerView.Adapter<ParticipantView>() {
     private var calls: List<ParticipantInfo>? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantView {
-        return ParticipantView(
-            ItemConferenceParticipantBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return ParticipantView(ItemConferenceParticipantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ParticipantView, position: Int) {
@@ -49,11 +43,7 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
         val contact = info.contact
         val context = holder.itemView.context
         if (info.call != null && info.call.callStatus != Call.CallStatus.CURRENT) {
-            holder.binding.displayName.text = String.format(
-                "%s\n%s",
-                contact.displayName,
-                context.getText(CallFragment.callStateToHumanState(info.call.callStatus))
-            )
+            holder.binding.displayName.text = String.format("%s\n%s", contact.displayName, context.getText(CallFragment.callStateToHumanState(info.call.callStatus)))
             holder.binding.photo.alpha = .5f
         } else {
             holder.binding.displayName.text = contact.displayName
@@ -69,11 +59,9 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
         )
         /*;
         holder.disposable = AvatarFactory.getAvatar(context, contact)
-                .subscribe(holder.binding.photo::setImageDrawable);*/holder.itemView.setOnClickListener { view: View? ->
-            onSelectedCallback.onParticipantSelected(
-                view,
-                info
-            )
+                .subscribe(holder.binding.photo::setImageDrawable);*/
+        holder.itemView.setOnClickListener { view: View ->
+            onSelectedCallback.onParticipantSelected(view, info)
         }
     }
 
@@ -111,6 +99,6 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
     }
 
     interface ConfParticipantSelected {
-        fun onParticipantSelected(view: View?, contact: ParticipantInfo?)
+        fun onParticipantSelected(view: View, contact: ParticipantInfo)
     }
 }
