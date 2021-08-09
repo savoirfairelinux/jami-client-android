@@ -1,0 +1,428 @@
+/*
+ *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>s
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package cx.ring.tv.main
+
+import android.app.Activity
+import android.content.*
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
+import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.FileProvider
+import androidx.leanback.app.GuidedStepSupportFragment
+import androidx.leanback.widget.*
+import androidx.tvprovider.media.tv.Channel
+import androidx.tvprovider.media.tv.ChannelLogoUtils
+import androidx.tvprovider.media.tv.PreviewProgram
+import androidx.tvprovider.media.tv.TvContractCompat
+import cx.ring.R
+import cx.ring.services.VCardServiceImpl.Companion.loadProfile
+import cx.ring.tv.account.TVAccountExport
+import cx.ring.tv.account.TVProfileEditingFragment
+import cx.ring.tv.account.TVShareActivity
+import cx.ring.tv.call.TVCallActivity
+import cx.ring.tv.cards.*
+import cx.ring.tv.cards.contacts.ContactCard
+import cx.ring.tv.cards.iconcards.IconCard
+import cx.ring.tv.cards.iconcards.IconCardHelper
+import cx.ring.tv.contact.TVContactActivity
+import cx.ring.tv.contact.TVContactFragment
+import cx.ring.tv.search.SearchActivity
+import cx.ring.tv.settings.TVSettingsActivity
+import cx.ring.tv.views.CustomTitleView
+import cx.ring.utils.AndroidFileUtils.createImageFile
+import cx.ring.utils.BitmapUtils.drawableToBitmap
+import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.ConversationPath
+import cx.ring.views.AvatarDrawable
+import cx.ring.views.AvatarFactory
+import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.model.Account
+import net.jami.navigation.HomeNavigationViewModel
+import net.jami.smartlist.SmartListViewModel
+import net.jami.utils.QRCodeUtils
+import java.io.BufferedOutputStream
+import java.io.FileOutputStream
+import java.util.*
+
+@AndroidEntryPoint
+class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
+    //private TVContactFragment mContactFragment;
+    private var mSpinnerFragment: SpinnerFragment? = null
+    private var mRowsAdapter: ArrayObjectAdapter? = null
+    private var cardRowAdapter: ArrayObjectAdapter? = null
+    private var contactRequestRowAdapter: ArrayObjectAdapter? = null
+    private var mTitleView: CustomTitleView? = null
+    private var requestsRow: CardListRow? = null
+    private var selector: CardPresenterSelector? = null
+    private var qrCard: IconCard? = null
+    private var accountSettingsRow: ListRow? = null
+    private val mDisposable = CompositeDisposable()
+    private val mHomeChannelDisposable = CompositeDisposable()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        headersState = HEADERS_DISABLED
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mTitleView = view.findViewById(R.id.browse_title_group)
+        super.onViewCreated(view, savedInstanceState)
+        setupUIElements(requireActivity())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mDisposable.clear()
+    }
+
+    private fun setupUIElements(activity: Activity) {
+        selector = CardPresenterSelector(activity)
+        cardRowAdapter = ArrayObjectAdapter(selector)
+
+        /* Contact Presenter */
+        val contactRow = CardRow(CardRow.TYPE_DEFAULT, false, getString(R.string.tv_contact_row_header), ArrayList())
+        val cardPresenterHeader = HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header))
+        val contactListRow = CardListRow(cardPresenterHeader, cardRowAdapter, contactRow)
+        accountSettingsRow = createAccountSettingsRow(activity)
+        adapter = ArrayObjectAdapter(ShadowRowPresenterSelector()).apply {
+            add(contactListRow)
+            add(accountSettingsRow)
+        }
+
+        // listeners
+        setOnSearchClickedListener { startActivity(Intent(getActivity(), SearchActivity::class.java)) }
+        onItemViewClickedListener = ItemViewClickedListener()
+        mTitleView!!.settingsButton.setOnClickListener { presenter.onSettingsClicked() }
+    }
+
+    private fun createRow(titleSection: String, cards: List<Card>, shadow: Boolean): ListRow {
+        val row = CardRow(CardRow.TYPE_DEFAULT, shadow, titleSection, cards)
+        val listRowAdapter = ArrayObjectAdapter(selector)
+        for (card in cards) {
+            listRowAdapter.add(card)
+        }
+        return CardListRow(HeaderItem(HEADER_MISC, titleSection), listRowAdapter, row)
+    }
+
+    private fun createAccountSettingsRow(context: Context): ListRow {
+        val cards = ArrayList<Card>(3).apply {
+            add(IconCardHelper.getAccountManagementCard(context))
+            add(IconCardHelper.getAccountAddDeviceCard(context))
+            add(IconCardHelper.getAccountShareCard(context, null).apply { qrCard = this })
+        }
+        return createRow(getString(R.string.account_tv_settings_header), cards, false)
+    }
+
+    private fun createContactRequestRow(): CardListRow {
+        val contactRequestRow = CardRow(CardRow.TYPE_DEFAULT, false, getString(R.string.menu_item_contact_request), ArrayList<ContactCard>())
+        contactRequestRowAdapter = ArrayObjectAdapter(selector)
+        return CardListRow(HeaderItem(HEADER_MISC, getString(R.string.menu_item_contact_request)), contactRequestRowAdapter, contactRequestRow)
+    }
+
+    override fun showLoading(show: Boolean) {
+        if (show) {
+            mSpinnerFragment = SpinnerFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_browse_fragment, mSpinnerFragment!!).commitAllowingStateLoss()
+        } else {
+            parentFragmentManager.beginTransaction().remove(mSpinnerFragment!!)
+                .commitAllowingStateLoss()
+        }
+    }
+
+    override fun refreshContact(index: Int, contact: SmartListViewModel) {
+        val contactCard = cardRowAdapter!![index] as ContactCard
+        contactCard.model = contact
+        cardRowAdapter!!.replace(index, contactCard)
+    }
+
+    override fun showContacts(contacts: List<SmartListViewModel>) {
+        val cards: MutableList<Card?> = ArrayList(contacts.size + 1)
+        cards.add(IconCardHelper.getAddContactCard(requireContext()))
+        for (contact in contacts) cards.add(ContactCard(contact))
+        cardRowAdapter!!.setItems(cards, null)
+        buildHomeChannel(requireContext().applicationContext, contacts)
+    }
+
+    private fun buildHomeChannel(context: Context, contacts: List<SmartListViewModel>) {
+        if (contacts.isEmpty()) return
+
+        // Get launcher package name
+        val resolveInfo = context.packageManager.resolveActivity(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME),
+            PackageManager.MATCH_DEFAULT_ONLY
+        )
+        val launcherName = resolveInfo?.activityInfo?.packageName
+        val cr = context.contentResolver
+        mHomeChannelDisposable.clear()
+        mHomeChannelDisposable.add(Single.fromCallable { createHomeChannel(context) }
+            .doOnEvent { channelId: Long?, error: Throwable? ->
+                if (error != null) {
+                    Log.w(TAG, "Error creating home channel", error)
+                } else {
+                    cr.delete(
+                        TvContractCompat.buildPreviewProgramsUriForChannel(channelId!!),
+                        null,
+                        null
+                    )
+                }
+            }
+            .flatMapObservable { channelId: Long ->
+                Observable.fromIterable(contacts)
+                    .concatMapEager({ contact: SmartListViewModel ->
+                        buildProgram(context, contact, launcherName, channelId)
+                            .toObservable()
+                            .subscribeOn(Schedulers.io())
+                    }, 8, 1)
+            }
+            .subscribeOn(Schedulers.io())
+            .subscribe({ program -> cr.insert(TvContractCompat.PreviewPrograms.CONTENT_URI, program.toContentValues()) }
+            ) { e: Throwable? -> Log.w(TAG, "Error updating home channel", e) })
+    }
+
+    override fun showContactRequests(contacts: List<SmartListViewModel>) {
+        val row = mRowsAdapter!![TRUST_REQUEST_ROW_POSITION] as CardListRow
+        val isRowDisplayed = row === requestsRow
+        val cards: MutableList<ContactCard> = ArrayList(contacts.size)
+        for (contact in contacts)
+            cards.add(ContactCard(contact))
+        if (isRowDisplayed && contacts.isEmpty()) {
+            mRowsAdapter!!.removeItems(TRUST_REQUEST_ROW_POSITION, 1)
+        } else if (contacts.isNotEmpty()) {
+            if (requestsRow == null) requestsRow = createContactRequestRow()
+            contactRequestRowAdapter!!.setItems(cards, null)
+            if (!isRowDisplayed) mRowsAdapter!!.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
+        }
+    }
+
+    override fun callContact(accountID: String, number: String) {
+        val intent = Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), activity, TVCallActivity::class.java)
+        startActivity(intent, null)
+    }
+
+    override fun displayAccountInfos(viewModel: HomeNavigationViewModel) {
+        val account = viewModel.account
+        account?.let { updateModel(it) }
+    }
+
+    override fun updateModel(account: Account) {
+        val context = requireContext()
+        val address = account.displayUsername
+        mDisposable.clear()
+        mDisposable.add(loadProfile(context, account)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { profile ->
+                    if (profile.first != null && profile.first.isNotEmpty()) {
+                        mTitleView!!.setAlias(profile.first)
+                        title = address ?: ""
+                    } else {
+                        mTitleView!!.setAlias(address)
+                    }
+                }
+            .map { p -> AvatarDrawable.build(context, account, p, true) }
+            .subscribe { a ->
+                mTitleView?.apply {
+                    settingsButton.visibility = View.VISIBLE
+                    logoView.visibility = View.VISIBLE
+                    logoView.setImageDrawable(a)
+                }
+            })
+        qrCard!!.setDrawable(prepareAccountQr(context, account.uri))
+        accountSettingsRow!!.adapter.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
+    }
+
+    override fun showExportDialog(pAccountID: String, hasPassword: Boolean) {
+        val wizard: GuidedStepSupportFragment =
+            TVAccountExport.createInstance(pAccountID, hasPassword)
+        GuidedStepSupportFragment.add(parentFragmentManager, wizard, R.id.main_browse_fragment)
+    }
+
+    override fun showProfileEditing() {
+        GuidedStepSupportFragment.add(
+            parentFragmentManager,
+            TVProfileEditingFragment(),
+            R.id.main_browse_fragment
+        )
+    }
+
+    override fun showAccountShare() {
+        val intent = Intent(activity, TVShareActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showSettings() {
+        startActivity(Intent(activity, TVSettingsActivity::class.java))
+    }
+
+    private inner class ItemViewClickedListener : OnItemViewClickedListener {
+        override fun onItemClicked(itemViewHolder: Presenter.ViewHolder, item: Any, rowViewHolder: RowPresenter.ViewHolder, row: Row) {
+            if (item is ContactCard) {
+                val model = item.model
+                val bundle = ConversationPath.toBundle(model.accountId, model.uri)
+                if (row === requestsRow) {
+                    bundle.putString("type", TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING)
+                }
+                val mContactFragment = TVContactFragment()
+                mContactFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .hide(this@MainFragment)
+                    .add(R.id.fragment_container, mContactFragment, TVContactFragment.TAG)
+                    .addToBackStack(TVContactFragment.TAG)
+                    .commit()
+            } else if (item is IconCard) {
+                when (item.type) {
+                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter!!.onExportClicked()
+                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter!!.onEditProfileClicked()
+                    Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
+                        val view = (itemViewHolder.view as CardView).mainImageView
+                        val intent = Intent(activity, TVShareActivity::class.java)
+                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            requireActivity(),
+                            view,
+                            TVShareActivity.SHARED_ELEMENT_NAME
+                        ).toBundle()
+                        requireActivity().startActivity(intent, bundle)
+                    }
+                    Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        private val TAG = MainFragment::class.java.simpleName
+
+        // Sections headers ids
+        private const val HEADER_CONTACTS: Long = 0
+        private const val HEADER_MISC: Long = 1
+        private const val TRUST_REQUEST_ROW_POSITION = 1
+        private const val QR_ITEM_POSITION = 2
+        private const val PREFERENCES_CHANNELS = "channels"
+        private const val KEY_CHANNEL_CONVERSATIONS = "conversations"
+        private val HOME_URI = Uri.Builder()
+            .scheme(ContentUriHandler.SCHEME_TV)
+            .authority(ContentUriHandler.AUTHORITY)
+            .appendPath(ContentUriHandler.PATH_TV_HOME)
+            .build()
+
+        private fun createHomeChannel(context: Context): Long {
+            val channel = Channel.Builder()
+                .setType(TvContractCompat.Channels.TYPE_PREVIEW)
+                .setDisplayName(context.getString(R.string.navigation_item_conversation))
+                .setAppLinkIntentUri(HOME_URI)
+                .build()
+            val cr = context.contentResolver
+            val sharedPref = context.getSharedPreferences(PREFERENCES_CHANNELS, Context.MODE_PRIVATE)
+            var channelId = sharedPref.getLong(KEY_CHANNEL_CONVERSATIONS, -1)
+            if (channelId == -1L) {
+                val channelUri = cr.insert(TvContractCompat.Channels.CONTENT_URI, channel.toContentValues())
+                channelId = ContentUris.parseId(channelUri!!)
+                sharedPref.edit().putLong(KEY_CHANNEL_CONVERSATIONS, channelId).apply()
+                val targetSize = (AvatarFactory.SIZE_NOTIF * context.resources.displayMetrics.density).toInt()
+                val targetPaddingSize = (AvatarFactory.SIZE_PADDING * context.resources.displayMetrics.density).toInt()
+                ChannelLogoUtils.storeChannelLogo(
+                    context, channelId, drawableToBitmap(context.getDrawable(R.drawable.ic_jami_48)!!, targetSize, targetPaddingSize))
+                TvContractCompat.requestChannelBrowsable(context, channelId)
+            } else {
+                cr.update(TvContractCompat.buildChannelUri(channelId), channel.toContentValues(), null, null)
+            }
+            return channelId
+        }
+
+        private fun buildProgram(
+            context: Context,
+            vm: SmartListViewModel,
+            launcherName: String?,
+            channelId: Long
+        ): Single<PreviewProgram> {
+            return AvatarDrawable.Builder()
+                .withViewModel(vm)
+                .withPresence(false)
+                .buildAsync(context)
+                .map { avatar: AvatarDrawable? ->
+                    val file = createImageFile(context)
+                    val bitmapAvatar = drawableToBitmap(avatar!!, 256)
+                    BufferedOutputStream(FileOutputStream(file)).use { os ->
+                        bitmapAvatar.compress(Bitmap.CompressFormat.PNG, 100, os)
+                    }
+                    bitmapAvatar.recycle()
+                    val uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
+
+                    // Grant permission to launcher
+                    if (launcherName != null) context.grantUriPermission(
+                        launcherName,
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                    )
+                    val contactBuilder = PreviewProgram.Builder()
+                        .setChannelId(channelId)
+                        .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
+                        .setTitle(vm.contactName)
+                        .setAuthor(vm.contacts[0].ringUsername)
+                        .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
+                        .setPosterArtUri(uri)
+                        .setIntentUri(
+                            Uri.Builder()
+                                .scheme(ContentUriHandler.SCHEME_TV)
+                                .authority(ContentUriHandler.AUTHORITY)
+                                .appendPath(ContentUriHandler.PATH_TV_CONVERSATION)
+                                .appendPath(vm.accountId)
+                                .appendPath(vm.uri.uri)
+                                .build()
+                        )
+                        .setInternalProviderId(vm.uuid)
+                    contactBuilder.build()
+                }
+        }
+
+        private fun prepareAccountQr(context: Context, accountId: String): BitmapDrawable? {
+            Log.w(TAG, "prepareAccountQr $accountId")
+            if (TextUtils.isEmpty(accountId)) return null
+            val pad = 16
+            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)
+            val bitmap = Bitmap.createBitmap(
+                qrCodeData.width + 2 * pad,
+                qrCodeData.height + 2 * pad,
+                Bitmap.Config.ARGB_8888
+            )
+            bitmap.setPixels(
+                qrCodeData.data,
+                0,
+                qrCodeData.width,
+                pad,
+                pad,
+                qrCodeData.width,
+                qrCodeData.height
+            )
+            return BitmapDrawable(context.resources, bitmap)
+        }
+    }
+}

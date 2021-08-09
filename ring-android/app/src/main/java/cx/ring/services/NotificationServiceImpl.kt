@@ -546,7 +546,7 @@ class NotificationServiceImpl(
             val account = mAccountService.getAccount(accountId)
             val profile = if (account == null) null else VCardServiceImpl.loadProfile(
                 mContext, account
-            ).blockingGet()
+            ).blockingFirst()
             val myPic = account?.let { getContactPicture(it) }
             val userPerson = Person.Builder()
                 .setKey(accountId)

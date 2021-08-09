@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.jami.mvp.RootPresenter;
+import net.jami.services.VCardService;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.VCardUtils;
@@ -46,8 +47,10 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
     private static final String TAG = JamiAccountSummaryPresenter.class.getSimpleName();
 
-    private final net.jami.services.DeviceRuntimeService mDeviceRuntimeService;
-    private final net.jami.services.AccountService mAccountService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final AccountService mAccountService;
+    private final VCardService mVcardService;
+
     private String mAccountID;
 
     @Inject
@@ -56,9 +59,11 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
     @Inject
     public JamiAccountSummaryPresenter(AccountService accountService,
-                                       DeviceRuntimeService deviceRuntimeService) {
+                                       DeviceRuntimeService deviceRuntimeService,
+                                       VCardService vcardService) {
         mAccountService = accountService;
         mDeviceRuntimeService = deviceRuntimeService;
+        mVcardService = vcardService;
     }
 
     public void registerName(String name, String password) {
@@ -93,14 +98,14 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
     public void setAccountId(String accountID) {
         mCompositeDisposable.clear();
         mAccountID = accountID;
-        net.jami.account.JamiAccountSummaryView v = getView();
+        JamiAccountSummaryView v = getView();
         Account account = mAccountService.getAccount(mAccountID);
         if (v != null && account != null)
             v.accountChanged(account);
         mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountID)
                 .observeOn(mUiScheduler)
                 .subscribe(a -> {
-                    net.jami.account.JamiAccountSummaryView view = getView();
+                    JamiAccountSummaryView view = getView();
                     if (view != null)
                         view.accountChanged(a);
                 }));
@@ -118,7 +123,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
     }
 
     public void changePassword(String oldPassword, String newPassword) {
-        net.jami.account.JamiAccountSummaryView view = getView();
+        JamiAccountSummaryView view = getView();
         if (view != null)
             view.showPasswordProgressDialog();
         mCompositeDisposable.add(mAccountService.setAccountPassword(mAccountID, oldPassword, newPassword)
@@ -158,9 +163,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.resetProfile();
-                    mAccountService.refreshAccounts();
-                    getView().updateUserView(account);
+                    account.setLoadedProfile(mVcardService.loadVCardProfile(vcard).cache());
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
@@ -183,9 +186,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
-                    account.resetProfile();
-                    mAccountService.refreshAccounts();
-                    getView().updateUserView(account);
+                    account.setLoadedProfile(mVcardService.loadVCardProfile(vcard).cache());
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 

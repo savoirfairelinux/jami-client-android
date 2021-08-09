@@ -97,6 +97,8 @@ public class Account {
 
     public Single<Account> historyLoader;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
+    private final Subject<Single<Tuple<String, Object>>> mProfileSubject = BehaviorSubject.create();
+    private final Observable<Tuple<String, Object>> mLoadedProfileSubject = mProfileSubject.switchMapSingle(single -> single);
 
     public Account(String bAccountID) {
         accountID = bAccountID;
@@ -133,13 +135,13 @@ public class Account {
     public void conversationStarted(Conversation conversation) {
         Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size() + " " + conversation.getMode().blockingFirst());
         synchronized (conversations) {
-            if (conversation.isSwarm() && conversation.getMode() == Conversation.Mode.OneToOne) {
+            if (conversation.isSwarm() && conversation.getMode().blockingFirst() == Conversation.Mode.OneToOne) {
                 Contact contact = conversation.getContact();
                 String key = contact.getUri().getUri();
                 Conversation removed = cache.remove(key);
                 conversations.remove(key);
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
-                //Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " contact " + key + " " + removed);
+                Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " contact " + key + " " + removed);
                 /*if (contactConversation != null) {
                     conversations.remove(contactConversation.getUri().getUri());
                 }*/
@@ -162,6 +164,7 @@ public class Account {
                 c = new Conversation(accountID, new Uri(Uri.SWARM_SCHEME, conversationId), mode);
                 swarmConversations.put(conversationId, c);
             }
+            c.setMode(mode);
             return c;
         }
     }
@@ -914,8 +917,9 @@ public class Account {
     private void contactAdded(Contact contact) {
         Uri uri = contact.getUri();
         String key = uri.getUri();
-        //Log.w(TAG, "contactAdded " + getAccountID() + " " + uri + " " + contact.getConversationUri().blockingFirst());
+        Log.w(TAG, "contactAdded " + getAccountID() + " " + uri + " " + contact.getConversationUri().blockingFirst());
         if (!contact.getConversationUri().blockingFirst().equals(uri)) {
+            Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation");
             // Don't add conversation if we have a swarm conversation
             return;
         }
@@ -1077,15 +1081,8 @@ public class Account {
     }
 
     public Single<String> getAccountAlias() {
-        if (isJami()) {
-            if (mLoadedProfile == null)
-                return Single.just(getJamiAlias());
-            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getJamiAlias() : p.first);
-        } else {
-            if (mLoadedProfile == null)
-                return Single.just(getAlias());
-            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
-        }
+        return mLoadedProfileSubject.firstOrError()
+                .map(p -> StringUtils.isEmpty(p.first) ? (isJami() ? getJamiAlias() : getAlias()) : p.first);
     }
 
     /**
@@ -1103,12 +1100,17 @@ public class Account {
         mLoadedProfile = null;
     }
 
+    public Observable<Tuple<String, Object>> getLoadedProfileObservable() {
+        return mLoadedProfileSubject;
+    }
+
     public Single<Tuple<String, Object>> getLoadedProfile() {
         return mLoadedProfile;
     }
 
     public void setLoadedProfile(Single<Tuple<String, Object>> profile) {
         mLoadedProfile = profile;
+        mProfileSubject.onNext(profile);
     }
 
     public DataTransfer getDataTransfer(String id) {

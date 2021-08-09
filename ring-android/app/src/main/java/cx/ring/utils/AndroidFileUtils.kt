@@ -59,7 +59,6 @@ object AndroidFileUtils {
      * @param toPath a directory in internal storage
      * @return true if success
      */
-    @JvmStatic
     fun copyAssetFolder(assetManager: AssetManager, fromAssetPath: String, toPath: File): Boolean {
         return try {
             var res = true
@@ -164,8 +163,7 @@ object AndroidFileUtils {
                 }
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
-                val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), id.toLong())
+                val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), id.toLong())
                 path = getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
@@ -222,7 +220,6 @@ object AndroidFileUtils {
             getMimeType(uri.toString())
     }
 
-    @JvmStatic
     fun getMimeType(filename: String): String? {
         val pos = filename.lastIndexOf(".")
         var fileExtension: String? = null
@@ -232,7 +229,6 @@ object AndroidFileUtils {
         return getMimeTypeFromExtension(fileExtension)
     }
 
-    @JvmStatic
     fun getMimeTypeFromExtension(ext: String?): String {
         if (ext != null && ext.isNotEmpty()) {
             val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.lowercase(Locale.getDefault()))
@@ -244,14 +240,12 @@ object AndroidFileUtils {
         return "application/octet-stream"
     }
 
-    @JvmStatic
     fun getTempShareDir(context: Context): File {
         val tmp = File(context.cacheDir, "tmp")
         tmp.mkdir()
         return tmp
     }
 
-    @JvmStatic
     @Throws(IOException::class)
     fun createImageFile(context: Context): File {
         // Create an image file name
@@ -262,7 +256,6 @@ object AndroidFileUtils {
         return File.createTempFile(imageFileName, ".jpg", getTempShareDir(context))
     }
 
-    @JvmStatic
     @Throws(IOException::class)
     fun createAudioFile(context: Context): File {
         // Create an image file name
@@ -273,7 +266,6 @@ object AndroidFileUtils {
         return File.createTempFile(imageFileName, ".mp3", getTempShareDir(context))
     }
 
-    @JvmStatic
     @Throws(IOException::class)
     fun createVideoFile(context: Context): File {
         // Create an image file name
@@ -333,7 +325,6 @@ object AndroidFileUtils {
         }.subscribeOn(Schedulers.io())
     }
 
-    @JvmStatic
     fun moveToUri(cr: ContentResolver, input: File, outUri: Uri): Completable {
         return Completable.fromAction {
             FileInputStream(input).use { inputStream ->
@@ -354,7 +345,6 @@ object AndroidFileUtils {
      * @param outUri the uri destination
      * @return success value
      */
-    @JvmStatic
     fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri?): Completable {
         return Completable.fromAction { FileInputStream(input).use { inputStream -> cr.openOutputStream(outUri!!).use { outputStream -> FileUtils.copyFile(inputStream, outputStream) } } }.subscribeOn(Schedulers.io())
     }
@@ -372,12 +362,10 @@ object AndroidFileUtils {
         return File(context.cacheDir, filename)
     }
 
-    @JvmStatic
     fun getFilePath(context: Context, filename: String?): File {
         return context.getFileStreamPath(filename)
     }
 
-    @JvmStatic
     fun getConversationDir(context: Context, conversationId: String): File {
         val conversationsDir = getFilePath(context, "conversation_data")
         if (!conversationsDir.exists()) conversationsDir.mkdir()
@@ -386,7 +374,6 @@ object AndroidFileUtils {
         return conversationDir
     }
 
-    @JvmStatic
     fun getConversationDir(context: Context, accountId: String, conversationId: String): File {
         val conversationsDir = getFilePath(context, "conversation_data")
         if (!conversationsDir.exists()) conversationsDir.mkdir()
@@ -397,17 +384,14 @@ object AndroidFileUtils {
         return conversationDir
     }
 
-    @JvmStatic
     fun getConversationPath(context: Context, conversationId: String, name: String): File {
         return File(getConversationDir(context, conversationId), name)
     }
 
-    @JvmStatic
     fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String): File {
         return File(getConversationDir(context, accountId, conversationId), name)
     }
 
-    @JvmStatic
     fun getTempPath(context: Context, conversationId: String, name: String): File {
         val conversationsDir = getCachePath(context, "conversation_data")
         if (!conversationsDir.exists()) conversationsDir.mkdir()
@@ -479,17 +463,15 @@ object AndroidFileUtils {
     @JvmStatic
     fun getSpaceLeft(path: String): Long {
         return try {
-            val statfs = StatFs(path)
-            statfs.availableBytes
+            StatFs(path).availableBytes
         } catch (e: IllegalArgumentException) {
             Log.e(TAG, "getSpaceLeft: not able to access path on $path")
             -1L
         }
     }
 
-    @JvmStatic
-    fun loadBitmap(context: Context, uriImage: Uri): Single<Bitmap?> {
-        return Single.fromCallable {
+    fun loadBitmap(context: Context, uriImage: Uri): Single<Bitmap> {
+        return Single.fromCallable<Bitmap> {
             val dbo = BitmapFactory.Options()
             dbo.inJustDecodeBounds = true
             context.contentResolver.openInputStream(uriImage).use { `is` -> BitmapFactory.decodeStream(`is`, null, dbo) }
@@ -567,7 +549,7 @@ object AndroidFileUtils {
 
     @JvmStatic
     fun isImage(s: String): Boolean {
-        return getMimeType(s)!!.startsWith("image")
+        return getMimeType(s)?.startsWith("image") ?: false
     }
 
     @JvmStatic

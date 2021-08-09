@@ -27,9 +27,7 @@ public abstract class RootPresenter<T> {
 
     protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public RootPresenter() {
-
-    }
+    public RootPresenter() { }
 
     private WeakReference<T> mView;
 
@@ -40,9 +38,12 @@ public abstract class RootPresenter<T> {
     public void unbindView() {
         if (mView != null) {
             mView.clear();
+            mView = null;
         }
+        mCompositeDisposable.clear();
+    }
 
-        mView = null;
+    public void onDestroy() {
         mCompositeDisposable.dispose();
     }
 
@@ -50,7 +51,6 @@ public abstract class RootPresenter<T> {
         if (mView != null) {
             return mView.get();
         }
-
         return null;
     }
 
