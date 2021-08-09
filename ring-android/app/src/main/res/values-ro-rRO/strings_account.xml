@@ -79,7 +79,7 @@
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_call_settings_title">Reglări apeluri</string>
   <string name="account_dht_public_in_calls_label">Primește apeluri de la persoane necunoscute</string>
-  <string name="account_registration_exp_label">Înscrierea a expirat</string>
+  <string name="account_registration_exp_label">Expirarea înscrierii</string>
   <string name="account_local_interface_label">Interfață locală</string>
   <string name="account_local_port_label">Port local</string>
   <string name="account_stun_enable_label">Folosește STUN</string>
