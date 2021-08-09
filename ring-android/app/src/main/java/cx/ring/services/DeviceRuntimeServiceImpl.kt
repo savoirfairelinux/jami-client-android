@@ -106,8 +106,8 @@ class DeviceRuntimeServiceImpl(
         return mContext.cacheDir
     }
 
-    override fun getPushToken(): String {
-        return instance!!.pushToken!!
+    override fun getPushToken(): String? {
+        return instance?.pushToken
     }
 
     private fun isNetworkConnectedForType(connectivityManagerType: Int): Boolean {
