@@ -354,8 +354,9 @@ public class ConversationFacade {
      */
     public Single<Conversation> loadConversationHistory(final Account account, final Uri conversationUri) {
         Conversation conversation = account.getByUri(conversationUri);
-        if (conversation == null)
+        if (conversation == null) {
             return Single.error(new RuntimeException("Can't get conversation"));
+        }
         synchronized (conversation) {
             if (!conversation.isSwarm() && conversation.getId() == null) {
                 return Single.just(conversation);

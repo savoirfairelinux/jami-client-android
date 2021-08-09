@@ -130,7 +130,7 @@ public class Account {
     }
 
     public void conversationStarted(Conversation conversation) {
-        Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size());
+        Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size() + " " + conversation.getMode().blockingFirst());
         synchronized (conversations) {
             if (conversation.isSwarm() && conversation.getMode() == Conversation.Mode.OneToOne) {
                 Contact contact = conversation.getContact();
@@ -808,11 +808,11 @@ public class Account {
         }
     }
 
-    public boolean removeRequest(Uri contact) {
+    public boolean removeRequest(Uri conversationUri) {
         synchronized (pending) {
-            String contactUri = contact.getUri();
-            TrustRequest request = mRequests.remove(contactUri);
-            if (pending.remove(contactUri) != null) {
+            String uri = conversationUri.getUri();
+            TrustRequest request = mRequests.remove(uri);
+            if (pending.remove(uri) != null) {
                 pendingChanged();
                 return true;
             }
@@ -1059,13 +1059,11 @@ public class Account {
 
     public Observable<Observable<ContactLocation>> getLocationUpdates(Uri contactId) {
         Contact contact = getContactFromCache(contactId);
-        Log.w(TAG, "getLocationUpdates " + contactId + " " + contact);
         if (contact == null || contact.isUser())
             return Observable.empty();
         return mLocationSubject
                 .flatMapMaybe(locations -> {
                     Observable<ContactLocation> r = locations.get(contact);
-                    Log.w(TAG, "getLocationUpdates flatMapMaybe " + locations.size() + " " + r);
                     return r == null ? Maybe.empty() : Maybe.just(r);
                 })
                 .distinctUntilChanged();

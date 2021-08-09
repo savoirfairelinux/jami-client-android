@@ -397,34 +397,36 @@ public class AccountService {
                         TrustRequest request = new TrustRequest(accountId, requestInfo);
                         account.addRequest(request);
                     }
-                    Log.w(TAG, accountId + " loading conversations");
                     List<String> conversations = JamiService.getConversations(account.getAccountID());
+                    Log.w(TAG, accountId + " loading conversations: " + conversations.size());
                     for (String conversationId : conversations) {
                         try {
                             Map<String, String> info = JamiService.conversationInfos(accountId, conversationId).toNative();
                             /*for (Map.Entry<String, String> i : info.entrySet()) {
                                 Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                             }*/
-                            if ("true".equals(info.get("syncing"))) {
+                            Conversation.Mode mode = "true".equals(info.get("syncing")) ? Conversation.Mode.Syncing : Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
+                            /*if ("true".equals(info.get("syncing"))) {
                                 continue;
-                            }
-                            Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
+                            }*/
                             Conversation conversation = account.newSwarm(conversationId, mode);
                             //conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
-                            for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
+                            if (mode != Conversation.Mode.Syncing) {
+                                for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
                                 /*for (Map.Entry<String, String> i : member.entrySet()) {
                                     Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
                                 }*/
-                                Uri uri = Uri.fromId(member.get("uri"));
-                                //String role = member.get("role");
-                                String lastDisplayed = member.get("lastDisplayed");
-                                Contact contact = conversation.findContact(uri);
-                                if (contact == null) {
-                                    contact = account.getContactFromCache(uri);
-                                    conversation.addContact(contact);
-                                }
-                                if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser()) {
-                                    conversation.setLastMessageRead(lastDisplayed);
+                                    Uri uri = Uri.fromId(member.get("uri"));
+                                    //String role = member.get("role");
+                                    String lastDisplayed = member.get("lastDisplayed");
+                                    Contact contact = conversation.findContact(uri);
+                                    if (contact == null) {
+                                        contact = account.getContactFromCache(uri);
+                                        conversation.addContact(contact);
+                                    }
+                                    if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser()) {
+                                        conversation.setLastMessageRead(lastDisplayed);
+                                    }
                                 }
                             }
                             conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
@@ -615,7 +617,7 @@ public class AccountService {
     }
 
     public Observable<Account> getCurrentProfileAccountSubject() {
-        return currentAccountSubject.flatMapSingle(a -> mVCardService.loadProfile(a).map(p -> a));
+        return currentAccountSubject.flatMapSingle(a -> mVCardService.loadProfile(a).firstOrError().map(p -> a));
     }
 
     public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {
@@ -692,6 +694,10 @@ public class AccountService {
         synchronized (conversation) {
             if (conversation.isLoaded()) {
                 Log.w(TAG, "loadMore: conversation already fully loaded");
+                return Single.just(conversation);
+            }
+            if (conversation.getMode().blockingFirst() == Conversation.Mode.Syncing) {
+                Log.w(TAG, "loadMore: conversation is syncing");
                 return Single.just(conversation);
             }
 
@@ -1068,7 +1074,7 @@ public class AccountService {
         }
 
         account.registeringUsername = true;
-        registerName(account.getAccountID(), password, name);
+        registerName(account.getAccountID(), password == null ? "" : password, name);
     }
 
     /**
@@ -1098,21 +1104,31 @@ public class AccountService {
      */
     public void acceptTrustRequest(final String accountId, final Uri from) {
         Log.i(TAG, "acceptRequest() " + accountId + " " + from);
+
         Account account = getAccount(accountId);
         if (account != null) {
             TrustRequest request = account.getRequest(from);
+            account.removeRequest(from);
+
             if (request != null) {
                 VCard vCard = request.getVCard();
                 if (vCard != null) {
                     VCardUtils.savePeerProfileToDisk(vCard, accountId, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
                 }
+                if (!StringUtils.isEmpty(request.getConversationId())
+                        && !request.getUri().isSwarm()
+                        && request.getUri().getRawRingId().equals(request.getConversationId())) {
+                    Contact contact = account.getContactFromCache(request.getUri());
+                    if (contact != null)  {
+                        account.newSwarm(request.getConversationId(), Conversation.Mode.Syncing);
+                        contact.setConversationUri(new Uri(Uri.SWARM_SCHEME, request.getConversationId()));
+                    }
+                }
             }
-            account.removeRequest(from);
             //handleTrustRequest(accountId, from, null, ContactType.INVITATION_ACCEPTED);
         }
         mExecutor.execute(() -> JamiService.acceptTrustRequest(accountId, from.getRawRingId()));
     }
-
 
     /**
      * Handles adding contacts and is the initial point of conversation creation
@@ -1660,6 +1676,8 @@ public class AccountService {
                 conversation.addContact(contact);
             }
         }
+        //if (conversation.getLastElementLoaded() == null)
+        //    conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
         account.conversationStarted(conversation);
         loadMore(conversation, 2);
     }

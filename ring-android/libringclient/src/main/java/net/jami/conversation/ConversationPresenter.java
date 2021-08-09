@@ -39,7 +39,6 @@ import net.jami.services.DeviceRuntimeService;
 import net.jami.services.HardwareService;
 import net.jami.services.PreferencesService;
 import net.jami.services.VCardService;
-import net.jami.utils.FileUtils;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
@@ -104,17 +103,24 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             return;
         mConversationUri = conversationUri;
         mCompositeDisposable.add(mConversationFacade.getAccountSubject(accountId)
+                .flatMap(a -> mConversationFacade.loadConversationHistory(a, conversationUri)
+                        .observeOn(mUiScheduler)
+                        .doOnSuccess(c -> setConversation(a, c)))
                 .observeOn(mUiScheduler)
-                .flatMap(account -> mConversationFacade.loadConversationHistory(account, conversationUri)
-                            .map(c -> {
-                                setConversation(account, c);
-                                return c;
-                            }))
                 .subscribe(c -> {}, e -> {
                     Log.e(TAG, "Error loading conversation", e);
                     getView().goToHome();
                 }));
         getView().setReadIndicatorStatus(showReadIndicator());
+    }
+
+    @Override
+    public void unbindView() {
+        super.unbindView();
+        mConversation = null;
+        mConversationUri = null;
+        mConversationDisposable.dispose();
+        mConversationDisposable = null;
     }
 
     private void setConversation(Account account, final Conversation conversation) {
@@ -148,10 +154,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
 
-    private void initContact(final Account account, final Conversation conversation, final ConversationView view) {
+    private void initContact(final Account account, final Conversation conversation, Conversation.Mode mode, final ConversationView view) {
         if (account.isJami()) {
-            Log.w(TAG, "initContact " + conversation.getUri());
-            if (conversation.isSwarm() || account.isContact(conversation)) {
+            Log.w(TAG, "initContact " + conversation.getUri() + " mode:" + mode + " " + conversation.getContacts());
+            if (mode == Conversation.Mode.Syncing) {
+                view.switchToSyncingView();
+            } else if (conversation.isSwarm() || account.isContact(conversation)) {
+                //if (conversation.isEnded())
+                //    conversation.s
                 view.switchToConversationView();
             } else {
                 Uri uri = conversation.getUri();
@@ -177,12 +187,16 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.clear();
         view.hideNumberSpinner();
 
-        if (account.isJami()) {
-            mConversationDisposable.add(c.getContact()
-                    .getConversationUri()
-                    .observeOn(mUiScheduler)
-                    .subscribe(uri -> init(uri, account.getAccountID())));
-        }
+        mConversationDisposable.add(c.getMode()
+                .switchMapSingle(mode -> mContactService.getLoadedContact(c.getAccountId(), c.getContacts(), true)
+                        .observeOn(mUiScheduler)
+                        .doOnSuccess(contact -> initContact(account, c, mode, view)))
+                .subscribe());
+        mConversationDisposable.add(c.getMode()
+                .switchMap(mode -> (mode == Conversation.Mode.Legacy || mode == Conversation.Mode.OneToOne) ?
+                        c.getContact().getConversationUri() : Observable.empty())
+                .observeOn(mUiScheduler)
+                .subscribe(uri -> init(uri, account.getAccountID())));
 
         mConversationDisposable.add(Observable.combineLatest(
                 mHardwareService.getConnectivityState(),
@@ -219,10 +233,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                         v.updateContact(contact);
                 }));
 
-        mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContacts(), true)
-                .observeOn(mUiScheduler)
-                .subscribe(contact -> initContact(account, c, view), e -> Log.e(TAG, "Can't get contact", e)));
-
         mConversationDisposable.add(c.getUpdatedElements()
                 .observeOn(mUiScheduler)
                 .subscribe(elementTuple -> {
@@ -257,7 +267,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationSymbol, e -> Log.e(TAG, "Can't update conversation color", e)));
 
-        Log.e(TAG, "getLocationUpdates subscribe");
         mConversationDisposable.add(account
                 .getLocationUpdates(c.getUri())
                 .observeOn(mUiScheduler)
@@ -387,11 +396,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void updateOngoingCallView(Conversation conversation) {
         Conference conf = conversation == null ? null : conversation.getCurrentCall();
-        if (conf != null && (conf.getState() == Call.CallStatus.CURRENT || conf.getState() == Call.CallStatus.HOLD || conf.getState() == Call.CallStatus.RINGING)) {
-            getView().displayOnGoingCallPane(true);
-        } else {
-            getView().displayOnGoingCallPane(false);
-        }
+        getView().displayOnGoingCallPane(conf != null && (conf.getState() == Call.CallStatus.CURRENT || conf.getState() == Call.CallStatus.HOLD || conf.getState() == Call.CallStatus.RINGING));
     }
 
     public void onBlockIncomingContactRequest() {
