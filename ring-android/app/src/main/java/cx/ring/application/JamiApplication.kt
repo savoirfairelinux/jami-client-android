@@ -91,6 +91,7 @@ abstract class JamiApplication : Application() {
         }
     }
     abstract val pushToken: String?
+    
     private var mBound = false
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, s: IBinder) {
@@ -146,10 +147,7 @@ abstract class JamiApplication : Application() {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
                 if (mPreferencesService.settings.isAllowPushNotifications) {
-                    val token = pushToken
-                    if (token != null) {
-                        JamiService.setPushNotificationToken(token)
-                    }
+                    pushToken?.let { token -> JamiService.setPushNotificationToken(token) }
                 } else {
                     JamiService.setPushNotificationToken("")
                 }
