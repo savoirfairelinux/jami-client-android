@@ -227,7 +227,7 @@ public class AccountWizardPresenter extends RootPresenter<net.jami.account.Accou
                 .firstElement()
                 .subscribe(a -> {
                     if (!model.isLink() && a.isJami() && !StringUtils.isEmpty(model.getUsername()))
-                        mAccountService.registerName(a, model.getPassword().toString(), model.getUsername());
+                        mAccountService.registerName(a, model.getPassword(), model.getUsername());
                     mAccountService.setCurrentAccount(a);
                     if (model.isPush()) {
                         Settings settings = mPreferences.getSettings();
