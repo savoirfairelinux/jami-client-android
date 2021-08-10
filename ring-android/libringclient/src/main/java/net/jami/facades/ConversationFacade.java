@@ -695,7 +695,17 @@ public class ConversationFacade {
 
     public Completable removeConversation(String accountId, Uri conversationUri) {
         if (conversationUri.isSwarm()) {
-            return mAccountService.removeConversation(accountId, conversationUri);
+            // For a one to one conversation, contact is strongly related, so remove the contact.
+            // This will remove related conversations
+            Account account = mAccountService.getAccount(accountId);
+            Conversation conversation = account.getSwarm(conversationUri.getRawRingId());
+            if (conversation != null && conversation.getMode().blockingFirst() == Conversation.Mode.OneToOne) {
+                Contact contact = conversation.getContact();
+                mAccountService.removeContact(accountId, contact.getUri().getRawRingId(), false);
+                return Completable.complete();
+            } else {
+                return mAccountService.removeConversation(accountId, conversationUri);
+            }
         } else {
             return mHistoryService
                     .clearHistory(conversationUri.getUri(), accountId, true)
