@@ -34,10 +34,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account?>?) :
-    ArrayAdapter<Account?>(context, R.layout.item_toolbar_spinner, accounts!!) {
+class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
+    ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         val type = getItemViewType(position)
@@ -56,11 +57,9 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account?>?) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ avatar -> holder.binding.logo.setImageDrawable(avatar)
                 }) { e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
-            holder.loader.add(
-                account.accountAlias
+            holder.loader.add(account.accountAlias
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ alias: String ->
-                        holder.binding.title.text = alias
+                    .subscribe({ alias -> holder.binding.title.text = alias.ifEmpty { context.getString(R.string.ring_account) }
                     }) { e: Throwable -> Log.e(TAG, "Error loading title", e) })
         }
         return view
@@ -81,14 +80,13 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account?>?) :
         holder.binding.logo.visibility = View.VISIBLE
         val logoParam = holder.binding.logo.layoutParams
         if (type == TYPE_ACCOUNT) {
-            val account = getItem(position)
-            val ip2ipString: CharSequence = rowView.context.getString(R.string.account_type_ip2ip)
-            holder.loader.add(
-                account!!.accountAlias
+            val account = getItem(position)!!
+            val ip2ipString = rowView.context.getString(R.string.account_type_ip2ip)
+            holder.loader.add(account.accountAlias
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { alias: String ->
+                    .subscribe { alias ->
                         val subtitle = getUri(account, ip2ipString)
-                        holder.binding.title.text = alias
+                        holder.binding.title.text = alias.ifEmpty { context.getString(R.string.ring_account) }
                         if (alias == subtitle) {
                             holder.binding.subtitle.visibility = View.GONE
                         } else {
@@ -105,11 +103,8 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account?>?) :
             holder.loader.add(AvatarDrawable.load(context, account)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ avatar: AvatarDrawable? ->
-                    holder.binding.logo.setImageDrawable(avatar)
-                }) { e: Throwable? ->
-                    Log.e(TAG, "Error loading avatar", e)
-                })
+                .subscribe({ avatar -> holder.binding.logo.setImageDrawable(avatar) })
+                { e -> Log.e(TAG, "Error loading avatar", e) })
         } else {
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)
@@ -143,18 +138,16 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account?>?) :
         val loader = CompositeDisposable()
     }
 
-    private class ViewHolderHeader(var binding: ItemToolbarSelectedBinding) {
+    private class ViewHolderHeader(val binding: ItemToolbarSelectedBinding) {
         val loader = CompositeDisposable()
     }
 
-    private fun getUri(account: Account?, defaultNameSip: CharSequence): String {
-        return if (account!!.isIP2IP) {
-            defaultNameSip.toString()
-        } else account.displayUri
+    private fun getUri(account: Account, defaultNameSip: CharSequence): String {
+        return if (account.isIP2IP) defaultNameSip.toString() else account.displayUri
     }
 
     companion object {
-        private val TAG = AccountSpinnerAdapter::class.java.simpleName
+        private val TAG = AccountSpinnerAdapter::class.simpleName!!
         const val TYPE_ACCOUNT = 0
         const val TYPE_CREATE_JAMI = 1
         const val TYPE_CREATE_SIP = 2
