@@ -45,6 +45,11 @@ abstract class BaseSupportFragment<T : RootPresenter<V>, V> : Fragment(), BaseVi
         presenter.unbindView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     override fun displayErrorToast(error: Error) {
         val errorString: String = when (error) {
             Error.NO_INPUT -> getString(R.string.call_error_no_camera_no_microphone)

@@ -32,6 +32,7 @@ import ezvcard.property.Photo
 import java.io.ByteArrayOutputStream
 import ezvcard.property.RawProperty
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
@@ -39,7 +40,7 @@ import net.jami.utils.Tuple
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
-    override fun loadProfile(account: Account): Single<Tuple<String, Any>> {
+    override fun loadProfile(account: Account): Observable<Tuple<String, Any>> {
         return loadProfile(mContext, account)
     }
 
@@ -101,20 +102,17 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
     }
 
     companion object {
-        fun loadProfile(context: Context, account: Account): Single<Tuple<String, Any>> {
+        fun loadProfile(context: Context, account: Account): Observable<Tuple<String, Any>> {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
-                    ret = VCardUtils.loadLocalProfileFromDiskWithDefault(
-                        context.filesDir,
-                        account.accountID
-                    )
-                        .map { vcard: VCard? -> readData(vcard) }
+                    ret = VCardUtils.loadLocalProfileFromDiskWithDefault(context.filesDir, account.accountID)
+                        .map { vcard: VCard -> readData(vcard) }
                         .subscribeOn(Schedulers.computation())
                         .cache()
                     account.loadedProfile = ret
                 }
-                return ret
+                return account.loadedProfileObservable
             }
         }
 

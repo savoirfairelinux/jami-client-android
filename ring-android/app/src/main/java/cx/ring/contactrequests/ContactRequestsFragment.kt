@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPendingContactRequestsBinding
@@ -41,11 +40,8 @@ class ContactRequestsFragment :
     SmartListListeners {
     private var mAdapter: SmartListAdapter? = null
     private var binding: FragPendingContactRequestsBinding? = null
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPendingContactRequestsBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding!!.root
@@ -58,16 +54,13 @@ class ContactRequestsFragment :
     }
 
     fun presentForAccount(accountId: String?) {
-        val arguments = arguments
         arguments?.putString(ACCOUNT_ID, accountId)
         presenter.updateAccount(accountId)
     }
 
     override fun onStart() {
         super.onStart()
-        val arguments = arguments
-        val accountId = arguments?.getString(ACCOUNT_ID)
-        presenter.updateAccount(accountId)
+        presenter.updateAccount(arguments?.getString(ACCOUNT_ID))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -103,31 +96,24 @@ class ContactRequestsFragment :
                 )
             }
         })
-        updateBadge()
     }
 
     override fun updateItem(item: SmartListViewModel) {
-        if (mAdapter != null) {
-            mAdapter!!.update(item)
-        }
+        mAdapter?.update(item)
     }
 
     override fun goToConversation(accountId: String, contactId: Uri) {
         (requireActivity() as HomeActivity).startConversation(accountId, contactId)
     }
 
-    override fun onItemClick(viewModel: SmartListViewModel) {
-        presenter.contactRequestClicked(viewModel.accountId, viewModel.uri)
+    override fun onItemClick(smartListViewModel: SmartListViewModel) {
+        presenter.contactRequestClicked(smartListViewModel.accountId, smartListViewModel.uri)
     }
 
     override fun onItemLongClick(smartListViewModel: SmartListViewModel) {}
-    private fun updateBadge() {
-        (requireActivity() as HomeActivity).setBadge(R.id.navigation_requests, mAdapter!!.itemCount)
-    }
 
     companion object {
         private val TAG = ContactRequestsFragment::class.java.simpleName
-        @JvmField
         val ACCOUNT_ID = TAG + "accountID"
         private const val SCROLL_DIRECTION_UP = -1
     }

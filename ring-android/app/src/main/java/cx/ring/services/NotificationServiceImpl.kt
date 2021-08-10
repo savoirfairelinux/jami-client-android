@@ -401,11 +401,7 @@ class NotificationServiceImpl(
         }
     }
 
-    override fun removeTransferNotification(
-        accountId: String,
-        conversationUri: net.jami.model.Uri,
-        transferId: String
-    ) {
+    override fun removeTransferNotification(accountId: String, conversationUri: net.jami.model.Uri, transferId: String) {
         removeTransferNotification(ConversationPath.toUri(accountId, conversationUri), transferId)
     }
 
@@ -546,7 +542,7 @@ class NotificationServiceImpl(
             val account = mAccountService.getAccount(accountId)
             val profile = if (account == null) null else VCardServiceImpl.loadProfile(
                 mContext, account
-            ).blockingGet()
+            ).blockingFirst()
             val myPic = account?.let { getContactPicture(it) }
             val userPerson = Person.Builder()
                 .setKey(accountId)
