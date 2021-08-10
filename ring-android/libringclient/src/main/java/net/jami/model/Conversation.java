@@ -71,7 +71,7 @@ public class Conversation extends ConversationHistory {
     private final Set<String> mRoots = new HashSet<>(2);
     private final Map<String, Interaction> mMessages = new HashMap<>(16);
     private String lastRead = null;
-    private final Mode mMode;
+    private final Subject<Mode> mMode;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
@@ -87,14 +87,14 @@ public class Conversation extends ConversationHistory {
         mKey = contact.getUri();
         mParticipant = contact.getUri().getUri();
         mContactSubject.onNext(mContacts);
-        mMode = null;
+        mMode = BehaviorSubject.createDefault(Mode.Legacy);
     }
 
     public Conversation(String accountId, Uri uri, Mode mode) {
         mAccountId = accountId;
         mKey = uri;
         mContacts = new ArrayList<>(3);
-        mMode = mode;
+        mMode = BehaviorSubject.createDefault(mode);
     }
 
     public Conference getConference(String id) {
@@ -113,7 +113,7 @@ public class Conversation extends ConversationHistory {
         return mKey;
     }
 
-    public Mode getMode() { return mMode; }
+    public Observable<Mode> getMode() { return mMode; }
 
     public boolean isSwarm() {
         return Uri.SWARM_SCHEME.equals(getUri().getScheme());
@@ -143,6 +143,9 @@ public class Conversation extends ConversationHistory {
 
     public String getTitle() {
         if (mContacts.isEmpty()) {
+            if (mMode.blockingFirst() == Mode.Syncing) {
+                return "(Syncing)";
+            }
             return null;
         } else if (mContacts.size() == 1) {
             return mContacts.get(0).getDisplayName();
@@ -242,6 +245,10 @@ public class Conversation extends ConversationHistory {
 
     public void setLastElementLoaded(Completable c) {
         lastElementLoaded = c;
+    }
+
+    public void setMode(Mode mode) {
+        mMode.onNext(mode);
     }
 
     public enum ElementStatus {
@@ -747,7 +754,8 @@ public class Conversation extends ConversationHistory {
         OneToOne,
         AdminInvitesOnly,
         InvitesOnly,
-        Public
+        // Non-daemon modes
+        Syncing, Public, Legacy
     }
 
     public interface ConversationActionCallback {
