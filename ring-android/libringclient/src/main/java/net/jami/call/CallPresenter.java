@@ -22,6 +22,7 @@ package net.jami.call;
 
 import net.jami.daemon.JamiService;
 import net.jami.facades.ConversationFacade;
+import net.jami.model.Account;
 import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Contact;
@@ -644,10 +645,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCallService.playDtmf(s.toString());
     }
 
-    public void addConferenceParticipant(String accountId, Uri contactUri) {
-        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactUri)
-                .map(Conversation::getCurrentCalls)
-                .subscribe(confs -> {
+    public void addConferenceParticipant(String accountId, Uri uri) {
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
+                .subscribe(conversation -> {
+                    List<Conference> confs = conversation.getCurrentCalls();
                     if (confs.isEmpty()) {
                         final Observer<Call> pendingObserver = new Observer<Call>() {
                             private Call call = null;
@@ -676,6 +677,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                                 }
                             }
                         };
+
+                        Uri contactUri = uri.isSwarm() ? conversation.getContact().getUri() : uri;
 
                         // Place new call, join to conference when answered
                         Maybe<Call> newCall = mCallService.placeCallObservable(accountId, null, contactUri, mAudioOnly)
