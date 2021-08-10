@@ -338,6 +338,13 @@ public class AccountService {
         });
     }
 
+    private static Account findAccount(List<Account> accounts, String accountId) {
+        for (Account account : accounts)
+            if (accountId.equals(account.getAccountID()))
+                return account;
+        return null;
+    }
+
     private void refreshAccountsCacheFromDaemon() {
         Log.w(TAG, "refreshAccountsCacheFromDaemon");
         boolean hasSip = false, hasJami = false;
@@ -357,10 +364,8 @@ public class AccountService {
             if (!newAccounts.contains(acc))
                 acc.cleanup();
 
-        mAccountList = newAccounts;
-
         for (String accountId : accountIds) {
-            Account account = getAccount(accountId);
+            Account account = findAccount(newAccounts, accountId);
             Map<String, String> details = JamiService.getAccountDetails(accountId).toNative();
             List<Map<String, String>> credentials = JamiService.getCredentials(accountId).toNative();
             Map<String, String> volatileAccountDetails = JamiService.getVolatileAccountDetails(accountId).toNative();
@@ -372,72 +377,92 @@ public class AccountService {
                 account.setCredentials(credentials);
                 account.setVolatileDetails(volatileAccountDetails);
             }
+        }
 
-            if (account.isSip()) {
-                hasSip = true;
-            } else if (account.isJami()) {
-                hasJami = true;
-                boolean enabled = account.isEnabled();
+        mAccountList = newAccounts;
 
-                account.setDevices(JamiService.getKnownRingDevices(accountId).toNative());
-                account.setContacts(JamiService.getContacts(accountId).toNative());
-                List<Map<String, String>> requests = JamiService.getTrustRequests(accountId).toNative();
-                for (Map<String, String> requestInfo : requests) {
-                    TrustRequest request = new TrustRequest(accountId, requestInfo);
-                    account.addRequest(request);
-                }
-                Log.w(TAG, accountId + " loading conversations");
-                List<String> conversations = JamiService.getConversations(account.getAccountID());
-                for (String conversationId : conversations) {
-                    Map<String, String> info = JamiService.conversationInfos(accountId, conversationId);
-                    /*for (Map.Entry<String, String> i : info.entrySet()) {
-                        Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                    }*/
-                    Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
-                    Conversation conversation = account.newSwarm(conversationId, mode);
-                    conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
-                    for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
-                        Uri uri = Uri.fromId(member.get("uri"));
-                        Contact contact = conversation.findContact(uri);
-                        if (contact == null) {
-                            contact = account.getContactFromCache(uri);
-                            conversation.addContact(contact);
+        synchronized (newAccounts) {
+            for (Account account : newAccounts) {
+                String accountId = account.getAccountID();
+                if (account.isSip()) {
+                    hasSip = true;
+                } else if (account.isJami()) {
+                    hasJami = true;
+                    boolean enabled = account.isEnabled();
+
+                    account.setDevices(JamiService.getKnownRingDevices(accountId).toNative());
+                    account.setContacts(JamiService.getContacts(accountId).toNative());
+                    List<Map<String, String>> requests = JamiService.getTrustRequests(accountId).toNative();
+                    for (Map<String, String> requestInfo : requests) {
+                        TrustRequest request = new TrustRequest(accountId, requestInfo);
+                        account.addRequest(request);
+                    }
+                    Log.w(TAG, accountId + " loading conversations");
+                    List<String> conversations = JamiService.getConversations(account.getAccountID());
+                    for (String conversationId : conversations) {
+                        try {
+                            Map<String, String> info = JamiService.conversationInfos(accountId, conversationId).toNative();
+                            /*for (Map.Entry<String, String> i : info.entrySet()) {
+                                Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
+                            }*/
+                            if ("true".equals(info.get("syncing"))) {
+                                continue;
+                            }
+                            Conversation.Mode mode = Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
+                            Conversation conversation = account.newSwarm(conversationId, mode);
+                            //conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
+                            for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
+                                /*for (Map.Entry<String, String> i : member.entrySet()) {
+                                    Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
+                                }*/
+                                Uri uri = Uri.fromId(member.get("uri"));
+                                //String role = member.get("role");
+                                String lastDisplayed = member.get("lastDisplayed");
+                                Contact contact = conversation.findContact(uri);
+                                if (contact == null) {
+                                    contact = account.getContactFromCache(uri);
+                                    conversation.addContact(contact);
+                                }
+                                if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser()) {
+                                    conversation.setLastMessageRead(lastDisplayed);
+                                }
+                            }
+                            conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
+                            account.conversationStarted(conversation);
+                        } catch (Exception e) {
+                            Log.w(TAG, "Error loading conversation", e);
                         }
                     }
-                    conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
-                    account.conversationStarted(conversation);
-                    //account.addSwarmConversation(conversationId, members);
-                }
-                for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
+                    for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
                     /*for (Map.Entry<String, String> e : requestData.entrySet()) {
                         Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
                     }*/
-                    String conversationId = requestData.get("id");
-                    Uri from = Uri.fromString(requestData.get("from"));
-                    TrustRequest request = account.getRequest(from);
-                    if (request != null) {
-                        request.setConversationId(conversationId);
-                    } else {
-                        account.addRequest(new TrustRequest(account.getAccountID(), from, conversationId));
+                        String conversationId = requestData.get("id");
+                        Uri from = Uri.fromString(requestData.get("from"));
+                        TrustRequest request = account.getRequest(from);
+                        if (request != null) {
+                            request.setConversationId(conversationId);
+                        } else {
+                            account.addRequest(new TrustRequest(account.getAccountID(), from, conversationId));
+                        }
                     }
-                }
 
-                if (enabled) {
-                    for (Contact contact : account.getContacts().values()) {
-                        if (!contact.isUsernameLoaded())
-                            JamiService.lookupAddress(accountId, "", contact.getUri().getRawRingId());
+                    if (enabled) {
+                        for (Contact contact : account.getContacts().values()) {
+                            if (!contact.isUsernameLoaded())
+                                JamiService.lookupAddress(accountId, "", contact.getUri().getRawRingId());
+                        }
                     }
                 }
             }
 
-        }
-
-        mHasSipAccount = hasSip;
-        mHasRingAccount = hasJami;
-        if (!newAccounts.isEmpty()) {
-            Account newAccount = newAccounts.get(0);
-            if (mCurrentAccount != newAccount) {
-                mCurrentAccount = newAccount;
+            mHasSipAccount = hasSip;
+            mHasRingAccount = hasJami;
+            if (!newAccounts.isEmpty()) {
+                Account newAccount = newAccounts.get(0);
+                if (mCurrentAccount != newAccount) {
+                    mCurrentAccount = newAccount;
+                }
             }
         }
 
@@ -445,9 +470,11 @@ public class AccountService {
     }
 
     private Account getAccountByName(final String name) {
-        for (Account acc : mAccountList) {
-            if (acc.getAlias().equals(name))
-                return acc;
+        synchronized (mAccountList) {
+            for (Account acc : mAccountList) {
+                if (acc.getAlias().equals(name))
+                    return acc;
+            }
         }
         return null;
     }
@@ -520,7 +547,7 @@ public class AccountService {
 
         // the account order is changed
         // the current Account is now on the top of the list
-        final List<Account> accounts = getAccounts();
+        final List<Account> accounts = mAccountList;
         List<String> orderedAccountIdList = new ArrayList<>(accounts.size());
         String selectedID = mCurrentAccount.getAccountID();
         orderedAccountIdList.add(selectedID);
@@ -539,9 +566,11 @@ public class AccountService {
      */
     public Account getAccount(String accountId) {
         if (!StringUtils.isEmpty(accountId)) {
-            for (Account account : mAccountList)
-                if (accountId.equals(account.getAccountID()))
-                    return account;
+            synchronized (mAccountList) {
+                for (Account account : mAccountList)
+                    if (accountId.equals(account.getAccountID()))
+                        return account;
+            }
         }
         return null;
     }
@@ -558,13 +587,6 @@ public class AccountService {
                     Log.d(TAG, "getAccountSingle() can't find account " + accountId);
                     throw new IllegalArgumentException();
                 });
-    }
-
-    /**
-     * @return Accounts list from the local cache
-     */
-    public List<Account> getAccounts() {
-        return mAccountList;
     }
 
     public Observable<List<Account>> getObservableAccountList() {
@@ -701,10 +723,10 @@ public class AccountService {
     /**
      * @return Account Ids list from Daemon
      */
-    public Single<List<String>> getAccountList() {
+    /*public Single<List<String>> getAccountList() {
         return Single.fromCallable(() -> (List<String>)new ArrayList<>(JamiService.getAccountList()))
                 .subscribeOn(Schedulers.from(mExecutor));
-    }
+    }*/
 
     /**
      * Sets the order of the accounts in the Daemon
@@ -773,13 +795,15 @@ public class AccountService {
     public void setAccountsActive(final boolean active) {
         mExecutor.execute(() -> {
             Log.i(TAG, "setAccountsActive() running... " + active);
-            for (Account a : mAccountList) {
-                // If the proxy is enabled we can considered the account
-                // as always active
-                if (a.isDhtProxyEnabled()) {
-                    JamiService.setAccountActive(a.getAccountID(), true);
-                } else {
-                    JamiService.setAccountActive(a.getAccountID(), active);
+            synchronized (mAccountList) {
+                for (Account a : mAccountList) {
+                    // If the proxy is enabled we can considered the account
+                    // as always active
+                    if (a.isDhtProxyEnabled()) {
+                        JamiService.setAccountActive(a.getAccountID(), true);
+                    } else {
+                        JamiService.setAccountActive(a.getAccountID(), active);
+                    }
                 }
             }
         });
@@ -789,8 +813,10 @@ public class AccountService {
      * Sets the video activation state of all the accounts in the local cache
      */
     public void setAccountsVideoEnabled(boolean isEnabled) {
-        for (Account account : mAccountList) {
-            account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
+        synchronized (mAccountList) {
+            for (Account account : mAccountList) {
+                account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
+            }
         }
     }
 
@@ -1900,13 +1926,15 @@ public class AccountService {
 
     public void setProxyEnabled(boolean enabled) {
         mExecutor.execute(() -> {
-            for (Account acc : mAccountList) {
-                if (acc.isJami() && (acc.isDhtProxyEnabled() != enabled)) {
-                    Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
-                    acc.setDhtProxyEnabled(enabled);
-                    StringMap details = JamiService.getAccountDetails(acc.getAccountID());
-                    details.put(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
-                    JamiService.setAccountDetails(acc.getAccountID(), details);
+            synchronized (mAccountList) {
+                for (Account acc : mAccountList) {
+                    if (acc.isJami() && (acc.isDhtProxyEnabled() != enabled)) {
+                        Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
+                        acc.setDhtProxyEnabled(enabled);
+                        StringMap details = JamiService.getAccountDetails(acc.getAccountID());
+                        details.put(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
+                        JamiService.setAccountDetails(acc.getAccountID(), details);
+                    }
                 }
             }
         });

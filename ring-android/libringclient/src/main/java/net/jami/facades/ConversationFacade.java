@@ -535,16 +535,16 @@ public class ConversationFacade {
     }
 
     public Completable clearAllHistory() {
-        List<Account> accounts = mAccountService.getAccounts();
-        return mHistoryService
-                .clearHistory(accounts)
-                .doOnSubscribe(s -> {
-                    for (Account account : accounts) {
-                        if (account != null) {
-                            account.clearAllHistory();
-                        }
-                    }
-                });
+        return mAccountService.getObservableAccountList()
+                .firstElement()
+                .flatMapCompletable(accounts -> mHistoryService.clearHistory(accounts)
+                        .doOnSubscribe(s -> {
+                            for (Account account : accounts) {
+                                if (account != null) {
+                                    account.clearAllHistory();
+                                }
+                            }
+                        }));
     }
 
     public void updateTextNotifications(String accountId, List<Conversation> conversations) {
