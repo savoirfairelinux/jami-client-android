@@ -1719,9 +1719,9 @@ public class AccountService {
             boolean isIncoming = !interaction.getContact().isUser();
             if (isIncoming) {
                 incomingSwarmMessageSubject.onNext(interaction);
-                if (interaction instanceof DataTransfer)
-                    dataTransferSubject.onNext((DataTransfer)interaction);
             }
+            if (interaction instanceof DataTransfer)
+                dataTransferSubject.onNext((DataTransfer)interaction);
         }
     }
 
