@@ -136,6 +136,19 @@ public class SmartListViewModel
         return contact;
     }
 
+    /**
+     * Used to get contact for one to one or legacy conversations
+     */
+    public Contact getContact() {
+        if (contact.size() == 1)
+            return contact.get(0);
+        for (Contact c : contact) {
+            if (!c.isUser())
+                return c;
+        }
+        return null;
+    }
+
     public String getContactName() {
         return contactName;
     }
