@@ -44,7 +44,7 @@ public class TrustRequest {
         mRequestUri = uri;
         mConversationId = StringUtils.isEmpty(conversationId) ? null : conversationId;
         mTimestamp = received;
-        mVcard = Ezvcard.parse(payload).first();
+        mVcard = payload == null ? null : Ezvcard.parse(payload).first();
         mMessage = null;
     }
 

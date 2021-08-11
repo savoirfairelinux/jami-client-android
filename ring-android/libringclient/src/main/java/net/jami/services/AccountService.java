@@ -407,12 +407,11 @@ public class AccountService {
                             }*/
                             Conversation.Mode mode = "true".equals(info.get("syncing")) ? Conversation.Mode.Syncing : Conversation.Mode.values()[Integer.parseInt(info.get("mode"))];
                             Conversation conversation = account.newSwarm(conversationId, mode);
-                            //conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
                             if (mode != Conversation.Mode.Syncing) {
                                 for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
-                                /*for (Map.Entry<String, String> i : member.entrySet()) {
-                                    Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
-                                }*/
+                                    /*for (Map.Entry<String, String> i : member.entrySet()) {
+                                        Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
+                                    }*/
                                     Uri uri = Uri.fromId(member.get("uri"));
                                     //String role = member.get("role");
                                     String lastDisplayed = member.get("lastDisplayed");
@@ -433,16 +432,15 @@ public class AccountService {
                         }
                     }
                     for (Map<String, String> requestData : JamiService.getConversationRequests(account.getAccountID()).toNative()) {
-                    /*for (Map.Entry<String, String> e : requestData.entrySet()) {
-                        Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
-                    }*/
+                        /*for (Map.Entry<String, String> e : requestData.entrySet()) {
+                            Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
+                        }*/
                         String conversationId = requestData.get("id");
                         Uri from = Uri.fromString(requestData.get("from"));
                         TrustRequest request = account.getRequest(from);
-                        if (request != null) {
-                            request.setConversationId(conversationId);
-                        } else {
-                            account.addRequest(new TrustRequest(account.getAccountID(), from, conversationId));
+                        if (request == null || !conversationId.equals(request.getConversationId())) {
+                            String received = requestData.get("received");
+                            account.addRequest(new TrustRequest(account.getAccountID(), from, Long.decode(received) * 1000L, null, conversationId));
                         }
                     }
 
@@ -1112,18 +1110,7 @@ public class AccountService {
                 if (vCard != null) {
                     VCardUtils.savePeerProfileToDisk(vCard, accountId, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
                 }
-                /*if (!StringUtils.isEmpty(request.getConversationId())
-                        && !request.getUri().isSwarm()
-                        && !request.getUri().getRawRingId().equals(request.getConversationId())) {
-                    Contact contact = account.getContactFromCache(request.getUri());
-                    if (contact != null)  {
-                        Conversation conversation = account.newSwarm(request.getConversationId(), Conversation.Mode.Syncing);
-                        conversation.addContact(contact);
-                        contact.setConversationUri(new Uri(Uri.SWARM_SCHEME, request.getConversationId()));
-                    }
-                }*/
             }
-            //handleTrustRequest(accountId, from, null, ContactType.INVITATION_ACCEPTED);
         }
         mExecutor.execute(() -> JamiService.acceptTrustRequest(accountId, from.getRawRingId()));
     }
@@ -1539,9 +1526,9 @@ public class AccountService {
     }
 
     private Interaction addMessage(Account account, Conversation conversation, Map<String, String> message)  {
-        /* for (Map.Entry<String, String> e : message.entrySet()) {
+        for (Map.Entry<String, String> e : message.entrySet()) {
             Log.w(TAG, e.getKey() + " -> " + e.getValue());
-        } */
+        }
         String id = message.get("id");
         String type = message.get("type");
         String author = message.get("author");
@@ -1555,10 +1542,12 @@ public class AccountService {
         }
         Interaction interaction;
         switch (type) {
-            case "member":
+            case "member": {
+                String action = message.get("action");
                 contact.setAddedDate(new Date(timestamp));
-                interaction = new ContactEvent(contact);
+                interaction = new ContactEvent(contact).setEvent(ContactEvent.Event.fromConversationAction(action));
                 break;
+            }
             case "text/plain":
                 interaction = new TextMessage(author, account.getAccountID(), timestamp, conversation, message.get("body"), !contact.isUser());
                 break;
@@ -1651,9 +1640,11 @@ public class AccountService {
             }
             case Remove:
             case Ban: {
-                Contact contact = conversation.findContact(uri);
-                if (contact != null) {
-                    conversation.removeContact(contact);
+                if (conversation.getMode().blockingFirst() != Conversation.Mode.OneToOne) {
+                    Contact contact = conversation.findContact(uri);
+                    if (contact != null) {
+                        conversation.removeContact(contact);
+                    }
                 }
                 break;
             }
@@ -1673,18 +1664,30 @@ public class AccountService {
         }*/
         int modeInt = Integer.parseInt(info.get("mode"));
         Conversation.Mode mode = Conversation.Mode.values()[modeInt];
-        Conversation conversation = account.newSwarm(conversationId, mode);
-
-        for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
-            Uri uri = Uri.fromId(member.get("uri"));
-            Contact contact = conversation.findContact(uri);
-            if (contact == null) {
-                contact = account.getContactFromCache(uri);
-                conversation.addContact(contact);
-            }
+        Conversation c = account.getSwarm(conversationId);
+        boolean setMode = false;
+        if (c == null) {
+            c = account.newSwarm(conversationId, mode);
+        } else {
+            setMode = mode != c.getMode().blockingFirst();
         }
-        //if (conversation.getLastElementLoaded() == null)
-        //    conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
+        Conversation conversation = c;
+        synchronized (conversation) {
+            // Making sure to add contacts before changing the mode
+            for (Map<String, String> member : JamiService.getConversationMembers(accountId, conversationId)) {
+                Uri uri = Uri.fromId(member.get("uri"));
+                Contact contact = conversation.findContact(uri);
+                if (contact == null) {
+                    contact = account.getContactFromCache(uri);
+                    conversation.addContact(contact);
+                }
+            }
+            if (conversation.getLastElementLoaded() == null)
+                conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
+            if (setMode)
+                conversation.setMode(mode);
+        }
+
         account.conversationStarted(conversation);
         loadMore(conversation, 2);
     }
@@ -1706,7 +1709,11 @@ public class AccountService {
             return;
         }
         Uri contactUri = Uri.fromId(metadata.get("from"));
-        account.addRequest(new TrustRequest(account.getAccountID(), contactUri, conversationId));
+        TrustRequest request = account.getRequest(contactUri);
+        if (request == null || !conversationId.equals(request.getConversationId())) {
+            String received = metadata.get("received");
+            account.addRequest(new TrustRequest(account.getAccountID(), contactUri, Long.decode(received) * 1000L, null, conversationId));
+        }
     }
 
     public void messageReceived(String accountId, String conversationId, Map<String, String> message) {
@@ -1719,9 +1726,9 @@ public class AccountService {
             boolean isIncoming = !interaction.getContact().isUser();
             if (isIncoming) {
                 incomingSwarmMessageSubject.onNext(interaction);
-                if (interaction instanceof DataTransfer)
-                    dataTransferSubject.onNext((DataTransfer)interaction);
             }
+            if (interaction instanceof DataTransfer)
+                dataTransferSubject.onNext((DataTransfer)interaction);
         }
     }
 
