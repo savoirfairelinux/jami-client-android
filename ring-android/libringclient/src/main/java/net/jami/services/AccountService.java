@@ -1703,6 +1703,16 @@ public class AccountService {
         account.removeSwarm(conversationId);
     }
 
+    public void conversationRequestDeclined(String accountId, String conversationId) {
+        Log.d(TAG, "conversation's request for " + conversationId + " is declined");
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.w(TAG, "conversationRequestDeclined: can't find account");
+            return;
+        }
+        account.removeRequestPerConvId(conversationId);
+    }
+
     public void conversationRequestReceived(String accountId, String conversationId, Map<String, String> metadata) {
         Log.w(TAG, "ConversationCallback: conversationRequestReceived " + accountId + "/" + conversationId + " " + metadata.size());
         Account account = getAccount(accountId);
