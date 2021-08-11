@@ -114,7 +114,7 @@ public class DataTransfer extends Interaction {
     }
 
     public boolean isComplete() {
-        return isOutgoing() || InteractionStatus.TRANSFER_FINISHED.toString().equals(mStatus);
+        return (getConversationId() == null && isOutgoing()) || InteractionStatus.TRANSFER_FINISHED.toString().equals(mStatus);
     }
     public boolean showPicture() {
         return isPicture() && isComplete();
