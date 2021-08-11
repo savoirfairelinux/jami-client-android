@@ -129,8 +129,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Log.w(TAG, "setConversation " + conversation.getAggregateHistory().size());
         if (mConversation == conversation)
             return;
-        //if (mConversation != null)
-        //    mConversation.setVisible(false);
         mConversation = conversation;
         mConversationSubject.onNext(conversation);
         ConversationView view = getView();
@@ -158,7 +156,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void initContact(final Account account, final Conversation conversation, Conversation.Mode mode, final ConversationView view) {
         if (account.isJami()) {
-            Log.w(TAG, "initContact " + conversation.getUri() + " mode:" + mode + " " + conversation.getContacts());
+            Log.w(TAG, "initContact " + conversation.getUri());
             if (mode == Conversation.Mode.Syncing) {
                 view.switchToSyncingView();
             } else if (conversation.isSwarm() || account.isContact(conversation)) {

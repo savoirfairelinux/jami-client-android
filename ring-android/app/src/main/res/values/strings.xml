@@ -158,7 +158,10 @@ along with this program; if not, write to the Free Software
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
+    <string name="hist_contact_invited">Contact invited</string>
     <string name="hist_contact_added">Contact added</string>
+    <string name="hist_contact_left">Contact left</string>
+    <string name="hist_contact_banned">Contact banned</string>
     <string name="hist_invitation_received">Invitation received</string>
     <string name="ab_action_audio_call">Audio call</string>
     <string name="ab_action_video_call">Video call</string>
