@@ -1542,10 +1542,37 @@ public class AccountService {
         }
         Interaction interaction;
         switch (type) {
+            case "initial": {
+                if (conversation.getMode().blockingFirst() == Conversation.Mode.OneToOne) {
+                    String invited = message.get("invited");
+                    Contact invitedContact = conversation.findContact(Uri.fromId(invited));
+                    if (invitedContact == null) {
+                        invitedContact = account.getContactFromCache(invited);
+                    }
+                    if (invitedContact == null) {
+                        interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
+                        break;
+                    }
+                    invitedContact.setAddedDate(new Date(timestamp));
+                    interaction = new ContactEvent(invitedContact).setEvent(ContactEvent.Event.fromConversationAction("add"));
+                } else {
+                    interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
+                }
+                break;
+            }
             case "member": {
                 String action = message.get("action");
-                contact.setAddedDate(new Date(timestamp));
-                interaction = new ContactEvent(contact).setEvent(ContactEvent.Event.fromConversationAction(action));
+                String uri = message.get("uri");
+                Contact member = conversation.findContact(Uri.fromId(uri));
+                if (member == null) {
+                    member = account.getContactFromCache(uri);
+                }
+                if (member == null) {
+                    interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
+                    break;
+                }
+                member.setAddedDate(new Date(timestamp));
+                interaction = new ContactEvent(member).setEvent(ContactEvent.Event.fromConversationAction(action));
                 break;
             }
             case "text/plain":
