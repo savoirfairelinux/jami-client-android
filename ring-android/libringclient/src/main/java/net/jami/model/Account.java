@@ -166,7 +166,7 @@ public class Account {
     }
 
     public void removeSwarm(String conversationId) {
-        Log.w(TAG, "removeSwarm " + conversationId);
+        Log.d(TAG, "removeSwarm " + conversationId);
         synchronized (conversations) {
             Conversation conversation = swarmConversations.remove(conversationId);
             if (conversation != null) {
@@ -818,6 +818,18 @@ public class Account {
             }
         }
         return false;
+    }
+
+    public void removeRequestPerConvId(String conversationId) {
+        synchronized (pending) {
+            for (Map.Entry<String, TrustRequest> entry : mRequests.entrySet()) {
+                TrustRequest request = entry.getValue();
+                if (request.getConversationId() != null && request.getConversationId().equals(conversationId)) {
+                    removeRequest(request.getUri());
+                    return;
+                }
+            }
+        }
     }
 
     public boolean registeredNameFound(int state, String address, String name) {

@@ -413,6 +413,10 @@ public class DaemonService {
         }
 
         @Override
+        public void conversationRequestDeclined(String accountId, String conversationId) {
+            mAccountService.conversationRequestDeclined(accountId, conversationId);
+        }
+        @Override
         public void conversationMemberEvent(String accountId, String conversationId, String uri, int event) {
             mAccountService.conversationMemberEvent(accountId, conversationId, uri, event);
         }
