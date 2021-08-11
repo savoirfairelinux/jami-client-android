@@ -245,10 +245,8 @@ class ConversationAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val type = MessageType.values()[viewType]
-        val v =
-            if (type == MessageType.INVALID) FrameLayout(parent.context) else (LayoutInflater.from(
-                parent.context
-            ).inflate(type.layout, parent, false) as ViewGroup)
+        val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
+        else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
         return ConversationViewHolder(v, type)
     }
 
@@ -398,11 +396,7 @@ class ConversationAdapter(
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
                     .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    conversationFragment.requireActivity(),
-                    viewHolder.mImage,
-                    "picture"
-                )
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage, "picture")
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't open picture", e);
@@ -668,11 +662,7 @@ class ConversationAdapter(
     }
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
-        val anim = AnimatedVectorDrawableCompat.create(
-            viewHolder.itemView.context,
-            R.drawable.typing_indicator_animation
-        )
-        if (anim != null) {
+        AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->
             viewHolder.mStatusIcon.setImageDrawable(anim)
             anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
                 override fun onAnimationEnd(drawable: Drawable) {
@@ -690,18 +680,10 @@ class ConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(
-        convViewHolder: ConversationViewHolder,
-        interaction: Interaction,
-        position: Int
-    ) {
+    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val context = convViewHolder.itemView.context
         val textMessage = interaction as TextMessage
-        val contact = textMessage.contact
-        if (contact == null) {
-            Log.e(TAG, "Invalid contact, not able to display message correctly")
-            return
-        }
+        val contact = textMessage.contact  ?: return
         // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
         val message = textMessage.body.trim { it <= ' ' }
         val longPressView: View = convViewHolder.mMsgTxt
@@ -730,10 +712,7 @@ class ConversationAdapter(
             } else {
                 longPressView.background.setTint(conversationFragment.resources.getColor(R.color.blue_900))
             }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.bindingAdapterPosition, v.id
-                    .toLong()
-            )
+            mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
             false
         }
         val isTimeShown = hasPermanentTimeString(textMessage, position)
@@ -744,8 +723,7 @@ class ConversationAdapter(
             convViewHolder.mMsgTxt.setPadding(0, 0, 0, 0)
         } else {
             val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            convViewHolder.mMsgTxt.background =
-                ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            convViewHolder.mMsgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
             if (convColor != 0 && !textMessage.isIncoming) {
                 convViewHolder.mMsgTxt.background.setTint(convColor)
             }
@@ -758,9 +736,7 @@ class ConversationAdapter(
             msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         if (textMessage.isIncoming) {
             if (endOfSeq) {
-                convViewHolder.mAvatar.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.primaryNumber)
-                )
+                convViewHolder.mAvatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
                 convViewHolder.mAvatar.visibility = View.VISIBLE
             } else {
                 if (position == lastMsgPos - 1 && convViewHolder.mAvatar != null) {
@@ -792,13 +768,8 @@ class ConversationAdapter(
                     convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24)
                 }
                 InteractionStatus.DISPLAYED -> if (lastDisplayedPosition == position) {
-                    convViewHolder.mStatusIcon.visibility =
-                        if (mShowReadIndicator) View.VISIBLE else View.GONE
-                    convViewHolder.mStatusIcon.setImageDrawable(
-                        conversationFragment.getSmallConversationAvatar(
-                            contact.primaryNumber
-                        )
-                    )
+                    convViewHolder.mStatusIcon.visibility = if (mShowReadIndicator) View.VISIBLE else View.GONE
+                    convViewHolder.mStatusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.primaryNumber))
                 } else {
                     convViewHolder.mStatusIcon.visibility = View.GONE
                     convViewHolder.mStatusIcon.setImageDrawable(null)
@@ -845,16 +816,16 @@ class ConversationAdapter(
         }
     }
 
-    private fun configureForContactEvent(
-        viewHolder: ConversationViewHolder,
-        interaction: Interaction
-    ) {
+    private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
-        if (event.event == ContactEvent.Event.ADDED) {
-            viewHolder.mMsgTxt.setText(R.string.hist_contact_added)
-        } else if (event.event == ContactEvent.Event.INCOMING_REQUEST) {
-            viewHolder.mMsgTxt.setText(R.string.hist_invitation_received)
-        }
+        viewHolder.mMsgTxt.setText(when (event.event) {
+            ContactEvent.Event.ADDED -> R.string.hist_contact_added
+            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+            else -> R.string.hist_contact_added
+        })
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             val timeSeparationString = timestampToDetailString(viewHolder.itemView.context, event.timestamp)
             viewHolder.mMsgDetailTxt.text = timeSeparationString
@@ -867,10 +838,7 @@ class ConversationAdapter(
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      */
-    private fun configureForCallInfo(
-        convViewHolder: ConversationViewHolder,
-        interaction: Interaction
-    ) {
+    private fun configureForCallInfo(convViewHolder: ConversationViewHolder, interaction: Interaction) {
         convViewHolder.mIcon.scaleY = 1f
         val context = convViewHolder.itemView.context
         val longPressView: View = convViewHolder.mCallInfoLayout

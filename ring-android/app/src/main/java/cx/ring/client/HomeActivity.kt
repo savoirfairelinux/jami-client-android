@@ -529,12 +529,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return true
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-        val type = mAccountAdapter!!.getItemViewType(position)
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val adapter = mAccountAdapter ?: return
+        val type = adapter.getItemViewType(position)
         if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-            val account = mAccountAdapter!!.getItem(position)
-            mAccountService.currentAccount = account
-            showAccountStatus(fContent is AccountEditionFragment && !account!!.isSip)
+            adapter.getItem(position)?.let { account ->
+                mAccountService.currentAccount = account
+                showAccountStatus(fContent is AccountEditionFragment && !account.isSip)
+            }
         } else {
             val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
             if (type == AccountSpinnerAdapter.TYPE_CREATE_SIP) {
@@ -546,35 +548,37 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
-    fun setBadge(menuId: Int, number: Int) {
+
+    private fun setBadge(menuId: Int, number: Int) {
         if (number == 0) mBinding!!.navigationView.removeBadge(menuId) else mBinding!!.navigationView.getOrCreateBadge(
             menuId
         ).number = number
     }
 
     private fun hideTabletToolbar() {
-        if (mBinding != null && mBinding!!.tabletToolbar != null) {
-            mBinding!!.contactTitle?.text = null
-            mBinding!!.contactSubtitle?.text = null
-            mBinding!!.contactImage!!.setImageDrawable(null)
-            mBinding!!.tabletToolbar!!.visibility = View.GONE
-        }
+        mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
+            binding.contactTitle?.text = null
+            binding.contactSubtitle?.text = null
+            binding.contactImage?.setImageDrawable(null)
+            toolbar.visibility = View.GONE
+        }}
     }
 
     private fun showTabletToolbar() {
-        if (mBinding != null && mBinding!!.tabletToolbar != null && DeviceUtils.isTablet(this)) {
-            mBinding!!.tabletToolbar!!.visibility = View.VISIBLE
-        }
+        if (DeviceUtils.isTablet(this))
+            mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
+                toolbar.visibility = View.VISIBLE
+            }}
     }
 
     fun setTabletTitle(@StringRes titleRes: Int) {
-        if (mBinding!!.tabletToolbar != null) {
-            mBinding!!.tabletToolbar!!.visibility = View.VISIBLE
-            mBinding!!.contactTitle!!.setText(titleRes)
-            mBinding!!.contactTitle!!.textSize = 19f
-            mBinding!!.contactTitle!!.setTypeface(null, Typeface.BOLD)
-            mBinding!!.contactImage!!.visibility = View.GONE
-        }
+        mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
+            binding.contactTitle?.setText(titleRes)
+            binding.contactTitle?.textSize = 19f
+            binding.contactTitle?.setTypeface(null, Typeface.BOLD)
+            binding.contactImage?.visibility = View.GONE
+            toolbar.visibility = View.VISIBLE
+        }}
         /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
         params.removeRule(RelativeLayout.ALIGN_TOP);
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);

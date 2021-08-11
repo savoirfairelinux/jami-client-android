@@ -25,7 +25,6 @@ public class ContactEvent extends Interaction {
     public TrustRequest request;
     public Event event;
 
-
     public ContactEvent(Interaction interaction) {
         mId = interaction.getId();
         mConversation = interaction.getConversation();
@@ -71,13 +70,25 @@ public class ContactEvent extends Interaction {
     public enum Event {
         UNKNOWN,
         INCOMING_REQUEST,
+        INVITED,
         ADDED,
         REMOVED,
-        BANNED
+        BANNED;
+
+        public static Event fromConversationAction(String action) {
+            switch (action) {
+                case "add": return INVITED;
+                case "join": return ADDED;
+                case "remove" : return REMOVED;
+                case "ban": return BANNED;
+                default: return UNKNOWN;
+            }
+        }
     }
 
-    public void setEvent(Event event) {
+    public ContactEvent setEvent(Event event) {
         this.event = event;
+        return this;
     }
 
     public void setRequest(TrustRequest request) {
