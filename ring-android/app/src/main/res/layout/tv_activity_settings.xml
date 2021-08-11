@@ -2,7 +2,7 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/generalFragment"
-    android:name="cx.ring.tv.account.TVSettingsFragment"
+    android:name="cx.ring.tv.settings.TVSettingsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cx.ring.tv.account.TVSettingsActivity" />
+    tools:context="cx.ring.tv.settings.TVSettingsActivity" />

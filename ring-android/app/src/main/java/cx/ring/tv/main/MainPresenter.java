@@ -59,7 +59,7 @@ public class MainPresenter extends RootPresenter<MainView> {
     public void bindView(MainView view) {
         super.bindView(view);
         loadConversations();
-        reloadAccountInfos();
+        reloadAccountInfo();
     }
 
     private void loadConversations() {
@@ -97,11 +97,11 @@ public class MainPresenter extends RootPresenter<MainView> {
                 }, e -> Log.w(TAG, "showConversations error ", e)));
     }
 
-    public void reloadAccountInfos() {
+    public void reloadAccountInfo() {
         mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
                 .observeOn(mUiScheduler)
                 .subscribe(
-                        account -> getView().displayAccountInfos(new HomeNavigationViewModel(account, null)),
+                        account -> getView().displayAccountInfo(new HomeNavigationViewModel(account, null)),
                         e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
@@ -116,10 +116,6 @@ public class MainPresenter extends RootPresenter<MainView> {
         getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID(), mAccountService.getCurrentAccount().hasPassword());
     }
 
-    public void onLicenceClicked(int aboutType) {
-        getView().showLicence(aboutType);
-    }
-
     public void onEditProfileClicked() {
         getView().showProfileEditing();
     }
@@ -131,4 +127,5 @@ public class MainPresenter extends RootPresenter<MainView> {
     public void onSettingsClicked() {
         getView().showSettings();
     }
+
 }

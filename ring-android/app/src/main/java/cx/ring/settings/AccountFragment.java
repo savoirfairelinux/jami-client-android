@@ -40,13 +40,15 @@ import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAccountBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 import net.jami.services.AccountService;
 
+@AndroidEntryPoint
 public class AccountFragment extends Fragment implements ViewTreeObserver.OnScrollChangedListener {
-
+    public static final String TAG = AccountFragment.class.getSimpleName();
     private static final int SCROLL_DIRECTION_UP = -1;
 
     public static AccountFragment newInstance(@NonNull String accountId) {
@@ -67,7 +69,6 @@ public class AccountFragment extends Fragment implements ViewTreeObserver.OnScro
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragAccountBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return mBinding.getRoot();
     }
 

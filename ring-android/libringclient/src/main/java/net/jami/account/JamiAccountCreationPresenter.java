@@ -34,7 +34,7 @@ import net.jami.utils.StringUtils;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account.JamiAccountCreationView> {
+public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreationView> {
 
     public static final String TAG = JamiAccountCreationPresenter.class.getSimpleName();
     private static final int PASSWORD_MIN_LENGTH = 6;
@@ -57,14 +57,14 @@ public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account
     }
 
     @Override
-    public void bindView(net.jami.account.JamiAccountCreationView view) {
+    public void bindView(JamiAccountCreationView view) {
         super.bindView(view);
         mCompositeDisposable.add(contactQuery
                 .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
                 .switchMapSingle(q -> mAccountService.
                         findRegistrationByName("", "", q))
                 .observeOn(mUiScheduler)
-                .subscribe(q -> onLookupResult(q.name, q.address, q.state)));
+                .subscribe(q -> onLookupResult(q.getName(), q.getAddress(), q.getState())));
     }
 
     public void init(AccountCreationModel accountCreationModel) {
@@ -86,9 +86,9 @@ public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account
         isUsernameCorrect = false;
 
         if (showLoadingAnimation) {
-            net.jami.account.JamiAccountCreationView view = getView();
+            JamiAccountCreationView view = getView();
             if (view != null)
-                view.updateUsernameAvailability(net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus.LOADING);
+                view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING);
             showLoadingAnimation = false;
         }
     }
@@ -151,7 +151,7 @@ public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account
 
     public void createAccount() {
         if (isInputValid()) {
-            net.jami.account.JamiAccountCreationView view = getView();
+            JamiAccountCreationView view = getView();
             view.goToAccountCreation(mAccountCreationModel);
         }
     }
@@ -164,40 +164,35 @@ public class JamiAccountCreationPresenter extends RootPresenter<net.jami.account
 
     private void checkForms() {
         boolean valid = isInputValid();
-        if(valid && isUsernameCorrect)
-            getView().updateUsernameAvailability(net.jami.account.JamiAccountCreationView.
-                    UsernameAvailabilityStatus.AVAILABLE);
+        if (valid && isUsernameCorrect)
+            getView().updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE);
     }
 
     private void onLookupResult(String name, String address, int state) {
-        net.jami.account.JamiAccountCreationView view = getView();
+        JamiAccountCreationView view = getView();
         //Once we get the result, we can show the loading animation again when the user types
         showLoadingAnimation = true;
         if (view == null) {
             return;
         }
         if (name == null || name.isEmpty()) {
-
-            view.updateUsernameAvailability(net.jami.account.JamiAccountCreationView.
-                    UsernameAvailabilityStatus.RESET);
+            view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.RESET);
             isUsernameCorrect = false;
         } else {
             switch (state) {
                 case 0:
                     // on found
-                    view.updateUsernameAvailability(net.jami.account.JamiAccountCreationView.
-                            UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN);
+                    view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN);
                     isUsernameCorrect = false;
                     break;
                 case 1:
                     // invalid name
-                    view.updateUsernameAvailability(net.jami.account.JamiAccountCreationView.
-                            UsernameAvailabilityStatus.ERROR_USERNAME_INVALID);
+                    view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.ERROR_USERNAME_INVALID);
                     isUsernameCorrect = false;
                     break;
                 case 2:
                     // available
-                    view.updateUsernameAvailability(net.jami.account.JamiAccountCreationView.
+                    view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.AVAILABLE);
                     mAccountCreationModel.setUsername(name);
                     isUsernameCorrect = true;

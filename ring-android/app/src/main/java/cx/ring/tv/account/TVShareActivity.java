@@ -21,8 +21,9 @@ package cx.ring.tv.account;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
 import cx.ring.R;
+import dagger.hilt.android.AndroidEntryPoint;
 
-
+@AndroidEntryPoint
 public class TVShareActivity extends FragmentActivity {
 
     public static final String SHARED_ELEMENT_NAME = "photo";

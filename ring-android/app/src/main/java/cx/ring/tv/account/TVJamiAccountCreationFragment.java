@@ -36,10 +36,13 @@ import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
 import cx.ring.application.JamiApplication;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.mvp.AccountCreationModel;
 import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 
+@AndroidEntryPoint
 public class TVJamiAccountCreationFragment
         extends JamiGuidedStepFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
@@ -56,7 +59,7 @@ public class TVJamiAccountCreationFragment
     private String mPassword;
     private String mPasswordConfirm;
 
-    private TextWatcher mUsernameWatcher = new TextWatcher() {
+    private final TextWatcher mUsernameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -68,10 +71,10 @@ public class TVJamiAccountCreationFragment
             String newName = s.toString();
             if (!newName.equals(getResources().getString(R.string.register_username))) {
                 boolean empty = newName.isEmpty();
-                /** If the username is empty make sure to set isRegisterUsernameChecked
+                /* If the username is empty make sure to set isRegisterUsernameChecked
                  *  to False, this allows to create an account with an empty username */
                 presenter.registerUsernameChanged(!empty);
-                /** Send the newName even when empty (in order to reset the views) */
+                /* Send the newName even when empty (in order to reset the views) */
                 presenter.userNameChanged(newName);
             }
         }
@@ -88,9 +91,6 @@ public class TVJamiAccountCreationFragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-
-        // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
 
         if (model == null) {

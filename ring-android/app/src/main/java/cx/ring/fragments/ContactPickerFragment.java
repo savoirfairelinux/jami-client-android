@@ -23,7 +23,6 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragContactPickerBinding;
 import net.jami.facades.ConversationFacade;
@@ -31,9 +30,11 @@ import net.jami.model.Contact;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 import cx.ring.views.AvatarDrawable;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+@AndroidEntryPoint
 public class ContactPickerFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = ContactPickerFragment.class.getSimpleName();
@@ -59,8 +60,8 @@ public class ContactPickerFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        //setRetainInstance(true);
+        //((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
     }
 
     @Override

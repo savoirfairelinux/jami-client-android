@@ -46,32 +46,24 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 
 public class SmartListPresenter extends RootPresenter<SmartListView> {
-
     private static final String TAG = SmartListPresenter.class.getSimpleName();
 
-    private final AccountService mAccountService;
-    private final ContactService mContactService;
     private final ConversationFacade mConversationFacade;
+    private final Scheduler mUiScheduler;
 
-    private Account mAccount;
+    //private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
+    private Disposable mQueryDisposable = null;
+
     private final Subject<String> mCurrentQuery = BehaviorSubject.createDefault("");
     private final Subject<String> mQuery = PublishSubject.create();
     private final Observable<String> mDebouncedQuery = mQuery.debounce(350, TimeUnit.MILLISECONDS);
 
     private final Observable<Account> accountSubject;
-
-    private final Scheduler mUiScheduler;
-
-    private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
-    private Disposable mQueryDisposable = null;
+    private Account mAccount;
 
     @Inject
-    public SmartListPresenter(AccountService accountService,
-                              ContactService contactService,
-                              ConversationFacade conversationFacade,
+    public SmartListPresenter(ConversationFacade conversationFacade,
                               @Named("UiScheduler") Scheduler uiScheduler) {
-        mAccountService = accountService;
-        mContactService = contactService;
         mConversationFacade = conversationFacade;
         mUiScheduler = uiScheduler;
 
@@ -83,9 +75,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     @Override
     public void bindView(SmartListView view) {
         super.bindView(view);
-        mCompositeDisposable.clear();
-        mCompositeDisposable.add(mConversationDisposable);
-        loadConversations();
+        //mCompositeDisposable.clear();
+        //mCompositeDisposable.add(mConversationDisposable);
+        showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true));
     }
 
     public void queryTextChanged(String query) {
@@ -147,7 +139,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void clearConversation(final Uri uri) {
-        mConversationDisposable.add(mConversationFacade
+        mCompositeDisposable.add(mConversationFacade
                 .clearHistory(mAccount.getAccountID(), uri)
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
@@ -157,7 +149,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void removeConversation(Uri uri) {
-        mConversationDisposable.add(mConversationFacade
+        mCompositeDisposable.add(mConversationFacade
                 .removeConversation(mAccount.getAccountID(), uri)
                 .subscribe());
     }
@@ -170,18 +162,17 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     void showConversations(Observable<List<Observable<SmartListViewModel>>> conversations) {
-        mConversationDisposable.clear();
+        //mConversationDisposable.clear();
         getView().setLoading(true);
 
-        mConversationDisposable.add(conversations
+        mCompositeDisposable.add(conversations
                 .switchMap(viewModels -> viewModels.isEmpty() ? SmartListViewModel.EMPTY_RESULTS
                         : Observable.combineLatest(viewModels, obs -> {
                             List<SmartListViewModel> vms = new ArrayList<>(obs.length);
                             for (Object ob : obs)
                                 vms.add((SmartListViewModel) ob);
                             return vms;
-                        }))
-                .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+                        }).throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler))
                 .observeOn(mUiScheduler)
                 .subscribe(viewModels -> {
                     final SmartListView view = getView();
@@ -192,12 +183,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         return;
                     }
                     view.hideNoConversationMessage();
-                    view.updateList(viewModels, mConversationDisposable);
+                    view.updateList(viewModels, mCompositeDisposable);
                 }, e -> Log.w(TAG, "showConversations error ", e)));
     }
-
-    private void loadConversations() {
-        showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true));
-    }
-
 }

@@ -213,6 +213,17 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
+    <!--  TV  -->
+    <string name="account_tv_settings_header">Account settings</string>
+    <string name="account_tv_advance_settings_header">Advanced settings</string>
+    <string name="account_tv_add_contact">Add contact</string>
+    <string name="account_tv_advanced_settings">Change the general settings</string>
+    <string name="account_tv_about">About Jami</string>
+    <string name="tv_about_version">Version</string>
+    <string name="tv_about_license">License</string>
+    <string name="tv_about_author">Author rights</string>
+    <string name="tv_about_credits">Credits</string>
+
     <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
@@ -226,7 +237,7 @@ along with this program; if not, write to the Free Software
     <string name="account_end_export_button">close</string>
     <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
     <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
-    <string name="account_export_title">Add devices</string>
+    <string name="account_export_title">Link account to other devices</string>
     <string name="account_connect_server_button">Connect to management server</string>
     <string name="account_connect_button">Connect</string>
     <string name="prompt_server">Jami management server URL</string>
@@ -262,7 +273,7 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_cannot_be_registered">Can\'t register account</string>
 
     <!-- Edit profile-->
-    <string name="account_edit_profile">Edit your profile</string>
+    <string name="account_edit_profile">Edit my account</string>
 
     <!-- Devices -->
     <string name="account_revoke_device_hint">Enter password to confirm</string>

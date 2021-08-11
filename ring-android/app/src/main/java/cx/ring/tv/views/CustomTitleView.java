@@ -18,8 +18,10 @@ import android.graphics.drawable.Drawable;
 import androidx.leanback.widget.TitleViewAdapter;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
     private final TextView mTitleView;
     private final ImageView mLogoView;
     private final View mSearchOrbView;
+    private final ImageButton mSettingsButton;
 
     private final TitleViewAdapter mTitleViewAdapter = new TitleViewAdapter() {
         @Override
@@ -82,7 +85,19 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         mAliasView = root.findViewById(R.id.account_alias);
         mTitleView = root.findViewById(R.id.title_text);
         mLogoView = root.findViewById(R.id.title_photo_contact);
+        mSettingsButton = root.findViewById(R.id.title_settings);
         mSearchOrbView = root.findViewById(R.id.title_orb);
+
+        mSearchOrbView.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    mSettingsButton.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         setClipChildren(false);
         setClipToPadding(false);
@@ -105,10 +120,15 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         mTitleView.setText(title);
         mTitleView.setVisibility(View.VISIBLE);
         mLogoView.setVisibility(View.VISIBLE);
+        mSettingsButton.setVisibility(View.VISIBLE);
     }
 
     public ImageView getLogoView() {
         return mLogoView;
+    }
+
+    public ImageButton getSettingsButton() {
+        return mSettingsButton;
     }
 
     @Override

@@ -48,13 +48,16 @@ import cx.ring.databinding.FragSettingsBinding;
 import net.jami.daemon.JamiService;
 import net.jami.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
+import dagger.hilt.android.AndroidEntryPoint;
+
 import net.jami.mvp.GenericView;
 import net.jami.settings.SettingsPresenter;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
-public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings>, ViewTreeObserver.OnScrollChangedListener {
+@AndroidEntryPoint
+public class SettingsFragment extends BaseSupportFragment<SettingsPresenter, GenericView<Settings>> implements GenericView<Settings>, ViewTreeObserver.OnScrollChangedListener {
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
@@ -72,7 +75,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragSettingsBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 

@@ -50,8 +50,6 @@ import java.util.List;
 import java.util.NavigableMap;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
@@ -69,26 +67,30 @@ public class ConversationFacade {
     private final CallService mCallService;
     private final ContactService mContactService;
     private final NotificationService mNotificationService;
+    private final HardwareService mHardwareService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final PreferencesService mPreferencesService;
+
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final Observable<Account> currentAccountSubject;
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
-    @Inject
-    HardwareService mHardwareService;
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-    @Inject
-    PreferencesService mPreferencesService;
 
     public ConversationFacade(HistoryService historyService,
                               CallService callService,
                               AccountService accountService,
                               ContactService contactService,
-                              NotificationService notificationService) {
+                              NotificationService notificationService,
+                              HardwareService hardwareService,
+                              DeviceRuntimeService deviceRuntimeService,
+                              PreferencesService preferencesService) {
         mHistoryService = historyService;
         mCallService = callService;
         mAccountService = accountService;
         mContactService = contactService;
         mNotificationService = notificationService;
+        mHardwareService = hardwareService;
+        mDeviceRuntimeService = deviceRuntimeService;
+        mPreferencesService = preferencesService;
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
@@ -284,12 +286,12 @@ public class ConversationFacade {
             DataTransfer transfer = new DataTransfer(conversation, to.getRawRingId(), conversation.getAccountId(), file.getName(), true, file.length(), 0, null);
             mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
 
-            transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId());
+            transfer.setDestination(mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId()));
             return transfer;
         })
                 .flatMap(t -> mAccountService.sendFile(file, t))
                 .flatMapCompletable(transfer -> Completable.fromAction(() -> {
-                    File destination = new File(transfer.destination, transfer.getStoragePath());
+                    File destination = new File(transfer.getDestination(), transfer.getStoragePath());
                     if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
                         Log.e(TAG, "sendFile: can't move file to " + destination);
                     }
@@ -352,8 +354,9 @@ public class ConversationFacade {
      */
     public Single<Conversation> loadConversationHistory(final Account account, final Uri conversationUri) {
         Conversation conversation = account.getByUri(conversationUri);
-        if (conversation == null)
+        if (conversation == null) {
             return Single.error(new RuntimeException("Can't get conversation"));
+        }
         synchronized (conversation) {
             if (!conversation.isSwarm() && conversation.getId() == null) {
                 return Single.just(conversation);
@@ -430,7 +433,7 @@ public class ConversationFacade {
                     .map(AccountService.UserSearchResult::getResultsViewModels);
         } else {
             return mAccountService.findRegistrationByName(account.getAccountID(), "", query)
-                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address), false)) : Collections.emptyList());
+                    .map(result -> result.getState() == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.getAddress()), false)) : Collections.emptyList());
         }
     }
 
@@ -514,8 +517,6 @@ public class ConversationFacade {
 
         return mHistoryService.getConversationHistory(conversation.getAccountId(), conversation.getId())
                 .map(loadedConversation -> {
-                    /*if (loadedConversation.isEmpty())
-                        return conversation;*/
                     conversation.clearHistory(true);
                     conversation.setHistory(loadedConversation);
                     return conversation;
@@ -535,16 +536,16 @@ public class ConversationFacade {
     }
 
     public Completable clearAllHistory() {
-        List<Account> accounts = mAccountService.getAccounts();
-        return mHistoryService
-                .clearHistory(accounts)
-                .doOnSubscribe(s -> {
-                    for (Account account : accounts) {
-                        if (account != null) {
-                            account.clearAllHistory();
-                        }
-                    }
-                });
+        return mAccountService.getObservableAccountList()
+                .firstElement()
+                .flatMapCompletable(accounts -> mHistoryService.clearHistory(accounts)
+                        .doOnSubscribe(s -> {
+                            for (Account account : accounts) {
+                                if (account != null) {
+                                    account.clearAllHistory();
+                                }
+                            }
+                        }));
     }
 
     public void updateTextNotifications(String accountId, List<Conversation> conversations) {
@@ -591,7 +592,8 @@ public class ConversationFacade {
     private void handleDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
         Interaction.InteractionStatus status = transfer.getStatus();
-        if ((status == Interaction.InteractionStatus.TRANSFER_CREATED || status == Interaction.InteractionStatus.FILE_AVAILABLE) && !transfer.isOutgoing()) {
+        Log.d(TAG, "handleDataTransferEvent " + status + " " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount())));
+        if (status == Interaction.InteractionStatus.TRANSFER_AWAITING_HOST || status == Interaction.InteractionStatus.FILE_AVAILABLE) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
                 mAccountService.acceptFileTransfer(conversation, transfer.getFileId(), transfer);
                 return;
