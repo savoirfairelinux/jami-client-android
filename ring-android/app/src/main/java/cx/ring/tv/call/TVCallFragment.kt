@@ -113,8 +113,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
 
     override fun initPresenter(presenter: CallPresenter) {
+        Log.w(TAG, "initPresenter");
         requireArguments().getString(CallFragment.KEY_ACTION)?.let { action ->
-            if (action == CallFragment.ACTION_PLACE_CALL)
+            Log.w(TAG, "initPresenter $action");
+            if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
                 prepareCall(false)
             else if (action == CallFragment.ACTION_GET_CALL || action == CallActivity.ACTION_CALL_ACCEPT)
                 presenter.initIncomingCall(requireArguments().getString(CallFragment.KEY_CONF_ID), action == CallFragment.ACTION_GET_CALL)
@@ -158,16 +160,15 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.w(TAG, "onViewCreated");
         mSession = MediaSessionCompat(requireContext(), TAG).apply {
             setMetadata(MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, getString(R.string.pip_title))
                 .build())
         }
         val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
-        mScreenWakeLock = powerManager.newWakeLock(
-            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
-            "ring:callLock"
-        ).apply { setReferenceCounted(false) }
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE, "ring:callLock")
+            .apply { setReferenceCounted(false) }
         binding!!.videoSurface.holder.setFormat(PixelFormat.RGBA_8888)
         binding!!.videoSurface.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -324,9 +325,9 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun updateContactBubble(calls: List<Call>) {
         mConferenceMode = calls.size > 1
-        val username = if (mConferenceMode) "Conference with " + calls.size + " people" else calls[0].contact.ringUsername
-        val displayName = if (mConferenceMode) null else calls[0].contact.displayName
-        val contact = calls[0].contact
+        val contact = calls[0].contact!!
+        val username = if (mConferenceMode) "Conference with " + calls.size + " people" else contact.ringUsername
+        val displayName = if (mConferenceMode) null else contact.displayName
         Log.d(TAG, "updateContactBubble: username=" + username + ", uri=" + contact.uri + " photo:" + contact.photo)
         mSession?.setMetadata(MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, displayName)
@@ -529,10 +530,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
      * @param isIncoming true if call is incoming, false for outgoing
      */
     private fun initializeCall(isIncoming: Boolean) {
+        Log.w(TAG, "initializeCall $isIncoming")
         if (isIncoming) {
             presenter.acceptCall()
         } else {
             arguments?.let { args ->
+                Log.w(TAG, "initializeCall presenter.initOutGoing")
                 val conversation = ConversationPath.fromBundle(args)!!
                 presenter.initOutGoing(
                     conversation.accountId,
@@ -545,17 +548,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
+        startActivity(Intent(Intent.ACTION_VIEW,
+            android.net.Uri.withAppendedPath(
                 android.net.Uri.withAppendedPath(
-                    android.net.Uri.withAppendedPath(
-                        ContentUriHandler.CONTACT_CONTENT_URI,
-                        accountId
-                    ), contact.primaryNumber
-                )
-            )
-                .setClass(requireContext(), ContactDetailsActivity::class.java)
+                    ContentUriHandler.CONTACT_CONTENT_URI,
+                    accountId
+                ), contact.primaryNumber))
+            .setClass(requireContext(), ContactDetailsActivity::class.java)
         )
     }
 
@@ -571,10 +570,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
                 val displayName = i.contact.displayName
                 if (!TextUtils.isEmpty(displayName)) {
                     val label = ItemParticipantLabelBinding.inflate(inflater)
-                    val params = PercentFrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
+                    val params = PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     params.percentLayoutInfo.leftMarginPercent = i.x / mVideoWidth.toFloat()
                     params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
                     label.participantName.text = displayName

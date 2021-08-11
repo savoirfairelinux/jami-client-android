@@ -60,7 +60,7 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
                 .debounce(350, TimeUnit.MILLISECONDS)
                 .switchMapSingle(q -> mAccountService.findRegistrationByName(mAccountService.getCurrentAccount().getAccountID(), "", q))
                 .observeOn(mUiScheduler)
-                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state)));
+                .subscribe(q -> parseEventState(mAccountService.getAccount(q.getAccountId()), q.getName(), q.getAddress(), q.getState())));
     }
 
     @Override

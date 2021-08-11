@@ -50,8 +50,7 @@ import net.jami.navigation.HomeNavigationView
 import net.jami.navigation.HomeNavigationViewModel
 
 @AndroidEntryPoint
-class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?>(),
-    HomeNavigationView {
+class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>(), HomeNavigationView {
     private var iconSize = -1
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
@@ -64,13 +63,13 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?
                 val uri = extras[MediaStore.EXTRA_OUTPUT] as Uri?
                 if (uri != null) {
                     val cr = requireContext().contentResolver
-                    presenter!!.saveVCardPhoto(Single.fromCallable {
+                    presenter.saveVCardPhoto(Single.fromCallable {
                         cr.openInputStream(uri).use { BitmapFactory.decodeStream(it) }
                     }.map { obj: Bitmap -> BitmapUtils.bitmapToPhoto(obj) })
                 }
             }
             ProfileCreationFragment.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && data != null) {
-                presenter!!.saveVCardPhoto(loadBitmap(requireContext(), data.data!!)
+                presenter.saveVCardPhoto(loadBitmap(requireContext(), data.data!!)
                     .map { obj: Bitmap -> BitmapUtils.bitmapToPhoto(obj) })
             }
             else -> {
@@ -78,11 +77,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 presenter!!.cameraPermissionChanged(true)
@@ -99,7 +94,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?
         iconSize = resources.getDimension(R.dimen.tv_avatar_size).toInt()
     }
 
-    override fun onCreateGuidance(savedInstanceState: Bundle): Guidance {
+    override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.profile)
         val breadcrumb = ""
         val description = getString(R.string.profile_message_warning)
@@ -111,54 +106,45 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?
         return R.style.Theme_Ring_Leanback_GuidedStep_First
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle) {
-        addEditTextAction(context, actions, USER_NAME.toLong(), R.string.account_edit_profile, R.string.profile_name_hint)
-        addAction(context, actions, CAMERA.toLong(), R.string.take_a_photo)
-        addAction(context, actions, GALLERY.toLong(), R.string.open_the_gallery)
+    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
+        addEditTextAction(context, actions, USER_NAME, R.string.account_edit_profile, R.string.profile_name_hint)
+        addAction(context, actions, CAMERA, R.string.take_a_photo)
+        addAction(context, actions, GALLERY, R.string.open_the_gallery)
         this.actions = actions
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
-        if (action.id == USER_NAME.toLong()) {
-            val username = action.editTitle.toString()
-            presenter!!.saveVCardFormattedName(username)
-        } else if (action.id == CAMERA.toLong()) {
-            presenter!!.cameraClicked()
-        } else if (action.id == GALLERY.toLong()) {
-            presenter!!.galleryClicked()
+        when (action.id) {
+            USER_NAME -> presenter?.saveVCardFormattedName(action.editTitle.toString())
+            CAMERA -> presenter?.cameraClicked()
+            GALLERY -> presenter?.galleryClicked()
         }
         return super.onGuidedActionEditedAndProceed(action)
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
-        if (action.id == CAMERA.toLong()) {
-            presenter!!.cameraClicked()
-        } else if (action.id == GALLERY.toLong()) {
-            presenter!!.galleryClicked()
+        when (action.id) {
+            CAMERA -> presenter?.cameraClicked()
+            GALLERY -> presenter?.galleryClicked()
         }
     }
 
     override fun showViewModel(viewModel: HomeNavigationViewModel) {
-        val account = viewModel.account
-        if (account == null) {
-            Log.e(TAG, "Not able to get current account")
-            return
-        }
-        val alias = viewModel.alias
         val action = actions?.let { if (it.isEmpty()) null else it[0] }
         if (action != null && action.id == USER_NAME.toLong()) {
-            if (TextUtils.isEmpty(alias)) {
+            if (TextUtils.isEmpty(viewModel.alias)) {
                 action.editTitle = ""
                 action.title = getString(R.string.account_edit_profile)
             } else {
-                action.editTitle = alias
-                action.title = alias
+                action.editTitle = viewModel.alias
+                action.title = viewModel.alias
             }
             notifyActionChanged(0)
         }
-        if (TextUtils.isEmpty(alias)) guidanceStylist.titleView.setText(R.string.profile) else guidanceStylist.titleView.text =
-            alias
-        setPhoto(account)
+        if (TextUtils.isEmpty(viewModel.alias))
+            guidanceStylist.titleView.setText(R.string.profile)
+        else guidanceStylist.titleView.text = viewModel.alias
+        setPhoto(viewModel.account)
     }
 
     override fun setPhoto(account: Account) {
@@ -203,8 +189,8 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter?
     }
 
     companion object {
-        private const val USER_NAME = 1
-        private const val GALLERY = 2
-        private const val CAMERA = 3
+        private const val USER_NAME = 1L
+        private const val GALLERY = 2L
+        private const val CAMERA = 3L
     }
 }

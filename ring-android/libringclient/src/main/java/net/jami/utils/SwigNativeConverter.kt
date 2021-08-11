@@ -1,8 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,25 +17,29 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package net.jami.utils
 
-package net.jami.navigation;
+import net.jami.daemon.*
+import java.util.ArrayList
 
-import net.jami.model.Account;
-
-public class HomeNavigationViewModel {
-    final private Account mAccount;
-    final private String mAlias;
-
-    public HomeNavigationViewModel(Account account, String alias) {
-        mAccount = account;
-        mAlias = alias;
+object SwigNativeConverter {
+    fun toSwig(creds: List<Map<String, String>>): VectMap {
+        val toReturn = VectMap()
+        toReturn.reserve(creds.size.toLong())
+        for (aTodecode in creds) {
+            toReturn.add(StringMap.toSwig(aTodecode))
+        }
+        return toReturn
     }
 
-    public Account getAccount() {
-        return mAccount;
+    fun toJava(vector: StringVect): ArrayList<String> {
+        return ArrayList(vector)
     }
 
-    public String getAlias() {
-        return mAlias;
+    fun toJava(vector: MessageVect): ArrayList<Message> {
+        val size = vector.size
+        val toReturn = ArrayList<Message>(size)
+        for (i in 0 until size) toReturn.add(vector[i])
+        return toReturn
     }
 }

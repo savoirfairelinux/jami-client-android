@@ -88,14 +88,11 @@ class AvatarDrawable : Drawable {
         )
         private val drawPaint = Paint()
 
-        @JvmStatic @JvmOverloads
         fun load(context: Context, account: Account, crop: Boolean = true): Observable<AvatarDrawable> {
-            return VCardServiceImpl.loadProfile(context, account).map { profile ->
-                build(context, account, profile, crop)
-            }
+            return VCardServiceImpl.loadProfile(context, account)
+                .map { profile -> build(context, account, profile, crop) }
         }
-        @JvmStatic
-        fun build(context: Context, account: Account, profile: Tuple<String, Any>, crop: Boolean): AvatarDrawable {
+        fun build(context: Context, account: Account, profile: Tuple<String?, Any?>, crop: Boolean): AvatarDrawable {
             return Builder()
                         .withPhoto(profile.second as Bitmap?)
                         .withNameData(profile.first, account.registeredName)

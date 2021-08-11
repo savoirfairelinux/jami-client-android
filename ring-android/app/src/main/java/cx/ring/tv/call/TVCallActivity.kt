@@ -48,10 +48,7 @@ class TVCallActivity : FragmentActivity() {
             setTurnScreenOn(true)
             setShowWhenLocked(true)
         } else {
-            window.addFlags(
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-            )
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         }
         setContentView(R.layout.tv_activity_call)
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
@@ -60,14 +57,9 @@ class TVCallActivity : FragmentActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         if (path != null) {
-            Log.d(TAG, "onCreate: outgoing call $path")
-            callFragment = TVCallFragment.newInstance(
-                intent.action!!,
-                path.accountId,
-                path.conversationId,
-                intent.extras!!.getString(Intent.EXTRA_PHONE_NUMBER, path.conversationId),
-                false
-            )
+            Log.d(TAG, "onCreate: outgoing call $path ${intent.action}")
+            callFragment = TVCallFragment.newInstance(intent.action!!, path.accountId, path.conversationId,
+                intent.extras!!.getString(Intent.EXTRA_PHONE_NUMBER, path.conversationId), false)
             fragmentTransaction.replace(R.id.main_call_layout, callFragment!!, CALL_FRAGMENT_TAG)
                 .commit()
         } else {

@@ -155,7 +155,7 @@ class LocationSharingService : Service(), LocationListener {
                     .throttleLatest(10, TimeUnit.SECONDS)
                     .map { location ->
                         val out = JSONObject()
-                        out.put("type", AccountService.Location.Type.position.toString())
+                        out.put("type", AccountService.Location.Type.Position.toString())
                         out.put("lat", location.latitude)
                         out.put("long", location.longitude)
                         out.put("alt", location.altitude)
@@ -182,7 +182,7 @@ class LocationSharingService : Service(), LocationListener {
                 contactLocationShare.remove(path)
                 val jsonObject = JSONObject()
                 try {
-                    jsonObject.put("type", AccountService.Location.Type.stop.toString())
+                    jsonObject.put("type", AccountService.Location.Type.Stop.toString())
                     jsonObject.put("time", Long.MAX_VALUE)
                 } catch (e: JSONException) {
                     e.printStackTrace()

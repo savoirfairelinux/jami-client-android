@@ -42,8 +42,9 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
         val info = calls!![position]
         val contact = info.contact
         val context = holder.itemView.context
-        if (info.call != null && info.call.callStatus != Call.CallStatus.CURRENT) {
-            holder.binding.displayName.text = String.format("%s\n%s", contact.displayName, context.getText(CallFragment.callStateToHumanState(info.call.callStatus)))
+        val call = info.call
+        if (call != null && call.callStatus != Call.CallStatus.CURRENT) {
+            holder.binding.displayName.text = String.format("%s\n%s", contact.displayName, context.getText(CallFragment.callStateToHumanState(call.callStatus)))
             holder.binding.photo.alpha = .5f
         } else {
             holder.binding.displayName.text = contact.displayName

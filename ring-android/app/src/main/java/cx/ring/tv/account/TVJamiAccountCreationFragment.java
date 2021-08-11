@@ -59,7 +59,7 @@ public class TVJamiAccountCreationFragment
     private String mPassword;
     private String mPasswordConfirm;
 
-    private TextWatcher mUsernameWatcher = new TextWatcher() {
+    private final TextWatcher mUsernameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -71,10 +71,10 @@ public class TVJamiAccountCreationFragment
             String newName = s.toString();
             if (!newName.equals(getResources().getString(R.string.register_username))) {
                 boolean empty = newName.isEmpty();
-                /** If the username is empty make sure to set isRegisterUsernameChecked
+                /* If the username is empty make sure to set isRegisterUsernameChecked
                  *  to False, this allows to create an account with an empty username */
                 presenter.registerUsernameChanged(!empty);
-                /** Send the newName even when empty (in order to reset the views) */
+                /* Send the newName even when empty (in order to reset the views) */
                 presenter.userNameChanged(newName);
             }
         }

@@ -286,12 +286,12 @@ public class ConversationFacade {
             DataTransfer transfer = new DataTransfer(conversation, to.getRawRingId(), conversation.getAccountId(), file.getName(), true, file.length(), 0, null);
             mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
 
-            transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId());
+            transfer.setDestination(mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId()));
             return transfer;
         })
                 .flatMap(t -> mAccountService.sendFile(file, t))
                 .flatMapCompletable(transfer -> Completable.fromAction(() -> {
-                    File destination = new File(transfer.destination, transfer.getStoragePath());
+                    File destination = new File(transfer.getDestination(), transfer.getStoragePath());
                     if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
                         Log.e(TAG, "sendFile: can't move file to " + destination);
                     }
@@ -433,7 +433,7 @@ public class ConversationFacade {
                     .map(AccountService.UserSearchResult::getResultsViewModels);
         } else {
             return mAccountService.findRegistrationByName(account.getAccountID(), "", query)
-                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address), false)) : Collections.emptyList());
+                    .map(result -> result.getState() == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.getAddress()), false)) : Collections.emptyList());
         }
     }
 

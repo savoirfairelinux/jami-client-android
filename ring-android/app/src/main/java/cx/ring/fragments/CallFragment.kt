@@ -176,21 +176,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 return
             }
             val actions = ArrayList<RemoteAction>(1)
-            actions.add(
-                RemoteAction(
-                    Icon.createWithResource(context, R.drawable.baseline_call_end_24),
+            actions.add(RemoteAction(Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                     getString(R.string.action_call_hangup),
                     getString(R.string.action_call_hangup),
-                    PendingIntent.getService(
-                        context,
-                        Random().nextInt(),
+                    PendingIntent.getService(context, Random().nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(context, JamiService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, callId),
-                        PendingIntent.FLAG_ONE_SHOT
-                    )
-                )
-            )
+                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)))
             paramBuilder.setActions(actions)
             try {
                 requireActivity().enterPictureInPictureMode(paramBuilder.build())
@@ -506,7 +498,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             -(currentYPosition + v.height - event.y.toInt())
                         )
                         v.layoutParams = params
-                        val outPosition = binding!!.pluginPreviewContainer.width * 0.85f
+                        val outPosition = binding.pluginPreviewContainer.width * 0.85f
                         var drapOut = 0f
                         if (currentXPosition < 0) {
                             drapOut = min(1f, -currentXPosition / outPosition)
@@ -523,11 +515,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         previewSnapAnimation.cancel()
                         previewDrag = null
                         v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                        var ml = 0
-                        var mr = 0
-                        var mt = 0
-                        var mb = 0
-                        val hp = binding!!.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
+                        var ml = 0; var mr = 0; var mt = 0; var mb = 0
+                        val hp = binding.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
                         if (params.leftMargin + v.width / 2 > parent.width / 2) {
                             params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
                             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
@@ -541,7 +530,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             previewPosition = PreviewPosition.LEFT
                             hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
                         }
-                        binding!!.pluginPreviewHandle.layoutParams = hp
+                        binding.pluginPreviewHandle.layoutParams = hp
                         if (params.topMargin + v.height / 2 > parent.height / 2) {
                             params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
                             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
@@ -557,7 +546,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         previewMargins[3] = mb
                         params.setMargins(ml, mt, mr, mb)
                         v.layoutParams = params
-                        val outPosition = binding!!.pluginPreviewContainer.width * 0.85f
+                        val outPosition = binding.pluginPreviewContainer.width * 0.85f
                         previewHiddenState = when {
                             currentXPosition < 0 -> min(1f, -currentXPosition / outPosition)
                             currentXPosition + v.width > parent.width -> min(1f, (currentXPosition + v.width - parent.width) / outPosition)
@@ -823,9 +812,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     @SuppressLint("RestrictedApi")
     override fun updateContactBubble(contacts: List<Call>) {
         Log.w(TAG, "updateContactBubble " + contacts.size)
-        val username =
-            if (contacts.size > 1) "Conference with " + contacts.size + " people" else contacts[0].contact.displayName
-        val displayName = if (contacts.size > 1) null else contacts[0].contact.displayName
+        val username = if (contacts.size > 1)
+            "Conference with " + contacts.size + " people"
+        else contacts[0].contact!!.displayName
+        val displayName = if (contacts.size > 1) null else contacts[0].contact!!.displayName
         val hasProfileName = displayName != null && !displayName.contentEquals(username)
         val activity = activity as AppCompatActivity?
         if (activity != null) {
@@ -891,16 +881,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             if (confAdapter == null) {
                 confAdapter =
                     ConfParticipantAdapter(object : ConfParticipantSelected {
-                        override fun onParticipantSelected(view: View, info: ParticipantInfo) {
-                            val maximized = presenter.isMaximized(info)
+                        override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
+                            val maximized = presenter.isMaximized(contact)
                             val popup = PopupMenu(view.context, view)
                             popup.inflate(R.menu.conference_participant_actions)
                             popup.setOnMenuItemClickListener { item ->
                                 when (item.itemId) {
-                                    R.id.conv_contact_details -> presenter.openParticipantContact(info)
-                                    R.id.conv_contact_hangup -> presenter.hangupParticipant(info)
-                                    R.id.conv_mute -> presenter.muteParticipant(info, !info.audioMuted)
-                                    R.id.conv_contact_maximize -> presenter.maximizeParticipant(info)
+                                    R.id.conv_contact_details -> presenter.openParticipantContact(contact)
+                                    R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
+                                    R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
+                                    R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
                                     else -> return@setOnMenuItemClickListener false
                                 }
                                 true
@@ -915,7 +905,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 maxItem.setTitle(R.string.action_call_maximize)
                                 maxItem.setIcon(R.drawable.baseline_open_in_full_24)
                             }
-                            if (!info.audioMuted) {
+                            if (!contact.audioMuted) {
                                 muteItem.setTitle(R.string.action_call_mute)
                                 muteItem.setIcon(R.drawable.baseline_mic_off_24)
                             } else {
@@ -1252,12 +1242,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun startAddParticipant(conferenceId: String) {
-        startActivityForResult(
-            Intent(Intent.ACTION_PICK)
+        startActivityForResult(Intent(Intent.ACTION_PICK)
                 .setClass(requireActivity(), ConversationSelectionActivity::class.java)
                 .putExtra(KEY_CONF_ID, conferenceId),
-            REQUEST_CODE_ADD_PARTICIPANT
-        )
+            REQUEST_CODE_ADD_PARTICIPANT)
     }
 
     override fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean) {

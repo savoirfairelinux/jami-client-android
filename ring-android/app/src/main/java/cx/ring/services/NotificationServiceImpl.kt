@@ -105,24 +105,15 @@ class NotificationServiceImpl(
                 conf.participants[0].daemonIdString
         }
         val call = conference.participants[0]
-        val gotoIntent = PendingIntent.getService(
-            mContext,
-            random.nextInt(),
+        val gotoIntent = PendingIntent.getService(mContext, random.nextInt(),
             Intent(DRingService.ACTION_CALL_VIEW)
                 .setClass(mContext, DRingService::class.java)
-                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), 0
-        )
-        val contact = call.contact
+                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), 0)
+        val contact = call.contact!!
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
-            messageNotificationBuilder =
-                NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
-            messageNotificationBuilder.setContentTitle(
-                mContext.getString(
-                    R.string.notif_current_call_title,
-                    contact.displayName
-                )
-            )
+            messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.displayName))
                 .setContentText(mContext.getText(R.string.notif_current_call))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(gotoIntent)
@@ -172,9 +163,10 @@ class NotificationServiceImpl(
                     )
                     .addAction(
                         R.drawable.baseline_call_24,
-                        if (ongoingCallId == null) mContext.getText(R.string.action_call_accept) else mContext.getText(
-                            R.string.action_call_end_accept
-                        ),
+                        if (ongoingCallId == null)
+                            mContext.getText(R.string.action_call_accept)
+                        else
+                            mContext.getText(R.string.action_call_end_accept),
                         PendingIntent.getService(
                             mContext, random.nextInt(),
                             Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
@@ -522,16 +514,12 @@ class NotificationServiceImpl(
                 .build()
             val history = NotificationCompat.MessagingStyle(userPerson)
             for (textMessage in texts.values) {
-                val contact = textMessage.contact
+                val contact = textMessage.contact!!
                 val contactPicture = getContactPicture(contact)
                 val contactPerson = Person.Builder()
                     .setKey(ConversationPath.toKey(cpath.accountId, contact.uri.uri))
                     .setName(contact.displayName)
-                    .setIcon(
-                        if (contactPicture == null) null else IconCompat.createWithBitmap(
-                            contactPicture
-                        )
-                    )
+                    .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                     .build()
                 history.addMessage(
                     NotificationCompat.MessagingStyle.Message(
@@ -619,7 +607,7 @@ class NotificationServiceImpl(
     override fun showIncomingTrustRequestNotification(account: Account) {
         val notificationId = getIncomingTrustNotificationId(account.accountID)
         val notifiedRequests = mPreferencesService.loadRequestsPreferences(account.accountID)
-        val requests = account.pending
+        val requests = account.getPending()
         if (requests.isEmpty()) {
             notificationManager.cancel(notificationId)
             return
@@ -828,6 +816,7 @@ class NotificationServiceImpl(
         }
         val path = ConversationPath.toUri(call)
         val intentConversation = Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService::class.java)
+        val contact = call.contact!!
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -835,10 +824,10 @@ class NotificationServiceImpl(
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setOnlyAlertOnce(true)
             .setAutoCancel(true)
-            .setContentText(call.contact.displayName)
+            .setContentText(contact.displayName)
             .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
             .color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
-        setContactPicture(call.contact, messageNotificationBuilder)
+        setContactPicture(contact, messageNotificationBuilder)
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
     }
 

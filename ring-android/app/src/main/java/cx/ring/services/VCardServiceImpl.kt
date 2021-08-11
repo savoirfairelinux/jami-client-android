@@ -21,7 +21,6 @@ package cx.ring.services
 
 import android.content.Context
 import net.jami.services.VCardService
-import cx.ring.services.VCardServiceImpl
 import ezvcard.VCard
 import net.jami.utils.VCardUtils
 import android.graphics.Bitmap
@@ -40,15 +39,15 @@ import net.jami.utils.Tuple
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
-    override fun loadProfile(account: Account): Observable<Tuple<String, Any>> {
+    override fun loadProfile(account: Account): Observable<Tuple<String?, Any?>> {
         return loadProfile(mContext, account)
     }
 
     override fun loadSmallVCard(accountId: String, maxSize: Int): Maybe<VCard> {
         return VCardUtils.loadLocalProfileFromDisk(mContext.filesDir, accountId)
-            .filter { vcard: VCard? -> !VCardUtils.isEmpty(vcard) }
+            .filter { vcard: VCard -> !VCardUtils.isEmpty(vcard) }
             .map { vcard: VCard ->
-                if (!vcard.photos.isEmpty()) {
+                if (vcard.photos.isNotEmpty()) {
                     // Reduce photo to fit in maxSize, assuming JPEG compress with ratio of at least 8
                     val data = vcard.photos[0].data
                     val photo = BitmapUtils.bytesToBitmap(data, maxSize * 8)
@@ -62,37 +61,16 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
     }
 
-    override fun saveVCardProfile(
-        accountId: String,
-        uri: String,
-        displayName: String,
-        picture: String
-    ): Single<VCard> {
-        return Single.fromCallable {
-            VCardUtils.writeData(
-                uri,
-                displayName,
-                Base64.decode(picture, Base64.DEFAULT)
-            )
-        }
-            .flatMap { vcard: VCard? ->
-                VCardUtils.saveLocalProfileToDisk(
-                    vcard,
-                    accountId,
-                    mContext.filesDir
-                )
-            }
+    override fun saveVCardProfile(accountId: String, uri: String, displayName: String, picture: String): Single<VCard> {
+        return Single.fromCallable { VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)) }
+            .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
     }
 
-    override fun loadVCardProfile(vcard: VCard): Single<Tuple<String, Any?>> {
+    override fun loadVCardProfile(vcard: VCard): Single<Tuple<String?, Any?>> {
         return Single.fromCallable { readData(vcard) }
     }
 
-    override fun peerProfileReceived(
-        accountId: String,
-        peerId: String,
-        vcardFile: File
-    ): Single<Tuple<String, Any?>> {
+    override fun peerProfileReceived(accountId: String, peerId: String, vcardFile: File): Single<Tuple<String?, Any?>> {
         return VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcardFile)
             .map { vcard -> readData(vcard) }
     }
@@ -102,7 +80,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
     }
 
     companion object {
-        fun loadProfile(context: Context, account: Account): Observable<Tuple<String, Any>> {
+        fun loadProfile(context: Context, account: Account): Observable<Tuple<String?, Any?>> {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
@@ -116,11 +94,11 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
         }
 
-        fun readData(vcard: VCard?): Tuple<String, Any?> {
+        fun readData(vcard: VCard?): Tuple<String?, Any?> {
             return readData(VCardUtils.readData(vcard))
         }
 
-        fun readData(profile: Tuple<String, ByteArray?>): Tuple<String, Any?> {
+        fun readData(profile: Tuple<String?, ByteArray?>): Tuple<String?, Any?> {
             return Tuple(profile.first, BitmapUtils.bytesToBitmap(profile.second))
         }
     }

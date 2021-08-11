@@ -133,8 +133,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun refreshView(conversation: List<Interaction>) {
         if (binding != null) binding!!.pbLoading.visibility = View.GONE
-        if (mAdapter != null) {
-            mAdapter!!.updateDataset(conversation)
+        mAdapter?.let { adapter ->
+            adapter.updateDataset(conversation)
             loading = false
         }
         requireActivity().invalidateOptionsMenu()
@@ -182,12 +182,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             val paddingTop = layout.paddingTop
             ViewCompat.setOnApplyWindowInsetsListener(layout) { v: View, insets: WindowInsetsCompat ->
-                v.setPadding(
-                    v.paddingLeft,
-                    paddingTop + insets.systemWindowInsetTop,
-                    v.paddingRight,
-                    v.paddingBottom
-                )
+                v.setPadding(v.paddingLeft, paddingTop + insets.systemWindowInsetTop, v.paddingRight, v.paddingBottom)
                 insets.consumeSystemWindowInsets()
                 insets
             }
@@ -198,20 +193,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         .flatMapCompletable { file: File -> sendFile(file) }
                         .doFinally { contentInfo.releasePermission() })
             }
-            binding.msgInputTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-                actionSendMsgText(
-                    actionId
-                )
-            }
-            binding.msgInputTxt.onFocusChangeListener =
-                View.OnFocusChangeListener { view: View, hasFocus: Boolean ->
-                    if (hasFocus) {
-                        val fragment = childFragmentManager.findFragmentById(R.id.mapLayout)
-                        if (fragment != null) {
-                            (fragment as LocationSharingFragment).hideControls()
-                        }
+            binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
+            binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { view: View, hasFocus: Boolean ->
+                if (hasFocus) {
+                    val fragment = childFragmentManager.findFragmentById(R.id.mapLayout)
+                    if (fragment != null) {
+                        (fragment as LocationSharingFragment).hideControls()
                     }
                 }
+            }
             binding.msgInputTxt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -649,43 +639,29 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter!!.setLastDisplayed(interaction)
     }
 
-    override fun acceptFile(
-        accountId: String,
-        conversationUri: net.jami.model.Uri,
-        transfer: DataTransfer
-    ) {
+    override fun acceptFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
+        if (transfer.messageId == null && transfer.fileId == null)
+            return
         val cacheDir = requireContext().cacheDir
         val spaceLeft = getSpaceLeft(cacheDir.toString())
         if (spaceLeft == -1L || transfer.totalSize > spaceLeft) {
             presenter.noSpaceLeft()
             return
         }
-        requireActivity().startService(
-            Intent(
-                DRingService.ACTION_FILE_ACCEPT,
-                ConversationPath.toUri(accountId, conversationUri),
-                requireContext(),
-                DRingService::class.java
-            )
-                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId)
+        requireActivity().startService(Intent(DRingService.ACTION_FILE_ACCEPT, ConversationPath.toUri(accountId, conversationUri),
+            requireContext(), DRingService::class.java)
+            .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
+            .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId)
         )
     }
 
-    override fun refuseFile(
-        accountId: String,
-        conversationUri: net.jami.model.Uri,
-        transfer: DataTransfer
-    ) {
-        requireActivity().startService(
-            Intent(
-                DRingService.ACTION_FILE_CANCEL,
-                ConversationPath.toUri(accountId, conversationUri),
-                requireContext(),
-                DRingService::class.java
-            )
-                .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
-                .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId)
+    override fun refuseFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
+        if (transfer.messageId == null && transfer.fileId == null)
+            return
+        requireActivity().startService(Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(accountId, conversationUri),
+            requireContext(), DRingService::class.java)
+            .putExtra(DRingService.KEY_MESSAGE_ID, transfer.messageId)
+            .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId)
         )
     }
 
@@ -818,7 +794,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
                 preferences.registerOnSharedPreferenceChangeListener(this)
                 presenter.setConversationColor(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
-                presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString()))
+                presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
                 mLastRead = preferences.getString(KEY_PREFERENCE_CONVERSATION_LAST_READ, null)
             }
         } catch (e: Exception) {
@@ -858,7 +834,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             KEY_PREFERENCE_CONVERSATION_COLOR -> presenter.setConversationColor(
                 prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
             KEY_PREFERENCE_CONVERSATION_SYMBOL -> presenter.setConversationSymbol(
-                prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString()))
+                prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
         }
     }
 

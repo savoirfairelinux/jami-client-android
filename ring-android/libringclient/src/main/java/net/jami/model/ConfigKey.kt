@@ -17,9 +17,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package net.jami.model;
+package net.jami.model
 
-public enum ConfigKey {
+enum class ConfigKey {
     MAILBOX("Account.mailbox"),
     REGISTRATION_EXPIRE("Account.registrationExpire"),
     CREDENTIAL_NUMBER("Credential.count"),
@@ -57,7 +57,7 @@ public enum ConfigKey {
     ACCOUNT_ACTIVE("Account.active", true),
     ACCOUNT_DEVICE_ID("Account.deviceID"),
     ACCOUNT_DEVICE_NAME("Account.deviceName"),
-    ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery",true),
+    ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery", true),
     ACCOUNT_DISCOVERY("Account.accountDiscovery", true),
     ACCOUNT_PUBLISH("Account.accountPublish", true),
     ACCOUNT_DISPLAYNAME("Account.displayName"),
@@ -103,36 +103,36 @@ public enum ConfigKey {
     MANAGER_URI("Account.managerUri"),
     MANAGER_USERNAME("Account.managerUsername");
 
-    private final String mKey;
-    private final boolean mIsBool;
+    private val mKey: String
+    val isTwoState: Boolean
 
-    ConfigKey(String key) {
-        mKey = key;
-        mIsBool = false;
-    }
-    ConfigKey(String key, boolean isBool) {
-        mKey = key;
-        mIsBool = isBool;
+    constructor(key: String) {
+        mKey = key
+        isTwoState = false
     }
 
-    public String key() {
-        return mKey;
+    constructor(key: String, isBool: Boolean) {
+        mKey = key
+        isTwoState = isBool
     }
 
-    public boolean equals(ConfigKey other) {
-        return other != null && mKey.equals(other.mKey);
+    fun key(): String {
+        return mKey
     }
 
-    public boolean isTwoState() {
-        return mIsBool;
+    fun equals(other: ConfigKey?): Boolean {
+        return other != null && mKey == other.mKey
     }
 
-    public static ConfigKey fromString(String stringKey) {
-        for (ConfigKey confKey : ConfigKey.values()) {
-            if (stringKey.contentEquals(confKey.mKey) || stringKey.equals(confKey.mKey)) {
-                return confKey;
+    companion object {
+        @JvmStatic
+        fun fromString(stringKey: String): ConfigKey? {
+            for (confKey in values()) {
+                if (stringKey.contentEquals(confKey.mKey) || stringKey == confKey.mKey) {
+                    return confKey
+                }
             }
+            return null
         }
-        return null;
     }
 }

@@ -290,7 +290,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mDisposable.add(mAccountService
                 .currentAccountSubject
-                .switchMap { obj -> obj.conversationsSubject }
+                .switchMap { obj -> obj.getConversationsSubject() }
                 .debounce(10, TimeUnit.SECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe({ conversations -> setShareShortcuts(conversations) })
@@ -745,15 +745,13 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .setKey(key)
                 .build()
             val shortcutInfo = ShortcutInfoCompat.Builder(this, key)
-                .setShortLabel(conversation.title)
+                .setShortLabel(conversation.title  ?: "")
                 .setPerson(person)
                 .setLongLived(true)
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
-                .setIntent(
-                    Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
-                        .putExtras(path.toBundle())
-                )
+                .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
+                        .putExtras(path.toBundle()))
                 .build()
             shortcutInfoList.add(shortcutInfo)
             if (++i == maxCount) break
@@ -785,8 +783,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
         const val VIDEO_SETTINGS_TAG = "VideoPrefs"
-        const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT =
-            BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
+        const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
         const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
         const val PLUGIN_SETTINGS_TAG = "PluginSettings"
         const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"

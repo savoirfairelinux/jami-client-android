@@ -18,14 +18,12 @@
  */
 package cx.ring.tv.main
 
-import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
@@ -70,12 +68,14 @@ import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
 import java.util.*
+import cx.ring.tv.cards.ShadowRowPresenterSelector
+
+import androidx.leanback.widget.ArrayObjectAdapter
 
 @AndroidEntryPoint
 class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     //private TVContactFragment mContactFragment;
     private var mSpinnerFragment: SpinnerFragment? = null
-    private var mRowsAdapter: ArrayObjectAdapter? = null
     private var cardRowAdapter: ArrayObjectAdapter? = null
     private var contactRequestRowAdapter: ArrayObjectAdapter? = null
     private var mTitleView: CustomTitleView? = null
@@ -101,22 +101,22 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         mDisposable.clear()
     }
 
-    private fun setupUIElements(activity: Activity) {
-        selector = CardPresenterSelector(activity)
+    private fun setupUIElements(context: Context) {
+        selector = CardPresenterSelector(context)
         cardRowAdapter = ArrayObjectAdapter(selector)
 
         /* Contact Presenter */
         val contactRow = CardRow(CardRow.TYPE_DEFAULT, false, getString(R.string.tv_contact_row_header), ArrayList())
         val cardPresenterHeader = HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header))
         val contactListRow = CardListRow(cardPresenterHeader, cardRowAdapter, contactRow)
-        accountSettingsRow = createAccountSettingsRow(activity)
+        accountSettingsRow = createAccountSettingsRow(context)
         adapter = ArrayObjectAdapter(ShadowRowPresenterSelector()).apply {
             add(contactListRow)
             add(accountSettingsRow)
         }
 
         // listeners
-        setOnSearchClickedListener { startActivity(Intent(getActivity(), SearchActivity::class.java)) }
+        setOnSearchClickedListener { startActivity(Intent(context, SearchActivity::class.java)) }
         onItemViewClickedListener = ItemViewClickedListener()
         mTitleView!!.settingsButton.setOnClickListener { presenter.onSettingsClicked() }
     }
@@ -182,15 +182,11 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         val cr = context.contentResolver
         mHomeChannelDisposable.clear()
         mHomeChannelDisposable.add(Single.fromCallable { createHomeChannel(context) }
-            .doOnEvent { channelId: Long?, error: Throwable? ->
+            .doOnEvent { channelId: Long, error: Throwable? ->
                 if (error != null) {
                     Log.w(TAG, "Error creating home channel", error)
                 } else {
-                    cr.delete(
-                        TvContractCompat.buildPreviewProgramsUriForChannel(channelId!!),
-                        null,
-                        null
-                    )
+                    cr.delete(TvContractCompat.buildPreviewProgramsUriForChannel(channelId), null, null)
                 }
             }
             .flatMapObservable { channelId: Long ->
@@ -207,17 +203,20 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun showContactRequests(contacts: List<SmartListViewModel>) {
-        val row = mRowsAdapter!![TRUST_REQUEST_ROW_POSITION] as CardListRow
+        val adapter = adapter as ArrayObjectAdapter
+        val row = adapter[TRUST_REQUEST_ROW_POSITION] as CardListRow?
         val isRowDisplayed = row === requestsRow
         val cards: MutableList<ContactCard> = ArrayList(contacts.size)
         for (contact in contacts)
             cards.add(ContactCard(contact))
         if (isRowDisplayed && contacts.isEmpty()) {
-            mRowsAdapter!!.removeItems(TRUST_REQUEST_ROW_POSITION, 1)
+            adapter.removeItems(TRUST_REQUEST_ROW_POSITION, 1)
         } else if (contacts.isNotEmpty()) {
-            if (requestsRow == null) requestsRow = createContactRequestRow()
+            if (requestsRow == null)
+                requestsRow = createContactRequestRow()
             contactRequestRowAdapter!!.setItems(cards, null)
-            if (!isRowDisplayed) mRowsAdapter!!.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
+            if (!isRowDisplayed)
+                adapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
         }
     }
 
@@ -226,9 +225,8 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         startActivity(intent, null)
     }
 
-    override fun displayAccountInfos(viewModel: HomeNavigationViewModel) {
-        val account = viewModel.account
-        account?.let { updateModel(it) }
+    override fun displayAccountInfo(viewModel: HomeNavigationViewModel) {
+        updateModel(viewModel.account)
     }
 
     override fun updateModel(account: Account) {
@@ -238,11 +236,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         mDisposable.add(loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { profile ->
-                    if (profile.first != null && profile.first.isNotEmpty()) {
-                        mTitleView!!.setAlias(profile.first)
+                    val name = profile.first
+                    if (name != null && name.isNotEmpty()) {
+                        mTitleView?.setAlias(name)
                         title = address ?: ""
                     } else {
-                        mTitleView!!.setAlias(address)
+                        mTitleView?.setAlias(address)
                     }
                 }
             .map { p -> AvatarDrawable.build(context, account, p, true) }
@@ -403,16 +402,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                 }
         }
 
-        private fun prepareAccountQr(context: Context, accountId: String): BitmapDrawable? {
+        private fun prepareAccountQr(context: Context, accountId: String?): BitmapDrawable? {
             Log.w(TAG, "prepareAccountQr $accountId")
-            if (TextUtils.isEmpty(accountId)) return null
+            if (accountId == null || accountId.isEmpty()) return null
             val pad = 16
             val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)
-            val bitmap = Bitmap.createBitmap(
-                qrCodeData.width + 2 * pad,
-                qrCodeData.height + 2 * pad,
-                Bitmap.Config.ARGB_8888
-            )
+            val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(
                 qrCodeData.data,
                 0,

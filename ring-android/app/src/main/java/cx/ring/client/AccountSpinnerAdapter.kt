@@ -143,7 +143,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
     }
 
     private fun getUri(account: Account, defaultNameSip: CharSequence): String {
-        return if (account.isIP2IP) defaultNameSip.toString() else account.displayUri
+        return if (account.isIP2IP) defaultNameSip.toString() else account.displayUri!!
     }
 
     companion object {

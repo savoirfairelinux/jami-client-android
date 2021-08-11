@@ -117,7 +117,7 @@ class ConversationPath {
             return if (interaction.conversation is Conversation)
                 toUri(interaction.account, (interaction.conversation as Conversation).uri)
             else
-                toUri(interaction.account, Uri.fromString(interaction.conversation.participant))
+                toUri(interaction.account, Uri.fromString(interaction.conversation!!.participant))
         }
 
         fun toBundle(accountId: String, uri: String): Bundle {

@@ -228,7 +228,7 @@ class ConversationAdapter(
             }
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
-                val out = if (interaction.isIncoming()) 0 else 4
+                val out = if (interaction.isIncoming) 0 else 4
                 if (file.isComplete) {
                     when {
                         file.isPicture -> return MessageType.INCOMING_IMAGE.ordinal + out
@@ -376,7 +376,8 @@ class ConversationAdapter(
         return true
     }
 
-    private fun addToClipboard(text: String) {
+    private fun addToClipboard(text: String?) {
+        if (text == null || text.isEmpty()) return
         val clipboard = conversationFragment.requireActivity()
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Copied Message", text)
@@ -563,15 +564,15 @@ class ConversationAdapter(
         } else {
             viewHolder.mMsgDetailTxtPerm.visibility = View.GONE
         }
-        val contact = interaction.getContact()
-        if (interaction.isIncoming()) {
+        val contact = interaction.contact
+        if (interaction.isIncoming) {
             viewHolder.mAvatar.setImageBitmap(null)
             viewHolder.mAvatar.visibility = View.VISIBLE
             if (contact != null) {
                 viewHolder.mAvatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
         } else {
-            when (interaction.getStatus()) {
+            when (interaction.status) {
                 InteractionStatus.SENDING -> {
                     viewHolder.mStatusIcon.visibility = View.VISIBLE
                     viewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24)
@@ -685,17 +686,17 @@ class ConversationAdapter(
         val textMessage = interaction as TextMessage
         val contact = textMessage.contact  ?: return
         // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
-        val message = textMessage.body.trim { it <= ' ' }
+        val message = textMessage.body!!.trim { it <= ' ' }
         val longPressView: View = convViewHolder.mMsgTxt
         longPressView.background.setTintList(null)
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
-            val date = Date(interaction.getTimestamp())
+            val date = Date(interaction.timestamp)
             val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
             menu.setHeaderTitle(dateFormat.format(date))
             conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
             val inflater = conversationFragment.requireActivity().menuInflater
             inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-            if (interaction.getStatus() == InteractionStatus.SENDING) {
+            if (interaction.status == InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
             } else {
                 menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)

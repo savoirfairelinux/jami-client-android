@@ -315,86 +315,61 @@ class ContactDetailsActivity : AppCompatActivity() {
         collapsingToolbarLayout.setContentScrimColor(color);
         collapsingToolbarLayout.setStatusBarScrimColor(color);*/
         adapter.actions.add(colorAction!!)
-        symbolAction =
-            ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-                val frag = EmojiChooserBottomSheet()
-                frag.setCallback(object : IEmojiSelected {
+        symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
+            EmojiChooserBottomSheet().apply {
+                setCallback(object : IEmojiSelected {
                     override fun onEmojiSelected(emoji: String?) {
-                        symbolAction!!.setSymbol(emoji)
+                        symbolAction?.setSymbol(emoji)
                         adapter.notifyItemChanged(symbolActionPosition)
                         preferences.edit()
                             .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
                             .apply()
                     }
                 })
-                frag.show(supportFragmentManager, "colorChooser")
+                show(supportFragmentManager, "colorChooser")
             }
-        symbolAction!!.setSymbol(
-            preferences.getString(
-                ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL,
-                resources.getString(R.string.conversation_default_emoji)
-            )
-        )
-        adapter.actions.add(symbolAction!!)
-        val conversationUri =
-            if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
-        if (conversation.contacts.size <= 2) {
-            val contact = conversation.contact
-            adapter.actions.add(
-                ContactAction(
-                    R.drawable.baseline_call_24,
-                    getText(R.string.ab_action_audio_call)
-                ) { goToCallActivity(conversation, contact.uri, true) }
-            )
-            adapter.actions.add(
-                ContactAction(
-                    R.drawable.baseline_videocam_24,
-                    getText(R.string.ab_action_video_call)
-                ) { goToCallActivity(conversation, contact.uri, false) }
-            )
+        }.apply {
+            setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
+            adapter.actions.add(this)
+        }
+        val conversationUri = if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
+        if (conversation.contacts.size <= 2 && conversation.contacts.isNotEmpty()) {
+            val contact = conversation.contact!!
+            adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
+                goToCallActivity(conversation, contact.uri, true)
+            })
+            adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
+                goToCallActivity(conversation, contact.uri, false)
+            })
             if (!conversation.isSwarm) {
-                adapter.actions.add(
-                    ContactAction(
-                        R.drawable.baseline_clear_all_24,
-                        getText(R.string.conversation_action_history_clear)
-                    ) {
-                        MaterialAlertDialogBuilder(this@ContactDetailsActivity)
-                            .setTitle(R.string.clear_history_dialog_title)
-                            .setMessage(R.string.clear_history_dialog_message)
-                            .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
-                                mConversationFacade.clearHistory(
-                                    conversation.accountId,
-                                    contact.uri
-                                ).subscribe()
-                                Snackbar.make(
-                                    binding!!.root,
-                                    R.string.clear_history_completed,
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                            }
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create()
-                            .show()
-                    }
-                )
-            }
-            adapter.actions.add(
-                ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
+                adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
                     MaterialAlertDialogBuilder(this@ContactDetailsActivity)
-                        .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
-                        .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
-                        .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
-                            mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
-                            Toast.makeText(applicationContext, getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
-                            finish()
+                        .setTitle(R.string.clear_history_dialog_title)
+                        .setMessage(R.string.clear_history_dialog_message)
+                        .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
+                            mConversationFacade.clearHistory(conversation.accountId, contact.uri).subscribe()
+                            Snackbar.make(binding!!.root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .create()
                         .show()
-                }
-            )
+                })
+            }
+            adapter.actions.add(ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
+                MaterialAlertDialogBuilder(this@ContactDetailsActivity)
+                    .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
+                    .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
+                    .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
+                        mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
+                        Toast.makeText(applicationContext, getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
+                        finish()
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .create()
+                    .show()
+            })
         }
-        supportActionBar!!.title = conversation.title
+        supportActionBar?.title = conversation.title
         //new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversationUri, () -> {});
         binding!!.conversationId.text = conversationUri
         binding!!.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
@@ -403,21 +378,15 @@ class ContactDetailsActivity : AppCompatActivity() {
         binding!!.contactListLayout.visibility =
             if (conversation.isSwarm) View.VISIBLE else View.GONE
         if (conversation.isSwarm) {
-            binding!!.contactList.adapter = ContactViewAdapter(
-                mDisposableBag,
-                conversation.contacts
-            ) { contact: Contact -> copyAndShow(contact.uri.rawUriString) }
+            binding!!.contactList.adapter = ContactViewAdapter(mDisposableBag, conversation.contacts)
+                { contact -> copyAndShow(contact.uri.rawUriString) }
         }
     }
 
     private fun copyAndShow(toCopy: String) {
         val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(
-            binding!!.root,
-            getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy),
-            Snackbar.LENGTH_LONG
-        ).show()
+        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -438,13 +407,11 @@ class ContactDetailsActivity : AppCompatActivity() {
     private fun goToCallActivity(conversation: Conversation, contactUri: Uri, audioOnly: Boolean) {
         val conf = conversation.currentCall
         if (conf != null && conf.participants.isNotEmpty()
-            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE && conf.participants[0].callStatus != Call.CallStatus.FAILURE
-        ) {
-            startActivity(
-                Intent(Intent.ACTION_VIEW)
-                    .setClass(applicationContext, CallActivity::class.java)
-                    .putExtra(NotificationService.KEY_CALL_ID, conf.id)
-            )
+            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
+            && conf.participants[0].callStatus != Call.CallStatus.FAILURE) {
+            startActivity(Intent(Intent.ACTION_VIEW)
+                .setClass(applicationContext, CallActivity::class.java)
+                .putExtra(NotificationService.KEY_CALL_ID, conf.id))
         } else {
             val intent = Intent(Intent.ACTION_CALL)
                 .setClass(applicationContext, CallActivity::class.java)

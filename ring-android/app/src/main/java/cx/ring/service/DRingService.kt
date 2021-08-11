@@ -212,34 +212,20 @@ class DRingService : Service() {
     }
 
     private fun handleFileAction(uri: Uri?, action: String, extras: Bundle) {
+        Log.w(TAG, "handleFileAction $extras")
         val messageId = extras.getString(KEY_MESSAGE_ID)
-        val id = extras.getString(KEY_TRANSFER_ID)
+        val id = extras.getString(KEY_TRANSFER_ID)!!
         val path = fromUri(uri)!!
         if (action == ACTION_FILE_ACCEPT) {
-            mNotificationService.removeTransferNotification(
-                path.accountId,
-                path.conversationUri,
-                id
-            )
-            mAccountService.acceptFileTransfer(
-                path.accountId,
-                path.conversationUri,
-                messageId,
-                id
-            )
+            mNotificationService.removeTransferNotification(path.accountId, path.conversationUri, id)
+            mAccountService.acceptFileTransfer(path.accountId, path.conversationUri, messageId, id)
         } else if (action == ACTION_FILE_CANCEL) {
-            mConversationFacade.cancelFileTransfer(
-                path.accountId,
-                path.conversationUri,
-                messageId,
-                id
-            )
+            mConversationFacade.cancelFileTransfer(path.accountId, path.conversationUri, messageId, id)
         }
     }
 
     private fun handleTrustRequestAction(uri: Uri?, action: String) {
-        val path = fromUri(uri)
-        if (path != null) {
+        fromUri(uri)?.let { path ->
             mNotificationService.cancelTrustRequestNotification(path.accountId)
             when (action) {
                 ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.acceptRequest(path.accountId, path.conversationUri)
@@ -260,34 +246,28 @@ class DRingService : Service() {
         when (action) {
             ACTION_CALL_ACCEPT -> {
                 mNotificationService.cancelCallNotification()
-                startActivity(
-                    Intent(ACTION_CALL_ACCEPT)
+                startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             ACTION_CALL_HOLD_ACCEPT -> {
-                val holdId = extras.getString(NotificationService.KEY_HOLD_ID)
+                val holdId = extras.getString(NotificationService.KEY_HOLD_ID)!!
                 mNotificationService.cancelCallNotification()
                 mCallService.hold(holdId)
-                startActivity(
-                    Intent(ACTION_CALL_ACCEPT)
+                startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             ACTION_CALL_END_ACCEPT -> {
-                val endId = extras.getString(NotificationService.KEY_END_ID)
+                val endId = extras.getString(NotificationService.KEY_END_ID)!!
                 mNotificationService.cancelCallNotification()
                 mCallService.hangUp(endId)
-                startActivity(
-                    Intent(ACTION_CALL_ACCEPT)
+                startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             ACTION_CALL_REFUSE -> {
                 mCallService.refuse(callId)
@@ -343,15 +323,8 @@ class DRingService : Service() {
                     }
                 }
             }
-            ACTION_CONV_ACCEPT -> startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    path.toUri(),
-                    applicationContext,
-                    ConversationActivity::class.java
-                )
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            ACTION_CONV_ACCEPT -> startActivity(Intent(Intent.ACTION_VIEW, path.toUri(), applicationContext, ConversationActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             else -> {
             }
         }

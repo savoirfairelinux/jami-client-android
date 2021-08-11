@@ -26,12 +26,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.application.JamiApplication.Companion.instance
+import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityLogsBinding
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUriHandler
@@ -45,50 +45,41 @@ import net.jami.services.HardwareService
 import net.jami.utils.StringUtils
 import java.io.File
 import java.io.FileOutputStream
-import java.io.OutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AndroidEntryPoint
 class LogsActivity : AppCompatActivity() {
-    private var binding: ActivityLogsBinding? = null
+    private lateinit var binding: ActivityLogsBinding
     private val compositeDisposable = CompositeDisposable()
     private var disposable: Disposable? = null
-    private var fileSaver: ActivityResultLauncher<String>? = null
+    private lateinit var fileSaver: ActivityResultLauncher<String>
     private var mCurrentFile: File? = null
 
-    @JvmField
     @Inject
     @Singleton
-    var mHardwareService: HardwareService? = null
+    lateinit var mHardwareService: HardwareService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        instance!!.startDaemon()
+        JamiApplication.instance?.startDaemon()
         binding = ActivityLogsBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
-        setSupportActionBar(binding!!.toolbar)
-        val ab = supportActionBar
-        ab?.setDisplayHomeAsUpEnabled(true)
-        fileSaver = registerForActivityResult(CreateDocument()) { result: Uri? ->
-            compositeDisposable.add(
-                AndroidFileUtils.copyFileToUri(contentResolver, mCurrentFile, result)
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        if (!mCurrentFile!!.delete()) Log.w(TAG, "Can't delete temp file")
-                        mCurrentFile = null
-                        Snackbar.make(
-                            binding!!.root,
-                            R.string.file_saved_successfully,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }) {
-                        Snackbar.make(
-                        binding!!.root, R.string.generic_error, Snackbar.LENGTH_SHORT
-                    ).show()
-                })
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        fileSaver = registerForActivityResult(ActivityResultContracts.CreateDocument()) { result: Uri? ->
+            if (result != null)
+                compositeDisposable.add(AndroidFileUtils.copyFileToUri(contentResolver, mCurrentFile, result)
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                            if (!mCurrentFile!!.delete())
+                                Log.w(TAG, "Can't delete temp file")
+                            mCurrentFile = null
+                            Snackbar.make(binding.root, R.string.file_saved_successfully, Snackbar.LENGTH_SHORT).show()
+                        }) { Snackbar.make(binding.root, R.string.generic_error, Snackbar.LENGTH_SHORT).show()
+                    })
         }
-        binding!!.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
-        if (mHardwareService!!.isLogging) startLogging()
+        binding.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
+        if (mHardwareService.isLogging) startLogging()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -98,29 +89,23 @@ class LogsActivity : AppCompatActivity() {
 
     private val log: Maybe<String>
         get() {
-            if (mHardwareService!!.isLogging) return mHardwareService!!.startLogs()
-                .firstElement()
-            val log = binding!!.logView.text
-            return if (StringUtils.isEmpty(log)) Maybe.empty() else Maybe.just(
-                log.toString()
-            )
+            if (mHardwareService.isLogging)
+                return mHardwareService.startLogs().firstElement()
+            val log = binding.logView.text
+            return if (StringUtils.isEmpty(log)) Maybe.empty()
+            else Maybe.just(log.toString())
         }
     private val logFile: Maybe<File>
         get() = log
             .observeOn(Schedulers.io())
             .map { log: String ->
                 val file = AndroidFileUtils.createLogFile(this)
-                val os: OutputStream = FileOutputStream(file)
-                os.write(log.toByteArray())
+                FileOutputStream(file).use { os -> os.write(log.toByteArray()) }
                 file
             }
     private val logUri: Maybe<Uri>
-        get() = logFile.map { file: File? ->
-            ContentUriHandler.getUriForFile(
-                this,
-                ContentUriHandler.AUTHORITY_FILES,
-                file!!
-            )
+        get() = logFile.map { file: File ->
+            ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, file)
         }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -130,33 +115,25 @@ class LogsActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_log_share -> {
-                compositeDisposable.add(
-                    logUri
-                        .observeOn(AndroidSchedulers.mainThread())
+                compositeDisposable.add(logUri.observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ uri: Uri ->
                             Log.w(TAG, "saved logs to $uri")
-                            val sendIntent = Intent(Intent.ACTION_SEND)
-                            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            val type = contentResolver.getType(uri)
-                            sendIntent.setDataAndType(uri, type)
-                            sendIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                setDataAndType(uri, contentResolver.getType(uri))
+                                putExtra(Intent.EXTRA_STREAM, uri)
+                            }
                             startActivity(Intent.createChooser(sendIntent, null))
                         }) { e: Throwable ->
-                            Snackbar.make(
-                                binding!!.root,
-                                "Error sharing logs: " + e.localizedMessage,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                            Snackbar.make(binding.root, "Error sharing logs: " + e.localizedMessage, Snackbar.LENGTH_SHORT).show()
                         })
                 return true
             }
             R.id.menu_log_save -> {
-                compositeDisposable.add(
-                    logFile
-                        .subscribe { file: File ->
-                            mCurrentFile = file
-                            fileSaver!!.launch(file.name)
-                        })
+                compositeDisposable.add(logFile.subscribe { file: File ->
+                    mCurrentFile = file
+                    fileSaver.launch(file.name)
+                })
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -164,37 +141,34 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun startLogging() {
-        binding!!.logView.text = ""
-        disposable = mHardwareService!!.startLogs()
+        binding.logView.text = ""
+        disposable = mHardwareService.startLogs()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ message: String? ->
-                binding!!.logView.text = message
-                binding!!.scroll.post { binding!!.scroll.fullScroll(View.FOCUS_DOWN) }
-            }) { e: Throwable? -> Log.w(TAG, "Error in logger", e) }
+            .subscribe({ message: String ->
+                binding.logView.text = message
+                binding.scroll.post { binding.scroll.fullScroll(View.FOCUS_DOWN) }
+            }) { e -> Log.w(TAG, "Error in logger", e) }
         compositeDisposable.add(disposable)
         setButtonState(true)
     }
 
     private fun stopLogging() {
-        disposable!!.dispose()
-        disposable = null
-        mHardwareService!!.stopLogs()
+        disposable?.let {
+            it.dispose()
+            disposable = null
+        }
+        mHardwareService.stopLogs()
         setButtonState(false)
     }
 
     private fun setButtonState(logging: Boolean) {
-        binding!!.fab.setText(if (logging) R.string.pref_logs_stop else R.string.pref_logs_start)
-        binding!!.fab.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                if (logging) R.color.red_400 else R.color.colorSecondary
-            )
-        )
+        binding.fab.setText(if (logging) R.string.pref_logs_stop else R.string.pref_logs_start)
+        binding.fab.setBackgroundColor(ContextCompat.getColor(this, if (logging) R.color.red_400 else R.color.colorSecondary))
     }
 
     override fun onDestroy() {
-        if (disposable != null) {
-            disposable!!.dispose()
+        disposable?.let {
+            it.dispose()
             disposable = null
         }
         compositeDisposable.clear()
@@ -202,6 +176,6 @@ class LogsActivity : AppCompatActivity() {
     }
 
     companion object {
-        private val TAG = LogsActivity::class.java.simpleName
+        private val TAG = LogsActivity::class.simpleName!!
     }
 }

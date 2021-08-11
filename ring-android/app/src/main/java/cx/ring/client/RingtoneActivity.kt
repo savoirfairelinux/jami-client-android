@@ -58,26 +58,26 @@ import javax.inject.Singleton
 @AndroidEntryPoint
 class RingtoneActivity : AppCompatActivity() {
     private var adapter: RingtoneAdapter? = null
-    private var mAccount: Account? = null
+    private lateinit var mAccount: Account
     private var customRingtone: TextView? = null
     private var customPlaying: ImageView? = null
     private var customSelected: ImageView? = null
     private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var disposable: Disposable? = null
 
-    @JvmField
     @Inject
     @Singleton
-    var mAccountService: AccountService? = null
+    lateinit var mAccountService: AccountService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_ringtone)
         super.onCreate(savedInstanceState)
-        mAccount =
-            mAccountService!!.getAccount(intent.extras!!.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
-        if (mAccount == null) {
+        val account = mAccountService.getAccount(intent.extras!!.getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
+        if (account == null) {
             finish()
             return
         }
+        mAccount = account
 
         /*Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
         toolbar.setNavigationOnClickListener(view -> finish());*/
@@ -128,13 +128,7 @@ class RingtoneActivity : AppCompatActivity() {
         val ringtoneIcon = getDrawable(R.drawable.baseline_notifications_active_24)
         if (ringtones == null) return ringtoneList
         Arrays.sort(ringtones) { a: File, b: File -> a.name.compareTo(b.name) }
-        ringtoneList.add(
-            Ringtone(
-                "Silent",
-                null,
-                getDrawable(R.drawable.baseline_notifications_off_24)
-            )
-        )
+        ringtoneList.add(Ringtone("Silent", null, getDrawable(R.drawable.baseline_notifications_off_24)))
         for (file in ringtones) {
             val name = stripFileNameExtension(file.name)
             ringtoneList.add(Ringtone(name, file.absolutePath, ringtoneIcon))
@@ -146,16 +140,13 @@ class RingtoneActivity : AppCompatActivity() {
      * Sets the selected ringtone (Jami or custom) on activity startup
      */
     private fun setPreference() {
-        val path = File(mAccount!!.config[ConfigKey.RINGTONE_PATH])
-        val customEnabled = mAccount!!.config.getBool(ConfigKey.RINGTONE_CUSTOM)
+        val path = File(mAccount.config[ConfigKey.RINGTONE_PATH])
+        val customEnabled = mAccount.config.getBool(ConfigKey.RINGTONE_CUSTOM)
         if (customEnabled && path.exists()) {
             customRingtone!!.text = path.name
             customSelected!!.visibility = View.VISIBLE
         } else if (path.exists()) {
-            adapter!!.selectDefaultItem(
-                path.absolutePath,
-                mAccount!!.config.getBool(ConfigKey.RINGTONE_ENABLED)
-            )
+            adapter!!.selectDefaultItem(path.absolutePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
         } else {
             setDefaultRingtone()
         }
@@ -163,14 +154,10 @@ class RingtoneActivity : AppCompatActivity() {
 
     private fun setDefaultRingtone() {
         val ringtonesDir = File(filesDir, "ringtones")
-        val ringtonePath =
-            File(ringtonesDir, getString(R.string.ringtone_default_name)).absolutePath
-        adapter!!.selectDefaultItem(
-            ringtonePath,
-            mAccount!!.config.getBool(ConfigKey.RINGTONE_ENABLED)
-        )
-        mAccount!!.setDetail(ConfigKey.RINGTONE_PATH, ringtonePath)
-        mAccount!!.setDetail(ConfigKey.RINGTONE_CUSTOM, false)
+        val ringtonePath = File(ringtonesDir, getString(R.string.ringtone_default_name)).absolutePath
+        adapter!!.selectDefaultItem(ringtonePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
+        mAccount.setDetail(ConfigKey.RINGTONE_PATH, ringtonePath)
+        mAccount.setDetail(ConfigKey.RINGTONE_CUSTOM, false)
         updateAccount()
     }
 
@@ -182,12 +169,12 @@ class RingtoneActivity : AppCompatActivity() {
     private fun setJamiRingtone(ringtone: Ringtone) {
         val path = ringtone.ringtonePath
         if (path == null) {
-            mAccount!!.setDetail(ConfigKey.RINGTONE_ENABLED, false)
-            mAccount!!.setDetail(ConfigKey.RINGTONE_PATH, "")
+            mAccount.setDetail(ConfigKey.RINGTONE_ENABLED, false)
+            mAccount.setDetail(ConfigKey.RINGTONE_PATH, "")
         } else {
-            mAccount!!.setDetail(ConfigKey.RINGTONE_ENABLED, true)
-            mAccount!!.setDetail(ConfigKey.RINGTONE_PATH, ringtone.ringtonePath)
-            mAccount!!.setDetail(ConfigKey.RINGTONE_CUSTOM, false)
+            mAccount.setDetail(ConfigKey.RINGTONE_ENABLED, true)
+            mAccount.setDetail(ConfigKey.RINGTONE_PATH, ringtone.ringtonePath)
+            mAccount.setDetail(ConfigKey.RINGTONE_CUSTOM, false)
         }
         updateAccount()
     }
@@ -200,9 +187,9 @@ class RingtoneActivity : AppCompatActivity() {
      * @see .displayFileSearchDialog
      */
     private fun setCustomRingtone(path: String) {
-        mAccount!!.setDetail(ConfigKey.RINGTONE_ENABLED, true)
-        mAccount!!.setDetail(ConfigKey.RINGTONE_PATH, path)
-        mAccount!!.setDetail(ConfigKey.RINGTONE_CUSTOM, true)
+        mAccount.setDetail(ConfigKey.RINGTONE_ENABLED, true)
+        mAccount.setDetail(ConfigKey.RINGTONE_PATH, path)
+        mAccount.setDetail(ConfigKey.RINGTONE_CUSTOM, true)
         updateAccount()
     }
 
@@ -210,8 +197,8 @@ class RingtoneActivity : AppCompatActivity() {
      * Updates an account with new details
      */
     private fun updateAccount() {
-        mAccountService!!.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService!!.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount.accountID, mAccount.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount.accountID, mAccount.details)
     }
 
     /**
@@ -303,7 +290,7 @@ class RingtoneActivity : AppCompatActivity() {
      * Displays a dialog that prompts the user to remove a custom ringtone
      */
     private fun displayRemoveDialog() {
-        if (!mAccount!!.config.getBool(ConfigKey.RINGTONE_CUSTOM)) return
+        if (!mAccount.config.getBool(ConfigKey.RINGTONE_CUSTOM)) return
         val item = arrayOf("Remove")
         // subject callback from adapter will update the view
         AlertDialog.Builder(this)

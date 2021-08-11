@@ -345,16 +345,22 @@ object AndroidFileUtils {
      * @param outUri the uri destination
      * @return success value
      */
-    fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri?): Completable {
-        return Completable.fromAction { FileInputStream(input).use { inputStream -> cr.openOutputStream(outUri!!).use { outputStream -> FileUtils.copyFile(inputStream, outputStream) } } }.subscribeOn(Schedulers.io())
+    fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri): Completable {
+        return Completable.fromAction {
+            FileInputStream(input).use { inputStream ->
+                cr.openOutputStream(outUri)?.use { outputStream ->
+                    FileUtils.copyFile(inputStream, outputStream)
+                } }
+        }.subscribeOn(Schedulers.io())
     }
 
     @Throws(IOException::class)
-    fun getConversationFile(context: Context, uri: Uri?, conversationId: String, name: String): File {
+    fun getConversationFile(context: Context, uri: Uri, conversationId: String, name: String): File {
         val file = getConversationPath(context, conversationId, name)
-        val output = FileOutputStream(file)
-        val inputStream = context.contentResolver.openInputStream(uri!!)
-        FileUtils.copyFile(inputStream, output)
+        context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            FileOutputStream(file).use { output ->
+                FileUtils.copyFile(inputStream, output)
+            } }
         return file
     }
 
@@ -401,7 +407,7 @@ object AndroidFileUtils {
     }
 
     @Throws(IOException::class)
-    fun writeCacheFileToExtStorage(context: Context, cacheFile: Uri?, targetFilename: String): String {
+    fun writeCacheFileToExtStorage(context: Context, cacheFile: Uri, targetFilename: String): String {
         val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         var fileCount = 0
         var finalFile = File(downloadsDirectory, targetFilename)
@@ -413,7 +419,10 @@ object AndroidFileUtils {
             fileCount++
         }
         Log.d(TAG, "writeCacheFileToExtStorage: finalFile=" + finalFile + ",exists=" + finalFile.exists())
-        context.contentResolver.openInputStream(cacheFile!!).use { inputStream -> FileOutputStream(finalFile).use { output -> FileUtils.copyFile(inputStream, output) } }
+        context.contentResolver.openInputStream(cacheFile)?.use { inputStream ->
+            FileOutputStream(finalFile).use { output ->
+                FileUtils.copyFile(inputStream, output)
+            } }
         return finalFile.toString()
     }
 
@@ -554,7 +563,7 @@ object AndroidFileUtils {
 
     @JvmStatic
     fun getFileName(s: String): String {
-        val parts = s.split("\\/".toRegex()).toTypedArray()
+        val parts = s.split(Regex("/")).toTypedArray()
         return parts[parts.size - 1]
     }
 }

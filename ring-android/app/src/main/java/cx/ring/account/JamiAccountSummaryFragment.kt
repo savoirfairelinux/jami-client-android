@@ -243,7 +243,7 @@ class JamiAccountSummaryFragment :
     override fun accountChanged(account: Account) {
         updateUserView(account)
         mBinding?.let { binding ->
-            binding.userPhoto.setOnClickListener { v: View? -> profileContainerClicked(account) }
+            binding.userPhoto.setOnClickListener { profileContainerClicked(account) }
             binding.linkedDevices.setText(account.deviceName)
             setLinkedDevicesAdapter(account)
             mAccountHasPassword = account.hasPassword()
@@ -251,13 +251,7 @@ class JamiAccountSummaryFragment :
             binding.accountAliasTxt.text = getString(R.string.profile)
             binding.identity.setText(account.username)
             mAccountId = account.accountID
-            mBestName = account.registeredName
-            if (mBestName.isEmpty()) {
-                mBestName = account.displayUsername
-                if (mBestName.isEmpty()) {
-                    mBestName = account.username
-                }
-            }
+            mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
             mBestName = "$mBestName.gz"
             val username = account.registeredName
             val currentRegisteredName = account.registeringUsername

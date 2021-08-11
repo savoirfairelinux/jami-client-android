@@ -47,15 +47,16 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     private var iconSize = -1
     private var isIncomingRequest = false
     private var isOutgoingRequest = false
-    private var mConversationPath: ConversationPath? = null
+    private lateinit var mConversationPath: ConversationPath
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val type: String?
         if (arguments != null) {
-            mConversationPath = ConversationPath.fromBundle(arguments)
+            mConversationPath = ConversationPath.fromBundle(arguments)!!
             type = arguments?.getString("type")
         } else {
-            mConversationPath = ConversationPath.fromIntent(requireActivity().intent)
+            mConversationPath = ConversationPath.fromIntent(requireActivity().intent)!!
             type = activity?.intent?.type
         }
         if (type != null) {

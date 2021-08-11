@@ -96,7 +96,7 @@ object AvatarFactory {
             .map { d -> BitmapUtils.drawableToBitmap(d, size) }
     }
 
-    private fun getDrawable(context: Context, photo: Bitmap, profileName: String, username: String, id: String): Drawable {
+    private fun getDrawable(context: Context, photo: Bitmap, profileName: String?, username: String?, id: String): Drawable {
         return AvatarDrawable.Builder()
             .withPhoto(photo)
             .withName(if (TextUtils.isEmpty(profileName)) username else profileName)
@@ -107,7 +107,7 @@ object AvatarFactory {
 
     fun clearCache() {}
 
-    private fun <T> getGlideRequest(context: Context, request: RequestBuilder<T>, photo: Bitmap, profileName: String, username: String, id: String): RequestBuilder<T> {
+    private fun <T> getGlideRequest(context: Context, request: RequestBuilder<T>, photo: Bitmap, profileName: String?, username: String?, id: String): RequestBuilder<T> {
         return request.load(getDrawable(context, photo, profileName, username, id))
     }
 

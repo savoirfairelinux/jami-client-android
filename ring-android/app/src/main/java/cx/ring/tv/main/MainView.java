@@ -40,7 +40,7 @@ public interface MainView {
 
     void displayErrorToast(Error error);
 
-    void displayAccountInfos(HomeNavigationViewModel viewModel);
+    void displayAccountInfo(HomeNavigationViewModel viewModel);
 
     void updateModel(Account account);
 

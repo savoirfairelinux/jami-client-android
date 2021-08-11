@@ -1,0 +1,90 @@
+/*
+ *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package net.jami.model
+
+import java.util.*
+
+class AccountConfig(details: Map<String, String>) {
+    private val mValues: MutableMap<ConfigKey, String> = EnumMap(ConfigKey::class.java)
+
+    operator fun get(key: ConfigKey): String {
+        return mValues[key] ?: ""
+    }
+
+    fun getBool(key: ConfigKey): Boolean {
+        return TRUE_STR == get(key)
+    }
+
+    val all: HashMap<String, String>
+        get() {
+            val details = HashMap<String, String>(mValues.size)
+            for ((key, value) in mValues) {
+                details[key.key()] = value
+            }
+            return details
+        }
+
+    fun put(key: ConfigKey, value: String) {
+        mValues[key] = value
+    }
+
+    fun put(key: ConfigKey, value: Boolean) {
+        mValues[key] = if (value) TRUE_STR else FALSE_STR
+    }
+
+    val keys: Set<ConfigKey>
+        get() = mValues.keys
+    val entries: Set<Map.Entry<ConfigKey, String>>
+        get() = mValues.entries
+
+    companion object {
+        private val TAG = AccountConfig::class.java.simpleName
+        const val TRUE_STR = "true"
+        const val FALSE_STR = "false"
+        const val ACCOUNT_TYPE_RING = "RING"
+        const val ACCOUNT_TYPE_SIP = "SIP"
+        const val STATE_REGISTERED = "REGISTERED"
+        const val STATE_READY = "READY"
+        const val STATE_UNREGISTERED = "UNREGISTERED"
+        const val STATE_TRYING = "TRYING"
+        const val STATE_ERROR = "ERROR"
+        const val STATE_ERROR_GENERIC = "ERROR_GENERIC"
+        const val STATE_ERROR_AUTH = "ERROR_AUTH"
+        const val STATE_ERROR_NETWORK = "ERROR_NETWORK"
+        const val STATE_ERROR_HOST = "ERROR_HOST"
+        const val STATE_ERROR_CONF_STUN = "ERROR_CONF_STUN"
+        const val STATE_ERROR_EXIST_STUN = "ERROR_EXIST_STUN"
+        const val STATE_ERROR_SERVICE_UNAVAILABLE = "ERROR_SERVICE_UNAVAILABLE"
+        const val STATE_ERROR_NOT_ACCEPTABLE = "ERROR_NOT_ACCEPTABLE"
+        const val STATE_REQUEST_TIMEOUT = "Request Timeout"
+        const val STATE_INITIALIZING = "INITIALIZING"
+        const val STATE_NEED_MIGRATION = "ERROR_NEED_MIGRATION"
+        const val STATE_SUCCESS = "SUCCESS"
+        const val STATE_INVALID = "INVALID"
+    }
+
+    init {
+        for ((key, value) in details) {
+            val confKey = ConfigKey.fromString(key)
+            if (confKey != null) {
+                mValues[confKey] = value
+            }
+        }
+    }
+}
