@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ee452c_4d54309e",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-08-16T22:26:17Z",
+      "side": 0,
+      "message": "This is used for two cases currently:\n* move from the contact view to the swarm conversation view when it\u0027s created (conversationUri: none -\u003e swarmId)\n* move from syncing view to the full conversation view (mode: syncing -\u003e oneToOne)",
+      "revId": "e3de5abe1e0acc6a382002b016690f6d1cd7963b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
