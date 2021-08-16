@@ -96,6 +96,7 @@
   <string name="account_link_archive_button">Hubungkan melalui cadangan</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Buat akun Jami</string>
+  <string name="account_link_export_button">Hubungkan perangkat baru</string>
   <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_export_title">Tambah perangkat</string>

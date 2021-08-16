@@ -23,6 +23,7 @@
   <string name="ringtones_by">noren partez txirrinak : </string>
   <!--RingActivity-->
   <string name="error_no_network">Ez dago sare-konexiorik</string>
+  <string name="error_account_offline">Kontua deskonektatuta dago</string>
   <string name="error_mobile_network_available_but_disabled">Eman sare mugikorra atzitzeko baimena ezarpenen pantailan.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Testu-mezularitza</string>
@@ -31,6 +32,7 @@
   <string name="menu_item_accounts">Kudeatu kontuak</string>
   <string name="menu_item_account">Kudeatu kontua</string>
   <string name="menu_item_settings">Ezarpenak</string>
+  <string name="menu_item_plugin_list">Pluginen konfigurazioa</string>
   <string name="menu_item_share">Partekatu nire kontaktua</string>
   <string name="menu_item_about">Jamiri buruz</string>
   <!--Dialing Fragment-->
@@ -85,14 +87,21 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Zuk:</string>
   <string name="action_call_hangup">Eseki</string>
+  <string name="action_call_maximize">Maximizatu</string>
+  <string name="action_call_minimize">Murriztu</string>
+  <string name="action_call_mute">Isiltzea</string>
+  <string name="action_call_unmute">Isiltzea desaktibatu</string>
   <string name="ongoing_call">Deia abioan</string>
   <string name="hist_in_call">%1$s iraupeneko deia</string>
   <string name="hist_out_call">%1$s iraupeneko deia</string>
   <string name="start_error_title">Ezin da Jami abiatu !</string>
   <string name="start_error_mic_required">Jamik mikrofonoa erabiltzeko baimena behar du funtzionatzeko.</string>
   <string name="action_call_accept">Onartu deia</string>
+  <string name="action_call_hold_accept">Deiari eustea eta erantzutea</string>
+  <string name="action_call_end_accept">Amaitu eta deia hartu</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
+  <string name="action_load_plugin">Plugina kargatu</string>
   <string name="ab_action_speakerphone">Gaitu bozgorailua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
@@ -104,7 +113,10 @@
   <string name="share_via">Partekatu honen bidez</string>
   <string name="write_a_message">Idatzi mezu bat</string>
   <string name="scan_qr">Eskaneatu QR kodea</string>
+  <string name="qr_code">QR kodea</string>
   <string name="ab_action_flipcamera">Itzulbiratu kamera</string>
+  <string name="ab_action_hidepreview">Ezkutatu aurretiko bista</string>
+  <string name="remote_recording">%s Grabatzen...</string>
   <!--Text messages-->
   <string name="send_message">Bidali mezua</string>
   <string name="message_sending">Mezua bidaltzen…</string>
@@ -162,6 +174,11 @@
   <string name="block_contact_dialog_message">%1$s erabiltzailea ezin izango da zurekin harremanetan jarri desblokeatzen ez baduzu.</string>
   <string name="block_contact_completed">%1$s blokeatu da.</string>
   <string name="conversation_contact_is_typing">Kontaktua idazten ari da…</string>
+  <string name="conversation_info_contact_you">Zuk</string>
+  <string name="conversation_members">Kideak</string>
+  <string name="conversation_preference_color">Elkarrizketaren kolorea</string>
+  <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
+  <string name="conversation_type_contact">Jami kontaktua</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Gehitu %1$s?</string>
   <string name="prompt_new_password">Pasahitz berria</string>
@@ -171,17 +188,26 @@
   <string name="prompt_new_username">Sartu erabiltzaile-izen berria</string>
   <string name="prompt_hint_username">Erabiltzaile-izena</string>
   <string name="help_password_choose">Hautatu gogoratuko duzun pasahitz sendo bat zure Jami kontua babesteko.</string>
+  <string name="help_password_enter">Sartu zure Jami kontuaren pasahitza.</string>
+  <string name="help_server_enter">Sartu kudeaketa zerbitzariaren URLa</string>
   <string name="help_pin_enter">Sartu konfiguratutako beste kontu baten PIN kodea. Erabili \"esportatu Jami kontua\" ezaugarria PINa eskuratzeko.</string>
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
   <!--Account Summary-->
   <string name="profile">Profila</string>
+  <string name="profile_name">Profilaren izena</string>
   <string name="profile_message_warning">Zure profila zure kontaktuekin partekatzen da soilik</string>
   <string name="open_the_gallery">Ireki galeria</string>
   <string name="take_a_photo">Atera argazkia</string>
+  <string name="profile_name_hint">Sartu zure izena</string>
+  <string name="registered_name">Erregistratutako erabiltzaile-izena</string>
+  <string name="no_registered_name">Ez dago erregistratutako konturik</string>
   <string name="identity">Identitatea</string>
   <string name="account">Kontua</string>
+  <string name="link_new_device">Estekatu gailu berria</string>
+  <string name="devices">Estekatuta dauden gailuak</string>
+  <string name="total_devices">Gailuak:</string>
   <!--Share fragment-->
   <string name="share_message">Eskaneatu kode hau Jami erabiliz</string>
   <string name="share_message_no_account">Hautatu kontu bat partekatzeko.</string>
@@ -203,8 +229,10 @@
   <string name="send_request_title">Bidali kontaktu-eskaera</string>
   <string name="send_request_msg">Kontaktu eskaera bat bidali behar duzu erabiltzaile honekin komunikatzeko. Zure kontaktuak eskaera onartu bitartean, mezuak bidali ahal dizkiozu, baina ezin izango dizu erantzun.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Ez dago kontakturik blokeatuta</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ez da kontaktu eskaerarik bidali</string>
+  <string name="conversation_placeholder">Oraindik ez duzu elkarrizketarik</string>
   <string name="contact_request_sent">Kontaktu eskaera bidali da</string>
   <string name="start_conversation">Hasi elkarrizketa</string>
   <string name="search_results">Bilaketaren emaitzak</string>
@@ -230,6 +258,7 @@
   <string name="file_transfer_status_timed_out">denbora-muga gaindituta</string>
   <string name="file_saved_in">Fitxategi gordetuta</string>
   <string name="file_saved_successfully">Fitxategia ongi gorde da</string>
+  <string name="file_download">Deskargatu </string>
   <string name="no_space_left_on_device">Ez dago espazio nahikorik gailuan</string>
   <string name="title_media_viewer">Titulu-euskarriko ikusle</string>
   <string name="menu_file_open">Ireki fitxategia</string>
@@ -249,9 +278,11 @@
   <string name="navigation_item_account">Kontua</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Bidali audio mezua?</string>
+  <string name="tv_media_preview">Aurrebista</string>
   <string name="tv_audio_play">Jo</string>
   <string name="tv_audio_pause">Pausatu</string>
   <string name="tv_dialog_send">Bidali</string>
+  <string name="tv_audio_recording">Grabatzen...</string>
   <string name="tv_send_text">Bidali testua</string>
   <string name="tv_send_audio">Bidali audioa</string>
   <!--Wizard-->

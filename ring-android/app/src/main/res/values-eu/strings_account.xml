@@ -109,6 +109,7 @@
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
   <string name="account_link_prompt_pin">Sartu PIN-a</string>
   <string name="account_new_button">Sortu Jami kontua</string>
+  <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_start_export_button">Sortu PIN-a</string>
   <string name="account_end_export_button">itxi</string>
   <string name="account_export_title">Gehitu gailuak</string>
