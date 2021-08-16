@@ -16,6 +16,24 @@
       "message": "This is used for two cases currently:\n* move from the contact view to the swarm conversation view when it\u0027s created (conversationUri: none -\u003e swarmId)\n* move from syncing view to the full conversation view (mode: syncing -\u003e oneToOne)",
       "revId": "e3de5abe1e0acc6a382002b016690f6d1cd7963b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29030e82_2b9d0f60",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-08-16T22:29:28Z",
+      "side": 0,
+      "message": "Ok. So in fact it\u0027s used in more cases. If a conversation is active and another request come or if clicking on a read only conversation, the URI is changing. so clicking on the conversation in the smartlist show another conv.",
+      "parentUuid": "40ee452c_4d54309e",
+      "revId": "e3de5abe1e0acc6a382002b016690f6d1cd7963b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
