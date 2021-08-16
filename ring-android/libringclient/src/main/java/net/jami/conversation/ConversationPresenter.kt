@@ -151,10 +151,6 @@ class ConversationPresenter @Inject constructor(
                     .doOnSuccess { initContact(account, c, mode, view) }
             }
             .subscribe())
-        mConversationDisposable!!.add(c.mode
-            .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
-            .observeOn(mUiScheduler)
-            .subscribe { uri: Uri -> init(uri, account.accountID) })
         mConversationDisposable!!.add(
             Observable.combineLatest(
                 mHardwareService.connectivityState,
