@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/tv_action_more">
+    <PreferenceCategory>
+        <Preference
+            android:key="Contact.clear"
+            android:title="@string/conversation_action_history_clear"
+            android:icon="@drawable/baseline_androidtv_clearconversation"
+            />
+        <Preference
+            android:key="Contact.delete"
+            android:title="@string/conversation_action_remove_this"
+            android:icon="@drawable/baseline_androidtv_deletecontact"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

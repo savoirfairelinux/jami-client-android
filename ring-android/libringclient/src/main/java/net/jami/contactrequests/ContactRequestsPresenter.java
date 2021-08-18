@@ -25,7 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.jami.facades.ConversationFacade;
+import net.jami.services.ConversationFacade;
 import net.jami.model.Account;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
@@ -70,9 +70,9 @@ public class ContactRequestsPresenter extends RootPresenter<net.jami.contactrequ
     }
 
     @Override
-    public void unbindView() {
+    public void onDestroy() {
         mAccount.onComplete();
-        super.unbindView();
+        super.onDestroy();
     }
 
     public void updateAccount(String accountId) {

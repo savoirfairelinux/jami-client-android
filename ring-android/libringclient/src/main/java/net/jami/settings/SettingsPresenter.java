@@ -23,7 +23,7 @@ package net.jami.settings;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.jami.facades.ConversationFacade;
+import net.jami.services.ConversationFacade;
 import net.jami.model.Settings;
 import net.jami.mvp.GenericView;
 import net.jami.mvp.RootPresenter;

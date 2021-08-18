@@ -28,7 +28,7 @@ import java.util.Enumeration;
 
 import javax.inject.Inject;
 
-import net.jami.facades.ConversationFacade;
+import net.jami.services.ConversationFacade;
 import net.jami.model.Account;
 import net.jami.model.ConfigKey;
 import net.jami.mvp.RootPresenter;

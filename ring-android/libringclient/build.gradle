@@ -1,8 +1,11 @@
+apply plugin: 'kotlin'
 apply plugin: 'java'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // VCard parsing
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.2'
@@ -25,6 +28,8 @@ dependencies {
     // gson
     implementation 'com.google.code.gson:gson:2.8.7'
 
+    api "com.google.dagger:dagger:$hilt_version"
+    kapt "com.google.dagger:dagger-compiler:$hilt_version"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

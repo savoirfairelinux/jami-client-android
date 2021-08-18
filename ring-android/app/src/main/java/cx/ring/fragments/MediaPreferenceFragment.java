@@ -42,7 +42,9 @@ import net.jami.model.AccountConfig;
 import net.jami.model.Codec;
 import net.jami.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter> implements MediaPreferenceView {
 
     public static final String TAG = MediaPreferenceFragment.class.getSimpleName();
@@ -74,7 +76,6 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         String accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);

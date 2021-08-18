@@ -2,44 +2,40 @@ package cx.ring.plugins.RecyclerPicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
-    private RecyclerView mRecyclerView;
-    private int mItemLayoutResource;
-    private RecyclerPickerAdapter mAdapter;
-    private RecyclerPickerLayoutManager mLayoutManager;
-    private int mOrientation;
-    private RecyclerPickerLayoutManager.ItemSelectedListener mItemSelectedListener;
+public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener {
+    private final RecyclerView mRecyclerView;
+    private final RecyclerPickerAdapter mAdapter;
+    private final RecyclerPickerLayoutManager mLayoutManager;
+    private final RecyclerPickerLayoutManager.ItemSelectedListener mItemSelectedListener;
     private int paddingLeft;
     private int paddingRight;
 
-    public RecyclerPicker(RecyclerView recyclerView,
+    public RecyclerPicker(@NonNull RecyclerView recyclerView,
                           @LayoutRes int recyclerItemLayout, int orientation,
                           RecyclerPickerLayoutManager.ItemSelectedListener listener) {
         mRecyclerView = recyclerView;
-        mItemLayoutResource = recyclerItemLayout;
-        mOrientation = orientation;
         mItemSelectedListener = listener;
-        init();
-    }
-
-    private void init() {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        mLayoutManager = new RecyclerPickerLayoutManager(mRecyclerView.getContext(), mOrientation,false,
+        mLayoutManager = new RecyclerPickerLayoutManager(mRecyclerView.getContext(), orientation,false,
                 mItemSelectedListener);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerPickerAdapter(mRecyclerView.getContext(), mItemLayoutResource, this);
+        mAdapter = new RecyclerPickerAdapter(mRecyclerView.getContext(), recyclerItemLayout, this);
         mRecyclerView.setAdapter(mAdapter);
         setRecyclerViewPadding();
     }
@@ -61,14 +57,14 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
     }
 
     public void setFirstLastElementsWidths(int first, int last){
-        paddingLeft = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2 - RecyclerPickerUtils.dpToPx(mRecyclerView.getContext(), first/2);
-        paddingRight = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2 - RecyclerPickerUtils.dpToPx(mRecyclerView.getContext(), last/2);
+        paddingLeft = getScreenWidth(mRecyclerView.getContext())/2 - dpToPx(mRecyclerView.getContext(), first/2);
+        paddingRight = getScreenWidth(mRecyclerView.getContext())/2 - dpToPx(mRecyclerView.getContext(), last/2);
         updateRecyclerViewPadding();
     }
 
     private void setRecyclerViewPadding() {
-        paddingLeft = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2;
-        paddingRight = RecyclerPickerUtils.getScreenWidth(mRecyclerView.getContext())/2;
+        paddingLeft = getScreenWidth(mRecyclerView.getContext())/2;
+        paddingRight = getScreenWidth(mRecyclerView.getContext())/2;
         updateRecyclerViewPadding();
     }
 
@@ -78,5 +74,19 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
 
     public void scrollToPosition(int position){
         mLayoutManager.scrollToPositionWithOffset(position, 0);
+    }
+
+    private static int getScreenWidth(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        if (windowManager != null) {
+            windowManager.getDefaultDisplay().getMetrics(dm);
+        }
+        return dm.widthPixels;
+    }
+
+    private static int dpToPx(Context context, int value){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) value,
+                context.getResources().getDisplayMetrics());
     }
 }

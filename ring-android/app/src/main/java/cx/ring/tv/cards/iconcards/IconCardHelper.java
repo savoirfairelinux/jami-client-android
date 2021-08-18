@@ -38,18 +38,10 @@ public final class IconCardHelper {
 
     public static IconCard getAboutCardByType(Context pContext, Card.Type type) {
         switch (type) {
-            case ABOUT_CONTRIBUTOR:
-                return getContributorCard(pContext);
-            case ABOUT_LICENCES:
-                return getLicencesCard(pContext);
-            case ABOUT_VERSION:
-                return getVersionCard(pContext);
             case ACCOUNT_ADD_DEVICE:
                 return getAccountAddDeviceCard(pContext);
             case ACCOUNT_EDIT_PROFILE:
                 return getAccountManagementCard(pContext);
-            case ACCOUNT_SETTINGS:
-                return getAccountSettingsCard(pContext);
             case ACCOUNT_SHARE_ACCOUNT:
                 return getAccountShareCard(pContext, null);
             default:
@@ -58,60 +50,19 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountAddDeviceCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.baseline_add_24);
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_export_title), "", R.drawable.baseline_androidtv_link_device);
     }
 
     public static IconCard getAccountManagementCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_EDIT_PROFILE, pContext.getString(R.string.account_edit_profile), "", R.drawable.baseline_account_card_details);
-    }
-
-    public static IconCard getAccountSettingsCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_SETTINGS, pContext.getString(R.string.menu_item_settings), "", R.drawable.baseline_settings_24);
+        return new IconCard(Card.Type.ACCOUNT_EDIT_PROFILE, pContext.getString(R.string.account_edit_profile), "", R.drawable.baseline_androidtv_account);
     }
 
     public static IconCard getAccountShareCard(Context pContext, BitmapDrawable bitmapDrawable) {
         return new IconCard(Card.Type.ACCOUNT_SHARE_ACCOUNT, pContext.getString(R.string.menu_item_share), "", bitmapDrawable);
     }
 
-    public static IconCard getVersionCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_VERSION, pContext.getString(R.string.version_section) + " " + BuildConfig.VERSION_NAME, "", R.drawable.ic_ring_logo_white_vd);
+    public static IconCard getAddContactCard(Context pContext) {
+        return new IconCard(Card.Type.ADD_CONTACT, pContext.getString(R.string.account_tv_add_contact), "", R.drawable.baseline_androidtv_add_user);
     }
 
-    public static IconCard getLicencesCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_LICENCES, pContext.getString(R.string.section_license), formatLicence(pContext), R.drawable.baseline_description_24);
-    }
-
-    public static IconCard getContributorCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.baseline_face_24);
-    }
-
-    private static CharSequence formatLicence(Context pContext) {
-        Resources res = pContext.getResources();
-
-        SpannableString version = new SpannableString(res.getString(R.string.version_section));
-        version.setSpan(new UnderlineSpan(), 0, version.length(), 0);
-        CharSequence versioned = res.getString(R.string.app_release, BuildConfig.VERSION_NAME);
-
-        SpannableString licence = new SpannableString(res.getString(R.string.section_license));
-        licence.setSpan(new UnderlineSpan(), 0, licence.length(), 0);
-        CharSequence licenced = res.getString(R.string.license);
-
-        SpannableString copyright = new SpannableString(res.getString(R.string.copyright_section));
-        copyright.setSpan(new UnderlineSpan(), 0, copyright.length(), 0);
-        CharSequence copyrighted = res.getString(R.string.copyright);
-
-
-        return Html.fromHtml("<b><u>" + version + "</u></b><br/>" + versioned + "<BR/><BR/>"
-                + "<b><u>" + licence + "</u></b><br/>" + licenced + "<BR/><BR/>"
-                + "<b><u>" + copyright + "</u></b><br/>" + copyrighted);
-    }
-
-    private static CharSequence formatContributors(Context pContext) {
-        Resources res = pContext.getResources();
-
-        SpannableString developedby = new SpannableString(res.getString(R.string.developed_by));
-        developedby.setSpan(new UnderlineSpan(), 0, developedby.length(), 0);
-        CharSequence developed = res.getString(R.string.credits_developer).replaceAll("\n", "<br/>");
-        return Html.fromHtml("<b><u>" + developedby + "</u></b><br/>" + developed);
-    }
 }

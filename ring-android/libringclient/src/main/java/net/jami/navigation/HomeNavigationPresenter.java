@@ -67,12 +67,13 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
     public void bindView(HomeNavigationView view) {
         super.bindView(view);
         mCompositeDisposable.add(mAccountService.getCurrentProfileAccountSubject()
-                .switchMapSingle(account -> account.getAccountAlias().map(alias -> new Tuple<>(account, alias)))
+                .switchMap(account -> account.getLoadedProfileObservable()
+                        .map(alias -> new Tuple<>(account, alias)))
                 .observeOn(mUiScheduler)
                 .subscribe(alias -> {
                     HomeNavigationView v = getView();
                     if (v != null)
-                        v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second));
+                        v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second.first));
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
@@ -94,10 +95,8 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
-                        .subscribeOn(Schedulers.io()),
-                photo
-                        .subscribeOn(Schedulers.io()),
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
+                photo.subscribeOn(Schedulers.io()),
                 (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     vcard.removeProperties(Photo.class);
@@ -110,6 +109,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                 .subscribe(vcard -> {
                     account.resetProfile();
                     mAccountService.refreshAccounts();
+                    getView().setPhoto(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
@@ -129,6 +129,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                 .subscribe(vcard -> {
                     account.resetProfile();
                     mAccountService.refreshAccounts();
+                    bindView(getView());
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 

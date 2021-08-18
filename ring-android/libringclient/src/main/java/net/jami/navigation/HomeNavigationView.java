@@ -35,4 +35,6 @@ public interface HomeNavigationView {
 
     void askGalleryPermission();
 
+    void setPhoto(Account account);
+
 }
