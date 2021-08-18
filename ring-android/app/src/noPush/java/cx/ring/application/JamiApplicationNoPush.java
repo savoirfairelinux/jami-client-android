@@ -17,7 +17,9 @@
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package cx.ring.application;
+import dagger.hilt.android.HiltAndroidApp;
 
+@HiltAndroidApp
 public class JamiApplicationNoPush extends JamiApplication {
 
     @Override
