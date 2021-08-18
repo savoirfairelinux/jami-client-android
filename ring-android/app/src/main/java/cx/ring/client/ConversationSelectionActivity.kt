@@ -81,7 +81,7 @@ class ConversationSelectionActivity : AppCompatActivity() {
                 if (conference == null) return@map vm
                 val filteredVms: MutableList<SmartListViewModel> = ArrayList(vm.size)
                 models@ for (v in vm) {
-                    val contact = v.contact ?: continue // We only add contacts and one to one
+                    val contact = v.getContact() ?: continue // We only add contacts and one to one
                     for (call in conference.participants) {
                         if (call.contact === contact) {
                             continue@models

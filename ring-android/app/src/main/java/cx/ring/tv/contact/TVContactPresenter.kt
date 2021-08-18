@@ -51,7 +51,7 @@ class TVContactPresenter @Inject constructor(
         mCompositeDisposable.clear()
         mCompositeDisposable.add(mConversationService
             .getAccountSubject(path.accountId)
-            .map { a: Account -> SmartListViewModel(a.getByUri(mUri), true) }
+            .map { a: Account -> SmartListViewModel(a.getByUri(mUri)!!, true) }
             .observeOn(mUiScheduler)
             .subscribe { c: SmartListViewModel -> view!!.showContact(c) })
     }

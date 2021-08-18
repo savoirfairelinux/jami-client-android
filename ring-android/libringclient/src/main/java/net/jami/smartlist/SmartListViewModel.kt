@@ -120,7 +120,7 @@ class SmartListViewModel {
      * Used to get contact for one to one or legacy conversations
      */
     fun getContact(): Contact? {
-        if (contacts!!.size == 1) return contacts[0]
+        if (contacts.size == 1) return contacts[0]
         for (c in contacts) {
             if (!c.isUser) return c
         }
@@ -166,6 +166,7 @@ class SmartListViewModel {
         val TITLE_CONVERSATIONS: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.Conversations))
         val TITLE_PUBLIC_DIR: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.PublicDirectory))
         val EMPTY_LIST: Single<List<Observable<SmartListViewModel>>> = Single.just(emptyList())
+        @JvmStatic
         val EMPTY_RESULTS: Observable<List<SmartListViewModel>> = Observable.just(emptyList())
     }
 }

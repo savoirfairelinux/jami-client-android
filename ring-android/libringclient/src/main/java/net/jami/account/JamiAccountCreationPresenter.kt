@@ -78,9 +78,9 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun registerUsernameChanged(isChecked: Boolean) {
-        if (mAccountCreationModel != null) {
+        mAccountCreationModel?.let  { model ->
             if (!isChecked) {
-                mAccountCreationModel!!.username = ""
+                model.username = ""
             }
             checkForms()
         }
@@ -90,8 +90,8 @@ class JamiAccountCreationPresenter @Inject constructor(
         if (mAccountCreationModel != null) mAccountCreationModel!!.password = null
         isPasswordCorrect = true
         isConfirmCorrect = true
-        view!!.showInvalidPasswordError(false)
-        view!!.enableNextButton(true)
+        view?.showInvalidPasswordError(false)
+        view?.enableNextButton(true)
     }
 
     fun passwordChanged(password: String, repeat: CharSequence) {

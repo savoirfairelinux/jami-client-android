@@ -82,8 +82,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
             } else if (smartListViewModel.lastEvent != null) {
                 binding.convLastItem.visibility = View.VISIBLE
-                binding.convLastItem.text =
-                    getLastEventSummary(smartListViewModel.lastEvent, itemView.context)
+                binding.convLastItem.text = getLastEventSummary(smartListViewModel.lastEvent!!, itemView.context)
             } else {
                 binding.convLastItem.visibility = View.GONE
             }
@@ -96,12 +95,10 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastTime.setTypeface(null, Typeface.NORMAL)
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL)
             }
-            binding.photo.setImageDrawable(
-                AvatarDrawable.Builder()
+            binding.photo.setImageDrawable(AvatarDrawable.Builder()
                     .withViewModel(smartListViewModel)
                     .withCircleCrop(true)
-                    .build(binding.photo.context)
-            )
+                    .build(binding.photo.context))
         } else headerBinding?.headerTitle?.setText(
             if (smartListViewModel.headerTitle == SmartListViewModel.Title.Conversations) R.string.navigation_item_conversation else R.string.search_results_public_directory
         )

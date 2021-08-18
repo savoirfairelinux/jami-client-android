@@ -422,7 +422,7 @@ class AccountService(
     /**
      * @return the Account from the local cache that matches the accountId
      */
-    fun getAccount(accountId: String): Account? {
+    fun getAccount(accountId: String?): Account? {
         if (!StringUtils.isEmpty(accountId)) {
             synchronized(mAccountList) { for (account in mAccountList) if (accountId == account.accountID) return account }
         }

@@ -65,12 +65,9 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
 
     override fun onResume() {
         super.onResume()
-        if (arguments == null || requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) == null) {
-            return
-        }
-        val mAccountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)
+        val accountId = arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return
         mOnBackPressedCallback.isEnabled = true
-        presenter.setAccountId(mAccountId)
+        presenter.setAccountId(accountId)
     }
 
     override fun onAttach(context: Context) {
@@ -102,12 +99,11 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
         binding!!.placeholder.visibility = if (display) View.VISIBLE else View.GONE
     }
 
-    fun setAccount(accountId: String?) {
+    fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
     }
 
     companion object {
-        @JvmStatic
         val TAG: String = BlockListFragment::class.simpleName!!
     }
 

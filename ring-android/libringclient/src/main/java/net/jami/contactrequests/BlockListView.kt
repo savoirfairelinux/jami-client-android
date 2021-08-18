@@ -16,18 +16,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package net.jami.contactrequests
 
-package net.jami.contactrequests;
+import net.jami.model.Contact
 
-import net.jami.model.Contact;
-
-import java.util.Collection;
-
-public interface BlockListView {
-
-    void updateView(Collection<Contact> list);
-
-    void hideListView();
-
-    void displayEmptyListMessage(boolean display);
+interface BlockListView {
+    fun updateView(list: Collection<Contact>)
+    fun hideListView()
+    fun displayEmptyListMessage(display: Boolean)
 }
