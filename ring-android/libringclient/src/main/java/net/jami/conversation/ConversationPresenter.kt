@@ -152,7 +152,10 @@ class ConversationPresenter @Inject constructor(
             }
             .subscribe())
         mConversationDisposable!!.add(c.mode
-            .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
+            .switchMap { mode: Conversation.Mode ->
+                if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri
+                else Observable.empty()
+            }
             .observeOn(mUiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountID) })
         mConversationDisposable!!.add(
