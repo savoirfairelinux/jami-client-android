@@ -117,6 +117,8 @@ class ConversationPresenter @Inject constructor(
             Log.w(TAG, "initContact " + conversation.uri)
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
+            } else if (conversation.readOnly) {
+                view.switchToReadOnlyView()
             } else if (conversation.isSwarm || account.isContact(conversation)) {
                 //if (conversation.isEnded())
                 //    conversation.s
@@ -151,6 +153,7 @@ class ConversationPresenter @Inject constructor(
                     .doOnSuccess { initContact(account, c, mode, view) }
             }
             .subscribe())
+        Log.w(TAG, "@@@@@@@@ " + c.readOnly);
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode ->
                 if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri

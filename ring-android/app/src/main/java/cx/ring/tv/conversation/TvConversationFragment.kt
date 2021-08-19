@@ -665,6 +665,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         // todo
     }
 
+    override fun switchToReadOnlyView() {
+        // todo
+    }
+
     override fun switchToSyncingView() {
         // todo
     }

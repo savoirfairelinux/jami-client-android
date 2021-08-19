@@ -1021,6 +1021,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         updateListPadding()
     }
 
+    override fun switchToReadOnlyView() {
+        binding?.apply {
+            cvMessageInput.visibility = View.GONE
+            unknownContactPrompt.visibility = View.GONE
+            trustRequestPrompt.visibility = View.GONE
+            trustRequestMessageLayout.visibility = View.GONE
+            currentBottomView = cvMessageInput
+        }
+        requireActivity().invalidateOptionsMenu()
+        updateListPadding()
+    }
+
     override fun switchToSyncingView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE

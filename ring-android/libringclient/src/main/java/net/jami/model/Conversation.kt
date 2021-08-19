@@ -41,6 +41,7 @@ class Conversation : ConversationHistory {
     val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
+    var readOnly: Boolean = false
     private var lastDisplayed: Interaction? = null
     private val updatedElementSubject: Subject<Tuple<Interaction, ElementStatus>> = PublishSubject.create()
     private val lastDisplayedSubject: Subject<Interaction> = BehaviorSubject.create()

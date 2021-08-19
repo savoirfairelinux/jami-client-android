@@ -42,6 +42,7 @@ interface ConversationView : BaseView {
     fun switchToUnknownView(name: String)
     fun switchToIncomingTrustRequestView(message: String)
     fun switchToConversationView()
+    fun switchToReadOnlyView()
     fun switchToSyncingView()
     fun switchToEndedView()
     fun askWriteExternalStoragePermission()

@@ -299,12 +299,11 @@ class AccountService(
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
                             if (mode != Conversation.Mode.Syncing) {
+                                var memberLeft = 0
                                 for (member in JamiService.getConversationMembers(accountId, conversationId)) {
-                                    /*for (Map.Entry<String, String> i : member.entrySet()) {
-                                        Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
-                                    }*/
                                     val uri = Uri.fromId(member["uri"]!!)
-                                    //String role = member.get("role");
+                                    if (member.get("role").equals("left"))
+                                        memberLeft += 1;
                                     val lastDisplayed = member["lastDisplayed"]
                                     var contact = conversation.findContact(uri)
                                     if (contact == null) {
@@ -315,6 +314,7 @@ class AccountService(
                                         conversation.setLastMessageRead(lastDisplayed)
                                     }
                                 }
+                                conversation.readOnly = mode == Conversation.Mode.OneToOne && memberLeft === 1
                             }
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
                             account.conversationStarted(conversation)
@@ -1467,8 +1467,11 @@ class AccountService(
         val conversation = c
         synchronized(conversation) {
             // Making sure to add contacts before changing the mode
+            var memberLeft = 0
             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                 val uri = Uri.fromId(member["uri"]!!)
+                if (member["role"].equals("left"))
+                    memberLeft += 1;
                 var contact = conversation.findContact(uri)
                 if (contact == null) {
                     contact = account.getContactFromCache(uri)
