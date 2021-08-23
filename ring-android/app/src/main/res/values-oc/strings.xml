@@ -46,6 +46,7 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
+  <string name="clear_history">Escafar</string>
   <!--Conversation-->
   <string name="conversation_action_history_clear">Escafar l’istoric</string>
   <string name="conversation_action_block_this">Blocar contacte</string>

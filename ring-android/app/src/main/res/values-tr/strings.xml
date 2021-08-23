@@ -34,7 +34,6 @@
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
   <string name="menu_item_plugin_list">Eklenti Ayarları</string>
-  <string name="menu_item_share">Bilgimi paylaş</string>
   <string name="menu_item_about">Jami Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Numara çevir</string>

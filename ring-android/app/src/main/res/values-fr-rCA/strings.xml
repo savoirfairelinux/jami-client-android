@@ -25,7 +25,6 @@
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
-  <string name="menu_item_share">Partager mes informations de contact</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
@@ -89,6 +88,7 @@
   <string name="scan_qr_account_message">Numériser le code QR du compte que vous désirez ajouter.</string>
   <!--Settings-->
   <string name="clear_history_completed">L\'historique a été effacé.</string>
+  <string name="clear_history">Effacer</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer cette conversation ?</string>

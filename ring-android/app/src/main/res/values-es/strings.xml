@@ -34,7 +34,7 @@
   <string name="menu_item_account">Administrar cuenta</string>
   <string name="menu_item_settings">Configuración</string>
   <string name="menu_item_plugin_list">Ajustes de complementos</string>
-  <string name="menu_item_share">Compartir mi contacto</string>
+  <string name="menu_item_share">Compartir mi cuenta</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un Número</string>
@@ -154,6 +154,7 @@
   <string name="clear_history_dialog_title">¿Limpiar historial?</string>
   <string name="clear_history_dialog_message">Esta acción no puede deshacerse.</string>
   <string name="clear_history_completed">El historial se ha limpiado.</string>
+  <string name="clear_history">Vaciar</string>
   <!--Conversation-->
   <string name="conversation_details">Detalles del contacto</string>
   <string name="conversation_action_delete_this">Borrar esta conversación</string>

@@ -169,6 +169,14 @@
   <string name="account_sip_success_title">Cont SIP înscris</string>
   <string name="account_sip_success_message">Ai înscris cu succes contul tău SIP.</string>
   <string name="account_sip_register_anyway">Înscrie-te oricum</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Reglările contului</string>
+  <string name="account_tv_advance_settings_header">Reglări avansate</string>
+  <string name="account_tv_add_contact">Adaugă contactul</string>
+  <string name="account_tv_about">Despre Jami</string>
+  <string name="tv_about_version">Versiune</string>
+  <string name="tv_about_license">Licență</string>
+  <string name="tv_about_credits">Merite</string>
   <string name="account_link_device">Conectează-te de la alt aparat</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectare din copia de rezervă</string>
@@ -182,7 +190,6 @@
   <string name="account_end_export_button">închide</string>
   <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat unui cont”. Codul tău PIN este valabil 10 minute.</string>
   <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
-  <string name="account_export_title">Adaugă aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
   <string name="account_connect_button">Conectează</string>
   <string name="prompt_server">URL-ul serverului de administrare Jami</string>
@@ -215,7 +222,6 @@
   <string name="account_link_title">Asociază acest aparat</string>
   <string name="account_sip_cannot_be_registered">Nu pot înscrie contul</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Modifică profilul tău</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introdu parola pentru confirmare</string>
   <string name="enter_password">Introdu parola</string>

@@ -29,7 +29,6 @@
   <string name="menu_item_account">Διαχείριση Λογαριασμού</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
-  <string name="menu_item_share">Κοινοποίηση Προφίλ</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>

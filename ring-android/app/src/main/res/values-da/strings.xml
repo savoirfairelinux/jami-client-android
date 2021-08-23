@@ -32,7 +32,7 @@
   <string name="menu_item_account">Håndter konto</string>
   <string name="menu_item_settings">Indstillinger</string>
   <string name="menu_item_plugin_list">Plugin Indstillinger</string>
-  <string name="menu_item_share">Del min kontakt</string>
+  <string name="menu_item_share">Del min konto</string>
   <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Indtast et nummer</string>
@@ -149,6 +149,7 @@
   <string name="clear_history_dialog_title">Ryd historik?</string>
   <string name="clear_history_dialog_message">Handlingen kan ikke fortrydes.</string>
   <string name="clear_history_completed">Historikken er blevet ryddet.</string>
+  <string name="clear_history">Ryd</string>
   <!--Conversation-->
   <string name="conversation_details">Kontakt-detajler</string>
   <string name="conversation_action_delete_this">Slet denne samtale</string>

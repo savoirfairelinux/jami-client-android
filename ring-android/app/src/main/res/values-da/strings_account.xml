@@ -157,6 +157,13 @@ Du kan rette din konto senere</string>
   <string name="account_sip_success_title">SIP-konto registreret</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Avancerede indstillinger</string>
+  <string name="account_tv_add_contact">Tilføj en kontakt</string>
+  <string name="account_tv_about">Om Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Licens</string>
+  <string name="tv_about_credits">Krediteringer</string>
   <string name="account_link_button">Opret forbindelse</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_new_button">Opret en Jami-konto</string>
@@ -166,7 +173,6 @@ Du kan rette din konto senere</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at gennemføre processen, skal du åbne Jami på den nye enhed og oprette en ny konto med \"Tilkny denne enheds til en konto\". PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_link_export_info_light">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Jami. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
-  <string name="account_export_title">Tilføj enheder</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
@@ -192,7 +198,6 @@ Du kan rette din konto senere</string>
   <string name="account_link_title">Tilknyt denne enhed</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Rediger profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Indtast adgangskode for at bekræfte</string>
   <string name="enter_password">Indtast adgangskode</string>

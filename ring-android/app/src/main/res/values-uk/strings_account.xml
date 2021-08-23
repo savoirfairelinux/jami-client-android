@@ -139,6 +139,12 @@
   <string name="account_sip_success_title">Зареєстровано обліковий запис SIP</string>
   <string name="account_sip_success_message">Ви успішно зареєстрували обліковий запис SIP</string>
   <string name="account_sip_register_anyway">Зареєструвати все одно</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Розширені налаштування</string>
+  <string name="account_tv_about">Про Джамі</string>
+  <string name="tv_about_version">Версія</string>
+  <string name="tv_about_license">Ліцензія</string>
+  <string name="tv_about_credits">Подяки</string>
   <string name="account_link_prompt_pin">Ввести PIN-код</string>
   <string name="account_new_button">Створити обліковий запис Джамі</string>
   <string name="account_link_export_button">Прив\'язати новий пристрій</string>
@@ -147,7 +153,6 @@
   <string name="account_end_export_button">закрити</string>
   <string name="account_end_export_infos">Ваш PIN-код:\n\n%%\n\nЩоб завершити, відкрийте Джамі на іншому пристрої. Створіть обліковий запис через «Прив\'язати інший пристрій до облікового запису». Ваш PIN-код дійсний протягом 10 хвилин.</string>
   <string name="account_link_export_info_light">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
-  <string name="account_export_title">Додати пристрої</string>
   <string name="account_connect_prompt_username">Ім’я</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>

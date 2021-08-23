@@ -87,6 +87,12 @@ Vous pouvez modifier votre compte ultérieurement</string>
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_enter_password">Entrez votre mot de passe</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Paramètres avancés</string>
+  <string name="account_tv_about">À propos de Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Licence</string>
+  <string name="tv_about_credits">Crédits</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_connect_prompt_username">Nom d\'utilisateur</string>

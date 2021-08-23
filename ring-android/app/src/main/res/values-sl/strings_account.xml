@@ -169,6 +169,14 @@
   <string name="account_sip_success_title">SIP račun je registriran</string>
   <string name="account_sip_success_message">Uspešno ste registrirali SIP račun.</string>
   <string name="account_sip_register_anyway">Vseeno registriraj</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Nastavitve računa</string>
+  <string name="account_tv_advance_settings_header">Napredne nastavitve</string>
+  <string name="account_tv_add_contact">Dodaj stik</string>
+  <string name="account_tv_about">O Jami</string>
+  <string name="tv_about_version">Različica</string>
+  <string name="tv_about_license">Licenca</string>
+  <string name="tv_about_credits">Zasluge</string>
   <string name="account_link_device">Poveži se z druge naprave</string>
   <string name="account_link_button">Poveči se iz omrežja</string>
   <string name="account_link_archive_button">Poveži se se iz varnostne kopije</string>
@@ -182,7 +190,6 @@
   <string name="account_end_export_button">zapri</string>
   <string name="account_end_export_infos">Vaš PIN je:\n\n%%\n\nZa dokončanje postopka morate odpreti Jami na novi napravi. Ustvarite nov račun preko \"Poveži to napravo z računom\". Vaš PIN je veljaven 10 minut.</string>
   <string name="account_link_export_info_light">Da bi uporabili ta račun na drugi napravi, jo morate najprej razkriti na Jamiju. To bo ustvarilo PIN kodo, ki jo morate vnesti v novo napravo, da ustvarite račun. PIN je veljaven 10 minut.</string>
-  <string name="account_export_title">Dodaj naprave</string>
   <string name="account_connect_server_button">Povezava na upravljalni strežnik</string>
   <string name="account_connect_button">Poveži</string>
   <string name="prompt_server">URL naslov Jami upravljalnega strežnika</string>
@@ -215,7 +222,6 @@
   <string name="account_link_title">Poveži to napravo</string>
   <string name="account_sip_cannot_be_registered">Ne morem prijaviti računa</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Uredi profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Vnesite geslo za potrditev</string>
   <string name="enter_password">Vnesite geslo</string>

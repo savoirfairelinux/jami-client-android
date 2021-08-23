@@ -16,7 +16,6 @@
   <!--Sections-->
   <string name="menu_item_accounts">Urus akaun</string>
   <string name="menu_item_settings">Tetapan</string>
-  <string name="menu_item_share">Kongsikan profil saya</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Dail nombor</string>
   <!--History Fragment-->

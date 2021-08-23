@@ -149,6 +149,12 @@ U kunt uw account later bewerken</string>
   <string name="account_sip_success_title">SIP-account geregistreerd</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Geavanceerde instellingen</string>
+  <string name="account_tv_about">Over Jami</string>
+  <string name="tv_about_version">Versie</string>
+  <string name="tv_about_license">Licentie</string>
+  <string name="tv_about_credits">Met dank aan</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Voer pincode in</string>
@@ -159,7 +165,6 @@ U kunt uw account later bewerken</string>
   <string name="account_end_export_button">sluiten</string>
   <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Voeg een Jami-account toe met ‘Dit apparaat koppelen’. Uw pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken dient u deze eerst op Ring bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
-  <string name="account_export_title">Apparaten toevoegen</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
   <string name="account_connect_button">Verbinden</string>
   <string name="prompt_server">Jami-beheerserver-URL</string>
@@ -190,7 +195,6 @@ U kunt uw account later bewerken</string>
   <string name="account_link_title">Dit apparaat koppelen</string>
   <string name="account_sip_cannot_be_registered">Account kan niet geregistreerd worden</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Bewerk uw profiel</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
   <string name="enter_password">Voer wachtwoord in</string>

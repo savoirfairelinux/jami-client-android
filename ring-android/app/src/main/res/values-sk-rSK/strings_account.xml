@@ -159,6 +159,13 @@
   <string name="account_sip_success_title">SIP účet registrovaný</string>
   <string name="account_sip_success_message">Úspešne ste zaregistrovali váš SIP účet.</string>
   <string name="account_sip_register_anyway">Napriek tomu registrovať</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Pokročilé nastavenia</string>
+  <string name="account_tv_add_contact">Pridať kontakt</string>
+  <string name="account_tv_about">O programe Jami</string>
+  <string name="tv_about_version">Verzia</string>
+  <string name="tv_about_license">Licencia</string>
+  <string name="tv_about_credits">Autori</string>
   <string name="account_link_button">Pripojiť zo siete</string>
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
   <string name="account_link_prompt_pin">Zadajte PIN</string>
@@ -169,7 +176,6 @@
   <string name="account_end_export_button">Zavrieť</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nNa dokončenie procesu je potrebné otvoriť aplikáciu Jami na novom zariadení. Vytvorte nový účet pomocou \"Prepojiť toto zariadenie s iným účtom\". Váš PIN bude funkčný 10 minút.</string>
   <string name="account_link_export_info_light">Aby ste mohli tento účet používať na viacerých zariadeniach, musíte ho najprv sprístupniť na Jami. Vygeneruje sa PIN kód, ktorý je potrebný zadať na novom zariadení. Tento kód bude funkčný 10 minút.</string>
-  <string name="account_export_title">Pridať zariadenia</string>
   <string name="account_connect_server_button">Pripojiť k spravujúcemu serveru</string>
   <string name="account_connect_button">Pripojiť</string>
   <string name="prompt_server">URL Jami spravujúceho serveru</string>
@@ -199,7 +205,6 @@
   <string name="account_link_title">Prepojiť toto zariadenie</string>
   <string name="account_sip_cannot_be_registered">Účet sa nedá zaregistrovať</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Upraviť váš profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Zadajte heslo na potvrdenie</string>
   <string name="enter_password">Zadajte heslo</string>

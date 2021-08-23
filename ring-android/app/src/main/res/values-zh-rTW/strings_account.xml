@@ -169,6 +169,14 @@
   <string name="account_sip_success_title">SIP 帳號已註冊</string>
   <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
   <string name="account_sip_register_anyway">無論如何都要註冊</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">帳號設定</string>
+  <string name="account_tv_advance_settings_header">進階設定</string>
+  <string name="account_tv_add_contact">新增聯絡人</string>
+  <string name="account_tv_about">關於 Jami</string>
+  <string name="tv_about_version">版本</string>
+  <string name="tv_about_license">授權條款</string>
+  <string name="tv_about_credits">榮譽</string>
   <string name="account_link_device">從其他裝置連線</string>
   <string name="account_link_button">從網路連線</string>
   <string name="account_link_archive_button">從備份連線</string>
@@ -182,7 +190,6 @@
   <string name="account_end_export_button">關閉</string>
   <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成過程，您需要在新裝置上開啟 Jami。以「連結這個裝置到一個帳號」來建立新帳號。您的 PIN 碼在 10 分鐘內有效。</string>
   <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
-  <string name="account_export_title">新增裝置</string>
   <string name="account_connect_server_button">連線到管理伺服器</string>
   <string name="account_connect_button">連線</string>
   <string name="prompt_server">Jami 管理伺服器 URL</string>
@@ -215,7 +222,6 @@
   <string name="account_link_title">連結此裝置</string>
   <string name="account_sip_cannot_be_registered">無法註冊帳號</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">編輯您的檔案</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">輸入密碼以確認</string>
   <string name="enter_password">輸入密碼</string>

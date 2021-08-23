@@ -106,6 +106,12 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
   <string name="account_cannot_be_found_title">ne mogu naći račun</string>
   <string name="account_no_network_title">Ne mogu se spojiti na mrežu</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Napredne postavke</string>
+  <string name="account_tv_about">O Jami-u</string>
+  <string name="tv_about_version">Verzija</string>
+  <string name="tv_about_license">Licenca</string>
+  <string name="tv_about_credits">Zasluge</string>
   <string name="account_link_prompt_pin">Unesite PIN</string>
   <string name="account_new_button">Napravite Jami račun</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>

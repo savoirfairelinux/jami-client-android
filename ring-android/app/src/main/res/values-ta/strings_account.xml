@@ -19,6 +19,9 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <!--TV-->
+  <string name="tv_about_version">பதிப்பு</string>
+  <string name="tv_about_license">உரிமம்</string>
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->

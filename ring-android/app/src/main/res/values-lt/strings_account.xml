@@ -158,6 +158,12 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_sip_success_title">Sip paskyra užregistruota</string>
   <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Išplėstiniai nustatymai</string>
+  <string name="account_tv_about">Apie Jami</string>
+  <string name="tv_about_version">Versija</string>
+  <string name="tv_about_license">Licencija</string>
+  <string name="tv_about_credits">Padėkos</string>
   <string name="account_link_device">Prisijungta iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
@@ -169,7 +175,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
   <string name="account_link_export_info_light">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
-  <string name="account_export_title">Pridėti įrenginius</string>
   <string name="account_connect_server_button">Prisijunkite prie valdymo serverio</string>
   <string name="account_connect_button">Prisijungti</string>
   <string name="prompt_server">„Jami“ valdymo serverio URL</string>
@@ -200,7 +205,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_title">Susiekite šį įrenginį</string>
   <string name="account_sip_cannot_be_registered">Nepavyksta užregistruoti paskyros</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Taisyti savo profilį</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>

@@ -65,6 +65,11 @@
   <string name="account_rtp_min_port">נומינלי</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
+  <!--TV-->
+  <string name="account_tv_about">על אודות Jami</string>
+  <string name="tv_about_version">גרסה</string>
+  <string name="tv_about_license">רישיון</string>
+  <string name="tv_about_credits">שבחים</string>
   <string name="account_new_button">יצירת חשבון Jami</string>
   <string name="account_connect_prompt_username">שם משתמש</string>
   <!--Name registration-->
@@ -75,6 +80,5 @@
   <string name="account_creation_home">ברוך בואך אל Jami</string>
   <string name="account_creation_profile">יצירת הפרופיל שלך</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">עריכת הפרופיל שלך</string>
   <!--Devices-->
 </resources>

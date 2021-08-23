@@ -32,7 +32,6 @@
   <string name="menu_item_account">مدیرت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_plugin_list">تنظیمات افزونه ها</string>
-  <string name="menu_item_share">اشتراک مخاطب من</string>
   <string name="menu_item_about">درباره جمی</string>
   <!--Dialing Fragment-->
   <string name="dial_number">یک شماره بگیرید</string>

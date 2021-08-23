@@ -45,6 +45,10 @@
   <string name="account_migration_title_dialog">Migracion de compte</string>
   <string name="account_cannot_be_found_title">Impossible de trobar aqueste compte</string>
   <string name="account_no_network_title">Connexion impossibla a la ret</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Paramètres avançats</string>
+  <string name="account_tv_about">A prepaus de Jami</string>
+  <string name="tv_about_credits">Crèdit</string>
   <string name="account_new_button">Crear un compte Jami</string>
   <string name="account_connect_prompt_username">Nom d’utilizaire</string>
   <!--Name registration-->

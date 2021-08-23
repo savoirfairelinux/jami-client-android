@@ -147,6 +147,13 @@ Du kan ändra kontot senare.</string>
   <string name="account_sip_success_title">SIP-konto registrerat</string>
   <string name="account_sip_success_message">Du har registrerat ditt SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrera i alla fall</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Kontoinställningar</string>
+  <string name="account_tv_advance_settings_header">Avancerade inställningar</string>
+  <string name="account_tv_about">Om Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Licens</string>
+  <string name="tv_about_credits">Tack till</string>
   <string name="account_link_button">Anslut från nätverk</string>
   <string name="account_link_archive_button">Anslut från säkerhetskopia</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
@@ -157,7 +164,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra processen måste du starta Jami på den nya enheten. Skapa ett nytt konto med \"Koppla denna enhet till ett konto\". Din PIN-kod är giltig i 10 minuter.</string>
   <string name="account_link_export_info_light">För att använda detta konto på en annan enhet, måste du först exponera det på Jami. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
-  <string name="account_export_title">Lägg till enheter</string>
   <string name="account_connect_button">Anslut</string>
   <string name="account_connect_prompt_username">Användarnamn</string>
   <!--Name registration-->
@@ -184,7 +190,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_link_title">Länka den här enheten</string>
   <string name="account_sip_cannot_be_registered">Kan inte registrera konto</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Redigera din profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Ange lösenord för att bekräfta</string>
   <string name="enter_password">Ange lösenord</string>

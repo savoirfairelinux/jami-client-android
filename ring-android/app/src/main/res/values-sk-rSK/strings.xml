@@ -31,7 +31,7 @@
   <string name="menu_item_accounts">Spravovať účty</string>
   <string name="menu_item_account">Spravovať účet</string>
   <string name="menu_item_settings">Nastavenia</string>
-  <string name="menu_item_share">Zdieľať môj kontakt</string>
+  <string name="menu_item_share">Zdieľať môj účet</string>
   <string name="menu_item_about">O programe Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Zavolať na číslo</string>
@@ -144,6 +144,7 @@
   <string name="clear_history_dialog_title">Vymazať históriu?</string>
   <string name="clear_history_dialog_message">Túto operáciu nie je možné vrátiť.</string>
   <string name="clear_history_completed">História bola vymazaná.</string>
+  <string name="clear_history">Vyčistiť</string>
   <!--Conversation-->
   <string name="conversation_details">Informácie o kontakte</string>
   <string name="conversation_action_delete_this">Vymazať túto konverzáciu</string>

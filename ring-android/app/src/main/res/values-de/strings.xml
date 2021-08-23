@@ -34,7 +34,7 @@
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_plugin_list">Plugin-Einstellungen</string>
-  <string name="menu_item_share">Meinen Kontakt teilen</string>
+  <string name="menu_item_share">Mein Konto teilen</string>
   <string name="menu_item_about">Über Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
@@ -154,6 +154,7 @@
   <string name="clear_history_dialog_title">Verlauf löschen?</string>
   <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="clear_history_completed">Der Verlauf wurde gelöscht.</string>
+  <string name="clear_history">Löschen</string>
   <!--Conversation-->
   <string name="conversation_details">Details</string>
   <string name="conversation_action_delete_this">Diese Unterhaltung löschen</string>

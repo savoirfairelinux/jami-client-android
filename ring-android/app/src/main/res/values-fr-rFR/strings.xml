@@ -32,7 +32,7 @@
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_plugin_list">Paramètres des plugins</string>
-  <string name="menu_item_share">Partager mes contacts</string>
+  <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro </string>
@@ -149,6 +149,7 @@
   <string name="clear_history_dialog_title">Effacer l\'historique ?</string>
   <string name="clear_history_dialog_message">Cette action ne peut être annulée.</string>
   <string name="clear_history_completed">L\'historique a été effacé.</string>
+  <string name="clear_history">Effacer</string>
   <!--Conversation-->
   <string name="conversation_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>

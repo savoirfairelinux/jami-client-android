@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- Call error -->
     <string name="call_error_no_microphone">Chiamata annullata. Nessun microfono rilevato.</string>
-    <string name="call_error_no_camera_no_microphone">Chiamata annullata. Nessuna videocamera o microfono rilevati.</string>
+    <string name="call_error_no_camera_no_microphone">Chiamata annullata. Nessuna fotocamera o microfono rilevati.</string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ricerca</string>

@@ -34,7 +34,6 @@
   <string name="menu_item_account">Hallitse tunnusta</string>
   <string name="menu_item_settings">Asetukset</string>
   <string name="menu_item_plugin_list">Lisäosien asetukset</string>
-  <string name="menu_item_share">Jaa yhteystietoni</string>
   <string name="menu_item_about">Tietoa Jamista</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
@@ -313,5 +312,5 @@
   <string name="wizard_profile_button">Tallenna profiili</string>
   <string name="wizard_profile_skip">Ohita ja tee tämä myöhemmin</string>
   <string name="fab_path_choose">Valitse toinen tiedosto</string>
-  <string name="chat_plugins">Chatti lisäosat</string>
+  <string name="chat_plugins">Keskustelun lisäosat</string>
 </resources>

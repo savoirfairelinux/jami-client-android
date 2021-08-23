@@ -33,7 +33,6 @@
   <string name="menu_item_account">खाते का संचालन करे</string>
   <string name="menu_item_settings">सेटिंग्स</string>
   <string name="menu_item_plugin_list">प्लग-इन सेटिंग्स</string>
-  <string name="menu_item_share">मेरा संपर्क साझा करें</string>
   <string name="menu_item_about">जामी के बारे में</string>
   <!--Dialing Fragment-->
   <string name="dial_number">एक नम्बर डायल करें</string>

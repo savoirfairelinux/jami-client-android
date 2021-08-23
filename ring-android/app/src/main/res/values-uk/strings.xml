@@ -29,7 +29,7 @@
   <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
   <string name="menu_item_plugin_list">Налаштування додатку</string>
-  <string name="menu_item_share">Поділитись своїми контактними даними</string>
+  <string name="menu_item_share">Поділитися моїм обліковим записом</string>
   <string name="menu_item_about">Про Джамі</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>

@@ -34,7 +34,7 @@
   <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_plugin_list">插件设置</string>
-  <string name="menu_item_share">共享我的通讯录</string>
+  <string name="menu_item_share">分享我的账户</string>
   <string name="menu_item_about">关于 Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
@@ -153,6 +153,7 @@
   <string name="clear_history_dialog_title">清除历史记录？</string>
   <string name="clear_history_dialog_message">此操作不可撤销。</string>
   <string name="clear_history_completed">已清除历史记录。</string>
+  <string name="clear_history">清除</string>
   <!--Conversation-->
   <string name="conversation_details">联系人详情</string>
   <string name="conversation_action_delete_this">删除该会话</string>

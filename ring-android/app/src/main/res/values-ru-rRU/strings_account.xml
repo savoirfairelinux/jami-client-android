@@ -150,6 +150,13 @@
   <string name="account_sip_success_title">Sip аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой Sip аккаунт.</string>
   <string name="account_sip_register_anyway">Зарегистрироваться несмотря ни на что</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Настройки аккаунта</string>
+  <string name="account_tv_advance_settings_header">Дополнительные настройки</string>
+  <string name="account_tv_about">О Jami</string>
+  <string name="tv_about_version">Версия</string>
+  <string name="tv_about_license">Лицензия</string>
+  <string name="tv_about_credits">Авторы</string>
   <string name="account_link_button">Подключиться из сети</string>
   <string name="account_link_archive_button">Подключиться через резервную копию</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
@@ -159,7 +166,6 @@
   <string name="account_end_export_button">закрыть</string>
   <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\n\Чтобы завершить процесс, вам нужно открыть Jami на новом устройстве. Создайте новую учетную запись с помощью \"связать это устройство с аккаунтом\". Ваш PIN-код действителен в течение 10 минут.</string>
   <string name="account_link_export_info_light">Чтобы использовать эту учетную запись на других устройствах, вы должны сначала предоставить ее в Jami. При этом будет сгенерирован PIN-код, который необходимо ввести на новом устройстве. PIN-код действителен в течение 10 минут.</string>
-  <string name="account_export_title">Добавить устройства</string>
   <string name="account_connect_server_button">Подключиться к серверу управления</string>
   <string name="account_connect_button">Соединение...</string>
   <string name="prompt_server">URL управляющего сервера Jami</string>
@@ -189,7 +195,6 @@
   <string name="account_link_title">Привязать это устройство</string>
   <string name="account_sip_cannot_be_registered">Не удаётся зарегистрировать аккаунт</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Редактировать свой профиль</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Введите пароль для подтверждения</string>
   <string name="enter_password">Введите пароль</string>

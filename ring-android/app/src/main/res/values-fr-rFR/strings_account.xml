@@ -111,6 +111,12 @@ Vous pourrez éditer votre compte plus tard.</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_cannot_be_found_title">Impossible de trouver le compte</string>
   <string name="account_no_network_title">Impossible de se connecter au réseau</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Paramètres avancés</string>
+  <string name="account_tv_about">À propos de Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Licence</string>
+  <string name="tv_about_credits">Crédits</string>
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>

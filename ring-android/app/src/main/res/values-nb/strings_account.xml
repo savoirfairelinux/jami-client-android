@@ -169,6 +169,14 @@ Du kan endre kontoen din senere</string>
   <string name="account_sip_success_title">SIP-konto registrert</string>
   <string name="account_sip_success_message">Du har nå registrert din SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrer uansett</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Kontoinnstillinger</string>
+  <string name="account_tv_advance_settings_header">Avanserte innstillinger</string>
+  <string name="account_tv_add_contact">Legg til kontakt</string>
+  <string name="account_tv_about">Om Jami</string>
+  <string name="tv_about_version">Versjon</string>
+  <string name="tv_about_license">Lisens</string>
+  <string name="tv_about_credits">Bidragsytere</string>
   <string name="account_link_device">Koble til fra en annen enhet</string>
   <string name="account_link_button">Koble til fra nettverk</string>
   <string name="account_link_archive_button">Koble til fra sikkerhetskopi</string>
@@ -182,7 +190,6 @@ Du kan endre kontoen din senere</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_end_export_infos">Din PIN er:\n\n%%\n\nFor å fullføre prosessen, må du åpne Jami på den nye enheten. Opprett en ny konto med \"Koble denne enheten til en konto\". PIN-koden din er gyldig i 10 minutter.</string>
   <string name="account_link_export_info_light">For å bruke denne kontoen på andre enheter, må du først avdekke den for Jami. Dette vil generere en PIN-kode som du må oppgi på den nye enheten for å konfigurere kontoen. PIN-koden er gyldig i 10 minutter.</string>
-  <string name="account_export_title">Legg til enheter</string>
   <string name="account_connect_server_button">Koble til administrasjonstjener</string>
   <string name="account_connect_button">Koble til</string>
   <string name="prompt_server">URL Jami administrasjonstjener</string>
@@ -215,7 +222,6 @@ Du kan endre kontoen din senere</string>
   <string name="account_link_title">Tilknytt denne enheten</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Rediger profilen din</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefte</string>
   <string name="enter_password">Skriv inn passord</string>

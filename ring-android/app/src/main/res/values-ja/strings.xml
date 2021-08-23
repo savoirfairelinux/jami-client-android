@@ -34,7 +34,7 @@
   <string name="menu_item_account">アカウントの管理</string>
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_plugin_list">プラグイン設定</string>
-  <string name="menu_item_share">連絡先を共有</string>
+  <string name="menu_item_share">アカウントの共有</string>
   <string name="menu_item_about">Jamiについて</string>
   <!--Dialing Fragment-->
   <string name="dial_number">電話番号を入力</string>

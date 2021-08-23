@@ -136,11 +136,16 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_title">konto SIP zarejestrowane</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Ustawienia zaawansowane</string>
+  <string name="account_tv_about">O Jami</string>
+  <string name="tv_about_version">Wersja</string>
+  <string name="tv_about_license">Licencja</string>
+  <string name="tv_about_credits">Podziękowania</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Utwórz konto Jami</string>
   <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
-  <string name="account_export_title">Dodaj urządzenia</string>
   <string name="account_connect_button">Połącz</string>
   <string name="prompt_server">Adres serwera zarządzającego Jami</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
@@ -164,7 +169,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Edytuj swój profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Wprowadź hasło aby potwierdzić</string>
   <string name="enter_password">Wprowadź hasło</string>

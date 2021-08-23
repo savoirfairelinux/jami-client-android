@@ -34,7 +34,7 @@
   <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
   <string name="menu_item_plugin_list">Rregullime Shtojcash</string>
-  <string name="menu_item_share">Ndaji kontaktet e mia me të tjerët</string>
+  <string name="menu_item_share">Ndaje llogarinë time</string>
   <string name="menu_item_about">Mbi Jami-n</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Thirrni një numër</string>
@@ -154,6 +154,7 @@
   <string name="clear_history_dialog_title">Të spastrohet historiku?</string>
   <string name="clear_history_dialog_message">Ky veprim s\’mund të zhbëhet.</string>
   <string name="clear_history_completed">Historiku u pastrua.</string>
+  <string name="clear_history">Spastroje</string>
   <!--Conversation-->
   <string name="conversation_details">Hollësi kontakti</string>
   <string name="conversation_action_delete_this">Fshije këtë bisedë</string>

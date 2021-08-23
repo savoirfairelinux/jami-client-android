@@ -32,7 +32,6 @@
   <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
   <string name="menu_item_plugin_list">Ustawienia wtyczek</string>
-  <string name="menu_item_share">Udostępnij mój kontakt</string>
   <string name="menu_item_about">O Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Wykręć numer</string>

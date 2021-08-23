@@ -33,7 +33,7 @@
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
   <string name="menu_item_plugin_list">Plugins instellingen</string>
-  <string name="menu_item_share">Deel mijn contact</string>
+  <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
@@ -152,6 +152,7 @@
   <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
   <string name="clear_history_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="clear_history_completed">Geschiedenis is gewist.</string>
+  <string name="clear_history">Wissen</string>
   <!--Conversation-->
   <string name="conversation_details">Contactdetails</string>
   <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>

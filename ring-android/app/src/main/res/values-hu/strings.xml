@@ -34,7 +34,7 @@
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
   <string name="menu_item_plugin_list">Beépülő modulok beállításai</string>
-  <string name="menu_item_share">Kapcsolati adatok megosztása</string>
+  <string name="menu_item_share">Azonosítóm megosztása</string>
   <string name="menu_item_about">A Jami névjegye</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
@@ -154,6 +154,7 @@
   <string name="clear_history_dialog_title">Törli az előzményeket?</string>
   <string name="clear_history_dialog_message">Ez a művelet nem vonható vissza.</string>
   <string name="clear_history_completed">Az előzmények törölve.</string>
+  <string name="clear_history">Törlés</string>
   <!--Conversation-->
   <string name="conversation_details">Elérhetőségei</string>
   <string name="conversation_action_delete_this">Beszélgetés törlése</string>
@@ -203,7 +204,7 @@
   <string name="profile_name">Profilnév</string>
   <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
-  <string name="take_a_photo">Fotó készítése</string>
+  <string name="take_a_photo">Fénykép készítése</string>
   <string name="profile_name_hint">Név megadása</string>
   <string name="registered_name">Bejegyzett név</string>
   <string name="no_registered_name">Nincs bejegyzett név</string>

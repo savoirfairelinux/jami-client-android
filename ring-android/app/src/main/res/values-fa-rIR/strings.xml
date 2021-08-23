@@ -34,7 +34,7 @@
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_plugin_list">تنظیمات افزونه</string>
-  <string name="menu_item_share">هم‌رسانی اطلاعات تماس من</string>
+  <string name="menu_item_share">هم‌رسانی حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
   <!--Dialing Fragment-->
   <string name="dial_number">شماره‌گیری کن</string>
@@ -154,6 +154,7 @@
   <string name="clear_history_dialog_title">پاکسازی تاریخچه؟</string>
   <string name="clear_history_dialog_message">این کار قابل بازگشت نیست.</string>
   <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
+  <string name="clear_history">پاک‌سازی</string>
   <!--Conversation-->
   <string name="conversation_details">جزئیات مخاطب</string>
   <string name="conversation_action_delete_this">حذف این گفتگو</string>

@@ -28,7 +28,6 @@
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
-  <string name="menu_item_share">Partilhar o meu contacto</string>
   <string name="menu_item_about">Sobre o Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar um número</string>

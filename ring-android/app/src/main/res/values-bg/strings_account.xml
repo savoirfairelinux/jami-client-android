@@ -125,11 +125,17 @@
   <string name="account_device_added_title">Профилът е добавен на устройството</string>
   <string name="account_device_updated_title">Профилът на устройството е обновен</string>
   <string name="account_sip_register_anyway">Регистриране въпреки това</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Разширени настройки</string>
+  <string name="account_tv_add_contact">Добавяне на контакт</string>
+  <string name="account_tv_about">Относно Jami</string>
+  <string name="tv_about_version">Версия</string>
+  <string name="tv_about_license">Лиценз</string>
+  <string name="tv_about_credits">Заслуги</string>
   <string name="account_link_prompt_pin">Въведете ПИН</string>
   <string name="account_new_button">Създаване на профил в Jami</string>
   <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
-  <string name="account_export_title">Добавяне на устройства</string>
   <string name="account_connect_prompt_username">Потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>

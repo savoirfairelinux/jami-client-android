@@ -31,7 +31,6 @@
   <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_account">Administració del compte</string>
   <string name="menu_item_settings">Opcions</string>
-  <string name="menu_item_share">Comparteix el meu contacte</string>
   <string name="menu_item_about">Sobre Jami...</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>

@@ -32,7 +32,7 @@
   <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_plugin_list">Настройки плагинов</string>
-  <string name="menu_item_share">Поделиться моей контактной информацией</string>
+  <string name="menu_item_share">Поделиться своей контактной информацией</string>
   <string name="menu_item_about">О Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>

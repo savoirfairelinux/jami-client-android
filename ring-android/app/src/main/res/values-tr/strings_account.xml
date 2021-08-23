@@ -166,6 +166,14 @@
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Hesap ayarları</string>
+  <string name="account_tv_advance_settings_header">Gelişmiş ayarlar</string>
+  <string name="account_tv_add_contact">Kişi ekle</string>
+  <string name="account_tv_about">Jami Hakkında</string>
+  <string name="tv_about_version">Sürüm</string>
+  <string name="tv_about_license">Lisans</string>
+  <string name="tv_about_credits">Emeği geçenler</string>
   <string name="account_link_device">Başka aygıttan bağlan</string>
   <string name="account_link_button">Ağdan bağlan</string>
   <string name="account_link_archive_button">Yedekten bağlan</string>
@@ -179,7 +187,6 @@
   <string name="account_end_export_button">kapat</string>
   <string name="account_end_export_infos">PIN\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı hesaba bağla\" ile yeni hesap oluşturun. PIN\'iniz 10 dakikalığına geçerlidir.</string>
   <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açığa çıkarmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken PIN kodu oluşturacak. PIN, 10 dakikalığına geçerlidir.</string>
-  <string name="account_export_title">Aygıtlar ekle</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
   <string name="prompt_server">Jami Yönetim Sunucusu URL\'si</string>
@@ -212,7 +219,6 @@
   <string name="account_link_title">Bu aygıtı bağla</string>
   <string name="account_sip_cannot_be_registered">Hesap kaydedilemiyor</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Profilinizi düzenleyin</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>
   <string name="enter_password">Parolayı gir</string>

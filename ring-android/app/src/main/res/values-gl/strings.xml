@@ -34,7 +34,6 @@
   <string name="menu_item_account">Xestionar conta</string>
   <string name="menu_item_settings">Axustes</string>
   <string name="menu_item_plugin_list">Axustes dos plugins</string>
-  <string name="menu_item_share">Compartir o meu contacto</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un número</string>

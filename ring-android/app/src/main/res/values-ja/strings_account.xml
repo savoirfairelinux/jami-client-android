@@ -159,6 +159,13 @@
   <string name="account_sip_success_title">SIPアカウントを登録しました</string>
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">詳細設定</string>
+  <string name="account_tv_add_contact">連絡先を追加</string>
+  <string name="account_tv_about">Jamiについて</string>
+  <string name="tv_about_version">バージョン</string>
+  <string name="tv_about_license">ライセンス</string>
+  <string name="tv_about_credits">謝辞</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
@@ -169,7 +176,6 @@
   <string name="account_end_export_button">閉じる</string>
   <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\n処理を完了するには、新しいデバイスでJamiを開く必要があります。\"このデバイスをアカウントとリンク\" して新しいアカウントを作成してください。PINの有効期間は10分です。</string>
   <string name="account_link_export_info_light">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
-  <string name="account_export_title">デバイスの追加</string>
   <string name="account_connect_server_button">管理サーバーに接続</string>
   <string name="account_connect_button">接続</string>
   <string name="prompt_server">Jami管理サーバーのURL</string>
@@ -202,7 +208,6 @@
   <string name="account_link_title">この機器を関連付ける</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">個人情報を編集</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">確認の暗証語を入力</string>
   <string name="enter_password">暗証語を入力してください</string>

@@ -169,6 +169,14 @@
   <string name="account_sip_success_title">SIP 账户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">账户设置</string>
+  <string name="account_tv_advance_settings_header">高级设置</string>
+  <string name="account_tv_add_contact">添加联系人</string>
+  <string name="account_tv_about">关于 Jami</string>
+  <string name="tv_about_version">版本</string>
+  <string name="tv_about_license">许可</string>
+  <string name="tv_about_credits">致谢</string>
   <string name="account_link_device">从另一台设备连接</string>
   <string name="account_link_button">从网络关联</string>
   <string name="account_link_archive_button">从备份文件关联</string>
@@ -182,7 +190,6 @@
   <string name="account_end_export_button">关闭</string>
   <string name="account_end_export_infos">您的 PIN 码是：\n\n%%\n\n要完成此过程，您需要在新设备上打开 Jami。 使用“将此设备关联到账户”创建一个新账户。您的 PIN 码有效期为 10 分钟。</string>
   <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置账户。PIN 有效期为 10 分钟。</string>
-  <string name="account_export_title">添加设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
   <string name="account_connect_button">连接</string>
   <string name="prompt_server">Jami 管理服务器 URL</string>
@@ -215,7 +222,6 @@
   <string name="account_link_title">关联此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册账户</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">修改您的账户资料</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">输入密码以确认</string>
   <string name="enter_password">输入密码</string>

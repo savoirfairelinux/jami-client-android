@@ -15,6 +15,7 @@
   <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
   <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
   <string name="credits">الأطراف الداعمة</string>
+  <string name="pip_title">اجتماع جامي مرئي</string>
   <string name="call_service_description">هذه الخدمه ضرورية لتبقي المكالمات تعمل في الواجهة. إنها تعمل فقط أثناء المكالمات.</string>
   <string name="data_transfer_service_description">هذه الخدمة ضرورية لعرض الإعلامات المستمرة أثناء نقل الملفات. تعمل فقط أثناء نقل الملفات.</string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">النغمات بواسطة</string>
   <!--RingActivity-->
   <string name="error_no_network">لا يوجد اتصال بالشبكة</string>
+  <string name="error_account_offline">الحساب غير متصل</string>
   <string name="error_mobile_network_available_but_disabled">الرجاء إعطاء صلاحيات الوصول إلى الشبكة الخلوية في شاشة الإعدادات.</string>
   <!--AB menus-->
   <string name="ab_action_chat">رسائل نصية</string>
@@ -32,7 +34,7 @@
   <string name="menu_item_account">إدارة الحساب</string>
   <string name="menu_item_settings">الإعدادات</string>
   <string name="menu_item_plugin_list">إعدادت الإضافات</string>
-  <string name="menu_item_share">مشاركة جهة اتصالي</string>
+  <string name="menu_item_share">مشاركة حسابي</string>
   <string name="menu_item_about">حول جامي</string>
   <!--Dialing Fragment-->
   <string name="dial_number">إتصال برقم</string>
@@ -93,6 +95,8 @@
   <string name="action_call_hangup">إنهاء</string>
   <string name="action_call_maximize">تكبير</string>
   <string name="action_call_minimize">تقليص</string>
+  <string name="action_call_mute">كتم الصوت</string>
+  <string name="action_call_unmute">إعادة الصوت</string>
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة صادرة من %1$s</string>
@@ -118,6 +122,7 @@
   <string name="qr_code">رمز الإستجابة السريعة</string>
   <string name="ab_action_flipcamera">قلب كاميرا</string>
   <string name="ab_action_hidepreview">إخفاء معاينة</string>
+  <string name="remote_recording">%s تسجيل... </string>
   <!--Text messages-->
   <string name="send_message">إرسال رسالة</string>
   <string name="message_sending">يتم إرسال رسالة...</string>
@@ -175,6 +180,13 @@
   <string name="block_contact_dialog_message">%1$s لن يتمكن من الاتصال بك حتى تقوم بإلغاء حظره.</string>
   <string name="block_contact_completed">تم حظر %1$s.</string>
   <string name="conversation_contact_is_typing">جهة إتصال تكتب…</string>
+  <string name="conversation_info_contact_you">أنت</string>
+  <string name="conversation_members">الأعضاء</string>
+  <string name="conversation_preference_color">لون المحادثة</string>
+  <string name="conversation_preference_emoji">إيموجي المحادثة</string>
+  <string name="conversation_type_contact">جهة اتصال جامي</string>
+  <string name="conversation_type_private">سرب خاص</string>
+  <string name="conversation_type_group">سرب مجموعة</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
   <string name="prompt_new_password">كلمة مرور جديدة</string>
@@ -217,6 +229,7 @@
   <string name="refuse">أرفض</string>
   <string name="block">حظر</string>
   <string name="contact_request_title">طلب جهة إتصال جديد</string>
+  <string name="contact_request_msg">لديك %1$d طلبات جهات اتصال</string>
   <string name="contact_request_account">لـ%1$s</string>
   <string name="no_requests">لا يوجد لديك طلبات جهة إتصال جديدة</string>
   <string name="message_contact_not_trusted_yet">%s ليس في جهات إتصالك بعد.\nهل تقبل أم ترفض جهة الإتصال هذه؟</string>
@@ -255,6 +268,7 @@
   <string name="file_transfer_status_timed_out">نفذت المهلة</string>
   <string name="file_saved_in">تم تخزين الملف في %s</string>
   <string name="file_saved_successfully">تم تخزين الملف بنجاح</string>
+  <string name="file_download">تنزيل</string>
   <string name="no_space_left_on_device">ﻻ توجد مساحة باقية على الجهاز</string>
   <string name="title_media_viewer">عارض الوسائط</string>
   <string name="menu_file_open">فتح ملف</string>
@@ -303,4 +317,5 @@
   <string name="wizard_profile_button">حفظ الملف الشخصي</string>
   <string name="wizard_profile_skip">تخطي وعمل ذلك فيما بعد</string>
   <string name="fab_path_choose">اختر وثيقة أخرى</string>
+  <string name="chat_plugins">إضافات الدردشة</string>
 </resources>

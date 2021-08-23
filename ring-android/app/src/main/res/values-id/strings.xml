@@ -15,6 +15,7 @@
   <string name="license">Perangkat lunak ini disediakan \"apa adanya\", tanpa jaminan apapun. Untuk detalinya, <u>GNU General Public License versi 3 atau yang lebih baru</u></string>
   <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
   <string name="credits">Partisipan</string>
+  <string name="pip_title">Konferensi Jami</string>
   <string name="call_service_description">Layanan ini diperlukan untuk membuat panggilan anda tetap berjalan di latar depan. Ini hanya berjalan selama panggilan</string>
   <string name="data_transfer_service_description">Layanan ini diperlukan untuk menampilkan pemberitahuan terus menerus selama mengirim file. Ini hanya berjalan ketika mengirim file</string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">Nada dering oleh</string>
   <!--RingActivity-->
   <string name="error_no_network">Tidak ada jaringan internet</string>
+  <string name="error_account_offline">Akun sedang offline</string>
   <string name="error_mobile_network_available_but_disabled">Tolong beri akses ke jaringan seluler di layar pengaturan</string>
   <!--AB menus-->
   <string name="ab_action_chat">Pesan teks</string>
@@ -32,7 +34,7 @@
   <string name="menu_item_account">Mengelola akun</string>
   <string name="menu_item_settings">Setelan</string>
   <string name="menu_item_plugin_list">Pengaturan Plugin</string>
-  <string name="menu_item_share">Bagikan kontak saya</string>
+  <string name="menu_item_share">Bagikan akun saya</string>
   <string name="menu_item_about">Tentang Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Tekan nomor</string>
@@ -65,7 +67,9 @@
   <string name="notif_channel_file_transfer">Mengirim berkas</string>
   <string name="notif_channel_sync">Sinkronisasi data</string>
   <string name="notif_channel_background_service">Layanan latar belakang</string>
+  <string name="notif_channel_background_service_descr">Selalu terima panggilan dan pesan kapan pun</string>
   <string name="notif_group_calls">Panggilan</string>
+  <string name="notif_background_service">Jami sedang berjalan di latar belakang</string>
   <string name="notif_mark_as_read">Tandai sudah dibaca</string>
   <string name="notif_dismiss">Abaikan</string>
   <string name="notif_reply">Balas</string>
@@ -74,6 +78,8 @@
   <string name="notif_incoming_picture">Gambar dari %1$s</string>
   <string name="notif_sync_title">Mensinkronisasi data...</string>
   <string name="notif_location_title">Berbagi lokasi dengan %1$s</string>
+  <string name="location_share_contact">%1$s berbagi lokasi dengan anda</string>
+  <string name="notif_location_multi_title">Berbagi lokasi dengan %1$d kontak</string>
   <string name="notif_location_remaining">%1$dmenit tersisa</string>
   <string name="notif_location_action_stop">Berhenti bagikan lokasi</string>
   <string name="location_share_action_start">Mulai berbagi</string>
@@ -83,10 +89,16 @@
   <string name="you_txt_prefix">Anda:</string>
   <string name="action_call_hangup">Angkat</string>
   <string name="action_call_maximize">Maksimalkan</string>
+  <string name="action_call_minimize">Kurangi</string>
   <string name="action_call_mute">Senyapkan</string>
   <string name="ongoing_call">Panggilan berlangsung</string>
+  <string name="hist_in_call">Panggilan masuk dari %1$s</string>
+  <string name="hist_out_call">Panggilan keluar dari %1$s</string>
   <string name="start_error_title">Tidak dapat memulai Jami !</string>
+  <string name="start_error_mic_required">Jami butuh izin akses mikrofon untuk bekerja.</string>
   <string name="action_call_accept">Terima panggilan</string>
+  <string name="action_call_hold_accept">Tahan dan angkat panggilan</string>
+  <string name="action_call_end_accept">Akhiri dan angkat panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="action_call_mic_mute">Senyapkan mikrofon</string>
   <string name="action_load_plugin">Muat plugin</string>
@@ -94,6 +106,7 @@
   <string name="ab_action_contact_add">Tambah sebagai kontak</string>
   <string name="ab_action_contact_add_question">Tambah ke kontak?</string>
   <string name="hist_contact_added">Kontak ditambahkan</string>
+  <string name="hist_invitation_received">Undangan diterima</string>
   <string name="ab_action_audio_call">Panggilan suara</string>
   <string name="ab_action_video_call">Panggilan video</string>
   <string name="ab_action_change_screen_orientation">Ganti orientasi layar</string>
@@ -121,15 +134,19 @@
   <string name="ringtone_error_title">Galat</string>
   <string name="ringtone_error_format_not_supported">Format tidak didukung.</string>
   <string name="ringtone_error_size_too_big">Berkas terlalu besar. Maksimal ukuran yang diterima adalah %1$d kB.</string>
+  <string name="ringtone_custom_prompt">Atur nada dering kustom</string>
   <string name="ringtone_custom_label">Kustom</string>
+  <string name="ringtone_jami_tones">Nada dering Jami</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
+  <string name="title_activity_qrcode">Bagikan akun saya</string>
   <string name="tab_code">Kode Saya</string>
   <string name="tab_scan">Pindai Kode</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Bersihkan riwayat?</string>
+  <string name="clear_history_dialog_message">Aksi ini tak bisa dibatalkan</string>
   <string name="clear_history_completed">Riwayat telah dihapus.</string>
   <!--Conversation-->
   <string name="conversation_details">Rincian kontak</string>
@@ -137,14 +154,25 @@
   <string name="conversation_action_delete_this_title">Hapus percakapan ini ?</string>
   <string name="conversation_action_delete_this_message">Aksi ini tidak dapat dibatalkan.</string>
   <string name="conversation_action_history_clear">Bersihkan riwayat</string>
+  <string name="conversation_action_history_clear_title">Hapus riwayat percakapan?</string>
   <string name="conversation_action_remove_this">Hapus kontak</string>
+  <string name="conversation_action_remove_this_title">Hapus kontak ini?</string>
+  <string name="conversation_action_remove_this_message">Ini akan menghapus kontak dan membersihkan riwayat percakapan.</string>
   <string name="conversation_action_copy_peer_number">Salin nomor</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
   <string name="conversation_action_select_peer_number">Pilih nomor</string>
+  <string name="conversation_action_block_this">Blokir kontak</string>
   <string name="clip_contact_uri">Alamat kontak</string>
   <string name="block_contact_dialog_title">Blokir %1$s?</string>
   <string name="block_contact_completed">%1$stelah diblokir.</string>
   <string name="conversation_contact_is_typing">Kontak sedang mengetik...</string>
+  <string name="conversation_info_contact_you">Anda</string>
+  <string name="conversation_members">Anggota</string>
+  <string name="conversation_preference_color">Warna percakapan</string>
+  <string name="conversation_preference_emoji">Emoji percakapan</string>
+  <string name="conversation_type_contact">Kontak jami</string>
+  <string name="conversation_type_private">Kolam privat</string>
+  <string name="conversation_type_group">Kolam grup</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>
@@ -153,6 +181,8 @@
   <string name="account_create_title">Buat akun Jami</string>
   <string name="prompt_new_username">Masukkan username baru</string>
   <string name="prompt_hint_username">Nama pengguna</string>
+  <string name="help_password_enter">Masukkan kata sandi utama akun Jami anda</string>
+  <string name="help_server_enter">Masukkan URL manajemen peladen.</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
   <string name="wizard_skip">Lewat</string>
@@ -166,7 +196,11 @@
   <string name="registered_name">Nama terdaftar</string>
   <string name="identity">Identitas</string>
   <string name="account">Akun</string>
+  <string name="link_new_device">Hubungkan perangkat baru</string>
+  <string name="devices">Perangkat yang terhubung</string>
+  <string name="total_devices">Jumlah perangkat:</string>
   <!--Share fragment-->
+  <string name="share_message">Pindai kode dengan Jami</string>
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
   <string name="share_label">Bagikan</string>
@@ -177,26 +211,83 @@
   <string name="accept">Terima</string>
   <string name="refuse">Tolak</string>
   <string name="block">Blokir</string>
+  <string name="contact_request_title">Permintaan kontak baru</string>
+  <string name="contact_request_msg">Anda memiliki %1$d permintaan kontak</string>
   <string name="contact_request_account">Untuk %1$s</string>
+  <string name="no_requests">Anda tidak memiliki permintaan kontak</string>
   <!--Send contact requests-->
   <string name="send_request_button">Kirim</string>
   <string name="send_request_title">Kirim permintaan kontak</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Tidak ada kontak yang diblokir</string>
   <!--Smartlist-->
+  <string name="contact_request_sent">Permintaan kontak terkirim</string>
   <string name="start_conversation">Mulai obrolan</string>
   <string name="search_results">Hasil Pencarian</string>
   <string name="tv_contact_row_header">Kontak</string>
+  <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
+  <string name="gallery_error_message">Tidak ada aplikasi yang ditemukan untuk membuka galeri</string>
   <!--File Transfer-->
+  <string name="invalid_file">Berkas tidak valid</string>
+  <string name="not_able_to_write_file">Tidak dapat menulis berkas</string>
+  <string name="file_transfer_status_unsupported">Tidak didukung</string>
+  <string name="file_transfer_status_ongoing">Sedang berlangsung</string>
+  <string name="file_transfer_status_finished">Selesai</string>
+  <string name="file_transfer_status_closed_by_host">Ditutup oleh host</string>
+  <string name="file_transfer_status_closed_by_peer">Tutup oleh sejawat</string>
+  <string name="file_transfer_status_invalid_pathname">Jalur tidak valid</string>
+  <string name="file_transfer_status_cancelled">Dibatalkan</string>
+  <string name="file_transfer_status_error">Gagal karena galat</string>
+  <string name="file_transfer_status_timed_out">Waktu habis</string>
+  <string name="file_saved_in">Berkas disimpan di %s</string>
+  <string name="file_saved_successfully">Berkas berhasil disimpan</string>
+  <string name="file_download">Unduh</string>
+  <string name="no_space_left_on_device">Tak ada ruang tersisa di perangkat</string>
+  <string name="menu_file_open">Buka berkas</string>
+  <string name="menu_file_download">Unduh berkas</string>
+  <string name="menu_file_save">Simpan berkas</string>
+  <string name="menu_file_delete">Hapus berkas</string>
+  <string name="menu_file_share">Bagikan berkas</string>
+  <string name="menu_message_copy">Salin</string>
+  <string name="menu_message_delete">Hapus pesan</string>
+  <string name="menu_message_cancel">Batalkan pesan</string>
   <string name="menu_delete">Hapus</string>
+  <string name="pref_darkTheme_title">Tema gelap</string>
+  <string name="pref_darkTheme_summary">Selalu aktifkan tema gelap daripada menggunakan bawaan sistem</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Obrolan</string>
   <string name="navigation_item_contact_request">Contact requests</string>
   <string name="navigation_item_account">Akun</string>
+  <string name="search_results_public_directory">Direktori publik</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Kirim pesan suara?</string>
+  <string name="tv_send_image_dialog_message">Kirim gambar?</string>
+  <string name="tv_send_video_dialog_message">Kirim video?</string>
+  <string name="tv_media_preview">Cuplikan</string>
   <string name="tv_audio_play">Mainkan</string>
+  <string name="tv_audio_pause">Jeda</string>
   <string name="tv_dialog_send">Kirim</string>
+  <string name="tv_audio_recording">Merekam...</string>
+  <string name="tv_send_text">Kirim teks</string>
+  <string name="tv_send_audio">Kirim audio</string>
+  <string name="tv_send_video">Kirim media</string>
+  <string name="conversation_input_speech_hint">Katakan sesuatu...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomendasi</string>
+  <string name="wizard_status_optional">Opsional</string>
+  <string name="wizard_status_required">Wajib</string>
+  <string name="wizard_username_info">Tentukan nama pengguna untuk akun anda</string>
+  <string name="wizard_username_button">Tentukan nama pengguna</string>
+  <string name="wizard_username_skip">Lewati menentukan nama pengguna</string>
+  <string name="wizard_password_info">Kata sandi akun</string>
+  <string name="wizard_password_placeholder">Tentukan kata sandi untuk mengenkripsi kunci akun pada perangkat ini</string>
+  <string name="wizard_password_button">Tentukan kata sandi</string>
   <string name="wizard_password_skip">Buat akun</string>
+  <string name="wizard_password_switch">Enkripsi akun dengan kata sandi</string>
+  <string name="wizard_password_warning">Harap perhatikan, kata sandi tidak bisa dipulihkan</string>
+  <string name="wizard_profile_info">Profil hanya dibagikan dengan kontak</string>
   <string name="wizard_profile_button">Simpan Profil</string>
+  <string name="wizard_profile_skip">Nanti saja</string>
+  <string name="fab_path_choose">Pilih berkas lain</string>
+  <string name="chat_plugins">Pengaya chat</string>
 </resources>

@@ -105,13 +105,20 @@
   <string name="account_device_added_title">Kontuaren gailua gehituta</string>
   <string name="account_device_updated_title">Kontuaren gailua eguneratu da</string>
   <string name="account_sip_register_anyway">Erregistratu hala ere</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Ezarpen aurreratuak</string>
+  <string name="account_tv_add_contact">Gehitu kontaktua</string>
+  <string name="account_tv_about">Jamiri buruz</string>
+  <string name="tv_about_version">Bertsioa</string>
+  <string name="tv_about_license">Lizentzia</string>
+  <string name="tv_about_credits">Kredituak</string>
   <string name="account_link_button">Konektatu saretik</string>
   <string name="account_link_archive_button">Konektatu babes-kopiatik</string>
   <string name="account_link_prompt_pin">Sartu PIN-a</string>
   <string name="account_new_button">Sortu Jami kontua</string>
+  <string name="account_link_export_button">Estekatu gailu berria</string>
   <string name="account_start_export_button">Sortu PIN-a</string>
   <string name="account_end_export_button">itxi</string>
-  <string name="account_export_title">Gehitu gailuak</string>
   <string name="account_connect_prompt_username">Erabiltzaile-izena</string>
   <!--Name registration-->
   <string name="error_username_empty">Sartu erabiltzaile-izen bat</string>
@@ -133,7 +140,6 @@
   <string name="account_link_title">Estekatu gailu hau</string>
   <string name="account_sip_cannot_be_registered">Ezin da kontua erregistratu</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Editatu zure profila</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Sartu pasahitza berresteko</string>
   <string name="enter_password">Sartu pasahitza</string>

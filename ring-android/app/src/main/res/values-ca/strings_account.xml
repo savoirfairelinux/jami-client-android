@@ -159,6 +159,12 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_sip_success_title">Compte Sip registrat</string>
   <string name="account_sip_success_message">Ha registrat amb èxit el seu compte Sip.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Preferències avançades</string>
+  <string name="account_tv_about">Sobre Jami...</string>
+  <string name="tv_about_version">Versió</string>
+  <string name="tv_about_license">Llicència</string>
+  <string name="tv_about_credits">Crèdits</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
@@ -168,7 +174,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_end_export_button">tanca</string>
   <string name="account_end_export_infos">El seu PIN és:\n\n%%\n\nPer completar el procès, necessita obrir Jami en el nou dispositiu. Crei un nou compte amb l\'opció «Vincula aquest dispositiu amb un compte». El seu PIN té una validesa de 10 minuts.</string>
   <string name="account_link_export_info_light">Per a utilitzar aquest compte en altres dispositius, primer ha d\'exposar-lo a Jami. Això generarà un codi PIN que ha d\'inserir en el nou dispositiu per configurar el compte. El PIN té una validesa de 10 minuts.</string>
-  <string name="account_export_title">Afegir dispositius</string>
   <string name="account_connect_server_button">Connecta amb el servidor de gestió</string>
   <string name="account_connect_button">Connectar</string>
   <string name="prompt_server">URL del servidor de gestió Jami</string>
@@ -198,7 +203,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_link_title">Vincula aquest dispositiu</string>
   <string name="account_sip_cannot_be_registered">No es pot registrar el compte</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Editi el seu perfil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduïu la contrasenya per confirmar</string>
   <string name="enter_password">Introduïu la contrasenya</string>

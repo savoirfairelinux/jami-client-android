@@ -169,6 +169,13 @@
   <string name="account_sip_success_title">تم تسجيل حساب Sip</string>
   <string name="account_sip_success_message">لقد نجحت في تسجيل حساب Sip الخاص بك.</string>
   <string name="account_sip_register_anyway">تسجيل على أى حال</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">إعدادات متقدمة</string>
+  <string name="account_tv_add_contact">إضافة جهة اتصال</string>
+  <string name="account_tv_about">حول جامي</string>
+  <string name="tv_about_version">الإصدار</string>
+  <string name="tv_about_license">الرخصة</string>
+  <string name="tv_about_credits">الأطراف الداعمة</string>
   <string name="account_link_device">اتصل من جهاز آخر</string>
   <string name="account_link_button">الاتصال من الشبكة</string>
   <string name="account_link_archive_button">الاتصال من النسخ الاحتياطي</string>
@@ -182,7 +189,6 @@
   <string name="account_end_export_button">إغلاق</string>
   <string name="account_end_export_infos">رقم PIN الخاص بك هو:\n\n%%\n/nلإكمال العملية، يجب فتح جامى على الجهاز الجديد. أنشئ حسابًا جديدًا باستخدام \"ربط هذا الجهاز بحساب\". رقم PIN صالح لمدة 10 دقائق.</string>
   <string name="account_link_export_info_light">لاستخدام هذا الحساب على أجهزة أخرى، يجب أولاً تعريضه على جامى. سيؤدي ذلك إلى إنشاء رمز PIN يجب إدخاله على الجهاز الجديد لإعداد الحساب. رمز PIN صالح لمدة 10 دقائق.</string>
-  <string name="account_export_title">إضافة أجهزة</string>
   <string name="account_connect_server_button">الاتصال بخادم الإدارة</string>
   <string name="account_connect_button">إتصال</string>
   <string name="prompt_server">عنوان URL خادم ادارة جامى</string>
@@ -215,7 +221,6 @@
   <string name="account_link_title">ربط هذا الجهاز</string>
   <string name="account_sip_cannot_be_registered">يتعذر تسجيل الحساب</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">تعديل ملفك الشخصى</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">أدخل كلمة المرور للتأكيد</string>
   <string name="enter_password">أدخِل كلمة المرور</string>

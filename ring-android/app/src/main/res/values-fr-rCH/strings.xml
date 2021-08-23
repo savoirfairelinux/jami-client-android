@@ -28,6 +28,7 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
+  <string name="clear_history">Effacer</string>
   <!--Conversation-->
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <!--Contacts-->

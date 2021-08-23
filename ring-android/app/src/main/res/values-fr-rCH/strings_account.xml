@@ -29,6 +29,7 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_enter_password">Entrez votre mot de passe</string>
+  <!--TV-->
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
   <!--Name registration-->

@@ -33,7 +33,7 @@
   <string name="menu_item_account">Upravljanjem nalogom</string>
   <string name="menu_item_settings">Podešavanja</string>
   <string name="menu_item_plugin_list">Podešavanja dodataka</string>
-  <string name="menu_item_share">Podeli moj kontakt</string>
+  <string name="menu_item_share">Podeli moj nalog</string>
   <string name="menu_item_about">O Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Birajte broj</string>

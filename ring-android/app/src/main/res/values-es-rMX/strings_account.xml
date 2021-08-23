@@ -19,6 +19,7 @@
   <string name="error_password_char_count">mínimo 6 caracteres</string>
   <string name="account_cannot_be_found_title">No se puede encontrar la cuenta</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
+  <!--TV-->
   <string name="account_link_prompt_pin">Escriba el PIN</string>
   <!--Name registration-->
   <string name="account_status_connecting">Conectado</string>

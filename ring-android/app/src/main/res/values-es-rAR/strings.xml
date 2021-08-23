@@ -34,7 +34,6 @@
   <string name="menu_item_account">Gestionar cuenta</string>
   <string name="menu_item_settings">Ajustes</string>
   <string name="menu_item_plugin_list">Ajustes de complementos</string>
-  <string name="menu_item_share">Compartir mi contacto</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un número</string>

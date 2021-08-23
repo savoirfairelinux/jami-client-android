@@ -167,6 +167,12 @@
   <string name="account_sip_success_title">Sip ਖਾਤੇ ਦਾ ਪੰਜੀਕਰਨ ਹੋਇਆ</string>
   <string name="account_sip_success_message">ਤੁਸੀਂ ਆਪਣੇ Sip ਖਾਤੇ ਦਾ ਸਫਲਤਾਪੂਰਵਕ ਪੰਜੀਕਰਨ ਕੀਤਾ।</string>
   <string name="account_sip_register_anyway">ਫਿਰ ਵੀ ਪੰਜੀਕਰਨ ਕਰੋ</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">ਉੱਨਤ ਸੈਟਿੰਗਾਂ</string>
+  <string name="account_tv_about">Jami ਬਾਰੇ</string>
+  <string name="tv_about_version">ਵਰਜਨ</string>
+  <string name="tv_about_license">ਲਾਇਸੰਸ</string>
+  <string name="tv_about_credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
   <string name="account_link_device">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ ਤੋਂ ਜੁੜੋ</string>
   <string name="account_link_button">ਨੈੱਟਵਰਕ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
   <string name="account_link_archive_button">ਬੈਕਅੱਪ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
@@ -178,7 +184,6 @@
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
   <string name="account_end_export_infos">ਤੁਹਾਡਾ ਪਿੰਨ:\n\n%%\n\nਸੈੱਟਅੱਪ ਪੂਰਾ ਕਰਨ ਲਈ, ਤੁਹਾਨੂੰ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ Jami ਖੋਲ੍ਹਣ ਦੀ ਲੋੜ ਹੈ। \"ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਕਿਸੇ ਖਾਤੇ ਨਾਲ ਲਿੰਕ ਕਰੋ\" ਨਾਲ ਨਵਾਂ ਖਾਤਾ ਬਣਾਓ। ਤੁਹਾਡਾ ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_link_export_info_light">ਹੋਰਾਂ ਡੀਵਾਈਸਾਂ \'ਤੇ ਇਹ ਖਾਤਾ ਵਰਤਣ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ Jami \'ਤੇ ਇਸਨੂੰ ਨਿਰਯਾਤ ਕਰਨਾ ਪਵੇਗਾ। ਇੰਝ ਕਰਨ ਨਾਲ ਪਿੰਨ ਕੋਡ ਸਿਰਜਿਆ ਜਾਵੇਗਾ ਜਿਸਨੂੰ ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੇ ਸੈੱਟਅੱਪ ਵੇਲੇ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ ਦਾਖਲ ਕਰਨਾ ਪਵੇਗਾ। ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
-  <string name="account_export_title">ਡੀਵਾਈਸ ਸ਼ਾਮਲ ਕਰੋ</string>
   <string name="account_connect_server_button">ਪ੍ਰਬੰਧ ਸਰਵਰ ਨਾਲ ਜੋੜੋ</string>
   <string name="account_connect_button">ਜੋੜੋ</string>
   <string name="prompt_server">Jami ਪ੍ਰਬੰਧ ਸਰਵਰ ਦਾ URL</string>
@@ -210,7 +215,6 @@
   <string name="account_link_title">ਇਹ ਡੀਵਾਈਸ ਲਿੰਕ ਕਰੋ</string>
   <string name="account_sip_cannot_be_registered">ਖਾਤੇ ਦਾ ਪੰਜੀਕਰਨ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">ਆਪਣੇ ਪ੍ਰੋਫਾਈਲ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
   <string name="enter_password">ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>

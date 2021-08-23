@@ -23,7 +23,7 @@
   <string name="menu_item_accounts">Upravljaj računima</string>
   <string name="menu_item_account">Upravljanje računom</string>
   <string name="menu_item_settings">Postavke</string>
-  <string name="menu_item_share">Dijeli moj kontakt</string>
+  <string name="menu_item_share">Dijeli moj račun</string>
   <string name="menu_item_about">O Jami-u</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>

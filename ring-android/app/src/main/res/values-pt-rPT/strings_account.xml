@@ -158,6 +158,13 @@
   <string name="account_sip_success_title">Conta SIP registada</string>
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Configurações avançadas</string>
+  <string name="account_tv_add_contact">Adicionar contacto</string>
+  <string name="account_tv_about">Sobre o Jami</string>
+  <string name="tv_about_version">Versão</string>
+  <string name="tv_about_license">Licença</string>
+  <string name="tv_about_credits">Créditos</string>
   <string name="account_link_button">Conectar da rede</string>
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
@@ -168,7 +175,6 @@
   <string name="account_end_export_button">fechar</string>
   <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
-  <string name="account_export_title">Adicionar dispositivos</string>
   <string name="account_connect_server_button">Ligar ao servidor de gestão</string>
   <string name="account_connect_button">Ligar</string>
   <string name="prompt_server">URL do servidor de gestão do Jami</string>
@@ -198,7 +204,6 @@
   <string name="account_link_title">Associar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Não foi possível registar a conta</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Editar o meu perfil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduza a palavra-chave para confirmar</string>
   <string name="enter_password">introduza a palavra-chave</string>

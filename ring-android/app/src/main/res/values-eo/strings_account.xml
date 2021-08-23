@@ -93,6 +93,9 @@
   <string name="account_export_end_error_title">Eraro</string>
   <string name="account_cannot_be_found_title">Ne trovantas konton</string>
   <string name="account_no_network_title">Ne povas konekti al la reto</string>
+  <!--TV-->
+  <string name="tv_about_version">Eldono</string>
+  <string name="tv_about_credits">Kredito</string>
   <string name="account_link_prompt_pin">Entajpu PIN</string>
   <string name="account_connect_prompt_username">Uzantnomo</string>
   <!--Name registration-->

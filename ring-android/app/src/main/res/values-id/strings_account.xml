@@ -91,14 +91,20 @@
   <string name="account_no_network_title">Tidak dapat terhubung ke jaringan</string>
   <string name="account_device_added_title">Akun perangkat ditambahkan</string>
   <string name="account_device_updated_title">Akun perangkat diperbarui</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Pengaturan lanjutan</string>
+  <string name="account_tv_about">Tentang Jami</string>
+  <string name="tv_about_version">Versi</string>
+  <string name="tv_about_license">Lisensi</string>
+  <string name="tv_about_credits">Partisipan</string>
   <string name="account_link_device">Hubungkan melalui perangkat lain</string>
   <string name="account_link_button">Hubungkan melalui jaringan</string>
   <string name="account_link_archive_button">Hubungkan melalui cadangan</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Buat akun Jami</string>
+  <string name="account_link_export_button">Hubungkan perangkat baru</string>
   <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
-  <string name="account_export_title">Tambah perangkat</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
   <string name="account_connect_button">Hubungkan</string>
   <string name="prompt_server">URL peladen manajemen Jami</string>
@@ -130,7 +136,6 @@
   <string name="account_link_title">Hubungkan perangkat ini</string>
   <string name="account_sip_cannot_be_registered">Tidak bisa mendaftarkan akun</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Ubah profil Anda</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Masukkan kata sandi untuk konfirmasi</string>
   <string name="enter_password">Masukan kata sandi</string>

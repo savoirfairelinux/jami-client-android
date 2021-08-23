@@ -167,6 +167,14 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_sip_success_title">Účet SIP zaregistrován</string>
   <string name="account_sip_success_message">Úspěšně jste zaregistroval účet SIP.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Nastavení účtu</string>
+  <string name="account_tv_advance_settings_header">Pokročilá nastavení</string>
+  <string name="account_tv_add_contact">Přidat kontakt</string>
+  <string name="account_tv_about">O Jami</string>
+  <string name="tv_about_version">Verze</string>
+  <string name="tv_about_license">Povolení</string>
+  <string name="tv_about_credits">Zásluhy</string>
   <string name="account_link_device">Připojit z jiného zařízení</string>
   <string name="account_link_button">Připojit ze sítě</string>
   <string name="account_link_archive_button">Připojit ze zálohy</string>
@@ -178,7 +186,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete Jami na novém zařízení. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <string name="account_link_export_info_light">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte pro nastavení účtu zadat na novém zařízení. PIN zůstává platný po 0 minut.</string>
-  <string name="account_export_title">Přidat zařízení</string>
   <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
   <string name="prompt_server">Adresa URL správcovského serveru Jami</string>
@@ -210,7 +217,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_title">Připojit toto zařízení</string>
   <string name="account_sip_cannot_be_registered">Nelze zaregistrovat účet</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Upravit váš profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Pro potvrzení zadejte heslo</string>
   <string name="enter_password">Zadejte heslo</string>

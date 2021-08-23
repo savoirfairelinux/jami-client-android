@@ -34,7 +34,7 @@
   <string name="menu_item_account">Управление аккаунтом</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_plugin_list">Настройки дополнений</string>
-  <string name="menu_item_share">Поделиться моим контактом</string>
+  <string name="menu_item_share">Поделиться своим контактом</string>
   <string name="menu_item_about">О программе Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
@@ -156,6 +156,7 @@
   <string name="clear_history_dialog_title">Очистить историю?</string>
   <string name="clear_history_dialog_message">Это действие невозможно отменить.</string>
   <string name="clear_history_completed">История была очищена.</string>
+  <string name="clear_history">Очистить</string>
   <!--Conversation-->
   <string name="conversation_details">Информация о контакте</string>
   <string name="conversation_action_delete_this">Удалить этот разговор</string>

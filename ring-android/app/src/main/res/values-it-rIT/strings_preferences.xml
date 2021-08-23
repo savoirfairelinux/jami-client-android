@@ -25,7 +25,7 @@
   <string name="pref_systemDialer_summary">Usa Jami per effettuare le chiamate di sistema quando possibile.</string>
   <string name="pref_startOnBoot_title">Avvia Jami all\'avvio del sistema</string>
   <string name="pref_startOnBoot_summary">Esegui Jami in background all\'avvio del sistema.</string>
-  <string name="pref_clearHistory_title">Elimina cronologia</string>
+  <string name="pref_clearHistory_title">Elimina le conversazioni</string>
   <string name="pref_clearHistory_summary">Elimina la cronologia di tutte le conversazioni. Questa azione non può essere annullata.</string>
   <string name="pref_notification_title">Visibilità delle notifiche</string>
   <string name="pref_notification_summary">Imposta la visibilità delle notifiche dell\'applicazione sulla schermata di blocco.</string>

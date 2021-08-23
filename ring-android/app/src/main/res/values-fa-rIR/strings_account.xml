@@ -169,6 +169,13 @@
   <string name="account_sip_success_title">حساب SIP ثبت شد</string>
   <string name="account_sip_success_message">شما حساب SIP خود را با موفقیت ثبت کردید.</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">تنظیمات پیشرفته</string>
+  <string name="account_tv_add_contact">افزودن مخاطب</string>
+  <string name="account_tv_about">درباره جمی</string>
+  <string name="tv_about_version">نسخه</string>
+  <string name="tv_about_license">مجوز</string>
+  <string name="tv_about_credits">دست‌اندرکاران</string>
   <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
@@ -182,7 +189,6 @@
   <string name="account_end_export_button">بستن</string>
   <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید جمی را روی دستگاه جدید گشوده و حساب جدیدی را با انتخاب «پیوند این دستگاه به یک حساب» ایجاد کنید. پین شما برای 10 دقیقه معتبر است.</string>
   <string name="account_link_export_info_light">برای استفاده از این حساب روی دستگاه‌های دیگر، باید ابتدا آن را روی جمی آشکار کنید. این کار یک کد پین تولید خواهد کرد که باید برای برپایی حساب، روی دستگاه جدید وارد کنید. این پین تا 10 دقیقه معتبر است.</string>
-  <string name="account_export_title">افزودن دستگاه‌ها</string>
   <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
   <string name="account_connect_button">اتصال</string>
   <string name="prompt_server">آدرس URL سرور مدیریت جمی</string>
@@ -215,7 +221,6 @@
   <string name="account_link_title">پیوند این دستگاه</string>
   <string name="account_sip_cannot_be_registered">نمی‌توان حساب را ثبت کرد</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">نمایه خود را ویرایش کنید</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">گذرواژه خود را دوباره وارد کنید</string>
   <string name="enter_password">گذرواژه را وارد کنید</string>

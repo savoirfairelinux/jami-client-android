@@ -85,6 +85,10 @@
   <string name="export_account_wait_title">Een moment a.u.b...</string>
   <string name="account_export_end_error_title">Fout</string>
   <string name="account_enter_password">Wachtwoord invoeren</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Uitgebreide instellingen</string>
+  <string name="tv_about_version">Versie</string>
+  <string name="tv_about_license">Licentie</string>
   <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_export_button">Koppel een nieuw apparaat</string>
   <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
@@ -102,7 +106,6 @@
   <string name="account_link_title">Dit apparaat koppelen</string>
   <string name="account_sip_cannot_be_registered">Kan het account niet registreren</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Profiel bewerken</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Wachtwoord ter controle nogmaals invoeren</string>
   <string name="enter_password">Wachtwoord invoeren</string>

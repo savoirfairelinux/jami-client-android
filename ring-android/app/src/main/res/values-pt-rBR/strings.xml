@@ -34,7 +34,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_plugin_list">Configurações dos complementos</string>
-  <string name="menu_item_share">Compartilhar meu contato</string>
+  <string name="menu_item_share">Compartilhar minha conta</string>
   <string name="menu_item_about">Sobre Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Disque um número</string>
@@ -154,6 +154,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="clear_history_dialog_title">Limpar histórico?</string>
   <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
   <string name="clear_history_completed">O histórico foi apagado.</string>
+  <string name="clear_history">Limpar</string>
   <!--Conversation-->
   <string name="conversation_details">Detalhes do contato</string>
   <string name="conversation_action_delete_this">Deletar conversa</string>

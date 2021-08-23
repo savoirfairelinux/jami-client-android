@@ -33,6 +33,8 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Configuración avanzada</string>
   <string name="account_new_button">Crear una cuenta de Jami</string>
   <string name="account_connect_button">Conectarse</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>

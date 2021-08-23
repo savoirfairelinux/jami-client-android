@@ -86,6 +86,12 @@
   <string name="account_export_end_error_title">Σφάλμα</string>
   <string name="account_enter_password">Εισάγετε τον κωδικό πρόσβασης</string>
   <string name="ring_account_identity">Ταυτότητα</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Προχωρημένες ρυθμίσεις</string>
+  <string name="account_tv_about">Σχετικά με το Jami</string>
+  <string name="tv_about_version">Έκδοση</string>
+  <string name="tv_about_license">Άδεια</string>
+  <string name="tv_about_credits">Συντελεστές</string>
   <string name="account_link_prompt_pin">Εισάγετε PIN</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Jami</string>
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>

@@ -106,6 +106,9 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_no_network_title">Tidak dapat berhubung dengan rangkaian</string>
   <string name="account_device_added_title">Berjaya menambah perangkat akaun</string>
   <string name="account_device_updated_title">Akaun perangkat telah dikemaskinikan</string>
+  <!--TV-->
+  <string name="tv_about_version">Versi</string>
+  <string name="tv_about_credits">Kredit</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>

@@ -28,7 +28,6 @@
   <string name="menu_item_accounts">Управление на профилите</string>
   <string name="menu_item_account">Управление на профила</string>
   <string name="menu_item_settings">Настройки</string>
-  <string name="menu_item_share">Споделяне на моята информация</string>
   <string name="menu_item_about">Относно Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>

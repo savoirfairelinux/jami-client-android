@@ -169,6 +169,14 @@ Puedes editar tu cuenta luego</string>
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Has registrado tu cuenta SIP correctamente.</string>
   <string name="account_sip_register_anyway">Registrar de todos modos</string>
+  <!--TV-->
+  <string name="account_tv_settings_header">Configuración de la cuenta</string>
+  <string name="account_tv_advance_settings_header">Ajustes avanzados</string>
+  <string name="account_tv_add_contact">Añadir contacto</string>
+  <string name="account_tv_about">Acerca de Jami</string>
+  <string name="tv_about_version">Versión</string>
+  <string name="tv_about_license">Licencia</string>
+  <string name="tv_about_credits">Créditos</string>
   <string name="account_link_device">Conectar desde otro dispositivo</string>
   <string name="account_link_button">Conectar desde red</string>
   <string name="account_link_archive_button">Conectar desde archivo de respaldo</string>
@@ -182,7 +190,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_end_export_button">cerrar</string>
   <string name="account_end_export_infos">Tu PIN es:\n\n%%\n\nPara completar el proceso, tienes que abrir Jami en el nuevo dispositivo. Crear una nueva cuenta con \"Conectar este dispositivo a una cuenta\". Tu PIN es válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta cuenta en otros dispositivos, primero debe exponerla en Jami. Esto generará un código PIN que debe introducir en el nuevo dispositivo para configurar la cuenta. El PIN es valido por 10 minutos.</string>
-  <string name="account_export_title">Agregar dispositivos</string>
   <string name="account_connect_server_button">Conectar a servidor de gestión</string>
   <string name="account_connect_button">Conectar</string>
   <string name="prompt_server">URL del servidor de gestión de Jami</string>
@@ -215,7 +222,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_link_title">Asociar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Error al registrar la cuenta</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Edite su perfil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Escribe la contraseña para confirmar</string>
   <string name="enter_password">Ingresa la contraseña</string>

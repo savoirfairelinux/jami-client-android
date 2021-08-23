@@ -25,8 +25,8 @@
   <string name="pref_systemDialer_summary">Efectuează apelurile de sistem folosind Jami cînd este posibil.</string>
   <string name="pref_startOnBoot_title">Deschide Jami la pornirea aparatului</string>
   <string name="pref_startOnBoot_summary">Deschide Jami în ascuns la pornirea aparatului.</string>
-  <string name="pref_clearHistory_title">Șterge cronologia</string>
-  <string name="pref_clearHistory_summary">Șterge cronologia  conversațiilor. Această acțiune este ireversibilă.</string>
+  <string name="pref_clearHistory_title">Șterge conversațiile</string>
+  <string name="pref_clearHistory_summary">Șterge cronologia tuturor conversațiilor. Această acțiune este ireversibilă.</string>
   <string name="pref_notification_title">Vizibilitatea notificărilor</string>
   <string name="pref_notification_summary">Decide vizibilitatea notificărilor aplicației pe ecranul blocat.</string>
   <string name="pref_blackList_title">Contacte blocate</string>
@@ -42,7 +42,7 @@
   <string name="pref_typing_title">Arată indicatorul de scriere</string>
   <string name="pref_typing_summary">Trimite și primește indicatori de scriere care arată că se scrie un mesaj.</string>
   <string name="pref_read_title">Arată confirmarea de citire</string>
-  <string name="pref_read_summary">Trimite și primește confirmări de citire care arată că un mesaj a fost afișat pe ecran.</string>
+  <string name="pref_read_summary">Trimite și primește confirmări de citire care arată că un mesaj a fost citit.</string>
   <string name="pref_block_record_title">Blochează captura de ecran și înregistrarea</string>
   <string name="pref_block_record_summary">Blochează captura de ecran și înregistrarea video.</string>
   <!--Notifications Visibility-->

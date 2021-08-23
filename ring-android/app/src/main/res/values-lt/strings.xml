@@ -28,7 +28,6 @@
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
-  <string name="menu_item_share">Bendrinti mano adresatus</string>
   <string name="menu_item_about">Apie Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>

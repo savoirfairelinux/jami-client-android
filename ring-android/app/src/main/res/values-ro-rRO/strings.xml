@@ -34,7 +34,7 @@
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
   <string name="menu_item_plugin_list">Reglări Extensii</string>
-  <string name="menu_item_share">Distribuie contactul meu</string>
+  <string name="menu_item_share">Distribuie contul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează un număr</string>
@@ -117,7 +117,7 @@
   <string name="write_a_message">Scrie un mesaj</string>
   <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
-  <string name="ab_action_flipcamera">Schimbă videocamera</string>
+  <string name="ab_action_flipcamera">Schimbă fotocamera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <string name="remote_recording">%s înregistrează…</string>
   <!--Text messages-->
@@ -125,15 +125,15 @@
   <string name="message_sending">Se trimite mesajul...</string>
   <string name="message_failed">Eșec</string>
   <string name="time_just_now">Chiar acum</string>
-  <string name="send_file">Trimite fișierul</string>
+  <string name="send_file">Trimite un fișier</string>
   <string name="hist_file_sent">Fișier trimis</string>
   <string name="hist_file_received">Fișier primit</string>
   <string name="conversation_send_audio">Trimite mesaj vocal</string>
   <string name="conversation_send_video">Trimite mesaj video</string>
   <string name="conversation_share_location">Trimite poziția</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Permisiune pentru videocameră</string>
-  <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la videocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>
+  <string name="permission_dialog_camera_title">Permisiune pentru fotocameră</string>
+  <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la fotocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Eroare</string>
   <string name="ringtone_error_format_not_supported">Acest format nu este suportat.</string>
@@ -148,19 +148,20 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanează Codul QR al contului pe care vrei să-l adaugi.</string>
   <string name="title_activity_qrcode">Distribuie contul meu</string>
-  <string name="error_scan_no_camera_permissions">Scanerul QR are nevoie de acces la videocameră pentru a funcționa.</string>
+  <string name="error_scan_no_camera_permissions">Scanerul QR are nevoie de acces la fotocameră pentru a funcționa.</string>
   <string name="tab_code">Codul meu</string>
   <string name="tab_scan">Scanează Codul</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Ștergi cronologia?</string>
+  <string name="clear_history_dialog_title">Ștergi conversațiile?</string>
   <string name="clear_history_dialog_message">Această acțiune este ireversibilă.</string>
-  <string name="clear_history_completed">Cronologia a fost ștearsă.</string>
+  <string name="clear_history_completed">Conversațiile au fost șterse.</string>
+  <string name="clear_history">Șterge</string>
   <!--Conversation-->
   <string name="conversation_details">Detaliile contactului</string>
   <string name="conversation_action_delete_this">Șterge această conversație</string>
   <string name="conversation_action_delete_this_title">Ștergi această conversație?</string>
   <string name="conversation_action_delete_this_message">Această acțiune este ireversibilă.</string>
-  <string name="conversation_action_history_clear">Șterge cronologia</string>
+  <string name="conversation_action_history_clear">Șterge conversația</string>
   <string name="conversation_action_history_clear_title">Ștergi cronologia conversației?</string>
   <string name="conversation_action_history_clear_message">Aceasta va șterge definitiv cronologia conversației.</string>
   <string name="conversation_action_remove_this">Șterge contactul</string>
@@ -272,7 +273,7 @@
   <string name="menu_file_download">Descarcă fișierul</string>
   <string name="menu_file_save">Salvează fișierul</string>
   <string name="menu_file_delete">Șterge fișierul</string>
-  <string name="menu_file_share">Distribuie fișierul</string>
+  <string name="menu_file_share">Trimite fișierul</string>
   <string name="menu_message_copy">Copiază</string>
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>

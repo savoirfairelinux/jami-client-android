@@ -34,7 +34,7 @@
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
   <string name="menu_item_plugin_list">Impostazioni dei plugin</string>
-  <string name="menu_item_share">Condividi il mio contatto</string>
+  <string name="menu_item_share">Condividi il mio account</string>
   <string name="menu_item_about">Informazioni su Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Componi un numero</string>
@@ -116,7 +116,7 @@
   <string name="write_a_message">Scrivi un messaggio</string>
   <string name="scan_qr">Leggi codice QR</string>
   <string name="qr_code">QR Code</string>
-  <string name="ab_action_flipcamera">Cambia videocamera</string>
+  <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
   <string name="remote_recording">%s in registrazione…</string>
   <!--Text messages-->
@@ -131,8 +131,8 @@
   <string name="conversation_send_video">Registra videomessaggio</string>
   <string name="conversation_share_location">Condividi posizione</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Permesso videocamera</string>
-  <string name="permission_dialog_camera_message">Le videochiamate richiedono il permesso di usare la videocamera per funzionare.</string>
+  <string name="permission_dialog_camera_title">Permesso fotocamera</string>
+  <string name="permission_dialog_camera_message">Le videochiamate richiedono il permesso di usare la fotocamera per funzionare.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
@@ -147,24 +147,25 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio account</string>
-  <string name="error_scan_no_camera_permissions">Lo scanner QR richiede il permesso di usare la videocamera per funzionare</string>
+  <string name="error_scan_no_camera_permissions">Lo scanner QR richiede il permesso di usare la fotocamera per funzionare</string>
   <string name="tab_code">Il mio codice</string>
   <string name="tab_scan"> Scansiona Codice</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Azzerate la cronologia?</string>
+  <string name="clear_history_dialog_title">Eliminare le conversazioni?</string>
   <string name="clear_history_dialog_message">Questa azione è irreversibile.</string>
-  <string name="clear_history_completed">La cronologia è stata cancellata.</string>
+  <string name="clear_history_completed">Conversazioni eliminate.</string>
+  <string name="clear_history">Cancella</string>
   <!--Conversation-->
   <string name="conversation_details">Dettagli contatto</string>
   <string name="conversation_action_delete_this">Cancella questa conversazione</string>
   <string name="conversation_action_delete_this_title">Cancellare questa conversazione?</string>
   <string name="conversation_action_delete_this_message">Questa azione è irreversibile.</string>
-  <string name="conversation_action_history_clear">Elimina cronologia</string>
-  <string name="conversation_action_history_clear_title">Cancellare la cronologia delle conversazioni?</string>
-  <string name="conversation_action_history_clear_message">Questo cancellerà definitivamente la cronologia delle conversazioni.</string>
+  <string name="conversation_action_history_clear">Cancella cronologia</string>
+  <string name="conversation_action_history_clear_title">Cancellare la cronologia della conversazione?</string>
+  <string name="conversation_action_history_clear_message">Questo cancellerà definitivamente la cronologia della conversazione.</string>
   <string name="conversation_action_remove_this">Elimina contatto</string>
   <string name="conversation_action_remove_this_title">Eliminare questo contatto?</string>
-  <string name="conversation_action_remove_this_message">In questo modo eliminerai il contatto e cancellerai definitivamente la cronologia delle conversazioni.</string>
+  <string name="conversation_action_remove_this_message">Questo eliminerà il contatto e cancellerà definitivamente la cronologia della conversazione.</string>
   <string name="conversation_action_copy_peer_number">Copia numero</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiato negli appunti</string>
   <string name="conversation_action_select_peer_number">Seleziona un numero</string>
@@ -240,7 +241,7 @@
   <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
   <string name="conversation_placeholder">Non hai ancora conversazioni</string>
   <string name="contact_request_sent">Richiesta di contatto inviata</string>
-  <string name="start_conversation">Inizia una conversazione</string>
+  <string name="start_conversation">Nuova conversazione</string>
   <string name="search_results">Risultati della ricerca</string>
   <string name="tv_contact_row_header">Contatti</string>
   <string name="gallery_error_title">Nessuna app Galleria trovata</string>

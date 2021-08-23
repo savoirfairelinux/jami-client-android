@@ -169,6 +169,13 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
+  <!--TV-->
+  <string name="account_tv_advance_settings_header">Erweiterte Einstellungen</string>
+  <string name="account_tv_add_contact">Kontakt hinzufügen</string>
+  <string name="account_tv_about">Über Jami</string>
+  <string name="tv_about_version">Version</string>
+  <string name="tv_about_license">Lizenz</string>
+  <string name="tv_about_credits">Würdigung</string>
   <string name="account_link_device">Verbindung von einem anderen Gerät aus herstellen</string>
   <string name="account_link_button">Verbindung vom Netzwerk</string>
   <string name="account_link_archive_button">Verbindung vom Backup</string>
@@ -182,7 +189,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_end_export_button">Schließen</string>
   <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen öffnen Sie Jami auf dem neuen Gerät. Erstellen Sie ein neues Konto mit \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist 10 Minuten gültig.</string>
   <string name="account_link_export_info_light">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
-  <string name="account_export_title">Gerät hinzufügen</string>
   <string name="account_connect_server_button">Verbindung zum Management-Server</string>
   <string name="account_connect_button">Verbinden</string>
   <string name="prompt_server">Jami Management-Server-URL</string>
@@ -215,7 +221,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_link_title">Verbinde diese Gerät</string>
   <string name="account_sip_cannot_be_registered">Konto kann nicht registriert werden</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Bearbeiten Sie Ihr Profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Passwort zur Bestätigung eingeben</string>
   <string name="enter_password">Passwort eingeben</string>
