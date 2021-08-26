@@ -526,7 +526,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         setLoading(true)
         op.observeOn(AndroidSchedulers.mainThread())
             .doFinally { setLoading(false) }
-            .subscribe({}) { e: Throwable? ->
+            .subscribe({}) { e ->
                 Log.e(TAG, "startFileSend: not able to create cache file", e)
                 displayErrorToast(Error.INVALID_FILE)
             }
@@ -1085,9 +1085,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 val clip = intent.clipData
                 if (uri == null && clip != null && clip.itemCount > 0) uri = clip.getItemAt(0).uri
                 if (uri == null) return
-                startFileSend(
-                    getCacheFile(requireContext(), uri)
-                        .flatMapCompletable { file -> sendFile(file) })
+                startFileSend(getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
             }
         } else if (Intent.ACTION_VIEW == action) {
             val path = ConversationPath.fromIntent(intent)

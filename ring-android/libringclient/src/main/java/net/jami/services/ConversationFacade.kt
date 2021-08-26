@@ -141,8 +141,8 @@ class ConversationFacade(
         mCallService.setIsComposing(accountId, conversationUri.uri, isComposing)
     }
 
-    fun sendFile(conversation: Conversation, to: Uri, file: File?): Completable {
-        if (file == null || !file.exists() || !file.canRead()) {
+    fun sendFile(conversation: Conversation, to: Uri, file: File): Completable {
+        if (!file.exists() || !file.canRead()) {
             return Completable.error(IllegalArgumentException("file not found or not readable"))
         }
         if (conversation.isSwarm) {

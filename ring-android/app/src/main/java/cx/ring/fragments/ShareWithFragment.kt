@@ -147,14 +147,7 @@ class ShareWithFragment : Fragment() {
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-        val intent = requireActivity().intent
-        val extra = intent.extras
-        if (ConversationPath.fromBundle(extra) != null) {
-            intent.setClass(requireActivity(), ConversationActivity::class.java)
-            startActivity(intent)
-            return
-        }
-        mPendingIntent = intent
+        mPendingIntent = requireActivity().intent
     }
 
     override fun onDestroy() {

@@ -95,6 +95,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private val mCompositeDisposable = CompositeDisposable()
     private var binding: FragConversationTvBinding? = null
     private var mCurrentFileAbsolutePath: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -107,13 +108,8 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         fileName?.let { file -> outState.putString(KEY_AUDIOFILE, file.absolutePath) }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragConversationTvBinding.inflate(inflater, container, false)
-        return binding!!.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return FragConversationTvBinding.inflate(inflater, container, false).apply { binding = this }.root
     }
 
     override fun onDestroyView() {
@@ -269,8 +265,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .setTitle(if (type == CustomCameraActivity.TYPE_IMAGE) R.string.tv_send_image_dialog_message else R.string.tv_send_video_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
-                    startFileSend(
-                        file.flatMapCompletable { file: File -> sendFile(file) })
+                    startFileSend(file.flatMapCompletable { file -> sendFile(file) })
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .setNeutralButton(R.string.tv_media_preview, null)
@@ -292,8 +287,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                     startActivity(i)
                 } else {
                     val intent = Intent(Intent.ACTION_VIEW, media)
-                    intent.setDataAndType(media, "video/*").flags =
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    intent.setDataAndType(media, "video/*").flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     startActivity(intent)
                 }
             }
@@ -391,17 +385,17 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
      * Creates an intent using Android Storage Access Framework
      * This intent is then received by applications that can handle it like
      * Downloads or Google drive
-     * @param file DataTransfer of the file that is going to be stored
-     * @param currentFileAbsolutePath absolute path of the file we want to save
+     * @param currentFile DataTransfer of the file that is going to be stored
+     * @param fileAbsolutePath absolute path of the file we want to save
      */
-    override fun startSaveFile(file: DataTransfer, currentFileAbsolutePath: String) {
-        mCurrentFileAbsolutePath = currentFileAbsolutePath
+    override fun startSaveFile(currentFile: DataTransfer, fileAbsolutePath: String) {
+        mCurrentFileAbsolutePath = fileAbsolutePath
         try {
             // Use Android Storage File Access to download the file
             val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            downloadFileIntent.type = getMimeTypeFromExtension(file.extension)
+            downloadFileIntent.type = getMimeTypeFromExtension(currentFile.extension)
             downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
-            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
+            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, currentFile.displayName)
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
         } catch (e: Exception) {
             Log.i(TAG, "No app detected for saving files.")
@@ -410,14 +404,12 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             if (!directory.exists()) {
                 directory.mkdirs()
             }
-            writeToFile(Uri.fromFile(File(directory, file.displayName)))
+            writeToFile(Uri.fromFile(File(directory, currentFile.displayName)))
         }
     }
 
-    override fun refreshView(interactions: List<Interaction>) {
-        if (mAdapter != null) {
-            mAdapter!!.updateDataset(interactions)
-        }
+    override fun refreshView(conversation: List<Interaction>) {
+        mAdapter?.updateDataset(conversation)
         requireActivity().invalidateOptionsMenu()
     }
 
@@ -426,11 +418,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         super.onStop()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
             // NOOP
@@ -454,19 +442,20 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     private fun startPlaying() {
-        if (fileName == null) return
-        player = MediaPlayer()
+        val fileName =  fileName ?: return
         try {
-            player!!.setDataSource(fileName!!.absolutePath)
-            player!!.prepare()
-            player!!.start()
+            player = MediaPlayer().apply {
+                setDataSource(fileName.absolutePath)
+                prepare()
+                start()
+            }
         } catch (e: IOException) {
             Log.e(TAG, "prepare() failed")
         }
     }
 
     private fun stopPlaying() {
-        player!!.release()
+        player?.release()
         player = null
     }
 
@@ -477,24 +466,21 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
         try {
             fileName = createAudioFile(requireContext())
-            recorder = MediaRecorder()
-            recorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-            recorder!!.setOutputFile(fileName!!.absolutePath)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                recorder!!.setOutputFormat(MediaRecorder.OutputFormat.OGG)
-                recorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.OPUS)
-            } else {
-                recorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-                recorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            recorder = MediaRecorder().apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFile(fileName!!.absolutePath)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    setOutputFormat(MediaRecorder.OutputFormat.OGG)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.OPUS)
+                } else {
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                }
+                prepare()
+                start()
             }
-            recorder!!.prepare()
-            recorder!!.start()
         } catch (e: Exception) {
-            Toast.makeText(
-                requireContext(),
-                "Error starting recording: " + e.localizedMessage,
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(requireContext(), "Error starting recording: " + e.localizedMessage, Toast.LENGTH_LONG).show()
             recorder?.let { rec ->
                 rec.release()
                 recorder = null
@@ -503,11 +489,12 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
         binding!!.buttonAudio.setImageResource(R.drawable.lb_ic_stop)
         binding!!.textAudio.setText(R.string.tv_audio_recording)
-        val anim: Animation = AlphaAnimation(0.0f, 1.0f)
-        anim.duration = 500
-        anim.startOffset = 100
-        anim.repeatMode = Animation.REVERSE
-        anim.repeatCount = Animation.INFINITE
+        val anim: Animation = AlphaAnimation(0.0f, 1.0f).apply {
+            duration = 500
+            startOffset = 100
+            repeatMode = Animation.REVERSE
+            repeatCount = Animation.INFINITE
+        }
         binding!!.textAudio.startAnimation(anim)
     }
 
@@ -549,7 +536,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     private fun sendFile(file: File): Completable {
-        return Completable.fromAction { presenter!!.sendFile(file) }
+        return Completable.fromAction { presenter.sendFile(file) }
     }
 
     fun updatePosition(position: Int) {
@@ -596,11 +583,11 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun updateElement(element: Interaction) {
-        mAdapter!!.update(element)
+        mAdapter?.update(element)
     }
 
     override fun removeElement(element: Interaction) {
-        mAdapter!!.remove(element)
+        mAdapter?.remove(element)
     }
 
     fun getConversationAvatar(uri: String): AvatarDrawable? {
@@ -608,10 +595,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun askWriteExternalStoragePermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            JamiApplication.PERMISSIONS_REQUEST
-        )
+        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), JamiApplication.PERMISSIONS_REQUEST)
     }
 
     override fun scrollToEnd() {}
@@ -631,7 +615,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun startShareLocation(accountId: String, contactId: String) {}
     override fun showMap(accountId: String, contactId: String, open: Boolean) {}
     override fun hideMap() {}
-    override fun showPluginListHandlers(accountId: String, contactId: String) {}
+    override fun showPluginListHandlers(accountId: String, peerId: String) {}
     override fun hideErrorPanel() {}
     override fun displayNetworkErrorPanel() {}
     override fun displayAccountOfflineErrorPanel() {}
@@ -647,12 +631,12 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun goToCallActivityWithResult(
         accountId: String,
         conversationUri: net.jami.model.Uri,
-        contactRingId: net.jami.model.Uri,
+        contactUri: net.jami.model.Uri,
         audioOnly: Boolean
     ) {
     }
 
-    override fun goToContactActivity(accountId: String, contactRingId: net.jami.model.Uri) {}
+    override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {}
     override fun switchToUnknownView(name: String) {
         // todo
     }
@@ -682,7 +666,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val cacheDir = requireContext().cacheDir
         val spaceLeft = getSpaceLeft(cacheDir.toString())
         if (spaceLeft == -1L || transfer.totalSize > spaceLeft) {
-            presenter!!.noSpaceLeft()
+            presenter.noSpaceLeft()
             return
         }
         requireActivity().startService(

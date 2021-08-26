@@ -98,7 +98,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
     }
 
     private fun handleShareIntent(intent: Intent) {
-        if (mConversationFragment != null) mConversationFragment!!.handleShareIntent(intent)
+        mConversationFragment?.handleShareIntent(intent)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
