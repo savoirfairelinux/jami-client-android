@@ -20,7 +20,6 @@
  */
 package net.jami.conversation
 
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -50,7 +49,7 @@ class ConversationPresenter @Inject constructor(
     private val mVCardService: VCardService,
     val deviceRuntimeService: DeviceRuntimeService,
     private val mPreferencesService: PreferencesService,
-    @Named("UiScheduler") private var mUiScheduler: Scheduler
+    @param:Named("UiScheduler") private var mUiScheduler: Scheduler
 ) : RootPresenter<ConversationView>() {
     private var mConversation: Conversation? = null
     private var mConversationUri: Uri? = null
@@ -255,9 +254,10 @@ class ConversationPresenter @Inject constructor(
         view!!.openFilePicker()
     }
 
-    fun sendFile(file: File?) {
-        mConversation?.let { conversation ->
-            mConversationFacade.sendFile(conversation, conversation.uri, file).subscribe() }
+    fun sendFile(file: File) {
+        mConversationSubject.firstElement().subscribe({ conversation ->
+            mConversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
+        }) {e -> Log.e(TAG, "Can't send file", e)}
     }
 
     /**
