@@ -31,7 +31,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
-import cx.ring.application.JamiApplication.Companion.instance
+import cx.ring.application.JamiApplication
 import cx.ring.client.HomeActivity
 import cx.ring.fragments.AccountMigrationFragment
 import cx.ring.fragments.SIPAccountCreationFragment
@@ -55,7 +55,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        instance?.startDaemon()
+        JamiApplication.instance?.startDaemon()
         setContentView(R.layout.activity_wizard)
         var accountToMigrate: String? = null
         val intent = intent

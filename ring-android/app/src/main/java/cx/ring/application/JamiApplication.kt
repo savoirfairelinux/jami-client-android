@@ -39,7 +39,6 @@ import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
@@ -55,7 +54,7 @@ abstract class JamiApplication : Application() {
         const val DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE"
         const val PERMISSIONS_REQUEST = 57
         private val RINGER_FILTER = IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION)
-        @JvmStatic var instance: JamiApplication? = null
+        var instance: JamiApplication? = null
     }
 
     @Inject
@@ -84,6 +83,9 @@ abstract class JamiApplication : Application() {
 
     @Inject lateinit
     var mContactService: ContactService
+
+    @Inject lateinit
+    var mConversationFacade: ConversationFacade
 
     private val ringerModeListener: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -194,14 +196,6 @@ abstract class JamiApplication : Application() {
 
         //RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
 
-        // building injection dependency tree
-        /*injectionComponent = DaggerJamiInjectionComponent.builder()
-                .jamiInjectionModule(JamiInjectionModule(this))
-                .serviceInjectionModule(ServiceInjectionModule(this))
-                .build()
-
-        // we can now inject in our self whatever modules define
-        injectionComponent!!.inject(this)*/
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
         Completable.fromAction {

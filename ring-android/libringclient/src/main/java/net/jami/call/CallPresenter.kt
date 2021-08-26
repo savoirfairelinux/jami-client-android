@@ -49,8 +49,9 @@ class CallPresenter @Inject constructor(
     private val mHardwareService: HardwareService,
     private val mCallService: CallService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
-    private val mConversationFacade: ConversationFacade
-) : RootPresenter<CallView>() {
+    private val mConversationFacade: ConversationFacade,
+    @param:Named("UiScheduler") private val mUiScheduler: Scheduler
+    ) : RootPresenter<CallView>() {
     private var mConference: Conference? = null
     private val mPendingCalls: MutableList<Call> = ArrayList()
     private val mPendingSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mPendingCalls)
@@ -69,10 +70,6 @@ class CallPresenter @Inject constructor(
     private var currentSurfaceId: String? = null
     private var currentPluginSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
-
-    @Inject
-    @Named("UiScheduler")
-    lateinit var mUiScheduler: Scheduler
 
     fun cameraPermissionChanged(isGranted: Boolean) {
         if (isGranted && mHardwareService.isVideoAvailable) {
@@ -201,14 +198,14 @@ class CallPresenter @Inject constructor(
             .switchMap { obj: Conference -> obj.participantInfo }
             .observeOn(mUiScheduler)
             .subscribe(
-                { info: List<ParticipantInfo>? -> view!!.updateConfInfo(info) }
-            ) { e: Throwable? -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+                { info: List<ParticipantInfo> -> view?.updateConfInfo(info) }
+            ) { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantRecording }
             .observeOn(mUiScheduler)
             .subscribe(
-                { contacts: Set<Contact>? -> view!!.updateParticipantRecording(contacts) }
-            ) { e: Throwable? -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+                { contacts: Set<Contact> -> view?.updateParticipantRecording(contacts) }
+            ) { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
     }
 
     fun prepareOptionMenu() {
