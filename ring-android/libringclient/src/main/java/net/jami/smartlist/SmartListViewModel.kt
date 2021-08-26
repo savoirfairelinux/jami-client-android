@@ -84,7 +84,7 @@ class SmartListViewModel {
         uuid = uri.rawUriString
         contactName = conversation.title
         val lastEvent = conversation.lastEvent
-        hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
+        hasUnreadTextMessage = conversation.hasUnreadTextMessage
         hasOngoingCall = false
         this.lastEvent = lastEvent
         selected = conversation.getVisible()

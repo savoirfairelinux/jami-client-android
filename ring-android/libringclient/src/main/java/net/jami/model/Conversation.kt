@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.daemon.JamiService
 import kotlin.jvm.Synchronized
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
@@ -38,10 +39,10 @@ class Conversation : ConversationHistory {
     val accountId: String
     val uri: Uri
     val contacts: MutableList<Contact>
+    val members: MutableList<Member>
     val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
-    var readOnly: Boolean = false
     private var lastDisplayed: Interaction? = null
     private val updatedElementSubject: Subject<Tuple<Interaction, ElementStatus>> = PublishSubject.create()
     private val lastDisplayedSubject: Subject<Interaction> = BehaviorSubject.create()
@@ -70,6 +71,7 @@ class Conversation : ConversationHistory {
     constructor(accountId: String, contact: Contact) {
         this.accountId = accountId
         contacts = mutableListOf(contact)
+        members = ArrayList(0)
         uri = contact.uri
         mParticipant = contact.uri.uri
         mContactSubject.onNext(contacts)
@@ -79,7 +81,8 @@ class Conversation : ConversationHistory {
     constructor(accountId: String, uri: Uri, mode: Mode) {
         this.accountId = accountId
         this.uri = uri
-        contacts = ArrayList(3)
+        contacts = ArrayList(3) // TODO delete
+        members = ArrayList(3)
         mMode = BehaviorSubject.createDefault(mode)
     }
 
@@ -112,6 +115,21 @@ class Conversation : ConversationHistory {
     fun addContact(contact: Contact) {
         contacts.add(contact)
         mContactSubject.onNext(contacts)
+    }
+
+    fun addMember(contact: Contact, role: String) {
+        members.add(Member(contact, role))
+    }
+
+    fun readOnly(): Boolean {
+        var memberLeft = 0
+        var result = false
+        for (member in members) {
+            if (member.role == Member.Role.Left) {
+                memberLeft += 1
+            }
+        }
+        return mode.blockingFirst() == Conversation.Mode.OneToOne && memberLeft === 1
     }
 
     fun removeContact(contact: Contact) {
@@ -166,10 +184,13 @@ class Conversation : ConversationHistory {
 
     @Synchronized
     fun readMessages(): String? {
+        Log.w(TAG, "@@@0")
         var interaction: Interaction? = null
         if (aggregateHistory.isNotEmpty()) {
+            Log.w(TAG, "@@@1")
             val i = aggregateHistory[aggregateHistory.size - 1]
             if (!i.isRead) {
+            Log.w(TAG, "@@@2")
                 i.read()
                 interaction = i
                 lastRead = i.messageId
@@ -438,10 +459,32 @@ class Conversation : ConversationHistory {
             }
             return result
         }
+
+    val hasUnreadTextMessage: Boolean
+        get() {
+            if (!this.isSwarm) {
+                this.lastEvent != null && !this.lastEvent!!.isRead
+            }
+            for (c in this.contacts) {
+                if (c.isUser) {
+                    // TODO add Member struct to follow unread
+                    var toId = ""
+                    for (member in JamiService.getConversationMembers(this.accountId, this.uri.rawRingId)) {
+                        if (c.uri.rawRingId == member["uri"]) {
+                            toId = member["lastDisplayed"]!!
+                            break;
+                        }
+                    }
+                    return !JamiService.countInteractions(this.accountId, this.uri.rawRingId, toId, "", c.uri.rawRingId).equals(0.toLong())
+                }
+            }
+            return false
+        }
+
     val unreadTextMessages: TreeMap<Long, TextMessage>
         get() {
             val texts = TreeMap<Long, TextMessage>()
-            if (isSwarm) {
+            if (isSwarm) {                                                        
                 for (j in aggregateHistory.indices.reversed()) {
                     val i = aggregateHistory[j]
                     if (i.isRead) break

@@ -299,22 +299,19 @@ class AccountService(
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
                             if (mode != Conversation.Mode.Syncing) {
-                                var memberLeft = 0
                                 for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                                     val uri = Uri.fromId(member["uri"]!!)
-                                    if (member.get("role").equals("left"))
-                                        memberLeft += 1;
                                     val lastDisplayed = member["lastDisplayed"]
                                     var contact = conversation.findContact(uri)
                                     if (contact == null) {
                                         contact = account.getContactFromCache(uri)
                                         conversation.addContact(contact)
                                     }
+                                    conversation.addMember(contact, member["role"]!!)
                                     if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser) {
                                         conversation.setLastMessageRead(lastDisplayed)
                                     }
                                 }
-                                conversation.readOnly = mode == Conversation.Mode.OneToOne && memberLeft === 1
                             }
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
                             account.conversationStarted(conversation)
