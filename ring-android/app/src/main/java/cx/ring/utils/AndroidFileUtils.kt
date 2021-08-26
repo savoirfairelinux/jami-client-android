@@ -368,7 +368,7 @@ object AndroidFileUtils {
         return File(context.cacheDir, filename)
     }
 
-    fun getFilePath(context: Context, filename: String?): File {
+    fun getFilePath(context: Context, filename: String): File {
         return context.getFileStreamPath(filename)
     }
 

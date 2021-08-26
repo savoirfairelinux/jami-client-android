@@ -26,9 +26,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.leanback.app.GuidedStepSupportFragment
 import cx.ring.R
 import cx.ring.account.AccountCreationModelImpl
-import cx.ring.application.JamiApplication.Companion.instance
+import cx.ring.application.JamiApplication
 import cx.ring.mvp.BaseActivity
-import cx.ring.tv.account.TVProfileCreationFragment.Companion.newInstance
 import dagger.hilt.android.AndroidEntryPoint
 import ezvcard.VCard
 import io.reactivex.rxjava3.core.Single
@@ -49,7 +48,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        instance?.startDaemon()
+        JamiApplication.instance?.startDaemon()
         val intent = intent
         if (intent != null) {
             mAccountType = intent.action
@@ -100,7 +99,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
     override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
         GuidedStepSupportFragment.add(
             supportFragmentManager,
-            newInstance(accountCreationModel as AccountCreationModelImpl)
+            TVProfileCreationFragment.newInstance(accountCreationModel as AccountCreationModelImpl)
         )
     }
 

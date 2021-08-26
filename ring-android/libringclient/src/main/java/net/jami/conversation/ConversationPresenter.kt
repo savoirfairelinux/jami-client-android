@@ -293,7 +293,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun deleteConversationItem(element: Interaction) {
-        mConversationFacade.deleteConversationItem(mConversation, element)
+        mConversationFacade.deleteConversationItem(mConversation!!, element)
     }
 
     fun cancelMessage(message: Interaction) {

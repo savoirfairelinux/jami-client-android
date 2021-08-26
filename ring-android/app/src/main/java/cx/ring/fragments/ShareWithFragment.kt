@@ -37,9 +37,9 @@ import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.services.ConversationFacade
 import net.jami.model.Account
 import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.SmartListViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,61 +48,19 @@ import javax.inject.Singleton
 class ShareWithFragment : Fragment() {
     private val mDisposable = CompositeDisposable()
 
-    @JvmField
     @Inject
     @Singleton
-    var mConversationFacade: ConversationFacade? = null
+    lateinit var mConversationFacade: ConversationFacade
 
-    @JvmField
     @Inject
     @Singleton
-    var mContactService: ContactService? = null
+    lateinit var mContactService: ContactService
+
     private var mPendingIntent: Intent? = null
     private var adapter: SmartListAdapter? = null
     private var binding: FragSharewithBinding? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragSharewithBinding.inflate(inflater)
-        val context = binding!!.root.context
-        val activity: Activity? = activity
-        if (activity is AppCompatActivity) {
-            activity.setSupportActionBar(binding!!.toolbar)
-            val ab = activity.supportActionBar
-            ab?.setDisplayHomeAsUpEnabled(true)
-        }
-        if (mPendingIntent != null) {
-            val type = mPendingIntent!!.type!!
-            val clip = mPendingIntent!!.clipData
-            when {
-                type.startsWith("text/") -> {
-                    binding!!.previewText.setText(mPendingIntent!!.getStringExtra(Intent.EXTRA_TEXT))
-                    binding!!.previewText.visibility = View.VISIBLE
-                }
-                type.startsWith("image/") -> {
-                    var data = mPendingIntent!!.data
-                    if (data == null && clip != null && clip.itemCount > 0) data = clip.getItemAt(0).uri
-                    binding!!.previewImage.setImageURI(data)
-                    binding!!.previewImage.visibility = View.VISIBLE
-                }
-                type.startsWith("video/") -> {
-                    var data = mPendingIntent!!.data
-                    if (data == null && clip != null && clip.itemCount > 0) data = clip.getItemAt(0).uri
-                    try {
-                        binding!!.previewVideo.setVideoURI(data)
-                        binding!!.previewVideo.visibility = View.VISIBLE
-                    } catch (e: NullPointerException) {
-                        Log.e(TAG, e.message!!)
-                    } catch (e: InflateException) {
-                        Log.e(TAG, e.message!!)
-                    } catch (e: NumberFormatException) {
-                        Log.e(TAG, e.message!!)
-                    }
-                    binding!!.previewVideo.setOnCompletionListener { binding!!.previewVideo.start() }
-                }
-            }
-        }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = SmartListAdapter(null, object : SmartListListeners {
             override fun onItemClick(smartListViewModel: SmartListViewModel) {
                 mPendingIntent?.let { intent ->
@@ -111,12 +69,7 @@ class ShareWithFragment : Fragment() {
                     if (type != null && type.startsWith("text/")) {
                         intent.putExtra(Intent.EXTRA_TEXT, binding!!.previewText.text.toString())
                     }
-                    intent.putExtras(
-                        ConversationPath.toBundle(
-                            smartListViewModel.accountId,
-                            smartListViewModel.uri
-                        )
-                    )
+                    intent.putExtras(ConversationPath.toBundle(smartListViewModel.accountId, smartListViewModel.uri))
                     intent.setClass(requireActivity(), ConversationActivity::class.java)
                     startActivity(intent)
                 }
@@ -124,23 +77,66 @@ class ShareWithFragment : Fragment() {
 
             override fun onItemLongClick(smartListViewModel: SmartListViewModel) {}
         }, mDisposable)
-        binding!!.shareList.layoutManager = LinearLayoutManager(context)
-        binding!!.shareList.adapter = adapter
-        return binding!!.root
+
+        val binding = FragSharewithBinding.inflate(inflater).apply {
+            shareList.layoutManager = LinearLayoutManager(inflater.context)
+            shareList.adapter = adapter
+            this@ShareWithFragment.binding = this
+        }
+        val activity: Activity? = activity
+        if (activity is AppCompatActivity) {
+            activity.setSupportActionBar(binding.toolbar)
+            val ab = activity.supportActionBar
+            ab?.setDisplayHomeAsUpEnabled(true)
+        }
+        mPendingIntent?.let { pendingIntent -> pendingIntent.type?.let { type ->
+            val clip = pendingIntent.clipData
+            when {
+                type.startsWith("text/") -> {
+                    binding.previewText.setText(pendingIntent.getStringExtra(Intent.EXTRA_TEXT))
+                    binding.previewText.visibility = View.VISIBLE
+                }
+                type.startsWith("image/") -> {
+                    var data = pendingIntent.data
+                    if (data == null && clip != null && clip.itemCount > 0) data = clip.getItemAt(0).uri
+                    binding.previewImage.setImageURI(data)
+                    binding.previewImage.visibility = View.VISIBLE
+                }
+                type.startsWith("video/") -> {
+                    var data = pendingIntent.data
+                    if (data == null && clip != null && clip.itemCount > 0) data = clip.getItemAt(0).uri
+                    try {
+                        binding.previewVideo.setVideoURI(data)
+                        binding.previewVideo.visibility = View.VISIBLE
+                    } catch (e: NullPointerException) {
+                        Log.e(TAG, e.message!!)
+                    } catch (e: InflateException) {
+                        Log.e(TAG, e.message!!)
+                    } catch (e: NumberFormatException) {
+                        Log.e(TAG, e.message!!)
+                    }
+                    binding.previewVideo.setOnCompletionListener { binding.previewVideo.start() }
+                }
+            }
+        }}
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        if (mPendingIntent == null) requireActivity().finish()
-        mDisposable.add(mConversationFacade!!
+        if (mPendingIntent == null) {
+            requireActivity().finish()
+            return
+        }
+        mDisposable.add(mConversationFacade
             .currentAccountSubject
             .switchMap { a: Account -> a.getConversationsViewModels(false) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { list: MutableList<SmartListViewModel> ->
-                adapter?.update(list)
-            })
-        if (binding != null && binding!!.previewVideo.visibility != View.GONE) {
-            binding!!.previewVideo.start()
+            .subscribe { list -> adapter?.update(list) })
+        binding?.let { binding ->
+            if (binding.previewVideo.visibility != View.GONE) {
+                binding.previewVideo.start()
+            }
         }
     }
 
@@ -151,13 +147,14 @@ class ShareWithFragment : Fragment() {
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-        /*Intent intent = getActivity().getIntent();
-        Bundle extra = intent.getExtras();
+        val intent = requireActivity().intent
+        val extra = intent.extras
         if (ConversationPath.fromBundle(extra) != null) {
-            intent.setClass(getActivity(), ConversationActivity.class);
-            startActivity(intent);
-            return;
-        }*/mPendingIntent = requireActivity().intent
+            intent.setClass(requireActivity(), ConversationActivity::class.java)
+            startActivity(intent)
+            return
+        }
+        mPendingIntent = intent
     }
 
     override fun onDestroy() {
@@ -167,15 +164,8 @@ class ShareWithFragment : Fragment() {
     }
 
     companion object {
-        private val TAG = ShareWithFragment::class.java.simpleName
+        private val TAG = ShareWithFragment::class.simpleName!!
 
-        /**
-         * Mandatory empty constructor for the fragment manager to instantiate the
-         * fragment (e.g. upon screen orientation changes).
-         */
-        /*public ShareWithFragment() {
-        JamiApplication.getInstance().getInjectionComponent().inject(this);
-    }*/
         fun newInstance(): ShareWithFragment {
             return ShareWithFragment()
         }

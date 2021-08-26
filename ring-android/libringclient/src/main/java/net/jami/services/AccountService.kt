@@ -782,21 +782,15 @@ class AccountService(
     }
 
     fun validateCertificatePath(
-        accountID: String?,
-        certificatePath: String?,
-        privateKeyPath: String?,
-        privateKeyPass: String?
+        accountID: String,
+        certificatePath: String,
+        privateKeyPath: String,
+        privateKeyPass: String
     ): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "validateCertificatePath() running...")
-                JamiService.validateCertificatePath(
-                    accountID,
-                    certificatePath,
-                    privateKeyPath,
-                    privateKeyPass,
-                    ""
-                ).toNative()
+                JamiService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative()
             }.get()
         } catch (e: Exception) {
             Log.e(TAG, "Error running validateCertificatePath()", e)
@@ -804,7 +798,7 @@ class AccountService(
         return null
     }
 
-    fun validateCertificate(accountId: String?, certificate: String?): Map<String, String>? {
+    fun validateCertificate(accountId: String, certificate: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "validateCertificate() running...")
@@ -816,7 +810,7 @@ class AccountService(
         return null
     }
 
-    fun getCertificateDetailsPath(certificatePath: String?): Map<String, String>? {
+    fun getCertificateDetailsPath(certificatePath: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "getCertificateDetailsPath() running...")
@@ -828,7 +822,7 @@ class AccountService(
         return null
     }
 
-    fun getCertificateDetails(certificateRaw: String?): Map<String, String>? {
+    fun getCertificateDetails(certificateRaw: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "getCertificateDetails() running...")
@@ -852,7 +846,7 @@ class AccountService(
     /**
      * @return the account's credentials from the Daemon
      */
-    fun getCredentials(accountId: String?): List<Map<String, String>>? {
+    fun getCredentials(accountId: String): List<Map<String, String>>? {
         try {
             return mExecutor.submit<ArrayList<Map<String, String>>> {
                 Log.i(TAG, "getCredentials() running...")
@@ -1397,8 +1391,8 @@ class AccountService(
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (StringUtils.isEmpty(parent)) null else parent)
         interaction.conversation = conversation
         if (conversation.addSwarmElement(interaction)) {
-            if (conversation.isVisible)
-                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId)
+            /*if (conversation.isVisible)
+                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
         }
         return interaction
     }

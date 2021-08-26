@@ -31,12 +31,8 @@ import android.system.ErrnoException
 import android.system.Os
 import android.util.Log
 import androidx.core.content.ContextCompat
-import cx.ring.application.JamiApplication.Companion.instance
-import cx.ring.utils.AndroidFileUtils.copyAssetFolder
-import cx.ring.utils.AndroidFileUtils.getConversationDir
-import cx.ring.utils.AndroidFileUtils.getConversationPath
-import cx.ring.utils.AndroidFileUtils.getFilePath
-import cx.ring.utils.AndroidFileUtils.getTempPath
+import cx.ring.application.JamiApplication
+import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.NetworkUtils
 import net.jami.daemon.IntVect
 import net.jami.daemon.StringVect
@@ -57,7 +53,7 @@ class DeviceRuntimeServiceImpl(
         val pluginsPath = File(mContext.filesDir, "plugins")
         Log.w(TAG, "Plugins: " + pluginsPath.absolutePath)
         // Overwrite existing plugins folder in order to use newer plugins
-        copyAssetFolder(mContext.assets, "plugins", pluginsPath)
+        AndroidFileUtils.copyAssetFolder(mContext.assets, "plugins", pluginsPath)
     }
 
     override fun loadNativeLibrary() {
@@ -79,57 +75,47 @@ class DeviceRuntimeServiceImpl(
     }
 
     override fun getFilePath(filename: String): File {
-        return getFilePath(mContext, filename)
+        return AndroidFileUtils.getFilePath(mContext, filename)
     }
 
     override fun getConversationPath(conversationId: String, name: String): File {
-        return getConversationPath(mContext, conversationId, name)
+        return AndroidFileUtils.getConversationPath(mContext, conversationId, name)
     }
 
-    override fun getConversationPath(
-        accountId: String,
-        conversationId: String,
-        name: String
-    ): File {
-        return getConversationPath(mContext, accountId, conversationId, name)
+    override fun getConversationPath(accountId: String, conversationId: String,name: String): File {
+        return AndroidFileUtils.getConversationPath(mContext, accountId, conversationId, name)
     }
 
     override fun getTemporaryPath(conversationId: String, name: String): File {
-        return getTempPath(mContext, conversationId, name)
+        return AndroidFileUtils.getTempPath(mContext, conversationId, name)
     }
 
     override fun getConversationDir(conversationId: String): File {
-        return getConversationDir(mContext, conversationId)
+        return AndroidFileUtils.getConversationDir(mContext, conversationId)
     }
 
-    override fun getCacheDir(): File {
-        return mContext.cacheDir
-    }
+    override val cacheDir: File
+        get() = mContext.cacheDir
 
-    override fun getPushToken(): String? {
-        return instance?.pushToken
-    }
+    override val pushToken: String?
+        get() = JamiApplication.instance?.pushToken
 
     private fun isNetworkConnectedForType(connectivityManagerType: Int): Boolean {
         val info = NetworkUtils.getNetworkInfo(mContext)
         return info != null && info.isConnected && info.type == connectivityManagerType
     }
 
-    override fun isConnectedBluetooth(): Boolean {
-        return isNetworkConnectedForType(ConnectivityManager.TYPE_BLUETOOTH)
-    }
+    override val isConnectedWifi: Boolean
+        get() = isNetworkConnectedForType(ConnectivityManager.TYPE_WIFI)
 
-    override fun isConnectedWifi(): Boolean {
-        return isNetworkConnectedForType(ConnectivityManager.TYPE_WIFI)
-    }
+    override val isConnectedBluetooth: Boolean
+        get() = isNetworkConnectedForType(ConnectivityManager.TYPE_BLUETOOTH)
 
-    override fun isConnectedMobile(): Boolean {
-        return isNetworkConnectedForType(ConnectivityManager.TYPE_MOBILE)
-    }
+    override val isConnectedMobile: Boolean
+        get() = isNetworkConnectedForType(ConnectivityManager.TYPE_MOBILE)
 
-    override fun isConnectedEthernet(): Boolean {
-        return isNetworkConnectedForType(ConnectivityManager.TYPE_ETHERNET)
-    }
+    override val isConnectedEthernet: Boolean
+        get() = isNetworkConnectedForType(ConnectivityManager.TYPE_ETHERNET)
 
     override fun hasVideoPermission(): Boolean {
         return checkPermission(Manifest.permission.CAMERA)
@@ -155,20 +141,15 @@ class DeviceRuntimeServiceImpl(
         return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    override fun getProfileName(): String? {
-        mContext.contentResolver.query(
-            ContactsContract.Profile.CONTENT_URI,
-            PROFILE_PROJECTION,
-            null,
-            null,
-            null
-        )?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                return cursor.getString(cursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
+    override val profileName: String?
+        get() {
+            mContext.contentResolver.query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(cursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
+                }
             }
+            return null
         }
-        return null
-    }
 
     override fun hardLinkOrCopy(source: File, dest: File): Boolean {
         try {
@@ -181,10 +162,7 @@ class DeviceRuntimeServiceImpl(
     }
 
     private fun checkPermission(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(
-            mContext,
-            permission
-        ) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun getHardwareAudioFormat(ret: IntVect) {
