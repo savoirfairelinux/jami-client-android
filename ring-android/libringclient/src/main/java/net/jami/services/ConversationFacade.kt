@@ -84,6 +84,7 @@ class ConversationFacade(
         val lastMessage = readMessages(conversation) ?: return null
         account.refreshed(conversation)
         if (mPreferencesService.settings.isAllowReadIndicator) {
+            Log.w(TAG, "@@@XXXXX" + lastMessage)
             mAccountService.setMessageDisplayed(account.accountID, conversation.uri, lastMessage)
         }
         if (cancelNotification) {
