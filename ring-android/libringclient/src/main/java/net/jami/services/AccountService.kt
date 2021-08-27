@@ -293,9 +293,6 @@ class AccountService(
                     for (conversationId in conversations) {
                         try {
                             val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId).toNative()
-                            /*for (Map.Entry<String, String> i : info.entrySet()) {
-                                Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                            }*/
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
                             if (mode != Conversation.Mode.Syncing) {
@@ -320,16 +317,18 @@ class AccountService(
                         }
                     }
                     for (requestData in JamiService.getConversationRequests(account.accountID).toNative()) {
-                        /*for (Map.Entry<String, String> e : requestData.entrySet()) {
-                            Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
-                        }*/
+                        val mode = Conversation.Mode.values()[requestData["mode"]!!.toInt()]
                         val conversationId = requestData["id"]
-                        val from = Uri.fromString(requestData["from"]!!)
-                        val request = account.getRequest(from)
-                        if (request == null || conversationId != request.conversationId) {
-                            val received = requestData["received"]
-                            account.addRequest(TrustRequest(account.accountID, from, java.lang.Long.decode(received) * 1000L, null, conversationId))
+                        val conversation = account.newSwarm(conversationId!!, mode)
+                        val from = Uri.fromId(requestData["from"]!!)
+                        var contact = conversation.findContact(from)
+                        if (contact == null) {
+                            contact = account.getContactFromCache(from)
+                            conversation.addContact(contact)
                         }
+                        // TODO addContact/member
+                        conversation.isRequest = true
+                        account.addConversationRequest(conversationId)
                     }
                     if (enabled) {
                         for (contact in account.contacts.values) {

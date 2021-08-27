@@ -716,6 +716,19 @@ class Account(
         }
     }
 
+    fun addConversationRequest(conversationId: String) {
+        synchronized(pending) {
+            var conversation = pending[conversationId]
+            if (conversation == null) {
+                conversation = swarmConversations[conversationId]
+                if (conversation == null)
+                    return
+                pending[conversationId] = conversation
+                pendingChanged()
+            }
+        }
+    }
+
     fun removeRequest(conversationUri: Uri): TrustRequest? {
         synchronized(pending) {
             val uri = conversationUri.uri

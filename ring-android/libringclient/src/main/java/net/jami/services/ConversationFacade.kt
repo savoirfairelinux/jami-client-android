@@ -243,7 +243,7 @@ class ConversationFacade(
         val conversation = account.getByUri(conversationUri)
             ?: return Single.error(RuntimeException("Can't get conversation"))
         synchronized(conversation) {
-            if (!conversation.isSwarm && conversation.id == null) {
+            if (conversation.isRequest || (!conversation.isSwarm && conversation.id == null)) {
                 return Single.just(conversation)
             }
             var ret = conversation.loaded

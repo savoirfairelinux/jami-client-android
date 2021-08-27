@@ -113,23 +113,23 @@ class ConversationPresenter @Inject constructor(
 
     private fun initContact(account: Account, conversation: Conversation, mode: Conversation.Mode, view: ConversationView) {
         if (account.isJami) {
-            Log.w(TAG, "initContact " + conversation.uri)
+            Log.w(TAG, "@@@initContact " + conversation.uri)
+            val uri = conversation.uri
+            val req = account.getRequest(uri)
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (conversation.readOnly()) {
                 view.switchToReadOnlyView()
+            } else if (conversation.isRequest) {
+                view.switchToIncomingTrustRequestView("")
+            } else if (req != null) {
+                view.switchToIncomingTrustRequestView(req.displayname)
             } else if (conversation.isSwarm || account.isContact(conversation)) {
                 //if (conversation.isEnded())
                 //    conversation.s
                 view.switchToConversationView()
             } else {
-                val uri = conversation.uri
-                val req = account.getRequest(uri)
-                if (req == null) {
-                    view.switchToUnknownView(uri.rawUriString)
-                } else {
-                    view.switchToIncomingTrustRequestView(req.displayname)
-                }
+                view.switchToUnknownView(uri.rawUriString)
             }
         } else {
             view.switchToConversationView()

@@ -54,6 +54,7 @@ class Conversation : ConversationHistory {
     private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
     var loaded: Single<Conversation>? = null
     var lastElementLoaded: Completable? = null
+    var isRequest: Boolean = false
     private val mRoots: MutableSet<String> = HashSet(2)
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     var lastRead: String? = null
