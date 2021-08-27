@@ -44,6 +44,7 @@ public abstract class VCardService {
     public abstract Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture);
     public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
     public abstract Single<Tuple<String, Object>> peerProfileReceived(String accountId, String peerId, File vcard);
+    public abstract Single<Tuple<String, Object>> accountProfileReceived(String accountId, File vcard);
 
     public abstract Object base64ToBitmap(String base64);
 

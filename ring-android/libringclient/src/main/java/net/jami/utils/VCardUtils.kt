@@ -219,6 +219,16 @@ object VCardUtils {
         return vcard
     }
 
+    fun accountProfileReceived(filesDir: File, accountId: String, vcard: File?): Single<VCard> {
+        return Single.fromCallable<VCard> {
+            val card = loadFromDisk(vcard)
+            saveLocalProfileToDisk(card!!, accountId, filesDir)
+                .subscribeOn(Schedulers.io())
+                .subscribe({}) { e -> Log.e(TAG, "Error while saving vcard", e) }
+            card
+        }.subscribeOn(Schedulers.io())
+    }
+
     fun peerProfileReceived(filesDir: File, accountId: String, peerId: String, vcard: File?): Single<VCard> {
         return Single.fromCallable<VCard> {
             val filename = "$peerId.vcf"

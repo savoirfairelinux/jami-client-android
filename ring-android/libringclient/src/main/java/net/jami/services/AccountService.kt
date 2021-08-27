@@ -1123,10 +1123,17 @@ class AccountService(
         val account = getAccount(accountId) ?: return
         Log.w(TAG, "profileReceived: $accountId, $peerId, $vcardPath")
         val contact = account.getContactFromCache(peerId)
-        mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
-            .subscribe({ profile: Tuple<String?, Any?> ->
-                contact.setProfile(profile.first, profile.second)
-            }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+        if (contact.isUser) {
+            mVCardService.accountProfileReceived(accountId, File(vcardPath))
+                .subscribe({ profile: Tuple<String?, Any?> ->
+                    Log.d(TAG, "@@@ OK") // TODO How to refresh account list?
+                }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+        } else {
+            mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
+                .subscribe({ profile: Tuple<String?, Any?> ->
+                    contact.setProfile(profile.first, profile.second)
+                }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+        }
     }
 
     fun incomingAccountMessage(accountId: String, messageId: String?, callId: String?, from: String, messages: Map<String, String>) {
