@@ -523,6 +523,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.type = "*/*"
         startActivityForResult(intent, REQUEST_CODE_FILE_PICKER)
     }
@@ -543,35 +544,47 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         Log.w(TAG, "onActivityResult: $requestCode $resultCode $resultData")
-        val uri = resultData?.data
         if (requestCode == REQUEST_CODE_FILE_PICKER) {
-            if (resultCode == Activity.RESULT_OK && uri != null) {
-                startFileSend(
-                    getCacheFile(requireContext(), uri)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .flatMapCompletable { file: File -> sendFile(file) })
+            if (resultCode == Activity.RESULT_OK && resultData != null) {
+                val clipData = resultData.clipData
+                if (clipData != null) { // checking multiple selection or not
+                    val fNb = clipData.itemCount
+                    for (i in 0 until fNb) {
+                        val uri = clipData.getItemAt(i).uri
+                        startFileSend(getCacheFile(requireContext(), uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .flatMapCompletable { file: File -> sendFile(file) })
+                    }
+                } else {
+                    resultData.data?.let { uri ->
+                        startFileSend(getCacheFile(requireContext(), uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .flatMapCompletable { file: File -> sendFile(file) })
+                    }
+                }
             }
         } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_AUDIO || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
             if (resultCode != Activity.RESULT_OK) {
                 mCurrentPhoto = null
                 return
             }
-            Log.w(TAG, "onActivityResult: mCurrentPhoto " + mCurrentPhoto!!.absolutePath + " " + mCurrentPhoto!!.exists() + " " + mCurrentPhoto!!.length())
+            val currentPhoto = mCurrentPhoto
             var file: Single<File>? = null
-            if (mCurrentPhoto == null || !mCurrentPhoto!!.exists() || mCurrentPhoto!!.length() == 0L) {
-                if (uri != null) {
+            if (currentPhoto == null || !currentPhoto.exists() || currentPhoto.length() == 0L) {
+                resultData?.data?.let { uri ->
                     file = getCacheFile(requireContext(), uri)
                 }
             } else {
-                file = Single.just(mCurrentPhoto)
+                file = Single.just(currentPhoto)
             }
             mCurrentPhoto = null
-            if (file == null) {
+            val sendingFile = file
+            if (sendingFile != null)
+                startFileSend(sendingFile.flatMapCompletable { f -> sendFile(f) })
+            else
                 Toast.makeText(activity, "Can't find picture", Toast.LENGTH_SHORT).show()
-                return
-            }
-            startFileSend(file.flatMapCompletable { f -> sendFile(f) })
         } else if (requestCode == REQUEST_CODE_SAVE_FILE) {
+            val uri = resultData?.data
             if (resultCode == Activity.RESULT_OK && uri != null) {
                 writeToFile(uri)
             }
