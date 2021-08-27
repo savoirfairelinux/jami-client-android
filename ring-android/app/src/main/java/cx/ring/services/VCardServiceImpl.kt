@@ -74,6 +74,11 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .map { vc -> readData(vc) }
     }
 
+    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Pair<String?, Any?>> {
+        return VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
+            .map { vcard -> readData(vcard) }
+    }
+
     override fun base64ToBitmap(base64: String?): Any? {
         return BitmapUtils.base64ToBitmap(base64)
     }

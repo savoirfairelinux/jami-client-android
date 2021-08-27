@@ -106,7 +106,6 @@ object VCardUtils {
         saveToDisk(vcard, filename, peerProfilePath(filesDir, accountId))
     }
 
-    @JvmStatic
     fun saveLocalProfileToDisk(vcard: VCard, accountId: String, filesDir: File): Single<VCard> {
         return Single.fromCallable {
             saveToDisk(vcard, LOCAL_USER_VCARD_NAME, localProfilePath(filesDir, accountId))
@@ -219,12 +218,22 @@ object VCardUtils {
         return vcard
     }
 
-    fun peerProfileReceived(filesDir: File, accountId: String, peerId: String, vcard: File?): Single<VCard> {
+    fun accountProfileReceived(filesDir: File, accountId: String, vcard: File): Single<VCard> {
+        return Single.fromCallable {
+            val card = loadFromDisk(vcard)!!
+            saveLocalProfileToDisk(card, accountId, filesDir)
+                .subscribeOn(Schedulers.io())
+                .subscribe({}) { e -> Log.e(TAG, "Error while saving vcard", e) }
+            card
+        }.subscribeOn(Schedulers.io())
+    }
+
+    fun peerProfileReceived(filesDir: File, accountId: String, peerId: String, vcard: File): Single<VCard> {
         return Single.fromCallable<VCard> {
             val filename = "$peerId.vcf"
             val peerProfilePath = peerProfilePath(filesDir, accountId)
             val file = File(peerProfilePath, filename)
-            moveFile(vcard!!, file)
+            moveFile(vcard, file)
             loadFromDisk(file)
         }.subscribeOn(Schedulers.io())
     }
