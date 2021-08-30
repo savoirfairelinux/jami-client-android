@@ -106,7 +106,10 @@
   <string name="ab_action_speakerphone">啟用喇叭</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <string name="ab_action_contact_add_question">新增到聯絡人？</string>
+  <string name="hist_contact_invited">已邀請聯絡人</string>
   <string name="hist_contact_added">已新增聯絡人</string>
+  <string name="hist_contact_left">聯絡人離開</string>
+  <string name="hist_contact_banned">聯絡人已封鎖</string>
   <string name="hist_invitation_received">已收到邀請</string>
   <string name="ab_action_audio_call">音訊通話</string>
   <string name="ab_action_video_call">視訊通話</string>
@@ -295,6 +298,7 @@
   <string name="tv_send_text">傳送文字</string>
   <string name="tv_send_audio">傳送音訊</string>
   <string name="tv_send_video">傳送媒體</string>
+  <string name="tv_action_more">更多</string>
   <string name="conversation_input_speech_hint">說點東西……</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">建議</string>

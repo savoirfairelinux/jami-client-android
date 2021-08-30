@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
+  <string name="hist_contact_invited">Kapcsolat meghívva</string>
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
+  <string name="hist_contact_left">Kapcsolat kilépett</string>
+  <string name="hist_contact_banned">Kapcsolat letiltva</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
   <string name="ab_action_video_call">Videohívás</string>
@@ -296,6 +299,7 @@
   <string name="tv_send_text">Szöveg küldése</string>
   <string name="tv_send_audio">Hang küldése</string>
   <string name="tv_send_video">Média küldése</string>
+  <string name="tv_action_more">Több</string>
   <string name="conversation_input_speech_hint">Mondjon valamit…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Ajánlott</string>

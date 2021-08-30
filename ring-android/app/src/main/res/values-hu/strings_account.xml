@@ -173,9 +173,11 @@
   <string name="account_tv_settings_header">Fiók beállítások</string>
   <string name="account_tv_advance_settings_header">Haladó beállítások</string>
   <string name="account_tv_add_contact">Kapcsolat hozzáadása</string>
+  <string name="account_tv_advanced_settings">Általános beállítások szerkesztése</string>
   <string name="account_tv_about">A Jami névjegye</string>
   <string name="tv_about_version">Verzió</string>
   <string name="tv_about_license">Licenc</string>
+  <string name="tv_about_author">Szerző engedélye</string>
   <string name="tv_about_credits">Készítők</string>
   <string name="account_link_device">Fiók létrehozása más eszközről</string>
   <string name="account_link_button">Kapcsolódás a hálózatról</string>
@@ -190,6 +192,7 @@
   <string name="account_end_export_button">bezárás</string>
   <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jamit az új eszközön. Hozzon létre egy új fiókot az „Eszköz összekapcsolása fiókhoz” lehetőséggel. A PIN-kódja 10 percig érvényes.</string>
   <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
+  <string name="account_export_title">Fiók összekapcsolása más eszközökkel</string>
   <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
   <string name="account_connect_button">Kapcsolódás</string>
   <string name="prompt_server">A Jami felügyeleti kiszolgáló URL-je</string>
@@ -222,6 +225,7 @@
   <string name="account_link_title">Eszköz hozzákapcsolása</string>
   <string name="account_sip_cannot_be_registered">A fiók nem regisztrálható</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Fiók szerkesztése</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Adja meg a jelszót a megerősítéshez</string>
   <string name="enter_password">Adja meg a jelszót</string>

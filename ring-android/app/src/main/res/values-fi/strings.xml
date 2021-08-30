@@ -34,6 +34,7 @@
   <string name="menu_item_account">Hallitse tunnusta</string>
   <string name="menu_item_settings">Asetukset</string>
   <string name="menu_item_plugin_list">Lisäosien asetukset</string>
+  <string name="menu_item_share">Jaa tunnukseni</string>
   <string name="menu_item_about">Tietoa Jamista</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
@@ -153,6 +154,7 @@
   <string name="clear_history_dialog_title">Tyhjennä historia?</string>
   <string name="clear_history_dialog_message">Tätä toimintoa ei voi perua.</string>
   <string name="clear_history_completed">Historia on tyhjennetty.</string>
+  <string name="clear_history">Tyhjennä</string>
   <!--Conversation-->
   <string name="conversation_details">Keskustelun tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>

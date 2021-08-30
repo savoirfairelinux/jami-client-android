@@ -173,9 +173,11 @@
   <string name="account_tv_settings_header">Rregullime llogarie</string>
   <string name="account_tv_advance_settings_header">Rregullime të mëtejshme</string>
   <string name="account_tv_add_contact">Shtoni kontakt</string>
+  <string name="account_tv_advanced_settings">Ndryshoni rregullimet e përgjithshme</string>
   <string name="account_tv_about">Mbi Jami-n</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licencë</string>
+  <string name="tv_about_author">Të drejta autori</string>
   <string name="tv_about_credits">Kredite</string>
   <string name="account_link_device">Lidhuni prej një pajisje tjetër</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
@@ -190,6 +192,7 @@
   <string name="account_end_export_button">mbylle</string>
   <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Jami-n në pajisjen e re. Krijoni një llogari të re përmes \"Lidhe këtë pajisje te një llogari\". PIN-i juaj është i vlefshëm për 10 minuta.</string>
   <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
+  <string name="account_export_title">Lidheni llogarinë te pajisje të tjera</string>
   <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
   <string name="account_connect_button">Lidhu</string>
   <string name="prompt_server">URL shërbyesi administrimi Jami</string>
@@ -222,6 +225,7 @@
   <string name="account_link_title">Lidhe këtë pajisje</string>
   <string name="account_sip_cannot_be_registered">S\’regjistrohet dot llogaria</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Përpunim i llogarisë time</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Jepni fjalëkalimin që ta ripohoni</string>
   <string name="enter_password">Jepni fjalëkalimin</string>

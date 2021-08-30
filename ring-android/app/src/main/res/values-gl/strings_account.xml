@@ -170,11 +170,14 @@
   <string name="account_sip_success_message">Rexistraches correctamente a conta SIP.</string>
   <string name="account_sip_register_anyway">Rexistrar igualmente</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Axustes da conta</string>
   <string name="account_tv_advance_settings_header">Axustes avanzados</string>
   <string name="account_tv_add_contact">Engadir contacto</string>
+  <string name="account_tv_advanced_settings">Cambiar os axustes xerais</string>
   <string name="account_tv_about">Acerca de Jami</string>
   <string name="tv_about_version">Versión</string>
   <string name="tv_about_license">Licenza</string>
+  <string name="tv_about_author">Dereitos da autoría</string>
   <string name="tv_about_credits">Cŕedito</string>
   <string name="account_link_device">Conectar desde outro dispositivo</string>
   <string name="account_link_button">Conectar desde a rede</string>
@@ -189,6 +192,7 @@
   <string name="account_end_export_button">pechar</string>
   <string name="account_end_export_infos">O PIN é:\n\n %% \n\nPara completar o proceso, abre Jami noutro dispositivo. Crea unha nova conta con \"Ligar este dispositivo a unha conta\". O PIN é válido durante 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta en outros dispositivos primeiro tes que exportala en Jami. Esto creará un código PIN que tes que escribir no novo dispositivo para configuralo. O PIN é válido durante 10 minutos.</string>
+  <string name="account_export_title">Ligar conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar a servidor de xestión</string>
   <string name="account_connect_button">Conectar</string>
   <string name="prompt_server">URL do servidor de xestión Jami</string>
@@ -221,6 +225,7 @@
   <string name="account_link_title">Liga este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Non se rexistrou a conta</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Editar a miña conta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Escribe o contrasinal para confirmar</string>
   <string name="enter_password">Escribir contrasinal</string>

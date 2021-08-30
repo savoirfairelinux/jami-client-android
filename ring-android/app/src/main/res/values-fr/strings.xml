@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
+  <string name="hist_contact_invited">Contact invité</string>
   <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_contact_left">Le contact a quitté</string>
+  <string name="hist_contact_banned">Contact bloqué</string>
   <string name="hist_invitation_received">Invitation reçue</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
@@ -296,6 +299,7 @@
   <string name="tv_send_text">Envoyer un texte</string>
   <string name="tv_send_audio">Envoyer le message audio </string>
   <string name="tv_send_video">Envoyer le média</string>
+  <string name="tv_action_more">Plus</string>
   <string name="conversation_input_speech_hint">Dîtes quelque chose...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recommandé</string>

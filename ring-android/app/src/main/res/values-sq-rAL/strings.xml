@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
+  <string name="hist_contact_invited">Kontakti u ftua</string>
   <string name="hist_contact_added">Kontakti u shtua</string>
+  <string name="hist_contact_left">Kontakti iku</string>
+  <string name="hist_contact_banned">Kontakt i dëbuar</string>
   <string name="hist_invitation_received">Ftesa u mor</string>
   <string name="ab_action_audio_call">Thirrje audio</string>
   <string name="ab_action_video_call">Thirrje video</string>
@@ -226,6 +229,7 @@
   <string name="refuse">Hidhe tej</string>
   <string name="block">Bllokoje</string>
   <string name="contact_request_title">Kërkesë kontakti të ri</string>
+  <string name="contact_request_msg">Keni %1$d kërkesa kontakti</string>
   <string name="contact_request_account">Për %1$s</string>
   <string name="no_requests">S’keni kërkesa për kontakt</string>
   <string name="message_contact_not_trusted_yet">%s s\’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
@@ -295,6 +299,7 @@
   <string name="tv_send_text">Dërgoni Tekst</string>
   <string name="tv_send_audio">Dërgoni Audio</string>
   <string name="tv_send_video">Dërgoni Media</string>
+  <string name="tv_action_more">Më tepër</string>
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">E rekomanduar</string>

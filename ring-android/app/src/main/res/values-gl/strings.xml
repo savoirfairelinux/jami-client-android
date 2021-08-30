@@ -34,6 +34,7 @@
   <string name="menu_item_account">Xestionar conta</string>
   <string name="menu_item_settings">Axustes</string>
   <string name="menu_item_plugin_list">Axustes dos plugins</string>
+  <string name="menu_item_share">Compartir a miña conta</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un número</string>
@@ -106,7 +107,10 @@
   <string name="ab_action_speakerphone">Activar altofalante</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>
   <string name="ab_action_contact_add_question">Engadir a contactos?</string>
+  <string name="hist_contact_invited">Contacto convidado</string>
   <string name="hist_contact_added">Contacto engadido</string>
+  <string name="hist_contact_left">Contacto desbotado</string>
+  <string name="hist_contact_banned">Contacto vetado</string>
   <string name="hist_invitation_received">Convite recibido</string>
   <string name="ab_action_audio_call">Chamada de audio</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
@@ -153,6 +157,7 @@
   <string name="clear_history_dialog_title">Limpar historial?</string>
   <string name="clear_history_dialog_message">Esta acción non ten volta.</string>
   <string name="clear_history_completed">Eliminouse o historial.</string>
+  <string name="clear_history">Limpar</string>
   <!--Conversation-->
   <string name="conversation_details">Detalles do contacto</string>
   <string name="conversation_action_delete_this">Eliminar esta conversa</string>
@@ -294,6 +299,7 @@
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar multimedia</string>
+  <string name="tv_action_more">Máis</string>
   <string name="conversation_input_speech_hint">Dí algo...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>

@@ -32,6 +32,7 @@
   <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
   <string name="menu_item_plugin_list">Ustawienia wtyczek</string>
+  <string name="menu_item_share">Udostępnij moje konto</string>
   <string name="menu_item_about">O Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Wykręć numer</string>
@@ -151,6 +152,7 @@
   <string name="clear_history_dialog_title">Wyczyścić historię?</string>
   <string name="clear_history_dialog_message">Tej czynności nie można cofnąć.</string>
   <string name="clear_history_completed">Historia została wyczyszczona.</string>
+  <string name="clear_history">Wyczyść</string>
   <!--Conversation-->
   <string name="conversation_details">Detale kontaktu</string>
   <string name="conversation_action_delete_this">Usuń tę rozmowę</string>

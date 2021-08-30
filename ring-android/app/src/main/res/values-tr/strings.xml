@@ -34,6 +34,7 @@
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
   <string name="menu_item_plugin_list">Eklenti Ayarları</string>
+  <string name="menu_item_share">Hesabımı paylaş</string>
   <string name="menu_item_about">Jami Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Numara çevir</string>
@@ -152,6 +153,7 @@
   <string name="clear_history_dialog_title">Geçmiş silinsin mi?</string>
   <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>
   <string name="clear_history_completed">Geçmiş temizlenmiş.</string>
+  <string name="clear_history">Temizle</string>
   <!--Conversation-->
   <string name="conversation_details">Kişi ayrıntıları</string>
   <string name="conversation_action_delete_this">Bu konuşmayı sil</string>

@@ -115,6 +115,7 @@
   <string name="clear_history_dialog_title">Išvalyti istoriją?</string>
   <string name="clear_history_dialog_message">Šio veiksmo neįmanoma bus atšaukti.</string>
   <string name="clear_history_completed">Istorija išvalyta.</string>
+  <string name="clear_history">Išvalyti</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
   <string name="conversation_action_delete_this_title">Ištrinti šį pokalbį ?</string>

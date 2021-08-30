@@ -175,9 +175,11 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_tv_settings_header">Paramètres du compte</string>
   <string name="account_tv_advance_settings_header">Réglages avancés</string>
   <string name="account_tv_add_contact">Ajouter le contact</string>
+  <string name="account_tv_advanced_settings">Modifier les paramètres généraux</string>
   <string name="account_tv_about">À propos de Jami</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licence</string>
+  <string name="tv_about_author">Droits d\'auteur</string>
   <string name="tv_about_credits">Crédits</string>
   <string name="account_link_device">Se connecter à partir d\'un autre appareil</string>
   <string name="account_link_button">Se connecter à partir d\'un réseau</string>
@@ -192,6 +194,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer le processus, vous devez ouvrir Ring sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
   <string name="account_link_export_info_light">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Jami. Ceci générera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes. </string>
+  <string name="account_export_title">Associer le compte à d\'autres appareils</string>
   <string name="account_connect_server_button">Se connecter à partir d\'un serveur d\'entreprise</string>
   <string name="account_connect_button">Se connecter</string>
   <string name="prompt_server">Adresse du serveur de gestion de parc Jami</string>
@@ -224,6 +227,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_link_title">Lier cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Modifier mon compte</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Entrer le mot de passe pour confirmer</string>
   <string name="enter_password">Entrez votre mot de passe</string>

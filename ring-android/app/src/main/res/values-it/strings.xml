@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Attiva gli altoparlanti</string>
   <string name="ab_action_contact_add">Aggiungi ai contatti</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>
+  <string name="hist_contact_invited">Contatto invitato</string>
   <string name="hist_contact_added">Contatto aggiunto</string>
+  <string name="hist_contact_left">Contatto lasciato</string>
+  <string name="hist_contact_banned">Contatto bloccato</string>
   <string name="hist_invitation_received">Invito ricevuto</string>
   <string name="ab_action_audio_call">Chiamata vocale</string>
   <string name="ab_action_video_call">Videochiamata</string>
@@ -283,7 +286,7 @@
   <string name="navigation_item_conversation">Conversazioni</string>
   <string name="navigation_item_contact_request">Richieste di contatto</string>
   <string name="navigation_item_account">Account</string>
-  <string name="search_results_public_directory">Cartella pubblica</string>
+  <string name="search_results_public_directory">Elenco pubblico</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Inviare un messaggio vocale?</string>
   <string name="tv_send_image_dialog_message">Inviare l\'immagine?</string>
@@ -296,6 +299,7 @@
   <string name="tv_send_text">Invia testo</string>
   <string name="tv_send_audio">Invia audio</string>
   <string name="tv_send_video">Invia media</string>
+  <string name="tv_action_more">Di più</string>
   <string name="conversation_input_speech_hint">Di\' qualcosa…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Consigliato</string>

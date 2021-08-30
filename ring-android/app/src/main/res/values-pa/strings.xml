@@ -33,6 +33,7 @@
   <string name="menu_item_account">ਖਾਤੇ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ</string>
   <string name="menu_item_settings">ਸੈਟਿੰਗਾਂ</string>
   <string name="menu_item_plugin_list">ਪਲੱਗਇਨ ਸੈਟਿੰਗਾਂ</string>
+  <string name="menu_item_share">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
   <string name="menu_item_about">Jami ਬਾਰੇ</string>
   <!--Dialing Fragment-->
   <string name="dial_number">ਨੰਬਰ ਡਾਇਲ ਕਰੋ</string>

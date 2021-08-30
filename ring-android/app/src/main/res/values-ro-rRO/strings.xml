@@ -108,7 +108,10 @@
   <string name="ab_action_speakerphone">Activează sonorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
+  <string name="hist_contact_invited">Contact invitat</string>
   <string name="hist_contact_added">Contact adăugat</string>
+  <string name="hist_contact_left">Contact ignorat</string>
+  <string name="hist_contact_banned">Contact blocat</string>
   <string name="hist_invitation_received">Invitație primită</string>
   <string name="ab_action_audio_call">Apel vocal</string>
   <string name="ab_action_video_call">Apel video</string>
@@ -211,7 +214,7 @@
   <string name="no_registered_name">Niciun nume înscris</string>
   <string name="identity">Identitate</string>
   <string name="account">Cont</string>
-  <string name="link_new_device">Asociază un nou aparat</string>
+  <string name="link_new_device">Asociază alt aparat</string>
   <string name="devices">Aparate asociate</string>
   <string name="total_devices">Toate aparatele: </string>
   <!--Share fragment-->
@@ -284,7 +287,7 @@
   <string name="navigation_item_conversation">Conversații</string>
   <string name="navigation_item_contact_request">Cereri de contact</string>
   <string name="navigation_item_account">Cont</string>
-  <string name="search_results_public_directory">Dosar public</string>
+  <string name="search_results_public_directory">Lista publică</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Trimiți mesajul vocal?</string>
   <string name="tv_send_image_dialog_message">Trimiți poza?</string>
@@ -297,6 +300,7 @@
   <string name="tv_send_text">Trimite Text</string>
   <string name="tv_send_audio">Trimite audio</string>
   <string name="tv_send_video">Trimite Media</string>
+  <string name="tv_action_more">Mai mult</string>
   <string name="conversation_input_speech_hint">Spune ceva...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomandat</string>
