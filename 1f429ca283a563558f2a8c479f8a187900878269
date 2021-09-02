@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3f93761_1781e83a",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-09-02T20:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232bed54_46cc5444",
+      "range": {
+        "startLine": 703,
+        "startChar": 30,
+        "endLine": 703,
+        "endChar": 41
+      },
+      "revId": "1f429ca283a563558f2a8c479f8a187900878269",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3c7950c_b2fb03d9",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56917aa3_2f8fe563",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-09-02T20:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c7950c_b2fb03d9",
+      "range": {
+        "startLine": 704,
+        "startChar": 33,
+        "endLine": 704,
+        "endChar": 59
+      },
+      "revId": "1f429ca283a563558f2a8c479f8a187900878269",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a28ab309_0a96d0db",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-09-02T16:14:05Z",
       "side": 1,
       "message": "I think just \"mConversation?.isSwarm\" is valid (can be `var isSwarm \u003d get()`)",
+      "range": {
+        "startLine": 329,
+        "startChar": 37,
+        "endLine": 329,
+        "endChar": 45
+      },
+      "revId": "1f429ca283a563558f2a8c479f8a187900878269",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73863472_6e47832d",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-09-02T20:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28ab309_0a96d0db",
       "range": {
         "startLine": 329,
         "startChar": 37,
