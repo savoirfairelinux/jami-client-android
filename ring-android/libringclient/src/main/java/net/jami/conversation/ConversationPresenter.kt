@@ -325,6 +325,10 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    fun swarmStatus() : Boolean{
+        return mConversation?.isSwarm == true
+    }
+
     fun goToCall(audioOnly: Boolean) {
         if (audioOnly && !mHardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)

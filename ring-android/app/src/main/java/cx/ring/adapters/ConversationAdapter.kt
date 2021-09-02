@@ -696,11 +696,18 @@ class ConversationAdapter(
             conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
             val inflater = conversationFragment.requireActivity().menuInflater
             inflater.inflate(R.menu.conversation_item_actions_messages, menu)
+
             if (interaction.status == InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
             } else {
-                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                menu.removeItem(R.id.conv_action_cancel_message)
+                if (presenter.swarmStatus()) {
+                    Log.w(TAG, "swarmstatus is true : " + presenter.swarmStatus());
+                    menu.removeItem(R.id.conv_action_delete)
+                    menu.removeItem(R.id.conv_action_cancel_message)
+                } else {
+                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
+                    menu.removeItem(R.id.conv_action_cancel_message)
+                }
             }
         }
         longPressView.setOnLongClickListener { v: View ->
@@ -840,27 +847,31 @@ class ConversationAdapter(
      * @param interaction    The conversation element to display
      */
     private fun configureForCallInfo(convViewHolder: ConversationViewHolder, interaction: Interaction) {
-        convViewHolder.mIcon.scaleY = 1f
-        val context = convViewHolder.itemView.context
-        val longPressView: View = convViewHolder.mCallInfoLayout
-        longPressView.background.setTintList(null)
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-            menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
-            menu.removeItem(R.id.conv_action_cancel_message)
-            menu.removeItem(R.id.conv_action_copy_text)
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
-            conversationFragment.updatePosition(convViewHolder.adapterPosition)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.adapterPosition, v.id
-                    .toLong()
-            )
-            false
-        }
+
+            convViewHolder.mIcon.scaleY = 1f
+            val context = convViewHolder.itemView.context
+            if (!presenter.swarmStatus()) {
+                val longPressView: View = convViewHolder.mCallInfoLayout
+                longPressView.background.setTintList(null)
+                longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
+                    conversationFragment.onCreateContextMenu(menu, v, menuInfo)
+                    val inflater = conversationFragment.requireActivity().menuInflater
+                    inflater.inflate(R.menu.conversation_item_actions_messages, menu)
+                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
+                    menu.removeItem(R.id.conv_action_cancel_message)
+                    menu.removeItem(R.id.conv_action_copy_text)
+                }
+                longPressView.setOnLongClickListener { v: View ->
+                    longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
+                    conversationFragment.updatePosition(convViewHolder.adapterPosition)
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(
+                        convViewHolder.adapterPosition, v.id
+                            .toLong()
+                    )
+                    false
+                }
+            }
+
         val pictureResID: Int
         val historyTxt: String
         val call = interaction as Call
@@ -888,7 +899,9 @@ class ConversationAdapter(
         convViewHolder.mHistTxt.text = historyTxt
         convViewHolder.mHistDetailTxt.text = DateFormat.getDateTimeInstance()
             .format(call.timestamp) // start date
+
     }
+
 
     /**
      * Computes the string to set in text details between messages, indicating time separation.
