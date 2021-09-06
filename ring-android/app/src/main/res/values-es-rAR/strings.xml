@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Activar altavoz</string>
   <string name="ab_action_contact_add">Agregar a contactos</string>
   <string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
+  <string name="hist_contact_invited">Contacto invitado</string>
   <string name="hist_contact_added">Contacto añadido</string>
+  <string name="hist_contact_left">El contacto se ha ido</string>
+  <string name="hist_contact_banned">Contacto bloqueado</string>
   <string name="hist_invitation_received">Invitación recibida</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
@@ -177,6 +180,13 @@
   <string name="block_contact_dialog_message">%1$s no podrá contactarte a menos que lo desbloquees.</string>
   <string name="block_contact_completed">%1$s ha sido bloqueado.</string>
   <string name="conversation_contact_is_typing">Escribiendo...</string>
+  <string name="conversation_info_contact_you">Vos</string>
+  <string name="conversation_members">Miembros</string>
+  <string name="conversation_preference_color">Color de la conversación</string>
+  <string name="conversation_preference_emoji">Emoji de la conversación</string>
+  <string name="conversation_type_contact">Contacto de Jami</string>
+  <string name="conversation_type_private">Enjambre privado</string>
+  <string name="conversation_type_group">Enjambre grupal</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir a %1$s?</string>
   <string name="prompt_new_password">Nueva contraseña</string>
@@ -219,6 +229,7 @@
   <string name="refuse">Rechazar</string>
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Nueva solicitud de contacto</string>
+  <string name="contact_request_msg">Tenés %1$d solicitudes de contacto</string>
   <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">No tenés solicitudes de contacto</string>
   <string name="message_contact_not_trusted_yet">%s no está en tus contactos. ¿Quieres aceptar o rechazar la solicitud de este contacto?</string>
@@ -257,6 +268,7 @@
   <string name="file_transfer_status_timed_out">Caducado: tiempo agotado</string>
   <string name="file_saved_in">Archivo guardado en %s</string>
   <string name="file_saved_successfully">Archivo guardado correctamente</string>
+  <string name="file_download">Descargar</string>
   <string name="no_space_left_on_device">No hay espacio disponible</string>
   <string name="title_media_viewer">Visor de archivos</string>
   <string name="menu_file_open">Abrir archivo</string>
@@ -287,6 +299,7 @@
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar medios</string>
+  <string name="tv_action_more">Más</string>
   <string name="conversation_input_speech_hint">Diga algo...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>

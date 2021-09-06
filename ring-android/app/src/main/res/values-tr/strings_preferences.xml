@@ -5,6 +5,7 @@
   <string name="pref_category_video">Görüntü</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Gizlilik</string>
+  <string name="pref_category_diagnostic">Sorun Tespiti</string>
   <string name="pref_mobileData_title">Hücresel veri</string>
   <string name="pref_mobileData_summary">Wi-Fi\'ye ek olarak 3G/LTE ağlarında Jami\'ye izin ver</string>
   <string name="pref_pushNotifications_title">Bildirim gönder</string>
@@ -26,13 +27,28 @@
   <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arka planda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
   <string name="pref_clearHistory_summary">Tüm konuşma geçmişini temizle. Bu işlem geri alınamaz.</string>
+  <string name="pref_notification_title">Bildirim görünürlüğü</string>
+  <string name="pref_notification_summary">Kilit ekranında uygulama bildirimlerinin görünürlüğünü ayarlayın.</string>
   <string name="pref_blackList_title">Engelleme listesi</string>
   <string name="pref_blackList_summary">Engelleme listenizi denetleyin.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>
   <string name="pref_delete_account_summary">Hesabınızı bu aygıttan silin</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>
   <string name="pref_persistNotification_summary">Arka planda çalışan çağrı  ve iletileri almak için izin ver</string>
+  <string name="pref_logs_title">Sorun tespit günlüğü</string>
+  <string name="pref_logs_summary">Sorun tespit günlüğü ayarlarını aç</string>
+  <string name="pref_logs_start">Günlük raporu tut</string>
+  <string name="pref_logs_stop">Günlük raporu tutmayı bitir</string>
+  <string name="pref_typing_title">Yazma göstergelerini etkinleştir</string>
+  <string name="pref_typing_summary">Bir mesajın yazıldığını gösteren yazma göstergelerini gönderin ve alın.</string>
+  <string name="pref_read_title">Okundu onaylarını etkinleştir</string>
+  <string name="pref_read_summary">Bir mesajın görüntülendiğini belirten onay bilgilerini gönderin ve alın.</string>
+  <string name="pref_block_record_title">Ekran görüntüsünü ve kaydını engelle</string>
+  <string name="pref_block_record_summary">Ekran görüntüsü ya da kaydını almayı engelleyin.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Herkese açık \n(bildirimleri ve içeriklerini kilit ekranında göster)\n</string>
+  <string name="notification_private">Özel \n(bildirimleri göster ancak içeriklerini kilit ekranında gizle)\n</string>
+  <string name="notification_secret">Gizli \n(bildirimleri kilit ekranında gösterme)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Eklentiler</string>
   <string name="pref_plugins_summary">Eklentileri etkinleştirin ve değişkenlerini ayarlayın</string>
@@ -40,9 +56,11 @@
   <string name="plugin_uninstall_title">Eklenti kaldırılsın mı?</string>
   <string name="plugin_reset_preferences">Eklenti tercihlerini sıfırlayın</string>
   <string name="plugin_reset_preferences_summary">Eklenti ayarlarınız öntanımlı olacaktır </string>
+  <string name="plugin_reset_preferences_ask">Eklenti ayarlarını sıfırlamak istediğinize emin misiniz?</string>
   <string name="plugin_successfully_installed"><b>%1$s</b> eklentisi başarıyla yüklendi</string>
   <string name="plugin_install_failure">Eklenti yüklenemedi: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Daha yeni bir sürümünüz var: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Aynı <b>%1$s</b> sürümüne sahipsiniz</string>
+  <string name="plugin_force_install">zorla \n yükle</string>
   <string name="plugin_path_image_add">Yeni bir görsel ekle</string>
 </resources>

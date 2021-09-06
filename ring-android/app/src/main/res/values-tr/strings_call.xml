@@ -36,4 +36,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Beklet</string>
     <string name="call_human_state_unhold">Sürdür</string>
     <string name="call_human_state_over">Bitti</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderatör</string>
+    <string name="call_muted">Sessiz</string>
+</resources>

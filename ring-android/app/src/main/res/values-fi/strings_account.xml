@@ -171,9 +171,11 @@
   <string name="account_tv_settings_header">Tunnuksen asetukset</string>
   <string name="account_tv_advance_settings_header">Lisäasetukset</string>
   <string name="account_tv_add_contact">Lisää yhteystieto</string>
+  <string name="account_tv_advanced_settings">Muuta yleiset asetukset</string>
   <string name="account_tv_about">Tietoa Jamista</string>
   <string name="tv_about_version">Versio</string>
   <string name="tv_about_license">Lisenssi</string>
+  <string name="tv_about_author">Tekijänoikeudet</string>
   <string name="tv_about_credits">Tekijät</string>
   <string name="account_link_device">Yhdistä toisesta laitteesta</string>
   <string name="account_link_button">Yhteyden muodostaminen verkosta</string>
@@ -188,6 +190,7 @@
   <string name="account_end_export_button">sulje</string>
   <string name="account_end_export_infos">PIN-koodisi on:\n\n%%\n\nProsessin viimeistelemiseksi sinun on avattava Jami uudessa laitteessa. Luo uusi tili \"linkitä tämä laite tiliin\". PIN-koodi on voimassa 10 minuuttia.</string>
   <string name="account_link_export_info_light">Jos haluat käyttää tätä tunnusta muissa laitteissa, sinun on ensin siirrettävä se Jamiin. Tämä luo PIN-koodin, joka on syötetään uuteen laitteeseen tunnuksen määrittämiseksi. PIN-koodi on voimassa 10 minuuttia.</string>
+  <string name="account_export_title">Linkitä tunnus toisesta laitteesta</string>
   <string name="account_connect_server_button">Yhteyden muodostaminen hallintapalvelimeen</string>
   <string name="account_connect_button">Yhdistä</string>
   <string name="prompt_server">Jamin hallintapalvelimen verkko-osoite</string>
@@ -220,6 +223,7 @@
   <string name="account_link_title">Linkitä tämä laite</string>
   <string name="account_sip_cannot_be_registered">Tiliä ei voi rekisteröidä</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Tunnukseni muokkaus</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Vahvista antamalla salasana</string>
   <string name="enter_password">Syötä salasana</string>

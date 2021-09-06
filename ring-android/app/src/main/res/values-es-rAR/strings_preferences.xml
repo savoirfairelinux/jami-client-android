@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidad</string>
+  <string name="pref_category_diagnostic">Diagnósticos</string>
   <string name="pref_mobileData_title">Datos móviles</string>
   <string name="pref_mobileData_summary">Habilitar Jami incluso en redes móviles 3G/LTE, además de WiFi</string>
   <string name="pref_pushNotifications_title">Notificaciones push</string>
@@ -34,6 +35,10 @@
   <string name="pref_delete_account_summary">Eliminar la cuenta de este dispositivo</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permitir ejecutar en segundo plano para recibir llamadas y mensajes.</string>
+  <string name="pref_logs_title">Registros de diagnóstico</string>
+  <string name="pref_logs_summary">Abrir preferencias de registro de diagnóstico</string>
+  <string name="pref_logs_start">Iniciar registro</string>
+  <string name="pref_logs_stop">Detener registro</string>
   <string name="pref_typing_title">Habilitar indicadores de tipeo</string>
   <string name="pref_typing_summary">Enviar y recibir indicadores de tipeo mostrando que un mensaje se está escribiendo.</string>
   <string name="pref_read_title">Habilitar confirmaciones de lectura</string>

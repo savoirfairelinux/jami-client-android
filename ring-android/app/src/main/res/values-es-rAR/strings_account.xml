@@ -173,9 +173,11 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_tv_settings_header">Configuración de la cuenta</string>
   <string name="account_tv_advance_settings_header">Opciones avanzadas</string>
   <string name="account_tv_add_contact">Añadir contacto</string>
+  <string name="account_tv_advanced_settings">Cambiar preferencias generales</string>
   <string name="account_tv_about">Acerca de Jami</string>
   <string name="tv_about_version">Versión</string>
   <string name="tv_about_license">Licencia</string>
+  <string name="tv_about_author">Derechos de autor</string>
   <string name="tv_about_credits">Créditos</string>
   <string name="account_link_device">Conectarse desde otro dispositivo</string>
   <string name="account_link_button">Conectarse desde la red</string>
@@ -190,6 +192,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_end_export_button">Cerrar</string>
   <string name="account_end_export_infos">Tu PIN es:\n\n%%\n\nPara completar el proceso, necesitás abrir Jami en el nuevo dipositivo y crear una cuenta presionando el botón \"Vincular este dispositivo a una cuenta\". Tu PIN es válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta cuenta en otros dispositivos, primero debés exponerla en Jami. Esto generará un código PIN que deberás introducir en el nuevo dispositivo para configurar la cuenta. El PIN será válido durante 10 minutos.</string>
+  <string name="account_export_title">Vincular cuenta a otros dispositivos</string>
   <string name="account_connect_server_button">Conectarse al servidor de gestión</string>
   <string name="account_connect_button">Conectarse</string>
   <string name="prompt_server">URL del servidor de gestión de Jami</string>
@@ -222,6 +225,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_link_title">Vincular este dispositivo</string>
   <string name="account_sip_cannot_be_registered">No se pudo registrar la cuenta</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Editar mi cuenta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Ingresá la contraseña para confirmar</string>
   <string name="enter_password">Ingresar contraseña</string>

@@ -107,7 +107,10 @@
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
   <string name="ab_action_contact_add_question">Lisää yhteystietoihin?</string>
-  <string name="hist_contact_added">Kontakti lisätty</string>
+  <string name="hist_contact_invited">Henkilö kutsuttu</string>
+  <string name="hist_contact_added">Henkilö lisätty</string>
+  <string name="hist_contact_left">Henkilö poistui</string>
+  <string name="hist_contact_banned">Henkilö estetty</string>
   <string name="hist_invitation_received">Kutsu vastaanotettu</string>
   <string name="ab_action_audio_call">Äänipuhelu</string>
   <string name="ab_action_video_call">Videopuhelu</string>
@@ -156,23 +159,23 @@
   <string name="clear_history_completed">Historia on tyhjennetty.</string>
   <string name="clear_history">Tyhjennä</string>
   <!--Conversation-->
-  <string name="conversation_details">Keskustelun tiedot</string>
+  <string name="conversation_details">Henkilön tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
   <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
   <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>
   <string name="conversation_action_history_clear">Tyhjennä historia</string>
   <string name="conversation_action_history_clear_title">Tyhjennä keskusteluhistoria?</string>
   <string name="conversation_action_history_clear_message">Tämä selvästikin tyhjentää keskusteluhistorian.</string>
-  <string name="conversation_action_remove_this">Poista yhteystieto</string>
-  <string name="conversation_action_remove_this_title">Poista tämä yhteystieto?</string>
-  <string name="conversation_action_remove_this_message">Tämä poistaa yhteystiedon ja kaikki keskustelut tämän kanssa.</string>
+  <string name="conversation_action_remove_this">Poista henkilö</string>
+  <string name="conversation_action_remove_this_title">Poistetaanko tämä henkilö?</string>
+  <string name="conversation_action_remove_this_message">Tämä poistaa henkilön ja kaikki keskustelut tämän kanssa.</string>
   <string name="conversation_action_copy_peer_number">Kopioi numero</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopioitu leikepöydälle</string>
   <string name="conversation_action_select_peer_number">Valitse numero</string>
-  <string name="conversation_action_block_this">Estä yhteystieto</string>
+  <string name="conversation_action_block_this">Estä henkilö</string>
   <string name="conversation_action_go_to_call">Palaa jatkuvaan puheluun</string>
   <string name="conversation_open_file_error">Laitteessa ei ole sovellusta, joka pystyisi avaamaan tämän tiedoston.</string>
-  <string name="clip_contact_uri">Yhteystiedon verkko-osoite</string>
+  <string name="clip_contact_uri">Yhteystieto</string>
   <string name="block_contact_dialog_title">Estä %1$s?</string>
   <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä kunnes poistat hänen estonsa.</string>
   <string name="block_contact_completed">%1$s estettiin.</string>
@@ -181,7 +184,7 @@
   <string name="conversation_members">Jäsenet</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
-  <string name="conversation_type_contact">Jami kontakti</string>
+  <string name="conversation_type_contact">Jami yhteystieto</string>
   <string name="conversation_type_private">Yksityinen parvi</string>
   <string name="conversation_type_group">Ryhmän parvi</string>
   <!--Contacts-->
@@ -202,7 +205,7 @@
   <!--Account Summary-->
   <string name="profile">Profiili</string>
   <string name="profile_name">Profiilin nimi</string>
-  <string name="profile_message_warning">Profiilisi jaetaan vain yhteystietojesi kanssa</string>
+  <string name="profile_message_warning">Profiilisi jaetaan vain sinun yhteystietojen kanssa</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
   <string name="profile_name_hint">Kirjoita nimesi</string>
@@ -236,11 +239,11 @@
   <string name="send_request_title">Lähetä yhteyspyyntö</string>
   <string name="send_request_msg">Sinun on lähetettävä yhteyspyyntö, jotta voit olla yhteydessä tähän käyttäjään. Niin kauan kuin yhteystietosi ei ole käsitellyt pyyntöä, voit lähettää viestejä, mutta hän ei voi vastata sinulle.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">EI estettyjä yhteystietoja</string>
+  <string name="no_blocked_contact">EI estettyjä henkilöitä</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Yhteydenottopyyntöä ei lähetetty</string>
+  <string name="no_contact_request">Pyyntöä ei lähetetty</string>
   <string name="conversation_placeholder">Sinulla ei ole vielä keskusteluja.</string>
-  <string name="contact_request_sent">Yhteydenottopyyntö lähetetty</string>
+  <string name="contact_request_sent">Pyyntö lähetetty</string>
   <string name="start_conversation">Aloita keskustelu</string>
   <string name="search_results">Hakutulokset</string>
   <string name="tv_contact_row_header">Yhteystiedot</string>
@@ -296,6 +299,7 @@
   <string name="tv_send_text">Lähetä teksti</string>
   <string name="tv_send_audio">Lähetä ääni</string>
   <string name="tv_send_video">Lähetä media</string>
+  <string name="tv_action_more">Lisää</string>
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Suositus</string>
