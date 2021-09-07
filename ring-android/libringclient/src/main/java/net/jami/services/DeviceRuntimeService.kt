@@ -31,10 +31,9 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     abstract fun getConversationPath(conversationId: String, name: String): File
     abstract fun getConversationPath(accountId: String, conversationId: String, name: String): File
     fun getConversationPath(interaction: DataTransfer): File {
-        return if (interaction.conversationId == null) getConversationPath(
-            interaction.conversation!!.participant,
-            interaction.storagePath
-        ) else interaction.publicPath!!
+        return if (interaction.conversationId == null)
+            getConversationPath(interaction.conversation!!.participant!!, interaction.storagePath)
+        else interaction.publicPath!!
     }
 
     fun getNewConversationPath(accountId: String, conversationId: String, name: String): File {

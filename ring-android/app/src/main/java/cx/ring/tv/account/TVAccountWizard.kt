@@ -36,11 +36,11 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.mvp.AccountCreationModel
+import net.jami.model.AccountCreationModel
 import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
-class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardView {
+class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
     private var mProgress: ProgressDialog? = null
     private var mLinkAccount = false
     private var mAccountType: String? = null
@@ -57,15 +57,11 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
             mAccountType = AccountConfig.ACCOUNT_TYPE_RING
         }
         if (savedInstanceState == null) {
-            GuidedStepSupportFragment.addAsRoot(
-                this,
-                TVHomeAccountCreationFragment(),
-                android.R.id.content
-            )
+            GuidedStepSupportFragment.addAsRoot(this, TVHomeAccountCreationFragment(), android.R.id.content)
         } else {
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount")
         }
-        presenter!!.init(if (getIntent().action != null) getIntent().action else AccountConfig.ACCOUNT_TYPE_RING)
+        presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_RING)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -74,8 +70,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
     }
 
     override fun onDestroy() {
-        if (mProgress != null) {
-            mProgress!!.dismiss()
+        mProgress?.let { progress ->
+            progress.dismiss()
             mProgress = null
         }
         super.onDestroy()
@@ -83,9 +79,9 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
 
     fun createAccount(accountCreationModel: AccountCreationModel) {
         if (accountCreationModel.isLink) {
-            presenter!!.initJamiAccountLink(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountLink(accountCreationModel, getText(R.string.ring_account_default_name).toString())
         } else {
-            presenter!!.initJamiAccountCreation(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountCreation(accountCreationModel, getText(R.string.ring_account_default_name).toString())
         }
     }
 
@@ -97,10 +93,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
     }
 
     override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
-        GuidedStepSupportFragment.add(
-            supportFragmentManager,
-            TVProfileCreationFragment.newInstance(accountCreationModel as AccountCreationModelImpl)
-        )
+        GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment.newInstance(accountCreationModel as AccountCreationModelImpl))
     }
 
     override fun displayProgress(display: Boolean) {
@@ -113,10 +106,9 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
                 show()
             }
         } else {
-            if (mProgress != null) {
-                if (mProgress!!.isShowing) {
-                    mProgress!!.dismiss()
-                }
+            mProgress?.let { progress ->
+                if (progress.isShowing)
+                    progress.dismiss()
                 mProgress = null
             }
         }
@@ -195,7 +187,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter?>(), AccountWizardVi
         finish()
     }
 
-    fun profileCreated(accountCreationModel: AccountCreationModel?, saveProfile: Boolean) {
-        presenter!!.profileCreated(accountCreationModel, saveProfile)
+    fun profileCreated(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
+        presenter.profileCreated(accountCreationModel, saveProfile)
     }
 }

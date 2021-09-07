@@ -406,7 +406,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             Log.w(TAG, "prepareAccountQr $accountId")
             if (accountId == null || accountId.isEmpty()) return null
             val pad = 16
-            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)
+            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)!!
             val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(
                 qrCodeData.data,

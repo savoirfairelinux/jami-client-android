@@ -22,11 +22,7 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
         mPath = ConversationPath.fromBundle(requireArguments())!!
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragPluginHandlersListBinding.inflate(inflater, container, false).also { b ->
             b.handlerList.setHasFixedSize(true)
             b.handlerList.adapter = PluginsListAdapter(
@@ -52,15 +48,15 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
     }
 
     override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-        JamiService.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
+        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
     }
 
     override fun onPluginEnabled(pluginDetails: PluginDetails) {
-        JamiService.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
+        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
     }
 
     companion object {
-        const val TAG = "PluginListHandlers"
+        val TAG = PluginHandlersListFragment::class.simpleName!!
         fun newInstance(accountId: String, peerId: String): PluginHandlersListFragment {
             val fragment = PluginHandlersListFragment()
             fragment.arguments = ConversationPath.toBundle(accountId, peerId)

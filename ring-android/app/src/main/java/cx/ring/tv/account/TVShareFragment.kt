@@ -21,15 +21,15 @@ package cx.ring.tv.account
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cx.ring.R
 import cx.ring.databinding.TvFragShareBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.services.VCardServiceImpl.Companion.loadProfile
+import cx.ring.services.VCardServiceImpl
 import cx.ring.views.AvatarDrawable
-import cx.ring.views.AvatarDrawable.Companion.build
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -37,7 +37,6 @@ import net.jami.model.Account
 import net.jami.mvp.GenericView
 import net.jami.share.SharePresenter
 import net.jami.share.ShareViewModel
-import net.jami.utils.Log
 
 @AndroidEntryPoint
 class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareViewModel>>(), GenericView<ShareViewModel> {
@@ -77,7 +76,7 @@ class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareVie
     }
 
     private fun getUserAvatar(account: Account) {
-        disposable.add(loadProfile(requireContext(), account)
+        disposable.add(VCardServiceImpl.loadProfile(requireContext(), account)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 binding?.apply {
@@ -85,12 +84,12 @@ class TVShareFragment : BaseSupportFragment<SharePresenter, GenericView<ShareVie
                     shareUri?.text = account.displayUsername
                 }
             }
-            .map { p -> build(requireContext(), account, p, true) }
-            .subscribe({ a: AvatarDrawable? ->
+            .map { p -> AvatarDrawable.build(requireContext(), account, p, true) }
+            .subscribe({ a: AvatarDrawable ->
                 binding?.apply {
                     qrUserPhoto?.visibility = View.VISIBLE
                     qrUserPhoto?.setImageDrawable(a)
                 }
-            }) { e -> Log.e(TVShareFragment::class.simpleName, e.message) })
+            }) { e -> Log.e(TVShareFragment::class.simpleName!!, e.message!!) })
     }
 }

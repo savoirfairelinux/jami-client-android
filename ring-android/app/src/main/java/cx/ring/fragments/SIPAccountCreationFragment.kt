@@ -36,8 +36,8 @@ import cx.ring.R
 import cx.ring.databinding.FragAccSipCreateBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.mvp.SIPCreationView
-import net.jami.wizard.SIPCreationPresenter
+import net.jami.account.SIPCreationView
+import net.jami.account.SIPCreationPresenter
 
 @AndroidEntryPoint
 class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIPCreationView>(),
@@ -77,10 +77,10 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
     private fun createSIPAccount(bypassWarnings: Boolean) {
         //orientation is locked during the create of account to avoid the destruction of the thread
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        val hostname = binding!!.hostname.text.toString()
-        val proxy = binding!!.proxy.text.toString()
-        val username = binding!!.username.text.toString()
-        val password = binding!!.password.text.toString()
+        val hostname = binding!!.hostname.text?.toString()
+        val proxy = binding!!.proxy.text?.toString()
+        val username = binding!!.username.text?.toString()
+        val password = binding!!.password.text?.toString()
         presenter.startCreation(hostname, proxy, username, password, bypassWarnings)
     }
 

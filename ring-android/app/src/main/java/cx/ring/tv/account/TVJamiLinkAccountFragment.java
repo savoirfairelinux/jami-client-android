@@ -18,6 +18,7 @@
 package cx.ring.tv.account;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -31,10 +32,10 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.JamiLinkAccountPresenter;
 import net.jami.account.JamiLinkAccountView;
-import cx.ring.application.JamiApplication;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
-import net.jami.mvp.AccountCreationModel;
+import net.jami.model.AccountCreationModel;
 import net.jami.utils.StringUtils;
 
 @AndroidEntryPoint
@@ -59,7 +60,7 @@ public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAc
         super.onViewCreated(view, savedInstanceState);
         presenter.init(model);
         if (model != null && model.getPhoto() != null) {
-            getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());
+            getGuidanceStylist().getIconView().setImageBitmap((Bitmap) model.getPhoto());
         }
     }
 
@@ -105,7 +106,7 @@ public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAc
     }
 
     @Override
-    public void createAccount(AccountCreationModel accountCreationModel) {
+    public void createAccount(@NonNull AccountCreationModel accountCreationModel) {
         ((TVAccountWizard) getActivity()).createAccount(accountCreationModel);
     }
 

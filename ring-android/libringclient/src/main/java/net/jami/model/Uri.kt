@@ -120,7 +120,6 @@ class Uri : Serializable {
         private val VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE)
         private val VALID_IPV6_PATTERN = Pattern.compile(ipv6Pattern, Pattern.CASE_INSENSITIVE)
 
-        @JvmStatic
         fun fromString(uri: String): Uri {
             val m = URI_PATTERN.matcher(uri)
             return if (m.find()) {
@@ -130,7 +129,6 @@ class Uri : Serializable {
             }
         }
 
-        @JvmStatic
         fun fromStringWithName(uriString: String): Tuple<Uri, String?> {
             val m = ANGLE_BRACKETS_PATTERN.matcher(uriString)
             return if (m.find()) {
@@ -140,7 +138,6 @@ class Uri : Serializable {
             }
         }
 
-        @JvmStatic
         fun fromId(conversationId: String): Uri {
             return Uri(null, null, conversationId, null)
         }
@@ -154,7 +151,6 @@ class Uri : Serializable {
          * @return `true` if the string is a value that is a valid IP address,
          * `false` otherwise.
          */
-        @JvmStatic
         fun isIpAddress(ipAddress: String): Boolean {
             val m1 = VALID_IPV4_PATTERN.matcher(ipAddress)
             if (m1.matches()) {

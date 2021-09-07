@@ -27,7 +27,6 @@ import cx.ring.BuildConfig
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.utils.StringUtils
-import net.jami.utils.Tuple
 import java.util.*
 
 class ConversationPath {
@@ -44,11 +43,6 @@ class ConversationPath {
     constructor(account: String, conversationUri: Uri) {
         accountId = account
         conversationId = conversationUri.uri
-    }
-
-    constructor(path: Tuple<String, String>) {
-        accountId = path.first
-        conversationId = path.second
     }
 
     constructor(conversation: Conversation) {
@@ -117,7 +111,7 @@ class ConversationPath {
             return if (interaction.conversation is Conversation)
                 toUri(interaction.account, (interaction.conversation as Conversation).uri)
             else
-                toUri(interaction.account, Uri.fromString(interaction.conversation!!.participant))
+                toUri(interaction.account, Uri.fromString(interaction.conversation!!.participant!!))
         }
 
         fun toBundle(accountId: String, uri: String): Bundle {

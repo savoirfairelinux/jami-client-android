@@ -39,9 +39,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
-import cx.ring.fragments.GeneralAccountPresenter;
-import cx.ring.fragments.GeneralAccountView;
+import net.jami.settings.GeneralAccountPresenter;
+import net.jami.settings.GeneralAccountView;
 import net.jami.model.Account;
 import net.jami.model.ConfigKey;
 import net.jami.utils.Tuple;

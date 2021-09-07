@@ -36,7 +36,6 @@ import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.HashUtils
-import net.jami.utils.Tuple
 import java.util.*
 
 class AvatarDrawable : Drawable {
@@ -92,7 +91,7 @@ class AvatarDrawable : Drawable {
             return VCardServiceImpl.loadProfile(context, account)
                 .map { profile -> build(context, account, profile, crop) }
         }
-        fun build(context: Context, account: Account, profile: Tuple<String?, Any?>, crop: Boolean): AvatarDrawable {
+        fun build(context: Context, account: Account, profile: Pair<String?, Any?>, crop: Boolean): AvatarDrawable {
             return Builder()
                         .withPhoto(profile.second as Bitmap?)
                         .withNameData(profile.first, account.registeredName)
@@ -618,14 +617,7 @@ class AvatarDrawable : Drawable {
                     val bitmap = bitmaps[i]
                     val subBounds = getSubBounds(realBounds, bitmaps.size, i)
                     if (subBounds != null) {
-                        fit(
-                            bitmap.width,
-                            bitmap.height,
-                            subBounds.width(),
-                            subBounds.height(),
-                            false,
-                            inBounds!![i]
-                        )
+                        fit(bitmap.width, bitmap.height, subBounds.width(), subBounds.height(), false, inBounds!![i])
                         backgroundBounds!![i].set(subBounds)
                     }
                 }

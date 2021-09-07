@@ -185,7 +185,7 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    fun setAccount(accountId: String?) {
+    fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
     }
 
@@ -671,7 +671,7 @@ class JamiAccountSummaryFragment :
         }.show(parentFragmentManager, FRAGMENT_DIALOG_RENAME)
     }
 
-    override fun onDeviceRename(newName: String?) {
+    override fun onDeviceRename(newName: String) {
         Log.d(TAG, "onDeviceRename: " + presenter.deviceName + " -> " + newName)
         presenter.renameDevice(newName)
     }

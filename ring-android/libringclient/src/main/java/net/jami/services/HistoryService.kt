@@ -117,12 +117,12 @@ abstract class HistoryService {
             Log.d(TAG, "Inserting interaction for account -> $accountId")
             val conversationDataDao = getConversationDataDao(accountId)
             val history = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.participant).queryForFirst() ?:
-            conversationDataDao.createIfNotExists(ConversationHistory(conversation.participant))!!
+            conversationDataDao.createIfNotExists(ConversationHistory(conversation.participant!!))!!
             //interaction.setConversation(conversation);
             conversation.id = history.id
             getInteractionDataDao(accountId).create(interaction)
         }
-            .doOnError { e: Throwable? -> Log.e(TAG, "Can't insert interaction", e) }
+            .doOnError { e: Throwable -> Log.e(TAG, "Can't insert interaction", e) }
             .subscribeOn(scheduler)
     }
 
@@ -177,8 +177,8 @@ abstract class HistoryService {
                     .orderBy(Interaction.COLUMN_TIMESTAMP, true)
                     .where().eq(Interaction.COLUMN_CONVERSATION, conversationId)
                     .prepare())
-        }.subscribeOn(scheduler).doOnError { e: Throwable? -> Log.e(TAG, "Can't load conversation from database", e) }
-            .onErrorReturn { e: Throwable? -> ArrayList() }
+        }.subscribeOn(scheduler).doOnError { e: Throwable -> Log.e(TAG, "Can't load conversation from database", e) }
+            .onErrorReturn { ArrayList() }
     }
 
     fun incomingMessage(accountId: String, daemonId: String?, from: String, message: String): Single<TextMessage> {
