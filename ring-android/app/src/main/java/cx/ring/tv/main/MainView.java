@@ -38,8 +38,6 @@ public interface MainView {
 
     void callContact(String accountID, String ringID);
 
-    void displayErrorToast(Error error);
-
     void displayAccountInfo(HomeNavigationViewModel viewModel);
 
     void updateModel(Account account);

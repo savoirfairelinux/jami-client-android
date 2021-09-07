@@ -21,17 +21,16 @@ package net.jami.conversation
 
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.mvp.BaseView
 import java.io.File
 
-interface ConversationView : BaseView {
+interface ConversationView {
     fun refreshView(conversation: List<Interaction>)
     fun scrollToEnd()
     fun updateContact(contact: Contact)
     fun displayContact(conversation: Conversation)
     fun displayOnGoingCallPane(display: Boolean)
     fun displayNumberSpinner(conversation: Conversation, number: Uri)
-    override fun displayErrorToast(error: Error)
+    fun displayErrorToast(error: Error)
     fun hideNumberSpinner()
     fun clearMsgEdit()
     fun goToHome()

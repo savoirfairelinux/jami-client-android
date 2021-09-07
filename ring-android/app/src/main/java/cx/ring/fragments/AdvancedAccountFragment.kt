@@ -35,6 +35,8 @@ import cx.ring.views.PasswordPreference
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
+import net.jami.settings.AdvancedAccountPresenter
+import net.jami.settings.AdvancedAccountView
 
 @AndroidEntryPoint
 class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>(),
@@ -46,7 +48,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs)
         val args = arguments
-        presenter!!.init(args?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
+        presenter.init(args?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -79,18 +81,18 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
             if (pref != null) {
                 pref.onPreferenceChangeListener = this
                 if (confKey == ConfigKey.LOCAL_INTERFACE) {
-                    val `val` = config[confKey]
+                    val value = config[confKey]
                     val display = networkInterfaces.toTypedArray()
                     val listPref = pref as ListPreference
                     listPref.entries = display
                     listPref.entryValues = display
-                    listPref.summary = `val`
-                    listPref.value = `val`
+                    listPref.summary = value
+                    listPref.value = value
                 } else if (!confKey.isTwoState) {
-                    val `val` = config[confKey]
-                    pref.summary = `val`
+                    val value = config[confKey]
+                    pref.summary = value
                     if (pref is EditTextPreference) {
-                        pref.text = `val`
+                        pref.text = value
                     }
                 } else {
                     (pref as TwoStatePreference).isChecked = config.getBool(confKey)
@@ -117,18 +119,18 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        val key = ConfigKey.fromString(preference.key)
-        presenter!!.preferenceChanged(key, newValue)
+        val key = ConfigKey.fromString(preference.key)!!
+        presenter.preferenceChanged(key, newValue)
         when (preference) {
             is TwoStatePreference -> {
-                presenter!!.twoStatePreferenceChanged(key, newValue)
+                presenter.twoStatePreferenceChanged(key, newValue)
             }
             is PasswordPreference -> {
-                presenter!!.passwordPreferenceChanged(key, newValue)
+                presenter.passwordPreferenceChanged(key, newValue)
                 preference.setSummary(if (TextUtils.isEmpty(newValue.toString())) "" else "******")
             }
             else -> {
-                presenter!!.preferenceChanged(key, newValue)
+                presenter.preferenceChanged(key, newValue)
                 preference.summary = newValue.toString()
             }
         }
@@ -136,8 +138,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
     }
 
     companion object {
-        @JvmField
-        val TAG = AdvancedAccountFragment::class.java.simpleName
+        val TAG = AdvancedAccountFragment::class.simpleName!!
         private const val DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG"
     }
 }

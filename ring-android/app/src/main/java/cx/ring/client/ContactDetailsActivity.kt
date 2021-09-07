@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.application.JamiApplication
 import cx.ring.client.ColorChooserBottomSheet.IColorSelected
 import cx.ring.client.EmojiChooserBottomSheet.IEmojiSelected
 import cx.ring.databinding.ActivityContactDetailsBinding
@@ -116,9 +117,7 @@ class ContactDetailsActivity : AppCompatActivity() {
     internal class ContactActionView(
         val binding: ItemContactActionBinding,
         parentDisposable: CompositeDisposable
-    ) : RecyclerView.ViewHolder(
-        binding.root
-    ) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         var callback: (() -> Unit)? = null
         val disposable = CompositeDisposable()
 
@@ -240,6 +239,7 @@ class ContactDetailsActivity : AppCompatActivity() {
             finish()
             return
         }
+        JamiApplication.instance?.startDaemon()
         binding = ActivityContactDetailsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         //JamiApplication.getInstance().getInjectionComponent().inject(this);
@@ -285,11 +285,7 @@ class ContactDetailsActivity : AppCompatActivity() {
         //adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
         binding!!.conversationType.setText(infoString)
         //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
-        colorAction = ContactAction(
-            R.drawable.item_color_background,
-            0,
-            getText(R.string.conversation_preference_color)
-        ) {
+        colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
             val frag = ColorChooserBottomSheet()
             frag.setCallback(object : IColorSelected {
                 override fun onColorSelected(color: Int) {

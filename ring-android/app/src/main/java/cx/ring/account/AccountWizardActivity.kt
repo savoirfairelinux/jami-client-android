@@ -21,7 +21,6 @@
 package cx.ring.account
 
 import android.app.ProgressDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -44,7 +43,7 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.mvp.AccountCreationModel
+import net.jami.model.AccountCreationModel
 import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
@@ -71,29 +70,27 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         }
         if (savedInstanceState == null) {
             if (accountToMigrate != null) {
-                val args = Bundle()
-                args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().data!!.lastPathSegment)
-                val fragment: Fragment = AccountMigrationFragment()
-                fragment.arguments = args
-                val fragmentManager = supportFragmentManager
-                fragmentManager
+                val fragment = AccountMigrationFragment().apply {
+                    arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountToMigrate) }
+                }
+                supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.wizard_container, fragment)
                     .commit()
             } else {
-                presenter.init(if (getIntent().action != null) getIntent().action else AccountConfig.ACCOUNT_TYPE_RING)
+                presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_RING)
             }
         }
     }
 
     override fun onDestroy() {
-        if (mProgress != null) {
-            mProgress!!.dismiss()
+        mProgress?.let { progress ->
+            progress.dismiss()
             mProgress = null
         }
-        if (mAlertDialog != null) {
-            mAlertDialog!!.setOnDismissListener(null)
-            mAlertDialog!!.dismiss()
+        mAlertDialog?.let { alertDialog ->
+            alertDialog.setOnDismissListener(null)
+            alertDialog.dismiss()
             mAlertDialog = null
         }
         super.onDestroy()
@@ -134,14 +131,14 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             .commit()
     }
 
-    override fun goToProfileCreation(model: AccountCreationModel) {
+    override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
             if (fragment is JamiLinkAccountFragment) {
-                fragment.scrollPagerFragment(model)
+                fragment.scrollPagerFragment(accountCreationModel)
             } else if (fragment is JamiAccountConnectFragment) {
-                profileCreated(model, false)
+                profileCreated(accountCreationModel, false)
             }
         }
     }
@@ -217,7 +214,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             .setPositiveButton(android.R.string.ok, null)
             .setTitle(R.string.account_cannot_be_found_title)
             .setMessage(R.string.account_cannot_be_found_message)
-            .setOnDismissListener { dialogInterface: DialogInterface? -> supportFragmentManager.popBackStack() }
+            .setOnDismissListener { supportFragmentManager.popBackStack() }
             .show()
     }
 
@@ -231,11 +228,11 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         presenter.successDialogClosed()
     }
 
-    fun profileCreated(accountCreationModel: AccountCreationModel?, saveProfile: Boolean) {
+    fun profileCreated(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
         presenter.profileCreated(accountCreationModel, saveProfile)
     }
 
     companion object {
-        val TAG = AccountWizardActivity::class.java.name
+        val TAG = AccountWizardActivity::class.simpleName!!
     }
 }

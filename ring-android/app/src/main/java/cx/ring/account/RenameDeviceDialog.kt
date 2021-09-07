@@ -102,7 +102,7 @@ class RenameDeviceDialog : DialogFragment() {
     }
 
     interface RenameDeviceListener {
-        fun onDeviceRename(newName: String?)
+        fun onDeviceRename(newName: String)
     }
 
     companion object {

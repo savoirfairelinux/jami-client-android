@@ -67,7 +67,6 @@ object ContentUriHandler {
         return getUriForFile(context, authority, file, null)
     }
 
-    @JvmStatic
     fun getUriForFile(context: Context, authority: String, file: File, displayName: String?): Uri {
         return try {
             if (displayName == null)

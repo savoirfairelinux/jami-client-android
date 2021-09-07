@@ -1189,7 +1189,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
     }
 
-    private fun startScreenShare(mediaProjection: MediaProjection) {
+    private fun startScreenShare(mediaProjection: MediaProjection?) {
         if (presenter.startScreenShare(mediaProjection)) {
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
@@ -1324,8 +1324,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         if (pluginsModeFirst) {
             // Init
             val callMediaHandlers = JamiService.getCallMediaHandlers()
-            val videoPluginsItems: MutableList<Drawable?> = ArrayList(callMediaHandlers.size + 1)
-            videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24))
+            val videoPluginsItems: MutableList<Drawable> = ArrayList(callMediaHandlers.size + 1)
+            videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24)!!)
             // Search for plugin call media handlers icons
             // If a call media handler doesn't have an icon use a standard android icon
             for (callMediaHandler in callMediaHandlers) {
@@ -1333,10 +1333,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 var drawablePath = details["iconPath"]
                 if (drawablePath != null && drawablePath.endsWith("svg")) drawablePath =
                     drawablePath.replace(".svg", ".png")
-                var handlerIcon = Drawable.createFromPath(drawablePath)
-                if (handlerIcon == null) {
-                    handlerIcon = context.getDrawable(R.drawable.ic_jami)
-                }
+                val handlerIcon = Drawable.createFromPath(drawablePath) ?: context.getDrawable(R.drawable.ic_jami)!!
                 videoPluginsItems.add(handlerIcon)
             }
             rp!!.updateData(videoPluginsItems)

@@ -62,20 +62,20 @@ class ShareWithFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = SmartListAdapter(null, object : SmartListListeners {
-            override fun onItemClick(smartListViewModel: SmartListViewModel) {
+            override fun onItemClick(item: SmartListViewModel) {
                 mPendingIntent?.let { intent ->
                     mPendingIntent = null
                     val type = intent.type
                     if (type != null && type.startsWith("text/")) {
                         intent.putExtra(Intent.EXTRA_TEXT, binding!!.previewText.text.toString())
                     }
-                    intent.putExtras(ConversationPath.toBundle(smartListViewModel.accountId, smartListViewModel.uri))
+                    intent.putExtras(ConversationPath.toBundle(item.accountId, item.uri))
                     intent.setClass(requireActivity(), ConversationActivity::class.java)
                     startActivity(intent)
                 }
             }
 
-            override fun onItemLongClick(smartListViewModel: SmartListViewModel) {}
+            override fun onItemLongClick(item: SmartListViewModel) {}
         }, mDisposable)
 
         val binding = FragSharewithBinding.inflate(inflater).apply {

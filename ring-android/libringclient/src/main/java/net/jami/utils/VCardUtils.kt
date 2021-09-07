@@ -40,7 +40,7 @@ import java.lang.Exception
 import java.util.HashMap
 
 object VCardUtils {
-    val TAG = VCardUtils::class.simpleName
+    val TAG = VCardUtils::class.simpleName!!
     const val MIME_PROFILE_VCARD = "x-ring/ring.profile.vcard"
     const val VCARD_KEY_MIME_TYPE = "mimeType"
     const val VCARD_KEY_PART = "part"
@@ -48,7 +48,7 @@ object VCardUtils {
     const val LOCAL_USER_VCARD_NAME = "profile.vcf"
     private const val VCARD_MAX_SIZE = 1024L * 1024L * 8
 
-    fun readData(vcard: VCard?): Tuple<String?, ByteArray?> {
+    fun readData(vcard: VCard?): Pair<String?, ByteArray?> {
         var contactName: String? = null
         var photo: ByteArray? = null
         if (vcard != null) {
@@ -67,7 +67,7 @@ object VCardUtils {
                 }
             }
         }
-        return Tuple(contactName, photo)
+        return Pair(contactName, photo)
     }
 
     fun writeData(uri: String?, displayName: String?, picture: ByteArray?): VCard {

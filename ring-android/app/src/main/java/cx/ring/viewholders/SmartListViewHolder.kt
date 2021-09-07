@@ -143,7 +143,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     interface SmartListListeners {
-        fun onItemClick(smartListViewModel: SmartListViewModel)
-        fun onItemLongClick(smartListViewModel: SmartListViewModel)
+        fun onItemClick(item: SmartListViewModel)
+        fun onItemLongClick(item: SmartListViewModel)
     }
 }

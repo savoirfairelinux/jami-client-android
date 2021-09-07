@@ -35,11 +35,10 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
-import net.jami.utils.Tuple
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
-    override fun loadProfile(account: Account): Observable<Tuple<String?, Any?>> {
+    override fun loadProfile(account: Account): Observable<Pair<String?, Any?>> {
         return loadProfile(mContext, account)
     }
 
@@ -61,26 +60,26 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
     }
 
-    override fun saveVCardProfile(accountId: String, uri: String, displayName: String, picture: String): Single<VCard> {
+    override fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> {
         return Single.fromCallable { VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)) }
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
     }
 
-    override fun loadVCardProfile(vcard: VCard): Single<Tuple<String?, Any?>> {
+    override fun loadVCardProfile(vcard: VCard): Single<Pair<String?, Any?>> {
         return Single.fromCallable { readData(vcard) }
     }
 
-    override fun peerProfileReceived(accountId: String, peerId: String, vcardFile: File): Single<Tuple<String?, Any?>> {
-        return VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcardFile)
-            .map { vcard -> readData(vcard) }
+    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Pair<String?, Any?>> {
+        return VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
+            .map { vc -> readData(vc) }
     }
 
-    override fun base64ToBitmap(base64: String): Any? {
+    override fun base64ToBitmap(base64: String?): Any? {
         return BitmapUtils.base64ToBitmap(base64)
     }
 
     companion object {
-        fun loadProfile(context: Context, account: Account): Observable<Tuple<String?, Any?>> {
+        fun loadProfile(context: Context, account: Account): Observable<Pair<String?, Any?>> {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
@@ -94,12 +93,12 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
         }
 
-        fun readData(vcard: VCard?): Tuple<String?, Any?> {
+        fun readData(vcard: VCard?): Pair<String?, Any?> {
             return readData(VCardUtils.readData(vcard))
         }
 
-        fun readData(profile: Tuple<String?, ByteArray?>): Tuple<String?, Any?> {
-            return Tuple(profile.first, BitmapUtils.bytesToBitmap(profile.second))
+        fun readData(profile: Pair<String?, ByteArray?>): Pair<String?, Any?> {
+            return Pair(profile.first, BitmapUtils.bytesToBitmap(profile.second))
         }
     }
 }
