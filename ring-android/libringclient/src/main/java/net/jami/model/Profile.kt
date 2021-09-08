@@ -1,7 +1,9 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Raphaël Brulé <raphael.brule@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,18 +16,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package net.jami.navigation
+package net.jami.model
 
-import net.jami.model.Account
-
-interface HomeNavigationView {
-    fun showViewModel(viewModel: HomeNavigationViewModel)
-    fun gotToImageCapture()
-    fun askCameraPermission()
-    fun goToGallery()
-    fun askGalleryPermission()
-    //fun setPhoto(account: Account)
-}
+class Profile(val displayName: String?, val avatar: Any?)

@@ -74,9 +74,9 @@ class MainPresenter @Inject constructor(
     }
 
     private fun reloadAccountInfo() {
-        mCompositeDisposable.add(mAccountService.currentAccountSubject
+        mCompositeDisposable.add(mAccountService.currentProfileAccountSubject
             .observeOn(mUiScheduler)
-            .subscribe({ account: Account -> view?.displayAccountInfo(HomeNavigationViewModel(account, null)) })
+            .subscribe({ accountProfile -> view?.displayAccountInfo(HomeNavigationViewModel(accountProfile.first, accountProfile.second)) })
             { e: Throwable -> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e) })
 
         mCompositeDisposable.add(mAccountService.observableAccounts

@@ -39,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
+import net.jami.model.Profile
 import java.io.File
 
 @AndroidEntryPoint
@@ -89,7 +90,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     }
 
     override fun showPasswordProgressDialog() {}
-    override fun accountChanged(account: Account) {}
+    override fun accountChanged(account: Account, profile: Profile) {}
     override fun showNetworkError() {
         mWaitDialog!!.dismiss()
         AlertDialog.Builder(activity)
@@ -164,7 +165,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     override fun askCameraPermission() {}
     override fun goToGallery() {}
     override fun askGalleryPermission() {}
-    override fun updateUserView(account: Account) {}
+    override fun updateUserView(account: Account, profile: Profile) {}
     override fun goToMedia(accountId: String) {}
     override fun goToSystem(accountId: String) {}
     override fun goToAdvanced(accountId: String) {}

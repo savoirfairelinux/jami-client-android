@@ -24,10 +24,11 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
+import net.jami.model.Profile
 import java.io.File
 
 abstract class VCardService {
-    abstract fun loadProfile(account: Account): Observable<Pair<String?, Any?>>
+    abstract fun loadProfile(account: Account): Observable<Profile>
     abstract fun loadSmallVCard(accountId: String, maxSize: Int): Maybe<VCard>
     fun loadSmallVCardWithDefault(accountId: String, maxSize: Int): Single<VCard> {
         return loadSmallVCard(accountId, maxSize)
@@ -36,9 +37,9 @@ abstract class VCardService {
 
     abstract fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard>
 
-    abstract fun loadVCardProfile(vcard: VCard): Single<Pair<String?, Any?>>
-    abstract fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Pair<String?, Any?>>
-    abstract fun accountProfileReceived(accountId: String, vcardFile: File): Single<Pair<String?, Any?>>
+    abstract fun loadVCardProfile(vcard: VCard): Single<Profile>
+    abstract fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile>
+    abstract fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile>
     abstract fun base64ToBitmap(base64: String?): Any?
 
     companion object {

@@ -19,12 +19,13 @@
 package net.jami.account
 
 import net.jami.model.Account
+import net.jami.model.Profile
 import java.io.File
 
 interface JamiAccountSummaryView {
     fun showExportingProgressDialog()
     fun showPasswordProgressDialog()
-    fun accountChanged(account: Account)
+    fun accountChanged(account: Account, profile: Profile)
     fun showNetworkError()
     fun showPasswordError()
     fun showGenericError()
@@ -35,7 +36,7 @@ interface JamiAccountSummaryView {
     fun askCameraPermission()
     fun goToGallery()
     fun askGalleryPermission()
-    fun updateUserView(account: Account)
+    fun updateUserView(account: Account, profile: Profile)
     fun goToMedia(accountId: String)
     fun goToSystem(accountId: String)
     fun goToAdvanced(accountId: String)

@@ -51,22 +51,10 @@ class HomeNavigationPresenter @Inject constructor(
     override fun bindView(view: HomeNavigationView) {
         super.bindView(view)
         mCompositeDisposable.add(mAccountService.currentProfileAccountSubject
-            .switchMap { account: Account ->
-                account.loadedProfileObservable.map { alias: Pair<String?, Any?> -> Pair(account, alias) }
-            }
             .observeOn(mUiScheduler)
-            .subscribe({ alias: Pair<Account, Pair<String?, Any?>> ->
-                this.view?.showViewModel(HomeNavigationViewModel(alias.first, alias.second))
+            .subscribe({ accountProfile ->
+                this.view?.showViewModel(HomeNavigationViewModel(accountProfile.first, accountProfile.second))
             }) { e: Throwable -> Log.e(TAG, "Error loading account list !", e) })
-        mCompositeDisposable.add(mAccountService.observableAccounts
-            .observeOn(mUiScheduler)
-            .subscribe({ account: Account ->
-                this.view?.updateModel(account)
-            }) { e: Throwable -> Log.e(TAG, "Error loading account list !", e) })
-    }
-
-    fun setAccountOrder(selectedAccount: Account?) {
-        mAccountService.currentAccount = selectedAccount
     }
 
     fun saveVCardPhoto(photo: Single<Photo>) {
@@ -87,9 +75,9 @@ class HomeNavigationPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribe({ vcard ->
                 account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-                //mAccountService.refreshAccounts()
-                //view?.setPhoto(account)
                 VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
             }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
     }
 
@@ -105,9 +93,9 @@ class HomeNavigationPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribe({ vcard ->
                 account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-                mAccountService.refreshAccounts()
-                bindView(view!!)
                 VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
             }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
     }
 
@@ -125,14 +113,12 @@ class HomeNavigationPresenter @Inject constructor(
                 vcard.removeProperties(Photo::class.java)
                 vcard.addPhoto(pic)
                 vcard.removeProperties(RawProperty::class.java)
+                account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
                 vcard
             })
+            .flatMap { vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
             .subscribeOn(Schedulers.io())
-            .subscribe({ vcard: VCard ->
-                account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir)
-                mAccountService.refreshAccounts()
-            }) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
+            .subscribe({}) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
     }
 
     fun getUri(account: Account, defaultNameSip: CharSequence): String? {
