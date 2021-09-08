@@ -32,9 +32,8 @@ import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.VCardService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils.isEmpty
-import net.jami.utils.VCardUtils.loadLocalProfileFromDiskWithDefault
-import net.jami.utils.VCardUtils.saveLocalProfileToDisk
+import net.jami.utils.StringUtils
+import net.jami.utils.VCardUtils
 import java.io.File
 import java.net.SocketException
 import javax.inject.Inject
@@ -51,7 +50,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
     fun registerName(name: String?, password: String?) {
         val account = mAccountService.getAccount(mAccountID) ?: return
         mAccountService.registerName(account, password, name)
-        view?.accountChanged(account)
+        //view?.accountChanged(account, a.second)
     }
 
     fun startAccountExport(password: String?) {
@@ -74,10 +73,9 @@ class JamiAccountSummaryPresenter @Inject constructor(
     fun setAccountId(accountId: String) {
         mCompositeDisposable.clear()
         mAccountID = accountId
-        mAccountService.getAccount(accountId)?.let { account -> view?.accountChanged(account) }
-        mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(accountId)
+        mCompositeDisposable.add(mAccountService.getObservableAccountProfile(accountId)
             .observeOn(mUiScheduler)
-            .subscribe { a: Account -> view?.accountChanged(a) })
+            .subscribe { a -> view?.accountChanged(a.first, a.second) })
     }
 
     fun enableAccount(newValue: Boolean) {
@@ -118,28 +116,33 @@ class JamiAccountSummaryPresenter @Inject constructor(
     }
 
     fun saveVCardFormattedName(username: String?) {
-        val account = mAccountService.getAccount(mAccountID)
+        val accountId = mAccountID ?: return
+        val account = mAccountService.getAccount(accountId)
         val filesDir = mDeviceRuntimeService.provideFilesDir()
-        mCompositeDisposable.add(loadLocalProfileFromDiskWithDefault(filesDir, mAccountID!!)
+        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
             .doOnSuccess { vcard: VCard ->
+                val previousName = vcard.formattedName?.value
+                if (StringUtils.isEmpty(previousName) == StringUtils.isEmpty(username) || previousName == username)
+                    throw IllegalArgumentException("Name didn't change")
                 vcard.setFormattedName(username)
                 vcard.removeProperties(RawProperty::class.java)
+                account?.loadedProfile = mVcardService.loadVCardProfile(vcard).cache()
             }
-            .flatMap { vcard: VCard -> saveLocalProfileToDisk(vcard, mAccountID!!, filesDir) }
+            .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
             .subscribeOn(Schedulers.io())
-            .subscribe({ vcard: VCard -> account?.loadedProfile = mVcardService.loadVCardProfile(vcard).cache() })
-            { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
+            .subscribe({}) { e: Throwable -> Log.e(TAG, "Error saving vCard " + e.message) })
     }
 
     fun saveVCard(username: String?, photo: Single<Photo>) {
-        val account = mAccountService.getAccount(mAccountID)!!
+        val accountId = mAccountID ?: return
+        val account = mAccountService.getAccount(accountId)!!
         val ringId = account.username
         val filesDir = mDeviceRuntimeService.provideFilesDir()
         mCompositeDisposable.add(Single.zip(
-            loadLocalProfileFromDiskWithDefault(filesDir, mAccountID!!).subscribeOn(Schedulers.io()),
+            VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
             photo, { vcard: VCard, pic: Photo ->
                 vcard.uid = Uid(ringId)
-                if (!isEmpty(username)) {
+                if (!StringUtils.isEmpty(username)) {
                     vcard.setFormattedName(username)
                 }
                 vcard.removeProperties(Photo::class.java)
@@ -147,7 +150,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
                 vcard.removeProperties(RawProperty::class.java)
                 vcard
             })
-            .flatMap { vcard: VCard -> saveLocalProfileToDisk(vcard, mAccountID!!, filesDir) }
+            .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
             .subscribeOn(Schedulers.io())
             .subscribe({ vcard: VCard -> account.loadedProfile = mVcardService.loadVCardProfile(vcard).cache() })
             { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })

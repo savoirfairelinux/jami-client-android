@@ -450,6 +450,12 @@ class AccountService(
         return observableAccounts.filter { acc -> acc.accountID == accountId }
     }
 
+    fun getObservableAccountProfile(accountId: String): Observable<Pair<Account, Profile>> {
+        return getObservableAccount(accountId).flatMap { a: Account ->
+            mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
+        }
+    }
+
     fun getObservableAccount(accountId: String): Observable<Account> {
         return Observable.fromCallable<Account> { getAccount(accountId) }
             .concatWith(getObservableAccountUpdates(accountId))
@@ -460,9 +466,9 @@ class AccountService(
             .concatWith(observableAccounts.filter { acc -> acc === account })
     }
 
-    val currentProfileAccountSubject: Observable<Account>
-        get() = currentAccountSubject.flatMapSingle { a: Account ->
-            mVCardService.loadProfile(a).firstOrError().map { a }
+    val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
+        get() = currentAccountSubject.flatMap { a: Account ->
+            mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
         }
 
     fun subscribeBuddy(accountID: String?, uri: String?, flag: Boolean) {
@@ -1126,14 +1132,13 @@ class AccountService(
         val contact = account.getContactFromCache(peerId)
         if (contact.isUser) {
             mVCardService.accountProfileReceived(accountId, File(vcardPath))
-                .subscribe({ profile: Pair<String?, Any?> ->
+                .subscribe({ profile: Profile ->
                     account.loadedProfile = Single.just(profile)
                 }) { e -> Log.e(TAG, "Error saving contact profile", e) }
         } else {
             mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
-                .subscribe({ profile: Pair<String?, Any?> ->
-                    contact.setProfile(profile.first, profile.second)
-                }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+                .subscribe({ profile -> contact.setProfile(profile) })
+                    { e -> Log.e(TAG, "Error saving contact profile", e) }
         }
     }
 
@@ -1250,9 +1255,7 @@ class AccountService(
                     // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                         .subscribeOn(Schedulers.computation())
-                        .subscribe { profile: Pair<String?, Any?> ->
-                            contact.setProfile(profile.first, profile.second)
-                        }
+                        .subscribe { profile -> contact.setProfile(profile) }
                 }
             }
             account.addRequest(request)

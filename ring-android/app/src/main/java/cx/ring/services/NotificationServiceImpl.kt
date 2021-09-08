@@ -509,7 +509,7 @@ class NotificationServiceImpl(
             val myPic = account?.let { getContactPicture(it) }
             val userPerson = Person.Builder()
                 .setKey(accountId)
-                .setName(if (profile == null || TextUtils.isEmpty(profile.first)) "You" else profile.first)
+                .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
                 .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
                 .build()
             val history = NotificationCompat.MessagingStyle(userPerson)

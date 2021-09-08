@@ -239,7 +239,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         mDisposable.add(loadProfile(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { profile ->
-                    val name = profile.first
+                    val name = profile.displayName
                     if (name != null && name.isNotEmpty()) {
                         mTitleView?.setAlias(name)
                         title = address ?: ""

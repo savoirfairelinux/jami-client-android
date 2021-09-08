@@ -80,11 +80,11 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.cameraPermissionChanged(true)
-                presenter!!.cameraClicked()
+                presenter.cameraPermissionChanged(true)
+                presenter.cameraClicked()
             }
             ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.galleryClicked()
+                presenter.galleryClicked()
             }
         }
     }
@@ -131,32 +131,23 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
 
     override fun showViewModel(viewModel: HomeNavigationViewModel) {
         val action = actions?.let { if (it.isEmpty()) null else it[0] }
-        if (action != null && action.id == USER_NAME.toLong()) {
-            if (TextUtils.isEmpty(viewModel.profile.first)) {
+        if (action != null && action.id == USER_NAME) {
+            if (TextUtils.isEmpty(viewModel.profile.displayName)) {
                 action.editTitle = ""
                 action.title = getString(R.string.account_edit_profile)
             } else {
-                action.editTitle = viewModel.profile.first
-                action.title = viewModel.profile.first
+                action.editTitle = viewModel.profile.displayName
+                action.title = viewModel.profile.displayName
             }
             notifyActionChanged(0)
         }
-        if (TextUtils.isEmpty(viewModel.profile.first))
+        if (TextUtils.isEmpty(viewModel.profile.displayName))
             guidanceStylist.titleView.setText(R.string.profile)
-        else guidanceStylist.titleView.text = viewModel.profile.first
-        guidanceStylist.iconView.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true))
-        //setPhoto(viewModel.account)
+        else guidanceStylist.titleView.text = viewModel.profile.displayName
+        guidanceStylist.iconView.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
+            .apply { setInSize(iconSize) })
     }
 
-    /*override fun setPhoto(account: Account) {
-        AvatarDrawable.load(requireContext(), account)
-            .map { avatar -> avatar.apply { setInSize(iconSize) } }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { avatar: AvatarDrawable -> guidanceStylist.iconView.setImageDrawable(avatar) }
-    }*/
-
-    override fun updateModel(account: Account) {}
     override fun gotToImageCapture() {
         val intent = Intent(activity, CustomCameraActivity::class.java)
         startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO)

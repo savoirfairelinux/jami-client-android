@@ -35,10 +35,11 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
+import net.jami.model.Profile
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
-    override fun loadProfile(account: Account): Observable<Pair<String?, Any?>> {
+    override fun loadProfile(account: Account): Observable<Profile> {
         return loadProfile(mContext, account)
     }
 
@@ -65,16 +66,16 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
     }
 
-    override fun loadVCardProfile(vcard: VCard): Single<Pair<String?, Any?>> {
+    override fun loadVCardProfile(vcard: VCard): Single<Profile> {
         return Single.fromCallable { readData(vcard) }
     }
 
-    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Pair<String?, Any?>> {
+    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> {
         return VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
             .map { vc -> readData(vc) }
     }
 
-    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Pair<String?, Any?>> {
+    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile> {
         return VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
             .map { vcard -> readData(vcard) }
     }
@@ -84,7 +85,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
     }
 
     companion object {
-        fun loadProfile(context: Context, account: Account): Observable<Pair<String?, Any?>> {
+        fun loadProfile(context: Context, account: Account): Observable<Profile> {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
@@ -98,12 +99,12 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
         }
 
-        fun readData(vcard: VCard?): Pair<String?, Any?> {
+        fun readData(vcard: VCard?): Profile {
             return readData(VCardUtils.readData(vcard))
         }
 
-        fun readData(profile: Pair<String?, ByteArray?>): Pair<String?, Any?> {
-            return Pair(profile.first, BitmapUtils.bytesToBitmap(profile.second))
+        private fun readData(profile: Pair<String?, ByteArray?>): Profile {
+            return Profile(profile.first, BitmapUtils.bytesToBitmap(profile.second))
         }
     }
 }

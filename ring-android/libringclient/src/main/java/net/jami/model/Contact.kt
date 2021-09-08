@@ -53,7 +53,6 @@ class Contact private constructor(
     private var mLookupKey: String? = null
     var isUsernameLoaded = false
         private set
-    @JvmField
     var detailsLoaded = false
     private val mConversationUri: BehaviorSubject<Uri> = BehaviorSubject.createDefault(uri)
     var photo: Any? = null
@@ -62,7 +61,6 @@ class Contact private constructor(
     var presenceUpdates: Observable<Boolean>? = null
     private var mContactPresenceEmitter: Emitter<Boolean>? = null
 
-    @JvmOverloads
     constructor(uri: Uri, user: Boolean = false) : this(uri, null, user) {
     }
 
@@ -199,6 +197,10 @@ class Contact private constructor(
         }
         return false
     }
+    fun setProfile(profile: Profile?) {
+        if (profile == null) return
+        setProfile(profile.displayName, profile.avatar)
+    }
 
     fun setProfile(name: String?, photo: Any?) {
         if (name != null && name.isNotEmpty() && !name.startsWith(Uri.RING_URI_SCHEME)) {
@@ -217,15 +219,12 @@ class Contact private constructor(
         const val DEFAULT_ID = 0
         const val PREFIX_RING = Uri.RING_URI_SCHEME
 
-        @JvmStatic
         fun buildSIP(to: Uri): Contact {
             val contact = Contact(to)
             contact.isUsernameLoaded = true
             return contact
         }
 
-        @JvmStatic
-        @JvmOverloads
         fun build(uri: String, isUser: Boolean = false): Contact {
             return Contact(Uri.fromString(uri), isUser)
         }

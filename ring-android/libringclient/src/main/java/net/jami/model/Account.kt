@@ -34,12 +34,11 @@ import java.lang.IllegalStateException
 import java.util.*
 
 class Account(
-    bAccountID: String,
+    val accountID: String,
     details: Map<String, String>,
     credentials: List<Map<String, String>>,
     volDetails: Map<String, String>
 ) {
-    val accountID: String = bAccountID
     private var mVolatileDetails: AccountConfig
     var config: AccountConfig
         private set
@@ -74,15 +73,15 @@ class Account(
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
 
     var historyLoader: Single<Account>? = null
-    var loadedProfile: Single<Pair<String?, Any?>>? = null
+    var loadedProfile: Single<Profile>? = null
         set(profile) {
             field = profile
             if  (profile != null)
                 mProfileSubject.onNext(profile)
         }
 
-    private val mProfileSubject: Subject<Single<Pair<String?, Any?>>> = BehaviorSubject.create()
-    val loadedProfileObservable: Observable<Pair<String?, Any?>> = mProfileSubject.switchMapSingle { single -> single }
+    private val mProfileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
+    val loadedProfileObservable: Observable<Profile> = mProfileSubject.switchMapSingle { single -> single }
 
     fun cleanup() {
         conversationSubject.onComplete()
@@ -945,7 +944,9 @@ class Account(
 
     val accountAlias: Single<String>
         get() = loadedProfileObservable.firstOrError()
-            .map { p -> if (StringUtils.isEmpty(p.first)) if (isJami) jamiAlias else alias else p.first }
+            .map { p -> if (p.displayName == null || p.displayName.isEmpty())
+                if (isJami) jamiAlias else alias!!
+            else p.displayName }
 
     /**
      * Registered name, fallback to Alias

@@ -34,6 +34,7 @@ import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Conversation
+import net.jami.model.Profile
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.HashUtils
 import java.util.*
@@ -91,10 +92,10 @@ class AvatarDrawable : Drawable {
             return VCardServiceImpl.loadProfile(context, account)
                 .map { profile -> build(context, account, profile, crop) }
         }
-        fun build(context: Context, account: Account, profile: Pair<String?, Any?>, crop: Boolean): AvatarDrawable {
+        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true): AvatarDrawable {
             return Builder()
-                        .withPhoto(profile.second as Bitmap?)
-                        .withNameData(profile.first, account.registeredName)
+                        .withPhoto(profile.avatar as Bitmap?)
+                        .withNameData(profile.displayName, account.registeredName)
                         .withId(account.uri)
                         .withCircleCrop(crop)
                         .build(context)

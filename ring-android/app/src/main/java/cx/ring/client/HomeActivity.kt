@@ -258,7 +258,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ accounts ->
                     if (mAccountAdapter == null) {
-                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts)).apply {
+                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable).apply {
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
                         }

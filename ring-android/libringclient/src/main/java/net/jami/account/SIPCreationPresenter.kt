@@ -30,6 +30,7 @@ import io.reactivex.rxjava3.observers.DisposableObserver
 import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.ConfigKey
+import net.jami.model.Profile
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
@@ -162,8 +163,9 @@ class SIPCreationPresenter @Inject constructor(
         val vcardUid = formattedName + accountID
         vcard.uid = Uid(vcardUid)
         vcard.removeProperties(RawProperty::class.java)
-        VCardUtils.saveLocalProfileToDisk(vcard, accountID, mDeviceService.provideFilesDir()).subscribe()
-        account.loadedProfile = Single.just(Pair(formattedName, null))
+        VCardUtils.saveLocalProfileToDisk(vcard, accountID, mDeviceService.provideFilesDir())
+            .subscribe()
+        account.loadedProfile = Single.just(Profile(formattedName, null))
     }
 
     companion object {

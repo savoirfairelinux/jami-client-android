@@ -21,5 +21,6 @@
 package net.jami.navigation
 
 import net.jami.model.Account
+import net.jami.model.Profile
 
-class HomeNavigationViewModel(val account: Account, val profile: Pair<String?, Any?>)
+class HomeNavigationViewModel(val account: Account, val profile: Profile)
