@@ -25,13 +25,11 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.leanback.app.DetailsSupportFragment;
-import cx.ring.R;
-import net.jami.model.Error;
-import net.jami.mvp.BaseView;
 import net.jami.mvp.RootPresenter;
 
-public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportFragment implements BaseView {
+public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportFragment {
 
     protected static final String TAG = BaseBrowseFragment.class.getSimpleName();
 
@@ -39,7 +37,7 @@ public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportF
     protected T presenter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
@@ -51,20 +49,6 @@ public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportF
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
-    }
-
-    public void displayErrorToast(Error error) {
-        String errorString;
-        switch (error) {
-            case NO_INPUT:
-                errorString = getString(R.string.call_error_no_camera_no_microphone);
-                break;
-            default:
-                errorString = getString(R.string.generic_error);
-                break;
-        }
-
-        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

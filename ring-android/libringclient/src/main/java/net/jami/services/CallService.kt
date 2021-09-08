@@ -33,8 +33,6 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Uri
-import net.jami.model.Uri.Companion.fromString
-import net.jami.model.Uri.Companion.fromStringWithName
 import net.jami.utils.Log
 import net.jami.utils.StringUtils.isEmpty
 import java.util.*
@@ -97,7 +95,7 @@ class CallService(
             val newInfo: MutableList<ParticipantInfo> = ArrayList(info.size)
             if (conference.isConference) {
                 for (i in info) {
-                    val call = conference.findCallByContact(fromString(i["uri"]!!))
+                    val call = conference.findCallByContact(Uri.fromString(i["uri"]!!))
                     if (call != null) {
                         val confInfo = ParticipantInfo(call, call.contact!!, i)
                         if (confInfo.isEmpty) {
@@ -116,7 +114,7 @@ class CallService(
             } else {
                 val account = mAccountService.getAccount(conference.call!!.account!!)!!
                 for (i in info) {
-                    val confInfo = ParticipantInfo(null, account.getContactFromCache(fromString(i["uri"]!!)), i)
+                    val confInfo = ParticipantInfo(null, account.getContactFromCache(Uri.fromString(i["uri"]!!)), i)
                     if (confInfo.isEmpty) {
                         Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
                         continue
@@ -385,7 +383,7 @@ class CallService(
             mExecutor.execute { JamiService.setRecordPath(path) }
         }
 
-    fun toggleRecordingCall(id: String?): Boolean {
+    fun toggleRecordingCall(id: String): Boolean {
         mExecutor.execute { JamiService.toggleRecording(id) }
         return false
     }
@@ -399,7 +397,7 @@ class CallService(
         mExecutor.execute { JamiService.stopRecordedFilePlayback() }
     }
 
-    fun sendTextMessage(callId: String, msg: String?) {
+    fun sendTextMessage(callId: String, msg: String) {
         mExecutor.execute {
             Log.i(TAG, "sendTextMessage() thread running...")
             val messages = StringMap()
@@ -487,7 +485,7 @@ class CallService(
             }
             call.setCallState(callState)
             val account = mAccountService.getAccount(call.account!!)!!
-            val contact = mContactService.findContact(account, fromString(call.contactNumber!!))
+            val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
             val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName)
@@ -536,7 +534,7 @@ class CallService(
 
     fun incomingCall(accountId: String, callId: String, from: String) {
         Log.d(TAG, "incoming call: $accountId, $callId, $from")
-        val call = addCall(accountId, callId, fromStringWithName(from).first, Call.Direction.INCOMING)
+        val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING)
         callSubject.onNext(call)
         updateConnectionCount()
     }

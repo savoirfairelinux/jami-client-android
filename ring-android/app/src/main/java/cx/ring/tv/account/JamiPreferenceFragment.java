@@ -22,6 +22,7 @@ package cx.ring.tv.account;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.leanback.preference.LeanbackPreferenceFragmentCompat;
 
 import android.view.View;
@@ -38,7 +39,7 @@ public abstract class JamiPreferenceFragment<T extends RootPresenter> extends Le
     protected T presenter;
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method

@@ -22,4 +22,4 @@ package net.jami.navigation
 
 import net.jami.model.Account
 
-class HomeNavigationViewModel(val account: Account, val alias: String?)
+class HomeNavigationViewModel(val account: Account, val profile: Pair<String?, Any?>)

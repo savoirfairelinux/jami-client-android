@@ -52,7 +52,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
         presenter.setAccountId(mIdAccount)
     }
 
-    override fun onCreateGuidance(savedInstanceState: Bundle): Guidance {
+    override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_export_title)
         val breadcrumb = ""
         val description = getString(R.string.account_link_export_info_light)
@@ -60,7 +60,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
         return Guidance(title, description, breadcrumb, icon)
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle) {
+    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
         if (mHasPassword) {
             addPasswordAction(activity, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
         } else {

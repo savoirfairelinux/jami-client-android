@@ -48,7 +48,7 @@ class ContactRequestsPresenter @Inject internal constructor(
                     { ob -> ob as SmartListViewModel } }
             }
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels -> getView()?.updateView(viewModels, mCompositeDisposable) })
+            .subscribe({ viewModels -> view?.updateView(viewModels, mCompositeDisposable) })
             { e: Throwable -> Log.d(TAG, "updateList subscribe onError", e) })
     }
 
@@ -67,7 +67,7 @@ class ContactRequestsPresenter @Inject internal constructor(
         }
     }
 
-    fun contactRequestClicked(accountId: String?, uri: Uri?) {
+    fun contactRequestClicked(accountId: String, uri: Uri) {
         view?.goToConversation(accountId, uri)
     }
 

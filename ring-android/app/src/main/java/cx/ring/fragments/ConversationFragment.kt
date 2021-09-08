@@ -65,8 +65,8 @@ import cx.ring.interfaces.Colorable
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.service.LocationSharingService
-import cx.ring.service.LocationSharingService.LocalBinder
 import cx.ring.services.NotificationServiceImpl
+import cx.ring.services.SharedPreferencesServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.AndroidFileUtils.copyFileToUri
@@ -77,7 +77,6 @@ import cx.ring.utils.AndroidFileUtils.getCacheFile
 import cx.ring.utils.AndroidFileUtils.getMimeTypeFromExtension
 import cx.ring.utils.AndroidFileUtils.getSpaceLeft
 import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
@@ -156,6 +155,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    override fun displayErrorToast(error: Error) {
+        val errorString: String = when (error) {
+            Error.NO_INPUT -> getString(R.string.call_error_no_camera_no_microphone)
+            Error.INVALID_FILE -> getString(R.string.invalid_file)
+            Error.NOT_ABLE_TO_WRITE_FILE -> getString(R.string.not_able_to_write_file)
+            Error.NO_SPACE_LEFT -> getString(R.string.no_space_left_on_device)
+            else -> getString(R.string.generic_error)
+        }
+        Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = resources
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
@@ -188,8 +198,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             binding.ongoingcallPane.visibility = View.GONE
             binding.msgInputTxt.setMediaListener { contentInfo: InputContentInfoCompat ->
-                startFileSend(
-                    getCacheFile(requireContext(), contentInfo.contentUri)
+                startFileSend(getCacheFile(requireContext(), contentInfo.contentUri)
                         .flatMapCompletable { file: File -> sendFile(file) }
                         .doFinally { contentInfo.releasePermission() })
             }
@@ -469,7 +478,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.CAMERA_FACING", Camera.CameraInfo.CAMERA_FACING_FRONT)
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
-                    putExtra(MediaStore.EXTRA_OUTPUT, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, createVideoFile(context).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, createVideoFile(context).apply {
                         mCurrentPhoto = this
                     }))
                 }
@@ -490,7 +499,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         try {
             val photoFile = createImageFile(c)
             Log.i(TAG, "takePicture: trying to save to $photoFile")
-            val photoURI = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile)
+            val photoURI = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile)
             val takePictureIntent =
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     .putExtra("android.intent.extras.CAMERA_FACING", 1)
@@ -580,11 +589,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         var i = 0
         val n = permissions.size
         while (i < n) {
@@ -669,7 +674,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val c = context ?: return
         var fileUri: Uri? = null
         try {
-            fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
         } catch (e: IllegalArgumentException) {
             Log.e("File Selector", "The selected file can't be shared: " + path.name)
         }
@@ -689,7 +694,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val c = context ?: return
         var fileUri: Uri? = null
         try {
-            fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
         } catch (e: IllegalArgumentException) {
             Log.e(TAG, "The selected file can't be shared: " + path.name)
         }
@@ -805,7 +810,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             connection = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName, service: IBinder) {
                     Log.w(TAG, "onServiceConnected")
-                    val binder = service as LocalBinder
+                    val binder = service as LocationSharingService.LocalBinder
                     val locationService = binder.service
                     //val path = ConversationPath(presenter.path)
                     if (locationService.isSharing(path)) {

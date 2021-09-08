@@ -43,7 +43,7 @@ import cx.ring.databinding.FragAccJamiUsernameBinding;
 
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
-import net.jami.mvp.AccountCreationModel;
+import net.jami.model.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
 import dagger.hilt.android.AndroidEntryPoint;

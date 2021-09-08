@@ -20,6 +20,8 @@
 package cx.ring.mvp;
 
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.jami.mvp.RootPresenter;
@@ -31,7 +33,7 @@ public abstract class BaseActivity<T extends RootPresenter> extends AppCompatAct
     protected T presenter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         presenter.bindView(this);

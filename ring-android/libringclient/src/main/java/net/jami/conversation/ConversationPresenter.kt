@@ -34,9 +34,8 @@ import net.jami.model.Conversation.ElementStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
 import net.jami.utils.Log
-import net.jami.utils.StringUtils.isEmpty
-import net.jami.utils.Tuple
-import net.jami.utils.VCardUtils.vcardToString
+import net.jami.utils.StringUtils
+import net.jami.utils.VCardUtils
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
@@ -161,8 +160,7 @@ class ConversationPresenter @Inject constructor(
                 { isConnected: Boolean, a: Account -> isConnected || a.isRegistered })
                 .observeOn(mUiScheduler)
                 .subscribe { isOk: Boolean ->
-                    val v = getView()
-                    if (v != null) {
+                    this.view?.let { v ->
                         if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
                             v.displayAccountOfflineErrorPanel()
                         } else {
@@ -172,12 +170,12 @@ class ConversationPresenter @Inject constructor(
                 })
         disposable.add(c.sortedHistory
             .observeOn(mUiScheduler)
-            .subscribe({ conversation: List<Interaction> -> view.refreshView(conversation) }) { e: Throwable ->
+            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
                 Log.e(TAG, "Can't update element", e)
             })
         disposable.add(c.cleared
             .observeOn(mUiScheduler)
-            .subscribe({ conversation: List<Interaction> -> view.refreshView(conversation) }) { e: Throwable ->
+            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
                 Log.e(TAG, "Can't update elements", e)
             })
         disposable.add(c.contactUpdates
@@ -185,25 +183,26 @@ class ConversationPresenter @Inject constructor(
                 Observable.merge(mContactService.observeLoadedContact(c.accountId, contacts, true))
             }
             .observeOn(mUiScheduler)
-            .subscribe { contact: Contact -> getView()?.updateContact(contact) })
+            .subscribe { contact: Contact -> this.view?.updateContact(contact) })
         disposable.add(c.updatedElements
             .observeOn(mUiScheduler)
             .subscribe({ elementTuple ->
+                val v = this.view ?: return@subscribe
                 when (elementTuple.second) {
-                    ElementStatus.ADD -> view.addElement(elementTuple.first)
-                    ElementStatus.UPDATE -> view.updateElement(elementTuple.first)
-                    ElementStatus.REMOVE -> view.removeElement(elementTuple.first)
+                    ElementStatus.ADD -> v.addElement(elementTuple.first)
+                    ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
+                    ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
                 }
             }, { e: Throwable -> Log.e(TAG, "Can't update element", e) })
         )
         if (showTypingIndicator()) {
             disposable.add(c.composingStatus
                 .observeOn(mUiScheduler)
-                .subscribe { composingStatus: ComposingStatus -> view.setComposingStatus(composingStatus) })
+                .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
         disposable.add(c.getLastDisplayed()
             .observeOn(mUiScheduler)
-            .subscribe { interaction: Interaction -> view.setLastDisplayed(interaction) })
+            .subscribe { interaction: Interaction -> this.view?.setLastDisplayed(interaction) })
         disposable.add(c.calls
             .observeOn(mUiScheduler)
             .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
@@ -224,7 +223,7 @@ class ConversationPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")
-                getView()?.showMap(c.accountId, c.uri.uri, false)
+                view?.showMap(c.accountId, c.uri.uri, false)
             }
         )
     }
@@ -239,7 +238,7 @@ class ConversationPresenter @Inject constructor(
 
     fun sendTextMessage(message: String?) {
         val conversation = mConversation
-        if (isEmpty(message) || conversation == null) {
+        if (message == null || message.isEmpty() || conversation == null) {
             return
         }
         val conference = conversation.currentCall
@@ -306,7 +305,7 @@ class ConversationPresenter @Inject constructor(
         contact.status = Contact.Status.REQUEST_SENT
         mVCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribeOn(Schedulers.computation())
-            .subscribe({ vCard -> mAccountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(vcardToString(vCard)))})
+            .subscribe({ vCard -> mAccountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard)))})
             { mAccountService.sendTrustRequest(conversation, contact.uri, null) }
     }
 
@@ -405,8 +404,8 @@ class ConversationPresenter @Inject constructor(
         view?.showPluginListHandlers(mConversation!!.accountId, mConversationUri!!.uri)
     }
 
-    val path: Tuple<String, String>
-        get() = Tuple(mConversation!!.accountId, mConversationUri!!.uri)
+    val path: Pair<String, String>
+        get() = Pair(mConversation!!.accountId, mConversationUri!!.uri)
 
     fun onComposingChanged(hasMessage: Boolean) {
         if (showTypingIndicator()) {

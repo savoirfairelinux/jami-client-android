@@ -73,7 +73,7 @@ class MainPresenter @Inject constructor(
             }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
     }
 
-    fun reloadAccountInfo() {
+    private fun reloadAccountInfo() {
         mCompositeDisposable.add(mAccountService.currentAccountSubject
             .observeOn(mUiScheduler)
             .subscribe({ account: Account -> view?.displayAccountInfo(HomeNavigationViewModel(account, null)) })

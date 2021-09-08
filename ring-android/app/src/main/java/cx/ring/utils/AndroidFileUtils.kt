@@ -220,7 +220,7 @@ object AndroidFileUtils {
             getMimeType(uri.toString())
     }
 
-    fun getMimeType(filename: String): String? {
+    fun getMimeType(filename: String): String {
         val pos = filename.lastIndexOf(".")
         var fileExtension: String? = null
         if (pos >= 0) {
@@ -522,8 +522,8 @@ object AndroidFileUtils {
     private fun getOrientation(context: Context, photoUri: Uri): Int {
         val resolver = context.contentResolver ?: return 0
         try {
-            resolver.query(photoUri, arrayOf(MediaStore.Images.ImageColumns.ORIENTATION), null, null, null).use { cursor ->
-                cursor!!.moveToFirst()
+            resolver.query(photoUri, arrayOf(MediaStore.Images.ImageColumns.ORIENTATION), null, null, null)!!.use { cursor ->
+                cursor.moveToFirst()
                 return cursor.getInt(0)
             }
         } catch (e: Exception) {
@@ -539,8 +539,8 @@ object AndroidFileUtils {
     private fun getExifOrientation(resolver: ContentResolver, photoUri: Uri): Int {
         if (Build.VERSION.SDK_INT > 23) {
             try {
-                resolver.openInputStream(photoUri).use { input ->
-                    return ExifInterface(input!!)
+                resolver.openInputStream(photoUri)!!.use { input ->
+                    return ExifInterface(input)
                             .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
                 }
             } catch (e: Exception) {
@@ -556,14 +556,11 @@ object AndroidFileUtils {
         }
     }
 
-    @JvmStatic
     fun isImage(s: String): Boolean {
-        return getMimeType(s)?.startsWith("image") ?: false
+        return getMimeType(s).startsWith("image")
     }
 
-    @JvmStatic
     fun getFileName(s: String): String {
-        val parts = s.split(Regex("/")).toTypedArray()
-        return parts[parts.size - 1]
+        return s.split('/').last()
     }
 }

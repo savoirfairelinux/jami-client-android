@@ -45,7 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import net.jami.account.ProfileCreationPresenter
 import net.jami.account.ProfileCreationView
-import net.jami.mvp.AccountCreationModel
+import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresenter>(),
@@ -59,14 +59,14 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
                 try {
                     requireContext().contentResolver.openInputStream(uri!!).use { iStream ->
                         val image = BitmapFactory.decodeStream(iStream)
-                        presenter!!.photoUpdated(Single.just(intent).map { image })
+                        presenter.photoUpdated(Single.just(intent).map { image })
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
             ProfileCreationFragment.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && intent != null) {
-                presenter!!.photoUpdated(
+                presenter.photoUpdated(
                     loadBitmap(requireContext(), intent.data!!).map { b: Bitmap? -> b })
             }
             else -> super.onActivityResult(requestCode, resultCode, intent)
@@ -76,11 +76,11 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.cameraPermissionChanged(true)
-                presenter!!.cameraClick()
+                presenter.cameraPermissionChanged(true)
+                presenter.cameraClick()
             }
             ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.galleryClick()
+                presenter.galleryClick()
             }
         }
     }
@@ -92,10 +92,10 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
             return
         }
         iconSize = resources.getDimension(R.dimen.tv_avatar_size).toInt()
-        presenter!!.initPresenter(mModel)
+        presenter.initPresenter(mModel!!)
     }
 
-    override fun onCreateGuidance(savedInstanceState: Bundle): Guidance {
+    override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_create_title)
         val breadcrumb = ""
         val description = getString(R.string.profile_message_warning)
@@ -113,7 +113,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         return R.style.Theme_Ring_Leanback_GuidedStep_First
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle) {
+    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
         addEditTextAction(activity, actions, USER_NAME.toLong(), R.string.profile_name_hint, R.string.profile_name_hint)
         addAction(activity, actions, CAMERA.toLong(), getString(R.string.take_a_photo), "")
         addAction(activity, actions, GALLERY.toLong(), getString(R.string.open_the_gallery), "")
@@ -122,9 +122,9 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
 
     override fun onGuidedActionClicked(action: GuidedAction) {
         when (action.id) {
-            CAMERA.toLong() -> presenter!!.cameraClick()
-            GALLERY.toLong() -> presenter!!.galleryClick()
-            NEXT.toLong() -> presenter!!.nextClick()
+            CAMERA.toLong() -> presenter.cameraClick()
+            GALLERY.toLong() -> presenter.galleryClick()
+            NEXT.toLong() -> presenter.nextClick()
         }
     }
 
@@ -176,8 +176,8 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         val model = accountCreationModel as AccountCreationModelImpl
         val newAccount = model.newAccount
         val avatar = AvatarDrawable.Builder()
-            .withPhoto(model.photo)
-            .withNameData(accountCreationModel.getFullName(), accountCreationModel.getUsername())
+            .withPhoto(model.photo as Bitmap?)
+            .withNameData(accountCreationModel.fullName, accountCreationModel.username)
             .withId(newAccount?.username)
             .withCircleCrop(true)
             .build(requireContext())
@@ -189,12 +189,12 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         when (action.id.toInt()) {
             USER_NAME -> {
                 val username = action.editTitle.toString()
-                presenter!!.fullNameUpdated(username)
+                presenter.fullNameUpdated(username)
                 if (username.isEmpty()) action.title =
                     getString(R.string.profile_name_hint) else action.title = username
             }
-            CAMERA -> presenter!!.cameraClick()
-            GALLERY -> presenter!!.galleryClick()
+            CAMERA -> presenter.cameraClick()
+            GALLERY -> presenter.galleryClick()
         }
         return super.onGuidedActionEditedAndProceed(action)
     }
@@ -202,7 +202,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     override fun onGuidedActionEditCanceled(action: GuidedAction) {
         if (action.id.toInt() == USER_NAME) {
             val username = action.editTitle.toString()
-            presenter!!.fullNameUpdated(username)
+            presenter.fullNameUpdated(username)
             if (TextUtils.isEmpty(username)) action.title =
                 getString(R.string.profile_name_hint) else action.title = username
         }

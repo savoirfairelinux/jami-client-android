@@ -20,12 +20,12 @@ package cx.ring.client
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
+import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
 import cx.ring.utils.ConversationPath
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
@@ -53,14 +53,14 @@ class ConversationSelectionActivity : AppCompatActivity() {
     var mCallService: CallService
 
     private val adapter: SmartListAdapter = SmartListAdapter(null, object : SmartListListeners {
-        override fun onItemClick(smartListViewModel: SmartListViewModel) {
+        override fun onItemClick(item: SmartListViewModel) {
             val intent = Intent()
-            intent.data = ConversationPath.toUri(smartListViewModel.accountId, smartListViewModel.uri)
+            intent.data = ConversationPath.toUri(item.accountId, item.uri)
             setResult(RESULT_OK, intent)
             finish()
         }
 
-        override fun onItemLongClick(smartListViewModel: SmartListViewModel) {}
+        override fun onItemLongClick(item: SmartListViewModel) {}
     }, mDisposable)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +69,7 @@ class ConversationSelectionActivity : AppCompatActivity() {
         val list = findViewById<RecyclerView>(R.id.conversationList)
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
+        JamiApplication.instance?.startDaemon()
     }
 
     public override fun onStart() {

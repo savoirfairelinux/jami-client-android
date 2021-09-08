@@ -386,7 +386,7 @@ class AccountService(
      * @param map the account details
      * @return the created Account
      */
-    fun addAccount(map: Map<String?, String?>?): Observable<Account?> {
+    fun addAccount(map: Map<String, String>): Observable<Account> {
         return Observable.fromCallable {
             val accountId = JamiService.addAccount(StringMap.toSwig(map))
             if (StringUtils.isEmpty(accountId)) {
@@ -462,7 +462,7 @@ class AccountService(
 
     val currentProfileAccountSubject: Observable<Account>
         get() = currentAccountSubject.flatMapSingle { a: Account ->
-            mVCardService.loadProfile(a).firstOrError().map { p: Tuple<String?, Any?>? -> a }
+            mVCardService.loadProfile(a).firstOrError().map { a }
         }
 
     fun subscribeBuddy(accountID: String?, uri: String?, flag: Boolean) {
@@ -1116,7 +1116,8 @@ class AccountService(
         val account = getAccount(accountId) ?: return
         mVCardService.saveVCardProfile(accountId, account.uri, name, photo)
             .subscribeOn(Schedulers.io())
-            .subscribe({ account.resetProfile() }) { e -> Log.e(TAG, "Error saving profile", e) }
+            .subscribe({ vcard -> account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache() })
+                { e -> Log.e(TAG, "Error saving profile", e) }
     }
 
     fun profileReceived(accountId: String, peerId: String, vcardPath: String) {
@@ -1124,7 +1125,7 @@ class AccountService(
         Log.w(TAG, "profileReceived: $accountId, $peerId, $vcardPath")
         val contact = account.getContactFromCache(peerId)
         mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
-            .subscribe({ profile: Tuple<String?, Any?> ->
+            .subscribe({ profile: Pair<String?, Any?> ->
                 contact.setProfile(profile.first, profile.second)
             }) { e -> Log.e(TAG, "Error saving contact profile", e) }
     }
@@ -1242,11 +1243,8 @@ class AccountService(
                     // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                         .subscribeOn(Schedulers.computation())
-                        .subscribe { profile: Tuple<String?, Any?> ->
-                            contact.setProfile(
-                                profile.first,
-                                profile.second
-                            )
+                        .subscribe { profile: Pair<String?, Any?> ->
+                            contact.setProfile(profile.first, profile.second)
                         }
                 }
             }
@@ -1258,8 +1256,7 @@ class AccountService(
     }
 
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
-        val account = getAccount(accountId)
-        if (account != null) {
+        getAccount(accountId)?.let { account ->
             val details: Map<String, String> = JamiService.getContactDetails(accountId, uri)
             val contact = account.addContact(details)
             val conversationUri = contact.conversationUri.blockingFirst()

@@ -386,11 +386,11 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
 
     override fun loadContactData(contact: Contact, accountId: String): Completable {
         if (!contact.detailsLoaded) {
-            val profile: Single<Tuple<String?, Any?>> =
+            val profile: Single<Pair<String?, Any?>> =
                 if (contact.isFromSystem) loadSystemContactData(contact)
                 else loadVCardContactData(contact, accountId)
             return profile
-                .doOnSuccess { p: Tuple<String?, Any?> -> contact.setProfile(p.first, p.second) }
+                .doOnSuccess { p: Pair<String?, Any?> -> contact.setProfile(p.first, p.second) }
                 .doOnError { e: Throwable? -> contact.setProfile(null, null) }
                 .ignoreElement()
                 .onErrorComplete()
@@ -410,7 +410,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         }
     }
 
-    override fun saveVCardContact(accountId: String, uri: String, displayName: String, picture: String): Single<VCard> {
+    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> {
         return Single.fromCallable {
             val vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT))
             val filename = "$uri.vcf"
@@ -419,23 +419,20 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         }
     }
 
-    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Tuple<String?, Any?>> {
+    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Pair<String?, Any?>> {
         val id = contact.primaryNumber
         return Single.fromCallable<VCard> { VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId) }
             .map { vcard: VCard -> VCardServiceImpl.readData(vcard) }
             .subscribeOn(Schedulers.computation())
     }
 
-    private fun loadSystemContactData(contact: Contact): Single<Tuple<String?, Any?>> {
+    private fun loadSystemContactData(contact: Contact): Single<Pair<String?, Any?>> {
         val contactName = contact.displayName
         val photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
         return AndroidFileUtils
-            .loadBitmap(
-                mContext,
-                Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO)
-            )
-            .map { bitmap: Bitmap? -> Tuple<String?, Any?>(contactName, bitmap) }
-            .onErrorReturn { e: Throwable? -> Tuple(contactName, null) }
+            .loadBitmap(mContext, Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+            .map { bitmap: Bitmap -> Pair<String?, Any?>(contactName, bitmap) }
+            .onErrorReturn { Pair(contactName, null) }
             .subscribeOn(Schedulers.io())
     }
 

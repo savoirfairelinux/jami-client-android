@@ -49,7 +49,7 @@ abstract class ContactService(
     protected abstract fun findContactByNumberFromSystem(number: String): Contact?
     abstract fun loadContactData(contact: Contact, accountId: String): Completable
     abstract fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard)
-    abstract fun saveVCardContact(accountId: String, uri: String, displayName: String, pictureB64: String): Single<VCard>
+    abstract fun saveVCardContact(accountId: String, uri: String?, displayName: String?, pictureB64: String?): Single<VCard>
 
     /**
      * Load contacts from system and generate a local contact cache
@@ -99,9 +99,7 @@ abstract class ContactService(
                     .replay(1)
                     .refCount()
             }
-            return if (withPresence) Observable.combineLatest(
-                contact.updates,
-                contact.presenceUpdates,
+            return if (withPresence) Observable.combineLatest(contact.updates, contact.presenceUpdates,
                 { c: Contact, p: Boolean -> c }) else contact.updates!!
         }
     }

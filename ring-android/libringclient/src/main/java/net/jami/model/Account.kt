@@ -30,7 +30,6 @@ import net.jami.services.AccountService
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
-import net.jami.utils.Tuple
 import java.lang.IllegalStateException
 import java.util.*
 
@@ -75,14 +74,15 @@ class Account(
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
 
     var historyLoader: Single<Account>? = null
-    var loadedProfile: Single<Tuple<String?, Any?>>? = null
+    var loadedProfile: Single<Pair<String?, Any?>>? = null
         set(profile) {
             field = profile
-            mProfileSubject.onNext(profile)
+            if  (profile != null)
+                mProfileSubject.onNext(profile)
         }
 
-    private val mProfileSubject: Subject<Single<Tuple<String?, Any?>>> = BehaviorSubject.create()
-    val loadedProfileObservable: Observable<Tuple<String?, Any?>> = mProfileSubject.switchMapSingle { single -> single }
+    private val mProfileSubject: Subject<Single<Pair<String?, Any?>>> = BehaviorSubject.create()
+    val loadedProfileObservable: Observable<Pair<String?, Any?>> = mProfileSubject.switchMapSingle { single -> single }
 
     fun cleanup() {
         conversationSubject.onComplete()
@@ -358,7 +358,7 @@ class Account(
             conversation = getConversationByCallId(daemonId)
         }
         if (conversation == null) {
-            conversation = getByKey(txt.conversation!!.participant)
+            conversation = getByKey(txt.conversation!!.participant!!)
             txt.contact = conversation.contact
         }
         conversation.addTextMessage(txt)
@@ -421,7 +421,7 @@ class Account(
         username = config[ConfigKey.ACCOUNT_USERNAME]
     }
 
-    fun setDetail(key: ConfigKey, value: String) {
+    fun setDetail(key: ConfigKey, value: String?) {
         config.put(key, value)
     }
 
@@ -544,9 +544,7 @@ class Account(
 
     val credentialsHashMapList: List<Map<String, String>>
         get() {
-            val result = ArrayList<Map<String, String>>(
-                credentials.size
-            )
+            val result = ArrayList<Map<String, String>>(credentials.size)
             for (cred in credentials) {
                 result.add(cred.details)
             }
@@ -947,7 +945,7 @@ class Account(
 
     val accountAlias: Single<String>
         get() = loadedProfileObservable.firstOrError()
-            .map { p: Tuple<String?, Any?> -> if (StringUtils.isEmpty(p.first)) if (isJami) jamiAlias else alias else p.first }
+            .map { p -> if (StringUtils.isEmpty(p.first)) if (isJami) jamiAlias else alias else p.first }
 
     /**
      * Registered name, fallback to Alias
@@ -957,10 +955,6 @@ class Account(
             val registeredName = registeredName
             return if (StringUtils.isEmpty(registeredName)) alias!! else registeredName
         }
-
-    fun resetProfile() {
-        loadedProfile = null
-    }
 
     fun getDataTransfer(id: String): DataTransfer? {
         return mDataTransfers[id]

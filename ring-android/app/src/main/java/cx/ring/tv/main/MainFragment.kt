@@ -25,7 +25,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.FileProvider
 import androidx.leanback.app.GuidedStepSupportFragment
@@ -85,6 +87,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     private var accountSettingsRow: ListRow? = null
     private val mDisposable = CompositeDisposable()
     private val mHomeChannelDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         headersState = HEADERS_DISABLED
@@ -317,7 +320,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     companion object {
-        private val TAG = MainFragment::class.java.simpleName
+        private val TAG = MainFragment::class.simpleName!!
 
         // Sections headers ids
         private const val HEADER_CONTACTS: Long = 0
@@ -406,7 +409,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             Log.w(TAG, "prepareAccountQr $accountId")
             if (accountId == null || accountId.isEmpty()) return null
             val pad = 16
-            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)
+            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)!!
             val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(
                 qrCodeData.data,

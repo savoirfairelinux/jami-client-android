@@ -21,10 +21,10 @@ package cx.ring.mvp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -32,11 +32,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import javax.inject.Inject;
 
 import cx.ring.R;
-import net.jami.model.Error;
-import net.jami.mvp.BaseView;
 import net.jami.mvp.RootPresenter;
 
-public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends BottomSheetDialogFragment implements BaseView {
+public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends BottomSheetDialogFragment {
 
     protected static final String TAG = BaseBottomSheetFragment.class.getSimpleName();
 
@@ -44,7 +42,7 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
     protected T presenter;
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Be sure to do the injection in onCreateView method
         if (presenter != null) {
             presenter.bindView(this);
@@ -59,34 +57,11 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
             presenter.unbindView();
     }
 
-    public void displayErrorToast(Error error) {
-        String errorString;
-        switch (error) {
-            case NO_INPUT:
-                errorString = getString(R.string.call_error_no_camera_no_microphone);
-                break;
-            case INVALID_FILE:
-                errorString = getString(R.string.invalid_file);
-                break;
-            case NOT_ABLE_TO_WRITE_FILE:
-                errorString = getString(R.string.not_able_to_write_file);
-                break;
-            case NO_SPACE_LEFT:
-                errorString = getString(R.string.no_space_left_on_device);
-                break;
-            default:
-                errorString = getString(R.string.generic_error);
-                break;
-        }
-
-        Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show();
-    }
-
     protected void initPresenter(T presenter) {
     }
 
     protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {
-        getFragmentManager()
+        getParentFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right,
                         R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
@@ -96,7 +71,7 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
     }
 
     protected void replaceFragment(Fragment fragment, @IdRes int content) {
-        getFragmentManager()
+        getParentFragmentManager()
                 .beginTransaction()
                 .replace(content, fragment, TAG)
                 .addToBackStack(TAG)

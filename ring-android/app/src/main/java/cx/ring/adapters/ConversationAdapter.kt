@@ -239,7 +239,6 @@ class ConversationAdapter(
                 out
             }
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
-            null -> MessageType.INVALID.ordinal
         }
     }
 
@@ -258,7 +257,7 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         conversationViewHolder.compositeDisposable.clear()
         if (position > lastMsgPos) {
-            lastMsgPos = position
+            //lastMsgPos = position
             val animation = AnimationUtils.loadAnimation(conversationViewHolder.itemView.context, R.anim.fade_in)
             animation.startOffset = 150
             conversationViewHolder.itemView.startAnimation(animation)
@@ -535,23 +534,15 @@ class ConversationAdapter(
         val timeString = timestampToDetailString(viewHolder.itemView.context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> {
-                    viewHolder.mMsgDetailTxt.text = String.format("%s - %s", timeString,
-                        Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
-                }
-                InteractionStatus.TRANSFER_ONGOING -> {
-                    viewHolder.mMsgDetailTxt.text = String.format("%s / %s - %s",
-                        Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
-                        Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                        ResourceMapper.getReadableFileTransferStatus(viewHolder.itemView.context, status)
-                    )
-                }
-                else -> {
-                    viewHolder.mMsgDetailTxt.text = String.format("%s - %s - %s", timeString,
-                        Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                        ResourceMapper.getReadableFileTransferStatus(viewHolder.itemView.context, status)
-                    )
-                }
+                InteractionStatus.TRANSFER_FINISHED -> viewHolder.mMsgDetailTxt.text = String.format("%s - %s", timeString,
+                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
+                InteractionStatus.TRANSFER_ONGOING -> viewHolder.mMsgDetailTxt.text = String.format("%s / %s - %s",
+                    Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
+                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
+                    ResourceMapper.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                else -> viewHolder.mMsgDetailTxt.text = String.format("%s - %s - %s", timeString,
+                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
+                    ResourceMapper.getReadableFileTransferStatus(viewHolder.itemView.context, status))
             }
         })
         val type = viewHolder.type.transferType
@@ -855,10 +846,7 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
             conversationFragment.updatePosition(convViewHolder.adapterPosition)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(
-                convViewHolder.adapterPosition, v.id
-                    .toLong()
-            )
+            mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
             false
         }
         val pictureResID: Int
@@ -903,25 +891,19 @@ class ConversationAdapter(
             if (diff < DateUtils.DAY_IN_MILLIS && DateUtils.isToday(timestamp)) { // 11:32 A.M.
                 DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
             } else {
-                DateUtils.formatDateTime(
-                    context, timestamp,
+                DateUtils.formatDateTime(context, timestamp,
                     DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_NO_YEAR or
-                            DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME
-                )
+                            DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)
             }
         } else if (diff < DateUtils.YEAR_IN_MILLIS) { // JAN. 7, 11:02 A.M.
-            DateUtils.formatDateTime(
-                context, timestamp,
+            DateUtils.formatDateTime(context, timestamp,
                 DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or
-                        DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME
-            )
+                        DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)
         } else {
-            DateUtils.formatDateTime(
-                context, timestamp,
+            DateUtils.formatDateTime(context, timestamp,
                 DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or
                         DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_SHOW_WEEKDAY or
-                        DateUtils.FORMAT_ABBREV_ALL
-            )
+                        DateUtils.FORMAT_ABBREV_ALL)
         }
         return timeStr.uppercase(Locale.getDefault())
     }
@@ -990,11 +972,7 @@ class ConversationAdapter(
         val nextMsg = getNextMessageFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(
-                    msg,
-                    nextMsg
-                ) || nextMsgHasTime)
-            ) {
+            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
                 return SequenceType.FIRST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST
@@ -1048,16 +1026,14 @@ class ConversationAdapter(
             return false
         }
         val prevMsg = getPreviousMessageFromPosition(position)
-        return prevMsg != null &&
-                msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
+        return prevMsg != null && msg.timestamp - prevMsg.timestamp > 10 * DateUtils.MINUTE_IN_MILLIS
     }
 
     private fun lastOutgoingIndex(): Int {
         var i: Int = mInteractions.size - 1
         while (i >= 0) {
-            if (!mInteractions[i].isIncoming) {
+            if (!mInteractions[i].isIncoming)
                 break
-            }
             i--
         }
         return i
@@ -1123,19 +1099,14 @@ class ConversationAdapter(
         val res = conversationFragment.resources
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
-        mPictureMaxSize = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            200f,
-            res.displayMetrics
-        ).toInt()
+        mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
         val corner = res.getDimension(R.dimen.conversation_message_radius).toInt()
         PICTURE_OPTIONS = GlideOptions()
             .transform(CenterInside())
             .fitCenter()
             .override(mPictureMaxSize)
             .transform(RoundedCorners(corner))
-        timestampUpdateTimer =
-            Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .startWithItem(0L)
+        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+            .startWithItem(0L)
     }
 }

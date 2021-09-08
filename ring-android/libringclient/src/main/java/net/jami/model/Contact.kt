@@ -156,11 +156,11 @@ class Contact private constructor(
         if (!hasNumber(tel)) phones.add(Phone(tel, cat, label))
     }
 
-    fun addNumber(tel: String, cat: Int, label: String?, type: Phone.NumberType?) {
+    fun addNumber(tel: String, cat: Int, label: String?, type: Phone.NumberType) {
         if (!hasNumber(tel)) phones.add(Phone(tel, cat, label, type))
     }
 
-    fun addNumber(tel: Uri, cat: Int, label: String?, type: Phone.NumberType?) {
+    fun addNumber(tel: Uri, cat: Int, label: String?, type: Phone.NumberType) {
         if (!hasNumber(tel)) phones.add(Phone(tel, cat, label, type))
     }
 

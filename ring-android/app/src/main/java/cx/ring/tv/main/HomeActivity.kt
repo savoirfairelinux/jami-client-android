@@ -100,7 +100,7 @@ class HomeActivity : FragmentActivity() {
             out = Allocation.createTyped(rs, rgbaType, Allocation.USAGE_SCRIPT)
             blurIntrinsic = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs)).apply {
                 setRadius(BLUR_RADIUS * size.width / 1080)
-                setInput(input)
+                setInput(out)
             }
             mBlurOutputBitmap = Bitmap.createBitmap(size.width, size.height, Bitmap.Config.ARGB_8888)
             mBlurOut = Allocation.createFromBitmap(rs, mBlurOutputBitmap)
@@ -119,7 +119,7 @@ class HomeActivity : FragmentActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance!!.startDaemon()
+        JamiApplication.instance?.startDaemon()
         setContentView(R.layout.tv_activity_home)
         mBackgroundManager = BackgroundManager.getInstance(this).apply { attach(window) }
         mPreviewView = findViewById(R.id.previewView)

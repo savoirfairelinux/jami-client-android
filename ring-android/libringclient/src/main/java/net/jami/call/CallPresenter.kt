@@ -106,7 +106,7 @@ class CallPresenter @Inject constructor(
             .subscribe { event: VideoEvent -> onVideoEvent(event) })
         mCompositeDisposable.add(mHardwareService.audioState
             .observeOn(mUiScheduler)
-            .subscribe { state: AudioState? -> getView()!!.updateAudioState(state) })
+            .subscribe { state: AudioState -> view?.updateAudioState(state) })
 
         /*mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
@@ -171,7 +171,7 @@ class CallPresenter @Inject constructor(
                     callInitialized = true
                     view!!.prepareCall(true)
                 }
-            }) { e: Throwable? ->
+            }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initIncoming, preparing call flow :", e)
             })
@@ -183,7 +183,7 @@ class CallPresenter @Inject constructor(
                     contactUpdate(call)
                     confUpdate(call)
                 }
-            }) { e: Throwable? ->
+            }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initIncoming, action view flow: ", e)
             })
@@ -227,9 +227,9 @@ class CallPresenter @Inject constructor(
         val c = firstCall.conversation
         if (c is Conversation) {
             val conversation = c
-            view!!.goToConversation(conversation.accountId, conversation.uri)
+            view?.goToConversation(conversation.accountId, conversation.uri)
         } else if (firstCall.contact != null) {
-            view!!.goToConversation(firstCall.account, firstCall.contact!!.conversationUri.blockingFirst())
+            view?.goToConversation(firstCall.account!!, firstCall.contact!!.conversationUri.blockingFirst())
         }
     }
 
@@ -414,12 +414,8 @@ class CallPresenter @Inject constructor(
                 .filter { list: List<Call> -> !list.isEmpty() }
             contactDisposable = contactUpdates
                 .observeOn(mUiScheduler)
-                .subscribe({ cs: List<Call>? -> view!!.updateContactBubble(cs) }) { e: Throwable? ->
-                    Log.e(
-                        TAG,
-                        "Error updating contact data",
-                        e
-                    )
+                .subscribe({ cs: List<Call> -> view!!.updateContactBubble(cs) }) { e: Throwable ->
+                    Log.e(TAG, "Error updating contact data", e)
                 }
             mCompositeDisposable.add(contactDisposable)
         }
@@ -571,9 +567,10 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    fun toggleCallMediaHandler(id: String?, toggle: Boolean) {
-        if (mConference != null && mConference!!.isOnGoing && mConference!!.hasVideo()) {
-            view!!.toggleCallMediaHandler(id, mConference!!.id, toggle)
+    fun toggleCallMediaHandler(id: String, toggle: Boolean) {
+        val conference = mConference ?: return
+        if (conference.isOnGoing && conference.hasVideo()) {
+            view?.toggleCallMediaHandler(id, conference.id, toggle)
         }
     }
 
@@ -659,8 +656,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun openParticipantContact(info: ParticipantInfo) {
-        val call = info.call ?: mConference!!.firstCall!!
-        view!!.goToContact(call.account, info.contact)
+        val call = info.call ?: mConference?.firstCall ?: return
+        view?.goToContact(call.account!!, info.contact)
     }
 
     fun stopCapture() {
