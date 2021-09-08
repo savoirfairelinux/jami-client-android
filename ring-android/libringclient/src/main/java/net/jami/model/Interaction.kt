@@ -141,6 +141,9 @@ open class Interaction {
     val isRead: Boolean
         get() = mIsRead == 1
 
+    val isSwarm: Boolean
+        get() = messageId != null && messageId!!.isNotEmpty()
+
     fun setSwarmInfo(conversationId: String) {
         this.conversationId = conversationId
         messageId = null

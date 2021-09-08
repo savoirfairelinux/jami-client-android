@@ -318,6 +318,9 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    val isSwarm: Boolean
+        get() = mConversation?.isSwarm == true
+
     fun goToCall(audioOnly: Boolean) {
         if (audioOnly && !mHardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
