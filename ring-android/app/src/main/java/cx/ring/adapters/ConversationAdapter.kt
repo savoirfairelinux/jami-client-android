@@ -126,7 +126,7 @@ class ConversationAdapter(
     }
 
     fun add(e: Interaction): Boolean {
-        if (!TextUtils.isEmpty(e.messageId)) {
+        if (e.isSwarm) {
             if (mInteractions.isEmpty() || mInteractions[mInteractions.size - 1].messageId == e.parentId) {
                 val update = mInteractions.isNotEmpty()
                 mInteractions.add(e)
@@ -169,7 +169,7 @@ class ConversationAdapter(
     }
 
     fun remove(e: Interaction) {
-        if (e.messageId != null) {
+        if (e.isSwarm) {
             for (i in mInteractions.indices.reversed()) {
                 if (e.messageId == mInteractions[i].messageId) {
                     mInteractions.removeAt(i)
@@ -687,11 +687,17 @@ class ConversationAdapter(
             conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
             val inflater = conversationFragment.requireActivity().menuInflater
             inflater.inflate(R.menu.conversation_item_actions_messages, menu)
+
             if (interaction.status == InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
             } else {
-                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                menu.removeItem(R.id.conv_action_cancel_message)
+                if (interaction.isSwarm) {
+                    menu.removeItem(R.id.conv_action_delete)
+                    menu.removeItem(R.id.conv_action_cancel_message)
+                } else {
+                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
+                    menu.removeItem(R.id.conv_action_cancel_message)
+                }
             }
         }
         longPressView.setOnLongClickListener { v: View ->
@@ -833,21 +839,23 @@ class ConversationAdapter(
     private fun configureForCallInfo(convViewHolder: ConversationViewHolder, interaction: Interaction) {
         convViewHolder.mIcon.scaleY = 1f
         val context = convViewHolder.itemView.context
-        val longPressView: View = convViewHolder.mCallInfoLayout
-        longPressView.background.setTintList(null)
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-            menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
-            menu.removeItem(R.id.conv_action_cancel_message)
-            menu.removeItem(R.id.conv_action_copy_text)
-        }
-        longPressView.setOnLongClickListener { v: View ->
-            longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
-            conversationFragment.updatePosition(convViewHolder.adapterPosition)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
-            false
+        if (!interaction.isSwarm) {
+            val longPressView: View = convViewHolder.mCallInfoLayout
+            longPressView.background.setTintList(null)
+            longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
+                conversationFragment.onCreateContextMenu(menu, v, menuInfo)
+                val inflater = conversationFragment.requireActivity().menuInflater
+                inflater.inflate(R.menu.conversation_item_actions_messages, menu)
+                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
+                menu.removeItem(R.id.conv_action_cancel_message)
+                menu.removeItem(R.id.conv_action_copy_text)
+            }
+            longPressView.setOnLongClickListener { v: View ->
+                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
+                conversationFragment.updatePosition(convViewHolder.adapterPosition)
+                mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
+                false
+            }
         }
         val pictureResID: Int
         val historyTxt: String
@@ -876,7 +884,9 @@ class ConversationAdapter(
         convViewHolder.mHistTxt.text = historyTxt
         convViewHolder.mHistDetailTxt.text = DateFormat.getDateTimeInstance()
             .format(call.timestamp) // start date
+
     }
+
 
     /**
      * Computes the string to set in text details between messages, indicating time separation.
