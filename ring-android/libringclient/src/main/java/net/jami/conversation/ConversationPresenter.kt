@@ -153,21 +153,18 @@ class ConversationPresenter @Inject constructor(
             .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
             .observeOn(mUiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountID) })
-        disposable.add(
-            Observable.combineLatest(
-                mHardwareService.connectivityState,
-                mAccountService.getObservableAccount(account),
-                { isConnected: Boolean, a: Account -> isConnected || a.isRegistered })
-                .observeOn(mUiScheduler)
-                .subscribe { isOk: Boolean ->
-                    this.view?.let { v ->
-                        if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
-                            v.displayAccountOfflineErrorPanel()
-                        } else {
-                            v.hideErrorPanel()
-                        }
+        disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account),
+            { isConnected: Boolean, a: Account -> isConnected || a.isRegistered })
+            .observeOn(mUiScheduler)
+            .subscribe { isOk: Boolean ->
+                this.view?.let { v ->
+                    if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
+                        v.displayAccountOfflineErrorPanel()
+                    } else {
+                        v.hideErrorPanel()
                     }
-                })
+                }
+            })
         disposable.add(c.sortedHistory
             .observeOn(mUiScheduler)
             .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
