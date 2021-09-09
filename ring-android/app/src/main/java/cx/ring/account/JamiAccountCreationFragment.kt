@@ -33,7 +33,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import cx.ring.databinding.FragAccJamiCreateBinding
 import cx.ring.views.WizardViewPager
-import net.jami.mvp.AccountCreationModel
+import net.jami.model.AccountCreationModel
 
 class JamiAccountCreationFragment : Fragment() {
     private var mBinding: FragAccJamiCreateBinding? = null
@@ -42,7 +42,7 @@ class JamiAccountCreationFragment : Fragment() {
             override fun handleOnBackPressed() {
                 if (mCurrentFragment is ProfileCreationFragment) {
                     val fragment = mCurrentFragment as ProfileCreationFragment
-                    (activity as AccountWizardActivity?)?.profileCreated(fragment.model, false)
+                    (activity as AccountWizardActivity?)?.profileCreated(fragment.model!!, false)
                     return
                 }
                 mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1

@@ -21,64 +21,54 @@
 package cx.ring.services
 
 import android.content.Context
-import net.jami.services.PreferencesService
-import java.util.HashMap
 import android.content.SharedPreferences
-import java.util.HashSet
-import cx.ring.utils.NetworkUtils
-import cx.ring.application.JamiApplication
-import android.text.TextUtils
-import cx.ring.utils.DeviceUtils
-import cx.ring.R
-import androidx.appcompat.app.AppCompatDelegate
 import android.os.Build
+import android.text.TextUtils
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
+import cx.ring.R
+import cx.ring.application.JamiApplication
+import cx.ring.utils.DeviceUtils
+import cx.ring.utils.NetworkUtils
 import net.jami.model.Settings
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
+import net.jami.services.PreferencesService
+import java.util.*
 
-class SharedPreferencesServiceImpl(val mContext: Context, accountService: AccountService, deviceService: DeviceRuntimeService) : PreferencesService(accountService, deviceService) {
+class SharedPreferencesServiceImpl(val mContext: Context, accountService: AccountService, deviceService: DeviceRuntimeService)
+    : PreferencesService(accountService, deviceService) {
     private val mNotifiedRequests: MutableMap<String, MutableSet<String>> = HashMap()
 
     override fun saveSettings(settings: Settings) {
-        val appPrefs = preferences
-        val edit = appPrefs.edit()
-        edit.clear()
-        edit.putBoolean(PREF_SYSTEM_CONTACTS, settings.isAllowSystemContacts)
-        edit.putBoolean(PREF_PLACE_CALLS, settings.isAllowPlaceSystemCalls)
-        edit.putBoolean(PREF_ON_STARTUP, settings.isAllowOnStartup)
-        edit.putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications)
-        edit.putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification)
-        edit.putBoolean(PREF_SHOW_TYPING, settings.isAllowTypingIndicator)
-        edit.putBoolean(PREF_SHOW_READ, settings.isAllowReadIndicator)
-        edit.putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
-        edit.putInt(PREF_NOTIFICATION_VISIBILITY, settings.notificationVisibility)
-        edit.apply()
+        preferences.edit()
+            .clear()
+            .putBoolean(PREF_SYSTEM_CONTACTS, settings.isAllowSystemContacts)
+            .putBoolean(PREF_PLACE_CALLS, settings.isAllowPlaceSystemCalls)
+            .putBoolean(PREF_ON_STARTUP, settings.isAllowOnStartup)
+            .putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications)
+            .putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification)
+            .putBoolean(PREF_SHOW_TYPING, settings.isAllowTypingIndicator)
+            .putBoolean(PREF_SHOW_READ, settings.isAllowReadIndicator)
+            .putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
+            .putInt(PREF_NOTIFICATION_VISIBILITY, settings.notificationVisibility)
+            .apply()
     }
 
     override fun loadSettings(): Settings {
         val appPrefs = preferences
-        val settings = userSettings ?: Settings()
-        settings.isAllowSystemContacts =
-            appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false)
-        settings.isAllowPlaceSystemCalls =
-            appPrefs.getBoolean(PREF_PLACE_CALLS, false)
-        settings.setAllowRingOnStartup(appPrefs.getBoolean(PREF_ON_STARTUP, true))
-        settings.isAllowPushNotifications =
-            appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false)
-        settings.isAllowPersistentNotification = appPrefs.getBoolean(
-            PREF_PERSISTENT_NOTIFICATION,
-            false
-        )
-        settings.isAllowTypingIndicator =
-            appPrefs.getBoolean(PREF_SHOW_TYPING, true)
-        settings.isAllowReadIndicator =
-            appPrefs.getBoolean(PREF_SHOW_READ, true)
-        settings.setBlockRecordIndicator(appPrefs.getBoolean(PREF_BLOCK_RECORD, false))
-        settings.notificationVisibility =
-            appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0)
-        return settings
+        return userSettings ?: Settings().apply {
+            isAllowSystemContacts = appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false)
+            isAllowPlaceSystemCalls = appPrefs.getBoolean(PREF_PLACE_CALLS, false)
+            setAllowRingOnStartup(appPrefs.getBoolean(PREF_ON_STARTUP, true))
+            isAllowPushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false)
+            isAllowPersistentNotification = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false)
+            isAllowTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true)
+            isAllowReadIndicator = appPrefs.getBoolean(PREF_SHOW_READ, true)
+            setBlockRecordIndicator(appPrefs.getBoolean(PREF_BLOCK_RECORD, false))
+            notificationVisibility = appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0)
+        }
     }
 
     private fun saveRequests(accountId: String, requests: Set<String>) {
@@ -114,40 +104,27 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
         return NetworkUtils.isConnectivityAllowed(mContext)
     }
 
-    override fun isPushAllowed(): Boolean {
-        val token = JamiApplication.instance?.pushToken
-        return settings.isAllowPushNotifications && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/
-    }
+    override val isPushAllowed: Boolean
+        get() {
+            val token = JamiApplication.instance?.pushToken
+            return settings.isAllowPushNotifications && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/
+        }
 
-    override fun getResolution(): Int {
-        return videoPreferences.getString(
-            PREF_RESOLUTION,
-            if (DeviceUtils.isTv(mContext)) mContext.getString(R.string.video_resolution_default_tv)
-            else mContext.getString(R.string.video_resolution_default)
-        )!!.toInt()
-    }
+    override val resolution: Int
+        get() = videoPreferences.getString(PREF_RESOLUTION, if (DeviceUtils.isTv(mContext)) mContext.getString(R.string.video_resolution_default_tv) else mContext.getString(R.string.video_resolution_default))!!.toInt()
 
-    override fun getBitrate(): Int {
-        return videoPreferences.getString(
-            PREF_BITRATE,
-            mContext.getString(R.string.video_bitrate_default)
-        )!!.toInt()
-    }
+    override val bitrate: Int
+        get() = videoPreferences.getString(PREF_BITRATE, mContext.getString(R.string.video_bitrate_default))!!.toInt()
 
-    override fun isHardwareAccelerationEnabled(): Boolean {
-        return videoPreferences.getBoolean(PREF_HW_ENCODING, true)
-    }
+    override val isHardwareAccelerationEnabled: Boolean
+        get() = videoPreferences.getBoolean(PREF_HW_ENCODING, true)
 
-    override fun setDarkMode(enabled: Boolean) {
-        val edit = themePreferences.edit()
-        edit.putBoolean(PREF_DARK_MODE, enabled)
-            .apply()
-        applyDarkMode(enabled)
-    }
-
-    override fun getDarkMode(): Boolean {
-        return themePreferences.getBoolean(PREF_DARK_MODE, false)
-    }
+    override var darkMode: Boolean
+        get() = themePreferences.getBoolean(PREF_DARK_MODE, false)
+        set(enabled) {
+            themePreferences.edit().putBoolean(PREF_DARK_MODE, enabled).apply()
+            applyDarkMode(enabled)
+        }
 
     override fun loadDarkMode() {
         applyDarkMode(darkMode)
@@ -190,15 +167,8 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
         private const val PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize"
         const val PREF_PLUGINS = "plugins"
 
-        @JvmStatic fun getConversationPreferences(
-            context: Context,
-            accountId: String,
-            conversationUri: Uri
-        ): SharedPreferences {
-            return context.getSharedPreferences(
-                accountId + "_" + conversationUri.uri,
-                Context.MODE_PRIVATE
-            )
+        fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences {
+            return context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
         }
     }
 }

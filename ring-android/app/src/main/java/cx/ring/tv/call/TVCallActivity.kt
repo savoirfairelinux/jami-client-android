@@ -26,13 +26,13 @@ import android.os.Build
 import android.view.WindowManager
 import cx.ring.R
 import android.media.AudioManager
+import android.util.Log
 import android.view.KeyEvent
 import net.jami.services.NotificationService
 import net.jami.call.CallView
 import android.view.MotionEvent
 import cx.ring.application.JamiApplication
 import cx.ring.utils.ConversationPath
-import net.jami.utils.Log
 
 @AndroidEntryPoint
 class TVCallActivity : FragmentActivity() {

@@ -49,7 +49,6 @@ import net.jami.model.Account;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragLinkDeviceBinding;
 import cx.ring.mvp.BaseBottomSheetFragment;
 import cx.ring.utils.DeviceUtils;

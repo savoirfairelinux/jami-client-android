@@ -21,27 +21,20 @@ package cx.ring.tv.search;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.leanback.app.SearchSupportFragment;
 
 import javax.inject.Inject;
 
-import cx.ring.R;
-import net.jami.model.Error;
-import net.jami.mvp.BaseView;
 import net.jami.mvp.RootPresenter;
 
-public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFragment
-        implements BaseView {
-
-    protected static final String TAG = BaseSearchFragment.class.getSimpleName();
-
+public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFragment {
     @Inject
     protected T presenter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
@@ -53,24 +46,6 @@ public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFr
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
-    }
-
-    @Override
-    public void displayErrorToast(Error error) {
-        String errorString;
-        switch (error) {
-            case NO_MICROPHONE:
-                errorString = getString(R.string.call_error_no_microphone);
-                break;
-            case NO_INPUT:
-                errorString = getString(R.string.call_error_no_camera_no_microphone);
-                break;
-            default:
-                errorString = getString(R.string.generic_error);
-                break;
-        }
-
-        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

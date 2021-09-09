@@ -25,6 +25,7 @@ import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -35,11 +36,9 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
-import cx.ring.application.JamiApplication;
 import dagger.hilt.android.AndroidEntryPoint;
 
-import net.jami.mvp.AccountCreationModel;
-import net.jami.utils.Log;
+import net.jami.model.AccountCreationModel;
 import net.jami.utils.StringUtils;
 
 @AndroidEntryPoint

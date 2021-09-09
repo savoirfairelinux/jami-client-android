@@ -38,6 +38,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Phone
+import net.jami.model.Profile
 import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.DeviceRuntimeService
@@ -183,12 +184,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                 val indexPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID)
                 val indexStared = result.getColumnIndex(ContactsContract.Contacts.STARRED)
                 val contactId = result.getLong(indexId)
-                Log.d(
-                    TAG,
-                    "Contact name: " + result.getString(indexName) + " id:" + contactId + " key:" + result.getString(
-                        indexKey
-                    )
-                )
+                Log.d(TAG, "Contact name: " + result.getString(indexName) + " id:" + contactId + " key:" + result.getString(indexKey))
                 contact = Contact(net.jami.model.Uri.fromString(contentUri.toString()))
                 contact.setSystemContactInfo(
                     contactId,
@@ -208,7 +204,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         if (contact == null) {
             Log.d(TAG, "findContactByIdFromSystem: findById $id can't find contact.")
         }
-        return contact!!
+        return contact
     }
 
     private fun fillContactDetails(contact: Contact) {
@@ -219,12 +215,9 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                 CONTACTS_PHONES_PROJECTION, ID_SELECTION, arrayOf(contact.id.toString()), null
             )
             if (cursorPhones != null) {
-                val indexNumber =
-                    cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                val indexType =
-                    cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
-                val indexLabel =
-                    cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)
+                val indexNumber = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                val indexType = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
+                val indexLabel = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)
                 while (cursorPhones.moveToNext()) {
                     contact.addNumber(
                         cursorPhones.getString(indexNumber),
@@ -232,19 +225,12 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                         cursorPhones.getString(indexLabel),
                         Phone.NumberType.TEL
                     )
-                    Log.d(
-                        TAG,
-                        "Phone:" + cursorPhones.getString(
-                            cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                        )
-                    )
+                    Log.d(TAG, "Phone:" + cursorPhones.getString(cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
                 }
                 cursorPhones.close()
             }
-            val baseUri =
-                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
-            val targetUri =
-                Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY)
+            val baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
+            val targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY)
             val cursorSip = contentResolver.query(
                 targetUri,
                 CONTACTS_SIP_PROJECTION,
@@ -257,22 +243,15 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             )
             if (cursorSip != null) {
                 val indexMime = cursorSip.getColumnIndex(ContactsContract.Data.MIMETYPE)
-                val indexSip =
-                    cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS)
-                val indexType =
-                    cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE)
-                val indexLabel =
-                    cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL)
+                val indexSip = cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS)
+                val indexType = cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.TYPE)
+                val indexLabel = cursorSip.getColumnIndex(ContactsContract.CommonDataKinds.SipAddress.LABEL)
                 while (cursorSip.moveToNext()) {
                     val contactMime = cursorSip.getString(indexMime)
                     val contactNumber = cursorSip.getString(indexSip)
-                    if (!contactMime.contentEquals(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) || net.jami.model.Uri.fromString(
-                            contactNumber
-                        ).isHexId || "ring".equals(
-                            cursorSip.getString(indexLabel),
-                            ignoreCase = true
-                        )
-                    ) {
+                    if (contactMime != ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE
+                        || net.jami.model.Uri.fromString(contactNumber).isHexId
+                        || "ring".equals(cursorSip.getString(indexLabel),ignoreCase = true)) {
                         contact.addNumber(
                             contactNumber,
                             cursorSip.getInt(indexType),
@@ -328,27 +307,20 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                 fillContactDetails(contact)
             }
             result.close()
-            if (contact == null || contact.phones == null || contact.phones.isEmpty()) {
+            if (contact?.phones == null || contact.phones.isEmpty()) {
                 return null
             }
         } catch (e: Exception) {
-            Log.d(
-                TAG,
-                "findContactBySipNumberFromSystem: Error while searching for contact number=$number",
-                e
-            )
+            Log.d(TAG, "findContactBySipNumberFromSystem: Error while searching for contact number=$number", e)
         }
-        return contact!!
+        return contact
     }
 
     public override fun findContactByNumberFromSystem(number: String): Contact? {
         var contact: Contact? = null
         val contentResolver = mContext.contentResolver
         try {
-            val uri = Uri.withAppendedPath(
-                ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                Uri.encode(number)
-            )
+            val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
             val result = contentResolver.query(uri, PHONELOOKUP_PROJECTION, null, null, null)
             if (result == null) {
                 Log.d(TAG, "findContactByNumberFromSystem: $number can't find contact.")
@@ -367,10 +339,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                     result.getLong(indexPhoto)
                 )
                 fillContactDetails(contact)
-                Log.d(
-                    TAG,
-                    "findContactByNumberFromSystem: " + number + " found " + contact.displayName
-                )
+                Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + contact.displayName)
             }
             result.close()
         } catch (e: Exception) {
@@ -386,12 +355,12 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
 
     override fun loadContactData(contact: Contact, accountId: String): Completable {
         if (!contact.detailsLoaded) {
-            val profile: Single<Tuple<String?, Any?>> =
+            val profile: Single<Profile> =
                 if (contact.isFromSystem) loadSystemContactData(contact)
                 else loadVCardContactData(contact, accountId)
             return profile
-                .doOnSuccess { p: Tuple<String?, Any?> -> contact.setProfile(p.first, p.second) }
-                .doOnError { e: Throwable? -> contact.setProfile(null, null) }
+                .doOnSuccess { p -> contact.setProfile(p) }
+                .doOnError { e: Throwable -> contact.setProfile(null, null) }
                 .ignoreElement()
                 .onErrorComplete()
         }
@@ -399,18 +368,13 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
     }
 
     override fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard) {
-        if (vcard != null) {
-            val profileData = VCardServiceImpl.readData(vcard)
-            contact.setProfile(profileData.first, profileData.second)
-            val filename = contact.primaryNumber + ".vcf"
-            VCardUtils.savePeerProfileToDisk(
-                vcard, accountId, filename, mContext.filesDir
-            )
-            AvatarFactory.clearCache()
-        }
+        contact.setProfile(VCardServiceImpl.readData(vcard))
+        val filename = contact.primaryNumber + ".vcf"
+        VCardUtils.savePeerProfileToDisk(vcard, accountId, filename, mContext.filesDir)
+        AvatarFactory.clearCache()
     }
 
-    override fun saveVCardContact(accountId: String, uri: String, displayName: String, picture: String): Single<VCard> {
+    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> {
         return Single.fromCallable {
             val vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT))
             val filename = "$uri.vcf"
@@ -419,23 +383,20 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         }
     }
 
-    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Tuple<String?, Any?>> {
+    private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> {
         val id = contact.primaryNumber
         return Single.fromCallable<VCard> { VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId) }
             .map { vcard: VCard -> VCardServiceImpl.readData(vcard) }
             .subscribeOn(Schedulers.computation())
     }
 
-    private fun loadSystemContactData(contact: Contact): Single<Tuple<String?, Any?>> {
+    private fun loadSystemContactData(contact: Contact): Single<Profile> {
         val contactName = contact.displayName
         val photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
         return AndroidFileUtils
-            .loadBitmap(
-                mContext,
-                Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO)
-            )
-            .map { bitmap: Bitmap? -> Tuple<String?, Any?>(contactName, bitmap) }
-            .onErrorReturn { e: Throwable? -> Tuple(contactName, null) }
+            .loadBitmap(mContext, Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+            .map { bitmap: Bitmap -> Profile(contactName, bitmap) }
+            .onErrorReturn { Profile(contactName, null) }
             .subscribeOn(Schedulers.io())
     }
 

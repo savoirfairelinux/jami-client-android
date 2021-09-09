@@ -21,20 +21,19 @@ package cx.ring.mvp;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceFragmentCompat;
 
 import net.jami.mvp.RootPresenter;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.AndroidEntryPoint;
-
 public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragmentCompat {
     @Inject
     protected T presenter;
 
     @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         //Be sure to do the injection in onCreateView method
         presenter.bindView(this);
     }

@@ -26,7 +26,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.utils.StringUtils.isEmpty
 import net.jami.model.Call.CallStatus
 import net.jami.daemon.IntVect
 import net.jami.daemon.UintVect
@@ -125,7 +124,7 @@ abstract class HardwareService(
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract val cameraCount: Int
-    abstract val maxResolutions: Observable<Tuple<Int, Int>>
+    abstract val maxResolutions: Observable<Tuple<Int?, Int?>>
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
     abstract fun unregisterCameraDetectionCallback()

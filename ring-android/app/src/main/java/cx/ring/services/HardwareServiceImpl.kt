@@ -30,6 +30,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.TextureView
 import android.view.WindowManager
@@ -50,7 +51,6 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
-import net.jami.utils.Log
 import net.jami.utils.Tuple
 import java.io.File
 import java.lang.ref.WeakReference
@@ -78,12 +78,13 @@ class HardwareServiceImpl(
     private var mIsChoosePlugin = false
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
+
     override fun initVideo(): Completable {
         Log.i(TAG, "initVideo()")
         return cameraService.init()
     }
 
-    override val maxResolutions: Observable<Tuple<Int, Int>>
+    override val maxResolutions: Observable<Tuple<Int?, Int?>>
         get() = cameraService.maxResolutions
     override val isVideoAvailable: Boolean
         get() = mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera()

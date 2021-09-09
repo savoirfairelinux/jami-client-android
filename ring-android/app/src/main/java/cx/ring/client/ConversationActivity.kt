@@ -58,7 +58,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         }
         conversationPath = path;
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
-        JamiApplication.instance!!.startDaemon()
+        JamiApplication.instance?.startDaemon()
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar)

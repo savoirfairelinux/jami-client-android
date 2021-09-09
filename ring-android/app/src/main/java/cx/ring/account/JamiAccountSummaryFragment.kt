@@ -73,6 +73,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
+import net.jami.model.Profile
 import net.jami.utils.StringUtils
 import java.io.File
 import java.util.*
@@ -102,10 +103,8 @@ class JamiAccountSummaryFragment :
     private var tmpProfilePhotoUri: Uri? = null
     private var mDeviceAdapter: DeviceAdapter? = null
     private val mDisposableBag = CompositeDisposable()
-    private val mProfileDisposable = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mDisposableBag.add(mProfileDisposable)
         return FragAccSummaryBinding.inflate(inflater, container, false).apply {
             mBinding = this
         }.root
@@ -143,9 +142,8 @@ class JamiAccountSummaryFragment :
         items.add(SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24) { presenter.goToAdvanced() })
         val adapter = SettingsAdapter(view.context, R.layout.item_setting, items)
         mBinding!!.settingsList.onItemClickListener =
-            AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, v: View?, i: Int, l: Long ->
-                adapter.getItem(i)!!
-                    .onClick()
+            AdapterView.OnItemClickListener { _, v: View?, i: Int, l: Long ->
+                adapter.getItem(i)?.onClick()
             }
         mBinding!!.settingsList.adapter = adapter
         var totalHeight = 0
@@ -185,39 +183,30 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    fun setAccount(accountId: String?) {
+    fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
     }
 
-    override fun updateUserView(account: Account) {
+    override fun updateUserView(account: Account, profile: Profile) {
         val context = context ?: return
-        mProfileDisposable.clear()
-        mProfileDisposable.add(loadProfile(context, account)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ profile ->
-                mBinding?.let { binding ->
-                    binding.userPhoto.setImageDrawable(AvatarDrawable.build(context, account, profile, true))
-                    binding.username.setText(profile.first)
-                }
-            }, { e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
-        )
+        mBinding?.let { binding ->
+            binding.userPhoto.setImageDrawable(AvatarDrawable.build(context, account, profile, true))
+            binding.username.setText(profile.displayName)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         when (requestCode) {
             WRITE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
-                if (resultData != null) {
-                    val uri = resultData.data
-                    if (uri != null) {
-                        if (mCacheArchive != null) {
-                            AndroidFileUtils.moveToUri(requireContext().contentResolver, mCacheArchive!!, uri)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({}) { e: Throwable ->
-                                    val v = view
-                                    if (v != null)
-                                        Snackbar.make(v, "Can't export archive: " + e.message, Snackbar.LENGTH_LONG).show()
-                                }
-                        }
+                resultData?.data?.let { uri ->
+                    mCacheArchive?.let { cacheArchive ->
+                        AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({}) { e: Throwable ->
+                                val v = view
+                                if (v != null)
+                                    Snackbar.make(v, "Can't export archive: " + e.message, Snackbar.LENGTH_LONG).show()
+                            }
                     }
                 }
             }
@@ -226,7 +215,7 @@ class JamiAccountSummaryFragment :
                     if (resultCode == Activity.RESULT_OK) {
                         if (photoUri == null) {
                             if (resultData != null)
-                                updatePhoto(Single.just(resultData.extras!!["data"] as Bitmap?))
+                                updatePhoto(Single.just(resultData.extras!!["data"] as Bitmap))
                         } else {
                             updatePhoto(photoUri)
                         }
@@ -240,8 +229,8 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    override fun accountChanged(account: Account) {
-        updateUserView(account)
+    override fun accountChanged(account: Account, profile: Profile) {
+        updateUserView(account, profile)
         mBinding?.let { binding ->
             binding.userPhoto.setOnClickListener { profileContainerClicked(account) }
             binding.linkedDevices.setText(account.deviceName)
@@ -255,7 +244,7 @@ class JamiAccountSummaryFragment :
             mBestName = "$mBestName.gz"
             val username = account.registeredName
             val currentRegisteredName = account.registeringUsername
-            val hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty()
+            val hasRegisteredName = !currentRegisteredName && username != null && username.isNotEmpty()
             binding.groupRegisteringName.visibility = if (currentRegisteredName) View.VISIBLE else View.GONE
             binding.btnShare.setOnClickListener { shareAccount(if (hasRegisteredName) username else account.username) }
             binding.registerName.visibility = if (hasRegisteredName) View.GONE else View.VISIBLE
@@ -265,11 +254,11 @@ class JamiAccountSummaryFragment :
                     .show(parentFragmentManager, QRCodeFragment.TAG)
             }
             binding.username.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
-                    val name = binding.username.text
-                    if (!hasFocus && !TextUtils.isEmpty(name)) {
-                        presenter.saveVCardFormattedName(name.toString())
-                    }
+                val name = binding.username.text
+                if (!hasFocus) {
+                    presenter.saveVCardFormattedName(name.toString())
                 }
+            }
         }
 
         setSwitchStatus(account)
@@ -671,7 +660,7 @@ class JamiAccountSummaryFragment :
         }.show(parentFragmentManager, FRAGMENT_DIALOG_RENAME)
     }
 
-    override fun onDeviceRename(newName: String?) {
+    override fun onDeviceRename(newName: String) {
         Log.d(TAG, "onDeviceRename: " + presenter.deviceName + " -> " + newName)
         presenter.renameDevice(newName)
     }

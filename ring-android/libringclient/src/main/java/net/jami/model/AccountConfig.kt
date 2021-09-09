@@ -40,8 +40,11 @@ class AccountConfig(details: Map<String, String>) {
             return details
         }
 
-    fun put(key: ConfigKey, value: String) {
-        mValues[key] = value
+    fun put(key: ConfigKey, value: String?) {
+        if (value == null)
+            mValues.remove(key)
+        else
+            mValues[key] = value
     }
 
     fun put(key: ConfigKey, value: Boolean) {

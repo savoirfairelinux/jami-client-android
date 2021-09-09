@@ -77,7 +77,7 @@ class SmartListPresenter @Inject constructor(
         startConversation(viewModel.accountId, viewModel.uri)
     }
 
-    fun conversationLongClicked(smartListViewModel: SmartListViewModel?) {
+    fun conversationLongClicked(smartListViewModel: SmartListViewModel) {
         view!!.displayConversationDialog(smartListViewModel)
     }
 
@@ -93,7 +93,7 @@ class SmartListPresenter @Inject constructor(
         }
     }
 
-    fun startConversation(uri: Uri?) {
+    fun startConversation(uri: Uri) {
         view!!.goToConversation(mAccount!!.accountID, uri)
     }
 
@@ -143,16 +143,16 @@ class SmartListPresenter @Inject constructor(
         view!!.setLoading(true)
         mCompositeDisposable.add(conversations
             .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
-                if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS else Observable.combineLatest<SmartListViewModel, List<SmartListViewModel>>(
-                    viewModels
-                ) { obs: Array<Any> -> //obs.map { it as SmartListViewModel }
+                if (viewModels.isEmpty())
+                    SmartListViewModel.EMPTY_RESULTS
+                else Observable.combineLatest(viewModels) { obs: Array<Any> -> //obs.map { it as SmartListViewModel }
                     val vms: MutableList<SmartListViewModel> = ArrayList(obs.size)
                     for (ob in obs) vms.add(ob as SmartListViewModel)
                     vms
                 }.throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
             }
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels: List<SmartListViewModel> ->
+            .subscribe({ viewModels: MutableList<SmartListViewModel> ->
                 val view = view
                 view!!.setLoading(false)
                 if (viewModels.isEmpty()) {
