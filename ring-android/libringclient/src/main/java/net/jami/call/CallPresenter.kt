@@ -451,6 +451,7 @@ class CallPresenter @Inject constructor(
             view.handleCallWakelock(isAudioOnly)
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account!!)!!.isAutoanswerEnabled) {
+                    Log.w(TAG, "Accept because of autoanswer")
                     mCallService.accept(scall.daemonIdString!!)
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {

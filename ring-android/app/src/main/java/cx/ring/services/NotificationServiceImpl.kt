@@ -90,12 +90,10 @@ class NotificationServiceImpl(
      * @param callId the call ID
      */
     private fun startCallActivity(callId: String) {
-        mContext.startActivity(
-            Intent(Intent.ACTION_VIEW)
+        mContext.startActivity(Intent(Intent.ACTION_VIEW)
                 .putExtra(NotificationService.KEY_CALL_ID, callId)
                 .setClass(mContext.applicationContext, TVCallActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
     private fun buildCallNotification(conference: Conference): Notification? {
