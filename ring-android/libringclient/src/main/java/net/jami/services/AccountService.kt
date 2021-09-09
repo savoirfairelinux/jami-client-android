@@ -68,6 +68,10 @@ class AccountService(
      */
     var currentAccount: Account? = null
         set(account) {
+            if (field == null) {
+                field = account
+                return
+            }
             if (field === account) return
             field = account!!
 
@@ -78,7 +82,7 @@ class AccountService(
             val selectedID = account.accountID
             orderedAccountIdList.add(selectedID)
             for (a in accounts) {
-                if (a.accountID.contentEquals(selectedID)) {
+                if (a.accountID == selectedID) {
                     continue
                 }
                 orderedAccountIdList.add(a.accountID)
@@ -336,18 +340,15 @@ class AccountService(
                     }
                     if (enabled) {
                         for (contact in account.contacts.values) {
-                            if (!contact.isUsernameLoaded) JamiService.lookupAddress(
-                                accountId,
-                                "",
-                                contact.uri.rawRingId
-                            )
+                            if (!contact.isUsernameLoaded)
+                                JamiService.lookupAddress(accountId, "", contact.uri.rawRingId)
                         }
                     }
                 }
             }
             mHasSipAccount = hasSip
             mHasRingAccount = hasJami
-            if (!newAccounts.isEmpty()) {
+            if (newAccounts.isNotEmpty()) {
                 val newAccount = newAccounts[0]
                 if (currentAccount !== newAccount) {
                     currentAccount = newAccount
@@ -386,7 +387,7 @@ class AccountService(
      * @param map the account details
      * @return the created Account
      */
-    fun addAccount(map: Map<String?, String?>?): Observable<Account?> {
+    fun addAccount(map: Map<String, String>): Observable<Account> {
         return Observable.fromCallable {
             val accountId = JamiService.addAccount(StringMap.toSwig(map))
             if (StringUtils.isEmpty(accountId)) {
@@ -450,6 +451,12 @@ class AccountService(
         return observableAccounts.filter { acc -> acc.accountID == accountId }
     }
 
+    fun getObservableAccountProfile(accountId: String): Observable<Pair<Account, Profile>> {
+        return getObservableAccount(accountId).flatMap { a: Account ->
+            mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
+        }
+    }
+
     fun getObservableAccount(accountId: String): Observable<Account> {
         return Observable.fromCallable<Account> { getAccount(accountId) }
             .concatWith(getObservableAccountUpdates(accountId))
@@ -460,9 +467,9 @@ class AccountService(
             .concatWith(observableAccounts.filter { acc -> acc === account })
     }
 
-    val currentProfileAccountSubject: Observable<Account>
-        get() = currentAccountSubject.flatMapSingle { a: Account ->
-            mVCardService.loadProfile(a).firstOrError().map { p: Tuple<String?, Any?>? -> a }
+    val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
+        get() = currentAccountSubject.flatMap { a: Account ->
+            mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
         }
 
     fun subscribeBuddy(accountID: String?, uri: String?, flag: Boolean) {
@@ -571,7 +578,7 @@ class AccountService(
      *
      * @param accountOrder The ordered list of account ids
      */
-    fun setAccountOrder(accountOrder: List<String>) {
+    private fun setAccountOrder(accountOrder: List<String>) {
         mExecutor.execute {
             val order = StringBuilder()
             for (accountId in accountOrder) {
@@ -1116,17 +1123,24 @@ class AccountService(
         val account = getAccount(accountId) ?: return
         mVCardService.saveVCardProfile(accountId, account.uri, name, photo)
             .subscribeOn(Schedulers.io())
-            .subscribe({ account.resetProfile() }) { e -> Log.e(TAG, "Error saving profile", e) }
+            .subscribe({ vcard -> account.loadedProfile = mVCardService.loadVCardProfile(vcard).cache() })
+                { e -> Log.e(TAG, "Error saving profile", e) }
     }
 
     fun profileReceived(accountId: String, peerId: String, vcardPath: String) {
         val account = getAccount(accountId) ?: return
         Log.w(TAG, "profileReceived: $accountId, $peerId, $vcardPath")
         val contact = account.getContactFromCache(peerId)
-        mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
-            .subscribe({ profile: Tuple<String?, Any?> ->
-                contact.setProfile(profile.first, profile.second)
-            }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+        if (contact.isUser) {
+            mVCardService.accountProfileReceived(accountId, File(vcardPath))
+                .subscribe({ profile: Profile ->
+                    account.loadedProfile = Single.just(profile)
+                }) { e -> Log.e(TAG, "Error saving contact profile", e) }
+        } else {
+            mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
+                .subscribe({ profile -> contact.setProfile(profile) })
+                    { e -> Log.e(TAG, "Error saving contact profile", e) }
+        }
     }
 
     fun incomingAccountMessage(accountId: String, messageId: String?, callId: String?, from: String, messages: Map<String, String>) {
@@ -1242,12 +1256,7 @@ class AccountService(
                     // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                         .subscribeOn(Schedulers.computation())
-                        .subscribe { profile: Tuple<String?, Any?> ->
-                            contact.setProfile(
-                                profile.first,
-                                profile.second
-                            )
-                        }
+                        .subscribe { profile -> contact.setProfile(profile) }
                 }
             }
             account.addRequest(request)
@@ -1258,8 +1267,7 @@ class AccountService(
     }
 
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
-        val account = getAccount(accountId)
-        if (account != null) {
+        getAccount(accountId)?.let { account ->
             val details: Map<String, String> = JamiService.getContactDetails(accountId, uri)
             val contact = account.addContact(details)
             val conversationUri = contact.conversationUri.blockingFirst()

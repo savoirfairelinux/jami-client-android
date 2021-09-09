@@ -106,11 +106,11 @@ class ContactRequestsFragment :
         (requireActivity() as HomeActivity).startConversation(accountId, contactId)
     }
 
-    override fun onItemClick(smartListViewModel: SmartListViewModel) {
-        presenter.contactRequestClicked(smartListViewModel.accountId, smartListViewModel.uri)
+    override fun onItemClick(item: SmartListViewModel) {
+        presenter.contactRequestClicked(item.accountId, item.uri)
     }
 
-    override fun onItemLongClick(smartListViewModel: SmartListViewModel) {}
+    override fun onItemLongClick(item: SmartListViewModel) {}
 
     companion object {
         private val TAG = ContactRequestsFragment::class.java.simpleName

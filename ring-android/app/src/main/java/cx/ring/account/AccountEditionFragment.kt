@@ -53,13 +53,8 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     private var mAccountId: String? = null
     private var mAccountIsJami = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        mBinding = FragAccountSettingsBinding.inflate(inflater, container, false)
-        return mBinding!!.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return FragAccountSettingsBinding.inflate(inflater, container, false).apply { mBinding = this }.root
     }
 
     override fun onDestroyView() {
@@ -102,33 +97,32 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     override fun initViewPager(accountId: String, isJami: Boolean) {
-        mBinding!!.pager.offscreenPageLimit = 4
-        mBinding!!.slidingTabs.setupWithViewPager(mBinding!!.pager)
-        mBinding!!.pager.adapter =
-            PreferencesPagerAdapter(childFragmentManager, activity, accountId, isJami)
-        val existingFragment =
-            childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as BlockListFragment?
+        mBinding?.apply {
+            pager.offscreenPageLimit = 4
+            pager.adapter = PreferencesPagerAdapter(childFragmentManager, requireContext(), accountId, isJami)
+            slidingTabs.setupWithViewPager(pager)
+        }
+        val existingFragment = childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as BlockListFragment?
         if (existingFragment != null) {
-            val args = Bundle()
-            args.putString(ACCOUNT_ID_KEY, accountId)
-            if (!existingFragment.isStateSaved) existingFragment.arguments = args
+            if (!existingFragment.isStateSaved)
+                existingFragment.arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
             existingFragment.setAccount(accountId)
         }
     }
 
     override fun goToBlackList(accountId: String) {
         val blockListFragment = BlockListFragment()
-        val args = Bundle()
-        args.putString(ACCOUNT_ID_KEY, accountId)
-        blockListFragment.arguments = args
+        blockListFragment.arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
         childFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .addToBackStack(BlockListFragment.TAG)
             .replace(R.id.fragment_container, blockListFragment, BlockListFragment.TAG)
             .commit()
-        mBinding!!.slidingTabs.visibility = View.GONE
-        mBinding!!.pager.visibility = View.GONE
-        mBinding!!.fragmentContainer.visibility = View.VISIBLE
+        mBinding?.apply {
+            slidingTabs.visibility = View.GONE
+            pager.visibility = View.GONE
+            fragmentContainer.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -148,45 +142,45 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun onBackPressed(): Boolean {
         if (mBinding == null) return false
         mIsVisible = false
-        if (activity is HomeActivity) (activity as HomeActivity?)!!.setToolbarOutlineState(true)
+        if (activity is HomeActivity) (activity as HomeActivity).setToolbarOutlineState(true)
         if (mBinding!!.fragmentContainer.visibility != View.VISIBLE) {
             toggleView(mAccountId, mAccountIsJami)
             return true
         }
-        val summaryFragment =
-            childFragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG) as JamiAccountSummaryFragment?
-        return if (summaryFragment != null && summaryFragment.onBackPressed()) {
+        val summaryFragment = childFragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG) as JamiAccountSummaryFragment?
+        return if (summaryFragment != null && summaryFragment.onBackPressed())
             true
-        } else childFragmentManager.popBackStackImmediate()
+        else
+            childFragmentManager.popBackStackImmediate()
     }
 
     private fun toggleView(accountId: String?, isJami: Boolean) {
         mAccountId = accountId
         mAccountIsJami = isJami
-        mBinding!!.slidingTabs.visibility = if (isJami) View.GONE else View.VISIBLE
-        mBinding!!.pager.visibility = if (isJami) View.GONE else View.VISIBLE
-        mBinding!!.fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
+        mBinding?.apply {
+            slidingTabs.visibility = if (isJami) View.GONE else View.VISIBLE
+            pager.visibility = if (isJami) View.GONE else View.VISIBLE
+            fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
+        }
         setBackListenerEnabled(isJami)
     }
 
     override fun exit() {
-        val activity: Activity? = activity
         activity?.onBackPressed()
     }
 
     private fun setBackListenerEnabled(enable: Boolean) {
         val activity: Activity? = activity
-        if (activity is HomeActivity) activity.setAccountFragmentOnBackPressedListener(if (enable) this else null)
+        if (activity is HomeActivity)
+            activity.setAccountFragmentOnBackPressedListener(if (enable) this else null)
     }
 
-    private class PreferencesPagerAdapter internal constructor(
-        fm: FragmentManager?,
-        private val mContext: Context?,
+    private class PreferencesPagerAdapter constructor(
+        fm: FragmentManager,
+        private val mContext: Context,
         private val accountId: String,
         private val isJamiAccount: Boolean
-    ) : FragmentStatePagerAdapter(
-        fm!!
-    ) {
+    ) : FragmentStatePagerAdapter(fm) {
         override fun getCount(): Int {
             return if (isJamiAccount) 3 else 4
         }
@@ -195,10 +189,9 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             return if (isJamiAccount) getJamiPanel(position) else getSIPPanel(position)
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            val resId =
-                if (isJamiAccount) getRingPanelTitle(position) else getSIPPanelTitle(position)
-            return mContext!!.getString(resId)
+        override fun getPageTitle(position: Int): CharSequence {
+            val resId = if (isJamiAccount) getRingPanelTitle(position) else getSIPPanelTitle(position)
+            return mContext.getString(resId)
         }
 
         private fun getJamiPanel(position: Int): Fragment {
@@ -221,10 +214,9 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         }
 
         private fun fragmentWithBundle(result: Fragment): Fragment {
-            val args = Bundle()
-            args.putString(ACCOUNT_ID_KEY, accountId)
-            result.arguments = args
-            return result
+            return result.apply {
+                arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
+            }
         }
 
         companion object {
@@ -256,20 +248,19 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     private fun setupElevation() {
-        if (mBinding == null || !mIsVisible) {
+        val binding = mBinding ?: return
+        if (!mIsVisible)
             return
-        }
         val activity: FragmentActivity = activity as? HomeActivity ?: return
-        val ll = mBinding!!.pager.getChildAt(mBinding!!.pager.currentItem) as LinearLayout
+        val ll = binding.pager.getChildAt(binding.pager.currentItem) as LinearLayout
         val rv = (ll.getChildAt(0) as FrameLayout).getChildAt(0) as RecyclerView
         val homeActivity = activity as HomeActivity
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
-            mBinding!!.slidingTabs.elevation =
-                mBinding!!.slidingTabs.resources.getDimension(R.dimen.toolbar_elevation)
+            binding.slidingTabs.elevation = binding.slidingTabs.resources.getDimension(R.dimen.toolbar_elevation)
             homeActivity.setToolbarElevation(true)
             homeActivity.setToolbarOutlineState(false)
         } else {
-            mBinding!!.slidingTabs.elevation = 0f
+            binding.slidingTabs.elevation = 0f
             homeActivity.setToolbarElevation(false)
             homeActivity.setToolbarOutlineState(true)
         }
@@ -278,10 +269,9 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     companion object {
         private val TAG = AccountEditionFragment::class.simpleName
         @JvmField
-        val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountid"
+        val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountId"
         @JvmField
-        val ACCOUNT_HAS_PASSWORD_KEY =
-            AccountEditionFragment::class.qualifiedName + "hasPassword"
+        val ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment::class.qualifiedName + "hasPassword"
         private const val SCROLL_DIRECTION_UP = -1
     }
 }

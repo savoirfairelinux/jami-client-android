@@ -31,12 +31,11 @@ import android.view.inputmethod.EditorInfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiConnectBinding;
 
 import net.jami.account.JamiAccountConnectPresenter;
 import net.jami.account.JamiConnectAccountView;
-import net.jami.mvp.AccountCreationModel;
+import net.jami.model.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import dagger.hilt.android.AndroidEntryPoint;
 

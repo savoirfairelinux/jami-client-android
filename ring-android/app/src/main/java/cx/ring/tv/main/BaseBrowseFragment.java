@@ -24,16 +24,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.leanback.app.BrowseSupportFragment;
 import android.view.View;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
-import cx.ring.R;
-import net.jami.model.Error;
-import net.jami.mvp.BaseView;
 import net.jami.mvp.RootPresenter;
 
-public class BaseBrowseFragment<T extends RootPresenter> extends BrowseSupportFragment implements BaseView {
+public class BaseBrowseFragment<T extends RootPresenter> extends BrowseSupportFragment {
 
     protected static final String TAG = BaseBrowseFragment.class.getSimpleName();
 
@@ -52,20 +48,6 @@ public class BaseBrowseFragment<T extends RootPresenter> extends BrowseSupportFr
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
-    }
-
-    public void displayErrorToast(Error error) {
-        String errorString;
-        switch (error) {
-            case NO_INPUT:
-                errorString = getString(R.string.call_error_no_camera_no_microphone);
-                break;
-            default:
-                errorString = getString(R.string.generic_error);
-                break;
-        }
-
-        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

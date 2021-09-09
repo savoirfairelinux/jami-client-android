@@ -25,6 +25,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -36,10 +37,9 @@ import androidx.leanback.widget.GuidedAction
 import cx.ring.R
 import cx.ring.account.ProfileCreationFragment
 import cx.ring.tv.camera.CustomCameraActivity
-import cx.ring.utils.AndroidFileUtils.loadBitmap
+import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.views.AvatarDrawable
-import cx.ring.views.AvatarDrawable.Companion.load
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -69,7 +69,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
                 }
             }
             ProfileCreationFragment.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && data != null) {
-                presenter.saveVCardPhoto(loadBitmap(requireContext(), data.data!!)
+                presenter.saveVCardPhoto(AndroidFileUtils.loadBitmap(requireContext(), data.data!!)
                     .map { obj: Bitmap -> BitmapUtils.bitmapToPhoto(obj) })
             }
             else -> {
@@ -80,11 +80,11 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.cameraPermissionChanged(true)
-                presenter!!.cameraClicked()
+                presenter.cameraPermissionChanged(true)
+                presenter.cameraClicked()
             }
             ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter!!.galleryClicked()
+                presenter.galleryClicked()
             }
         }
     }
@@ -131,31 +131,23 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
 
     override fun showViewModel(viewModel: HomeNavigationViewModel) {
         val action = actions?.let { if (it.isEmpty()) null else it[0] }
-        if (action != null && action.id == USER_NAME.toLong()) {
-            if (TextUtils.isEmpty(viewModel.alias)) {
+        if (action != null && action.id == USER_NAME) {
+            if (TextUtils.isEmpty(viewModel.profile.displayName)) {
                 action.editTitle = ""
                 action.title = getString(R.string.account_edit_profile)
             } else {
-                action.editTitle = viewModel.alias
-                action.title = viewModel.alias
+                action.editTitle = viewModel.profile.displayName
+                action.title = viewModel.profile.displayName
             }
             notifyActionChanged(0)
         }
-        if (TextUtils.isEmpty(viewModel.alias))
+        if (TextUtils.isEmpty(viewModel.profile.displayName))
             guidanceStylist.titleView.setText(R.string.profile)
-        else guidanceStylist.titleView.text = viewModel.alias
-        setPhoto(viewModel.account)
+        else guidanceStylist.titleView.text = viewModel.profile.displayName
+        guidanceStylist.iconView.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
+            .apply { setInSize(iconSize) })
     }
 
-    override fun setPhoto(account: Account) {
-        load(requireContext(), account)
-            .map { avatar -> avatar.apply { setInSize(iconSize) } }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { avatar: AvatarDrawable? -> guidanceStylist.iconView.setImageDrawable(avatar) }
-    }
-
-    override fun updateModel(account: Account) {}
     override fun gotToImageCapture() {
         val intent = Intent(activity, CustomCameraActivity::class.java)
         startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO)

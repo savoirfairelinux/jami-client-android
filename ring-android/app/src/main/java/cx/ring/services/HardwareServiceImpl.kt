@@ -30,6 +30,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.TextureView
 import android.view.WindowManager
@@ -50,7 +51,6 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
-import net.jami.utils.Log
 import net.jami.utils.Tuple
 import java.io.File
 import java.lang.ref.WeakReference
@@ -63,7 +63,7 @@ class HardwareServiceImpl(
     preferenceService: PreferencesService,
     uiScheduler: Scheduler
 ) : HardwareService(executor, preferenceService, uiScheduler), OnAudioFocusChangeListener, BluetoothChangeListener {
-    private val videoInputs: MutableMap<String?, Shm> = HashMap()
+    private val videoInputs: MutableMap<String, Shm> = HashMap()
     private val cameraService = CameraService(mContext)
     private val mRinger = Ringer(mContext)
     private val mAudioManager: AudioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -78,12 +78,13 @@ class HardwareServiceImpl(
     private var mIsChoosePlugin = false
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
+
     override fun initVideo(): Completable {
         Log.i(TAG, "initVideo()")
         return cameraService.init()
     }
 
-    override val maxResolutions: Observable<Tuple<Int, Int>>
+    override val maxResolutions: Observable<Tuple<Int?, Int?>>
         get() = cameraService.maxResolutions
     override val isVideoAvailable: Boolean
         get() = mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera()
@@ -119,37 +120,29 @@ class HardwareServiceImpl(
         get() = mAudioManager.isSpeakerphoneOn
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
-        .setAudioAttributes(
-            AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
-                .setLegacyStreamType(AudioManager.STREAM_RING)
-                .build()
-        )
+        .setAudioAttributes(AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
+            .setLegacyStreamType(AudioManager.STREAM_RING)
+            .build())
         .setOnAudioFocusChangeListener(this)
         .build()
     private val CALL_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
-        .setAudioAttributes(
-            AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
-                .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
-                .setLegacyStreamType(AudioManager.STREAM_VOICE_CALL)
-                .build()
-        )
+        .setAudioAttributes(AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
+            .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
+            .setLegacyStreamType(AudioManager.STREAM_VOICE_CALL)
+            .build())
         .setOnAudioFocusChangeListener(this)
         .build()
 
     private fun getFocus(request: AudioFocusRequestCompat?) {
         if (currentFocus === request) return
-        if (currentFocus != null) {
-            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, currentFocus!!)
+        currentFocus?.let { focus ->
+            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, focus)
             currentFocus = null
         }
-        if (request != null && AudioManagerCompat.requestAudioFocus(
-                mAudioManager,
-                request
-            ) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-        ) {
+        if (request != null && AudioManagerCompat.requestAudioFocus(mAudioManager, request) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             currentFocus = request
         }
     }
@@ -330,31 +323,24 @@ class HardwareServiceImpl(
 
     override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
-        val shm = Shm()
-        shm.id = id
-        shm.w = width
-        shm.h = height
+        val shm = Shm(id, width, height)
         videoInputs[id] = shm
-        val weakSurfaceHolder = videoSurfaces[id]
-        if (weakSurfaceHolder != null) {
-            val holder = weakSurfaceHolder.get()
-            if (holder != null) {
-                shm.window = startVideo(id, holder.surface, width, height)
-                if (shm.window == 0L) {
-                    Log.i(TAG, "DJamiService.decodingStarted() no window !")
-                    val event = VideoEvent()
-                    event.start = true
-                    event.callId = shm.id
-                    videoEvents.onNext(event)
-                    return
-                }
+        videoSurfaces[id]?.get()?.let { holder ->
+            shm.window = startVideo(id, holder.surface, width, height)
+            if (shm.window == 0L) {
+                Log.i(TAG, "DJamiService.decodingStarted() no window !")
                 val event = VideoEvent()
+                event.start = true
                 event.callId = shm.id
-                event.started = true
-                event.w = shm.w
-                event.h = shm.h
                 videoEvents.onNext(event)
+                return
             }
+            val event = VideoEvent()
+            event.callId = shm.id
+            event.started = true
+            event.w = shm.w
+            event.h = shm.h
+            videoEvents.onNext(event)
         }
     }
 
@@ -529,7 +515,7 @@ class HardwareServiceImpl(
         cameraService.requestKeyFrame()
     }
 
-    override fun setBitrate(device: String?, bitrate: Int) {
+    override fun setBitrate(device: String, bitrate: Int) {
         cameraService.setBitrate(bitrate)
     }
 
@@ -546,7 +532,7 @@ class HardwareServiceImpl(
         mIsCapturing = false
     }
 
-    override fun addVideoSurface(id: String?, holder: Any?) {
+    override fun addVideoSurface(id: String, holder: Any) {
         if (holder !is SurfaceHolder) {
             return
         }
@@ -572,7 +558,7 @@ class HardwareServiceImpl(
         videoEvents.onNext(event)
     }
 
-    override fun updateVideoSurfaceId(currentId: String?, newId: String?) {
+    override fun updateVideoSurfaceId(currentId: String, newId: String) {
         Log.w(TAG, "updateVideoSurfaceId $currentId $newId")
         val surfaceHolder = videoSurfaces[currentId] ?: return
         val surface = surfaceHolder.get()
@@ -589,7 +575,7 @@ class HardwareServiceImpl(
         surface?.let { addVideoSurface(newId, it) }
     }
 
-    override fun addPreviewVideoSurface(holder: Any?, conference: Conference?) {
+    override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
         if (holder !is TextureView)
             return
         Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId)
@@ -601,7 +587,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun updatePreviewVideoSurface(conference: Conference?) {
+    override fun updatePreviewVideoSurface(conference: Conference) {
         val old = mCameraPreviewCall.get()
         mCameraPreviewCall = WeakReference(conference)
         if (old !== conference && mIsCapturing) {
@@ -611,7 +597,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun removeVideoSurface(id: String?) {
+    override fun removeVideoSurface(id: String) {
         Log.i(TAG, "removeVideoSurface $id")
         videoSurfaces.remove(id)
         val shm = videoInputs[id] ?: return
@@ -634,7 +620,7 @@ class HardwareServiceImpl(
         mCameraPreviewSurface.clear()
     }
 
-    override fun switchInput(id: String?, setDefaultCamera: Boolean) {
+    override fun switchInput(id: String, setDefaultCamera: Boolean) {
         Log.w(TAG, "switchInput $id")
         mCapturingId = cameraService.switchInput(setDefaultCamera)
         switchInput(id, "camera://$mCapturingId")
@@ -670,10 +656,7 @@ class HardwareServiceImpl(
     override val videoDevices: List<String>
         get() = cameraService.cameraIds
 
-    private class Shm {
-        var id: String? = null
-        var w = 0
-        var h = 0
+    private class Shm (val id: String, val w: Int, val h: Int) {
         var window: Long = 0
     }
 
@@ -688,8 +671,8 @@ class HardwareServiceImpl(
         private val VIDEO_SIZE_FULL_HD = Point(1920, 1080)
         private val VIDEO_SIZE_ULTRA_HD = Point(3840, 2160)
         private val TAG = HardwareServiceImpl::class.simpleName!!
-        private var mCameraPreviewSurface = WeakReference<TextureView?>(null)
-        private var mCameraPreviewCall = WeakReference<Conference?>(null)
-        private val videoSurfaces = Collections.synchronizedMap(HashMap<String?, WeakReference<SurfaceHolder>>())
+        private var mCameraPreviewSurface = WeakReference<TextureView>(null)
+        private var mCameraPreviewCall = WeakReference<Conference>(null)
+        private val videoSurfaces = Collections.synchronizedMap(HashMap<String, WeakReference<SurfaceHolder>>())
     }
 }

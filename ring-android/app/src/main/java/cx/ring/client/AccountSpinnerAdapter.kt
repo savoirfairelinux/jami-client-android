@@ -30,11 +30,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import android.widget.RelativeLayout
 import cx.ring.databinding.ItemToolbarSelectedBinding
 import cx.ring.databinding.ItemToolbarSpinnerBinding
+import cx.ring.services.VCardServiceImpl
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
+import net.jami.model.Profile
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
+class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable) :
     ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
@@ -44,7 +45,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
         val type = getItemViewType(position)
         val holder: ViewHolderHeader
         if (view == null) {
-            holder = ViewHolderHeader(ItemToolbarSelectedBinding.inflate(mInflater, parent, false))
+            holder = ViewHolderHeader(ItemToolbarSelectedBinding.inflate(mInflater, parent, false), disposable)
             view = holder.binding.root
             view.setTag(holder)
         } else {
@@ -53,14 +54,13 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
         }
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
-            holder.loader.add(AvatarDrawable.load(context, account)
+            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
+                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ avatar -> holder.binding.logo.setImageDrawable(avatar)
-                }) { e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
-            holder.loader.add(account.accountAlias
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ alias -> holder.binding.title.text = alias.ifEmpty { context.getString(R.string.ring_account) }
-                    }) { e: Throwable -> Log.e(TAG, "Error loading title", e) })
+                .subscribe({ profile ->
+                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
+                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
+                }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         }
         return view
     }
@@ -70,7 +70,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
         val holder: ViewHolder
         var rowView = convertView
         if (rowView == null) {
-            holder = ViewHolder(ItemToolbarSpinnerBinding.inflate(mInflater, parent, false))
+            holder = ViewHolder(ItemToolbarSpinnerBinding.inflate(mInflater, parent, false), disposable)
             rowView = holder.binding.root
             rowView.setTag(holder)
         } else {
@@ -82,33 +82,29 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
             val ip2ipString = rowView.context.getString(R.string.account_type_ip2ip)
-            holder.loader.add(account.accountAlias
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { alias ->
-                        val subtitle = getUri(account, ip2ipString)
-                        holder.binding.title.text = alias.ifEmpty { context.getString(R.string.ring_account) }
-                        if (alias == subtitle) {
-                            holder.binding.subtitle.visibility = View.GONE
-                        } else {
-                            holder.binding.subtitle.visibility = View.VISIBLE
-                            holder.binding.subtitle.text = subtitle
-                        }
-                    })
             val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
             params.removeRule(RelativeLayout.CENTER_VERTICAL)
             holder.binding.title.layoutParams = params
             logoParam.width = logoSize
             logoParam.height = logoSize
             holder.binding.logo.layoutParams = logoParam
-            holder.loader.add(AvatarDrawable.load(context, account)
-                .subscribeOn(Schedulers.io())
+            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
+                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ avatar -> holder.binding.logo.setImageDrawable(avatar) })
-                { e -> Log.e(TAG, "Error loading avatar", e) })
+                .subscribe({ profile ->
+                    val subtitle = getUri(account, ip2ipString)
+                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
+                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
+                    if (profile.displayName == subtitle) {
+                        holder.binding.subtitle.visibility = View.GONE
+                    } else {
+                        holder.binding.subtitle.visibility = View.VISIBLE
+                        holder.binding.subtitle.text = subtitle
+                    }
+                }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         } else {
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)
-
             holder.binding.subtitle.visibility = View.GONE
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
             logoParam.width = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -134,12 +130,12 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>) :
         return super.getCount() + 2
     }
 
-    private class ViewHolder(val binding: ItemToolbarSpinnerBinding) {
-        val loader = CompositeDisposable()
+    private class ViewHolder(val binding: ItemToolbarSpinnerBinding, parentDisposable: CompositeDisposable) {
+        val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 
-    private class ViewHolderHeader(val binding: ItemToolbarSelectedBinding) {
-        val loader = CompositeDisposable()
+    private class ViewHolderHeader(val binding: ItemToolbarSelectedBinding, parentDisposable: CompositeDisposable) {
+        val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 
     private fun getUri(account: Account, defaultNameSip: CharSequence): String {

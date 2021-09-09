@@ -40,29 +40,23 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
         startPreferenceFragment(PrefsFragment.newInstance())
     }
 
-    override fun onPreferenceStartFragment(
-        preferenceFragment: PreferenceFragmentCompat,
-        preference: Preference
-    ): Boolean {
+    override fun onPreferenceStartFragment(preferenceFragment: PreferenceFragmentCompat, preference: Preference): Boolean {
         return false
     }
 
-    override fun onPreferenceStartScreen(
-        caller: PreferenceFragmentCompat,
-        pref: PreferenceScreen
-    ): Boolean {
+    override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat, pref: PreferenceScreen): Boolean {
         return false
     }
 
     @AndroidEntryPoint
     class PrefsFragment : JamiPreferenceFragment<TVContactMorePresenter>(), TVContactMoreView {
-        override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.tv_contact_more_pref, rootKey)
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            presenter!!.setContact(fromIntent(requireActivity().intent))
+            presenter.setContact(fromIntent(requireActivity().intent))
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
@@ -70,12 +64,12 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
                 createDialog(
                     getString(R.string.conversation_action_history_clear_title),
                     getString(R.string.clear_history)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter!!.clearHistory() }
+                ) { dialog: DialogInterface?, whichButton: Int -> presenter.clearHistory() }
             } else if (preference.key == "Contact.delete") {
                 createDialog(
                     getString(R.string.conversation_action_remove_this_title),
                     getString(R.string.menu_delete)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter!!.removeContact() }
+                ) { dialog: DialogInterface?, whichButton: Int -> presenter.removeContact() }
             }
             return super.onPreferenceTreeClick(preference)
         }

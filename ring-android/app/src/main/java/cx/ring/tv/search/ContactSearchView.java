@@ -29,8 +29,6 @@ public interface ContactSearchView {
 
     void clearSearch();
 
-    void displayErrorToast(Error error);
-
     void startCall(String accountID, String number);
 
     void displayContactDetails(SmartListViewModel model);

@@ -21,16 +21,13 @@ package cx.ring.mvp
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import cx.ring.R
-import net.jami.model.Error
-import net.jami.mvp.BaseView
 import net.jami.mvp.RootPresenter
 import javax.inject.Inject
 
-abstract class BaseSupportFragment<T : RootPresenter<V>, V> : Fragment(), BaseView {
+abstract class BaseSupportFragment<T : RootPresenter<in V>, in V> : Fragment() {
     @Inject lateinit
     var presenter: T
 
@@ -50,40 +47,26 @@ abstract class BaseSupportFragment<T : RootPresenter<V>, V> : Fragment(), BaseVi
         presenter.onDestroy()
     }
 
-    override fun displayErrorToast(error: Error) {
-        val errorString: String = when (error) {
-            Error.NO_INPUT -> getString(R.string.call_error_no_camera_no_microphone)
-            Error.INVALID_FILE -> getString(R.string.invalid_file)
-            Error.NOT_ABLE_TO_WRITE_FILE -> getString(R.string.not_able_to_write_file)
-            Error.NO_SPACE_LEFT -> getString(R.string.no_space_left_on_device)
-            else -> getString(R.string.generic_error)
-        }
-        Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
-    }
-
     protected open fun initPresenter(presenter: T) {}
 
-    protected fun replaceFragmentWithSlide(fragment: Fragment?, @IdRes content: Int) {
+    protected fun replaceFragmentWithSlide(fragment: Fragment, @IdRes content: Int) {
         parentFragmentManager
             .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right
-            )
-            .replace(content, fragment!!, TAG)
+            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+            .replace(content, fragment, TAG)
             .addToBackStack(TAG)
             .commit()
     }
 
-    protected fun replaceFragment(fragment: Fragment?, @IdRes content: Int) {
+    protected fun replaceFragment(fragment: Fragment, @IdRes content: Int) {
         parentFragmentManager
             .beginTransaction()
-            .replace(content, fragment!!, TAG)
+            .replace(content, fragment, TAG)
             .addToBackStack(TAG)
             .commit()
     }
 
     companion object {
-        protected val TAG = BaseSupportFragment::class.simpleName
+        protected val TAG = BaseSupportFragment::class.simpleName!!
     }
 }

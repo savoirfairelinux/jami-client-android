@@ -23,10 +23,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     // RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.13'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.1'
 
     // gson
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.8.8'
 
     api "com.google.dagger:dagger:$hilt_version"
     kapt "com.google.dagger:dagger-compiler:$hilt_version"

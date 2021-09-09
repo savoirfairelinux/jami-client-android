@@ -30,6 +30,8 @@ import androidx.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.RowPresenter;
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,7 +39,6 @@ import cx.ring.R;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
-import net.jami.utils.Log;
 
 public class AboutDetailsFragment extends DetailsSupportFragment {
     private static final String TAG = "AboutDetailsFragment";

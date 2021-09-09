@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import cx.ring.utils.ConversationPath
 import cx.ring.R
+import cx.ring.application.JamiApplication
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ class ShareActivity : AppCompatActivity() {
             finish()
             return
         }
+        JamiApplication.instance?.startDaemon()
         setContentView(R.layout.activity_share)
     }
 }

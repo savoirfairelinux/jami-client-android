@@ -46,7 +46,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun loadConversations() {
-        view!!.showLoading(true)
+        view?.showLoading(true)
         mCompositeDisposable.add(mConversationFacade.getSmartList(true)
             .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
                 if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
@@ -56,10 +56,10 @@ class MainPresenter @Inject constructor(
             .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
             .observeOn(mUiScheduler)
             .subscribe({ viewModels: List<SmartListViewModel> ->
-                val view = view
-                view!!.showLoading(false)
+                val view = view ?: return@subscribe
+                view.showLoading(false)
                 view.showContacts(viewModels)
-            }) { e: Throwable? -> Log.w(TAG, "showConversations error ", e) })
+            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
         mCompositeDisposable.add(mConversationFacade.pendingList
             .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
                 if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
@@ -73,10 +73,10 @@ class MainPresenter @Inject constructor(
             }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
     }
 
-    fun reloadAccountInfo() {
-        mCompositeDisposable.add(mAccountService.currentAccountSubject
+    private fun reloadAccountInfo() {
+        mCompositeDisposable.add(mAccountService.currentProfileAccountSubject
             .observeOn(mUiScheduler)
-            .subscribe({ account: Account -> view?.displayAccountInfo(HomeNavigationViewModel(account, null)) })
+            .subscribe({ accountProfile -> view?.displayAccountInfo(HomeNavigationViewModel(accountProfile.first, accountProfile.second)) })
             { e: Throwable -> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e) })
 
         mCompositeDisposable.add(mAccountService.observableAccounts
@@ -90,11 +90,11 @@ class MainPresenter @Inject constructor(
     }
 
     fun onEditProfileClicked() {
-        view!!.showProfileEditing()
+        view?.showProfileEditing()
     }
 
     fun onShareAccountClicked() {
-        view!!.showAccountShare()
+        view?.showAccountShare()
     }
 
     fun onSettingsClicked() {

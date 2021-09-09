@@ -35,23 +35,14 @@ class BlockListPresenter @Inject constructor(
 ) : RootPresenter<BlockListView>() {
     private var mAccountID: String? = null
 
-    override fun bindView(view: BlockListView) {
-        super.bindView(view)
-        /*if (mAccountID != null) {
-            setAccountId(mAccountID)
-        }*/
-    }
-
     private fun updateList(list: Collection<Contact>) {
-        if (view == null) {
-            return
-        }
+        val view = view ?: return
         if (list.isEmpty()) {
-            view!!.hideListView()
-            view!!.displayEmptyListMessage(true)
+            view.hideListView()
+            view.displayEmptyListMessage(true)
         } else {
-            view!!.updateView(list)
-            view!!.displayEmptyListMessage(false)
+            view.updateView(list)
+            view.displayEmptyListMessage(false)
         }
     }
 
@@ -64,13 +55,8 @@ class BlockListPresenter @Inject constructor(
             .getAccountSingle(accountID)
             .flatMapObservable(Account::bannedContactsUpdates)
             .observeOn(mUiScheduler)
-            .subscribe({ list: Collection<Contact> -> updateList(list) }) { e: Throwable ->
-                Log.e(
-                    TAG,
-                    "Error showing blacklist",
-                    e
-                )
-            })
+            .subscribe({ list: Collection<Contact> -> updateList(list) })
+            { e: Throwable -> Log.e(TAG, "Error showing blacklist", e) })
         mAccountID = accountID
     }
 

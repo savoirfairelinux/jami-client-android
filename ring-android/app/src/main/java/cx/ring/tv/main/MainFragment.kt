@@ -35,7 +35,7 @@ import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import cx.ring.R
-import cx.ring.services.VCardServiceImpl.Companion.loadProfile
+import cx.ring.services.VCardServiceImpl
 import cx.ring.tv.account.TVAccountExport
 import cx.ring.tv.account.TVProfileEditingFragment
 import cx.ring.tv.account.TVShareActivity
@@ -49,8 +49,8 @@ import cx.ring.tv.contact.TVContactFragment
 import cx.ring.tv.search.SearchActivity
 import cx.ring.tv.settings.TVSettingsActivity
 import cx.ring.tv.views.CustomTitleView
-import cx.ring.utils.AndroidFileUtils.createImageFile
-import cx.ring.utils.BitmapUtils.drawableToBitmap
+import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
@@ -67,15 +67,10 @@ import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
-import java.util.*
-import cx.ring.tv.cards.ShadowRowPresenterSelector
-
-import androidx.leanback.widget.ArrayObjectAdapter
 
 @AndroidEntryPoint
 class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
-    //private TVContactFragment mContactFragment;
-    private var mSpinnerFragment: SpinnerFragment? = null
+    private val mSpinnerFragment: SpinnerFragment = SpinnerFragment()
     private var cardRowAdapter: ArrayObjectAdapter? = null
     private var contactRequestRowAdapter: ArrayObjectAdapter? = null
     private var mTitleView: CustomTitleView? = null
@@ -85,6 +80,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     private var accountSettingsRow: ListRow? = null
     private val mDisposable = CompositeDisposable()
     private val mHomeChannelDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         headersState = HEADERS_DISABLED
@@ -93,7 +89,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mTitleView = view.findViewById(R.id.browse_title_group)
         super.onViewCreated(view, savedInstanceState)
-        setupUIElements(requireActivity())
+        setupUIElements(requireContext())
     }
 
     override fun onDestroyView() {
@@ -147,11 +143,10 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
 
     override fun showLoading(show: Boolean) {
         if (show) {
-            mSpinnerFragment = SpinnerFragment()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_browse_fragment, mSpinnerFragment!!).commitAllowingStateLoss()
+                .replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss()
         } else {
-            parentFragmentManager.beginTransaction().remove(mSpinnerFragment!!)
+            parentFragmentManager.beginTransaction().remove(mSpinnerFragment)
                 .commitAllowingStateLoss()
         }
     }
@@ -199,7 +194,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             }
             .subscribeOn(Schedulers.io())
             .subscribe({ program -> cr.insert(TvContractCompat.PreviewPrograms.CONTENT_URI, program.toContentValues()) }
-            ) { e: Throwable? -> Log.w(TAG, "Error updating home channel", e) })
+            ) { e: Throwable -> Log.w(TAG, "Error updating home channel", e) })
     }
 
     override fun showContactRequests(contacts: List<SmartListViewModel>) {
@@ -233,17 +228,17 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         val context = requireContext()
         val address = account.displayUsername
         mDisposable.clear()
-        mDisposable.add(loadProfile(context, account)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { profile ->
-                    val name = profile.first
-                    if (name != null && name.isNotEmpty()) {
-                        mTitleView?.setAlias(name)
-                        title = address ?: ""
-                    } else {
-                        mTitleView?.setAlias(address)
-                    }
+        mDisposable.add(VCardServiceImpl.loadProfile(context, account)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { profile ->
+                val name = profile.displayName
+                if (name != null && name.isNotEmpty()) {
+                    mTitleView?.setAlias(name)
+                    title = address ?: ""
+                } else {
+                    mTitleView?.setAlias(address)
                 }
+            }
             .map { p -> AvatarDrawable.build(context, account, p, true) }
             .subscribe { a ->
                 mTitleView?.apply {
@@ -252,8 +247,8 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     logoView.setImageDrawable(a)
                 }
             })
-        qrCard!!.setDrawable(prepareAccountQr(context, account.uri))
-        accountSettingsRow!!.adapter.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
+        qrCard?.setDrawable(prepareAccountQr(context, account.uri))
+        accountSettingsRow?.adapter!!.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
     }
 
     override fun showExportDialog(pAccountID: String, hasPassword: Boolean) {
@@ -296,16 +291,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     .commit()
             } else if (item is IconCard) {
                 when (item.type) {
-                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter!!.onExportClicked()
-                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter!!.onEditProfileClicked()
+                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter.onExportClicked()
+                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter.onEditProfileClicked()
                     Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
                         val view = (itemViewHolder.view as CardView).mainImageView
                         val intent = Intent(activity, TVShareActivity::class.java)
-                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            requireActivity(),
-                            view,
-                            TVShareActivity.SHARED_ELEMENT_NAME
-                        ).toBundle()
+                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, TVShareActivity.SHARED_ELEMENT_NAME).toBundle()
                         requireActivity().startActivity(intent, bundle)
                     }
                     Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
@@ -317,7 +308,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     companion object {
-        private val TAG = MainFragment::class.java.simpleName
+        private val TAG = MainFragment::class.simpleName!!
 
         // Sections headers ids
         private const val HEADER_CONTACTS: Long = 0
@@ -348,7 +339,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                 val targetSize = (AvatarFactory.SIZE_NOTIF * context.resources.displayMetrics.density).toInt()
                 val targetPaddingSize = (AvatarFactory.SIZE_PADDING * context.resources.displayMetrics.density).toInt()
                 ChannelLogoUtils.storeChannelLogo(
-                    context, channelId, drawableToBitmap(context.getDrawable(R.drawable.ic_jami_48)!!, targetSize, targetPaddingSize))
+                    context, channelId, BitmapUtils.drawableToBitmap(context.getDrawable(R.drawable.ic_jami_48)!!, targetSize, targetPaddingSize))
                 TvContractCompat.requestChannelBrowsable(context, channelId)
             } else {
                 cr.update(TvContractCompat.buildChannelUri(channelId), channel.toContentValues(), null, null)
@@ -356,19 +347,14 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             return channelId
         }
 
-        private fun buildProgram(
-            context: Context,
-            vm: SmartListViewModel,
-            launcherName: String?,
-            channelId: Long
-        ): Single<PreviewProgram> {
+        private fun buildProgram(context: Context, vm: SmartListViewModel, launcherName: String?, channelId: Long): Single<PreviewProgram> {
             return AvatarDrawable.Builder()
                 .withViewModel(vm)
                 .withPresence(false)
                 .buildAsync(context)
-                .map { avatar: AvatarDrawable? ->
-                    val file = createImageFile(context)
-                    val bitmapAvatar = drawableToBitmap(avatar!!, 256)
+                .map { avatar: AvatarDrawable ->
+                    val file = AndroidFileUtils.createImageFile(context)
+                    val bitmapAvatar = BitmapUtils.drawableToBitmap(avatar, 256)
                     BufferedOutputStream(FileOutputStream(file)).use { os ->
                         bitmapAvatar.compress(Bitmap.CompressFormat.PNG, 100, os)
                     }
@@ -376,11 +362,8 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     val uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
 
                     // Grant permission to launcher
-                    if (launcherName != null) context.grantUriPermission(
-                        launcherName,
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-                    )
+                    if (launcherName != null)
+                        context.grantUriPermission(launcherName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                     val contactBuilder = PreviewProgram.Builder()
                         .setChannelId(channelId)
                         .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
@@ -388,15 +371,13 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         .setAuthor(vm.contacts[0].ringUsername)
                         .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                         .setPosterArtUri(uri)
-                        .setIntentUri(
-                            Uri.Builder()
-                                .scheme(ContentUriHandler.SCHEME_TV)
-                                .authority(ContentUriHandler.AUTHORITY)
-                                .appendPath(ContentUriHandler.PATH_TV_CONVERSATION)
-                                .appendPath(vm.accountId)
-                                .appendPath(vm.uri.uri)
-                                .build()
-                        )
+                        .setIntentUri(Uri.Builder()
+                            .scheme(ContentUriHandler.SCHEME_TV)
+                            .authority(ContentUriHandler.AUTHORITY)
+                            .appendPath(ContentUriHandler.PATH_TV_CONVERSATION)
+                            .appendPath(vm.accountId)
+                            .appendPath(vm.uri.uri)
+                            .build())
                         .setInternalProviderId(vm.uuid)
                     contactBuilder.build()
                 }
@@ -406,7 +387,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             Log.w(TAG, "prepareAccountQr $accountId")
             if (accountId == null || accountId.isEmpty()) return null
             val pad = 16
-            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)
+            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, -0x1)!!
             val bitmap = Bitmap.createBitmap(qrCodeData.width + 2 * pad, qrCodeData.height + 2 * pad, Bitmap.Config.ARGB_8888)
             bitmap.setPixels(
                 qrCodeData.data,

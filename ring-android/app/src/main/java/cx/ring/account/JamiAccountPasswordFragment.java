@@ -38,7 +38,7 @@ import cx.ring.databinding.FragAccJamiPasswordBinding;
 
 import net.jami.account.JamiAccountCreationPresenter;
 import net.jami.account.JamiAccountCreationView;
-import net.jami.mvp.AccountCreationModel;
+import net.jami.model.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import dagger.hilt.android.AndroidEntryPoint;
 

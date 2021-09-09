@@ -122,19 +122,23 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun displaySpeechRecognizer() {
         if (!checkAudioPermission()) return
         try {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                .putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                )
-                .putExtra(
-                    RecognizerIntent.EXTRA_PROMPT,
-                    getText(R.string.conversation_input_speech_hint)
-                )
-            startActivityForResult(intent, REQUEST_SPEECH_CODE)
+            startActivityForResult(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint)), REQUEST_SPEECH_CODE)
         } catch (e: Exception) {
             Snackbar.make(requireView(), "Can't get voice input", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    override fun displayErrorToast(error: Error) {
+        val errorString: String = when (error) {
+            Error.NO_INPUT -> getString(R.string.call_error_no_camera_no_microphone)
+            Error.INVALID_FILE -> getString(R.string.invalid_file)
+            Error.NOT_ABLE_TO_WRITE_FILE -> getString(R.string.not_able_to_write_file)
+            Error.NO_SPACE_LEFT -> getString(R.string.no_space_left_on_device)
+            else -> getString(R.string.generic_error)
+        }
+        Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -560,11 +564,11 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val contacts = conversation.contacts
         mCompositeDisposable.clear()
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
-            .doOnSuccess { d: Drawable? ->
+            .doOnSuccess { d: Drawable ->
                 mConversationAvatar = d as AvatarDrawable?
-                mParticipantAvatars[contacts[0].primaryNumber] = AvatarDrawable(d!!)
+                mParticipantAvatars[contacts[0].primaryNumber] = AvatarDrawable(d)
             }
-            .flatMapObservable { d: Drawable? -> contacts[0].updatesSubject }
+            .flatMapObservable { d: Drawable -> contacts[0].updatesSubject }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { c: Contact ->
                 val id = c.ringUsername
