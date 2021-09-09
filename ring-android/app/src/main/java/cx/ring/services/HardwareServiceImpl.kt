@@ -120,37 +120,29 @@ class HardwareServiceImpl(
         get() = mAudioManager.isSpeakerphoneOn
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
-        .setAudioAttributes(
-            AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
-                .setLegacyStreamType(AudioManager.STREAM_RING)
-                .build()
-        )
+        .setAudioAttributes(AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
+            .setLegacyStreamType(AudioManager.STREAM_RING)
+            .build())
         .setOnAudioFocusChangeListener(this)
         .build()
     private val CALL_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
-        .setAudioAttributes(
-            AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
-                .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
-                .setLegacyStreamType(AudioManager.STREAM_VOICE_CALL)
-                .build()
-        )
+        .setAudioAttributes(AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
+            .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
+            .setLegacyStreamType(AudioManager.STREAM_VOICE_CALL)
+            .build())
         .setOnAudioFocusChangeListener(this)
         .build()
 
     private fun getFocus(request: AudioFocusRequestCompat?) {
         if (currentFocus === request) return
-        if (currentFocus != null) {
-            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, currentFocus!!)
+        currentFocus?.let { focus ->
+            AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, focus)
             currentFocus = null
         }
-        if (request != null && AudioManagerCompat.requestAudioFocus(
-                mAudioManager,
-                request
-            ) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
-        ) {
+        if (request != null && AudioManagerCompat.requestAudioFocus(mAudioManager, request) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             currentFocus = request
         }
     }
