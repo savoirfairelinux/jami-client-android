@@ -70,7 +70,6 @@ class JamiAccountCreationPresenter @Inject constructor(
         contactQuery.onNext(userName)
         isUsernameCorrect = false
         if (showLoadingAnimation) {
-            val view = view
             view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING)
             showLoadingAnimation = false
         }
@@ -99,13 +98,13 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun passwordChanged(password: String) {
-        if (mAccountCreationModel != null) mAccountCreationModel!!.password = password
+        mAccountCreationModel?.password = password
         if (!isEmpty(password) && password.length < PASSWORD_MIN_LENGTH) {
             view?.showInvalidPasswordError(true)
             isPasswordCorrect = false
         } else {
             view?.showInvalidPasswordError(false)
-            isPasswordCorrect = password.isNotEmpty()
+            isPasswordCorrect = true
             isConfirmCorrect = if (!password.contentEquals(mPasswordConfirm)) {
                 if (mPasswordConfirm.isNotEmpty())
                     view?.showNonMatchingPasswordError(true)
