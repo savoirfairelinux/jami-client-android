@@ -101,12 +101,13 @@ class CallPresenter @Inject constructor(
                     if (mSipCall != null && mSipCall.getContact() != null) {
                         getView().updateContactBubble(mSipCall.getContact());
                     }
-                }));*/mCompositeDisposable.add(mHardwareService.getVideoEvents()
+                }));*/
+        mCompositeDisposable.add(mHardwareService.getVideoEvents()
             .observeOn(mUiScheduler)
             .subscribe { event: VideoEvent -> onVideoEvent(event) })
         mCompositeDisposable.add(mHardwareService.audioState
             .observeOn(mUiScheduler)
-            .subscribe { state: AudioState -> view?.updateAudioState(state) })
+            .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
 
         /*mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
@@ -453,6 +454,7 @@ class CallPresenter @Inject constructor(
             view.handleCallWakelock(isAudioOnly)
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account!!)!!.isAutoanswerEnabled) {
+                    Log.w(TAG, "Accept because of autoanswer")
                     mCallService.accept(scall.daemonIdString!!)
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
