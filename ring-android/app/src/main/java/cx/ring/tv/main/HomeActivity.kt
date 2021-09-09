@@ -21,7 +21,9 @@
  */
 package cx.ring.tv.main
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.hardware.Camera
 import android.hardware.Camera.ErrorCallback
@@ -33,11 +35,13 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.app.BackgroundManager
 import androidx.leanback.app.GuidedStepSupportFragment
 import cx.ring.R
+import cx.ring.account.ProfileCreationFragment
 import cx.ring.application.JamiApplication
 import cx.ring.tv.account.TVAccountWizard
 import cx.ring.tv.camera.CameraPreview
@@ -49,6 +53,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.services.AccountService
+import net.jami.services.DeviceRuntimeService
+import net.jami.services.HardwareService
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,6 +63,10 @@ class HomeActivity : FragmentActivity() {
 
     @Inject
     lateinit var mAccountService: AccountService
+    @Inject
+    lateinit var mDeviceRuntimeService: DeviceRuntimeService
+    @Inject
+    lateinit var mHardwareService: HardwareService
     private lateinit var mBackgroundManager: BackgroundManager
     private lateinit var mBlurImage: ImageView
     private lateinit var mPreviewView: FrameLayout
@@ -79,7 +89,7 @@ class HomeActivity : FragmentActivity() {
     private val mCameraAvailabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
             if (mBlurImage.visibility == View.INVISIBLE) {
-                setUpCamera()
+                checkCameraAvailability()
             }
         }
     }
@@ -152,7 +162,7 @@ class HomeActivity : FragmentActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
-        setUpCamera()
+        checkCameraAvailability()
     }
 
     override fun onPause() {
@@ -234,6 +244,39 @@ class HomeActivity : FragmentActivity() {
             }) {
                 mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
             })
+    }
+
+    private fun checkCameraAvailability() {
+        if (mDeviceRuntimeService.hasVideoPermission()) {
+            setUpCamera()
+        } else {
+            askCameraPermission()
+        }
+    }
+
+    private fun askCameraPermission() {
+        ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                ProfileCreationFragment.REQUEST_PERMISSION_CAMERA
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                cameraPermissionChanged(true)
+                setUpCamera()
+            }
+        }
+    }
+
+    private fun cameraPermissionChanged(isGranted: Boolean) {
+        if (isGranted && mHardwareService.isVideoAvailable) {
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe()
+        }
     }
 
     companion object {
