@@ -43,8 +43,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.tv.call.TVCallActivity
-import cx.ring.utils.ConversationPath.Companion.fromIntent
-import cx.ring.utils.ConversationPath.Companion.fromUri
+import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTv
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -215,7 +214,7 @@ class DRingService : Service() {
         Log.w(TAG, "handleFileAction $extras")
         val messageId = extras.getString(KEY_MESSAGE_ID)
         val id = extras.getString(KEY_TRANSFER_ID)!!
-        val path = fromUri(uri)!!
+        val path = ConversationPath.fromUri(uri)!!
         if (action == ACTION_FILE_ACCEPT) {
             mNotificationService.removeTransferNotification(path.accountId, path.conversationUri, id)
             mAccountService.acceptFileTransfer(path.accountId, path.conversationUri, messageId, id)
@@ -225,7 +224,7 @@ class DRingService : Service() {
     }
 
     private fun handleTrustRequestAction(uri: Uri?, action: String) {
-        fromUri(uri)?.let { path ->
+        ConversationPath.fromUri(uri)?.let { path ->
             mNotificationService.cancelTrustRequestNotification(path.accountId)
             when (action) {
                 ACTION_TRUST_REQUEST_ACCEPT -> mConversationFacade.acceptRequest(path.accountId, path.conversationUri)
@@ -299,7 +298,7 @@ class DRingService : Service() {
     }
 
     private fun handleConvAction(intent: Intent, action: String) {
-        val path = fromIntent(intent)
+        val path = ConversationPath.fromIntent(intent)
         if (path == null || path.conversationId.isEmpty()) {
             return
         }
