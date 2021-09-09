@@ -35,6 +35,7 @@ import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import cx.ring.R
+import cx.ring.services.VCardServiceImpl
 import cx.ring.tv.account.TVAccountExport
 import cx.ring.tv.account.TVProfileEditingFragment
 import cx.ring.tv.account.TVShareActivity
@@ -48,6 +49,8 @@ import cx.ring.tv.contact.TVContactFragment
 import cx.ring.tv.search.SearchActivity
 import cx.ring.tv.settings.TVSettingsActivity
 import cx.ring.tv.views.CustomTitleView
+import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
@@ -64,12 +67,6 @@ import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
-import cx.ring.tv.cards.ShadowRowPresenterSelector
-
-import androidx.leanback.widget.ArrayObjectAdapter
-import cx.ring.services.VCardServiceImpl
-import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.BitmapUtils
 
 @AndroidEntryPoint
 class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
@@ -197,7 +194,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             }
             .subscribeOn(Schedulers.io())
             .subscribe({ program -> cr.insert(TvContractCompat.PreviewPrograms.CONTENT_URI, program.toContentValues()) }
-            ) { e: Throwable? -> Log.w(TAG, "Error updating home channel", e) })
+            ) { e: Throwable -> Log.w(TAG, "Error updating home channel", e) })
     }
 
     override fun showContactRequests(contacts: List<SmartListViewModel>) {
@@ -294,16 +291,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     .commit()
             } else if (item is IconCard) {
                 when (item.type) {
-                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter!!.onExportClicked()
-                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter!!.onEditProfileClicked()
+                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter.onExportClicked()
+                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter.onEditProfileClicked()
                     Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
                         val view = (itemViewHolder.view as CardView).mainImageView
                         val intent = Intent(activity, TVShareActivity::class.java)
-                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            requireActivity(),
-                            view,
-                            TVShareActivity.SHARED_ELEMENT_NAME
-                        ).toBundle()
+                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, TVShareActivity.SHARED_ELEMENT_NAME).toBundle()
                         requireActivity().startActivity(intent, bundle)
                     }
                     Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
@@ -369,11 +362,8 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     val uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file)
 
                     // Grant permission to launcher
-                    if (launcherName != null) context.grantUriPermission(
-                        launcherName,
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-                    )
+                    if (launcherName != null)
+                        context.grantUriPermission(launcherName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                     val contactBuilder = PreviewProgram.Builder()
                         .setChannelId(channelId)
                         .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
