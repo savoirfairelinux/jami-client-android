@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:background="?attr/selectableItemBackground"
+                        style="@style/LightThemeSelector"
                         android:gravity="center"
                         android:text="@string/refuse"
                         android:textColor="@color/color_primary_dark" />
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:background="?attr/selectableItemBackground"
+                        style="@style/LightThemeSelector"
                         android:gravity="center"
                         android:text="@string/accept"
                         android:textColor="@color/color_primary_dark" />
