@@ -395,4 +395,8 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="LightThemeSelector" parent="android:Theme.Light">
+        <item name="selectableItemBackground">?android:attr/selectableItemBackground</item>
+    </style>
+
 </resources>
