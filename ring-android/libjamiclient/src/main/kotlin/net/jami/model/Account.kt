@@ -103,9 +103,13 @@ class Account(
     fun conversationStarted(conversation: Conversation) {
         Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
         synchronized(conversations) {
+            if (conversation.isSwarm) {
+                removeRequest(conversation.uri)
+                swarmConversations[conversation.uri.rawRingId] = conversation
+            }
             if (conversation.isSwarm && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
-                val contact = conversation.contact
-                val key = contact!!.uri.uri
+                val contact = conversation.contact!!
+                val key = contact.uri.uri
                 val removed = cache.remove(key)
                 conversations.remove(key)
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
@@ -595,10 +599,10 @@ class Account(
         } else {
             contact.status = Contact.Status.REQUEST_SENT
         }
-        val req = mRequests[id]
-        if (req != null) {
+        //val req = mRequests[id]
+        //if (req != null) {
             mRequests.remove(id)
-        }
+        //}
         contactAdded(contact)
         contactListSubject.onNext(mContacts.values)
     }
@@ -639,8 +643,8 @@ class Account(
                 if (java.lang.Boolean.parseBoolean(contact[CONTACT_CONFIRMED])) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
         }
         val conversationUri = contact[CONTACT_CONVERSATION]
-        if (!StringUtils.isEmpty(conversationUri)) {
-            callContact.setConversationUri(Uri(Uri.SWARM_SCHEME, conversationUri!!))
+        if (conversationUri != null && conversationUri.isNotEmpty()) {
+            callContact.setConversationUri(Uri(Uri.SWARM_SCHEME, conversationUri))
         }
         mContacts[contactId] = callContact
         contactAdded(callContact)
@@ -654,15 +658,12 @@ class Account(
         contactListSubject.onNext(mContacts.values)
     }
 
-    var requests: List<TrustRequest>
+    /*var requests: List<TrustRequest>
         get() {
-            val requests = ArrayList<TrustRequest>(mRequests.size)
-            for (request in mRequests.values) {
-                if (request.isNameResolved) {
-                    requests.add(request)
-                }
+            synchronized(pending) {
+                return mRequests.values.filterTo(ArrayList<TrustRequest>(mRequests.size))
+                    { request -> request.isNameResolved }
             }
-            return requests
         }
         set(requests) {
             Log.w(TAG, "setRequests " + requests.size)
@@ -680,7 +681,7 @@ class Account(
                 }
                 pendingChanged()
             }
-        }
+        }*/
 
     fun getRequest(uri: Uri): TrustRequest? {
         return mRequests[uri.uri]
@@ -688,14 +689,22 @@ class Account(
 
     fun addRequest(request: TrustRequest) {
         synchronized(pending) {
-            val key = request.uri.uri
+            val key = request.conversationUri?.uri ?: request.from.uri
             mRequests[key] = request
-            var conversation = pending[key]
-            if (conversation == null) {
-                conversation = getByKey(key)
+            if (pending[key] == null) {
+                val conversation = if (request.conversationUri?.isSwarm == true)
+                    Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
+                        addContact(getContactFromCache(request.from).apply {
+                            if (!conversationUri.blockingFirst().isSwarm)
+                                setConversationUri(request.conversationUri)
+                        })
+                    }
+                else
+                    getByKey(key)
+                Log.w(TAG, "pendingRequestAdded $key")
                 pending[key] = conversation
                 if (!conversation.isSwarm) {
-                    val contact = getContactFromCache(request.uri)
+                    val contact = getContactFromCache(request.from)
                     conversation.addRequestEvent(request, contact)
                 }
                 pendingChanged()
@@ -711,17 +720,6 @@ class Account(
                 pendingChanged()
             }
             return request
-        }
-    }
-
-    fun removeRequestPerConvId(conversationId: String) {
-        synchronized(pending) {
-            for ((_, request) in mRequests) {
-                if (request.conversationId != null && request.conversationId == conversationId) {
-                    removeRequest(request.uri)
-                    return
-                }
-            }
         }
     }
 
@@ -742,7 +740,7 @@ class Account(
     fun getByUri(uri: Uri?): Conversation? {
         //Log.w(TAG, "getByUri " + getAccountID() + " " + uri);
         if (uri == null || uri.isEmpty) return null
-        return if (uri.isSwarm) getSwarm(uri.rawRingId) else getByKey(uri.uri)
+        return if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
     }
 
     fun getByUri(uri: String?): Conversation? {

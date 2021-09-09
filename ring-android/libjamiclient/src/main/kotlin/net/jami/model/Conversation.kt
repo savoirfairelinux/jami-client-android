@@ -638,7 +638,7 @@ class Conversation : ConversationHistory {
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
-        Syncing, Public, Legacy
+        Syncing, Public, Legacy, Request
     }
 
     interface ConversationActionCallback {

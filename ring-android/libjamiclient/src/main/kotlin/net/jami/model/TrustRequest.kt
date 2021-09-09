@@ -26,32 +26,25 @@ import net.jami.utils.StringUtils
 class TrustRequest {
     val accountId: String
     private var mContactUsername: String? = null
-    val uri: Uri
-    var conversationId: String?
+    val from: Uri
+    val conversationUri: Uri?
     var vCard: VCard? = null
     var message: String? = null
     val timestamp: Long
     var isNameResolved = false
         private set
 
-    constructor(accountId: String, uri: Uri, received: Long, payload: String?, conversationId: String?) {
+    constructor(accountId: String, uri: Uri, received: Long, payload: String?, conversationUri: Uri?) {
         this.accountId = accountId
-        this.uri = uri
-        this.conversationId = if (StringUtils.isEmpty(conversationId)) null else conversationId
+        this.from = uri
+        this.conversationUri = conversationUri
         timestamp = received
         vCard = if (payload == null) null else Ezvcard.parse(payload).first()
         message = null
     }
 
     constructor(accountId: String, info: Map<String, String>) : this(accountId, Uri.fromId(info["from"]!!),
-        java.lang.Long.decode(info["received"]) * 1000L, info["payload"], info["conversationId"])
-
-    constructor(accountId: String, contactUri: Uri, conversationId: String?) {
-        this.accountId = accountId
-        uri = contactUri
-        this.conversationId = conversationId
-        timestamp = 0
-    }
+        info["received"]!!.toLong() * 1000L, info["payload"], info["conversationId"]?.let { uriString -> Uri(Uri.SWARM_SCHEME, uriString) })
 
     val fullname: String
         get() {
@@ -64,7 +57,7 @@ class TrustRequest {
     val displayname: String
         get() {
             val username = mContactUsername
-            return if (username != null && username.isNotEmpty()) username else uri.toString()
+            return if (username != null && username.isNotEmpty()) username else from.toString()
         }
 
     fun setUsername(username: String?) {

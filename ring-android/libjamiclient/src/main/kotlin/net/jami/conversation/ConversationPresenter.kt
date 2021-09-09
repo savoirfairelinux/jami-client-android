@@ -115,6 +115,8 @@ class ConversationPresenter @Inject constructor(
             Log.w(TAG, "initContact " + conversation.uri)
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
+            } else if (mode == Conversation.Mode.Request) {
+                view.switchToIncomingTrustRequestView(conversation.contact?.displayName ?: conversation.uri.uri)
             } else if (conversation.isSwarm || account.isContact(conversation)) {
                 //if (conversation.isEnded())
                 //    conversation.s
@@ -150,7 +152,9 @@ class ConversationPresenter @Inject constructor(
             }
             .subscribe())
         disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
+            .switchMap { mode: Conversation.Mode ->
+                if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.Request)
+                    c.contact!!.conversationUri else Observable.empty() }
             .observeOn(mUiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountId) })
         disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account),
@@ -361,6 +365,8 @@ class ConversationPresenter @Inject constructor(
 
     fun onAcceptIncomingContactRequest() {
         mConversation?.let { conversation ->
+            if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                conversation.setMode(Conversation.Mode.Syncing)
             mConversationFacade.acceptRequest(conversation.accountId, conversation.uri)
         }
         view?.switchToConversationView()

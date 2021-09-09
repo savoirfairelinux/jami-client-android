@@ -230,14 +230,13 @@ class ConversationFacade(
         val conversation = account.getByUri(conversationUri)
             ?: return Single.error(RuntimeException("Can't get conversation"))
         synchronized(conversation) {
-            if (!conversation.isSwarm && conversation.id == null) {
+            if ((!conversation.isSwarm && conversation.id == null) || (conversation.isSwarm && conversation.mode.blockingFirst() == Conversation.Mode.Request)) {
                 return Single.just(conversation)
             }
             var ret = conversation.loaded
             if (ret == null) {
-                ret = if (conversation.isSwarm) mAccountService.loadMore(conversation) else getConversationHistory(
-                    conversation
-                )
+                ret = if (conversation.isSwarm) mAccountService.loadMore(conversation)
+                else getConversationHistory(conversation)
                 conversation.loaded = ret
             }
             return ret
