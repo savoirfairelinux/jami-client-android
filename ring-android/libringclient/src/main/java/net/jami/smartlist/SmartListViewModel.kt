@@ -99,7 +99,7 @@ class SmartListViewModel {
         headerTitle = Title.None
     }
 
-    constructor(conversation: Conversation, presence: Boolean) : this(conversation, conversation.contacts, presence) {}
+    constructor(conversation: Conversation, presence: Boolean) : this(conversation, conversation.contacts, presence)
 
     private constructor(title: Title) {
         contactName = null
@@ -166,7 +166,6 @@ class SmartListViewModel {
         val TITLE_CONVERSATIONS: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.Conversations))
         val TITLE_PUBLIC_DIR: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.PublicDirectory))
         val EMPTY_LIST: Single<List<Observable<SmartListViewModel>>> = Single.just(emptyList())
-        @JvmStatic
-        val EMPTY_RESULTS: Observable<List<SmartListViewModel>> = Observable.just(emptyList())
+        val EMPTY_RESULTS: Observable<MutableList<SmartListViewModel>> = Observable.just(ArrayList())
     }
 }

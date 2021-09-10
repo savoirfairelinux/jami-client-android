@@ -52,7 +52,7 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         super.onCreate(savedInstanceState)
         setSearchResultProvider(this)
         setOnItemViewClickedListener { _, item: Any, _, _ ->
-            presenter.contactClicked((item as ContactCard).model)
+            presenter.contactClicked((item as ContactCard).model!!)
         }
         badgeDrawable = ContextCompat.getDrawable(requireContext(), R.mipmap.ic_launcher)
         setSearchQuery("", false)

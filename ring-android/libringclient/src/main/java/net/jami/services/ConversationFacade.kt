@@ -36,7 +36,6 @@ import net.jami.services.AccountService.RegisteredName
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.FileUtils.moveFile
 import net.jami.utils.Log
-import net.jami.utils.Tuple
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -129,9 +128,9 @@ class ConversationFacade(
             }.ignoreElement()
     }
 
-    fun sendTextMessage(c: Conversation, conf: Conference, txt: String?) {
+    fun sendTextMessage(c: Conversation, conf: Conference, txt: String) {
         mCallService.sendTextMessage(conf.id, txt)
-        val message = TextMessage(null, c.accountId, conf.id, c, txt!!)
+        val message = TextMessage(null, c.accountId, conf.id, c, txt)
         message.read()
         mHistoryService.insertInteraction(c.accountId, c, message).subscribe()
         c.addTextMessage(message)
@@ -152,29 +151,18 @@ class ConversationFacade(
             return Completable.complete()
         }
         return Single.fromCallable {
-            val transfer = DataTransfer(
-                conversation,
-                to.rawRingId,
-                conversation.accountId,
-                file.name,
-                true,
-                file.length(),
-                0,
-                null
-            )
+            val transfer = DataTransfer(conversation, to.rawRingId, conversation.accountId, file.name, true, file.length(), 0, null)
             mHistoryService.insertInteraction(conversation.accountId, conversation, transfer).blockingAwait()
             transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.uri.rawRingId)
             transfer
         }
             .flatMap { t: DataTransfer -> mAccountService.sendFile(file, t) }
-            .flatMapCompletable { transfer: DataTransfer ->
-                Completable.fromAction {
-                    val destination = File(transfer.destination, transfer.storagePath)
-                    if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
-                        Log.e(TAG, "sendFile: can't move file to $destination")
-                    }
+            .flatMapCompletable { transfer: DataTransfer -> Completable.fromAction {
+                val destination = File(transfer.destination, transfer.storagePath)
+                if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
+                    Log.e(TAG, "sendFile: can't move file to $destination")
                 }
-            }
+            } }
             .subscribeOn(Schedulers.io())
     }
 
@@ -210,9 +198,9 @@ class ConversationFacade(
         val accountId = message.account!!
         mDisposableBag.add(
             Completable.mergeArrayDelayError(mCallService.cancelMessage(accountId, message.id.toLong()).subscribeOn(Schedulers.io()))
-                .andThen(startConversation(accountId, fromString(message.conversation!!.participant)))
+                .andThen(startConversation(accountId, fromString(message.conversation!!.participant!!)))
                 .subscribe({ c: Conversation -> c.removeInteraction(message) }
-                ) { e: Throwable? -> Log.e(TAG, "Can't cancel message sending", e) })
+                ) { e: Throwable -> Log.e(TAG, "Can't cancel message sending", e) })
     }
 
     /**
@@ -273,19 +261,20 @@ class ConversationFacade(
     fun getSmartList(currentAccount: Observable<Account>, hasPresence: Boolean): Observable<List<Observable<SmartListViewModel>>> {
         return currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
-                .switchMapSingle { conversations -> Observable.fromIterable(conversations)
+                .switchMapSingle { conversations -> if (conversations.isEmpty()) Single.just(emptyList())
+                else Observable.fromIterable(conversations)
                     .map { conversation: Conversation -> observeConversation(account, conversation, hasPresence) }
-                    .toList() } }
+                    .toList(conversations.size) } }
     }
 
-    fun getContactList(currentAccount: Observable<Account>): Observable<List<SmartListViewModel>> {
+    fun getContactList(currentAccount: Observable<Account>): Observable<MutableList<SmartListViewModel>> {
         return currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
-                .switchMapSingle { conversations: List<Conversation>? ->
-                    Observable.fromIterable(conversations)
+                .switchMapSingle { conversations: List<Conversation> -> if (conversations.isEmpty()) Single.just(ArrayList())
+                else Observable.fromIterable(conversations)
                         .filter { conversation: Conversation -> !conversation.isSwarm }
                         .map { conversation: Conversation -> SmartListViewModel(conversation, false) }
-                        .toList()
+                        .toList(conversations.size)
                 }
         }
     }
@@ -304,7 +293,7 @@ class ConversationFacade(
 
     val pendingList: Observable<List<Observable<SmartListViewModel>>>
         get() = getPendingList(mAccountService.currentAccountSubject)
-    val contactList: Observable<List<SmartListViewModel>>
+    val contactList: Observable<MutableList<SmartListViewModel>>
         get() = getContactList(mAccountService.currentAccountSubject)
 
     private fun getSearchResults(account: Account, query: String): Single<List<Observable<SmartListViewModel>>> {
@@ -409,7 +398,7 @@ class ConversationFacade(
      */
     private fun getConversationHistory(conversation: Conversation): Single<Conversation> {
         Log.d(TAG, "getConversationHistory() " + conversation.accountId + " " + conversation.uri)
-        return mHistoryService.getConversationHistory(conversation.accountId, conversation.id)
+        return mHistoryService.getConversationHistory(conversation.accountId, conversation.id!!)
             .map { loadedConversation: List<Interaction> ->
                 conversation.clearHistory(true)
                 conversation.setHistory(loadedConversation)
@@ -464,7 +453,7 @@ class ConversationFacade(
             .firstOrError()
             .subscribeOn(Schedulers.io())
             .subscribe({ c: List<Conversation> -> updateTextNotifications(txt.account!!, c) })
-            { e: Throwable -> Log.e(TAG, e.message) }
+            { e: Throwable -> Log.e(TAG, e.message!!) }
     }
 
     fun acceptRequest(accountId: String, contactUri: Uri) {
@@ -479,11 +468,12 @@ class ConversationFacade(
     }
 
     private fun handleDataTransferEvent(transfer: DataTransfer) {
-        val conversation = mAccountService.getAccount(transfer.account!!)!!.onDataTransferEvent(transfer)
+        val account = transfer.account!!
+        val conversation = mAccountService.getAccount(account)!!.onDataTransferEvent(transfer)
         val status = transfer.status
-        Log.d(TAG, "handleDataTransferEvent $status " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.account)))
+        Log.d(TAG, "handleDataTransferEvent $status " + transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account)))
         if (status === InteractionStatus.TRANSFER_AWAITING_HOST || status === InteractionStatus.FILE_AVAILABLE) {
-            if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.account))) {
+            if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(account))) {
                 mAccountService.acceptFileTransfer(conversation, transfer.fileId!!, transfer)
                 return
             }
@@ -505,18 +495,13 @@ class ConversationFacade(
         val conversationId = call.conversationId
         Log.w(TAG, "CallStateChange " + call.daemonIdString + " conversationId:" + conversationId)
         val conversation = if (conversationId == null)
-            if (contact == null) null else account.getByUri(contact.uri)
+            if (contact == null) return else account.getByUri(contact.uri)!!
         else
-            account.getSwarm(conversationId)
-        var conference: Conference? = null
-        if (conversation != null) {
-            conference = conversation.getConference(call.daemonIdString)
-            if (conference == null) {
-                if (newState === CallStatus.OVER) return
-                conference = Conference(call)
-                conversation.addConference(conference)
-                account.updated(conversation)
-            }
+            account.getSwarm(conversationId) ?: return
+        val conference: Conference = conversation.getConference(call.daemonIdString) ?: Conference(call).apply {
+            if (newState === CallStatus.OVER) return@onCallStateChange
+            conversation.addConference(this)
+            account.updated(conversation)
         }
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to $newState")
         if ((call.isRinging || newState === CallStatus.CURRENT) && call.timestamp == 0L) {
@@ -526,8 +511,7 @@ class ConversationFacade(
             mNotificationService.handleCallNotification(conference, false)
             mHardwareService.setPreviewSettings()
         } else if (newState === CallStatus.CURRENT && call.isIncoming
-            || newState === CallStatus.RINGING && !call.isIncoming
-        ) {
+            || newState === CallStatus.RINGING && !call.isIncoming) {
             mNotificationService.handleCallNotification(conference, false)
             mAccountService.sendProfile(call.daemonIdString!!, call.account!!)
         } else if (newState === CallStatus.HUNGUP || newState === CallStatus.BUSY || newState === CallStatus.FAILURE || newState === CallStatus.OVER) {
@@ -655,12 +639,12 @@ class ConversationFacade(
             .subscribe())
         mDisposableBag.add(mAccountService.observableAccountList
             .switchMap { accounts: List<Account> ->
-                val r: MutableList<Observable<Tuple<Account, ContactLocationEntry>>> = ArrayList(accounts.size)
-                for (a in accounts) r.add(a.locationUpdates.map { s: ContactLocationEntry -> Tuple(a, s) })
+                val r: MutableList<Observable<Pair<Account, ContactLocationEntry>>> = ArrayList(accounts.size)
+                for (a in accounts) r.add(a.locationUpdates.map { s: ContactLocationEntry -> Pair(a, s) })
                 Observable.merge(r)
             }
             .distinctUntilChanged()
-            .subscribe { t: Tuple<Account, ContactLocationEntry> ->
+            .subscribe { t: Pair<Account, ContactLocationEntry> ->
                 Log.e(TAG, "Location reception started for " + t.second.contact)
                 mNotificationService.showLocationNotification(t.first, t.second.contact)
                 mDisposableBag.add(t.second.location.doOnComplete {

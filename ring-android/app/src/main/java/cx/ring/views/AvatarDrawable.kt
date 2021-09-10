@@ -34,9 +34,9 @@ import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
 import net.jami.model.Contact
 import net.jami.model.Conversation
+import net.jami.model.Profile
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.HashUtils
-import net.jami.utils.Tuple
 import java.util.*
 
 class AvatarDrawable : Drawable {
@@ -92,10 +92,10 @@ class AvatarDrawable : Drawable {
             return VCardServiceImpl.loadProfile(context, account)
                 .map { profile -> build(context, account, profile, crop) }
         }
-        fun build(context: Context, account: Account, profile: Tuple<String?, Any?>, crop: Boolean): AvatarDrawable {
+        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true): AvatarDrawable {
             return Builder()
-                        .withPhoto(profile.second as Bitmap?)
-                        .withNameData(profile.first, account.registeredName)
+                        .withPhoto(profile.avatar as Bitmap?)
+                        .withNameData(profile.displayName, account.registeredName)
                         .withId(account.uri)
                         .withCircleCrop(crop)
                         .build(context)
@@ -294,7 +294,9 @@ class AvatarDrawable : Drawable {
         avatarText = convertNameToAvatarText(
             if (TextUtils.isEmpty(profileName)) username else profileName
         )
-        bitmaps?.set(0, contact.photo as Bitmap)
+        contact.photo?.let { photo ->
+            bitmaps?.set(0, photo as Bitmap)
+        }
         isOnline = contact.isOnline
         update = true
     }
@@ -618,14 +620,7 @@ class AvatarDrawable : Drawable {
                     val bitmap = bitmaps[i]
                     val subBounds = getSubBounds(realBounds, bitmaps.size, i)
                     if (subBounds != null) {
-                        fit(
-                            bitmap.width,
-                            bitmap.height,
-                            subBounds.width(),
-                            subBounds.height(),
-                            false,
-                            inBounds!![i]
-                        )
+                        fit(bitmap.width, bitmap.height, subBounds.width(), subBounds.height(), false, inBounds!![i])
                         backgroundBounds!![i].set(subBounds)
                     }
                 }

@@ -70,7 +70,7 @@ class Conversation : ConversationHistory {
         this.accountId = accountId
         contacts = mutableListOf(contact)
         uri = contact.uri
-        mParticipant = contact.uri.uri
+        participant = contact.uri.uri
         mContactSubject.onNext(contacts)
         mMode = BehaviorSubject.createDefault(Mode.Legacy)
     }
@@ -640,8 +640,8 @@ class Conversation : ConversationHistory {
     }
 
     interface ConversationActionCallback {
-        fun removeConversation(callContact: Uri)
-        fun clearConversation(callContact: Uri)
+        fun removeConversation(conversationUri: Uri)
+        fun clearConversation(conversationUri: Uri)
         fun copyContactNumberToClipboard(contactNumber: String)
     }
 

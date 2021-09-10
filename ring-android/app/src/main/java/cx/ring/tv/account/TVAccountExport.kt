@@ -39,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
+import net.jami.model.Profile
 import java.io.File
 
 @AndroidEntryPoint
@@ -52,7 +53,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
         presenter.setAccountId(mIdAccount)
     }
 
-    override fun onCreateGuidance(savedInstanceState: Bundle): Guidance {
+    override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_export_title)
         val breadcrumb = ""
         val description = getString(R.string.account_link_export_info_light)
@@ -60,7 +61,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
         return Guidance(title, description, breadcrumb, icon)
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle) {
+    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
         if (mHasPassword) {
             addPasswordAction(activity, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
         } else {
@@ -89,7 +90,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     }
 
     override fun showPasswordProgressDialog() {}
-    override fun accountChanged(account: Account) {}
+    override fun accountChanged(account: Account, profile: Profile) {}
     override fun showNetworkError() {
         mWaitDialog!!.dismiss()
         AlertDialog.Builder(activity)
@@ -164,7 +165,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     override fun askCameraPermission() {}
     override fun goToGallery() {}
     override fun askGalleryPermission() {}
-    override fun updateUserView(account: Account) {}
+    override fun updateUserView(account: Account, profile: Profile) {}
     override fun goToMedia(accountId: String) {}
     override fun goToSystem(accountId: String) {}
     override fun goToAdvanced(accountId: String) {}

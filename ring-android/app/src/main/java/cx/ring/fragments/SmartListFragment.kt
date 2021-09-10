@@ -233,8 +233,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         presenter.removeConversation(conversationUri)
     }
 
-    override fun clearConversation(callContact: Uri) {
-        presenter.clearConversation(callContact)
+    override fun clearConversation(conversationUri: Uri) {
+        presenter.clearConversation(conversationUri)
     }
 
     override fun copyContactNumberToClipboard(contactNumber: String) {
@@ -244,10 +244,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             ActionHelper.getShortenedNumber(contactNumber)
         )
         Snackbar.make(binding!!.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show()
-    }
-
-    fun onFabButtonClicked() {
-        presenter.fabButtonClicked()
     }
 
     override fun displayChooseNumberDialog(numbers: Array<CharSequence>) {
@@ -297,12 +293,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         }
     }
 
-    override fun displayClearDialog(uri: Uri) {
-        ActionHelper.launchClearAction(activity, uri, this@SmartListFragment)
+    override fun displayClearDialog(conversationUri: Uri) {
+        ActionHelper.launchClearAction(activity, conversationUri, this@SmartListFragment)
     }
 
-    override fun displayDeleteDialog(uri: Uri) {
-        ActionHelper.launchDeleteAction(activity, uri, this@SmartListFragment)
+    override fun displayDeleteDialog(conversationUri: Uri) {
+        ActionHelper.launchDeleteAction(activity, conversationUri, this@SmartListFragment)
     }
 
     override fun copyNumber(uri: Uri) {
@@ -381,12 +377,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding?.apply { confsList.scrollToPosition(0) }
     }
 
-    override fun onItemClick(smartListViewModel: SmartListViewModel) {
-        presenter.conversationClicked(smartListViewModel)
+    override fun onItemClick(item: SmartListViewModel) {
+        presenter.conversationClicked(item)
     }
 
-    override fun onItemLongClick(smartListViewModel: SmartListViewModel) {
-        presenter.conversationLongClicked(smartListViewModel)
+    override fun onItemLongClick(item: SmartListViewModel) {
+        presenter.conversationLongClicked(item)
     }
 
     private fun changeSeparatorHeight(open: Boolean) {

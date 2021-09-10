@@ -117,8 +117,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         args.getString(CallFragment.KEY_ACTION)?.let { action ->
             if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
                 prepareCall(false)
-            else if (action == CallFragment.ACTION_GET_CALL || action == CallActivity.ACTION_CALL_ACCEPT)
-                presenter.initIncomingCall(args.getString(CallFragment.KEY_CONF_ID)!!, action == CallFragment.ACTION_GET_CALL)
+            else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT)
+                presenter.initIncomingCall(args.getString(CallFragment.KEY_CONF_ID)!!, action == Intent.ACTION_VIEW)
         }
     }
 
@@ -211,17 +211,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         if (mScreenWakeLock != null && mScreenWakeLock!!.isHeld) {
             mScreenWakeLock!!.release()
         }
-        val r = runnable
-        if (r != null) {
+        runnable?.let { r ->
             view?.handler?.removeCallbacks(r)
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode != REQUEST_PERMISSION_INCOMING && requestCode != REQUEST_PERMISSION_OUTGOING) return
         var i = 0
@@ -267,14 +262,9 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         binding!!.contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
     }
 
-    override fun displayVideoSurface(
-        displayVideoSurface: Boolean,
-        displayPreviewContainer: Boolean
-    ) {
-        binding!!.videoSurface.visibility =
-            if (displayVideoSurface) View.VISIBLE else View.GONE
-        binding!!.previewContainer.visibility =
-            if (displayPreviewContainer) View.VISIBLE else View.GONE
+    override fun displayVideoSurface(displayVideoSurface: Boolean, displayPreviewContainer: Boolean) {
+        binding!!.videoSurface.visibility = if (displayVideoSurface) View.VISIBLE else View.GONE
+        binding!!.previewContainer.visibility = if (displayPreviewContainer) View.VISIBLE else View.GONE
     }
 
     override fun displayPreviewSurface(display: Boolean) {

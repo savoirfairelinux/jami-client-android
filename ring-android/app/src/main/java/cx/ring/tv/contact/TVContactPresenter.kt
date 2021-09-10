@@ -53,7 +53,7 @@ class TVContactPresenter @Inject constructor(
             .getAccountSubject(path.accountId)
             .map { a: Account -> SmartListViewModel(a.getByUri(mUri)!!, true) }
             .observeOn(mUiScheduler)
-            .subscribe { c: SmartListViewModel -> view!!.showContact(c) })
+            .subscribe { c: SmartListViewModel -> view?.showContact(c) })
     }
 
     fun contactClicked() {

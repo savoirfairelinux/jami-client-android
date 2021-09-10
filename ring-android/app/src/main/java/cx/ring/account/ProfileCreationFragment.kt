@@ -48,7 +48,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import net.jami.account.ProfileCreationPresenter
 import net.jami.account.ProfileCreationView
-import net.jami.mvp.AccountCreationModel
+import net.jami.model.AccountCreationModel
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -87,7 +87,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
                     .build(view.context)
             )
         }
-        presenter.initPresenter(model)
+        presenter.initPresenter(model!!)
         binding!!.gallery.setOnClickListener { presenter.galleryClick() }
         binding!!.camera.setOnClickListener { presenter.cameraClick() }
         binding!!.nextCreateAccount.setOnClickListener { presenter.nextClick() }
@@ -197,11 +197,8 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         val newAccount = model.newAccount
         binding!!.profilePhoto.setImageDrawable(
             AvatarDrawable.Builder()
-                .withPhoto(model.photo)
-                .withNameData(
-                    accountCreationModel.getFullName(),
-                    accountCreationModel.getUsername()
-                )
+                .withPhoto(model.photo as Bitmap?)
+                .withNameData(accountCreationModel.fullName, accountCreationModel.username)
                 .withId(newAccount?.username)
                 .withCircleCrop(true)
                 .build(requireContext())
@@ -215,7 +212,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         const val REQUEST_PERMISSION_CAMERA = 3
         const val REQUEST_PERMISSION_READ_STORAGE = 4
 
-        fun newInstance(model: AccountCreationModelImpl?): ProfileCreationFragment {
+        fun newInstance(model: AccountCreationModelImpl): ProfileCreationFragment {
             val fragment = ProfileCreationFragment()
             fragment.model = model
             return fragment

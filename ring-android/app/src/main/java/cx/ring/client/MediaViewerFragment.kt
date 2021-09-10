@@ -38,11 +38,7 @@ class MediaViewerFragment : Fragment() {
     private var mUri: Uri? = null
     private var mImage: ImageView? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_media_viewer, container, false) as ViewGroup
         mImage = view.findViewById(R.id.image)
         showImage()

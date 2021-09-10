@@ -51,7 +51,7 @@ class CallPresenter @Inject constructor(
     private val mDeviceRuntimeService: DeviceRuntimeService,
     private val mConversationFacade: ConversationFacade,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
-    ) : RootPresenter<CallView>() {
+) : RootPresenter<CallView>() {
     private var mConference: Conference? = null
     private val mPendingCalls: MutableList<Call> = ArrayList()
     private val mPendingSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mPendingCalls)
@@ -101,12 +101,13 @@ class CallPresenter @Inject constructor(
                     if (mSipCall != null && mSipCall.getContact() != null) {
                         getView().updateContactBubble(mSipCall.getContact());
                     }
-                }));*/mCompositeDisposable.add(mHardwareService.getVideoEvents()
+                }));*/
+        mCompositeDisposable.add(mHardwareService.getVideoEvents()
             .observeOn(mUiScheduler)
             .subscribe { event: VideoEvent -> onVideoEvent(event) })
         mCompositeDisposable.add(mHardwareService.audioState
             .observeOn(mUiScheduler)
-            .subscribe { state: AudioState? -> getView()!!.updateAudioState(state) })
+            .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
 
         /*mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
@@ -141,7 +142,7 @@ class CallPresenter @Inject constructor(
                 confUpdate(conference)
             }) { e: Throwable ->
                 hangupCall()
-                Log.e(TAG, "Error with initOutgoing: " + e.message)
+                Log.e(TAG, "Error with initOutgoing: " + e.message, e)
             })
         showConference(callObservable)
     }
@@ -171,7 +172,7 @@ class CallPresenter @Inject constructor(
                     callInitialized = true
                     view!!.prepareCall(true)
                 }
-            }) { e: Throwable? ->
+            }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initIncoming, preparing call flow :", e)
             })
@@ -183,7 +184,7 @@ class CallPresenter @Inject constructor(
                     contactUpdate(call)
                     confUpdate(call)
                 }
-            }) { e: Throwable? ->
+            }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initIncoming, action view flow: ", e)
             })
@@ -192,20 +193,17 @@ class CallPresenter @Inject constructor(
 
     private fun showConference(conference: Observable<Conference>) {
         var conference = conference
-        conference = conference
-            .distinctUntilChanged()
+        conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantInfo }
             .observeOn(mUiScheduler)
-            .subscribe(
-                { info: List<ParticipantInfo> -> view?.updateConfInfo(info) }
-            ) { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+            .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
+            { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantRecording }
             .observeOn(mUiScheduler)
-            .subscribe(
-                { contacts: Set<Contact> -> view?.updateParticipantRecording(contacts) }
-            ) { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+            .subscribe({ contacts: Set<Contact> -> view?.updateParticipantRecording(contacts) })
+            { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
     }
 
     fun prepareOptionMenu() {
@@ -216,7 +214,7 @@ class CallPresenter @Inject constructor(
         val displayPluginsButton = view!!.displayPluginsButton()
         val showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && !isAudioOnly
-        view!!.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall)
+        view?.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall)
     }
 
     fun chatClick() {
@@ -226,10 +224,9 @@ class CallPresenter @Inject constructor(
         val firstCall = mConference!!.participants[0] ?: return
         val c = firstCall.conversation
         if (c is Conversation) {
-            val conversation = c
-            view!!.goToConversation(conversation.accountId, conversation.uri)
+            view?.goToConversation(c.accountId, c.uri)
         } else if (firstCall.contact != null) {
-            view!!.goToConversation(firstCall.account, firstCall.contact!!.conversationUri.blockingFirst())
+            view?.goToConversation(firstCall.account!!, firstCall.contact!!.conversationUri.blockingFirst())
         }
     }
 
@@ -248,9 +245,9 @@ class CallPresenter @Inject constructor(
         get() = mCallService.isCaptureMuted
 
     fun switchVideoInputClick() {
-        if (mConference == null) return
-        mHardwareService.switchInput(mConference!!.id, false)
-        view!!.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
+        val conference = mConference ?: return
+        mHardwareService.switchInput(conference.id, false)
+        view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
     }
 
     fun configurationChanged(rotation: Int) {
@@ -283,61 +280,69 @@ class CallPresenter @Inject constructor(
         finish()
     }
 
-    fun videoSurfaceCreated(holder: Any?) {
+    fun videoSurfaceCreated(holder: Any) {
         if (mConference == null) {
             return
         }
         val newId = mConference!!.id
         if (newId != currentSurfaceId) {
-            mHardwareService.removeVideoSurface(currentSurfaceId)
+            currentSurfaceId?.let { id ->
+                mHardwareService.removeVideoSurface(id)
+            }
             currentSurfaceId = newId
         }
         mHardwareService.addVideoSurface(mConference!!.id, holder)
-        view!!.displayContactBubble(false)
+        view?.displayContactBubble(false)
     }
 
-    fun videoSurfaceUpdateId(newId: String?) {
+    private fun videoSurfaceUpdateId(newId: String) {
         if (newId != currentSurfaceId) {
-            mHardwareService.updateVideoSurfaceId(currentSurfaceId, newId)
+            currentSurfaceId?.let { oldId ->
+                mHardwareService.updateVideoSurfaceId(oldId, newId)
+            }
             currentSurfaceId = newId
         }
     }
 
-    fun pluginSurfaceCreated(holder: Any?) {
+    fun pluginSurfaceCreated(holder: Any) {
         if (mConference == null) {
             return
         }
         val newId = mConference!!.pluginId
         if (newId != currentPluginSurfaceId) {
-            mHardwareService.removeVideoSurface(currentPluginSurfaceId)
+            currentPluginSurfaceId?.let { id ->
+                mHardwareService.removeVideoSurface(id)
+            }
             currentPluginSurfaceId = newId
         }
         mHardwareService.addVideoSurface(mConference!!.pluginId, holder)
-        view!!.displayContactBubble(false)
+        view?.displayContactBubble(false)
     }
 
-    fun pluginSurfaceUpdateId(newId: String?) {
+    private fun pluginSurfaceUpdateId(newId: String) {
         if (newId != currentPluginSurfaceId) {
-            mHardwareService.updateVideoSurfaceId(currentPluginSurfaceId, newId)
+            currentPluginSurfaceId?.let { oldId ->
+                mHardwareService.updateVideoSurfaceId(oldId, newId)
+            }
             currentPluginSurfaceId = newId
         }
     }
 
-    fun previewVideoSurfaceCreated(holder: Any?) {
+    fun previewVideoSurfaceCreated(holder: Any) {
         mHardwareService.addPreviewVideoSurface(holder, mConference)
         //mHardwareService.startCapture(null);
     }
 
     fun videoSurfaceDestroyed() {
-        if (currentSurfaceId != null) {
-            mHardwareService.removeVideoSurface(currentSurfaceId)
+        currentSurfaceId?.let { id ->
+            mHardwareService.removeVideoSurface(id)
             currentSurfaceId = null
         }
     }
 
     fun pluginSurfaceDestroyed() {
-        if (currentPluginSurfaceId != null) {
-            mHardwareService.removeVideoSurface(currentPluginSurfaceId)
+        currentPluginSurfaceId?.let { id ->
+            mHardwareService.removeVideoSurface(id)
             currentPluginSurfaceId = null
         }
     }
@@ -357,13 +362,13 @@ class CallPresenter @Inject constructor(
 
     fun uiVisibilityChanged(displayed: Boolean) {
         Log.w(TAG, "uiVisibilityChanged $mOnGoingCall $displayed")
-        val view = view
         view?.displayHangupButton(mOnGoingCall && displayed)
     }
 
     private fun finish() {
-        if (timeUpdateTask != null && !timeUpdateTask!!.isDisposed) {
-            timeUpdateTask!!.dispose()
+        timeUpdateTask?.let { task ->
+            if (!task.isDisposed)
+                task.dispose()
             timeUpdateTask = null
         }
         mConference = null
@@ -375,9 +380,7 @@ class CallPresenter @Inject constructor(
     private fun contactUpdate(conference: Conference) {
         if (mConference !== conference) {
             mConference = conference
-            if (contactDisposable != null && !contactDisposable!!.isDisposed) {
-                contactDisposable!!.dispose()
-            }
+            contactDisposable?.apply { dispose() }
             if (conference.participants.isEmpty()) return
 
             // Updates of participant (and  pending participant) list
@@ -392,36 +395,27 @@ class CallPresenter @Inject constructor(
                 }
 
             // Updates of individual contacts
-            val contactsObservable = callsObservable
-                .flatMapSingle { calls: List<Call> ->
-                    Observable.fromIterable(calls)
-                        .map { call: Call -> mContactService.observeContact(call.account!!, call.contact!!, false)
-                                .map { call } }
-                        .toList(calls.size)
-                }
+            val contactsObservable = callsObservable.flatMapSingle { calls: List<Call> ->
+                Observable.fromIterable(calls)
+                    .map { call: Call -> mContactService.observeContact(call.account!!, call.contact!!, false)
+                            .map { call } }
+                    .toList(calls.size)
+            }
 
             // Combined updates of contacts as participant list updates
             val contactUpdates = contactsObservable
-                .switchMap { list: List<Observable<Call>>? ->
-                    Observable
-                        .combineLatest(list) { objects: Array<Any> ->
-                            Log.w(TAG, "flatMapObservable " + objects.size)
-                            val calls = ArrayList<Call>(objects.size)
-                            for (call in objects) calls.add(call as Call)
-                            calls
-                        }
-                }
-                .filter { list: List<Call> -> !list.isEmpty() }
+                .switchMap { list: List<Observable<Call>> -> Observable.combineLatest(list) { objects: Array<Any> ->
+                    Log.w(TAG, "flatMapObservable " + objects.size)
+                    val calls = ArrayList<Call>(objects.size)
+                    for (call in objects) calls.add(call as Call)
+                    calls
+                } }
+                .filter { list: List<Call> -> list.isNotEmpty() }
             contactDisposable = contactUpdates
                 .observeOn(mUiScheduler)
-                .subscribe({ cs: List<Call>? -> view!!.updateContactBubble(cs) }) { e: Throwable? ->
-                    Log.e(
-                        TAG,
-                        "Error updating contact data",
-                        e
-                    )
-                }
-            mCompositeDisposable.add(contactDisposable)
+                .subscribe({ cs: List<Call> -> view?.updateContactBubble(cs) })
+                { e: Throwable -> Log.e(TAG, "Error updating contact data", e) }
+                .apply { mCompositeDisposable.add(this) }
         }
         mPendingSubject.onNext(mPendingCalls)
     }
@@ -450,7 +444,7 @@ class CallPresenter @Inject constructor(
                     permissionChanged = false
                 }
             }
-            if (timeUpdateTask != null) timeUpdateTask!!.dispose()
+            timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
         } else if (call.isRinging) {
             val scall = call.call!!
@@ -500,30 +494,28 @@ class CallPresenter @Inject constructor(
 
     private fun onVideoEvent(event: VideoEvent) {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h)
+        val view = view ?: return
         if (event.start) {
-            view!!.displayVideoSurface(true, !isPipMode && mDeviceRuntimeService.hasVideoPermission())
+            view.displayVideoSurface(true, !isPipMode && mDeviceRuntimeService.hasVideoPermission())
         } else if (mConference != null && mConference!!.id == event.callId) {
-            view!!.displayVideoSurface(
-                event.started,
-                event.started && !isPipMode && mDeviceRuntimeService.hasVideoPermission()
-            )
+            view.displayVideoSurface(event.started, event.started && !isPipMode && mDeviceRuntimeService.hasVideoPermission())
             if (event.started) {
                 videoWidth = event.w
                 videoHeight = event.h
-                view!!.resetVideoSize(videoWidth, videoHeight)
+                view.resetVideoSize(videoWidth, videoHeight)
             }
         } else if (event.callId == null) {
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
-                view!!.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
+                view.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
         }
         if (mConference != null && mConference!!.pluginId == event.callId) {
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
-                view!!.resetPluginPreviewVideoSize(previewWidth, previewHeight, event.rot)
+                view.resetPluginPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
         }
         /*if (event.started || event.start) {
@@ -571,9 +563,10 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    fun toggleCallMediaHandler(id: String?, toggle: Boolean) {
-        if (mConference != null && mConference!!.isOnGoing && mConference!!.hasVideo()) {
-            view!!.toggleCallMediaHandler(id, mConference!!.id, toggle)
+    fun toggleCallMediaHandler(id: String, toggle: Boolean) {
+        val conference = mConference ?: return
+        if (conference.isOnGoing && conference.hasVideo()) {
+            view?.toggleCallMediaHandler(id, conference.id, toggle)
         }
     }
 
@@ -659,8 +652,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun openParticipantContact(info: ParticipantInfo) {
-        val call = info.call ?: mConference!!.firstCall!!
-        view!!.goToContact(call.account, info.contact)
+        val call = info.call ?: mConference?.firstCall ?: return
+        view?.goToContact(call.account!!, info.contact)
     }
 
     fun stopCapture() {

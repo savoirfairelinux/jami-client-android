@@ -26,7 +26,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.utils.StringUtils.isEmpty
 import net.jami.model.Call.CallStatus
 import net.jami.daemon.IntVect
 import net.jami.daemon.UintVect
@@ -53,33 +52,19 @@ abstract class HardwareService(
         var callId: String? = null
     }
 
-    class BluetoothEvent {
-        var connected = false
-    }
+    class BluetoothEvent (val connected: Boolean)
 
     enum class AudioOutput {
         INTERNAL, SPEAKERS, BLUETOOTH
     }
 
-    class AudioState {
-        val outputType: AudioOutput
-        val outputName: String?
-
-        constructor(ot: AudioOutput) {
-            outputType = ot
-            outputName = null
-        }
-
-        constructor(ot: AudioOutput, name: String?) {
-            outputType = ot
-            outputName = name
-        }
-    }
+    class AudioState(val outputType: AudioOutput, val outputName: String? = null)
 
     protected val videoEvents: Subject<VideoEvent> = PublishSubject.create()
     protected val bluetoothEvents: Subject<BluetoothEvent> = PublishSubject.create()
     protected val audioStateSubject: Subject<AudioState> = BehaviorSubject.createDefault(STATE_INTERNAL)
     protected val connectivityEvents: Subject<Boolean> = BehaviorSubject.create()
+
     fun getVideoEvents(): Observable<VideoEvent> {
         return videoEvents
     }
@@ -114,18 +99,18 @@ abstract class HardwareService(
     abstract fun endCapture()
     abstract fun stopScreenShare()
     abstract fun requestKeyFrame()
-    abstract fun setBitrate(device: String?, bitrate: Int)
-    abstract fun addVideoSurface(id: String?, holder: Any?)
-    abstract fun updateVideoSurfaceId(currentId: String?, newId: String?)
-    abstract fun removeVideoSurface(id: String?)
-    abstract fun addPreviewVideoSurface(holder: Any?, conference: Conference?)
-    abstract fun updatePreviewVideoSurface(conference: Conference?)
+    abstract fun setBitrate(device: String, bitrate: Int)
+    abstract fun addVideoSurface(id: String, holder: Any)
+    abstract fun updateVideoSurfaceId(currentId: String, newId: String)
+    abstract fun removeVideoSurface(id: String)
+    abstract fun addPreviewVideoSurface(holder: Any, conference: Conference?)
+    abstract fun updatePreviewVideoSurface(conference: Conference)
     abstract fun removePreviewVideoSurface()
-    abstract fun switchInput(id: String?, setDefaultCamera: Boolean)
+    abstract fun switchInput(id: String, setDefaultCamera: Boolean)
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract val cameraCount: Int
-    abstract val maxResolutions: Observable<Tuple<Int, Int>>
+    abstract val maxResolutions: Observable<Tuple<Int?, Int?>>
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
     abstract fun unregisterCameraDetectionCallback()
@@ -137,12 +122,12 @@ abstract class HardwareService(
         mExecutor.execute { JamiService.connectivityChanged() }
     }
 
-    protected fun switchInput(id: String?, uri: String) {
+    protected fun switchInput(id: String, uri: String) {
         Log.i(TAG, "switchInput() $uri")
         mExecutor.execute { JamiService.switchInput(id, uri) }
     }
 
-    fun setPreviewSettings(cameraMaps: Map<String?, StringMap?>) {
+    fun setPreviewSettings(cameraMaps: Map<String, StringMap>) {
         mExecutor.execute {
             Log.i(TAG, "applySettings() thread running...")
             for ((key, value) in cameraMaps) {
@@ -151,7 +136,7 @@ abstract class HardwareService(
         }
     }
 
-    fun startVideo(inputId: String?, surface: Any?, width: Int, height: Int): Long {
+    fun startVideo(inputId: String, surface: Any, width: Int, height: Int): Long {
         val inputWindow = JamiService.acquireNativeWindow(surface)
         if (inputWindow == 0L) {
             return inputWindow
@@ -161,7 +146,7 @@ abstract class HardwareService(
         return inputWindow
     }
 
-    fun stopVideo(inputId: String?, inputWindow: Long) {
+    fun stopVideo(inputId: String, inputWindow: Long) {
         if (inputWindow == 0L) {
             return
         }
@@ -170,7 +155,7 @@ abstract class HardwareService(
     }
 
     abstract fun setDeviceOrientation(rotation: Int)
-    protected abstract val videoDevices: List<String?>?
+    protected abstract val videoDevices: List<String>
     private var logs: Observable<String>? = null
     private var logEmitter: Emitter<String>? = null
 

@@ -509,7 +509,7 @@ class NotificationServiceImpl(
             val myPic = account?.let { getContactPicture(it) }
             val userPerson = Person.Builder()
                 .setKey(accountId)
-                .setName(if (profile == null || TextUtils.isEmpty(profile.first)) "You" else profile.first)
+                .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
                 .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
                 .build()
             val history = NotificationCompat.MessagingStyle(userPerson)
@@ -831,23 +831,22 @@ class NotificationServiceImpl(
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
     }
 
-    override fun getServiceNotification(): Any {
-        val intentHome = Intent(Intent.ACTION_VIEW)
-            .setClass(mContext, HomeActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val pendIntent = PendingIntent.getActivity(mContext, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT)
-        val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_SERVICE)
-        messageNotificationBuilder
-            .setContentTitle(mContext.getText(R.string.app_name))
-            .setContentText(mContext.getText(R.string.notif_background_service))
-            .setSmallIcon(R.drawable.ic_ring_logo_white)
-            .setContentIntent(pendIntent)
-            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-            .setPriority(NotificationCompat.PRIORITY_MIN)
-            .setOngoing(true)
-            .setCategory(NotificationCompat.CATEGORY_SERVICE)
-        return messageNotificationBuilder.build()
-    }
+    override val serviceNotification: Any
+        get() {
+            val intentHome = Intent(Intent.ACTION_VIEW)
+                .setClass(mContext, HomeActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            return NotificationCompat.Builder(mContext, NOTIF_CHANNEL_SERVICE)
+                .setContentTitle(mContext.getText(R.string.app_name))
+                .setContentText(mContext.getText(R.string.notif_background_service))
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentIntent(PendingIntent.getActivity(mContext, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setOngoing(true)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                .build()
+        }
 
     override fun cancelTextNotification(accountId: String, contact: net.jami.model.Uri) {
         val notificationId = getTextNotificationId(accountId, contact)

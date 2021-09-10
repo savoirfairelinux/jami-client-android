@@ -43,6 +43,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccountMigrationBinding;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -56,7 +57,6 @@ import net.jami.services.AccountService;
 
 @AndroidEntryPoint
 public class AccountMigrationFragment extends Fragment {
-    public static final String ACCOUNT_ID = "ACCOUNT_ID";
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
     @Inject
     AccountService mAccountService;
@@ -99,7 +99,7 @@ public class AccountMigrationFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (getArguments() != null) {
-            mAccountId = getArguments().getString(ACCOUNT_ID);
+            mAccountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
         }
     }
 

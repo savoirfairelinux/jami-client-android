@@ -24,6 +24,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -48,7 +49,6 @@ import net.jami.model.Account
 import net.jami.model.ConfigKey
 import net.jami.model.Ringtone
 import net.jami.services.AccountService
-import net.jami.utils.Log
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -57,11 +57,11 @@ import javax.inject.Singleton
 
 @AndroidEntryPoint
 class RingtoneActivity : AppCompatActivity() {
-    private var adapter: RingtoneAdapter? = null
+    private lateinit var adapter: RingtoneAdapter
     private lateinit var mAccount: Account
-    private var customRingtone: TextView? = null
-    private var customPlaying: ImageView? = null
-    private var customSelected: ImageView? = null
+    private lateinit var customRingtone: TextView
+    private lateinit var customPlaying: ImageView
+    private lateinit var customSelected: ImageView
     private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var disposable: Disposable? = null
 
@@ -78,28 +78,27 @@ class RingtoneActivity : AppCompatActivity() {
             return
         }
         mAccount = account
-
-        /*Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
-        toolbar.setNavigationOnClickListener(view -> finish());*/
-        val recycler = findViewById<RecyclerView>(R.id.ringToneRecycler)
-        val customRingtoneLayout = findViewById<ConstraintLayout>(R.id.customRingtoneLayout)
         customRingtone = findViewById(R.id.customRingtoneName)
         customPlaying = findViewById(R.id.custom_ringtone_playing)
         customSelected = findViewById(R.id.custom_ringtone_selected)
         adapter = RingtoneAdapter(prepareRingtones())
         val upcomingLayoutManager: LayoutManager = LinearLayoutManager(this)
+
+        val recycler = findViewById<RecyclerView>(R.id.ringToneRecycler)
         recycler.layoutManager = upcomingLayoutManager
         recycler.itemAnimator = DefaultItemAnimator()
         recycler.adapter = adapter
 
         // loads the user's settings
         setPreference()
+
+        val customRingtoneLayout = findViewById<ConstraintLayout>(R.id.customRingtoneLayout)
         customRingtoneLayout.setOnClickListener { displayFileSearchDialog() }
         customRingtoneLayout.setOnLongClickListener {
             displayRemoveDialog()
             true
         }
-        disposable = adapter!!.ringtoneSubject.subscribe({ ringtone: Ringtone ->
+        disposable = adapter.getRingtone().subscribe({ ringtone: Ringtone ->
             setJamiRingtone(ringtone)
             removeCustomRingtone()
         }) { Log.e(TAG, "Error updating ringtone status") }
@@ -117,18 +116,17 @@ class RingtoneActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        adapter!!.releaseMediaPlayer()
+        adapter.releaseMediaPlayer()
         mediaPlayer.release()
     }
 
     private fun prepareRingtones(): List<Ringtone> {
         val ringtoneList: MutableList<Ringtone> = ArrayList()
         val ringtoneFolder = File(filesDir, "ringtones")
-        val ringtones = ringtoneFolder.listFiles()
-        val ringtoneIcon = getDrawable(R.drawable.baseline_notifications_active_24)
-        if (ringtones == null) return ringtoneList
+        val ringtones = ringtoneFolder.listFiles() ?: return emptyList()
+        val ringtoneIcon = getDrawable(R.drawable.baseline_notifications_active_24)!!
         Arrays.sort(ringtones) { a: File, b: File -> a.name.compareTo(b.name) }
-        ringtoneList.add(Ringtone("Silent", null, getDrawable(R.drawable.baseline_notifications_off_24)))
+        ringtoneList.add(Ringtone("Silent", null, getDrawable(R.drawable.baseline_notifications_off_24)!!))
         for (file in ringtones) {
             val name = stripFileNameExtension(file.name)
             ringtoneList.add(Ringtone(name, file.absolutePath, ringtoneIcon))
@@ -143,10 +141,10 @@ class RingtoneActivity : AppCompatActivity() {
         val path = File(mAccount.config[ConfigKey.RINGTONE_PATH])
         val customEnabled = mAccount.config.getBool(ConfigKey.RINGTONE_CUSTOM)
         if (customEnabled && path.exists()) {
-            customRingtone!!.text = path.name
-            customSelected!!.visibility = View.VISIBLE
+            customRingtone.text = path.name
+            customSelected.visibility = View.VISIBLE
         } else if (path.exists()) {
-            adapter!!.selectDefaultItem(path.absolutePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
+            adapter.selectDefaultItem(path.absolutePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
         } else {
             setDefaultRingtone()
         }
@@ -155,7 +153,7 @@ class RingtoneActivity : AppCompatActivity() {
     private fun setDefaultRingtone() {
         val ringtonesDir = File(filesDir, "ringtones")
         val ringtonePath = File(ringtonesDir, getString(R.string.ringtone_default_name)).absolutePath
-        adapter!!.selectDefaultItem(ringtonePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
+        adapter.selectDefaultItem(ringtonePath, mAccount.config.getBool(ConfigKey.RINGTONE_ENABLED))
         mAccount.setDetail(ConfigKey.RINGTONE_PATH, ringtonePath)
         mAccount.setDetail(ConfigKey.RINGTONE_CUSTOM, false)
         updateAccount()
@@ -225,9 +223,9 @@ class RingtoneActivity : AppCompatActivity() {
      * Removes a custom ringtone and updates the view
      */
     private fun removeCustomRingtone() {
-        customSelected!!.visibility = View.INVISIBLE
-        customPlaying!!.visibility = View.INVISIBLE
-        customRingtone!!.setText(R.string.ringtone_custom_prompt)
+        customSelected.visibility = View.INVISIBLE
+        customPlaying.visibility = View.INVISIBLE
+        customRingtone.setText(R.string.ringtone_custom_prompt)
         stopCustomPreview()
     }
 
@@ -252,10 +250,10 @@ class RingtoneActivity : AppCompatActivity() {
             displayFileTooBigDialog()
         } else {
             // resetState will stop the preview
-            adapter!!.resetState()
-            customRingtone!!.text = ringtone.name
-            customSelected!!.visibility = View.VISIBLE
-            customPlaying!!.visibility = View.VISIBLE
+            adapter.resetState()
+            customRingtone.text = ringtone.name
+            customSelected.visibility = View.VISIBLE
+            customPlaying.visibility = View.VISIBLE
             Glide.with(this)
                 .load(R.raw.baseline_graphic_eq_black_24dp)
                 .placeholder(R.drawable.baseline_graphic_eq_24)
@@ -317,14 +315,8 @@ class RingtoneActivity : AppCompatActivity() {
                 cr.takePersistableUriPermission(uri, takeFlags)
                 AndroidFileUtils.getCacheFile(this, uri)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { ringtone: File -> onFileFound(ringtone) }
-                    ) {
-                        Toast.makeText(
-                            this,
-                            "Can't load ringtone !",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    .subscribe({ ringtone: File -> onFileFound(ringtone) }) {
+                        Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show()
                     }
             }
         }
@@ -342,13 +334,12 @@ class RingtoneActivity : AppCompatActivity() {
          */
         fun stripFileNameExtension(fileName: String): String {
             val index = fileName.lastIndexOf('.')
-            return if (index == -1) {
+            return if (index == -1)
                 fileName
-            } else {
+            else
                 fileName.substring(0, index)
-            }
         }
 
-        private val TAG = RingtoneActivity::class.java.simpleName
+        private val TAG = RingtoneActivity::class.simpleName!!
     }
 }

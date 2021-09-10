@@ -169,11 +169,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val extra = intent.extras
         val action = intent.action
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT == action) {
-            if (extra?.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
-                return
-            }
             //mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
-            presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID))
+            presentTrustRequestFragment(extra?.getString(ContactRequestsFragment.ACCOUNT_ID) ?: return)
         } else if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
             val path = ConversationPath.fromBundle(extra)
             if (path != null) {
@@ -261,7 +258,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ accounts ->
                     if (mAccountAdapter == null) {
-                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts)).apply {
+                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable).apply {
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
                         }
@@ -375,7 +372,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .commit()
     }
 
-    private fun presentTrustRequestFragment(accountID: String?) {
+    private fun presentTrustRequestFragment(accountID: String) {
         mNotificationService.cancelTrustRequestNotification(accountID)
         if (fContent is ContactRequestsFragment) {
             (fContent as ContactRequestsFragment).presentForAccount(accountID)
@@ -635,7 +632,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
      * Changes the current main fragment to a plugin settings fragment
      * @param pluginDetails
      */
-    fun gotToPluginSettings(pluginDetails: PluginDetails?) {
+    fun gotToPluginSettings(pluginDetails: PluginDetails) {
         if (fContent is PluginSettingsFragment) {
             return
         }
@@ -651,7 +648,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     /**
      * Changes the current main fragment to a plugin PATH preference fragment
      */
-    fun gotToPluginPathPreference(pluginDetails: PluginDetails?, preferenceKey: String?) {
+    fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
         if (fContent is PluginPathPreferenceFragment) {
             return
         }

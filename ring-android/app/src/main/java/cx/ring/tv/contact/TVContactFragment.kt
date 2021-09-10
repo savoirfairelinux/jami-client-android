@@ -68,26 +68,18 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         setupAdapter()
         val res = resources
         iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size)
-        presenter!!.setContact(mConversationPath)
+        presenter.setContact(mConversationPath)
     }
 
     private fun setupAdapter() {
         // Set detail background and style.
         val detailsPresenter: FullWidthDetailsOverviewRowPresenter = if (isIncomingRequest || isOutgoingRequest) {
-            FullWidthDetailsOverviewRowPresenter(
-                TVContactRequestDetailPresenter(),
-                DetailsOverviewLogoPresenter()
-            )
+            FullWidthDetailsOverviewRowPresenter(TVContactRequestDetailPresenter(),DetailsOverviewLogoPresenter())
         } else {
-            FullWidthDetailsOverviewRowPresenter(
-                TVContactDetailPresenter(),
-                DetailsOverviewLogoPresenter()
-            )
+            FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter())
         }
-        detailsPresenter.backgroundColor =
-            ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
-        detailsPresenter.actionsBackgroundColor =
-            ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
+        detailsPresenter.backgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
+        detailsPresenter.actionsBackgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
         detailsPresenter.initialState = FullWidthDetailsOverviewRowPresenter.STATE_HALF
 
         // Hook up transition element.
@@ -101,24 +93,18 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         }
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action: Action ->
             if (action.id == ACTION_CALL.toLong()) {
-                presenter!!.contactClicked()
+                presenter.contactClicked()
             } else if (action.id == ACTION_ADD_CONTACT.toLong()) {
-                presenter!!.onAddContact()
+                presenter.onAddContact()
             } else if (action.id == ACTION_ACCEPT.toLong()) {
-                presenter!!.acceptTrustRequest()
+                presenter.acceptTrustRequest()
             } else if (action.id == ACTION_REFUSE.toLong()) {
-                presenter!!.refuseTrustRequest()
+                presenter.refuseTrustRequest()
             } else if (action.id == ACTION_BLOCK.toLong()) {
-                presenter!!.blockTrustRequest()
+                presenter.blockTrustRequest()
             } else if (action.id == ACTION_MORE.toLong()) {
-                startActivityForResult(
-                    Intent(getActivity(), TVContactMoreActivity::class.java)
-                        .setDataAndType(
-                            mConversationPath!!.toUri(),
-                            TVContactMoreActivity.CONTACT_REQUEST_URI
-                        ),
-                    REQUEST_CODE
-                )
+                startActivityForResult(Intent(getActivity(), TVContactMoreActivity::class.java)
+                    .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
             }
         }
         val mPresenterSelector = ClassPresenterSelector()
@@ -161,30 +147,25 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun callContact(accountId: String, conversationUri: Uri, uri: Uri) {
-        startActivity(
-            Intent(Intent.ACTION_CALL)
-                .setClass(requireContext(), TVCallActivity::class.java)
-                .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-                .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri)
-        )
+        startActivity(Intent(Intent.ACTION_CALL)
+            .setClass(requireContext(), TVCallActivity::class.java)
+            .putExtras(ConversationPath.toBundle(accountId, conversationUri))
+            .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri))
     }
 
     override fun goToCallActivity(id: String) {
-        startActivity(
-            Intent(requireContext(), TVCallActivity::class.java)
-                .putExtra(NotificationService.KEY_CALL_ID, id)
-        )
+        startActivity(Intent(requireContext(), TVCallActivity::class.java)
+            .putExtra(NotificationService.KEY_CALL_ID, id))
     }
 
     override fun switchToConversationView() {
         isIncomingRequest = false
         isOutgoingRequest = false
         setupAdapter()
-        presenter!!.setContact(mConversationPath)
+        presenter.setContact(mConversationPath)
     }
 
     override fun finishView() {
-        val activity: Activity? = activity
         activity?.onBackPressed()
     }
 
@@ -194,7 +175,6 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     companion object {
-        @JvmField
         val TAG = TVContactFragment::class.simpleName!!
         private const val ACTION_CALL = 0
         private const val ACTION_ACCEPT = 1

@@ -770,17 +770,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         var display = display
         Log.w(TAG, "displayHangupButton $display")
         display = display and !isChoosePluginMode
-        binding!!.callControlGroup.visibility = if (display) View.VISIBLE else View.GONE
-        binding!!.callHangupBtn.visibility =
-            if (display) View.VISIBLE else View.GONE
-        binding!!.confControlGroup.visibility =
-            if (mConferenceMode && display) View.VISIBLE else View.GONE
+        binding?.apply {
+            callControlGroup.visibility = if (display) View.VISIBLE else View.GONE
+            callHangupBtn.visibility = if (display) View.VISIBLE else View.GONE
+            confControlGroup.visibility = if (mConferenceMode && display) View.VISIBLE else View.GONE
+        }
     }
 
     override fun displayDialPadKeyboard() {
         binding!!.dialpadEditText.requestFocus()
-        val imm =
-            binding!!.dialpadEditText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = binding!!.dialpadEditText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
@@ -789,8 +788,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun updateAudioState(state: AudioState) {
-        binding!!.callSpeakerBtn.isChecked =
-            state.outputType == HardwareService.AudioOutput.SPEAKERS
+        binding!!.callSpeakerBtn.isChecked = state.outputType == HardwareService.AudioOutput.SPEAKERS
     }
 
     override fun updateMenu() {
@@ -799,8 +797,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun updateTime(duration: Long) {
         binding?.let { binding ->
-            if (duration <= 0) binding.callStatusTxt.text =
-                null else binding.callStatusTxt.text = String.format(
+            binding.callStatusTxt.text = if (duration <= 0) null else String.format(
                 Locale.getDefault(),
                 "%d:%02d:%02d",
                 duration / 3600,
@@ -1189,7 +1186,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
     }
 
-    private fun startScreenShare(mediaProjection: MediaProjection) {
+    private fun startScreenShare(mediaProjection: MediaProjection?) {
         if (presenter.startScreenShare(mediaProjection)) {
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
@@ -1324,8 +1321,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         if (pluginsModeFirst) {
             // Init
             val callMediaHandlers = JamiService.getCallMediaHandlers()
-            val videoPluginsItems: MutableList<Drawable?> = ArrayList(callMediaHandlers.size + 1)
-            videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24))
+            val videoPluginsItems: MutableList<Drawable> = ArrayList(callMediaHandlers.size + 1)
+            videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24)!!)
             // Search for plugin call media handlers icons
             // If a call media handler doesn't have an icon use a standard android icon
             for (callMediaHandler in callMediaHandlers) {
@@ -1333,10 +1330,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 var drawablePath = details["iconPath"]
                 if (drawablePath != null && drawablePath.endsWith("svg")) drawablePath =
                     drawablePath.replace(".svg", ".png")
-                var handlerIcon = Drawable.createFromPath(drawablePath)
-                if (handlerIcon == null) {
-                    handlerIcon = context.getDrawable(R.drawable.ic_jami)
-                }
+                val handlerIcon = Drawable.createFromPath(drawablePath) ?: context.getDrawable(R.drawable.ic_jami)!!
                 videoPluginsItems.add(handlerIcon)
             }
             rp!!.updateData(videoPluginsItems)
