@@ -36,7 +36,7 @@ interface NotificationService {
     fun cancelFileNotification(id: Int, isMigratingToService: Boolean)
     fun handleDataTransferNotification(transfer: DataTransfer, contact: Conversation, remove: Boolean)
     fun removeTransferNotification(accountId: String, conversationUri: Uri, fileId: String)
-    fun getDataTransferNotification(notificationId: Int): Any
+    fun getDataTransferNotification(notificationId: Int): Any?
 
     //void updateNotification(Object notification, int notificationId);
     val serviceNotification: Any

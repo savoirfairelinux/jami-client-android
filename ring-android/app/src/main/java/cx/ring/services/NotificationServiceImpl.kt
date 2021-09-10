@@ -77,6 +77,7 @@ class NotificationServiceImpl(
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
+
     @SuppressLint("CheckResult")
     fun initHelper() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -124,43 +125,30 @@ class NotificationServiceImpl(
                 .addAction(
                     R.drawable.baseline_call_end_24,
                     mContext.getText(R.string.action_call_hangup),
-                    PendingIntent.getService(
-                        mContext, random.nextInt(),
+                    PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                        PendingIntent.FLAG_ONE_SHOT
-                    )
+                        PendingIntent.FLAG_ONE_SHOT)
                 )
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
-                messageNotificationBuilder =
-                    NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
-                messageNotificationBuilder.setContentTitle(
-                    mContext.getString(
-                        R.string.notif_incoming_call_title,
-                        contact.displayName
-                    )
-                )
+                messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentText(mContext.getText(R.string.notif_incoming_call))
                     .setContentIntent(gotoIntent)
                     .setSound(null)
                     .setVibrate(null)
                     .setFullScreenIntent(gotoIntent, true)
-                    .addAction(
-                        R.drawable.baseline_call_end_24,
+                    .addAction(R.drawable.baseline_call_end_24,
                         mContext.getText(R.string.action_call_decline),
-                        PendingIntent.getService(
-                            mContext, random.nextInt(),
+                        PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_REFUSE)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                            PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
-                    .addAction(
-                        R.drawable.baseline_call_24,
+                            PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.baseline_call_24,
                         if (ongoingCallId == null)
                             mContext.getText(R.string.action_call_accept)
                         else
@@ -175,18 +163,15 @@ class NotificationServiceImpl(
                         )
                     )
                 if (ongoingCallId != null) {
-                    messageNotificationBuilder.addAction(
-                        R.drawable.baseline_call_24,
+                    messageNotificationBuilder.addAction(R.drawable.baseline_call_24,
                         mContext.getText(R.string.action_call_hold_accept),
-                        PendingIntent.getService(
-                            mContext, random.nextInt(),
+                        PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_HOLD_ACCEPT)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
                             PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
+                        ))
                 }
             } else {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
@@ -198,8 +183,7 @@ class NotificationServiceImpl(
                     .setVibrate(null)
                     .setColorized(true)
                     .setColor(ContextCompat.getColor(mContext, R.color.color_primary_light))
-                    .addAction(
-                        R.drawable.baseline_call_end_24,
+                    .addAction(R.drawable.baseline_call_end_24,
                         mContext.getText(R.string.action_call_hangup),
                         PendingIntent.getService(
                             mContext, random.nextInt(),
@@ -207,8 +191,7 @@ class NotificationServiceImpl(
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
                             PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
+                        ))
             }
         } else {
             return null
@@ -226,38 +209,19 @@ class NotificationServiceImpl(
 
     override fun showLocationNotification(first: Account, contact: Contact) {
         val path = ConversationPath.toUri(first.accountID, contact.uri)
-        val intentConversation =
-            Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
+        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
                 .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
-        val messageNotificationBuilder = NotificationCompat.Builder(
-            mContext, NOTIF_CHANNEL_MESSAGE
-        )
+        val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setLargeIcon(getContactPicture(contact))
-            .setContentText(
-                mContext.getString(
-                    R.string.location_share_contact,
-                    contact.displayName
-                )
-            )
-            .setContentIntent(
-                PendingIntent.getActivity(
-                    mContext,
-                    random.nextInt(),
-                    intentConversation,
-                    0
-                )
-            )
+            .setContentText(mContext.getString(R.string.location_share_contact, contact.displayName))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, 0))
             .setAutoCancel(false)
-            .setColor(ResourcesCompat.getColor(
-                    mContext.resources,
-                    R.color.color_primary_dark,
-                    null
-                ))
+            .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         notificationManager.notify(
             Objects.hash("Location", path),
             messageNotificationBuilder.build()
@@ -289,10 +253,8 @@ class NotificationServiceImpl(
      * @param id            the notification id
      */
     private fun startForegroundService(id: Int, serviceClass: Class<*>) {
-        ContextCompat.startForegroundService(
-            mContext, Intent(mContext, serviceClass)
-                .putExtra(NotificationService.KEY_NOTIFICATION_ID, id)
-        )
+        ContextCompat.startForegroundService(mContext, Intent(mContext, serviceClass)
+            .putExtra(NotificationService.KEY_NOTIFICATION_ID, id))
     }
 
     /**
@@ -387,26 +349,12 @@ class NotificationServiceImpl(
         dataTransferNotifications.remove(id)
         cancelFileNotification(id, false)
         if (dataTransferNotifications.isEmpty()) {
-            mContext.startService(
-                Intent(
-                    DataTransferService.ACTION_STOP,
-                    path,
-                    mContext,
-                    DataTransferService::class.java
-                )
-                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, id)
-            )
+            mContext.startService(Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService::class.java)
+                .putExtra(NotificationService.KEY_NOTIFICATION_ID, id))
         } else {
-            ContextCompat.startForegroundService(
-                mContext,
-                Intent(
-                    DataTransferService.ACTION_STOP,
-                    path,
-                    mContext,
-                    DataTransferService::class.java
-                )
-                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, id)
-            )
+            ContextCompat.startForegroundService(mContext,
+                Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService::class.java)
+                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, id))
         }
     }
 
@@ -414,8 +362,8 @@ class NotificationServiceImpl(
      * @param notificationId the notification id
      * @return the notification object for a data transfer notification
      */
-    override fun getDataTransferNotification(notificationId: Int): Notification {
-        return dataTransferNotifications[notificationId]!!
+    override fun getDataTransferNotification(notificationId: Int): Notification? {
+        return dataTransferNotifications[notificationId]
     }
 
     override fun showTextNotification(accountId: String, conversation: Conversation) {
