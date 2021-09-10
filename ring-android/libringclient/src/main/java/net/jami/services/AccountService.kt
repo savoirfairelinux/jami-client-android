@@ -24,6 +24,7 @@ package net.jami.services
 import com.google.gson.JsonParser
 import ezvcard.Ezvcard
 import ezvcard.VCard
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -1389,6 +1390,11 @@ class AccountService(
         interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (StringUtils.isEmpty(parent)) null else parent)
         interaction.conversation = conversation
+        if (interaction is DataTransfer && interaction.status == InteractionStatus.FILE_AVAILABLE) {
+            // This will trigger auto acceptation on shown
+            dataTransfers.onNext(interaction as @NonNull DataTransfer?);
+        }
+
         if (conversation.addSwarmElement(interaction)) {
             /*if (conversation.isVisible)
                 mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
