@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bab4ee23_1b4f2d9b",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-09-10T11:21:54Z",
+      "side": 1,
+      "message": "The interaction is a swarm element if interaction.messageId is not empty\n\nCheck interaction.messageId instead (might also be checked through a new method Interaction.isSwarm() that would return `!isEmpty(messageId)`).",
+      "range": {
+        "startLine": 852,
+        "startChar": 16,
+        "endLine": 852,
+        "endChar": 34
+      },
+      "revId": "d3e63fc8ec40411f1c44570659b7adbfa7c8ddef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9113cf5_03162fad",
+        "filename": "ring-android/libringclient/src/main/java/net/jami/conversation/ConversationPresenter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-09-10T11:21:54Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "d3e63fc8ec40411f1c44570659b7adbfa7c8ddef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
