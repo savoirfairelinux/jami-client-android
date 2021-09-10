@@ -495,27 +495,32 @@ class ConversationFacade(
         val conversationId = call.conversationId
         Log.w(TAG, "CallStateChange " + call.daemonIdString + " conversationId:" + conversationId)
         val conversation = if (conversationId == null)
-            if (contact == null) return else account.getByUri(contact.uri)!!
+            if (contact == null) null else account.getByUri(contact.uri)
         else
-            account.getSwarm(conversationId) ?: return
-        val conference: Conference = conversation.getConference(call.daemonIdString) ?: Conference(call).apply {
+            account.getSwarm(conversationId)
+        val conference = if (conversation != null) (conversation.getConference(call.daemonIdString) ?: Conference(call).apply {
             if (newState === CallStatus.OVER) return@onCallStateChange
             conversation.addConference(this)
             account.updated(conversation)
-        }
+        }) else null
+
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to $newState")
         if ((call.isRinging || newState === CallStatus.CURRENT) && call.timestamp == 0L) {
             call.timestamp = System.currentTimeMillis()
         }
         if (incomingCall) {
-            mNotificationService.handleCallNotification(conference, false)
+            mNotificationService.handleCallNotification(conference!!, false)
             mHardwareService.setPreviewSettings()
         } else if (newState === CallStatus.CURRENT && call.isIncoming
             || newState === CallStatus.RINGING && !call.isIncoming) {
-            mNotificationService.handleCallNotification(conference, false)
+            mNotificationService.handleCallNotification(conference!!, false)
             mAccountService.sendProfile(call.daemonIdString!!, call.account!!)
         } else if (newState === CallStatus.HUNGUP || newState === CallStatus.BUSY || newState === CallStatus.FAILURE || newState === CallStatus.OVER) {
-            mNotificationService.handleCallNotification(conference, true)
+            if (conference != null)
+                mNotificationService.handleCallNotification(conference, true)
+            else {
+                mNotificationService.removeCallNotification(call.id)
+            }
             mHardwareService.closeAudioState()
             val now = System.currentTimeMillis()
             if (call.timestamp == 0L) {

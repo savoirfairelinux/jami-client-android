@@ -25,6 +25,7 @@ import net.jami.model.*
 interface NotificationService {
     fun showCallNotification(callId: Int): Any?
     fun cancelCallNotification()
+    fun removeCallNotification(callId: Int)
     fun handleCallNotification(conference: Conference, remove: Boolean)
     fun showMissedCallNotification(call: Call)
     fun showTextNotification(accountId: String, conversation: Conversation)
