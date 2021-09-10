@@ -21,6 +21,7 @@
 package cx.ring.tv.call
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PictureInPictureParams
 import android.content.ComponentName
@@ -575,6 +576,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             binding.confControlGroup!!.visibility = View.VISIBLE
             if (confAdapter == null) {
                 confAdapter = ConfParticipantAdapter(object : ConfParticipantSelected {
+                    @SuppressLint("RestrictedApi")
                     override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
                         val context = requireContext()
                         val popup = PopupMenu(context, view)
