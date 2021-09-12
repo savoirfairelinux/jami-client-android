@@ -367,8 +367,8 @@ class AccountService(
         return null
     }
 
-    fun getNewAccountName(prefix: String?): String {
-        var name = String.format(prefix!!, "").trim { it <= ' ' }
+    fun getNewAccountName(prefix: String): String {
+        var name = String.format(prefix, "").trim { it <= ' ' }
         if (getAccountByName(name) == null) {
             return name
         }
@@ -472,7 +472,7 @@ class AccountService(
             mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
         }
 
-    fun subscribeBuddy(accountID: String?, uri: String?, flag: Boolean) {
+    fun subscribeBuddy(accountID: String, uri: String, flag: Boolean) {
         mExecutor.execute { JamiService.subscribeBuddy(accountID, uri, flag) }
     }
 
@@ -505,7 +505,7 @@ class AccountService(
             }) { e: Throwable -> Log.w(TAG, "Not sending empty profile", e) }
     }
 
-    fun setMessageDisplayed(accountId: String?, conversationUri: Uri, messageId: String?) {
+    fun setMessageDisplayed(accountId: String?, conversationUri: Uri, messageId: String) {
         mExecutor.execute { JamiService.setMessageDisplayed(accountId, conversationUri.uri, messageId, 3) }
     }
 
@@ -597,7 +597,7 @@ class AccountService(
         mExecutor.execute { JamiService.setAccountDetails(accountId, StringMap.toSwig(map)) }
     }
 
-    fun migrateAccount(accountId: String, password: String): Single<String?> {
+    fun migrateAccount(accountId: String, password: String): Single<String> {
         return mMigrationSubject
             .filter { r: MigrationResult -> r.accountId == accountId }
             .map { r: MigrationResult -> r.state }
@@ -610,14 +610,14 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
     }
 
-    fun setAccountEnabled(accountId: String?, active: Boolean) {
+    fun setAccountEnabled(accountId: String, active: Boolean) {
         mExecutor.execute { JamiService.sendRegister(accountId, active) }
     }
 
     /**
      * Sets the activation state of the account in the Daemon
      */
-    fun setAccountActive(accountId: String?, active: Boolean) {
+    fun setAccountActive(accountId: String, active: Boolean) {
         mExecutor.execute { JamiService.setAccountActive(accountId, active) }
     }
 
@@ -1771,15 +1771,11 @@ class AccountService(
             return dataTransferEventCode
         }
 
-        private fun getDataTransferError(errorCode: Long?): DataTransferError {
-            if (errorCode == null) {
-                Log.e(TAG, "getDataTransferError: invalid error code")
-            } else {
-                try {
-                    return DataTransferError.values()[errorCode.toInt()]
-                } catch (ignored: ArrayIndexOutOfBoundsException) {
-                    Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
-                }
+        private fun getDataTransferError(errorCode: Long): DataTransferError {
+            try {
+                return DataTransferError.values()[errorCode.toInt()]
+            } catch (ignored: ArrayIndexOutOfBoundsException) {
+                Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
             }
             return DataTransferError.UNKNOWN
         }

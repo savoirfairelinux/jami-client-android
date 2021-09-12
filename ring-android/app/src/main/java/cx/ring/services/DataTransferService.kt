@@ -34,9 +34,10 @@ import java.util.HashSet
 
 @AndroidEntryPoint
 class DataTransferService : Service() {
+
     @Inject
     lateinit var mNotificationService: NotificationService
-    private var notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(this)
+    private lateinit var notificationManager: NotificationManagerCompat
     private var started = false
     private var serviceNotificationId = 0
     private val serviceNotifications: MutableSet<Int> = HashSet()
@@ -94,7 +95,7 @@ class DataTransferService : Service() {
 
     override fun onCreate() {
         Log.d(TAG, "OnCreate(), DataTransferService has been initialized")
-        //notificationManager = NotificationManagerCompat.from(this)
+        notificationManager = NotificationManagerCompat.from(this)
         super.onCreate()
     }
 

@@ -17,37 +17,22 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.main;
+package cx.ring.tv.main
 
-import java.util.List;
+import net.jami.model.Account
+import net.jami.navigation.HomeNavigationViewModel
+import net.jami.smartlist.SmartListViewModel
 
-import net.jami.model.Account;
-import net.jami.navigation.HomeNavigationViewModel;
-import net.jami.smartlist.SmartListViewModel;
-import net.jami.model.Error;
-
-public interface MainView {
-
-    void showLoading(boolean show);
-
-    void refreshContact(int index, SmartListViewModel contact);
-
-    void showContacts(List<SmartListViewModel> contacts);
-
-    void showContactRequests(List<SmartListViewModel> contactRequests);
-
-    void callContact(String accountID, String ringID);
-
-    void displayAccountInfo(HomeNavigationViewModel viewModel);
-
-    void updateModel(Account account);
-
-    void showExportDialog(String pAccountID, boolean hasPassword);
-
-    void showProfileEditing();
-
-    void showAccountShare();
-
-    void showSettings();
-
+interface MainView {
+    fun showLoading(show: Boolean)
+    fun refreshContact(index: Int, contact: SmartListViewModel)
+    fun showContacts(contacts: List<SmartListViewModel>)
+    fun showContactRequests(contactRequests: List<SmartListViewModel>)
+    fun callContact(accountID: String, ringID: String)
+    fun displayAccountInfo(viewModel: HomeNavigationViewModel)
+    fun updateModel(account: Account)
+    fun showExportDialog(pAccountID: String, hasPassword: Boolean)
+    fun showProfileEditing()
+    fun showAccountShare()
+    fun showSettings()
 }

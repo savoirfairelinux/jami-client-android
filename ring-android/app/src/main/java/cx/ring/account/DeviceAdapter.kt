@@ -81,7 +81,7 @@ class DeviceAdapter(
     }
 
     interface DeviceRevocationListener {
-        fun onDeviceRevocationAsked(deviceId: String?)
+        fun onDeviceRevocationAsked(deviceId: String)
         fun onDeviceRename()
     }
 

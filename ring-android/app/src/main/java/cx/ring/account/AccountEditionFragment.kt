@@ -44,6 +44,8 @@ import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.account.AccountEditionPresenter
+import net.jami.account.AccountEditionView
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
@@ -71,7 +73,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             activity.setTabletTitle(R.string.navigation_item_account)
         }
         mBinding!!.fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this)
-        presenter.init(mAccountId)
+        presenter.init(mAccountId!!)
     }
 
     override fun displaySummary(accountId: String) {
@@ -268,9 +270,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
 
     companion object {
         private val TAG = AccountEditionFragment::class.simpleName
-        @JvmField
         val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountId"
-        @JvmField
         val ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment::class.qualifiedName + "hasPassword"
         private const val SCROLL_DIRECTION_UP = -1
     }

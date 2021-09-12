@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,22 +17,21 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package net.jami.settings;
+package cx.ring.tv.search
 
-import java.util.ArrayList;
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.FragmentActivity
+import android.os.Bundle
+import cx.ring.R
 
-import net.jami.model.Account;
-import net.jami.model.Codec;
+@AndroidEntryPoint
+class SearchActivity : FragmentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.tv_activity_search)
+    }
 
-public interface MediaPreferenceView {
-
-    void accountChanged(Account account, ArrayList<Codec> audioCodec, ArrayList<Codec> videoCodec);
-
-    void displayWrongFileFormatDialog();
-
-    void displayPermissionCameraDenied();
-
-    void displayFileSearchDialog();
-
-    void refresh(Account account);
+    override fun onSearchRequested(): Boolean {
+        return true
+    }
 }

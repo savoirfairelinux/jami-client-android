@@ -17,39 +17,28 @@
  * along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.utils
 
-package cx.ring.utils;
+import android.view.KeyEvent
 
-import android.view.KeyEvent;
-
-public class MediaButtonsHelper {
-
-    public static boolean handleMediaKeyCode(int keyCode, MediaButtonsHelperCallback mediaButtonsHelperCallback) {
-        boolean isHandledKey = false;
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_CALL:
-            case KeyEvent.KEYCODE_MEDIA_PLAY:
-            case KeyEvent.KEYCODE_ENTER:
-            case KeyEvent.KEYCODE_BUTTON_A:
-            case KeyEvent.KEYCODE_HOME:
-                mediaButtonsHelperCallback.positiveMediaButtonClicked();
-                isHandledKey = true;
-                break;
-            case KeyEvent.KEYCODE_ENDCALL:
-            case KeyEvent.KEYCODE_MEDIA_PAUSE:
-            case KeyEvent.KEYCODE_DEL:
-            case KeyEvent.KEYCODE_BUTTON_B:
-            case KeyEvent.KEYCODE_MEDIA_STOP:
-                mediaButtonsHelperCallback.negativeMediaButtonClicked();
-                isHandledKey = true;
-                break;
-            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-            case KeyEvent.KEYCODE_HEADSETHOOK:
-                mediaButtonsHelperCallback.toggleMediaButtonClicked();
-                isHandledKey = true;
-                break;
+object MediaButtonsHelper {
+    fun handleMediaKeyCode(keyCode: Int, mediaButtonsHelperCallback: MediaButtonsHelperCallback): Boolean {
+        var isHandledKey = false
+        when (keyCode) {
+            KeyEvent.KEYCODE_CALL, KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_BUTTON_A, KeyEvent.KEYCODE_HOME -> {
+                mediaButtonsHelperCallback.positiveMediaButtonClicked()
+                isHandledKey = true
+            }
+            KeyEvent.KEYCODE_ENDCALL, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_BUTTON_B, KeyEvent.KEYCODE_MEDIA_STOP -> {
+                mediaButtonsHelperCallback.negativeMediaButtonClicked()
+                isHandledKey = true
+            }
+            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK -> {
+                mediaButtonsHelperCallback.toggleMediaButtonClicked()
+                isHandledKey = true
+            }
         }
-        return isHandledKey;
+        return isHandledKey
     }
 
     /**
@@ -60,14 +49,11 @@ public class MediaButtonsHelper {
      * <tr><th>incoming call</th>      <td>accept</td>	       <td>refuse</td>          <td>/</td></tr>
      * <tr><th>outgoing call</th>      <td>hangup</td>         <td>hangup</td>	        <td>hangup</td></tr>
      * <tr><th>calling</th>	           <td>hangup</td>         <td>hangup</td>	        <td>hangup</td></tr>
-     * </table>
+    </table> *
      */
-
-    public interface MediaButtonsHelperCallback {
-        void positiveMediaButtonClicked();
-
-        void negativeMediaButtonClicked();
-
-        void toggleMediaButtonClicked();
+    interface MediaButtonsHelperCallback {
+        fun positiveMediaButtonClicked()
+        fun negativeMediaButtonClicked()
+        fun toggleMediaButtonClicked()
     }
 }

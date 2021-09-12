@@ -44,7 +44,7 @@ import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
-import cx.ring.utils.DeviceUtils.isTv
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.services.ConversationFacade
@@ -244,7 +244,6 @@ class DRingService : Service() {
         }
         when (action) {
             ACTION_CALL_ACCEPT -> {
-                mNotificationService.cancelCallNotification()
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
@@ -252,7 +251,6 @@ class DRingService : Service() {
             }
             ACTION_CALL_HOLD_ACCEPT -> {
                 val holdId = extras.getString(NotificationService.KEY_HOLD_ID)!!
-                mNotificationService.cancelCallNotification()
                 mCallService.hold(holdId)
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
@@ -261,7 +259,6 @@ class DRingService : Service() {
             }
             ACTION_CALL_END_ACCEPT -> {
                 val endId = extras.getString(NotificationService.KEY_END_ID)!!
-                mNotificationService.cancelCallNotification()
                 mCallService.hangUp(endId)
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
@@ -277,22 +274,10 @@ class DRingService : Service() {
                 mHardwareService.closeAudioState()
             }
             ACTION_CALL_VIEW -> {
-                mNotificationService.cancelCallNotification()
-                if (isTv(this)) {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW)
-                            .putExtras(extras)
-                            .setClass(applicationContext, TVCallActivity::class.java)
-                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    )
-                } else {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW)
-                            .putExtras(extras)
-                            .setClass(applicationContext, CallActivity::class.java)
-                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    )
-                }
+                startActivity(Intent(Intent.ACTION_VIEW)
+                    .putExtras(extras)
+                    .setClass(applicationContext, if (DeviceUtils.isTv(this)) TVCallActivity::class.java else CallActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
         }
     }

@@ -251,9 +251,9 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun sendFile(file: File) {
-        mConversationSubject.firstElement().subscribe({ conversation ->
+        mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
             mConversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
-        }) {e -> Log.e(TAG, "Can't send file", e)}
+        }) {e -> Log.e(TAG, "Can't send file", e)})
     }
 
     /**
@@ -394,7 +394,8 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun shareLocation() {
-        view?.startShareLocation(mConversation!!.accountId, mConversationUri!!.uri)
+        mCompositeDisposable.add(mConversationSubject.firstElement()
+            .subscribe { conversation -> view?.startShareLocation(conversation.accountId, conversation.uri.uri) })
     }
 
     fun showPluginListHandlers() {

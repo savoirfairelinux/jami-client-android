@@ -442,9 +442,9 @@ class ConversationFacade(
             }
             if (mPreferencesService.settings.isAllowReadIndicator) {
                 if (txt.messageId != null) {
-                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.SWARM_SCHEME, txt.conversationId!!), txt.messageId)
+                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.SWARM_SCHEME, txt.conversationId!!), txt.messageId!!)
                 } else {
-                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.JAMI_URI_SCHEME, txt.author!!), txt.daemonIdString)
+                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.JAMI_URI_SCHEME, txt.author!!), txt.daemonIdString!!)
                 }
             }
         }

@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,20 +14,19 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.account;
+package net.jami.settings
 
-public interface AccountEditionView {
+import net.jami.model.Account
+import net.jami.model.Codec
+import java.util.*
 
-    void exit();
-
-    void displaySummary(String accountId);
-
-    void initViewPager(String accountId, boolean isRing);
-
-    void goToBlackList(String accountId);
-
-    void displaySIPView(String accountID);
-
+interface MediaPreferenceView {
+    fun accountChanged(account: Account, audioCodec: ArrayList<Codec>, videoCodec: ArrayList<Codec>)
+    fun displayWrongFileFormatDialog()
+    fun displayPermissionCameraDenied()
+    fun displayFileSearchDialog()
+    fun refresh(account: Account)
 }

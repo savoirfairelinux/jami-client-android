@@ -132,7 +132,7 @@ class JamiAccountSummaryFragment :
             presenter.setAccountId(arguments.getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
         }
         mBinding!!.scrollview.viewTreeObserver.addOnScrollChangedListener(this)
-        mBinding!!.linkNewDevice.setOnClickListener { v: View? -> showWizard(mAccountId) }
+        mBinding!!.linkNewDevice.setOnClickListener { v: View? -> showWizard(mAccountId!!) }
         mBinding!!.linkedDevices.setRightDrawableOnClickListener { v: View? -> onDeviceRename() }
         mBinding!!.registerName.setOnClickListener { v: View? -> showUsernameRegistrationPopup() }
         val items: MutableList<SettingItem> = ArrayList(4)
@@ -268,7 +268,7 @@ class JamiAccountSummaryFragment :
         return false
     }
 
-    private fun showWizard(accountId: String?) {
+    private fun showWizard(accountId: String) {
         LinkDeviceFragment.newInstance(accountId)
             .show(parentFragmentManager, LinkDeviceFragment.TAG)
     }
@@ -438,10 +438,9 @@ class JamiAccountSummaryFragment :
 
     override fun askCameraPermission() {
         requestPermissions(arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ), HomeActivity.REQUEST_PERMISSION_CAMERA
-        )
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ), HomeActivity.REQUEST_PERMISSION_CAMERA)
     }
 
     override fun goToGallery() {
@@ -495,9 +494,7 @@ class JamiAccountSummaryFragment :
     override fun onScrollChanged() {
         if (mBinding != null) {
             val activity = activity
-            if (activity is HomeActivity) activity.setToolbarElevation(
-                mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP)
-            )
+            if (activity is HomeActivity) activity.setToolbarElevation(mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
         }
     }
 
@@ -643,7 +640,7 @@ class JamiAccountSummaryFragment :
         presenter.revokeDevice(deviceId, password)
     }
 
-    override fun onDeviceRevocationAsked(deviceId: String?) {
+    override fun onDeviceRevocationAsked(deviceId: String) {
         ConfirmRevocationDialog().apply {
             arguments = Bundle().apply {
                 putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId)

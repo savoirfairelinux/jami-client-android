@@ -60,8 +60,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragmentCompat preferenceFragment, Preference preference) {
         final Bundle args = preference.getExtras();
-        final Fragment f = getChildFragmentManager().getFragmentFactory().instantiate(
-                requireActivity().getClassLoader(), preference.getFragment());
+        final Fragment f = getChildFragmentManager().getFragmentFactory().instantiate(requireActivity().getClassLoader(), preference.getFragment());
         f.setArguments(args);
         f.setTargetFragment(preferenceFragment, 0);
         if (f instanceof PreferenceFragmentCompat

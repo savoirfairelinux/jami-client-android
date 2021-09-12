@@ -59,9 +59,9 @@ class ContactSearchPresenter @Inject constructor(
             val uri = fromString(query)
             if (uri.isHexId) {
                 mContact = currentAccount.getContactFromCache(uri)
-                view!!.displayContact(currentAccount.accountID, mContact)
+                view?.displayContact(currentAccount.accountID, mContact!!)
             } else {
-                view!!.clearSearch()
+                view?.clearSearch()
                 contactQuery.onNext(query)
             }
         }
@@ -72,14 +72,14 @@ class ContactSearchPresenter @Inject constructor(
             0 -> {
                 // on found
                 mContact = account.getContactFromCache(address!!).apply { setUsername(name) }
-                view?.displayContact(account.accountID, mContact)
+                view?.displayContact(account.accountID, mContact!!)
             }
             1 -> {
                 // invalid name
                 val uriName = fromString(name)
                 if (uriName.isHexId) {
                     mContact = account.getContactFromCache(uriName)
-                    view?.displayContact(account.accountID, mContact)
+                    view?.displayContact(account.accountID, mContact!!)
                 } else {
                     view?.clearSearch()
                 }
@@ -89,7 +89,7 @@ class ContactSearchPresenter @Inject constructor(
                 val uriAddress = fromString(address!!)
                 if (uriAddress.isHexId) {
                     mContact = account.getContactFromCache(uriAddress)
-                    view?.displayContact(account.accountID, mContact)
+                    view?.displayContact(account.accountID, mContact!!)
                 } else {
                     view?.clearSearch()
                 }

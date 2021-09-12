@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,25 +17,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.search;
+package cx.ring.tv.search
 
-import android.os.Bundle;
+import net.jami.model.Contact
+import net.jami.smartlist.SmartListViewModel
 
-import androidx.fragment.app.FragmentActivity;
-
-import cx.ring.R;
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
-public class SearchActivity extends FragmentActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_activity_search);
-    }
-
-    @Override
-    public boolean onSearchRequested() {
-        return true;
-    }
+interface ContactSearchView {
+    fun displayContact(accountId: String, contact: Contact)
+    fun clearSearch()
+    fun startCall(accountID: String, number: String)
+    fun displayContactDetails(model: SmartListViewModel)
 }

@@ -14,22 +14,14 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.tv.search;
+package net.jami.account
 
-import net.jami.model.Contact;
-import net.jami.model.Error;
-import net.jami.smartlist.SmartListViewModel;
-
-public interface ContactSearchView {
-
-    void displayContact(String accountId, Contact contact);
-
-    void clearSearch();
-
-    void startCall(String accountID, String number);
-
-    void displayContactDetails(SmartListViewModel model);
+interface AccountEditionView {
+    fun exit()
+    fun displaySummary(accountId: String)
+    fun initViewPager(accountId: String, isJami: Boolean)
+    fun goToBlackList(accountId: String)
+    fun displaySIPView(accountId: String)
 }

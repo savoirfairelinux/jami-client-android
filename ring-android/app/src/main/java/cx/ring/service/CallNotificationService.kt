@@ -33,8 +33,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CallNotificationService : Service() {
+
     @Inject
     lateinit var mNotificationService: NotificationService
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         if (ACTION_START == intent.action) {
