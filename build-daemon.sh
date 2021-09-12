@@ -85,7 +85,7 @@ make .gas
 # Generate JNI interface
 JNIDIR=$DAEMON_DIR/bin/jni
 cd $JNIDIR
-PACKAGEDIR=$ANDROID_APP_DIR/libringclient/src/main/java/net/jami/daemon $JNIDIR/make-swig.sh
+PACKAGEDIR=$ANDROID_APP_DIR/libjamiclient/src/main/java/net/jami/daemon $JNIDIR/make-swig.sh
 
 # Setup cross-compilation build environemnt
 export AR=$TOOLCHAIN/bin/llvm-ar

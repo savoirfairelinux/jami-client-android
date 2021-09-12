@@ -1,1 +1,1 @@
-include ':app', ':libringclient'
+include ':app', ':libjamiclient'
