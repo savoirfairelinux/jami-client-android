@@ -190,8 +190,8 @@
   <string name="conversation_type_group">Grup</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adaugi %1$s?</string>
-  <string name="prompt_new_password">Parolă nouă</string>
-  <string name="prompt_new_password_optional">Parolă nouă (facultativ)</string>
+  <string name="prompt_new_password">Parola nouă</string>
+  <string name="prompt_new_password_optional">Parola nouă (facultativ)</string>
   <string name="prompt_new_password_repeat">Repetă parola nouă</string>
   <string name="account_create_title">Creează un cont Jami</string>
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
@@ -313,7 +313,7 @@
   <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău în acest aparat</string>
   <string name="wizard_password_button">Alege parola</string>
   <string name="wizard_password_skip">Creează contul</string>
-  <string name="wizard_password_switch">Cifrează contul cu parolă</string>
+  <string name="wizard_password_switch">Cifrează contul cu o parolă</string>
   <string name="wizard_password_warning">Reține că parola nu poate fi recuperată</string>
   <string name="wizard_profile_info">Profilul este distribuit doar contactelor</string>
   <string name="wizard_profile_button">Salvează Profilul</string>
