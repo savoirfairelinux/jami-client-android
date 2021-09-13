@@ -133,16 +133,18 @@ class Call : Interaction {
         mIsRead = 1
     }
 
-    constructor(daemonId: String?, call_details: Map<String?, String>) : this(
-        daemonId, call_details[KEY_ACCOUNT_ID], call_details[KEY_PEER_NUMBER], Direction.fromInt(
-            call_details[KEY_CALL_TYPE]!!.toInt()
-        ), System.currentTimeMillis()
-    ) {
+    constructor(daemonId: String?, call_details: Map<String, String>) : this(
+        daemonId,
+        call_details[KEY_ACCOUNT_ID],
+        call_details[KEY_PEER_NUMBER],
+        Direction.fromInt(call_details[KEY_CALL_TYPE]!!.toInt()),
+        System.currentTimeMillis())
+    {
         setCallState(CallStatus.fromString(call_details[KEY_CALL_STATE]))
         setDetails(call_details)
     }
 
-    fun setDetails(details: Map<String?, String>) {
+    fun setDetails(details: Map<String, String>) {
         isPeerHolding = "true" == details[KEY_PEER_HOLDING]
         isAudioMuted = "true" == details[KEY_AUDIO_MUTED]
         isVideoMuted = "true" == details[KEY_VIDEO_MUTED]

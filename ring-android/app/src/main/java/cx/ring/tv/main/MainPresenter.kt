@@ -86,7 +86,7 @@ class MainPresenter @Inject constructor(
     }
 
     fun onExportClicked() {
-        view?.showExportDialog(mAccountService.currentAccount!!.accountID, mAccountService.currentAccount!!.hasPassword())
+        view?.showExportDialog(mAccountService.currentAccount!!.accountId, mAccountService.currentAccount!!.hasPassword())
     }
 
     fun onEditProfileClicked() {

@@ -32,8 +32,8 @@ import android.graphics.Color
 import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
-import android.text.TextUtils
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
@@ -41,6 +41,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.TextureView.SurfaceTextureListener
+import android.view.TextureView.VISIBLE
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -60,13 +61,16 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
 import cx.ring.fragments.ConversationFragment
+import cx.ring.linkpreview.LinkPreview
+import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.utils.GlideApp
 import cx.ring.utils.GlideOptions
 import cx.ring.utils.ResourceMapper
-import cx.ring.views.ConversationViewHolder
+import cx.ring.viewholders.ConversationViewHolder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
@@ -88,6 +92,7 @@ class ConversationAdapter(
     private val hPadding: Int
     private val vPadding: Int
     private val mPictureMaxSize: Int
+    private val mPreviewMaxSize: Int
     private val PICTURE_OPTIONS: GlideOptions
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     private var convColor = 0
@@ -268,14 +273,12 @@ class ConversationAdapter(
             conversationViewHolder.itemView.visibility = View.GONE
         } else {
             conversationViewHolder.itemView.visibility = View.VISIBLE
-            if (interaction.type == Interaction.InteractionType.TEXT) {
-                configureForTextMessage(conversationViewHolder, interaction, position)
-            } else if (interaction.type == Interaction.InteractionType.CALL) {
-                configureForCallInfo(conversationViewHolder, interaction)
-            } else if (interaction.type == Interaction.InteractionType.CONTACT) {
-                configureForContactEvent(conversationViewHolder, interaction)
-            } else if (interaction.type == Interaction.InteractionType.DATA_TRANSFER) {
-                configureForFileInfo(conversationViewHolder, interaction, position)
+            when (interaction.type) {
+                Interaction.InteractionType.TEXT -> configureForTextMessage(conversationViewHolder, interaction, position)
+                Interaction.InteractionType.CALL -> configureForCallInfo(conversationViewHolder, interaction)
+                Interaction.InteractionType.CONTACT -> configureForContactEvent(conversationViewHolder, interaction)
+                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(conversationViewHolder, interaction, position)
+                else -> {}
             }
         }
     }
@@ -469,8 +472,13 @@ class ConversationAdapter(
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = viewHolder.video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
-            p.width = width * mPictureMaxSize / maxDim
-            p.height = height * mPictureMaxSize / maxDim
+            if (maxDim != 0)  {
+                p.width = width * mPictureMaxSize / maxDim
+                p.height = height * mPictureMaxSize / maxDim
+            } else {
+                p.width = 0
+                p.height = 0
+            }
             viewHolder.video.layoutParams = p
         }
         if (viewHolder.video.isAvailable) {
@@ -677,7 +685,7 @@ class ConversationAdapter(
         val textMessage = interaction as TextMessage
         val contact = textMessage.contact  ?: return
         // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
-        val message = textMessage.body!!.trim { it <= ' ' }
+        val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
         val longPressView: View = convViewHolder.mMsgTxt
         longPressView.background.setTintList(null)
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
@@ -715,6 +723,7 @@ class ConversationAdapter(
         }
         val isTimeShown = hasPermanentTimeString(textMessage, position)
         val msgSequenceType = getMsgSequencing(position, isTimeShown)
+        convViewHolder.mAnswerLayout?.visibility = View.GONE
         if (StringUtils.isOnlyEmoji(message)) {
             convViewHolder.mMsgTxt.background.alpha = 0
             convViewHolder.mMsgTxt.textSize = 32.0f
@@ -728,10 +737,47 @@ class ConversationAdapter(
             convViewHolder.mMsgTxt.background.alpha = 255
             convViewHolder.mMsgTxt.textSize = 16f
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+
+            val cachedPreview = interaction.preview as Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
+                .flatMapSingle { url -> LinkPreview.load(url) }
+                .cache()
+                .apply { interaction.preview = this }
+
+            convViewHolder.compositeDisposable.add(cachedPreview
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ data ->
+                    Log.w(TAG, "got preview $data")
+                    if (data.isEmpty()) {
+                        return@subscribe
+                    }
+                    if (data.imageUrl.isNotEmpty()) {
+                        GlideApp.with(context)
+                            .load(data.imageUrl)
+                            .apply(GlideOptions().override(mPreviewMaxSize))
+                            .centerCrop()
+                            .into(convViewHolder.mImage)
+                        //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))
+                        convViewHolder.mImage.visibility = View.VISIBLE
+                    } else {
+                        convViewHolder.mImage.visibility = View.GONE
+                    }
+                    convViewHolder.mHistTxt.text = data.title
+                    if (data.description.isNotEmpty()) {
+                        convViewHolder.mHistDetailTxt.visibility = View.VISIBLE
+                        convViewHolder.mHistDetailTxt.text = data.description
+                    } else {
+                        convViewHolder.mHistDetailTxt.visibility = View.GONE
+                    }
+                    convViewHolder.mAnswerLayout.visibility = View.VISIBLE
+                    val url = Uri.parse(data.baseUrl)
+                    convViewHolder.mPreviewDomain.text = url.host
+                    convViewHolder.mAnswerLayout.setOnClickListener {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                    }
+                }) {e -> Log.e(TAG, "Can't load preview", e)})
         }
         convViewHolder.mMsgTxt.text = message
-        val endOfSeq =
-            msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         if (textMessage.isIncoming) {
             if (endOfSeq) {
                 convViewHolder.mAvatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
@@ -1110,6 +1156,7 @@ class ConversationAdapter(
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
         mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+        mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
         val corner = res.getDimension(R.dimen.conversation_message_radius).toInt()
         PICTURE_OPTIONS = GlideOptions()
             .transform(CenterInside())

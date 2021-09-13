@@ -1,30 +1,97 @@
 package cx.ring.linkpreview
 
+import android.util.Log
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jsoup.Jsoup
+import android.util.Patterns
+import io.reactivex.rxjava3.core.Maybe
 import org.jsoup.nodes.Document
+import kotlin.collections.ArrayList
 
 object LinkPreview {
-
-    fun loadPreviewData(url: String) : Single<PreviewData> {
-        return Single.fromCallable {
-            val doc = Jsoup.connect(url)
-                .userAgent("Mozilla")
-                .get()
-            val imageElements = doc.select("meta[property=og:image]")
-            if (imageElements.size > 0) {
-                var it = 0
-                var chosen: String? = ""
-                while ((chosen == null || chosen.isEmpty()) && it < imageElements.size) {
-                    chosen = imageElements[it].attr("content")
-                    it += 1
+    private fun extractUrls(input: String): List<String> {
+        Log.w("LinkPreview", "parsing $input")
+        val result: MutableList<String> = ArrayList()
+        val words = input.split("\\s+".toRegex())
+        for (word in words)
+            if (Patterns.WEB_URL.matcher(word).find()) {
+                if (!word.lowercase().contains("http://") && !word.lowercase().contains("https://")) {
+                    result.add("https://$word")
+                } else {
+                    result.add(word)
                 }
-                PreviewData(doc.title(), chosen ?: "", url)
-            } else {
-                PreviewData("", "", "")
             }
-        }.subscribeOn(Schedulers.io())
+        Log.w("LinkPreview", "found $result")
+        return result
+    }
+
+    fun getFirstUrl(input: String) : Maybe<String> {
+        return Maybe.fromCallable { extractUrls(input).firstOrNull() }
+    }
+
+    private fun getTile(doc: Document): String {
+        doc.selectFirst("meta[property=og:title]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        doc.selectFirst("meta[property=twitter:title]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        return doc.title()
+    }
+
+    private fun getDescription(doc: Document): String {
+        doc.selectFirst("meta[property=og:description]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        doc.selectFirst("meta[property=twitter:description]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        doc.selectFirst("meta[name=description]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        return ""
+    }
+
+    private fun getImage(doc: Document): String {
+        doc.selectFirst("meta[property=og:image]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        doc.selectFirst("link[rel=image_src]")
+            ?.attr("href")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        doc.selectFirst("meta[name=twitter:image]")
+            ?.attr("content")
+            ?.takeIf { it.isNotEmpty() }
+            ?.let { return it }
+        return ""
+    }
+
+    private fun loadUrl(url: String): Single<Document> {
+        return Single.create { e ->
+            try {
+                e.onSuccess(Jsoup.connect(url)
+                    .userAgent("Mozilla")
+                    .get())
+            } catch (ex: Exception) {
+                if (!e.isDisposed)
+                    e.onError(ex)
+            }
+        }
+    }
+
+    fun load(url: String): Single<PreviewData> {
+        Log.w("LinkPreview", "load $url")
+        return loadUrl(url)
+            .map { doc -> PreviewData(getTile(doc), getDescription(doc), getImage(doc), url) }
+            .subscribeOn(Schedulers.io())
     }
 
 }

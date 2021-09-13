@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.views;
+package cx.ring.viewholders;
 
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +49,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ImageView mIcon;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
+    public TextView mPreviewDomain;
     public View mLayout;
     public ViewGroup mAnswerLayout;
     public View btnAccept;
@@ -82,6 +83,11 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                     mMsgTxt = v.findViewById(R.id.msg_txt);
                     mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
                     mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
+                    mAnswerLayout = v.findViewById(R.id.link_preview);
+                    mImage = v.findViewById(R.id.link_preview_img);
+                    mHistTxt = v.findViewById(R.id.link_preview_title);
+                    mHistDetailTxt = v.findViewById(R.id.link_preview_description);
+                    mPreviewDomain = v.findViewById(R.id.link_preview_domain);
                     break;
                 case INCOMING_FILE:
                 case OUTGOING_FILE:

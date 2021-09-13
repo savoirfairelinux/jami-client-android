@@ -165,7 +165,7 @@ abstract class ContactService(
         val contact = account.getContactFromCache(uri)
         // TODO load system contact info into SIP contact
         if (account.isSip) {
-            loadContactData(contact, account.accountID).subscribe({}) { e: Throwable? ->
+            loadContactData(contact, account.accountId).subscribe({}) { e: Throwable? ->
                 Log.e(
                     TAG,
                     "Can't load contact data"

@@ -78,7 +78,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
     override fun accountChanged(account: Account) {
         val pm = preferenceManager
         pm.sharedPreferencesMode = Context.MODE_PRIVATE
-        pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_ACCOUNT + account.accountID
+        pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_ACCOUNT + account.accountId
         setPreferenceDetails(account.config)
         val pref = findPreference<SwitchPreference>("Account.status")
         if (account.isSip && pref != null) {

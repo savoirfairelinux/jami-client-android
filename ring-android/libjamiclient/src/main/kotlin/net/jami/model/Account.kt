@@ -34,7 +34,7 @@ import java.lang.IllegalStateException
 import java.util.*
 
 class Account(
-    val accountID: String,
+    val accountId: String,
     details: Map<String, String>,
     credentials: List<Map<String, String>>,
     volDetails: Map<String, String>
@@ -109,13 +109,11 @@ class Account(
                 val removed = cache.remove(key)
                 conversations.remove(key)
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
-                Log.w(
-                    TAG,
-                    "conversationStarted " + conversation.accountId + " contact " + key + " " + removed
-                )
+                Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
                 /*if (contactConversation != null) {
                     conversations.remove(contactConversation.getUri().getUri());
-                }*/contact.setConversationUri(conversation.uri)
+                }*/
+                contact.setConversationUri(conversation.uri)
             }
             conversations[conversation.uri.uri] = conversation
             conversationChanged()
@@ -126,14 +124,14 @@ class Account(
         synchronized(conversations) { return swarmConversations[conversationId] }
     }
 
-    fun newSwarm(conversationId: String, mode: Conversation.Mode?): Conversation {
+    fun newSwarm(conversationId: String, mode: Conversation.Mode): Conversation {
         synchronized(conversations) {
             var c = swarmConversations[conversationId]
             if (c == null) {
-                c = Conversation(accountID, Uri(Uri.SWARM_SCHEME, conversationId), mode!!)
+                c = Conversation(accountId, Uri(Uri.SWARM_SCHEME, conversationId), mode)
                 swarmConversations[conversationId] = c
             }
-            c.setMode(mode!!)
+            c.setMode(mode)
             return c
         }
     }
@@ -143,13 +141,10 @@ class Account(
         synchronized(conversations) {
             val conversation = swarmConversations.remove(conversationId)
             if (conversation != null) {
-                val c = conversations.remove(conversation.uri.uri)
                 try {
+                    val c = conversations.remove(conversation.uri.uri)
                     val contact = c!!.contact
-                    Log.w(
-                        TAG,
-                        "removeSwarm: adding back contact conversation " + contact + " " + contact!!.conversationUri.blockingFirst() + " " + c.uri
-                    )
+                    Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact!!.conversationUri.blockingFirst() + " " + c.uri)
                     if (contact.conversationUri.blockingFirst().equals(c.uri)) {
                         contact.setConversationUri(contact.uri)
                         contactAdded(contact)
@@ -353,7 +348,7 @@ class Account(
     fun addTextMessage(txt: TextMessage) {
         var conversation: Conversation? = null
         val daemonId = txt.daemonIdString
-        if (daemonId != null && !StringUtils.isEmpty(daemonId)) {
+        if (daemonId != null && daemonId.isNotEmpty()) {
             conversation = getConversationByCallId(daemonId)
         }
         if (conversation == null) {
@@ -388,16 +383,11 @@ class Account(
             var contact = mContactCache[key]
             if (contact == null) {
                 contact = if (isSip) Contact.buildSIP(Uri.fromString(key))
-                else Contact.build(key, isMe(key))
+                else Contact.build(key, username == key)
                 mContactCache[key] = contact
             }
             return contact
         }
-    }
-
-    fun isMe(uri: String): Boolean {
-        //Log.w(TAG, "isMe " + uri + " " + getUsername());
-        return username == uri
     }
 
     fun getContactFromCache(uri: Uri): Contact {
@@ -762,7 +752,7 @@ class Account(
     private fun getByKey(key: String): Conversation {
         cache[key]?.let { return it }
         val contact = getContactFromCache(key)
-        val conversation = Conversation(accountID, contact)
+        val conversation = Conversation(accountId, contact)
         //Log.w(TAG, "getByKey " + getAccountID() + " contact " + key);
         cache[key] = conversation
         return conversation
@@ -808,7 +798,7 @@ class Account(
     private fun contactAdded(contact: Contact?) {
         val uri = contact!!.uri
         val key = uri.uri
-        Log.w(TAG, "contactAdded " + accountID + " " + uri + " " + contact.conversationUri.blockingFirst())
+        Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
         if (!contact.conversationUri.blockingFirst().equals(uri)) {
             Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation")
             // Don't add conversation if we have a swarm conversation

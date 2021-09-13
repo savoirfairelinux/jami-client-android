@@ -34,7 +34,6 @@ import net.jami.model.Conversation.ElementStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import net.jami.utils.VCardUtils
 import java.io.File
 import javax.inject.Inject
@@ -152,7 +151,7 @@ class ConversationPresenter @Inject constructor(
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
             .observeOn(mUiScheduler)
-            .subscribe { uri: Uri -> init(uri, account.accountID) })
+            .subscribe { uri: Uri -> init(uri, account.accountId) })
         disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account),
             { isConnected: Boolean, a: Account -> isConnected || a.isRegistered })
             .observeOn(mUiScheduler)

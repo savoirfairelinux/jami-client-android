@@ -141,7 +141,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         return accountCreationModel.toVCard()
             .flatMap { vcard ->
                 account.loadedProfile = Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
-                VCardUtils.saveLocalProfileToDisk(vcard, account.accountID, filedir)
+                VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
             }
             .subscribeOn(Schedulers.io())
     }

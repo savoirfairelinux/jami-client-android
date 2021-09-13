@@ -59,7 +59,7 @@ class HomeNavigationPresenter @Inject constructor(
 
     fun saveVCardPhoto(photo: Single<Photo>) {
         val account = mAccountService.currentAccount!!
-        val accountId = account.accountID
+        val accountId = account.accountId
         val ringId = account.username
         val filesDir = mDeviceRuntimeService.provideFilesDir()
         mCompositeDisposable.add(Single.zip(
@@ -83,7 +83,7 @@ class HomeNavigationPresenter @Inject constructor(
 
     fun saveVCardFormattedName(username: String?) {
         val account = mAccountService.currentAccount!!
-        val accountId = account.accountID
+        val accountId = account.accountId
         val filesDir = mDeviceRuntimeService.provideFilesDir()
         mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
             .doOnSuccess { vcard: VCard ->
@@ -100,7 +100,7 @@ class HomeNavigationPresenter @Inject constructor(
     }
 
     fun saveVCard(account: Account, username: String?, photo: Single<Photo>) {
-        val accountId = account.accountID
+        val accountId = account.accountId
         val ringId = account.username
         val filesDir = mDeviceRuntimeService.provideFilesDir()
         mCompositeDisposable.add(Single.zip(

@@ -94,7 +94,7 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun startConversation(uri: Uri) {
-        view!!.goToConversation(mAccount!!.accountID, uri)
+        view!!.goToConversation(mAccount!!.accountId, uri)
     }
 
     fun copyNumber(smartListViewModel: SmartListViewModel) {
@@ -115,7 +115,7 @@ class SmartListPresenter @Inject constructor(
     fun clearConversation(uri: Uri?) {
         mCompositeDisposable.add(
             mConversationFacade
-                .clearHistory(mAccount!!.accountID, uri!!)
+                .clearHistory(mAccount!!.accountId, uri!!)
                 .subscribeOn(Schedulers.computation()).subscribe()
         )
     }
@@ -126,7 +126,7 @@ class SmartListPresenter @Inject constructor(
 
     fun removeConversation(uri: Uri) {
         mCompositeDisposable.add(
-            mConversationFacade.removeConversation(mAccount!!.accountID, uri)
+            mConversationFacade.removeConversation(mAccount!!.accountId, uri)
                 .subscribe())
     }
 

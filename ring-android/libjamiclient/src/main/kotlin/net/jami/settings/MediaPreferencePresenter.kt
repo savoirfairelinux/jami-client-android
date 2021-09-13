@@ -64,7 +64,7 @@ class MediaPreferencePresenter @Inject constructor(
     }
 
     fun codecChanged(codecs: ArrayList<Long>) {
-        mAccountService.setActiveCodecList(mAccount!!.accountID, codecs)
+        mAccountService.setActiveCodecList(mAccount!!.accountId, codecs)
     }
 
     fun videoPreferenceChanged(key: ConfigKey, newValue: Any) {
@@ -73,8 +73,8 @@ class MediaPreferencePresenter @Inject constructor(
     }
 
     private fun updateAccount() {
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 
     companion object {

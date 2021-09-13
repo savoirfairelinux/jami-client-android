@@ -62,8 +62,8 @@ class AdvancedAccountPresenter @Inject constructor(
     }
 
     private fun updateAccount() {
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 
     private fun adjustRtpRange(newValue: Int): String {

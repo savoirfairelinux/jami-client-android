@@ -79,13 +79,13 @@ class AccountService(
             // the current Account is now on the top of the list
             val accounts: List<Account> = mAccountList
             val orderedAccountIdList: MutableList<String> = ArrayList(accounts.size)
-            val selectedID = account.accountID
+            val selectedID = account.accountId
             orderedAccountIdList.add(selectedID)
             for (a in accounts) {
-                if (a.accountID == selectedID) {
+                if (a.accountId == selectedID) {
                     continue
                 }
-                orderedAccountIdList.add(a.accountID)
+                orderedAccountIdList.add(a.accountId)
             }
             setAccountOrder(orderedAccountIdList)
         }
@@ -254,7 +254,7 @@ class AccountService(
         val accountIds: List<String> = ArrayList(JamiService.getAccountList())
         val newAccounts: MutableList<Account> = ArrayList(accountIds.size)
         for (id in accountIds) {
-            for (acc in curList) if (acc.accountID == id) {
+            for (acc in curList) if (acc.accountId == id) {
                 newAccounts.add(acc)
                 break
             }
@@ -279,7 +279,7 @@ class AccountService(
         mAccountList = newAccounts
         synchronized(newAccounts) {
             for (account in newAccounts) {
-                val accountId = account.accountID
+                val accountId = account.accountId
                 if (account.isSip) {
                     hasSip = true
                 } else if (account.isJami) {
@@ -292,7 +292,7 @@ class AccountService(
                         val request = TrustRequest(accountId, requestInfo)
                         account.addRequest(request)
                     }
-                    val conversations: List<String> = JamiService.getConversations(account.accountID)
+                    val conversations: List<String> = JamiService.getConversations(account.accountId)
                     Log.w(TAG, accountId + " loading conversations: " + conversations.size)
                     for (conversationId in conversations) {
                         try {
@@ -326,7 +326,7 @@ class AccountService(
                             Log.w(TAG, "Error loading conversation", e)
                         }
                     }
-                    for (requestData in JamiService.getConversationRequests(account.accountID).toNative()) {
+                    for (requestData in JamiService.getConversationRequests(account.accountId).toNative()) {
                         /*for (Map.Entry<String, String> e : requestData.entrySet()) {
                             Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
                         }*/
@@ -335,7 +335,7 @@ class AccountService(
                         val request = account.getRequest(from)
                         if (request == null || conversationId != request.conversationId) {
                             val received = requestData["received"]
-                            account.addRequest(TrustRequest(account.accountID, from, java.lang.Long.decode(received) * 1000L, null, conversationId))
+                            account.addRequest(TrustRequest(account.accountId, from, java.lang.Long.decode(received) * 1000L, null, conversationId))
                         }
                     }
                     if (enabled) {
@@ -411,7 +411,7 @@ class AccountService(
         }
             .flatMap { account: Account ->
                 observableAccounts
-                    .filter { acc: Account? -> acc!!.accountID == account.accountID }
+                    .filter { acc: Account? -> acc!!.accountId == account.accountId }
                     .startWithItem(account)
             }
             .subscribeOn(Schedulers.from(mExecutor))
@@ -425,7 +425,7 @@ class AccountService(
      */
     fun getAccount(accountId: String?): Account? {
         if (!StringUtils.isEmpty(accountId)) {
-            synchronized(mAccountList) { for (account in mAccountList) if (accountId == account.accountID) return account }
+            synchronized(mAccountList) { for (account in mAccountList) if (accountId == account.accountId) return account }
         }
         return null
     }
@@ -435,7 +435,7 @@ class AccountService(
             .firstOrError()
             .map { accounts: List<Account> ->
                 for (account in accounts) {
-                    if (account.accountID == accountId) {
+                    if (account.accountId == accountId) {
                         return@map account
                     }
                 }
@@ -448,7 +448,7 @@ class AccountService(
         get() = accountsSubject
 
     fun getObservableAccountUpdates(accountId: String): Observable<Account> {
-        return observableAccounts.filter { acc -> acc.accountID == accountId }
+        return observableAccounts.filter { acc -> acc.accountId == accountId }
     }
 
     fun getObservableAccountProfile(accountId: String): Observable<Pair<Account, Profile>> {
@@ -632,9 +632,9 @@ class AccountService(
                     // If the proxy is enabled we can considered the account
                     // as always active
                     if (a.isDhtProxyEnabled) {
-                        JamiService.setAccountActive(a.accountID, true)
+                        JamiService.setAccountActive(a.accountId, true)
                     } else {
-                        JamiService.setAccountActive(a.accountID, active)
+                        JamiService.setAccountActive(a.accountId, active)
                     }
                 }
             }
@@ -890,7 +890,7 @@ class AccountService(
             return
         }
         account.registeringUsername = true
-        registerName(account.accountID, password ?: "", name)
+        registerName(account.accountId, password ?: "", name)
     }
 
     /**
@@ -1093,10 +1093,10 @@ class AccountService(
         val account = getAccount(accountId) ?: return
         val oldState = account.registrationState
         if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) && !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-            account.setDetails(JamiService.getAccountDetails(account.accountID).toNative())
-            account.setCredentials(JamiService.getCredentials(account.accountID).toNative())
-            account.devices = JamiService.getKnownRingDevices(account.accountID).toNative()
-            account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountID).toNative())
+            account.setDetails(JamiService.getAccountDetails(account.accountId).toNative())
+            account.setCredentials(JamiService.getCredentials(account.accountId).toNative())
+            account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
+            account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
             account.setRegistrationState(newState, code)
         }
@@ -1211,7 +1211,7 @@ class AccountService(
             return
         }
         acc.registeringUsername = false
-        acc.setVolatileDetails(JamiService.getVolatileAccountDetails(acc.accountID).toNative())
+        acc.setVolatileDetails(JamiService.getVolatileAccountDetails(acc.accountId).toNative())
         if (state == 0) {
             acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name)
         }
@@ -1363,7 +1363,7 @@ class AccountService(
                 member.addedDate = Date(timestamp)
                 interaction = ContactEvent(member).setEvent(ContactEvent.Event.fromConversationAction(action))
             }
-            "text/plain" -> interaction = TextMessage(author, account.accountID, timestamp, conversation, message["body"]!!, !contact.isUser)
+            "text/plain" -> interaction = TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
             "application/data-transfer+json" -> {
                 try {
                     val fileName = message["displayName"]!!
@@ -1373,12 +1373,12 @@ class AccountService(
                     val paths = arrayOfNulls<String>(1)
                     val progressA = LongArray(1)
                     val totalA = LongArray(1)
-                    JamiService.fileTransferInfo(account.accountID, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
+                    JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
                     if (totalA[0] == 0L) {
                         totalA[0] = message["totalSize"]!!.toLong()
                     }
                     val path = File(paths[0]!!)
-                    interaction = DataTransfer(fileId, account.accountID, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0])
+                    interaction = DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0])
                     interaction.daemonPath = path
                     val isComplete = path.exists() && progressA[0] == totalA[0]
                     Log.w(TAG, "add DataTransfer at " + paths[0] + " with progress " + progressA[0] + "/" + totalA[0])
@@ -1389,7 +1389,7 @@ class AccountService(
                 }
             }
             "application/call-history+json" -> {
-                interaction = Call(null, account.accountID, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp)
+                interaction = Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp)
                 interaction.duration = message["duration"]!!.toLong()
             }
             "merge" -> interaction = Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1516,7 +1516,7 @@ class AccountService(
         val request = account.getRequest(contactUri)
         if (request == null || conversationId != request.conversationId) {
             val received = metadata["received"]
-            account.addRequest(TrustRequest(account.accountID, contactUri, java.lang.Long.decode(received) * 1000L, null, conversationId))
+            account.addRequest(TrustRequest(account.accountId, contactUri, java.lang.Long.decode(received) * 1000L, null, conversationId))
         }
     }
 
@@ -1642,7 +1642,7 @@ class AccountService(
         if (conversation == null) {
             val info = DataTransferInfo()
             val err =
-                getDataTransferError(JamiService.dataTransferInfo(account.accountID, fileId, info))
+                getDataTransferError(JamiService.dataTransferInfo(account.accountId, fileId, info))
             if (err != DataTransferError.SUCCESS) {
                 Log.d(TAG, "Data Transfer error getting details $err")
                 return
@@ -1657,7 +1657,7 @@ class AccountService(
             val paths = arrayOfNulls<String>(1)
             val progressA = LongArray(1)
             val totalA = LongArray(1)
-            JamiService.fileTransferInfo(account.accountID, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
+            JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
             progress = progressA[0]
             total = totalA[0]
             if (transfer == null && interactionId != null && interactionId.isNotEmpty()) {
@@ -1676,14 +1676,14 @@ class AccountService(
                 transfer = startingTransfer
                 mStartingTransfer = null
             } else {
-                transfer = DataTransfer(conversation, from, account.accountID, displayName,
+                transfer = DataTransfer(conversation, from, account.accountId, displayName,
                     outgoing, total,
                     progress, fileId
                 )
                 if (conversation!!.isSwarm) {
                     transfer.setSwarmInfo(conversation.uri.rawRingId, interactionId!!, null)
                 } else {
-                    mHistoryService.insertInteraction(account.accountID, conversation, transfer)
+                    mHistoryService.insertInteraction(account.accountId, conversation, transfer)
                         .blockingAwait()
                 }
             }
@@ -1720,7 +1720,7 @@ class AccountService(
             transfer.status = transferStatus
             transfer.bytesProgress = progress
             if (!conversation!!.isSwarm) {
-                mHistoryService.updateInteraction(transfer, account.accountID).subscribe()
+                mHistoryService.updateInteraction(transfer, account.accountId).subscribe()
             }
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
@@ -1738,11 +1738,11 @@ class AccountService(
             synchronized(mAccountList) {
                 for (acc in mAccountList) {
                     if (acc.isJami && acc.isDhtProxyEnabled != enabled) {
-                        Log.d(TAG, (if (enabled) "Enabling" else "Disabling") + " proxy for account " + acc.accountID)
+                        Log.d(TAG, (if (enabled) "Enabling" else "Disabling") + " proxy for account " + acc.accountId)
                         acc.isDhtProxyEnabled = enabled
-                        val details = JamiService.getAccountDetails(acc.accountID)
+                        val details = JamiService.getAccountDetails(acc.accountId)
                         details[ConfigKey.PROXY_ENABLED.key()] = if (enabled) "true" else "false"
-                        JamiService.setAccountDetails(acc.accountID, details)
+                        JamiService.setAccountDetails(acc.accountId, details)
                     }
                 }
             }
@@ -1757,7 +1757,7 @@ class AccountService(
         private const val PIN_GENERATION_WRONG_PASSWORD = 1
         private const val PIN_GENERATION_NETWORK_ERROR = 2
         private fun findAccount(accounts: List<Account?>, accountId: String): Account? {
-            for (account in accounts) if (accountId == account!!.accountID) return account
+            for (account in accounts) if (accountId == account!!.accountId) return account
             return null
         }
 

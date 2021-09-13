@@ -85,7 +85,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
             return
         }
         account.isEnabled = newValue
-        mAccountService.setAccountEnabled(account.accountID, newValue)
+        mAccountService.setAccountEnabled(account.accountId, newValue)
     }
 
     fun changePassword(oldPassword: String, newPassword: String) {

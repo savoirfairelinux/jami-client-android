@@ -478,7 +478,7 @@ class CallService(
             call.setCallState(callState)
             call.setDetails(JamiService.getCallDetails(callId).toNative())
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
-            val callDetails: Map<String?, String> = JamiService.getCallDetails(callId)
+            val callDetails: Map<String, String> = JamiService.getCallDetails(callId)
             call = Call(callId, callDetails)
             if (isEmpty(call.contactNumber)) {
                 Log.w(TAG, "No number")

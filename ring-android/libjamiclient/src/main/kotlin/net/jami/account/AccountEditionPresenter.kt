@@ -48,10 +48,10 @@ class AccountEditionPresenter @Inject constructor(
         mAccount = account
         val view = view ?: return
         if (account.isJami) {
-            view.displaySummary(account.accountID)
+            view.displaySummary(account.accountId)
         } else {
-            view.displaySIPView(account.accountID)
+            view.displaySIPView(account.accountId)
         }
-        view.initViewPager(account.accountID, account.isJami)
+        view.initViewPager(account.accountId, account.isJami)
     }
 }

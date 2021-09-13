@@ -34,10 +34,8 @@ import net.jami.model.Profile
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
-import net.jami.services.VCardService
 import net.jami.utils.Log
 import net.jami.utils.VCardUtils
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -95,7 +93,7 @@ class SIPCreationPresenter @Inject constructor(
 
     fun removeAccount() {
         mAccount?.let { account ->
-            mAccountService.removeAccount(account.accountID)
+            mAccountService.removeAccount(account.accountId)
             mAccount = null
         }
     }
@@ -110,7 +108,7 @@ class SIPCreationPresenter @Inject constructor(
                         mAccount = account
                         when (account.registrationState) {
                             AccountConfig.STATE_REGISTERED, AccountConfig.STATE_SUCCESS, AccountConfig.STATE_READY -> {
-                                saveProfile(account.accountID)
+                                saveProfile(account.accountId)
                                 view?.showRegistrationSuccess()
                                 dispose()
                             }

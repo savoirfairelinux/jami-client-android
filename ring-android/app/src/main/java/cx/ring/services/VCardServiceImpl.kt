@@ -89,7 +89,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             synchronized(account) {
                 var ret = account.loadedProfile
                 if (ret == null) {
-                    ret = VCardUtils.loadLocalProfileFromDiskWithDefault(context.filesDir, account.accountID)
+                    ret = VCardUtils.loadLocalProfileFromDiskWithDefault(context.filesDir, account.accountId)
                         .map { vcard: VCard -> readData(vcard) }
                         .subscribeOn(Schedulers.computation())
                         .cache()

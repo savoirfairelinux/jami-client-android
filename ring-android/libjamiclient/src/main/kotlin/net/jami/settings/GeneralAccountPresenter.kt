@@ -54,12 +54,12 @@ class GeneralAccountPresenter @Inject internal constructor(
         mAccount = account
         if (account != null) {
             if (account.isJami) {
-                view!!.addJamiPreferences(account.accountID)
+                view!!.addJamiPreferences(account.accountId)
             } else {
                 view!!.addSipPreferences()
             }
             view!!.accountChanged(account)
-            mCompositeDisposable.add(mAccountService.getObservableAccount(account.accountID)
+            mCompositeDisposable.add(mAccountService.getObservableAccount(account.accountId)
                 .observeOn(mUiScheduler)
                 .subscribe { acc: Account -> view!!.accountChanged(acc) })
             mCompositeDisposable.add(
@@ -82,7 +82,7 @@ class GeneralAccountPresenter @Inject internal constructor(
 
     fun setEnabled(enabled: Boolean) {
         mAccount!!.isEnabled = enabled
-        mAccountService.setAccountEnabled(mAccount!!.accountID, enabled)
+        mAccountService.setAccountEnabled(mAccount!!.accountId, enabled)
     }
 
     fun twoStatePreferenceChanged(configKey: ConfigKey, newValue: Any) {
@@ -115,12 +115,12 @@ class GeneralAccountPresenter @Inject internal constructor(
     }
 
     private fun updateAccount() {
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 
     fun removeAccount() {
-        mAccountService.removeAccount(mAccount!!.accountID)
+        mAccountService.removeAccount(mAccount!!.accountId)
     }
 
     companion object {

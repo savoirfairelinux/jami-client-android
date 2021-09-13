@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/link_preview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/textmsg_bg_ripple"
+    android:visibility="visible"
+    tools:showIn="@layout/item_conv_msg_me">
+
+    <ImageView
+        android:id="@+id/link_preview_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/link_preview_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/link_preview_img"
+        android:maxLines="4"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/textColorPrimary"
+        android:visibility="visible"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/link_preview_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/link_preview_title"
+        android:layout_toEndOf="@id/link_preview_img"
+        android:maxLines="4"
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="4dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/textColorPrimary"
+        android:visibility="visible"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/link_preview_domain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/link_preview_description"
+        android:layout_toEndOf="@id/link_preview_img"
+        android:maxLines="1"
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="4dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/textColorSecondary"
+        android:visibility="visible"
+        tools:text="jami.net" />
+</RelativeLayout>

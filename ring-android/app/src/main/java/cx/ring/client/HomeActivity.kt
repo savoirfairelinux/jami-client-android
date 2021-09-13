@@ -129,6 +129,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon()
+        // Switch to TV if appropriate (could happen with buggy launcher)
+        if (DeviceUtils.isTv(this)) {
+            val intent = intent
+            intent.setClass(this, cx.ring.tv.main.HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             setSupportActionBar(binding.mainToolbar)
@@ -344,7 +352,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mDisposable.add(mAccountService.currentAccountSubject
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { account -> startConversation(account.accountID, Uri.fromString(conversationId)) })
+                .subscribe { account -> startConversation(account.accountId, Uri.fromString(conversationId)) })
     }
 
     fun startConversation(accountId: String, conversationId: Uri) {
@@ -502,11 +510,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
                 val intent = Intent()
                     .setClass(this, AccountWizardActivity::class.java)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountID))
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId))
                 startActivityForResult(intent, 1)
             } else {
                 Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
-                bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountID)
+                bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
                 if (fContent is AccountEditionFragment) {
                     return true
                 }
@@ -697,7 +705,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             return
         }
         account.isEnabled = newValue
-        mAccountService.setAccountEnabled(account.accountID, newValue)
+        mAccountService.setAccountEnabled(account.accountId, newValue)
     }
 
     val switchButton: SwitchButton

@@ -50,16 +50,16 @@ class SecurityAccountPresenter @Inject constructor(private val mAccountService: 
             // There is a new value for this credentials it means it has been edited (otherwise deleted)
             mAccount!!.addCredential(newCreds)
         }
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
         view!!.removeAllCredentials()
         view!!.addAllCredentials(mAccount!!.credentials)
     }
 
     fun credentialAdded(old: AccountCredentials?, newCreds: AccountCredentials?) {
         mAccount!!.addCredential(newCreds!!)
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
         view!!.removeAllCredentials()
         view!!.addAllCredentials(mAccount!!.credentials)
     }
@@ -70,13 +70,13 @@ class SecurityAccountPresenter @Inject constructor(private val mAccountService: 
         } else {
             mAccount!!.setDetail(key!!, newValue as String?)
         }
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 
     fun fileActivityResult(key: ConfigKey?, filePath: String?) {
         mAccount!!.setDetail(key!!, filePath)
-        mAccountService.setCredentials(mAccount!!.accountID, mAccount!!.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount!!.accountID, mAccount!!.details)
+        mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)
     }
 }

@@ -198,7 +198,7 @@ class NotificationServiceImpl(
     }
 
     override fun showLocationNotification(first: Account, contact: Contact) {
-        val path = ConversationPath.toUri(first.accountID, contact.uri)
+        val path = ConversationPath.toUri(first.accountId, contact.uri)
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
@@ -223,7 +223,7 @@ class NotificationServiceImpl(
         notificationManager.cancel(
             Objects.hash(
                 "Location",
-                ConversationPath.toUri(first.accountID, contact.uri)
+                ConversationPath.toUri(first.accountId, contact.uri)
             )
         )
     }
@@ -502,8 +502,8 @@ class NotificationServiceImpl(
     }
 
     override fun showIncomingTrustRequestNotification(account: Account) {
-        val notificationId = getIncomingTrustNotificationId(account.accountID)
-        val notifiedRequests = mPreferencesService.loadRequestsPreferences(account.accountID)
+        val notificationId = getIncomingTrustNotificationId(account.accountId)
+        val notifiedRequests = mPreferencesService.loadRequestsPreferences(account.accountId)
         val requests = account.getPending()
         if (requests.isEmpty()) {
             notificationManager.cancel(notificationId)
@@ -515,10 +515,10 @@ class NotificationServiceImpl(
             if (notifiedRequests.contains(contactKey)) {
                 return
             }
-            mContactService.getLoadedContact(account.accountID, request.contacts, false).subscribe({
-                val builder = getRequestNotificationBuilder(account.accountID)
-                mPreferencesService.saveRequestPreferences(account.accountID, contactKey)
-                val info = ConversationPath.toUri(account.accountID, request.uri)
+            mContactService.getLoadedContact(account.accountId, request.contacts, false).subscribe({
+                val builder = getRequestNotificationBuilder(account.accountId)
+                mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
+                val info = ConversationPath.toUri(account.accountId, request.uri)
                 builder.setContentText(request.uriTitle)
                     .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
                         mContext, random.nextInt(),
@@ -536,7 +536,7 @@ class NotificationServiceImpl(
                 notificationManager.notify(notificationId, builder.build())
             }) { e: Throwable -> Log.w(TAG, "error showing notification", e) }
         } else {
-            val builder = getRequestNotificationBuilder(account.accountID)
+            val builder = getRequestNotificationBuilder(account.accountId)
             var newRequest = false
             for (request in requests) {
                 val contact = request.contact
@@ -544,7 +544,7 @@ class NotificationServiceImpl(
                     val contactKey = contact.uri.rawRingId
                     if (!notifiedRequests.contains(contactKey)) {
                         newRequest = true
-                        mPreferencesService.saveRequestPreferences(account.accountID, contactKey)
+                        mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
                     }
                 }
             }

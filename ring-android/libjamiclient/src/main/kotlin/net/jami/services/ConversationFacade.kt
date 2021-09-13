@@ -83,10 +83,10 @@ class ConversationFacade(
         val lastMessage = readMessages(conversation) ?: return null
         account.refreshed(conversation)
         if (mPreferencesService.settings.isAllowReadIndicator) {
-            mAccountService.setMessageDisplayed(account.accountID, conversation.uri, lastMessage)
+            mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
         }
         if (cancelNotification) {
-            mNotificationService.cancelTextNotification(account.accountID, conversation.uri)
+            mNotificationService.cancelTextNotification(account.accountId, conversation.uri)
         }
         return lastMessage
     }
@@ -300,16 +300,16 @@ class ConversationFacade(
         val uri = fromString(query)
         return if (account.isSip) {
             val contact = account.getContactFromCache(uri)
-            mContactService.loadContactData(contact, account.accountID)
-                .andThen(Single.just(listOf(Observable.just(SmartListViewModel(account.accountID, contact, contact.primaryNumber, null)))))
+            mContactService.loadContactData(contact, account.accountId)
+                .andThen(Single.just(listOf(Observable.just(SmartListViewModel(account.accountId, contact, contact.primaryNumber, null)))))
         } else if (uri.isHexId) {
-            mContactService.getLoadedContact(account.accountID, account.getContactFromCache(uri))
-                .map { contact -> listOf(Observable.just(SmartListViewModel(account.accountID, contact, contact.primaryNumber, null))) }
+            mContactService.getLoadedContact(account.accountId, account.getContactFromCache(uri))
+                .map { contact -> listOf(Observable.just(SmartListViewModel(account.accountId, contact, contact.primaryNumber, null))) }
         } else if (account.canSearch() && !query.contains("@")) {
-            mAccountService.searchUser(account.accountID, query)
+            mAccountService.searchUser(account.accountId, query)
                 .map(AccountService.UserSearchResult::resultsViewModels)
         } else {
-            mAccountService.findRegistrationByName(account.accountID, "", query)
+            mAccountService.findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
                     if (result.state == 0)
                         listOf(observeConversation(account, account.getByUri(result.address)!!, false))
@@ -372,7 +372,7 @@ class ConversationFacade(
         for (c in account.getConversations()) {
             if (c.isSwarm) actions.add(c.lastElementLoaded)
         }
-        actions.add(mHistoryService.getSmartlist(account.accountID)
+        actions.add(mHistoryService.getSmartlist(account.accountId)
             .flatMapCompletable { conversationHistoryList: List<Interaction> ->
                 Completable.fromAction {
                     val conversations: MutableList<Conversation> = ArrayList()
@@ -531,7 +531,7 @@ class ConversationFacade(
             }
             if (conference != null && conference.removeParticipant(call) && conversation != null && !conversation.isSwarm) {
                 Log.w(TAG, "Adding call history for conversation " + conversation.uri)
-                mHistoryService.insertInteraction(account.accountID, conversation, call).subscribe()
+                mHistoryService.insertInteraction(account.accountId, conversation, call).subscribe()
                 conversation.addCall(call)
                 if (call.isIncoming && call.isMissed) {
                     mNotificationService.showMissedCallNotification(call)

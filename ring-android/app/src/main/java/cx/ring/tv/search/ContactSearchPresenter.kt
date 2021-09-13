@@ -45,7 +45,7 @@ class ContactSearchPresenter @Inject constructor(
         mCompositeDisposable.add(contactQuery
             .debounce(350, TimeUnit.MILLISECONDS)
             .switchMapSingle { q: String ->
-                mAccountService.findRegistrationByName(mAccountService.currentAccount!!.accountID, "", q)
+                mAccountService.findRegistrationByName(mAccountService.currentAccount!!.accountId, "", q)
             }
             .observeOn(mUiScheduler)
             .subscribe { q: RegisteredName -> parseEventState(mAccountService.getAccount(q.accountId)!!, q.name, q.address, q.state) })
@@ -59,7 +59,7 @@ class ContactSearchPresenter @Inject constructor(
             val uri = fromString(query)
             if (uri.isHexId) {
                 mContact = currentAccount.getContactFromCache(uri)
-                view?.displayContact(currentAccount.accountID, mContact!!)
+                view?.displayContact(currentAccount.accountId, mContact!!)
             } else {
                 view?.clearSearch()
                 contactQuery.onNext(query)
@@ -72,14 +72,14 @@ class ContactSearchPresenter @Inject constructor(
             0 -> {
                 // on found
                 mContact = account.getContactFromCache(address!!).apply { setUsername(name) }
-                view?.displayContact(account.accountID, mContact!!)
+                view?.displayContact(account.accountId, mContact!!)
             }
             1 -> {
                 // invalid name
                 val uriName = fromString(name)
                 if (uriName.isHexId) {
                     mContact = account.getContactFromCache(uriName)
-                    view?.displayContact(account.accountID, mContact!!)
+                    view?.displayContact(account.accountId, mContact!!)
                 } else {
                     view?.clearSearch()
                 }
@@ -89,7 +89,7 @@ class ContactSearchPresenter @Inject constructor(
                 val uriAddress = fromString(address!!)
                 if (uriAddress.isHexId) {
                     mContact = account.getContactFromCache(uriAddress)
-                    view?.displayContact(account.accountID, mContact!!)
+                    view?.displayContact(account.accountId, mContact!!)
                 } else {
                     view?.clearSearch()
                 }

@@ -85,7 +85,7 @@ abstract class HistoryService {
     fun clearHistory(accounts: List<Account>): Completable {
         return Completable.fromAction {
             for (account in accounts) {
-                getInteractionDataDao(account.accountID).deleteBuilder().let { deleteBuilder ->
+                getInteractionDataDao(account.accountId).deleteBuilder().let { deleteBuilder ->
                     deleteBuilder.where().ne(Interaction.COLUMN_TYPE, Interaction.InteractionType.CONTACT.toString())
                     deleteBuilder.delete()
                 }

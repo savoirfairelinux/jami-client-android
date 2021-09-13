@@ -73,10 +73,10 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
                     binding.settingsChangePassword.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
                     binding.settingsExport.visibility = if (account.hasManager()) View.GONE else View.VISIBLE
                     binding.systemChangePasswordTitle.setText(if (account.hasPassword()) R.string.account_password_change else R.string.account_password_set)
-                    binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountID).show() }
+                    binding.settingsDeleteAccount.setOnClickListener { createDeleteDialog(account.accountId).show() }
                     binding.settingsBlackList.setOnClickListener {
                         val summaryFragment = parentFragment as JamiAccountSummaryFragment?
-                        summaryFragment?.goToBlackList(account.accountID)
+                        summaryFragment?.goToBlackList(account.accountId)
                     }
                 }
             }) {

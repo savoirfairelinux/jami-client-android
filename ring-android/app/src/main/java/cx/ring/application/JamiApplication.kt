@@ -70,8 +70,6 @@ abstract class JamiApplication : Application() {
     @Inject lateinit
     var mCallService: CallService
 
-    //@Inject
-    //ConferenceService mConferenceService;
     @Inject lateinit
     var hardwareService: HardwareService
 
@@ -185,6 +183,7 @@ abstract class JamiApplication : Application() {
         }
         try {
             stopResult.get()
+            mExecutor.shutdown()
         } catch (e: Exception) {
             Log.e(TAG, "DRingService stop failed", e)
         }
@@ -246,8 +245,6 @@ abstract class JamiApplication : Application() {
 
     override fun onTerminate() {
         super.onTerminate()
-
-        // todo decide when to stop the daemon
         terminateDaemon()
         instance = null
     }

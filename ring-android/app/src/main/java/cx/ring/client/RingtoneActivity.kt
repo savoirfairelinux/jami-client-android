@@ -195,8 +195,8 @@ class RingtoneActivity : AppCompatActivity() {
      * Updates an account with new details
      */
     private fun updateAccount() {
-        mAccountService.setCredentials(mAccount.accountID, mAccount.credentialsHashMapList)
-        mAccountService.setAccountDetails(mAccount.accountID, mAccount.details)
+        mAccountService.setCredentials(mAccount.accountId, mAccount.credentialsHashMapList)
+        mAccountService.setAccountDetails(mAccount.accountId, mAccount.details)
     }
 
     /**

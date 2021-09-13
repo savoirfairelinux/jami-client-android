@@ -23,6 +23,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import io.reactivex.rxjava3.core.Maybe
 
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 open class Interaction {
@@ -155,6 +156,8 @@ open class Interaction {
         this.messageId = messageId
         parentId = parent
     }
+
+    var preview: Any? = null
 
     enum class InteractionStatus {
         UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE, TRANSFER_CREATED, TRANSFER_ACCEPTED, TRANSFER_CANCELED, TRANSFER_ERROR, TRANSFER_UNJOINABLE_PEER, TRANSFER_ONGOING, TRANSFER_AWAITING_PEER, TRANSFER_AWAITING_HOST, TRANSFER_TIMEOUT_EXPIRED, TRANSFER_FINISHED, FILE_AVAILABLE;

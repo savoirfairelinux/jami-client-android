@@ -66,7 +66,6 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.service.LocationSharingService
 import cx.ring.services.NotificationServiceImpl
-import cx.ring.services.SharedPreferencesServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.AndroidFileUtils.copyFileToUri

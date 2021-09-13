@@ -3,9 +3,7 @@ package cx.ring.plugins
 import android.content.Context
 import android.util.Log
 import cx.ring.settings.pluginssettings.PluginDetails
-import cx.ring.plugins.PluginUtils
 import net.jami.daemon.JamiService
-import net.jami.daemon.StringMap
 import java.io.File
 import java.lang.StringBuilder
 import java.util.ArrayList
@@ -19,7 +17,6 @@ object PluginUtils {
      * @param mContext The current context
      * @return List of PluginDetails
      */
-    @JvmStatic
     fun getInstalledPlugins(mContext: Context): List<PluginDetails> {
         tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
         tree(mContext.cacheDir.absolutePath, 0)
@@ -73,8 +70,7 @@ object PluginUtils {
      * @param path root path of the plugin
      * @return true if loaded
      */
-    @JvmStatic
-    fun loadPlugin(path: String?): Boolean {
+    fun loadPlugin(path: String): Boolean {
         return JamiService.loadPlugin(path)
     }
 
@@ -84,8 +80,7 @@ object PluginUtils {
      * @param path root path of the plugin
      * @return true if unloaded
      */
-    @JvmStatic
-    fun unloadPlugin(path: String?): Boolean {
+    fun unloadPlugin(path: String): Boolean {
         return JamiService.unloadPlugin(path)
     }
 
@@ -111,12 +106,11 @@ object PluginUtils {
     }
 
     /**
-     * Converts a string that contains a list to a java List<String>
+     * Converts a string that contains a list to a List<String>
      * E.g: String entries = "[AAA,BBB,CCC]" to List<String> l, where l.get(0) = "AAA"
      * @return List of strings
      * @param stringList a string in the form "[AAA,BBB,CCC]"
     </String></String> */
-    @JvmStatic
     fun stringListToListString(stringList: String): List<String> {
         val listString: MutableList<String> = ArrayList()
         val currentWord = StringBuilder()

@@ -33,7 +33,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +58,6 @@ import cx.ring.contactrequests.BlockListFragment
 import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.fragments.*
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.services.VCardServiceImpl.Companion.loadProfile
 import cx.ring.settings.AccountFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
@@ -239,7 +237,7 @@ class JamiAccountSummaryFragment :
             (requireActivity() as HomeActivity).switchButton.setCheckedSilent(account.isEnabled)
             binding.accountAliasTxt.text = getString(R.string.profile)
             binding.identity.setText(account.username)
-            mAccountId = account.accountID
+            mAccountId = account.accountId
             mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
             mBestName = "$mBestName.gz"
             val username = account.registeredName

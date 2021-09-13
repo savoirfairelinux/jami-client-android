@@ -118,7 +118,7 @@ class AccountMigrationFragment : Fragment() {
         val account = mAccountService.getAccount(accountId)!!
         val details = account.details
         details[ConfigKey.ARCHIVE_PASSWORD.key()] = password
-        mAccountService.setAccountDetails(account.accountID, details)
+        mAccountService.setAccountDetails(account.accountId, details)
         mDisposableBag.add(mAccountService.migrateAccount(accountId, password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { newState: String -> handleMigrationState(newState) })

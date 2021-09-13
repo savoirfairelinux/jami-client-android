@@ -3,9 +3,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // VCard parsing
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.2'
