@@ -19,40 +19,16 @@
  */
 package net.jami.model
 
-class Settings(s: Settings? = null) {
-    var isAllowPushNotifications = false
-    var isAllowPersistentNotification = false
-    var isAllowSystemContacts = false
-    var isAllowPlaceSystemCalls = false
-    var isAllowOnStartup = false
-        private set
-    var isAllowTypingIndicator = false
-    var isAllowReadIndicator = false
-    var isRecordingBlocked = false
-        private set
-    private var mHwEncoding = false
-    var notificationVisibility = 0
-
-    init {
-        if (s != null) {
-            isAllowPushNotifications = s.isAllowPushNotifications
-            isAllowPersistentNotification = s.isAllowPersistentNotification
-            isAllowSystemContacts = s.isAllowSystemContacts
-            isAllowPlaceSystemCalls = s.isAllowPlaceSystemCalls
-            isAllowOnStartup = s.isAllowOnStartup
-            isAllowTypingIndicator = s.isAllowTypingIndicator
-            isAllowReadIndicator = s.isAllowReadIndicator
-            isRecordingBlocked = s.isRecordingBlocked
-            mHwEncoding = s.mHwEncoding
-            notificationVisibility = s.notificationVisibility
-        }
-    }
-
-    fun setAllowRingOnStartup(allowRingOnStartup: Boolean) {
-        isAllowOnStartup = allowRingOnStartup
-    }
-
-    fun setBlockRecordIndicator(checked: Boolean) {
-        isRecordingBlocked = checked
-    }
-}
+data class Settings(
+    val enablePushNotifications: Boolean,
+    val enablePermanentService: Boolean,
+    val useSystemContacts: Boolean,
+    val allowPlaceSystemCalls: Boolean,
+    val runOnStartup: Boolean,
+    val enableTypingIndicator: Boolean,
+    val enableReadIndicator: Boolean,
+    val enableLinkPreviews: Boolean,
+    val isRecordingBlocked: Boolean,
+    //val enableHwEncoding: Boolean,
+    val notificationVisibility: Int = 0
+)

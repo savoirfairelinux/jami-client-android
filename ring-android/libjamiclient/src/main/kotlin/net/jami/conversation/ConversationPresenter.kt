@@ -58,6 +58,8 @@ class ConversationPresenter @Inject constructor(
     fun init(conversationUri: Uri, accountId: String) {
         Log.w(TAG, "init $conversationUri $accountId")
         if (conversationUri == mConversationUri) return
+        val settings = mPreferencesService.settings
+        view?.setSettings(settings.enableReadIndicator, settings.enableLinkPreviews)
         mConversationUri = conversationUri
         mCompositeDisposable.add(mConversationFacade.getAccountSubject(accountId)
             .flatMap { a: Account ->
@@ -70,7 +72,6 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "Error loading conversation", e)
                 view?.goToHome()
             })
-        view?.setReadIndicatorStatus(showReadIndicator())
     }
 
     override fun unbindView() {
@@ -145,7 +146,7 @@ class ConversationPresenter @Inject constructor(
             .switchMapSingle { mode: Conversation.Mode ->
                 mContactService.getLoadedContact(c.accountId, c.contacts, true)
                     .observeOn(mUiScheduler)
-                    .doOnSuccess { initContact(account, c, mode, view) }
+                    .doOnSuccess { initContact(account, c, mode, this.view!!) }
             }
             .subscribe())
         disposable.add(c.mode
@@ -206,12 +207,12 @@ class ConversationPresenter @Inject constructor(
             })
         disposable.add(c.getColor()
             .observeOn(mUiScheduler)
-            .subscribe({ integer: Int -> view.setConversationColor(integer) }) { e: Throwable ->
+            .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
         disposable.add(c.getSymbol()
             .observeOn(mUiScheduler)
-            .subscribe({ symbol: CharSequence -> view.setConversationSymbol(symbol) }) { e: Throwable ->
+            .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
         disposable.add(account
@@ -219,7 +220,7 @@ class ConversationPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")
-                view?.showMap(c.accountId, c.uri.uri, false)
+                this.view?.showMap(c.accountId, c.uri.uri, false)
             }
         )
     }
@@ -246,7 +247,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun selectFile() {
-        view!!.openFilePicker()
+        view?.openFilePicker()
     }
 
     fun sendFile(file: File) {
@@ -413,11 +414,11 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun showTypingIndicator(): Boolean {
-        return mPreferencesService.settings.isAllowTypingIndicator
+        return mPreferencesService.settings.enableTypingIndicator
     }
 
     private fun showReadIndicator(): Boolean {
-        return mPreferencesService.settings.isAllowReadIndicator
+        return mPreferencesService.settings.enableReadIndicator
     }
 
     companion object {

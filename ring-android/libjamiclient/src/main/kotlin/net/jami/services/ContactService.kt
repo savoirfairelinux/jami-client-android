@@ -60,7 +60,7 @@ abstract class ContactService(
     fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> {
         return Single.fromCallable {
             val settings = mPreferencesService.settings
-            if (settings.isAllowSystemContacts && mDeviceRuntimeService.hasContactPermission()) {
+            if (settings.useSystemContacts && mDeviceRuntimeService.hasContactPermission()) {
                 return@fromCallable loadContactsFromSystem(loadRingContacts, loadSipContacts)
             }
             HashMap()

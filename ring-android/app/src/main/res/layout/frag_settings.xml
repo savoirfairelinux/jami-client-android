@@ -255,11 +255,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/system_typing_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_typing_summary"
-                    android:src="@drawable/baseline_keyboard_24"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
+                    android:layout_marginEnd="32dp"
+                    android:contentDescription="@string/pref_typing_summary"
+                    android:src="@drawable/baseline_keyboard_24" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -290,9 +290,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                    android:checked="true" />
 
             </RelativeLayout>
 
@@ -305,12 +305,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/system_read_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"
                     android:contentDescription="@string/pref_read_summary"
                     android:src="@drawable/baseline_mark_chat_read_24dp"
-                    android:layout_alignParentStart="true"
-                    app:tint="@color/colorPrimary"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"/>
+                    app:tint="@color/colorPrimary" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -341,9 +341,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                    android:checked="true" />
 
             </RelativeLayout>
 
@@ -392,9 +392,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="false"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"/>
+                    android:checked="false" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/enable_link_preview_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"
+                    android:contentDescription="@string/pref_read_summary"
+                    android:src="@drawable/baseline_preview_24"
+                    app:tint="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/settings_link_preview"
+                    android:layout_toEndOf="@id/enable_link_preview_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/pref_link_preview_title" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_link_preview_summary" />
+
+                </LinearLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/settings_link_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:checked="true" />
 
             </RelativeLayout>
 
@@ -445,33 +497,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:padding="@dimen/padding_large">
 
                 <ImageView
-                    android:id="@+id/system_clear_history_image"
+                    android:id="@+id/clear_history_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/pref_clearHistory_summary"
-                    android:src="@drawable/baseline_clear_all_24"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp" />
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="32dp"
+                    android:contentDescription="@string/pref_clearHistory_summary"
+                    android:src="@drawable/baseline_clear_all_24" />
 
                 <TextView
                     style="@style/ListPrimary"
-                    android:id="@+id/system_clear_history_title"
+                    android:id="@+id/clear_history_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@string/pref_clearHistory_title"
-                    android:layout_toEndOf="@+id/system_clear_history_image"/>
+                    android:layout_toEndOf="@+id/clear_history_image"/>
 
                 <TextView
                     style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pref_clearHistory_summary"
-                    android:layout_toEndOf="@+id/system_clear_history_image"
-                    android:layout_below="@id/system_clear_history_title"/>
+                    android:layout_toEndOf="@+id/clear_history_image"
+                    android:layout_below="@id/clear_history_title"/>
 
             </RelativeLayout>
 

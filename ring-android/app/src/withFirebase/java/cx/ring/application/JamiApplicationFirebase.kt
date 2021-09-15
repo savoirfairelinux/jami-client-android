@@ -31,7 +31,7 @@ class JamiApplicationFirebase : JamiApplication() {
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
             field = token
-            if (mPreferencesService.settings.isAllowPushNotifications) {
+            if (mPreferencesService.settings.enablePushNotifications) {
                 mAccountService.setPushNotificationToken(token)
             }
         }

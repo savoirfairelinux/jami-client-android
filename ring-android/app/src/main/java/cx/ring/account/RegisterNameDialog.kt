@@ -64,7 +64,7 @@ class RegisterNameDialog : DialogFragment() {
                 binding.ringUsernameTxtBox.error = null
                 return
             }
-            if (name.contentEquals(actualName)) {
+            if (name == actualName) {
                 when (state) {
                     0 -> {
                         // on found
@@ -213,6 +213,6 @@ class RegisterNameDialog : DialogFragment() {
     }
 
     interface RegisterNameDialogListener {
-        fun onRegisterName(name: String?, password: String?)
+        fun onRegisterName(name: String, password: String?)
     }
 }

@@ -94,7 +94,7 @@ class Conference {
     val isSimpleCall: Boolean
         get() = mParticipants.size == 1 && id == mParticipants[0].daemonIdString
 
-    fun setState(state: String?) {
+    fun setState(state: String) {
         mConfState = fromConferenceString(state)
     }
 
@@ -109,17 +109,15 @@ class Conference {
         return mParticipants.remove(toRemove)
     }
 
-    operator fun contains(callID: String?): Boolean {
-        for (participant in mParticipants) {
-            if (participant.daemonIdString.contentEquals(callID)) return true
-        }
+    operator fun contains(callID: String): Boolean {
+        for (participant in mParticipants)
+            if (participant.daemonIdString == callID) return true
         return false
     }
 
-    fun getCallById(callID: String?): Call? {
-        for (participant in mParticipants) {
-            if (participant.daemonIdString.contentEquals(callID)) return participant
-        }
+    fun getCallById(callID: String): Call? {
+        for (participant in mParticipants)
+            if (participant.daemonIdString == callID) return participant
         return null
     }
 

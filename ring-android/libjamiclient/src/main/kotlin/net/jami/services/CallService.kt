@@ -134,7 +134,7 @@ class CallService(
 
     fun setConfMaximizedParticipant(confId: String, uri: Uri) {
         mExecutor.execute {
-            JamiService.setActiveParticipant(confId, uri.rawRingId ?: "")
+            JamiService.setActiveParticipant(confId, uri.rawRingId)
             JamiService.setConferenceLayout(confId, 1)
         }
     }
@@ -703,7 +703,7 @@ class CallService(
         }
         val participants = JamiService.getParticipantList(confId)
         val map = JamiService.getConferenceDetails(confId)
-        conf.setState(map["STATE"])
+        conf.setState(map["STATE"]!!)
         for (callId in participants) {
             val call = getCurrentCallForId(callId)
             if (call != null) {

@@ -106,7 +106,7 @@ class AccountWizardPresenter @Inject constructor(
         val newAccount = initRingAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 val settings = mPreferences.settings
-                if (settings.isAllowPushNotifications) {
+                if (settings.enablePushNotifications) {
                     accountCreationModel.isPush = true
                     setProxyDetails(accountCreationModel, accountDetails)
                 }
@@ -202,8 +202,7 @@ class AccountWizardPresenter @Inject constructor(
                     mAccountService.registerName(a, model.password, model.username)
                 mAccountService.currentAccount = a
                 if (model.isPush) {
-                    val settings = mPreferences.settings
-                    settings.isAllowPushNotifications = true
+                    val settings = mPreferences.settings.copy(enablePushNotifications = true)
                     mPreferences.settings = settings
                 }
             }

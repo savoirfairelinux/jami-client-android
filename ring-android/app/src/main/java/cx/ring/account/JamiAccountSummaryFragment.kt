@@ -337,7 +337,7 @@ class JamiAccountSummaryFragment :
         }.show(parentFragmentManager, TAG)
     }
 
-    override fun onRegisterName(name: String?, password: String?) {
+    override fun onRegisterName(name: String, password: String?) {
         presenter.registerName(name, password)
     }
 

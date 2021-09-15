@@ -82,7 +82,7 @@ class ConversationFacade(
     fun readMessages(account: Account, conversation: Conversation, cancelNotification: Boolean): String? {
         val lastMessage = readMessages(conversation) ?: return null
         account.refreshed(conversation)
-        if (mPreferencesService.settings.isAllowReadIndicator) {
+        if (mPreferencesService.settings.enableReadIndicator) {
             mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
         }
         if (cancelNotification) {
@@ -112,12 +112,12 @@ class ConversationFacade(
         return lastRead
     }
 
-    fun sendTextMessage(c: Conversation, to: Uri, txt: String?): Completable {
+    fun sendTextMessage(c: Conversation, to: Uri, txt: String): Completable {
         if (c.isSwarm) {
-            mAccountService.sendConversationMessage(c.accountId, c.uri, txt!!)
+            mAccountService.sendConversationMessage(c.accountId, c.uri, txt)
             return Completable.complete()
         }
-        return mCallService.sendAccountTextMessage(c.accountId, to.rawUriString, txt!!)
+        return mCallService.sendAccountTextMessage(c.accountId, to.rawUriString, txt)
             .map { id: Long ->
                 val message = TextMessage(null, c.accountId, java.lang.Long.toHexString(id), c, txt)
                 if (c.isVisible) message.read()
@@ -440,7 +440,7 @@ class ConversationFacade(
             if (txt.messageId == null) {
                 mHistoryService.updateInteraction(txt, accountId).subscribe()
             }
-            if (mPreferencesService.settings.isAllowReadIndicator) {
+            if (mPreferencesService.settings.enableReadIndicator) {
                 if (txt.messageId != null) {
                     mAccountService.setMessageDisplayed(txt.account, Uri(Uri.SWARM_SCHEME, txt.conversationId!!), txt.messageId!!)
                 } else {

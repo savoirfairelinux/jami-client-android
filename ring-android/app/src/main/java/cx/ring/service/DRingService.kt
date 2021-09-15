@@ -156,7 +156,7 @@ class DRingService : Service() {
     }
 
     private fun showSystemNotification(settings: Settings) {
-        if (settings.isAllowPersistentNotification) {
+        if (settings.enablePermanentService) {
             startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)
         } else {
             stopForeground(true)

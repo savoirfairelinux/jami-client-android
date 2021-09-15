@@ -36,17 +36,17 @@ abstract class PreferencesService(
     protected abstract fun saveSettings(settings: Settings)
     var settings: Settings
         get() {
-            if (userSettings == null) {
-                val newSettings = loadSettings()
-                userSettings = newSettings
-                mSettingsSubject.onNext(newSettings)
+            val settings = userSettings ?: loadSettings().apply {
+                userSettings = this
+                mSettingsSubject.onNext(this)
             }
-            return Settings(userSettings)
+            return settings
         }
         set(settings) {
             saveSettings(settings)
-            val allowPush = settings.isAllowPushNotifications
-            if (userSettings == null || userSettings!!.isAllowPushNotifications != allowPush) {
+            val allowPush = settings.enablePushNotifications
+            val previousSettings = userSettings
+            if (previousSettings == null || previousSettings.enablePushNotifications != allowPush) {
                 mAccountService.setPushNotificationToken(if (allowPush) mDeviceService.pushToken else "")
                 mAccountService.setProxyEnabled(allowPush)
             }

@@ -140,7 +140,7 @@ class Call : Interaction {
         Direction.fromInt(call_details[KEY_CALL_TYPE]!!.toInt()),
         System.currentTimeMillis())
     {
-        setCallState(CallStatus.fromString(call_details[KEY_CALL_STATE]))
+        setCallState(CallStatus.fromString(call_details[KEY_CALL_STATE]!!))
         setDetails(call_details)
     }
 
@@ -234,8 +234,7 @@ class Call : Interaction {
         NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
 
         companion object {
-            @JvmStatic
-            fun fromString(state: String?): CallStatus {
+            fun fromString(state: String): CallStatus {
                 return when (state) {
                     "SEARCHING" -> SEARCHING
                     "CONNECTING" -> CONNECTING
@@ -253,8 +252,7 @@ class Call : Interaction {
                 }
             }
 
-            @JvmStatic
-            fun fromConferenceString(state: String?): CallStatus {
+            fun fromConferenceString(state: String): CallStatus {
                 return when (state) {
                     "ACTIVE_ATTACHED" -> CURRENT
                     "ACTIVE_DETACHED", "HOLD" -> HOLD

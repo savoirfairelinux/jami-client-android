@@ -907,7 +907,7 @@ class Account(
             contactLocations.entries.iterator()
         while (it.hasNext()) {
             val e = it.next()
-            if (e.value.blockingFirst().receivedDate!!.before(expiration)) {
+            if (e.value.blockingFirst().receivedDate.before(expiration)) {
                 Log.w(TAG, "maintainLocation clearing " + e.key.displayName)
                 (e.value as Subject<ContactLocation>?)!!.onComplete()
                 changed = true

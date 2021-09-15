@@ -624,7 +624,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun hideErrorPanel() {}
     override fun displayNetworkErrorPanel() {}
     override fun displayAccountOfflineErrorPanel() {}
-    override fun setReadIndicatorStatus(show: Boolean) {}
+    override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {}
     override fun updateLastRead(last: String) {}
     override fun displayOnGoingCallPane(display: Boolean) {}
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}

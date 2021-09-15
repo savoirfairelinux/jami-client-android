@@ -82,10 +82,11 @@ class Conversation : ConversationHistory {
         mMode = BehaviorSubject.createDefault(mode)
     }
 
-    fun getConference(id: String?): Conference? {
-        for (c in currentCalls) if (c.id.contentEquals(id) || c.getCallById(id) != null) {
-            return c
-        }
+    fun getConference(confId: String?): Conference? {
+        val id = confId ?: return null
+        for (c in currentCalls)
+            if (c.id == id || c.getCallById(id) != null)
+                return c
         return null
     }
 
@@ -356,7 +357,7 @@ class Conversation : ConversationHistory {
     private fun isAfter(previous: Interaction, query: Interaction?): Boolean {
         var query = query
         return if (isSwarm) {
-            while (query != null && query.parentId != null) {
+            while (query?.parentId != null) {
                 if (query.parentId == previous.messageId) return true
                 query = mMessages[query.parentId]
             }
@@ -526,6 +527,7 @@ class Conversation : ConversationHistory {
             Interaction.InteractionType.CALL -> addCall(Call(interaction))
             Interaction.InteractionType.CONTACT -> addContactEvent(ContactEvent(interaction))
             Interaction.InteractionType.DATA_TRANSFER -> addFileTransfer(DataTransfer(interaction))
+            else -> {}
         }
     }
 
