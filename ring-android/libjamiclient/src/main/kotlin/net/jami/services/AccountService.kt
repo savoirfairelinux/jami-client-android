@@ -44,10 +44,10 @@ import java.io.UnsupportedEncodingException
 import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
-import java.util.concurrent.Callable
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.min
 
@@ -302,7 +302,7 @@ class AccountService(
                             }*/
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
-                            if (mode != Conversation.Mode.Syncing) {
+                            //if (mode != Conversation.Mode.Syncing) {
                                 for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                                     /*for (Map.Entry<String, String> i : member.entrySet()) {
                                         Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
@@ -319,7 +319,7 @@ class AccountService(
                                         conversation.setLastMessageRead(lastDisplayed)
                                     }
                                 }
-                            }
+                            //}
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
                             account.conversationStarted(conversation)
                         } catch (e: Exception) {
@@ -334,8 +334,8 @@ class AccountService(
                         val from = Uri.fromString(requestData["from"]!!)
                         val request = account.getRequest(from)
                         if (request == null || conversationId != request.conversationId) {
-                            val received = requestData["received"]
-                            account.addRequest(TrustRequest(account.accountId, from, java.lang.Long.decode(received) * 1000L, null, conversationId))
+                            val received = requestData["received"]!!
+                            account.addRequest(TrustRequest(account.accountId, from, received.toLong() * 1000L, null, conversationId))
                         }
                     }
                     if (enabled) {
@@ -884,7 +884,7 @@ class AccountService(
     /**
      * Registers a new name on the blockchain for the account
      */
-    fun registerName(account: Account, password: String?, name: String?) {
+    fun registerName(account: Account, password: String?, name: String) {
         if (account.registeringUsername) {
             Log.w(TAG, "Already trying to register username")
             return
@@ -896,7 +896,7 @@ class AccountService(
     /**
      * Register a new name on the blockchain for the account Id
      */
-    fun registerName(account: String?, password: String?, name: String?) {
+    fun registerName(account: String, password: String, name: String) {
         Log.i(TAG, "registerName()")
         mExecutor.execute { JamiService.registerName(account, password, name) }
     }
@@ -904,14 +904,11 @@ class AccountService(
     /**
      * @return all trust requests from the daemon for the account Id
      */
-    fun getTrustRequests(accountId: String?): List<Map<String, String>>? {
+    fun getTrustRequests(accountId: String): List<Map<String, String>>? {
         try {
             return mExecutor.submit<ArrayList<Map<String, String>>> {
-                JamiService.getTrustRequests(
-                    accountId
-                ).toNative()
-            }
-                .get()
+                JamiService.getTrustRequests(accountId).toNative()
+            }.get()
         } catch (e: Exception) {
             Log.e(TAG, "Error running getTrustRequests()", e)
         }
@@ -1001,23 +998,6 @@ class AccountService(
     fun removeContact(accountId: String, uri: String, ban: Boolean) {
         Log.i(TAG, "removeContact() $accountId $uri ban:$ban")
         mExecutor.execute { JamiService.removeContact(accountId, uri, ban) }
-    }
-
-    /**
-     * @return the contacts list from the daemon
-     */
-    fun getContacts(accountId: String?): List<Map<String, String>>? {
-        try {
-            return mExecutor.submit<ArrayList<Map<String, String>>> {
-                JamiService.getContacts(
-                    accountId
-                ).toNative()
-            }
-                .get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getContacts()", e)
-        }
-        return null
     }
 
     /**
@@ -1170,12 +1150,7 @@ class AccountService(
         }
     }
 
-    fun composingStatusChanged(
-        accountId: String,
-        conversationId: String,
-        contactUri: String,
-        status: Int
-    ) {
+    fun composingStatusChanged(accountId: String, conversationId: String, contactUri: String, status: Int) {
         Log.d(TAG, "composingStatusChanged: $accountId, $contactUri, $conversationId, $status")
         getAccountSingle(accountId)
             .subscribe { account: Account ->
@@ -1242,13 +1217,9 @@ class AccountService(
         if (account != null) {
             val fromUri = Uri.fromString(from)
             var request = account.getRequest(fromUri)
-            if (request == null) request = TrustRequest(
-                accountId,
-                fromUri,
-                received * 1000L,
-                message,
-                conversationId
-            ) else request.vCard = Ezvcard.parse(message).first()
+            if (request == null)
+                request = TrustRequest(accountId, fromUri, received * 1000L, message, conversationId)
+            else request.vCard = Ezvcard.parse(message).first()
             val vcard = request.vCard
             if (vcard != null) {
                 val contact = account.getContactFromCache(fromUri)
@@ -1564,17 +1535,6 @@ class AccountService(
         mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
     }
 
-    fun getLastMessages(accountId: String?, baseTime: Long): List<net.jami.daemon.Message> {
-        try {
-            return mExecutor.submit(Callable {
-                SwigNativeConverter.toJava(JamiService.getLastMessages(accountId, baseTime))
-            }).get()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return ArrayList()
-    }
-
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
         getAccount(accountId)?.let { account -> account.getByUri(conversationUri)?.let { conversation ->
             val transfer = if (conversation.isSwarm)
@@ -1725,12 +1685,6 @@ class AccountService(
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
         dataTransfers.onNext(transfer)
-    }
-
-    fun observeDataTransfer(transfer: DataTransfer): Observable<DataTransfer?> {
-        return dataTransfers
-            .filter { t: DataTransfer? -> t === transfer }
-            .startWithItem(transfer)
     }
 
     fun setProxyEnabled(enabled: Boolean) {

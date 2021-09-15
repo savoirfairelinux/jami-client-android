@@ -44,13 +44,13 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     override fun saveSettings(settings: Settings) {
         preferences.edit()
             .clear()
-            .putBoolean(PREF_SYSTEM_CONTACTS, settings.isAllowSystemContacts)
-            .putBoolean(PREF_PLACE_CALLS, settings.isAllowPlaceSystemCalls)
-            .putBoolean(PREF_ON_STARTUP, settings.isAllowOnStartup)
-            .putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications)
-            .putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification)
-            .putBoolean(PREF_SHOW_TYPING, settings.isAllowTypingIndicator)
-            .putBoolean(PREF_SHOW_READ, settings.isAllowReadIndicator)
+            .putBoolean(PREF_SYSTEM_CONTACTS, settings.useSystemContacts)
+            .putBoolean(PREF_PLACE_CALLS, settings.allowPlaceSystemCalls)
+            .putBoolean(PREF_ON_STARTUP, settings.runOnStartup)
+            .putBoolean(PREF_PUSH_NOTIFICATIONS, settings.enablePushNotifications)
+            .putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.enablePermanentService)
+            .putBoolean(PREF_SHOW_TYPING, settings.enableTypingIndicator)
+            .putBoolean(PREF_SHOW_READ, settings.enableReadIndicator)
             .putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
             .putInt(PREF_NOTIFICATION_VISIBILITY, settings.notificationVisibility)
             .apply()
@@ -58,17 +58,18 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
 
     override fun loadSettings(): Settings {
         val appPrefs = preferences
-        return userSettings ?: Settings().apply {
-            isAllowSystemContacts = appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false)
-            isAllowPlaceSystemCalls = appPrefs.getBoolean(PREF_PLACE_CALLS, false)
-            setAllowRingOnStartup(appPrefs.getBoolean(PREF_ON_STARTUP, true))
-            isAllowPushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false)
-            isAllowPersistentNotification = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false)
-            isAllowTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true)
-            isAllowReadIndicator = appPrefs.getBoolean(PREF_SHOW_READ, true)
-            setBlockRecordIndicator(appPrefs.getBoolean(PREF_BLOCK_RECORD, false))
+        return Settings(
+            useSystemContacts = appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false),
+            allowPlaceSystemCalls = appPrefs.getBoolean(PREF_PLACE_CALLS, false),
+            runOnStartup = appPrefs.getBoolean(PREF_ON_STARTUP, true),
+            enablePushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false),
+            enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false),
+            enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),
+            enableReadIndicator = appPrefs.getBoolean(PREF_SHOW_READ, true),
+            isRecordingBlocked = appPrefs.getBoolean(PREF_BLOCK_RECORD, false),
+            enableLinkPreviews = appPrefs.getBoolean(PREF_LINK_PREVIEWS, true),
             notificationVisibility = appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0)
-        }
+        )
     }
 
     private fun saveRequests(accountId: String, requests: Set<String>) {
@@ -107,7 +108,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     override val isPushAllowed: Boolean
         get() {
             val token = JamiApplication.instance?.pushToken
-            return settings.isAllowPushNotifications && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/
+            return settings.enablePushNotifications && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().allowMobileData())*/
         }
 
     override val resolution: Int
@@ -156,6 +157,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
         private const val PREF_SHOW_TYPING = "persistent_typing"
         private const val PREF_SHOW_READ = "persistent_read"
         private const val PREF_BLOCK_RECORD = "persistent_block_record"
+        private const val PREF_LINK_PREVIEWS = "link_previews_enable"
         private const val PREF_NOTIFICATION_VISIBILITY = "persistent_notification"
         private const val PREF_HW_ENCODING = "video_hwenc"
         const val PREF_BITRATE = "video_bitrate"

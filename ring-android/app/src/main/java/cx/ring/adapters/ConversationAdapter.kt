@@ -103,6 +103,7 @@ class ConversationAdapter(
     private var lastMsgPos = -1
     private var isComposing = false
     private var mShowReadIndicator = true
+    public var showLinkPreviews = true
 
     /**
      * Refreshes the data and notifies the changes
@@ -435,13 +436,10 @@ class ConversationAdapter(
                 viewHolder.compositeDisposable.add(
                     Observable.interval(1L, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                         .startWithItem(0L)
-                        .subscribe { t: Long? ->
+                        .subscribe {
                             val pS = player.currentPosition / 1000
                             val dS = player.duration / 1000
-                            viewHolder.mMsgTxt.text = String.format(
-                                Locale.getDefault(),
-                                "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60
-                            )
+                            viewHolder.mMsgTxt.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
                         })
             } else {
                 viewHolder.btnAccept.setOnClickListener(null)
@@ -738,43 +736,45 @@ class ConversationAdapter(
             convViewHolder.mMsgTxt.textSize = 16f
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
 
-            val cachedPreview = interaction.preview as Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
-                .flatMapSingle { url -> LinkPreview.load(url) }
-                .cache()
-                .apply { interaction.preview = this }
+            if (showLinkPreviews) {
+                val cachedPreview = interaction.preview as Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
+                    .flatMapSingle { url -> LinkPreview.load(url) }
+                    .cache()
+                    .apply { interaction.preview = this }
 
-            convViewHolder.compositeDisposable.add(cachedPreview
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
-                    Log.w(TAG, "got preview $data")
-                    if (data.isEmpty()) {
-                        return@subscribe
-                    }
-                    if (data.imageUrl.isNotEmpty()) {
-                        GlideApp.with(context)
-                            .load(data.imageUrl)
-                            .apply(GlideOptions().override(mPreviewMaxSize))
-                            .centerCrop()
-                            .into(convViewHolder.mImage)
-                        //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))
-                        convViewHolder.mImage.visibility = View.VISIBLE
-                    } else {
-                        convViewHolder.mImage.visibility = View.GONE
-                    }
-                    convViewHolder.mHistTxt.text = data.title
-                    if (data.description.isNotEmpty()) {
-                        convViewHolder.mHistDetailTxt.visibility = View.VISIBLE
-                        convViewHolder.mHistDetailTxt.text = data.description
-                    } else {
-                        convViewHolder.mHistDetailTxt.visibility = View.GONE
-                    }
-                    convViewHolder.mAnswerLayout.visibility = View.VISIBLE
-                    val url = Uri.parse(data.baseUrl)
-                    convViewHolder.mPreviewDomain.text = url.host
-                    convViewHolder.mAnswerLayout.setOnClickListener {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                    }
-                }) {e -> Log.e(TAG, "Can't load preview", e)})
+                convViewHolder.compositeDisposable.add(cachedPreview
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ data ->
+                        Log.w(TAG, "got preview $data")
+                        if (data.isEmpty()) {
+                            return@subscribe
+                        }
+                        if (data.imageUrl.isNotEmpty()) {
+                            GlideApp.with(context)
+                                .load(data.imageUrl)
+                                .apply(GlideOptions().override(mPreviewMaxSize))
+                                .centerCrop()
+                                .into(convViewHolder.mImage)
+                            //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))
+                            convViewHolder.mImage.visibility = View.VISIBLE
+                        } else {
+                            convViewHolder.mImage.visibility = View.GONE
+                        }
+                        convViewHolder.mHistTxt.text = data.title
+                        if (data.description.isNotEmpty()) {
+                            convViewHolder.mHistDetailTxt.visibility = View.VISIBLE
+                            convViewHolder.mHistDetailTxt.text = data.description
+                        } else {
+                            convViewHolder.mHistDetailTxt.visibility = View.GONE
+                        }
+                        convViewHolder.mAnswerLayout.visibility = View.VISIBLE
+                        val url = Uri.parse(data.baseUrl)
+                        convViewHolder.mPreviewDomain.text = url.host
+                        convViewHolder.mAnswerLayout.setOnClickListener {
+                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                        }
+                    }) { e -> Log.e(TAG, "Can't load preview", e) })
+            }
         }
         convViewHolder.mMsgTxt.text = message
         val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
@@ -951,7 +951,7 @@ class ConversationAdapter(
                     DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_NO_YEAR or
                             DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)
             }
-        } else if (diff < DateUtils.YEAR_IN_MILLIS) { // JAN. 7, 11:02 A.M.
+        } else if (diff < DateUtils.YEAR_IN_MILLIS) {
             DateUtils.formatDateTime(context, timestamp,
                 DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or
                         DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME)

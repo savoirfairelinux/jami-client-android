@@ -36,7 +36,7 @@ class BootReceiver : BroadcastReceiver() {
         val action = intent.action ?: return
         if (Intent.ACTION_BOOT_COMPLETED == action || Intent.ACTION_REBOOT == action || Intent.ACTION_MY_PACKAGE_REPLACED == action) {
             try {
-                if (mPreferencesService.settings.isAllowOnStartup) {
+                if (mPreferencesService.settings.runOnStartup) {
                     try {
                         ContextCompat.startForegroundService(context, Intent(SyncService.ACTION_START)
                                 .setClass(context, SyncService::class.java)

@@ -146,7 +146,7 @@ abstract class JamiApplication : Application() {
 
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected())
-                if (mPreferencesService.settings.isAllowPushNotifications) {
+                if (mPreferencesService.settings.enablePushNotifications) {
                     pushToken?.let { token -> JamiService.setPushNotificationToken(token) }
                 } else {
                     JamiService.setPushNotificationToken("")
@@ -221,7 +221,7 @@ abstract class JamiApplication : Application() {
         if (!DRingService.isRunning) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                        && mPreferencesService.settings.isAllowPersistentNotification) {
+                        && mPreferencesService.settings.enablePermanentService) {
                     startForegroundService(Intent(this, DRingService::class.java))
                 } else {
                     startService(Intent(this, DRingService::class.java))

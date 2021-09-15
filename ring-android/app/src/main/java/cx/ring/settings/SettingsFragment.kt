@@ -74,6 +74,7 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsTyping.setOnCheckedChangeListener(save)
             settingsRead.setOnCheckedChangeListener(save)
             settingsBlockRecord.setOnCheckedChangeListener(save)
+            settingsLinkPreview.setOnCheckedChangeListener(save)
             settingsVideoLayout.setOnClickListener {
                 (activity as HomeActivity?)?.goToVideoSettings()
             }
@@ -89,6 +90,7 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
                     .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, id: Int -> }
                     .show()
             }
+
             val singleItems = arrayOf(
                 getString(R.string.notification_private),
                 getString(R.string.notification_public),
@@ -146,16 +148,16 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
 
     private fun saveSettings(binding: FragSettingsBinding) {
         // save settings according to UI inputs
-        presenter.saveSettings(Settings(currentSettings).apply {
-            setAllowRingOnStartup(binding.settingsStartup.isChecked)
-            isAllowPushNotifications = binding.settingsPushNotifications.isChecked
-            isAllowPersistentNotification = binding.settingsPersistNotification.isChecked
-            isAllowPersistentNotification = binding.settingsPersistNotification.isChecked
-            isAllowTypingIndicator = binding.settingsTyping.isChecked
-            isAllowReadIndicator = binding.settingsRead.isChecked
-            setBlockRecordIndicator(binding.settingsBlockRecord.isChecked)
+        presenter.saveSettings(currentSettings!!.copy(
+            runOnStartup = binding.settingsStartup.isChecked,
+            enablePushNotifications = binding.settingsPushNotifications.isChecked,
+            enablePermanentService = binding.settingsPersistNotification.isChecked,
+            enableTypingIndicator = binding.settingsTyping.isChecked,
+            enableReadIndicator = binding.settingsRead.isChecked,
+            isRecordingBlocked = binding.settingsBlockRecord.isChecked,
+            enableLinkPreviews = binding.settingsLinkPreview.isChecked,
             notificationVisibility = mNotificationVisibility
-        })
+        ))
     }
 
     /**
@@ -185,12 +187,15 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
     override fun showViewModel(viewModel: Settings) {
         currentSettings = viewModel
         mIsRefreshingViewFromPresenter = true
-        binding!!.settingsPushNotifications.isChecked = viewModel.isAllowPushNotifications
-        binding!!.settingsPersistNotification.isChecked = viewModel.isAllowPersistentNotification
-        binding!!.settingsStartup.isChecked = viewModel.isAllowOnStartup
-        binding!!.settingsTyping.isChecked = viewModel.isAllowTypingIndicator
-        binding!!.settingsRead.isChecked = viewModel.isAllowReadIndicator
-        binding!!.settingsBlockRecord.isChecked = viewModel.isRecordingBlocked
+        binding?.apply {
+            settingsPushNotifications.isChecked = viewModel.enablePushNotifications
+            settingsPersistNotification.isChecked = viewModel.enablePermanentService
+            settingsStartup.isChecked = viewModel.runOnStartup
+            settingsTyping.isChecked = viewModel.enableTypingIndicator
+            settingsRead.isChecked = viewModel.enableReadIndicator
+            settingsBlockRecord.isChecked = viewModel.isRecordingBlocked
+            settingsLinkPreview.isChecked = viewModel.enableLinkPreviews
+        }
         mIsRefreshingViewFromPresenter = false
         mNotificationVisibility = viewModel.notificationVisibility
     }

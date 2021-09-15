@@ -47,8 +47,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs)
-        val args = arguments
-        presenter.init(args?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
+        presenter.init(requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {

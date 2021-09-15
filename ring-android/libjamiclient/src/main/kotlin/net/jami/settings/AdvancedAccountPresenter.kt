@@ -35,10 +35,9 @@ class AdvancedAccountPresenter @Inject constructor(
     private var mAccountService: AccountService
 ) : RootPresenter<AdvancedAccountView>() {
     private var mAccount: Account? = null
-    fun init(accountId: String?) {
-        mAccount = mAccountService.getAccount(accountId)
-        if (mAccount != null) {
-            view!!.initView(mAccount!!.config, networkInterfaces)
+    fun init(accountId: String) {
+        mAccount = mAccountService.getAccount(accountId)?.also { account ->
+            view?.initView(account.config, networkInterfaces)
         }
     }
 

@@ -47,7 +47,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
 ) : RootPresenter<JamiAccountSummaryView>() {
     private var mAccountID: String? = null
 
-    fun registerName(name: String?, password: String?) {
+    fun registerName(name: String, password: String?) {
         val account = mAccountService.getAccount(mAccountID) ?: return
         mAccountService.registerName(account, password, name)
         //view?.accountChanged(account, a.second)

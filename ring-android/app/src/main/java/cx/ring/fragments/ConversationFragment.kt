@@ -202,7 +202,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         .doFinally { contentInfo.releasePermission() })
             }
             binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
-            binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { view: View, hasFocus: Boolean ->
+            binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 if (hasFocus) {
                     val fragment = childFragmentManager.findFragmentById(R.id.mapLayout)
                     if (fragment != null) {
@@ -1158,8 +1158,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun setReadIndicatorStatus(show: Boolean) {
-        mAdapter?.setReadIndicatorStatus(show)
+    override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {
+        mAdapter?.apply {
+            setReadIndicatorStatus(readIndicator)
+            showLinkPreviews = linkPreviews
+        }
     }
 
     override fun updateLastRead(last: String) {
