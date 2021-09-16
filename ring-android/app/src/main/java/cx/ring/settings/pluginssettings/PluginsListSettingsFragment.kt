@@ -39,10 +39,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     private var binding: FragPluginsListSettingsBinding? = null
     private var mAdapter: PluginsListAdapter? = null
     private val mCompositeDisposable = CompositeDisposable()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
 
         // use this setting to improve performance if you know that changes
@@ -54,7 +51,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         binding!!.pluginsList.adapter = mAdapter
 
         //Fab
-        binding!!.pluginsListSettingsFab.setOnClickListener { view: View? ->
+        binding!!.pluginsListSettingsFab.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"

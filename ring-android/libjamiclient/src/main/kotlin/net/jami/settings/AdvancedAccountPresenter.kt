@@ -41,13 +41,13 @@ class AdvancedAccountPresenter @Inject constructor(
         }
     }
 
-    fun twoStatePreferenceChanged(configKey: ConfigKey?, newValue: Any) {
-        mAccount!!.setDetail(configKey!!, newValue.toString())
+    fun twoStatePreferenceChanged(configKey: ConfigKey, newValue: Any) {
+        mAccount!!.setDetail(configKey, newValue.toString())
         updateAccount()
     }
 
-    fun passwordPreferenceChanged(configKey: ConfigKey?, newValue: Any) {
-        mAccount!!.setDetail(configKey!!, newValue.toString())
+    fun passwordPreferenceChanged(configKey: ConfigKey, newValue: Any) {
+        mAccount!!.setDetail(configKey, newValue.toString())
         updateAccount()
     }
 

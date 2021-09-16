@@ -246,7 +246,6 @@ class CallService(
     }
 
     fun hangUp(callId: String) {
-        Log.i(TAG, "hangUp() called... $callId", Exception())
         mExecutor.execute {
             Log.i(TAG, "hangUp() running... $callId")
             JamiService.hangUp(callId)
