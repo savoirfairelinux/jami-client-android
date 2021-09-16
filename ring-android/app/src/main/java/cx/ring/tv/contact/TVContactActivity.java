@@ -116,7 +116,7 @@ public class TVContactActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_frag_contact);
+        setContentView(R.layout.tv_activity_contact);
 
         mBackgroundManager = BackgroundManager.getInstance(this);
         mBackgroundManager.attach(getWindow());

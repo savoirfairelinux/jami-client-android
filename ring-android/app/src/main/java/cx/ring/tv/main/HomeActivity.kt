@@ -279,6 +279,10 @@ class HomeActivity : FragmentActivity() {
         }
     }
 
+    fun getFrameLayout(): FrameLayout {
+        return mPreviewView
+    }
+
     companion object {
         private val TAG = HomeActivity::class.simpleName!!
         private const val BLUR_RADIUS = 7.5f
