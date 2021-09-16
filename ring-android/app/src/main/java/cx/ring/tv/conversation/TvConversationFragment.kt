@@ -28,9 +28,7 @@ import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.text.TextUtils
@@ -55,6 +53,7 @@ import cx.ring.databinding.FragConversationTvBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.tv.camera.CustomCameraActivity
+import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.AndroidFileUtils.copyFileToUri
 import cx.ring.utils.AndroidFileUtils.createAudioFile
 import cx.ring.utils.AndroidFileUtils.getCacheFile
@@ -164,6 +163,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 View.OnFocusChangeListener { _, hasFocus: Boolean ->
                     TransitionManager.beginDelayedTransition(binding.textContainer)
                     binding.textText.visibility = if (hasFocus) View.VISIBLE else View.GONE
+                    val r = Runnable {
+                        if (hasFocus && activity is HomeActivity) {
+                            val homeActivity = activity as HomeActivity
+                            homeActivity.getFrameLayout().invalidate()
+                            homeActivity.getFrameLayout().requestLayout()
+                        }
+                    }
+                    Handler(Looper.getMainLooper()).postDelayed(r, 50)
                 }
             binding.buttonAudio.onFocusChangeListener =
                 View.OnFocusChangeListener { _, hasFocus: Boolean ->
@@ -446,7 +453,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     private fun startPlaying() {
-        val fileName =  fileName ?: return
+        val fileName = fileName ?: return
         try {
             player = MediaPlayer().apply {
                 setDataSource(fileName.absolutePath)
