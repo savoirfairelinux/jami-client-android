@@ -514,7 +514,6 @@ class ConversationFacade(
         } else if (newState === CallStatus.CURRENT && call.isIncoming
             || newState === CallStatus.RINGING && !call.isIncoming) {
             mNotificationService.handleCallNotification(conference!!, false)
-            mAccountService.sendProfile(call.daemonIdString!!, call.account!!)
         } else if (newState === CallStatus.HUNGUP || newState === CallStatus.BUSY || newState === CallStatus.FAILURE || newState === CallStatus.OVER) {
             if (conference != null)
                 mNotificationService.handleCallNotification(conference, true)
