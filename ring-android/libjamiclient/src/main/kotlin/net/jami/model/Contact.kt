@@ -110,11 +110,9 @@ class Contact private constructor(
 
     val ids: ArrayList<String>
         get() {
-            val ret = ArrayList<String>(phones.size + if (id == UNKNOWN_ID.toLong()) 0 else 1)
-            if (id != UNKNOWN_ID.toLong()) ret.add(
-                "c:" + java.lang.Long.toHexString(
-                    id
-                )
+            val ret = ArrayList<String>(phones.size + if (id == UNKNOWN_ID) 0 else 1)
+            if (id != UNKNOWN_ID) ret.add(
+                "c:" + java.lang.Long.toHexString(id)
             )
             for (p in phones) ret.add(p.number.rawUriString)
             return ret
@@ -215,8 +213,8 @@ class Contact private constructor(
 
     companion object {
         private val TAG = Contact::class.simpleName!!
-        const val UNKNOWN_ID = -1
-        const val DEFAULT_ID = 0
+        const val UNKNOWN_ID = -1L
+        const val DEFAULT_ID = 0L
         const val PREFIX_RING = Uri.RING_URI_SCHEME
 
         fun buildSIP(to: Uri): Contact {

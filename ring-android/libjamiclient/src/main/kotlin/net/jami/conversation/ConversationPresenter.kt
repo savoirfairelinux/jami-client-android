@@ -56,8 +56,8 @@ class ConversationPresenter @Inject constructor(
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
 
     fun init(conversationUri: Uri, accountId: String) {
-        Log.w(TAG, "init $conversationUri $accountId")
         if (conversationUri == mConversationUri) return
+        Log.w(TAG, "init $conversationUri $accountId")
         val settings = mPreferencesService.settings
         view?.setSettings(settings.enableReadIndicator, settings.enableLinkPreviews)
         mConversationUri = conversationUri

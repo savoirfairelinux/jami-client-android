@@ -178,7 +178,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val action = intent.action
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT == action) {
             //mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
-            presentTrustRequestFragment(extra?.getString(ContactRequestsFragment.ACCOUNT_ID) ?: return)
+            presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
         } else if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
             val path = ConversationPath.fromBundle(extra)
             if (path != null) {
@@ -380,14 +380,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .commit()
     }
 
-    private fun presentTrustRequestFragment(accountID: String) {
-        mNotificationService.cancelTrustRequestNotification(accountID)
+    private fun presentTrustRequestFragment(accountId: String) {
+        mNotificationService.cancelTrustRequestNotification(accountId)
         if (fContent is ContactRequestsFragment) {
-            (fContent as ContactRequestsFragment).presentForAccount(accountID)
+            (fContent as ContactRequestsFragment).presentForAccount(accountId)
             return
         }
         val content = ContactRequestsFragment().apply {
-            arguments = Bundle().apply { putString(ContactRequestsFragment.ACCOUNT_ID, accountID) }
+            arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
         }
         fContent = content
         mBinding!!.navigationView.menu.getItem(NAVIGATION_CONTACT_REQUESTS).isChecked = true

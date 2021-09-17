@@ -105,8 +105,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         )
         searchView.imeOptions = EditorInfo.IME_ACTION_GO
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val editText = searchView.findViewById<EditText>(R.id.search_src_text)
-            editText?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
+            searchView.findViewById<EditText>(R.id.search_src_text)
+                ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
         }
         mSearchMenuItem = searchMenuItem
         mDialpadMenuItem = dialpadMenuItem
@@ -119,16 +119,17 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     fun handleIntent(intent: Intent) {
-        if (mSearchView != null && intent.action != null) {
+        val searchView = mSearchView ?: return
+        if (intent.action != null) {
             when (intent.action) {
-                Intent.ACTION_VIEW, Intent.ACTION_CALL -> mSearchView!!.setQuery(intent.dataString, true)
+                Intent.ACTION_VIEW, Intent.ACTION_CALL -> searchView.setQuery(intent.dataString, true)
                 Intent.ACTION_DIAL -> {
                     mSearchMenuItem?.expandActionView()
-                    mSearchView?.setQuery(intent.dataString, false)
+                    searchView.setQuery(intent.dataString, false)
                 }
                 Intent.ACTION_SEARCH -> {
                     mSearchMenuItem?.expandActionView()
-                    mSearchView?.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
+                    searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
                 }
                 else -> {}
             }
@@ -294,15 +295,15 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayClearDialog(conversationUri: Uri) {
-        ActionHelper.launchClearAction(activity, conversationUri, this@SmartListFragment)
+        ActionHelper.launchClearAction(requireContext(), conversationUri, this@SmartListFragment)
     }
 
     override fun displayDeleteDialog(conversationUri: Uri) {
-        ActionHelper.launchDeleteAction(activity, conversationUri, this@SmartListFragment)
+        ActionHelper.launchDeleteAction(requireContext(), conversationUri, this@SmartListFragment)
     }
 
     override fun copyNumber(uri: Uri) {
-        ActionHelper.launchCopyNumberToClipboardFromContact(activity, uri, this)
+        copyContactNumberToClipboard(uri.toString())
     }
 
     override fun displayMenuItem() {

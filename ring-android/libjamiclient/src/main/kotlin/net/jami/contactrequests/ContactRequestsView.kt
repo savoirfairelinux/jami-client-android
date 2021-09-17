@@ -26,4 +26,5 @@ interface ContactRequestsView {
     fun updateView(list: MutableList<SmartListViewModel>, disposable: CompositeDisposable)
     fun updateItem(item: SmartListViewModel)
     fun goToConversation(accountId: String, contactId: Uri)
+    fun copyNumber(uri: Uri)
 }

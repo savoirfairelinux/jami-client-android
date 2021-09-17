@@ -45,6 +45,7 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.util.Pair
 import com.bumptech.glide.Glide
 import cx.ring.R
+import cx.ring.account.AccountEditionFragment
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
@@ -495,7 +496,7 @@ class NotificationServiceImpl(
             .setContentTitle(mContext.getString(R.string.contact_request_title))
         val intentOpenTrustRequestFragment = Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
             .setClass(mContext, HomeActivity::class.java)
-            .putExtra(ContactRequestsFragment.ACCOUNT_ID, accountId)
+            .putExtra(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
         builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT))
         builder.color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
         return builder

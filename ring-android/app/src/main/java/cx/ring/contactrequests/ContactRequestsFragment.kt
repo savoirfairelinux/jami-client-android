@@ -22,10 +22,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import cx.ring.R
+import cx.ring.account.AccountEditionFragment
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPendingContactRequestsBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.ActionHelper
+import cx.ring.utils.ClipboardHelper
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -54,13 +60,14 @@ class ContactRequestsFragment :
     }
 
     fun presentForAccount(accountId: String?) {
-        arguments?.putString(ACCOUNT_ID, accountId)
+        if (accountId != null)
+            arguments?.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
         presenter.updateAccount(accountId)
     }
 
     override fun onStart() {
         super.onStart()
-        presenter.updateAccount(arguments?.getString(ACCOUNT_ID))
+        presenter.updateAccount(arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,28 +79,23 @@ class ContactRequestsFragment :
     }
 
     override fun updateView(list: MutableList<SmartListViewModel>, disposable: CompositeDisposable) {
-        if (binding == null) {
-            return
-        }
+        val binding = binding ?: return
         if (list.isNotEmpty()) {
-            binding!!.paneRingID.visibility = View.GONE
+            binding.paneRingID.visibility = View.GONE
         }
-        binding!!.placeholder.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        if (binding!!.requestsList.adapter != null) {
-            mAdapter!!.update(list)
+        binding.placeholder.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        val adapter = mAdapter
+        if (adapter != null) {
+            adapter.update(list)
         } else {
-            mAdapter = SmartListAdapter(list, this@ContactRequestsFragment, disposable)
-            binding!!.requestsList.adapter = mAdapter
-            val mLayoutManager = LinearLayoutManager(activity)
-            binding!!.requestsList.layoutManager = mLayoutManager
+            binding.requestsList.layoutManager = LinearLayoutManager(activity)
+            mAdapter = SmartListAdapter(list, this@ContactRequestsFragment, disposable).apply {
+                binding.requestsList.adapter = this
+            }
         }
-        binding!!.requestsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.requestsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                (requireActivity() as HomeActivity).setToolbarElevation(
-                    recyclerView.canScrollVertically(
-                        SCROLL_DIRECTION_UP
-                    )
-                )
+                (activity as HomeActivity?)?.setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP))
             }
         })
     }
@@ -106,15 +108,34 @@ class ContactRequestsFragment :
         (requireActivity() as HomeActivity).startConversation(accountId, contactId)
     }
 
+    override fun copyNumber(uri: Uri) {
+        val number = uri.toString()
+        ClipboardHelper.copyToClipboard(requireContext(), number)
+        val snackbarText = getString(
+            R.string.conversation_action_copied_peer_number_clipboard,
+            ActionHelper.getShortenedNumber(number)
+        )
+        Snackbar.make(binding!!.root, snackbarText, Snackbar.LENGTH_LONG).show()
+    }
+
     override fun onItemClick(item: SmartListViewModel) {
         presenter.contactRequestClicked(item.accountId, item.uri)
     }
 
-    override fun onItemLongClick(item: SmartListViewModel) {}
+    override fun onItemLongClick(item: SmartListViewModel) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setItems(R.array.swarm_actions) { dialog, which ->
+                when (which) {
+                    0 -> presenter.copyNumber(item)
+                    1 -> presenter.removeConversation(item)
+                    2 -> presenter.banContact(item)
+                }
+            }
+            .show()
+    }
 
     companion object {
-        private val TAG = ContactRequestsFragment::class.java.simpleName
-        val ACCOUNT_ID = TAG + "accountID"
+        private val TAG = ContactRequestsFragment::class.simpleName!!
         private const val SCROLL_DIRECTION_UP = -1
     }
 }

@@ -44,11 +44,11 @@ class ContactRequestsPresenter @Inject internal constructor(
         mCompositeDisposable.add(mConversationFacade.getPendingList(mAccount)
             .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
                 if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
-                else Observable.combineLatest(viewModels) { obs: Array<Any> -> obs.mapTo(ArrayList(obs.size))
+                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size))
                     { ob -> ob as SmartListViewModel } }
             }
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels -> view?.updateView(viewModels, mCompositeDisposable) })
+            .subscribe({ viewModels -> this.view?.updateView(viewModels, mCompositeDisposable) })
             { e: Throwable -> Log.d(TAG, "updateList subscribe onError", e) })
     }
 
@@ -69,6 +69,24 @@ class ContactRequestsPresenter @Inject internal constructor(
 
     fun contactRequestClicked(accountId: String, uri: Uri) {
         view?.goToConversation(accountId, uri)
+    }
+
+    fun removeConversation(item: SmartListViewModel) {
+        mConversationFacade.discardRequest(item.accountId, item.uri)
+    }
+
+    fun banContact(item: SmartListViewModel) {
+        mConversationFacade.discardRequest(item.accountId, item.uri)
+        mAccountService.removeContact(item.accountId, item.uri.host, true)
+    }
+
+    fun copyNumber(item: SmartListViewModel) {
+        val contact = item.getContact()
+        if (contact != null) {
+            view?.copyNumber(contact.uri)
+        } else {
+            view?.copyNumber(item.uri)
+        }
     }
 
     companion object {

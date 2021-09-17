@@ -21,26 +21,26 @@
  */
 package cx.ring.client
 
-import cx.ring.utils.ConversationPath.Companion.fromIntent
-import dagger.hilt.android.AndroidEntryPoint
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Build
-import android.view.WindowManager
-import cx.ring.R
-import android.media.AudioManager
-import android.os.Looper
 import android.content.Intent
 import android.content.res.Configuration
+import android.media.AudioManager
+import android.os.Build
+import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import cx.ring.BuildConfig
+import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
-import net.jami.services.NotificationService
+import cx.ring.utils.ConversationPath.Companion.fromIntent
 import cx.ring.utils.KeyboardVisibilityManager
 import cx.ring.utils.MediaButtonsHelper
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.services.NotificationService
 
 @AndroidEntryPoint
 class CallActivity : AppCompatActivity() {
@@ -68,11 +68,10 @@ class CallActivity : AppCompatActivity() {
         mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
             setOnClickListener {
                 dimmed = !dimmed
-                if (dimmed) {
+                if (dimmed)
                     hideSystemUI()
-                } else {
+                else
                     showSystemUI()
-                }
             }
         }
         intent?.let { handleNewIntent(it) }
@@ -81,13 +80,12 @@ class CallActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         restartNoInteractionTimer()
+        volumeControlStream = AudioManager.STREAM_VOICE_CALL
     }
 
     override fun onStop() {
         super.onStop()
-        if (handler != null) {
-            handler!!.removeCallbacks(onNoInteraction)
-        }
+        handler?.removeCallbacks(onNoInteraction)
     }
 
     public override fun onNewIntent(intent: Intent) {
@@ -128,9 +126,9 @@ class CallActivity : AppCompatActivity() {
     }
 
     private fun restartNoInteractionTimer() {
-        if (handler != null) {
-            handler!!.removeCallbacks(onNoInteraction)
-            handler!!.postDelayed(onNoInteraction, (4 * 1000).toLong())
+        handler?.let { handler ->
+            handler.removeCallbacks(onNoInteraction)
+            handler.postDelayed(onNoInteraction, (4 * 1000).toLong())
         }
     }
 
@@ -155,8 +153,8 @@ class CallActivity : AppCompatActivity() {
 
     private fun hideSystemUI() {
         KeyboardVisibilityManager.hideKeyboard(this)
-        if (mMainView != null) {
-            mMainView!!.systemUiVisibility =
+        mMainView?.let { mainView ->
+            mainView.systemUiVisibility =
                 (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LOW_PROFILE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -167,29 +165,27 @@ class CallActivity : AppCompatActivity() {
             if (callFragment != null && !callFragment.isChoosePluginMode) {
                 callFragment.toggleVideoPluginsCarousel(false)
             }
-            if (handler != null) handler!!.removeCallbacks(onNoInteraction)
+            handler?.removeCallbacks(onNoInteraction)
         }
     }
 
     fun showSystemUI() {
-        if (mMainView != null) {
-            mMainView!!.systemUiVisibility =
+        mMainView?.let { mainView ->
+            mainView.systemUiVisibility =
                 (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LOW_PROFILE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_IMMERSIVE)
-            val callFragment = callFragment
             callFragment?.toggleVideoPluginsCarousel(true)
             restartNoInteractionTimer()
         }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        val callFragment = callFragment
-        return if (callFragment != null) {
-            (MediaButtonsHelper.handleMediaKeyCode(keyCode, callFragment)
-                    || super.onKeyDown(keyCode, event))
-        } else super.onKeyDown(keyCode, event)
+        val fragment = callFragment
+        if (fragment != null && MediaButtonsHelper.handleMediaKeyCode(keyCode, fragment))
+            return true
+        return super.onKeyDown(keyCode, event)
     }
 
     // Get the call Fragment

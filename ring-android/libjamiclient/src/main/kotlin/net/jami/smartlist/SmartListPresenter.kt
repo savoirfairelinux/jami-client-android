@@ -41,7 +41,6 @@ class SmartListPresenter @Inject constructor(
     private val mConversationFacade: ConversationFacade,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
-    //private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
     private var mQueryDisposable: Disposable? = null
     private val mCurrentQuery: Subject<String> = BehaviorSubject.createDefault("")
     private val mQuery: Subject<String> = PublishSubject.create()
@@ -53,15 +52,32 @@ class SmartListPresenter @Inject constructor(
 
     override fun bindView(view: SmartListView) {
         super.bindView(view)
-        //mCompositeDisposable.clear();
-        //mCompositeDisposable.add(mConversationDisposable);
-        showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true))
+        view.setLoading(true)
+        mCompositeDisposable.add(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true)
+            .switchMap { viewModels ->
+                if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
+                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size), {ob -> ob as SmartListViewModel}) }
+                    .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+            }
+            .observeOn(mUiScheduler)
+            .subscribe({ viewModels: MutableList<SmartListViewModel> ->
+                val v = this.view ?: return@subscribe
+                v.setLoading(false)
+                if (viewModels.isEmpty()) {
+                    v.hideList()
+                    v.displayNoConversationMessage()
+                } else {
+                    v.hideNoConversationMessage()
+                    v.updateList(viewModels, mCompositeDisposable)
+                }
+            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
+
     }
 
     fun queryTextChanged(query: String) {
         if (query.isEmpty()) {
-            if (mQueryDisposable != null) {
-                mQueryDisposable!!.dispose()
+            mQueryDisposable?.let { disposable ->
+                disposable.dispose()
                 mQueryDisposable = null
             }
             mCurrentQuery.onNext(query)
@@ -78,11 +94,11 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun conversationLongClicked(smartListViewModel: SmartListViewModel) {
-        view!!.displayConversationDialog(smartListViewModel)
+        view?.displayConversationDialog(smartListViewModel)
     }
 
     fun fabButtonClicked() {
-        view!!.displayMenuItem()
+        view?.displayMenuItem()
     }
 
     private fun startConversation(accountId: String, conversationUri: Uri?) {
@@ -94,40 +110,35 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun startConversation(uri: Uri) {
-        view!!.goToConversation(mAccount!!.accountId, uri)
+        view?.goToConversation(mAccount!!.accountId, uri)
     }
 
     fun copyNumber(smartListViewModel: SmartListViewModel) {
-        if (smartListViewModel.isSwarm) {
-            // Copy first contact's URI for a swarm
-            // TODO other modes
-            val contact = smartListViewModel.contacts[0]
-            view!!.copyNumber(contact.uri)
+        val contact = smartListViewModel.getContact()
+        if (contact != null) {
+            view?.copyNumber(contact.uri)
         } else {
-            view!!.copyNumber(smartListViewModel.uri)
+            view?.copyNumber(smartListViewModel.uri)
         }
     }
 
     fun clearConversation(smartListViewModel: SmartListViewModel) {
-        view!!.displayClearDialog(smartListViewModel.uri)
+        view?.displayClearDialog(smartListViewModel.uri)
     }
 
     fun clearConversation(uri: Uri?) {
-        mCompositeDisposable.add(
-            mConversationFacade
-                .clearHistory(mAccount!!.accountId, uri!!)
-                .subscribeOn(Schedulers.computation()).subscribe()
-        )
+        mCompositeDisposable.add(mConversationFacade
+            .clearHistory(mAccount!!.accountId, uri!!)
+            .subscribeOn(Schedulers.computation()).subscribe())
     }
 
     fun removeConversation(smartListViewModel: SmartListViewModel) {
-        view!!.displayDeleteDialog(smartListViewModel.uri)
+        view?.displayDeleteDialog(smartListViewModel.uri)
     }
 
     fun removeConversation(uri: Uri) {
-        mCompositeDisposable.add(
-            mConversationFacade.removeConversation(mAccount!!.accountId, uri)
-                .subscribe())
+        mCompositeDisposable.add(mConversationFacade.removeConversation(mAccount!!.accountId, uri)
+            .subscribe())
     }
 
     fun banContact(smartListViewModel: SmartListViewModel) {
@@ -135,37 +146,13 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun clickQRSearch() {
-        view!!.goToQRFragment()
+        view?.goToQRFragment()
     }
 
     private fun showConversations(conversations: Observable<List<Observable<SmartListViewModel>>>) {
-        //mConversationDisposable.clear();
-        view!!.setLoading(true)
-        mCompositeDisposable.add(conversations
-            .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
-                if (viewModels.isEmpty())
-                    SmartListViewModel.EMPTY_RESULTS
-                else Observable.combineLatest(viewModels) { obs: Array<Any> -> //obs.map { it as SmartListViewModel }
-                    val vms: MutableList<SmartListViewModel> = ArrayList(obs.size)
-                    for (ob in obs) vms.add(ob as SmartListViewModel)
-                    vms
-                }.throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
-            }
-            .observeOn(mUiScheduler)
-            .subscribe({ viewModels: MutableList<SmartListViewModel> ->
-                val view = view
-                view!!.setLoading(false)
-                if (viewModels.isEmpty()) {
-                    view.hideList()
-                    view.displayNoConversationMessage()
-                    return@subscribe
-                }
-                view.hideNoConversationMessage()
-                view.updateList(viewModels, mCompositeDisposable)
-            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
     }
 
     companion object {
-        private val TAG = SmartListPresenter::class.java.simpleName
+        private val TAG = SmartListPresenter::class.simpleName!!
     }
 }
