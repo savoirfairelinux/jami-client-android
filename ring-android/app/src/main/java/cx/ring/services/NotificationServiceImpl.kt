@@ -57,7 +57,6 @@ import cx.ring.settings.SettingsFragment
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
-import cx.ring.utils.ResourceMapper
 import cx.ring.views.AvatarFactory
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
@@ -618,7 +617,7 @@ class NotificationServiceImpl(
                 if (event == InteractionStatus.TRANSFER_ONGOING)
                     Formatter.formatFileSize(mContext, info.bytesProgress) + " / " + Formatter.formatFileSize(mContext, info.totalSize)
                 else
-                    info.displayName + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event)
+                    info.displayName + ": " + cx.ring.utils.TextUtils.getReadableFileTransferStatus(mContext, event)
             )
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentViewConversation, 0))
             .color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
@@ -803,11 +802,12 @@ class NotificationServiceImpl(
                 NOTIF_CHANNEL_MISSED_CALL,
                 context.getString(R.string.notif_channel_missed_calls),
                 NotificationManager.IMPORTANCE_DEFAULT
-            )
-            missedCallsChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-            missedCallsChannel.setSound(null, null)
-            missedCallsChannel.enableVibration(false)
-            missedCallsChannel.group = NOTIF_CALL_GROUP
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_SECRET
+                setSound(null, null)
+                enableVibration(false)
+                group = NOTIF_CALL_GROUP
+            }
             notificationManager.createNotificationChannel(missedCallsChannel)
 
             // Incoming call channel
@@ -815,11 +815,12 @@ class NotificationServiceImpl(
                 NOTIF_CHANNEL_INCOMING_CALL,
                 context.getString(R.string.notif_channel_incoming_calls),
                 NotificationManager.IMPORTANCE_HIGH
-            )
-            incomingCallChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            incomingCallChannel.group = NOTIF_CALL_GROUP
-            incomingCallChannel.setSound(null, null)
-            incomingCallChannel.enableVibration(false)
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                group = NOTIF_CALL_GROUP
+                setSound(null, null)
+                enableVibration(false)
+            }
             notificationManager.createNotificationChannel(incomingCallChannel)
 
             // Call in progress channel

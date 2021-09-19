@@ -47,7 +47,7 @@ import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSmartlistBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ClipboardHelper
+import cx.ring.utils.TextUtils
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
@@ -239,11 +239,9 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun copyContactNumberToClipboard(contactNumber: String) {
-        ClipboardHelper.copyToClipboard(requireContext(), contactNumber)
-        val snackbarText = getString(
-            R.string.conversation_action_copied_peer_number_clipboard,
-            ActionHelper.getShortenedNumber(contactNumber)
-        )
+        TextUtils.copyToClipboard(requireContext(), contactNumber)
+        val snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+            TextUtils.getShortenedNumber(contactNumber))
         Snackbar.make(binding!!.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
@@ -344,8 +342,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
-            val contactId = data.getStringExtra(ConversationPath.KEY_CONVERSATION_URI)
-            if (contactId != null) {
+            data.getStringExtra(ConversationPath.KEY_CONVERSATION_URI)?.let { contactId ->
                 presenter.startConversation(Uri.fromString(contactId))
             }
         }

@@ -31,7 +31,7 @@ import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPendingContactRequestsBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ClipboardHelper
+import cx.ring.utils.TextUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -110,10 +110,10 @@ class ContactRequestsFragment :
 
     override fun copyNumber(uri: Uri) {
         val number = uri.toString()
-        ClipboardHelper.copyToClipboard(requireContext(), number)
+        TextUtils.copyToClipboard(requireContext(), number)
         val snackbarText = getString(
             R.string.conversation_action_copied_peer_number_clipboard,
-            ActionHelper.getShortenedNumber(number)
+            TextUtils.getShortenedNumber(number)
         )
         Snackbar.make(binding!!.root, snackbarText, Snackbar.LENGTH_LONG).show()
     }

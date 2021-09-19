@@ -45,6 +45,7 @@ import net.jami.utils.FileUtils
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
 
 object AndroidFileUtils {
     private val TAG = AndroidFileUtils::class.simpleName
@@ -150,7 +151,6 @@ object AndroidFileUtils {
         }
     }
 
-    @JvmStatic
     fun getRealPathFromURI(context: Context, uri: Uri): String? {
         var path: String? = null
         if (DocumentsContract.isDocumentUri(context, uri)) {
@@ -231,7 +231,7 @@ object AndroidFileUtils {
 
     fun getMimeTypeFromExtension(ext: String?): String {
         if (ext != null && ext.isNotEmpty()) {
-            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.lowercase(Locale.getDefault()))
+            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.lowercase())
             if (mimeType != null && mimeType.isNotEmpty()) return mimeType
             if (ext == "gz") {
                 return "application/gzip"
@@ -292,7 +292,6 @@ object AndroidFileUtils {
      * @param uri uri of the
      * @return Single<File> which points to the newly created copy in the cache
     </File> */
-    @JvmStatic
     fun getCacheFile(context: Context, uri: Uri): Single<File> {
         val contentResolver = context.contentResolver
         val cacheDir = context.cacheDir
@@ -469,7 +468,6 @@ object AndroidFileUtils {
      *
      * @return -1L if an error occurred, size otherwise
      */
-    @JvmStatic
     fun getSpaceLeft(path: String): Long {
         return try {
             StatFs(path).availableBytes
@@ -499,7 +497,7 @@ object AndroidFileUtils {
                 if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
                     val widthRatio = rotatedWidth.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
                     val heightRatio = rotatedHeight.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
-                    val maxRatio = Math.max(widthRatio, heightRatio)
+                    val maxRatio = max(widthRatio, heightRatio)
 
                     // Create the bitmap from file
                     val options = BitmapFactory.Options()

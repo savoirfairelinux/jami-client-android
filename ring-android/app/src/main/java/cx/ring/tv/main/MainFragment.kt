@@ -247,7 +247,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     logoView.setImageDrawable(a)
                 }
             })
-        qrCard?.setDrawable(prepareAccountQr(context, account.uri))
+        qrCard?.setDrawable(prepareAccountQr(context, account.uri)!!)
         accountSettingsRow?.adapter!!.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
     }
 

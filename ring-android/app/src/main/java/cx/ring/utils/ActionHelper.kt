@@ -20,14 +20,14 @@
 package cx.ring.utils
 
 import android.content.*
-import net.jami.model.Conversation.ConversationActionCallback
+import android.provider.ContactsContract
+import android.util.Log
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import net.jami.model.Contact
-import android.provider.ContactsContract
-import android.util.Log
+import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
-import java.util.ArrayList
+import java.util.*
 
 object ActionHelper {
     val TAG = ActionHelper::class.simpleName!!
@@ -95,11 +95,4 @@ object ActionHelper {
         }
     }
 
-    fun getShortenedNumber(number: String?): String? {
-        if (number != null && number.isNotEmpty() && number.length > 18) {
-            val size = number.length
-            return number.substring(0, 9) + "\u2026" + number.substring(size - 9, size)
-        }
-        return number
-    }
 }

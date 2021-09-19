@@ -16,21 +16,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.tv.account;
+package cx.ring.tv.account
 
-import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
-import cx.ring.R;
-import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.FragmentActivity
+import android.os.Bundle
+import cx.ring.R
 
 @AndroidEntryPoint
-public class TVShareActivity extends FragmentActivity {
+class TVShareActivity : FragmentActivity() {
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.tv_activity_share)
+    }
 
-    public static final String SHARED_ELEMENT_NAME = "photo";
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_activity_share);
+    companion object {
+        const val SHARED_ELEMENT_NAME = "photo"
     }
 }

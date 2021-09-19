@@ -50,14 +50,12 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
             holder.binding.displayName.text = contact.displayName
             holder.binding.photo.alpha = 1f
         }
-        if (holder.disposable != null) holder.disposable.dispose()
-        holder.binding.photo.setImageDrawable(
-            AvatarDrawable.Builder()
+        holder.disposable?.dispose()
+        holder.binding.photo.setImageDrawable(AvatarDrawable.Builder()
                 .withContact(contact)
                 .withCircleCrop(true)
                 .withPresence(false)
-                .build(context)
-        )
+                .build(context))
         /*;
         holder.disposable = AvatarFactory.getAvatar(context, contact)
                 .subscribe(holder.binding.photo::setImageDrawable);*/
@@ -87,10 +85,7 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
                     return oldCalls[oldItemPosition] === contacts[newItemPosition]
                 }
 
-                override fun areContentsTheSame(
-                    oldItemPosition: Int,
-                    newItemPosition: Int
-                ): Boolean {
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     return false
                 }
             }).dispatchUpdatesTo(this)

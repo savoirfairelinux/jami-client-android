@@ -34,7 +34,7 @@ import java.lang.IllegalArgumentException
  * This class distributes content uri used to pass along data in the app
  */
 object ContentUriHandler {
-    private val TAG = ContentUriHandler::class.java.simpleName
+    private val TAG = ContentUriHandler::class.simpleName!!
     const val AUTHORITY = BuildConfig.APPLICATION_ID
     const val AUTHORITY_FILES = "$AUTHORITY.file_provider"
     const val SCHEME_TV = "jamitv"
@@ -46,12 +46,6 @@ object ContentUriHandler {
     val ACCOUNTS_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "accounts")
     val CONTACT_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "contact")
 
-    /**
-     * The following is a workaround used to mitigate getUriForFile exceptions
-     * on Huawei devices taken from stackoverflow
-     * https://stackoverflow.com/a/41309223
-     */
-    private const val HUAWEI_MANUFACTURER = "Huawei"
     fun getUriForResource(context: Context, resourceId: Int): Uri {
         val resources = context.resources
         return Uri.Builder()
@@ -62,12 +56,13 @@ object ContentUriHandler {
             .build()
     }
 
-    @JvmStatic
-    fun getUriForFile(context: Context, authority: String, file: File): Uri {
-        return getUriForFile(context, authority, file, null)
-    }
-
-    fun getUriForFile(context: Context, authority: String, file: File, displayName: String?): Uri {
+    /**
+     * The following is a workaround used to mitigate getUriForFile exceptions
+     * on Huawei devices taken from stackoverflow
+     * https://stackoverflow.com/a/41309223
+     */
+    private const val HUAWEI_MANUFACTURER = "Huawei"
+    fun getUriForFile(context: Context, authority: String, file: File, displayName: String? = null): Uri {
         return try {
             if (displayName == null)
                 FileProvider.getUriForFile(context, authority, file)
@@ -85,16 +80,10 @@ object ContentUriHandler {
                     val cacheLocation = File(cacheFolder, file.name)
                     if (FileUtils.copyFile(file, cacheLocation)) {
                         Log.i(TAG, "Completed Android N+ Huawei file copy. Attempting to return the cached file")
-                        return if (displayName == null) FileProvider.getUriForFile(
-                            context,
-                            authority,
-                            cacheLocation
-                        ) else FileProvider.getUriForFile(
-                            context,
-                            authority,
-                            cacheLocation,
-                            displayName
-                        )
+                        return if (displayName == null)
+                            FileProvider.getUriForFile(context, authority, cacheLocation)
+                        else
+                            FileProvider.getUriForFile(context, authority, cacheLocation, displayName)
                     }
                     Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception")
                     throw IllegalArgumentException("Huawei devices are unsupported for Android N")

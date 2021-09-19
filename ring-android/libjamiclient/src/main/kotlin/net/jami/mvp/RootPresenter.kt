@@ -23,9 +23,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 
 abstract class RootPresenter<T> {
-    @JvmField
     protected var mCompositeDisposable = CompositeDisposable()
     private var mView: WeakReference<T>? = null
+
     open fun bindView(view: T) {
         mView = WeakReference(view)
     }

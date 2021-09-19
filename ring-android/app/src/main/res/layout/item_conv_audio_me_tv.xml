@@ -27,6 +27,7 @@
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:gravity="center"
+    android:focusable="true"
     android:clipChildren="false"
     android:clipToPadding="false">
 

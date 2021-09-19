@@ -111,8 +111,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private var mBinding: ActivityHomeBinding? = null
     private var mMigrationDialog: AlertDialog? = null
-
-    //private String mAccountWithPendingrequests = null;
     private val mDisposable = CompositeDisposable()
 
     /* called before activity is killed, e.g. rotation */
@@ -203,11 +201,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     .commitNow()
             }
         }
-        /*if (mAccountWithPendingrequests != null) {
-                presentTrustRequestFragment(mAccountWithPendingrequests);
-                mAccountWithPendingrequests = null;
-            }*/
-        //}
     }
 
     private fun showMigrationDialog() {

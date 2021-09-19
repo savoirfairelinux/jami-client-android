@@ -30,7 +30,6 @@ object DeviceUtils {
         return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
     }
 
-    @JvmStatic
     fun isTablet(context: Context): Boolean {
         return context.resources.getBoolean(R.bool.isTablet)
     }

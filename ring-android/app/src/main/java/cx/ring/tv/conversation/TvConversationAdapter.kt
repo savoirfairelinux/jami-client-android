@@ -1,8 +1,7 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Authors:    Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *              Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+ *  Authors:    AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,22 +17,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.adapters
+package cx.ring.tv.conversation
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.SurfaceTexture
-import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
-import android.net.Uri
-import android.os.Build
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
@@ -42,8 +34,6 @@ import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
 import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
@@ -51,114 +41,70 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import cx.ring.R
+import cx.ring.adapters.MessageType
 import cx.ring.client.MediaViewerActivity
-import cx.ring.fragments.ConversationFragment
-import cx.ring.linkpreview.LinkPreview
-import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.*
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
-import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.utils.StringUtils
+import net.jami.utils.StringUtils.isOnlyEmoji
 import java.io.File
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 import kotlin.math.max
 
-class ConversationAdapter(
-    private val conversationFragment: ConversationFragment,
+class TvConversationAdapter(
+    private val conversationFragment: TvConversationFragment,
     private val presenter: ConversationPresenter
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
-
     private val mInteractions = ArrayList<Interaction>()
     private val hPadding: Int
     private val vPadding: Int
     private val mPictureMaxSize: Int
-    private val mPreviewMaxSize: Int
     private val PICTURE_OPTIONS: GlideOptions
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     private var convColor = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
-    private var lastDisplayedPosition = -1
     private val timestampUpdateTimer: Observable<Long>
-    private var lastMsgPos = -1
-    private var isComposing = false
-    private var mShowReadIndicator = true
-    var showLinkPreviews = true
 
     /**
      * Refreshes the data and notifies the changes
      *
      * @param list an arraylist of interactions
      */
-    @SuppressLint("NotifyDataSetChanged")
     fun updateDataset(list: List<Interaction>) {
         Log.d(TAG, "updateDataset: list size=" + list.size)
-        when {
-            mInteractions.isEmpty() -> {
-                mInteractions.addAll(list)
-                notifyDataSetChanged()
-            }
-            list.size > mInteractions.size -> {
-                val oldSize = mInteractions.size
-                mInteractions.addAll(list.subList(oldSize, list.size))
-                notifyItemRangeInserted(oldSize, list.size)
-            }
-            else -> {
-                mInteractions.clear()
-                mInteractions.addAll(list)
-                notifyDataSetChanged()
-            }
+        if (mInteractions.isEmpty()) {
+            mInteractions.addAll(list)
+        } else if (list.size > mInteractions.size) {
+            mInteractions.addAll(list.subList(mInteractions.size, list.size))
+        } else {
+            mInteractions.clear()
+            mInteractions.addAll(list)
         }
+        notifyDataSetChanged()
     }
 
-    fun add(e: Interaction): Boolean {
-        if (e.isSwarm) {
-            if (mInteractions.isEmpty() || mInteractions[mInteractions.size - 1].messageId == e.parentId) {
-                val update = mInteractions.isNotEmpty()
-                mInteractions.add(e)
-                notifyItemInserted(mInteractions.size - 1)
-                if (update) notifyItemChanged(mInteractions.size - 2)
-                return true
-            }
-            var i = 0
-            val n = mInteractions.size
-            while (i < n) {
-                if (e.messageId == mInteractions[i].parentId) {
-                    Log.w(TAG, "Adding message at $i previous count $n")
-                    mInteractions.add(i, e)
-                    notifyItemInserted(i)
-                    return i == n - 1
-                }
-                i++
-            }
-        } else {
-            val update = mInteractions.isNotEmpty()
-            mInteractions.add(e)
-            notifyItemInserted(mInteractions.size - 1)
-            if (update) notifyItemChanged(mInteractions.size - 2)
-        }
-        return true
+    fun add(e: Interaction) {
+        val update = mInteractions.isNotEmpty()
+        mInteractions.add(e)
+        notifyItemInserted(mInteractions.size - 1)
+        if (update) notifyItemChanged(mInteractions.size - 2)
     }
 
     fun update(e: Interaction) {
-        Log.w(TAG, "update " + e.messageId)
-        if (!e.isIncoming && e.status == InteractionStatus.SUCCESS) {
+        if (!e.isIncoming && e.status === InteractionStatus.SUCCESS) {
             notifyItemChanged(lastDeliveredPosition)
         }
         for (i in mInteractions.indices.reversed()) {
@@ -171,33 +117,18 @@ class ConversationAdapter(
     }
 
     fun remove(e: Interaction) {
-        if (e.isSwarm) {
-            for (i in mInteractions.indices.reversed()) {
-                if (e.messageId == mInteractions[i].messageId) {
-                    mInteractions.removeAt(i)
-                    notifyItemRemoved(i)
-                    if (i > 0) {
-                        notifyItemChanged(i - 1)
-                    }
-                    if (i != mInteractions.size) {
-                        notifyItemChanged(i)
-                    }
-                    break
+        for (i in mInteractions.indices.reversed()) {
+            val element = mInteractions[i]
+            if (e.id == element.id) {
+                mInteractions.removeAt(i)
+                notifyItemRemoved(i)
+                if (i > 0) {
+                    notifyItemChanged(i - 1)
                 }
-            }
-        } else {
-            for (i in mInteractions.indices.reversed()) {
-                if (e.id == mInteractions[i].id) {
-                    mInteractions.removeAt(i)
-                    notifyItemRemoved(i)
-                    if (i > 0) {
-                        notifyItemChanged(i - 1)
-                    }
-                    if (i != mInteractions.size) {
-                        notifyItemChanged(i)
-                    }
-                    break
+                if (i != mInteractions.size) {
+                    notifyItemChanged(i)
                 }
+                break
             }
         }
     }
@@ -210,72 +141,67 @@ class ConversationAdapter(
     }
 
     override fun getItemCount(): Int {
-        return mInteractions.size + if (isComposing) 1 else 0
+        return mInteractions.size + 1
     }
 
     override fun getItemId(position: Int): Long {
-        return if (isComposing && position == mInteractions.size) Long.MAX_VALUE else mInteractions[position].id.toLong()
+        return mInteractions[position].id.toLong()
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (isComposing && position == mInteractions.size) return MessageType.COMPOSING_INDICATION.ordinal
-        val interaction = mInteractions[position]
-        return when (interaction.type) {
-            Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> MessageType.CALL_INFORMATION.ordinal
-            Interaction.InteractionType.TEXT -> if (interaction.isIncoming) {
-                MessageType.INCOMING_TEXT_MESSAGE.ordinal
-            } else {
-                MessageType.OUTGOING_TEXT_MESSAGE.ordinal
-            }
-            Interaction.InteractionType.DATA_TRANSFER -> {
-                val file = interaction as DataTransfer
-                val out = if (interaction.isIncoming) 0 else 4
-                if (file.isComplete) {
-                    when {
-                        file.isPicture -> return MessageType.INCOMING_IMAGE.ordinal + out
-                        file.isAudio -> return MessageType.INCOMING_AUDIO.ordinal + out
-                        file.isVideo -> return MessageType.INCOMING_VIDEO.ordinal + out
-                    }
-                }
-                out
-            }
-            Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
+        if (position == mInteractions.size) {
+            return MessageType.HEADER.ordinal
         }
+        val interaction = mInteractions[position]
+        if (interaction != null) {
+            when (interaction.type) {
+                Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
+                Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
+                Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
+                    MessageType.INCOMING_TEXT_MESSAGE.ordinal
+                } else {
+                    MessageType.OUTGOING_TEXT_MESSAGE.ordinal
+                }
+                Interaction.InteractionType.DATA_TRANSFER -> {
+                    val file = interaction as DataTransfer
+                    val out = if (interaction.isIncoming) 0 else 4
+                    if (file.isComplete) {
+                        if (file.isPicture) {
+                            return MessageType.INCOMING_IMAGE.ordinal + out
+                        } else if (file.isAudio) {
+                            return MessageType.INCOMING_AUDIO.ordinal + out
+                        } else if (file.isVideo) {
+                            return MessageType.INCOMING_VIDEO.ordinal + out
+                        }
+                    }
+                    return out
+                }
+            }
+        }
+        return MessageType.CALL_INFORMATION.ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
         val type = MessageType.values()[viewType]
-        val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
-        else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
+        val v = LayoutInflater.from(parent.context).inflate(type.tvLayout, parent, false) as ViewGroup
         return ConversationViewHolder(v, type)
     }
 
-    override fun onBindViewHolder(conversationViewHolder: ConversationViewHolder, position: Int) {
-        if (isComposing && position == mInteractions.size) {
-            configureForTypingIndicator(conversationViewHolder)
+    override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
+        if (position >= mInteractions.size)
             return
-        }
         val interaction = mInteractions[position]
-        conversationViewHolder.compositeDisposable.clear()
-        if (position > lastMsgPos) {
-            //lastMsgPos = position
-            val animation = AnimationUtils.loadAnimation(conversationViewHolder.itemView.context, R.anim.fade_in)
-            animation.startOffset = 150
-            conversationViewHolder.itemView.startAnimation(animation)
-        }
-
-        //Log.w(TAG, "onBindViewHolder " + interaction.getType() + " " + interaction);
+        holder.compositeDisposable.clear()
         val type = interaction.type
         if (type == Interaction.InteractionType.INVALID) {
-            conversationViewHolder.itemView.visibility = View.GONE
+            holder.itemView.visibility = View.GONE
         } else {
-            conversationViewHolder.itemView.visibility = View.VISIBLE
+            holder.itemView.visibility = View.VISIBLE
             when (type) {
-                Interaction.InteractionType.TEXT -> configureForTextMessage(conversationViewHolder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfo(conversationViewHolder, interaction)
-                Interaction.InteractionType.CONTACT -> configureForContactEvent(conversationViewHolder, interaction)
-                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(conversationViewHolder, interaction, position)
+                Interaction.InteractionType.TEXT -> configureForTextMessage(holder, interaction, position)
+                Interaction.InteractionType.CALL -> configureForCallInfoTextMessage(holder, interaction)
+                Interaction.InteractionType.CONTACT -> configureForContactEvent(holder, interaction)
+                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(holder, interaction, position)
                 else -> {}
             }
         }
@@ -302,13 +228,14 @@ class ConversationAdapter(
             player.release()
             holder.player = null
         }
+        holder.mMsgTxt?.setOnClickListener(null)
         holder.mMsgTxt?.setOnLongClickListener(null)
-        holder.mItem?.setOnClickListener(null)
         if (expandedItemPosition == holder.layoutPosition) {
             holder.mMsgDetailTxt?.visibility = View.GONE
             expandedItemPosition = -1
         }
         holder.compositeDisposable.clear()
+        super.onViewRecycled(holder)
     }
 
     fun setPrimaryColor(color: Int) {
@@ -316,38 +243,7 @@ class ConversationAdapter(
         notifyDataSetChanged()
     }
 
-    fun setComposingStatus(composingStatus: ComposingStatus) {
-        val composing = composingStatus == ComposingStatus.Active
-        if (isComposing != composing) {
-            isComposing = composing
-            if (composing) notifyItemInserted(mInteractions.size) else notifyItemRemoved(
-                mInteractions.size
-            )
-        }
-    }
-
-    fun setReadIndicatorStatus(show: Boolean) {
-        mShowReadIndicator = show
-    }
-
-    fun setLastDisplayed(interaction: Interaction) {
-        Log.w(TAG, "setLastDisplayed " + interaction.daemonId)
-        for (i in mInteractions.indices.reversed()) {
-            val element = mInteractions[i]
-            if (interaction.id == element.id) {
-                if (lastDisplayedPosition != -1) notifyItemChanged(lastDisplayedPosition)
-                lastDisplayedPosition = i
-                notifyItemChanged(i)
-                Log.w(TAG, "new displayed item $i")
-                break
-            }
-        }
-    }
-
-    private class RecyclerViewContextMenuInfo(
-        val position: Int,
-        val id: Long
-    ) : ContextMenuInfo
+    private class RecyclerViewContextMenuInfo constructor(val position: Int, val id: Long) : ContextMenuInfo
 
     fun onContextItemSelected(item: MenuItem): Boolean {
         val info = mCurrentLongItem ?: return false
@@ -357,24 +253,14 @@ class ConversationAdapter(
             Log.e(TAG, "Interaction array may be empty or null", e)
             return false
         }
-        if (interaction.type == Interaction.InteractionType.CONTACT) return false
+        if (interaction.type === Interaction.InteractionType.CONTACT) return false
         when (item.itemId) {
             R.id.conv_action_download -> presenter.saveFile(interaction)
-            R.id.conv_action_share -> presenter.shareFile(interaction)
             R.id.conv_action_open -> presenter.openFile(interaction)
             R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
             R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
-            R.id.conv_action_copy_text -> addToClipboard(interaction.body)
         }
         return true
-    }
-
-    private fun addToClipboard(text: String?) {
-        if (text == null || text.isEmpty()) return
-        val clipboard = conversationFragment.requireActivity()
-            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Copied Message", text)
-        clipboard.setPrimaryClip(clip)
     }
 
     private fun configureImage(viewHolder: ConversationViewHolder, path: File) {
@@ -383,14 +269,20 @@ class ConversationAdapter(
             .load(path)
             .apply(PICTURE_OPTIONS)
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
-        viewHolder.mImage?.setOnClickListener { v: View ->
+        viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+            viewHolder.mAnswerLayout!!.animate().scaleY(if (hasFocus) 1.1f else 1f)
+                .scaleX(if (hasFocus) 1.1f else 1f)
+        }
+
+        viewHolder.itemView.setOnClickListener { v: View ->
             try {
                 val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
                     .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage, "picture")
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage!!, "picture")
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't open picture", e)
@@ -400,9 +292,14 @@ class ConversationAdapter(
 
     private fun configureAudio(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
+        viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+            viewHolder.mAudioInfoLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+        }
+
         try {
             val acceptBtn = viewHolder.btnAccept as ImageView
-            val refuseBtn = viewHolder.btnRefuse!!
+            val refuseBtn = viewHolder.btnRefuse
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
             val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
             viewHolder.player = player
@@ -411,7 +308,7 @@ class ConversationAdapter(
                     mp.seekTo(0)
                     acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
                 }
-                acceptBtn.setOnClickListener {
+                viewHolder.itemView.setOnClickListener {
                     if (player.isPlaying) {
                         player.pause()
                         acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
@@ -420,7 +317,7 @@ class ConversationAdapter(
                         acceptBtn.setImageResource(R.drawable.baseline_pause_24)
                     }
                 }
-                refuseBtn.setOnClickListener {
+                refuseBtn?.setOnClickListener {
                     if (player.isPlaying) player.pause()
                     player.seekTo(0)
                     acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
@@ -435,7 +332,7 @@ class ConversationAdapter(
                         })
             } else {
                 acceptBtn.setOnClickListener(null)
-                refuseBtn.setOnClickListener(null)
+                refuseBtn?.setOnClickListener(null)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing player", e)
@@ -444,6 +341,11 @@ class ConversationAdapter(
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
+        viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+            viewHolder.mLayout?.animate()?.scaleY(if (hasFocus) 1.1f else 1f)?.scaleX(if (hasFocus) 1.1f else 1f)
+        }
+
         viewHolder.player?.let {
             viewHolder.player = null
             it.release()
@@ -563,57 +465,38 @@ class ConversationAdapter(
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
         } else {
-            val statusIcon = viewHolder.mStatusIcon ?: return
             when (interaction.status) {
                 InteractionStatus.SENDING -> {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.baseline_circle_24)
+                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
+                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_circle_24)
                 }
                 InteractionStatus.FAILURE -> {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                InteractionStatus.DISPLAYED -> {
-                    statusIcon.visibility = if (mShowReadIndicator) View.VISIBLE else View.GONE
-                    statusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact!!.primaryNumber))
+                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
+                    viewHolder.mStatusIcon?.setImageResource(R.drawable.round_highlight_off_24)
                 }
                 else -> {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.baseline_check_circle_24)
+                    viewHolder.mStatusIcon?.visibility = View.VISIBLE
+                    viewHolder.mStatusIcon?.setImageResource(R.drawable.baseline_check_circle_24)
                     lastDeliveredPosition = position
                 }
             }
         }
         val type = viewHolder.type.transferType
-        val longPressView = when (type) {
-            MessageType.TransferType.IMAGE -> viewHolder.mImage
-            MessageType.TransferType.VIDEO -> viewHolder.video
-            MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
-            else -> viewHolder.mFileInfoLayout
-        } ?: return
-        if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-            longPressView.background.setTintList(null)
-        }
+
+        val longPressView = viewHolder.itemView
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
             menu.setHeaderTitle(file.displayName)
-            MenuInflater(v.context).inflate(R.menu.conversation_item_actions_file, menu)
-            if (file.status == InteractionStatus.TRANSFER_ONGOING) {
-                menu.findItem(R.id.conv_action_delete).setTitle(android.R.string.cancel)
+            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
+            val inflater = conversationFragment.requireActivity().menuInflater
+            inflater.inflate(R.menu.conversation_item_actions_file_tv, menu)
+            if (!file.isComplete) {
                 menu.removeItem(R.id.conv_action_download)
                 menu.removeItem(R.id.conv_action_share)
-                menu.removeItem(R.id.conv_action_open)
-            } else {
-                if (!file.isComplete) {
-                    menu.removeItem(R.id.conv_action_download)
-                    menu.removeItem(R.id.conv_action_share)
-                }
             }
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
         }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.adapterPosition)
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
             }
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
             false
@@ -625,11 +508,16 @@ class ConversationAdapter(
         } else if (type == MessageType.TransferType.AUDIO) {
             configureAudio(viewHolder, path)
         } else {
+            viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+                viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+                viewHolder.mFileInfoLayout?.animate()
+                    ?.scaleY(if (hasFocus) 1.1f else 1f)
+                    ?.scaleX(if (hasFocus) 1.1f else 1f)
+            }
             val status = file.status
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
             viewHolder.mMsgTxt?.text = file.displayName
-            if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
-                viewHolder.btnRefuse?.visibility = View.VISIBLE
+            if (status === InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.mAnswerLayout?.visibility = View.VISIBLE
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
                 viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
@@ -639,31 +527,9 @@ class ConversationAdapter(
                 viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
             } else {
                 viewHolder.mAnswerLayout?.visibility = View.GONE
-                if (status == InteractionStatus.TRANSFER_ONGOING) {
-                    viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                    } else {
-                        viewHolder.progress?.progress = (file.bytesProgress / 1024).toInt()
-                    }
-                    viewHolder.progress?.show()
-                } else {
-                    viewHolder.progress?.hide()
-                }
             }
         }
-    }
 
-    private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
-        AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->
-            viewHolder.mStatusIcon?.setImageDrawable(anim)
-            anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
-                override fun onAnimationEnd(drawable: Drawable) {
-                    anim.start()
-                }
-            })
-            anim.start()
-        }
     }
 
     /**
@@ -676,10 +542,17 @@ class ConversationAdapter(
     private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val context = convViewHolder.itemView.context
         val textMessage = interaction as TextMessage
-        val contact = textMessage.contact  ?: return
-        // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
-        val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
-        val longPressView = convViewHolder.mMsgTxt!!
+        val contact = textMessage.contact
+        if (contact == null) {
+            Log.e(TAG, "Invalid contact, not able to display message correctly")
+            return
+        }
+        convViewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            convViewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
+            convViewHolder.mMsgTxt!!.animate().scaleY(if (hasFocus) 1.1f else 1f).scaleX(if (hasFocus) 1.1f else 1f)
+        }
+        val message = textMessage.body!!.trim { it <= ' ' }
+        val longPressView = convViewHolder.itemView
         longPressView.background.setTintList(null)
         longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
             val date = Date(interaction.timestamp)
@@ -687,158 +560,92 @@ class ConversationAdapter(
             menu.setHeaderTitle(dateFormat.format(date))
             conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
             val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-
-            if (interaction.status == InteractionStatus.SENDING) {
+            inflater.inflate(R.menu.conversation_item_actions_messages_tv, menu)
+            if (interaction.status === InteractionStatus.SENDING) {
                 menu.removeItem(R.id.conv_action_delete)
             } else {
-                if (interaction.isSwarm) {
-                    menu.removeItem(R.id.conv_action_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
-                } else {
-                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
-                }
+                menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
+                menu.removeItem(R.id.conv_action_cancel_message)
             }
         }
         longPressView.setOnLongClickListener { v: View ->
             if (expandedItemPosition == position) {
                 expandedItemPosition = -1
             }
-            conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
-            if (textMessage.isIncoming) {
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
-            } else {
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.blue_900))
-            }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
+            conversationFragment.updatePosition(convViewHolder.adapterPosition)
+            mCurrentLongItem = RecyclerViewContextMenuInfo(
+                convViewHolder.adapterPosition, v.id
+                    .toLong()
+            )
             false
         }
         val isTimeShown = hasPermanentTimeString(textMessage, position)
         val msgSequenceType = getMsgSequencing(position, isTimeShown)
-        convViewHolder.mAnswerLayout?.visibility = View.GONE
-        val msgTxt = convViewHolder.mMsgTxt ?: return
-        if (StringUtils.isOnlyEmoji(message)) {
-            msgTxt.background.alpha = 0
-            msgTxt.textSize = 32.0f
-            msgTxt.setPadding(0, 0, 0, 0)
+        if (isOnlyEmoji(message)) {
+            convViewHolder.mMsgTxt!!.background.alpha = 0
+            convViewHolder.mMsgTxt!!.textSize = 32.0f
+            convViewHolder.mMsgTxt!!.setPadding(0, 0, 0, 0)
         } else {
             val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            convViewHolder.mMsgTxt!!.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
             if (convColor != 0 && !textMessage.isIncoming) {
-                msgTxt.background.setTint(convColor)
+                convViewHolder.mMsgTxt!!.background.setTint(convColor)
             }
-            msgTxt.background.alpha = 255
-            msgTxt.textSize = 16f
-            msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
-
-            if (showLinkPreviews) {
-                val cachedPreview = interaction.preview as Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
-                    .flatMap { url -> LinkPreview.load(url) }
-                    .cache()
-                    .apply { interaction.preview = this }
-
-                convViewHolder.compositeDisposable.add(cachedPreview
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ data ->
-                        Log.w(TAG, "got preview $data")
-                        val image = convViewHolder.mImage ?: return@subscribe
-                        if (data.imageUrl.isNotEmpty()) {
-                            GlideApp.with(context)
-                                .load(data.imageUrl)
-                                .apply(GlideOptions().override(mPreviewMaxSize))
-                                .centerCrop()
-                                .into(image)
-                            //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))
-                            image.visibility = View.VISIBLE
-                        } else {
-                            image.visibility = View.GONE
-                        }
-                        convViewHolder.mHistTxt?.text = data.title
-                        if (data.description.isNotEmpty()) {
-                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                            convViewHolder.mHistDetailTxt?.text = data.description
-                        } else {
-                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
-                        }
-                        convViewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        val url = Uri.parse(data.baseUrl)
-                        convViewHolder.mPreviewDomain?.text = url.host
-                        convViewHolder.mAnswerLayout?.setOnClickListener {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                        }
-                    }) { e -> Log.e(TAG, "Can't load preview", e) })
-            }
+            convViewHolder.mMsgTxt!!.background.alpha = 255
+            convViewHolder.mMsgTxt!!.textSize = 16f
+            convViewHolder.mMsgTxt!!.setPadding(hPadding, vPadding, hPadding, vPadding)
         }
-        msgTxt.text = message
-        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+        convViewHolder.mMsgTxt!!.text = message
         if (textMessage.isIncoming) {
-            val avatar = convViewHolder.mAvatar ?: return
-            if (endOfSeq) {
-                avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                avatar.visibility = View.VISIBLE
-            } else {
-                if (position == lastMsgPos - 1) {
-                    avatar.startAnimation(AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
-                        setAnimationListener(object : Animation.AnimationListener {
-                            override fun onAnimationStart(arg0: Animation) {}
-                            override fun onAnimationRepeat(arg0: Animation) {}
-                            override fun onAnimationEnd(arg0: Animation) {
-                                avatar.setImageBitmap(null)
-                                avatar.visibility = View.INVISIBLE
-                            }
-                        })
-                    })
-                } else {
-                    avatar.setImageBitmap(null)
-                    avatar.visibility = View.INVISIBLE
-                }
-            }
+            convViewHolder.mAvatar!!.setImageBitmap(null)
+            convViewHolder.mAvatar.visibility = View.VISIBLE
         } else {
-            val statusIcon = convViewHolder.mStatusIcon ?: return
             when (textMessage.status) {
                 InteractionStatus.SENDING -> {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.baseline_circle_24)
+                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24)
                 }
                 InteractionStatus.FAILURE -> {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.round_highlight_off_24)
-                }
-                InteractionStatus.DISPLAYED -> if (lastDisplayedPosition == position) {
-                    statusIcon.visibility = if (mShowReadIndicator) View.VISIBLE else View.GONE
-                    statusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.primaryNumber))
-                } else {
-                    statusIcon.visibility = View.GONE
-                    statusIcon.setImageDrawable(null)
+                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24)
                 }
                 else -> if (position == lastOutgoingIndex()) {
-                    statusIcon.visibility = View.VISIBLE
-                    statusIcon.setImageResource(R.drawable.baseline_check_circle_24)
+                    convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_check_circle_24)
                     lastDeliveredPosition = position
                 } else {
-                    statusIcon.visibility = View.GONE
-                    statusIcon.setImageDrawable(null)
+                    convViewHolder.mStatusIcon!!.visibility = View.GONE
                 }
             }
         }
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
-        if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                convViewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-            })
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
+        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
+            setBottomMargin(convViewHolder.mMsgTxt, 8)
+            if (textMessage.isIncoming) {
+                convViewHolder.mAvatar!!.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.primaryNumber)
+                )
+            }
         } else {
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+            setBottomMargin(convViewHolder.mMsgTxt, 0)
+        }
+        if (isTimeShown) {
+            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
+                val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                convViewHolder.mMsgDetailTxtPerm!!.text = timeSeparationString
+            })
+            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.VISIBLE
+        } else {
+            convViewHolder.mMsgDetailTxtPerm!!.visibility = View.GONE
             val isExpanded = position == expandedItemPosition
             if (isExpanded) {
-                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                    convViewHolder.mMsgDetailTxt?.text = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
+                    val timeSeparationString = TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                    convViewHolder.mMsgDetailTxt!!.text = timeSeparationString
                 })
             }
             setItemViewExpansionState(convViewHolder, isExpanded)
-            convViewHolder.mItem?.setOnClickListener {
-                if (convViewHolder.animator?.isRunning == true) {
+            convViewHolder.itemView.setOnClickListener { v: View? ->
+                if (convViewHolder.animator != null && convViewHolder.animator!!.isRunning) {
                     return@setOnClickListener
                 }
                 if (expandedItemPosition >= 0) {
@@ -853,15 +660,12 @@ class ConversationAdapter(
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
-        viewHolder.mMsgTxt?.setText(when (event.event) {
-            ContactEvent.Event.ADDED -> R.string.hist_contact_added
-            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
-            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
-            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
-            else -> R.string.hist_contact_added
-        })
-        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+        if (event.event === ContactEvent.Event.ADDED) {
+            viewHolder.mMsgTxt?.setText(R.string.hist_contact_added)
+        } else if (event.event === ContactEvent.Event.INCOMING_REQUEST) {
+            viewHolder.mMsgTxt?.setText(R.string.hist_invitation_received)
+        }
+        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
             val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
             viewHolder.mMsgDetailTxt?.text = timeSeparationString
         })
@@ -873,30 +677,13 @@ class ConversationAdapter(
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      */
-    private fun configureForCallInfo(convViewHolder: ConversationViewHolder, interaction: Interaction) {
-        convViewHolder.mIcon?.scaleY = 1f
-        val context = convViewHolder.itemView.context
-        if (!interaction.isSwarm) {
-            convViewHolder.mCallInfoLayout?.apply {
-                background.setTintList(null)
-                setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-                    conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-                    val inflater = conversationFragment.requireActivity().menuInflater
-                    inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
-                    menu.removeItem(R.id.conv_action_copy_text)
-                }
-                setOnLongClickListener { v: View ->
-                    background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
-                    conversationFragment.updatePosition(convViewHolder.adapterPosition)
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
-                    false
-                }
-            }
-        }
+    private fun configureForCallInfoTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction) {
         val pictureResID: Int
         val historyTxt: String
+        convViewHolder.mIcon?.scaleY = 1f
+        val context = convViewHolder.itemView.context
+        val longPressView: View = convViewHolder.mCallInfoLayout!!
+        longPressView.background.setTintList(null)
         val call = interaction as Call
         if (call.isMissed) {
             if (call.isIncoming) {
@@ -906,18 +693,14 @@ class ConversationAdapter(
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mIcon?.scaleY = -1f
             }
-            historyTxt = if (call.isIncoming)
-                context.getString(R.string.notif_missed_incoming_call)
-            else
-                context.getString(R.string.notif_missed_outgoing_call)
+            historyTxt = if (call.isIncoming) context.getString(R.string.notif_missed_incoming_call) else context.getString(R.string.notif_missed_outgoing_call)
         } else {
             pictureResID = if (call.isIncoming) R.drawable.baseline_call_received_24 else R.drawable.baseline_call_made_24
             historyTxt = if (call.isIncoming) context.getString(R.string.notif_incoming_call) else context.getString(R.string.notif_outgoing_call)
         }
         convViewHolder.mIcon?.setImageResource(pictureResID)
         convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance()
-            .format(call.timestamp) // start date
+        convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance().format(call.timestamp) // start date
     }
 
     /**
@@ -939,17 +722,18 @@ class ConversationAdapter(
      * @return the next TextMessage if any, null otherwise
      */
     private fun getNextMessageFromPosition(position: Int): Interaction? {
-        return if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
+        return if (!mInteractions.isEmpty() && position < mInteractions.size - 1) {
             mInteractions[position + 1]
         } else null
     }
 
     private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
-        return StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type != Interaction.InteractionType.TEXT || second.type != Interaction.InteractionType.TEXT
+        return isOnlyEmoji(first.body) != isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
     }
 
     private fun isAlwaysSingleMsg(msg: Interaction): Boolean {
-        return msg.type != Interaction.InteractionType.TEXT || StringUtils.isOnlyEmoji(msg.body)
+        return (msg.type !== Interaction.InteractionType.TEXT
+                || isOnlyEmoji(msg.body))
     }
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
@@ -1037,30 +821,33 @@ class ConversationAdapter(
     private fun lastOutgoingIndex(): Int {
         var i: Int = mInteractions.size - 1
         while (i >= 0) {
-            if (!mInteractions[i].isIncoming)
+            if (!mInteractions[i].isIncoming) {
                 break
+            }
             i--
         }
         return i
     }
 
-    private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
+    private enum class SequenceType {
+        FIRST, MIDDLE, LAST, SINGLE
+    }
 
     companion object {
-        private val TAG = ConversationAdapter::class.simpleName!!
+        private val TAG = TvConversationAdapter::class.java.simpleName
         private val msgBGLayouts = intArrayOf(
-            R.drawable.textmsg_bg_out_first,
-            R.drawable.textmsg_bg_out_middle,
             R.drawable.textmsg_bg_out_last,
+            R.drawable.textmsg_bg_out_middle,
+            R.drawable.textmsg_bg_out_first,
             R.drawable.textmsg_bg_out,
-            R.drawable.textmsg_bg_in_first,
-            R.drawable.textmsg_bg_in_middle,
             R.drawable.textmsg_bg_in_last,
+            R.drawable.textmsg_bg_in_middle,
+            R.drawable.textmsg_bg_in_first,
             R.drawable.textmsg_bg_in
         )
 
-        private fun setBottomMargin(view: View, value: Int) {
-            val targetSize = (value * view.context.resources.displayMetrics.density).toInt()
+        private fun setBottomMargin(view: View?, value: Int) {
+            val targetSize = (value * view!!.context.resources.displayMetrics.density).toInt()
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
         }
@@ -1071,14 +858,15 @@ class ConversationAdapter(
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
         mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-        mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
         val corner = res.getDimension(R.dimen.conversation_message_radius).toInt()
         PICTURE_OPTIONS = GlideOptions()
             .transform(CenterInside())
             .fitCenter()
             .override(mPictureMaxSize)
             .transform(RoundedCorners(corner))
-        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .startWithItem(0L)
     }
 }

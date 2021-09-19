@@ -25,7 +25,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -41,16 +40,13 @@ import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.model.Account
 import net.jami.navigation.HomeNavigationPresenter
 import net.jami.navigation.HomeNavigationView
 import net.jami.navigation.HomeNavigationViewModel
 
 @AndroidEntryPoint
-class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>(), HomeNavigationView {
+class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter, HomeNavigationView>(), HomeNavigationView {
     private var iconSize = -1
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
@@ -106,26 +102,26 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
         return R.style.Theme_Ring_Leanback_GuidedStep_First
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
+    override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
+        val context = requireContext()
         addEditTextAction(context, actions, USER_NAME, R.string.account_edit_profile, R.string.profile_name_hint)
         addAction(context, actions, CAMERA, R.string.take_a_photo)
         addAction(context, actions, GALLERY, R.string.open_the_gallery)
-        this.actions = actions
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
         when (action.id) {
-            USER_NAME -> presenter?.saveVCardFormattedName(action.editTitle.toString())
-            CAMERA -> presenter?.cameraClicked()
-            GALLERY -> presenter?.galleryClicked()
+            USER_NAME -> presenter.saveVCardFormattedName(action.editTitle.toString())
+            CAMERA -> presenter.cameraClicked()
+            GALLERY -> presenter.galleryClicked()
         }
         return super.onGuidedActionEditedAndProceed(action)
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
         when (action.id) {
-            CAMERA -> presenter?.cameraClicked()
-            GALLERY -> presenter?.galleryClicked()
+            CAMERA -> presenter.cameraClicked()
+            GALLERY -> presenter.galleryClicked()
         }
     }
 
@@ -184,5 +180,6 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter>
         private const val USER_NAME = 1L
         private const val GALLERY = 2L
         private const val CAMERA = 3L
+        private val TAG = TVProfileEditingFragment::class.simpleName!!
     }
 }

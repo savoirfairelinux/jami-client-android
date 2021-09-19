@@ -29,10 +29,8 @@ import java.io.Serializable
 
 abstract class AccountCreationModel : Serializable {
     var managementServer: String? = null
-    private var mFullName = ""
     var username = ""
     var password = ""
-    private var mPin = ""
     var archive: File? = null
     var isLink = false
     var isPush = true
@@ -57,16 +55,14 @@ abstract class AccountCreationModel : Serializable {
     @Transient
     protected val profile: Subject<AccountCreationModel> = BehaviorSubject.createDefault(this)
 
-    var fullName: String
-        get() = mFullName
+    var fullName: String = ""
         set(fullName) {
-            mFullName = fullName
+            field = fullName
             profile.onNext(this)
         }
-    var pin: String
-        get() = mPin
+    var pin: String = ""
         set(pin) {
-            mPin = pin.toUpperCase()
+            field = pin.uppercase()
         }
 
     abstract fun toVCard(): Single<VCard>

@@ -1,13 +1,12 @@
 package cx.ring.linkpreview
 
 import android.util.Log
+import android.util.Patterns
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.jsoup.Jsoup
-import android.util.Patterns
-import io.reactivex.rxjava3.core.Maybe
 import org.jsoup.nodes.Document
-import kotlin.collections.ArrayList
 
 object LinkPreview {
     private fun extractUrls(input: String): List<String> {
@@ -35,19 +34,11 @@ object LinkPreview {
             ?.attr("content")
             ?.takeIf { it.isNotEmpty() }
             ?.let { return it }
-        doc.selectFirst("meta[property=twitter:title]")
-            ?.attr("content")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
         return doc.title()
     }
 
     private fun getDescription(doc: Document): String {
         doc.selectFirst("meta[property=og:description]")
-            ?.attr("content")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        doc.selectFirst("meta[property=twitter:description]")
             ?.attr("content")
             ?.takeIf { it.isNotEmpty() }
             ?.let { return it }
@@ -67,10 +58,6 @@ object LinkPreview {
             ?.attr("href")
             ?.takeIf { it.isNotEmpty() }
             ?.let { return it }
-        doc.selectFirst("meta[name=twitter:image]")
-            ?.attr("content")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
         return ""
     }
 
@@ -87,10 +74,11 @@ object LinkPreview {
         }
     }
 
-    fun load(url: String): Single<PreviewData> {
+    fun load(url: String): Maybe<PreviewData> {
         Log.w("LinkPreview", "load $url")
         return loadUrl(url)
             .map { doc -> PreviewData(getTile(doc), getDescription(doc), getImage(doc), url) }
+            .filter { preview -> preview.isNotEmpty() }
             .subscribeOn(Schedulers.io())
     }
 

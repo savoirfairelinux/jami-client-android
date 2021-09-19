@@ -92,19 +92,14 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             prepareEntranceTransition()
         }
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action: Action ->
-            if (action.id == ACTION_CALL.toLong()) {
-                presenter.contactClicked()
-            } else if (action.id == ACTION_ADD_CONTACT.toLong()) {
-                presenter.onAddContact()
-            } else if (action.id == ACTION_ACCEPT.toLong()) {
-                presenter.acceptTrustRequest()
-            } else if (action.id == ACTION_REFUSE.toLong()) {
-                presenter.refuseTrustRequest()
-            } else if (action.id == ACTION_BLOCK.toLong()) {
-                presenter.blockTrustRequest()
-            } else if (action.id == ACTION_MORE.toLong()) {
-                startActivityForResult(Intent(getActivity(), TVContactMoreActivity::class.java)
-                    .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
+            when (action.id) {
+                ACTION_CALL -> presenter.contactClicked()
+                ACTION_ADD_CONTACT -> presenter.onAddContact()
+                ACTION_ACCEPT -> presenter.acceptTrustRequest()
+                ACTION_REFUSE -> presenter.refuseTrustRequest()
+                ACTION_BLOCK -> presenter.blockTrustRequest()
+                ACTION_MORE -> startActivityForResult(Intent(getActivity(), TVContactMoreActivity::class.java)
+                        .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
             }
         }
         val mPresenterSelector = ClassPresenterSelector()
@@ -130,20 +125,19 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
             .build(context)
         avatar.setInSize(iconSize)
         row.imageDrawable = avatar
-        val adapter = SparseArrayObjectAdapter()
+        val adapter = ArrayObjectAdapter()
         if (isIncomingRequest) {
-            adapter[ACTION_ACCEPT] = Action(ACTION_ACCEPT.toLong(), resources
-                    .getString(R.string.accept))
-            adapter[ACTION_REFUSE] = Action(ACTION_REFUSE.toLong(), resources.getString(R.string.refuse))
-            adapter[ACTION_BLOCK] = Action(ACTION_BLOCK.toLong(), resources.getString(R.string.block))
+            adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
+            adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
+            adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
         } else if (isOutgoingRequest) {
-            adapter[ACTION_ADD_CONTACT] = Action(ACTION_ADD_CONTACT.toLong(), resources.getString(R.string.ab_action_contact_add))
+            adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
         } else {
-            adapter[ACTION_CALL] = Action(ACTION_CALL.toLong(), resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24))
-            adapter[ACTION_MORE] = Action(ACTION_MORE.toLong(), resources.getString(R.string.tv_action_more), null, context.getDrawable(R.drawable.baseline_more_vert_24))
+            adapter.add(Action(ACTION_CALL, resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24)))
+            adapter.add(Action(ACTION_MORE, resources.getString(R.string.tv_action_more), null, context.getDrawable(R.drawable.baseline_more_vert_24)))
         }
         row.actionsAdapter = adapter
-        mAdapter!!.add(row)
+        mAdapter?.add(row)
     }
 
     override fun callContact(accountId: String, conversationUri: Uri, uri: Uri) {
@@ -176,12 +170,12 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
 
     companion object {
         val TAG = TVContactFragment::class.simpleName!!
-        private const val ACTION_CALL = 0
-        private const val ACTION_ACCEPT = 1
-        private const val ACTION_REFUSE = 2
-        private const val ACTION_BLOCK = 3
-        private const val ACTION_ADD_CONTACT = 4
-        private const val ACTION_MORE = 5
+        private const val ACTION_CALL = 0L
+        private const val ACTION_ACCEPT = 1L
+        private const val ACTION_REFUSE = 2L
+        private const val ACTION_BLOCK = 3L
+        private const val ACTION_ADD_CONTACT = 4L
+        private const val ACTION_MORE = 5L
         private const val REQUEST_CODE = 100
     }
 }

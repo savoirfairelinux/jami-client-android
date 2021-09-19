@@ -2,7 +2,6 @@
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,19 +17,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.contact;
+package cx.ring.tv.contactrequest
 
-import net.jami.model.Uri;
-import net.jami.smartlist.SmartListViewModel;
+import androidx.leanback.widget.AbstractDetailsDescriptionPresenter
+import net.jami.smartlist.SmartListViewModel
 
-public interface TVContactView {
-    void showContact(SmartListViewModel model);
-
-    void callContact(String accountID, Uri conversationUri, Uri uri);
-
-    void goToCallActivity(String id);
-
-    void switchToConversationView();
-
-    void finishView();
+class TVContactRequestDetailPresenter : AbstractDetailsDescriptionPresenter() {
+    override fun onBindDescription(viewHolder: ViewHolder, item: Any) {
+        val viewModel = item as SmartListViewModel?
+        if (viewModel != null) {
+            val id = viewModel.getContact()!!.ringUsername
+            val displayName = viewModel.contactName
+            viewHolder.title.text = displayName
+            if (displayName != id)
+                viewHolder.subtitle.text = id
+        }
+    }
 }

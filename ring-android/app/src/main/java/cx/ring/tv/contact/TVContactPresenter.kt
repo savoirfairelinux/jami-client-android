@@ -59,17 +59,16 @@ class TVContactPresenter @Inject constructor(
     fun contactClicked() {
         val account = mAccountService.getAccount(mAccountId!!)
         if (account != null) {
-            val conversation = account.getByUri(mUri)
-            val conf = conversation!!.currentCall
-            if (conf != null && conf.participants.isNotEmpty()
-                && conf.participants[0].callStatus !== Call.CallStatus.INACTIVE && conf.participants[0].callStatus !== Call.CallStatus.FAILURE
-            ) {
+            val conversation = account.getByUri(mUri)!!
+            val conf = conversation.currentCall
+            val call = conf?.firstCall
+            if (call != null && call.callStatus !== Call.CallStatus.INACTIVE && call.callStatus !== Call.CallStatus.FAILURE) {
                 view?.goToCallActivity(conf.id)
             } else {
                 if (conversation.isSwarm) {
-                    view?.callContact(mAccountId, mUri, conversation.contact!!.uri)
+                    view?.callContact(account.accountId, conversation.uri, conversation.contact!!.uri)
                 } else {
-                    view?.callContact(mAccountId, mUri, mUri)
+                    view?.callContact(account.accountId, conversation.uri, conversation.uri)
                 }
             }
         }

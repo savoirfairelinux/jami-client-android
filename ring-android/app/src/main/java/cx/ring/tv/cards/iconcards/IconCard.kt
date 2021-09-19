@@ -17,27 +17,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.cards.iconcards;
+package cx.ring.tv.cards.iconcards
 
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.BitmapDrawable
+import androidx.annotation.DrawableRes
+import cx.ring.tv.cards.Card
 
-import androidx.annotation.DrawableRes;
-
-import cx.ring.tv.cards.Card;
-
-public class IconCard extends Card {
-
-    public IconCard(Type pType, String name, CharSequence description, @DrawableRes int imageId) {
-        setType(pType);
-        setTitle(name);
-        setDescription(description);
-        setLocalImageResource(imageId);
+class IconCard : Card {
+    constructor(pType: Type, name: String, description: CharSequence, @DrawableRes imageId: Int) {
+        type = pType
+        title = name
+        this.description = description
+        localImageResource = imageId
     }
 
-    public IconCard(Type pType, String name, CharSequence description, BitmapDrawable bitmapDrawable) {
-        setType(pType);
-        setTitle(name);
-        setDescription(description);
-        setDrawable(bitmapDrawable);
+    constructor(pType: Type, name: String, description: CharSequence, bitmapDrawable: BitmapDrawable?) {
+        type = pType
+        title = name
+        this.description = description
+        setDrawable(bitmapDrawable)
     }
 }

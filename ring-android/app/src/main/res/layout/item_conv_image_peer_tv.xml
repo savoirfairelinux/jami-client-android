@@ -24,6 +24,7 @@
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
     android:orientation="vertical"
+    android:focusable="true"
     android:gravity="center"
     android:clipToPadding="false"
     android:clipChildren="false">

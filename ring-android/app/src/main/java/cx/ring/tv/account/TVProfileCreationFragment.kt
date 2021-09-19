@@ -48,8 +48,7 @@ import net.jami.account.ProfileCreationView
 import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
-class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresenter>(),
-    ProfileCreationView {
+class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresenter, ProfileCreationView>(), ProfileCreationView {
     private var mModel: AccountCreationModelImpl? = null
     private var iconSize = -1
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -66,8 +65,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
                 }
             }
             ProfileCreationFragment.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && intent != null) {
-                presenter.photoUpdated(
-                    loadBitmap(requireContext(), intent.data!!).map { b: Bitmap? -> b })
+                presenter.photoUpdated(loadBitmap(requireContext(), intent.data!!).map { b -> b })
             }
             else -> super.onActivityResult(requestCode, resultCode, intent)
         }
@@ -100,37 +98,34 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         val breadcrumb = ""
         val description = getString(R.string.profile_message_warning)
         return Guidance(title, description, breadcrumb, AvatarDrawable.Builder()
-                .withNameData(
-                    if (mModel == null) null else mModel!!.fullName,
-                    if (mModel == null) null else mModel!!.username
-                )
-                .withCircleCrop(true)
-                .build(requireContext())
-        )
+            .withNameData(mModel?.fullName, mModel?.username)
+            .withCircleCrop(true)
+            .build(requireContext()))
     }
 
     override fun onProvideTheme(): Int {
         return R.style.Theme_Ring_Leanback_GuidedStep_First
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
-        addEditTextAction(activity, actions, USER_NAME.toLong(), R.string.profile_name_hint, R.string.profile_name_hint)
-        addAction(activity, actions, CAMERA.toLong(), getString(R.string.take_a_photo), "")
-        addAction(activity, actions, GALLERY.toLong(), getString(R.string.open_the_gallery), "")
-        addAction(activity, actions, NEXT.toLong(), getString(R.string.wizard_next), "", true)
+    override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
+        val context = requireContext()
+        addEditTextAction(context, actions, USER_NAME, R.string.profile_name_hint, R.string.profile_name_hint)
+        addAction(context, actions, CAMERA, getString(R.string.take_a_photo))
+        addAction(context, actions, GALLERY, getString(R.string.open_the_gallery))
+        addAction(context, actions, NEXT, getString(R.string.wizard_next), "", true)
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
         when (action.id) {
-            CAMERA.toLong() -> presenter.cameraClick()
-            GALLERY.toLong() -> presenter.galleryClick()
-            NEXT.toLong() -> presenter.nextClick()
+            CAMERA -> presenter.cameraClick()
+            GALLERY -> presenter.galleryClick()
+            NEXT -> presenter.nextClick()
         }
     }
 
     override fun displayProfileName(profileName: String) {
-        findActionById(USER_NAME.toLong()).editDescription = profileName
-        notifyActionChanged(findActionPositionById(USER_NAME.toLong()))
+        findActionById(USER_NAME).editDescription = profileName
+        notifyActionChanged(findActionPositionById(USER_NAME))
     }
 
     override fun goToGallery() {
@@ -186,7 +181,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
-        when (action.id.toInt()) {
+        when (action.id) {
             USER_NAME -> {
                 val username = action.editTitle.toString()
                 presenter.fullNameUpdated(username)
@@ -200,7 +195,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun onGuidedActionEditCanceled(action: GuidedAction) {
-        if (action.id.toInt() == USER_NAME) {
+        if (action.id == USER_NAME) {
             val username = action.editTitle.toString()
             presenter.fullNameUpdated(username)
             if (TextUtils.isEmpty(username)) action.title =
@@ -210,12 +205,12 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     companion object {
-        private const val USER_NAME = 1
-        private const val GALLERY = 2
-        private const val CAMERA = 3
-        private const val NEXT = 4
+        private const val USER_NAME = 1L
+        private const val GALLERY = 2L
+        private const val CAMERA = 3L
+        private const val NEXT = 4L
 
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl?): GuidedStepSupportFragment {
+        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): GuidedStepSupportFragment {
             val fragment = TVProfileCreationFragment()
             fragment.mModel = ringAccountViewModel
             return fragment

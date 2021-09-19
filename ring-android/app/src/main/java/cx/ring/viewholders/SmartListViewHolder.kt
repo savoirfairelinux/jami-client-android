@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.databinding.ItemSmartlistBinding
 import cx.ring.databinding.ItemSmartlistHeaderBinding
-import cx.ring.utils.ResourceMapper
+import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -137,7 +137,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 } else {
                     context.getString(R.string.hist_file_received)
                 }
-            } else ResourceMapper.getReadableFileTransferStatus(context, e.status)
+            } else TextUtils.getReadableFileTransferStatus(context, e.status)
         }
         return null
     }

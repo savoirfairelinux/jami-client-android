@@ -568,7 +568,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 mConversationAvatar = d as AvatarDrawable?
                 mParticipantAvatars[contacts.primaryNumber] = AvatarDrawable(d)
             }
-            .flatMapObservable { d: Drawable -> contacts.updatesSubject }
+            .flatMapObservable { contacts.updatesSubject }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { c: Contact ->
                 val id = c.ringUsername
@@ -581,9 +581,8 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                         binding!!.subtitle.visibility = View.GONE
                 }
                 mConversationAvatar!!.update(c)
-                val uri = contacts.primaryNumber
-                mParticipantAvatars[uri]?.update(c)
-                if (mAdapter != null) mAdapter!!.setPhoto()
+                mParticipantAvatars[contacts.primaryNumber]?.update(c)
+                mAdapter?.setPhoto()
             })
     }
 

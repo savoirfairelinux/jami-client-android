@@ -49,7 +49,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class TVContactActivity extends FragmentActivity {
-
     private static final String TAG = TVContactActivity.class.getSimpleName();
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();

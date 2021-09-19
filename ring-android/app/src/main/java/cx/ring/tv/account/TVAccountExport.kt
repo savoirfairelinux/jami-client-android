@@ -43,7 +43,7 @@ import net.jami.model.Profile
 import java.io.File
 
 @AndroidEntryPoint
-class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), JamiAccountSummaryView {
+class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView>(), JamiAccountSummaryView {
     private var mWaitDialog: ProgressDialog? = null
     private lateinit var mIdAccount: String
     private var mHasPassword = false
@@ -61,9 +61,10 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
         return Guidance(title, description, breadcrumb, icon)
     }
 
-    override fun onCreateActions(actions: List<GuidedAction>, savedInstanceState: Bundle?) {
+    override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
+        val context = requireContext()
         if (mHasPassword) {
-            addPasswordAction(activity, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
+            addPasswordAction(context, actions, PASSWORD, getString(R.string.account_enter_password), "", "")
         } else {
             addAction(context, actions, ACTION, R.string.account_start_export_button)
         }
@@ -92,7 +93,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     override fun showPasswordProgressDialog() {}
     override fun accountChanged(account: Account, profile: Profile) {}
     override fun showNetworkError() {
-        mWaitDialog!!.dismiss()
+        mWaitDialog?.dismiss()
         AlertDialog.Builder(activity)
             .setTitle(R.string.account_export_end_network_title)
             .setMessage(R.string.account_export_end_network_message)
@@ -101,7 +102,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     }
 
     override fun showPasswordError() {
-        mWaitDialog!!.dismiss()
+        mWaitDialog?.dismiss()
         AlertDialog.Builder(activity)
             .setTitle(R.string.account_export_end_error_title)
             .setMessage(R.string.account_export_end_decryption_message)
@@ -110,7 +111,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     }
 
     override fun showGenericError() {
-        mWaitDialog!!.dismiss()
+        mWaitDialog?.dismiss()
         AlertDialog.Builder(activity)
             .setTitle(R.string.account_export_end_error_title)
             .setMessage(R.string.account_export_end_error_message)
@@ -119,7 +120,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter>(), J
     }
 
     override fun showPIN(pin: String) {
-        mWaitDialog!!.dismiss()
+        mWaitDialog?.dismiss()
         val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
         val styledResultText = SpannableString(pined)
         val pos = pined.lastIndexOf(pin)

@@ -27,14 +27,7 @@ import java.util.regex.Pattern
 
 class RegisteredNameFilter : InputFilter {
     private val nameCharMatcher = REGISTERED_NAME_CHAR_PATTERN.matcher("")
-    override fun filter(
-        source: CharSequence,
-        start: Int,
-        end: Int,
-        dest: Spanned,
-        dstart: Int,
-        dend: Int
-    ): CharSequence? {
+    override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned,dstart: Int, dend: Int): CharSequence? {
         var keepOriginal = true
         val sb = StringBuilder(end - start)
         for (i in start until end) {

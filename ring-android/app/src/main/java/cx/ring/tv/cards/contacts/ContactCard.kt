@@ -31,7 +31,7 @@ class ContactCard : Card {
         id = pContact.id
         title = pContact.displayName
         description = pContact.ringUsername
-        setType(type)
+        this.type = type
     }
 
     constructor(m: SmartListViewModel) {
@@ -43,7 +43,7 @@ class ContactCard : Card {
         get() = mModel
         set(model) {
             mModel = model
-            title = model.contactName
+            title = model.contactName ?: ""
             val contact = model.getContact()!!
             val username = contact.ringUsername
             description = username
