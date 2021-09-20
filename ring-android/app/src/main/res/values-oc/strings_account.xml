@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Paramètres avançats</string>
   <string name="ic_blacklist_menu">Contactes blocats</string>
   <!--Strings related to account creation-->
+  <string name="prompt_alias">Alias</string>
   <string name="prompt_username">Nom d’utilizaire</string>
   <string name="prompt_password">Senha</string>
   <string name="action_create">Crear compte</string>
@@ -50,6 +51,7 @@
   <string name="account_tv_about">A prepaus de Jami</string>
   <string name="tv_about_credits">Crèdit</string>
   <string name="account_new_button">Crear un compte Jami</string>
+  <string name="account_connect_button">Se connectar</string>
   <string name="account_connect_prompt_username">Nom d’utilizaire</string>
   <!--Name registration-->
   <string name="username_already_taken">Nom d’utilizaire ja pres</string>
