@@ -74,7 +74,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     private fun setupAdapter() {
         // Set detail background and style.
         val detailsPresenter: FullWidthDetailsOverviewRowPresenter = if (isIncomingRequest || isOutgoingRequest) {
-            FullWidthDetailsOverviewRowPresenter(TVContactRequestDetailPresenter(),DetailsOverviewLogoPresenter())
+            FullWidthDetailsOverviewRowPresenter(TVContactRequestDetailPresenter(), DetailsOverviewLogoPresenter())
         } else {
             FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter())
         }

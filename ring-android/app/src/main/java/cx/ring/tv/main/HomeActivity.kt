@@ -30,8 +30,11 @@ import android.hardware.Camera.ErrorCallback
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.renderscript.*
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -46,6 +49,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.tv.account.TVAccountWizard
 import cx.ring.tv.camera.CameraPreview
 import cx.ring.tv.contact.TVContactFragment
+import cx.ring.tv.conversation.TvConversationFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -144,6 +148,17 @@ class HomeActivity : FragmentActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val fragment = supportFragmentManager.fragments.lastOrNull()
+        if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN && fragment is TvConversationFragment) {
+            val r = Runnable {
+                mPreviewView.requestLayout()
+            }
+            Handler(Looper.getMainLooper()).postDelayed(r, 70)
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onResume() {
