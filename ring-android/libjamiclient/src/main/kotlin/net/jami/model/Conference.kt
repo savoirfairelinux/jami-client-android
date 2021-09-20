@@ -122,8 +122,10 @@ class Conference {
     }
 
     fun findCallByContact(uri: Uri): Call? {
+        val muri = if (uri.host == "ring.dht") Uri.fromId(uri.rawRingId) else uri
         for (call in mParticipants) {
-            if (call.contact!!.uri.toString() == uri.toString()) return call
+            if (call.contact!!.uri == muri)
+                return call
         }
         return null
     }

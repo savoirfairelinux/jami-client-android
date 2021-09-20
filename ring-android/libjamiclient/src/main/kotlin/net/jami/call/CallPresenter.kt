@@ -192,8 +192,7 @@ class CallPresenter @Inject constructor(
     }
 
     private fun showConference(conference: Observable<Conference>) {
-        var conference = conference
-        conference = conference.distinctUntilChanged()
+        val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantInfo }
             .observeOn(mUiScheduler)
@@ -608,7 +607,7 @@ class CallPresenter @Inject constructor(
                         .filter(Call::isOnGoing)
                         .firstElement()
                         .delay(1, TimeUnit.SECONDS)
-                        .doOnEvent { v: Call, e: Throwable -> pendingObserver.onComplete() }
+                        .doOnEvent { v: Call?, e: Throwable? -> pendingObserver.onComplete() }
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
                         val id = mConference!!.id
                         if (mConference!!.isConference) {
