@@ -95,6 +95,8 @@ class CallService(
             val newInfo: MutableList<ParticipantInfo> = ArrayList(info.size)
             if (conference.isConference) {
                 for (i in info) {
+                    val uri = i["uri"]!!
+                    if (uri.isEmpty()) continue
                     val call = conference.findCallByContact(Uri.fromString(i["uri"]!!))
                     if (call != null) {
                         val confInfo = ParticipantInfo(call, call.contact!!, i)
@@ -128,7 +130,7 @@ class CallService(
             conference.isModerator = isModerator
             conference.setInfo(newInfo)
         } else {
-            Log.w(TAG, "onConferenceInfoUpdated can't find conference$confId")
+            Log.w(TAG, "onConferenceInfoUpdated can't find conference $confId")
         }
     }
 
