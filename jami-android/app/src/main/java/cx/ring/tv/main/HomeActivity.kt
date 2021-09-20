@@ -35,6 +35,9 @@ import android.renderscript.ScriptIntrinsicYuvToRGB
 import android.renderscript.Type
 import android.util.Log
 import android.util.Size
+import android.view.KeyEvent
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -49,6 +52,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.tv.account.TVAccountWizard
 import cx.ring.tv.camera.CameraPreview
 import cx.ring.tv.contact.TVContactFragment
+import cx.ring.tv.conversation.TvConversationFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -157,6 +161,17 @@ class HomeActivity : FragmentActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    /** This is a workaround to fix the issue of the preview overlapping the conversation fragment
+     * when the user press the down button GitLab#1719 */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val fragment = supportFragmentManager.fragments.lastOrNull()
+        if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN && fragment is TvConversationFragment) {
+            val view = mPreviewView
+            view.postDelayed({ view.requestLayout() }, 70)
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onResume() {
