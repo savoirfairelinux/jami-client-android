@@ -19,6 +19,7 @@
  */
 package net.jami.services
 
+import net.jami.call.CallPresenter
 import net.jami.daemon.*
 import net.jami.model.Uri
 import net.jami.utils.Log
@@ -204,7 +205,23 @@ class DaemonService(
         }
 
         override fun incomingCall(accountId: String, callId: String, from: String) {
-            mCallService.incomingCall(accountId, callId, from)
+            // Should be kept while multi-stream is not enabled for Android by default
+            mCallService.incomingCallWithMedia(accountId, callId, from, null)
+        }
+
+        override fun incomingCallWithMedia(accountId: String, callId: String, from: String, mediaList: VectMap) {
+            for (i in mediaList){
+                Log.w(CallPresenter.TAG, "DEBUG fn incomingCallWithMedia [DaemonService] -> media.toMap() : ${i}")
+            }
+            mCallService.incomingCallWithMedia(accountId, callId, from, mediaList)
+        }
+
+        override fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
+            mCallService.mediaChangeRequested(accountId, callId, mediaList)
+        }
+
+        override fun mediaNegotiationStatus(callId: String, event: String, mediaList: VectMap) {
+            mCallService.mediaNegotiationStatus(callId, event, mediaList)
         }
 
         override fun connectionUpdate(id: String, state: Int) {

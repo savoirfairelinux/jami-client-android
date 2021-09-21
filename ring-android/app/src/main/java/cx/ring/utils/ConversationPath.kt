@@ -96,7 +96,7 @@ class ConversationPath {
                 .build()
         }
 
-        fun toUri(accountId: String?, conversationUri: Uri): android.net.Uri {
+        fun toUri(accountId: String, conversationUri: Uri): android.net.Uri {
             return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(conversationUri.uri)
@@ -109,9 +109,9 @@ class ConversationPath {
 
         fun toUri(interaction: Interaction): android.net.Uri {
             return if (interaction.conversation is Conversation)
-                toUri(interaction.account, (interaction.conversation as Conversation).uri)
+                toUri(interaction.account!!, (interaction.conversation as Conversation).uri)
             else
-                toUri(interaction.account, Uri.fromString(interaction.conversation!!.participant!!))
+                toUri(interaction.account!!, Uri.fromString(interaction.conversation!!.participant!!))
         }
 
         fun toBundle(accountId: String, uri: String): Bundle {

@@ -78,11 +78,6 @@ class MainPresenter @Inject constructor(
             .observeOn(mUiScheduler)
             .subscribe({ accountProfile -> view?.displayAccountInfo(HomeNavigationViewModel(accountProfile.first, accountProfile.second)) })
             { e: Throwable -> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e) })
-
-        mCompositeDisposable.add(mAccountService.observableAccounts
-            .observeOn(mUiScheduler)
-            .subscribe({ account: Account -> view?.updateModel(account) })
-            { e: Throwable -> Log.e(TAG, "Error loading account list !", e) })
     }
 
     fun onExportClicked() {

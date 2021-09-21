@@ -57,11 +57,11 @@ class CustomTitleView @JvmOverloads constructor(context: Context?, attrs: Attrib
             return mSearchOrbView
         }
 
-        override fun setTitle(titleText: CharSequence) {
+        override fun setTitle(titleText: CharSequence?) {
             this@CustomTitleView.setTitle(titleText)
         }
 
-        override fun setBadgeDrawable(drawable: Drawable) {
+        override fun setBadgeDrawable(drawable: Drawable?) {
             //NOOP
         }
 

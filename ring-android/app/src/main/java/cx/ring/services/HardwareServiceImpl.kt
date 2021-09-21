@@ -539,7 +539,7 @@ class HardwareServiceImpl(
         val surfaceHolder = WeakReference(holder)
         videoSurfaces[id] = surfaceHolder
         if (shm != null && shm.window == 0L) {
-            shm.window = startVideo(shm.id, surfaceHolder.get()!!.surface, shm.w, shm.h)
+            shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
         }
         if (shm == null || shm.window == 0L) {
             Log.i(TAG, "DJamiService.addVideoSurface() no window !")

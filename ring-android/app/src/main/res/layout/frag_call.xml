@@ -142,9 +142,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_centerInParent="true"
                 android:orientation="vertical"
                 android:visibility="gone"
+                app:alignItems="stretch"
                 app:flexDirection="column"
                 app:flexWrap="wrap"
-                app:alignItems="stretch"
                 tools:visibility="visible">
 
                 <RelativeLayout
@@ -236,12 +236,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             tools:visibility="visible" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/call_accept_btn"
+                            android:id="@+id/call_accept_audio_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:contentDescription="@string/action_call_accept"
-                            android:onClick="@{() -> presenter.acceptClicked()}"
+                            android:contentDescription="@string/action_call_accept_audio"
+                            android:onClick="@{() -> presenter.acceptAudioClicked()}"
+                            android:tint="@color/white"
                             android:visibility="gone"
                             app:backgroundTint="@color/green_500"
                             app:elevation="6dp"
@@ -249,6 +250,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             app:pressedTranslationZ="12dp"
                             app:rippleColor="@android:color/white"
                             app:srcCompat="@drawable/baseline_call_24"
+                            app:useCompatPadding="true"
+                            tools:visibility="visible" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/call_accept_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:contentDescription="@string/action_call_accept_video"
+                            android:onClick="@{() -> presenter.acceptClicked()}"
+                            android:visibility="gone"
+                            app:backgroundTint="@color/green_500"
+                            app:elevation="6dp"
+                            app:fabSize="normal"
+                            app:pressedTranslationZ="12dp"
+                            app:rippleColor="@android:color/white"
+                            app:srcCompat="@drawable/baseline_videocam_24"
                             app:useCompatPadding="true"
                             tools:visibility="visible" />
                     </LinearLayout>
@@ -268,8 +286,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:orientation="vertical"
                 android:visibility="gone"
                 app:flexDirection="column_reverse"
+                android:animateLayoutChanges="true"
                 app:flexWrap="wrap"
                 tools:visibility="visible">
+
+                <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_screenshare_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/call_button_background"
+                    android:contentDescription="@string/ab_action_speakerphone"
+                    android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/baseline_mobile_screen_share_24" />
 
                 <ImageButton
                     android:id="@+id/call_camera_flip_btn"
@@ -280,19 +310,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:contentDescription="@string/ab_action_flipcamera"
                     android:onClick="@{() -> presenter.cameraFlip()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/baseline_camera_front_24" />
+                    app:srcCompat="@drawable/baseline_flip_camera_24" />
 
-                <ImageButton
-                    android:id="@+id/call_conference_add"
+                <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_camera_switch_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
                     android:background="@drawable/call_button_background"
-                    android:onClick="@{() -> presenter.addParticipant()}"
+                    android:contentDescription="@string/ab_action_flipcamera"
+                    android:onClick="@{() -> presenter.switchCamera()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/baseline_person_add_24" />
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/baseline_videocam_24" />
 
                 <cx.ring.views.CheckableImageButton
                     android:id="@+id/call_mic_btn"
@@ -303,7 +333,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:contentDescription="@string/action_call_mic_mute"
                     android:onClick="@{() -> presenter.micClicked()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
                     app:srcCompat="@drawable/baseline_mic_24"
                     tools:visibility="visible" />
 
@@ -316,20 +345,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:contentDescription="@string/ab_action_speakerphone"
                     android:onClick="@{() -> presenter.speakerClicked()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/baseline_volume_up_24" />
+                    app:srcCompat="@drawable/baseline_sound_on_24" />
 
-                <cx.ring.views.CheckableImageButton
-                    android:id="@+id/call_screenshare_btn"
+
+                <ImageButton
+                    android:id="@+id/call_conference_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
                     android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/ab_action_speakerphone"
-                    android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"
+                    android:onClick="@{() -> presenter.addParticipant()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:srcCompat="@drawable/baseline_mobile_screen_share_24" />
+                    app:srcCompat="@drawable/baseline_person_add_24" />
 
             </com.google.android.flexbox.FlexboxLayout>
 
@@ -374,11 +401,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/record_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="16dp"
-                android:gravity="center_vertical"
                 android:layout_alignParentLeft="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:layout_toLeftOf="@+id/conf_control_group"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:visibility="invisible"
                 tools:visibility="visible">
 
@@ -386,8 +416,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/record_indicator"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
-                    android:backgroundTint="#BF0046"
-                    android:background="@drawable/item_color_background" />
+                    android:background="@drawable/item_color_background"
+                    android:backgroundTint="#BF0046" />
 
                 <TextView
                     android:id="@+id/record_name"
@@ -395,7 +425,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textSize="12sp"
-                    tools:text="Thomas"/>
+                    tools:text="Thomas" />
 
             </LinearLayout>
 

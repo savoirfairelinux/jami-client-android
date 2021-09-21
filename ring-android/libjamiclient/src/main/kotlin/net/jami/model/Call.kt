@@ -19,13 +19,12 @@
  */
 package net.jami.model
 
-import net.jami.utils.StringUtils.isEmpty
-import net.jami.utils.ProfileChunk
-import ezvcard.VCard
-import net.jami.utils.VCardUtils
 import ezvcard.Ezvcard
+import ezvcard.VCard
 import net.jami.utils.Log
-import java.lang.Exception
+import net.jami.utils.ProfileChunk
+import net.jami.utils.StringUtils.isEmpty
+import net.jami.utils.VCardUtils
 import java.util.*
 
 class Call : Interaction {
@@ -35,8 +34,6 @@ class Call : Interaction {
         private set
     private var isVideoMuted = false
     private val isRecording = false
-    var isAudioOnly = false
-        private set
     var callStatus = CallStatus.NONE
         private set
     var timestampEnd: Long = 0
@@ -73,6 +70,9 @@ class Call : Interaction {
     var contactNumber: String? = null
         private set
     var confId: String? = null
+
+    var mediaList: List<Media>? = null
+
     private var mProfileChunk: ProfileChunk? = null
 
     constructor(
@@ -81,7 +81,8 @@ class Call : Interaction {
         account: String?,
         conversation: ConversationHistory?,
         contact: Contact?,
-        direction: Direction
+        direction: Direction,
+        mediaList: List<Media>,
     ) {
         daemonIdString = daemonId
         try {
@@ -97,6 +98,8 @@ class Call : Interaction {
         mType = InteractionType.CALL.toString()
         this.contact = contact
         mIsRead = 1
+        this.mediaList = mediaList
+
     }
 
     constructor(interaction: Interaction) {
@@ -145,16 +148,14 @@ class Call : Interaction {
     }
 
     fun setDetails(details: Map<String, String>) {
-        isPeerHolding = "true" == details[KEY_PEER_HOLDING]
-        isAudioMuted = "true" == details[KEY_AUDIO_MUTED]
-        isVideoMuted = "true" == details[KEY_VIDEO_MUTED]
-        isAudioOnly = "true" == details[KEY_AUDIO_ONLY]
+        isPeerHolding = details[KEY_PEER_HOLDING].toBoolean()
+        isAudioMuted = details[KEY_AUDIO_MUTED].toBoolean()
+        isVideoMuted = details[KEY_VIDEO_MUTED].toBoolean()
         audioCodec = details[KEY_AUDIO_CODEC]
         videoCodec = details[KEY_VIDEO_CODEC]
         val confId = details[KEY_CONF_ID]
         this.confId = if (isEmpty(confId)) null else confId
     }
-
     val isConferenceParticipant: Boolean
         get() = confId != null
 
@@ -230,6 +231,24 @@ class Call : Interaction {
         return null
     }
 
+    fun hasMedia(label: Media.MediaType): Boolean {
+        val mediaList = mediaList ?: return false
+        for (media in mediaList) {
+            // todo check -> isEnabled est il utile ? Si le media n'est pas activé alors le daemon ne nous le transmets pas ?
+            if (media.isEnabled && media.mediaType == label) {
+                return true
+            }
+        }
+        return false
+    }
+    fun hasActiveMedia(label: Media.MediaType): Boolean {
+        val mediaList = mediaList ?: return false
+        for (media in mediaList)
+            if (media.isEnabled && !media.isMuted && media.mediaType == label)
+                return true
+        return false
+    }
+
     enum class CallStatus {
         NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
 
@@ -275,7 +294,7 @@ class Call : Interaction {
     companion object {
         val TAG = Call::class.simpleName!!
         const val KEY_ACCOUNT_ID = "ACCOUNTID"
-        const val KEY_AUDIO_ONLY = "AUDIO_ONLY"
+        const val KEY_HAS_VIDEO = "HAS_VIDEO"
         const val KEY_CALL_TYPE = "CALL_TYPE"
         const val KEY_CALL_STATE = "CALL_STATE"
         const val KEY_PEER_NUMBER = "PEER_NUMBER"

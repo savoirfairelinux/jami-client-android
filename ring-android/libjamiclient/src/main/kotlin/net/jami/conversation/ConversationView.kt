@@ -22,6 +22,7 @@ package net.jami.conversation
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import java.io.File
+import javax.swing.text.StyledEditorKit
 
 interface ConversationView {
     fun refreshView(conversation: List<Interaction>)
@@ -35,8 +36,8 @@ interface ConversationView {
     fun clearMsgEdit()
     fun goToHome()
     fun goToAddContact(contact: Contact)
-    fun goToCallActivity(conferenceId: String)
-    fun goToCallActivityWithResult(accountId: String, conversationUri: Uri, contactUri: Uri, audioOnly: Boolean)
+    fun goToCallActivity(conferenceId: String, withCamera: Boolean)
+    fun goToCallActivityWithResult(accountId: String, conversationUri: Uri, contactUri: Uri, withCamera: Boolean)
     fun goToContactActivity(accountId: String, uri: Uri)
     fun switchToUnknownView(name: String)
     fun switchToIncomingTrustRequestView(message: String)

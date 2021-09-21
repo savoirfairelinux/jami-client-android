@@ -137,18 +137,24 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private enum class PreviewPosition { LEFT, RIGHT }
     private var previewPosition = PreviewPosition.RIGHT
-
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
 
     private val mCompositeDisposable = CompositeDisposable()
+
     override fun initPresenter(presenter: CallPresenter) {
+        Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> chose between prepareCall and initIncomingCall")
         val args = requireArguments()
+        presenter.wantVideo = args.getBoolean(KEY_HAS_VIDEO, false)
         args.getString(KEY_ACTION)?.let { action ->
-            if (action == ACTION_PLACE_CALL)
+            if (action == Intent.ACTION_CALL) {
+                Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn prepareCall(false) ")
                 prepareCall(false)
-            else if (action == ACTION_GET_CALL || action == CallActivity.ACTION_CALL_ACCEPT)
-                presenter.initIncomingCall(args.getString(KEY_CONF_ID)!!, action == ACTION_GET_CALL)
+            }
+            else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
+                Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn initIncomingCall( CONF_ID, GET_CALL)")
+                presenter.initIncomingCall(args.getString(KEY_CONF_ID)!!, action == Intent.ACTION_VIEW)
+            }
         }
     }
 
@@ -197,8 +203,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onStart() {
         super.onStart()
+        Log.w(TAG, "DEBUG fn onStart [CallFragment.kt] -> on start, value hasVideo = ${presenter.wantVideo}, restartvideo : $restartVideo | restartPreview : $restartPreview")
         if (restartVideo && restartPreview) {
-            displayVideoSurface(true, !presenter.isPipMode)
+            displayVideoSurface(true, !presenter.isPipMode && presenter.wantVideo)
             restartVideo = false
             restartPreview = false
         } else if (restartVideo) {
@@ -649,6 +656,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         if (requestCode != REQUEST_PERMISSION_INCOMING && requestCode != REQUEST_PERMISSION_OUTGOING) return
         var i = 0
         val n = permissions.size
+
+        val hasVideo = presenter.wantVideo
+        Log.w(TAG, "DEBUG fn onRequestPermissionsResult [CallFragment.kt] -> value hasVideo = $hasVideo")
+
         while (i < n) {
             val audioGranted = mDeviceRuntimeService.hasAudioPermission()
             val granted = grantResults[i] == PackageManager.PERMISSION_GRANTED
@@ -656,12 +667,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 Manifest.permission.CAMERA -> {
                     presenter.cameraPermissionChanged(granted)
                     if (audioGranted) {
-                        initializeCall(requestCode == REQUEST_PERMISSION_INCOMING)
+                        initializeCall(requestCode == REQUEST_PERMISSION_INCOMING, hasVideo)
                     }
                 }
                 Manifest.permission.RECORD_AUDIO -> {
                     presenter.audioPermissionChanged(granted)
-                    initializeCall(requestCode == REQUEST_PERMISSION_INCOMING)
+                    initializeCall(requestCode == REQUEST_PERMISSION_INCOMING, hasVideo)
                 }
             }
             i++
@@ -739,15 +750,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         displayVideoSurface: Boolean,
         displayPreviewContainer: Boolean
     ) {
-        binding!!.videoSurface.visibility =
-            if (displayVideoSurface) View.VISIBLE else View.GONE
+        Log.w(TAG, "DEBUG fn displayVideoSurface [CallFragment.kt] -> changement des affichages videos  displayVideoSurface: $displayVideoSurface; displayPreviewContainer: $displayPreviewContainer")
+        binding!!.videoSurface.visibility = if (displayVideoSurface) View.VISIBLE else View.GONE
+
         if (isChoosePluginMode) {
+            Log.w(TAG, "DEBUG fn displayVideoSurface |1| inside => if (isChoosePluginMode) {displayPreviewContainer: $displayPreviewContainer}")
             binding!!.pluginPreviewSurface.visibility =
                 if (displayPreviewContainer) View.VISIBLE else View.GONE
             binding!!.pluginPreviewContainer.visibility =
                 if (displayPreviewContainer) View.VISIBLE else View.GONE
             binding!!.previewContainer.visibility = View.GONE
         } else {
+            Log.w(TAG, "DEBUG fn displayVideoSurface |2| inside => else { displayPreviewContainer : $displayPreviewContainer}")
             binding!!.pluginPreviewSurface.visibility = View.GONE
             binding!!.pluginPreviewContainer.visibility = View.GONE
             binding!!.previewContainer.visibility =
@@ -756,6 +770,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         updateMenu()
     }
 
+    // todo Change function name, this name is misleading, this function concerns PIP preview
     override fun displayPreviewSurface(display: Boolean) {
         if (display) {
             binding!!.videoSurface.setZOrderOnTop(false)
@@ -783,8 +798,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
-    override fun switchCameraIcon(isFront: Boolean) {
-        binding!!.callCameraFlipBtn.setImageResource(if (isFront) R.drawable.baseline_camera_front_24 else R.drawable.baseline_camera_rear_24)
+    override fun switchCameraIcon() {
+        //binding!!.callCameraFlipBtn.setImageResource(if (isFront) R.drawable.baseline_camera_front_24 else R.drawable.baseline_camera_rear_24)
+    }
+
+    fun switchCamera() {
+        presenter.switchOnOffCamera()
+        binding?.callCameraSwitchBtn?.setImageResource(if (binding?.callCameraSwitchBtn?.isChecked == true) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_24)
     }
 
     override fun updateAudioState(state: AudioState) {
@@ -828,6 +848,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 ab.setDisplayShowTitleEnabled(true)
             }
+            val call = contacts[0]
+            val conversationUri = if (call.conversationId != null) Uri(Uri.SWARM_SCHEME, call.conversationId!!) else call.contact!!.conversationUri.blockingFirst()
+            activity.intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(call.account!!, conversationUri))
         }
         if (hasProfileName) {
             binding!!.contactBubbleNumTxt.visibility = View.VISIBLE
@@ -918,8 +941,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     })
             }
             confAdapter!!.updateFromCalls(participantInfo)
-            if (binding!!.confControlGroup.adapter == null) binding!!.confControlGroup.adapter =
-                confAdapter
+            if (binding!!.confControlGroup.adapter == null)
+                binding!!.confControlGroup.adapter = confAdapter
         }
     }
 
@@ -944,17 +967,21 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun updateCallStatus(callStatus: CallStatus) {
-        binding!!.callStatusTxt.setText(callStateToHumanState(callStatus))
+    override fun updateCallStatus(callState: CallStatus) {
+        binding!!.callStatusTxt.setText(callStateToHumanState(callState))
     }
 
     override fun initMenu(
-        isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean,
-        showPluginBtn: Boolean, onGoingCall: Boolean
+        isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean,
+        showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean
     ) {
-        if (binding != null) {
-            binding!!.callCameraFlipBtn.visibility = if (displayFlip) View.VISIBLE else View.GONE
+        //
+        if (!hasActiveVideo) {
+            binding!!.callCameraSwitchBtn.isChecked = true
+            binding!!.callCameraSwitchBtn.setImageResource(R.drawable.baseline_videocam_off_24)
         }
+        binding!!.callCameraFlipBtn.visibility = if (hasMultipleCamera && !binding!!.callCameraSwitchBtn.isChecked) View.VISIBLE else View.GONE
+
         if (dialPadBtn != null) {
             dialPadBtn!!.isVisible = canDial
         }
@@ -969,6 +996,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding?.apply {
             shapeRipple.stopRipple()
             callAcceptBtn.visibility = View.GONE
+            callAcceptAudioBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
             callControlGroup.visibility = View.VISIBLE
             callHangupBtn.visibility = View.VISIBLE
@@ -980,10 +1008,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         callActivity?.showSystemUI()
     }
 
-    override fun initIncomingCallDisplay() {
+    override fun initIncomingCallDisplay(hasVideo: Boolean) {
         Log.w(TAG, "initIncomingCallDisplay")
         binding?.apply {
-            callAcceptBtn.visibility = View.VISIBLE
+            if (hasVideo) callAcceptBtn.visibility = View.VISIBLE else callAcceptBtn.visibility = View.GONE
+            callAcceptAudioBtn.visibility = View.VISIBLE
             callRefuseBtn.visibility = View.VISIBLE
             callControlGroup.visibility = View.GONE
             callHangupBtn.visibility = View.GONE
@@ -1117,17 +1146,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
     override fun prepareCall(isIncoming: Boolean) {
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
-        val audioOnly: Boolean
-        val permissionType: Int
-        if (isIncoming) {
-            audioOnly = presenter.isAudioOnly
-            permissionType = REQUEST_PERMISSION_INCOMING
-        } else {
-            val args = arguments
-            audioOnly = args != null && args.getBoolean(KEY_AUDIO_ONLY)
-            permissionType = REQUEST_PERMISSION_OUTGOING
-        }
-        if (!audioOnly) {
+        val hasVideo = presenter.wantVideo
+
+        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($isIncoming, $hasVideo) ")
+        //Log.w(TAG, "fn prepareCall [CallFragment.kt] -> value of presenter.hasVideo() : $hasVideo")
+
+        val permissionType =
+            if (isIncoming) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
+
+        if (hasVideo) {
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
             if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val perms = ArrayList<String>()
@@ -1139,13 +1166,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                initializeCall(isIncoming)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
+                initializeCall(isIncoming, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                initializeCall(isIncoming)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
+                initializeCall(isIncoming, hasVideo)
             }
         }
     }
@@ -1154,10 +1183,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Starts a call. Takes into account whether call is incoming or outgoing.
      *
      * @param isIncoming true if call is incoming, false for outgoing
+     * @param hasVideo true if we already know that conversation has video
      */
-    private fun initializeCall(isIncoming: Boolean) {
+
+    private fun initializeCall(isIncoming: Boolean, hasVideo: Boolean) {
+        Log.w(TAG, "DEBUG fn initializeCall [CallFragment.kt] -> if isIncoming ( = $isIncoming ) == true : presenter.AcceptCall(hasVideo: $hasVideo) : presenter.initOutGoing(conversation.accountId,conversation.conversationUri,args.getString(Intent.EXTRA_PHONE_NUMBER), hasVideo: $hasVideo)")
         if (isIncoming) {
-            presenter.acceptCall()
+            presenter.acceptCall(hasVideo)
         } else {
             arguments?.let { args ->
                 val conversation = ConversationPath.fromBundle(args)!!
@@ -1165,7 +1197,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     conversation.accountId,
                     conversation.conversationUri,
                     args.getString(Intent.EXTRA_PHONE_NUMBER),
-                    args.getBoolean(KEY_AUDIO_ONLY)
+                    hasVideo
                 )
             }
         }
@@ -1182,8 +1214,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    //todo if videomode, should mute/unmute audio output, if audio only, should switch between speaker options
     fun speakerClicked() {
         presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
+        //binding!!.callSpeakerBtn.setImageResource(if (binding!!.callSpeakerBtn.isChecked) R.drawable.baseline_sound_on_24 else R.drawable.baseline_sound_off_24)
     }
 
     private fun startScreenShare(mediaProjection: MediaProjection?) {
@@ -1227,7 +1261,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.refuseCall()
     }
 
+    fun acceptAudioClicked() {
+        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo current value is : $ (${presenter.wantVideo})")
+        presenter.wantVideo = false
+        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo new value is : $ (${presenter.wantVideo})")
+        prepareCall(true)
+    }
+
     fun acceptClicked() {
+        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo current value is : $ (${presenter.wantVideo})")
+        presenter.wantVideo = true
+        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo new value is : $ (${presenter.wantVideo})")
         prepareCall(true)
     }
 
@@ -1370,7 +1414,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         //change preview image
-        displayVideoSurface(true, true)
+        displayVideoSurface(true, presenter.wantVideo)
     }
 
     /**
@@ -1425,32 +1469,32 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     companion object {
         val TAG = CallFragment::class.simpleName!!
         const val ACTION_PLACE_CALL = "PLACE_CALL"
-        const val ACTION_GET_CALL = "GET_CALL"
         const val KEY_ACTION = "action"
         const val KEY_CONF_ID = "confId"
-        const val KEY_AUDIO_ONLY = "AUDIO_ONLY"
+        const val KEY_HAS_VIDEO = "HAS_VIDEO"
         private const val REQUEST_CODE_ADD_PARTICIPANT = 6
         private const val REQUEST_PERMISSION_INCOMING = 1003
         private const val REQUEST_PERMISSION_OUTGOING = 1004
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
-        fun newInstance(action: String, path: ConversationPath?, contactId: String?, audioOnly: Boolean): CallFragment {
+        fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
             val bundle = Bundle()
             bundle.putString(KEY_ACTION, action)
             path?.toBundle(bundle)
             bundle.putString(Intent.EXTRA_PHONE_NUMBER, contactId)
-            bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly)
+            bundle.putBoolean(KEY_HAS_VIDEO, hasVideo)
             val countDownFragment = CallFragment()
             countDownFragment.arguments = bundle
             return countDownFragment
         }
 
-        fun newInstance(action: String, confId: String?): CallFragment {
-            val bundle = Bundle()
-            bundle.putString(KEY_ACTION, action)
-            bundle.putString(KEY_CONF_ID, confId)
+        fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
             val countDownFragment = CallFragment()
-            countDownFragment.arguments = bundle
+            countDownFragment.arguments = Bundle().apply {
+                putString(KEY_ACTION, action)
+                putString(KEY_CONF_ID, confId)
+                putBoolean(KEY_HAS_VIDEO, hasVideo)
+            }
             return countDownFragment
         }
 

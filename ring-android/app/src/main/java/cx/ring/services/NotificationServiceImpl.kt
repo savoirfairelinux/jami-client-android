@@ -50,6 +50,7 @@ import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
 import cx.ring.contactrequests.ContactRequestsFragment
+import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.service.CallNotificationService
 import cx.ring.service.DRingService
@@ -79,7 +80,6 @@ class NotificationServiceImpl(
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
-
     @SuppressLint("CheckResult")
     fun initHelper() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -141,21 +141,42 @@ class NotificationServiceImpl(
                     .setSound(null)
                     .setVibrate(null)
                     .setFullScreenIntent(viewIntent, true)
-                    .addAction(R.drawable.baseline_call_end_24,
-                        mContext.getText(R.string.action_call_decline),
-                        PendingIntent.getService(mContext, random.nextInt(),
-                            Intent(DRingService.ACTION_CALL_REFUSE)
+                    .addAction(
+                        R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
+                        PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
                                 .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                            PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.baseline_call_24,
-                        mContext.getText(if (ongoingCallId == null) R.string.action_call_accept else R.string.action_call_end_accept),
-                        PendingIntent.getService(mContext, random.nextInt(),
-                            Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT
+                        )
+                    )
+                Log.w(TAG, "DEBUG fn buildCallNotification [NotificationServiceImpl.kt] -> conference.hasvideo = ${conference.hasVideo()} ")
+
+                if (conference.hasVideo()){
+                        messageNotificationBuilder
+                            .addAction(R.id.btnAcceptAudio, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
+                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
+                                    .setClass(mContext, DRingService::class.java)
+                                    .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
+                                    .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT)
+                            )
+                            .addAction(R.id.btnAcceptVideo, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_end_accept),
+                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
+                                    .setClass(mContext, DRingService::class.java)
+                                    .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
+                                    .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, true), PendingIntent.FLAG_ONE_SHOT)
+                            )
+
+                    } else {
+                        messageNotificationBuilder.addAction(
+                            R.id.btnAcceptAudio, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
+                            PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                            PendingIntent.FLAG_ONE_SHOT))
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT)
+                        )
+                    }
                 if (ongoingCallId != null) {
                     messageNotificationBuilder.addAction(R.drawable.baseline_call_24,
                         mContext.getText(R.string.action_call_hold_accept),
@@ -555,6 +576,7 @@ class NotificationServiceImpl(
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun showFileTransferNotification(conversation: Conversation, info: DataTransfer) {
         val event = info.status ?: return
         if (event == InteractionStatus.FILE_AVAILABLE)

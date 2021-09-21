@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
+import net.jami.utils.Log
 import java.util.*
 import kotlin.math.min
 
@@ -135,8 +136,28 @@ class Conference {
     val isOnGoing: Boolean
         get() = mParticipants.size == 1 && mParticipants[0].isOnGoing || mParticipants.size > 1
 
+
+    fun getMediaList(): List<Media>? {
+        return if (mParticipants.size == 1) mParticipants[0].mediaList else ArrayList()
+    }
+
+    fun hasAudioMedia(): Boolean {
+        return mParticipants.size == 1  && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_AUDIO)
+    }
+
     fun hasVideo(): Boolean {
-        for (call in mParticipants) if (!call.isAudioOnly) return true
+        for (call in mParticipants) if (call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) return true
+        return false
+    }
+
+ /*   fun hasVideoMedia(): Boolean {
+        return mParticipants.size == 1 && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)
+    }*/
+
+    fun hasActiveVideo(): Boolean {
+        for (call in mParticipants)
+            if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
+                return true
         return false
     }
 
@@ -168,4 +189,5 @@ class Conference {
         }
         mParticipantRecording.onNext(mParticipantRecordingSet)
     }
+
 }

@@ -39,7 +39,7 @@ class Conversation : ConversationHistory {
     val uri: Uri
     val contacts: MutableList<Contact>
     val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
-    val currentCalls = ArrayList<Conference>()
+    private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
     private var lastDisplayed: Interaction? = null
     private val updatedElementSubject: Subject<Tuple<Interaction, ElementStatus>> = PublishSubject.create()

@@ -19,6 +19,7 @@
  */
 package net.jami.call
 
+import com.j256.ormlite.field.converter.BooleanNumberFieldConverter
 import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
@@ -32,15 +33,15 @@ interface CallView {
     fun displayPreviewSurface(display: Boolean)
     fun displayHangupButton(display: Boolean)
     fun displayDialPadKeyboard()
-    fun switchCameraIcon(isFront: Boolean)
+    fun switchCameraIcon()
     fun updateAudioState(state: AudioState)
     fun updateMenu()
     fun updateTime(duration: Long)
     fun updateContactBubble(contact: List<Call>)
     fun updateCallStatus(callState: CallStatus)
-    fun initMenu(isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean)
+    fun initMenu(isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean)
     fun initNormalStateDisplay(audioOnly: Boolean, muted: Boolean)
-    fun initIncomingCallDisplay()
+    fun initIncomingCallDisplay(hasVideo: Boolean)
     fun initOutGoingCallDisplay()
     fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)
     fun resetPluginPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)

@@ -30,7 +30,6 @@ interface MainView {
     fun showContactRequests(contactRequests: List<SmartListViewModel>)
     fun callContact(accountID: String, ringID: String)
     fun displayAccountInfo(viewModel: HomeNavigationViewModel)
-    fun updateModel(account: Account)
     fun showExportDialog(pAccountID: String, hasPassword: Boolean)
     fun showProfileEditing()
     fun showAccountShare()

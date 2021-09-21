@@ -309,14 +309,16 @@ class ConversationPresenter @Inject constructor(
     fun clickOnGoingPane() {
         val conf = mConversation?.currentCall
         if (conf != null) {
-            view?.goToCallActivity(conf.id)
+            view?.goToCallActivity(conf.id, conf.hasActiveVideo())
         } else {
             view?.displayOnGoingCallPane(false)
         }
     }
 
-    fun goToCall(audioOnly: Boolean) {
-        if (audioOnly && !mHardwareService.hasMicrophone()) {
+    fun goToCall(withCamera: Boolean) {
+
+        Log.w(TAG, "DEBUG fn goToCall ||   hasVideo: $withCamera")
+        if (!withCamera && !mHardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
             return
         }
@@ -329,9 +331,9 @@ class ConversationPresenter @Inject constructor(
                     if (conf != null && conf.participants.isNotEmpty()
                         && conf.participants[0].callStatus !== Call.CallStatus.INACTIVE
                         && conf.participants[0].callStatus !== Call.CallStatus.FAILURE) {
-                        view.goToCallActivity(conf.id)
+                        view.goToCallActivity(conf.id, conf.hasActiveVideo())
                     } else {
-                        view.goToCallActivityWithResult(conversation.accountId, conversation.uri, conversation.contact!!.uri, audioOnly)
+                        view.goToCallActivityWithResult(conversation.accountId, conversation.uri, conversation.contact!!.uri, withCamera)
                     }
                 }
             })

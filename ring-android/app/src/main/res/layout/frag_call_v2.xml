@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".client.CallActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/cardview_dark_background">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/call_options_drawer"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/contact_bubble"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_contact_picture_fallback" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/call_options_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_call_menu">
+
+        <RelativeLayout
+            android:id="@+id/call_drawer_handle"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/drawer_handlebar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flow_horizontalAlign="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/call_drawer_handle"
+            tools:layout_editor_absoluteX="5dp">
+
+            <cx.ring.views.CheckableImageButton
+                android:id="@+id/call_speaker_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/ab_action_speakerphone"
+                android:onClick="@{() -> presenter.speakerClicked()}"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/call_mic_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_volume_up_24"
+                app:tint="@color/white" />
+
+            <cx.ring.views.CheckableImageButton
+                android:id="@+id/call_mic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/action_call_mic_mute"
+                android:onClick="@{() -> presenter.micClicked()}"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/call_screenshare_btn"
+                app:layout_constraintStart_toEndOf="@+id/call_speaker_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_mic_24"
+                app:tint="@color/white"
+                tools:visibility="visible" />
+
+            <cx.ring.views.CheckableImageButton
+                android:id="@+id/call_screenshare_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/ab_action_speakerphone"
+                android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/call_camera_flip_btn"
+                app:layout_constraintStart_toEndOf="@+id/call_mic_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/baseline_videocam_24"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/call_camera_flip_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/call_conference_add"
+                app:layout_constraintStart_toEndOf="@+id/call_screenshare_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_photo_camera_24"
+                app:tint="@color/white"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageButton
+                android:id="@+id/call_conference_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/call_camera_flip_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_person_add_24"
+                app:tint="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>

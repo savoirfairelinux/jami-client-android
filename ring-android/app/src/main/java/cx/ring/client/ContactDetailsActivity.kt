@@ -400,7 +400,7 @@ class ContactDetailsActivity : AppCompatActivity() {
         binding = null
     }
 
-    private fun goToCallActivity(conversation: Conversation, contactUri: Uri, audioOnly: Boolean) {
+    private fun goToCallActivity(conversation: Conversation, contactUri: Uri, hasVideo: Boolean) {
         val conf = conversation.currentCall
         if (conf != null && conf.participants.isNotEmpty()
             && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
@@ -413,7 +413,7 @@ class ContactDetailsActivity : AppCompatActivity() {
                 .setClass(applicationContext, CallActivity::class.java)
                 .putExtras(ConversationPath.toBundle(conversation))
                 .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
-                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo)
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
         }
     }

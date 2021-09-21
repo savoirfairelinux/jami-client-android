@@ -62,6 +62,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
+import net.jami.model.Profile
 import net.jami.navigation.HomeNavigationViewModel
 import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.QRCodeUtils
@@ -221,34 +222,28 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun displayAccountInfo(viewModel: HomeNavigationViewModel) {
-        updateModel(viewModel.account)
+        updateModel(viewModel.account, viewModel.profile)
     }
 
-    override fun updateModel(account: Account) {
+    private fun updateModel(account: Account, profile: Profile) {
         val context = requireContext()
         val address = account.displayUsername
-        mDisposable.clear()
-        mDisposable.add(VCardServiceImpl.loadProfile(context, account)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { profile ->
-                val name = profile.displayName
-                if (name != null && name.isNotEmpty()) {
-                    mTitleView?.setAlias(name)
-                    title = address ?: ""
-                } else {
-                    mTitleView?.setAlias(address)
-                }
-            }
-            .map { p -> AvatarDrawable.build(context, account, p, true) }
-            .subscribe { a ->
-                mTitleView?.apply {
-                    settingsButton.visibility = View.VISIBLE
-                    logoView.visibility = View.VISIBLE
-                    logoView.setImageDrawable(a)
-                }
-            })
-        qrCard?.setDrawable(prepareAccountQr(context, account.uri)!!)
-        accountSettingsRow?.adapter!!.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
+        val name = profile.displayName
+        if (name != null && name.isNotEmpty()) {
+            mTitleView?.setAlias(name)
+            title = address ?: ""
+        } else {
+            mTitleView?.setAlias(address)
+        }
+        mTitleView?.apply {
+            settingsButton.visibility = View.VISIBLE
+            logoView.visibility = View.VISIBLE
+            logoView.setImageDrawable(AvatarDrawable.build(context, account, profile, true))
+        }
+        prepareAccountQr(context, account.uri)?.let { qr ->
+            qrCard?.setDrawable(qr)
+            accountSettingsRow?.adapter?.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
+        }
     }
 
     override fun showExportDialog(pAccountID: String, hasPassword: Boolean) {
