@@ -103,7 +103,7 @@ class Contact private constructor(
         mLookupKey = k
         profileName = displayName
         photoId = photo_id
-        if (username == null && displayName.contains(PREFIX_RING)) {
+        if (username == null && (displayName.startsWith(Uri.RING_URI_SCHEME) || displayName.startsWith(Uri.JAMI_URI_SCHEME))) {
             username = displayName
         }
     }
@@ -201,7 +201,7 @@ class Contact private constructor(
     }
 
     fun setProfile(name: String?, photo: Any?) {
-        if (name != null && name.isNotEmpty() && !name.startsWith(Uri.RING_URI_SCHEME)) {
+        if (name != null && name.isNotEmpty() && !name.startsWith(Uri.RING_URI_SCHEME)  && !name.startsWith(Uri.JAMI_URI_SCHEME)) {
             profileName = name
         }
         if (photo != null) {
@@ -215,7 +215,6 @@ class Contact private constructor(
         private val TAG = Contact::class.simpleName!!
         const val UNKNOWN_ID = -1L
         const val DEFAULT_ID = 0L
-        const val PREFIX_RING = Uri.RING_URI_SCHEME
 
         fun buildSIP(to: Uri): Contact {
             val contact = Contact(to)

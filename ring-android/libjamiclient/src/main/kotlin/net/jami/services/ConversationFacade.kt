@@ -444,7 +444,7 @@ class ConversationFacade(
                 if (txt.messageId != null) {
                     mAccountService.setMessageDisplayed(txt.account, Uri(Uri.SWARM_SCHEME, txt.conversationId!!), txt.messageId!!)
                 } else {
-                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.JAMI_URI_SCHEME, txt.author!!), txt.daemonIdString!!)
+                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.DEFAULT_CONTACT_SCHEME, txt.author!!), txt.daemonIdString!!)
                 }
             }
         }
