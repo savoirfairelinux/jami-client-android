@@ -174,11 +174,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         Log.d(TAG, "handleIntent: $intent")
         val extra = intent.extras
         val action = intent.action
+        val path = ConversationPath.fromBundle(extra)
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT == action) {
             //mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
             presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
         } else if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
-            val path = ConversationPath.fromBundle(extra)
             if (path != null) {
                 startConversation(path)
             } else {
@@ -186,8 +186,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 startActivity(intent)
             }
         } else if (DRingService.ACTION_CONV_ACCEPT == action || Intent.ACTION_VIEW == action) {
-            startConversation(ConversationPath.fromIntent(intent)!!)
-        } //else {
+            if (path != null) {
+                startConversation(path)
+            }
+        }
         val fragmentManager = supportFragmentManager
         fContent = fragmentManager.findFragmentById(R.id.main_frame)
         if (fContent == null || Intent.ACTION_SEARCH == action) {
@@ -258,17 +260,17 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             mAccountService.observableAccountList
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ accounts ->
-                    if (mAccountAdapter == null) {
+                    mAccountAdapter?.apply {
+                        clear()
+                        addAll(accounts)
+                        notifyDataSetChanged()
+                        if (accounts.isNotEmpty()) {
+                            mBinding!!.spinnerToolbar.setSelection(0)
+                        }
+                    } ?: run {
                         mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable).apply {
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
-                        }
-                    } else {
-                        mAccountAdapter!!.clear()
-                        mAccountAdapter!!.addAll(accounts)
-                        mAccountAdapter!!.notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            mBinding!!.spinnerToolbar.setSelection(0)
                         }
                     }
                     if (fContent is SmartListFragment) {
@@ -362,14 +364,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun startConversationTablet(bundle: Bundle?) {
-        fConversation = ConversationFragment()
-        fConversation!!.arguments = bundle
+        val conversationFragment = ConversationFragment().apply {
+            arguments = bundle
+            fConversation = this
+        }
         if (fContent !is ContactRequestsFragment) {
             selectNavigationItem(R.id.navigation_home)
         }
         showTabletToolbar()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.conversation_container, fConversation!!, ConversationFragment::class.java.simpleName)
+            .replace(R.id.conversation_container, conversationFragment, ConversationFragment::class.java.simpleName)
             .commit()
     }
 
@@ -391,14 +395,13 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onBackPressed() {
-        if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface!!.onBackPressed()) {
+        if (mAccountFragmentBackHandlerInterface?.onBackPressed() == true) {
             return
         }
         super.onBackPressed()
         fContent = supportFragmentManager.findFragmentById(R.id.main_frame)
         if (fContent is SmartListFragment) {
-            mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked =
-                true
+            mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked = true
             //showProfileInfo();
             showToolbarSpinner()
             hideTabletToolbar()
@@ -527,7 +530,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return true
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         val adapter = mAccountAdapter ?: return
         val type = adapter.getItemViewType(position)
         if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
@@ -548,16 +551,19 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun setBadge(menuId: Int, number: Int) {
-        if (number == 0) mBinding!!.navigationView.removeBadge(menuId) else mBinding!!.navigationView.getOrCreateBadge(
-            menuId
-        ).number = number
+        mBinding?.apply {
+            if (number == 0)
+                navigationView.removeBadge(menuId)
+            else
+                navigationView.getOrCreateBadge(menuId).number = number
+        }
     }
 
     private fun hideTabletToolbar() {
-        mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
-            binding.contactTitle?.text = null
-            binding.contactSubtitle?.text = null
-            binding.contactImage?.setImageDrawable(null)
+        mBinding?.apply { tabletToolbar?.let { toolbar ->
+            contactTitle?.text = null
+            contactSubtitle?.text = null
+            contactImage?.setImageDrawable(null)
             toolbar.visibility = View.GONE
         }}
     }
@@ -592,17 +598,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun showAccountStatus(show: Boolean) {
-        mBinding!!.accountSwitch.visibility = if (show) View.VISIBLE else View.GONE
+        mBinding?.apply { accountSwitch.visibility = if (show) View.VISIBLE else View.GONE }
     }
 
     private fun showToolbarSpinner() {
-        mBinding!!.spinnerToolbar.visibility = View.VISIBLE
+        mBinding?.apply { spinnerToolbar.visibility = View.VISIBLE }
     }
 
     private fun hideToolbarSpinner() {
-        if (mBinding != null && !DeviceUtils.isTablet(this)) {
-            mBinding!!.spinnerToolbar.visibility = View.GONE
-        }
+        if (!DeviceUtils.isTablet(this))
+            mBinding?.apply { spinnerToolbar.visibility = View.GONE }
     }
 
     private val fragmentContainerId: Int
@@ -667,16 +672,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
+        mBinding?.apply {
+            appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
+        }
     }
 
     fun setToolbarOutlineState(enabled: Boolean) {
-        if (mBinding != null) {
-            if (!enabled) {
-                mBinding!!.appBar.outlineProvider = null
-            } else {
-                mBinding!!.appBar.outlineProvider = mOutlineProvider
-            }
+        mBinding?.apply {
+            appBar.outlineProvider = if(enabled) mOutlineProvider else null
         }
     }
 
@@ -688,15 +691,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun selectNavigationItem(id: Int) {
-        if (mBinding != null) mBinding!!.navigationView.selectedItemId = id
+        mBinding?.apply { navigationView.selectedItemId = id }
     }
 
     private fun enableAccount(newValue: Boolean) {
-        val account = mAccountService.currentAccount
-        if (account == null) {
-            Log.w(TAG, "account not found!")
-            return
-        }
+        val account = mAccountService.currentAccount ?: return
         account.isEnabled = newValue
         mAccountService.setAccountEnabled(account.accountId, newValue)
     }
@@ -715,11 +714,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             val mode = conversation.mode.blockingFirst()
             if (mode == Conversation.Mode.Syncing)
                 continue
-            futureIcons.add(
-                (mContactService as ContactServiceImpl?)!!.loadConversationAvatar(this,conversation)
-                    .map { d -> BitmapUtils.drawableToBitmap(d, targetSize) }
-                    .subscribeOn(Schedulers.computation())
-                    .toFuture())
+            futureIcons.add((mContactService as ContactServiceImpl).loadConversationAvatar(this,conversation)
+                .map { d -> BitmapUtils.drawableToBitmap(d, targetSize) }
+                .subscribeOn(Schedulers.computation())
+                .toFuture())
             if (++i == maxCount) break
         }
         val shortcutInfoList: MutableList<ShortcutInfoCompat> = ArrayList(futureIcons.size)
@@ -728,11 +726,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             val mode = conversation.mode.blockingFirst()
             if (mode == Conversation.Mode.Syncing)
                 continue
-            var icon: IconCompat? = null
-            try {
-                icon = IconCompat.createWithBitmap(futureIcons[i].get())
+            val icon: IconCompat? = try {
+                IconCompat.createWithBitmap(futureIcons[i].get())
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to load icon", e)
+                null
             }
             val title = conversation.title ?: continue
             if (title.isEmpty()) continue
