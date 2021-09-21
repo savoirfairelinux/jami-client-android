@@ -549,7 +549,7 @@ class ConversationFacade(
 
     private fun parseNewMessage(txt: TextMessage) {
         val accountId = txt.account!!
-        val uri = if (txt.messageId != null) Uri(Uri.SWARM_SCHEME, txt.conversationId!!) else Uri(Uri.JAMI_URI_SCHEME, txt.author!!)
+        val uri = if (txt.messageId != null) Uri(Uri.SWARM_SCHEME, txt.conversationId!!) else Uri(Uri.DEFAULT_CONTACT_SCHEME, txt.author!!)
 
         if (txt.isRead) {
             if (txt.messageId == null) {

@@ -85,7 +85,7 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         mLookupKey = k
         loadedProfile = Single.just(Profile(displayName, null))
         photoId = photo_id
-        if (username == null && displayName.contains(PREFIX_RING)) {
+        if (username == null && displayName.startsWith(Uri.RING_URI_SCHEME) || displayName.startsWith(Uri.JAMI_URI_SCHEME)) {
             username = Single.just(displayName)
         }
     }
@@ -136,7 +136,6 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         private val TAG = Contact::class.simpleName!!
         const val UNKNOWN_ID = -1L
         const val DEFAULT_ID = 0L
-        const val PREFIX_RING = Uri.RING_URI_SCHEME
 
         fun buildSIP(to: Uri): Contact = Contact(to).apply { username = Single.just("") }
         fun build(uri: String, isUser: Boolean = false) = Contact(Uri.fromString(uri), isUser)
