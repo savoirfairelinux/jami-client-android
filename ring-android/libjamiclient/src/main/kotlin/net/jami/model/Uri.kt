@@ -61,7 +61,7 @@ class Uri : Serializable {
         get() {
             if (isSwarm) return scheme + rawRingId
             return if (isHexId) {
-                RING_URI_SCHEME + rawRingId
+                DEFAULT_CONTACT_SCHEME + rawRingId
             } else toString()
         }
 
@@ -112,6 +112,7 @@ class Uri : Serializable {
         private val URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE)
         const val RING_URI_SCHEME = "ring:"
         const val JAMI_URI_SCHEME = "jami:"
+        const val DEFAULT_CONTACT_SCHEME = JAMI_URI_SCHEME
         const val SWARM_SCHEME = "swarm:"
         private const val ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])"
         private const val ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}"
