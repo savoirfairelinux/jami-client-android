@@ -929,6 +929,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         Log.w(TAG, "DEBUG fn goToCallActivity")
         startActivity(Intent(Intent.ACTION_VIEW)
             .setClass(requireContext().applicationContext, CallActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(NotificationService.KEY_CALL_ID, conferenceId)
         )
     }
@@ -936,11 +937,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun goToCallActivityWithResult(accountId: String, conversationUri: net.jami.model.Uri, contactUri: net.jami.model.Uri, withCamera: Boolean) {
         Log.w(TAG, "DEBUG fn goToCallActivityWithResult || hasVideo : $withCamera")
         val intent = Intent(Intent.ACTION_CALL)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .setClass(requireContext(), CallActivity::class.java)
             .putExtras(ConversationPath.toBundle(accountId, conversationUri))
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
             .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera)
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
+        startActivity(intent)
     }
 
     private fun setupActionbar(conversation: Conversation) {
