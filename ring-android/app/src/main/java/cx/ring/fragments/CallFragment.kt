@@ -817,56 +817,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun updateTime(duration: Long) {
         binding?.let { binding ->
-            binding.callStatusTxt.text = if (duration <= 0) null else String.format(
-                Locale.getDefault(),
-                "%d:%02d:%02d",
+            binding.callStatusTxt.text = if (duration <= 0) null else String.format("%d:%02d:%02d",
                 duration / 3600,
                 duration % 3600 / 60,
-                duration % 60
-            )
+                duration % 60)
         }
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun updateContactBubble(contacts: List<Call>) {
-        Log.w(TAG, "updateContactBubble " + contacts.size)
-        val username = if (contacts.size > 1)
-            "Conference with " + contacts.size + " people"
-        else contacts[0].contact!!.displayName
-        val displayName = if (contacts.size > 1) null else contacts[0].contact!!.displayName
-        val hasProfileName = displayName != null && !displayName.contentEquals(username)
-        val activity = activity as AppCompatActivity?
-        if (activity != null) {
-            val ab = activity.supportActionBar
-            if (ab != null) {
-                if (hasProfileName) {
-                    ab.title = displayName
-                    ab.subtitle = username
-                } else {
-                    ab.title = username
-                    ab.subtitle = null
-                }
-                ab.setDisplayShowTitleEnabled(true)
-            }
-            val call = contacts[0]
-            val conversationUri = if (call.conversationId != null) Uri(Uri.SWARM_SCHEME, call.conversationId!!) else call.contact!!.conversationUri.blockingFirst()
-            activity.intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(call.account!!, conversationUri))
-        }
-        if (hasProfileName) {
-            binding!!.contactBubbleNumTxt.visibility = View.VISIBLE
-            binding!!.contactBubbleTxt.text = displayName
-            binding!!.contactBubbleNumTxt.text = username
-        } else {
-            binding!!.contactBubbleNumTxt.visibility = View.GONE
-            binding!!.contactBubbleTxt.text = username
-        }
-        binding!!.contactBubble.setImageDrawable(
-            AvatarDrawable.Builder()
-                .withContact(contacts[0].contact)
-                .withCircleCrop(true)
-                .withPresence(false)
-                .build(requireActivity())
-        )
     }
 
     @SuppressLint("RestrictedApi")
@@ -875,6 +830,48 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         mConferenceMode = participantInfo.size > 1
         binding!!.participantLabelContainer.removeAllViews()
         if (participantInfo.isNotEmpty()) {
+            val username = if (participantInfo.size > 1)
+                "Conference with ${participantInfo.size} people"
+            else participantInfo[0].contact.displayName
+            val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
+            val hasProfileName = displayName != null && !displayName.contentEquals(username)
+            val activity = activity as AppCompatActivity?
+            if (activity != null) {
+                val ab = activity.supportActionBar
+                if (ab != null) {
+                    if (hasProfileName) {
+                        ab.title = displayName
+                        ab.subtitle = username
+                    } else {
+                        ab.title = username
+                        ab.subtitle = null
+                    }
+                    ab.setDisplayShowTitleEnabled(true)
+                }
+                val call = participantInfo[0].call
+                if (call != null) {
+                    val conversationUri = if (call.conversationId != null)
+                        Uri(Uri.SWARM_SCHEME, call.conversationId!!)
+                    else call.contact!!.conversationUri.blockingFirst()
+                    activity.intent = Intent(Intent.ACTION_VIEW,
+                        ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java)
+                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                }
+            }
+            if (hasProfileName) {
+                binding!!.contactBubbleNumTxt.visibility = View.VISIBLE
+                binding!!.contactBubbleTxt.text = displayName
+                binding!!.contactBubbleNumTxt.text = username
+            } else {
+                binding!!.contactBubbleNumTxt.visibility = View.GONE
+                binding!!.contactBubbleTxt.text = username
+            }
+            binding!!.contactBubble.setImageDrawable(AvatarDrawable.Builder()
+                .withContact(participantInfo[0].contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(requireActivity()))
+
             val inflater = LayoutInflater.from(binding!!.participantLabelContainer.context)
             for (i in participantInfo) {
                 val displayName = i.contact.displayName
@@ -893,8 +890,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
             }
         }
-        binding!!.participantLabelContainer.visibility =
-            if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
+        binding!!.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
         if (participantInfo.isEmpty() || participantInfo.size < 2) {
             binding!!.confControlGroup.visibility = View.GONE
         } else {
@@ -1131,28 +1127,25 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(
-            Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri))
-                .setClass(requireContext(), ContactDetailsActivity::class.java)
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
     }
 
     /**
      * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
      * Initializes the call if permissions are accepted.
      *
-     * @param isIncoming true if call is incoming, false for outgoing
+     * @param acceptIncomingCall true if call is incoming, false for outgoing
      * @see .initializeCall
      */
-    override fun prepareCall(isIncoming: Boolean) {
+    override fun prepareCall(acceptIncomingCall: Boolean) {
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val hasVideo = presenter.wantVideo
 
-        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($isIncoming, $hasVideo) ")
+        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($acceptIncomingCall, $hasVideo) ")
         //Log.w(TAG, "fn prepareCall [CallFragment.kt] -> value of presenter.hasVideo() : $hasVideo")
 
         val permissionType =
-            if (isIncoming) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
+            if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
 
         if (hasVideo) {
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
@@ -1166,15 +1159,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
-                initializeCall(isIncoming, hasVideo)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                initializeCall(acceptIncomingCall, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
-                initializeCall(isIncoming, hasVideo)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                initializeCall(acceptIncomingCall, hasVideo)
             }
         }
     }

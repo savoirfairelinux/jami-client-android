@@ -30,14 +30,14 @@ import java.util.*
 import kotlin.math.min
 
 class Conference {
-    class ParticipantInfo(val call: Call?, val contact: Contact, i: Map<String, String>) {
-        var x: Int = i["x"]?.toInt() ?: 0
-        var y: Int = i["y"]?.toInt() ?: 0
-        var w: Int = i["w"]?.toInt() ?: 0
-        var h: Int = i["h"]?.toInt() ?: 0
-        var videoMuted: Boolean = java.lang.Boolean.parseBoolean(i["videoMuted"])
-        var audioMuted: Boolean = java.lang.Boolean.parseBoolean(i["audioMuted"])
-        var isModerator: Boolean = java.lang.Boolean.parseBoolean(i["isModerator"])
+    class ParticipantInfo(val call: Call?, val contact: Contact, i: Map<String, String>, pending: Boolean = false) {
+        val x: Int = i["x"]?.toInt() ?: 0
+        val y: Int = i["y"]?.toInt() ?: 0
+        val w: Int = i["w"]?.toInt() ?: 0
+        val h: Int = i["h"]?.toInt() ?: 0
+        val videoMuted: Boolean = i["videoMuted"].toBoolean()
+        val audioMuted: Boolean = i["audioMuted"].toBoolean()
+        val isModerator: Boolean = i["isModerator"].toBoolean()
         val isEmpty: Boolean
             get() = x == 0 && y == 0 && w == 0 && h == 0
     }

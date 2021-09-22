@@ -19,8 +19,6 @@
  */
 package net.jami.call
 
-import com.j256.ormlite.field.converter.BooleanNumberFieldConverter
-import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -37,7 +35,6 @@ interface CallView {
     fun updateAudioState(state: AudioState)
     fun updateMenu()
     fun updateTime(duration: Long)
-    fun updateContactBubble(contact: List<Call>)
     fun updateCallStatus(callState: CallStatus)
     fun initMenu(isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean)
     fun initNormalStateDisplay(audioOnly: Boolean, muted: Boolean)
@@ -52,7 +49,7 @@ interface CallView {
     fun finish()
     fun onUserLeave()
     fun enterPipMode(callId: String)
-    fun prepareCall(isIncoming: Boolean)
+    fun prepareCall(acceptIncomingCall: Boolean)
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)
     fun displayPluginsButton(): Boolean

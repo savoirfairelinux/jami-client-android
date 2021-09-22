@@ -82,7 +82,7 @@ class ConfParticipantAdapter(private val onSelectedCallback: ConfParticipantSele
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return oldCalls[oldItemPosition] === contacts[newItemPosition]
+                    return oldCalls[oldItemPosition].contact === contacts[newItemPosition].contact
                 }
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
