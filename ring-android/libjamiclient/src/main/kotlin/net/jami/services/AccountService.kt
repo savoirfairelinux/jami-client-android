@@ -425,7 +425,10 @@ class AccountService(
      */
     fun getAccount(accountId: String?): Account? {
         if (!StringUtils.isEmpty(accountId)) {
-            synchronized(mAccountList) { for (account in mAccountList) if (accountId == account.accountId) return account }
+            synchronized(mAccountList) {
+                for (account in mAccountList)
+                    if (accountId == account.accountId) return account
+            }
         }
         return null
     }

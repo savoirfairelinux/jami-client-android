@@ -27,6 +27,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.*
 import cx.ring.R
+import cx.ring.fragments.CallFragment
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.contact.more.TVContactMoreActivity
 import cx.ring.tv.contact.more.TVContactMoreFragment
@@ -144,7 +145,8 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         startActivity(Intent(Intent.ACTION_CALL)
             .setClass(requireContext(), TVCallActivity::class.java)
             .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-            .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri))
+            .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.uri)
+            .putExtra(CallFragment.KEY_HAS_VIDEO, true))
     }
 
     override fun goToCallActivity(id: String) {

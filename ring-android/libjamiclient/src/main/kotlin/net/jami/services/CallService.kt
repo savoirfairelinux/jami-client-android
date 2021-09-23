@@ -36,18 +36,10 @@ import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Media
 import net.jami.model.Uri
 import net.jami.utils.Log
-import net.jami.utils.StringUtils.isEmpty
-import net.jami.utils.SwigNativeConverter
-import org.w3c.dom.stylesheets.MediaList
+import net.jami.utils.StringUtils
 import java.util.*
 import java.util.concurrent.Callable
 import java.util.concurrent.ScheduledExecutorService
-import javax.xml.transform.Source
-import kotlin.collections.ArrayList
-
-
-
-
 
 class CallService(
     private val mExecutor: ScheduledExecutorService,
@@ -515,7 +507,7 @@ class CallService(
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
             val callDetails: Map<String, String> = JamiService.getCallDetails(callId)
             call = Call(callId, callDetails)
-            if (isEmpty(call.contactNumber)) {
+            if (StringUtils.isEmpty(call.contactNumber)) {
                 Log.w(TAG, "No number")
                 return null
             }

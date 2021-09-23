@@ -313,62 +313,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         )
     }
 
-    override fun updateContactBubble(calls: List<Call>) {
-        mConferenceMode = calls.size > 1
-        val contact = calls[0].contact!!
-        val username = if (mConferenceMode) "Conference with " + calls.size + " people" else contact.ringUsername
-        val displayName = if (mConferenceMode) null else contact.displayName
-        Log.d(TAG, "updateContactBubble: username=" + username + ", uri=" + contact.uri + " photo:" + contact.photo)
-        mSession?.setMetadata(MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, displayName)
-                .build())
-        val hasProfileName = displayName != null && !displayName.contentEquals(username)
-        if (hasProfileName) {
-            binding!!.contactBubbleNumTxt.visibility = View.VISIBLE
-            binding!!.contactBubbleTxt.text = displayName
-            binding!!.contactBubbleNumTxt.text = username
-        } else {
-            binding!!.contactBubbleNumTxt.visibility = View.GONE
-            binding!!.contactBubbleTxt.text = username
-        }
-        binding!!.contactBubble.setImageDrawable(
-            AvatarDrawable.Builder()
-                .withContact(contact)
-                .withCircleCrop(true)
-                .build(requireActivity())
-        )
-
-        /*if (!mConferenceMode) {
-            binding.confControlGroup.setVisibility(View.GONE);
-        } else {
-            binding.confControlGroup.setVisibility(View.VISIBLE);
-            if (confAdapter  == null) {
-                confAdapter = new ConfParticipantAdapter((view, call) -> {
-                    Context context = requireContext();
-                    PopupMenu popup = new PopupMenu(context, view);
-                    popup.inflate(R.menu.conference_participant_actions);
-                    popup.setOnMenuItemClickListener(item -> {
-                        int itemId = item.getItemId();
-                        if (itemId == R.id.conv_contact_details) {
-                            presenter.openParticipantContact(call);
-                        } else if (itemId == R.id.conv_contact_hangup) {
-                            presenter.hangupParticipant(call);
-                        } else {
-                            return false;
-                        }
-                        return true;
-                    });
-                    MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
-                    menuHelper.setForceShowIcon(true);
-                    menuHelper.show();
-                });
-            }
-            confAdapter.updateFromCalls(calls);
-            if (binding.confControlGroup.getAdapter() == null)
-                binding.confControlGroup.setAdapter(confAdapter);
-        }*/
-    }
-
     override fun updateCallStatus(callStatus: CallStatus) {
         when (callStatus) {
             CallStatus.NONE -> binding!!.callStatusTxt.text = ""
@@ -540,20 +484,14 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(Intent(Intent.ACTION_VIEW,
-            android.net.Uri.withAppendedPath(
-                android.net.Uri.withAppendedPath(
-                    ContentUriHandler.CONTACT_CONTENT_URI,
-                    accountId
-                ), contact.primaryNumber))
-            .setClass(requireContext(), ContactDetailsActivity::class.java)
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
     }
 
     override fun displayPluginsButton(): Boolean {
         return false
     }
 
+    @SuppressLint("RestrictedApi")
     override fun updateConfInfo(info: List<ParticipantInfo>) {
         val binding = binding!!
         binding.participantLabelContainer.removeAllViews()
@@ -576,30 +514,50 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             binding.confControlGroup!!.visibility = View.GONE
         } else {
             binding.confControlGroup!!.visibility = View.VISIBLE
-            if (confAdapter == null) {
-                confAdapter = ConfParticipantAdapter(object : ConfParticipantSelected {
-                    @SuppressLint("RestrictedApi")
+            confAdapter?.apply { updateFromCalls(info) }
+            // Create new adapter
+                ?: ConfParticipantAdapter(info, object : ConfParticipantSelected {
                     override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
-                        val context = requireContext()
-                        val popup = PopupMenu(context, view)
+                        val maximized = presenter.isMaximized(contact)
+                        val popup = PopupMenu(view.context, view)
                         popup.inflate(R.menu.conference_participant_actions)
-                        popup.setOnMenuItemClickListener { item: MenuItem ->
+                        popup.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 R.id.conv_contact_details -> presenter.openParticipantContact(contact)
                                 R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
+                                R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
+                                R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
                                 else -> return@setOnMenuItemClickListener false
                             }
                             true
                         }
-                        val menuHelper = MenuPopupHelper(context, (popup.menu as MenuBuilder), view)
+                        val menu = popup.menu as MenuBuilder
+                        val maxItem = menu.findItem(R.id.conv_contact_maximize)
+                        val muteItem = menu.findItem(R.id.conv_mute)
+                        if (maximized) {
+                            maxItem.setTitle(R.string.action_call_minimize)
+                            maxItem.setIcon(R.drawable.baseline_close_fullscreen_24)
+                        } else {
+                            maxItem.setTitle(R.string.action_call_maximize)
+                            maxItem.setIcon(R.drawable.baseline_open_in_full_24)
+                        }
+                        if (!contact.audioMuted) {
+                            muteItem.setTitle(R.string.action_call_mute)
+                            muteItem.setIcon(R.drawable.baseline_mic_off_24)
+                        } else {
+                            muteItem.setTitle(R.string.action_call_unmute)
+                            muteItem.setIcon(R.drawable.baseline_mic_24)
+                        }
+                        val menuHelper = MenuPopupHelper(view.context, menu, view)
+                        menuHelper.gravity = Gravity.END
                         menuHelper.setForceShowIcon(true)
                         menuHelper.show()
                     }
-                })
-            }
-            confAdapter!!.updateFromCalls(info)
-            if (binding.confControlGroup.adapter == null)
-                binding.confControlGroup.adapter = confAdapter
+                }).apply {
+                    setHasStableIds(true)
+                    confAdapter = this
+                    binding.confControlGroup.adapter = this
+                }
         }
     }
 
