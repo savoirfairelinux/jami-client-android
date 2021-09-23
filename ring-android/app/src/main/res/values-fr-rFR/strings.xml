@@ -97,7 +97,8 @@
   <string name="action_call_accept">Prendre un appel</string>
   <string name="action_call_accept_audio">Répondre en audio</string>
   <string name="action_call_accept_video">Répondre en video</string>
-  <string name="action_call_hold_accept">Mettre en attente et prendre l\'appel</string>
+  <string name="action_call_hold_accept">Répondre en audio</string>
+  <string name="action_call_hold_accept_video">Répondre en video</string>
   <string name="action_call_end_accept">Terminer et prendre l\'appel</string>
   <string name="action_call_decline">Refuser</string>
   <string name="action_call_mic_mute">Couper le micro</string>

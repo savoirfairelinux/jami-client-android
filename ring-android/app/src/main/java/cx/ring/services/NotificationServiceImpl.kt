@@ -145,31 +145,27 @@ class NotificationServiceImpl(
                         R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
                         PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
                                 .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT))
                 Log.w(TAG, "DEBUG fn buildCallNotification [NotificationServiceImpl.kt] -> conference.hasvideo = ${conference.hasVideo()} ")
 
                 if (conference.hasVideo()){
                         messageNotificationBuilder
-                            .addAction(R.id.btnAcceptAudio, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
-                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
+                            .addAction(R.drawable.baseline_call_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_hold_accept),
+                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_HOLD_ACCEPT)
                                     .setClass(mContext, DRingService::class.java)
-                                    .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
+                                    .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                     .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT)
-                            )
-                            .addAction(R.id.btnAcceptVideo, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_end_accept),
-                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT))
+                            .addAction(R.drawable.baseline_videocam_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_hold_accept_video),
+                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_HOLD_ACCEPT)
                                     .setClass(mContext, DRingService::class.java)
-                                    .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
+                                    .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                     .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                    .putExtra(CallFragment.KEY_HAS_VIDEO, true), PendingIntent.FLAG_ONE_SHOT)
-                            )
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, true), PendingIntent.FLAG_ONE_SHOT))
 
                     } else {
                         messageNotificationBuilder.addAction(
-                            R.id.btnAcceptAudio, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
+                            R.drawable.baseline_call_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_end_accept),
                             PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_END_ACCEPT)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_END_ID, ongoingCallId)

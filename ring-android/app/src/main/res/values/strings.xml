@@ -152,7 +152,8 @@ along with this program; if not, write to the Free Software
     <string name="action_call_accept">Take call</string>
     <string name="action_call_accept_audio">Answer in audio</string>
     <string name="action_call_accept_video">Answer in video</string>
-    <string name="action_call_hold_accept">Hold and take call</string>
+    <string name="action_call_hold_accept">Hold and take call audio</string>
+    <string name="action_call_hold_accept_video">Hold and take call video</string>
     <string name="action_call_end_accept">End and take call</string>
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
