@@ -36,6 +36,7 @@ import net.jami.services.ConversationFacade
 import net.jami.model.Account
 import net.jami.model.Conference
 import net.jami.services.CallService
+import net.jami.services.NotificationService
 import net.jami.smartlist.SmartListViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -74,7 +75,7 @@ class ConversationSelectionActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        val conference: Conference? = intent?.getStringExtra(CallFragment.KEY_CONF_ID)?.let { confId -> mCallService.getConference(confId) }
+        val conference: Conference? = intent?.getStringExtra(NotificationService.KEY_CALL_ID)?.let { confId -> mCallService.getConference(confId) }
         mDisposable.add(mConversationFacade
             .currentAccountSubject
             .switchMap { a: Account -> a.getConversationsViewModels(false) }

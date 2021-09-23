@@ -76,6 +76,7 @@ import net.jami.model.Contact
 import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService.AudioState
+import net.jami.services.NotificationService
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
@@ -119,7 +120,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
                 prepareCall(false)
             else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT)
-                presenter.initIncomingCall(args.getString(CallFragment.KEY_CONF_ID)!!, action == Intent.ACTION_VIEW)
+                presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
         }
     }
 
@@ -262,10 +263,16 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun displayContactBubble(display: Boolean) {
         binding!!.contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
     }
+    override fun displayPeerVideo(display: Boolean) {
+        Log.w(CallFragment.TAG, "DEBUG fn displayPeerVideo -> $display")
+        binding!!.videoSurface.visibility = if (display) View.VISIBLE else View.GONE
+    }
 
-    override fun displayVideoSurface(displayVideoSurface: Boolean, displayPreviewContainer: Boolean) {
-        binding!!.videoSurface.visibility = if (displayVideoSurface) View.VISIBLE else View.GONE
-        binding!!.previewContainer.visibility = if (displayPreviewContainer) View.VISIBLE else View.GONE
+    override fun displayLocalVideo(display: Boolean) {
+        Log.w(CallFragment.TAG, "DEBUG fn displayLocalVideo -> $display")
+        /*binding!!.pluginPreviewSurface.visibility = View.GONE
+        binding!!.pluginPreviewContainer.visibility = View.GONE*/
+        binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
     }
 
     override fun displayPreviewSurface(display: Boolean) {
@@ -320,20 +327,17 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun initMenu(
-        isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean,
-        showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean
-    ) {
+    override fun initMenu(isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean) {
     }
 
-    override fun initNormalStateDisplay(audioOnly: Boolean, muted: Boolean) {
+    override fun initNormalStateDisplay(muted: Boolean) {
         mSession!!.isActive = true
         binding?.apply {
             shapeRipple.stopRipple()
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
             callHangupBtn.visibility = View.VISIBLE
-            contactBubbleLayout.visibility = if (audioOnly) View.VISIBLE else View.INVISIBLE
+            contactBubbleLayout.visibility = View.VISIBLE
         }
         requireActivity().invalidateOptionsMenu()
         handleVisibilityTimer()
@@ -492,31 +496,71 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     @SuppressLint("RestrictedApi")
-    override fun updateConfInfo(info: List<ParticipantInfo>) {
-        val binding = binding!!
+    override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+        val binding = binding ?: return
+        mConferenceMode = participantInfo.size > 1
         binding.participantLabelContainer.removeAllViews()
-        if (info.isNotEmpty()) {
+        if (participantInfo.isNotEmpty()) {
+            val username = if (participantInfo.size > 1)
+                "Conference with ${participantInfo.size} people"
+            else participantInfo[0].contact.displayName
+            val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
+            val hasProfileName = displayName != null && !displayName.contentEquals(username)
+            val call = participantInfo[0].call
+            if (call != null) {
+                val conversationUri = if (call.conversationId != null)
+                    Uri(Uri.SWARM_SCHEME, call.conversationId!!)
+                else call.contact!!.conversationUri.blockingFirst()
+                activity?.let { activity ->
+                    activity.intent = Intent(Intent.ACTION_VIEW,
+                        ConversationPath.toUri(call.account!!, conversationUri), context, TVCallActivity::class.java)
+                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                }
+                arguments = Bundle().apply {
+                    putString(CallFragment.KEY_ACTION, Intent.ACTION_VIEW)
+                    putString(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString)
+                }
+            }
+            if (hasProfileName) {
+                binding.contactBubbleNumTxt.visibility = View.VISIBLE
+                binding.contactBubbleTxt.text = displayName
+                binding.contactBubbleNumTxt.text = username
+            } else {
+                binding.contactBubbleNumTxt.visibility = View.GONE
+                binding.contactBubbleTxt.text = username
+            }
+            binding.contactBubble.setImageDrawable(AvatarDrawable.Builder()
+                .withContact(participantInfo[0].contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(requireActivity()))
+
             val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
-            for (i in info) {
+            for (i in participantInfo) {
                 val displayName = i.contact.displayName
                 if (!TextUtils.isEmpty(displayName)) {
                     val label = ItemParticipantLabelBinding.inflate(inflater)
                     val params = PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     params.percentLayoutInfo.leftMarginPercent = i.x / mVideoWidth.toFloat()
                     params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
+                    params.percentLayoutInfo.rightMarginPercent =
+                        1f - (i.x + i.w) / mVideoWidth.toFloat()
+                    //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
                     label.participantName.text = displayName
+                    label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
+                    label.mute.visibility = if (i.audioMuted) View.VISIBLE else View.GONE
                     binding.participantLabelContainer.addView(label.root, params)
                 }
             }
         }
-        binding.participantLabelContainer.visibility = if (info.isEmpty()) View.GONE else View.VISIBLE
+        binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
         if (!mConferenceMode) {
-            binding.confControlGroup!!.visibility = View.GONE
+            binding.confControlGroup.visibility = View.GONE
         } else {
-            binding.confControlGroup!!.visibility = View.VISIBLE
-            confAdapter?.apply { updateFromCalls(info) }
+            binding.confControlGroup.visibility = View.VISIBLE
+            confAdapter?.apply { updateFromCalls(participantInfo) }
             // Create new adapter
-                ?: ConfParticipantAdapter(info, object : ConfParticipantSelected {
+                ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
                     override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
                         val maximized = presenter.isMaximized(contact)
                         val popup = PopupMenu(view.context, view)
@@ -594,7 +638,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun startAddParticipant(conferenceId: String) {
         startActivityForResult(Intent(Intent.ACTION_PICK)
                 .setClass(requireActivity(), ConversationSelectionActivity::class.java)
-                .putExtra(CallFragment.KEY_CONF_ID, conferenceId),
+                .putExtra(NotificationService.KEY_CALL_ID, conferenceId),
             REQUEST_CODE_ADD_PARTICIPANT)
     }
 
@@ -690,7 +734,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         fun newInstance(action: String, confId: String?): TVCallFragment {
             return TVCallFragment().apply { arguments = Bundle().apply {
                 putString(CallFragment.KEY_ACTION, action)
-                putString(CallFragment.KEY_CONF_ID, confId)
+                putString(NotificationService.KEY_CALL_ID, confId)
             }}
         }
     }
