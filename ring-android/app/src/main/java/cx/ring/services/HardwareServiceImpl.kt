@@ -320,30 +320,22 @@ class HardwareServiceImpl(
     }
 
     override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
-        Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
+        Log.i(TAG, "DEBUG decodingStarted() " + id + " " + width + "x" + height)
         val shm = Shm(id, width, height)
         videoInputs[id] = shm
+        videoEvents.onNext(VideoEvent(id, start = true))
         videoSurfaces[id]?.get()?.let { holder ->
             shm.window = startVideo(id, holder.surface, width, height)
             if (shm.window == 0L) {
-                Log.i(TAG, "DJamiService.decodingStarted() no window !")
-                val event = VideoEvent()
-                event.start = true
-                event.callId = shm.id
-                videoEvents.onNext(event)
-                return
+                Log.w(TAG, "DJamiService.decodingStarted() no window !")
+            } else {
+                videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
             }
-            val event = VideoEvent()
-            event.callId = shm.id
-            event.started = true
-            event.w = shm.w
-            event.h = shm.h
-            videoEvents.onNext(event)
         }
     }
 
     override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
-        Log.i(TAG, "decodingStopped() $id")
+        Log.i(TAG, "DEBUG decodingStopped() $id")
         val shm = videoInputs.remove(id) ?: return
         if (shm.window != 0L) {
             try {
@@ -352,7 +344,12 @@ class HardwareServiceImpl(
                 Log.e(TAG, "decodingStopped error$e")
             }
             shm.window = 0
+            videoEvents.onNext(VideoEvent(id, started = false))
         }
+    }
+
+    override fun hasInput(id: String): Boolean {
+        return videoInputs[id] !== null
     }
 
     override fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect) {
@@ -444,9 +441,7 @@ class HardwareServiceImpl(
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.")
             cameraService.setPreviewParams(videoParams)
-            val event = VideoEvent()
-            event.start = true
-            videoEvents.onNext(event)
+            videoEvents.onNext(VideoEvent(start = true))
             return
         }
         val conf = mCameraPreviewCall.get()
@@ -491,12 +486,12 @@ class HardwareServiceImpl(
             )
         }
         cameraService.setPreviewParams(videoParams)
-        val event = VideoEvent()
-        event.started = true
-        event.w = videoParams.width
-        event.h = videoParams.height
-        event.rot = videoParams.rotation
-        videoEvents.onNext(event)
+        videoEvents.onNext(VideoEvent(
+            started = true,
+            w = videoParams.width,
+            h = videoParams.height,
+            rot = videoParams.rotation
+        ))
     }
 
     override fun stopCapture() {
@@ -521,11 +516,7 @@ class HardwareServiceImpl(
         if (cameraService.isOpen) {
             //final CameraService.VideoParams params = previewParams;
             cameraService.closeCamera()
-            val event = VideoEvent()
-            event.started = false
-            //event.w = params.width;
-            //event.h = params.height;
-            videoEvents.onNext(event)
+            videoEvents.onNext(VideoEvent(started = false))
         }
         mIsCapturing = false
     }
@@ -543,17 +534,10 @@ class HardwareServiceImpl(
         }
         if (shm == null || shm.window == 0L) {
             Log.i(TAG, "DJamiService.addVideoSurface() no window !")
-            val event = VideoEvent()
-            event.start = true
-            videoEvents.onNext(event)
-            return
+            //videoEvents.onNext(VideoEvent(id, start = true))
+        } else {
+            videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
         }
-        val event = VideoEvent()
-        event.callId = shm.id
-        event.started = true
-        event.w = shm.w
-        event.h = shm.h
-        videoEvents.onNext(event)
     }
 
     override fun updateVideoSurfaceId(currentId: String, newId: String) {
@@ -607,10 +591,7 @@ class HardwareServiceImpl(
             }
             shm.window = 0
         }
-        val event = VideoEvent()
-        event.callId = shm.id
-        event.started = false
-        videoEvents.onNext(event)
+        //videoEvents.onNext(VideoEvent(shm.id, started = false))
     }
 
     override fun removePreviewVideoSurface() {
@@ -642,12 +623,12 @@ class HardwareServiceImpl(
         cameraService.setOrientation(rotation)
         if (mCapturingId != null) {
             val videoParams = cameraService.getParams(mCapturingId)
-            val event = VideoEvent()
-            event.started = true
-            event.w = videoParams.width
-            event.h = videoParams.height
-            event.rot = videoParams.rotation
-            videoEvents.onNext(event)
+            videoEvents.onNext(VideoEvent(
+                started = true,
+                w = videoParams.width,
+                h = videoParams.height,
+                rot = videoParams.rotation
+            ))
         }
     }
 

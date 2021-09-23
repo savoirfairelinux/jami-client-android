@@ -189,6 +189,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun prepareOptionMenu() {
+        Log.w(TAG, "DEBUG prepareOptionMenu")
         val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         val conference = mConference
@@ -280,7 +281,6 @@ class CallPresenter @Inject constructor(
             currentSurfaceId = newId
         }
         mHardwareService.addVideoSurface(conference.id, holder)
-        view?.displayContactBubble(false)
     }
 
     private fun videoSurfaceUpdateId(newId: String) {
@@ -356,7 +356,7 @@ class CallPresenter @Inject constructor(
 
     private fun confUpdate(call: Conference) {
         mConference = call
-        Log.w(TAG, "confUpdate " + call.id + " " + call.state)
+        Log.w(TAG, "DEBUG confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
             if (call.isSimpleCall) mCallService.unhold(call.id) else JamiService.addMainParticipant(call.id)
@@ -364,22 +364,27 @@ class CallPresenter @Inject constructor(
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
         videoIsMuted = !hasActiveVideo
+
         val view = view ?: return
         view.updateMenu()
+
         if (call.isOnGoing) {
             mOnGoingCall = true
-            view.initNormalStateDisplay(!hasVideo, isMicrophoneMuted)
-            view.updateMenu()
+            view.initNormalStateDisplay(isMicrophoneMuted)
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
                 pluginSurfaceUpdateId(call.pluginId)
-                view.displayVideoSurface(true, hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
+                //view.displayPeerVideo(hasVideo)
+                view.displayLocalVideo(hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     mHardwareService.switchInput(call.id, permissionChanged)
                     permissionChanged = false
                 }
+            }
+            if (mHardwareService.hasInput(call.id)) {
+                view.displayPeerVideo(true)
             }
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
@@ -388,7 +393,7 @@ class CallPresenter @Inject constructor(
             val scall = call.call!!
             view.handleCallWakelock(!hasVideo)
             if (scall.isIncoming) {
-                if (mAccountService.getAccount(scall.account!!)!!.isAutoanswerEnabled) {
+                if (mAccountService.getAccount(scall.account)?.isAutoanswerEnabled == true) {
                     Log.w(TAG, "Accept because of autoanswer")
                     mCallService.accept(scall.daemonIdString!!, wantVideo)
                     // only display the incoming call screen if the notification is a full screen intent
@@ -431,41 +436,38 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        Log.w(TAG, "DEBUG fn onVideoEvent")
-        Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h)
+        Log.w(TAG, "DEBUG onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
-        if (event.start) {
-            Log.w(TAG, "DEBUG fn onVideoEvent |1| inside => if (event.start) ")
-            view.displayVideoSurface(true, !isPipMode && mDeviceRuntimeService.hasVideoPermission() && conference?.hasActiveVideo() == true)
-        } else if (conference != null && conference.id == event.callId) {
-            Log.w(TAG, "DEBUG fn onVideoEvent |2| inside => else if (mConference != null && mConference!!.id == event.callId)")
-            Log.w(TAG, "DEBUG fn onVideoEvent |2| inside =>  event.started ${event.started} && !isPipMode ${!isPipMode} && mDeviceRuntimeService.hasVideoPermission() ${mDeviceRuntimeService.hasVideoPermission()} && hasVideo $wantVideo && !videoIsMuted ${!videoIsMuted}")
-            view.displayVideoSurface(event.started,
-                event.started && !isPipMode && mDeviceRuntimeService.hasVideoPermission() && conference.hasActiveVideo())
-            if (event.started) {
-                videoWidth = event.w
-                videoHeight = event.h
-                view.resetVideoSize(videoWidth, videoHeight)
+        if (event.callId == null) {
+            Log.w(TAG, "DEBUG onVideoEvent  $event; callId == null; event.start: ${event.start}, event.started: ${event.started}")
+            if (event.start) {
+                view.displayLocalVideo(true)
             }
-        } else if (event.callId == null) {
-            Log.w(TAG, "DEBUG fn onVideoEvent |3| inside => else if (event.callId == null)")
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
                 view.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
+        } else if (conference != null && conference.id == event.callId) {
+            Log.w(TAG, "DEBUG onVideoEvent  $event; onference != null && conference.id: ${conference.id} == event.callId: ${event.callId}; event.start: ${event.start}, event.started: ${event.started}")
+            if (event.start) {
+                view.displayPeerVideo(true)
+            } else if (event.started) {
+                videoWidth = event.w
+                videoHeight = event.h
+                view.resetVideoSize(videoWidth, videoHeight)
+            } else {
+                view.displayPeerVideo(false)
+            }
         }
-        if (conference != null && conference.pluginId == event.callId) {
+        /*if (conference != null && conference.pluginId == event.callId) {
             Log.w(TAG, "DEBUG fn onVideoEvent |4| inside => if (mConference != null && mConference!!.pluginId == event.callId)")
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
                 view.resetPluginPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
-        }
-        /*if (event.started || event.start) {
-            getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
         }*/
     }
 
@@ -502,16 +504,16 @@ class CallPresenter @Inject constructor(
     }
 
     fun pipModeChanged(pip: Boolean) {
+        Log.w(TAG, "DEBUG fn pipModeChanged $pip")
         isPipMode = pip
         if (pip) {
-            Log.w(TAG, "DEBUG fn pipModeChanged |1| entering pipMode -> hangupButton : false; previewSurface: false; displayVideoSurface(true, false)")
             view!!.displayHangupButton(false)
             view!!.displayPreviewSurface(false)
-            view!!.displayVideoSurface(true, false)
+            //view!!.displayPeerVideo(true, false)
         } else {
-            Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
+            //Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
             view!!.displayPreviewSurface(true)
-            view!!.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission())
+            //view!!.displayPeerVideo(true, mDeviceRuntimeService.hasVideoPermission())
         }
     }
 

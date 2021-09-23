@@ -145,9 +145,7 @@ class NotificationServiceImpl(
                         R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
                         PendingIntent.getService(mContext, random.nextInt(), Intent(DRingService.ACTION_CALL_REFUSE)
                                 .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT))
                 Log.w(TAG, "DEBUG fn buildCallNotification [NotificationServiceImpl.kt] -> conference.hasvideo = ${conference.hasVideo()} ")
 
                 if (conference.hasVideo()){

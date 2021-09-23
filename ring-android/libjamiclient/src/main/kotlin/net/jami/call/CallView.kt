@@ -27,7 +27,8 @@ import net.jami.services.HardwareService.AudioState
 
 interface CallView {
     fun displayContactBubble(display: Boolean)
-    fun displayVideoSurface(displayVideoSurface: Boolean, displayPreviewContainer: Boolean)
+    fun displayPeerVideo(display: Boolean)
+    fun displayLocalVideo(display: Boolean)
     fun displayPreviewSurface(display: Boolean)
     fun displayHangupButton(display: Boolean)
     fun displayDialPadKeyboard()
@@ -37,7 +38,7 @@ interface CallView {
     fun updateTime(duration: Long)
     fun updateCallStatus(callState: CallStatus)
     fun initMenu(isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean)
-    fun initNormalStateDisplay(audioOnly: Boolean, muted: Boolean)
+    fun initNormalStateDisplay(muted: Boolean)
     fun initIncomingCallDisplay(hasVideo: Boolean)
     fun initOutGoingCallDisplay()
     fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)

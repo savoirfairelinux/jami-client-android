@@ -43,14 +43,14 @@ abstract class HardwareService(
     val mPreferenceService: PreferencesService,
     protected val mUiScheduler: Scheduler
 ) {
-    class VideoEvent {
-        var start = false
-        var started = false
-        var w = 0
-        var h = 0
-        var rot = 0
-        var callId: String? = null
-    }
+    data class VideoEvent (
+        val callId: String? = null,
+        val start: Boolean = false,
+        val started: Boolean = false,
+        val w: Int = 0,
+        val h: Int = 0,
+        val rot: Int = 0
+    )
 
     class BluetoothEvent (val connected: Boolean)
 
@@ -90,6 +90,7 @@ abstract class HardwareService(
     abstract fun abandonAudioFocus()
     abstract fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean)
     abstract fun decodingStopped(id: String, shmPath: String, isMixer: Boolean)
+    abstract fun hasInput(id: String): Boolean
     abstract fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect)
     abstract fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int)
     abstract fun startCapture(camId: String?)
