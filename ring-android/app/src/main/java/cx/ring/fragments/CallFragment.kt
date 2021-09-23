@@ -84,7 +84,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -486,25 +485,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
                     params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                    params.setMargins(
-                        v.x.toInt(),
-                        v.y.toInt(),
+                    params.setMargins(v.x.toInt(), v.y.toInt(),
                         parent.width - (v.x.toInt() + v.width),
-                        parent.height - (v.y
-                            .toInt() + v.height)
-                    )
+                        parent.height - (v.y.toInt() + v.height))
                     v.layoutParams = params
                     return@setOnTouchListener true
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     if (previewDrag != null) {
                         val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
                         val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
-                        params.setMargins(
-                            currentXPosition,
-                            currentYPosition,
+                        params.setMargins(currentXPosition, currentYPosition,
                             -(currentXPosition + v.width - event.x.toInt()),
-                            -(currentYPosition + v.height - event.y.toInt())
-                        )
+                            -(currentYPosition + v.height - event.y.toInt()))
                         v.layoutParams = params
                         val outPosition = binding.pluginPreviewContainer.width * 0.85f
                         var drapOut = 0f
@@ -788,7 +780,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding?.apply {
             callControlGroup.visibility = if (display) View.VISIBLE else View.GONE
             callHangupBtn.visibility = if (display) View.VISIBLE else View.GONE
-            confControlGroup.visibility = if (mConferenceMode && display) View.VISIBLE else View.GONE
+            confControlGroup.visibility = when {
+                mConferenceMode && display -> View.VISIBLE
+                mConferenceMode -> View.INVISIBLE
+                else -> View.GONE
+            }
         }
     }
 
@@ -817,65 +813,63 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun updateTime(duration: Long) {
         binding?.let { binding ->
-            binding.callStatusTxt.text = if (duration <= 0) null else String.format(
-                Locale.getDefault(),
-                "%d:%02d:%02d",
+            binding.callStatusTxt.text = if (duration <= 0) null else String.format("%d:%02d:%02d",
                 duration / 3600,
                 duration % 3600 / 60,
-                duration % 60
-            )
+                duration % 60)
         }
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun updateContactBubble(contacts: List<Call>) {
-        Log.w(TAG, "updateContactBubble " + contacts.size)
-        val username = if (contacts.size > 1)
-            "Conference with " + contacts.size + " people"
-        else contacts[0].contact!!.displayName
-        val displayName = if (contacts.size > 1) null else contacts[0].contact!!.displayName
-        val hasProfileName = displayName != null && !displayName.contentEquals(username)
-        val activity = activity as AppCompatActivity?
-        if (activity != null) {
-            val ab = activity.supportActionBar
-            if (ab != null) {
-                if (hasProfileName) {
-                    ab.title = displayName
-                    ab.subtitle = username
-                } else {
-                    ab.title = username
-                    ab.subtitle = null
-                }
-                ab.setDisplayShowTitleEnabled(true)
-            }
-            val call = contacts[0]
-            val conversationUri = if (call.conversationId != null) Uri(Uri.SWARM_SCHEME, call.conversationId!!) else call.contact!!.conversationUri.blockingFirst()
-            activity.intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(call.account!!, conversationUri))
-        }
-        if (hasProfileName) {
-            binding!!.contactBubbleNumTxt.visibility = View.VISIBLE
-            binding!!.contactBubbleTxt.text = displayName
-            binding!!.contactBubbleNumTxt.text = username
-        } else {
-            binding!!.contactBubbleNumTxt.visibility = View.GONE
-            binding!!.contactBubbleTxt.text = username
-        }
-        binding!!.contactBubble.setImageDrawable(
-            AvatarDrawable.Builder()
-                .withContact(contacts[0].contact)
-                .withCircleCrop(true)
-                .withPresence(false)
-                .build(requireActivity())
-        )
     }
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
         Log.w(TAG, "updateConfInfo $participantInfo")
+        val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
-        binding!!.participantLabelContainer.removeAllViews()
+        binding.participantLabelContainer.removeAllViews()
         if (participantInfo.isNotEmpty()) {
-            val inflater = LayoutInflater.from(binding!!.participantLabelContainer.context)
+            val username = if (participantInfo.size > 1)
+                "Conference with ${participantInfo.size} people"
+            else participantInfo[0].contact.displayName
+            val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
+            val hasProfileName = displayName != null && !displayName.contentEquals(username)
+            val activity = activity as AppCompatActivity?
+            if (activity != null) {
+                val ab = activity.supportActionBar
+                if (ab != null) {
+                    if (hasProfileName) {
+                        ab.title = displayName
+                        ab.subtitle = username
+                    } else {
+                        ab.title = username
+                        ab.subtitle = null
+                    }
+                    ab.setDisplayShowTitleEnabled(true)
+                }
+                val call = participantInfo[0].call
+                if (call != null) {
+                    val conversationUri = if (call.conversationId != null)
+                        Uri(Uri.SWARM_SCHEME, call.conversationId!!)
+                    else call.contact!!.conversationUri.blockingFirst()
+                    activity.intent = Intent(Intent.ACTION_VIEW,
+                        ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java)
+                        .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                }
+            }
+            if (hasProfileName) {
+                binding.contactBubbleNumTxt.visibility = View.VISIBLE
+                binding.contactBubbleTxt.text = displayName
+                binding.contactBubbleNumTxt.text = username
+            } else {
+                binding.contactBubbleNumTxt.visibility = View.GONE
+                binding.contactBubbleTxt.text = username
+            }
+            binding.contactBubble.setImageDrawable(AvatarDrawable.Builder()
+                .withContact(participantInfo[0].contact)
+                .withCircleCrop(true)
+                .withPresence(false)
+                .build(requireActivity()))
+
+            val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
             for (i in participantInfo) {
                 val displayName = i.contact.displayName
                 if (!TextUtils.isEmpty(displayName)) {
@@ -889,60 +883,59 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     label.participantName.text = displayName
                     label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
                     label.mute.visibility = if (i.audioMuted) View.VISIBLE else View.GONE
-                    binding!!.participantLabelContainer.addView(label.root, params)
+                    binding.participantLabelContainer.addView(label.root, params)
                 }
             }
         }
-        binding!!.participantLabelContainer.visibility =
-            if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
-        if (participantInfo.isEmpty() || participantInfo.size < 2) {
-            binding!!.confControlGroup.visibility = View.GONE
+        binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
+        if (!mConferenceMode) {
+            binding.confControlGroup.visibility = View.GONE
         } else {
-            binding!!.confControlGroup.visibility = View.VISIBLE
-            if (confAdapter == null) {
-                confAdapter =
-                    ConfParticipantAdapter(object : ConfParticipantSelected {
-                        override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
-                            val maximized = presenter.isMaximized(contact)
-                            val popup = PopupMenu(view.context, view)
-                            popup.inflate(R.menu.conference_participant_actions)
-                            popup.setOnMenuItemClickListener { item ->
-                                when (item.itemId) {
-                                    R.id.conv_contact_details -> presenter.openParticipantContact(contact)
-                                    R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
-                                    R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
-                                    R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
-                                    else -> return@setOnMenuItemClickListener false
-                                }
-                                true
-                            }
-                            val menu = popup.menu as MenuBuilder
-                            val maxItem = menu.findItem(R.id.conv_contact_maximize)
-                            val muteItem = menu.findItem(R.id.conv_mute)
-                            if (maximized) {
-                                maxItem.setTitle(R.string.action_call_minimize)
-                                maxItem.setIcon(R.drawable.baseline_close_fullscreen_24)
-                            } else {
-                                maxItem.setTitle(R.string.action_call_maximize)
-                                maxItem.setIcon(R.drawable.baseline_open_in_full_24)
-                            }
-                            if (!contact.audioMuted) {
-                                muteItem.setTitle(R.string.action_call_mute)
-                                muteItem.setIcon(R.drawable.baseline_mic_off_24)
-                            } else {
-                                muteItem.setTitle(R.string.action_call_unmute)
-                                muteItem.setIcon(R.drawable.baseline_mic_24)
-                            }
-                            val menuHelper = MenuPopupHelper(view.context, menu, view)
-                            menuHelper.gravity = Gravity.END
-                            menuHelper.setForceShowIcon(true)
-                            menuHelper.show()
+            binding.confControlGroup.visibility = View.VISIBLE
+            confAdapter?.apply { updateFromCalls(participantInfo) }
+                // Create new adapter
+                ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
+                override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
+                    val maximized = presenter.isMaximized(contact)
+                    val popup = PopupMenu(view.context, view)
+                    popup.inflate(R.menu.conference_participant_actions)
+                    popup.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.conv_contact_details -> presenter.openParticipantContact(contact)
+                            R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
+                            R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
+                            R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
+                            else -> return@setOnMenuItemClickListener false
                         }
-                    })
+                        true
+                    }
+                    val menu = popup.menu as MenuBuilder
+                    val maxItem = menu.findItem(R.id.conv_contact_maximize)
+                    val muteItem = menu.findItem(R.id.conv_mute)
+                    if (maximized) {
+                        maxItem.setTitle(R.string.action_call_minimize)
+                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24)
+                    } else {
+                        maxItem.setTitle(R.string.action_call_maximize)
+                        maxItem.setIcon(R.drawable.baseline_open_in_full_24)
+                    }
+                    if (!contact.audioMuted) {
+                        muteItem.setTitle(R.string.action_call_mute)
+                        muteItem.setIcon(R.drawable.baseline_mic_off_24)
+                    } else {
+                        muteItem.setTitle(R.string.action_call_unmute)
+                        muteItem.setIcon(R.drawable.baseline_mic_24)
+                    }
+                    val menuHelper = MenuPopupHelper(view.context, menu, view)
+                    menuHelper.gravity = Gravity.END
+                    menuHelper.setForceShowIcon(true)
+                    menuHelper.show()
+                }
+            }).apply {
+                setHasStableIds(true)
+                confAdapter = this
+                binding.confControlGroup.adapter = this
             }
-            confAdapter!!.updateFromCalls(participantInfo)
-            if (binding!!.confControlGroup.adapter == null)
-                binding!!.confControlGroup.adapter = confAdapter
         }
     }
 
@@ -1114,15 +1107,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun goToConversation(accountId: String, conversationId: Uri) {
         val context = requireContext()
         if (isTablet(context)) {
-            startActivity(
-                Intent(DRingService.ACTION_CONV_ACCEPT, ConversationPath.toUri(accountId, conversationId), context, HomeActivity::class.java)
-            )
+            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, HomeActivity::class.java))
         } else {
             startActivityForResult(
                 Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, ConversationActivity::class.java)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT),
-                HomeActivity.REQUEST_CODE_CONVERSATION
-            )
+                HomeActivity.REQUEST_CODE_CONVERSATION)
         }
     }
 
@@ -1131,28 +1121,25 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(
-            Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri))
-                .setClass(requireContext(), ContactDetailsActivity::class.java)
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
     }
 
     /**
      * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
      * Initializes the call if permissions are accepted.
      *
-     * @param isIncoming true if call is incoming, false for outgoing
+     * @param acceptIncomingCall true if call is incoming, false for outgoing
      * @see .initializeCall
      */
-    override fun prepareCall(isIncoming: Boolean) {
+    override fun prepareCall(acceptIncomingCall: Boolean) {
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val hasVideo = presenter.wantVideo
 
-        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($isIncoming, $hasVideo) ")
+        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($acceptIncomingCall, $hasVideo) ")
         //Log.w(TAG, "fn prepareCall [CallFragment.kt] -> value of presenter.hasVideo() : $hasVideo")
 
         val permissionType =
-            if (isIncoming) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
+            if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
 
         if (hasVideo) {
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
@@ -1166,15 +1153,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
-                initializeCall(isIncoming, hasVideo)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                initializeCall(acceptIncomingCall, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($isIncoming, $hasVideo) ")
-                initializeCall(isIncoming, hasVideo)
+                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                initializeCall(acceptIncomingCall, hasVideo)
             }
         }
     }
@@ -1457,13 +1444,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private val blinkingAnimation: Animation
-        get() {
-            return AlphaAnimation(1f, 0f).apply {
-                duration = 400
-                interpolator = LinearInterpolator()
-                repeatCount = Animation.INFINITE
-                repeatMode = Animation.REVERSE
-            }
+        get() = AlphaAnimation(1f, 0f).apply {
+            duration = 400
+            interpolator = LinearInterpolator()
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.REVERSE
         }
 
     companion object {
@@ -1478,27 +1463,27 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
         fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
-            val bundle = Bundle()
-            bundle.putString(KEY_ACTION, action)
-            path?.toBundle(bundle)
-            bundle.putString(Intent.EXTRA_PHONE_NUMBER, contactId)
-            bundle.putBoolean(KEY_HAS_VIDEO, hasVideo)
-            val countDownFragment = CallFragment()
-            countDownFragment.arguments = bundle
-            return countDownFragment
+            return CallFragment().apply {
+                arguments = Bundle().apply {
+                    putString(KEY_ACTION, action)
+                    path?.toBundle(this)
+                    putString(Intent.EXTRA_PHONE_NUMBER, contactId)
+                    putBoolean(KEY_HAS_VIDEO, hasVideo)
+                }
+            }
         }
 
         fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
-            val countDownFragment = CallFragment()
-            countDownFragment.arguments = Bundle().apply {
-                putString(KEY_ACTION, action)
-                putString(KEY_CONF_ID, confId)
-                putBoolean(KEY_HAS_VIDEO, hasVideo)
+            return CallFragment().apply {
+                arguments = Bundle().apply {
+                    putString(KEY_ACTION, action)
+                    putString(KEY_CONF_ID, confId)
+                    putBoolean(KEY_HAS_VIDEO, hasVideo)
+                }
             }
-            return countDownFragment
         }
 
-        fun callStateToHumanState(state: CallStatus?): Int {
+        fun callStateToHumanState(state: CallStatus): Int {
             return when (state) {
                 CallStatus.SEARCHING -> R.string.call_human_state_searching
                 CallStatus.CONNECTING -> R.string.call_human_state_connecting

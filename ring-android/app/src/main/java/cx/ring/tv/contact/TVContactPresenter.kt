@@ -57,8 +57,7 @@ class TVContactPresenter @Inject constructor(
     }
 
     fun contactClicked() {
-        val account = mAccountService.getAccount(mAccountId!!)
-        if (account != null) {
+        mAccountService.getAccount(mAccountId)?.let { account ->
             val conversation = account.getByUri(mUri)!!
             val conf = conversation.currentCall
             val call = conf?.firstCall

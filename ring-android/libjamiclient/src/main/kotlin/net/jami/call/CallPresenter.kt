@@ -53,8 +53,8 @@ class CallPresenter @Inject constructor(
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<CallView>() {
     private var mConference: Conference? = null
-    private val mPendingCalls: MutableList<Call> = ArrayList()
-    private val mPendingSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mPendingCalls)
+    private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
+    private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
     private var mOnGoingCall = false
     var wantVideo = false
     var videoIsMuted = false
@@ -87,36 +87,14 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    /*override fun unbindView() {
-        if (wantVideo) {
-            mHardwareService.endCapture()
-        }
-        super.unbindView()
-    }*/
-
     override fun bindView(view: CallView) {
         super.bindView(view)
-        /*mCompositeDisposable.add(mAccountService.getRegisteredNames()
-                .observeOn(mUiScheduler)
-                .subscribe(r -> {
-                    if (mSipCall != null && mSipCall.getContact() != null) {
-                        getView().updateContactBubble(mSipCall.getContact());
-                    }
-                }));*/
         mCompositeDisposable.add(mHardwareService.getVideoEvents()
             .observeOn(mUiScheduler)
             .subscribe { event: VideoEvent -> onVideoEvent(event) })
         mCompositeDisposable.add(mHardwareService.audioState
             .observeOn(mUiScheduler)
             .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
-
-        /*mCompositeDisposable.add(mHardwareService
-                .getBluetoothEvents()
-                .subscribe(event -> {
-                    if (!event.connected && mSipCall == null) {
-                        hangupCall();
-                    }
-                }));*/
     }
 
     fun initOutGoing(accountId: String?, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean) {
@@ -134,14 +112,11 @@ class CallPresenter @Inject constructor(
         //getView().blockScreenRotation();
         val callObservable = mCallService
             .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
-            //.map(mCallService::getConference)
             .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
             .share()
         mCompositeDisposable.add(callObservable
             .observeOn(mUiScheduler)
-            .subscribe({ conference: Conference ->
-                contactUpdate(conference)
-                confUpdate(conference)
+            .subscribe({ conference -> confUpdate(conference)
             }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initOutgoing: " + e.message, e)
@@ -166,25 +141,24 @@ class CallPresenter @Inject constructor(
             .share()
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
-        mCompositeDisposable.add(callObservable
-            .firstOrError()
-            .subscribe({ call: Conference ->
-                if (!actionViewOnly) {
-                    contactUpdate(call)
+
+        if (!actionViewOnly) {
+            mCompositeDisposable.add(callObservable
+                .firstOrError()
+                .subscribe({ call: Conference ->
                     confUpdate(call)
                     callInitialized = true
                     view!!.prepareCall(true)
-                }
-            }) { e: Throwable ->
-                hangupCall()
-                Log.e(TAG, "Error with initIncoming, preparing call flow :", e)
-            })
+                }) { e: Throwable ->
+                    hangupCall()
+                    Log.e(TAG, "Error with initIncoming, preparing call flow :", e)
+                })
+        }
 
         // Handles retrieving call updates. Items emitted are only used if call is already in process or if user is returning to a call.
         mCompositeDisposable.add(callObservable
             .subscribe({ call: Conference ->
                 if (callInitialized || actionViewOnly) {
-                    contactUpdate(call)
                     confUpdate(call)
                 }
             }) { e: Throwable ->
@@ -197,7 +171,13 @@ class CallPresenter @Inject constructor(
     private fun showConference(conference: Observable<Conference>) {
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> obj.participantInfo }
+            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject, { participants, pending ->
+                val p = if (participants.isEmpty() && !obj.isConference)
+                    listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
+                else
+                    participants
+                if (pending.isEmpty()) p else p + pending
+            })}
             .observeOn(mUiScheduler)
             .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
@@ -222,10 +202,9 @@ class CallPresenter @Inject constructor(
     }
 
     fun chatClick() {
-        if (mConference == null || mConference!!.participants.isEmpty()) {
-            return
-        }
-        val firstCall = mConference!!.participants[0] ?: return
+        val conference = mConference ?: return
+        if (conference.participants.isEmpty()) return
+        val firstCall = conference.participants[0]
         val c = firstCall.conversation
         if (c is Conversation) {
             view?.goToConversation(c.accountId, c.uri)
@@ -281,7 +260,7 @@ class CallPresenter @Inject constructor(
                 mCallService.hangUp(conference.id)
         }
         for (call in mPendingCalls) {
-            mCallService.hangUp(call.daemonIdString!!)
+            mCallService.hangUp(call.call!!.daemonIdString!!)
         }
         finish()
     }
@@ -292,17 +271,15 @@ class CallPresenter @Inject constructor(
     }
 
     fun videoSurfaceCreated(holder: Any) {
-        if (mConference == null) {
-            return
-        }
-        val newId = mConference!!.id
+        val conference = mConference ?: return
+        val newId = conference.id
         if (newId != currentSurfaceId) {
             currentSurfaceId?.let { id ->
                 mHardwareService.removeVideoSurface(id)
             }
             currentSurfaceId = newId
         }
-        mHardwareService.addVideoSurface(mConference!!.id, holder)
+        mHardwareService.addVideoSurface(conference.id, holder)
         view?.displayContactBubble(false)
     }
 
@@ -316,17 +293,15 @@ class CallPresenter @Inject constructor(
     }
 
     fun pluginSurfaceCreated(holder: Any) {
-        if (mConference == null) {
-            return
-        }
-        val newId = mConference!!.pluginId
+        val conference = mConference ?: return
+        val newId = conference.pluginId
         if (newId != currentPluginSurfaceId) {
             currentPluginSurfaceId?.let { id ->
                 mHardwareService.removeVideoSurface(id)
             }
             currentPluginSurfaceId = newId
         }
-        mHardwareService.addVideoSurface(mConference!!.pluginId, holder)
+        mHardwareService.addVideoSurface(conference.pluginId, holder)
         view?.displayContactBubble(false)
     }
 
@@ -363,14 +338,6 @@ class CallPresenter @Inject constructor(
         mHardwareService.endCapture()
     }
 
-    fun displayChanged() {
-        mHardwareService.switchInput(mConference!!.id, false)
-    }
-
-    fun layoutChanged() {
-        //getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
-    }
-
     fun uiVisibilityChanged(displayed: Boolean) {
         Log.w(TAG, "uiVisibilityChanged $mOnGoingCall $displayed")
         view?.displayHangupButton(mOnGoingCall && displayed)
@@ -387,51 +354,8 @@ class CallPresenter @Inject constructor(
         view?.finish()
     }
 
-    private var contactDisposable: Disposable? = null
-    private fun contactUpdate(conference: Conference) {
-        if (mConference !== conference) {
-            mConference = conference
-            contactDisposable?.apply { dispose() }
-            if (conference.participants.isEmpty()) return
-
-            // Updates of participant (and  pending participant) list
-            val callsObservable = mPendingSubject
-                .map<List<Call>> { pendingList: List<Call> ->
-                    Log.w(TAG, "mPendingSubject onNext " + pendingList.size + " " + conference.participants.size)
-                    if (pendingList.isEmpty()) return@map conference.participants
-                    val newList: MutableList<Call> = ArrayList(conference.participants.size + pendingList.size)
-                    newList.addAll(conference.participants)
-                    newList.addAll(pendingList)
-                    newList
-                }
-
-            // Updates of individual contacts
-            val contactsObservable = callsObservable.flatMapSingle { calls: List<Call> ->
-                Observable.fromIterable(calls)
-                    .map { call: Call -> mContactService.observeContact(call.account!!, call.contact!!, false)
-                            .map { call } }
-                    .toList(calls.size)
-            }
-
-            // Combined updates of contacts as participant list updates
-            val contactUpdates = contactsObservable
-                .switchMap { list: List<Observable<Call>> -> Observable.combineLatest(list) { objects: Array<Any> ->
-                    Log.w(TAG, "flatMapObservable " + objects.size)
-                    val calls = ArrayList<Call>(objects.size)
-                    for (call in objects) calls.add(call as Call)
-                    calls
-                } }
-                .filter { list: List<Call> -> list.isNotEmpty() }
-            contactDisposable = contactUpdates
-                .observeOn(mUiScheduler)
-                .subscribe({ cs: List<Call> -> view?.updateContactBubble(cs) })
-                { e: Throwable -> Log.e(TAG, "Error updating contact data", e) }
-                .apply { mCompositeDisposable.add(this) }
-        }
-        mPendingSubject.onNext(mPendingCalls)
-    }
-
     private fun confUpdate(call: Conference) {
+        mConference = call
         Log.w(TAG, "confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
@@ -482,27 +406,26 @@ class CallPresenter @Inject constructor(
     }
 
     fun maximizeParticipant(info: ParticipantInfo?) {
-        var info = info
+        val conference = mConference ?: return
         val contact = info?.contact
-        if (mConference!!.maximizedParticipant == contact) info = null
-        mConference!!.maximizedParticipant = contact
-        if (info != null) {
-            mCallService.setConfMaximizedParticipant(mConference!!.id, info.contact.uri)
+        val toMaximize = if (conference.maximizedParticipant == contact) null else info
+        conference.maximizedParticipant = contact
+        if (toMaximize != null) {
+            mCallService.setConfMaximizedParticipant(conference.id, toMaximize.contact.uri)
         } else {
-            mCallService.setConfGridLayout(mConference!!.id)
+            mCallService.setConfGridLayout(conference.id)
         }
     }
 
     private fun updateTime() {
-        val view = view
-        if (view != null && mConference != null) {
-            if (mConference!!.isOnGoing) {
-                val start = mConference!!.timestampStart
-                if (start != Long.MAX_VALUE) {
-                    view.updateTime((System.currentTimeMillis() - start) / 1000)
-                } else {
-                    view.updateTime(-1)
-                }
+        val conference = mConference ?: return
+        val view = view ?: return
+        if (conference.isOnGoing) {
+            val start = conference.timestampStart
+            if (start != Long.MAX_VALUE) {
+                view.updateTime((System.currentTimeMillis() - start) / 1000)
+            } else {
+                view.updateTime(-1)
             }
         }
     }
@@ -547,7 +470,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun positiveButtonClicked() {
-        if (mConference!!.isRinging && mConference!!.isIncoming) {
+        val conference = mConference ?: return
+        if (conference.isRinging && conference.isIncoming) {
             acceptCall(true)
         } else {
             hangupCall()
@@ -555,7 +479,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun negativeButtonClicked() {
-        if (mConference!!.isRinging && mConference!!.isIncoming) {
+        val conference = mConference ?: return
+        if (conference.isRinging && conference.isIncoming) {
             refuseCall()
         } else {
             hangupCall()
@@ -563,14 +488,16 @@ class CallPresenter @Inject constructor(
     }
 
     fun toggleButtonClicked() {
-        if (mConference != null && !(mConference!!.isRinging && mConference!!.isIncoming)) {
+        val conference = mConference ?: return
+        if (!(conference.isRinging && conference.isIncoming)) {
             hangupCall()
         }
     }
 
     fun requestPipMode() {
-        if (mConference != null && mConference!!.isOnGoing && mConference!!.hasVideo()) {
-            view!!.enterPipMode(mConference!!.id)
+        val conference = mConference ?: return
+        if (conference.isOnGoing && conference.hasVideo()) {
+            view?.enterPipMode(conference.id)
         }
     }
 
@@ -601,17 +528,18 @@ class CallPresenter @Inject constructor(
     }
 
     fun addConferenceParticipant(accountId: String, uri: Uri) {
+        val conference = mConference ?: return
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->
                 val conf = conversation.currentCall
                 if (conf == null) {
                     val pendingObserver: Observer<Call> = object : Observer<Call> {
-                        private var call: Call? = null
+                        private var call: ParticipantInfo? = null
                         override fun onSubscribe(d: Disposable) {}
                         override fun onNext(sipCall: Call) {
                             if (call == null) {
-                                call = sipCall
-                                mPendingCalls.add(sipCall)
+                                call = ParticipantInfo(sipCall, sipCall.contact ?: conversation.contact!!, emptyMap(), pending = true)
+                                    .apply { mPendingCalls.add(this) }
                             }
                             mPendingSubject.onNext(mPendingCalls)
                         }
@@ -635,24 +563,24 @@ class CallPresenter @Inject constructor(
                         .delay(1, TimeUnit.SECONDS)
                         .doOnEvent { v: Call?, e: Throwable? -> pendingObserver.onComplete() }
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
-                        val id = mConference!!.id
-                        if (mConference!!.isConference) {
+                        val id = conference.id
+                        if (conference.isConference) {
                             mCallService.addParticipant(call.daemonIdString!!, id)
                         } else {
                             mCallService.joinParticipant(id, call.daemonIdString!!).subscribe()
                         }
                     })
-                } else if (conf !== mConference) {
-                    if (mConference!!.isConference) {
+                } else if (conf !== conference) {
+                    if (conference.isConference) {
                         if (conf.isConference)
-                            mCallService.joinConference(mConference!!.id, conf.id)
+                            mCallService.joinConference(conference.id, conf.id)
                         else
-                            mCallService.addParticipant(conf.id, mConference!!.id)
+                            mCallService.addParticipant(conf.id, conference.id)
                     } else {
                         if (conf.isConference)
-                            mCallService.addParticipant(mConference!!.id, conf.id)
+                            mCallService.addParticipant(conference.id, conf.id)
                         else
-                            mCallService.joinParticipant(mConference!!.id, conf.id).subscribe()
+                            mCallService.joinParticipant(conference.id, conf.id).subscribe()
                     }
                 }
             })

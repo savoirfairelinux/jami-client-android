@@ -38,7 +38,7 @@ along with this program; if not, write to the Free Software
         android:layout_margin="@dimen/padding_large"
         android:background="@drawable/background_conference_participant"
         android:elevation="4dp"
-        android:ellipsize="end"
+        android:ellipsize="middle"
         android:maxLines="2"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
@@ -47,8 +47,10 @@ along with this program; if not, write to the Free Software
         android:textAlignment="center"
         android:textColor="@color/grey_800"
         android:textIsSelectable="false"
+        android:maxWidth="230dp"
+        android:scrollHorizontally="false"
         android:textSize="16sp"
-        tools:text="Thomas\nConnecting..." />
+        tools:text="ring:21d85b6990d2f23663da147db28797ad26c478e421d85b6990d2f23663da147db28797ad26c478e4\nConnecting..." />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/photo"
@@ -60,7 +62,6 @@ along with this program; if not, write to the Free Software
         android:enabled="false"
         app:maxImageSize="64dp"
         app:useCompatPadding="true"
-
         tools:src="@drawable/ic_contact_picture_fallback" />
 
 </LinearLayout>
