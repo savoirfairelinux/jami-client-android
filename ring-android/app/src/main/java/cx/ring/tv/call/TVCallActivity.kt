@@ -59,7 +59,7 @@ class TVCallActivity : FragmentActivity() {
         if (path != null) {
             Log.d(TAG, "onCreate: outgoing call $path ${intent.action}")
             callFragment = TVCallFragment.newInstance(intent.action!!, path.accountId, path.conversationId,
-                intent.extras!!.getString(Intent.EXTRA_PHONE_NUMBER, path.conversationId), false)
+                intent.extras!!.getString(Intent.EXTRA_PHONE_NUMBER, path.conversationId),  true)
             fragmentTransaction.replace(R.id.main_call_layout, callFragment!!, CALL_FRAGMENT_TAG)
                 .commit()
         } else {

@@ -489,13 +489,16 @@ class ConversationFacade(
         Log.d(TAG, "onCallStateChange Thread id: " + Thread.currentThread().id)
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
-        mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly)
+        mHardwareService.updateAudioState(newState, incomingCall, call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
         val account = mAccountService.getAccount(call.account!!) ?: return
         val contact = call.contact
         val conversationId = call.conversationId
         Log.w(TAG, "CallStateChange " + call.daemonIdString + " conversationId:" + conversationId)
         val conversation = if (conversationId == null)
-            if (contact == null) null else account.getByUri(contact.uri)
+            if (contact == null)
+                null
+            else
+                account.getByUri(contact.conversationUri.blockingFirst())
         else
             account.getSwarm(conversationId)
         val conference = if (conversation != null) (conversation.getConference(call.daemonIdString) ?: Conference(call).apply {

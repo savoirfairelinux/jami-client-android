@@ -243,6 +243,12 @@ class DRingService : Service() {
             return
         }
         when (action) {
+            ACTION_CALL_ACCEPT_AUDIO -> {
+                startActivity(Intent(ACTION_CALL_ACCEPT)
+                    .putExtras(extras)
+                    .setClass(applicationContext, CallActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
+            }
             ACTION_CALL_ACCEPT -> {
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
@@ -337,6 +343,7 @@ class DRingService : Service() {
         const val ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT"
         const val ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE"
         const val ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK"
+        const val ACTION_CALL_ACCEPT_AUDIO = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT_AUDIO"
         const val ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT"
         const val ACTION_CALL_HOLD_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_HOLD_ACCEPT"
         const val ACTION_CALL_END_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_END_ACCEPT"

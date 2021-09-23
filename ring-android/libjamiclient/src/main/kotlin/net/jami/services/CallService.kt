@@ -28,16 +28,26 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
+import net.jami.daemon.VectMap
 import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
+import net.jami.model.Media
 import net.jami.model.Uri
 import net.jami.utils.Log
 import net.jami.utils.StringUtils.isEmpty
+import net.jami.utils.SwigNativeConverter
+import org.w3c.dom.stylesheets.MediaList
 import java.util.*
 import java.util.concurrent.Callable
 import java.util.concurrent.ScheduledExecutorService
+import javax.xml.transform.Source
+import kotlin.collections.ArrayList
+
+
+
+
 
 class CallService(
     private val mExecutor: ScheduledExecutorService,
@@ -208,24 +218,25 @@ class CallService(
         SipCall call = getCurrentCallForId(callId);
         return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
     }*/
-    fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, audioOnly: Boolean): Observable<Call> {
-        return placeCall(accountId, conversationUri, number, audioOnly)
+    fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> {
+        return placeCall(accountId, conversationUri, number, hasVideo)
             .flatMapObservable { call: Call -> getCallUpdates(call) }
     }
 
-    fun placeCall(account: String, conversationUri: Uri?, number: Uri, audioOnly: Boolean): Single<Call> {
+    fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> {
         return Single.fromCallable<Call> {
-            Log.i(TAG, "placeCall() thread running... $number audioOnly: $audioOnly")
-            val volatileDetails = HashMap<String, String>()
-            volatileDetails[Call.KEY_AUDIO_ONLY] = audioOnly.toString()
-            val callId = JamiService.placeCall(account, number.uri, StringMap.toSwig(volatileDetails))
+            Log.i(TAG, "placeCall() thread running... $number hasVideo: $hasVideo")
+            val media = VectMap()
+            media.reserve(if (hasVideo) 2L else 1L)
+            media.add(Media.DEFAULT_AUDIO.toMap())
+            if (hasVideo)
+                media.add(Media.DEFAULT_VIDEO.toMap())
+            val callId = JamiService.placeCallWithMedia(account, number.uri, media)
             if (callId == null || callId.isEmpty()) return@fromCallable null
-            if (audioOnly) {
-                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true)
-            }
-            val call = addCall(account, callId, number, Call.Direction.OUTGOING)
+            Log.w(TAG, "DEBUG fn placeCall() -> La valeur de hasVideo est $hasVideo et la valeur de !hasVideo est ${!hasVideo}")
+
+            val call = addCall(account, callId, number, Call.Direction.OUTGOING, if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO) else listOf(Media.DEFAULT_AUDIO))
             if (conversationUri != null && conversationUri.isSwarm) call.setSwarmInfo(conversationUri.rawRingId)
-            call.muteVideo(audioOnly)
             updateConnectionCount()
             call
         }.subscribeOn(Schedulers.from(mExecutor))
@@ -239,11 +250,32 @@ class CallService(
         }
     }
 
-    fun accept(callId: String) {
+/*    fun accept(callId: String) {
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
             JamiService.muteCapture(false)
             JamiService.accept(callId)
+        }
+    }*/
+
+    fun accept(callId: String, hasVideo: Boolean = false) {
+        Log.w(TAG, "DEBUG fn accept [CallService.kt] -> based on value of hasvideo ( $hasVideo ) [IF] false then mute media type VIDEO and JamiService.accept [ELSE] add Media in VectMap and JamiService.acceptWithMedia() ")
+        mExecutor.execute {
+            Log.i(TAG, "accept() running... $callId")
+            val call = currentCalls[callId] ?: return@execute
+            val mediaList = call.mediaList ?: return@execute
+            val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }, { media ->
+                if (!hasVideo && media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
+                    media.copy(isMuted = true).toMap()
+                else
+                    media.toMap()
+            })
+
+            for (i in vectMapMedia){
+                Log.w(TAG, "DEBUG fn accept [CallService.kt] -> $i")
+            }
+            Log.w(TAG, "DEBUG fn accept [CallService.kt] -> value of hasvideo : $hasVideo => on accept un appel avec media")
+            JamiService.acceptWithMedia(callId, vectMapMedia)
         }
     }
 
@@ -443,8 +475,9 @@ class CallService(
         }
     }
 
-    private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction): Call {
+    private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, mediaList: List<Media>): Call {
         synchronized(currentCalls) {
+            Log.w(TAG, "DEBUG fn addCall() [CallService] -> if call == null ? create a new call instance and return it : update medialist of the call and return it => we go back to previous fn who will push the call as the updated subject ")
             var call = currentCalls[callId]
             if (call == null) {
                 val account = mAccountService.getAccount(accountId)!!
@@ -452,10 +485,11 @@ class CallService(
                 val conversationUri = contact.conversationUri.blockingFirst()
                 val conversation =
                     if (conversationUri.equals(from)) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
-                call = Call(callId, from.uri, accountId, conversation, contact, direction)
+                call = Call(callId, from.uri, accountId, conversation, contact, direction, mediaList)
                 currentCalls[callId] = call
             } else {
                 Log.w(TAG, "Call already existed ! $callId $from")
+                call.mediaList = mediaList
             }
             return call
         }
@@ -534,11 +568,49 @@ class CallService(
         }
     }
 
-    fun incomingCall(accountId: String, callId: String, from: String) {
+    fun incomingCallWithMedia(accountId: String, callId: String, from: String, mediaList: VectMap?) {
         Log.d(TAG, "incoming call: $accountId, $callId, $from")
-        val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING)
+        val nMediaList = mediaList ?: emptyList()
+        val medias = nMediaList.mapTo(ArrayList(nMediaList.size)) { mediaMap -> Media(mediaMap) }
+        val call = addCall(accountId, callId, Uri.fromStringWithName(from).first, Call.Direction.INCOMING, medias)
         callSubject.onNext(call)
         updateConnectionCount()
+    }
+
+    fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
+        Log.w(TAG, "DEBUG fn mediaChangeRequested $accountId $callId $mediaList")
+        currentCalls[callId]?.let { call ->
+            if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
+                for (e in mediaList)
+                    if (e[Media.MEDIA_TYPE_KEY]!! == MEDIA_TYPE_VIDEO)
+                        e[Media.MUTED_KEY] = true.toString()
+            }
+            JamiService.answerMediaChangeRequest(callId, mediaList)
+        }
+    }
+
+    fun mediaNegotiationStatus(callId: String, event: String, mediaList: VectMap) {
+        Log.w(TAG, "DEBUG fn mediaNegotiationStatus $callId $event $mediaList")
+        synchronized(currentCalls) {
+            currentCalls[callId]?.let { call ->
+                call.mediaList = mediaList.mapTo(ArrayList(mediaList.size), { media -> Media(media)})
+                callSubject.onNext(call)
+            }
+        }
+    }
+
+    fun requestVideoMedia(conf: Conference, enable: Boolean) {
+        Log.w(TAG, "DEBUG fn requestVideoMedia: ${conf.id} $enable")
+        if (conf.isConference || conf.hasVideo()) {
+            JamiService.muteLocalMedia(conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
+        } else if (enable) {
+            val call = conf.firstCall ?: return
+            val mediaList = call.mediaList ?: return
+            JamiService.requestMediaChange(call.daemonIdString, mediaList.mapTo(VectMap()
+                    .apply { reserve(mediaList.size.toLong() + 1L) },
+                            { media -> media.toMap() })
+                    .apply { add(Media.DEFAULT_VIDEO.toMap()) })
+        }
     }
 
     fun incomingMessage(callId: String, from: String, messages: Map<String, String>) {

@@ -251,7 +251,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             .setTitle(R.string.choose_number)
             .setItems(numbers) { _: DialogInterface?, which: Int ->
                 val selected = numbers[which]
-                val intent = Intent(CallActivity.ACTION_CALL)
+                val intent = Intent(Intent.ACTION_CALL)
                     .setClass(context, CallActivity::class.java)
                     .setData(android.net.Uri.parse(selected.toString()))
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
@@ -355,10 +355,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String) {
-        val intent = Intent(CallActivity.ACTION_CALL)
+        val intent = Intent(Intent.ACTION_CALL)
             .setClass(requireContext(), CallActivity::class.java)
             .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-            .putExtra(CallFragment.KEY_AUDIO_ONLY, false)
+            .putExtra(CallFragment.KEY_HAS_VIDEO, true)
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId)
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
     }

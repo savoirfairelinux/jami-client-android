@@ -109,7 +109,7 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     }
 
     override fun startCall(accountID: String, number: String) {
-        val intent = Intent(CallActivity.ACTION_CALL, toUri(accountID, number), activity, TVCallActivity::class.java)
+        val intent = Intent(Intent.ACTION_CALL, toUri(accountID, number), activity, TVCallActivity::class.java)
         intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number)
         startActivity(intent)
         activity?.finish()

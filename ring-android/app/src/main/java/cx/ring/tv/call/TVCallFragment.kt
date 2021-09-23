@@ -300,7 +300,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun displayDialPadKeyboard() {}
-    override fun switchCameraIcon(isFront: Boolean) {}
+    override fun switchCameraIcon() {}
     override fun updateAudioState(state: AudioState) {}
     override fun updateMenu() {}
     override fun updateTime(duration: Long) {
@@ -378,7 +378,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun initMenu(
         isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean,
-        showPluginBtn: Boolean, onGoingCall: Boolean
+        showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean
     ) {
     }
 
@@ -395,7 +395,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         handleVisibilityTimer()
     }
 
-    override fun initIncomingCallDisplay() {
+
+    override fun initIncomingCallDisplay(hasVideo: Boolean) {
         mSession!!.isActive = true
         binding?.apply {
             callAcceptBtn.visibility = View.VISIBLE
@@ -482,16 +483,16 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
      */
     override fun prepareCall(isIncoming: Boolean) {
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
-        val audioOnly: Boolean
+        val hasVideo: Boolean
         val permissionType: Int
         if (isIncoming) {
-            audioOnly = presenter.isAudioOnly
+            hasVideo = presenter.wantVideo
             permissionType = REQUEST_PERMISSION_INCOMING
         } else {
-            audioOnly = requireArguments().getBoolean(CallFragment.KEY_AUDIO_ONLY)
+            hasVideo = requireArguments().getBoolean(CallFragment.KEY_HAS_VIDEO)
             permissionType = REQUEST_PERMISSION_OUTGOING
         }
-        if (!audioOnly) {
+        if (!hasVideo) {
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
             if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val perms = ArrayList<String>()
@@ -520,9 +521,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
      * @param isIncoming true if call is incoming, false for outgoing
      */
     private fun initializeCall(isIncoming: Boolean) {
-        Log.w(TAG, "initializeCall $isIncoming")
+        val hasVideo : Boolean = presenter.wantVideo
+        Log.w(TAG, "DEBUG fn initializeCall() -> isIncoming = $isIncoming and hasVideo = $hasVideo")
         if (isIncoming) {
-            presenter.acceptCall()
+            presenter.acceptCall(hasVideo)
         } else {
             arguments?.let { args ->
                 Log.w(TAG, "initializeCall presenter.initOutGoing")
@@ -531,7 +533,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
                     conversation.accountId,
                     conversation.conversationUri,
                     args.getString(Intent.EXTRA_PHONE_NUMBER),
-                    args.getBoolean(CallFragment.KEY_AUDIO_ONLY)
+                    args.getBoolean(CallFragment.KEY_HAS_VIDEO)
                 )
             }
         }
@@ -651,6 +653,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     fun acceptClicked() {
+        presenter.wantVideo = true
         prepareCall(true)
     }
 
@@ -717,12 +720,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         private const val REQUEST_PERMISSION_INCOMING = 1003
         private const val REQUEST_PERMISSION_OUTGOING = 1004
 
-        fun newInstance(action: String, accountId: String, conversationId: String, contactUri: String, audioOnly: Boolean): TVCallFragment {
+        fun newInstance(action: String, accountId: String, conversationId: String, contactUri: String, hasVideo: Boolean): TVCallFragment {
             return TVCallFragment().apply { arguments = Bundle().apply {
                 putString(CallFragment.KEY_ACTION, action)
                 putAll(ConversationPath.toBundle(accountId, conversationId))
                 putString(Intent.EXTRA_PHONE_NUMBER, contactUri)
-                putBoolean(CallFragment.KEY_AUDIO_ONLY, audioOnly)
+                putBoolean(CallFragment.KEY_HAS_VIDEO, hasVideo)
             }}
         }
 

@@ -787,10 +787,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             startActivity(Intent(activity, HomeActivity::class.java))
             return true
         } else if (itemId == R.id.conv_action_audiocall) {
-            presenter.goToCall(true)
+            presenter.goToCall(false)
             return true
         } else if (itemId == R.id.conv_action_videocall) {
-            presenter.goToCall(false)
+            presenter.goToCall(true)
             return true
         } else if (itemId == R.id.conv_contact_details) {
             presenter.openContact()
@@ -915,11 +915,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact), REQ_ADD_CONTACT)
     }
 
-    override fun goToCallActivity(conferenceId: String) {
-        startActivity(Intent(Intent.ACTION_VIEW)
-                .setClass(requireContext().applicationContext, CallActivity::class.java)
-                .putExtra(NotificationService.KEY_CALL_ID, conferenceId))
-    }
 
     override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {
         val toolbar: Toolbar = requireActivity().findViewById(R.id.main_toolbar)
@@ -930,17 +925,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 .toBundle())
     }
 
-    override fun goToCallActivityWithResult(
-        accountId: String,
-        conversationUri: net.jami.model.Uri,
-        contactUri: net.jami.model.Uri,
-        audioOnly: Boolean
-    ) {
+    override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
+        Log.w(TAG, "DEBUG fn goToCallActivity")
+        startActivity(Intent(Intent.ACTION_VIEW)
+            .setClass(requireContext().applicationContext, CallActivity::class.java)
+            .putExtra(NotificationService.KEY_CALL_ID, conferenceId)
+        )
+    }
+
+    override fun goToCallActivityWithResult(accountId: String, conversationUri: net.jami.model.Uri, contactUri: net.jami.model.Uri, withCamera: Boolean) {
+        Log.w(TAG, "DEBUG fn goToCallActivityWithResult || hasVideo : $withCamera")
         val intent = Intent(Intent.ACTION_CALL)
             .setClass(requireContext(), CallActivity::class.java)
             .putExtras(ConversationPath.toBundle(accountId, conversationUri))
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
-            .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
+            .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera)
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
     }
 

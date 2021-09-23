@@ -631,7 +631,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun clearMsgEdit() {}
     override fun goToHome() {}
     override fun goToAddContact(contact: Contact) {}
-    override fun goToCallActivity(conferenceId: String) {}
+    override fun goToCallActivity(conferenceId: String, hasVideo: Boolean) {}
     override fun goToCallActivityWithResult(
         accountId: String,
         conversationUri: net.jami.model.Uri,

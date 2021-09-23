@@ -56,7 +56,8 @@ class CallPresenter @Inject constructor(
     private val mPendingCalls: MutableList<Call> = ArrayList()
     private val mPendingSubject: Subject<List<Call>> = BehaviorSubject.createDefault(mPendingCalls)
     private var mOnGoingCall = false
-    var isAudioOnly = true
+    var wantVideo = false
+    var videoIsMuted = false
         private set
     private var permissionChanged = false
     var isPipMode = false
@@ -86,12 +87,12 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    override fun unbindView() {
-        if (!isAudioOnly) {
+    /*override fun unbindView() {
+        if (wantVideo) {
             mHardwareService.endCapture()
         }
         super.unbindView()
-    }
+    }*/
 
     override fun bindView(view: CallView) {
         super.bindView(view)
@@ -118,20 +119,21 @@ class CallPresenter @Inject constructor(
                 }));*/
     }
 
-    fun initOutGoing(accountId: String?, conversationUri: Uri?, contactUri: String?, audioOnly: Boolean) {
+    fun initOutGoing(accountId: String?, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean) {
         Log.e(TAG, "initOutGoing")
-        var audioOnly = audioOnly
+        var pHasVideo = hasVideo
         if (accountId == null || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact")
             hangupCall()
             return
         }
         if (!mHardwareService.hasCamera()) {
-            audioOnly = true
+            pHasVideo = false
         }
+        Log.w(TAG, "DEBUG fn initOutGoing() -> value of pHasVideo : $pHasVideo")
         //getView().blockScreenRotation();
         val callObservable = mCallService
-            .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), audioOnly)
+            .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
             //.map(mCallService::getConference)
             .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
             .share()
@@ -155,6 +157,7 @@ class CallPresenter @Inject constructor(
      */
     fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
         //getView().blockScreenRotation();
+        Log.w(TAG, "DEBUG fn initIncomingCall [CallPresenter.kt] -> if actionViewOnly ( = $actionViewOnly ) == true then getConfUpdate() who return a conference \n ,then if (!ActionViewOnly) call confUpdate() and prepareCall(isIncoming: true) or  ")
 
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
@@ -208,12 +211,14 @@ class CallPresenter @Inject constructor(
     fun prepareOptionMenu() {
         val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
-        val canDial = mOnGoingCall && mConference != null
+        val conference = mConference
+        val canDial = mOnGoingCall && conference != null
+        val hasActiveVideo = conference?.hasActiveVideo() == true
         // get the preferences
         val displayPluginsButton = view!!.displayPluginsButton()
-        val showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null
-        val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && !isAudioOnly
-        view?.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall)
+        val showPluginBtn = displayPluginsButton && mOnGoingCall && conference != null
+        val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
+        view?.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -246,7 +251,14 @@ class CallPresenter @Inject constructor(
     fun switchVideoInputClick() {
         val conference = mConference ?: return
         mHardwareService.switchInput(conference.id, false)
-        view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
+        //view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
+        view?.switchCameraIcon()
+    }
+
+    fun switchOnOffCamera() {
+        val conference = mConference ?: return
+        videoIsMuted = !videoIsMuted
+        mCallService.requestVideoMedia(conference, !videoIsMuted)
     }
 
     fun configurationChanged(rotation: Int) {
@@ -257,8 +269,8 @@ class CallPresenter @Inject constructor(
         view?.displayDialPadKeyboard()
     }
 
-    fun acceptCall() {
-        mConference?.let { mCallService.accept(it.id) }
+    fun acceptCall(hasVideo: Boolean) {
+        mConference?.let { mCallService.accept(it.id, hasVideo) }
     }
 
     fun hangupCall() {
@@ -425,36 +437,39 @@ class CallPresenter @Inject constructor(
         if (status === CallStatus.HOLD) {
             if (call.isSimpleCall) mCallService.unhold(call.id) else JamiService.addMainParticipant(call.id)
         }
-        isAudioOnly = !call.hasVideo()
+        val hasVideo = call.hasVideo()
+        val hasActiveVideo = call.hasActiveVideo()
+        videoIsMuted = !hasActiveVideo
         val view = view ?: return
         view.updateMenu()
         if (call.isOnGoing) {
             mOnGoingCall = true
-            view.initNormalStateDisplay(isAudioOnly, isMicrophoneMuted)
+            view.initNormalStateDisplay(!hasVideo, isMicrophoneMuted)
             view.updateMenu()
-            if (!isAudioOnly) {
+            if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
                 pluginSurfaceUpdateId(call.pluginId)
-                view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission())
+                view.displayVideoSurface(true, hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(mConference!!.id, permissionChanged)
+                    mHardwareService.switchInput(call.id, permissionChanged)
                     permissionChanged = false
                 }
             }
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
         } else if (call.isRinging) {
+            //Log.w(TAG, "DEBUG fn confUpdate [CallPresenter] -> [ELSEIF] checking value of call.hasVideo() : ${call.hasVideo()}")
             val scall = call.call!!
-            view.handleCallWakelock(isAudioOnly)
+            view.handleCallWakelock(!hasVideo)
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account!!)!!.isAutoanswerEnabled) {
                     Log.w(TAG, "Accept because of autoanswer")
-                    mCallService.accept(scall.daemonIdString!!)
+                    mCallService.accept(scall.daemonIdString!!, wantVideo)
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
-                    view.initIncomingCallDisplay()
+                    view.initIncomingCallDisplay(hasVideo)
                 }
             } else {
                 mOnGoingCall = false
@@ -493,25 +508,33 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
+        Log.w(TAG, "DEBUG fn onVideoEvent")
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h)
         val view = view ?: return
+        val conference = mConference
         if (event.start) {
-            view.displayVideoSurface(true, !isPipMode && mDeviceRuntimeService.hasVideoPermission())
-        } else if (mConference != null && mConference!!.id == event.callId) {
-            view.displayVideoSurface(event.started, event.started && !isPipMode && mDeviceRuntimeService.hasVideoPermission())
+            Log.w(TAG, "DEBUG fn onVideoEvent |1| inside => if (event.start) ")
+            view.displayVideoSurface(true, !isPipMode && mDeviceRuntimeService.hasVideoPermission() && conference?.hasActiveVideo() == true)
+        } else if (conference != null && conference.id == event.callId) {
+            Log.w(TAG, "DEBUG fn onVideoEvent |2| inside => else if (mConference != null && mConference!!.id == event.callId)")
+            Log.w(TAG, "DEBUG fn onVideoEvent |2| inside =>  event.started ${event.started} && !isPipMode ${!isPipMode} && mDeviceRuntimeService.hasVideoPermission() ${mDeviceRuntimeService.hasVideoPermission()} && hasVideo $wantVideo && !videoIsMuted ${!videoIsMuted}")
+            view.displayVideoSurface(event.started,
+                event.started && !isPipMode && mDeviceRuntimeService.hasVideoPermission() && conference.hasActiveVideo())
             if (event.started) {
                 videoWidth = event.w
                 videoHeight = event.h
                 view.resetVideoSize(videoWidth, videoHeight)
             }
         } else if (event.callId == null) {
+            Log.w(TAG, "DEBUG fn onVideoEvent |3| inside => else if (event.callId == null)")
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
                 view.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
         }
-        if (mConference != null && mConference!!.pluginId == event.callId) {
+        if (conference != null && conference.pluginId == event.callId) {
+            Log.w(TAG, "DEBUG fn onVideoEvent |4| inside => if (mConference != null && mConference!!.pluginId == event.callId)")
             if (event.started) {
                 previewWidth = event.w
                 previewHeight = event.h
@@ -525,7 +548,7 @@ class CallPresenter @Inject constructor(
 
     fun positiveButtonClicked() {
         if (mConference!!.isRinging && mConference!!.isIncoming) {
-            acceptCall()
+            acceptCall(true)
         } else {
             hangupCall()
         }
@@ -554,10 +577,12 @@ class CallPresenter @Inject constructor(
     fun pipModeChanged(pip: Boolean) {
         isPipMode = pip
         if (pip) {
+            Log.w(TAG, "DEBUG fn pipModeChanged |1| entering pipMode -> hangupButton : false; previewSurface: false; displayVideoSurface(true, false)")
             view!!.displayHangupButton(false)
             view!!.displayPreviewSurface(false)
             view!!.displayVideoSurface(true, false)
         } else {
+            Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
             view!!.displayPreviewSurface(true)
             view!!.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission())
         }
@@ -565,6 +590,7 @@ class CallPresenter @Inject constructor(
 
     fun toggleCallMediaHandler(id: String, toggle: Boolean) {
         val conference = mConference ?: return
+        //Log.w(TAG, "fn toggleMediaHandler [CallPresenter] -> check value of conference.hasVideo : ${conference.hasVideo()}")
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.toggleCallMediaHandler(id, conference.id, toggle)
         }
@@ -577,8 +603,8 @@ class CallPresenter @Inject constructor(
     fun addConferenceParticipant(accountId: String, uri: Uri) {
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->
-                val confs: List<Conference> = conversation.currentCalls
-                if (confs.isEmpty()) {
+                val conf = conversation.currentCall
+                if (conf == null) {
                     val pendingObserver: Observer<Call> = object : Observer<Call> {
                         private var call: Call? = null
                         override fun onSubscribe(d: Disposable) {}
@@ -602,7 +628,7 @@ class CallPresenter @Inject constructor(
                     val contactUri = if (uri.isSwarm) conversation.contact!!.uri else uri
 
                     // Place new call, join to conference when answered
-                    val newCall = mCallService.placeCallObservable(accountId, null, contactUri, isAudioOnly)
+                    val newCall = mCallService.placeCallObservable(accountId, null, contactUri, wantVideo)
                         .doOnEach(pendingObserver)
                         .filter(Call::isOnGoing)
                         .firstElement()
@@ -616,21 +642,17 @@ class CallPresenter @Inject constructor(
                             mCallService.joinParticipant(id, call.daemonIdString!!).subscribe()
                         }
                     })
-                } else {
-                    // Selected contact already in call or conference, join it to current conference
-                    val selectedConf = confs[0]
-                    if (selectedConf !== mConference) {
-                        if (mConference!!.isConference) {
-                            if (selectedConf.isConference)
-                                mCallService.joinConference(mConference!!.id, selectedConf.id)
-                            else
-                                mCallService.addParticipant(selectedConf.id, mConference!!.id)
-                        } else {
-                            if (selectedConf.isConference)
-                                mCallService.addParticipant(mConference!!.id, selectedConf.id)
-                            else
-                                mCallService.joinParticipant(mConference!!.id, selectedConf.id).subscribe()
-                        }
+                } else if (conf !== mConference) {
+                    if (mConference!!.isConference) {
+                        if (conf.isConference)
+                            mCallService.joinConference(mConference!!.id, conf.id)
+                        else
+                            mCallService.addParticipant(conf.id, mConference!!.id)
+                    } else {
+                        if (conf.isConference)
+                            mCallService.addParticipant(mConference!!.id, conf.id)
+                        else
+                            mCallService.joinParticipant(mConference!!.id, conf.id).subscribe()
                     }
                 }
             })
