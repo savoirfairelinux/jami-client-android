@@ -18,10 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".tv.call.TVCallActivity">
 
     <data>
-
         <variable
             name="presenter"
             type="cx.ring.tv.call.TVCallFragment" />
@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:clipChildren="false"
         android:clipToPadding="false"
         android:keepScreenOn="true"
-        tools:context=".tv.call.TVCallActivity">
+        tools:background="@color/cardview_dark_background">
 
         <SurfaceView
             android:id="@+id/video_surface"
@@ -68,25 +68,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <cx.ring.views.AutoFitTextureView
                 android:id="@+id/preview_surface"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                tools:visibility="visible" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/plugin_preview_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="12dp"
-            android:visibility="gone"
-            app:cardCornerRadius="16dp"
-            app:cardPreventCornerOverlap="false">
-
-            <cx.ring.views.AutoFitTextureView
-                android:id="@+id/plugin_preview_surface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -207,6 +188,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:useCompatPadding="true" />
 
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
@@ -216,7 +198,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="48dp"
             android:onClick="@{() -> presenter.hangUpClicked()}"
             android:tint="@color/white"
@@ -224,25 +208,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:backgroundTint="@color/colorError"
             app:rippleColor="@android:color/white"
             app:srcCompat="@drawable/baseline_call_end_24"
-            app:useCompatPadding="true" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/call_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/call_hangup_btn"
-            android:layout_toEndOf="@+id/call_hangup_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:onClick="@{() -> presenter.addParticipant()}"
-            android:tint="@color/white"
-            android:visibility="gone"
-            app:backgroundTint="@color/blue_400"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/baseline_person_add_24"
             app:useCompatPadding="true"
             tools:visibility="visible" />
 
@@ -273,6 +238,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 tools:text="Thomas"/>
 
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/call_hangup_btn"
+            android:layout_toEndOf="@+id/call_hangup_btn"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="48dp"
+            android:onClick="@{() -> presenter.addParticipant()}"
+            android:visibility="gone"
+            app:srcCompat="@drawable/baseline_person_add_24"
+            app:useCompatPadding="true"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/conf_control_group"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_conference_participant"
+            tools:itemCount="4" />
 
     </RelativeLayout>
 </layout>

@@ -96,17 +96,20 @@ class CallActivity : AppCompatActivity() {
 
     private fun handleNewIntent(intent: Intent) {
         val action = intent.action
-        val hasVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
+        val wantVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
         if (Intent.ACTION_CALL == action) {
             val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-            val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, hasVideo)
+            val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
         } else if (Intent.ACTION_VIEW == action || ACTION_CALL_ACCEPT == action) {
             val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
-            val callFragment = CallFragment.newInstance(action, confId, hasVideo)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+            val currentId = callFragment?.arguments?.get(NotificationService.KEY_CALL_ID)
+            if (currentId != confId) {
+                val callFragment = CallFragment.newInstance(action, confId, wantVideo)
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+            }
         }
     }
 
@@ -125,7 +128,6 @@ class CallActivity : AppCompatActivity() {
     }
 
     public override fun onUserLeaveHint() {
-        val callFragment = callFragment
         callFragment?.onUserLeave()
     }
 
@@ -183,16 +185,11 @@ class CallActivity : AppCompatActivity() {
     // Get the call Fragment
     private val callFragment: CallFragment?
         get() {
-            var callFragment: CallFragment? = null
-            // Get the call Fragment
-            val fragment = supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG)
-            if (fragment is CallFragment) {
-                callFragment = fragment
-            }
-            return callFragment
+            return supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG) as CallFragment?
         }
 
     companion object {
+        private val TAG = CallActivity::class.simpleName!!
         const val ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT"
         private const val CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG"
 
