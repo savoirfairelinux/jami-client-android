@@ -671,7 +671,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        Log.w(CallPresenter.TAG, "DEBUG onPrepareOptionsMenu")
         presenter.prepareOptionMenu()
     }
 
@@ -700,7 +699,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayContactBubble(display: Boolean) {
-        Log.w(TAG, "DEBUG fn displayContactBubble -> $display")
         binding?.apply {
             contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
         }
@@ -929,7 +927,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean,
         showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean
     ) {
-        Log.w(CallPresenter.TAG, "DEBUG initMenu hasActiveVideo: $hasActiveVideo; hasMultipleCamera: $hasMultipleCamera")
         binding?.apply {
             callSpeakerBtn.visibility = if (hasActiveVideo) View.GONE else View.VISIBLE
             callCameraSwitchBtn.isChecked = !hasActiveVideo
@@ -949,7 +946,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callRefuseBtn.visibility = View.GONE
             callControlGroup.visibility = View.VISIBLE
             callHangupBtn.visibility = View.VISIBLE
-            contactBubbleLayout.visibility =  View.VISIBLE
+            contactBubbleLayout.visibility = View.VISIBLE
             callMicBtn.isChecked = isMuted
         }
         requireActivity().invalidateOptionsMenu()
@@ -1013,12 +1010,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val oldH = params.height
         if (videoRatio >= screenRatio) {
             params.width = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.height =
-                (videoHeight * rootView.width.toDouble() / videoWidth.toDouble()).toInt()
+            params.height = (videoHeight * rootView.width.toDouble() / videoWidth.toDouble()).toInt()
         } else {
             params.height = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.width =
-                (videoWidth * rootView.height.toDouble() / videoHeight.toDouble()).toInt()
+            params.width = (videoWidth * rootView.height.toDouble() / videoHeight.toDouble()).toInt()
         }
         if (oldW != params.width || oldH != params.height) {
             binding!!.videoSurface.layoutParams = params

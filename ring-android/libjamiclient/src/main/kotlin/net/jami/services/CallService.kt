@@ -521,7 +521,7 @@ class CallService(
             val conversation = account.getByUri(contact.conversationUri.blockingFirst())
             call.contact = contact
             call.conversation = conversation
-            Log.w(TAG, "parseCallState " + contact + " " + contact.conversationUri.blockingFirst() + " " + conversation + " " + conversation!!.participant)
+            Log.w(TAG, "parseCallState " + contact + " " + contact.conversationUri.blockingFirst() + " " + conversation + " " + conversation?.participant)
             currentCalls[callId] = call
             updateConnectionCount()
         }

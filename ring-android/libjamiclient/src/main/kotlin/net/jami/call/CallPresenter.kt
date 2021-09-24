@@ -189,7 +189,6 @@ class CallPresenter @Inject constructor(
     }
 
     fun prepareOptionMenu() {
-        Log.w(TAG, "DEBUG prepareOptionMenu")
         val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         val conference = mConference
@@ -356,7 +355,7 @@ class CallPresenter @Inject constructor(
 
     private fun confUpdate(call: Conference) {
         mConference = call
-        Log.w(TAG, "DEBUG confUpdate " + call.id + " " + call.state)
+        Log.w(TAG, "confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
             if (call.isSimpleCall) mCallService.unhold(call.id) else JamiService.addMainParticipant(call.id)
@@ -364,10 +363,8 @@ class CallPresenter @Inject constructor(
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
         videoIsMuted = !hasActiveVideo
-
         val view = view ?: return
         view.updateMenu()
-
         if (call.isOnGoing) {
             mOnGoingCall = true
             view.initNormalStateDisplay(isMicrophoneMuted)
@@ -436,11 +433,10 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        Log.w(TAG, "DEBUG onVideoEvent  $event")
+        Log.w(TAG, "onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
-            Log.w(TAG, "DEBUG onVideoEvent  $event; callId == null; event.start: ${event.start}, event.started: ${event.started}")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -450,7 +446,6 @@ class CallPresenter @Inject constructor(
                 view.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
             }
         } else if (conference != null && conference.id == event.callId) {
-            Log.w(TAG, "DEBUG onVideoEvent  $event; onference != null && conference.id: ${conference.id} == event.callId: ${event.callId}; event.start: ${event.start}, event.started: ${event.started}")
             if (event.start) {
                 view.displayPeerVideo(true)
             } else if (event.started) {
