@@ -660,11 +660,14 @@ class TvConversationAdapter(
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
-        if (event.event === ContactEvent.Event.ADDED) {
-            viewHolder.mMsgTxt?.setText(R.string.hist_contact_added)
-        } else if (event.event === ContactEvent.Event.INCOMING_REQUEST) {
-            viewHolder.mMsgTxt?.setText(R.string.hist_invitation_received)
-        }
+        viewHolder.mMsgTxt?.setText(when (event.event) {
+            ContactEvent.Event.ADDED -> R.string.hist_contact_added
+            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+            else -> R.string.hist_contact_added
+        })
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
             val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
             viewHolder.mMsgDetailTxt?.text = timeSeparationString
