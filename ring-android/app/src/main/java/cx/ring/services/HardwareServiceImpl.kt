@@ -319,8 +319,8 @@ class HardwareServiceImpl(
         bluetoothEvents.onNext(event)
     }
 
-    override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
-        Log.i(TAG, "DEBUG decodingStarted() " + id + " " + width + "x" + height)
+    @Synchronized override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
+        Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
         val shm = Shm(id, width, height)
         videoInputs[id] = shm
         videoEvents.onNext(VideoEvent(id, start = true))
@@ -334,8 +334,8 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
-        Log.i(TAG, "DEBUG decodingStopped() $id")
+    @Synchronized override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
+        Log.i(TAG, "decodingStopped() $id")
         val shm = videoInputs.remove(id) ?: return
         if (shm.window != 0L) {
             try {
@@ -521,7 +521,7 @@ class HardwareServiceImpl(
         mIsCapturing = false
     }
 
-    override fun addVideoSurface(id: String, holder: Any) {
+    @Synchronized override fun addVideoSurface(id: String, holder: Any) {
         if (holder !is SurfaceHolder) {
             return
         }
@@ -540,7 +540,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun updateVideoSurfaceId(currentId: String, newId: String) {
+    @Synchronized override fun updateVideoSurfaceId(currentId: String, newId: String) {
         Log.w(TAG, "updateVideoSurfaceId $currentId $newId")
         val surfaceHolder = videoSurfaces[currentId] ?: return
         val surface = surfaceHolder.get()
@@ -557,7 +557,7 @@ class HardwareServiceImpl(
         surface?.let { addVideoSurface(newId, it) }
     }
 
-    override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
+    @Synchronized override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
         if (holder !is TextureView)
             return
         Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId)
@@ -569,7 +569,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun updatePreviewVideoSurface(conference: Conference) {
+    @Synchronized override fun updatePreviewVideoSurface(conference: Conference) {
         val old = mCameraPreviewCall.get()
         mCameraPreviewCall = WeakReference(conference)
         if (old !== conference && mIsCapturing) {
@@ -579,7 +579,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun removeVideoSurface(id: String) {
+    @Synchronized override fun removeVideoSurface(id: String) {
         Log.i(TAG, "removeVideoSurface $id")
         videoSurfaces.remove(id)
         val shm = videoInputs[id] ?: return
@@ -652,6 +652,6 @@ class HardwareServiceImpl(
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
-        private val videoSurfaces = Collections.synchronizedMap(HashMap<String, WeakReference<SurfaceHolder>>())
+        private val videoSurfaces = HashMap<String, WeakReference<SurfaceHolder>>()
     }
 }
