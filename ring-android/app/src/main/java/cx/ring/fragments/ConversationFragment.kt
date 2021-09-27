@@ -1045,7 +1045,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = "Syncing conversation..."
+            tvTrustRequestMessage.text = getText(R.string.conversation_syncing)
         }
         currentBottomView = null
         requireActivity().invalidateOptionsMenu()
