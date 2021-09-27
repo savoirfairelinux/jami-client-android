@@ -37,12 +37,17 @@ class DataTransferService : Service() {
 
     @Inject
     lateinit var mNotificationService: NotificationService
+
     private lateinit var notificationManager: NotificationManagerCompat
     private var started = false
     private var serviceNotificationId = 0
     private val serviceNotifications: MutableSet<Int> = HashSet()
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent == null) {
+            stopSelfResult(startId)
+            return START_NOT_STICKY
+        }
         val notificationId = intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1)
         val action = intent.action
         if (ACTION_START == action) {
