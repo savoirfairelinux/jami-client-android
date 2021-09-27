@@ -186,7 +186,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 startActivity(intent)
             }
         } else if (DRingService.ACTION_CONV_ACCEPT == action || Intent.ACTION_VIEW == action) {
-            startConversation(ConversationPath.fromIntent(intent)!!)
+            val path = ConversationPath.fromBundle(extra)
+            if (path != null) {
+                startConversation(path)
+            }
         } //else {
         val fragmentManager = supportFragmentManager
         fContent = fragmentManager.findFragmentById(R.id.main_frame)
@@ -258,17 +261,18 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             mAccountService.observableAccountList
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ accounts ->
-                    if (mAccountAdapter == null) {
-                        mAccountAdapter = AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable).apply {
-                            setNotifyOnChange(false)
-                            mBinding?.spinnerToolbar?.adapter = this
-                        }
-                    } else {
-                        mAccountAdapter!!.clear()
-                        mAccountAdapter!!.addAll(accounts)
-                        mAccountAdapter!!.notifyDataSetChanged()
+                    mAccountAdapter?.apply {
+                        clear()
+                        addAll(accounts)
+                        notifyDataSetChanged()
                         if (accounts.isNotEmpty()) {
                             mBinding!!.spinnerToolbar.setSelection(0)
+                        }
+                    } ?: run {
+                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable).apply {
+                            mAccountAdapter = this
+                            setNotifyOnChange(false)
+                            mBinding?.spinnerToolbar?.adapter = this
                         }
                     }
                     if (fContent is SmartListFragment) {
