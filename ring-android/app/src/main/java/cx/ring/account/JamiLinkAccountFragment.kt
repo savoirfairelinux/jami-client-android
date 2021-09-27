@@ -55,7 +55,6 @@ class JamiLinkAccountFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        retainInstance = true
         if (savedInstanceState != null) {
             model = savedInstanceState.getSerializable("model") as AccountCreationModel
         }

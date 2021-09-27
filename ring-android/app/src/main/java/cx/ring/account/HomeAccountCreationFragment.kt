@@ -28,7 +28,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.account.JamiLinkAccountFragment.Companion.newInstance
 import cx.ring.databinding.FragAccHomeCreateBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.getCacheFile
@@ -43,27 +42,20 @@ class HomeAccountCreationFragment :
     BaseSupportFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
     HomeAccountCreationView {
     private var binding: FragAccHomeCreateBinding? = null
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragAccHomeCreateBinding.inflate(inflater, container, false)
-        return binding!!.root
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
+            ringAddAccount.setOnClickListener {presenter.clickOnLinkAccount() }
+            ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
+            accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
+            ringImportAccount.setOnClickListener {performFileSearch() }
+            binding = this
+        }.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        retainInstance = true
-        binding!!.ringAddAccount.setOnClickListener { v: View? -> presenter.clickOnLinkAccount() }
-        binding!!.ringCreateBtn.setOnClickListener { v: View? -> presenter.clickOnCreateAccount() }
-        binding!!.accountConnectServer.setOnClickListener { v: View? -> presenter.clickOnConnectAccount() }
-        binding!!.ringImportAccount.setOnClickListener { v: View? -> performFileSearch() }
     }
 
     override fun goToAccountCreation() {
@@ -72,16 +64,16 @@ class HomeAccountCreationFragment :
     }
 
     override fun goToAccountLink() {
-        val ringAccountViewModel = AccountCreationModelImpl()
-        ringAccountViewModel.isLink = true
-        val fragment: Fragment = newInstance(ringAccountViewModel)
+        val fragment: Fragment = JamiLinkAccountFragment.newInstance(AccountCreationModelImpl().apply {
+            isLink = true
+        })
         replaceFragmentWithSlide(fragment, R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {
-        val ringAccountViewModel = AccountCreationModelImpl()
-        ringAccountViewModel.isLink = true
-        val fragment: Fragment = JamiAccountConnectFragment.newInstance(ringAccountViewModel)
+        val fragment: Fragment = JamiAccountConnectFragment.newInstance(AccountCreationModelImpl().apply {
+            isLink = true
+        })
         replaceFragmentWithSlide(fragment, R.id.wizard_container)
     }
 
@@ -92,34 +84,26 @@ class HomeAccountCreationFragment :
                 .setType("*/*")
             startActivityForResult(intent, ARCHIVE_REQUEST_CODE)
         } catch (e: Exception) {
-            val v = view
-            if (v != null) Snackbar.make(
-                v,
-                "No file browser available on this device",
-                Snackbar.LENGTH_SHORT
-            ).show()
+            view?.let { v ->
+                Snackbar.make(v, "No file browser available on this device", Snackbar.LENGTH_SHORT).show() }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         if (requestCode == ARCHIVE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (resultData != null) {
-                val uri = resultData.data
-                if (uri != null) {
-                    getCacheFile(requireContext(), uri)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ file: File? ->
-                            val ringAccountViewModel = AccountCreationModelImpl()
-                            ringAccountViewModel.isLink = true
-                            ringAccountViewModel.archive = file
-                            val fragment: Fragment = newInstance(ringAccountViewModel)
-                            replaceFragmentWithSlide(fragment, R.id.wizard_container)
-                        }) { e: Throwable ->
-                            val v = view
-                            if (v != null)
-                                Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show()
-                        }
-                }
+            resultData?.data?.let { uri ->
+                getCacheFile(requireContext(), uri)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ file: File ->
+                        val ringAccountViewModel = AccountCreationModelImpl()
+                        ringAccountViewModel.isLink = true
+                        ringAccountViewModel.archive = file
+                        val fragment: Fragment = JamiLinkAccountFragment.newInstance(ringAccountViewModel)
+                        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+                    }) { e: Throwable ->
+                        view?.let { v ->
+                            Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
+                    }
             }
         }
     }
