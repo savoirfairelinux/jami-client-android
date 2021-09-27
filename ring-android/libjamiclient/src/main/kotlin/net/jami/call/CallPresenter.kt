@@ -373,7 +373,6 @@ class CallPresenter @Inject constructor(
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
                 pluginSurfaceUpdateId(call.pluginId)
-                //view.displayPeerVideo(hasVideo)
                 view.displayLocalVideo(hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     mHardwareService.switchInput(call.id, permissionChanged)
@@ -456,14 +455,6 @@ class CallPresenter @Inject constructor(
                 view.displayPeerVideo(false)
             }
         }
-        /*if (conference != null && conference.pluginId == event.callId) {
-            Log.w(TAG, "DEBUG fn onVideoEvent |4| inside => if (mConference != null && mConference!!.pluginId == event.callId)")
-            if (event.started) {
-                previewWidth = event.w
-                previewHeight = event.h
-                view.resetPluginPreviewVideoSize(previewWidth, previewHeight, event.rot)
-            }
-        }*/
     }
 
     fun positiveButtonClicked() {

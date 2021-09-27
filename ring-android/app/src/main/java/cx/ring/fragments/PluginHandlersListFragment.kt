@@ -26,7 +26,7 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
         return FragPluginHandlersListBinding.inflate(inflater, container, false).also { b ->
             b.handlerList.setHasFixedSize(true)
             b.handlerList.adapter = PluginsListAdapter(
-                PluginUtils.getChatHandlersDetails(b.handlerList.context, mPath.accountId, mPath.conversationId), this)
+                PluginUtils.getChatHandlersDetails(b.handlerList.context, mPath.accountId, mPath.conversationId.removePrefix("swarm:")), this)
             binding = b
         }.root
     }
@@ -48,11 +48,11 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
     }
 
     override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
+        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId.removePrefix("swarm:"), pluginDetails.isEnabled)
     }
 
     override fun onPluginEnabled(pluginDetails: PluginDetails) {
-        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId, pluginDetails.isEnabled)
+        JamiService.toggleChatHandler(pluginDetails.handlerId, mPath.accountId, mPath.conversationId.removePrefix("swarm:"), pluginDetails.isEnabled)
     }
 
     companion object {

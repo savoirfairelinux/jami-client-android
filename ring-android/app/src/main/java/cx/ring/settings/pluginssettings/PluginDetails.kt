@@ -25,18 +25,10 @@ import java.io.File
 /**
  * Class that contains PluginDetails like name, rootPath
  */
-class PluginDetails(var name: String, rootPath: String, enabled: Boolean, val handlerId: String? = null) {
-    var rootPath: String = rootPath
-        private set
+class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, val handlerId: String? = null) {
     private val details: Map<String, String> = pluginDetails
     var icon: Drawable? = null
         private set
-
-    /**
-     * Returns the plugin activation status by the user
-     * @return boolean
-     */
-    var isEnabled: Boolean = enabled
 
     fun setIcon() {
         var iconPath = details["iconPath"]

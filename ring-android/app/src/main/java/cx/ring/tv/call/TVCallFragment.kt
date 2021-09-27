@@ -271,15 +271,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     override fun displayLocalVideo(display: Boolean) {
         Log.w(CallFragment.TAG, "DEBUG fn displayLocalVideo -> $display")
-        /*binding!!.pluginPreviewSurface.visibility = View.GONE
-        binding!!.pluginPreviewContainer.visibility = View.GONE*/
         binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
     }
 
     override fun displayPreviewSurface(display: Boolean) {
         if (display) {
             binding!!.videoSurface.setZOrderOnTop(false)
-            //mVideoPreview.setZOrderMediaOverlay(true);
             binding!!.videoSurface.setZOrderMediaOverlay(false)
         } else {
             binding!!.videoSurface.setZOrderMediaOverlay(true)
@@ -373,8 +370,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             if (flip) mPreviewWidth else mPreviewHeight
         )
     }
-
-    override fun resetPluginPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {}
 
     override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
         Log.w(TAG, "resetVideoSize " + videoWidth + "x" + videoHeight)
