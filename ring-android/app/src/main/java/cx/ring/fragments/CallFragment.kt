@@ -1165,7 +1165,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
             } else {
-                binding!!.previewSurface.visibility = View.GONE
+                binding!!.previewContainer.visibility = View.GONE
             }
         } else {
             Toast.makeText(requireContext(), "Can't start screen sharing", Toast.LENGTH_SHORT)
@@ -1174,7 +1174,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun stopShareScreen() {
-        binding?.previewSurface?.visibility = View.VISIBLE
+        binding?.previewContainer?.visibility = View.VISIBLE
         presenter.stopScreenShare()
     }
 
