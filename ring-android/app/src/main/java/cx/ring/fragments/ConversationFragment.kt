@@ -593,12 +593,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun writeToFile(data: Uri) {
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
-        val input = File(path)
-        mCompositeDisposable.add(
-            copyFileToUri(cr, input, data)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
-                { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
+        mCompositeDisposable.add(copyFileToUri(cr, File(path), data)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
+            { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -751,16 +749,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun onStop() {
         super.onStop()
         presenter.pause()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //presenter.pause();
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //presenter.resume(mIsBubble);
     }
 
     override fun onDestroy() {
@@ -1051,6 +1039,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         requireActivity().invalidateOptionsMenu()
         updateListPadding()
     }
+
     override fun switchToEndedView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
