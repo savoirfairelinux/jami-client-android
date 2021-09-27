@@ -105,20 +105,19 @@ class JamiAccountCreationFragment : Fragment() {
         var mRegisteredFragments = SparseArray<Fragment>()
         private var mCurrentPosition = -1
         override fun getItem(position: Int): Fragment {
-            var fragment: Fragment? = null
-            val ringAccountViewModel = AccountCreationModelImpl()
-            when (position) {
-                0 -> fragment = JamiAccountUsernameFragment.newInstance(ringAccountViewModel)
-                1 -> fragment = JamiAccountPasswordFragment.newInstance(ringAccountViewModel)
-                2 -> fragment = ProfileCreationFragment.newInstance(ringAccountViewModel)
+            val accountViewModel = AccountCreationModelImpl()
+            return when (position) {
+                0 -> JamiAccountUsernameFragment.newInstance(accountViewModel)
+                1 -> JamiAccountPasswordFragment.newInstance(accountViewModel)
+                2 -> ProfileCreationFragment.newInstance(accountViewModel)
+                else -> throw IllegalStateException()
             }
-            return fragment!!
         }
 
-        override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
-            super.setPrimaryItem(container, position, `object`)
+        override fun setPrimaryItem(container: ViewGroup, position: Int, o: Any) {
+            super.setPrimaryItem(container, position, o)
             if (position != mCurrentPosition && container is WizardViewPager) {
-                val fragment = `object` as Fragment
+                val fragment = o as Fragment
                 if (fragment.view != null) {
                     mCurrentPosition = position
                     container.measureCurrentView(fragment.view)
@@ -132,9 +131,9 @@ class JamiAccountCreationFragment : Fragment() {
             return super.instantiateItem(container, position)
         }
 
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        override fun destroyItem(container: ViewGroup, position: Int, o: Any) {
             mRegisteredFragments.remove(position)
-            super.destroyItem(container, position, `object`)
+            super.destroyItem(container, position, o)
         }
 
         override fun getCount(): Int {
