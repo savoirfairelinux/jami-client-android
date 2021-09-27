@@ -32,6 +32,7 @@ import android.hardware.camera2.CameraManager.AvailabilityCallback
 import android.os.Bundle
 import android.renderscript.*
 import android.util.Log
+import android.util.Size
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -55,6 +56,7 @@ import net.jami.model.Account
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -167,9 +169,9 @@ class HomeActivity : FragmentActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (mCameraPreview != null) {
-            mCamera!!.setPreviewCallback(null)
-            mCameraPreview!!.stop()
+        mCameraPreview?.let { preview ->
+            mCamera?.setPreviewCallback(null)
+            preview.stop()
             mCameraPreview = null
         }
     }
@@ -182,50 +184,81 @@ class HomeActivity : FragmentActivity() {
             camera.release();
             mCamera = null
         }
-        if (mBlurOutputBitmap != null) {
-            input!!.destroy()
+        mBlurOutputBitmap?.let { blurOutputBitmap ->
+            input?.destroy()
             input = null
-            out!!.destroy()
+            out?.destroy()
             out = null
-            blurIntrinsic!!.destroy()
+            blurIntrinsic?.destroy()
             blurIntrinsic = null
-            mBlurOut!!.destroy()
+            mBlurOut?.destroy()
             mBlurOut = null
-            yuvToRgbIntrinsic!!.destroy()
+            yuvToRgbIntrinsic?.destroy()
             yuvToRgbIntrinsic = null
-            mBlurOutputBitmap!!.recycle()
+            blurOutputBitmap.recycle()
             mBlurOutputBitmap = null
-            rs!!.destroy()
+            rs?.destroy()
             rs = null
         }
     }
 
-    private val cameraInstance: Camera
-        private get() {
-            try {
-                val currentCamera = 0
-                mCamera = Camera.open(currentCamera)
-            } catch (e: RuntimeException) {
-                Log.e(TAG, "failed to open camera")
+    internal class CompareSizesByArea : Comparator<Camera.Size> {
+        override fun compare(lhs: Camera.Size, rhs: Camera.Size): Int {
+            // We cast here to ensure the multiplications won't overflow
+            return java.lang.Long.signum(lhs.width.toLong() * lhs.height - rhs.width.toLong() * rhs.height)
+        }
+    }
+
+    private fun chooseOptimalSize(
+        choices: List<Camera.Size>,
+        minWidth: Int,
+        minHeight: Int,
+        maxWidth: Int,
+        maxHeight: Int,
+        target: Size
+    ): Camera.Size {
+        if (choices.isEmpty())
+            throw IllegalArgumentException()
+        // Collect the supported resolutions that are at least as big as the preview Surface
+        val bigEnough: MutableList<Camera.Size> = ArrayList()
+        // Collect the supported resolutions that are smaller than the preview Surface
+        val notBigEnough: MutableList<Camera.Size> = ArrayList()
+        val w = target.width
+        val h = target.height
+        for (option in choices) {
+            Log.w(TAG, "supportedSize: $option")
+            if (option.width <= maxWidth && option.height <= maxHeight && option.height == option.width * h / w) {
+                if (option.width >= minWidth && option.height >= minHeight) {
+                    bigEnough.add(option)
+                } else {
+                    notBigEnough.add(option)
+                }
             }
-            return mCamera!!
         }
 
+        // Pick the smallest of those big enough. If there is no one big enough, pick the
+        // largest of those not big enough.
+        return when {
+            bigEnough.size > 0 -> Collections.min(bigEnough, CompareSizesByArea())
+            notBigEnough.size > 0 -> Collections.max(notBigEnough, CompareSizesByArea())
+            else -> {
+                Log.e(TAG, "Couldn't find any suitable preview size")
+                choices[0]
+            }
+        }
+    }
+
     private fun setUpCamera() {
-        mDisposableBag.add(Single.fromCallable { cameraInstance }
+        mDisposableBag.add(Single.fromCallable {
+            val currentCamera = 0
+            Camera.open(currentCamera)!!.apply { mCamera = this }
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ camera: Camera ->
                 Log.w(TAG, "setUpCamera()")
                 val params = camera.parameters
-                var selectSize: Camera.Size? = null
-                for (size in params.supportedPictureSizes) {
-                    if (size.width == 1280 && size.height == 720) {
-                        selectSize = size
-                        break
-                    }
-                }
-                checkNotNull(selectSize) { "No supported size" }
+                val selectSize = chooseOptimalSize(params.supportedPictureSizes, 1280, 720, 1920, 1080, Size(1280, 720))
                 Log.w(TAG, "setUpCamera() selectSize " + selectSize.width + "x" + selectSize.height)
                 params.setPictureSize(selectSize.width, selectSize.height)
                 params.setPreviewSize(selectSize.width, selectSize.height)
