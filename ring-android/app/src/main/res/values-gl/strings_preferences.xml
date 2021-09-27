@@ -45,6 +45,8 @@
   <string name="pref_read_summary">Enviar e recibir notificación de que unha mensaxe foi mostrada.</string>
   <string name="pref_block_record_title">Bloquear captura de pantalla e gravación</string>
   <string name="pref_block_record_summary">Bloquear a captura de pantalla ou gravación de vídeo.</string>
+  <string name="pref_link_preview_title">Mostrar na conversa vista previa das ligazóns</string>
+  <string name="pref_link_preview_summary">A vista previa precisa descargar contido desde servidores de terceiras partes.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Públicas \n(mostra notificacións e o seu contido na pantalla de bloqueo)\n</string>
   <string name="notification_private">Privadas \n(mostra notificacións pero agocha o seu contido na pantalla de bloqueo)\n</string>

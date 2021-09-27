@@ -96,7 +96,6 @@
   <string name="start_error_title">Jami ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ !</string>
   <string name="start_error_mic_required">Jami ਨੂੰ ਚੱਲਣ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ।</string>
   <string name="action_call_accept">ਕਾਲ ਲਓ</string>
-  <string name="action_call_hold_accept">ਕਾਲ ਰੋਕ ਕੇ ਦੂਜੀ ਕਾਲ ਲਓ</string>
   <string name="action_call_end_accept">ਕਾਲ ਕੱਟ ਕੇ ਦੂਜੀ ਕਾਲ ਲਓ</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>

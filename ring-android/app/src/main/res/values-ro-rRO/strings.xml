@@ -100,7 +100,6 @@
   <string name="start_error_title">Jami nu se deschide!</string>
   <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
   <string name="action_call_accept">Răspunde</string>
-  <string name="action_call_hold_accept">Așteptare și răspunde la apel</string>
   <string name="action_call_end_accept">Închide și răspunde la apel</string>
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>

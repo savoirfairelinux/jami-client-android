@@ -99,7 +99,6 @@
   <string name="start_error_title">¡No se ha podido iniciar Jami!</string>
   <string name="start_error_mic_required">Jami requiere permisos para acceder al micrófono para funcionar.</string>
   <string name="action_call_accept">Atender</string>
-  <string name="action_call_hold_accept">Mantener en espera y responder llamada</string>
   <string name="action_call_end_accept">Finalizar y responder llamada</string>
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Enmudecer micrófono</string>

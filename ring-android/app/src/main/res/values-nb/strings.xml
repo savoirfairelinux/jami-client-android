@@ -98,7 +98,6 @@
   <string name="start_error_title">Klarte ikke starte Jami!</string>
   <string name="start_error_mic_required">Jami krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Svar</string>
-  <string name="action_call_hold_accept">Sett på vent og svar</string>
   <string name="action_call_end_accept">Legg på og svar</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>

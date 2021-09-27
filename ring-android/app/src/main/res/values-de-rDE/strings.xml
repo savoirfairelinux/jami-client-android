@@ -100,7 +100,6 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="start_error_title">Kann Jami nicht starten!</string>
   <string name="start_error_mic_required">Jami benötigt die Mikrofonberechtigung, um zu funktionieren.</string>
   <string name="action_call_accept">Annehmen</string>
-  <string name="action_call_hold_accept">Aktuellen Anruf halten und Neuen annehmen</string>
   <string name="action_call_end_accept">Aktuellen Anruf beenden und Neuen annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>

@@ -99,7 +99,6 @@
   <string name="start_error_title">Jamia ei voitu käynnistää!</string>
   <string name="start_error_mic_required">Jami vaatii mikrofonin käyttöoikeuden toimiakseen.</string>
   <string name="action_call_accept">Vastaanota puhelu</string>
-  <string name="action_call_hold_accept">Pitoon ja tee puhelu</string>
   <string name="action_call_end_accept">Lopeta ja tee puhelu</string>
   <string name="action_call_decline">Kieltäydy</string>
   <string name="action_call_mic_mute">Mykistä mikrofoni</string>

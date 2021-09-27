@@ -98,7 +98,6 @@
   <string name="start_error_title">無法啟動 Jami！</string>
   <string name="start_error_mic_required">Jami 需要麥克風權限以正常運作。</string>
   <string name="action_call_accept">打電話</string>
-  <string name="action_call_hold_accept">保留並接聽通話</string>
   <string name="action_call_end_accept">結束並接聽通話</string>
   <string name="action_call_decline">拒絕</string>
   <string name="action_call_mic_mute">麥克風靜音</string>

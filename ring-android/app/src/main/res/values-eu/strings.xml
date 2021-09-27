@@ -97,7 +97,6 @@
   <string name="start_error_title">Ezin da Jami abiatu !</string>
   <string name="start_error_mic_required">Jamik mikrofonoa erabiltzeko baimena behar du funtzionatzeko.</string>
   <string name="action_call_accept">Onartu deia</string>
-  <string name="action_call_hold_accept">Deiari eustea eta erantzutea</string>
   <string name="action_call_end_accept">Amaitu eta deia hartu</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>

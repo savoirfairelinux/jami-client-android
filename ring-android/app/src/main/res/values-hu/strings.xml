@@ -99,7 +99,6 @@
   <string name="start_error_title">Nem lehet elindítani Jami-t!</string>
   <string name="start_error_mic_required">A Jami működéséhez szükséges a mikrofont elérés engedélyezése.</string>
   <string name="action_call_accept">Hívás fogadása</string>
-  <string name="action_call_hold_accept">Tartás és bejövő hívás fogadása</string>
   <string name="action_call_end_accept">Hívás befejezése és bejövő hívás fogadása</string>
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>

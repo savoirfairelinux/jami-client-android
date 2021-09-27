@@ -101,7 +101,6 @@
   <string name="start_error_title">Невозможно запустить Jami!</string>
   <string name="start_error_mic_required">Для работы Jami требуется разрешение на использование микрофона.</string>
   <string name="action_call_accept">Принять</string>
-  <string name="action_call_hold_accept">Задержать и ответить на звонок</string>
   <string name="action_call_end_accept">Завершить и ответить на звонок</string>
   <string name="action_call_decline">Отклонить</string>
   <string name="action_call_mic_mute">Выключить микрофон</string>

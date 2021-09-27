@@ -99,7 +99,6 @@
   <string name="start_error_title">Nie udało się uruchomić Jami!</string>
   <string name="start_error_mic_required">Jami wymaga zezwolenia na korzystanie z mikrofonu, by działać.</string>
   <string name="action_call_accept">Odbierz</string>
-  <string name="action_call_hold_accept">Wstrzymaj i odbierz połączenie</string>
   <string name="action_call_end_accept">Zakończ i odbierz połączenie</string>
   <string name="action_call_decline">Odrzuć</string>
   <string name="action_call_mic_mute">Wycisz mikrofon</string>

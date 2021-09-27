@@ -95,7 +95,6 @@
   <string name="start_error_title">Kan ikke starte Jami!</string>
   <string name="start_error_mic_required">Jami kræver adgang til mikrofonen for at virke.</string>
   <string name="action_call_accept">Besvar opkald</string>
-  <string name="action_call_hold_accept">Put på hold og tag besvar opkald</string>
   <string name="action_call_end_accept">Afslut og besvar opkald</string>
   <string name="action_call_decline">Afvis</string>
   <string name="action_call_mic_mute">Sluk mikrofon</string>

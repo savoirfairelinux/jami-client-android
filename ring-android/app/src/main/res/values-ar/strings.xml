@@ -103,7 +103,6 @@
   <string name="start_error_title">ﻻ يمكن تشغيل جامي !</string>
   <string name="start_error_mic_required">جامي يستوجب الحصول على صلاحيات المايكروفون للعمل.</string>
   <string name="action_call_accept">قبول مكالمة</string>
-  <string name="action_call_hold_accept">انتظر وقم بإجراء مكالمة</string>
   <string name="action_call_end_accept">إنهاء وإجراء مكالمة</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>

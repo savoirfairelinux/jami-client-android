@@ -99,7 +99,6 @@
   <string name="start_error_title">Jami non si avvia!</string>
   <string name="start_error_mic_required">Jami deve usare il microfono per funzionare.</string>
   <string name="action_call_accept">Rispondi</string>
-  <string name="action_call_hold_accept">Metti in attesa e rispondi alla chiamata</string>
   <string name="action_call_end_accept">Termina e rispondi alla chiamata</string>
   <string name="action_call_decline">Rifiuta</string>
   <string name="action_call_mic_mute">Disattiva microfono</string>

@@ -99,7 +99,6 @@
   <string name="start_error_title">Ne morem zagnati Jami-ja!</string>
   <string name="start_error_mic_required">Jami za delovanje potrebuje dovoljenje za uporabo mikrofona.</string>
   <string name="action_call_accept">Prevzemi klic</string>
-  <string name="action_call_hold_accept">Zadrži in prevzemi klic</string>
   <string name="action_call_end_accept">Končaj in prevzemi klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>

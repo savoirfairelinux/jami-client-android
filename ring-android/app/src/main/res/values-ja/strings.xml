@@ -98,7 +98,6 @@
   <string name="start_error_title">Jamiを開始できません</string>
   <string name="start_error_mic_required">Jamiはマイク使用の権限を必要とします</string>
   <string name="action_call_accept">電話を取る</string>
-  <string name="action_call_hold_accept">いまの通話を保持して電話に出る</string>
   <string name="action_call_end_accept">いまの通話を終了して電話に出る</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
