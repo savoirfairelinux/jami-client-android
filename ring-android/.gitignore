@@ -28,7 +28,7 @@ tests/bin
 /.gradle/
 /app/build/
 /androidtv/build/
-/libringclient/build/
-/libringclient/src/main/java/net/jami/daemon/*
+/libjamiclient/build/
+/libjamiclient/src/main/java/net/jami/daemon/*
 /build/
 **/google-services.json
