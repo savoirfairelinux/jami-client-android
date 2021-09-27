@@ -39,6 +39,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     private var binding: FragPluginsListSettingsBinding? = null
     private var mAdapter: PluginsListAdapter? = null
     private val mCompositeDisposable = CompositeDisposable()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
 

@@ -42,7 +42,6 @@ interface CallView {
     fun initIncomingCallDisplay(hasVideo: Boolean)
     fun initOutGoingCallDisplay()
     fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)
-    fun resetPluginPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)
     fun resetVideoSize(videoWidth: Int, videoHeight: Int)
     fun goToConversation(accountId: String, conversationId: Uri)
     fun goToAddContact(contact: Contact)

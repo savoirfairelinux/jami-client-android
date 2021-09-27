@@ -466,7 +466,8 @@ class HardwareServiceImpl(
                     override fun onOpened() {
                         val currentCall = conf?.id ?: return
                         if (mPluginCallId != null && mPluginCallId != currentCall) {
-                            JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall, false)
+                            if (mMediaHandlerId != null)
+                                JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall, false)
                             mIsChoosePlugin = false
                             mMediaHandlerId = null
                             mPluginCallId = null

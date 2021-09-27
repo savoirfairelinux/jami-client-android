@@ -712,9 +712,19 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "DEBUG fn displayLocalVideo -> $display")
-        /*binding!!.pluginPreviewSurface.visibility = View.GONE
-        binding!!.pluginPreviewContainer.visibility = View.GONE*/
-        binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
+        if (isChoosePluginMode) {
+            binding!!.previewContainer.visibility = View.GONE
+            binding!!.pluginPreviewContainer.visibility = if (display) View.VISIBLE else View.GONE
+            binding!!.pluginPreviewSurface.visibility = if (display) View.VISIBLE else View.GONE
+            binding!!.pluginPreviewSurface.setZOrderMediaOverlay(true)
+//            binding!!.pluginPreviewContainer.z = binding!!.pluginPreviewSurface.z
+        } else {
+            binding!!.pluginPreviewSurface.visibility = View.GONE
+            binding!!.pluginPreviewContainer.visibility = View.GONE
+            binding!!.pluginPreviewSurface.setZOrderOnTop(false)
+            binding!!.pluginPreviewContainer.z = binding!!.pluginPreviewSurface.z
+            binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
+        }
     }
 
     // todo Change function name, this name is misleading, this function concerns PIP preview
@@ -984,21 +994,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         mPreviewWidth = previewWidth
         mPreviewHeight = previewHeight
         val flip = rot % 180 != 0
-        binding?.previewSurface?.setAspectRatio(
-            if (flip) mPreviewHeight else mPreviewWidth,
-            if (flip) mPreviewWidth else mPreviewHeight
-        )
-    }
-
-    override fun resetPluginPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
-        if (previewWidth == -1 && previewHeight == -1) return
-        mPreviewWidth = previewWidth
-        mPreviewHeight = previewHeight
-        val flip = rot % 180 != 0
-        binding?.pluginPreviewSurface?.setAspectRatio(
-            if (flip) mPreviewHeight else mPreviewWidth,
-            if (flip) mPreviewWidth else mPreviewHeight
-        )
+        if (isChoosePluginMode) {
+            binding?.pluginPreviewSurface?.setAspectRatio(
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
+            )
+        } else {
+            binding?.previewSurface?.setAspectRatio(
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
+            )
+        }
     }
 
     override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
@@ -1302,23 +1308,22 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val context: Context = requireActivity()
 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
-        if (pluginsModeFirst) {
-            // Init
-            val callMediaHandlers = JamiService.getCallMediaHandlers()
-            val videoPluginsItems: MutableList<Drawable> = ArrayList(callMediaHandlers.size + 1)
+        val mediaHandlers = callMediaHandlers ?: run {
+            val mediaHandlers = JamiService.getCallMediaHandlers().toList().apply { callMediaHandlers = this }
+            val videoPluginsItems: MutableList<Drawable> = ArrayList(mediaHandlers.size + 1)
             videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24)!!)
             // Search for plugin call media handlers icons
             // If a call media handler doesn't have an icon use a standard android icon
-            for (callMediaHandler in callMediaHandlers) {
+            for (callMediaHandler in mediaHandlers) {
                 val details = getCallMediaHandlerDetails(callMediaHandler)
                 var drawablePath = details["iconPath"]
-                if (drawablePath != null && drawablePath.endsWith("svg")) drawablePath =
-                    drawablePath.replace(".svg", ".png")
+                if (drawablePath != null && drawablePath.endsWith("svg"))
+                    drawablePath = drawablePath.replace(".svg", ".png")
                 val handlerIcon = Drawable.createFromPath(drawablePath) ?: context.getDrawable(R.drawable.ic_jami)!!
                 videoPluginsItems.add(handlerIcon)
             }
             rp!!.updateData(videoPluginsItems)
-            pluginsModeFirst = false
+            mediaHandlers
         }
         if (isChoosePluginMode) {
             // hide hang up button and other call buttons
@@ -1328,7 +1333,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             movePreview(true)
 
             // Start loading the first or previous plugin if one was active
-            if (callMediaHandlers!!.isNotEmpty()) {
+            if (mediaHandlers.isNotEmpty()) {
                 // If no previous plugin was active, take the first, else previous
                 val position: Int
                 if (previousPluginPosition < 1) {
@@ -1338,12 +1343,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 } else {
                     position = previousPluginPosition
                 }
-                val callMediaId = callMediaHandlers!![position - 1]
+                val callMediaId = mediaHandlers[position - 1]
                 presenter.startPlugin(callMediaId)
             }
         } else {
             if (previousPluginPosition > 0) {
-                val callMediaId = callMediaHandlers!![previousPluginPosition - 1]
+                val callMediaId = mediaHandlers[previousPluginPosition - 1]
                 presenter.toggleCallMediaHandler(callMediaId, false)
                 rp!!.scrollToPosition(previousPluginPosition)
             }

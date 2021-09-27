@@ -16,7 +16,9 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private var mPreferencesAttributes: List<Map<String, String>>? = null
     private var pluginDetails: PluginDetails? = null
     private var ppds: PluginPreferencesDataStore? = null
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {}
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val arguments = requireArguments()
