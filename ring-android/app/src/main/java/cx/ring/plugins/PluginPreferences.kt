@@ -21,7 +21,6 @@
 package cx.ring.plugins
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
@@ -33,6 +32,8 @@ class PluginPreferences : Preference {
     private var mPluginDetails: PluginDetails? = null
     private var resetClickListener: View.OnClickListener? = null
     private var installClickListener: View.OnClickListener? = null
+    private var openPluginSettingsListener: View.OnClickListener? = null
+    private var mAccountId: String? = ""
     fun setResetClickListener(clickListener: View.OnClickListener?) {
         resetClickListener = clickListener
     }
@@ -41,25 +42,14 @@ class PluginPreferences : Preference {
         installClickListener = clickListener
     }
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
+    fun setPluginSettingsRedirect(clickListener: View.OnClickListener?) {
+        openPluginSettingsListener = clickListener
     }
 
-    constructor(context: Context?, pluginDetails: PluginDetails?) : super(context) {
+    constructor(context: Context?, pluginDetails: PluginDetails?, accountId: String? = "") : super(context) {
         mPluginDetails = pluginDetails
+        mAccountId = accountId
         layoutResource = R.layout.frag_plugin_settings
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
     }
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
@@ -72,8 +62,20 @@ class PluginPreferences : Preference {
         if (resetClickListener != null) {
             binding.pluginSettingReset.setOnClickListener(resetClickListener)
         }
-        if (installClickListener != null) {
-            binding.pluginSettingInstall.setOnClickListener(installClickListener)
+        if (mAccountId!!.isEmpty()) {
+            if (installClickListener != null) {
+                binding.pluginSettingInstall.setOnClickListener(installClickListener)
+            }
+        } else {
+            binding.pluginSettingButtons.weightSum = 1.0F
+            binding.pluginSettingInstall.visibility = View.GONE
         }
+        if (mAccountId!!.isEmpty()) {
+            binding.pluginAccountSettingRedirect.setText(R.string.open_account_plugin_settings)
+        } else {
+            binding.pluginAccountSettingRedirect.setText(R.string.open_general_plugin_settings)
+        }
+        if (openPluginSettingsListener != null)
+            binding.pluginAccountSettingRedirect.setOnClickListener(openPluginSettingsListener)
     }
 }

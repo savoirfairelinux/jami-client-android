@@ -19,13 +19,14 @@
 package cx.ring.settings.pluginssettings
 
 import android.graphics.drawable.Drawable
+import cx.ring.utils.ConversationPath
 import net.jami.daemon.JamiService
 import java.io.File
 
 /**
  * Class that contains PluginDetails like name, rootPath
  */
-class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, val handlerId: String? = null) {
+class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, val handlerId: String? = null, var accountId: String? = "") {
     private val details: Map<String, String> = pluginDetails
     var icon: Drawable? = null
         private set
@@ -45,12 +46,12 @@ class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boole
     private val pluginDetails: Map<String, String>
         get() = JamiService.getPluginDetails(rootPath).toNative()
     val pluginPreferences: List<Map<String, String>>
-        get() = JamiService.getPluginPreferences(rootPath).toNative()
+        get() = JamiService.getPluginPreferences(rootPath, accountId).toNative()
     val pluginPreferencesValues: Map<String, String>
-        get() = JamiService.getPluginPreferencesValues(rootPath)
+        get() = JamiService.getPluginPreferencesValues(rootPath, accountId)
 
     fun setPluginPreference(key: String, value: String): Boolean {
-        return JamiService.setPluginPreference(rootPath, key, value)
+        return JamiService.setPluginPreference(accountId, rootPath, key, value)
     }
 
     companion object {

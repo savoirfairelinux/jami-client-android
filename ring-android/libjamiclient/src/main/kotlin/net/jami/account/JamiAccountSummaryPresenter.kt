@@ -193,6 +193,10 @@ class JamiAccountSummaryPresenter @Inject constructor(
         view?.goToAdvanced(mAccountID!!)
     }
 
+    fun goToPlugins() {
+        view?.goToPlugin(mAccountID!!)
+    }
+
     fun revokeDevice(deviceId: String?, password: String?) {
         view?.showRevokingProgressDialog()
         mCompositeDisposable.add(mAccountService

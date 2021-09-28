@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginViewHolder
 
-class PluginsListAdapter(private var mList: List<PluginDetails>, private val listener: PluginListItemListener) :
+class PluginsListAdapter(private var mList: List<PluginDetails>, private val listener: PluginListItemListener, private val accountId: String? = "") :
     RecyclerView.Adapter<PluginViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PluginViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.frag_plugins_list_item, parent, false)
@@ -18,14 +18,29 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
     }
 
     override fun onBindViewHolder(holder: PluginViewHolder, position: Int) {
+        for (item in mList) {
+            item.accountId = accountId
+        }
         holder.setDetails(mList[position])
     }
 
     override fun getItemCount(): Int {
+        if (!accountId!!.isEmpty()) {
+            var copy: List<PluginDetails> = ArrayList()
+            for (item in mList) {
+                item.accountId = accountId
+                if (!item.pluginPreferences.isEmpty())
+                    copy += item
+            }
+            mList = copy
+        }
         return mList.size
     }
 
     fun updatePluginsList(listPlugins: List<PluginDetails>) {
+        for (item in listPlugins) {
+            item.accountId = accountId
+        }
         mList = listPlugins
         notifyDataSetChanged()
     }
@@ -35,6 +50,7 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
         private val pluginNameTextView: TextView = itemView.findViewById(R.id.plugin_item_name)
         private val pluginItemEnableCheckbox: CheckBox = itemView.findViewById(R.id.plugin_item_enable_checkbox)
         private var details: PluginDetails? = null
+
         fun setDetails(details: PluginDetails) {
             this.details = details
             update(details)
@@ -43,7 +59,11 @@ class PluginsListAdapter(private var mList: List<PluginDetails>, private val lis
         // update the viewHolder view
         fun update(details: PluginDetails) {
             pluginNameTextView.text = details.name
-            pluginItemEnableCheckbox.isChecked = details.isEnabled
+            if (details.accountId!!.isEmpty())
+                pluginItemEnableCheckbox.isChecked = details.isEnabled
+            else
+                pluginItemEnableCheckbox.visibility = View.GONE
+
             // Set the plugin icon
             val icon = details.icon
             if (icon != null) {

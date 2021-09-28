@@ -620,11 +620,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     /**
      * Changes the current main fragment to a plugins list settings fragment
      */
-    fun goToPluginsListSettings() {
+    fun goToPluginsListSettings(accountId: String? = "") {
         if (fContent is PluginsListSettingsFragment) {
             return
         }
-        val content = PluginsListSettingsFragment()
+        val content = PluginsListSettingsFragment.newInstance(accountId)
         fContent = content
         supportFragmentManager
             .beginTransaction()
@@ -691,7 +691,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fContent = fm.findFragmentById(entry.id)
     }
 
-    private fun selectNavigationItem(id: Int) {
+    fun selectNavigationItem(id: Int) {
         if (mBinding != null) mBinding!!.navigationView.selectedItemId = id
     }
 
