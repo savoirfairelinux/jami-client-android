@@ -42,6 +42,7 @@ import cx.ring.fragments.MediaPreferenceFragment
 import cx.ring.fragments.SecurityAccountFragment
 import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
@@ -201,6 +202,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
                 0 -> fragmentWithBundle(GeneralAccountFragment())
                 1 -> fragmentWithBundle(MediaPreferenceFragment())
                 2 -> fragmentWithBundle(AdvancedAccountFragment())
+                3 -> fragmentWithBundle(PluginsListSettingsFragment())
                 else -> throw IllegalArgumentException()
             }
         }
@@ -211,6 +213,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
                 1 -> MediaPreferenceFragment.newInstance(accountId)
                 2 -> fragmentWithBundle(AdvancedAccountFragment())
                 3 -> fragmentWithBundle(SecurityAccountFragment())
+                4 -> fragmentWithBundle(PluginsListSettingsFragment())
                 else -> throw IllegalArgumentException()
             }
         }
@@ -228,6 +231,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
                     0 -> R.string.account_preferences_basic_tab
                     1 -> R.string.account_preferences_media_tab
                     2 -> R.string.account_preferences_advanced_tab
+                    3 -> R.string.account_preference_plugin_tab
                     else -> -1
                 }
             }
@@ -239,6 +243,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
                     1 -> R.string.account_preferences_media_tab
                     2 -> R.string.account_preferences_advanced_tab
                     3 -> R.string.account_preferences_security_tab
+                    4 -> R.string.account_preference_plugin_tab
                     else -> -1
                 }
             }

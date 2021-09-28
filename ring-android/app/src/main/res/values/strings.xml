@@ -408,5 +408,9 @@ along with this program; if not, write to the Free Software
     <string name="bottomSheet_hangup_btn">End Call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
+    <string name="open_account_plugin_settings">Open Account Plugin Settings</string>
+    <string name="open_general_plugin_settings">Open General Plugin Settings</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="reset">Reset</string>
 
 </resources>
