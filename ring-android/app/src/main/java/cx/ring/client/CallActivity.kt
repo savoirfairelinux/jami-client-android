@@ -21,6 +21,7 @@
  */
 package cx.ring.client
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.res.Configuration
 import android.media.AudioManager
@@ -32,9 +33,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -70,13 +70,15 @@ class CallActivity : AppCompatActivity() {
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
         handler = Handler(Looper.getMainLooper())
         mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
             setOnClickListener {
                 dimmed = !dimmed
-                if (dimmed)
+                if (dimmed) {
                     hideSystemUI()
-                else
+                }
+                else {
                     showSystemUI()
-            }
+                }}
         }
         intent?.let { handleNewIntent(it) }
     }
@@ -152,13 +154,17 @@ class CallActivity : AppCompatActivity() {
     private fun hideSystemUI() {
         KeyboardVisibilityManager.hideKeyboard(this)
         mMainView?.let { mainView ->
-            WindowCompat.setDecorFitsSystemWindows(window, false)
             WindowInsetsControllerCompat(window, mainView).let { controller ->
                 controller.hide(WindowInsetsCompat.Type.systemBars())
                 controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
-            val callFragment = callFragment
-            if (callFragment != null && !callFragment.isChoosePluginMode) {
+
+            mainView.findViewById<View>(R.id.call_coordinator_option_container).updatePadding(bottom = 0)
+            mainView.findViewById<View>(R.id.call_options_bottom_sheet).updatePadding(bottom = 0)
+
+            val callFragment = callFragment ?: return
+            callFragment.displayBottomSheet(false)
+            if (!callFragment.isChoosePluginMode) {
                 callFragment.toggleVideoPluginsCarousel(false)
             }
             handler?.removeCallbacks(onNoInteraction)
@@ -166,12 +172,19 @@ class CallActivity : AppCompatActivity() {
     }
 
 
-
     fun showSystemUI() {
         mMainView?.let { mainView ->
-            WindowCompat.setDecorFitsSystemWindows(window, true)
+            // todo : add behaviour based on the screen rotation status { if paysage then show systembar without navbar  else show complete systembar }
             WindowInsetsControllerCompat(window, mainView).show(WindowInsetsCompat.Type.systemBars())
-            callFragment?.toggleVideoPluginsCarousel(true)
+            val res = ViewCompat.getRootWindowInsets(mainView)?.getInsets(WindowInsetsCompat.Type.navigationBars())
+             res?.bottom?.toFloat()?.let {
+                 mainView.findViewById<View>(R.id.call_coordinator_option_container).updatePadding(bottom = res.bottom)
+             }
+
+            callFragment?.let { frag ->
+                frag.displayBottomSheet(true)
+                frag.toggleVideoPluginsCarousel(true)
+            }
             restartNoInteractionTimer()
         }
     }
