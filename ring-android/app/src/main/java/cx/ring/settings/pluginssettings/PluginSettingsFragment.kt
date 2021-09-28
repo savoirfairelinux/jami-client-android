@@ -7,6 +7,8 @@ import android.view.*
 import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
+import cx.ring.account.AccountEditionFragment
+import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.client.HomeActivity
 import cx.ring.plugins.PluginPreferences
 import cx.ring.plugins.PluginUtils.stringListToListString
@@ -16,13 +18,14 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private var mPreferencesAttributes: List<Map<String, String>>? = null
     private var pluginDetails: PluginDetails? = null
     private var ppds: PluginPreferencesDataStore? = null
+    private var accountId: String? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val arguments = requireArguments()
-        val details = PluginDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"))
+        val details = PluginDetails(arguments.getString("name")!!, arguments.getString("rootPath")!!, arguments.getBoolean("enabled"), null, accountId)
         mPreferencesAttributes = details.pluginPreferences
         val preferenceManager = preferenceManager
         ppds = PluginPreferencesDataStore(details)
@@ -82,13 +85,20 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun createHeadPreference(): Preference {
-        val preference = PluginPreferences(requireContext(), pluginDetails)
+        val preference = PluginPreferences(requireContext(), pluginDetails, accountId)
+        var message = run {
+            var value = R.string.plugin_reset_preferences_ask
+            if (!accountId!!.isEmpty()) {
+                value = R.string.plugin_reset_account_preferences_ask
+            }
+            value
+        }
         preference.setResetClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(preference.title)
-                .setMessage(R.string.plugin_reset_preferences_ask)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
-                    JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath)
+                    JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
                     (requireActivity() as HomeActivity).popFragmentImmediate()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
@@ -105,6 +115,21 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
+        }
+        preference.setPluginSettingsRedirect {
+            if (accountId!!.isEmpty()) {
+                val act = requireActivity() as HomeActivity
+                act.selectNavigationItem(R.id.navigation_settings)
+                var acc = act.mAccountService.currentAccount!!.accountId
+                act.goToPluginsListSettings(acc)
+                act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
+            } else {
+                val act = requireActivity() as HomeActivity
+                act.selectNavigationItem(R.id.navigation_home)
+                act.goToSettings()
+                act.goToPluginsListSettings()
+                act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
+            }
         }
         return preference
     }
@@ -187,7 +212,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         preference.summary = preferenceModel["summary"] ?: ""
     }
 
-    //TODO : add drawable icon
     private fun setDialogPreferenceAttributes(preference: DialogPreference, preferenceModel: Map<String, String>) {
         val dialogTitle = preferenceModel["dialogTitle"] ?: ""
         val dialogMessage = preferenceModel["dialogMessage"] ?: ""
@@ -308,6 +332,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 putString("name", pluginDetails.name)
                 putString("rootPath", pluginDetails.rootPath)
                 putBoolean("enabled", pluginDetails.isEnabled)
+                psf.accountId = pluginDetails.accountId
             }
             return psf
         }
