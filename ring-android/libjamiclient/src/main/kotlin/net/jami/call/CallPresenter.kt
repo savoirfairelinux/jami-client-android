@@ -55,7 +55,8 @@ class CallPresenter @Inject constructor(
     private var mConference: Conference? = null
     private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
     private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
-    private var mOnGoingCall = false
+    var mOnGoingCall = false
+        private set
     var wantVideo = false
     var videoIsMuted = false
         private set
@@ -189,6 +190,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun prepareOptionMenu() {
+
+
         val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         val conference = mConference
@@ -230,8 +233,6 @@ class CallPresenter @Inject constructor(
     fun switchVideoInputClick() {
         val conference = mConference ?: return
         mHardwareService.switchInput(conference.id, false)
-        //view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
-        view?.switchCameraIcon()
     }
 
     fun switchOnOffCamera() {
@@ -436,6 +437,7 @@ class CallPresenter @Inject constructor(
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
+            Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -494,11 +496,11 @@ class CallPresenter @Inject constructor(
         isPipMode = pip
         if (pip) {
             view!!.displayHangupButton(false)
-            view!!.displayPreviewSurface(false)
+            view!!.previewSurfacePosIfPipMode(false)
             //view!!.displayPeerVideo(true, false)
         } else {
             //Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
-            view!!.displayPreviewSurface(true)
+            view!!.previewSurfacePosIfPipMode(true)
             //view!!.displayPeerVideo(true, mDeviceRuntimeService.hasVideoPermission())
         }
     }

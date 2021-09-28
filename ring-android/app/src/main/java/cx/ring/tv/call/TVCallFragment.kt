@@ -274,7 +274,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
     }
 
-    override fun displayPreviewSurface(display: Boolean) {
+    override fun previewSurfacePosIfPipMode(display: Boolean) {
         if (display) {
             binding!!.videoSurface.setZOrderOnTop(false)
             binding!!.videoSurface.setZOrderMediaOverlay(false)
@@ -305,7 +305,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun displayDialPadKeyboard() {}
-    override fun switchCameraIcon() {}
     override fun updateAudioState(state: AudioState) {}
     override fun updateMenu() {}
     override fun updateTime(duration: Long) {
@@ -328,6 +327,9 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun initMenu(isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean) {
     }
 
+    override fun initCallOptionsBottomSheet() {
+
+    }
     override fun initNormalStateDisplay(muted: Boolean) {
         mSession!!.isActive = true
         binding?.apply {
