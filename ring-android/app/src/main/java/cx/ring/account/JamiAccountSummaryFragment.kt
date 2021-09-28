@@ -59,6 +59,7 @@ import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.fragments.*
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
+import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
@@ -138,6 +139,8 @@ class JamiAccountSummaryFragment :
         items.add(SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24) { presenter.goToMedia() })
         items.add(SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24) { presenter.goToSystem() })
         items.add(SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24) { presenter.goToAdvanced() })
+        items.add(SettingItem(R.string.account_preference_plugin_tab, R.drawable.ic_plugin) { presenter.goToPlugins() })
+
         val adapter = SettingsAdapter(view.context, R.layout.item_setting, items)
         mBinding!!.settingsList.onItemClickListener =
             AdapterView.OnItemClickListener { _, v: View?, i: Int, l: Long ->
@@ -617,6 +620,10 @@ class JamiAccountSummaryFragment :
 
     override fun goToAdvanced(accountId: String) {
         changeFragment(fragmentWithBundle(AdvancedAccountFragment(), accountId), AdvancedAccountFragment.TAG)
+    }
+
+    override fun goToPlugin(accountId: String) {
+        changeFragment(PluginsListSettingsFragment.newInstance(accountId), PluginsListSettingsFragment.TAG)
     }
 
     fun goToBlackList(accountId: String?) {

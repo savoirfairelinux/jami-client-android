@@ -398,5 +398,9 @@ along with this program; if not, write to the Free Software
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
     <string name="chat_plugins">Chat Plugins</string>
+    <string name="open_account_plugin_settings">Open Account Plugin Settings</string>
+    <string name="open_general_plugin_settings">Open General Plugin Settings</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="reset">Reset</string>
 
 </resources>
