@@ -22,6 +22,7 @@ package net.jami.model
 
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
@@ -32,6 +33,7 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.lang.IllegalStateException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Account(
     val accountId: String,
@@ -103,9 +105,13 @@ class Account(
     fun conversationStarted(conversation: Conversation) {
         Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
         synchronized(conversations) {
+            if (conversation.isSwarm) {
+                removeRequest(conversation.uri)
+                swarmConversations[conversation.uri.rawRingId] = conversation
+            }
             if (conversation.isSwarm && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
-                val contact = conversation.contact
-                val key = contact!!.uri.uri
+                val contact = conversation.contact!!
+                val key = contact.uri.uri
                 val removed = cache.remove(key)
                 conversations.remove(key)
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
@@ -373,20 +379,15 @@ class Account(
     }
 
     val bannedContactsUpdates: Observable<Collection<Contact>>
-        get() = contactListSubject.concatMapSingle { list: Collection<Contact> ->
-            Observable.fromIterable(list).filter(Contact::isBanned).toList(list.size)
-        }
+        get() = contactListSubject.map { list -> list.filterTo(ArrayList(list.size), Contact::isBanned) }
 
     fun getContactFromCache(key: String): Contact {
         if (key.isEmpty()) throw IllegalStateException()
         synchronized(mContactCache) {
-            var contact = mContactCache[key]
-            if (contact == null) {
-                contact = if (isSip) Contact.buildSIP(Uri.fromString(key))
+            return mContactCache.getOrPut(key) {
+                if (isSip) Contact.buildSIP(Uri.fromString(key))
                 else Contact.build(key, username == key)
-                mContactCache[key] = contact
             }
-            return contact
         }
     }
 
@@ -469,7 +470,7 @@ class Account(
     val isJami: Boolean
         get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_RING
 
-    private fun getDetail(key: ConfigKey): String {
+    private fun getDetail(key: ConfigKey): String? {
         return config[key]
     }
 
@@ -563,9 +564,9 @@ class Account(
     }
 
     val deviceId: String
-        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)
+        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)!!
     val deviceName: String
-        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)
+        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)!!
     val contacts: Map<String, Contact>
         get() = mContacts
     val bannedContacts: List<Contact>
@@ -584,21 +585,10 @@ class Account(
     }
 
     fun addContact(id: String, confirmed: Boolean) {
-        var contact = mContacts[id]
-        if (contact == null) {
-            contact = getContactFromCache(Uri.fromId(id))
-            mContacts[id] = contact
-        }
+        val contact = mContacts.getOrPut(id) { getContactFromCache(Uri.fromId(id)) }
         contact.addedDate = Date()
-        if (confirmed) {
-            contact.status = Contact.Status.CONFIRMED
-        } else {
-            contact.status = Contact.Status.REQUEST_SENT
-        }
-        val req = mRequests[id]
-        if (req != null) {
-            mRequests.remove(id)
-        }
+        contact.status = if (confirmed) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
+        mRequests.remove(id)
         contactAdded(contact)
         contactListSubject.onNext(mContacts.values)
     }
@@ -635,12 +625,11 @@ class Account(
         if (contact.containsKey(CONTACT_BANNED) && contact[CONTACT_BANNED] == "true") {
             callContact.status = Contact.Status.BANNED
         } else if (contact.containsKey(CONTACT_CONFIRMED)) {
-            callContact.status =
-                if (java.lang.Boolean.parseBoolean(contact[CONTACT_CONFIRMED])) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
+            callContact.status = if (contact[CONTACT_CONFIRMED].toBoolean()) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
         }
         val conversationUri = contact[CONTACT_CONVERSATION]
-        if (!StringUtils.isEmpty(conversationUri)) {
-            callContact.setConversationUri(Uri(Uri.SWARM_SCHEME, conversationUri!!))
+        if (conversationUri != null && conversationUri.isNotEmpty()) {
+            callContact.setConversationUri(Uri(Uri.SWARM_SCHEME, conversationUri))
         }
         mContacts[contactId] = callContact
         contactAdded(callContact)
@@ -654,48 +643,36 @@ class Account(
         contactListSubject.onNext(mContacts.values)
     }
 
-    var requests: List<TrustRequest>
-        get() {
-            val requests = ArrayList<TrustRequest>(mRequests.size)
-            for (request in mRequests.values) {
-                if (request.isNameResolved) {
-                    requests.add(request)
-                }
-            }
-            return requests
-        }
-        set(requests) {
-            Log.w(TAG, "setRequests " + requests.size)
-            synchronized(pending) {
-                for (request in requests) {
-                    val key = request.uri.uri
-                    mRequests[key] = request
-                    var conversation = pending[key]
-                    if (conversation == null) {
-                        conversation = getByKey(key)
-                        pending[key] = conversation
-                        val contact = getContactFromCache(request.uri)
-                        conversation.addRequestEvent(request, contact)
-                    }
-                }
-                pendingChanged()
-            }
-        }
-
     fun getRequest(uri: Uri): TrustRequest? {
         return mRequests[uri.uri]
     }
 
     fun addRequest(request: TrustRequest) {
         synchronized(pending) {
-            val key = request.uri.uri
+            val key = request.conversationUri?.uri ?: request.from.uri
             mRequests[key] = request
-            var conversation = pending[key]
-            if (conversation == null) {
-                conversation = getByKey(key)
+            if (pending[key] == null) {
+                val conversation = if (request.conversationUri?.isSwarm == true)
+                    Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
+                        val contact = getContactFromCache(request.from).apply {
+                            if (!conversationUri.blockingFirst().isSwarm)
+                                setConversationUri(request.conversationUri)
+                        }
+                        addContact(contact)
+                        addContactEvent(ContactEvent(contact, request))
+                    }
+                else
+                    getByKey(key)
+
+                // Apply request profile to contact
+                request.profile?.let { p -> conversation.contact?.let { c ->
+                    p.observeOn(Schedulers.computation()).subscribe { profile -> c.setProfile(profile) }
+                } }
+
+                Log.w(TAG, "pendingRequestAdded $key")
                 pending[key] = conversation
                 if (!conversation.isSwarm) {
-                    val contact = getContactFromCache(request.uri)
+                    val contact = getContactFromCache(request.from)
                     conversation.addRequestEvent(request, contact)
                 }
                 pendingChanged()
@@ -714,17 +691,6 @@ class Account(
         }
     }
 
-    fun removeRequestPerConvId(conversationId: String) {
-        synchronized(pending) {
-            for ((_, request) in mRequests) {
-                if (request.conversationId != null && request.conversationId == conversationId) {
-                    removeRequest(request.uri)
-                    return
-                }
-            }
-        }
-    }
-
     fun registeredNameFound(state: Int, address: String, name: String?): Boolean {
         val uri = Uri.fromString(address)
         val key = uri.uri
@@ -740,9 +706,9 @@ class Account(
     }
 
     fun getByUri(uri: Uri?): Conversation? {
-        //Log.w(TAG, "getByUri " + getAccountID() + " " + uri);
+        Log.w(TAG, "getByUri $accountId $uri");
         if (uri == null || uri.isEmpty) return null
-        return if (uri.isSwarm) getSwarm(uri.rawRingId) else getByKey(uri.uri)
+        return if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
     }
 
     fun getByUri(uri: String?): Conversation? {
@@ -750,12 +716,7 @@ class Account(
     }
 
     private fun getByKey(key: String): Conversation {
-        cache[key]?.let { return it }
-        val contact = getContactFromCache(key)
-        val conversation = Conversation(accountId, contact)
-        //Log.w(TAG, "getByKey " + getAccountID() + " contact " + key);
-        cache[key] = conversation
-        return conversation
+        return cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
     }
 
     fun setHistoryLoaded(conversations: List<Conversation>) {

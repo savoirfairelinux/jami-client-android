@@ -240,6 +240,14 @@ class ContactDetailsActivity : AppCompatActivity() {
             return
         }
         JamiApplication.instance?.startDaemon()
+        val conversation = try {
+            mConversationFacade
+                .startConversation(path.accountId, path.conversationUri)
+                .blockingGet()
+        } catch (e: Throwable) {
+            finish()
+            return
+        }
         binding = ActivityContactDetailsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         //JamiApplication.getInstance().getInjectionComponent().inject(this);
@@ -254,17 +262,12 @@ class ContactDetailsActivity : AppCompatActivity() {
         //fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
         colorActionPosition = 0
         symbolActionPosition = 1
-        val conversation = mConversationFacade
-            .startConversation(path.accountId, path.conversationUri)
-            .blockingGet()
         val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
-        binding!!.contactImage.setImageDrawable(
-            AvatarDrawable.Builder()
-                .withConversation(conversation)
-                .withPresence(false)
-                .withCircleCrop(true)
-                .build(this)
-        )
+        binding!!.contactImage.setImageDrawable(AvatarDrawable.Builder()
+            .withConversation(conversation)
+            .withPresence(false)
+            .withCircleCrop(true)
+            .build(this))
 
         /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());
         for (Map.Entry<String, String> e : details.entrySet()) {

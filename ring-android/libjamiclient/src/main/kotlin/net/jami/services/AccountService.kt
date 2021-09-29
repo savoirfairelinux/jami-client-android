@@ -247,7 +247,6 @@ class AccountService(
     }
 
     private fun refreshAccountsCacheFromDaemon() {
-        Log.w(TAG, "refreshAccountsCacheFromDaemon")
         var hasSip = false
         var hasJami = false
         val curList: List<Account> = mAccountList
@@ -286,14 +285,20 @@ class AccountService(
                     hasJami = true
                     val enabled = account.isEnabled
                     account.devices = JamiService.getKnownRingDevices(accountId).toNative()
+                    Log.w(TAG, "$accountId loading contacts")
                     account.setContacts(JamiService.getContacts(accountId).toNative())
+
                     val requests: List<Map<String, String>> = JamiService.getTrustRequests(accountId).toNative()
+                    Log.w(TAG, "$accountId loading ${requests.size} trust requests")
                     for (requestInfo in requests) {
                         val request = TrustRequest(accountId, requestInfo)
+                        request.vCard?.let { vcard ->
+                            request.profile = mVCardService.loadVCardProfile(vcard)
+                        }
                         account.addRequest(request)
                     }
                     val conversations: List<String> = JamiService.getConversations(account.accountId)
-                    Log.w(TAG, accountId + " loading conversations: " + conversations.size)
+                    Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
                     for (conversationId in conversations) {
                         try {
                             val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId).toNative()
@@ -326,16 +331,20 @@ class AccountService(
                             Log.w(TAG, "Error loading conversation", e)
                         }
                     }
+                    Log.w(TAG, "$accountId loading conversation requests")
                     for (requestData in JamiService.getConversationRequests(account.accountId).toNative()) {
                         /*for (Map.Entry<String, String> e : requestData.entrySet()) {
                             Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
                         }*/
-                        val conversationId = requestData["id"]
                         val from = Uri.fromString(requestData["from"]!!)
-                        val request = account.getRequest(from)
-                        if (request == null || conversationId != request.conversationId) {
-                            val received = requestData["received"]!!
-                            account.addRequest(TrustRequest(account.accountId, from, received.toLong() * 1000L, null, conversationId))
+                        val conversationId = requestData["id"]
+                        val conversationUri =
+                            if (conversationId == null || conversationId.isEmpty()) null
+                            else Uri(Uri.SWARM_SCHEME, conversationId)
+                        val request = account.getRequest(conversationUri ?: from)
+                        if (request == null || conversationUri != request.from) {
+                            val received = requestData["received"]!!.toLong() * 1000L
+                            account.addRequest(TrustRequest(account.accountId, from, received, null, conversationUri))
                         }
                     }
                     if (enabled) {
@@ -516,7 +525,7 @@ class AccountService(
         return getAccountSingle(accountId).map { account ->
             Log.w(TAG, "startConversation")
             val id = JamiService.startConversation(accountId)
-            val conversation = account.getSwarm(id)!! //new Conversation(accountId, new Uri(id));
+            val conversation = account.getSwarm(id)!!
             for (member in initialMembers) {
                 Log.w(TAG, "addConversationMember $member")
                 JamiService.addConversationMember(accountId, id, member)
@@ -537,7 +546,6 @@ class AccountService(
         JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
     }
 
-    @JvmOverloads
     fun loadMore(conversation: Conversation, n: Int = 16): Single<Conversation> {
         synchronized(conversation) {
             if (conversation.isLoaded()) {
@@ -923,10 +931,15 @@ class AccountService(
      */
     fun acceptTrustRequest(accountId: String, from: Uri) {
         Log.i(TAG, "acceptRequest() $accountId $from")
-        getAccount(accountId)?.let { account -> account.removeRequest(from)?.vCard?.let{ vcard ->
+        getAccount(accountId)?.let { account -> account.getRequest(from)?.vCard?.let{ vcard ->
             VCardUtils.savePeerProfileToDisk(vcard, accountId, from.rawRingId + ".vcf", mDeviceRuntimeService.provideFilesDir())
         }}
-        mExecutor.execute { JamiService.acceptTrustRequest(accountId, from.rawRingId) }
+        mExecutor.execute {
+            if (from.isSwarm)
+                JamiService.acceptConversationRequest(accountId, from.rawRingId)
+            else
+                JamiService.acceptTrustRequest(accountId, from.rawRingId)
+        }
     }
 
     /**
@@ -967,14 +980,19 @@ class AccountService(
      * Refuses and blocks a pending trust request
      */
     fun discardTrustRequest(accountId: String, contactUri: Uri): Boolean {
-        val account = getAccount(accountId)
-        var removed = false
-        if (account != null) {
-            removed = account.removeRequest(contactUri) != null
-            mHistoryService.clearHistory(contactUri.rawRingId, accountId, true).subscribe()
+        return if (contactUri.isSwarm)  {
+            JamiService.declineConversationRequest(accountId, contactUri.rawRingId)
+            true
+        } else {
+            val account = getAccount(accountId)
+            var removed = false
+            if (account != null) {
+                removed = account.removeRequest(contactUri) != null
+                mHistoryService.clearHistory(contactUri.rawRingId, accountId, true).subscribe()
+            }
+            mExecutor.execute { JamiService.discardTrustRequest(accountId, contactUri.rawRingId) }
+            removed
         }
-        mExecutor.execute { JamiService.discardTrustRequest(accountId, contactUri.rawRingId) }
-        return removed
     }
 
     /**
@@ -1221,7 +1239,7 @@ class AccountService(
             val fromUri = Uri.fromString(from)
             var request = account.getRequest(fromUri)
             if (request == null)
-                request = TrustRequest(accountId, fromUri, received * 1000L, message, conversationId)
+                request = TrustRequest(accountId, fromUri, received * 1000L, message, if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId))
             else request.vCard = Ezvcard.parse(message).first()
             request.vCard?.let { vcard ->
                 val contact = account.getContactFromCache(fromUri)
@@ -1245,7 +1263,7 @@ class AccountService(
             val contact = account.addContact(details)
             val conversationUri = contact.conversationUri.blockingFirst()
             if (conversationUri.isSwarm) {
-                var conversation = account.getSwarm(conversationUri.rawRingId)
+                var conversation = account.getByUri(conversationUri)
                 if (conversation == null) {
                     conversation = account.newSwarm(conversationUri.rawRingId, Conversation.Mode.Syncing)
                     conversation.addContact(contact)
@@ -1426,28 +1444,32 @@ class AccountService(
         }*/
         val modeInt = info["mode"]!!.toInt()
         val mode = Conversation.Mode.values()[modeInt]
-        var c = account.getSwarm(conversationId)
+        val uri = Uri(Uri.SWARM_SCHEME, conversationId)
+        var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
         if (c == null) {
             c = account.newSwarm(conversationId, mode)
         } else {
+            c.loaded = null
+            c.clearHistory(true)
             setMode = mode != c.mode.blockingFirst()
         }
         val conversation = c
         synchronized(conversation) {
             // Making sure to add contacts before changing the mode
             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
-                val uri = Uri.fromId(member["uri"]!!)
-                var contact = conversation.findContact(uri)
+                val memberUri = Uri.fromId(member["uri"]!!)
+                var contact = conversation.findContact(memberUri)
                 if (contact == null) {
-                    contact = account.getContactFromCache(uri)
+                    contact = account.getContactFromCache(memberUri)
                     conversation.addContact(contact)
                 }
             }
-            if (conversation.lastElementLoaded == null) conversation.lastElementLoaded =
-                Completable.defer { loadMore(conversation, 2).ignoreElement() }
+            if (conversation.lastElementLoaded == null)
+                conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }
                     .cache()
-            if (setMode) conversation.setMode(mode)
+            if (setMode)
+                conversation.setMode(mode)
         }
         account.conversationStarted(conversation)
         loadMore(conversation, 2)
@@ -1463,13 +1485,13 @@ class AccountService(
     }
 
     fun conversationRequestDeclined(accountId: String, conversationId: String) {
-        Log.d(TAG, "conversation's request for $conversationId is declined")
+        Log.d(TAG, "conversation request for $conversationId is declined")
         val account = getAccount(accountId)
         if (account == null) {
             Log.w(TAG, "conversationRequestDeclined: can't find account")
             return
         }
-        account.removeRequestPerConvId(conversationId)
+        account.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
     }
 
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
@@ -1480,10 +1502,11 @@ class AccountService(
             return
         }
         val contactUri = Uri.fromId(metadata["from"]!!)
+        val conversationUri = if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId)
         val request = account.getRequest(contactUri)
-        if (request == null || conversationId != request.conversationId) {
-            val received = metadata["received"]
-            account.addRequest(TrustRequest(account.accountId, contactUri, java.lang.Long.decode(received) * 1000L, null, conversationId))
+        if (request == null || conversationUri != request.conversationUri) {
+            val received = metadata["received"]!!
+            account.addRequest(TrustRequest(account.accountId, contactUri, received.toLong() * 1000L, null, conversationUri))
         }
     }
 

@@ -308,15 +308,8 @@ class Conversation : ConversationHistory {
     }
 
     fun addTextMessage(txt: TextMessage) {
-        if (mVisible) {
+        if (mVisible)
             txt.read()
-        }
-        if (txt.conversation == null) {
-            Log.e(
-                TAG,
-                "Error in conversation class... No conversation is attached to this interaction"
-            )
-        }
         setInteractionProperties(txt)
         rawHistory[txt.timestamp] = txt
         mDirty = true
@@ -413,9 +406,7 @@ class Conversation : ConversationHistory {
         if (mDirty) {
             Log.w(TAG, "sortHistory()")
             synchronized(aggregateHistory) {
-                aggregateHistory.sortWith { c1: Interaction, c2: Interaction ->
-                    java.lang.Long.compare(c1.timestamp, c2.timestamp)
-                }
+                aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
             }
             mDirty = false
         }
@@ -499,7 +490,8 @@ class Conversation : ConversationHistory {
         aggregateHistory.clear()
         rawHistory.clear()
         mDirty = false
-        if (!delete && contacts.size == 1) aggregateHistory.add(ContactEvent(contacts[0]))
+        if (!delete && contacts.size == 1)
+            aggregateHistory.add(ContactEvent(contacts[0]))
         clearedSubject.onNext(aggregateHistory)
     }
 
@@ -638,7 +630,7 @@ class Conversation : ConversationHistory {
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes
-        Syncing, Public, Legacy
+        Syncing, Public, Legacy, Request
     }
 
     interface ConversationActionCallback {
