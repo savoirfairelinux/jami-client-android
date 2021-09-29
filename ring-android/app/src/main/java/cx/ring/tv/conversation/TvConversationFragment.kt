@@ -392,14 +392,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
      * @param currentFile DataTransfer of the file that is going to be stored
      * @param fileAbsolutePath absolute path of the file we want to save
      */
-    override fun startSaveFile(currentFile: DataTransfer, fileAbsolutePath: String) {
+    override fun startSaveFile(file: DataTransfer, fileAbsolutePath: String) {
         mCurrentFileAbsolutePath = fileAbsolutePath
         try {
             // Use Android Storage File Access to download the file
             val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            downloadFileIntent.type = getMimeTypeFromExtension(currentFile.extension)
+            downloadFileIntent.type = getMimeTypeFromExtension(file.extension)
             downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
-            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, currentFile.displayName)
+            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
         } catch (e: Exception) {
             Log.i(TAG, "No app detected for saving files.")
@@ -408,7 +408,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             if (!directory.exists()) {
                 directory.mkdirs()
             }
-            writeToFile(Uri.fromFile(File(directory, currentFile.displayName)))
+            writeToFile(Uri.fromFile(File(directory, file.displayName)))
         }
     }
 

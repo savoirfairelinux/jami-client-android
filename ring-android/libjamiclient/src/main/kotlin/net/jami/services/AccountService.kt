@@ -1223,8 +1223,7 @@ class AccountService(
             if (request == null)
                 request = TrustRequest(accountId, fromUri, received * 1000L, message, conversationId)
             else request.vCard = Ezvcard.parse(message).first()
-            val vcard = request.vCard
-            if (vcard != null) {
+            request.vCard?.let { vcard ->
                 val contact = account.getContactFromCache(fromUri)
                 if (!contact.detailsLoaded) {
                     // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
@@ -1312,32 +1311,26 @@ class AccountService(
         val authorUri = Uri.fromId(author)
         val timestamp = message["timestamp"]!!.toLong() * 1000
         val contact = conversation.findContact(authorUri) ?: account.getContactFromCache(authorUri)
-        var interaction: Interaction
-        when (type) {
-            "initial" -> {
-                if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
+        val interaction: Interaction = when (type) {
+            "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                     val invited = message["invited"]!!
                     var invitedContact = conversation.findContact(Uri.fromId(invited))
                     if (invitedContact == null) {
                         invitedContact = account.getContactFromCache(invited)
                     }
                     invitedContact.addedDate = Date(timestamp)
-                    interaction = ContactEvent(invitedContact).setEvent(ContactEvent.Event.fromConversationAction("add"))
+                    ContactEvent(invitedContact).setEvent(ContactEvent.Event.fromConversationAction("add"))
                 } else {
-                    interaction = Interaction(conversation, Interaction.InteractionType.INVALID)
+                    Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
-            }
             "member" -> {
                 val action = message["action"]!!
                 val uri = message["uri"]!!
-                var member = conversation.findContact(Uri.fromId(uri))
-                if (member == null) {
-                    member = account.getContactFromCache(uri)
-                }
+                val member = conversation.findContact(Uri.fromId(uri)) ?: account.getContactFromCache(uri)
                 member.addedDate = Date(timestamp)
-                interaction = ContactEvent(member).setEvent(ContactEvent.Event.fromConversationAction(action))
+                ContactEvent(member).setEvent(ContactEvent.Event.fromConversationAction(action))
             }
-            "text/plain" -> interaction = TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
+            "text/plain" -> TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
             "application/data-transfer+json" -> {
                 try {
                     val fileName = message["displayName"]!!
@@ -1352,22 +1345,22 @@ class AccountService(
                         totalA[0] = message["totalSize"]!!.toLong()
                     }
                     val path = File(paths[0]!!)
-                    interaction = DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0])
-                    interaction.daemonPath = path
                     val isComplete = path.exists() && progressA[0] == totalA[0]
                     Log.w(TAG, "add DataTransfer at " + paths[0] + " with progress " + progressA[0] + "/" + totalA[0])
-                    interaction.status = if (isComplete) InteractionStatus.TRANSFER_FINISHED else InteractionStatus.FILE_AVAILABLE
-                    //}
+                    DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
+                        daemonPath = path
+                        status = if (isComplete) InteractionStatus.TRANSFER_FINISHED else InteractionStatus.FILE_AVAILABLE
+                    }
                 } catch (e: Exception) {
-                    interaction = Interaction(conversation, Interaction.InteractionType.INVALID)
+                    Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
             }
-            "application/call-history+json" -> {
-                interaction = Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp)
-                interaction.duration = message["duration"]!!.toLong()
-            }
-            "merge" -> interaction = Interaction(conversation, Interaction.InteractionType.INVALID)
-            else -> interaction = Interaction(conversation, Interaction.InteractionType.INVALID)
+            "application/call-history+json" ->
+                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
+                    duration = message["duration"]!!.toLong()
+                }
+            "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
+            else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (StringUtils.isEmpty(parent)) null else parent)
