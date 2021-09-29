@@ -593,12 +593,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun writeToFile(data: Uri) {
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
-        val input = File(path)
-        mCompositeDisposable.add(
-            copyFileToUri(cr, input, data)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
-                { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
+        mCompositeDisposable.add(copyFileToUri(cr, File(path), data)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
+            { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -751,16 +749,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun onStop() {
         super.onStop()
         presenter.pause()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //presenter.pause();
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //presenter.resume(mIsBubble);
     }
 
     override fun onDestroy() {
@@ -997,16 +985,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val visible = binding!!.cvMessageInput.visibility == View.VISIBLE
-        if (mAudioCallBtn != null) mAudioCallBtn!!.isVisible = visible
-        if (mVideoCallBtn != null) mVideoCallBtn!!.isVisible = visible
+        mAudioCallBtn?.isVisible = visible
+        mVideoCallBtn?.isVisible = visible
     }
 
-    override fun switchToUnknownView(contactDisplayName: String) {
+    override fun switchToUnknownView(name: String) {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
-            tvTrustRequestMessage.text = String.format(getString(R.string.message_contact_not_trusted), contactDisplayName)
+            tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted, name)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = unknownContactPrompt
         }
@@ -1014,12 +1002,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         updateListPadding()
     }
 
-    override fun switchToIncomingTrustRequestView(contactDisplayName: String) {
+    override fun switchToIncomingTrustRequestView(name: String) {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName)
+            tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted_yet, name)
             trustRequestMessageLayout.visibility = View.VISIBLE
             currentBottomView = trustRequestPrompt
         }
@@ -1051,6 +1039,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         requireActivity().invalidateOptionsMenu()
         updateListPadding()
     }
+
     override fun switchToEndedView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
@@ -1077,13 +1066,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun setLoading(isLoading: Boolean) {
-        if (binding == null) return
+        val binding = binding ?: return
         if (isLoading) {
-            binding!!.btnTakePicture.visibility = View.GONE
-            binding!!.pbDataTransfer.visibility = View.VISIBLE
+            binding.btnTakePicture.visibility = View.GONE
+            binding.pbDataTransfer.visibility = View.VISIBLE
         } else {
-            binding!!.btnTakePicture.visibility = View.VISIBLE
-            binding!!.pbDataTransfer.visibility = View.GONE
+            binding.btnTakePicture.visibility = View.VISIBLE
+            binding.pbDataTransfer.visibility = View.GONE
         }
     }
 
