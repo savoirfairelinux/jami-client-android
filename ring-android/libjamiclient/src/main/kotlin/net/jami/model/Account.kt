@@ -759,9 +759,9 @@ class Account(
     private fun contactAdded(contact: Contact?) {
         val uri = contact!!.uri
         val key = uri.uri
-        Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
+        //Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
         if (!contact.conversationUri.blockingFirst().equals(uri)) {
-            Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation")
+            //Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation")
             // Don't add conversation if we have a swarm conversation
             return
         }
