@@ -8,7 +8,7 @@ def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStart
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
-    ndkVersion '23.0.7272597 rc3'
+    ndkVersion '23.0.7599858'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
