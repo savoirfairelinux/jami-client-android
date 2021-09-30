@@ -126,7 +126,7 @@ class AccountMigrationFragment : Fragment() {
 
     private fun checkPassword(pwd: TextView, confirm: TextView?): Boolean {
         var error = false
-        if (pwd.text.length == 0) {
+        if (pwd.text.isEmpty()) {
             error = true
         } else {
             if (pwd.text.length < 6) {

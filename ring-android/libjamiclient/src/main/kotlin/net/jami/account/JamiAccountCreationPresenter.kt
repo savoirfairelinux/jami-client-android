@@ -99,7 +99,7 @@ class JamiAccountCreationPresenter @Inject constructor(
 
     fun passwordChanged(password: String) {
         mAccountCreationModel?.password = password
-        if (!isEmpty(password) && password.length < PASSWORD_MIN_LENGTH) {
+        if (password.isNotEmpty() && password.length < PASSWORD_MIN_LENGTH) {
             view?.showInvalidPasswordError(true)
             isPasswordCorrect = false
         } else {
