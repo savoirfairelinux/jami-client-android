@@ -21,6 +21,7 @@
 package net.jami.services
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -497,9 +498,9 @@ class ConversationFacade(
             if (contact == null)
                 null
             else
-                account.getByUri(contact.conversationUri.blockingFirst())
+                account.getByUri(contact.conversationUri.blockingFirst()) ?: account.getByUri(contact.uri)
         else
-            account.getSwarm(conversationId)
+            account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         val conference = if (conversation != null) (conversation.getConference(call.daemonIdString) ?: Conference(call).apply {
             if (newState === CallStatus.OVER) return@onCallStateChange
             conversation.addConference(this)
@@ -658,13 +659,14 @@ class ConversationFacade(
                 }.subscribe()) })
         mDisposableBag.add(mAccountService
             .messageStateChanges
-            .concatMapSingle { e: Interaction ->
+            .concatMapMaybe { e: Interaction ->
                 getAccountSubject(e.account!!)
-                    .map { a: Account ->
-                        if (e.conversation == null)
-                            a.getByUri(Uri(Uri.SWARM_SCHEME, e.conversationId!!))!!
-                        else
-                            a.getByUri(e.conversation!!.participant)!!
+                    .flatMapMaybe<Conversation> { a: Account -> Maybe.fromCallable {
+                            if (e.conversation == null)
+                                a.getByUri(Uri(Uri.SWARM_SCHEME, e.conversationId!!))
+                            else
+                                a.getByUri(e.conversation!!.participant)
+                        }
                     }
                     .doOnSuccess { conversation -> conversation.updateInteraction(e) }
             }
