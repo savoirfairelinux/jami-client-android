@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb12516d_e7491215",
+        "filename": "ring-android/app/src/main/res/values-v27/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-09-30T18:21:43Z",
+      "side": 1,
+      "message": "use base theme to avoid duplication",
+      "revId": "5276a8643b96e1e600f45eead8ed0691386d7750",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
