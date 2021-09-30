@@ -61,21 +61,19 @@ class AccountMigrationFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragAccountMigrationBinding.inflate(inflater, parent, false)
-        return binding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding!!.ringPassword.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
-            actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null)
-        }
-        binding!!.ringPassword.onFocusChangeListener = View.OnFocusChangeListener { v: View, hasFocus: Boolean ->
-            if (!hasFocus) {
-                checkPassword(v as TextView, null)
+        return FragAccountMigrationBinding.inflate(inflater, parent, false).apply {
+            ringPassword.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+                actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null)
             }
-        }
-        binding!!.ringMigrateBtn.setOnClickListener { initAccountMigration(binding!!.ringPassword.text.toString()) }
-        binding!!.deleteBtn.setOnClickListener { initAccountDelete() }
+            ringPassword.onFocusChangeListener = View.OnFocusChangeListener { v: View, hasFocus: Boolean ->
+                if (!hasFocus) {
+                    checkPassword(v as TextView, null)
+                }
+            }
+            ringMigrateBtn.setOnClickListener { initAccountMigration(ringPassword.text.toString()) }
+            deleteBtn.setOnClickListener { initAccountDelete() }
+            binding = this
+        }.root
     }
 
     override fun onResume() {
@@ -150,16 +148,12 @@ class AccountMigrationFragment : Fragment() {
 
     private fun handleMigrationState(newState: String) {
         migratingAccount = false
-        if (TextUtils.isEmpty(newState)) {
-            if (mProgress != null) {
-                mProgress!!.dismiss()
-                mProgress = null
-            }
-            return
-        }
-        if (mProgress != null) {
-            mProgress!!.dismiss()
+        mProgress?.let { progress ->
+            progress.dismiss()
             mProgress = null
+        }
+        if (TextUtils.isEmpty(newState)) {
+            return
         }
         val dialogBuilder: AlertDialog.Builder = MaterialAlertDialogBuilder(requireContext())
         dialogBuilder.setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int -> }
