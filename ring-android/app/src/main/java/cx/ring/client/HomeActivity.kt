@@ -174,23 +174,27 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         Log.d(TAG, "handleIntent: $intent")
         val extra = intent.extras
         val action = intent.action
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT == action) {
-            //mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
-            presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
-        } else if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action) {
-            val path = ConversationPath.fromBundle(extra)
-            if (path != null) {
-                startConversation(path)
-            } else {
-                intent.setClass(applicationContext, ShareActivity::class.java)
-                startActivity(intent)
+        when (action) {
+            ACTION_PRESENT_TRUST_REQUEST_FRAGMENT -> {
+                presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
             }
-        } else if (DRingService.ACTION_CONV_ACCEPT == action || Intent.ACTION_VIEW == action) {
-            val path = ConversationPath.fromBundle(extra)
-            if (path != null) {
-                startConversation(path)
+            Intent.ACTION_SEND,
+            Intent.ACTION_SEND_MULTIPLE -> {
+                val path = ConversationPath.fromBundle(extra)
+                if (path != null) {
+                    startConversation(path)
+                } else {
+                    intent.setClass(applicationContext, ShareActivity::class.java)
+                    startActivity(intent)
+                }
             }
-        } //else {
+            Intent.ACTION_VIEW,
+            DRingService.ACTION_CONV_ACCEPT -> {
+                val path = ConversationPath.fromIntent(intent)
+                if (path != null)
+                    startConversation(path)
+            }
+        }
         val fragmentManager = supportFragmentManager
         fContent = fragmentManager.findFragmentById(R.id.main_frame)
         if (fContent == null || Intent.ACTION_SEARCH == action) {

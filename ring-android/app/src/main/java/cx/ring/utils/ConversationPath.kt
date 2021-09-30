@@ -165,8 +165,9 @@ class ConversationPath {
                 if (accountId != null && contactId != null) {
                     return ConversationPath(accountId, contactId)
                 } else {
-                    val shortcutId = bundle.getString(ShortcutManagerCompat.EXTRA_SHORTCUT_ID)
-                    if (shortcutId != null) return fromKey(shortcutId)
+                    bundle.getString(ShortcutManagerCompat.EXTRA_SHORTCUT_ID)?.let { shortcutId ->
+                        return fromKey(shortcutId)
+                    }
                 }
             }
             return null
@@ -174,9 +175,7 @@ class ConversationPath {
 
         fun fromIntent(intent: Intent?): ConversationPath? {
             if (intent != null) {
-                val uri = intent.data
-                val conversationPath = fromUri(uri)
-                return conversationPath ?: fromBundle(intent.extras)
+                return fromUri(intent.data) ?: fromBundle(intent.extras)
             }
             return null
         }
