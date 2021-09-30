@@ -222,7 +222,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:resizeableActivity="true"
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/AppTheme.ActionBar.Transparent"
+            android:theme="@style/AppTheme.Call"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
