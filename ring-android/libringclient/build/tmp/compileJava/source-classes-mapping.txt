@@ -1,0 +1,95 @@
+net/jami/settings/GeneralAccountPresenter_Factory.java
+ net.jami.settings.GeneralAccountPresenter_Factory
+net/jami/account/JamiLinkAccountPresenter_Factory.java
+ net.jami.account.JamiLinkAccountPresenter_Factory
+ net.jami.account.JamiLinkAccountPresenter_Factory$InstanceHolder
+net/jami/account/ProfileCreationPresenter_Factory.java
+ net.jami.account.ProfileCreationPresenter_Factory
+net/jami/daemon/DataTransferInfo.java
+ net.jami.daemon.DataTransferInfo
+net/jami/daemon/VideoCallback.java
+ net.jami.daemon.VideoCallback
+net/jami/settings/MediaPreferenceView.java
+ net.jami.settings.MediaPreferenceView
+net/jami/account/LinkDevicePresenter_Factory.java
+ net.jami.account.LinkDevicePresenter_Factory
+net/jami/account/JamiAccountSummaryPresenter_Factory.java
+ net.jami.account.JamiAccountSummaryPresenter_Factory
+net/jami/contactrequests/ContactRequestsPresenter_Factory.java
+ net.jami.contactrequests.ContactRequestsPresenter_Factory
+net/jami/daemon/SWIGTYPE_p_DRing__SinkTarget.java
+ net.jami.daemon.SWIGTYPE_p_DRing__SinkTarget
+net/jami/call/CallPresenter_Factory.java
+ net.jami.call.CallPresenter_Factory
+net/jami/daemon/Blob.java
+ net.jami.daemon.Blob
+net/jami/account/JamiAccountConnectPresenter_Factory.java
+ net.jami.account.JamiAccountConnectPresenter_Factory
+ net.jami.account.JamiAccountConnectPresenter_Factory$InstanceHolder
+net/jami/daemon/ConversationCallback.java
+ net.jami.daemon.ConversationCallback
+net/jami/account/HomeAccountCreationPresenter_Factory.java
+ net.jami.account.HomeAccountCreationPresenter_Factory
+ net.jami.account.HomeAccountCreationPresenter_Factory$InstanceHolder
+net/jami/account/SIPCreationPresenter_Factory.java
+ net.jami.account.SIPCreationPresenter_Factory
+net/jami/daemon/IntegerMap.java
+ net.jami.daemon.IntegerMap
+ net.jami.daemon.IntegerMap$1
+ net.jami.daemon.IntegerMap$Iterator
+net/jami/account/JamiAccountCreationPresenter_Factory.java
+ net.jami.account.JamiAccountCreationPresenter_Factory
+net/jami/daemon/ConfigurationCallback.java
+ net.jami.daemon.ConfigurationCallback
+net/jami/daemon/MessageVect.java
+ net.jami.daemon.MessageVect
+net/jami/daemon/JamiService.java
+ net.jami.daemon.JamiService
+net/jami/settings/MediaPreferencePresenter_Factory.java
+ net.jami.settings.MediaPreferencePresenter_Factory
+net/jami/account/AccountWizardPresenter_Factory.java
+ net.jami.account.AccountWizardPresenter_Factory
+net/jami/navigation/HomeNavigationPresenter_Factory.java
+ net.jami.navigation.HomeNavigationPresenter_Factory
+net/jami/daemon/Callback.java
+ net.jami.daemon.Callback
+net/jami/daemon/StringMap.java
+ net.jami.daemon.StringMap
+ net.jami.daemon.StringMap$1
+ net.jami.daemon.StringMap$Iterator
+net/jami/share/SharePresenter_Factory.java
+ net.jami.share.SharePresenter_Factory
+net/jami/settings/AdvancedAccountPresenter_Factory.java
+ net.jami.settings.AdvancedAccountPresenter_Factory
+net/jami/daemon/IntVect.java
+ net.jami.daemon.IntVect
+net/jami/settings/SettingsPresenter_Factory.java
+ net.jami.settings.SettingsPresenter_Factory
+net/jami/contactrequests/BlockListPresenter_Factory.java
+ net.jami.contactrequests.BlockListPresenter_Factory
+net/jami/daemon/FloatVect.java
+ net.jami.daemon.FloatVect
+net/jami/daemon/PresenceCallback.java
+ net.jami.daemon.PresenceCallback
+net/jami/daemon/JamiServiceJNI.java
+ net.jami.daemon.JamiServiceJNI
+net/jami/smartlist/SmartListPresenter_Factory.java
+ net.jami.smartlist.SmartListPresenter_Factory
+cx/ring/daemon/SWIGTYPE_p_long_long.java
+ cx.ring.daemon.SWIGTYPE_p_long_long
+cx/ring/daemon/SWIGTYPE_p_DRing__SinkTarget.java
+ cx.ring.daemon.SWIGTYPE_p_DRing__SinkTarget
+net/jami/conversation/ConversationPresenter_Factory.java
+ net.jami.conversation.ConversationPresenter_Factory
+net/jami/account/SecurityAccountPresenter_Factory.java
+ net.jami.account.SecurityAccountPresenter_Factory
+net/jami/daemon/DataTransferCallback.java
+ net.jami.daemon.DataTransferCallback
+net/jami/daemon/UintVect.java
+ net.jami.daemon.UintVect
+net/jami/daemon/StringVect.java
+ net.jami.daemon.StringVect
+net/jami/daemon/Message.java
+ net.jami.daemon.Message
+net/jami/daemon/VectMap.java
+ net.jami.daemon.VectMap

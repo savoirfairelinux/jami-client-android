@@ -165,6 +165,7 @@ class AvatarDrawable : Drawable {
     }
 
     private val cropCircle: Boolean
+    private val resize: Boolean
     private var isOnline = false
     private var isChecked = false
     private var showPresence = false
@@ -178,6 +179,7 @@ class AvatarDrawable : Drawable {
         private var showPresence = true
         private var isChecked = false
         private var isGroup = false
+        private var resize = true
         fun withId(id: String?): Builder {
             this.id = id
             return this
@@ -200,6 +202,11 @@ class AvatarDrawable : Drawable {
 
         fun withCircleCrop(crop: Boolean): Builder {
             circleCrop = crop
+            return this
+        }
+
+        fun withResize(resize: Boolean): Builder {
+            this.resize = resize
             return this
         }
 
@@ -275,7 +282,7 @@ class AvatarDrawable : Drawable {
 
         fun build(context: Context): AvatarDrawable {
             val avatarDrawable = AvatarDrawable(
-                context, photos, name, id, circleCrop, isGroup
+                context, photos, name, id, circleCrop, isGroup, resize
             )
             avatarDrawable.setOnline(isOnline)
             avatarDrawable.setChecked(isChecked)
@@ -325,14 +332,16 @@ class AvatarDrawable : Drawable {
         name: String?,
         id: String?,
         crop: Boolean,
-        group: Boolean
+        group: Boolean,
+        resize: Boolean
     ) {
         //Log.w("AvatarDrawable", "AvatarDrawable " + (photos == null ? null : photos.size()) + " " + name);
         cropCircle = crop
+        this.resize = resize
         isGroup = group
         minSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB.toFloat(), context.resources.displayMetrics).toInt()
         val borderSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_BORDER.toFloat(), context.resources.displayMetrics)
-        if (cropCircle) {
+        if (cropCircle && resize) {
             inSize = minSize
         }
         if (photos != null && photos.size > 0) {
@@ -407,6 +416,7 @@ class AvatarDrawable : Drawable {
     constructor(other: AvatarDrawable) {
         //Log.w("AvatarDrawable", "AvatarDrawable copy");
         cropCircle = other.cropCircle
+        resize = other.resize
         isGroup = other.isGroup
         minSize = other.minSize
         bitmaps = other.bitmaps
