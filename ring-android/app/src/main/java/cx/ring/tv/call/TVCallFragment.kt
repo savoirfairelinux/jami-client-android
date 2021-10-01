@@ -62,14 +62,12 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -528,6 +526,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             binding.contactBubble.setImageDrawable(AvatarDrawable.Builder()
                 .withContact(participantInfo[0].contact)
                 .withCircleCrop(true)
+                .withResize(false)
                 .withPresence(false)
                 .build(requireActivity()))
 
