@@ -45,6 +45,8 @@
   <string name="pref_read_summary">Envoyer et recevoir les indicateurs montrant qu\'un message a été affiché</string>
   <string name="pref_block_record_title">Bloquer la capture d\'écran et l\'enregistrement</string>
   <string name="pref_block_record_summary">Bloquer la capture d\'écran et l\'enregistrement vidéo</string>
+  <string name="pref_link_preview_title">Charger la prévisualisation des liens dans les conversations</string>
+  <string name="pref_link_preview_summary">Les prévisualisations requièrent le téléchargement de contenu provenant serveurs tiers.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Public \n(montre les notifications et leurs contenus sur l\'écran verrouillé )\n</string>
   <string name="notification_private">Privé\n(montre les notifications mais cache le contenu sur l\'écran verrouillé)\n</string>

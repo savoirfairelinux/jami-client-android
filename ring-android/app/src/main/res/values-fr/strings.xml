@@ -99,6 +99,10 @@
   <string name="start_error_title">Jami n\'arrive pas à se lancer !</string>
   <string name="start_error_mic_required">Jami demande pour fonctionner votre autorisation d\'utiliser votre microphone .</string>
   <string name="action_call_accept">Répondre</string>
+  <string name="action_call_accept_audio">Répondre en audio</string>
+  <string name="action_call_accept_video">Répondre en vidéo</string>
+  <string name="action_call_hold_accept">Mettre en attente et prendre l\'appel audio</string>
+  <string name="action_call_hold_accept_video">Mettre en attente et prendre l\'appel vidéo</string>
   <string name="action_call_end_accept">Raccrocher et prendre l\'appel</string>
   <string name="action_call_decline">Décliner</string>
   <string name="action_call_mic_mute">Rendre votre microphone muet</string>

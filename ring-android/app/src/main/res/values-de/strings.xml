@@ -286,6 +286,7 @@
   <string name="tv_send_text">Text senden</string>
   <string name="tv_send_audio">Audio senden</string>
   <string name="tv_send_video">Medien senden</string>
+  <string name="tv_action_more">Mehr</string>
   <string name="conversation_input_speech_hint">Sag etwas...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Empfohlen</string>

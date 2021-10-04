@@ -45,6 +45,8 @@
   <string name="pref_read_summary">Lähetä ja vastaanota kuittaus, jotka osoittaa, että viesti on nähty.</string>
   <string name="pref_block_record_title">Estä ruudunkaappaus ja tallennus</string>
   <string name="pref_block_record_summary">Estä ruudunkaappaus tai tallennus.</string>
+  <string name="pref_link_preview_title">Näytä linkkien esikatselu keskusteluissa</string>
+  <string name="pref_link_preview_summary">Esikatselu vaatii sisällön lataamista kolmannen osapuolen palvelimelta.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Julkinen \n(näytä ilmoitukset ja niiden sisältö lukitusruudulla)\n</string>
   <string name="notification_private">Yksityinen \n(näytä ilmoitukset, mutta piilottaa sisältö lukitusnäytöllä)\n</string>

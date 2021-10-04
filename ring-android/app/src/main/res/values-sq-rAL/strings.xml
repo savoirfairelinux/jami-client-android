@@ -99,6 +99,10 @@
   <string name="start_error_title">S\’niset dot Jami!</string>
   <string name="start_error_mic_required">Që të funksionojë, Jami lyp leje për mikrofonin.</string>
   <string name="action_call_accept">Pranoje thirrjen</string>
+  <string name="action_call_accept_audio">Përgjigjuni me zë</string>
+  <string name="action_call_accept_video">Përgjigjuni me video</string>
+  <string name="action_call_hold_accept">Mbaje dhe merr thirrje audio</string>
+  <string name="action_call_hold_accept_video">Mbaje dhe merr thirrje video</string>
   <string name="action_call_end_accept">Përfundoje dhe bëje thirrje</string>
   <string name="action_call_decline">Hidhe tej</string>
   <string name="action_call_mic_mute">Heshtoje mikrofonin</string>

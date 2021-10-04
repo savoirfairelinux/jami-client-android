@@ -99,6 +99,10 @@
   <string name="start_error_title">No se puede iniciar Jami!</string>
   <string name="start_error_mic_required">Jami necesita permiso de acceso al micrófono para funcionar.</string>
   <string name="action_call_accept">Contestar a la llamada</string>
+  <string name="action_call_accept_audio">Responder mediante audio</string>
+  <string name="action_call_accept_video">Responder mediante vídeo</string>
+  <string name="action_call_hold_accept">Mantener en espera y responder llamada de audio</string>
+  <string name="action_call_hold_accept_video">Mantener en espera y responder videollamada</string>
   <string name="action_call_end_accept">Finalizar y responder llamada</string>
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Silenciar micrófono</string>
@@ -195,7 +199,7 @@
   <string name="prompt_new_username">Ingresa un nuevo nombre de usuario</string>
   <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elige una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
-  <string name="help_password_enter">Ingresa la contraseña maestra de su cuenta de Jami</string>
+  <string name="help_password_enter">Ingresa la contraseña maestra de tu cuenta de Jami</string>
   <string name="help_server_enter">Ingrese la URL del servidor de gestión</string>
   <string name="help_pin_enter">Ingresa el PIN de otra cuenta de Jami configurada. Utiliza la opción \"Exportar cuenta en Jami\" para obtener un PIN.</string>
   <string name="wizard_next">Siguiente</string>
