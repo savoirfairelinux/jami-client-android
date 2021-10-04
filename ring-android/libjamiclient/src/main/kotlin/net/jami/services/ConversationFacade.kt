@@ -230,14 +230,13 @@ class ConversationFacade(
         val conversation = account.getByUri(conversationUri)
             ?: return Single.error(RuntimeException("Can't get conversation"))
         synchronized(conversation) {
-            if (!conversation.isSwarm && conversation.id == null) {
+            if ((!conversation.isSwarm && conversation.id == null) || (conversation.isSwarm && conversation.mode.blockingFirst() == Conversation.Mode.Request)) {
                 return Single.just(conversation)
             }
             var ret = conversation.loaded
             if (ret == null) {
-                ret = if (conversation.isSwarm) mAccountService.loadMore(conversation) else getConversationHistory(
-                    conversation
-                )
+                ret = if (conversation.isSwarm) mAccountService.loadMore(conversation)
+                else getConversationHistory(conversation)
                 conversation.loaded = ret
             }
             return ret
@@ -332,33 +331,33 @@ class ConversationFacade(
             Observable.combineLatest<List<Conversation>, List<Observable<SmartListViewModel>>, String, List<Observable<SmartListViewModel>>>(
                 account.getConversationsSubject(),
                 getSearchResults(account, query),
-                query,
-                { conversations: List<Conversation>, searchResults: List<Observable<SmartListViewModel>>, q: String ->
-                    val newList: MutableList<Observable<SmartListViewModel>> =
-                        ArrayList(conversations.size + searchResults.size + 2)
-                    if (searchResults.isNotEmpty()) {
-                        newList.add(SmartListViewModel.TITLE_PUBLIC_DIR)
-                        newList.addAll(searchResults)
-                    }
-                    if (conversations.isNotEmpty()) {
-                        if (q.isEmpty()) {
-                            for (conversation in conversations)
+                query
+            ) { conversations: List<Conversation>, searchResults: List<Observable<SmartListViewModel>>, q: String ->
+                val newList: MutableList<Observable<SmartListViewModel>> =
+                    ArrayList(conversations.size + searchResults.size + 2)
+                if (searchResults.isNotEmpty()) {
+                    newList.add(SmartListViewModel.TITLE_PUBLIC_DIR)
+                    newList.addAll(searchResults)
+                }
+                if (conversations.isNotEmpty()) {
+                    if (q.isEmpty()) {
+                        for (conversation in conversations)
+                            newList.add(observeConversation(account, conversation, hasPresence))
+                    } else {
+                        val lq = q.lowercase()
+                        newList.add(SmartListViewModel.TITLE_CONVERSATIONS)
+                        var nRes = 0
+                        for (conversation in conversations) {
+                            if (conversation.matches(lq)) {
                                 newList.add(observeConversation(account, conversation, hasPresence))
-                        } else {
-                            val lq = q.lowercase()
-                            newList.add(SmartListViewModel.TITLE_CONVERSATIONS)
-                            var nRes = 0
-                            for (conversation in conversations) {
-                                if (conversation.matches(lq)) {
-                                    newList.add(observeConversation(account, conversation, hasPresence))
-                                    nRes++
-                                }
+                                nRes++
                             }
-                            if (nRes == 0) newList.removeAt(newList.size - 1)
                         }
+                        if (nRes == 0) newList.removeAt(newList.size - 1)
                     }
-                    newList
-                })
+                }
+                newList
+            }
         }
     }
 
@@ -368,9 +367,9 @@ class ConversationFacade(
      * @param account the user account
      */
     private fun getSmartlist(account: Account): Single<Account> {
-        val actions: MutableList<Completable?> = ArrayList(account.getConversations().size + 1)
+        val actions: MutableList<Completable> = ArrayList(account.getConversations().size + 1)
         for (c in account.getConversations()) {
-            if (c.isSwarm) actions.add(c.lastElementLoaded)
+            if (c.isSwarm && c.lastElementLoaded != null) actions.add(c.lastElementLoaded!!)
         }
         actions.add(mHistoryService.getSmartlist(account.accountId)
             .flatMapCompletable { conversationHistoryList: List<Interaction> ->
@@ -663,7 +662,7 @@ class ConversationFacade(
                 getAccountSubject(e.account!!)
                     .map { a: Account ->
                         if (e.conversation == null)
-                            a.getSwarm(e.conversationId!!)!!
+                            a.getByUri(Uri(Uri.SWARM_SCHEME, e.conversationId!!))!!
                         else
                             a.getByUri(e.conversation!!.participant)!!
                     }

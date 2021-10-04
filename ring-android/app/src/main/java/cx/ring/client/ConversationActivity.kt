@@ -56,7 +56,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             finish()
             return
         }
-        conversationPath = path;
+        conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon()
         val binding = ActivityConversationBinding.inflate(layoutInflater)
@@ -66,10 +66,11 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         ab?.setDisplayHomeAsUpEnabled(true)
         binding.contactImage.setOnClickListener { v: View? -> if (mConversationFragment != null) mConversationFragment!!.openContact() }
         if (mConversationFragment == null) {
-            val bundle = conversationPath.toBundle()
-            bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, isBubble)
-            mConversationFragment = ConversationFragment()
-            mConversationFragment!!.arguments = bundle
+            mConversationFragment = ConversationFragment().apply {
+                arguments = conversationPath.toBundle().apply {
+                    putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, isBubble)
+                }
+            }
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frame, mConversationFragment!!, null)
                 .commitNow()
@@ -80,14 +81,14 @@ class ConversationActivity : AppCompatActivity(), Colorable {
     }
 
     override fun onContextMenuClosed(menu: Menu) {
-        mConversationFragment!!.updateAdapterItem()
+        mConversationFragment?.updateAdapterItem()
         super.onContextMenuClosed(menu)
     }
 
     override fun onStart() {
         super.onStart()
-        if (mPendingIntent != null) {
-            handleShareIntent(mPendingIntent!!)
+        mPendingIntent?.let { pendingIntent ->
+            handleShareIntent(pendingIntent)
             mPendingIntent = null
         }
     }
@@ -109,7 +110,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
             if (event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                if (mConversationFragment != null) mConversationFragment!!.sendMessageText()
+                mConversationFragment?.sendMessageText()
                 return true
             }
         }

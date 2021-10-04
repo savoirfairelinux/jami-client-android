@@ -89,7 +89,6 @@ class ConversationPresenter @Inject constructor(
         if (mConversation == conversation) return
         mConversation = conversation
         mConversationSubject.onNext(conversation)
-        val view = view
         view?.let { initView(account, conversation, it) }
     }
 
@@ -112,9 +111,11 @@ class ConversationPresenter @Inject constructor(
 
     private fun initContact(account: Account, conversation: Conversation, mode: Conversation.Mode, view: ConversationView) {
         if (account.isJami) {
-            Log.w(TAG, "initContact " + conversation.uri)
+            Log.w(TAG, "initContact " + conversation.uri + " mode: " + mode)
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
+            } else if (mode == Conversation.Mode.Request) {
+                view.switchToIncomingTrustRequestView(conversation.contact?.displayName ?: conversation.uri.uri)
             } else if (conversation.isSwarm || account.isContact(conversation)) {
                 //if (conversation.isEnded())
                 //    conversation.s
@@ -125,7 +126,7 @@ class ConversationPresenter @Inject constructor(
                 if (req == null) {
                     view.switchToUnknownView(uri.rawUriString)
                 } else {
-                    view.switchToIncomingTrustRequestView(req.displayname)
+                    view.switchToIncomingTrustRequestView(req.displayName)
                 }
             }
         } else {
@@ -135,7 +136,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun initView(account: Account, c: Conversation, view: ConversationView) {
-        Log.w(TAG, "initView " + c.uri + " " + c.mode)
+        Log.w(TAG, "initView " + c.uri)
         val disposable = mConversationDisposable?.apply { clear() } ?: CompositeDisposable().apply {
             mConversationDisposable = this
             mCompositeDisposable.add(this)
@@ -150,11 +151,13 @@ class ConversationPresenter @Inject constructor(
             }
             .subscribe())
         disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode -> if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.OneToOne) c.contact!!.conversationUri else Observable.empty() }
+            .switchMap { mode: Conversation.Mode ->
+                if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.Request)
+                    c.contact!!.conversationUri else Observable.empty() }
             .observeOn(mUiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountId) })
-        disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account),
-            { isConnected: Boolean, a: Account -> isConnected || a.isRegistered })
+        disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account))
+            { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
             .observeOn(mUiScheduler)
             .subscribe { isOk: Boolean ->
                 this.view?.let { v ->
@@ -361,6 +364,11 @@ class ConversationPresenter @Inject constructor(
 
     fun onAcceptIncomingContactRequest() {
         mConversation?.let { conversation ->
+            if (conversation.mode.blockingFirst() == Conversation.Mode.Request) {
+                conversation.loaded = null
+                conversation.clearHistory(true)
+                conversation.setMode(Conversation.Mode.Syncing)
+            }
             mConversationFacade.acceptRequest(conversation.accountId, conversation.uri)
         }
         view?.switchToConversationView()

@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.lang.ref.WeakReference
 
 abstract class RootPresenter<T> {
-    protected var mCompositeDisposable = CompositeDisposable()
+    protected val mCompositeDisposable = CompositeDisposable()
     private var mView: WeakReference<T>? = null
 
     open fun bindView(view: T) {
