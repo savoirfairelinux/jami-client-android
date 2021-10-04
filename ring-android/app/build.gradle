@@ -13,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 320
-        versionName "20210924-01"
+        versionName "20211004-01"
     }
     sourceSets {
         main {
