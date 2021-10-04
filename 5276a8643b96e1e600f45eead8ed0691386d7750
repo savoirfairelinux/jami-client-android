@@ -16,6 +16,24 @@
       "message": "use base theme to avoid duplication",
       "revId": "5276a8643b96e1e600f45eead8ed0691386d7750",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3066d8c2_07bc3150",
+        "filename": "ring-android/app/src/main/res/values-v27/styles.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-10-04T22:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb12516d_e7491215",
+      "revId": "5276a8643b96e1e600f45eead8ed0691386d7750",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
