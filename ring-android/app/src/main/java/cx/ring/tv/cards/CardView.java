@@ -102,6 +102,8 @@ public class CardView extends BaseCardView {
             mTitleView = (TextView) inflater.inflate(R.layout.lb_image_card_view_themed_title, mInfoArea, false);
             mTitleView.setTextSize(12);
             mTitleView.setTypeface(mulishBold);
+            mTitleView.setMaxLines(2);
+            mTitleView.setEllipsize(TextUtils.TruncateAt.END);
             mInfoArea.addView(mTitleView);
         }
 

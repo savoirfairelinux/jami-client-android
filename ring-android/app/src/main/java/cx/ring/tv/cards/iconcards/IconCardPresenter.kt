@@ -32,7 +32,6 @@ import cx.ring.tv.cards.CardView
 class IconCardPresenter(context: Context) : AbstractCardPresenter<CardView>(ContextThemeWrapper(context, R.style.ContactCardTheme)) {
     override fun onCreateView(): CardView {
         val cardView = CardView(context)
-        cardView.setTitleSingleLine(false)
         cardView.setBackgroundColor(context.resources.getColor(R.color.tv_transparent))
         cardView.setInfoAreaBackgroundColor(context.resources.getColor(R.color.transparent))
         val image = cardView.mainImageView
