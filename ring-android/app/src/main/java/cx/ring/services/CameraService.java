@@ -182,7 +182,7 @@ public class CameraService {
     }
 
     public VideoParams getParams(String camId) {
-        Log.w(TAG, "getParams()" + camId);
+        Log.w(TAG, "getParams() " + camId);
         if (camId != null) {
             return mParams.get(camId);
         } else if (previewParams != null) {
@@ -213,7 +213,7 @@ public class CameraService {
             params = new VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
             mParams.put(camId, params);
         } else {
-            params.id = camId;
+            //params.id = camId;
             //params.format = format;
             params.width = deviceParams.size.x;
             params.height = deviceParams.size.y;
@@ -305,7 +305,8 @@ public class CameraService {
     }
 
     public static class VideoParams {
-        public String id;
+        public final String id;
+        public final String inputUri;
         //public int format;
         // size as captured by Android
         public int width;
@@ -316,6 +317,7 @@ public class CameraService {
 
         public VideoParams(String id, int format, int width, int height, int rate) {
             this.id = id;
+            inputUri = "camera://" + id;
             //this.format = format;
             this.width = width;
             this.height = height;
@@ -507,7 +509,7 @@ public class CameraService {
         }
     }
 
-    public Pair<MediaCodec, Surface> openEncoder(VideoParams videoParams, String mimeType, Handler handler, int resolution, int bitrate) {
+    public Pair<MediaCodec, Surface> openEncoder(final VideoParams videoParams, String mimeType, Handler handler, int resolution, int bitrate) {
         Log.d(TAG, "Video with codec " + mimeType + " resolution: " + videoParams.width + "x" + videoParams.height + " Bitrate: " + bitrate);
         int bitrateValue;
         if(bitrate == 0)
@@ -580,12 +582,12 @@ public class CameraService {
                                     // If it's a key-frame, send the cached SPS/PPS NALs prior to
                                     // sending key-frame.
                                     if (isKeyFrame && codecData != null) {
-                                        JamiService.captureVideoPacket(codecData, codecData.capacity(), 0, false, info.presentationTimeUs, videoParams.rotation);
+                                        JamiService.captureVideoPacket(videoParams.inputUri, codecData, codecData.capacity(), 0, false, info.presentationTimeUs, videoParams.rotation);
                                     }
 
                                     // Send the encoded frame
                                     ByteBuffer buffer = codec.getOutputBuffer(index);
-                                    JamiService.captureVideoPacket(buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs, videoParams.rotation);
+                                    JamiService.captureVideoPacket(videoParams.inputUri, buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs, videoParams.rotation);
                                     codec.releaseOutputBuffer(index, false);
                                 }
                             }
@@ -838,7 +840,7 @@ public class CameraService {
                 tmpReader.setOnImageAvailableListener(r -> {
                     Image image = r.acquireLatestImage();
                     if (image != null) {
-                        JamiService.captureVideoFrame(image, videoParams.rotation);
+                        JamiService.captureVideoFrame(videoParams.inputUri, image, videoParams.rotation);
                         image.close();
                     }
                 }, handler);
@@ -851,7 +853,7 @@ public class CameraService {
                 @Override
                 public void onOpened(@NonNull CameraDevice camera) {
                     try {
-                        Log.w(TAG, "onOpened");
+                        Log.w(TAG, "onOpened " + videoParams.id);
                         previewCamera = camera;
                         texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
                         CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
