@@ -94,6 +94,7 @@ import net.jami.services.HardwareService.AudioState
 import net.jami.services.NotificationService
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
 import kotlin.math.min
 
 @AndroidEntryPoint
@@ -1041,10 +1042,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val bufferRect = RectF(0f, 0f, mPreviewHeight.toFloat(), mPreviewWidth.toFloat())
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
-            val scale = Math.max(
-                viewHeight.toFloat() / mPreviewHeight,
-                viewWidth.toFloat() / mPreviewWidth
-            )
+            val scale = max(viewHeight.toFloat() / mPreviewHeight, viewWidth.toFloat() / mPreviewWidth)
             matrix.postScale(scale, scale, centerX, centerY)
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
         } else if (Surface.ROTATION_180 == rotation) {

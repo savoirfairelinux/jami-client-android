@@ -327,7 +327,7 @@ class HardwareServiceImpl(
         videoSurfaces[id]?.get()?.let { holder ->
             shm.window = startVideo(id, holder.surface, width, height)
             if (shm.window == 0L) {
-                Log.w(TAG, "DJamiService.decodingStarted() no window !")
+                Log.w(TAG, "decodingStarted() no window !")
             } else {
                 videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
             }
@@ -431,7 +431,7 @@ class HardwareServiceImpl(
         if (mIsCapturing && mCapturingId != null && mCapturingId == camId) {
             return
         }
-        val cam = camId ?: if (mCapturingId != null) mCapturingId else cameraService.switchInput(true)
+        val cam = camId ?: mCapturingId ?: cameraService.switchInput(true)
         val videoParams = cameraService.getParams(cam)
         if (videoParams == null) {
             Log.w(TAG, "startCapture: no video parameters ")
@@ -456,10 +456,10 @@ class HardwareServiceImpl(
                 videoParams.codec = null
             }
         }
-        Log.w(TAG, "startCapture: call " + cam + " " + videoParams.codec + " useHardwareCodec:" + useHardwareCodec + " bitrate:" + mPreferenceService.bitrate)
+        Log.w(TAG, "startCapture: cam " + cam + " " + videoParams.codec + " useHardwareCodec:" + useHardwareCodec + " bitrate:" + mPreferenceService.bitrate)
         mIsCapturing = true
         mCapturingId = videoParams.id
-        Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation)
+        Log.d(TAG, "startCapture: openCamera " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation)
         mUiScheduler.scheduleDirect {
             cameraService.openCamera(videoParams, surface,
                 object : CameraListener {
