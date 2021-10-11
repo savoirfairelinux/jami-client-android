@@ -78,7 +78,7 @@
   <string name="notif_incoming_file_transfer_title">Fișier primit de la %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Se trimite fișierul către %1$s</string>
   <string name="notif_incoming_picture">Fotografie de la %1$s</string>
-  <string name="notif_sync_title">Sincronizarea datelor...</string>
+  <string name="notif_sync_title">Se sincronizează datele...</string>
   <string name="notif_location_title">Distribuirea poziției către %1$s</string>
   <string name="location_share_contact">%1$s îți trimite poziția</string>
   <string name="notif_location_multi_title">Distribuirea poziției către %1$d contacte</string>
@@ -100,8 +100,8 @@
   <string name="start_error_title">Jami nu se deschide!</string>
   <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
   <string name="action_call_accept">Răspunde</string>
-  <string name="action_call_accept_audio">Răspunde doar vocal</string>
-  <string name="action_call_accept_video">Răspunde cu video</string>
+  <string name="action_call_accept_audio">Vocal</string>
+  <string name="action_call_accept_video">Video</string>
   <string name="action_call_hold_accept">Așteptare și răspunde doar vocal</string>
   <string name="action_call_hold_accept_video">Așteptare și răspunde cu video</string>
   <string name="action_call_end_accept">Închide și răspunde la apel</string>
@@ -186,6 +186,7 @@
   <string name="conversation_contact_is_typing">Contactul tău scrie...</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>
+  <string name="conversation_syncing">Se descarcă conversația de la utilizator</string>
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>

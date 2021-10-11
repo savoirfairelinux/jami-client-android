@@ -99,6 +99,10 @@
   <string name="start_error_title">Jami konnte nicht gestartet werden!</string>
   <string name="start_error_mic_required">Jami benötigt die Erlaubnis, auf das Mikrofon zuzugreifen.</string>
   <string name="action_call_accept">Anruf annehmen</string>
+  <string name="action_call_accept_audio">Mit Audio antworten</string>
+  <string name="action_call_accept_video">Mit Video antworten</string>
+  <string name="action_call_hold_accept">Audioanruf halten und annehmen</string>
+  <string name="action_call_hold_accept_video">Videoanruf halten und annehmen</string>
   <string name="action_call_end_accept">Anruf beenden und entgegennehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
@@ -106,7 +110,10 @@
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
+  <string name="hist_contact_invited">Kontakt eingeladen</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>
+  <string name="hist_contact_left">verlassener Kontakt</string>
+  <string name="hist_contact_banned">Kontakt gesperrt</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
@@ -176,6 +183,14 @@
   <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, dich zu kontaktieren, bis du die Sperre entfernst.</string>
   <string name="block_contact_completed">%1$s wurde gesperrt.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt...</string>
+  <string name="conversation_info_contact_you">Sie</string>
+  <string name="conversation_members">Mitglieder</string>
+  <string name="conversation_syncing">Gespräch von Peer herunterladen</string>
+  <string name="conversation_preference_color">Farbe der Konversation</string>
+  <string name="conversation_preference_emoji">Emoji der Konversation</string>
+  <string name="conversation_type_contact">Jami-Kontakt</string>
+  <string name="conversation_type_private">privater Schwarm</string>
+  <string name="conversation_type_group">Schwarmgruppe</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -218,6 +233,7 @@
   <string name="refuse">Verweigern</string>
   <string name="block">Sperren</string>
   <string name="contact_request_title">Neue Kontaktanfrage</string>
+  <string name="contact_request_msg">Sie haben %1$d Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">Du hast keine Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in deiner Kontaktliste.\nDiese Kontaktanfrage annehmen oder ablehnen?</string>
@@ -256,6 +272,7 @@
   <string name="file_transfer_status_timed_out">abgelaufen</string>
   <string name="file_saved_in">Datei gespeichert in %s</string>
   <string name="file_saved_successfully">Datei erfolgreich gespeichert</string>
+  <string name="file_download">Herunterladen</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr auf dem Gerät</string>
   <string name="title_media_viewer">Dateibetrachter</string>
   <string name="menu_file_open">Datei öffnen</string>

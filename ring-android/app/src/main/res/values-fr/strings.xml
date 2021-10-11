@@ -185,6 +185,7 @@
   <string name="conversation_contact_is_typing">Votre interlocuteur est en train d\'écrire...</string>
   <string name="conversation_info_contact_you">Vous</string>
   <string name="conversation_members">Membres</string>
+  <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>

@@ -99,6 +99,10 @@
   <string name="start_error_title">Jami non pode iniciarse!</string>
   <string name="start_error_mic_required">Jami precisa permiso de acceso ao micrófono para funcionar:</string>
   <string name="action_call_accept">Responder a chamada</string>
+  <string name="action_call_accept_audio">Responder con audio</string>
+  <string name="action_call_accept_video">Responder con vídeo</string>
+  <string name="action_call_hold_accept">Manter e facer chamada de audio</string>
+  <string name="action_call_hold_accept_video">Manter e facer chamada de vídeo</string>
   <string name="action_call_end_accept">Rematar e atender chamada</string>
   <string name="action_call_decline">Rexeitar</string>
   <string name="action_call_mic_mute">Apagar micrófono</string>
@@ -181,6 +185,7 @@
   <string name="conversation_contact_is_typing">O contacto está a escribir...</string>
   <string name="conversation_info_contact_you">Ti</string>
   <string name="conversation_members">Membresía</string>
+  <string name="conversation_syncing">Descargando a conversa desde parceiro</string>
   <string name="conversation_preference_color">Cor da conversa</string>
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>

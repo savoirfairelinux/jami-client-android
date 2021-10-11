@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatsphäre</string>
+  <string name="pref_category_diagnostic">Diagnose</string>
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Jami die Nutzung von 3G/LTE zusätzlich zum WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
@@ -34,12 +35,18 @@
   <string name="pref_delete_account_summary">Dein Konto von diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
   <string name="pref_persistNotification_summary">Jami erlauben im Hintergrund zu laufen, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_logs_title">Diagnoseprotokolle</string>
+  <string name="pref_logs_summary">Diagnoseprotokolleinstellungen öffnen</string>
+  <string name="pref_logs_start">Protokollierung starten</string>
+  <string name="pref_logs_stop">Protokollierung beenden</string>
   <string name="pref_typing_title">Tipp-Benachtigung aktivieren</string>
   <string name="pref_typing_summary">Senden und Empfangen von Tipp-Benachrichtungen, die das Tippen einer Nachricht anzeigen.</string>
   <string name="pref_read_title">Lesebestätigungen aktivieren</string>
   <string name="pref_read_summary">Senden und Empfangen von Lesebestätigungen, die das Anzeigen einer Nachricht bestätigen.</string>
   <string name="pref_block_record_title">Bildschirmfoto und Aufzeichnung sperren</string>
   <string name="pref_block_record_summary">Blockiert die Aufnahme von Bildschirmfotos oder Videos.</string>
+  <string name="pref_link_preview_title">Linkvorschauen in Unterhaltungen anzeigen</string>
+  <string name="pref_link_preview_summary">Vorschauen erfordern das Herunterladen von Inhalten von Drittanbieter-Servern</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Öffentlich \n(Benachrichtigungen und deren Inhalt auf dem Sperrbildschirm anzeigen)\n</string>
   <string name="notification_private">Privat \n(Benachrichtigungen anzeigen, aber deren Inhalt auf dem Sperrbildschirm ausblenden)\n</string>

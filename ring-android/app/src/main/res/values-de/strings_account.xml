@@ -177,6 +177,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_tv_about">Über Jami</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Lizenz</string>
+  <string name="tv_about_author">Autorenrechte</string>
   <string name="tv_about_credits">Würdigung</string>
   <string name="account_link_device">Verbindung von einem anderen Gerät aus herstellen</string>
   <string name="account_link_button">Verbindung vom Netzwerk</string>

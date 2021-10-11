@@ -185,6 +185,7 @@
   <string name="conversation_contact_is_typing">Kapcsolat gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
+  <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>

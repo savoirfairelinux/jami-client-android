@@ -185,6 +185,7 @@
   <string name="conversation_contact_is_typing">Kontakti po shtyp…</string>
   <string name="conversation_info_contact_you">Ju</string>
   <string name="conversation_members">Anëtarë</string>
+  <string name="conversation_syncing">Po shkarkohet biseda nga ortaku</string>
   <string name="conversation_preference_color">Ngjyrë bisede</string>
   <string name="conversation_preference_emoji">Emoji bisede</string>
   <string name="conversation_type_contact">Kontakt Jami</string>

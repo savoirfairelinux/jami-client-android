@@ -184,6 +184,7 @@
   <string name="conversation_contact_is_typing">聯絡人正在打字……</string>
   <string name="conversation_info_contact_you">您</string>
   <string name="conversation_members">成員</string>
+  <string name="conversation_syncing">正在從 peer 下載對話</string>
   <string name="conversation_preference_color">對話色彩</string>
   <string name="conversation_preference_emoji">對話表情符號</string>
   <string name="conversation_type_contact">Jami 聯絡人</string>
