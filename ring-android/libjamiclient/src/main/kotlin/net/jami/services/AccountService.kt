@@ -307,6 +307,7 @@ class AccountService(
                             }*/
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
+                            conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
                             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                                 /*for (Map.Entry<String, String> i : member.entrySet()) {
                                     Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
@@ -561,11 +562,10 @@ class AccountService(
             Log.w(TAG, "loadMore " + conversation.uri + " " + roots)
             conversation.loading = ret
             if (roots.isEmpty())
-                loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong()
-            ) else {
+                loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
+            else
                 for (root in roots)
                     loadConversationHistory(conversation.accountId, conversation.uri, root, n.toLong())
-            }
             return ret
         }
     }
@@ -1447,7 +1447,9 @@ class AccountService(
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
         if (c == null) {
-            c = account.newSwarm(conversationId, mode)
+            c = account.newSwarm(conversationId, mode).apply {
+                setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, uri))
+            }
         } else {
             c.loaded = null
             c.clearHistory(true)

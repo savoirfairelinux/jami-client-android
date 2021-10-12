@@ -56,6 +56,8 @@ class Conversation : ConversationHistory {
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     var lastRead: String? = null
         private set
+    var lastNotified: String? = null
+        private set
     private val mMode: Subject<Mode>
 
     // runtime flag set to true if the user is currently viewing this conversation
@@ -144,9 +146,9 @@ class Conversation : ConversationHistory {
             if (names.isNotEmpty() && names.size < target) {
                 ret.append(" + ").append(contacts.size - names.size)
             }
-            val result = ret.toString()
-            return if (result.isEmpty()) uri.rawUriString else result
+            return ret.toString().ifEmpty { uri.rawUriString }
         }
+
     val uriTitle: String?
         get() {
             if (contacts.isEmpty()) {
@@ -161,6 +163,7 @@ class Conversation : ConversationHistory {
             }
             return StringUtils.join(", ", names)
         }
+
     val contactUpdates: Observable<List<Contact>>
         get() = mContactSubject
 
@@ -185,6 +188,10 @@ class Conversation : ConversationHistory {
 
     fun setLastMessageRead(lastMessageRead: String?) {
         lastRead = lastMessageRead
+    }
+
+    fun setLastMessageNotified(lastMessage: String?) {
+        lastNotified = lastMessage
     }
 
     var loading: SingleSubject<Conversation>?
@@ -350,7 +357,8 @@ class Conversation : ConversationHistory {
         var query = query
         return if (isSwarm) {
             while (query?.parentId != null) {
-                if (query.parentId == previous.messageId) return true
+                if (query.parentId == previous.messageId)
+                    return true
                 query = mMessages[query.parentId]
             }
             false
@@ -434,14 +442,15 @@ class Conversation : ConversationHistory {
             if (isSwarm) {
                 for (j in aggregateHistory.indices.reversed()) {
                     val i = aggregateHistory[j]
-                    if (i.isRead) break
-                    if (i is TextMessage) texts[i.timestamp] = i
+                    if (i !is TextMessage) continue
+                    if (i.isRead || i.isNotified) break
+                    texts[i.timestamp] = i
                 }
             } else {
                 for ((key, value) in rawHistory.descendingMap()) {
                     if (value.type == Interaction.InteractionType.TEXT) {
                         val message = value as TextMessage
-                        if (message.isRead) break
+                        if (message.isRead || message.isNotified) break
                         texts[key] = message
                     }
                 }
@@ -533,6 +542,7 @@ class Conversation : ConversationHistory {
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
         }
         if (lastRead != null && lastRead == interaction.messageId) interaction.read()
+        if (lastNotified != null && lastNotified == interaction.messageId) interaction.isNotified = true
         var newLeaf = false
         var added = false
         if (aggregateHistory.isEmpty() || aggregateHistory[aggregateHistory.size - 1].messageId == interaction.parentId) {

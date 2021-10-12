@@ -49,7 +49,6 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
-import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.service.CallNotificationService
@@ -67,11 +66,11 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.LinkedHashMap
 
 class NotificationServiceImpl(
-    val mContext: Context,
-    val mAccountService: AccountService,
-    val mContactService: ContactService,
-    val mPreferencesService: PreferencesService,
-    val mDeviceRuntimeService: DeviceRuntimeService
+    private val mContext: Context,
+    private val mAccountService: AccountService,
+    private val mContactService: ContactService,
+    private val mPreferencesService: PreferencesService,
+    private val mDeviceRuntimeService: DeviceRuntimeService
 ) : NotificationService {
     private val mNotificationBuilders = SparseArray<NotificationCompat.Builder>()
     private var notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
@@ -80,8 +79,8 @@ class NotificationServiceImpl(
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
-    @SuppressLint("CheckResult")
-    fun initHelper() {
+
+    init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels(mContext)
         }
@@ -238,10 +237,7 @@ class NotificationServiceImpl(
 
     override fun cancelLocationNotification(first: Account, contact: Contact) {
         notificationManager.cancel(
-            Objects.hash(
-                "Location",
-                ConversationPath.toUri(first.accountId, contact.uri)
-            )
+            Objects.hash("Location", ConversationPath.toUri(first.accountId, contact.uri))
         )
     }
 
@@ -407,6 +403,7 @@ class NotificationServiceImpl(
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val intentDelete = Intent(DRingService.ACTION_CONV_DISMISS, path, mContext, DRingService::class.java)
+            .putExtra(DRingService.KEY_MESSAGE_ID, last?.messageId ?: last?.daemonId)
         val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setPriority(Notification.PRIORITY_HIGH)
@@ -440,7 +437,6 @@ class NotificationServiceImpl(
                 .setShortcutId(key)
         }
         if (texts.size == 1) {
-            last?.isNotified = true
             messageNotificationBuilder.setStyle(null)
         } else {
             val account = mAccountService.getAccount(accountId)
@@ -786,8 +782,7 @@ class NotificationServiceImpl(
     }
 
     private fun setContactPicture(contact: Contact, messageNotificationBuilder: NotificationCompat.Builder) {
-        val pic = getContactPicture(contact)
-        if (pic != null) messageNotificationBuilder.setLargeIcon(pic)
+        getContactPicture(contact)?.let { pic -> messageNotificationBuilder.setLargeIcon(pic) }
     }
 
     companion object {
