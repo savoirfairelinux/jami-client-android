@@ -61,6 +61,7 @@ import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.NotificationService
+import net.jami.utils.StringUtils
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -371,21 +372,25 @@ class ContactDetailsActivity : AppCompatActivity() {
         supportActionBar?.title = conversation.title
         //new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversationUri, () -> {});
         binding!!.conversationId.text = conversationUri
-        binding!!.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
+        binding!!.infoCard.setOnClickListener { shareContact(path.conversationId) }
         //adapter.actions.add(contactAction);
         binding!!.contactActionList.adapter = adapter
         binding!!.contactListLayout.visibility =
             if (conversation.isSwarm) View.VISIBLE else View.GONE
         if (conversation.isSwarm) {
             binding!!.contactList.adapter = ContactViewAdapter(mDisposableBag, conversation.contacts)
-                { contact -> copyAndShow(contact.uri.rawUriString) }
+                { contact -> shareContact(contact.uri.rawUriString) }
         }
     }
 
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    private fun shareContact(id: String) {
+        if (!StringUtils.isEmpty(id)) {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.contact_share_title))
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.contact_share_body, id, getText(R.string.app_website)))
+            startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
