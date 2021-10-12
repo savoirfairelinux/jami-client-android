@@ -37,7 +37,7 @@ import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
 import java.util.*
 
-class SharedPreferencesServiceImpl(val mContext: Context, accountService: AccountService, deviceService: DeviceRuntimeService)
+class SharedPreferencesServiceImpl(private val context: Context, accountService: AccountService, deviceService: DeviceRuntimeService)
     : PreferencesService(accountService, deviceService) {
     private val mNotifiedRequests: MutableMap<String, MutableSet<String>> = HashMap()
 
@@ -73,7 +73,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     }
 
     private fun saveRequests(accountId: String, requests: Set<String>) {
-        val preferences = mContext.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE)
+        val preferences = context.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE)
         val edit = preferences.edit()
         edit.putStringSet(accountId, requests)
         edit.apply()
@@ -88,7 +88,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     override fun loadRequestsPreferences(accountId: String): MutableSet<String> {
         var requests = mNotifiedRequests[accountId]
         if (requests == null) {
-            val preferences = mContext.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE)
+            val preferences = context.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE)
             requests = HashSet(preferences.getStringSet(accountId, null) ?: HashSet())
             mNotifiedRequests[accountId] = requests
         }
@@ -102,7 +102,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     }
 
     override fun hasNetworkConnected(): Boolean {
-        return NetworkUtils.isConnectivityAllowed(mContext)
+        return NetworkUtils.isConnectivityAllowed(context)
     }
 
     override val isPushAllowed: Boolean
@@ -112,10 +112,10 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
         }
 
     override val resolution: Int
-        get() = videoPreferences.getString(PREF_RESOLUTION, if (DeviceUtils.isTv(mContext)) mContext.getString(R.string.video_resolution_default_tv) else mContext.getString(R.string.video_resolution_default))!!.toInt()
+        get() = videoPreferences.getString(PREF_RESOLUTION, if (DeviceUtils.isTv(context)) context.getString(R.string.video_resolution_default_tv) else context.getString(R.string.video_resolution_default))!!.toInt()
 
     override val bitrate: Int
-        get() = videoPreferences.getString(PREF_BITRATE, mContext.getString(R.string.video_bitrate_default))!!.toInt()
+        get() = videoPreferences.getString(PREF_BITRATE, context.getString(R.string.video_bitrate_default))!!.toInt()
 
     override val isHardwareAccelerationEnabled: Boolean
         get() = videoPreferences.getBoolean(PREF_HW_ENCODING, true)
@@ -132,7 +132,7 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
     }
 
     override fun getMaxFileAutoAccept(accountId: String): Int {
-        return mContext.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
+        return context.getSharedPreferences(PREFS_ACCOUNT + accountId, Context.MODE_PRIVATE)
             .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024
     }
 
@@ -142,9 +142,9 @@ class SharedPreferencesServiceImpl(val mContext: Context, accountService: Accoun
         )
     }
 
-    private val preferences: SharedPreferences = mContext.getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE)
-    private val videoPreferences: SharedPreferences = mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE)
-    private val themePreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext)
+    private val preferences: SharedPreferences = context.getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE)
+    private val videoPreferences: SharedPreferences = context.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE)
+    private val themePreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     companion object {
         const val PREFS_SETTINGS = "ring_settings"
