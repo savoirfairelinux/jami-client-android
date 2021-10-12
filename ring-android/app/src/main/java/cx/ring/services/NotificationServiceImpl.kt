@@ -337,9 +337,8 @@ class NotificationServiceImpl(
      */
     override fun handleDataTransferNotification(transfer: DataTransfer, conversation: Conversation, remove: Boolean) {
         Log.d(TAG, "handleDataTransferNotification, a data transfer event is in progress $remove")
-        if (DeviceUtils.isTv(mContext)) {
+        if (DeviceUtils.isTv(mContext))
             return
-        }
         if (!remove) {
             showFileTransferNotification(conversation, transfer)
         } else {
@@ -347,8 +346,8 @@ class NotificationServiceImpl(
         }
     }
 
-    override fun removeTransferNotification(accountId: String, conversationUri: net.jami.model.Uri, transferId: String) {
-        removeTransferNotification(ConversationPath.toUri(accountId, conversationUri), transferId)
+    override fun removeTransferNotification(accountId: String, conversationUri: net.jami.model.Uri, fileId: String) {
+        removeTransferNotification(ConversationPath.toUri(accountId, conversationUri), fileId)
     }
 
     /**
@@ -356,17 +355,13 @@ class NotificationServiceImpl(
      *
      * @param transferId the transfer id which is required to generate the notification id
      */
-    fun removeTransferNotification(path: Uri, transferId: String) {
-        val id = getFileTransferNotificationId(path, transferId)
-        dataTransferNotifications.remove(id)
-        cancelFileNotification(id, false)
-        if (dataTransferNotifications.isEmpty()) {
+    private fun removeTransferNotification(path: Uri, fileId: String) {
+        val id = getFileTransferNotificationId(path, fileId)
+        try {
             mContext.startService(Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService::class.java)
-                .putExtra(NotificationService.KEY_NOTIFICATION_ID, id))
-        } else {
-            ContextCompat.startForegroundService(mContext,
-                Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService::class.java)
                     .putExtra(NotificationService.KEY_NOTIFICATION_ID, id))
+        } catch (e: Exception) {
+            Log.d(TAG, "Error stopping transfer service ${e.message}");
         }
     }
 
@@ -445,7 +440,7 @@ class NotificationServiceImpl(
                 .setShortcutId(key)
         }
         if (texts.size == 1) {
-            last!!.isNotified = true
+            last?.isNotified = true
             messageNotificationBuilder.setStyle(null)
         } else {
             val account = mAccountService.getAccount(accountId)
@@ -674,14 +669,20 @@ class NotificationServiceImpl(
                         .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT))
         }
         dataTransferNotifications[notificationId] = messageNotificationBuilder.build()
-        ContextCompat.startForegroundService(mContext, Intent(DataTransferService.ACTION_START, path, mContext, DataTransferService::class.java)
-                .putExtra(NotificationService.KEY_NOTIFICATION_ID, notificationId))
+        try {
+            ContextCompat.startForegroundService(mContext,
+                Intent(DataTransferService.ACTION_START, path, mContext, DataTransferService::class.java)
+                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, notificationId))
+        } catch (e: Exception) {
+            Log.w(TAG, "Error starting file transfer service " + e.message)
+        }
         //startForegroundService(notificationId, DataTransferService.class);
     }
 
     override fun showMissedCallNotification(call: Call) {
         val notificationId = call.daemonIdString.hashCode()
-        val messageNotificationBuilder = mNotificationBuilders[notificationId] ?: NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL)
+        val messageNotificationBuilder = mNotificationBuilders[notificationId]
+            ?: NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL)
         val path = ConversationPath.toUri(call)
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -739,9 +740,8 @@ class NotificationServiceImpl(
      * @param notificationId the notification ID
      * @param isMigratingToService true if the notification is being updated to be a part of the foreground service
      */
-    override fun cancelFileNotification(notificationId: Int, isMigratingToService: Boolean) {
-        notificationManager.cancel(notificationId)
-        if (!isMigratingToService) mNotificationBuilders.remove(notificationId)
+    override fun cancelFileNotification(notificationId: Int) {
+        mNotificationBuilders.remove(notificationId)
     }
 
     override fun cancelAll() {
