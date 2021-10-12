@@ -63,7 +63,7 @@
                         style="@style/TextAppearance.LeanbackPreference.ListItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/baseline_info_24"
+                        android:drawableStart="@drawable/baseline_share_24"
                         android:drawablePadding="16dp"
                         android:gravity="center_vertical"
                         tools:text="Private swarm" />

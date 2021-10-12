@@ -195,8 +195,10 @@ along with this program; if not, write to the Free Software
     <string name="account_export_end_error_message">Couldn\'t export account. An unknown error occurred.</string>
     <string name="account_enter_password">Enter password</string>
     <string name="account_share_body">Contact me using \'%1$s\' on the Jami distributed communication platform: %2$s</string>
+    <string name="contact_share_body">Contact id is \'%1$s\' on the Jami distributed communication platform: %2$s</string>
     <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Jami distributed communication platform: %3$s</string>
     <string name="account_contact_me">Contact me on Jami !</string>
+    <string name="contact_share_title">Contact id on Jami</string>
     <string name="update_account">Update account</string>
     <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
     <string name="ring_account">Jami account</string>

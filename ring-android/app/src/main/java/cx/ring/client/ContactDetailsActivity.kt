@@ -57,6 +57,7 @@ import net.jami.services.ConversationFacade
 import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.NotificationService
+import net.jami.utils.StringUtils
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -268,7 +269,7 @@ class ContactDetailsActivity : AppCompatActivity() {
                 if (conversation.isSwarm) {
                     binding.conversationId.text = vm.uri.toString()
                     binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
-                    { contact -> copyAndShow(contact.uri.rawUriString) }
+                    { contact -> shareContact(contact.uri.rawUriString) }
                 } else {
                     binding.conversationId.text = vm.uriTitle
                 }
@@ -357,14 +358,18 @@ class ContactDetailsActivity : AppCompatActivity() {
             })
         }
         binding.conversationId.text = conversationUri
-        binding.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
+        binding.infoCard.setOnClickListener { shareContact(path.conversationId) }
         binding.contactActionList.adapter = adapter
     }
 
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    private fun shareContact(id: String) {
+        if (id.isNotEmpty()) {
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.contact_share_title))
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.contact_share_body, id, getText(R.string.app_website)))
+            startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
