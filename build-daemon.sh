@@ -214,5 +214,5 @@ if [ "${RELEASE}" -eq 1 ]; then
     mkdir -p ${LIBRING_JNI_UNSTRIPPED_DIR}
     cp ${LIBCPP} ${LIBRING_JNI_UNSTRIPPED_DIR}
     cp ${LIBRING_JNI_DIR}/libring.so ${LIBRING_JNI_UNSTRIPPED_DIR}
-    ${STRIP} ${LIBRING_JNI_DIR}/libring.so
+    #${STRIP} ${LIBRING_JNI_DIR}/libring.so
 fi
