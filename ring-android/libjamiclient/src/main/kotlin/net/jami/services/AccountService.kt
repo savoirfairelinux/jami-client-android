@@ -307,24 +307,22 @@ class AccountService(
                             }*/
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
-                            //if (mode != Conversation.Mode.Syncing) {
-                                for (member in JamiService.getConversationMembers(accountId, conversationId)) {
-                                    /*for (Map.Entry<String, String> i : member.entrySet()) {
-                                        Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
-                                    }*/
-                                    val uri = Uri.fromId(member["uri"]!!)
-                                    //String role = member.get("role");
-                                    val lastDisplayed = member["lastDisplayed"]
-                                    var contact = conversation.findContact(uri)
-                                    if (contact == null) {
-                                        contact = account.getContactFromCache(uri)
-                                        conversation.addContact(contact)
-                                    }
-                                    if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser) {
-                                        conversation.setLastMessageRead(lastDisplayed)
-                                    }
+                            for (member in JamiService.getConversationMembers(accountId, conversationId)) {
+                                /*for (Map.Entry<String, String> i : member.entrySet()) {
+                                    Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
+                                }*/
+                                val uri = Uri.fromId(member["uri"]!!)
+                                //String role = member.get("role");
+                                val lastDisplayed = member["lastDisplayed"]
+                                var contact = conversation.findContact(uri)
+                                if (contact == null) {
+                                    contact = account.getContactFromCache(uri)
+                                    conversation.addContact(contact)
                                 }
-                            //}
+                                if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser) {
+                                    conversation.setLastMessageRead(lastDisplayed)
+                                }
+                            }
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
                             account.conversationStarted(conversation)
                         } catch (e: Exception) {
@@ -1320,9 +1318,9 @@ class AccountService(
         conversation: Conversation,
         message: Map<String, String>
     ): Interaction {
-        for ((key, value) in message) {
+        /*for ((key, value) in message) {
             Log.w(TAG, "$key -> $value")
-        }
+        }*/
         val id = message["id"]!!
         val type = message["type"]!!
         val author = message["author"]!!

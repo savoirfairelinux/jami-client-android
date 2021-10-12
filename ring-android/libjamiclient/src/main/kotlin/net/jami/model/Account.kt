@@ -706,7 +706,6 @@ class Account(
     }
 
     fun getByUri(uri: Uri?): Conversation? {
-        Log.w(TAG, "getByUri $accountId $uri");
         if (uri == null || uri.isEmpty) return null
         return if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
     }
