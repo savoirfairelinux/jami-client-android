@@ -184,7 +184,7 @@
                         android:gravity="center"
                         android:onClick="@{() -> presenter.blockContactRequest()}"
                         android:text="@string/block"
-                        android:textColor="@color/color_primary_dark" />
+                        android:textColor="@color/colorPrimary" />
 
                     <Button
                         android:id="@+id/btnRefuse"
@@ -196,7 +196,7 @@
                         android:gravity="center"
                         android:onClick="@{() -> presenter.refuseContactRequest()}"
                         android:text="@string/refuse"
-                        android:textColor="@color/color_primary_dark" />
+                        android:textColor="@color/colorPrimary" />
 
                     <Button
                         android:id="@+id/btnAccept"
@@ -253,8 +253,8 @@
                             android:contentDescription="@string/share_label"
                             android:onClick="@{v -> presenter.expandMenu(v)}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
-                            app:srcCompat="@drawable/baseline_more_vert_24" />
+                            app:srcCompat="@drawable/baseline_more_vert_24"
+                            app:tint="@color/colorPrimary" />
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
@@ -264,8 +264,8 @@
                             android:contentDescription="@string/take_a_photo"
                             android:onClick="@{() -> presenter.takePicture()}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
-                            app:srcCompat="@drawable/baseline_photo_camera_24" />
+                            app:srcCompat="@drawable/baseline_photo_camera_24"
+                            app:tint="@color/colorPrimary" />
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
@@ -313,9 +313,9 @@
                             android:contentDescription="@string/send_message"
                             android:onClick="@{() -> presenter.sendMessageText()}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/baseline_send_24" />
+                            app:srcCompat="@drawable/baseline_send_24"
+                            app:tint="@color/colorPrimary" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
