@@ -74,6 +74,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="40dp"
+                        android:singleLine="true"
+                        android:ellipsize="middle"
                         tools:text="swarm:toto" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
