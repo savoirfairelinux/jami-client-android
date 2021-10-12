@@ -51,7 +51,6 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
-import net.jami.utils.Tuple
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.*
@@ -84,7 +83,7 @@ class HardwareServiceImpl(
         return cameraService.init()
     }
 
-    override val maxResolutions: Observable<Tuple<Int?, Int?>>
+    override val maxResolutions: Observable<Pair<Int?, Int?>>
         get() = cameraService.maxResolutions
     override val isVideoAvailable: Boolean
         get() = mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera()
@@ -622,8 +621,8 @@ class HardwareServiceImpl(
 
     override fun setDeviceOrientation(rotation: Int) {
         cameraService.setOrientation(rotation)
-        if (mCapturingId != null) {
-            val videoParams = cameraService.getParams(mCapturingId)
+        mCapturingId?.let { id ->
+            val videoParams = cameraService.getParams(id) ?: return
             videoEvents.onNext(VideoEvent(
                 started = true,
                 w = videoParams.width,
