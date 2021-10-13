@@ -31,7 +31,7 @@ public class AutoFitTextureView extends TextureView {
 
     public AutoFitTextureView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mSize = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 192, context.getResources().getDisplayMetrics()));
+        mSize = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, context.getResources().getDisplayMetrics()));
     }
 
     @Override
