@@ -95,40 +95,31 @@ class CallService(
         var isModerator = false
         if (conference != null) {
             val newInfo: MutableList<ParticipantInfo> = ArrayList(info.size)
-            if (conference.isConference) {
-                for (i in info) {
-                    val uri = i["uri"]!!
-                    if (uri.isEmpty()) continue
-                    val call = conference.findCallByContact(Uri.fromString(i["uri"]!!))
+            val account = mAccountService.getAccount(conference.firstCall?.account) ?: return
+
+            for (i in info) {
+                val uri = i["uri"]!!
+                val confInfo = if (uri.isEmpty()) {
+                    ParticipantInfo(null, account.getContactFromCache(Uri.fromId(account.username!!)), i)
+                } else {
+                    val contactUri = Uri.fromString(uri)
+                    val call = conference.findCallByContact(contactUri)
                     if (call != null) {
-                        val confInfo = ParticipantInfo(call, call.contact!!, i)
-                        if (confInfo.isEmpty) {
-                            Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
-                            continue
-                        }
-                        if (confInfo.contact.isUser && confInfo.isModerator) {
-                            isModerator = true
-                        }
-                        newInfo.add(confInfo)
+                        ParticipantInfo(call, call.contact!!, i)
                     } else {
-                        Log.w(TAG, "onConferenceInfoUpdated $confId can't find call for $i")
-                        // TODO
+                        ParticipantInfo(null, account.getContactFromCache(contactUri), i)
                     }
                 }
-            } else {
-                val account = mAccountService.getAccount(conference.call!!.account!!)!!
-                for (i in info) {
-                    val confInfo = ParticipantInfo(null, account.getContactFromCache(Uri.fromString(i["uri"]!!)), i)
-                    if (confInfo.isEmpty) {
-                        Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
-                        continue
-                    }
-                    if (confInfo.contact.isUser && confInfo.isModerator) {
-                        isModerator = true
-                    }
-                    newInfo.add(confInfo)
+                if (confInfo.isEmpty) {
+                    Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
+                    continue
                 }
+                if (confInfo.contact.isUser && confInfo.isModerator) {
+                    isModerator = true
+                }
+                newInfo.add(confInfo)
             }
+
             conference.isModerator = isModerator
             conference.setInfo(newInfo)
         } else {
