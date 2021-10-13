@@ -236,7 +236,6 @@ class Call : Interaction {
     fun hasActiveMedia(label: Media.MediaType): Boolean {
         val mediaList = mediaList ?: return false
         for (media in mediaList) {
-            Log.w(TAG, "DEBUG hasActiveMedia ------> media: $media")
             if (media.isEnabled && !media.isMuted && media.mediaType == label)
                 return true
         }

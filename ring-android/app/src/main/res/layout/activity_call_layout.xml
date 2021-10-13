@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
     android:id="@+id/main_call_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background"
-    tools:context=".client.CallActivity">
+    tools:context=".client.CallActivity"
+    >
 
 </cx.ring.views.FitsWindowsLayout>
