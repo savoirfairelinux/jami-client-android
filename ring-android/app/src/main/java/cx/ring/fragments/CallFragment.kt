@@ -21,6 +21,8 @@
 package cx.ring.fragments
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -40,9 +42,7 @@ import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.util.Rational
 import android.view.*
@@ -56,12 +56,10 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
-import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.rodolfonavalon.shaperipplelibrary.model.Circle
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
@@ -97,8 +95,9 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
+
 @AndroidEntryPoint
-class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
+class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     MediaButtonsHelperCallback, ItemSelectedListener {
     private var binding: FragCallBinding? = null
     private var mOrientationListener: OrientationEventListener? = null
@@ -114,6 +113,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var mPreviewHeight = 1280
     private var mPreviewSurfaceWidth = 0
     private var mPreviewSurfaceHeight = 0
+    private var isInPIP = false
     private lateinit var mProjectionManager: MediaProjectionManager
     private var mBackstackLost = false
     private var confAdapter: ConfParticipantAdapter? = null
@@ -136,33 +136,286 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var previewHiddenState = 0f
 
     private enum class PreviewPosition { LEFT, RIGHT }
-    private var previewPosition = PreviewPosition.RIGHT
+
+    private var previewPosition = PreviewPosition.LEFT
+
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
-
     private val mCompositeDisposable = CompositeDisposable()
+    private var bottomSheetParams: BottomSheetBehavior<View>? = null
+    private var isMyMicMuted: Boolean = false
 
     override fun initPresenter(presenter: CallPresenter) {
-        Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> chose between prepareCall and initIncomingCall")
+        //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> chose between prepareCall and initIncomingCall")
         val args = requireArguments()
         presenter.wantVideo = args.getBoolean(KEY_HAS_VIDEO, false)
         args.getString(KEY_ACTION)?.let { action ->
             if (action == Intent.ACTION_CALL) {
-                Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn prepareCall(false) ")
+                //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn prepareCall(false) ")
                 prepareCall(false)
-            }
-            else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
-                Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn initIncomingCall( CONF_ID, GET_CALL)")
-                presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
+            } else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
+                //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn initIncomingCall( CONF_ID, GET_CALL)")
+                presenter.initIncomingCall(
+                    args.getString(NotificationService.KEY_CALL_ID)!!,
+                    action == Intent.ACTION_VIEW
+                )
             }
         }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return (DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false) as FragCallBinding)
+            .also { b ->
+                b.presenter = this
+                binding = b
+                rp = RecyclerPicker(b.recyclerPicker, R.layout.item_picker, LinearLayout.HORIZONTAL, this)
+                    .apply { setFirstLastElementsWidths(112, 112) }
+            bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
+        }.root
+    }
+
+    @SuppressLint("ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setHasOptionsMenu(false)
+        super.onViewCreated(view, savedInstanceState)
+
+        val windowManager = view.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        mCurrentOrientation = windowManager.defaultDisplay.rotation
+        val dpRatio = requireActivity().resources.displayMetrics.density
+        animation.addUpdateListener { valueAnimator ->
+            binding?.let { binding ->
+                val upBy = valueAnimator.animatedValue as Int
+                val layoutParams = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
+                layoutParams.setMargins(0, 0, 0, (upBy * dpRatio).toInt())
+                binding.previewContainer.layoutParams = layoutParams
+            }
+        }
+
+        mProjectionManager =
+            requireContext().getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+        mScreenWakeLock = powerManager.newWakeLock(
+            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
+            "ring:callLock"
+        ).apply {
+            setReferenceCounted(false)
+            if (!isHeld)
+                acquire()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            setBottomSheet(insets)
+            insets
+        }
+
+        binding?.let { binding ->
+            binding.videoSurface.holder.setFormat(PixelFormat.RGBA_8888)
+            binding.videoSurface.holder.addCallback(object : SurfaceHolder.Callback {
+                override fun surfaceCreated(holder: SurfaceHolder) {
+                    presenter.videoSurfaceCreated(holder)
+                }
+
+                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
+
+                override fun surfaceDestroyed(holder: SurfaceHolder) {
+                    presenter.videoSurfaceDestroyed()
+                }
+            })
+            binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBA_8888)
+            binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
+                override fun surfaceCreated(holder: SurfaceHolder) {
+                    presenter.pluginSurfaceCreated(holder)
+                }
+
+                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
+
+                override fun surfaceDestroyed(holder: SurfaceHolder) {
+                    presenter.pluginSurfaceDestroyed()
+                }
+            })
+
+            val insets = ViewCompat.getRootWindowInsets(view)
+            insets?.apply {
+                presenter.uiVisibilityChanged(this.isVisible(WindowInsetsCompat.Type.navigationBars()))
+            }
+            view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
+
+            // todo: doublon with CallActivity.onConfigurationChanged ??
+            mOrientationListener = object : OrientationEventListener(context) {
+                override fun onOrientationChanged(orientation: Int) {
+                    val rot = windowManager.defaultDisplay.rotation
+                    if (mCurrentOrientation != rot) {
+                        mCurrentOrientation = rot
+                        presenter.configurationChanged(rot)
+                    }
+
+                }
+            }.apply { if (canDetectOrientation()) enable() }
+
+            binding.shapeRipple.rippleShape = Circle()
+            binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
+            binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
+            binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+            }
+            binding.previewSurface.surfaceTextureListener = listener
+            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+            }
+            binding.previewContainer.setOnTouchListener(previewTouchListener)
+            binding.pluginPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
+                val action = event.actionMasked
+                val parent = v.parent as RelativeLayout
+                val params = v.layoutParams as RelativeLayout.LayoutParams
+
+                when (action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        previewSnapAnimation.cancel()
+                        previewDrag = PointF(event.x, event.y)
+                        v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation_dragged)
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+                        params.setMargins(
+                            v.x.toInt(), v.y.toInt(),
+                            parent.width - (v.x.toInt() + v.width),
+                            parent.height - (v.y.toInt() + v.height)
+                        )
+                        v.layoutParams = params
+                        return@setOnTouchListener true
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        if (previewDrag != null) {
+                            val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
+                            val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
+                            params.setMargins(
+                                currentXPosition, currentYPosition,
+                                -(currentXPosition + v.width - event.x.toInt()),
+                                -(currentYPosition + v.height - event.y.toInt())
+                            )
+                            v.layoutParams = params
+                            val outPosition = binding.pluginPreviewContainer.width * 0.85f
+                            var drapOut = 0f
+                            if (currentXPosition < 0) {
+                                drapOut = min(1f, -currentXPosition / outPosition)
+                            } else if (currentXPosition + v.width > parent.width) {
+                                drapOut = min(1f, (currentXPosition + v.width - parent.width) / outPosition)
+                            }
+                            setPreviewDragHiddenState(drapOut)
+                            return@setOnTouchListener true
+                        }
+                        return@setOnTouchListener false
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        if (previewDrag != null) {
+                            val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
+                            previewSnapAnimation.cancel()
+                            previewDrag = null
+                            v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
+                            var ml = 0;
+                            var mr = 0;
+                            var mt = 0;
+                            var mb = 0
+                            val hp = binding.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
+                            if (params.leftMargin + v.width / 2 > parent.width / 2) {
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                                mr = (parent.width - v.width - v.x).toInt()
+                                previewPosition = PreviewPosition.RIGHT
+                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
+                            } else {
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+                                ml = v.x.toInt()
+                                previewPosition = PreviewPosition.LEFT
+                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
+                            }
+                            binding.pluginPreviewHandle.layoutParams = hp
+                            if (params.topMargin + v.height / 2 > parent.height / 2) {
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                                mb = (parent.height - v.height - v.y).toInt()
+                            } else {
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+                                mt = v.y.toInt()
+                            }
+                            previewMargins[0] = ml
+                            previewMargins[1] = mt
+                            previewMargins[2] = mr
+                            previewMargins[3] = mb
+                            params.setMargins(ml, mt, mr, mb)
+                            v.layoutParams = params
+                            val outPosition = binding.pluginPreviewContainer.width * 0.85f
+                            previewHiddenState = when {
+                                currentXPosition < 0 -> min(1f, -currentXPosition / outPosition)
+                                currentXPosition + v.width > parent.width -> min(
+                                    1f,
+                                    (currentXPosition + v.width - parent.width) / outPosition
+                                )
+                                else -> 0f
+                            }
+                            setPreviewDragHiddenState(previewHiddenState)
+                            previewSnapAnimation.start()
+                            return@setOnTouchListener true
+                        }
+                        return@setOnTouchListener false
+                    }
+                    else -> {
+                        return@setOnTouchListener false
+                    }
+                }
+            }
+            /*  binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
+                  override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                  override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                      presenter.sendDtmf(s.subSequence(start, start + count))
+                  }
+
+                  override fun afterTextChanged(s: Editable) {}
+              })*/
+            
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.w(TAG, "DEBUG onResume --->")
+    }
+
     override fun onUserLeave() {
+        Log.w(TAG, "DEBUG onUserLeave -------------->")
         presenter.requestPipMode()
     }
 
+    override fun onStop() {
+        super.onStop()
+        previewSnapAnimation.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (mOrientationListener != null) {
+            mOrientationListener!!.disable()
+            mOrientationListener = null
+        }
+        mCompositeDisposable.clear()
+        if (mScreenWakeLock != null && mScreenWakeLock!!.isHeld) {
+            mScreenWakeLock!!.release()
+        }
+        binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mCompositeDisposable.dispose()
+    }
+
+
+    //todo: enable pip when only our video is displayed
     override fun enterPipMode(callId: String) {
+        Log.w(TAG, "DEBUG enterPipMode -------------->")
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return
         }
@@ -183,13 +436,19 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 return
             }
             val actions = ArrayList<RemoteAction>(1)
-            actions.add(RemoteAction(Icon.createWithResource(context, R.drawable.baseline_call_end_24),
+            actions.add(
+                RemoteAction(
+                    Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                     getString(R.string.action_call_hangup),
                     getString(R.string.action_call_hangup),
-                    PendingIntent.getService(context, Random().nextInt(),
+                    PendingIntent.getService(
+                        context, Random().nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(context, JamiService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)))
+                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT
+                    )
+                )
+            )
             paramBuilder.setActions(actions)
             try {
                 requireActivity().enterPictureInPictureMode(paramBuilder.build())
@@ -201,32 +460,42 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        previewSnapAnimation.cancel()
-    }
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+        Log.w(TAG, "DEBUG onPictureInPictureModeChanged --->")
+        isInPIP = isInPictureInPictureMode
+        if (isInPictureInPictureMode) {
+            binding!!.callCoordinatorOptionContainer.visibility = View.GONE
+            val callActivity = activity as CallActivity?
+            callActivity?.hideSystemUI()
+            binding!!.pluginPreviewContainer.visibility = View.GONE
+            binding!!.pluginPreviewSurface.visibility = View.GONE
+            binding!!.previewContainer.visibility = View.GONE
+            binding!!.previewSurface.visibility = View.GONE
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return (DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false) as FragCallBinding).also { b ->
-            b.presenter = this
-            binding = b
-            rp = RecyclerPicker(b.recyclerPicker, R.layout.item_picker, LinearLayout.HORIZONTAL, this)
-                .apply { setFirstLastElementsWidths(112, 112) }
-        }.root
+        } else {
+            mBackstackLost = true
+            binding!!.callCoordinatorOptionContainer.visibility = View.VISIBLE
+            binding!!.pluginPreviewContainer.visibility = View.VISIBLE
+            binding!!.pluginPreviewSurface.visibility = View.VISIBLE
+            binding!!.previewContainer.visibility = View.VISIBLE
+            binding!!.previewSurface.visibility = View.VISIBLE
+        }
     }
 
     private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
         override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+            Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
+            Log.w(
+                TAG,
+                " onSurfaceTextureAvailable -------->  mPreviewSurfaceWidth: $mPreviewSurfaceWidth, mPreviewSurfaceHeight: $mPreviewSurfaceHeight"
+            )
             presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
         }
 
         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+            Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
             mPreviewSurfaceWidth = width
             mPreviewSurfaceHeight = height
             configurePreview(width, 1f)
@@ -252,7 +521,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    private val previewTouchListener = object: View.OnTouchListener {
+    private val previewTouchListener = object : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View, event: MotionEvent): Boolean {
             val action = event.actionMasked
@@ -358,195 +627,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onViewCreated(view, savedInstanceState)
-        mCurrentOrientation = resources.configuration.orientation
-        val dpRatio = requireActivity().resources.displayMetrics.density
-        animation.addUpdateListener { valueAnimator ->
-            binding?.let { binding ->
-                val upBy = valueAnimator.animatedValue as Int
-                val layoutParams = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
-                layoutParams.setMargins(0, 0, 0, (upBy * dpRatio).toInt())
-                binding.previewContainer.layoutParams = layoutParams
-            }
-        }
-        val activity = activity
-        if (activity != null) {
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            if (activity is AppCompatActivity) {
-                val ab = activity.supportActionBar
-                if (ab != null) {
-                    ab.setHomeAsUpIndicator(R.drawable.baseline_chat_24)
-                    ab.setDisplayHomeAsUpEnabled(true)
-                }
-            }
-        }
-        mProjectionManager = requireContext().getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
-        mScreenWakeLock = powerManager.newWakeLock(
-            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
-            "ring:callLock"
-        ).apply {
-            setReferenceCounted(false)
-            if (!isHeld)
-                acquire()
-        }
-        binding?.let { binding ->
-            binding.videoSurface.holder.setFormat(PixelFormat.RGBA_8888)
-            binding.videoSurface.holder.addCallback(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    presenter.videoSurfaceCreated(holder)
-                }
-
-                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
-
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    presenter.videoSurfaceDestroyed()
-                }
-            })
-            binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBA_8888)
-            binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    presenter.pluginSurfaceCreated(holder)
-                }
-
-                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
-
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    presenter.pluginSurfaceDestroyed()
-                }
-            })
-            view.setOnSystemUiVisibilityChangeListener { visibility: Int ->
-                val ui = visibility and (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN) == 0
-                presenter.uiVisibilityChanged(ui)
-            }
-            val ui = view.systemUiVisibility and (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN) == 0
-            presenter.uiVisibilityChanged(ui)
-            view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
-            val windowManager = view.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            mOrientationListener = object : OrientationEventListener(context) {
-                override fun onOrientationChanged(orientation: Int) {
-                    val rot = windowManager.defaultDisplay.rotation
-                    if (mCurrentOrientation != rot) {
-                        mCurrentOrientation = rot
-                        presenter.configurationChanged(rot)
-                    }
-                }
-            }.apply { if (canDetectOrientation()) enable() }
-            binding.shapeRipple.rippleShape = Circle()
-            binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
-            binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
-            binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
-            }
-            binding.previewSurface.surfaceTextureListener = listener
-            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
-            }
-            binding.previewContainer.setOnTouchListener(previewTouchListener)
-            binding.pluginPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
-                val action = event.actionMasked
-                val parent = v.parent as RelativeLayout
-                val params = v.layoutParams as RelativeLayout.LayoutParams
-                if (action == MotionEvent.ACTION_DOWN) {
-                    previewSnapAnimation.cancel()
-                    previewDrag = PointF(event.x, event.y)
-                    v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation_dragged)
-                    params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                    params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                    params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                    params.setMargins(v.x.toInt(), v.y.toInt(),
-                        parent.width - (v.x.toInt() + v.width),
-                        parent.height - (v.y.toInt() + v.height))
-                    v.layoutParams = params
-                    return@setOnTouchListener true
-                } else if (action == MotionEvent.ACTION_MOVE) {
-                    if (previewDrag != null) {
-                        val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
-                        val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
-                        params.setMargins(currentXPosition, currentYPosition,
-                            -(currentXPosition + v.width - event.x.toInt()),
-                            -(currentYPosition + v.height - event.y.toInt()))
-                        v.layoutParams = params
-                        val outPosition = binding.pluginPreviewContainer.width * 0.85f
-                        var drapOut = 0f
-                        if (currentXPosition < 0) {
-                            drapOut = min(1f, -currentXPosition / outPosition)
-                        } else if (currentXPosition + v.width > parent.width) {
-                            drapOut = min(1f, (currentXPosition + v.width - parent.width) / outPosition)
-                        }
-                        setPreviewDragHiddenState(drapOut)
-                        return@setOnTouchListener true
-                    }
-                    return@setOnTouchListener false
-                } else if (action == MotionEvent.ACTION_UP) {
-                    if (previewDrag != null) {
-                        val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
-                        previewSnapAnimation.cancel()
-                        previewDrag = null
-                        v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                        var ml = 0; var mr = 0; var mt = 0; var mb = 0
-                        val hp = binding.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
-                        if (params.leftMargin + v.width / 2 > parent.width / 2) {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                            mr = (parent.width - v.width - v.x).toInt()
-                            previewPosition = PreviewPosition.RIGHT
-                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
-                        } else {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                            ml = v.x.toInt()
-                            previewPosition = PreviewPosition.LEFT
-                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                        }
-                        binding.pluginPreviewHandle.layoutParams = hp
-                        if (params.topMargin + v.height / 2 > parent.height / 2) {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                            mb = (parent.height - v.height - v.y).toInt()
-                        } else {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                            mt = v.y.toInt()
-                        }
-                        previewMargins[0] = ml
-                        previewMargins[1] = mt
-                        previewMargins[2] = mr
-                        previewMargins[3] = mb
-                        params.setMargins(ml, mt, mr, mb)
-                        v.layoutParams = params
-                        val outPosition = binding.pluginPreviewContainer.width * 0.85f
-                        previewHiddenState = when {
-                            currentXPosition < 0 -> min(1f, -currentXPosition / outPosition)
-                            currentXPosition + v.width > parent.width -> min(1f, (currentXPosition + v.width - parent.width) / outPosition)
-                            else -> 0f
-                        }
-                        setPreviewDragHiddenState(previewHiddenState)
-                        previewSnapAnimation.start()
-                        return@setOnTouchListener true
-                    }
-                    return@setOnTouchListener false
-                } else {
-                    return@setOnTouchListener false
-                }
-            }
-            binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    presenter.sendDtmf(s.subSequence(start, start + count))
-                }
-
-                override fun afterTextChanged(s: Editable) {}
-            })
-        }
-
-    }
-
     private fun configurePreview(width: Int, animatedFraction: Float) {
+        Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
+
         val context = context
         if (context == null || binding == null) return
         val margin = context.resources.getDimension(R.dimen.call_preview_margin)
@@ -594,36 +677,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (mOrientationListener != null) {
-            mOrientationListener!!.disable()
-            mOrientationListener = null
-        }
-        mCompositeDisposable.clear()
-        if (mScreenWakeLock != null && mScreenWakeLock!!.isHeld) {
-            mScreenWakeLock!!.release()
-        }
-        binding = null
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mCompositeDisposable.dispose()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode != REQUEST_PERMISSION_INCOMING && requestCode != REQUEST_PERMISSION_OUTGOING) return
         var i = 0
         val n = permissions.size
 
         val hasVideo = presenter.wantVideo
-        Log.w(TAG, "DEBUG fn onRequestPermissionsResult [CallFragment.kt] -> value hasVideo = $hasVideo")
 
         while (i < n) {
             val audioGranted = mDeviceRuntimeService.hasAudioPermission()
@@ -645,58 +706,28 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_ADD_PARTICIPANT) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                val path = ConversationPath.fromUri(data.data)
-                if (path != null) {
-                    presenter.addConferenceParticipant(path.accountId, path.conversationUri)
+        Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
+        when(requestCode){
+            REQUEST_CODE_ADD_PARTICIPANT -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val path = ConversationPath.fromUri(data.data)
+                    if (path != null) {
+                        presenter.addConferenceParticipant(path.accountId, path.conversationUri)
+                    }
+                } }
+            REQUEST_CODE_SCREEN_SHARE -> {
+                Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    try {
+                        startScreenShare(mProjectionManager.getMediaProjection(resultCode, data))
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Error starting screen sharing", e)
+                    }
+                } else {
+                    binding!!.callSharescreenBtn.isChecked = false
                 }
             }
-        } else if (requestCode == REQUEST_CODE_SCREEN_SHARE) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                try {
-                    startScreenShare(mProjectionManager.getMediaProjection(resultCode, data))
-                } catch (e: Exception) {
-                    Log.w(TAG, "Error starting screen sharing", e)
-                }
-            } else {
-                binding!!.callScreenshareBtn.isChecked = false
-            }
         }
-    }
-
-    override fun onCreateOptionsMenu(m: Menu, inf: MenuInflater) {
-        inf.inflate(R.menu.ac_call, m)
-        dialPadBtn = m.findItem(R.id.menuitem_dialpad)
-        pluginsMenuBtn = m.findItem(R.id.menuitem_video_plugins)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        presenter.prepareOptionMenu()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> presenter.chatClick()
-            R.id.menuitem_dialpad -> presenter.dialpadClick()
-            R.id.menuitem_video_plugins -> displayVideoPluginsCarousel()
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
-    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
-        val activity = activity as AppCompatActivity?
-        val actionBar = activity?.supportActionBar
-        if (actionBar != null) {
-            if (isInPictureInPictureMode) {
-                actionBar.hide()
-            } else {
-                mBackstackLost = true
-                actionBar.show()
-            }
-        }
-        presenter.pipModeChanged(isInPictureInPictureMode)
     }
 
     override fun displayContactBubble(display: Boolean) {
@@ -706,13 +737,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayPeerVideo(display: Boolean) {
-        Log.w(TAG, "DEBUG fn displayPeerVideo -> $display")
+        Log.w(TAG, "displayPeerVideo -> $display")
         binding!!.videoSurface.visibility = if (display) View.VISIBLE else View.GONE
         displayContactBubble(!display)
     }
 
     override fun displayLocalVideo(display: Boolean) {
-        Log.w(TAG, "DEBUG fn displayLocalVideo -> $display")
+        Log.w(TAG, "displayLocalVideo -> $display")
         if (isChoosePluginMode) {
             binding!!.previewContainer.visibility = View.GONE
             binding!!.pluginPreviewContainer.visibility = if (display) View.VISIBLE else View.GONE
@@ -725,30 +756,16 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    // todo Change function name, this name is misleading, this function concerns PIP preview
-    override fun displayPreviewSurface(display: Boolean) {
-        if (display) {
-            binding!!.videoSurface.setZOrderOnTop(false)
-            binding!!.videoSurface.setZOrderMediaOverlay(false)
-        } else {
-            binding!!.videoSurface.setZOrderMediaOverlay(true)
-            binding!!.videoSurface.setZOrderOnTop(true)
-        }
-    }
-
     override fun displayHangupButton(display: Boolean) {
         var display = display
         Log.w(TAG, "displayHangupButton $display")
-        display = display and !isChoosePluginMode
-        binding?.apply {
-            callControlGroup.visibility = if (display) View.VISIBLE else View.GONE
-            callHangupBtn.visibility = if (display) View.VISIBLE else View.GONE
-            confControlGroup.visibility = when {
+       /* display = display and !isChoosePluginMode
+        binding?.apply { confControlGroup.visibility = when {
                 mConferenceMode && display -> View.VISIBLE
                 mConferenceMode -> View.INVISIBLE
                 else -> View.GONE
             }
-        }
+        }*/
     }
 
     override fun displayDialPadKeyboard() {
@@ -757,71 +774,72 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
-    override fun switchCameraIcon() {
-        //binding!!.callCameraFlipBtn.setImageResource(if (isFront) R.drawable.baseline_camera_front_24 else R.drawable.baseline_camera_rear_24)
-    }
-
     fun switchCamera() {
+        binding!!.callSpeakerBtn.isChecked = false
         presenter.switchOnOffCamera()
-        binding?.callCameraSwitchBtn?.setImageResource(if (binding?.callCameraSwitchBtn?.isChecked == true) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_24)
     }
 
     override fun updateAudioState(state: AudioState) {
         binding!!.callSpeakerBtn.isChecked = state.outputType == HardwareService.AudioOutput.SPEAKERS
     }
 
-    override fun updateMenu() {
-        requireActivity().invalidateOptionsMenu()
-    }
-
     override fun updateTime(duration: Long) {
         binding?.let { binding ->
-            binding.callStatusTxt.text = if (duration <= 0) null else String.format("%d:%02d:%02d",
+            binding.callStatusTxt.text = if (duration <= 0) null else String.format(
+                "%d:%02d:%02d",
                 duration / 3600,
                 duration % 3600 / 60,
-                duration % 60)
+                duration % 60
+            )
         }
     }
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
-        Log.w(TAG, "updateConfInfo $participantInfo")
+        Log.w(TAG, "DEBUG updateConfInfo $participantInfo")
+        Log.w(
+            "ConfParticipantAdapter",
+            "updateConfInfo participantInfo.size: ${participantInfo.size}, participantInfo: $participantInfo"
+        )
+        for (i in participantInfo) {
+            Log.w("ConfParticipantAdapter", "updateConfInfo participant.name: ${i.contact.displayName} \n")
+        }
+
         val binding = binding ?: return
-        mConferenceMode = participantInfo.size > 1
+        mConferenceMode = participantInfo.isNotEmpty()
+
         binding.participantLabelContainer.removeAllViews()
         if (participantInfo.isNotEmpty()) {
+            isMyMicMuted = participantInfo[0].audioLocalMuted
             val username = if (participantInfo.size > 1)
                 "Conference with ${participantInfo.size} people"
             else participantInfo[0].contact.displayName
             val displayName = if (participantInfo.size > 1) null else participantInfo[0].contact.displayName
             val hasProfileName = displayName != null && !displayName.contentEquals(username)
-            val activity = activity as AppCompatActivity?
+            val activity = activity
             if (activity != null) {
-                val ab = activity.supportActionBar
-                if (ab != null) {
-                    if (hasProfileName) {
-                        ab.title = displayName
-                        ab.subtitle = username
-                    } else {
-                        ab.title = username
-                        ab.subtitle = null
-                    }
-                    ab.setDisplayShowTitleEnabled(true)
-                }
                 val call = participantInfo[0].call
                 if (call != null) {
                     val conversationUri = if (call.conversationId != null)
                         Uri(Uri.SWARM_SCHEME, call.conversationId!!)
                     else call.contact!!.conversationUri.blockingFirst()
-                    activity.intent = Intent(Intent.ACTION_VIEW,
-                        ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java)
+                    activity.intent = Intent(
+                        Intent.ACTION_VIEW,
+                        ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java
+                    )
                         .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
+                    Log.w(TAG, "DEBUG setIntent ${activity.intent}")
+
                     arguments = Bundle().apply {
                         putString(KEY_ACTION, Intent.ACTION_VIEW)
                         putString(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString)
                     }
+                } else {
+                    Log.w(TAG, "DEBUG null call")
                 }
-            }
+            } else {
+                    Log.w(TAG, "DEBUG null activity")
+                }
             if (hasProfileName) {
                 binding.contactBubbleNumTxt.visibility = View.VISIBLE
                 binding.contactBubbleTxt.text = displayName
@@ -830,18 +848,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 binding.contactBubbleNumTxt.visibility = View.GONE
                 binding.contactBubbleTxt.text = username
             }
-            binding.contactBubble.setImageDrawable(AvatarDrawable.Builder()
-                .withContact(participantInfo[0].contact)
-                .withCircleCrop(true)
-                .withPresence(false)
-                .build(requireActivity()))
+            binding.contactBubble.setImageDrawable(
+                AvatarDrawable.Builder()
+                    .withContact(participantInfo[0].contact)
+                    .withCircleCrop(true)
+                    .withPresence(false)
+                    .build(requireActivity())
+            )
 
             val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
             for (i in participantInfo) {
                 val displayName = i.contact.displayName
                 if (!TextUtils.isEmpty(displayName)) {
                     val label = ItemParticipantLabelBinding.inflate(inflater)
-                    val params = PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    val params = PercentFrameLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
                     params.percentLayoutInfo.leftMarginPercent = i.x / mVideoWidth.toFloat()
                     params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
                     params.percentLayoutInfo.rightMarginPercent =
@@ -849,61 +872,38 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
                     label.participantName.text = displayName
                     label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
-                    label.mute.visibility = if (i.audioMuted) View.VISIBLE else View.GONE
+                    label.mute.visibility = if (i.audioModeratorMuted || i.audioLocalMuted) View.VISIBLE else View.GONE
                     binding.participantLabelContainer.addView(label.root, params)
                 }
             }
         }
         binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
-        if (!mConferenceMode) {
-            binding.confControlGroup.visibility = View.GONE
-        } else {
-            binding.confControlGroup.visibility = View.VISIBLE
-            confAdapter?.apply { updateFromCalls(participantInfo) }
-                // Create new adapter
-                ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
-                override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
-                    val maximized = presenter.isMaximized(contact)
-                    val popup = PopupMenu(view.context, view)
-                    popup.inflate(R.menu.conference_participant_actions)
-                    popup.setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.conv_contact_details -> presenter.openParticipantContact(contact)
-                            R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
-                            R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
-                            R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
-                            else -> return@setOnMenuItemClickListener false
-                        }
-                        true
+
+        binding.confControlGroup.visibility = View.VISIBLE
+        confAdapter?.apply {
+            updateFromCalls(participantInfo)
+        }
+        // Create new adapter
+            ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
+                override fun onParticipantSelected(
+                    contact: ParticipantInfo,
+                    action: ConfParticipantAdapter.ParticipantAction
+                ) {
+                    when (action) {
+                        ConfParticipantAdapter.ParticipantAction.ShowDetails -> presenter.openParticipantContact(contact)
+                        ConfParticipantAdapter.ParticipantAction.Hangup -> presenter.hangupParticipant(contact)
+                        ConfParticipantAdapter.ParticipantAction.Mute -> presenter.muteParticipant(
+                            contact,
+                            !contact.audioModeratorMuted
+                        )
+                        ConfParticipantAdapter.ParticipantAction.Extend -> presenter.maximizeParticipant(contact)
                     }
-                    val menu = popup.menu as MenuBuilder
-                    val maxItem = menu.findItem(R.id.conv_contact_maximize)
-                    val muteItem = menu.findItem(R.id.conv_mute)
-                    if (maximized) {
-                        maxItem.setTitle(R.string.action_call_minimize)
-                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24)
-                    } else {
-                        maxItem.setTitle(R.string.action_call_maximize)
-                        maxItem.setIcon(R.drawable.baseline_open_in_full_24)
-                    }
-                    if (!contact.audioMuted) {
-                        muteItem.setTitle(R.string.action_call_mute)
-                        muteItem.setIcon(R.drawable.baseline_mic_off_24)
-                    } else {
-                        muteItem.setTitle(R.string.action_call_unmute)
-                        muteItem.setIcon(R.drawable.baseline_mic_24)
-                    }
-                    val menuHelper = MenuPopupHelper(view.context, menu, view)
-                    menuHelper.gravity = Gravity.END
-                    menuHelper.setForceShowIcon(true)
-                    menuHelper.show()
                 }
             }).apply {
                 setHasStableIds(true)
                 confAdapter = this
                 binding.confControlGroup.adapter = this
             }
-        }
     }
 
     override fun updateParticipantRecording(contacts: Set<Contact>) {
@@ -931,33 +931,188 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding!!.callStatusTxt.setText(callStateToHumanState(callState))
     }
 
-    override fun initMenu(
-        isSpeakerOn: Boolean, hasMultipleCamera: Boolean, canDial: Boolean,
-        showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean
+    override fun updateBottomSheetButtonStatus(
+        isSpeakerOn: Boolean,
+        isMicrophoneMuted: Boolean,
+        hasMultipleCamera: Boolean,
+        canDial: Boolean,
+        showPluginBtn: Boolean,
+        onGoingCall: Boolean,
+        hasActiveVideo: Boolean
     ) {
+        Log.w(TAG, "DEBUG updateBottomSheetButtonStatus  ----------> ")
         binding?.apply {
-            callSpeakerBtn.visibility = if (hasActiveVideo) View.GONE else View.VISIBLE
-            callCameraSwitchBtn.isChecked = !hasActiveVideo
-            callCameraSwitchBtn.setImageResource(if (hasActiveVideo) R.drawable.baseline_videocam_24 else R.drawable.baseline_videocam_off_24)
-            callCameraFlipBtn.visibility = if (hasMultipleCamera && hasActiveVideo) View.VISIBLE else View.GONE
+            dialpadBtnContainer.isVisible = canDial
+            pluginsBtnContainer.isVisible = showPluginBtn
+            callVideocamBtn.apply {
+                isChecked = !hasActiveVideo
+                setImageResource(if(isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
+            }
+            callCameraFlipBtn.apply {
+                isEnabled = !callVideocamBtn.isChecked
+                setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
+            }
+            callMicBtn.isChecked = isMicrophoneMuted
+            callSpeakerBtn.isChecked = isSpeakerOn
+
+
         }
-        dialPadBtn?.isVisible = canDial
-        pluginsMenuBtn?.isVisible = showPluginBtn
-        updateMenu()
     }
 
-    override fun initNormalStateDisplay(isMuted: Boolean) {
+    /**
+     * Set the bottomSheet height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
+     *
+     * // comment: For the expanded_state height we could also change it based on every bottomsheet elements heights
+     * grid height = gridView.height
+     * recyclerview height = (conf.participants.size * viewholder.height)
+     * then expandedstateoffset = (dm.height - [gridView.height + (conf.participants.size * viewholder.height)])
+     *
+     */
+    private fun setBottomSheet(inset: WindowInsetsCompat) {
+        Log.w(TAG, "DEBUG setBottomSheet  ----------> presenter.isPipMode: ${isInPIP} ")
+        val bsView = view?.findViewById<View>(R.id.call_options_bottom_sheet)!!
+        if (!isInPIP || bsView.isVisible) {
+            val dm = requireContext().resources.displayMetrics
+            val orientation = requireContext().resources.configuration.orientation
+            val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
+            val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
+            val gridViewHeight = view?.findViewById<View>(R.id.call_parameters_grid)?.height
+            var halfExpandedRatio = (gridViewHeight?.plus((40 * dm.density)))?.div(dm.heightPixels)
+
+            val bsViewParam = bsView.layoutParams
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                bsViewParam.width = getBottomSheetMaxWidth()
+                bsView.layoutParams = bsViewParam
+            } else {
+                bsViewParam.width = -1
+                bsView.layoutParams = bsViewParam
+            }
+            var desiredPeekHeight = (((89) * dm.density) + bottomInsets)
+            /*Defining value of the bottom inset based on the size of the navbar*/
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                /* if (no navbar || landscape mode == true) then we must adapt the elements (bottomInsets, peekHeightsPx, halExpandedRatio) to the new display value */
+                if (gridViewHeight != null) {
+                    desiredPeekHeight =
+                        (10 * dm.density) + (gridViewHeight / 2) //peekHeight = the height of the fist row of the buttons grid + margintop
+                    halfExpandedRatio =
+                        (gridViewHeight + (10 * dm.density)).div(dm.heightPixels) //halfExpandedRatio = height of the buttons grid + margin / total screen height
+                }
+            }
+            view?.findViewById<View>(R.id.call_coordinator_option_container)?.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
+            view?.findViewById<View>(R.id.call_options_bottom_sheet)?.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
+
+            Log.w(TAG, "DEBUG setBottomSheet  ----------> bsview.isvisible: ${bsView.isVisible}, bsview.w: ${bsView.layoutParams.width}, bsview.h: ${bsView.layoutParams.height}")
+            Log.w(TAG, "DEBUG setBottomSheet  ----------> gridView.isvisible: ${view?.findViewById<View>(R.id.call_parameters_grid)?.isVisible}, gridView.h: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.height}, gridView.w: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.width}")
+
+            bottomSheetParams?.let { bs ->
+                bs.expandedOffset =
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) (topInsets * dm.density).toInt()
+                    else (bottomInsets * dm.density).toInt()
+                if (halfExpandedRatio != null) {
+                    bs.halfExpandedRatio =
+                        if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
+                } else bs.halfExpandedRatio = 0.4f
+
+                bs.peekHeight = desiredPeekHeight.toInt()
+                bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
+            }
+        }
+    }
+
+    /**
+     * getBottomSheetMaxWidth(): Int
+     *
+     * return the width value for the bottomSheet based on screen size, density and ratio
+     * */
+    private fun getBottomSheetMaxWidth(): Int {
+        val dm = requireContext().resources.displayMetrics
+        val maxWidth =
+            if (requireContext().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && dm.widthPixels >= dm.heightPixels) dm.widthPixels else dm.heightPixels
+        val gridMinWidth = 350 //width size in dp
+        val wRatio = (gridMinWidth
+                * dm.density).div(maxWidth)
+        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> dm.widthPixels: ${dm.widthPixels}, dm.heightPixels: ${dm.heightPixels}")
+        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> gridMinWidth: $gridMinWidth, maxWidth: $maxWidth, wRatio: $wRatio")
+        return when {
+            wRatio < 0f -> -1
+            wRatio < 0.5f -> (((gridMinWidth * dm.density).toInt() * 1.25).toInt())
+            wRatio < 0.6f -> (((gridMinWidth * dm.density).toInt() * 1.20).toInt())
+            wRatio < 0.7f -> (((gridMinWidth * dm.density).toInt() * 1.15).toInt())
+            wRatio < 0.8f -> (((gridMinWidth * dm.density).toInt() * 1.10).toInt())
+            wRatio >= 1f -> -1
+            else -> -1
+        }
+    }
+
+    private fun displayBottomSheet(display: Boolean) {
+        Log.w(TAG,"DEBUG displayBottomSheet -----> display: $display, presenter.mOnGoingCall: ${presenter.mOnGoingCall}")
+        val binding = binding ?: return
+        binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
+        Log.w(TAG,"DEBUG displayBottomSheet -----> callOptionsBottomSheet.isVisible: ${binding.callOptionsBottomSheet.isVisible}, callCoordinatorOptionContainer.isVisible: ${binding.callCoordinatorOptionContainer.isVisible}")
+    }
+
+    override fun resetBottomSheetState() {
+        bottomSheetParams?.let { bs ->
+            bs.isHideable = false
+            bs.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+    }
+
+    enum class BottomSheetAnimation {
+        UP, DOWN
+    }
+
+    fun moveBottomSheet(movement: BottomSheetAnimation) {
+        view?.let { mainView ->
+            when (movement) {
+                BottomSheetAnimation.UP -> {
+                    //Log.w(TAG,"DEBUG moveBottomSheet -----> animate UP")
+                    mainView.findViewById<View>(R.id.call_coordinator_option_container).let {
+                        if(it.isVisible){
+                            it.animate()
+                                .translationY(0f)
+                                .alpha(1.0f)
+                                .setListener(null)
+                        }
+                    }
+                    displayBottomSheet(true)
+                }
+                BottomSheetAnimation.DOWN -> {
+                    //Log.w(TAG,"DEBUG moveBottomSheet -----> animate DOWN")
+                    mainView.findViewById<View>(R.id.call_coordinator_option_container).apply {
+                        this@apply.updatePadding(bottom = 0)
+                        mainView.findViewById<View>(R.id.call_options_bottom_sheet).updatePadding(bottom = 0)
+                        animate()
+                            .translationY(250f)
+                            .alpha(0.0f)
+                            .setListener(object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    displayBottomSheet(false)
+                                }
+                            })
+                        WindowInsetsControllerCompat(requireActivity().window, mainView).apply {
+                            requireActivity().window.navigationBarColor = resources.getColor(R.color.transparent)
+                            hide(WindowInsetsCompat.Type.systemBars())
+                            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Init the Call view when the call is ongoing
+     * */
+    override fun initNormalStateDisplay() {
+        Log.w(CallPresenter.TAG, "DEBUG initNormalStateDisplay ---------------- >>  ")
         binding?.apply {
             shapeRipple.stopRipple()
-            callAcceptBtn.visibility = View.GONE
-            callAcceptAudioBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
-            callControlGroup.visibility = View.VISIBLE
-            callHangupBtn.visibility = View.VISIBLE
             contactBubbleLayout.visibility = View.VISIBLE
-            callMicBtn.isChecked = isMuted
         }
-        requireActivity().invalidateOptionsMenu()
+
         val callActivity = activity as CallActivity?
         callActivity?.showSystemUI()
     }
@@ -968,11 +1123,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             if (hasVideo) callAcceptBtn.visibility = View.VISIBLE else callAcceptBtn.visibility = View.GONE
             callAcceptAudioBtn.visibility = View.VISIBLE
             callRefuseBtn.visibility = View.VISIBLE
-            callControlGroup.visibility = View.GONE
-            callHangupBtn.visibility = View.GONE
             contactBubbleLayout.visibility = View.VISIBLE
         }
-        requireActivity().invalidateOptionsMenu()
     }
 
     override fun initOutGoingCallDisplay() {
@@ -980,14 +1132,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding?.apply {
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.VISIBLE
-            callControlGroup.visibility = View.GONE
-            callHangupBtn.visibility = View.GONE
             contactBubbleLayout.visibility = View.VISIBLE
         }
-        requireActivity().invalidateOptionsMenu()
     }
 
+    // change le ratio de la video mais ne change pas la taille du container
     override fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
+        //Log.w(TAG, "DEBUG ------ resetPreviewVideoSize ||  previewWidth: $previewWidth, previewHeight: $previewHeight, rot: $rot")
         if (previewWidth == -1 && previewHeight == -1) return
         mPreviewWidth = previewWidth
         mPreviewHeight = previewHeight
@@ -1006,6 +1157,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
+        //Log.w(TAG, "DEBUG ------ resetVideoSize ||  videoWidth: $videoWidth, videoHeight: $videoHeight")
         val rootView = view as ViewGroup? ?: return
         val videoRatio = videoWidth / videoHeight.toDouble()
         val screenRatio = rootView.width / rootView.height.toDouble()
@@ -1027,6 +1179,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
+        //Log.w(TAG, "DEBUG ------ configureTransform ||  viewWidth: $viewWidth, mPreviewWidth: $mPreviewWidth, viewHeight: $viewHeight,  mPreviewHeight: $mPreviewHeight,  ")
         val activity: Activity? = activity
         if (null == binding || null == activity) {
             return
@@ -1049,9 +1202,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             matrix.postRotate(180f, centerX, centerY)
         }
         if (!isChoosePluginMode) {
-//            binding.pluginPreviewSurface.setTransform(matrix);
-//        }
-//        else {
             binding!!.previewSurface.setTransform(matrix)
         }
     }
@@ -1059,12 +1209,25 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun goToConversation(accountId: String, conversationId: Uri) {
         val context = requireContext()
         if (isTablet(context)) {
-            startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, HomeActivity::class.java))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    ConversationPath.toUri(accountId, conversationId),
+                    context,
+                    HomeActivity::class.java
+                )
+            )
         } else {
             startActivityForResult(
-                Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, ConversationActivity::class.java)
+                Intent(
+                    Intent.ACTION_VIEW,
+                    ConversationPath.toUri(accountId, conversationId),
+                    context,
+                    ConversationActivity::class.java
+                )
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT),
-                HomeActivity.REQUEST_CODE_CONVERSATION)
+                HomeActivity.REQUEST_CODE_CONVERSATION
+            )
         }
     }
 
@@ -1073,7 +1236,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contact.uri), requireContext(), ContactDetailsActivity::class.java))
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                ConversationPath.toUri(accountId, contact.uri),
+                requireContext(),
+                ContactDetailsActivity::class.java
+            )
+        )
     }
 
     /**
@@ -1087,8 +1257,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val hasVideo = presenter.wantVideo
 
-        Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($acceptIncomingCall, $hasVideo) ")
-        //Log.w(TAG, "fn prepareCall [CallFragment.kt] -> value of presenter.hasVideo() : $hasVideo")
+        //Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($acceptIncomingCall, $hasVideo) ")
 
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
@@ -1105,14 +1274,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
+                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         }
@@ -1126,7 +1295,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
 
     private fun initializeCall(isIncoming: Boolean, hasVideo: Boolean) {
-        Log.w(TAG, "DEBUG fn initializeCall [CallFragment.kt] -> if isIncoming ( = $isIncoming ) == true : presenter.AcceptCall(hasVideo: $hasVideo) : presenter.initOutGoing(conversation.accountId,conversation.conversationUri,args.getString(Intent.EXTRA_PHONE_NUMBER), hasVideo: $hasVideo)")
+        //Log.w(TAG, "DEBUG fn initializeCall [CallFragment.kt] -> if isIncoming ( = $isIncoming ) == true : presenter.AcceptCall(hasVideo: $hasVideo) : presenter.initOutGoing(conversation.accountId,conversation.conversationUri,args.getString(Intent.EXTRA_PHONE_NUMBER), hasVideo: $hasVideo)")
         if (isIncoming) {
             presenter.acceptCall(hasVideo)
         } else {
@@ -1147,21 +1316,25 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             activity.finishAndRemoveTask()
             if (mBackstackLost) {
                 startActivity(
-                    Intent.makeMainActivity(ComponentName(activity, HomeActivity::class.java)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    Intent.makeMainActivity(ComponentName(activity, HomeActivity::class.java))
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
             }
         }
     }
 
+    fun addParticipantClicked() {
+        presenter.startAddParticipant()
+    }
+
     //todo if videomode, should mute/unmute audio output, if audio only, should switch between speaker options
     fun speakerClicked() {
-        binding?.let {
-            presenter.speakerClick(it.callSpeakerBtn.isChecked)
-            //it.callSpeakerBtn.setImageResource(if (it.callSpeakerBtn.isChecked) R.drawable.baseline_sound_on_24 else R.drawable.baseline_sound_off_24)
-        }
+        presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
     }
 
     private fun startScreenShare(mediaProjection: MediaProjection?) {
+        Log.w(TAG, "[screenshare] startScreenShare ---> mediaProjection: $mediaProjection ")
+
         if (presenter.startScreenShare(mediaProjection)) {
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
@@ -1179,18 +1352,21 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.stopScreenShare()
     }
 
-    fun shareScreenClicked(checked: Boolean) {
-        if (!checked) {
+    fun shareScreenClicked() {
+        if (binding?.callSharescreenBtn?.isChecked == false) {
+            Log.w(TAG, "[screenshare] shareScreenClicked ---> stop screen sharing ")
             stopShareScreen()
         } else {
+            Log.w(TAG, "[screenshare] shareScreenClicked ---> startActivityForResult ")
             startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE_SCREEN_SHARE)
         }
     }
 
     fun micClicked() {
-        binding?.let { binding->
-            presenter.muteMicrophoneToggled(binding.callMicBtn.isChecked)
-            binding.callMicBtn.setImageResource(if (binding.callMicBtn.isChecked) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_24)
+        binding?.callMicBtn?.let { micButton ->
+            presenter.isMicrophoneMuted = !presenter.isMicrophoneMuted
+            presenter.muteMicrophoneToggled(micButton.isChecked)
+            //micButton.setImageResource(if (micButton.isChecked) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_24)
         }
     }
 
@@ -1203,16 +1379,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun acceptAudioClicked() {
-        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo current value is : $ (${presenter.wantVideo})")
         presenter.wantVideo = false
-        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo new value is : $ (${presenter.wantVideo})")
         prepareCall(true)
     }
 
     fun acceptClicked() {
-        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo current value is : $ (${presenter.wantVideo})")
         presenter.wantVideo = true
-        Log.w(TAG, "DEBUG fn acceptClicked() [CallFragment.kt] -> hasVideo new value is : $ (${presenter.wantVideo})")
         prepareCall(true)
     }
 
@@ -1220,15 +1392,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.switchVideoInputClick()
     }
 
-    fun addParticipant() {
-        presenter.startAddParticipant()
-    }
-
     override fun startAddParticipant(conferenceId: String) {
-        startActivityForResult(Intent(Intent.ACTION_PICK)
+        startActivityForResult(
+            Intent(Intent.ACTION_PICK)
                 .setClass(requireActivity(), ConversationSelectionActivity::class.java)
                 .putExtra(NotificationService.KEY_CALL_ID, conferenceId),
-            REQUEST_CODE_ADD_PARTICIPANT)
+            REQUEST_CODE_ADD_PARTICIPANT
+        )
     }
 
     override fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean) {
@@ -1261,7 +1431,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         rp!!.setFirstLastElementsWidths(112, 112)
         binding!!.recyclerPicker.visibility = View.GONE
         if (isChoosePluginMode) {
-            displayHangupButton(false)
             binding!!.recyclerPicker.visibility = View.VISIBLE
             movePreview(true)
             if (previousPluginPosition != -1) {
@@ -1273,14 +1442,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun toggleVideoPluginsCarousel(toggle: Boolean) {
+        val binding = binding ?: return
         if (isChoosePluginMode) {
-            if (toggle) {
-                binding!!.recyclerPicker.visibility = View.VISIBLE
-                movePreview(true)
-            } else {
-                binding!!.recyclerPicker.visibility = View.INVISIBLE
-                movePreview(false)
-            }
+            binding.recyclerPicker.isInvisible = !toggle
+            movePreview(toggle)
         }
     }
 
@@ -1350,11 +1515,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             presenter.stopPlugin()
             binding!!.recyclerPicker.visibility = View.GONE
             movePreview(false)
-            displayHangupButton(true)
         }
-
-        //change preview image
-        //displayPeerVideo(true, presenter.wantVideo)
     }
 
     /**

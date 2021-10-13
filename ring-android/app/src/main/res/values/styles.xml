@@ -49,18 +49,15 @@
     </style>
 
     <!-- Call theme -->
-    <style name="AppTheme.Call.Base" parent="@style/Theme.MaterialComponents">
+    <style name="AppTheme.Call.Base" parent="AppThemeBase">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Transparent</item>
-        <item name="actionBarStyle">@style/ActionBar.Transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+
     </style>
 
     <style name="AppTheme.Call" parent="AppTheme.Call.Base" />
