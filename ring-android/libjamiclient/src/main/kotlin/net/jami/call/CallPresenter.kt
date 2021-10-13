@@ -55,9 +55,7 @@ class CallPresenter @Inject constructor(
     private var mConference: Conference? = null
     private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
     private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
-    private var mOnGoingCall = false
-    var wantVideo = false
-    var videoIsMuted = false
+    var mOnGoingCall = false
         private set
     private var permissionChanged = false
     var isPipMode = false
@@ -71,6 +69,12 @@ class CallPresenter @Inject constructor(
     private var currentSurfaceId: String? = null
     private var currentPluginSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
+    val isSpeakerphoneOn: Boolean
+        get() = mHardwareService.isSpeakerphoneOn
+    var isMicrophoneMuted: Boolean = false
+    var wantVideo = false
+    var videoIsMuted = false
+        private set
 
     fun cameraPermissionChanged(isGranted: Boolean) {
         if (isGranted && mHardwareService.isVideoAvailable) {
@@ -169,15 +173,27 @@ class CallPresenter @Inject constructor(
     }
 
     private fun showConference(conference: Observable<Conference>) {
+        Log.w(TAG,"DEBUG[conference] showConference ---------------- >> conference: $conference")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject, { participants, pending ->
-                val p = if (participants.isEmpty() && !obj.isConference)
+            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
+                Log.w(
+                    TAG,
+                    "DEBUG[conference] showConference ---------------- >> participants: $participants, pending: $pending, obj.call: ${obj.call}"
+                )
+                val p = if (participants.isEmpty() && !obj.isConference) {
+                    Log.w(
+                        TAG,
+                        "DEBUG[conference] IF ---------------- >> obj.isConference: ${obj.isConference}, obj.call: ${obj.call}"
+                    )
                     listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
-                else
+                } else {
+                    Log.w(TAG, "DEBUG[conference] ELSE ---------------- >> participants: $participants ")
                     participants
+                }
                 if (pending.isEmpty()) p else p + pending
-            })}
+            }
+            }
             .observeOn(mUiScheduler)
             .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
@@ -188,7 +204,7 @@ class CallPresenter @Inject constructor(
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
     }
 
-    fun prepareOptionMenu() {
+    fun prepareBottomSheetButtonsStatus() {
         val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         val conference = mConference
@@ -198,7 +214,15 @@ class CallPresenter @Inject constructor(
         val displayPluginsButton = view!!.displayPluginsButton()
         val showPluginBtn = displayPluginsButton && mOnGoingCall && conference != null
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
-        view?.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+        val tmp1 = mConference?.call?.isAudioMuted
+        val tmp2 = mConference?.firstCall?.isAudioMuted
+        val tmp3 = mConference?.call?.mediaList
+        val tmp4 = JamiService.getAudioInputDeviceList()
+
+        /*Log.w(TAG, "DEBUG prepareBottomSheetButtonsStatus ---- status for local audio \n" +
+                " -------- isMicrophoneMuted: $isMicrophoneMuted, tmp1: $tmp1, tmp2: $tmp2, tmp3: $tmp3\n" +
+                " tmp4: $tmp4 \n ------------------ ")*/
+        view?.updateBottomSheetButtonStatus(isSpeakerOn, isMicrophoneMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -213,9 +237,6 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    val isSpeakerphoneOn: Boolean
-        get() = mHardwareService.isSpeakerphoneOn
-
     fun speakerClick(checked: Boolean) {
         mHardwareService.toggleSpeakerphone(checked)
     }
@@ -224,14 +245,9 @@ class CallPresenter @Inject constructor(
         mCallService.setLocalMediaMuted(mConference!!.id, CallService.MEDIA_TYPE_AUDIO, checked)
     }
 
-    val isMicrophoneMuted: Boolean
-        get() = mCallService.isCaptureMuted
-
     fun switchVideoInputClick() {
         val conference = mConference ?: return
         mHardwareService.switchInput(conference.id, false)
-        //view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
-        view?.switchCameraIcon()
     }
 
     fun switchOnOffCamera() {
@@ -355,6 +371,10 @@ class CallPresenter @Inject constructor(
 
     private fun confUpdate(call: Conference) {
         mConference = call
+        Log.w(TAG, "DEBUG[conference] ----------> callId:${call.id} " + call.state)
+        for (i in call.firstCall?.mediaList!!){
+            Log.w(TAG, "DEBUG[conference] ----------> $i")
+        }
         Log.w(TAG, "confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
@@ -364,10 +384,9 @@ class CallPresenter @Inject constructor(
         val hasActiveVideo = call.hasActiveVideo()
         videoIsMuted = !hasActiveVideo
         val view = view ?: return
-        view.updateMenu()
         if (call.isOnGoing) {
             mOnGoingCall = true
-            view.initNormalStateDisplay(isMicrophoneMuted)
+            view.initNormalStateDisplay()
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
@@ -436,6 +455,7 @@ class CallPresenter @Inject constructor(
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
+            Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -494,18 +514,14 @@ class CallPresenter @Inject constructor(
         isPipMode = pip
         if (pip) {
             view!!.displayHangupButton(false)
-            view!!.displayPreviewSurface(false)
-            //view!!.displayPeerVideo(true, false)
+            view!!.previewSurfacePosIfPipMode(false)
         } else {
-            //Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
-            view!!.displayPreviewSurface(true)
-            //view!!.displayPeerVideo(true, mDeviceRuntimeService.hasVideoPermission())
+            view!!.previewSurfacePosIfPipMode(true)
         }
     }
 
     fun toggleCallMediaHandler(id: String, toggle: Boolean) {
         val conference = mConference ?: return
-        //Log.w(TAG, "fn toggleMediaHandler [CallPresenter] -> check value of conference.hasVideo : ${conference.hasVideo()}")
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.toggleCallMediaHandler(id, conference.id, toggle)
         }
@@ -516,6 +532,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun addConferenceParticipant(accountId: String, uri: Uri) {
+        Log.w(TAG, "DEBUG[conference] addConferenceParticipant ----> ")
         val conference = mConference ?: return
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->

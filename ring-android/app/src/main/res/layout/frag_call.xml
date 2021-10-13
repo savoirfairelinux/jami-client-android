@@ -16,430 +16,643 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".client.CallActivity">
 
     <data>
-
         <variable
             name="presenter"
             type="cx.ring.fragments.CallFragment" />
     </data>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:keepScreenOn="true"
-        tools:background="@color/cardview_dark_background">
+        tools:background="@color/background">
 
-        <RelativeLayout
+    <!-- video surfaces layout -->
+    <RelativeLayout
+        android:id="@+id/call_relative_layout_surfaces"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SurfaceView
+            android:id="@+id/video_surface"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-            <SurfaceView
-                android:id="@+id/video_surface"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <androidx.percentlayout.widget.PercentFrameLayout
-                android:layout_gravity="center"
-                android:id="@+id/participant_label_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@id/video_surface"
-                android:layout_alignBottom="@id/video_surface"
-                android:layout_alignLeft="@id/video_surface"
-                android:layout_alignRight="@id/video_surface"
-                android:visibility="gone"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/plugin_preview_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/call_preview_margin"
-                android:layout_marginTop="@dimen/call_preview_margin"
-                android:layout_marginBottom="@dimen/call_preview_margin"
-                android:layout_marginRight="@dimen/call_preview_margin"
-                android:visibility="gone"
-                app:cardCornerRadius="16dp"
-                app:cardPreventCornerOverlap="false"
-                tools:visibility="visible"
-                app:cardBackgroundColor="@color/black">
-
-                <cx.ring.views.AutoFitSurfaceView
-                    android:id="@+id/plugin_preview_surface"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible"/>
-
-                <ImageView
-                    android:id="@+id/plugin_preview_handle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical"
-                    android:layout_marginHorizontal="@dimen/call_preview_margin_handle"
-                    android:visibility="visible"
-                    android:alpha="0"
-                    app:srcCompat="@drawable/ic_preview_handle" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/preview_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/call_preview_margin"
-                android:layout_marginTop="@dimen/call_preview_margin"
-                android:layout_marginBottom="@dimen/call_preview_margin"
-                android:layout_marginRight="@dimen/call_preview_margin"
-                android:visibility="gone"
-                app:cardCornerRadius="16dp"
-                app:cardPreventCornerOverlap="false"
-                tools:visibility="visible"
-                app:cardBackgroundColor="@color/black">
-
-                <cx.ring.views.AutoFitTextureView
-                    android:id="@+id/preview_surface"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"/>
-
-                <ImageView
-                    android:id="@+id/preview_handle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical"
-                    android:layout_marginHorizontal="@dimen/call_preview_margin_handle"
-                    android:visibility="visible"
-                    android:alpha="0"
-                    app:srcCompat="@drawable/ic_preview_handle" />
-
-            </androidx.cardview.widget.CardView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
+        <androidx.percentlayout.widget.PercentFrameLayout
+            android:layout_gravity="center"
+            android:id="@+id/participant_label_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:fitsSystemWindows="true">
+            android:layout_alignTop="@id/video_surface"
+            android:layout_alignBottom="@id/video_surface"
+            android:layout_alignLeft="@id/video_surface"
+            android:layout_alignRight="@id/video_surface"
+            android:visibility="gone"/>
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/contact_bubble_layout"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/plugin_preview_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/call_preview_margin"
+            android:layout_marginTop="@dimen/call_preview_margin"
+            android:layout_marginBottom="@dimen/call_preview_margin"
+            android:layout_marginRight="@dimen/call_preview_margin"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardPreventCornerOverlap="false"
+            tools:visibility="visible"
+            app:cardBackgroundColor="@color/black">
+
+            <cx.ring.views.AutoFitSurfaceView
+                android:id="@+id/plugin_preview_surface"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/plugin_preview_handle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:alignItems="stretch"
-                app:flexDirection="column"
-                app:flexWrap="wrap"
-                tools:visibility="visible">
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginHorizontal="@dimen/call_preview_margin_handle"
+                android:visibility="visible"
+                android:alpha="0"
+                app:srcCompat="@drawable/ic_preview_handle" />
 
-                <RelativeLayout
-                    android:layout_width="230dp"
-                    android:layout_height="230dp">
+        </androidx.cardview.widget.CardView>
 
-                    <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
-                        android:id="@+id/shape_ripple"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        app:enable_color_transition="true"
-                        app:ripple_color="@color/white"
-                        app:ripple_count="3"
-                        app:ripple_duration="3000"
-                        app:ripple_stroke_width="15dp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/preview_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/call_preview_margin"
+            android:layout_marginTop="@dimen/call_preview_margin"
+            android:layout_marginBottom="@dimen/call_preview_margin"
+            android:layout_marginRight="@dimen/call_preview_margin"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardPreventCornerOverlap="false"
+            tools:visibility="visible"
+            app:cardBackgroundColor="@color/black">
 
-                    <ImageView
-                        android:id="@+id/contact_bubble"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_centerInParent="true"
-                        tools:src="@drawable/ic_contact_picture_fallback" />
-                </RelativeLayout>
+            <cx.ring.views.AutoFitTextureView
+                android:id="@+id/preview_surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/preview_handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginHorizontal="@dimen/call_preview_margin_handle"
+                android:visibility="visible"
+                android:alpha="0"
+                app:srcCompat="@drawable/ic_preview_handle" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+     <!--waiting screen layout-->
+    <RelativeLayout
+        android:id="@+id/call_relative_layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/contact_bubble_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:alignItems="stretch"
+            app:flexDirection="column"
+            app:flexWrap="wrap"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="230dp"
+                android:layout_height="230dp">
+
+                <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
+                    android:id="@+id/shape_ripple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    app:enable_color_transition="true"
+                    app:ripple_color="@color/white"
+                    app:ripple_count="3"
+                    app:ripple_duration="3000"
+                    app:ripple_stroke_width="15dp" />
+
+                <ImageView
+                    android:id="@+id/contact_bubble"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerInParent="true"
+                    tools:src="@drawable/ic_contact_picture_fallback" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contact_bubble_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:gravity="center_horizontal"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="Contact Name" />
+
+                <TextView
+                    android:id="@+id/contact_bubble_num_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:gravity="center_horizontal"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="gone"
+                    tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/call_status_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:textSize="16sp"
+                    tools:text="Connecting" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/contact_bubble_txt"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/call_refuse_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="middle"
-                        android:gravity="center_horizontal"
-                        android:paddingStart="32dp"
-                        android:paddingEnd="32dp"
-                        android:singleLine="true"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        tools:text="Contact Name" />
-
-                    <TextView
-                        android:id="@+id/contact_bubble_num_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="middle"
-                        android:gravity="center_horizontal"
-                        android:paddingStart="32dp"
-                        android:paddingEnd="32dp"
-                        android:singleLine="true"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_decline"
+                        android:onClick="@{() -> presenter.refuseClicked()}"
+                        android:tint="@color/white"
                         android:visibility="gone"
-                        tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                        app:backgroundTint="@color/colorError"
+                        app:elevation="6dp"
+                        app:fabSize="normal"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/baseline_call_end_24"
+                        app:useCompatPadding="true"
                         tools:visibility="visible" />
 
-                    <TextView
-                        android:id="@+id/call_status_txt"
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/call_accept_audio_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingStart="32dp"
-                        android:paddingEnd="32dp"
-                        android:textSize="16sp"
-                        tools:text="Connecting" />
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_accept_audio"
+                        android:onClick="@{() -> presenter.acceptAudioClicked()}"
+                        android:tint="@color/white"
+                        android:visibility="gone"
+                        app:backgroundTint="@color/green_500"
+                        app:elevation="6dp"
+                        app:fabSize="normal"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/baseline_call_24"
+                        app:useCompatPadding="true"
+                        tools:visibility="visible" />
 
-                    <LinearLayout
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/call_accept_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/call_refuse_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            android:contentDescription="@string/action_call_decline"
-                            android:onClick="@{() -> presenter.refuseClicked()}"
-                            android:tint="@color/white"
-                            android:visibility="gone"
-                            app:backgroundTint="@color/colorError"
-                            app:elevation="6dp"
-                            app:fabSize="normal"
-                            app:pressedTranslationZ="12dp"
-                            app:rippleColor="@android:color/white"
-                            app:srcCompat="@drawable/baseline_call_end_24"
-                            app:useCompatPadding="true"
-                            tools:visibility="visible" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/call_accept_audio_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            android:contentDescription="@string/action_call_accept_audio"
-                            android:onClick="@{() -> presenter.acceptAudioClicked()}"
-                            android:tint="@color/white"
-                            android:visibility="gone"
-                            app:backgroundTint="@color/green_500"
-                            app:elevation="6dp"
-                            app:fabSize="normal"
-                            app:pressedTranslationZ="12dp"
-                            app:rippleColor="@android:color/white"
-                            app:srcCompat="@drawable/baseline_call_24"
-                            app:useCompatPadding="true"
-                            tools:visibility="visible" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/call_accept_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="16dp"
-                            android:contentDescription="@string/action_call_accept_video"
-                            android:onClick="@{() -> presenter.acceptClicked()}"
-                            android:visibility="gone"
-                            app:backgroundTint="@color/green_500"
-                            app:elevation="6dp"
-                            app:fabSize="normal"
-                            app:pressedTranslationZ="12dp"
-                            app:rippleColor="@android:color/white"
-                            app:srcCompat="@drawable/baseline_videocam_24"
-                            app:useCompatPadding="true"
-                            tools:visibility="visible" />
-                    </LinearLayout>
-
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_accept_video"
+                        android:onClick="@{() -> presenter.acceptClicked()}"
+                        android:visibility="gone"
+                        app:backgroundTint="@color/green_500"
+                        app:elevation="6dp"
+                        app:fabSize="normal"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/baseline_videocam_24"
+                        app:useCompatPadding="true"
+                        tools:visibility="visible" />
                 </LinearLayout>
-            </com.google.android.flexbox.FlexboxLayout>
-
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/call_control_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:flexDirection="column_reverse"
-                android:animateLayoutChanges="true"
-                app:flexWrap="wrap"
-                tools:visibility="visible">
-
-                <cx.ring.views.CheckableImageButton
-                    android:id="@+id/call_screenshare_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/ab_action_speakerphone"
-                    android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/baseline_mobile_screen_share_24" />
-
-                <ImageButton
-                    android:id="@+id/call_camera_flip_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/ab_action_flipcamera"
-                    android:onClick="@{() -> presenter.cameraFlip()}"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/baseline_flip_camera_24" />
-
-                <cx.ring.views.CheckableImageButton
-                    android:id="@+id/call_camera_switch_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/ab_action_flipcamera"
-                    android:onClick="@{() -> presenter.switchCamera()}"
-                    android:padding="16dp"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/baseline_videocam_24" />
-
-                <cx.ring.views.CheckableImageButton
-                    android:id="@+id/call_mic_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/action_call_mic_mute"
-                    android:onClick="@{() -> presenter.micClicked()}"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/baseline_mic_24"
-                    tools:visibility="visible" />
-
-                <cx.ring.views.CheckableImageButton
-                    android:id="@+id/call_speaker_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:contentDescription="@string/ab_action_speakerphone"
-                    android:onClick="@{() -> presenter.speakerClicked()}"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/baseline_sound_on_24" />
-
-
-                <ImageButton
-                    android:id="@+id/call_conference_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/call_button_background"
-                    android:onClick="@{() -> presenter.addParticipant()}"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/baseline_person_add_24" />
-
-            </com.google.android.flexbox.FlexboxLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/conf_control_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_conference_participant" />
-
-            <EditText
-                android:id="@+id/dialpad_edit_text"
-                android:layout_width="1dp"
-                android:layout_height="1dp"
-                android:ems="10"
-                android:inputType="phone"
-                android:visibility="visible" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/call_hangup_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="4dp"
-                android:contentDescription="@string/action_call_hangup"
-                android:onClick="@{() -> presenter.hangUpClicked()}"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:backgroundTint="@color/colorError"
-                app:elevation="6dp"
-                app:fabSize="normal"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="@android:color/white"
-                app:srcCompat="@drawable/baseline_call_end_24"
-                app:useCompatPadding="true" />
-
-            <LinearLayout
-                android:id="@+id/record_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_toLeftOf="@+id/conf_control_group"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="invisible"
-                tools:visibility="visible">
-
-                <View
-                    android:id="@+id/record_indicator"
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:background="@drawable/item_color_background"
-                    android:backgroundTint="#BF0046" />
-
-                <TextView
-                    android:id="@+id/record_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textSize="12sp"
-                    tools:text="Thomas" />
 
             </LinearLayout>
+        </com.google.android.flexbox.FlexboxLayout>
 
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/dialpad_edit_text"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_picker"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/record_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_gravity="bottom"
-            android:clipToPadding="false"
-            tools:listitem="@layout/item_picker"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layoutManager="LinearLayoutManager"/>
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <View
+                android:id="@+id/record_indicator"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:background="@drawable/item_color_background"
+                android:backgroundTint="#BF0046" />
+
+            <TextView
+                android:id="@+id/record_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"
+                tools:text="Thomas" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_picker"
+        android:orientation="horizontal"
+        app:layoutManager="LinearLayoutManager"
+        tools:ignore="MissingConstraints" />
+
+    <!-- Bottom sheet coordinator -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/call_coordinator_option_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <!-- Bottom sheet -->
+    <FrameLayout
+            android:id="@+id/call_options_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:behavior_fitToContents="false"
+            tools:visibility="visible"
+            android:layout_gravity="center"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_bs_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_call_menu"
+                >
+                <!-- handle bar -->
+                <FrameLayout
+                    android:id="@+id/call_drawer_handle"
+                    android:layout_width="40dp"
+                    android:layout_height="3dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/drawer_handlebar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <!-- Icons grid -->
+                <GridLayout
+                    android:id="@+id/call_parameters_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:columnCount="5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/call_drawer_handle"
+                    android:maxWidth="1200dp">
+
+                    <!-- Sound button -->
+                    <LinearLayout
+                        android:id="@+id/sound_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                        <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_speaker_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/call_button_background"
+                            android:contentDescription="@string/ab_action_speakerphone"
+                            android:padding="16dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/baseline_sound_on_24"
+                            android:onClick="@{() -> presenter.speakerClicked()}"/>
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sounds"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            />
+                    </LinearLayout>
+
+                    <!-- Mic button -->
+                    <LinearLayout
+                        android:id="@+id/microphone_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_mic_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_button_background"
+                            android:contentDescription="@string/action_call_mic_mute"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_mic_24"
+                            android:onClick="@{() -> presenter.micClicked()}"/>
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Micro"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Hangup button -->
+                    <LinearLayout
+                        android:id="@+id/hng_up_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_hng_up_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_hangup_btn_background"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_call_end_24"
+                            app:tint="@color/white"
+                            android:onClick="@{() -> presenter.hangUpClicked()}"/>
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="End Call"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Camera switch button -->
+                    <LinearLayout
+                        android:id="@+id/videocam_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_videocam_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_button_background"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_videocam_w"
+                            android:onClick="@{() -> presenter.switchCamera()}"/>
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Camera"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Camera switch button -->
+                    <LinearLayout
+                        android:id="@+id/Flip_cam_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_camera_flip_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_button_background"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_flip_camera_24"
+                            android:onClick="@{(v) -> presenter.cameraFlip()}"/>
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Change"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Screen Share button -->
+                    <LinearLayout
+                        android:id="@+id/sharescreen_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_sharescreen_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/call_button_background"
+                            android:padding="16dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/baseline_mobile_screen_share_24"
+                            app:tint="@color/white"
+                            android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"/>
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/call_sharescreen_btn" />
+                    </LinearLayout>
+
+                    <!-- Dialpad button -->
+                    <LinearLayout
+                        android:id="@+id/dialpad_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                        <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_dialpad_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/call_button_background"
+                            android:layout_gravity="center"
+                            android:padding="16dp"
+                            android:onClick="@{(v) -> presenter.displayDialPadKeyboard()}"
+                            app:srcCompat="@drawable/baseline_dialpad_24"
+                            app:tint="@color/white"
+                            />
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dialpad"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Plugins list button -->
+                    <LinearLayout
+                        android:id="@+id/plugins_btn_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                    <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_plugins_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/call_button_background"
+                            android:layout_gravity="center"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_settings_24"
+                            app:tint="@color/white"
+                            />
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plugins"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                </GridLayout>
+
+                <!-- Recycler view for participants in call -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/conf_control_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:nestedScrollingEnabled="true"
+                    app:layout_constraintTop_toBottomOf="@id/call_parameters_grid"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_conference_participant" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     </FrameLayout>
 </layout>

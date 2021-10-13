@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+
+Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_participant_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical|start"
+    android:minHeight="42dp"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+    <cx.ring.views.CheckableImageButton
+        android:id="@+id/call_sharescreen_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/baseline_person_add_24"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_large"
+        android:layout_weight="1"
+        android:elevation="4dp"
+        android:ellipsize="middle"
+        android:padding="8dp"
+        android:scrollHorizontally="false"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        android:textSize="16sp"
+        android:text="Add new participant"
+        tools:text="Add new user" />
+
+
+</LinearLayout>
+

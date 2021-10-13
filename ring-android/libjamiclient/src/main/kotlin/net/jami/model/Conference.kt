@@ -36,7 +36,8 @@ class Conference {
         val w: Int = i["w"]?.toInt() ?: 0
         val h: Int = i["h"]?.toInt() ?: 0
         val videoMuted: Boolean = i["videoMuted"].toBoolean()
-        val audioMuted: Boolean = i["audioMuted"].toBoolean()
+        val audioModeratorMuted: Boolean = i["audioModeratorMuted"].toBoolean()
+        val audioLocalMuted: Boolean = i["audioLocalMuted"].toBoolean()
         val isModerator: Boolean = i["isModerator"].toBoolean()
         val isEmpty: Boolean
             get() = x == 0 && y == 0 && w == 0 && h == 0
