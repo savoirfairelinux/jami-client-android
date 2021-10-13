@@ -254,10 +254,19 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
-        if (!isInPictureInPictureMode) {
-            mBackstackLost = true
+        when(isInPictureInPictureMode){
+            true -> {
+                binding!!.previewContainer.visibility = View.GONE
+                binding!!.videoSurface.setZOrderOnTop(false)
+                binding!!.videoSurface.setZOrderMediaOverlay(false)
+            }
+            false -> {
+                mBackstackLost = true
+                binding!!.previewContainer.visibility = View.VISIBLE
+                binding!!.videoSurface.setZOrderMediaOverlay(true)
+                binding!!.videoSurface.setZOrderOnTop(true)
+            }
         }
-        presenter.pipModeChanged(isInPictureInPictureMode)
     }
 
     override fun displayContactBubble(display: Boolean) {
@@ -272,16 +281,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun displayLocalVideo(display: Boolean) {
         Log.w(CallFragment.TAG, "DEBUG fn displayLocalVideo -> $display")
         binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
-    }
-
-    override fun displayPreviewSurface(display: Boolean) {
-        if (display) {
-            binding!!.videoSurface.setZOrderOnTop(false)
-            binding!!.videoSurface.setZOrderMediaOverlay(false)
-        } else {
-            binding!!.videoSurface.setZOrderMediaOverlay(true)
-            binding!!.videoSurface.setZOrderOnTop(true)
-        }
     }
 
     override fun displayHangupButton(display: Boolean) {
@@ -305,9 +304,11 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun displayDialPadKeyboard() {}
-    override fun switchCameraIcon() {}
     override fun updateAudioState(state: AudioState) {}
-    override fun updateMenu() {}
+
+    /*
+        override fun updateMenu() {}
+    */
     override fun updateTime(duration: Long) {
         binding?.callStatusTxt?.text = String.format(
             Locale.getDefault(),
@@ -325,10 +326,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun initMenu(isSpeakerOn: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean) {
+    override fun updateBottomSheetButtonStatus(isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean) {
     }
 
-    override fun initNormalStateDisplay(muted: Boolean) {
+    override fun resetBottomSheetState() {}
+
+    override fun initNormalStateDisplay() {
         mSession!!.isActive = true
         binding?.apply {
             shapeRipple.stopRipple()
@@ -544,61 +547,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
                     //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
                     label.participantName.text = displayName
                     label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
-                    label.mute.visibility = if (i.audioMuted) View.VISIBLE else View.GONE
+                    label.mute.visibility = if (i.audioModeratorMuted) View.VISIBLE else View.GONE
                     binding.participantLabelContainer.addView(label.root, params)
                 }
             }
         }
         binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
-        if (!mConferenceMode) {
-            binding.confControlGroup.visibility = View.GONE
-        } else {
-            binding.confControlGroup.visibility = View.VISIBLE
-            confAdapter?.apply { updateFromCalls(participantInfo) }
-            // Create new adapter
-                ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
-                    override fun onParticipantSelected(view: View, contact: ParticipantInfo) {
-                        val maximized = presenter.isMaximized(contact)
-                        val popup = PopupMenu(view.context, view)
-                        popup.inflate(R.menu.conference_participant_actions)
-                        popup.setOnMenuItemClickListener { item ->
-                            when (item.itemId) {
-                                R.id.conv_contact_details -> presenter.openParticipantContact(contact)
-                                R.id.conv_contact_hangup -> presenter.hangupParticipant(contact)
-                                R.id.conv_mute -> presenter.muteParticipant(contact, !contact.audioMuted)
-                                R.id.conv_contact_maximize -> presenter.maximizeParticipant(contact)
-                                else -> return@setOnMenuItemClickListener false
-                            }
-                            true
-                        }
-                        val menu = popup.menu as MenuBuilder
-                        val maxItem = menu.findItem(R.id.conv_contact_maximize)
-                        val muteItem = menu.findItem(R.id.conv_mute)
-                        if (maximized) {
-                            maxItem.setTitle(R.string.action_call_minimize)
-                            maxItem.setIcon(R.drawable.baseline_close_fullscreen_24)
-                        } else {
-                            maxItem.setTitle(R.string.action_call_maximize)
-                            maxItem.setIcon(R.drawable.baseline_open_in_full_24)
-                        }
-                        if (!contact.audioMuted) {
-                            muteItem.setTitle(R.string.action_call_mute)
-                            muteItem.setIcon(R.drawable.baseline_mic_off_24)
-                        } else {
-                            muteItem.setTitle(R.string.action_call_unmute)
-                            muteItem.setIcon(R.drawable.baseline_mic_24)
-                        }
-                        val menuHelper = MenuPopupHelper(view.context, menu, view)
-                        menuHelper.gravity = Gravity.END
-                        menuHelper.setForceShowIcon(true)
-                        menuHelper.show()
-                    }
-                }).apply {
-                    setHasStableIds(true)
-                    confAdapter = this
-                    binding.confControlGroup.adapter = this
-                }
-        }
+
     }
 
     override fun updateParticipantRecording(contacts: Set<Contact>) {

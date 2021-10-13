@@ -489,7 +489,7 @@ class ConversationFacade(
         Log.d(TAG, "onCallStateChange Thread id: " + Thread.currentThread().id)
         val newState = call.callStatus
         val incomingCall = newState === CallStatus.RINGING && call.isIncoming
-        mHardwareService.updateAudioState(newState, incomingCall, call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
+        mHardwareService.updateAudioState(newState, incomingCall, call.hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO), mHardwareService.isSpeakerphoneOn)
         val account = mAccountService.getAccount(call.account!!) ?: return
         val contact = call.contact
         val conversationId = call.conversationId

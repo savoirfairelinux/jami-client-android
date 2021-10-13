@@ -17,51 +17,77 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:gravity="center_vertical|end"
-    android:minHeight="72dp"
-    android:paddingLeft="16dp"
-    android:paddingTop="8dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="8dp">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical|start"
+    android:minHeight="42dp"
+    android:orientation="horizontal"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_weight="0"
+        android:backgroundTint="@color/transparent"
+        android:contentDescription="@string/contact_picture_description"
+        android:enabled="false"
+        android:tintMode="multiply"
+        app:maxImageSize="72dp"
+        app:useCompatPadding="true" />
 
     <TextView
         android:id="@+id/display_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_large"
-        android:background="@drawable/background_conference_participant"
+        android:layout_weight="1"
         android:elevation="4dp"
         android:ellipsize="middle"
-        android:maxLines="2"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:textAlignment="center"
-        android:textColor="@color/grey_800"
-        android:textIsSelectable="false"
-        android:maxWidth="230dp"
+        android:padding="8dp"
         android:scrollHorizontally="false"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
         android:textSize="16sp"
-        tools:text="ring:21d85b6990d2f23663da147db28797ad26c478e421d85b6990d2f23663da147db28797ad26c478e4\nConnecting..." />
+        tools:text="jami:21d85b6990d2f23663d6990d2f23663da147db28797ad26c478e4" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/photo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/transparent"
-        android:contentDescription="@string/contact_picture_description"
-        android:tintMode="multiply"
-        android:enabled="false"
-        app:maxImageSize="64dp"
-        app:useCompatPadding="true"
-        tools:src="@drawable/ic_contact_picture_fallback" />
+    <cx.ring.views.CheckableImageButton
+        android:id="@+id/mute_participant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="?actionBarItemBackground"
+        android:padding="12dp"
+        app:srcCompat="@drawable/baseline_mic_on_24"/>
+
+    <cx.ring.views.CheckableImageButton
+        android:id="@+id/extend_participant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="?actionBarItemBackground"
+        android:padding="12dp"
+        app:srcCompat="@drawable/baseline_open_in_full_24"/>
+
+    <cx.ring.views.CheckableImageButton
+        android:id="@+id/kick_participant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="?actionBarItemBackground"
+        android:padding="12dp"
+        app:srcCompat="@drawable/baseline_block_24"/>
 
 </LinearLayout>

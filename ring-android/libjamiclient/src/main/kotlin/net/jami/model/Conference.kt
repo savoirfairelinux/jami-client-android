@@ -23,6 +23,7 @@ package net.jami.model
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.call.CallPresenter
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
 import net.jami.utils.Log
@@ -36,7 +37,8 @@ class Conference {
         val w: Int = i["w"]?.toInt() ?: 0
         val h: Int = i["h"]?.toInt() ?: 0
         val videoMuted: Boolean = i["videoMuted"].toBoolean()
-        val audioMuted: Boolean = i["audioMuted"].toBoolean()
+        val audioModeratorMuted: Boolean = i["audioModeratorMuted"].toBoolean()
+        val audioLocalMuted: Boolean = i["audioLocalMuted"].toBoolean()
         val isModerator: Boolean = i["isModerator"].toBoolean()
         val isEmpty: Boolean
             get() = x == 0 && y == 0 && w == 0 && h == 0
@@ -51,6 +53,11 @@ class Conference {
     private var mRecording: Boolean
     var maximizedParticipant: Contact? = null
     var isModerator = false
+
+    var isAudioMuted = false
+        get() = call?.isAudioMuted ?: field
+    var isVideoMuted = false
+        get() = call?.isVideoMuted ?: field
 
     constructor(call: Call) : this(call.daemonIdString!!) {
         mParticipants.add(call)
@@ -159,6 +166,17 @@ class Conference {
             if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
                 return true
         return false
+    }
+
+
+    fun hasActiveAudio(user: String?) {
+        Log.w("Conference.kt", "DEBUG hasActiveAudio -------> init")
+        mParticipantInfo.subscribe {
+            Log.w("Conference.kt", "DEBUG hasActiveAudio -------> List<ParticipantInfo>: $it")
+            for (participants in it)
+                //if (user == participants.contact.username)
+                Log.w("Conference.kt", "DEBUG hasActiveAudio -------> ${participants.contact.displayName}, local audio muted : ${participants.audioLocalMuted}, moderator audio muted: ${participants.audioModeratorMuted}")
+        }
     }
 
     val timestampStart: Long

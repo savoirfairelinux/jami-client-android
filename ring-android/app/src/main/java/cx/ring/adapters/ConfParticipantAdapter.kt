@@ -21,52 +21,82 @@ package cx.ring.adapters
 
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import cx.ring.R
 import cx.ring.databinding.ItemConferenceParticipantBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.ParticipantView
-import net.jami.model.Call
 import net.jami.model.Conference.ParticipantInfo
+import net.jami.utils.Log
 import java.util.*
 
 class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private val onSelectedCallback: ConfParticipantSelected) :
     RecyclerView.Adapter<ParticipantView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantView {
-        return ParticipantView(ItemConferenceParticipantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ParticipantView(participantBinding = ItemConferenceParticipantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ParticipantView, position: Int) {
+       Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> position: $position" )
+
         val info = calls[position]
         val contact = info.contact
+        Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> , calls: $calls" )
+        Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> calls.size: ${calls.size}, calls[${position}]: ${info.contact.displayName} " )
+
         val context = holder.itemView.context
         val call = info.call
+        val participantBinding = holder.participantBinding
         val displayName = TextUtils.ellipsize(contact.displayName,
-            holder.binding.displayName.paint,
-            holder.binding.displayName.maxWidth.toFloat(),
+            participantBinding.displayName.paint,
+            participantBinding.displayName.maxWidth.toFloat(),
             TextUtils.TruncateAt.MIDDLE)
         if (call != null && info.pending) {
-            holder.binding.displayName.text = String.format("%s\n%s", displayName, context.getText(CallFragment.callStateToHumanState(call.callStatus)))
-            holder.binding.photo.alpha = .5f
+            participantBinding.displayName.text = String.format("%s\n%s", displayName, context.getText(CallFragment.callStateToHumanState(call.callStatus)))
+            participantBinding.photo.alpha = .5f
         } else {
-            holder.binding.displayName.text = displayName
-            holder.binding.photo.alpha = 1f
+            participantBinding.displayName.text = displayName
+            participantBinding.photo.alpha = 1f
         }
+
         holder.disposable?.dispose()
-        holder.binding.photo.setImageDrawable(AvatarDrawable.Builder()
+        participantBinding.photo.setImageDrawable(AvatarDrawable.Builder()
             .withContact(contact)
             .withCircleCrop(true)
             .withPresence(false)
             .build(context))
 
-        /*holder.disposable = AvatarFactory.getAvatar(context, contact)
-                .subscribe(holder.binding.photo::setImageDrawable);*/
-        holder.itemView.setOnClickListener { view: View ->
-            onSelectedCallback.onParticipantSelected(view, info)
+        Log.w("ConfParticipantAdapter", "DEBUG mute status ---------------- >>  participant name: ${info.contact.displayName}, audioMuted: ${info.audioModeratorMuted}" )
+        participantBinding.muteParticipant.let {
+            it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
+        }
+
+        participantBinding.muteParticipant.setOnClickListener {
+            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
+            participantBinding.muteParticipant.let {
+                it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
+            }
+            Log.w("ConfParticipantAdapter", "DEBUG mute onclick 2 ---------------- >>  participant name: ${info.contact.displayName}, isAudioMuted: ${info.audioModeratorMuted}" )
+        }
+
+        participantBinding.extendParticipant.setOnClickListener {
+            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Extend)
+
+            Log.w("ConfParticipantAdapter", "DEBUG  ---------- > extendParticipant clicked")
+        }
+
+        participantBinding.kickParticipant.setOnClickListener {
+            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Hangup)
+
+            Log.w("ConfParticipantAdapter", "DEBUG  ---------- > kickbutton clicked")
+        }
+
+        holder.itemView.setOnClickListener {
+            onSelectedCallback.onParticipantSelected(info, ParticipantAction.ShowDetails)
         }
     }
 
@@ -81,17 +111,23 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
 
     fun updateFromCalls(contacts: List<ParticipantInfo>) {
         val oldCalls = calls
+        Log.w("ConfParticipantAdapter", "DEBUG updateFromCalls ---------------- >> oldCalls: $oldCalls, size: ${oldCalls.size} contacts:$contacts, size: ${contacts.size}")
+
         calls = contacts
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int {
+                Log.w("ConfParticipantAdapter", "DEBUG getOldListSize ---------------- >> oldCalls.size: ${oldCalls.size} " )
+
                 return oldCalls.size
             }
 
             override fun getNewListSize(): Int {
+                Log.w("ConfParticipantAdapter", "DEBUG getNewListSize ---------------- >> contacts.size: ${contacts.size} " )
                 return contacts.size
             }
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                Log.w("ConfParticipantAdapter", "DEBUG areItemsTheSame ---------------- >> oldCalls[oldItemPosition].contact:${oldCalls[oldItemPosition].contact} =?= contacts[newItemPosition].contact: ${contacts[newItemPosition].contact} " )
                 return oldCalls[oldItemPosition].contact === contacts[newItemPosition].contact
             }
 
@@ -101,7 +137,12 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
         }).dispatchUpdatesTo(this)
     }
 
+    enum class ParticipantAction {
+        ShowDetails, Mute, Extend, Hangup
+    }
+
     interface ConfParticipantSelected {
-        fun onParticipantSelected(view: View, contact: ParticipantInfo)
+        //fun onAddParticipant();
+        fun onParticipantSelected(contact: ParticipantInfo, action: ParticipantAction)
     }
 }

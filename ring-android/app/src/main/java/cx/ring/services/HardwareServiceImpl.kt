@@ -148,7 +148,7 @@ class HardwareServiceImpl(
     }
 
     @Synchronized
-    override fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean) {
+    override fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean) {
         Log.d(TAG, "updateAudioState: Call state updated to $state Call is incoming: $incomingCall Call is video: $isOngoingVideo")
         val callEnded = state == CallStatus.HUNGUP || state == CallStatus.FAILURE || state == CallStatus.OVER
         try {
@@ -163,14 +163,14 @@ class HardwareServiceImpl(
                         // ringtone for incoming calls
                         mAudioManager.mode = AudioManager.MODE_RINGTONE
                         setAudioRouting(true)
-                        mShouldSpeakerphone = isOngoingVideo
+                        //mShouldSpeakerphone = isOngoingVideo
                     } else setAudioRouting(isOngoingVideo)
                 }
                 CallStatus.CURRENT -> {
                     stopRinging()
                     getFocus(CALL_REQUEST)
                     mAudioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-                    setAudioRouting(isOngoingVideo)
+                    setAudioRouting(isSpeakerOn)
                 }
                 CallStatus.HOLD, CallStatus.UNHOLD, CallStatus.INACTIVE -> {
                 }
@@ -226,11 +226,10 @@ class HardwareServiceImpl(
     }
 
     private fun setAudioRouting(requestSpeakerOn: Boolean) {
-        mShouldSpeakerphone = requestSpeakerOn
         // prioritize bluetooth by checking for bluetooth device first
         if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth() && mBluetoothWrapper!!.isBTHeadsetConnected) {
             routeToBTHeadset()
-        } else if (!mAudioManager.isWiredHeadsetOn && mHasSpeakerPhone && mShouldSpeakerphone) {
+        } else if (!mAudioManager.isWiredHeadsetOn && mHasSpeakerPhone && requestSpeakerOn) {
             routeToSpeaker()
         } else {
             resetAudio()
@@ -296,7 +295,7 @@ class HardwareServiceImpl(
     override fun toggleSpeakerphone(checked: Boolean) {
         JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
         mShouldSpeakerphone = checked
-        Log.w(TAG, "toggleSpeakerphone setSpeakerphoneOn $checked")
+
         if (mHasSpeakerPhone && checked) {
             routeToSpeaker()
         } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth() && mBluetoothWrapper!!.isBTHeadsetConnected) {

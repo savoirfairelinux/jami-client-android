@@ -399,5 +399,14 @@ along with this program; if not, write to the Free Software
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
     <string name="chat_plugins">Chat Plugins</string>
+    <string name="bottomSheet_share_btn">Share</string>
+    <string name="bottomSheet_dialpad_btn">Dialpad</string>
+    <string name="bottomSheet_plugins_btn">Plugins</string>
+    <string name="bottomSheet_add_participants_btn">Add</string>
+    <string name="bottomSheet_change_camera_btn">Change</string>
+    <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
+    <string name="bottomSheet_hangup_btn">End Call</string>
+    <string name="bottomSheet_mute_microphone_btn">Micro</string>
+    <string name="bottomSheet_sound_output_btn">Sounds</string>
 
 </resources>

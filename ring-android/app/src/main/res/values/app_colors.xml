@@ -5,4 +5,6 @@
 
     <color name="color_primary_light_translucent">#B028B1ED</color>
     <color name="color_primary_dark_translucent">#B00f426b</color>
+
+    <color name="color_bottom_sheet_background">#E6272727</color>
 </resources>
