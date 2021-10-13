@@ -21,20 +21,17 @@
  */
 package cx.ring.client
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.content.res.Configuration
 import android.media.AudioManager
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.*
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -50,10 +47,12 @@ import net.jami.utils.Log
 class CallActivity : AppCompatActivity() {
     private var mMainView: View? = null
     private var handler: Handler? = null
-    private var currentOrientation = Configuration.ORIENTATION_PORTRAIT
-    private var dimmed = false
+    private var currentOrientation = 1
+    private var isFullscreen = false
+    private var navBarBottomInset = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         JamiApplication.instance?.startDaemon()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true)
@@ -70,12 +69,14 @@ class CallActivity : AppCompatActivity() {
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
         handler = Handler(Looper.getMainLooper())
         mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
             setOnClickListener {
-                dimmed = !dimmed
-                if (dimmed)
+                isFullscreen = !isFullscreen
+                if (isFullscreen) {
                     hideSystemUI()
-                else
+                } else {
                     showSystemUI()
+                }
             }
         }
         intent?.let { handleNewIntent(it) }
@@ -84,6 +85,7 @@ class CallActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         restartNoInteractionTimer()
+        currentOrientation = resources.configuration.orientation
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
     }
 
@@ -101,25 +103,28 @@ class CallActivity : AppCompatActivity() {
     private fun handleNewIntent(intent: Intent) {
         val action = intent.action
         val wantVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
-        if (Intent.ACTION_CALL == action) {
-            val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-            val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
-        } else if (Intent.ACTION_VIEW == action || ACTION_CALL_ACCEPT == action) {
-            val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
-            val currentId = callFragment?.arguments?.get(NotificationService.KEY_CALL_ID)
-            if (currentId != confId) {
-                val callFragment = CallFragment.newInstance(action, confId, wantVideo)
+        val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
+        when(action){
+            Intent.ACTION_CALL -> {
+                val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
+                val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+            }
+            Intent.ACTION_VIEW, ACTION_CALL_ACCEPT -> {
+                val currentId = callFragment?.arguments?.getString(NotificationService.KEY_CALL_ID)
+                if (currentId != confId) {
+                            val callFragment = CallFragment.newInstance(action, confId, wantVideo)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+                }
             }
         }
     }
 
     private val onNoInteraction = Runnable {
-        if (!dimmed) {
-            dimmed = true
+        if (!isFullscreen) {
+            isFullscreen = true
             hideSystemUI()
         }
     }
@@ -140,39 +145,90 @@ class CallActivity : AppCompatActivity() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Log.w(CallFragment.TAG, "DEBUG onConfigurationChanged ------------ currentOrientation: $currentOrientation ?? newConfig.orientation: ${newConfig.orientation}; fullscreen: $isFullscreen")
         if (currentOrientation != newConfig.orientation) {
             currentOrientation = newConfig.orientation
-            if (dimmed) hideSystemUI() else showSystemUI()
+            if (isFullscreen) hideSystemUI() else showSystemUI()
         } else {
             restartNoInteractionTimer()
         }
-        super.onConfigurationChanged(newConfig)
     }
 
     private fun hideSystemUI() {
+        val callFragment = callFragment ?: return
         KeyboardVisibilityManager.hideKeyboard(this)
+        callFragment.resetBottomSheetState()
+        moveBottomSheet(BottomSheetAnimation.DOWN)
+        if (!callFragment.isChoosePluginMode) {
+            callFragment.toggleVideoPluginsCarousel(false)
+        }
+        handler?.removeCallbacks(onNoInteraction)
+    }
+
+    fun showSystemUI() {
+        val callFragment = callFragment ?: return
         mMainView?.let { mainView ->
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            WindowInsetsControllerCompat(window, mainView).let { controller ->
-                controller.hide(WindowInsetsCompat.Type.systemBars())
-                controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            if (currentOrientation != 1) {
+                WindowInsetsControllerCompat(window, mainView).show(WindowInsetsCompat.Type.statusBars())
+                WindowInsetsControllerCompat(window, mainView).hide(WindowInsetsCompat.Type.navigationBars())
+            } else {
+                WindowInsetsControllerCompat(window, mainView).show(WindowInsetsCompat.Type.systemBars())
             }
-            val callFragment = callFragment
-            if (callFragment != null && !callFragment.isChoosePluginMode) {
-                callFragment.toggleVideoPluginsCarousel(false)
-            }
-            handler?.removeCallbacks(onNoInteraction)
+            moveBottomSheet(BottomSheetAnimation.UP)
+            callFragment.toggleVideoPluginsCarousel(true)
+            restartNoInteractionTimer()
         }
     }
 
+    enum class BottomSheetAnimation {
+        UP, DOWN
+    }
 
+    private fun moveBottomSheet(movement: BottomSheetAnimation) {
+        val dm = resources.displayMetrics
 
-    fun showSystemUI() {
         mMainView?.let { mainView ->
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-            WindowInsetsControllerCompat(window, mainView).show(WindowInsetsCompat.Type.systemBars())
-            callFragment?.toggleVideoPluginsCarousel(true)
-            restartNoInteractionTimer()
+            val topInset = ViewCompat.getRootWindowInsets(mainView)
+                ?.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars())?.top!!
+            val bottomInset = ViewCompat.getRootWindowInsets(mainView)
+                ?.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars())?.bottom ?: return
+
+            when (movement) {
+                BottomSheetAnimation.UP -> {
+                    mainView.findViewById<View>(R.id.call_coordinator_option_container).let {
+                        it.updatePadding(bottom = if (bottomInset == 0 || currentOrientation != 1 ) 0 else bottomInset)
+                        mainView.findViewById<View>(R.id.call_options_bottom_sheet)
+                            .updatePadding(bottom = if(bottomInset == 0 || currentOrientation != 1) ((topInset - 5) * dm.density).toInt() else (bottomInset * dm.density).toInt() )
+                        it.animate()
+                            .translationY(0f)
+                            .alpha(1.0f)
+                            .setListener(null)
+                    }
+                    callFragment?.setBottomSheet(true)
+                }
+                BottomSheetAnimation.DOWN -> {
+                    mainView.findViewById<View>(R.id.call_coordinator_option_container).let {
+                        WindowInsetsControllerCompat(window, mainView).let { controller ->
+                            controller.hide(WindowInsetsCompat.Type.systemBars())
+                            controller.systemBarsBehavior =
+                                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                        }
+                        it.animate()
+                            .translationY(250f)
+                            .alpha(0.0f)
+                            .setListener(object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator?) {
+                                    super.onAnimationEnd(animation)
+                                    it.updatePadding(bottom = 0)
+                                    mainView.findViewById<View>(R.id.call_options_bottom_sheet)
+                                        .updatePadding(bottom = 0)
+                                    callFragment?.setBottomSheet(false)
+                                }
+                            })
+                    }
+                }
+            }
         }
     }
 
