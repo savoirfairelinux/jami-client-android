@@ -55,9 +55,7 @@ class CallPresenter @Inject constructor(
     private var mConference: Conference? = null
     private val mPendingCalls: MutableList<ParticipantInfo> = ArrayList()
     private val mPendingSubject: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(mPendingCalls)
-    private var mOnGoingCall = false
-    var wantVideo = false
-    var videoIsMuted = false
+    var mOnGoingCall = false
         private set
     private var permissionChanged = false
     var isPipMode = false
@@ -71,6 +69,12 @@ class CallPresenter @Inject constructor(
     private var currentSurfaceId: String? = null
     private var currentPluginSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
+    val isSpeakerphoneOn: Boolean
+        get() = mHardwareService.isSpeakerphoneOn
+    var isMicrophoneMuted: Boolean = false
+    var wantVideo = false
+    var videoIsMuted = false
+        private set
 
     fun cameraPermissionChanged(isGranted: Boolean) {
         if (isGranted && mHardwareService.isVideoAvailable) {
@@ -116,7 +120,9 @@ class CallPresenter @Inject constructor(
             .share()
         mCompositeDisposable.add(callObservable
             .observeOn(mUiScheduler)
-            .subscribe({ conference -> confUpdate(conference)
+            .subscribe({ conference ->
+                Log.w(TAG, "DEBUG subscribe confUpdate(conference)")
+                confUpdate(conference)
             }) { e: Throwable ->
                 hangupCall()
                 Log.e(TAG, "Error with initOutgoing: " + e.message, e)
@@ -132,7 +138,7 @@ class CallPresenter @Inject constructor(
      */
     fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
         //getView().blockScreenRotation();
-        Log.w(TAG, "DEBUG fn initIncomingCall [CallPresenter.kt] -> if actionViewOnly ( = $actionViewOnly ) == true then getConfUpdate() who return a conference \n ,then if (!ActionViewOnly) call confUpdate() and prepareCall(isIncoming: true) or  ")
+        Log.w(TAG, "DEBUG initIncomingCall -------> actionViewOnly: $actionViewOnly ")
 
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
@@ -168,16 +174,22 @@ class CallPresenter @Inject constructor(
         showConference(callObservable)
     }
 
-    private fun showConference(conference: Observable<Conference>) {
+    private fun showConference(conference: Observable<Conference>){
+        Log.w(TAG,"DEBUG showConference ---------------- ")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject, { participants, pending ->
-                val p = if (participants.isEmpty() && !obj.isConference)
+            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
+                Log.w(TAG, "DEBUG showConference ---------------- >> participants: $participants, pending: $pending, obj.call: ${obj.call}")
+                val p = if (participants.isEmpty() && !obj.isConference) {
+                    Log.w(TAG, "DEBUG showConference IF ---------------- >> obj.isConference: ${obj.isConference}, obj.call: ${obj.call}")
                     listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
-                else
+                } else {
+                    Log.w(TAG, "DEBUG showConference ELSE ---------------- >> participants: $participants ")
                     participants
+                }
                 if (pending.isEmpty()) p else p + pending
-            })}
+            }
+            }
             .observeOn(mUiScheduler)
             .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
@@ -188,17 +200,18 @@ class CallPresenter @Inject constructor(
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
     }
 
-    fun prepareOptionMenu() {
-        val isSpeakerOn: Boolean = mHardwareService.isSpeakerphoneOn
+    /**
+     * Get all the call details in order to display each elements correctly
+     * */
+    private fun prepareBottomSheetButtonsStatus(conference: Conference) {
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
-        val conference = mConference
-        val canDial = mOnGoingCall && conference != null
-        val hasActiveVideo = conference?.hasActiveVideo() == true
-        // get the preferences
+        val canDial = mOnGoingCall
         val displayPluginsButton = view!!.displayPluginsButton()
-        val showPluginBtn = displayPluginsButton && mOnGoingCall && conference != null
+        val showPluginBtn = displayPluginsButton && mOnGoingCall
+        val hasActiveVideo = conference.hasActiveVideo()
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
-        view?.initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+
+        view?.updateBottomSheetButtonStatus(isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -213,25 +226,22 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    val isSpeakerphoneOn: Boolean
-        get() = mHardwareService.isSpeakerphoneOn
-
     fun speakerClick(checked: Boolean) {
         mHardwareService.toggleSpeakerphone(checked)
     }
 
+    /**
+     * Mute the local microphone
+     * this function is used by the main panel control
+     * */
     fun muteMicrophoneToggled(checked: Boolean) {
+        Log.w(TAG, "DEBUG muteMicrophoneToggled ------  checked: $checked, mConference!!.id: ${mConference!!.id}")
         mCallService.setLocalMediaMuted(mConference!!.id, CallService.MEDIA_TYPE_AUDIO, checked)
     }
-
-    val isMicrophoneMuted: Boolean
-        get() = mCallService.isCaptureMuted
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
         mHardwareService.switchInput(conference.id, false)
-        //view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
-        view?.switchCameraIcon()
     }
 
     fun switchOnOffCamera() {
@@ -355,7 +365,6 @@ class CallPresenter @Inject constructor(
 
     private fun confUpdate(call: Conference) {
         mConference = call
-        Log.w(TAG, "confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
             if (call.isSimpleCall) mCallService.unhold(call.id) else JamiService.addMainParticipant(call.id)
@@ -364,10 +373,10 @@ class CallPresenter @Inject constructor(
         val hasActiveVideo = call.hasActiveVideo()
         videoIsMuted = !hasActiveVideo
         val view = view ?: return
-        view.updateMenu()
         if (call.isOnGoing) {
             mOnGoingCall = true
-            view.initNormalStateDisplay(isMicrophoneMuted)
+            view.initNormalStateDisplay()
+            prepareBottomSheetButtonsStatus(call)
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
@@ -436,6 +445,7 @@ class CallPresenter @Inject constructor(
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
+            Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -483,29 +493,29 @@ class CallPresenter @Inject constructor(
     }
 
     fun requestPipMode() {
+        Log.w(TAG, "DEBUG requestPipMode ------------->")
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.enterPipMode(conference.id)
         }
     }
 
+    /**
+     * hiding preview container if pipmode
+     * */
     fun pipModeChanged(pip: Boolean) {
-        Log.w(TAG, "DEBUG fn pipModeChanged $pip")
+        Log.w(TAG, "DEBUG pipModeChanged  ---------->  $pip")
         isPipMode = pip
         if (pip) {
             view!!.displayHangupButton(false)
-            view!!.displayPreviewSurface(false)
-            //view!!.displayPeerVideo(true, false)
+            view!!.previewSurfacePosIfPipMode(false)
         } else {
-            //Log.w(TAG, "DEBUG fn pipModeChanged |2| entering pipMode -> previewSurface: true; displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission() && hasVideo && !videoIsMuted)")
-            view!!.displayPreviewSurface(true)
-            //view!!.displayPeerVideo(true, mDeviceRuntimeService.hasVideoPermission())
+            view!!.previewSurfacePosIfPipMode(true)
         }
     }
 
     fun toggleCallMediaHandler(id: String, toggle: Boolean) {
         val conference = mConference ?: return
-        //Log.w(TAG, "fn toggleMediaHandler [CallPresenter] -> check value of conference.hasVideo : ${conference.hasVideo()}")
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.toggleCallMediaHandler(id, conference.id, toggle)
         }
@@ -516,6 +526,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun addConferenceParticipant(accountId: String, uri: Uri) {
+        Log.w(TAG, "DEBUG addConferenceParticipant ----> ")
         val conference = mConference ?: return
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->
@@ -585,7 +596,13 @@ class CallPresenter @Inject constructor(
             mCallService.hangupParticipant(mConference!!.id, info.contact.primaryNumber)
     }
 
+    /**
+    * Mute a participant when in conference mode
+     * this fonction is used by the recycler view for each participant
+     * it allow user to mute when they are moderator
+    * */
     fun muteParticipant(info: ParticipantInfo, mute: Boolean) {
+        Log.w(TAG, "DEBUG muteParticipant ------  mute: $mute, mConference!!.id: ${mConference!!.id}, info.call?.confId: ${info.call?.confId}, info.contact.primaryNumber: ${info.contact.primaryNumber}")
         mCallService.muteParticipant(mConference!!.id, info.contact.primaryNumber, mute)
     }
 
