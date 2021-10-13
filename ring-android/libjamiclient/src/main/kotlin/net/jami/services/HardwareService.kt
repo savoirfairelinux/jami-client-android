@@ -80,7 +80,7 @@ abstract class HardwareService(
 
     abstract fun initVideo(): Completable
     abstract val isVideoAvailable: Boolean
-    abstract fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean)
+    abstract fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean)
     abstract fun closeAudioState()
     abstract val isSpeakerphoneOn: Boolean
 
