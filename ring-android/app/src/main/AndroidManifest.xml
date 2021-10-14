@@ -108,9 +108,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".client.HomeActivity"
+            android:launchMode="singleTask"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.Navigation"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
