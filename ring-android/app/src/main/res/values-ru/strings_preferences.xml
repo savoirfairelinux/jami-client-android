@@ -45,6 +45,8 @@
   <string name="pref_read_summary">Подтверждения прочтения показывают что сообщение было прочтено</string>
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
+  <string name="pref_link_preview_title">Показывать предварительный просмотр ссылок в разговорах</string>
+  <string name="pref_link_preview_summary">Предварительный просмотр требует загрузки контента со сторонних серверов.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Показать всё \n(отображать уведомления и их содержимое на экране блокировки)\n</string>
   <string name="notification_private">Скрыть содержимое \n(отображать уведомления на экране блокировки, но скрывать их содержимое)\n</string>
