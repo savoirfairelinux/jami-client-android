@@ -89,8 +89,12 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     override fun goToHomeCreation() {}
     override fun goToSipCreation() {}
     override fun onBackPressed() {
-        val fragment = GuidedStepSupportFragment.getCurrentGuidedStepSupportFragment(supportFragmentManager)
-        if (fragment is TVProfileCreationFragment) finish() else super.onBackPressed()
+        when (GuidedStepSupportFragment.getCurrentGuidedStepSupportFragment(supportFragmentManager)) {
+            is TVProfileCreationFragment -> finish()
+            is TVHomeAccountCreationFragment -> finishAffinity()
+            is TVJamiAccountCreationFragment -> supportFragmentManager.popBackStack()
+            else -> super.onBackPressed()
+        }
     }
 
     override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
