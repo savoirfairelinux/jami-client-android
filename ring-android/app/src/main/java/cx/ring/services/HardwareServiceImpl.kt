@@ -450,7 +450,7 @@ class HardwareServiceImpl(
         if (conf != null && useHardwareCodec) {
             val call = conf.call
             if (call != null) {
-                call.setDetails(JamiService.getCallDetails(call.daemonIdString).toNative())
+                call.setDetails(JamiService.getCallDetails(call.account!!, call.daemonIdString!!).toNative())
                 videoParams.codec = call.videoCodec
             } else {
                 videoParams.codec = null
@@ -600,10 +600,10 @@ class HardwareServiceImpl(
         mCameraPreviewSurface.clear()
     }
 
-    override fun switchInput(id: String, setDefaultCamera: Boolean) {
+    override fun switchInput(accountId:String, id: String, setDefaultCamera: Boolean) {
         Log.w(TAG, "switchInput $id")
         mCapturingId = cameraService.switchInput(setDefaultCamera)
-        switchInput(id, "camera://$mCapturingId")
+        switchInput(accountId, id, "camera://$mCapturingId")
     }
 
     override fun setPreviewSettings() {

@@ -107,7 +107,7 @@ abstract class HardwareService(
     abstract fun addPreviewVideoSurface(holder: Any, conference: Conference?)
     abstract fun updatePreviewVideoSurface(conference: Conference)
     abstract fun removePreviewVideoSurface()
-    abstract fun switchInput(id: String, setDefaultCamera: Boolean)
+    abstract fun switchInput(accountId:String, id: String, setDefaultCamera: Boolean)
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract val cameraCount: Int
@@ -123,9 +123,9 @@ abstract class HardwareService(
         mExecutor.execute { JamiService.connectivityChanged() }
     }
 
-    protected fun switchInput(id: String, uri: String) {
+    protected fun switchInput(accountId:String, callId: String, uri: String) {
         Log.i(TAG, "switchInput() $uri")
-        mExecutor.execute { JamiService.switchInput(id, uri) }
+        mExecutor.execute { JamiService.switchInput(accountId, callId, uri) }
     }
 
     fun setPreviewSettings(cameraMaps: Map<String, StringMap>) {

@@ -221,7 +221,8 @@ class CallPresenter @Inject constructor(
     }
 
     fun muteMicrophoneToggled(checked: Boolean) {
-        mCallService.setLocalMediaMuted(mConference!!.id, CallService.MEDIA_TYPE_AUDIO, checked)
+        val conference = mConference ?: return
+        mCallService.setLocalMediaMuted(conference.accountId, conference.id, CallService.MEDIA_TYPE_AUDIO, checked)
     }
 
     val isMicrophoneMuted: Boolean
@@ -229,7 +230,7 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.id, false)
+        mHardwareService.switchInput(conference.accountId, conference.id, false)
         //view?.switchCameraIcon(mHardwareService.isPreviewFromFrontCamera)
         view?.switchCameraIcon()
     }
@@ -249,24 +250,25 @@ class CallPresenter @Inject constructor(
     }
 
     fun acceptCall(hasVideo: Boolean) {
-        mConference?.let { mCallService.accept(it.id, hasVideo) }
+        mConference?.let { mCallService.accept(it.accountId, it.id, hasVideo) }
     }
 
     fun hangupCall() {
         mConference?.let { conference ->
             if (conference.isConference)
-                mCallService.hangUpConference(conference.id)
+                mCallService.hangUpConference(conference.accountId, conference.id)
             else
-                mCallService.hangUp(conference.id)
+                mCallService.hangUp(conference.accountId, conference.id)
         }
-        for (call in mPendingCalls) {
-            mCallService.hangUp(call.call!!.daemonIdString!!)
+        for (participant in mPendingCalls) {
+            val call = participant.call ?: continue
+            mCallService.hangUp(call.account!!, call.daemonIdString!!)
         }
         finish()
     }
 
     fun refuseCall() {
-        mConference?.let { mCallService.refuse(it.id) }
+        mConference?.let { mCallService.refuse(it.accountId, it.id) }
         finish()
     }
 
@@ -358,7 +360,7 @@ class CallPresenter @Inject constructor(
         Log.w(TAG, "confUpdate " + call.id + " " + call.state)
         val status = call.state
         if (status === CallStatus.HOLD) {
-            if (call.isSimpleCall) mCallService.unhold(call.id) else JamiService.addMainParticipant(call.id)
+            if (call.isSimpleCall) mCallService.unhold(call.accountId, call.id) else JamiService.addMainParticipant(call.accountId, call.id)
         }
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
@@ -375,7 +377,7 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 view.displayLocalVideo(hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(call.id, permissionChanged)
+                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
                     permissionChanged = false
                 }
             }
@@ -391,7 +393,7 @@ class CallPresenter @Inject constructor(
             if (scall.isIncoming) {
                 if (mAccountService.getAccount(scall.account)?.isAutoanswerEnabled == true) {
                     Log.w(TAG, "Accept because of autoanswer")
-                    mCallService.accept(scall.daemonIdString!!, wantVideo)
+                    mCallService.accept(scall.account!!, scall.daemonIdString!!, wantVideo)
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
                     view.initIncomingCallDisplay(hasVideo)
@@ -412,9 +414,9 @@ class CallPresenter @Inject constructor(
         val toMaximize = if (conference.maximizedParticipant == contact) null else info
         conference.maximizedParticipant = contact
         if (toMaximize != null) {
-            mCallService.setConfMaximizedParticipant(conference.id, toMaximize.contact.uri)
+            mCallService.setConfMaximizedParticipant(conference.accountId, conference.id, toMaximize.contact.uri)
         } else {
-            mCallService.setConfGridLayout(conference.id)
+            mCallService.setConfGridLayout(conference.accountId, conference.id)
         }
     }
 
@@ -553,22 +555,22 @@ class CallPresenter @Inject constructor(
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
                         val id = conference.id
                         if (conference.isConference) {
-                            mCallService.addParticipant(call.daemonIdString!!, id)
+                            mCallService.addParticipant(conference.accountId, call.daemonIdString!!, id)
                         } else {
-                            mCallService.joinParticipant(id, call.daemonIdString!!).subscribe()
+                            mCallService.joinParticipant(conference.accountId, id, call.daemonIdString!!).subscribe()
                         }
                     })
                 } else if (conf !== conference) {
                     if (conference.isConference) {
                         if (conf.isConference)
-                            mCallService.joinConference(conference.id, conf.id)
+                            mCallService.joinConference(conference.accountId, conference.id, conf.id)
                         else
-                            mCallService.addParticipant(conf.id, conference.id)
+                            mCallService.addParticipant(conference.accountId, conf.id, conference.id)
                     } else {
                         if (conf.isConference)
-                            mCallService.addParticipant(conference.id, conf.id)
+                            mCallService.addParticipant(conference.accountId, conference.id, conf.id)
                         else
-                            mCallService.joinParticipant(conference.id, conf.id).subscribe()
+                            mCallService.joinParticipant(conference.accountId, conference.id, conf.id).subscribe()
                     }
                 }
             })
@@ -580,13 +582,13 @@ class CallPresenter @Inject constructor(
 
     fun hangupParticipant(info: ParticipantInfo) {
         if (info.call != null)
-            mCallService.hangUp(info.call.daemonIdString!!)
+            mCallService.hangUp(info.call.account!!, info.call.daemonIdString!!)
         else
-            mCallService.hangupParticipant(mConference!!.id, info.contact.primaryNumber)
+            mCallService.hangupParticipant(mConference!!.accountId, mConference!!.id, info.contact.primaryNumber)
     }
 
     fun muteParticipant(info: ParticipantInfo, mute: Boolean) {
-        mCallService.muteParticipant(mConference!!.id, info.contact.primaryNumber, mute)
+        mCallService.muteParticipant(mConference!!.accountId, mConference!!.id, info.contact.primaryNumber, mute)
     }
 
     fun openParticipantContact(info: ParticipantInfo) {
@@ -612,12 +614,12 @@ class CallPresenter @Inject constructor(
 
     fun startPlugin(mediaHandlerId: String?) {
         mHardwareService.startMediaHandler(mediaHandlerId)
-        mConference?.let { conference -> mHardwareService.switchInput(conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
 
     fun stopPlugin() {
         mHardwareService.stopMediaHandler()
-        mConference?.let { conference -> mHardwareService.switchInput(conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
 
     companion object {
