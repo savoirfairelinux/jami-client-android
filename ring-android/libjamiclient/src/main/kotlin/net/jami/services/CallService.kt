@@ -551,6 +551,30 @@ class CallService(
         }
     }
 
+    fun audioMuted(callId: String, muted: Boolean) {
+        val call = currentCalls[callId]
+        if (call != null) {
+            call.isAudioMuted = muted
+            callSubject.onNext(call)
+        } else {
+            currentConferences[callId]?.let { conf ->
+                conf.isAudioMuted = muted
+                conferenceSubject.onNext(conf)
+            }
+        }
+    }
+
+    fun videoMuted(callId: String, muted: Boolean) {
+        currentCalls[callId]?.let { call ->
+            call.isVideoMuted = muted
+            callSubject.onNext(call)
+        }
+        currentConferences[callId]?.let { conf ->
+            conf.isVideoMuted = muted
+            conferenceSubject.onNext(conf)
+        }
+    }
+
     fun incomingCallWithMedia(accountId: String, callId: String, from: String, mediaList: VectMap?) {
         Log.d(TAG, "incoming call: $accountId, $callId, $from")
         val nMediaList = mediaList ?: emptyList()
@@ -667,40 +691,6 @@ class CallService(
         }
         return false
     }
-
-    //todo remove condition when callDetails does not contains sips ids anymore
-    val conferenceList: Map<String, ArrayList<String>>?
-        get() {
-            try {
-                return mExecutor.submit(Callable {
-                    Log.i(TAG, "getConferenceList() running...")
-                    val callIds = JamiService.getCallList()
-                    val confs = HashMap<String, ArrayList<String>>(callIds.size)
-                    for (i in callIds.indices) {
-                        val callId = callIds[i]
-                        var confId = JamiService.getConferenceId(callId)
-                        val callDetails: Map<String, String> = JamiService.getCallDetails(callId).toNative()
-
-                        //todo remove condition when callDetails does not contains sips ids anymore
-                        if (!callDetails["PEER_NUMBER"]!!.contains("sips")) {
-                            if (confId == null || confId.isEmpty()) {
-                                confId = callId
-                            }
-                            var calls = confs[confId]
-                            if (calls == null) {
-                                calls = ArrayList()
-                                confs[confId] = calls
-                            }
-                            calls.add(callId)
-                        }
-                    }
-                    confs
-                }).get()
-            } catch (e: Exception) {
-                Log.e(TAG, "Error running isConferenceParticipant()", e)
-            }
-            return null
-        }
 
     fun getParticipantList(confId: String?): List<String>? {
         try {

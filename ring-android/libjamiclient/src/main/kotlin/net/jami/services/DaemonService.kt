@@ -204,6 +204,14 @@ class DaemonService(
             mCallService.callStateChanged(callId, newState, detailCode)
         }
 
+        override fun audioMuted(callId: String, muted: Boolean) {
+            mCallService.audioMuted(callId, muted)
+        }
+
+        override fun videoMuted(callId: String, muted: Boolean) {
+            mCallService.videoMuted(callId, muted)
+        }
+
         override fun incomingCall(accountId: String, callId: String, from: String) {
             // Should be kept while multi-stream is not enabled for Android by default
             mCallService.incomingCallWithMedia(accountId, callId, from, null)
