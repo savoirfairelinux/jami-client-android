@@ -21,6 +21,7 @@ package net.jami.model
 
 import ezvcard.Ezvcard
 import ezvcard.VCard
+import net.jami.call.CallPresenter
 import net.jami.utils.Log
 import net.jami.utils.ProfileChunk
 import net.jami.utils.StringUtils.isEmpty
@@ -31,8 +32,7 @@ class Call : Interaction {
     override val daemonIdString: String?
     private var isPeerHolding = false
     var isAudioMuted = false
-        private set
-    private var isVideoMuted = false
+    var isVideoMuted = false
     private val isRecording = false
     var callStatus = CallStatus.NONE
         private set
@@ -171,14 +171,6 @@ class Call : Interaction {
                 String.format(Locale.getDefault(), "%d h %02d mins %02d secs", mDuration / 3600, mDuration % 3600 / 60, mDuration % 60)
         }
 
-    fun muteVideo(mute: Boolean) {
-        isVideoMuted = mute
-    }
-
-    fun muteAudio(mute: Boolean) {
-        isAudioMuted = mute
-    }
-
     fun setCallState(callStatus: CallStatus) {
         this.callStatus = callStatus
         if (callStatus == CallStatus.CURRENT) {
@@ -243,9 +235,11 @@ class Call : Interaction {
     }
     fun hasActiveMedia(label: Media.MediaType): Boolean {
         val mediaList = mediaList ?: return false
-        for (media in mediaList)
+        for (media in mediaList) {
+            Log.w(TAG, "DEBUG hasActiveMedia ------> media: $media")
             if (media.isEnabled && !media.isMuted && media.mediaType == label)
                 return true
+        }
         return false
     }
 
@@ -299,7 +293,7 @@ class Call : Interaction {
         const val KEY_CALL_STATE = "CALL_STATE"
         const val KEY_PEER_NUMBER = "PEER_NUMBER"
         const val KEY_PEER_HOLDING = "PEER_HOLDING"
-        const val KEY_AUDIO_MUTED = "PEER_NUMBER"
+        const val KEY_AUDIO_MUTED = "AUDIO_MUTED"
         const val KEY_VIDEO_MUTED = "VIDEO_MUTED"
         const val KEY_AUDIO_CODEC = "AUDIO_CODEC"
         const val KEY_VIDEO_CODEC = "VIDEO_CODEC"
