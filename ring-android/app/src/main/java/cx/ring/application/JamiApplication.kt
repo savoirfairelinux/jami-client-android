@@ -40,6 +40,7 @@ import cx.ring.service.JamiJobService
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.*
@@ -193,7 +194,7 @@ abstract class JamiApplication : Application() {
         super.onCreate()
         instance = this
 
-        //RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
+        RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
