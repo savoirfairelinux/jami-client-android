@@ -40,34 +40,36 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ConversationPresenter @Inject constructor(
-    private val mContactService: ContactService,
-    private val mAccountService: AccountService,
-    private val mHardwareService: HardwareService,
-    private val mConversationFacade: ConversationFacade,
-    private val mVCardService: VCardService,
+    private val contactService: ContactService,
+    private val accountService: AccountService,
+    private val hardwareService: HardwareService,
+    private val conversationFacade: ConversationFacade,
+    private val vCardService: VCardService,
     val deviceRuntimeService: DeviceRuntimeService,
-    private val mPreferencesService: PreferencesService,
-    @param:Named("UiScheduler") private var mUiScheduler: Scheduler
+    private val preferencesService: PreferencesService,
+    @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<ConversationView>() {
     private var mConversation: Conversation? = null
     private var mConversationUri: Uri? = null
     private var mConversationDisposable: CompositeDisposable? = null
-    private val mVisibilityDisposable = CompositeDisposable()
+    private val mVisibilityDisposable = CompositeDisposable().apply {
+        mCompositeDisposable.add(this)
+    }
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
 
     fun init(conversationUri: Uri, accountId: String) {
         if (conversationUri == mConversationUri) return
         Log.w(TAG, "init $conversationUri $accountId")
-        val settings = mPreferencesService.settings
+        val settings = preferencesService.settings
         view?.setSettings(settings.enableReadIndicator, settings.enableLinkPreviews)
         mConversationUri = conversationUri
-        mCompositeDisposable.add(mConversationFacade.getAccountSubject(accountId)
+        mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
             .flatMap { a: Account ->
-                mConversationFacade.loadConversationHistory(a, conversationUri)
-                    .observeOn(mUiScheduler)
+                conversationFacade.loadConversationHistory(a, conversationUri)
+                    .observeOn(uiScheduler)
                     .doOnSuccess { c: Conversation -> setConversation(a, c) }
             }
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({}) { e: Throwable ->
                 Log.e(TAG, "Error loading conversation", e)
                 view?.goToHome()
@@ -104,8 +106,8 @@ class ConversationPresenter @Inject constructor(
             .subscribe({ conversation: Conversation ->
                 conversation.isVisible = true
                 updateOngoingCallView(conversation)
-                mAccountService.getAccount(conversation.accountId)?.let { account ->
-                    mConversationFacade.readMessages(account, conversation, !isBubble)}
+                accountService.getAccount(conversation.accountId)?.let { account ->
+                    conversationFacade.readMessages(account, conversation, !isBubble)}
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
     }
 
@@ -151,8 +153,8 @@ class ConversationPresenter @Inject constructor(
         view.hideNumberSpinner()
         disposable.add(c.mode
             .switchMapSingle { mode: Conversation.Mode ->
-                mContactService.getLoadedContact(c.accountId, c.contacts, true)
-                    .observeOn(mUiScheduler)
+                contactService.getLoadedContact(c.accountId, c.contacts, true)
+                    .observeOn(uiScheduler)
                     .doOnSuccess { contacts -> initContact(account, c, contacts, mode, this.view!!) }
             }
             .subscribe())
@@ -160,11 +162,11 @@ class ConversationPresenter @Inject constructor(
             .switchMap { mode: Conversation.Mode ->
                 if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.Request)
                     c.contact!!.conversationUri else Observable.empty() }
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountId) })
-        disposable.add(Observable.combineLatest(mHardwareService.connectivityState, mAccountService.getObservableAccount(account))
+        disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
             { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe { isOk: Boolean ->
                 this.view?.let { v ->
                     if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
@@ -175,23 +177,23 @@ class ConversationPresenter @Inject constructor(
                 }
             })
         disposable.add(c.sortedHistory
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
                 Log.e(TAG, "Can't update element", e)
             })
         disposable.add(c.cleared
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
                 Log.e(TAG, "Can't update elements", e)
             })
         disposable.add(c.contactUpdates
             .switchMap { contacts ->
-                Observable.merge(mContactService.observeLoadedContact(c.accountId, contacts, true))
+                Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true))
             }
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
         disposable.add(c.updatedElements
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ elementTuple ->
                 val v = this.view ?: return@subscribe
                 when (elementTuple.second) {
@@ -203,30 +205,30 @@ class ConversationPresenter @Inject constructor(
         )
         if (showTypingIndicator()) {
             disposable.add(c.composingStatus
-                .observeOn(mUiScheduler)
+                .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
         disposable.add(c.getLastDisplayed()
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe { interaction: Interaction -> this.view?.setLastDisplayed(interaction) })
         disposable.add(c.calls
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
                 Log.e(TAG, "Can't update call view", e)
             })
         disposable.add(c.getColor()
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
         disposable.add(c.getSymbol()
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
         disposable.add(account
             .getLocationUpdates(c.uri)
-            .observeOn(mUiScheduler)
+            .observeOn(uiScheduler)
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")
                 this.view?.showMap(c.accountId, c.uri.uri, false)
@@ -235,7 +237,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun loadMore() {
-        mConversationDisposable?.add(mAccountService.loadMore(mConversation!!).subscribe({}) {})
+        mConversationDisposable?.add(accountService.loadMore(mConversation!!).subscribe({}) {})
     }
 
     fun openContact() {
@@ -249,9 +251,9 @@ class ConversationPresenter @Inject constructor(
         }
         val conference = conversation.currentCall
         if (conversation.isSwarm || conference == null || !conference.isOnGoing) {
-            mConversationFacade.sendTextMessage(conversation, conversation.uri, message).subscribe()
+            conversationFacade.sendTextMessage(conversation, conversation.uri, message).subscribe()
         } else {
-            mConversationFacade.sendTextMessage(conversation, conference, message)
+            conversationFacade.sendTextMessage(conversation, conference, message)
         }
     }
 
@@ -261,7 +263,7 @@ class ConversationPresenter @Inject constructor(
 
     fun sendFile(file: File) {
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
-            mConversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
+            conversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
         }) {e -> Log.e(TAG, "Can't send file", e)})
     }
 
@@ -298,21 +300,21 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun deleteConversationItem(element: Interaction) {
-        mConversationFacade.deleteConversationItem(mConversation!!, element)
+        conversationFacade.deleteConversationItem(mConversation!!, element)
     }
 
     fun cancelMessage(message: Interaction) {
-        mConversationFacade.cancelMessage(message)
+        conversationFacade.cancelMessage(message)
     }
 
     private fun sendTrustRequest() {
         val conversation = mConversation ?: return
         val contact = conversation.contact ?: return
         contact.status = Contact.Status.REQUEST_SENT
-        mVCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
+        vCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribeOn(Schedulers.computation())
-            .subscribe({ vCard -> mAccountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard)))})
-            { mAccountService.sendTrustRequest(conversation, contact.uri, null) }
+            .subscribe({ vCard -> accountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard)))})
+            { accountService.sendTrustRequest(conversation, contact.uri, null) }
     }
 
     fun clickOnGoingPane() {
@@ -327,7 +329,7 @@ class ConversationPresenter @Inject constructor(
     fun goToCall(withCamera: Boolean) {
 
         Log.w(TAG, "DEBUG fn goToCall ||   hasVideo: $withCamera")
-        if (!withCamera && !mHardwareService.hasMicrophone()) {
+        if (!withCamera && !hardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
             return
         }
@@ -355,15 +357,15 @@ class ConversationPresenter @Inject constructor(
 
     fun onBlockIncomingContactRequest() {
         mConversation?.let { conversation ->
-            mConversationFacade.discardRequest(conversation.accountId, conversation.uri)
-            mAccountService.removeContact(conversation.accountId, conversation.uri.host, true)
+            conversationFacade.discardRequest(conversation.accountId, conversation.uri)
+            accountService.removeContact(conversation.accountId, conversation.uri.host, true)
         }
         view?.goToHome()
     }
 
     fun onRefuseIncomingContactRequest() {
         mConversation?.let { conversation ->
-            mConversationFacade.discardRequest(conversation.accountId, conversation.uri)
+            conversationFacade.discardRequest(conversation.accountId, conversation.uri)
         }
         view?.goToHome()
     }
@@ -375,7 +377,7 @@ class ConversationPresenter @Inject constructor(
                 conversation.clearHistory(true)
                 conversation.setMode(Conversation.Mode.Syncing)
             }
-            mConversationFacade.acceptRequest(conversation.accountId, conversation.uri)
+            conversationFacade.acceptRequest(conversation.accountId, conversation.uri)
         }
         view?.switchToConversationView()
     }
@@ -402,8 +404,8 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun cameraPermissionChanged(isGranted: Boolean) {
-        if (isGranted && mHardwareService.isVideoAvailable) {
-            mHardwareService.initVideo()
+        if (isGranted && hardwareService.isVideoAvailable) {
+            hardwareService.initVideo()
                 .onErrorComplete()
                 .subscribe()
         }
@@ -424,24 +426,20 @@ class ConversationPresenter @Inject constructor(
     fun onComposingChanged(hasMessage: Boolean) {
         if (showTypingIndicator()) {
             mConversation?.let { conversation ->
-                mConversationFacade.setIsComposing(conversation.accountId, conversation.uri, hasMessage)
+                conversationFacade.setIsComposing(conversation.accountId, conversation.uri, hasMessage)
             }
         }
     }
 
     private fun showTypingIndicator(): Boolean {
-        return mPreferencesService.settings.enableTypingIndicator
+        return preferencesService.settings.enableTypingIndicator
     }
 
     private fun showReadIndicator(): Boolean {
-        return mPreferencesService.settings.enableReadIndicator
+        return preferencesService.settings.enableReadIndicator
     }
 
     companion object {
         private val TAG = ConversationPresenter::class.simpleName!!
-    }
-
-    init {
-        mCompositeDisposable.add(mVisibilityDisposable)
     }
 }
