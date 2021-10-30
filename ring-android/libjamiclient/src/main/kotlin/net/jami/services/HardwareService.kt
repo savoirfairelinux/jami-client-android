@@ -33,7 +33,6 @@ import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.model.Conference
 import net.jami.utils.Log
-import net.jami.utils.Tuple
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Synchronized
@@ -111,7 +110,7 @@ abstract class HardwareService(
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract val cameraCount: Int
-    abstract val maxResolutions: Observable<Tuple<Int?, Int?>>
+    abstract val maxResolutions: Observable<Pair<Int?, Int?>>
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
     abstract fun unregisterCameraDetectionCallback()

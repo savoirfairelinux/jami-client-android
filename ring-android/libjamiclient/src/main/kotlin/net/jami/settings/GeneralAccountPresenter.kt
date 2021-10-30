@@ -28,7 +28,6 @@ import net.jami.services.AccountService
 import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
 import net.jami.utils.Log
-import net.jami.utils.Tuple
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -65,11 +64,11 @@ class GeneralAccountPresenter @Inject internal constructor(
             mCompositeDisposable.add(
                 mHardwareService.maxResolutions
                     .observeOn(mUiScheduler)
-                    .subscribe({ res: Tuple<Int?, Int?> ->
-                            if (res.first == null) {
+                    .subscribe({ res: Pair<Int?, Int?> ->
+                            if (res.first == null || res.second == null) {
                                 view?.updateResolutions(null, mPreferenceService.resolution)
                             } else {
-                                view?.updateResolutions(res, mPreferenceService.resolution)
+                                view?.updateResolutions(Pair(res.first!!, res.second!!), mPreferenceService.resolution)
                             }
                         },
                         { view?.updateResolutions(null, mPreferenceService.resolution) })
