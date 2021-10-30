@@ -10,7 +10,6 @@ import org.jsoup.nodes.Document
 
 object LinkPreview {
     private fun extractUrls(input: String): List<String> {
-        Log.w("LinkPreview", "parsing $input")
         val result: MutableList<String> = ArrayList()
         val words = input.split("\\s+".toRegex())
         for (word in words)
@@ -21,7 +20,6 @@ object LinkPreview {
                     result.add(word)
                 }
             }
-        Log.w("LinkPreview", "found $result")
         return result
     }
 
