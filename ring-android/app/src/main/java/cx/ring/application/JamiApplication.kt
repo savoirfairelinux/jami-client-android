@@ -198,6 +198,11 @@ abstract class JamiApplication : Application() {
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
         Completable.fromAction {
+            val caRootFile = getString(R.string.ca_root_file)
+            val dest = File(filesDir, caRootFile)
+            AndroidFileUtils.copyAsset(assets, caRootFile, dest)
+            Os.setenv("CA_ROOT_FILE", dest.absolutePath, true)
+
             val path = AndroidFileUtils.ringtonesPath(this)
             val defaultRingtone = File(path, getString(R.string.ringtone_default_name))
             val defaultLink = File(path, "default.opus")
@@ -205,12 +210,8 @@ abstract class JamiApplication : Application() {
                 AndroidFileUtils.copyAssetFolder(assets, "ringtones", path)
             }
             if (!defaultLink.exists()) {
-                Os.symlink(defaultRingtone.absolutePath, defaultLink.absolutePath)
+                AndroidFileUtils.linkOrCopy(defaultRingtone.absolutePath, defaultLink.absolutePath)
             }
-            val caRootFile = getString(R.string.ca_root_file)
-            val dest = File(filesDir, caRootFile)
-            AndroidFileUtils.copyAsset(assets, caRootFile, dest)
-            Os.setenv("CA_ROOT_FILE", dest.absolutePath, true)
         }
                 .subscribeOn(Schedulers.io())
                 .subscribe()

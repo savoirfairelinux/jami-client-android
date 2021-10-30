@@ -34,6 +34,7 @@ import android.os.StatFs
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.system.Os
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.MimeTypeMap
@@ -52,6 +53,15 @@ object AndroidFileUtils {
     private const val ORIENTATION_LEFT = 270
     private const val ORIENTATION_RIGHT = 90
     private const val MAX_IMAGE_DIMENSION = 1024
+
+    fun linkOrCopy(oldPath: String, newPath: String): Boolean {
+        try {
+            Os.symlink(oldPath, newPath)
+        } catch (e: Exception) {
+            return FileUtils.copyFile(File(oldPath), File(newPath))
+        }
+        return true
+    }
 
     /**
      * Copy assets from a folder recursively ( files and subfolder)
@@ -192,7 +202,7 @@ object AndroidFileUtils {
         if (ContentResolver.SCHEME_CONTENT == uri.scheme) {
             cr.query(uri, null, null, null, null).use { cursor ->
                 if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                    result = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
                 }
             }
         }
