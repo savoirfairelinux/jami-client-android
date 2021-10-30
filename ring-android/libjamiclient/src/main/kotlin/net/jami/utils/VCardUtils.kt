@@ -88,15 +88,15 @@ object VCardUtils {
      * @return a correct hashtable, null if invalid input
      */
     fun parseMimeAttributes(mime: String): HashMap<String, String> {
-        val elements = mime.split(";".toRegex()).toTypedArray()
+        val elements = mime.split(";")
         val messageKeyValue = HashMap<String, String>()
         if (elements.size < 2) {
             return messageKeyValue
         }
         messageKeyValue[VCARD_KEY_MIME_TYPE] = elements[0]
-        val pairs = elements[1].split(",".toRegex()).toTypedArray()
+        val pairs = elements[1].split(",")
         for (pair in pairs) {
-            val kv = pair.split("=".toRegex()).toTypedArray()
+            val kv = pair.split("=")
             messageKeyValue[kv[0].trim { it <= ' ' }] = kv[1]
         }
         return messageKeyValue

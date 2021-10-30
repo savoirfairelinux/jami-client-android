@@ -24,7 +24,7 @@ import java.lang.StringBuilder
 class ProfileChunk(private val numberOfParts: Int) {
     private var mTotalSize = 0
     private var mInsertedParts: Int = 0
-    private val mParts: MutableList<String> = ArrayList(numberOfParts)
+    private val mParts: Array<String> = Array(numberOfParts) { "" }
 
     /**
      * Inserts a profile part in the data structure, at a given position
@@ -55,22 +55,12 @@ class ProfileChunk(private val numberOfParts: Int) {
     val completeProfile: String?
         get() = if (isProfileComplete) {
             val stringBuilder = StringBuilder(mTotalSize)
-            for (part in mParts) {
+            for (part in mParts)
                 stringBuilder.append(part)
-            }
             stringBuilder.toString()
-        } else {
-            null
-        }
+        } else null
 
     companion object {
         val TAG = ProfileChunk::class.simpleName!!
-    }
-
-    init {
-        Log.d(TAG, "Create ProfileChink of size $numberOfParts")
-        for (i in 0 until numberOfParts) {
-            mParts.add("")
-        }
     }
 }
