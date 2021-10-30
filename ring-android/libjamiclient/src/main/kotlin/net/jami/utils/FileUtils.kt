@@ -27,7 +27,7 @@ object FileUtils {
     @Throws(IOException::class)
     fun copyFile(input: InputStream, out: OutputStream) {
         // Buffer size based on https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
-        val buffer = ByteArray(64 * 1024)
+        val buffer = ByteArray(256 * 1024)
         var read: Int
         while (input.read(buffer).also { read = it } != -1) {
             out.write(buffer, 0, read)
