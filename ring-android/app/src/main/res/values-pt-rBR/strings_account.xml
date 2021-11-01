@@ -173,9 +173,11 @@
   <string name="account_tv_settings_header">Configurações da conta</string>
   <string name="account_tv_advance_settings_header">Configurações avançadas</string>
   <string name="account_tv_add_contact">Adicionar contato</string>
+  <string name="account_tv_advanced_settings">Mude as configurações gerais</string>
   <string name="account_tv_about">Sobre Jami</string>
   <string name="tv_about_version">Versão</string>
   <string name="tv_about_license">Licença</string>
+  <string name="tv_about_author">Direitos de autor</string>
   <string name="tv_about_credits">Créditos</string>
   <string name="account_link_device">Conectar de outro dispositivo</string>
   <string name="account_link_button">Conecte-se de outra rede</string>
@@ -190,6 +192,7 @@
   <string name="account_end_export_button">fechar</string>
   <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo à uma conta\". Seu PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
+  <string name="account_export_title">Conectar a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Conectar ao servidor de gerenciamento</string>
   <string name="account_connect_button">Conectar</string>
   <string name="prompt_server">URL do servidor de gerenciamento Jami</string>
@@ -222,6 +225,7 @@
   <string name="account_link_title">Conectar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossível registrar conta.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Editar minha conta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Digite senha para confirmar</string>
   <string name="enter_password">Entre a senha</string>

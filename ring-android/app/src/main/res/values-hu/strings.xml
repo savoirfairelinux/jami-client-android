@@ -182,7 +182,7 @@
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s tiltva lett.</string>
-  <string name="conversation_contact_is_typing">Kapcsolat gépel…</string>
+  <string name="conversation_contact_is_typing">Kapcsolat éppen gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
   <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
