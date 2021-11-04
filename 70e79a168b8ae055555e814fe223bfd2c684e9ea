@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ee5e3b_9b45199f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-04T20:59:59Z",
+      "side": 1,
+      "message": "doesn\u0027t build",
+      "revId": "70e79a168b8ae055555e814fe223bfd2c684e9ea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "543b66fb_9e8b6afe",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/model/Call.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-04T20:59:59Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "70e79a168b8ae055555e814fe223bfd2c684e9ea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
