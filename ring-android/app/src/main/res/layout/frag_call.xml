@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
 
@@ -56,8 +56,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="match_parent"
             android:layout_alignTop="@id/video_surface"
             android:layout_alignBottom="@id/video_surface"
-            android:layout_alignLeft="@id/video_surface"
-            android:layout_alignRight="@id/video_surface"
+            android:layout_alignStart="@id/video_surface"
+            android:layout_alignEnd="@id/video_surface"
+            android:visibility="gone" />
+
+        <androidx.percentlayout.widget.PercentFrameLayout
+            android:layout_gravity="center"
+            android:id="@+id/participant_hand_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/video_surface"
+            android:layout_alignBottom="@id/video_surface"
+            android:layout_alignStart="@id/video_surface"
+            android:layout_alignEnd="@id/video_surface"
             android:visibility="gone"/>
 
         <androidx.cardview.widget.CardView
@@ -372,7 +383,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/call_drawer_handle"
-                    android:maxWidth="1200dp">
+                    android:visibility="visible">
 
                     <!-- Sound button -->
                     <LinearLayout
@@ -536,7 +547,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:background="@drawable/call_button_background_pressable"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_flip_camera_24"
-                            android:onClick="@{(v) -> presenter.cameraFlip()}"/>
+                            android:onClick="@{() -> presenter.cameraFlip()}"/>
 
                         <TextView
                             android:id="@+id/textView_call_camera_flip_btn"
@@ -572,7 +583,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/baseline_person_add_24"
                             app:tint="@color/white"
-                            android:onClick="@{(v) -> presenter.addParticipantClicked()}"/>
+                            android:onClick="@{() -> presenter.addParticipantClicked()}"/>
 
                         <TextView
                             android:id="@+id/textView_add_participant_btn"
@@ -608,7 +619,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/baseline_mobile_screen_share_24"
                             app:tint="@color/white"
-                            android:onClick="@{(v) -> presenter.shareScreenClicked()}"/>
+                            android:onClick="@{() -> presenter.shareScreenClicked()}"/>
 
                         <TextView
                             android:id="@+id/textView_call_sharescreen_btn"
@@ -619,6 +630,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_share_btn"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Raise Hand button -->
+                    <LinearLayout
+                        android:id="@+id/raiseHand_btn_container"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
+
+                        <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_raiseHand_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_button_background_checkable"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_raisehand_24"
+                            android:onClick="@{() -> presenter.raiseHandClicked()}"/>
+
+                        <TextView
+                            android:id="@+id/textView_raiseHand"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/bottomSheet_raiseHand_btn"
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:textColor="@color/white"
@@ -644,7 +688,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:background="@drawable/call_button_background_checkable"
                             android:layout_gravity="center"
                             android:padding="16dp"
-                            android:onClick="@{(v) -> presenter.displayDialPadKeyboard()}"
+                            android:onClick="@{() -> presenter.displayDialPadKeyboard()}"
                             app:srcCompat="@drawable/baseline_dialpad_24"
                             app:tint="@color/white"
                             />

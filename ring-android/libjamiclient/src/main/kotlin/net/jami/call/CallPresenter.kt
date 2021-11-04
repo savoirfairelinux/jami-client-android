@@ -171,6 +171,13 @@ class CallPresenter @Inject constructor(
         showConference(callObservable)
     }
 
+    /**
+     * update the Observable<Conference> data before dispatching it to the element who are subscribed to
+     * this will lead to new conference data, which will impact your view
+     * @see: mCallService.getConfUpdate()
+     * @example: when a new participant is added to the conference, this will increase the List<participantInfo>
+     *     before dispatching it to the ui fonctions updateConfInfo(List<participantInfo>)
+     * */
     private fun showConference(conference: Observable<Conference>){
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
@@ -203,8 +210,8 @@ class CallPresenter @Inject constructor(
         val showPluginBtn = displayPluginsButton && mOnGoingCall
         val hasActiveVideo = conference.hasActiveVideo()
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
-
-        view?.updateBottomSheetButtonStatus(isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+        val isConference = conference.isConference
+        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -357,6 +364,10 @@ class CallPresenter @Inject constructor(
         view?.finish()
     }
 
+    /**
+     * This fonctions define some global var and the UI screen/elements to show based on the Call/Conference properties.
+     * @example: it will update the bottomSheet elements based on the conference data.
+     * */
     private fun confUpdate(call: Conference) {
         mConference = call
         val status = call.state
@@ -434,7 +445,7 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        Log.w(TAG, "onVideoEvent  $event")
+        //Log.w(TAG, "onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
@@ -585,6 +596,11 @@ class CallPresenter @Inject constructor(
     fun openParticipantContact(info: ParticipantInfo) {
         val call = info.call ?: mConference?.firstCall ?: return
         view?.goToContact(call.account!!, info.contact)
+    }
+
+    fun raiseParticipantHand(state: Boolean){
+        val call = mConference ?: return
+        mCallService.raiseParticipantHand(call.accountId, call.id, call.call?.contact?.primaryNumber ?: "", state)
     }
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
