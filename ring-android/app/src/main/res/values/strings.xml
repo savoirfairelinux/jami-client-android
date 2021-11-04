@@ -408,5 +408,7 @@ along with this program; if not, write to the Free Software
     <string name="bottomSheet_hangup_btn">End Call</string>
     <string name="bottomSheet_mute_microphone_btn">Micro</string>
     <string name="bottomSheet_sound_output_btn">Sounds</string>
+    <string name="bottomSheet_raiseHand_btn">Raise hand</string>
+    <string name="call_raisedHand">handRaised</string>
 
 </resources>

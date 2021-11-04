@@ -45,5 +45,15 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+        <ImageView
+            android:id="@+id/raisedHand"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/call_raisedHand"
+            android:src="@drawable/baseline_raisehand_24dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </LinearLayout>
 </FrameLayout>

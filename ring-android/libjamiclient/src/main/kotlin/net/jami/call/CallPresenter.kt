@@ -112,7 +112,6 @@ class CallPresenter @Inject constructor(
         if (!mHardwareService.hasCamera()) {
             pHasVideo = false
         }
-        Log.w(TAG, "DEBUG fn initOutGoing() -> value of pHasVideo : $pHasVideo")
         //getView().blockScreenRotation();
         val callObservable = mCallService
             .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
@@ -121,7 +120,6 @@ class CallPresenter @Inject constructor(
         mCompositeDisposable.add(callObservable
             .observeOn(mUiScheduler)
             .subscribe({ conference ->
-                Log.w(TAG, "DEBUG subscribe confUpdate(conference)")
                 confUpdate(conference)
             }) { e: Throwable ->
                 hangupCall()
@@ -175,23 +173,21 @@ class CallPresenter @Inject constructor(
     }
 
     private fun showConference(conference: Observable<Conference>){
-        Log.w(TAG,"DEBUG showConference ---------------- ")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
-                Log.w(TAG, "DEBUG showConference ---------------- >> participants: $participants, pending: $pending, obj.call: ${obj.call}")
                 val p = if (participants.isEmpty() && !obj.isConference) {
-                    Log.w(TAG, "DEBUG showConference IF ---------------- >> obj.isConference: ${obj.isConference}, obj.call: ${obj.call}")
                     listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
                 } else {
-                    Log.w(TAG, "DEBUG showConference ELSE ---------------- >> participants: $participants ")
                     participants
                 }
                 if (pending.isEmpty()) p else p + pending
             }
             }
             .observeOn(mUiScheduler)
-            .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
+            .subscribe({ info: List<ParticipantInfo> ->
+                view?.updateConfInfo(info)
+            })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantRecording }
@@ -211,6 +207,7 @@ class CallPresenter @Inject constructor(
         val hasActiveVideo = conference.hasActiveVideo()
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
 
+        // TODO: implement retrieving the data for hasRaisedHand from conference
         view?.updateBottomSheetButtonStatus(isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
@@ -595,6 +592,11 @@ class CallPresenter @Inject constructor(
     fun openParticipantContact(info: ParticipantInfo) {
         val call = info.call ?: mConference?.firstCall ?: return
         view?.goToContact(call.account!!, info.contact)
+    }
+
+    fun raiseParticipantHand(state: Boolean){
+        val call = mConference ?: return
+        mCallService.raiseParticipantHand(call.id, call.firstCall?.confId?:"", "", state)
     }
 
     fun stopCapture() {
