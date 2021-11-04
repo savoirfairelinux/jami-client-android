@@ -112,7 +112,6 @@ class CallPresenter @Inject constructor(
         if (!mHardwareService.hasCamera()) {
             pHasVideo = false
         }
-        Log.w(TAG, "DEBUG fn initOutGoing() -> value of pHasVideo : $pHasVideo")
         //getView().blockScreenRotation();
         val callObservable = mCallService
             .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
@@ -121,7 +120,6 @@ class CallPresenter @Inject constructor(
         mCompositeDisposable.add(callObservable
             .observeOn(mUiScheduler)
             .subscribe({ conference ->
-                Log.w(TAG, "DEBUG subscribe confUpdate(conference)")
                 confUpdate(conference)
             }) { e: Throwable ->
                 hangupCall()
@@ -138,7 +136,7 @@ class CallPresenter @Inject constructor(
      */
     fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
         //getView().blockScreenRotation();
-        Log.w(TAG, "DEBUG initIncomingCall -------> actionViewOnly: $actionViewOnly ")
+        //Log.w(TAG, "DEBUG initIncomingCall -------> actionViewOnly: $actionViewOnly ")
 
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
@@ -174,24 +172,29 @@ class CallPresenter @Inject constructor(
         showConference(callObservable)
     }
 
+    /**
+     * update the Observable<Conference> data before dispatching it to the element who are subscribed to
+     * this will lead to new conference data, which will impact your view
+     * @see: mCallService.getConfUpdate()
+     * @example: when a new participant is added to the conference, this will increase the List<participantInfo>
+     *     before dispatching it to the ui fonctions updateConfInfo(List<participantInfo>)
+     * */
     private fun showConference(conference: Observable<Conference>){
-        Log.w(TAG,"DEBUG showConference ---------------- ")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
-                Log.w(TAG, "DEBUG showConference ---------------- >> participants: $participants, pending: $pending, obj.call: ${obj.call}")
                 val p = if (participants.isEmpty() && !obj.isConference) {
-                    Log.w(TAG, "DEBUG showConference IF ---------------- >> obj.isConference: ${obj.isConference}, obj.call: ${obj.call}")
                     listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
                 } else {
-                    Log.w(TAG, "DEBUG showConference ELSE ---------------- >> participants: $participants ")
                     participants
                 }
                 if (pending.isEmpty()) p else p + pending
             }
             }
             .observeOn(mUiScheduler)
-            .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
+            .subscribe({ info: List<ParticipantInfo> ->
+                view?.updateConfInfo(info)
+            })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantRecording }
@@ -210,8 +213,8 @@ class CallPresenter @Inject constructor(
         val showPluginBtn = displayPluginsButton && mOnGoingCall
         val hasActiveVideo = conference.hasActiveVideo()
         val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
-
-        view?.updateBottomSheetButtonStatus(isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+        val isConference = conference.isConference
+        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -235,7 +238,6 @@ class CallPresenter @Inject constructor(
      * this function is used by the main panel control
      * */
     fun muteMicrophoneToggled(checked: Boolean) {
-        Log.w(TAG, "DEBUG muteMicrophoneToggled ------  checked: $checked, mConference!!.id: ${mConference!!.id}")
         mCallService.setLocalMediaMuted(mConference!!.id, CallService.MEDIA_TYPE_AUDIO, checked)
     }
 
@@ -363,7 +365,12 @@ class CallPresenter @Inject constructor(
         view?.finish()
     }
 
+    /**
+     * This fonctions define some global var and the UI screen/elements to show based on the Call/Conference properties.
+     * @example: it will update the bottomSheet elements based on the conference data.
+     * */
     private fun confUpdate(call: Conference) {
+        Log.w(TAG, "DEBUG confUpdate ---->")
         mConference = call
         val status = call.state
         if (status === CallStatus.HOLD) {
@@ -441,11 +448,11 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        Log.w(TAG, "onVideoEvent  $event")
+        //Log.w(TAG, "onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
-            Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
+            //Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -595,6 +602,11 @@ class CallPresenter @Inject constructor(
     fun openParticipantContact(info: ParticipantInfo) {
         val call = info.call ?: mConference?.firstCall ?: return
         view?.goToContact(call.account!!, info.contact)
+    }
+
+    fun raiseParticipantHand(state: Boolean){
+        val call = mConference ?: return
+        mCallService.raiseParticipantHand(call.id, call.firstCall?.confId?:"", "", state)
     }
 
     fun stopCapture() {

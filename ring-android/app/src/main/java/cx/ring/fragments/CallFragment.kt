@@ -66,6 +66,7 @@ import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
+import cx.ring.databinding.ItemParticipantHandContainerBinding
 import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker
@@ -796,19 +797,12 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
-        Log.w(TAG, "DEBUG updateConfInfo $participantInfo")
-        Log.w(
-            "ConfParticipantAdapter",
-            "updateConfInfo participantInfo.size: ${participantInfo.size}, participantInfo: $participantInfo"
-        )
-        for (i in participantInfo) {
-            Log.w("ConfParticipantAdapter", "updateConfInfo participant.name: ${i.contact.displayName} \n")
-        }
+         val binding = binding ?: return
 
-        val binding = binding ?: return
-        mConferenceMode = participantInfo.isNotEmpty()
+        /* even a 1on1 call is a conference containing 2 participants*/
+        Log.w(TAG, "DEBUG updateConfInfo  ----------> participantInfo.size: ${participantInfo.size}")
+        mConferenceMode = participantInfo.size > 2
 
-        binding.participantLabelContainer.removeAllViews()
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
             val username = if (participantInfo.size > 1)
@@ -855,29 +849,9 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .withPresence(false)
                     .build(requireActivity())
             )
-
-            val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
-            for (i in participantInfo) {
-                val displayName = i.contact.displayName
-                if (!TextUtils.isEmpty(displayName)) {
-                    val label = ItemParticipantLabelBinding.inflate(inflater)
-                    val params = PercentFrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
-                    params.percentLayoutInfo.leftMarginPercent = i.x / mVideoWidth.toFloat()
-                    params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-                    params.percentLayoutInfo.rightMarginPercent =
-                        1f - (i.x + i.w) / mVideoWidth.toFloat()
-                    //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
-                    label.participantName.text = displayName
-                    label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
-                    label.mute.visibility = if (i.audioModeratorMuted || i.audioLocalMuted) View.VISIBLE else View.GONE
-                    binding.participantLabelContainer.addView(label.root, params)
-                }
-            }
+            addParticipantLabelContainer(participantInfo)
+            addHandSurface(participantInfo)
         }
-        binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
 
         binding.confControlGroup.visibility = View.VISIBLE
         confAdapter?.apply {
@@ -903,6 +877,51 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 setHasStableIds(true)
                 confAdapter = this
                 binding.confControlGroup.adapter = this
+            }
+    }
+    private fun addParticipantLabelContainer(participantsInfo: List<ParticipantInfo>){
+       val binding =  binding ?: return
+        binding.participantLabelContainer.removeAllViews()
+        binding.participantLabelContainer.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
+        val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
+        for (i in participantsInfo) {
+            val displayName = i.contact.displayName
+            if (!TextUtils.isEmpty(displayName)) {
+                val label = ItemParticipantLabelBinding.inflate(inflater)
+                val params = PercentFrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                params.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
+                params.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
+                params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
+                params.percentLayoutInfo.bottomMarginPercent =  1f - (i.y + i.h) / mVideoHeight.toFloat()
+
+                label.participantName.text = displayName
+                //label.moderator.isVisible = i.isModerator
+                label.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
+                binding.participantLabelContainer.addView(label.root, params)
+            }
+        }
+    }
+
+    private fun addHandSurface(participantsInfo: List<ParticipantInfo>){
+        val binding =  binding ?: return
+        binding.participantHandContainer.removeAllViews()
+        binding.participantHandContainer.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
+        val inflater = LayoutInflater.from(binding.participantHandContainer.context)
+        for (i in participantsInfo) {
+                val label = ItemParticipantHandContainerBinding.inflate(inflater)
+                val params = PercentFrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                )
+            params.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
+            params.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
+            params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
+
+            label.raisedHand.isVisible = i.isHandRaised
+            binding.participantHandContainer.addView(label.root, params)
             }
     }
 
@@ -931,7 +950,9 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding!!.callStatusTxt.setText(callStateToHumanState(callState))
     }
 
+    /** Receive data from the presenter in order to display valid button to the user */
     override fun updateBottomSheetButtonStatus(
+        isConference: Boolean,
         isSpeakerOn: Boolean,
         isMicrophoneMuted: Boolean,
         hasMultipleCamera: Boolean,
@@ -940,10 +961,11 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         onGoingCall: Boolean,
         hasActiveVideo: Boolean
     ) {
-        Log.w(TAG, "DEBUG updateBottomSheetButtonStatus  ----------> ")
         binding?.apply {
-            dialpadBtnContainer.isVisible = canDial
-            pluginsBtnContainer.isVisible = showPluginBtn
+            callPluginsBtn.isClickable = showPluginBtn
+            callRaiseHandBtn.isClickable = isConference
+            callDialpadBtn.isClickable = canDial
+
             callVideocamBtn.apply {
                 isChecked = !hasActiveVideo
                 setImageResource(if(isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
@@ -954,8 +976,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
             callMicBtn.isChecked = isMicrophoneMuted
             callSpeakerBtn.isChecked = isSpeakerOn
-
-
         }
     }
 
@@ -969,7 +989,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      *
      */
     private fun setBottomSheet(inset: WindowInsetsCompat) {
-        Log.w(TAG, "DEBUG setBottomSheet  ----------> presenter.isPipMode: ${isInPIP} ")
+        //Log.w(TAG, "DEBUG setBottomSheet  ----------> presenter.isPipMode: ${isInPIP} ")
         val bsView = view?.findViewById<View>(R.id.call_options_bottom_sheet)!!
         if (!isInPIP || bsView.isVisible) {
             val dm = requireContext().resources.displayMetrics
@@ -1001,8 +1021,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             view?.findViewById<View>(R.id.call_coordinator_option_container)?.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
             view?.findViewById<View>(R.id.call_options_bottom_sheet)?.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
 
-            Log.w(TAG, "DEBUG setBottomSheet  ----------> bsview.isvisible: ${bsView.isVisible}, bsview.w: ${bsView.layoutParams.width}, bsview.h: ${bsView.layoutParams.height}")
-            Log.w(TAG, "DEBUG setBottomSheet  ----------> gridView.isvisible: ${view?.findViewById<View>(R.id.call_parameters_grid)?.isVisible}, gridView.h: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.height}, gridView.w: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.width}")
+            //Log.w(TAG, "DEBUG setBottomSheet  ----------> bsview.isvisible: ${bsView.isVisible}, bsview.w: ${bsView.layoutParams.width}, bsview.h: ${bsView.layoutParams.height}")
+            //Log.w(TAG, "DEBUG setBottomSheet  ----------> gridView.isvisible: ${view?.findViewById<View>(R.id.call_parameters_grid)?.isVisible}, gridView.h: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.height}, gridView.w: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.width}")
 
             bottomSheetParams?.let { bs ->
                 bs.expandedOffset =
@@ -1031,8 +1051,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val gridMinWidth = 350 //width size in dp
         val wRatio = (gridMinWidth
                 * dm.density).div(maxWidth)
-        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> dm.widthPixels: ${dm.widthPixels}, dm.heightPixels: ${dm.heightPixels}")
-        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> gridMinWidth: $gridMinWidth, maxWidth: $maxWidth, wRatio: $wRatio")
+        //Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> dm.widthPixels: ${dm.widthPixels}, dm.heightPixels: ${dm.heightPixels}")
+        //Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> gridMinWidth: $gridMinWidth, maxWidth: $maxWidth, wRatio: $wRatio")
         return when {
             wRatio < 0f -> -1
             wRatio < 0.5f -> (((gridMinWidth * dm.density).toInt() * 1.25).toInt())
@@ -1045,10 +1065,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun displayBottomSheet(display: Boolean) {
-        Log.w(TAG,"DEBUG displayBottomSheet -----> display: $display, presenter.mOnGoingCall: ${presenter.mOnGoingCall}")
+        //Log.w(TAG,"DEBUG displayBottomSheet -----> display: $display, presenter.mOnGoingCall: ${presenter.mOnGoingCall}")
         val binding = binding ?: return
         binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
-        Log.w(TAG,"DEBUG displayBottomSheet -----> callOptionsBottomSheet.isVisible: ${binding.callOptionsBottomSheet.isVisible}, callCoordinatorOptionContainer.isVisible: ${binding.callCoordinatorOptionContainer.isVisible}")
+       // Log.w(TAG,"DEBUG displayBottomSheet -----> callOptionsBottomSheet.isVisible: ${binding.callOptionsBottomSheet.isVisible}, callCoordinatorOptionContainer.isVisible: ${binding.callCoordinatorOptionContainer.isVisible}")
     }
 
     override fun resetBottomSheetState() {
@@ -1106,7 +1126,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Init the Call view when the call is ongoing
      * */
     override fun initNormalStateDisplay() {
-        Log.w(CallPresenter.TAG, "DEBUG initNormalStateDisplay ---------------- >>  ")
+        Log.w(CallPresenter.TAG, "initNormalStateDisplay")
         binding?.apply {
             shapeRipple.stopRipple()
             callRefuseBtn.visibility = View.GONE
@@ -1370,6 +1390,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    fun raiseHandClicked(){
+        presenter.raiseParticipantHand(binding!!.callRaiseHandBtn.isChecked)
+    }
+
     fun hangUpClicked() {
         presenter.hangupCall()
     }
@@ -1576,7 +1600,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
         fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "DEBUG newInstance $action $path $contactId $hasVideo")
+            Log.w(TAG, "newInstance $action $path $contactId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
@@ -1588,7 +1612,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "DEBUG newInstance $action $confId $hasVideo")
+            Log.w(TAG, "newInstance $action $confId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
