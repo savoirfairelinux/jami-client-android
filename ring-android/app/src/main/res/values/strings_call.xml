@@ -40,4 +40,6 @@ along with this program; if not, write to the Free Software
     <!-- Conferences -->
     <string name="call_moderator">Moderator</string>
     <string name="call_muted">Muted</string>
+    <string name="call_handRaised">hand raised</string>
+
 </resources>

@@ -326,7 +326,15 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun updateBottomSheetButtonStatus(isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, displayFlip: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean) {
+    override fun updateBottomSheetButtonStatus(
+        isConference: Boolean,
+        isSpeakerOn: Boolean,
+        isMicrophoneMuted: Boolean,
+        displayFlip: Boolean,
+        canDial: Boolean,
+        showPluginBtn: Boolean,
+        onGoingCall: Boolean,
+        hasActiveVideo: Boolean) {
     }
 
     override fun resetBottomSheetState() {}
