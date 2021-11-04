@@ -77,10 +77,8 @@ class CallActivity : AppCompatActivity() {
             WindowCompat.setDecorFitsSystemWindows(window, false)
             setOnClickListener {
                 if (!isFullscreen) {
-                    Log.w(TAG, "DEBUG setOnClickListener ---------------> hideSystemUI")
                     hideSystemUI()
                 } else {
-                    Log.w(TAG, "DEBUG setOnClickListener ---------------> showSystemUI")
                     showSystemUI()
                 }
             }
@@ -143,13 +141,11 @@ class CallActivity : AppCompatActivity() {
 
     private val onNoInteraction = Runnable {
         if (!isFullscreen) {
-            Log.w(TAG, "DEBUG onNoInteraction ---------------> calling hideSystemUI")
             hideSystemUI()
         }
     }
 
     private fun restartNoInteractionTimer() {
-        Log.w(CallFragment.TAG, "DEBUG restartNoInteractionTimer ------------> ")
         handler?.let { handler ->
             handler.removeCallbacks(onNoInteraction)
             handler.postDelayed(onNoInteraction, (5 * 1000).toLong())
@@ -185,7 +181,7 @@ class CallActivity : AppCompatActivity() {
     }
 
     fun hideSystemUI() {
-        Log.w(TAG, "DEBUG hideSystemUI ---------------> ")
+        //Log.w(TAG, "DEBUG hideSystemUI ---------------> ")
         val callFragment = callFragment ?: return
         KeyboardVisibilityManager.hideKeyboard(this)
         callFragment.resetBottomSheetState()
@@ -198,7 +194,7 @@ class CallActivity : AppCompatActivity() {
     }
 
     fun showSystemUI() {
-        Log.w(TAG, "DEBUG showSystemUI ---------------> ")
+       // Log.w(TAG, "DEBUG showSystemUI ---------------> ")
         val callFragment = callFragment ?: return
         mMainView?.apply {
             if (currentOrientation != 1) {

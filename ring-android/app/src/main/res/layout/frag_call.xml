@@ -377,8 +377,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Sound button -->
                     <LinearLayout
                         android:id="@+id/sound_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -411,8 +409,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Mic button -->
                     <LinearLayout
                         android:id="@+id/microphone_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -444,8 +440,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Hangup button -->
                     <LinearLayout
                         android:id="@+id/hng_up_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -477,8 +471,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Camera switch button -->
                     <LinearLayout
                         android:id="@+id/videocam_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -509,8 +501,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Camera switch button -->
                     <LinearLayout
                         android:id="@+id/Flip_cam_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -524,7 +514,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:background="@drawable/call_button_background_pressable"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_flip_camera_24"
-                            android:onClick="@{(v) -> presenter.cameraFlip()}"/>
+                            android:onClick="@{() -> presenter.cameraFlip()}"/>
 
                         <TextView
                             android:id="@+id/textView5"
@@ -541,8 +531,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Add participant button -->
                     <LinearLayout
                         android:id="@+id/add_participant_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -557,7 +545,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/baseline_person_add_24"
                             app:tint="@color/white"
-                            android:onClick="@{(v) -> presenter.addParticipantClicked()}"/>
+                            android:onClick="@{() -> presenter.addParticipantClicked()}"/>
 
                         <TextView
                             android:id="@+id/textView_add_participant"
@@ -574,8 +562,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Screen Share button -->
                     <LinearLayout
                         android:id="@+id/sharescreen_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
@@ -590,7 +576,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/baseline_mobile_screen_share_24"
                             app:tint="@color/white"
-                            android:onClick="@{(v) -> presenter.shareScreenClicked()}"/>
+                            android:onClick="@{() -> presenter.shareScreenClicked()}"/>
 
                         <TextView
                             android:id="@+id/textView7"
@@ -604,17 +590,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:textSize="11sp"/>
                     </LinearLayout>
 
-                    <!-- Dialpad button -->
+                    <!-- Raise Hand button -->
                     <LinearLayout
-                        android:id="@+id/dialpad_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/raiseHand_btn_container"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        android:padding="5dp"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:padding="5dp">
+
+                        <cx.ring.views.CheckableImageButton
+                            android:id="@+id/call_raiseHand_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/call_button_background_checkable"
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/baseline_raisehand_24dp"
+                            android:onClick="@{() -> presenter.raiseHandClicked()}"/>
+
+                        <TextView
+                            android:id="@+id/textView_raiseHand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/bottomSheet_raiseHand_btn"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <!-- Dialpad button -->
+                    <LinearLayout
+                        android:id="@+id/dialpad_btn_container"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:padding="5dp">
 
                         <cx.ring.views.CheckableImageButton
                             android:id="@+id/call_dialpad_btn"
@@ -623,7 +635,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:background="@drawable/call_button_background_checkable"
                             android:layout_gravity="center"
                             android:padding="16dp"
-                            android:onClick="@{(v) -> presenter.displayDialPadKeyboard()}"
+                            android:onClick="@{() -> presenter.displayDialPadKeyboard()}"
                             app:srcCompat="@drawable/baseline_dialpad_24"
                             app:tint="@color/white"
                             />
@@ -643,14 +655,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <!-- Plugins list button -->
                     <LinearLayout
                         android:id="@+id/plugins_btn_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        android:padding="5dp"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                        android:padding="5dp">
 
                     <cx.ring.views.CheckableImageButton
                             android:id="@+id/call_plugins_btn"
