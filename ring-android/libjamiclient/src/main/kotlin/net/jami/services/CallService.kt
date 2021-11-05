@@ -127,15 +127,15 @@ class CallService(
         }
     }
 
-    fun setConfMaximizedParticipant(confId: String, uri: Uri) {
+    fun setConfMaximizedParticipant(accountId: String, confId: String, uri: Uri) {
         mExecutor.execute {
-            JamiService.setActiveParticipant(confId, uri.rawRingId)
-            JamiService.setConferenceLayout(confId, 1)
+            JamiService.setActiveParticipant(accountId, confId, uri.rawRingId)
+            JamiService.setConferenceLayout(accountId, confId, 1)
         }
     }
 
-    fun setConfGridLayout(confId: String?) {
-        mExecutor.execute { JamiService.setConferenceLayout(confId, 0) }
+    fun setConfGridLayout(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.setConferenceLayout(accountId, confId, 0) }
     }
 
     fun remoteRecordingChanged(callId: String, peerNumber: Uri, state: Boolean) {
@@ -225,11 +225,11 @@ class CallService(
         }.subscribeOn(Schedulers.from(mExecutor))
     }
 
-    fun refuse(callId: String) {
+    fun refuse(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "refuse() running... $callId")
-            JamiService.refuse(callId)
-            JamiService.hangUp(callId)
+            JamiService.refuse(accountId, callId)
+            JamiService.hangUp(accountId, callId)
         }
     }
 
@@ -241,72 +241,60 @@ class CallService(
         }
     }*/
 
-    fun accept(callId: String, hasVideo: Boolean = false) {
+    fun accept(accountId:String, callId: String, hasVideo: Boolean = false) {
         Log.w(TAG, "DEBUG fn accept [CallService.kt] -> based on value of hasvideo ( $hasVideo ) [IF] false then mute media type VIDEO and JamiService.accept [ELSE] add Media in VectMap and JamiService.acceptWithMedia() ")
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
             val call = currentCalls[callId] ?: return@execute
             val mediaList = call.mediaList ?: return@execute
-            val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }, { media ->
+            val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }) { media ->
                 if (!hasVideo && media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
                     media.copy(isMuted = true).toMap()
                 else
                     media.toMap()
-            })
+            }
 
             for (i in vectMapMedia){
                 Log.w(TAG, "DEBUG fn accept [CallService.kt] -> $i")
             }
             Log.w(TAG, "DEBUG fn accept [CallService.kt] -> value of hasvideo : $hasVideo => on accept un appel avec media")
-            JamiService.acceptWithMedia(callId, vectMapMedia)
+            JamiService.acceptWithMedia(accountId, callId, vectMapMedia)
         }
     }
 
-    fun hangUp(callId: String) {
+    fun hangUp(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "hangUp() running... $callId")
-            JamiService.hangUp(callId)
+            JamiService.hangUp(accountId, callId)
         }
     }
 
-    fun muteParticipant(confId: String, peerId: String, mute: Boolean) {
+    fun muteParticipant(accountId:String, confId: String, peerId: String, mute: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "mute participant... $peerId")
-            JamiService.muteParticipant(confId, peerId, mute)
+            JamiService.muteParticipant(accountId, confId, peerId, mute)
         }
     }
 
-    fun hangupParticipant(confId: String?, peerId: String) {
+    fun hangupParticipant(accountId:String, confId: String?, peerId: String) {
         mExecutor.execute {
             Log.i(TAG, "hangup participant... $peerId")
-            JamiService.hangupParticipant(confId, peerId)
+            JamiService.hangupParticipant(accountId, confId, peerId)
         }
     }
 
-    fun hold(callId: String) {
+    fun hold(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "hold() running... $callId")
-            JamiService.hold(callId)
+            JamiService.hold(accountId, callId)
         }
     }
 
-    fun unhold(callId: String) {
+    fun unhold(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "unhold() running... $callId")
-            JamiService.unhold(callId)
+            JamiService.unhold(accountId, callId)
         }
-    }
-
-    fun getCallDetails(callId: String): Map<String, String>? {
-        try {
-            return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "getCallDetails() running... $callId")
-                JamiService.getCallDetails(callId).toNative()
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getCallDetails()", e)
-        }
-        return null
     }
 
     fun muteRingTone(mute: Boolean) {
@@ -355,20 +343,20 @@ class CallService(
         }
     }
 
-    fun setLocalMediaMuted(callId: String, mediaType: String, mute: Boolean) {
+    fun setLocalMediaMuted(accountId:String, callId: String, mediaType: String, mute: Boolean) {
         mExecutor.execute {
             Log.i(TAG, "muteCapture() running...")
-            JamiService.muteLocalMedia(callId, mediaType, mute)
+            JamiService.muteLocalMedia(accountId, callId, mediaType, mute)
         }
     }
 
     val isCaptureMuted: Boolean
         get() = JamiService.isCaptureMuted()
 
-    fun transfer(callId: String, to: String) {
+    fun transfer(accountId:String, callId: String, to: String) {
         mExecutor.execute {
             Log.i(TAG, "transfer() thread running...")
-            if (JamiService.transfer(callId, to)) {
+            if (JamiService.transfer(accountId, callId, to)) {
                 Log.i(TAG, "OK")
             } else {
                 Log.i(TAG, "NOT OK")
@@ -376,10 +364,10 @@ class CallService(
         }
     }
 
-    fun attendedTransfer(transferId: String, targetID: String) {
+    fun attendedTransfer(accountId:String, transferId: String, targetID: String) {
         mExecutor.execute {
             Log.i(TAG, "attendedTransfer() thread running...")
-            if (JamiService.attendedTransfer(transferId, targetID)) {
+            if (JamiService.attendedTransfer(accountId, transferId, targetID)) {
                 Log.i(TAG, "OK")
             } else {
                 Log.i(TAG, "NOT OK")
@@ -400,8 +388,8 @@ class CallService(
             mExecutor.execute { JamiService.setRecordPath(path) }
         }
 
-    fun toggleRecordingCall(id: String): Boolean {
-        mExecutor.execute { JamiService.toggleRecording(id) }
+    fun toggleRecordingCall(accountId:String, callId: String): Boolean {
+        mExecutor.execute { JamiService.toggleRecording(accountId, callId) }
         return false
     }
 
@@ -414,12 +402,12 @@ class CallService(
         mExecutor.execute { JamiService.stopRecordedFilePlayback() }
     }
 
-    fun sendTextMessage(callId: String, msg: String) {
+    fun sendTextMessage(accountId: String, callId: String, msg: String) {
         mExecutor.execute {
             Log.i(TAG, "sendTextMessage() thread running...")
             val messages = StringMap()
             messages.setRaw("text/plain", Blob.fromString(msg))
-            JamiService.sendTextMessage(callId, messages, "", false)
+            JamiService.sendTextMessage(accountId, callId, messages, "", false)
         }
     }
 
@@ -489,14 +477,14 @@ class CallService(
         return conference
     }
 
-    private fun parseCallState(callId: String, newState: String): Call? {
+    private fun parseCallState(accountId:String, callId: String, newState: String): Call? {
         val callState = CallStatus.fromString(newState)
         var call = currentCalls[callId]
         if (call != null) {
             call.setCallState(callState)
-            call.setDetails(JamiService.getCallDetails(callId).toNative())
+            call.setDetails(JamiService.getCallDetails(accountId, callId).toNative())
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
-            val callDetails: Map<String, String> = JamiService.getCallDetails(callId)
+            val callDetails: Map<String, String> = JamiService.getCallDetails(accountId, callId)
             call = Call(callId, callDetails)
             if (StringUtils.isEmpty(call.contactNumber)) {
                 Log.w(TAG, "No number")
@@ -533,11 +521,11 @@ class CallService(
         updateConnectionCount();*/
     }
 
-    fun callStateChanged(callId: String, newState: String, detailCode: Int) {
+    fun callStateChanged(accountId: String, callId: String, newState: String, detailCode: Int) {
         Log.d(TAG, "call state changed: $callId, $newState, $detailCode")
         try {
             synchronized(currentCalls) {
-                parseCallState(callId, newState)?.let { call ->
+                parseCallState(accountId, callId, newState)?.let { call ->
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
                         currentCalls.remove(call.daemonIdString)
@@ -592,7 +580,7 @@ class CallService(
                     if (e[Media.MEDIA_TYPE_KEY]!! == MEDIA_TYPE_VIDEO)
                         e[Media.MUTED_KEY] = true.toString()
             }
-            JamiService.answerMediaChangeRequest(callId, mediaList)
+            JamiService.answerMediaChangeRequest(accountId, callId, mediaList)
         }
     }
 
@@ -600,7 +588,7 @@ class CallService(
         Log.w(TAG, "DEBUG fn mediaNegotiationStatus $callId $event $mediaList")
         synchronized(currentCalls) {
             currentCalls[callId]?.let { call ->
-                call.mediaList = mediaList.mapTo(ArrayList(mediaList.size), { media -> Media(media)})
+                call.mediaList = mediaList.mapTo(ArrayList(mediaList.size)) { media -> Media(media) }
                 callSubject.onNext(call)
             }
         }
@@ -609,14 +597,14 @@ class CallService(
     fun requestVideoMedia(conf: Conference, enable: Boolean) {
         Log.w(TAG, "DEBUG fn requestVideoMedia: ${conf.id} $enable")
         if (conf.isConference || conf.hasVideo()) {
-            JamiService.muteLocalMedia(conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
+            JamiService.muteLocalMedia(conf.accountId, conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
         } else if (enable) {
             val call = conf.firstCall ?: return
             val mediaList = call.mediaList ?: return
-            JamiService.requestMediaChange(call.daemonIdString, mediaList.mapTo(VectMap()
-                    .apply { reserve(mediaList.size.toLong() + 1L) },
-                            { media -> media.toMap() })
-                    .apply { add(Media.DEFAULT_VIDEO.toMap()) })
+            JamiService.requestMediaChange(call.account, call.daemonIdString, mediaList.mapTo(VectMap()
+                    .apply { reserve(mediaList.size.toLong() + 1L) }
+            ) { media -> media.toMap() }
+                .apply { add(Media.DEFAULT_VIDEO.toMap()) })
         }
     }
 
@@ -643,112 +631,56 @@ class CallService(
         Log.i(TAG, "on RTCP report received: $callId")
     }
 
-    fun removeConference(confId: String) {
-        mExecutor.execute { JamiService.removeConference(confId) }
-    }
-
-    fun joinParticipant(selCallId: String, dragCallId: String): Single<Boolean> {
-        return Single.fromCallable { JamiService.joinParticipant(selCallId, dragCallId) }
+    fun joinParticipant(accountId: String, selCallId: String, dragCallId: String): Single<Boolean> {
+        return Single.fromCallable { JamiService.joinParticipant(accountId, selCallId, dragCallId) }
             .subscribeOn(Schedulers.from(mExecutor))
     }
 
-    fun addParticipant(callId: String, confId: String) {
-        mExecutor.execute { JamiService.addParticipant(callId, confId) }
+    fun addParticipant(accountId: String, callId: String, confId: String) {
+        mExecutor.execute { JamiService.addParticipant(callId, confId, accountId) }
     }
 
-    fun addMainParticipant(confId: String) {
-        mExecutor.execute { JamiService.addMainParticipant(confId) }
+    fun addMainParticipant(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.addMainParticipant(accountId, confId) }
     }
 
-    fun detachParticipant(callId: String) {
-        mExecutor.execute { JamiService.detachParticipant(callId) }
+    fun detachParticipant(accountId: String, callId: String) {
+        mExecutor.execute { JamiService.detachParticipant(accountId, callId) }
     }
 
-    fun joinConference(selConfId: String, dragConfId: String) {
-        mExecutor.execute { JamiService.joinConference(selConfId, dragConfId) }
+    fun joinConference(accountId: String, selConfId: String, dragConfId: String) {
+        mExecutor.execute { JamiService.joinConference(accountId, selConfId, dragConfId) }
     }
 
-    fun hangUpConference(confId: String) {
-        mExecutor.execute { JamiService.hangUpConference(confId) }
+    fun hangUpConference(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.hangUpConference(accountId, confId) }
     }
 
-    fun holdConference(confId: String) {
-        mExecutor.execute { JamiService.holdConference(confId) }
+    fun holdConference(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.holdConference(accountId, confId) }
     }
 
-    fun unholdConference(confId: String) {
-        mExecutor.execute { JamiService.unholdConference(confId) }
-    }
-
-    fun isConferenceParticipant(callId: String): Boolean {
-        try {
-            return mExecutor.submit<Boolean> {
-                Log.i(TAG, "isConferenceParticipant() running...")
-                JamiService.isConferenceParticipant(callId)
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running isConferenceParticipant()", e)
-        }
-        return false
-    }
-
-    fun getParticipantList(confId: String?): List<String>? {
-        try {
-            return mExecutor.submit<ArrayList<String>> {
-                Log.i(TAG, "getParticipantList() running...")
-                ArrayList(JamiService.getParticipantList(confId))
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getParticipantList()", e)
-        }
-        return null
+    fun unholdConference(accountId: String, confId: String) {
+        mExecutor.execute { JamiService.unholdConference(accountId, confId) }
     }
 
     fun getConference(call: Call): Conference {
         return addConference(call)
     }
 
-    fun getConferenceId(callId: String): String {
-        return JamiService.getConferenceId(callId)
-    }
-
-    fun getConferenceState(callId: String): String? {
-        try {
-            return mExecutor.submit<String> {
-                Log.i(TAG, "getConferenceDetails() thread running...")
-                JamiService.getConferenceDetails(callId)["CONF_STATE"]
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getParticipantList()", e)
-        }
-        return null
-    }
-
     fun getConference(id: String): Conference? {
         return currentConferences[id]
     }
 
-    fun getConferenceDetails(id: String): Map<String, String>? {
-        try {
-            return mExecutor.submit<HashMap<String, String>> {
-                Log.i(TAG, "getCredentials() thread running...")
-                JamiService.getConferenceDetails(id).toNative()
-            }.get()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error running getParticipantList()", e)
-        }
-        return null
-    }
-
-    fun conferenceCreated(confId: String) {
+    fun conferenceCreated(accountId: String, confId: String) {
         Log.d(TAG, "conference created: $confId")
         var conf = currentConferences[confId]
         if (conf == null) {
-            conf = Conference(confId)
+            conf = Conference(accountId, confId)
             currentConferences[confId] = conf
         }
-        val participants = JamiService.getParticipantList(confId)
-        val map = JamiService.getConferenceDetails(confId)
+        val participants = JamiService.getParticipantList(accountId, confId)
+        val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
         for (callId in participants) {
             val call = getCurrentCallForId(callId)
@@ -763,7 +695,7 @@ class CallService(
         conferenceSubject.onNext(conf)
     }
 
-    fun conferenceRemoved(confId: String) {
+    fun conferenceRemoved(accountId: String, confId: String) {
         Log.d(TAG, "conference removed: $confId")
         currentConferences.remove(confId)?.let { conf ->
             for (call in conf.participants) {
@@ -774,16 +706,16 @@ class CallService(
         }
     }
 
-    fun conferenceChanged(confId: String, state: String) {
+    fun conferenceChanged(accountId: String, confId: String, state: String) {
         Log.d(TAG, "conference changed: $confId, $state")
         try {
             var conf = currentConferences[confId]
             if (conf == null) {
-                conf = Conference(confId)
+                conf = Conference(accountId, confId)
                 currentConferences[confId] = conf
             }
             conf.setState(state)
-            val participants: Set<String> = JamiService.getParticipantList(confId).toHashSet()
+            val participants: Set<String> = JamiService.getParticipantList(accountId, confId).toHashSet()
             // Add new participants
             for (callId in participants) {
                 if (!conf.contains(callId)) {
