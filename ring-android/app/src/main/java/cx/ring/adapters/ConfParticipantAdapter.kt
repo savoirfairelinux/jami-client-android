@@ -22,6 +22,7 @@ package cx.ring.adapters
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -41,12 +42,8 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
     }
 
     override fun onBindViewHolder(holder: ParticipantView, position: Int) {
-       Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> position: $position" )
-
         val info = calls[position]
         val contact = info.contact
-        Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> , calls: $calls" )
-        Log.w("ConfParticipantAdapter", "DEBUG onBindViewHolder ---------------- >> calls.size: ${calls.size}, calls[${position}]: ${info.contact.displayName} " )
 
         val context = holder.itemView.context
         val call = info.call
@@ -70,7 +67,6 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
             .withPresence(false)
             .build(context))
 
-        Log.w("ConfParticipantAdapter", "DEBUG mute status ---------------- >>  participant name: ${info.contact.displayName}, audioMuted: ${info.audioModeratorMuted}" )
         participantBinding.muteParticipant.let {
             it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
         }
@@ -80,23 +76,22 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
             participantBinding.muteParticipant.let {
                 it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
             }
-            Log.w("ConfParticipantAdapter", "DEBUG mute onclick 2 ---------------- >>  participant name: ${info.contact.displayName}, isAudioMuted: ${info.audioModeratorMuted}" )
+            Log.i(TAG, "muteParticipant clicked..")
         }
 
         participantBinding.extendParticipant.setOnClickListener {
             onSelectedCallback.onParticipantSelected(info, ParticipantAction.Extend)
-
-            Log.w("ConfParticipantAdapter", "DEBUG  ---------- > extendParticipant clicked")
+            Log.i(TAG, "extendParticipant clicked..")
         }
 
         participantBinding.kickParticipant.setOnClickListener {
             onSelectedCallback.onParticipantSelected(info, ParticipantAction.Hangup)
-
-            Log.w("ConfParticipantAdapter", "DEBUG  ---------- > kickbutton clicked")
+            Log.i(TAG, "kickParticipant clicked..")
         }
 
         holder.itemView.setOnClickListener {
             onSelectedCallback.onParticipantSelected(info, ParticipantAction.ShowDetails)
+            Log.i(TAG, "ShowDetails clicked..")
         }
     }
 
@@ -111,23 +106,22 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
 
     fun updateFromCalls(contacts: List<ParticipantInfo>) {
         val oldCalls = calls
-        Log.w("ConfParticipantAdapter", "DEBUG updateFromCalls ---------------- >> oldCalls: $oldCalls, size: ${oldCalls.size} contacts:$contacts, size: ${contacts.size}")
+        Log.w(TAG, "DEBUG updateFromCalls ---------------- >> oldCalls: $oldCalls, size: ${oldCalls.size} contacts:$contacts, size: ${contacts.size}")
 
         calls = contacts
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int {
-                Log.w("ConfParticipantAdapter", "DEBUG getOldListSize ---------------- >> oldCalls.size: ${oldCalls.size} " )
-
+                //Log.w(TAG, "DEBUG getOldListSize ---------------- >> oldCalls.size: ${oldCalls.size} " )
                 return oldCalls.size
             }
 
             override fun getNewListSize(): Int {
-                Log.w("ConfParticipantAdapter", "DEBUG getNewListSize ---------------- >> contacts.size: ${contacts.size} " )
+                //Log.w(TAG, "DEBUG getNewListSize ---------------- >> contacts.size: ${contacts.size} " )
                 return contacts.size
             }
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                Log.w("ConfParticipantAdapter", "DEBUG areItemsTheSame ---------------- >> oldCalls[oldItemPosition].contact:${oldCalls[oldItemPosition].contact} =?= contacts[newItemPosition].contact: ${contacts[newItemPosition].contact} " )
+                //Log.w(TAG, "DEBUG areItemsTheSame ---------------- >> oldCalls[oldItemPosition].contact:${oldCalls[oldItemPosition].contact} =?= contacts[newItemPosition].contact: ${contacts[newItemPosition].contact} " )
                 return oldCalls[oldItemPosition].contact === contacts[newItemPosition].contact
             }
 
@@ -144,5 +138,9 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
     interface ConfParticipantSelected {
         //fun onAddParticipant();
         fun onParticipantSelected(contact: ParticipantInfo, action: ParticipantAction)
+    }
+
+    companion object {
+        val TAG = ConfParticipantAdapter::class.simpleName!!
     }
 }
