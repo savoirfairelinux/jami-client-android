@@ -109,13 +109,19 @@ class ConversationPresenter @Inject constructor(
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
     }
 
-    private fun initContact(account: Account, conversation: Conversation, mode: Conversation.Mode, view: ConversationView) {
+    private fun initContact(
+        account: Account,
+        conversation: Conversation,
+        contacts: List<ContactViewModel>,
+        mode: Conversation.Mode,
+        view: ConversationView
+    ) {
         if (account.isJami) {
             Log.w(TAG, "initContact " + conversation.uri + " mode: " + mode)
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(conversation.contact?.displayName ?: conversation.uri.uri)
+                view.switchToIncomingTrustRequestView(contacts[0].displayName ?: conversation.uri.uri)
             } else if (conversation.isSwarm || account.isContact(conversation)) {
                 //if (conversation.isEnded())
                 //    conversation.s
@@ -132,7 +138,7 @@ class ConversationPresenter @Inject constructor(
         } else {
             view.switchToConversationView()
         }
-        view.displayContact(conversation)
+        view.displayContact(conversation, contacts)
     }
 
     private fun initView(account: Account, c: Conversation, view: ConversationView) {
@@ -147,7 +153,7 @@ class ConversationPresenter @Inject constructor(
             .switchMapSingle { mode: Conversation.Mode ->
                 mContactService.getLoadedContact(c.accountId, c.contacts, true)
                     .observeOn(mUiScheduler)
-                    .doOnSuccess { initContact(account, c, mode, this.view!!) }
+                    .doOnSuccess { contacts -> initContact(account, c, contacts, mode, this.view!!) }
             }
             .subscribe())
         disposable.add(c.mode
@@ -179,11 +185,11 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "Can't update elements", e)
             })
         disposable.add(c.contactUpdates
-            .switchMap { contacts: List<Contact> ->
+            .switchMap { contacts ->
                 Observable.merge(mContactService.observeLoadedContact(c.accountId, contacts, true))
             }
             .observeOn(mUiScheduler)
-            .subscribe { contact: Contact -> this.view?.updateContact(contact) })
+            .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
         disposable.add(c.updatedElements
             .observeOn(mUiScheduler)
             .subscribe({ elementTuple ->
