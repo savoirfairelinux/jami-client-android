@@ -19,15 +19,14 @@
  */
 package cx.ring.tv.main
 
-import net.jami.model.Account
 import net.jami.navigation.HomeNavigationViewModel
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 interface MainView {
     fun showLoading(show: Boolean)
-    fun refreshContact(index: Int, contact: SmartListViewModel)
-    fun showContacts(contacts: List<SmartListViewModel>)
-    fun showContactRequests(contactRequests: List<SmartListViewModel>)
+    fun refreshContact(index: Int, contact: ConversationItemViewModel)
+    fun showContacts(contacts: List<ConversationItemViewModel>)
+    fun showContactRequests(contactRequests: List<ConversationItemViewModel>)
     fun callContact(accountID: String, ringID: String)
     fun displayAccountInfo(viewModel: HomeNavigationViewModel)
     fun showExportDialog(pAccountID: String, hasPassword: Boolean)

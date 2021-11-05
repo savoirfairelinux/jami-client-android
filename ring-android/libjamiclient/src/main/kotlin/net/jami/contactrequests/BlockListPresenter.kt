@@ -20,22 +20,24 @@
 package net.jami.contactrequests
 
 import io.reactivex.rxjava3.core.Scheduler
-import net.jami.contactrequests.BlockListPresenter
 import net.jami.model.Account
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
+import net.jami.services.ContactService
 import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named
 
 class BlockListPresenter @Inject constructor(
     private val mAccountService: AccountService,
+    private val contactService: ContactService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<BlockListView>() {
     private var mAccountID: String? = null
 
-    private fun updateList(list: Collection<Contact>) {
+    private fun updateList(list: Collection<ContactViewModel>) {
         val view = view ?: return
         if (list.isEmpty()) {
             view.hideListView()
@@ -54,8 +56,9 @@ class BlockListPresenter @Inject constructor(
         mCompositeDisposable.add(mAccountService
             .getAccountSingle(accountID)
             .flatMapObservable(Account::bannedContactsUpdates)
+            .switchMapSingle { contacts -> contactService.getLoadedContact(accountID, contacts) }
             .observeOn(mUiScheduler)
-            .subscribe({ list: Collection<Contact> -> updateList(list) })
+            .subscribe({ list -> updateList(list) })
             { e: Throwable -> Log.e(TAG, "Error showing blacklist", e) })
         mAccountID = accountID
     }

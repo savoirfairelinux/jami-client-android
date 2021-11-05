@@ -20,4 +20,13 @@
  */
 package net.jami.model
 
-class Profile(val displayName: String?, val avatar: Any?)
+open class Profile(val displayName: String?, val avatar: Any?)
+
+class ContactViewModel(val contact: Contact, val profile: Profile, val registeredName: String? = null, val presence: Boolean = false) {
+    val displayUri: String
+        get() = registeredName ?: contact.uri.toString()
+    val displayName: String
+        get() = profile.displayName ?: displayUri
+    val fullProfile: Profile
+        get() = Profile(displayName, profile.avatar)
+}

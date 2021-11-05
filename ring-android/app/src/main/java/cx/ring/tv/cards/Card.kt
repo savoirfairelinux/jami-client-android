@@ -30,7 +30,7 @@ open class Card {
     var title = ""
     var description: CharSequence = ""
     var type: Type? = null
-    var id: Long = 0
+    //var id: Long = 0
     var width = 0
     var height = 0
 

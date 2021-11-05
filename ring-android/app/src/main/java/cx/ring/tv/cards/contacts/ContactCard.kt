@@ -20,34 +20,35 @@
 package cx.ring.tv.cards.contacts
 
 import cx.ring.tv.cards.Card
-import net.jami.model.Contact
-import net.jami.smartlist.SmartListViewModel
+import net.jami.model.ContactViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 class ContactCard : Card {
-    private var mModel: SmartListViewModel
+    private var mModel: ConversationItemViewModel
 
-    constructor(accountId: String, pContact: Contact, type: Type?) {
-        mModel = SmartListViewModel(accountId, pContact, null)
-        id = pContact.id
+    constructor(accountId: String, pContact: ContactViewModel, type: Type?) {
+        mModel = ConversationItemViewModel(accountId, pContact, null)
+        //id = pContact.contact.id
         title = pContact.displayName
-        description = pContact.ringUsername
+        description = pContact.displayUri
         this.type = type
     }
 
-    constructor(m: SmartListViewModel) {
+    constructor(m: ConversationItemViewModel, type: Type? = null) {
         mModel = m
         model = m
+        this.type = type
     }
 
-    var model: SmartListViewModel
+    var model: ConversationItemViewModel
         get() = mModel
         set(model) {
             mModel = model
             title = model.contactName ?: ""
             val contact = model.getContact()!!
-            val username = contact.ringUsername
+            val username = contact.displayUri
             description = username
-            val isOnline = contact.isOnline
+            val isOnline = contact.contact.isOnline
             type = if (model.contactName == username) {
                 if (isOnline) {
                     Type.CONTACT_ONLINE
