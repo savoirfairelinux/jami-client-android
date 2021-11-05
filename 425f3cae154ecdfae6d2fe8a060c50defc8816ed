@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9b8a15_c6793bbf",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4693c755_3727571e",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "788745ff_b5714d82",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15dc48e1_8f6cce31",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6317d44_7063d460",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove or cleanup",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fb5bec6_5b135d17",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce08dcb_068e29f8",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63fe5add_a77a7b9d",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-05T20:52:17Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
