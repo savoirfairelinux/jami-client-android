@@ -20,13 +20,13 @@
 package cx.ring.tv.contactrequest
 
 import androidx.leanback.widget.AbstractDetailsDescriptionPresenter
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 class TVContactRequestDetailPresenter : AbstractDetailsDescriptionPresenter() {
     override fun onBindDescription(viewHolder: ViewHolder, item: Any) {
-        val viewModel = item as SmartListViewModel?
+        val viewModel = item as ConversationItemViewModel?
         if (viewModel != null) {
-            val id = viewModel.getContact()!!.ringUsername
+            val id = viewModel.getContact()!!.displayUri
             val displayName = viewModel.contactName
             viewHolder.title.text = displayName
             if (displayName != id)

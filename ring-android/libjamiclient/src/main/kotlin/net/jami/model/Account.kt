@@ -28,7 +28,6 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.AccountService
-import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.lang.IllegalStateException
@@ -188,14 +187,14 @@ class Account(
         return conversationsSubject
     }
 
-    fun getConversationsViewModels(withPresence: Boolean): Observable<MutableList<SmartListViewModel>> {
+    /*fun getConversationsViewModels(withPresence: Boolean): Observable<MutableList<SmartListViewModel>> {
         return conversationsSubject
             .map { conversations: List<Conversation> ->
                 val viewModel = ArrayList<SmartListViewModel>(conversations.size)
                 for (c in conversations) viewModel.add(SmartListViewModel(c, withPresence))
                 viewModel
             }
-    }
+    }*/
 
     fun getConversationSubject(): Observable<Conversation> {
         return conversationSubject
@@ -691,7 +690,7 @@ class Account(
         }
     }
 
-    fun registeredNameFound(state: Int, address: String, name: String?): Boolean {
+    /*fun registeredNameFound(state: Int, address: String, name: String?): Boolean {
         val uri = Uri.fromString(address)
         val key = uri.uri
         val contact = getContactFromCache(key)
@@ -703,7 +702,7 @@ class Account(
             return true
         }
         return false
-    }
+    }*/
 
     fun getByUri(uri: Uri?): Conversation? {
         if (uri == null || uri.isEmpty) return null
@@ -714,7 +713,7 @@ class Account(
         return if (uri != null) getByUri(Uri.fromString(uri)) else null
     }
 
-    private fun getByKey(key: String): Conversation {
+    fun getByKey(key: String): Conversation {
         return cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
     }
 
@@ -851,7 +850,7 @@ class Account(
         Log.w(TAG, "forceExpireContact " + contactLocations.size)
         val cl = contactLocations.remove(contact)
         if (cl != null) {
-            Log.w(TAG, "Contact stopped sharing location: " + contact!!.displayName)
+            Log.w(TAG, "Contact stopped sharing location: $contact")
             (cl as Subject<ContactLocation>).onComplete()
             mLocationSubject.onNext(contactLocations)
         }
@@ -868,7 +867,7 @@ class Account(
         while (it.hasNext()) {
             val e = it.next()
             if (e.value.blockingFirst().receivedDate.before(expiration)) {
-                Log.w(TAG, "maintainLocation clearing " + e.key.displayName)
+                Log.w(TAG, "maintainLocation clearing $e.key")
                 (e.value as Subject<ContactLocation>?)!!.onComplete()
                 changed = true
                 it.remove()

@@ -32,7 +32,7 @@ import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils.isEmpty
+import net.jami.utils.StringUtils
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -70,15 +70,15 @@ class AccountWizardPresenter @Inject constructor(
     fun initJamiAccountConnect(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
         val newAccount = initRingAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
-                if (!isEmpty(accountCreationModel.managementServer)) {
+                if (!StringUtils.isEmpty(accountCreationModel.managementServer)) {
                     accountDetails[ConfigKey.MANAGER_URI.key()] = accountCreationModel.managementServer!!
-                    if (!isEmpty(accountCreationModel.username)) {
+                    if (!StringUtils.isEmpty(accountCreationModel.username)) {
                         accountDetails[ConfigKey.MANAGER_USERNAME.key()] = accountCreationModel.username
                     }
-                } else if (!isEmpty(accountCreationModel.username)) {
+                } else if (!StringUtils.isEmpty(accountCreationModel.username)) {
                     accountDetails[ConfigKey.ACCOUNT_USERNAME.key()] = accountCreationModel.username
                 }
-                if (!isEmpty(accountCreationModel.password)) {
+                if (!StringUtils.isEmpty(accountCreationModel.password)) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
@@ -90,10 +90,10 @@ class AccountWizardPresenter @Inject constructor(
     fun initJamiAccountCreation(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
         val newAccount = initRingAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
-                if (!isEmpty(accountCreationModel.username)) {
+                if (!StringUtils.isEmpty(accountCreationModel.username)) {
                     accountDetails[ConfigKey.ACCOUNT_REGISTERED_NAME.key()] = accountCreationModel.username
                 }
-                if (!isEmpty(accountCreationModel.password)) {
+                if (!StringUtils.isEmpty(accountCreationModel.password)) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
@@ -110,7 +110,7 @@ class AccountWizardPresenter @Inject constructor(
                     accountCreationModel.isPush = true
                     setProxyDetails(accountCreationModel, accountDetails)
                 }
-                if (!isEmpty(accountCreationModel.password)) {
+                if (!StringUtils.isEmpty(accountCreationModel.password)) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 if (accountCreationModel.archive != null) {
@@ -198,7 +198,7 @@ class AccountWizardPresenter @Inject constructor(
         }
             .firstElement()
             .subscribe { a: Account ->
-                if (!model.isLink && a.isJami && !isEmpty(model.username))
+                if (!model.isLink && a.isJami && !StringUtils.isEmpty(model.username))
                     mAccountService.registerName(a, model.password, model.username)
                 mAccountService.currentAccount = a
                 if (model.isPush) {

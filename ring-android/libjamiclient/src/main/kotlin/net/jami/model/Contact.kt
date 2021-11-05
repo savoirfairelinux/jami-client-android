@@ -22,12 +22,11 @@ package net.jami.model
 
 import io.reactivex.rxjava3.core.Emitter
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.utils.StringUtils
 import java.lang.Exception
 import java.util.*
-import kotlin.jvm.JvmOverloads
 
 class Contact private constructor(
     val uri: Uri, // Profile
@@ -38,8 +37,20 @@ class Contact private constructor(
         BANNED, REQUEST_SENT, CONFIRMED, NO_REQUEST
     }
 
-    var username: String? = null
-        private set
+    var username: Single<String>? = null
+
+    var presenceUpdates: Observable<Boolean>? = null
+    private var mContactPresenceEmitter: Emitter<Boolean>? = null
+
+    private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.create()
+    val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
+    var loadedProfile: Single<Profile>? = null
+        set(profile) {
+            field = profile
+            if  (profile != null)
+                profileSubject.onNext(profile)
+        }
+
     var photoId: Long = 0
         private set
     val phones = ArrayList<Phone>()
@@ -51,15 +62,11 @@ class Contact private constructor(
     private var mOnline = false
     var id: Long = 0
     private var mLookupKey: String? = null
-    var isUsernameLoaded = false
-        private set
     var detailsLoaded = false
     private val mConversationUri: BehaviorSubject<Uri> = BehaviorSubject.createDefault(uri)
     var photo: Any? = null
     private val mContactUpdates: Subject<Contact> = BehaviorSubject.create()
     var updates: Observable<Contact>? = null
-    var presenceUpdates: Observable<Boolean>? = null
-    private var mContactPresenceEmitter: Emitter<Boolean>? = null
 
     constructor(uri: Uri, user: Boolean = false) : this(uri, null, user) {
     }
@@ -83,7 +90,7 @@ class Contact private constructor(
 
     fun matches(query: String): Boolean {
         return (profileName != null && profileName!!.lowercase().contains(query)
-                || username != null && username!!.contains(query)
+                //|| username != null && username!!.contains(query)
                 || primaryNumber.contains(query))
     }
 
@@ -91,7 +98,7 @@ class Contact private constructor(
         get() = mOnline
         set(present) {
             mOnline = present
-            if (mContactPresenceEmitter != null) mContactPresenceEmitter!!.onNext(present)
+            mContactPresenceEmitter?.onNext(present)
         }
 
     fun setSystemId(id: Long) {
@@ -104,7 +111,7 @@ class Contact private constructor(
         profileName = displayName
         photoId = photo_id
         if (username == null && displayName.contains(PREFIX_RING)) {
-            username = displayName
+            username = Single.just(displayName)
         }
     }
 
@@ -117,14 +124,15 @@ class Contact private constructor(
             for (p in phones) ret.add(p.number.rawUriString)
             return ret
         }
-    var displayName: String
+
+    /*var displayName: String
         get() {
             val profileName = profileName
             return if (profileName != null && profileName.isNotEmpty()) profileName else ringUsername
         }
         set(displayName) {
             profileName = displayName
-        }
+        }*/
 
     fun hasNumber(number: String): Boolean {
         return hasNumber(Uri.fromString(number))
@@ -137,7 +145,7 @@ class Contact private constructor(
     }
 
     override fun toString(): String {
-        username?.let { username -> if (username.isNotEmpty()) return@toString username }
+        //username?.let { username -> if (username.isNotEmpty()) return@toString username }
         return uri.rawUriString
     }
 
@@ -174,27 +182,7 @@ class Contact private constructor(
      */
     val isUnknown: Boolean
         get() = profileName == null || profileName.contentEquals(phones[0].number.rawUriString)
-    val ringUsername: String
-        get() {
-            val username = username
-            return if (username != null && username.isNotEmpty()) {
-                username
-            } else if (isUsernameLoaded) {
-                uri.rawUriString
-            } else {
-                ""
-            }
-        }
 
-    fun setUsername(name: String?): Boolean {
-        if (!isUsernameLoaded || name != null && name != username) {
-            username = name
-            isUsernameLoaded = true
-            mContactUpdates.onNext(this)
-            return true
-        }
-        return false
-    }
     fun setProfile(profile: Profile?) {
         if (profile == null) return
         setProfile(profile.displayName, profile.avatar)
@@ -219,7 +207,7 @@ class Contact private constructor(
 
         fun buildSIP(to: Uri): Contact {
             val contact = Contact(to)
-            contact.isUsernameLoaded = true
+            contact.username = Single.just("")
             return contact
         }
 

@@ -35,7 +35,6 @@ import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import cx.ring.R
-import cx.ring.services.VCardServiceImpl
 import cx.ring.tv.account.TVAccountExport
 import cx.ring.tv.account.TVProfileEditingFragment
 import cx.ring.tv.account.TVShareActivity
@@ -56,7 +55,6 @@ import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -64,7 +62,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.navigation.HomeNavigationViewModel
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
@@ -152,13 +150,13 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         }
     }
 
-    override fun refreshContact(index: Int, contact: SmartListViewModel) {
+    override fun refreshContact(index: Int, contact: ConversationItemViewModel) {
         val contactCard = cardRowAdapter!![index] as ContactCard
         contactCard.model = contact
         cardRowAdapter!!.replace(index, contactCard)
     }
 
-    override fun showContacts(contacts: List<SmartListViewModel>) {
+    override fun showContacts(contacts: List<ConversationItemViewModel>) {
         val cards: MutableList<Card> = ArrayList(contacts.size + 1)
         cards.add(IconCardHelper.getAddContactCard(requireContext()))
         for (contact in contacts) cards.add(ContactCard(contact))
@@ -166,7 +164,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         buildHomeChannel(requireContext().applicationContext, contacts)
     }
 
-    private fun buildHomeChannel(context: Context, contacts: List<SmartListViewModel>) {
+    private fun buildHomeChannel(context: Context, contacts: List<ConversationItemViewModel>) {
         if (contacts.isEmpty()) return
 
         // Get launcher package name
@@ -187,7 +185,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             }
             .flatMapObservable { channelId: Long ->
                 Observable.fromIterable(contacts)
-                    .concatMapEager({ contact: SmartListViewModel ->
+                    .concatMapEager({ contact: ConversationItemViewModel ->
                         buildProgram(context, contact, launcherName, channelId)
                             .toObservable()
                             .subscribeOn(Schedulers.io())
@@ -198,7 +196,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             ) { e: Throwable -> Log.w(TAG, "Error updating home channel", e) })
     }
 
-    override fun showContactRequests(contacts: List<SmartListViewModel>) {
+    override fun showContactRequests(contacts: List<ConversationItemViewModel>) {
         val adapter = adapter as ArrayObjectAdapter
         val row = adapter[TRUST_REQUEST_ROW_POSITION] as CardListRow?
         val isRowDisplayed = row === requestsRow
@@ -342,7 +340,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             return channelId
         }
 
-        private fun buildProgram(context: Context, vm: SmartListViewModel, launcherName: String?, channelId: Long): Single<PreviewProgram> {
+        private fun buildProgram(context: Context, vm: ConversationItemViewModel, launcherName: String?, channelId: Long): Single<PreviewProgram> {
             return AvatarDrawable.Builder()
                 .withViewModel(vm)
                 .withPresence(false)
@@ -363,7 +361,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         .setChannelId(channelId)
                         .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
                         .setTitle(vm.contactName)
-                        .setAuthor(vm.contacts[0].ringUsername)
+                        .setAuthor(vm.contacts[0].displayUri)
                         .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                         .setPosterArtUri(uri)
                         .setIntentUri(Uri.Builder()
