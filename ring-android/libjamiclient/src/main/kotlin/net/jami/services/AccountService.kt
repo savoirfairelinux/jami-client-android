@@ -506,7 +506,7 @@ class AccountService(
                     val keyHashMap = VCardUtils.MIME_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal
                     val message = stringVCard.substring(0, min(VCARD_CHUNK_SIZE, stringVCard.length))
                     chunk[keyHashMap] = message
-                    JamiService.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false)
+                    JamiService.sendTextMessage(accountId, callId, StringMap.toSwig(chunk), "Me", false)
                     if (stringVCard.length > VCARD_CHUNK_SIZE) {
                         stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE)
                     }
