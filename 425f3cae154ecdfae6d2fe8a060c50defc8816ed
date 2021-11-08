@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa451e45_103e992b",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9b8a15_c6793bbf",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4693c755_3727571e",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-11-05T20:52:17Z",
       "side": 1,
       "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c881742_6d3ccb76",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4693c755_3727571e",
       "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -52,6 +88,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "275b3f7b_de98de84",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788745ff_b5714d82",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15dc48e1_8f6cce31",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-11-05T20:52:17Z",
       "side": 1,
       "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6bb8250_a70820d6",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15dc48e1_8f6cce31",
       "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -86,6 +158,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "731d5c43_f0ce3196",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6317d44_7063d460",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fb5bec6_5b135d17",
@@ -99,6 +189,24 @@
       "writtenOn": "2021-11-05T20:52:17Z",
       "side": 1,
       "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b366cf90_6d889143",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fb5bec6_5b135d17",
       "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -120,6 +228,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43495132_22927248",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce08dcb_068e29f8",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63fe5add_a77a7b9d",
@@ -133,6 +259,24 @@
       "writtenOn": "2021-11-05T20:52:17Z",
       "side": 1,
       "message": "remove",
+      "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc6ad9d_0ed37daf",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-08T17:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fe5add_a77a7b9d",
       "revId": "425f3cae154ecdfae6d2fe8a060c50defc8816ed",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
