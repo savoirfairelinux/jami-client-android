@@ -303,4 +303,9 @@
   <string name="wizard_profile_button">Lagre profil</string>
   <string name="wizard_profile_skip">Hopp over og gjør dette senere</string>
   <string name="fab_path_choose">Velg en annen fil</string>
+  <string name="bottomSheet_share_btn">Del</string>
+  <string name="bottomSheet_plugins_btn">Utvidelser</string>
+  <string name="bottomSheet_add_participants_btn">Legg til</string>
+  <string name="bottomSheet_change_camera_btn">Endre</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

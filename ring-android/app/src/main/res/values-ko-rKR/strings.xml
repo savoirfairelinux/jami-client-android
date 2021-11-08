@@ -17,6 +17,7 @@
   <!--Call Fragment-->
   <string name="ab_action_contact_add">연락처에 추가</string>
   <!--Text messages-->
+  <string name="send_file">파일 보내기</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

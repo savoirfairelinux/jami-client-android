@@ -20,6 +20,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="send_file">फाइल पाठवा</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

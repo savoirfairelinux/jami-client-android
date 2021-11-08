@@ -35,6 +35,7 @@
   <string name="action_call_hangup">Ophangen</string>
   <string name="ab_action_contact_add">Voeg toe aan contacten</string>
   <!--Text messages-->
+  <string name="send_file">Bestand verzenden</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Fout</string>

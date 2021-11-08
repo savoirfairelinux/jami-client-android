@@ -304,4 +304,5 @@
   <string name="wizard_profile_skip">Preskoči i odradite kasnije</string>
   <string name="fab_path_choose">Izaberite drugi podatak</string>
   <string name="chat_plugins">Dodatak za ćaskanje</string>
+  <string name="bottomSheet_share_btn">Podeli</string>
 </resources>

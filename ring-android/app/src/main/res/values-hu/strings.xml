@@ -323,4 +323,9 @@
   <string name="wizard_profile_skip">Későbbre halasztás</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
   <string name="chat_plugins">Csevegési beépülő modulok</string>
+  <string name="bottomSheet_share_btn">Megosztás </string>
+  <string name="bottomSheet_plugins_btn">Beépülő modulok</string>
+  <string name="bottomSheet_add_participants_btn">Hozzáadás</string>
+  <string name="bottomSheet_change_camera_btn">Változás</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Fényképezőgép</string>
 </resources>

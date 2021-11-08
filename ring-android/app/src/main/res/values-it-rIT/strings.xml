@@ -130,7 +130,7 @@
   <string name="message_sending">Sto inviando il messaggio...</string>
   <string name="message_failed">Errore</string>
   <string name="time_just_now">Proprio ora</string>
-  <string name="send_file">Invia File</string>
+  <string name="send_file">Invia file</string>
   <string name="hist_file_sent">File inviato</string>
   <string name="hist_file_received">File recevuto</string>
   <string name="conversation_send_audio">Registra messaggio vocale</string>
@@ -323,4 +323,9 @@
   <string name="wizard_profile_skip">Salta e fallo più tardi</string>
   <string name="fab_path_choose">Scegli un altro file</string>
   <string name="chat_plugins">Plugin per chat</string>
+  <string name="bottomSheet_share_btn">Condividi</string>
+  <string name="bottomSheet_plugins_btn">Plugin</string>
+  <string name="bottomSheet_add_participants_btn">Aggiungi</string>
+  <string name="bottomSheet_change_camera_btn">Cambia</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Videocamera</string>
 </resources>

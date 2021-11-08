@@ -55,6 +55,7 @@
   <string name="notif_outgoing_call_title">تماس خروجی از %1$s</string>
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="send_file">ارسال فایل</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

@@ -303,4 +303,8 @@
   <string name="wizard_profile_button">Shrani profil</string>
   <string name="wizard_profile_skip">Preskoči in to naredi kasneje</string>
   <string name="fab_path_choose">Izberite še eno datoteko</string>
+  <string name="bottomSheet_share_btn">Deli</string>
+  <string name="bottomSheet_plugins_btn">Vtičniki</string>
+  <string name="bottomSheet_add_participants_btn">Dodaj</string>
+  <string name="bottomSheet_change_camera_btn">remeni</string>
 </resources>

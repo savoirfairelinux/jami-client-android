@@ -183,4 +183,6 @@
   <string name="tv_dialog_send">Pošalji</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Napravi račun</string>
+  <string name="bottomSheet_share_btn">Podijeli</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

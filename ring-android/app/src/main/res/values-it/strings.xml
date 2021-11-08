@@ -323,4 +323,8 @@
   <string name="wizard_profile_skip">Salta e fallo più tardi</string>
   <string name="fab_path_choose">Scegli un altro file</string>
   <string name="chat_plugins">Plugin per chat</string>
+  <string name="bottomSheet_share_btn">Condividi</string>
+  <string name="bottomSheet_plugins_btn">Plugin</string>
+  <string name="bottomSheet_add_participants_btn">Aggiungi</string>
+  <string name="bottomSheet_change_camera_btn">Cambia</string>
 </resources>

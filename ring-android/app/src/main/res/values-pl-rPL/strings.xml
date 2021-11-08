@@ -213,4 +213,8 @@
   <!--Wizard-->
   <string name="wizard_username_info">Wybierz nazwę użytkownika dla swojego konta</string>
   <string name="wizard_password_skip">Stwórz konto</string>
+  <string name="bottomSheet_share_btn">Podziel się</string>
+  <string name="bottomSheet_plugins_btn">Dodatki</string>
+  <string name="bottomSheet_add_participants_btn">Dodaj</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

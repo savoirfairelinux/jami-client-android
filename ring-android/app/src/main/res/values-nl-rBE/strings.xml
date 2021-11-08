@@ -111,7 +111,7 @@
   <string name="message_sending">Bericht wordt verstuurd…</string>
   <string name="message_failed">Mislukt</string>
   <string name="time_just_now">Zojuist</string>
-  <string name="send_file">Bestand versturen</string>
+  <string name="send_file">Bestand verzenden</string>
   <string name="hist_file_sent">Bestand verstuurd</string>
   <string name="hist_file_received">Bestand ontvangen</string>
   <string name="conversation_send_audio">Geluidsbericht opnemen</string>
@@ -266,4 +266,6 @@
   <string name="tv_send_video">Verzend Media</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Account aanmaken</string>
+  <string name="bottomSheet_share_btn">Delen</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
 </resources>

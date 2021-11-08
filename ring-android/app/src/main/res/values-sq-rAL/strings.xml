@@ -323,4 +323,9 @@
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
   <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
   <string name="chat_plugins">Shtojca Fjalosjeje</string>
+  <string name="bottomSheet_share_btn">Ndajeni me të tjerë</string>
+  <string name="bottomSheet_plugins_btn">Shtojca</string>
+  <string name="bottomSheet_add_participants_btn">Shtoje</string>
+  <string name="bottomSheet_change_camera_btn">Ndryshoje</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamerë</string>
 </resources>

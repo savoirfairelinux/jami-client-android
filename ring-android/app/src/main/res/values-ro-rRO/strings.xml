@@ -324,4 +324,8 @@
   <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
   <string name="fab_path_choose">Alege alt fișier</string>
   <string name="chat_plugins">Extensii pentru Discuții</string>
+  <string name="bottomSheet_share_btn">Distribuie</string>
+  <string name="bottomSheet_plugins_btn">Extensii</string>
+  <string name="bottomSheet_add_participants_btn">Adaugă</string>
+  <string name="bottomSheet_change_camera_btn">Schimbă</string>
 </resources>

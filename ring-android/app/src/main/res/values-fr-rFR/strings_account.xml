@@ -97,15 +97,19 @@ Vous pourrez éditer votre compte plus tard.</string>
   <string name="account_proxy_enable_label">Utiliser le proxy DHT</string>
   <string name="account_proxy_server_label">Adresse du proxy DHT</string>
   <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_peer_discovery_enable_label">Activer la découverte des utilisateurs locaux</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">securité</string>
+  <string name="account_srtp_switch_label">Chiffrer les flux média (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_certificate_file_label">Certificat</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
   <string name="error_password_char_count">6 caractères minimum</string>
+  <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_enter_password">Entrez votre mot de passe</string>
   <string name="ring_account_identity">Identité</string>

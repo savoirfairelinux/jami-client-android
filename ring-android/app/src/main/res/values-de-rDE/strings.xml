@@ -313,4 +313,9 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="wizard_profile_skip">Abbrechen, das mache ich später ...</string>
   <string name="fab_path_choose">Eine andere Datei wählen</string>
   <string name="chat_plugins">Chat-Plugins</string>
+  <string name="bottomSheet_share_btn">Freigeben</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Hinzufügen</string>
+  <string name="bottomSheet_change_camera_btn">Ändern</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

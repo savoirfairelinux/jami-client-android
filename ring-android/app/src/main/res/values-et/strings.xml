@@ -15,6 +15,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="send_file">Saada fail</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

@@ -49,7 +49,7 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_password_summary">Podesite šifru naloga</string>
   <string name="account_password_change_wait_message">Promenite šifru naloga</string>
   <!--Basic Details-->
-  <string name="account_preferences_basic_tab">General</string>
+  <string name="account_preferences_basic_tab">Opšte</string>
   <string name="account_basic_category">Osnovna podešavanja</string>
   <string name="account_alias_label">Ime naloga</string>
   <string name="account_hostname_label">ime hosta</string>

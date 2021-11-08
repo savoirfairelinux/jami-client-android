@@ -272,4 +272,7 @@
   <string name="conversation_input_speech_hint">Povedzte niečo...</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Vytvoriť účet</string>
+  <string name="bottomSheet_share_btn">Zdieľať</string>
+  <string name="bottomSheet_add_participants_btn">Pridať</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

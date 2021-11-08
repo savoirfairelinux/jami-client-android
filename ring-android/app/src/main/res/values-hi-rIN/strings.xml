@@ -29,6 +29,7 @@
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <!--Text messages-->
   <string name="send_message">संदेश भेजें</string>
+  <string name="send_file">फ़ाइल भेजें</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

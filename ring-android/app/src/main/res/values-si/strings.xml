@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="contribute_section">Nye aka</string>
+  <string name="version_section">අනුවාදය</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_settings">සැකසුම්</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -16,8 +17,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
-  <string name="send_message">Zie ozi</string>
-  <string name="send_file">Zipu faịlụ</string>
+  <string name="send_file">ගොනුව යවන්න</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -26,17 +26,14 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <string name="wizard_next">Nke na-abịa</string>
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
-  <string name="send_request_button">Zie</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <!--TV-->
-  <string name="tv_dialog_send">Zie</string>
   <!--Wizard-->
 </resources>

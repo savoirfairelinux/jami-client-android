@@ -106,4 +106,7 @@
   <string name="tv_audio_pause">Paŭzi</string>
   <string name="tv_dialog_send">Sendi</string>
   <!--Wizard-->
+  <string name="bottomSheet_share_btn">Kunhavi</string>
+  <string name="bottomSheet_add_participants_btn">Aldoni</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
 </resources>

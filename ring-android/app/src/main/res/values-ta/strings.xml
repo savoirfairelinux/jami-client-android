@@ -20,6 +20,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="send_file">கோப்பை அனுப்பு</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

@@ -322,4 +322,9 @@
   <string name="wizard_profile_skip">略過並在稍後執行此動作</string>
   <string name="fab_path_choose">選擇其他檔案</string>
   <string name="chat_plugins">聊天外掛程式</string>
+  <string name="bottomSheet_share_btn">分享</string>
+  <string name="bottomSheet_plugins_btn">外掛程式</string>
+  <string name="bottomSheet_add_participants_btn">新增</string>
+  <string name="bottomSheet_change_camera_btn">變更</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">攝影機</string>
 </resources>

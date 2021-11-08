@@ -59,4 +59,6 @@
   <!--TV-->
   <string name="tv_dialog_send">Envoyer</string>
   <!--Wizard-->
+  <string name="bottomSheet_share_btn">Partager</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Caméra</string>
 </resources>

@@ -314,4 +314,8 @@
   <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
   <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
   <string name="chat_plugins">افزونه‌های گفتگو</string>
+  <string name="bottomSheet_share_btn">هم‌رسانی</string>
+  <string name="bottomSheet_plugins_btn">افزونه‌ها</string>
+  <string name="bottomSheet_add_participants_btn">افزودن</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
 </resources>

@@ -267,4 +267,6 @@
   <string name="wizard_profile_button">Зберегти зміни у профілі</string>
   <string name="wizard_profile_skip">Пропустити та нагадати пізніше</string>
   <string name="fab_path_choose">Виберіть інший файл</string>
+  <string name="bottomSheet_share_btn">Поділитися</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
 </resources>

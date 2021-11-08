@@ -80,6 +80,7 @@
   <!--Call Fragment-->
   <string name="ongoing_call">चल रही कॉल </string>
   <!--Text messages-->
+  <string name="send_file">फ़ाइल भेजें</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

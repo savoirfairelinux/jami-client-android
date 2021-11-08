@@ -185,6 +185,7 @@
   <string name="conversation_contact_is_typing">Escribiendo...</string>
   <string name="conversation_info_contact_you">Tú</string>
   <string name="conversation_members">Miembros</string>
+  <string name="conversation_syncing">Descargando conversación del par</string>
   <string name="conversation_preference_color">Color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de la conversación</string>
   <string name="conversation_type_contact">Contacto de Jami</string>
@@ -322,4 +323,9 @@
   <string name="wizard_profile_skip">Omitir y hacerlo más tarde</string>
   <string name="fab_path_choose">Elegir otro archivo</string>
   <string name="chat_plugins">Complementos del chat</string>
+  <string name="bottomSheet_share_btn">Compartir</string>
+  <string name="bottomSheet_plugins_btn">Complementos</string>
+  <string name="bottomSheet_add_participants_btn">Añadir</string>
+  <string name="bottomSheet_change_camera_btn">Cambiar</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Camara</string>
 </resources>

@@ -210,4 +210,6 @@
   <string name="tv_dialog_send">Изпращане</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Създаване на профил</string>
+  <string name="bottomSheet_share_btn">Споделяне</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
 </resources>

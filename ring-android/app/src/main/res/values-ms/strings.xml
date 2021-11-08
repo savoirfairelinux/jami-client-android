@@ -57,6 +57,7 @@
   <string name="message_sending">Sedang menghantar pesan…</string>
   <string name="message_failed">Gagal</string>
   <string name="time_just_now">Seketika yang lalu</string>
+  <string name="send_file">Hantar fail</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Akses kamera</string>
   <string name="permission_dialog_camera_message">Perbualan video memerlukan akses kepada kamera untuk bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut.</string>

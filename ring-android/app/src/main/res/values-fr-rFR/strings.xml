@@ -299,4 +299,5 @@
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="wizard_profile_skip">Passer et faire ça plus tard</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>
+  <string name="bottomSheet_share_btn">Partager</string>
 </resources>

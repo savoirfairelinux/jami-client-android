@@ -38,7 +38,7 @@
   <!--Text messages-->
   <string name="send_message">שליחת הודעה</string>
   <string name="message_failed">כשל</string>
-  <string name="send_file">שליחת קובץ</string>
+  <string name="send_file">שלח קובץ</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">שגיאה</string>
@@ -86,4 +86,5 @@
   <!--TV-->
   <string name="tv_dialog_send">שליחה</string>
   <!--Wizard-->
+  <string name="bottomSheet_share_btn">שיתוף</string>
 </resources>

@@ -121,7 +121,7 @@
   <string name="message_sending">Bericht wordt verstuurd…</string>
   <string name="message_failed">Mislukt</string>
   <string name="time_just_now">Zonet</string>
-  <string name="send_file">Bestand versturen</string>
+  <string name="send_file">Bestand verzenden</string>
   <string name="hist_file_sent">Bestand verstuurd</string>
   <string name="hist_file_received">Bestand ontvangen</string>
   <string name="conversation_send_audio">Geluidsbericht opnemen</string>
@@ -302,4 +302,6 @@
   <string name="wizard_profile_button">Profiel opslaan</string>
   <string name="wizard_profile_skip">Overslaan en dit later doen</string>
   <string name="fab_path_choose">Kies een ander bestand</string>
+  <string name="bottomSheet_share_btn">Delen</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
 </resources>

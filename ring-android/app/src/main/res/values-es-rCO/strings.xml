@@ -62,4 +62,6 @@
   <string name="tv_dialog_send">Enviar</string>
   <!--Wizard-->
   <string name="wizard_password_switch">Cifrar cuenta con una contraseña</string>
+  <string name="bottomSheet_plugins_btn">Complementos</string>
+  <string name="bottomSheet_add_participants_btn">Agregar</string>
 </resources>
