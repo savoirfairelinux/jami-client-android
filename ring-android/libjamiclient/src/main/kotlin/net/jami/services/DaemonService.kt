@@ -302,7 +302,7 @@ class DaemonService(
             mHardwareService.setParameters(camId, format, width, height, rate)
         }
 
-        override fun requestKeyFrame() {
+        fun requestKeyFrame() {
             mHardwareService.requestKeyFrame()
         }
 

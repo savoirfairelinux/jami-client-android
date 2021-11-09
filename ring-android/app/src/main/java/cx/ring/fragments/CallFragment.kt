@@ -66,6 +66,7 @@ import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
+import cx.ring.databinding.ItemParticipantHandContainerBinding
 import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker
@@ -792,7 +793,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val binding = binding ?: return
         mConferenceMode = participantInfo.isNotEmpty()
 
-        binding.participantLabelContainer.removeAllViews()
+
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
             val username = if (participantInfo.size > 1)
@@ -838,29 +839,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .withPresence(false)
                     .build(requireActivity())
             )
-
-            val inflater = LayoutInflater.from(binding.participantLabelContainer.context)
-            for (i in participantInfo) {
-                val displayName = i.contact.displayName
-                if (!TextUtils.isEmpty(displayName)) {
-                    val label = ItemParticipantLabelBinding.inflate(inflater)
-                    val params = PercentFrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
-                    params.percentLayoutInfo.leftMarginPercent = i.x / mVideoWidth.toFloat()
-                    params.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-                    params.percentLayoutInfo.rightMarginPercent =
-                        1f - (i.x + i.w) / mVideoWidth.toFloat()
-                    //params.getPercentLayoutInfo().rightMarginPercent = (i.x + i.w) / (float) mVideoWidth;
-                    label.participantName.text = displayName
-                    label.moderator.visibility = if (i.isModerator) View.VISIBLE else View.GONE
-                    label.mute.visibility = if (i.audioModeratorMuted || i.audioLocalMuted) View.VISIBLE else View.GONE
-                    binding.participantLabelContainer.addView(label.root, params)
-                }
-            }
+            generateParticipantOverlay(participantInfo)
         }
-        binding.participantLabelContainer.visibility = if (participantInfo.isEmpty()) View.GONE else View.VISIBLE
 
         binding.confControlGroup.visibility = View.VISIBLE
         confAdapter?.apply {
@@ -889,6 +869,51 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
     }
 
+    private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>){
+        val overlayViewBinding =  binding?.participantOverlayContainer ?: return
+        overlayViewBinding.removeAllViews()
+        overlayViewBinding.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
+
+        val inflater = LayoutInflater.from(overlayViewBinding.context)
+
+        for (i in participantsInfo) {
+
+            // adding name, mic etc..
+            val displayName = i.contact.displayName
+            if (!TextUtils.isEmpty(displayName)) {
+                val participantInfoOverlay = ItemParticipantLabelBinding.inflate(inflater)
+                val infoOverlayLayoutParams = PercentFrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                infoOverlayLayoutParams.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
+                infoOverlayLayoutParams.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
+                infoOverlayLayoutParams.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
+                infoOverlayLayoutParams.percentLayoutInfo.bottomMarginPercent =  1f - (i.y + i.h) / mVideoHeight.toFloat()
+
+                participantInfoOverlay.participantName.text = displayName
+                //label.moderator.isVisible = i.isModerator
+                participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
+                overlayViewBinding.addView(participantInfoOverlay.root, infoOverlayLayoutParams)
+            }
+
+            val raisedHandBadge = ItemParticipantHandContainerBinding.inflate(inflater)
+            val raisedHandBadgeLayoutParam = PercentFrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            )
+            raisedHandBadgeLayoutParam.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
+            raisedHandBadgeLayoutParam.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
+            raisedHandBadgeLayoutParam.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
+
+            raisedHandBadge.raisedHand.isVisible = i.isHandRaised
+            overlayViewBinding.addView(raisedHandBadge.root, raisedHandBadgeLayoutParam)
+
+        }
+    }
+
+
+
     override fun updateParticipantRecording(contacts: Set<Contact>) {
         binding?.let { binding ->
             if (contacts.isEmpty()) {
@@ -914,7 +939,9 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         binding!!.callStatusTxt.setText(callStateToHumanState(callState))
     }
 
+    /** Receive data from the presenter in order to display valid button to the user */
     override fun updateBottomSheetButtonStatus(
+        isConference: Boolean,
         isSpeakerOn: Boolean,
         isMicrophoneMuted: Boolean,
         hasMultipleCamera: Boolean,
@@ -924,8 +951,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         hasActiveVideo: Boolean
     ) {
         binding?.apply {
-            dialpadBtnContainer.isVisible = canDial
-            pluginsBtnContainer.isVisible = showPluginBtn
+            callPluginsBtn.isClickable = showPluginBtn
+            callRaiseHandBtn.isClickable = mConferenceMode
+            callDialpadBtn.isClickable = canDial
+
             callVideocamBtn.apply {
                 isChecked = !hasActiveVideo
                 setImageResource(if(isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
@@ -936,8 +965,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
             callMicBtn.isChecked = isMicrophoneMuted
             callSpeakerBtn.isChecked = isSpeakerOn
-
-
         }
     }
 
@@ -1078,7 +1105,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Init the Call view when the call is ongoing
      * */
     override fun initNormalStateDisplay() {
-        Log.w(CallPresenter.TAG, "DEBUG initNormalStateDisplay ---------------- >>  ")
+        Log.w(CallPresenter.TAG, "initNormalStateDisplay")
         binding?.apply {
             shapeRipple.stopRipple()
             callRefuseBtn.visibility = View.GONE
@@ -1332,6 +1359,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             presenter.muteMicrophoneToggled(micButton.isChecked)
             //micButton.setImageResource(if (micButton.isChecked) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_24)
         }
+    }
+
+    fun raiseHandClicked(){
+        presenter.raiseParticipantHand(binding!!.callRaiseHandBtn.isChecked)
     }
 
     fun hangUpClicked() {

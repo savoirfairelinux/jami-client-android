@@ -278,6 +278,13 @@ class CallService(
         }
     }
 
+    fun raiseParticipantHand(accountId: String, confId: String, peerId: String, state: Boolean){
+        mExecutor.execute {
+            Log.i(TAG, "participant $peerId raise hand... ")
+            JamiService.raiseParticipantHand(accountId, confId, peerId, state)
+        }
+    }
+
     fun hold(accountId:String, callId: String) {
         mExecutor.execute {
             Log.i(TAG, "hold() running... $callId")
