@@ -89,8 +89,10 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
                 .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
                 .commit()
         } else {
-            if (!existingFragment.isStateSaved) existingFragment.arguments = args
-            (existingFragment as JamiAccountSummaryFragment).setAccount(accountId)
+            if (existingFragment is JamiAccountSummaryFragment) {
+                if (!existingFragment.isStateSaved) existingFragment.arguments = args
+                existingFragment.setAccount(accountId)
+            }
         }
     }
 
