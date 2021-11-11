@@ -1374,7 +1374,7 @@ class AccountService(
             }
             "application/call-history+json" ->
                 Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
-                    duration = message["duration"]!!.toLong()
+                    message["duration"]?.let { d -> duration = d.toLong() }
                 }
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
