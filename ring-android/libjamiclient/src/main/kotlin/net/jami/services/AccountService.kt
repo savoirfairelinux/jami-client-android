@@ -207,9 +207,9 @@ class AccountService(
     private val mExportSubject: Subject<ExportOnRingResult> = PublishSubject.create()
     private val mDeviceRevocationSubject: Subject<DeviceRevocationResult> = PublishSubject.create()
     private val mMigrationSubject: Subject<MigrationResult> = PublishSubject.create()
-    val registeredNames: Observable<RegisteredName>
+    private val registeredNames: Observable<RegisteredName>
         get() = registeredNameSubject
-    val searchResults: Observable<UserSearchResult>
+    private val searchResults: Observable<UserSearchResult>
         get() = searchResultSubject
     val incomingSwarmMessages: Observable<TextMessage>
         get() = incomingSwarmMessageSubject
@@ -966,7 +966,6 @@ class AccountService(
                     .subscribe()
                 return
             }
-            else -> return
         }
         mHistoryService.insertInteraction(conversation.accountId, conversation, event).subscribe()
     }
@@ -1020,15 +1019,8 @@ class AccountService(
         mExecutor.execute { JamiService.removeContact(accountId, uri, ban) }
     }
 
-    /**
-     * Looks up for the availability of the name on the blockchain
-     */
-    fun lookupName(account: String, nameserver: String, name: String) {
-        Log.i(TAG, "lookupName() $account $nameserver $name")
-        mExecutor.execute { JamiService.lookupName(account, nameserver, name) }
-    }
-
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> {
+        Log.w(TAG, "findRegistrationByName " + name)
         return if (name.isEmpty()) {
             Single.just(RegisteredName(account, name))
         } else registeredNames
@@ -1073,16 +1065,17 @@ class AccountService(
     /**
      * Reverse looks up the address in the blockchain to find the name
      */
-    fun lookupAddress(account: String?, nameserver: String?, address: String?) {
+    fun lookupAddress(account: String, nameserver: String, address: String) {
+        Log.w(TAG, "lookupAddress " + address)
         mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
     }
 
-    fun pushNotificationReceived(from: String?, data: Map<String?, String?>?) {
+    fun pushNotificationReceived(from: String, data: Map<String, String>) {
         // Log.i(TAG, "pushNotificationReceived()");
         mExecutor.execute { JamiService.pushNotificationReceived(from, StringMap.toSwig(data)) }
     }
 
-    fun setPushNotificationToken(pushNotificationToken: String?) {
+    fun setPushNotificationToken(pushNotificationToken: String) {
         //Log.i(TAG, "setPushNotificationToken()");
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
@@ -1295,7 +1288,7 @@ class AccountService(
 
     fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
         try {
-            //Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
+            //Log.d(TAG, "registeredNameFound: $accountId, $state, name:$name, address:$address");
             /*if (address.isNotEmpty()) {
                 getAccount(accountId)?.registeredNameFound(state, address, name)
             }*/
