@@ -39,7 +39,7 @@ else
 fi
 TARGET_CC=${TARGET_CC:-$TARGET}
 
-export API=21
+export API=24
 export ANDROID_API=android-$API
 export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/$platform-$arch
 export TARGET
@@ -57,13 +57,13 @@ if [ ! -d "$DAEMON_DIR" ]; then
 fi
 export DAEMON_DIR
 
-if [ "${RELEASE}" -eq 1 ]; then
-    echo "Daemon in release mode."
-    OPTS=""
-else
-    echo "Daemon in debug mode."
-    OPTS="--enable-debug"
-fi
+#if [ "${RELEASE}" -eq 1 ]; then
+echo "Daemon in release mode."
+OPTS=""
+#else
+#    echo "Daemon in debug mode."
+#    OPTS="--enable-debug"
+#fi
 
 # Make in //
 MAKEFLAGS=
