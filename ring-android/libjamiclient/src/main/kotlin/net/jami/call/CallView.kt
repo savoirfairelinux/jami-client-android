@@ -22,6 +22,7 @@ package net.jami.call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.model.Uri
 import net.jami.services.HardwareService.AudioState
 
@@ -52,6 +53,6 @@ interface CallView {
     fun goToContact(accountId: String, contact: Contact)
     fun displayPluginsButton(): Boolean
     fun updateConfInfo(info: List<ParticipantInfo>)
-    fun updateParticipantRecording(contacts: Set<Contact>)
+    fun updateParticipantRecording(contacts: List<ContactViewModel>)
     fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean)
 }

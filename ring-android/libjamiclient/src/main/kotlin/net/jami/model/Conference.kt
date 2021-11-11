@@ -26,13 +26,12 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.call.CallPresenter
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
-import net.jami.utils.Log
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.min
 
 class Conference(val accountId: String, val id: String) {
-    class ParticipantInfo(val call: Call?, val contact: Contact, i: Map<String, String>, val pending: Boolean = false) {
+    class ParticipantInfo(val call: Call?, val contact: ContactViewModel, i: Map<String, String>, val pending: Boolean = false) {
         val x: Int = i["x"]?.toInt() ?: 0
         val y: Int = i["y"]?.toInt() ?: 0
         val w: Int = i["w"]?.toInt() ?: 0

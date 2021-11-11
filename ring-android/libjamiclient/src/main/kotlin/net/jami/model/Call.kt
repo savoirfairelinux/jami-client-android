@@ -24,7 +24,7 @@ import ezvcard.VCard
 import net.jami.call.CallPresenter
 import net.jami.utils.Log
 import net.jami.utils.ProfileChunk
-import net.jami.utils.StringUtils.isEmpty
+import net.jami.utils.StringUtils
 import net.jami.utils.VCardUtils
 import java.util.*
 
@@ -154,7 +154,7 @@ class Call : Interaction {
         audioCodec = details[KEY_AUDIO_CODEC]
         videoCodec = details[KEY_VIDEO_CODEC]
         val confId = details[KEY_CONF_ID]
-        this.confId = if (isEmpty(confId)) null else confId
+        this.confId = if (StringUtils.isEmpty(confId)) null else confId
     }
     val isConferenceParticipant: Boolean
         get() = confId != null

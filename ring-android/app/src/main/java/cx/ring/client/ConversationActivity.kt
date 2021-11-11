@@ -47,11 +47,10 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         super.onCreate(savedInstanceState)
         val intent = intent
         val action = intent?.action
-        var path: ConversationPath? = null
-        if (intent != null) {
-            path = ConversationPath.fromIntent(intent)
-        } else if (savedInstanceState != null) {
-            path = ConversationPath.fromBundle(savedInstanceState)
+        val path: ConversationPath? = when {
+            intent != null -> ConversationPath.fromIntent(intent)
+            savedInstanceState != null -> ConversationPath.fromBundle(savedInstanceState)
+            else -> null
         }
         if (path == null) {
             finish()
@@ -67,7 +66,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         setSupportActionBar(binding.mainToolbar)
         val ab = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
-        binding.contactImage.setOnClickListener { v: View? -> if (mConversationFragment != null) mConversationFragment!!.openContact() }
+        binding.contactImage.setOnClickListener { mConversationFragment?.openContact() }
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
                 arguments = conversationPath.toBundle().apply {

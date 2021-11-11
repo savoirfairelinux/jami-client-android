@@ -22,13 +22,12 @@ package net.jami.conversation
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import java.io.File
-import javax.swing.text.StyledEditorKit
 
 interface ConversationView {
     fun refreshView(conversation: List<Interaction>)
     fun scrollToEnd()
-    fun updateContact(contact: Contact)
-    fun displayContact(conversation: Conversation)
+    fun updateContact(contact: ContactViewModel)
+    fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>)
     fun displayOnGoingCallPane(display: Boolean)
     fun displayNumberSpinner(conversation: Conversation, number: Uri)
     fun displayErrorToast(error: Error)

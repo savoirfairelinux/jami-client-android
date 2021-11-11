@@ -107,8 +107,8 @@ class Conversation : ConversationHistory {
         return false
     }
 
-    val displayName: String?
-        get() = contacts[0].displayName
+    /*val displayName: String?
+        get() = contacts[0].displayName*/
 
     fun addContact(contact: Contact) {
         contacts.add(contact)
@@ -120,7 +120,7 @@ class Conversation : ConversationHistory {
         mContactSubject.onNext(contacts)
     }
 
-    val title: String?
+    /*val title: String?
         get() {
             if (contacts.isEmpty()) {
                 return if (mMode.blockingFirst() == Mode.Syncing) { "(Syncing)" } else null
@@ -161,7 +161,8 @@ class Conversation : ConversationHistory {
                 c.ringUsername.let { names.add(it) }
             }
             return StringUtils.join(", ", names)
-        }
+        }*/
+    //val
 
     val contactUpdates: Observable<List<Contact>>
         get() = mContactSubject
@@ -368,14 +369,15 @@ class Conversation : ConversationHistory {
 
     fun updateInteraction(element: Interaction) {
         Log.e(TAG, "updateInteraction: " + element.messageId + " " + element.status)
+        val lastDisplayed = lastDisplayed
         if (isSwarm) {
             val e = mMessages[element.messageId]
             if (e != null) {
                 e.status = element.status
                 updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
                 if (e.status == Interaction.InteractionStatus.DISPLAYED) {
-                    if (lastDisplayed == null || isAfter(lastDisplayed!!, e)) {
-                        lastDisplayed = e
+                    if (lastDisplayed == null || isAfter(lastDisplayed, e)) {
+                        this.lastDisplayed = e
                         lastDisplayedSubject.onNext(e)
                     }
                 }
@@ -391,8 +393,8 @@ class Conversation : ConversationHistory {
                     txt.status = element.status
                     updatedElementSubject.onNext(Pair(txt, ElementStatus.UPDATE))
                     if (element.status == Interaction.InteractionStatus.DISPLAYED) {
-                        if (lastDisplayed == null || isAfter(lastDisplayed!!, element)) {
-                            lastDisplayed = element
+                        if (lastDisplayed == null || isAfter(lastDisplayed, element)) {
+                            this.lastDisplayed = element
                             lastDisplayedSubject.onNext(element)
                         }
                     }
