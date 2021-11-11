@@ -140,16 +140,17 @@ class JamiAccountSummaryPresenter @Inject constructor(
         val filesDir = mDeviceRuntimeService.provideFilesDir()
         mCompositeDisposable.add(Single.zip(
             VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
-            photo, { vcard: VCard, pic: Photo ->
-                vcard.uid = Uid(ringId)
-                if (!StringUtils.isEmpty(username)) {
-                    vcard.setFormattedName(username)
-                }
-                vcard.removeProperties(Photo::class.java)
-                vcard.addPhoto(pic)
-                vcard.removeProperties(RawProperty::class.java)
-                vcard
-            })
+            photo
+        ) { vcard: VCard, pic: Photo ->
+            vcard.uid = Uid(ringId)
+            if (!StringUtils.isEmpty(username)) {
+                vcard.setFormattedName(username)
+            }
+            vcard.removeProperties(Photo::class.java)
+            vcard.addPhoto(pic)
+            vcard.removeProperties(RawProperty::class.java)
+            vcard
+        }
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir) }
             .subscribeOn(Schedulers.io())
             .subscribe({ vcard: VCard -> account.loadedProfile = mVcardService.loadVCardProfile(vcard).cache() })

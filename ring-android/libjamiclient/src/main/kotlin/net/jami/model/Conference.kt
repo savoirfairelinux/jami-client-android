@@ -26,13 +26,12 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.call.CallPresenter
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
-import net.jami.utils.Log
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.min
 
 class Conference(val accountId: String, val id: String) {
-    class ParticipantInfo(val call: Call?, val contact: Contact, i: Map<String, String>, val pending: Boolean = false) {
+    class ParticipantInfo(val call: Call?, val contact: ContactViewModel, i: Map<String, String>, val pending: Boolean = false) {
         val x: Int = i["x"]?.toInt() ?: 0
         val y: Int = i["y"]?.toInt() ?: 0
         val w: Int = i["w"]?.toInt() ?: 0
@@ -160,17 +159,6 @@ class Conference(val accountId: String, val id: String) {
             if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
                 return true
         return false
-    }
-
-
-    fun hasActiveAudio(user: String?) {
-        Log.w("Conference.kt", "DEBUG hasActiveAudio -------> init")
-        mParticipantInfo.subscribe {
-            Log.w("Conference.kt", "DEBUG hasActiveAudio -------> List<ParticipantInfo>: $it")
-            for (participants in it)
-                //if (user == participants.contact.username)
-                Log.w("Conference.kt", "DEBUG hasActiveAudio -------> ${participants.contact.displayName}, local audio muted : ${participants.audioLocalMuted}, moderator audio muted: ${participants.audioModeratorMuted}")
-        }
     }
 
     val timestampStart: Long

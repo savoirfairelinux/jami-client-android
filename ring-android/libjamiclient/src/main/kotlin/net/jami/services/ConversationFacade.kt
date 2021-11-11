@@ -32,14 +32,13 @@ import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
 import net.jami.model.Call.CallStatus
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.model.Uri.Companion.fromString
 import net.jami.services.AccountService.RegisteredName
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.FileUtils.moveFile
 import net.jami.utils.Log
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class ConversationFacade(
     private val mHistoryService: HistoryService,
@@ -205,7 +204,7 @@ class ConversationFacade(
         val accountId = message.account!!
         mDisposableBag.add(
             Completable.mergeArrayDelayError(mCallService.cancelMessage(accountId, message.id.toLong()).subscribeOn(Schedulers.io()))
-                .andThen(startConversation(accountId, fromString(message.conversation!!.participant!!)))
+                .andThen(startConversation(accountId, Uri.fromString(message.conversation!!.participant!!)))
                 .subscribe({ c: Conversation -> c.removeInteraction(message) }
                 ) { e: Throwable -> Log.e(TAG, "Can't cancel message sending", e) })
     }
@@ -250,12 +249,22 @@ class ConversationFacade(
         }
     }
 
-    private fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<SmartListViewModel> {
-        return Observable.merge(account.getConversationSubject()
+    fun observeConversation(accountId: String, conversationUri: Uri, hasPresence: Boolean): Observable<ConversationItemViewModel> {
+        return startConversation(accountId, conversationUri)
+            .flatMapObservable { conversation -> observeConversation(conversation, hasPresence) }
+    }
+
+    fun observeConversation(conversation: Conversation, hasPresence: Boolean = false): Observable<ConversationItemViewModel> {
+        val account = mAccountService.getAccount(conversation.accountId) ?: return Observable.error(IllegalArgumentException())
+        return observeConversation(account, conversation, hasPresence)
+    }
+
+    private fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> {
+        return Observable.combineLatest(account.getConversationSubject()
             .filter { c: Conversation -> c == conversation }
             .startWithItem(conversation),
-            mContactService.observeContact(conversation.accountId, conversation.contacts, hasPresence))
-            .map { SmartListViewModel(conversation, hasPresence) }
+            mContactService.observeContact(conversation.accountId, conversation.contacts, hasPresence)
+        ) { c, contacts -> ConversationItemViewModel(c, contacts, hasPresence) }
         /*return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
@@ -264,7 +273,7 @@ class ConversationFacade(
                         .map(contact -> new SmartListViewModel(c, hasPresence)));*/
     }
 
-    fun getSmartList(currentAccount: Observable<Account>, hasPresence: Boolean): Observable<List<Observable<SmartListViewModel>>> {
+    fun getSmartList(currentAccount: Observable<Account>, hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> {
         return currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
                 .switchMapSingle { conversations -> if (conversations.isEmpty()) Single.just(emptyList())
@@ -273,19 +282,28 @@ class ConversationFacade(
                     .toList(conversations.size) } }
     }
 
-    fun getContactList(currentAccount: Observable<Account>): Observable<MutableList<SmartListViewModel>> {
+    fun getContactList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> {
         return currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
-                .switchMapSingle { conversations: List<Conversation> -> if (conversations.isEmpty()) Single.just(ArrayList())
-                else Observable.fromIterable(conversations)
-                        .filter { conversation: Conversation -> !conversation.isSwarm }
-                        .map { conversation: Conversation -> SmartListViewModel(conversation, false) }
-                        .toList(conversations.size)
-                }
+                .map { conversations -> conversations.filter { c -> !c.isSwarm }
+                    .map { conversation -> mContactService.getLoadedConversation(conversation) }}
+                .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
         }
     }
 
-    fun getPendingList(currentAccount: Observable<Account>): Observable<List<Observable<SmartListViewModel>>> {
+    fun getConversationList(): Observable<MutableList<ConversationItemViewModel>> {
+        return getConversationList(mAccountService.currentAccountSubject)
+    }
+
+    fun getConversationList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> {
+        return currentAccount.switchMap { account: Account ->
+            account.getConversationsSubject()
+                .map { conversations -> conversations.map { conversation -> mContactService.getLoadedConversation(conversation) }}
+                .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
+        }
+    }
+
+    fun getPendingList(currentAccount: Observable<Account>): Observable<List<Observable<ConversationItemViewModel>>> {
         return currentAccount.switchMap { account: Account ->
             account.getPendingSubject()
                 .switchMapSingle { conversations -> Observable.fromIterable(conversations)
@@ -293,24 +311,24 @@ class ConversationFacade(
                     .toList() } }
     }
 
-    fun getSmartList(hasPresence: Boolean): Observable<List<Observable<SmartListViewModel>>> {
+    fun getSmartList(hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> {
         return getSmartList(mAccountService.currentAccountSubject, hasPresence)
     }
 
-    val pendingList: Observable<List<Observable<SmartListViewModel>>>
+    val pendingList: Observable<List<Observable<ConversationItemViewModel>>>
         get() = getPendingList(mAccountService.currentAccountSubject)
-    val contactList: Observable<MutableList<SmartListViewModel>>
+    val contactList: Observable<MutableList<ConversationItemViewModel>>
         get() = getContactList(mAccountService.currentAccountSubject)
 
-    private fun getSearchResults(account: Account, query: String): Single<List<Observable<SmartListViewModel>>> {
-        val uri = fromString(query)
+    private fun getSearchResults(account: Account, query: String): Single<List<Observable<ConversationItemViewModel>>> {
+        val uri = Uri.fromString(query)
         return if (account.isSip) {
             val contact = account.getContactFromCache(uri)
             mContactService.loadContactData(contact, account.accountId)
-                .andThen(Single.just(listOf(Observable.just(SmartListViewModel(account.accountId, contact, contact.primaryNumber, null)))))
+                .map { profile -> listOf(Observable.just(ConversationItemViewModel(account.accountId, ContactViewModel(contact, profile, null, false), contact.primaryNumber, null)))}
         } else if (uri.isHexId) {
             mContactService.getLoadedContact(account.accountId, account.getContactFromCache(uri))
-                .map { contact -> listOf(Observable.just(SmartListViewModel(account.accountId, contact, contact.primaryNumber, null))) }
+                .map { contact -> listOf(Observable.just(ConversationItemViewModel(account.accountId, contact, contact.contact.primaryNumber, null))) }
         } else if (account.canSearch() && !query.contains("@")) {
             mAccountService.searchUser(account.accountId, query)
                 .map(AccountService.UserSearchResult::resultsViewModels)
@@ -318,32 +336,37 @@ class ConversationFacade(
             mAccountService.findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
                     if (result.state == 0)
-                        listOf(observeConversation(account, account.getByUri(result.address)!!, false))
+                        listOf(observeConversation(account, account.getByKey(result.address!!).apply {
+                            contact?.let { c -> synchronized(c) {
+                                if (c.username == null)
+                                    c.username = Single.just(result.name)
+                            }}
+                        }, false))
                     else
                         emptyList()
                 }
         }
     }
 
-    private fun getSearchResults(account: Account, query: Observable<String>): Observable<List<Observable<SmartListViewModel>>> {
+    fun getSearchResults(account: Account, query: Observable<String>): Observable<List<Observable<ConversationItemViewModel>>> {
         return query.switchMapSingle { q: String ->
             if (q.isEmpty())
-                SmartListViewModel.EMPTY_LIST
+                ConversationItemViewModel.EMPTY_LIST
             else getSearchResults(account, q)
         }.distinctUntilChanged()
     }
 
-    fun getFullList(currentAccount: Observable<Account>, query: Observable<String>, hasPresence: Boolean): Observable<List<Observable<SmartListViewModel>>> {
+    fun getFullList(currentAccount: Observable<Account>, query: Observable<String>, hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> {
         return currentAccount.switchMap { account: Account ->
-            Observable.combineLatest<List<Conversation>, List<Observable<SmartListViewModel>>, String, List<Observable<SmartListViewModel>>>(
+            Observable.combineLatest<List<Conversation>, List<Observable<ConversationItemViewModel>>, String, List<Observable<ConversationItemViewModel>>>(
                 account.getConversationsSubject(),
                 getSearchResults(account, query),
                 query
-            ) { conversations: List<Conversation>, searchResults: List<Observable<SmartListViewModel>>, q: String ->
-                val newList: MutableList<Observable<SmartListViewModel>> =
+            ) { conversations: List<Conversation>, searchResults: List<Observable<ConversationItemViewModel>>, q: String ->
+                val newList: MutableList<Observable<ConversationItemViewModel>> =
                     ArrayList(conversations.size + searchResults.size + 2)
                 if (searchResults.isNotEmpty()) {
-                    newList.add(SmartListViewModel.TITLE_PUBLIC_DIR)
+                    newList.add(ConversationItemViewModel.TITLE_PUBLIC_DIR)
                     newList.addAll(searchResults)
                 }
                 if (conversations.isNotEmpty()) {
@@ -352,7 +375,7 @@ class ConversationFacade(
                             newList.add(observeConversation(account, conversation, hasPresence))
                     } else {
                         val lq = q.lowercase()
-                        newList.add(SmartListViewModel.TITLE_CONVERSATIONS)
+                        newList.add(ConversationItemViewModel.TITLE_CONVERSATIONS)
                         var nRes = 0
                         for (conversation in conversations) {
                             if (conversation.matches(lq)) {

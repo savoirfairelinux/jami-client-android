@@ -34,7 +34,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Call
 import net.jami.model.ContactEvent
 import net.jami.model.Interaction
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 class SmartListViewHolder : RecyclerView.ViewHolder {
     val binding: ItemSmartlistBinding?
@@ -53,40 +53,37 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
         parentDisposable.add(compositeDisposable)
     }
 
-    fun bind(clickListener: SmartListListeners, smartListViewModel: SmartListViewModel) {
+    fun bind(clickListener: SmartListListeners, conversationItemViewModel: ConversationItemViewModel) {
         //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear()
         if (binding != null) {
-            itemView.setOnClickListener { clickListener.onItemClick(smartListViewModel) }
-            smartListViewModel.selected?.let { selected ->
+            itemView.setOnClickListener { clickListener.onItemClick(conversationItemViewModel) }
+            conversationItemViewModel.selected?.let { selected ->
                 compositeDisposable.add(selected.observeOn(AndroidSchedulers.mainThread()).subscribe { activated ->
                     binding.itemLayout.isActivated = activated
                 })
             }
             itemView.setOnLongClickListener {
-                clickListener.onItemLongClick(smartListViewModel)
+                clickListener.onItemLongClick(conversationItemViewModel)
                 true
             }
-            binding.convParticipant.text = smartListViewModel.contactName
-            val lastInteraction = smartListViewModel.lastInteractionTime
+            binding.convParticipant.text = conversationItemViewModel.contactName
+            val lastInteraction = conversationItemViewModel.lastInteractionTime
             val lastInteractionStr =
-                if (lastInteraction == 0L) "" else DateUtils.getRelativeTimeSpanString(
-                    lastInteraction,
-                    System.currentTimeMillis(),
-                    0L,
-                    DateUtils.FORMAT_ABBREV_ALL
-                ).toString()
+                if (lastInteraction == 0L) ""
+                else DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)
+                    .toString()
             binding.convLastTime.text = lastInteractionStr
-            if (smartListViewModel.hasOngoingCall()) {
+            if (conversationItemViewModel.hasOngoingCall()) {
                 binding.convLastItem.visibility = View.VISIBLE
                 binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
-            } else if (smartListViewModel.lastEvent != null) {
+            } else if (conversationItemViewModel.lastEvent != null) {
                 binding.convLastItem.visibility = View.VISIBLE
-                binding.convLastItem.text = getLastEventSummary(smartListViewModel.lastEvent!!, itemView.context)
+                binding.convLastItem.text = getLastEventSummary(conversationItemViewModel.lastEvent!!, itemView.context)
             } else {
                 binding.convLastItem.visibility = View.GONE
             }
-            if (smartListViewModel.hasUnreadTextMessage()) {
+            if (conversationItemViewModel.hasUnreadTextMessage()) {
                 binding.convParticipant.setTypeface(null, Typeface.BOLD)
                 binding.convLastTime.setTypeface(null, Typeface.BOLD)
                 binding.convLastItem.setTypeface(null, Typeface.BOLD)
@@ -96,11 +93,11 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL)
             }
             binding.photo.setImageDrawable(AvatarDrawable.Builder()
-                    .withViewModel(smartListViewModel)
+                    .withViewModel(conversationItemViewModel)
                     .withCircleCrop(true)
                     .build(binding.photo.context))
         } else headerBinding?.headerTitle?.setText(
-            if (smartListViewModel.headerTitle == SmartListViewModel.Title.Conversations) R.string.navigation_item_conversation else R.string.search_results_public_directory
+            if (conversationItemViewModel.headerTitle == ConversationItemViewModel.Title.Conversations) R.string.navigation_item_conversation else R.string.search_results_public_directory
         )
     }
 
@@ -143,7 +140,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     interface SmartListListeners {
-        fun onItemClick(item: SmartListViewModel)
-        fun onItemLongClick(item: SmartListViewModel)
+        fun onItemClick(item: ConversationItemViewModel)
+        fun onItemLongClick(item: ConversationItemViewModel)
     }
 }

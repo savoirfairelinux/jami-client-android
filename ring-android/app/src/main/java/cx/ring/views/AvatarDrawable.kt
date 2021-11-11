@@ -31,11 +31,8 @@ import cx.ring.services.VCardServiceImpl
 import cx.ring.utils.DeviceUtils.isTv
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import net.jami.model.Account
-import net.jami.model.Contact
-import net.jami.model.Conversation
-import net.jami.model.Profile
-import net.jami.smartlist.SmartListViewModel
+import net.jami.model.*
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.HashUtils
 import java.util.*
 
@@ -222,20 +219,20 @@ class AvatarDrawable : Drawable {
             return withName(if (TextUtils.isEmpty(profileName)) username else profileName)
         }
 
-        fun withContact(contact: Contact?): Builder {
-            return if (contact == null) this else withPhoto(contact.photo as Bitmap?)
-                .withId(contact.primaryNumber)
-                .withOnlineState(contact.isOnline)
-                .withNameData(contact.profileName, contact.username)
+        fun withContact(contact: ContactViewModel?): Builder {
+            return if (contact == null) this else withPhoto(contact.profile.avatar as Bitmap?)
+                .withId(contact.contact.primaryNumber)
+                .withOnlineState(contact.contact.isOnline)
+                .withNameData(contact.profile.displayName, contact.registeredName)
         }
 
-        fun withContacts(contacts: List<Contact>): Builder {
+        fun withContacts(contacts: List<ContactViewModel>): Builder {
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
             var notTheUser = 0
             for (contact in contacts) {
-                if (contact.isUser) continue
+                if (contact.contact.isUser) continue
                 notTheUser++
-                val bitmap = contact.photo as Bitmap?
+                val bitmap = contact.profile.avatar as Bitmap?
                 if (bitmap != null) {
                     bitmaps.add(bitmap)
                 }
@@ -243,7 +240,7 @@ class AvatarDrawable : Drawable {
             }
             if (notTheUser == 1) {
                 for (contact in contacts) {
-                    if (!contact.isUser) return withContact(contact)
+                    if (!contact.contact.isUser) return withContact(contact)
                 }
             }
             if (bitmaps.isEmpty()) {
@@ -255,10 +252,10 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withConversation(conversation: Conversation): Builder {
+        fun withConversation(conversation: Conversation, contacts: List<ContactViewModel>): Builder {
             return if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
-                withContacts(conversation.contacts).setGroup()
-            else withContact(conversation.contact)
+                withContacts(contacts).setGroup()
+            else withContact(contacts[0])
         }
 
         private fun setGroup(): Builder {
@@ -266,7 +263,7 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withViewModel(vm: SmartListViewModel): Builder {
+        fun withViewModel(vm: ConversationItemViewModel): Builder {
             val isSwarm = vm.uri.isSwarm
             return (if (isSwarm) withContacts(vm.contacts).setGroup() else withContact(if (vm.contacts.isEmpty()) null else vm.contacts[vm.contacts.size - 1]))
                 .withPresence(vm.showPresence())
@@ -289,16 +286,12 @@ class AvatarDrawable : Drawable {
         }
     }
 
-    fun update(contact: Contact) {
-        val profileName = contact.profileName
-        val username = contact.username
-        avatarText = convertNameToAvatarText(
-            if (TextUtils.isEmpty(profileName)) username else profileName
-        )
-        contact.photo?.let { photo ->
+    fun update(contact: ContactViewModel) {
+        avatarText = convertNameToAvatarText(contact.profile.displayName)
+        contact.profile.avatar?.let { photo ->
             bitmaps?.set(0, photo as Bitmap)
         }
-        isOnline = contact.isOnline
+        isOnline = contact.contact.isOnline
         update = true
     }
 
