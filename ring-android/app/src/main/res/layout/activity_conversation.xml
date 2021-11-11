@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
         app:elevation="4dp"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_toolbar"
@@ -70,10 +71,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_layout"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        />
 </RelativeLayout>
