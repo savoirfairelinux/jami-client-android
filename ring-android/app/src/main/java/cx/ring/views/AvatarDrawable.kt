@@ -256,7 +256,8 @@ class AvatarDrawable : Drawable {
         }
 
         fun withConversation(conversation: Conversation): Builder {
-            return if (conversation.isSwarm) withContacts(conversation.contacts).setGroup()
+            return if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
+                withContacts(conversation.contacts).setGroup()
             else withContact(conversation.contact)
         }
 
