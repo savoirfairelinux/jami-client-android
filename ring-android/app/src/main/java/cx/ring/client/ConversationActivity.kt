@@ -27,6 +27,7 @@ import android.view.Menu
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityConversationBinding
@@ -56,6 +57,8 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             finish()
             return
         }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon()
