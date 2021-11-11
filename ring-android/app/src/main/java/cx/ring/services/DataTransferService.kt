@@ -69,16 +69,18 @@ class DataTransferService : Service() {
             }
         } else if (ACTION_STOP == action) {
             serviceNotifications.remove(notificationId)
+            mNotificationService.cancelFileNotification(notificationId)
             if (notificationId == serviceNotificationId) {
                 while (true) {
                     // The service notification is removed. Migrate service to other notification or stop it
-                    serviceNotificationId = if (serviceNotifications.isEmpty()) 0 else serviceNotifications.iterator().next()
-                    if (serviceNotificationId == 0) {
+                    if (serviceNotifications.isEmpty()) {
+                        serviceNotificationId = 0
                         Log.w(TAG, "stopping transfer service $intent")
                         stopForeground(true)
                         stopSelf()
                         started = false
                     } else {
+                        serviceNotificationId = serviceNotifications.iterator().next()
                         // migrate notification to service
                         notificationManager.cancel(serviceNotificationId)
                         val notification = mNotificationService.getDataTransferNotification(serviceNotificationId) as Notification?
