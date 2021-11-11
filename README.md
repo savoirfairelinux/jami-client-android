@@ -28,11 +28,11 @@ install swig-2.0.6 or later and python-2.7 or later on your system
 
 ## Build instructions
 
-Supported archs are: armeabi-v7a and x86
+Supported archs are: armeabi-v7a , arm64-v8a and x86_64
 
 Example:
 
-    ANDROID_ABI="armeabi-v7a x86"
+    ANDROID_ABI="arm64-v8a x86_64"
 
 Then:
 
