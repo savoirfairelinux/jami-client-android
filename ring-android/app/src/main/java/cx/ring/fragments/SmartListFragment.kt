@@ -57,7 +57,7 @@ import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
@@ -267,14 +267,14 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding!!.placeholder.visibility = View.GONE
     }
 
-    override fun displayConversationDialog(smartListViewModel: SmartListViewModel) {
-        if (smartListViewModel.isSwarm) {
+    override fun displayConversationDialog(conversationItemViewModel: ConversationItemViewModel) {
+        if (conversationItemViewModel.isSwarm) {
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.swarm_actions) { dialog, which ->
                     when (which) {
-                        0 -> presenter.copyNumber(smartListViewModel)
-                        1 -> presenter.removeConversation(smartListViewModel)
-                        2 -> presenter.banContact(smartListViewModel)
+                        0 -> presenter.copyNumber(conversationItemViewModel)
+                        1 -> presenter.removeConversation(conversationItemViewModel)
+                        2 -> presenter.banContact(conversationItemViewModel)
                     }
                 }
                 .show()
@@ -282,10 +282,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.conversation_actions) { dialog, which ->
                     when (which) {
-                        ActionHelper.ACTION_COPY -> presenter.copyNumber(smartListViewModel)
-                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(smartListViewModel)
-                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(smartListViewModel)
-                        ActionHelper.ACTION_BLOCK -> presenter.banContact(smartListViewModel)
+                        ActionHelper.ACTION_COPY -> presenter.copyNumber(conversationItemViewModel)
+                        ActionHelper.ACTION_CLEAR -> presenter.clearConversation(conversationItemViewModel)
+                        ActionHelper.ACTION_DELETE -> presenter.removeConversation(conversationItemViewModel)
+                        ActionHelper.ACTION_BLOCK -> presenter.banContact(conversationItemViewModel)
                     }
                 }
                 .show()
@@ -313,10 +313,10 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.update(null)
     }
 
-    override fun updateList(smartListViewModels: MutableList<SmartListViewModel>?, parentDisposable: CompositeDisposable) {
+    override fun updateList(conversationItemViewModels: MutableList<ConversationItemViewModel>?, parentDisposable: CompositeDisposable) {
         binding?.apply {
             if (confsList.adapter == null) {
-                confsList.adapter = SmartListAdapter(smartListViewModels, this@SmartListFragment, parentDisposable).apply {
+                confsList.adapter = SmartListAdapter(conversationItemViewModels, this@SmartListFragment, parentDisposable).apply {
                     mSmartListAdapter = this
                 }
                 confsList.setHasFixedSize(true)
@@ -324,7 +324,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     orientation = RecyclerView.VERTICAL
                 }
             } else {
-                mSmartListAdapter?.update(smartListViewModels)
+                mSmartListAdapter?.update(conversationItemViewModels)
             }
             confsList.visibility = View.VISIBLE
         }
@@ -335,7 +335,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.notifyItemChanged(position)
     }
 
-    override fun update(model: SmartListViewModel) {
+    override fun update(model: ConversationItemViewModel) {
         mSmartListAdapter?.update(model)
     }
 
@@ -375,11 +375,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding?.apply { confsList.scrollToPosition(0) }
     }
 
-    override fun onItemClick(item: SmartListViewModel) {
+    override fun onItemClick(item: ConversationItemViewModel) {
         presenter.conversationClicked(item)
     }
 
-    override fun onItemLongClick(item: SmartListViewModel) {
+    override fun onItemLongClick(item: ConversationItemViewModel) {
         presenter.conversationLongClicked(item)
     }
 

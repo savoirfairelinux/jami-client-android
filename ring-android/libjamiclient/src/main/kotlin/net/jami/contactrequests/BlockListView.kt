@@ -18,10 +18,10 @@
  */
 package net.jami.contactrequests
 
-import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 
 interface BlockListView {
-    fun updateView(list: Collection<Contact>)
+    fun updateView(list: Collection<ContactViewModel>)
     fun hideListView()
     fun displayEmptyListMessage(display: Boolean)
 }
