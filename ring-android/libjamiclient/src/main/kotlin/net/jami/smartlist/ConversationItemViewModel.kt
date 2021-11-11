@@ -27,6 +27,7 @@ import net.jami.model.*
 class ConversationItemViewModel {
     val accountId: String
     val uri: Uri
+    val mode: Conversation.Mode
     val contacts: List<ContactViewModel>
     val uuid: String?
     val contactName: String
@@ -50,6 +51,7 @@ class ConversationItemViewModel {
         this.accountId = accountId
         contacts = listOf(contact)
         uri = contact.contact.uri
+        mode = Conversation.Mode.Legacy
         uuid = uri.rawUriString
         contactName = contact.displayName
         hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
@@ -64,6 +66,7 @@ class ConversationItemViewModel {
         this.accountId = accountId
         contacts = listOf(contact)
         uri = contact.contact.uri
+        mode = Conversation.Mode.Legacy
         uuid = id
         contactName = contact.displayName
         hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
@@ -78,6 +81,7 @@ class ConversationItemViewModel {
         accountId = conversation.accountId
         this.contacts = contacts
         uri = conversation.uri
+        mode = conversation.mode.blockingFirst()
         uuid = uri.rawUriString
         contactName = getTitle(conversation, contacts)
         val lastEvent = conversation.lastEvent
@@ -104,6 +108,7 @@ class ConversationItemViewModel {
         contacts = emptyList()
         uuid = null
         uri = Uri()
+        mode = Conversation.Mode.Legacy
         hasUnreadTextMessage = false
         lastEvent = null
         showPresence = false
