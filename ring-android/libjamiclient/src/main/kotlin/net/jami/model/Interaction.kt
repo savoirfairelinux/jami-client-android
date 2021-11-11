@@ -61,6 +61,8 @@ open class Interaction {
     @DatabaseField(columnName = COLUMN_EXTRA_FLAG)
     var mExtraFlag = JsonObject().toString()
 
+    var isNotified = false
+
     // Swarm
     var conversationId: String? = null
         private set

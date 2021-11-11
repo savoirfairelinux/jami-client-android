@@ -23,8 +23,6 @@ package net.jami.model
 import java.lang.NumberFormatException
 
 class TextMessage : Interaction {
-    var isNotified = false
-
     constructor(author: String?, account: String, daemonId: String?, conversation: ConversationHistory?, message: String) {
         this.author = author
         this.account = account
