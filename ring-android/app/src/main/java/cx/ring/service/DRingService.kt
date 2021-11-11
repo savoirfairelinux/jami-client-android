@@ -203,7 +203,7 @@ class DRingService : Service() {
                 handleCallAction(action, it)
             }
             ACTION_CONV_READ, ACTION_CONV_ACCEPT, ACTION_CONV_DISMISS, ACTION_CONV_REPLY_INLINE ->
-                handleConvAction(intent, action)
+                handleConvAction(intent, action, extras)
             ACTION_FILE_ACCEPT, ACTION_FILE_CANCEL -> extras?.let {
                 handleFileAction(intent.data, action, it)
             }
@@ -289,7 +289,7 @@ class DRingService : Service() {
         }
     }
 
-    private fun handleConvAction(intent: Intent, action: String) {
+    private fun handleConvAction(intent: Intent, action: String, extras: Bundle?) {
         val path = ConversationPath.fromIntent(intent)
         if (path == null || path.conversationId.isEmpty()) {
             return
@@ -297,12 +297,15 @@ class DRingService : Service() {
         when (action) {
             ACTION_CONV_READ -> mConversationFacade.readMessages(path.accountId, path.conversationUri)
             ACTION_CONV_DISMISS -> {
+                extras?.getString(KEY_MESSAGE_ID)?.let { messageId ->
+                    mConversationFacade.messageNotified(path.accountId, path.conversationUri, messageId)
+                }
             }
             ACTION_CONV_REPLY_INLINE -> {
                 val remoteInput = RemoteInput.getResultsFromIntent(intent)
                 if (remoteInput != null) {
                     val reply = remoteInput.getCharSequence(KEY_TEXT_REPLY)
-                    if (!TextUtils.isEmpty(reply)) {
+                    if (!reply.isNullOrEmpty()) {
                         val uri = path.conversationUri
                         val message = reply.toString()
                         mConversationFacade.startConversation(path.accountId, uri)
