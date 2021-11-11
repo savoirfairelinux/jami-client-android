@@ -44,13 +44,9 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
-import androidx.appcompat.widget.PopupMenu
 import androidx.percentlayout.widget.PercentFrameLayout
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
-import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
 import cx.ring.client.CallActivity
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.ConversationSelectionActivity
@@ -61,17 +57,16 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService.AudioState
@@ -549,7 +544,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
 
     }
 
-    override fun updateParticipantRecording(contacts: Set<Contact>) {
+    override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
         binding?.let { binding ->
             if (contacts.isEmpty()) {
                 binding.recordLayout.visibility = View.INVISIBLE

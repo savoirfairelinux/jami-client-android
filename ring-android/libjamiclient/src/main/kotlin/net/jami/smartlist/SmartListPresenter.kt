@@ -55,12 +55,12 @@ class SmartListPresenter @Inject constructor(
         view.setLoading(true)
         mCompositeDisposable.add(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true)
             .switchMap { viewModels ->
-                if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
-                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size), {ob -> ob as SmartListViewModel}) }
+                if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
+                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size), {ob -> ob as ConversationItemViewModel}) }
                     .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
             }
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels: MutableList<SmartListViewModel> ->
+            .subscribe({ viewModels: MutableList<ConversationItemViewModel> ->
                 val v = this.view ?: return@subscribe
                 v.setLoading(false)
                 if (viewModels.isEmpty()) {
@@ -89,12 +89,12 @@ class SmartListPresenter @Inject constructor(
         }
     }
 
-    fun conversationClicked(viewModel: SmartListViewModel) {
+    fun conversationClicked(viewModel: ConversationItemViewModel) {
         startConversation(viewModel.accountId, viewModel.uri)
     }
 
-    fun conversationLongClicked(smartListViewModel: SmartListViewModel) {
-        view?.displayConversationDialog(smartListViewModel)
+    fun conversationLongClicked(conversationItemViewModel: ConversationItemViewModel) {
+        view?.displayConversationDialog(conversationItemViewModel)
     }
 
     fun fabButtonClicked() {
@@ -113,17 +113,17 @@ class SmartListPresenter @Inject constructor(
         view?.goToConversation(mAccount!!.accountId, uri)
     }
 
-    fun copyNumber(smartListViewModel: SmartListViewModel) {
-        val contact = smartListViewModel.getContact()
+    fun copyNumber(conversationItemViewModel: ConversationItemViewModel) {
+        val contact = conversationItemViewModel.getContact()
         if (contact != null) {
-            view?.copyNumber(contact.uri)
+            view?.copyNumber(contact.contact.uri)
         } else {
-            view?.copyNumber(smartListViewModel.uri)
+            view?.copyNumber(conversationItemViewModel.uri)
         }
     }
 
-    fun clearConversation(smartListViewModel: SmartListViewModel) {
-        view?.displayClearDialog(smartListViewModel.uri)
+    fun clearConversation(conversationItemViewModel: ConversationItemViewModel) {
+        view?.displayClearDialog(conversationItemViewModel.uri)
     }
 
     fun clearConversation(uri: Uri?) {
@@ -132,8 +132,8 @@ class SmartListPresenter @Inject constructor(
             .subscribeOn(Schedulers.computation()).subscribe())
     }
 
-    fun removeConversation(smartListViewModel: SmartListViewModel) {
-        view?.displayDeleteDialog(smartListViewModel.uri)
+    fun removeConversation(conversationItemViewModel: ConversationItemViewModel) {
+        view?.displayDeleteDialog(conversationItemViewModel.uri)
     }
 
     fun removeConversation(uri: Uri) {
@@ -141,15 +141,15 @@ class SmartListPresenter @Inject constructor(
             .subscribe())
     }
 
-    fun banContact(smartListViewModel: SmartListViewModel) {
-        mConversationFacade.banConversation(smartListViewModel.accountId, smartListViewModel.uri)
+    fun banContact(conversationItemViewModel: ConversationItemViewModel) {
+        mConversationFacade.banConversation(conversationItemViewModel.accountId, conversationItemViewModel.uri)
     }
 
     fun clickQRSearch() {
         view?.goToQRFragment()
     }
 
-    private fun showConversations(conversations: Observable<List<Observable<SmartListViewModel>>>) {
+    private fun showConversations(conversations: Observable<List<Observable<ConversationItemViewModel>>>) {
     }
 
     companion object {

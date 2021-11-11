@@ -22,17 +22,14 @@ package net.jami.smartlist
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import net.jami.model.Contact
-import net.jami.model.Conversation
-import net.jami.model.Interaction
-import net.jami.model.Uri
+import net.jami.model.*
 
-class SmartListViewModel {
+class ConversationItemViewModel {
     val accountId: String
     val uri: Uri
-    val contacts: List<Contact>
+    val contacts: List<ContactViewModel>
     val uuid: String?
-    val contactName: String?
+    val contactName: String
     private val hasUnreadTextMessage: Boolean
     private var hasOngoingCall = false
     private val showPresence: Boolean
@@ -49,48 +46,48 @@ class SmartListViewModel {
 
     val headerTitle: Title
 
-    constructor(accountId: String, contact: Contact, lastEvent: Interaction?) {
+    constructor(accountId: String, contact: ContactViewModel, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
-        uri = contact.uri
+        uri = contact.contact.uri
         uuid = uri.rawUriString
         contactName = contact.displayName
         hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
         hasOngoingCall = false
         this.lastEvent = lastEvent
         showPresence = true
-        isOnline = contact.isOnline
+        isOnline = contact.contact.isOnline
         headerTitle = Title.None
     }
 
-    constructor(accountId: String, contact: Contact, id: String?, lastEvent: Interaction?) {
+    constructor(accountId: String, contact: ContactViewModel, id: String?, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
-        uri = contact.uri
+        uri = contact.contact.uri
         uuid = id
         contactName = contact.displayName
         hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
         hasOngoingCall = false
         this.lastEvent = lastEvent
         showPresence = true
-        isOnline = contact.isOnline
+        isOnline = contact.contact.isOnline
         headerTitle = Title.None
     }
 
-    constructor(conversation: Conversation, contacts: List<Contact>, presence: Boolean) {
+    constructor(conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean) {
         accountId = conversation.accountId
         this.contacts = contacts
         uri = conversation.uri
         uuid = uri.rawUriString
-        contactName = conversation.title
+        contactName = getTitle(conversation, contacts)
         val lastEvent = conversation.lastEvent
         hasUnreadTextMessage = lastEvent != null && !lastEvent.isRead
         hasOngoingCall = false
         this.lastEvent = lastEvent
         selected = conversation.getVisible()
-        for (contact in contacts) {
-            if (contact.isUser) continue
-            if (contact.isOnline) {
+        for (c in contacts) {
+            if (c.contact.isUser) continue
+            if (c.contact.isOnline) {
                 isOnline = true
                 break
             }
@@ -99,10 +96,10 @@ class SmartListViewModel {
         headerTitle = Title.None
     }
 
-    constructor(conversation: Conversation, presence: Boolean) : this(conversation, conversation.contacts, presence)
+    //constructor(conversation: Conversation, presence: Boolean) : this(conversation, conversation.contacts, presence)
 
     private constructor(title: Title) {
-        contactName = null
+        contactName = ""
         accountId = ""
         contacts = emptyList()
         uuid = null
@@ -113,16 +110,19 @@ class SmartListViewModel {
         headerTitle = title
     }
 
+    val uriTitle: String?
+        get() = getUriTitle(uri, contacts)
+
     val isSwarm: Boolean
         get() = uri.isSwarm
 
     /**
      * Used to get contact for one to one or legacy conversations
      */
-    fun getContact(): Contact? {
+    fun getContact(): ContactViewModel? {
         if (contacts.size == 1) return contacts[0]
         for (c in contacts) {
-            if (!c.isUser) return c
+            if (!c.contact.isUser) return c
         }
         return null
     }
@@ -155,7 +155,7 @@ class SmartListViewModel {
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is SmartListViewModel) return false
+        if (other !is ConversationItemViewModel) return false
         return (other.headerTitle == headerTitle
                 && (headerTitle != Title.None
                 || (contacts === other.contacts && contactName == other.contactName
@@ -163,9 +163,50 @@ class SmartListViewModel {
     }
 
     companion object {
-        val TITLE_CONVERSATIONS: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.Conversations))
-        val TITLE_PUBLIC_DIR: Observable<SmartListViewModel> = Observable.just(SmartListViewModel(Title.PublicDirectory))
-        val EMPTY_LIST: Single<List<Observable<SmartListViewModel>>> = Single.just(emptyList())
-        val EMPTY_RESULTS: Observable<MutableList<SmartListViewModel>> = Observable.just(ArrayList())
+        val TITLE_CONVERSATIONS: Observable<ConversationItemViewModel> = Observable.just(ConversationItemViewModel(Title.Conversations))
+        val TITLE_PUBLIC_DIR: Observable<ConversationItemViewModel> = Observable.just(ConversationItemViewModel(Title.PublicDirectory))
+        val EMPTY_LIST: Single<List<Observable<ConversationItemViewModel>>> = Single.just(emptyList())
+        val EMPTY_RESULTS: Observable<MutableList<ConversationItemViewModel>> = Observable.just(ArrayList())
+
+        fun getTitle(conversation: Conversation, contacts: List<ContactViewModel>): String  {
+            if (contacts.isEmpty()) {
+                return if (conversation.mode.blockingFirst() == Conversation.Mode.Syncing) { "(Syncing)" } else ""
+            } else if (contacts.size == 1) {
+                return contacts[0].displayName
+            }
+            val names = ArrayList<String>(contacts.size)
+            var target = contacts.size
+            for (c in contacts) {
+                if (c.contact.isUser) {
+                    target--
+                    continue
+                }
+                val displayName = c.displayName
+                if (displayName.isNotEmpty()) {
+                    names.add(displayName)
+                    if (names.size == 3) break
+                }
+            }
+            val ret = StringBuilder()
+            names.joinTo(ret)
+            if (names.isNotEmpty() && names.size < target) {
+                ret.append(" + ").append(contacts.size - names.size)
+            }
+            return ret.toString().ifEmpty { conversation.uri.rawUriString }
+        }
+
+        fun getUriTitle(conversationUri: Uri, contacts: List<ContactViewModel>): String? {
+            if (contacts.isEmpty()) {
+                return null
+            } else if (contacts.size == 1) {
+                return contacts[0].displayUri
+            }
+            val names = ArrayList<String>(contacts.size)
+            for (c in contacts) {
+                if (c.contact.isUser) continue
+                names.add(c.displayUri)
+            }
+            return names.joinToString().ifEmpty { conversationUri.rawUriString }
+        }
     }
 }

@@ -53,13 +53,10 @@ import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.Consumer
+import net.jami.model.*
 import net.jami.services.ConversationFacade
-import net.jami.model.Call
-import net.jami.model.Contact
-import net.jami.model.Conversation
-import net.jami.model.Uri
 import net.jami.services.AccountService
+import net.jami.services.ContactService
 import net.jami.services.NotificationService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -69,6 +66,9 @@ class ContactDetailsActivity : AppCompatActivity() {
     @Inject
     @Singleton lateinit
     var mConversationFacade: ConversationFacade
+
+    @Inject lateinit
+    var mContactService: ContactService
 
     @Inject
     @Singleton lateinit
@@ -146,9 +146,9 @@ class ContactDetailsActivity : AppCompatActivity() {
             val action = actions[position]
             holder.disposable.clear()
             if (action.drawable != null) {
-                holder.disposable.add(action.drawable.subscribe(Consumer { background: Drawable? ->
+                holder.disposable.add(action.drawable.subscribe { background: Drawable ->
                     holder.binding.actionIcon.background = background
-                }))
+                })
             } else {
                 holder.binding.actionIcon.setBackgroundResource(action.icon)
                 holder.binding.actionIcon.text = action.iconSymbol
@@ -171,12 +171,8 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    internal class ContactView(
-        val binding: ItemContactHorizontalBinding,
-        parentDisposable: CompositeDisposable
-    ) : RecyclerView.ViewHolder(
-        binding.root
-    ) {
+    internal class ContactView(val binding: ItemContactHorizontalBinding, parentDisposable: CompositeDisposable)
+        : RecyclerView.ViewHolder(binding.root) {
         var callback: (() -> Unit)? = null
         val disposable = CompositeDisposable()
 
@@ -194,7 +190,7 @@ class ContactDetailsActivity : AppCompatActivity() {
 
     private class ContactViewAdapter(
         private val disposable: CompositeDisposable,
-        private val contacts: List<Contact>,
+        private val contacts: List<ContactViewModel>,
         private val callback: (Contact) -> Unit
     ) : RecyclerView.Adapter<ContactView>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactView {
@@ -206,14 +202,13 @@ class ContactDetailsActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: ContactView, position: Int) {
             val contact = contacts[position]
             holder.disposable.clear()
-            holder.disposable.add(
-                AvatarFactory.getAvatar(holder.itemView.context, contact, false)
-                    .subscribe { drawable: Drawable ->
-                        holder.binding.photo.setImageDrawable(drawable)
-                    })
+            holder.disposable.add(AvatarFactory.getAvatar(holder.itemView.context, contact, false)
+                .subscribe { drawable: Drawable ->
+                    holder.binding.photo.setImageDrawable(drawable)
+                })
             holder.binding.displayName.text =
-                if (contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
-            holder.itemView.setOnClickListener { callback.invoke(contact) }
+                if (contact.contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
+            holder.itemView.setOnClickListener { callback.invoke(contact.contact) }
         }
 
         override fun onViewRecycled(holder: ContactView) {
@@ -248,26 +243,33 @@ class ContactDetailsActivity : AppCompatActivity() {
             finish()
             return
         }
-        binding = ActivityContactDetailsBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
-        //JamiApplication.getInstance().getInjectionComponent().inject(this);
 
-        //CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
-        //collapsingToolbarLayout.setTitle("");
-        setSupportActionBar(binding!!.toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-
-        //FloatingActionButton fab = binding.sendMessage;
-        //fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
+        val binding = ActivityContactDetailsBinding.inflate(layoutInflater).also { this.binding = it }
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+        val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
         colorActionPosition = 0
         symbolActionPosition = 1
-        val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
-        binding!!.contactImage.setImageDrawable(AvatarDrawable.Builder()
-            .withConversation(conversation)
-            .withPresence(false)
-            .withCircleCrop(true)
-            .build(this))
+
+        mDisposableBag.add(mConversationFacade.observeConversation(conversation).subscribe { vm ->
+            binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
+                .withViewModel(vm)
+                .withCircleCrop(true)
+                .build(this))
+
+            supportActionBar?.title = vm.contactName
+            binding.contactListLayout.visibility =
+                if (conversation.isSwarm) View.VISIBLE else View.GONE
+            if (conversation.isSwarm) {
+                binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
+                { contact -> copyAndShow(contact.uri.rawUriString) }
+            }
+            binding.conversationId.text = vm.uriTitle
+        })
 
         /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());
         for (Map.Entry<String, String> e : details.entrySet()) {
@@ -286,15 +288,12 @@ class ContactDetailsActivity : AppCompatActivity() {
                 : R.drawable.baseline_group_24)
                 : R.drawable.baseline_person_24;*/
         //adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
-        binding!!.conversationType.setText(infoString)
+        binding.conversationType.setText(infoString)
         //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
         colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
             val frag = ColorChooserBottomSheet()
             frag.setCallback(object : IColorSelected {
                 override fun onColorSelected(color: Int) {
-                    /*collapsingToolbarLayout.setBackgroundColor(color);
-                                   collapsingToolbarLayout.setContentScrimColor(color);
-                                   collapsingToolbarLayout.setStatusBarScrimColor(color);*/
                     colorAction!!.iconTint = color
                     adapter.notifyItemChanged(colorActionPosition)
                     preferences.edit()
@@ -304,15 +303,8 @@ class ContactDetailsActivity : AppCompatActivity() {
             })
             frag.show(supportFragmentManager, "colorChooser")
         }
-        val color = preferences.getInt(
-            ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR,
-            resources.getColor(R.color.color_primary_light)
-        )
+        val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
         colorAction!!.iconTint = color
-        /*collapsingToolbarLayout.setBackgroundColor(color);
-        collapsingToolbarLayout.setTitle(conversation.getTitle());
-        collapsingToolbarLayout.setContentScrimColor(color);
-        collapsingToolbarLayout.setStatusBarScrimColor(color);*/
         adapter.actions.add(colorAction!!)
         symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
             EmojiChooserBottomSheet().apply {
@@ -331,7 +323,7 @@ class ContactDetailsActivity : AppCompatActivity() {
             setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
             adapter.actions.add(this)
         }
-        val conversationUri = if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
+        val conversationUri = conversation.uri.toString()//if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
         if (conversation.contacts.size <= 2 && conversation.contacts.isNotEmpty()) {
             val contact = conversation.contact!!
             adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
@@ -347,7 +339,7 @@ class ContactDetailsActivity : AppCompatActivity() {
                         .setMessage(R.string.clear_history_dialog_message)
                         .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
                             mConversationFacade.clearHistory(conversation.accountId, contact.uri).subscribe()
-                            Snackbar.make(binding!!.root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(binding.root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .create()
@@ -368,18 +360,9 @@ class ContactDetailsActivity : AppCompatActivity() {
                     .show()
             })
         }
-        supportActionBar?.title = conversation.title
-        //new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversationUri, () -> {});
-        binding!!.conversationId.text = conversationUri
-        binding!!.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
-        //adapter.actions.add(contactAction);
-        binding!!.contactActionList.adapter = adapter
-        binding!!.contactListLayout.visibility =
-            if (conversation.isSwarm) View.VISIBLE else View.GONE
-        if (conversation.isSwarm) {
-            binding!!.contactList.adapter = ContactViewAdapter(mDisposableBag, conversation.contacts)
-                { contact -> copyAndShow(contact.uri.rawUriString) }
-        }
+        binding.conversationId.text = conversationUri
+        binding.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
+        binding.contactActionList.adapter = adapter
     }
 
     private fun copyAndShow(toCopy: String) {
@@ -422,14 +405,11 @@ class ContactDetailsActivity : AppCompatActivity() {
     }
 
     private fun goToConversationActivity(accountId: String, conversationUri: Uri) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                ConversationPath.toUri(accountId, conversationUri),
-                applicationContext,
-                ConversationActivity::class.java
-            )
-        )
+        startActivity(Intent(Intent.ACTION_VIEW,
+            ConversationPath.toUri(accountId, conversationUri),
+            applicationContext,
+            ConversationActivity::class.java
+        ))
     }
 
     companion object {

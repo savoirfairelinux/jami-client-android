@@ -36,14 +36,13 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.Codec
 import net.jami.model.ConfigKey
-import net.jami.model.ConfigKey.Companion.fromString
 import net.jami.settings.MediaPreferencePresenter
 import net.jami.settings.MediaPreferenceView
 
 @AndroidEntryPoint
 class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>(), MediaPreferenceView {
     private val changeVideoPreferenceListener = Preference.OnPreferenceChangeListener { preference: Preference, newValue: Any ->
-        val key = fromString(preference.key)!!
+        val key = ConfigKey.fromString(preference.key)!!
         presenter.videoPreferenceChanged(key, newValue)
         true
     }
