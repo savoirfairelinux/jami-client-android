@@ -74,7 +74,6 @@ import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.utils.StringUtils
 import java.io.File
-import java.util.*
 
 @AndroidEntryPoint
 class JamiAccountSummaryFragment :
@@ -104,6 +103,18 @@ class JamiAccountSummaryFragment :
     private var mBinding: FragAccSummaryBinding? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragAccSummaryBinding.inflate(inflater, container, false).apply {
+            scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
+            linkNewDevice.setOnClickListener { showWizard(mAccountId!!) }
+            linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
+            registerName.setOnClickListener { showUsernameRegistrationPopup() }
+            chipMore.setOnClickListener {
+                val binding = mBinding ?: return@setOnClickListener
+                if (binding.devicesList.visibility == View.GONE) {
+                    expand(binding.devicesList)
+                } else {
+                    collapse(binding.devicesList)
+                }
+            }
             mBinding = this
         }.root
     }
@@ -126,41 +137,29 @@ class JamiAccountSummaryFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireArguments().let { arguments ->
-            presenter.setAccountId(arguments.getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
-        }
-        mBinding!!.scrollview.viewTreeObserver.addOnScrollChangedListener(this)
-        mBinding!!.linkNewDevice.setOnClickListener { v: View? -> showWizard(mAccountId!!) }
-        mBinding!!.linkedDevices.setRightDrawableOnClickListener { v: View? -> onDeviceRename() }
-        mBinding!!.registerName.setOnClickListener { v: View? -> showUsernameRegistrationPopup() }
-        val items: MutableList<SettingItem> = ArrayList(4)
-        items.add(SettingItem(R.string.account, R.drawable.baseline_account_card_details) { presenter.goToAccount() })
-        items.add(SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24) { presenter.goToMedia() })
-        items.add(SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24) { presenter.goToSystem() })
-        items.add(SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24) { presenter.goToAdvanced() })
-        val adapter = SettingsAdapter(view.context, R.layout.item_setting, items)
-        mBinding!!.settingsList.onItemClickListener =
-            AdapterView.OnItemClickListener { _, v: View?, i: Int, l: Long ->
+        presenter.setAccountId(requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!)
+        val binding = mBinding ?: return
+        val adapter = SettingsAdapter(view.context, R.layout.item_setting, listOf(
+            SettingItem(R.string.account, R.drawable.baseline_account_card_details) { presenter.goToAccount() },
+            SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24) { presenter.goToMedia() },
+            SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24) { presenter.goToSystem() },
+            SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24) { presenter.goToAdvanced() }
+        ))
+        binding.settingsList.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, i: Int, _ ->
                 adapter.getItem(i)?.onClick()
             }
-        mBinding!!.settingsList.adapter = adapter
+        binding.settingsList.adapter = adapter
         var totalHeight = 0
         for (i in 0 until adapter.count) {
-            val listItem = adapter.getView(i, null, mBinding!!.settingsList)
+            val listItem = adapter.getView(i, null, binding.settingsList)
             listItem.measure(0, 0)
             totalHeight += listItem.measuredHeight
         }
-        val par = mBinding!!.settingsList.layoutParams
-        par.height = totalHeight + mBinding!!.settingsList.dividerHeight * (adapter.count - 1)
-        mBinding!!.settingsList.layoutParams = par
-        mBinding!!.settingsList.requestLayout()
-        mBinding!!.chipMore.setOnClickListener { v: View? ->
-            if (mBinding!!.devicesList.visibility == View.GONE) {
-                expand(mBinding!!.devicesList)
-            } else {
-                collapse(mBinding!!.devicesList)
-            }
-        }
+        val par = binding.settingsList.layoutParams
+        par.height = totalHeight + binding.settingsList.dividerHeight * (adapter.count - 1)
+        binding.settingsList.layoutParams = par
+        binding.settingsList.requestLayout()
     }
 
     override fun onResume() {
@@ -570,10 +569,7 @@ class JamiAccountSummaryFragment :
     }
 
     override fun updateDeviceList(devices: Map<String, String>, currentDeviceId: String) {
-        if (mDeviceAdapter == null) {
-            return
-        }
-        mDeviceAdapter!!.setData(devices, currentDeviceId)
+        mDeviceAdapter?.setData(devices, currentDeviceId)
         collapse(mBinding!!.devicesList)
     }
 

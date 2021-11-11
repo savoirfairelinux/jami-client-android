@@ -19,9 +19,9 @@
 package cx.ring.account
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -35,12 +35,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.FragRegisterNameBinding
 import cx.ring.utils.RegisteredNameFilter
-import cx.ring.utils.RegisteredNameTextWatcher
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import net.jami.account.JamiAccountCreationPresenter
 import net.jami.services.AccountService
 import net.jami.services.AccountService.RegisteredName
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,66 +50,78 @@ class RegisterNameDialog : DialogFragment() {
     @Inject
     lateinit var mAccountService: AccountService
 
-    private var mUsernameTextWatcher: TextWatcher? = null
     private var mListener: RegisterNameDialogListener? = null
+    private val contactQuery = PublishSubject.create<String>()
     private var mDisposableListener: Disposable? = null
     private var binding: FragRegisterNameBinding? = null
-    fun setListener(l: RegisterNameDialogListener?) {
+
+    fun setListener(l: RegisterNameDialogListener) {
         mListener = l
     }
 
-    private fun onLookupResult(state: Int, name: String) {
+    private fun onLookupResult(name: String, address: String?, state: Int) {
         binding?.let { binding ->
-            val actualName: CharSequence = binding.ringUsername.text!!
+            val actualName = binding.ringUsername.text?.toString() ?: ""
             if (actualName.isEmpty()) {
                 binding.ringUsernameTxtBox.isErrorEnabled = false
                 binding.ringUsernameTxtBox.error = null
                 return
             }
-            if (name == actualName) {
-                when (state) {
-                    0 -> {
-                        // on found
-                        binding.ringUsernameTxtBox.isErrorEnabled = true
-                        binding.ringUsernameTxtBox.error = getText(R.string.username_already_taken)
-                    }
-                    1 -> {
-                        // invalid name
-                        binding.ringUsernameTxtBox.isErrorEnabled = true
-                        binding.ringUsernameTxtBox.error = getText(R.string.invalid_username)
-                    }
-                    else -> {
-                        // on error
-                        binding.ringUsernameTxtBox.isErrorEnabled = false
-                        binding.ringUsernameTxtBox.error = null
-                    }
+            if (name != actualName)
+                return
+            when (state) {
+                0 -> {
+                    // on found
+                    binding.ringUsernameTxtBox.isErrorEnabled = true
+                    binding.ringUsernameTxtBox.error = getText(R.string.username_already_taken)
+                }
+                1 -> {
+                    // invalid name
+                    binding.ringUsernameTxtBox.isErrorEnabled = true
+                    binding.ringUsernameTxtBox.error = getText(R.string.invalid_username)
+                }
+                else -> {
+                    // on error
+                    binding.ringUsernameTxtBox.isErrorEnabled = false
+                    binding.ringUsernameTxtBox.error = null
                 }
             }
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = FragRegisterNameBinding.inflate(layoutInflater)
-        val view: View = binding!!.root
-        var accountId = ""
+        val binding = FragRegisterNameBinding.inflate(layoutInflater).also { this.binding = it }
+        val view: View = binding.root
         var hasPassword = true
         val args = arguments
         if (args != null) {
-            accountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
             hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true)
         }
-        mUsernameTextWatcher = RegisteredNameTextWatcher(
-            requireContext(),
-            mAccountService,
-            accountId,
-            binding!!.ringUsernameTxtBox,
-            binding!!.ringUsername
-        )
-        binding!!.ringUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
-        binding!!.ringUsername.addTextChangedListener(mUsernameTextWatcher)
+
+        binding.ringUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
+        binding.ringUsername.addTextChangedListener(object: TextWatcher {
+            val mLookingForAvailability = getString(R.string.looking_for_username_availability)
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                binding.ringUsername.apply { error = null }
+            }
+
+            override fun afterTextChanged(txt: Editable) {
+                val name = txt.toString()
+                if (name.isBlank()) {
+                    binding.ringUsernameTxtBox.isErrorEnabled = false
+                    binding.ringUsernameTxtBox.error = null
+                } else {
+                    binding.ringUsernameTxtBox.isErrorEnabled = true
+                    binding.ringUsernameTxtBox.error = mLookingForAvailability
+                    contactQuery.onNext(name.trim())
+                }
+            }
+        })
         // binding.ringUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
-        binding!!.passwordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
-        binding!!.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+        binding.passwordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
+        binding.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             onEditorAction(v, actionId)
         }
         val dialog = dialog as AlertDialog?
@@ -133,30 +147,20 @@ class RegisterNameDialog : DialogFragment() {
         return result
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (binding != null) {
-            binding!!.ringUsername.addTextChangedListener(mUsernameTextWatcher)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mDisposableListener = mAccountService.registeredNames
+    override fun onStart() {
+        val accountId = arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: ""
+        mDisposableListener = contactQuery
+            .debounce(JamiAccountCreationPresenter.TYPING_DELAY, TimeUnit.MILLISECONDS)
+            .switchMapSingle { q: String -> mAccountService.findRegistrationByName(accountId, "", q) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { r: RegisteredName -> onLookupResult(r.state, r.name) }
+            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) }
+        super.onStart()
     }
 
-    override fun onPause() {
-        super.onPause()
-        mDisposableListener!!.dispose()
-    }
-
-    override fun onDetach() {
-        if (binding != null) {
-            binding!!.ringUsername.removeTextChangedListener(mUsernameTextWatcher)
-        }
-        super.onDetach()
+    override fun onStop() {
+        super.onStop()
+        mDisposableListener?.dispose()
+        mDisposableListener = null
     }
 
     private val isValidUsername: Boolean
