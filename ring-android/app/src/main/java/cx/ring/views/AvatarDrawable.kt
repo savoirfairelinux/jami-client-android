@@ -23,7 +23,6 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
-import android.text.TextUtils
 import android.util.TypedValue
 import androidx.core.content.ContextCompat
 import cx.ring.R
@@ -35,6 +34,7 @@ import net.jami.model.*
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.HashUtils
 import java.util.*
+import kotlin.math.min
 
 class AvatarDrawable : Drawable {
     private class PresenceIndicatorInfo {
@@ -48,18 +48,22 @@ class AvatarDrawable : Drawable {
     private val isGroup: Boolean
     private var inSize = -1
     private val minSize: Int
-    private val workspace: MutableList<Bitmap?>
+    private val workspace: Array<Bitmap?>
     private val bitmaps: MutableList<Bitmap>?
     private var placeholder: VectorDrawable? = null
     private var checkedIcon: VectorDrawable? = null
-    private val backgroundBounds: List<RectF>?
-    private val inBounds: List<Rect?>?
+    private val backgroundBounds: Array<RectF>?
+    private val inBounds: Array<Rect?>?
     private var avatarText: String? = null
     private var textStartXPoint = 0f
     private var textStartYPoint = 0f
     private var color = 0
-    private val clipPaint: MutableList<Paint>?
-    private val textPaint = Paint()
+    private val clipPaint: Array<Paint>?
+    private val textPaint = Paint().apply {
+        isAntiAlias = true
+        color = Color.WHITE
+        typeface = Typeface.SANS_SERIF
+    }
     private val presenceFillPaint: Paint
     private val presenceStrokePaint: Paint
     private val checkedPaint: Paint
@@ -216,7 +220,7 @@ class AvatarDrawable : Drawable {
         }
 
         fun withNameData(profileName: String?, username: String?): Builder {
-            return withName(if (TextUtils.isEmpty(profileName)) username else profileName)
+            return withName(if (profileName.isNullOrEmpty()) username else profileName)
         }
 
         fun withContact(contact: ContactViewModel?): Builder {
@@ -226,7 +230,7 @@ class AvatarDrawable : Drawable {
                 .withNameData(contact.profile.displayName, contact.registeredName)
         }
 
-        fun withContacts(contacts: List<ContactViewModel>): Builder {
+        private fun withContacts(contacts: List<ContactViewModel>): Builder {
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
             var notTheUser = 0
             for (contact in contacts) {
@@ -255,7 +259,7 @@ class AvatarDrawable : Drawable {
         fun withConversation(conversation: Conversation, contacts: List<ContactViewModel>): Builder {
             return if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
                 withContacts(contacts).setGroup()
-            else withContact(contacts[0])
+            else withContact(ConversationItemViewModel.getContact(contacts))
         }
 
         private fun setGroup(): Builder {
@@ -264,8 +268,10 @@ class AvatarDrawable : Drawable {
         }
 
         fun withViewModel(vm: ConversationItemViewModel): Builder {
-            val isSwarm = vm.uri.isSwarm
-            return (if (isSwarm) withContacts(vm.contacts).setGroup() else withContact(if (vm.contacts.isEmpty()) null else vm.contacts[vm.contacts.size - 1]))
+            val isSwarm = vm.uri.isSwarm && vm.mode != Conversation.Mode.OneToOne
+            return if (isSwarm)
+                withContacts(vm.contacts).setGroup()
+            else withContact(ConversationItemViewModel.getContact(vm.contacts))
                 .withPresence(vm.showPresence())
                 .withOnlineState(vm.isOnline)
                 .withCheck(vm.isChecked)
@@ -326,44 +332,36 @@ class AvatarDrawable : Drawable {
         isGroup = group
         minSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB.toFloat(), context.resources.displayMetrics).toInt()
         val borderSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_BORDER.toFloat(), context.resources.displayMetrics)
-        if (cropCircle) {
+        /*if (cropCircle) {
             inSize = minSize
-        }
+        }*/
         if (photos != null && photos.size > 0) {
             avatarText = null
             bitmaps = photos
             if (photos.size == 1) {
-                backgroundBounds = listOf(RectF())
-                inBounds = listOf<Rect?>(null)
-                clipPaint = if (cropCircle) mutableListOf(Paint()) else null
-                workspace = mutableListOf(null as Bitmap?)
+                backgroundBounds = arrayOf(RectF())
+                inBounds = arrayOf(null)
+                clipPaint = if (cropCircle) arrayOf(Paint()) else null
+                workspace = arrayOf(null)
             } else {
-                backgroundBounds = ArrayList(bitmaps.size)
-                inBounds = ArrayList(bitmaps.size)
-                clipPaint = if (cropCircle) ArrayList(bitmaps.size) else null
+                backgroundBounds = Array(bitmaps.size) { RectF() }
+                inBounds = if (cropCircle) arrayOfNulls(bitmaps.size) else Array(bitmaps.size) { Rect() }
+                clipPaint = if (cropCircle) Array(bitmaps.size) {Paint().apply {
+                    strokeWidth = borderSize
+                    color = Color.WHITE
+                    style = Paint.Style.FILL
+                }} else null
                 workspace =
-                    if (cropCircle) ArrayList(bitmaps.size) else Arrays.asList(null as Bitmap?)
-                for (ignored in bitmaps) {
-                    backgroundBounds.add(RectF())
-                    inBounds.add(if (cropCircle) null else Rect())
-                    if (cropCircle) {
-                        val p = Paint()
-                        p.strokeWidth = borderSize
-                        p.color = Color.WHITE
-                        p.style = Paint.Style.FILL
-                        clipPaint!!.add(p)
-                        workspace.add(null)
-                    }
-                }
+                    if (cropCircle) arrayOfNulls(bitmaps.size) else arrayOf(null)
             }
         } else {
-            workspace = mutableListOf(null as Bitmap?)
+            workspace = arrayOf(null)
             bitmaps = null
             backgroundBounds = null
             inBounds = null
             avatarText = convertNameToAvatarText(name)
             color = ContextCompat.getColor(context, getAvatarColor(id))
-            clipPaint = if (cropCircle) mutableListOf(Paint()) else null
+            clipPaint = if (cropCircle) arrayOf(Paint()) else null
             if (avatarText == null) {
                 placeholder =
                     context.getDrawable(if (isGroup) PLACEHOLDER_ICON_GROUP else PLACEHOLDER_ICON) as VectorDrawable?
@@ -372,30 +370,26 @@ class AvatarDrawable : Drawable {
                 textPaint.typeface = Typeface.SANS_SERIF
             }
         }
-        presenceFillPaint = Paint()
-        presenceFillPaint.color = ContextCompat.getColor(context, PRESENCE_COLOR)
-        presenceFillPaint.style = Paint.Style.FILL
-        presenceFillPaint.isAntiAlias = true
-        presenceFillPaint.color = ContextCompat.getColor(context, PRESENCE_COLOR)
-        presenceFillPaint.style = Paint.Style.FILL
-        presenceFillPaint.isAntiAlias = true
-        presenceStrokePaint = Paint()
-        presenceStrokePaint.color = ContextCompat.getColor(
-            context,
-            if (isTv(context)) R.color.grey_900 else R.color.background
-        )
-        presenceStrokePaint.style = Paint.Style.STROKE
-        presenceStrokePaint.isAntiAlias = true
+        presenceFillPaint = Paint().apply {
+            color = ContextCompat.getColor(context, PRESENCE_COLOR)
+            style = Paint.Style.FILL
+            isAntiAlias = true
+            color = ContextCompat.getColor(context, PRESENCE_COLOR)
+        }
+        presenceStrokePaint = Paint().apply {
+            color = ContextCompat.getColor(context,
+                if (isTv(context)) R.color.grey_900 else R.color.background)
+            style = Paint.Style.STROKE
+            isAntiAlias = true
+        }
         checkedIcon = context.getDrawable(CHECKED_ICON) as VectorDrawable?
-        checkedIcon!!.setTint(ContextCompat.getColor(context, R.color.colorPrimary))
-        checkedPaint = Paint()
-        checkedPaint.color = ContextCompat.getColor(context, R.color.background)
-        checkedPaint.style = Paint.Style.FILL_AND_STROKE
-        checkedPaint.isAntiAlias = true
+        checkedIcon?.setTint(ContextCompat.getColor(context, R.color.colorPrimary))
+        checkedPaint = Paint().apply {
+            color = ContextCompat.getColor(context, R.color.background)
+            style = Paint.Style.FILL_AND_STROKE
+            isAntiAlias = true
+        }
         if (clipPaint != null) for (p in clipPaint) p.isAntiAlias = true
-        textPaint.isAntiAlias = true
-        textPaint.color = Color.WHITE
-        textPaint.typeface = Typeface.SANS_SERIF
     }
 
     constructor(other: AvatarDrawable) {
@@ -404,55 +398,30 @@ class AvatarDrawable : Drawable {
         isGroup = other.isGroup
         minSize = other.minSize
         bitmaps = other.bitmaps
-        if (other.backgroundBounds != null) {
-            backgroundBounds = ArrayList(other.backgroundBounds.size)
-            var i = 0
-            val n = other.backgroundBounds.size
-            while (i < n) {
-                backgroundBounds.add(RectF())
-                i++
-            }
-        } else {
-            backgroundBounds = null
-        }
+        backgroundBounds = if (other.backgroundBounds != null)
+            Array(other.backgroundBounds.size) { RectF() }
+        else null
         inBounds = other.inBounds
         color = other.color
         placeholder = other.placeholder
         avatarText = other.avatarText
-        workspace = ArrayList(other.workspace.size)
-        var i = 0
-        val n = other.workspace.size
-        while (i < n) {
-            workspace.add(null)
-            i++
-        }
-        clipPaint = if (other.clipPaint == null) null else ArrayList(other.clipPaint.size)
-        if (clipPaint != null) {
-            i = 0
-            val n = other.clipPaint!!.size
-            while (i < n) {
-                clipPaint.add(Paint(other.clipPaint[i]))
-                clipPaint[i].shader = null
-                i++
-            }
-        }
+        workspace = arrayOfNulls(other.workspace.size)
+        clipPaint = if (other.clipPaint == null) null else Array(other.clipPaint.size) { i -> Paint(other.clipPaint[i]).apply {
+            shader = null
+        } }
         isOnline = other.isOnline
         isChecked = other.isChecked
         showPresence = other.showPresence
         presenceFillPaint = other.presenceFillPaint
         presenceStrokePaint = other.presenceStrokePaint
         checkedPaint = other.checkedPaint
-        textPaint.isAntiAlias = true
-        textPaint.color = Color.WHITE
-        textPaint.typeface = Typeface.SANS_SERIF
     }
 
     override fun draw(finalCanvas: Canvas) {
-        if (workspace[0] == null) return
+        val firstWorkspace = workspace[0] ?: return
         if (update) {
             var i = 0
-            val s = workspace.size
-            while (i < s) {
+            while (i < workspace.size) {
                 drawActual(i, Canvas(workspace[i]!!))
                 i++
             }
@@ -461,33 +430,29 @@ class AvatarDrawable : Drawable {
         if (cropCircle) {
             finalCanvas.save()
             finalCanvas.translate(
-                (bounds.width() - workspace[0]!!
-                    .width) / 2f, (bounds.height() - workspace[0]!!.height) / 2f
+                (bounds.width() - firstWorkspace.width) / 2f,
+                (bounds.height() - firstWorkspace.height) / 2f
             )
-            var r = (Math.min(
-                workspace[0]!!.width, workspace[0]!!.height
-            ) / 2).toFloat()
-            val cx = workspace[0]!!.width / 2 //getBounds().centerX();
-            var cy = (workspace[0]!!.height / 2).toFloat() //getBounds().height() / 2;
-            var i = 0
+            var r = (min(firstWorkspace.width, firstWorkspace.height) / 2).toFloat()
+            val cx = firstWorkspace.width / 2 //getBounds().centerX();
+            var cy = (firstWorkspace.height / 2).toFloat() //getBounds().height() / 2;
             val ratio = 1.333333f
-            for (paint in clipPaint!!) {
-                finalCanvas.drawCircle(cx.toFloat(), workspace[0]!!.height - cy, r, paint)
+            for ((i, paint) in clipPaint!!.withIndex()) {
+                finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, paint)
                 if (i != 0) {
                     val s = paint.shader
                     paint.shader = null
                     paint.style = Paint.Style.STROKE
-                    finalCanvas.drawCircle(cx.toFloat(), workspace[0]!!.height - cy, r, paint)
+                    finalCanvas.drawCircle(cx.toFloat(), firstWorkspace.height - cy, r, paint)
                     paint.shader = s
                     paint.style = Paint.Style.FILL
                 }
-                i++
                 r /= ratio
                 cy /= ratio
             }
             finalCanvas.restore()
         } else {
-            finalCanvas.drawBitmap(workspace[0]!!, null, bounds, drawPaint)
+            finalCanvas.drawBitmap(firstWorkspace, null, bounds, drawPaint)
         }
         if (showPresence && isOnline) {
             drawPresence(finalCanvas)
@@ -568,35 +533,29 @@ class AvatarDrawable : Drawable {
     override fun onBoundsChange(bounds: Rect) {
         //if (showPresence)
         setupPresenceIndicator(bounds)
-        val d = Math.min(bounds.width(), bounds.height())
-        if (placeholder != null) {
-            val cx = (bounds.width() - d) / 2
-            val cy = (bounds.height() - d) / 2
-            placeholder!!.setBounds(cx, cy, cx + d, cy + d)
-        }
+        val d = min(bounds.width(), bounds.height())
         val iw = if (cropCircle) d else bounds.width()
         val ih = if (cropCircle) d else bounds.height()
-        var i = 0
-        val n = workspace.size
-        while (i < n) {
+        if (placeholder != null) {
+            val cx = (iw - d) / 2
+            val cy = (ih - d) / 2
+            placeholder!!.setBounds(cx, cy, cx + d, cy + d)
+        }
+        for (i in workspace.indices) {
             if (workspace[i] != null) {
                 workspace[i]!!.recycle()
                 workspace[i] = null
                 clipPaint!![i].shader = null
             }
-            i++
         }
         if (iw <= 0 || ih <= 0) {
             return
         }
         if (cropCircle) {
-            i = 0
-            val s = workspace.size
-            while (i < s) {
+            for (i in workspace.indices) {
                 val workspacei = Bitmap.createBitmap(iw, ih, Bitmap.Config.ARGB_8888)
                 workspace[i] = workspacei
                 clipPaint!![i].shader = BitmapShader(workspacei, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-                i++
             }
         } else {
             workspace[0] =
@@ -620,7 +579,7 @@ class AvatarDrawable : Drawable {
                 }
             }
         } else {
-            setAvatarTextValues(bounds)
+            setAvatarTextValues(iw, ih)
         }
         update = true
     }
@@ -665,20 +624,18 @@ class AvatarDrawable : Drawable {
         return PixelFormat.TRANSLUCENT
     }
 
-    private fun setAvatarTextValues(bounds: Rect) {
+    private fun setAvatarTextValues(width: Int, height: Int) {
         if (avatarText != null) {
-            textPaint.textSize = bounds.height() * DEFAULT_TEXT_SIZE_PERCENTAGE
+            textPaint.textSize = height * DEFAULT_TEXT_SIZE_PERCENTAGE
             val stringWidth = textPaint.measureText(avatarText)
-            textStartXPoint = bounds.width() / 2f - stringWidth / 2f
-            textStartYPoint = bounds.height() / 2f - (textPaint.ascent() + textPaint.descent()) / 2f
+
+            textStartXPoint = width / 2f - stringWidth / 2f
+            textStartYPoint = height / 2f - (textPaint.ascent() + textPaint.descent()) / 2f
         }
     }
 
     private fun convertNameToAvatarText(name: String?): String? {
-        return if (name == null || name.isEmpty()) {
-            null
-        } else {
-            String(Character.toChars(name.codePointAt(0))).uppercase(Locale.getDefault())
-        }
+        return if (name.isNullOrEmpty()) null
+        else String(Character.toChars(name.codePointAt(0))).uppercase(Locale.getDefault())
     }
 }
