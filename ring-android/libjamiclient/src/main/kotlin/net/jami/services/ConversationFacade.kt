@@ -74,6 +74,15 @@ class ConversationFacade(
         get() = currentAccountSubject
             .switchMap { obj: Account -> obj.getConversationsSubject() }
 
+    fun messageNotified(accountId: String, conversationUri: Uri, messageId: String) {
+        val account = mAccountService.getAccount(accountId) ?: return
+        val conversation  = account.getByUri(conversationUri) ?: return
+        conversation.getMessage(messageId)?.let { message ->
+            message.isNotified = true
+        }
+        mHistoryService.setMessageNotified(accountId, conversationUri, messageId)
+    }
+
     fun readMessages(accountId: String, contact: Uri): String? {
         val account = mAccountService.getAccount(accountId) ?: return null
         val conversation  = account.getByUri(contact) ?: return null
@@ -96,7 +105,7 @@ class ConversationFacade(
         var lastRead: String? = null
         if (conversation.isSwarm) {
             lastRead = conversation.readMessages()
-            if (lastRead != null) mHistoryService.setMessageRead(conversation.accountId, conversation.uri, lastRead)
+            if (lastRead != null) mHistoryService.setMessageNotified(conversation.accountId, conversation.uri, lastRead)
         } else {
             val messages = conversation.rawHistory
             for (e in messages.descendingMap().values) {
@@ -168,15 +177,12 @@ class ConversationFacade(
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
+        if (conversation.isSwarm)
+            return
         if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
             val transfer = element as DataTransfer
             if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
-                mAccountService.cancelDataTransfer(
-                    conversation.accountId,
-                    conversation.uri.rawRingId,
-                    transfer.messageId,
-                    transfer.fileId!!
-                )
+                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
             } else {
                 val file = mDeviceRuntimeService.getConversationPath(conversation.uri.rawRingId, transfer.storagePath)
                 mDisposableBag.add(Completable.mergeArrayDelayError(
@@ -380,6 +386,7 @@ class ConversationFacade(
                         val conversation = account.getByUri(e.conversation!!.participant) ?: continue
                         conversation.id = e.conversation!!.id
                         conversation.addElement(e)
+                        conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
                         conversations.add(conversation)
                     }
                     account.setHistoryLoaded(conversations)
@@ -550,9 +557,10 @@ class ConversationFacade(
     fun cancelFileTransfer(accountId: String, conversationId: Uri, messageId: String?, fileId: String?) {
         mAccountService.cancelDataTransfer(accountId, if (conversationId.isSwarm) conversationId.rawRingId else "", messageId, fileId!!)
         mNotificationService.removeTransferNotification(accountId, conversationId, fileId)
-        mAccountService.getAccount(accountId)?.getDataTransfer(fileId)?.let { transfer ->
-            deleteConversationItem(transfer.conversation as Conversation, transfer)
-        }
+        if (!conversationId.isSwarm)
+            mAccountService.getAccount(accountId)?.getDataTransfer(fileId)?.let { transfer ->
+                deleteConversationItem(transfer.conversation as Conversation, transfer)
+            }
     }
 
     fun removeConversation(accountId: String, conversationUri: Uri): Completable {
