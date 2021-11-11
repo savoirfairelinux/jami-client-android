@@ -31,6 +31,7 @@ import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.hardware.Camera
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.IBinder
@@ -47,13 +48,13 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.*
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.math.MathUtils.lerp
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
@@ -70,13 +71,7 @@ import cx.ring.service.LocationSharingService
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.AndroidFileUtils.copyFileToUri
-import cx.ring.utils.AndroidFileUtils.createAudioFile
-import cx.ring.utils.AndroidFileUtils.createImageFile
-import cx.ring.utils.AndroidFileUtils.createVideoFile
-import cx.ring.utils.AndroidFileUtils.getCacheFile
-import cx.ring.utils.AndroidFileUtils.getMimeTypeFromExtension
-import cx.ring.utils.AndroidFileUtils.getSpaceLeft
+import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
@@ -122,6 +117,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mapHeight = 0
     private var mLastRead: String? = null
     private var loading = true
+    private var animating = 0
 
     fun getConversationAvatar(uri: String): AvatarDrawable? {
         return mParticipantAvatars[uri]
@@ -141,18 +137,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun scrollToEnd() {
-        if (mAdapter!!.itemCount > 0) {
-            binding!!.histList.scrollToPosition(mAdapter!!.itemCount - 1)
+        mAdapter?.let { adapter ->
+            if (adapter.itemCount > 0)
+                binding!!.histList.scrollToPosition(adapter.itemCount - 1)
         }
     }
 
     private fun updateListPadding() {
-        if (currentBottomView != null && currentBottomView!!.height != 0) {
-            val bottomViewHeight = if (currentBottomView != null) currentBottomView!!.height else 0
-            setBottomPadding(binding!!.histList, bottomViewHeight + marginPxTotal)
-            val params = binding!!.mapCard.layoutParams as RelativeLayout.LayoutParams
-            params.bottomMargin = bottomViewHeight + marginPxTotal
-            binding!!.mapCard.layoutParams = params
+        val binding = binding ?: return
+        val bottomView = currentBottomView ?: return
+        val bottomViewHeight = bottomView.height
+        if (bottomViewHeight != 0) {
+            val padding = bottomViewHeight + marginPxTotal
+            binding.histList.updatePadding(bottom = padding)
+            val params = binding.mapCard.layoutParams as RelativeLayout.LayoutParams
+            params.bottomMargin = padding
+            binding.mapCard.layoutParams = params
         }
     }
 
@@ -177,29 +177,43 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             this@ConversationFragment.binding = binding
             binding.presenter = this@ConversationFragment
             animation.duration = 150
-            animation.addUpdateListener { valueAnimator: ValueAnimator -> setBottomPadding(binding.histList, valueAnimator.animatedValue as Int) }
+            animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
-            ViewCompat.setOnApplyWindowInsetsListener(binding.histList) { _, insets: WindowInsetsCompat ->
-                marginPxTotal = marginPx + insets.systemWindowInsetBottom
-                updateListPadding()
-                insets.consumeSystemWindowInsets()
-                insets
-            }
             val layout: View = binding.conversationLayout
 
             // remove action bar height for tablet layout
             if (isTablet(layout.context)) {
-                layout.setPadding(layout.paddingLeft, 0, layout.paddingRight, layout.paddingBottom)
+                layout.updatePadding(top = 0)
             }
-            val paddingTop = layout.paddingTop
+
+            if (Build.VERSION.SDK_INT >= 30) {
+                ViewCompat.setWindowInsetsAnimationCallback(
+                    layout,
+                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                            animating++
+                        }
+                        override fun onProgress(
+                            insets: WindowInsetsCompat,
+                            runningAnimations: List<WindowInsetsAnimationCompat>
+                        ): WindowInsetsCompat {
+                            layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+                            return insets
+                        }
+
+                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                            animating--
+                        }
+                    })
+            }
             ViewCompat.setOnApplyWindowInsetsListener(layout) { v: View, insets: WindowInsetsCompat ->
-                v.setPadding(v.paddingLeft, paddingTop + insets.systemWindowInsetTop, v.paddingRight, v.paddingBottom)
-                insets.consumeSystemWindowInsets()
-                insets
+                if (animating == 0)
+                    layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+                WindowInsetsCompat.CONSUMED
             }
             binding.ongoingcallPane.visibility = View.GONE
             binding.msgInputTxt.setMediaListener { contentInfo: InputContentInfoCompat ->
-                startFileSend(getCacheFile(requireContext(), contentInfo.contentUri)
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), contentInfo.contentUri)
                         .flatMapCompletable { file: File -> sendFile(file) }
                         .doFinally { contentInfo.releasePermission() })
             }
@@ -257,7 +271,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     if (animation.isStarted) animation.cancel()
                     animation.setIntValues(
                         binding.histList.paddingBottom,
-                        (if (currentBottomView == null) 0 else currentBottomView!!.height) + marginPxTotal
+                        (currentBottomView?.height ?: 0) + marginPxTotal
                     )
                     animation.start()
                 }
@@ -466,7 +480,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             try {
                 val ctx = requireContext()
                 val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-                mCurrentPhoto = createAudioFile(ctx)
+                mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx)
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO)
             } catch (ex: Exception) {
                 Log.e(TAG, "sendAudioMessage: error", ex)
@@ -485,7 +499,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.CAMERA_FACING", Camera.CameraInfo.CAMERA_FACING_FRONT)
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
-                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, createVideoFile(context).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, AndroidFileUtils.createVideoFile(context).apply {
                         mCurrentPhoto = this
                     }))
                 }
@@ -504,7 +518,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
         val c = context ?: return
         try {
-            val photoFile = createImageFile(c)
+            val photoFile = AndroidFileUtils.createImageFile(c)
             Log.i(TAG, "takePicture: trying to save to $photoFile")
             val photoURI = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile)
             val takePictureIntent =
@@ -558,13 +572,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     val fNb = clipData.itemCount
                     for (i in 0 until fNb) {
                         val uri = clipData.getItemAt(i).uri
-                        startFileSend(getCacheFile(requireContext(), uri)
+                        startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .observeOn(AndroidSchedulers.mainThread())
                             .flatMapCompletable { file: File -> sendFile(file) })
                     }
                 } else {
                     resultData.data?.let { uri ->
-                        startFileSend(getCacheFile(requireContext(), uri)
+                        startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .observeOn(AndroidSchedulers.mainThread())
                             .flatMapCompletable { file: File -> sendFile(file) })
                     }
@@ -579,7 +593,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             var file: Single<File>? = null
             if (currentPhoto == null || !currentPhoto.exists() || currentPhoto.length() == 0L) {
                 resultData?.data?.let { uri ->
-                    file = getCacheFile(requireContext(), uri)
+                    file = AndroidFileUtils.getCacheFile(requireContext(), uri)
                 }
             } else {
                 file = Single.just(currentPhoto)
@@ -601,7 +615,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private fun writeToFile(data: Uri) {
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
-        mCompositeDisposable.add(copyFileToUri(cr, File(path), data)
+        mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(cr, File(path), data)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
             { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
@@ -666,7 +680,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (transfer.messageId == null && transfer.fileId == null)
             return
         val cacheDir = requireContext().cacheDir
-        val spaceLeft = getSpaceLeft(cacheDir.toString())
+        val spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString())
         if (spaceLeft == -1L || transfer.totalSize > spaceLeft) {
             presenter.noSpaceLeft()
             return
@@ -1092,7 +1106,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 val clip = intent.clipData
                 if (uri == null && clip != null && clip.itemCount > 0) uri = clip.getItemAt(0).uri
                 if (uri == null) return
-                startFileSend(getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
             }
         } else if (Intent.ACTION_VIEW == action) {
             val path = ConversationPath.fromIntent(intent)
@@ -1115,7 +1129,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         try {
             //Use Android Storage File Access to download the file
             val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            downloadFileIntent.type = getMimeTypeFromExtension(file.extension)
+            downloadFileIntent.type = AndroidFileUtils.getMimeTypeFromExtension(file.extension)
             downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
             downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
@@ -1189,10 +1203,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 i++
             }
             return 0
-        }
-
-        private fun setBottomPadding(view: View, padding: Int) {
-            view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, padding)
         }
     }
 }
