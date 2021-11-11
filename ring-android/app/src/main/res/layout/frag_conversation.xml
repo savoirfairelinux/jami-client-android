@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/conversationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         tools:context=".client.ConversationActivity">
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/conversationLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:background="@color/background"
-            android:clipToPadding="false">
+            android:clipToPadding="false">-->
 
             <TextView
                 android:id="@+id/error_msg_pane"
@@ -129,14 +131,14 @@
                     tools:background="@color/light_green_400" />
 
             </androidx.cardview.widget.CardView>
-
+<!--
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true">-->
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 style="@style/Widget.AppTheme.MainActionButton"
@@ -215,21 +217,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:animateLayoutChanges="true"
                 android:background="@drawable/textmsg_bg_input"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="visible"
-                android:animateLayoutChanges="true">
+                tools:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvMessageInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="8dp"
+                    android:minHeight="48dp"
                     android:visibility="gone"
                     app:cardCornerRadius="@dimen/conversation_message_input_radius"
                     app:cardElevation="4dp"
@@ -239,8 +241,8 @@
                         android:id="@+id/btn_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_gravity="center"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingStart="8dp">
 
@@ -319,9 +321,8 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </RelativeLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
     <data>
 
