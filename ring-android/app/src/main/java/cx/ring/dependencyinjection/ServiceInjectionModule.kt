@@ -65,9 +65,7 @@ object ServiceInjectionModule {
                                    contactService: ContactService,
                                    preferencesService: PreferencesService,
                                    deviceRuntimeService: DeviceRuntimeService): NotificationService {
-        val service = NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService)
-        service.initHelper()
-        return service
+        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService)
     }
 
     @Provides
