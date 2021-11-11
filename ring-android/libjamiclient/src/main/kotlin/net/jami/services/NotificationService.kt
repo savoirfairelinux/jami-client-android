@@ -34,10 +34,10 @@ interface NotificationService {
     fun showIncomingTrustRequestNotification(account: Account)
     fun cancelTrustRequestNotification(accountID: String)
     fun showFileTransferNotification(conversation: Conversation, info: DataTransfer)
-    fun cancelFileNotification(id: Int, isMigratingToService: Boolean)
     fun handleDataTransferNotification(transfer: DataTransfer, contact: Conversation, remove: Boolean)
     fun removeTransferNotification(accountId: String, conversationUri: Uri, fileId: String)
     fun getDataTransferNotification(notificationId: Int): Any?
+    fun cancelFileNotification(notificationId: Int)
 
     //void updateNotification(Object notification, int notificationId);
     val serviceNotification: Any
