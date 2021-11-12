@@ -238,7 +238,7 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id, false)
+        mHardwareService.switchInput(conference.accountId, conference.id)
     }
 
     fun switchOnOffCamera() {
@@ -599,11 +599,14 @@ class CallPresenter @Inject constructor(
     }
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
-        return mHardwareService.startScreenShare(mediaProjection)
+        val conference = mConference ?: return false
+        mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        return true//mHardwareService.startScreenShare(mediaProjection)
     }
 
     fun stopScreenShare() {
-        mHardwareService.stopScreenShare()
+        val conference = mConference ?: return
+        mHardwareService.switchInput(conference.accountId, conference.id, true)
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {

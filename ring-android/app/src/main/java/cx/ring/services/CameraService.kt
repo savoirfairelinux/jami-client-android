@@ -56,6 +56,7 @@ import net.jami.daemon.UintVect
 import java.nio.ByteBuffer
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.max
 
 class CameraService internal constructor(c: Context) {
     private val manager = c.getSystemService(Context.CAMERA_SERVICE) as CameraManager?
@@ -118,6 +119,10 @@ class CameraService internal constructor(c: Context) {
                 currentId = null
             }
             return currentId
+        }
+
+        companion object {
+            const val SCREEN_SHARING = "desktop"
         }
     }
 
@@ -183,11 +188,11 @@ class CameraService internal constructor(c: Context) {
         JamiService.setDeviceOrientation(camId, rotation)
     }
 
-    fun getCameraInfo(camId: String, formats: IntVect?, sizes: UintVect, rates: UintVect, minVideoSize: Point) {
+    fun getCameraInfo(camId: String, formats: IntVect?, sizes: UintVect, rates: UintVect, minVideoSize: Point, context: Context) {
         Log.d(TAG, "getCameraInfo: $camId min. size: $minVideoSize")
         val p = DeviceParams()
         rates.clear()
-        fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize)
+        fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize, context)
         sizes.add(p.size.x.toLong())
         sizes.add(p.size.y.toLong())
         Log.d(TAG, "getCameraInfo: " + camId + " max. size: " + p.maxSize + " size:" + p.size)
@@ -218,8 +223,8 @@ class CameraService internal constructor(c: Context) {
         return cameraCount > 0
     }
 
-    class VideoParams(val id: String?, var width: Int, var height: Int, var rate: Int) {
-        val inputUri: String = if (id != null) "camera://$id" else "screen://0"
+    class VideoParams(val id: String, var width: Int, var height: Int, var rate: Int) {
+        val inputUri: String = "camera://$id"
 
         //public int format;
         // size as captured by Android
@@ -293,6 +298,9 @@ class CameraService internal constructor(c: Context) {
                         Log.w(TAG, "JamiServiceJNI.addVideoDevice init $camera")
                         if (addedDevices.add(camera)) JamiService.addVideoDevice(camera)
                     }
+                    // Add screen sharing device
+                    if (addedDevices.add(VideoDevices.SCREEN_SHARING))
+                        JamiService.addVideoDevice(VideoDevices.SCREEN_SHARING)
                     // New default
                     if (devs.currentId != null) {
                         JamiService.setDefaultDevice(devs.currentId)
@@ -325,6 +333,7 @@ class CameraService internal constructor(c: Context) {
             camera.close()
             currentCodec = null
         }
+        stopScreenSharing()
     }
 
     private fun openEncoder(
@@ -465,8 +474,12 @@ class CameraService internal constructor(c: Context) {
         val screenDensity = metrics.densityDpi
         val handler = videoHandler
         var r: Pair<MediaCodec?, Surface?>? = null
+        while (max(screenWidth, screenHeight) > 1920) {
+            screenWidth /= 2
+            screenHeight /= 2
+        }
         while (screenWidth >= 320) {
-            val params = VideoParams(null, screenWidth, screenHeight, 24)
+            val params = VideoParams(VideoDevices.SCREEN_SHARING, screenWidth, screenHeight, 24)
             r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0)
             if (r.first == null) {
                 screenWidth /= 2
@@ -543,7 +556,7 @@ class CameraService internal constructor(c: Context) {
         try {
             val view = surface as AutoFitTextureView
             val flip = videoParams.rotation % 180 != 0
-            val cc = manager!!.getCameraCharacteristics(videoParams.id!!)
+            val cc = manager!!.getCameraCharacteristics(videoParams.id)
             val fpsRange = chooseOptimalFpsRange(cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES))
             val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
             val previewSize = chooseOptimalSize(
@@ -677,7 +690,7 @@ class CameraService internal constructor(c: Context) {
     }
 
     val isOpen: Boolean
-        get() = previewCamera != null
+        get() = previewCamera != null || currentMediaProjection != null
     val cameraIds: List<String>
         get() = devices?.cameras ?: ArrayList()
     val cameraCount: Int
@@ -687,10 +700,30 @@ class CameraService internal constructor(c: Context) {
             0
         }
 
-    fun fillCameraInfo(p: DeviceParams, camId: String?, formats: IntVect?, sizes: UintVect?, rates: UintVect, minVideoSize: Point) {
+    private fun fillCameraInfo(
+        p: DeviceParams,
+        camId: String,
+        formats: IntVect?,
+        sizes: UintVect?,
+        rates: UintVect,
+        minVideoSize: Point,
+        context: Context
+    ) {
         if (manager == null) return
         try {
-            val cc = manager.getCameraCharacteristics(camId!!)
+            if (camId == VideoDevices.SCREEN_SHARING) {
+                val metrics = context.resources.displayMetrics
+                var screenWidth = metrics.widthPixels
+                var screenHeight = metrics.heightPixels
+                while (max(screenWidth, screenHeight) > 1920) {
+                    screenWidth /= 2
+                    screenHeight /= 2
+                }
+                p.size.x = screenWidth
+                p.size.y = screenHeight
+                return
+            }
+            val cc = manager.getCameraCharacteristics(camId)
             val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: return
             val rawSizes = streamConfigs.getOutputSizes(ImageFormat.YUV_420_888)
             var newSize = rawSizes[0]
