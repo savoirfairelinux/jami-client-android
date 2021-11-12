@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "530c82b1_f65b16bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "some questions 👍",
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d86c5d20_64fef296",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "[typo] info.contact.uri",
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d65f0b72_5aabae26",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "proposition: Should we rename this to match the new name ? \nsomething like conversationInfo or conversationlistItem",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74f0954f_d9db22db",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "deprecated ? can be delete ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd68eb4e_0889e785",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "could we delete this function and just use kotlin default getter ?? or is there a specific needs for this parameters to be private ?\n\n\n```\nval hasUnreadTextMessage\n      private set\n```\n\nthen:\n```\nconversationViewModel.hasUnreadTextMessage \u003d\u003d hasUnreadTextMessage()\n```",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d811db0_f29b8724",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "could we delete this function and just use kotlin default getter ?? or is there a specific needs for this parameters to be private ?\n\n```\nval hasOngoingCall\n      private set\n```\n\nthen:\n```\nconversationViewModel.hasOngoingCall \u003d\u003d hasOngoingCall()\n```",
+      "range": {
+        "startLine": 137,
+        "startChar": 3,
+        "endLine": 139,
+        "endChar": 5
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "647215d1_2955afaa",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "could we delete this function and just use kotlin default getter ?? or is there a specific needs for this parameters to be private ?\n\n```\nval showPresence\n      private set\n```\n\nthen:\n```\nconversationViewModel.showPresence \u003d\u003d showPresence()\n```",
+      "range": {
+        "startLine": 149,
+        "startChar": 3,
+        "endLine": 151,
+        "endChar": 5
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c23117_317895fa",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/smartlist/ConversationItemViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-11-12T19:52:01Z",
+      "side": 1,
+      "message": "could this function be the same as the default setter for a declared var in kotlin ?\n\n``` \n    fun setHasOngoingCall(hasOngoingCall: Boolean) {\n        this.hasOngoingCall \u003d hasOngoingCall\n    }\n```\n\nreplaced by: \n\n```\nvar hasOngoingCall :  Boolean\n\n```\nwhich inherit default getter and setter",
+      "range": {
+        "startLine": 153,
+        "startChar": 3,
+        "endLine": 155,
+        "endChar": 5
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
