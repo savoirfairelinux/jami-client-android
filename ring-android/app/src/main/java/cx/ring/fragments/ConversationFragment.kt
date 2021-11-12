@@ -42,6 +42,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.annotation.ColorInt
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -52,6 +53,7 @@ import androidx.core.view.inputmethod.InputContentInfoCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
@@ -276,10 +278,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val animator = binding.histList.itemAnimator as DefaultItemAnimator?
             animator?.supportsChangeAnimations = false
             binding.histList.adapter = mAdapter
+
+
+            val toolbarLayout: AppBarLayout = requireActivity().findViewById(R.id.toolbar_layout)
+            toolbarLayout.isLifted = true
+            //toolbarLayout.liftOnScrollTargetViewId = binding.histList.id
+
         }
     }
 
-    override fun setConversationColor(color: Int) {
+    override fun setConversationColor(@ColorInt color: Int) {
         val activity = activity as Colorable?
         activity?.setColor(color)
         mAdapter?.setPrimaryColor(color)
@@ -952,17 +960,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (identity != null && identity != displayName) {
             subtitle.text = identity
             subtitle.visibility = View.VISIBLE
-            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_TOP, R.id.contact_image);
-            title.setLayoutParams(params);*/
         } else {
             subtitle.text = ""
             subtitle.visibility = View.GONE
-
-            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-            params.removeRule(RelativeLayout.ALIGN_TOP);
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            title.setLayoutParams(params);*/
         }
     }
 
