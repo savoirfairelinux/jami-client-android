@@ -29,7 +29,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import kotlin.jvm.Synchronized
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
-import net.jami.utils.Tuple
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
@@ -42,7 +41,7 @@ class Conversation : ConversationHistory {
     private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
     private var lastDisplayed: Interaction? = null
-    private val updatedElementSubject: Subject<Tuple<Interaction, ElementStatus>> = PublishSubject.create()
+    private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val lastDisplayedSubject: Subject<Interaction> = BehaviorSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.create()
@@ -215,7 +214,7 @@ class Conversation : ConversationHistory {
         UPDATE, REMOVE, ADD
     }
 
-    val updatedElements: Observable<Tuple<Interaction, ElementStatus>>
+    val updatedElements: Observable<Pair<Interaction, ElementStatus>>
         get() = updatedElementSubject
 
     fun getLastDisplayed(): Observable<Interaction> {
@@ -281,7 +280,7 @@ class Conversation : ConversationHistory {
         }
         mDirty = true
         aggregateHistory.add(call)
-        updatedElementSubject.onNext(Tuple(call, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(call, ElementStatus.ADD))
     }
 
     private fun setInteractionProperties(interaction: Interaction) {
@@ -313,7 +312,7 @@ class Conversation : ConversationHistory {
         rawHistory[txt.timestamp] = txt
         mDirty = true
         aggregateHistory.add(txt)
-        updatedElementSubject.onNext(Tuple(txt, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(txt, ElementStatus.ADD))
     }
 
     fun addRequestEvent(request: TrustRequest, contact: Contact) {
@@ -321,20 +320,20 @@ class Conversation : ConversationHistory {
         val event = ContactEvent(contact, request)
         mDirty = true
         aggregateHistory.add(event)
-        updatedElementSubject.onNext(Tuple(event, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(event, ElementStatus.ADD))
     }
 
     fun addContactEvent(contact: Contact) {
         val event = ContactEvent(contact)
         mDirty = true
         aggregateHistory.add(event)
-        updatedElementSubject.onNext(Tuple(event, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(event, ElementStatus.ADD))
     }
 
     fun addContactEvent(contactEvent: ContactEvent) {
         mDirty = true
         aggregateHistory.add(contactEvent)
-        updatedElementSubject.onNext(Tuple(contactEvent, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(contactEvent, ElementStatus.ADD))
     }
 
     fun addFileTransfer(dataTransfer: DataTransfer) {
@@ -343,7 +342,7 @@ class Conversation : ConversationHistory {
         }
         mDirty = true
         aggregateHistory.add(dataTransfer)
-        updatedElementSubject.onNext(Tuple(dataTransfer, ElementStatus.ADD))
+        updatedElementSubject.onNext(Pair(dataTransfer, ElementStatus.ADD))
     }
 
     private fun isAfter(previous: Interaction, query: Interaction?): Boolean {
@@ -365,7 +364,7 @@ class Conversation : ConversationHistory {
             val e = mMessages[element.messageId]
             if (e != null) {
                 e.status = element.status
-                updatedElementSubject.onNext(Tuple(e, ElementStatus.UPDATE))
+                updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
                 if (e.status == Interaction.InteractionStatus.DISPLAYED) {
                     if (lastDisplayed == null || isAfter(lastDisplayed!!, e)) {
                         lastDisplayed = e
@@ -382,7 +381,7 @@ class Conversation : ConversationHistory {
             for (txt in msgs.values) {
                 if (txt.id == element.id) {
                     txt.status = element.status
-                    updatedElementSubject.onNext(Tuple(txt, ElementStatus.UPDATE))
+                    updatedElementSubject.onNext(Pair(txt, ElementStatus.UPDATE))
                     if (element.status == Interaction.InteractionStatus.DISPLAYED) {
                         if (lastDisplayed == null || isAfter(lastDisplayed!!, element)) {
                             lastDisplayed = element
@@ -541,14 +540,14 @@ class Conversation : ConversationHistory {
             added = true
             newLeaf = true
             aggregateHistory.add(interaction)
-            updatedElementSubject.onNext(Tuple(interaction, ElementStatus.ADD))
+            updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
         } else {
             // New root or normal node
             for (i in aggregateHistory.indices) {
                 if (interaction.messageId == aggregateHistory[i].parentId) {
                     //Log.w(TAG, "@@@ New root node at " + i);
                     aggregateHistory.add(i, interaction)
-                    updatedElementSubject.onNext(Tuple(interaction, ElementStatus.ADD))
+                    updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
                     added = true
                     break
                 }
@@ -560,7 +559,7 @@ class Conversation : ConversationHistory {
                         added = true
                         newLeaf = true
                         aggregateHistory.add(i + 1, interaction)
-                        updatedElementSubject.onNext(Tuple(interaction, ElementStatus.ADD))
+                        updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
                         break
                     }
                 }
@@ -592,15 +591,15 @@ class Conversation : ConversationHistory {
         val dataTransfer = (if (isSwarm) transfer else findConversationElement(transfer.id)) as DataTransfer?
         if (dataTransfer != null) {
             dataTransfer.status = eventCode
-            updatedElementSubject.onNext(Tuple(dataTransfer, ElementStatus.UPDATE))
+            updatedElementSubject.onNext(Pair(dataTransfer, ElementStatus.UPDATE))
         }
     }
 
     fun removeInteraction(interaction: Interaction) {
         if (isSwarm) {
-            if (removeSwarmInteraction(interaction.messageId!!)) updatedElementSubject.onNext(Tuple(interaction, ElementStatus.REMOVE))
+            if (removeSwarmInteraction(interaction.messageId!!)) updatedElementSubject.onNext(Pair(interaction, ElementStatus.REMOVE))
         } else {
-            if (removeInteraction(interaction.id.toLong())) updatedElementSubject.onNext(Tuple(interaction, ElementStatus.REMOVE))
+            if (removeInteraction(interaction.id.toLong())) updatedElementSubject.onNext(Pair(interaction, ElementStatus.REMOVE))
         }
     }
 

@@ -28,9 +28,10 @@ import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
 import net.jami.utils.Log
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.min
 
-class Conference {
+class Conference(val accountId: String, val id: String) {
     class ParticipantInfo(val call: Call?, val contact: Contact, i: Map<String, String>, val pending: Boolean = false) {
         val x: Int = i["x"]?.toInt() ?: 0
         val y: Int = i["y"]?.toInt() ?: 0
@@ -47,10 +48,9 @@ class Conference {
     private val mParticipantInfo: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(emptyList())
     private val mParticipantRecordingSet: MutableSet<Contact> = HashSet()
     private val mParticipantRecording: Subject<Set<Contact>> = BehaviorSubject.createDefault(emptySet())
-    val id: String
     private var mConfState: CallStatus? = null
-    private val mParticipants: ArrayList<Call>
-    private var mRecording: Boolean
+    private val mParticipants: ArrayList<Call> = ArrayList()
+    private var mRecording: Boolean = false
     var maximizedParticipant: Contact? = null
     var isModerator = false
 
@@ -59,22 +59,16 @@ class Conference {
     var isVideoMuted = false
         get() = call?.isVideoMuted ?: field
 
-    constructor(call: Call) : this(call.daemonIdString!!) {
+    constructor(call: Call) : this(call.account!!, call.daemonIdString!!) {
         mParticipants.add(call)
     }
 
-    constructor(cID: String) {
-        id = cID
-        mParticipants = ArrayList()
-        mRecording = false
-    }
-
-    constructor(c: Conference) {
+    /*constructor(c: Conference) {
         id = c.id
         mConfState = c.mConfState
         mParticipants = ArrayList(c.mParticipants)
         mRecording = c.mRecording
-    }
+    }*/
 
     val isRinging: Boolean
         get() = mParticipants.isNotEmpty() && mParticipants[0].isRinging

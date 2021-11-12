@@ -43,7 +43,6 @@ import net.jami.model.ConfigKey
 import net.jami.model.ConfigKey.Companion.fromString
 import net.jami.settings.GeneralAccountPresenter
 import net.jami.settings.GeneralAccountView
-import net.jami.utils.Tuple
 
 @AndroidEntryPoint
 class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>(), GeneralAccountView {
@@ -108,7 +107,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
         activity?.onBackPressed()
     }
 
-    override fun updateResolutions(maxResolution: Tuple<Int?, Int?>?, currentResolution: Int) {}
+    override fun updateResolutions(maxResolution: Pair<Int, Int>?, currentResolution: Int) {}
     private fun getFileSizeSummary(size: Int, maxSize: Int): CharSequence {
         return if (size == 0) {
             getText(R.string.account_accept_files_never)
