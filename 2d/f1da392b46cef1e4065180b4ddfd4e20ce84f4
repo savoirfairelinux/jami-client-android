@@ -1,0 +1,7 @@
+Code-Review+2: Maxime Callet <maxime.callet@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Submitted-at: Fri, 12 Nov 2021 12:18:03 -0500
+Reviewed-on: https://review.jami.net/c/jami-client-android/+/19764
+Project: jami-client-android
+Branch: refs/heads/master
