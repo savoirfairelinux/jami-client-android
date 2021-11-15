@@ -264,4 +264,6 @@
   <string name="conversation_input_speech_hint">Digui alguna cosa…</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Crea compte</string>
+  <string name="bottomSheet_share_btn">Comparteix</string>
+  <string name="bottomSheet_add_participants_btn">Afegir</string>
 </resources>

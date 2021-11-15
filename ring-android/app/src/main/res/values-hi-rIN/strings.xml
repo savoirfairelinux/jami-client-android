@@ -54,4 +54,5 @@
   <string name="tv_audio_play">शुरू करें</string>
   <!--Wizard-->
   <string name="wizard_password_skip">खाता बनाएं</string>
+  <string name="bottomSheet_share_btn">बाटें </string>
 </resources>

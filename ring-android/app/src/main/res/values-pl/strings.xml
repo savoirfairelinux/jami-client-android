@@ -302,4 +302,9 @@
   <string name="wizard_profile_skip">Pomiń i zrób to później</string>
   <string name="fab_path_choose">Wybierz inny plik</string>
   <string name="chat_plugins">Wtyczki czatu</string>
+  <string name="bottomSheet_share_btn">Podziel się</string>
+  <string name="bottomSheet_plugins_btn">Wtyczki</string>
+  <string name="bottomSheet_add_participants_btn">Dodaj</string>
+  <string name="bottomSheet_change_camera_btn">Zmień</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

@@ -324,8 +324,12 @@
   <string name="fab_path_choose">Choisir un autre fichier</string>
   <string name="chat_plugins">Modules d\'extension de discussion</string>
   <string name="bottomSheet_share_btn">Partager</string>
+  <string name="bottomSheet_dialpad_btn">Clavier numérique</string>
   <string name="bottomSheet_plugins_btn">Modules d\'extension</string>
   <string name="bottomSheet_add_participants_btn">Ajouter</string>
   <string name="bottomSheet_change_camera_btn">Modifier</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Caméra</string>
+  <string name="bottomSheet_hangup_btn">Terminer l\'appel</string>
+  <string name="bottomSheet_mute_microphone_btn">Micro</string>
+  <string name="bottomSheet_sound_output_btn">Sons</string>
 </resources>

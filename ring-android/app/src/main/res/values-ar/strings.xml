@@ -318,6 +318,10 @@
   <string name="fab_path_choose">اختر وثيقة أخرى</string>
   <string name="chat_plugins">إضافات الدردشة</string>
   <string name="bottomSheet_share_btn">مشاركة</string>
+  <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
   <string name="bottomSheet_plugins_btn">الإضافات</string>
   <string name="bottomSheet_camera_onoff_switch_btn">كاميرا</string>
+  <string name="bottomSheet_hangup_btn">إنهاء المكالمة</string>
+  <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
+  <string name="bottomSheet_sound_output_btn">الأصوات</string>
 </resources>

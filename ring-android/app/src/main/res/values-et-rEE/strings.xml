@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_end_accept">Lõpeta kõne ja vasta</string>
+  <string name="action_call_mic_mute">Vaigista mikrofon</string>
+  <!--Text messages-->
+  <string name="send_file">Saada fail</string>
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <string name="tv_audio_play">Mängi</string>
+  <!--Wizard-->
+  <string name="bottomSheet_dialpad_btn">Valimisklahvistik</string>
+  <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
+  <string name="bottomSheet_sound_output_btn">Helid</string>
+</resources>

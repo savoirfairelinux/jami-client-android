@@ -304,4 +304,9 @@
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>
   <string name="chat_plugins">Sohbet Eklentileri</string>
+  <string name="bottomSheet_share_btn">Paylaş</string>
+  <string name="bottomSheet_plugins_btn">Eklentiler</string>
+  <string name="bottomSheet_add_participants_btn">Ekle</string>
+  <string name="bottomSheet_change_camera_btn">Değiştir</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

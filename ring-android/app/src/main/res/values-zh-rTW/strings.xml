@@ -323,8 +323,12 @@
   <string name="fab_path_choose">選擇其他檔案</string>
   <string name="chat_plugins">聊天外掛程式</string>
   <string name="bottomSheet_share_btn">分享</string>
+  <string name="bottomSheet_dialpad_btn">撥號鍵盤</string>
   <string name="bottomSheet_plugins_btn">外掛程式</string>
   <string name="bottomSheet_add_participants_btn">新增</string>
   <string name="bottomSheet_change_camera_btn">變更</string>
   <string name="bottomSheet_camera_onoff_switch_btn">攝影機</string>
+  <string name="bottomSheet_hangup_btn">結束通話</string>
+  <string name="bottomSheet_mute_microphone_btn">微</string>
+  <string name="bottomSheet_sound_output_btn">聲音</string>
 </resources>

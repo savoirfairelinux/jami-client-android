@@ -233,4 +233,6 @@
   <string name="tv_dialog_send">Enviar</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Criar conta</string>
+  <string name="bottomSheet_share_btn">Partilhar</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Câmara</string>
 </resources>

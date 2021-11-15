@@ -323,4 +323,13 @@
   <string name="wizard_profile_skip">Saltar e facer esto máis tarde</string>
   <string name="fab_path_choose">Escolle outro ficheiro</string>
   <string name="chat_plugins">Complementos do chat</string>
+  <string name="bottomSheet_share_btn">Compartir</string>
+  <string name="bottomSheet_dialpad_btn">Teclado</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Engadir</string>
+  <string name="bottomSheet_change_camera_btn">Cambiar</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Cámara</string>
+  <string name="bottomSheet_hangup_btn">Rematar chamada</string>
+  <string name="bottomSheet_mute_microphone_btn">Micro</string>
+  <string name="bottomSheet_sound_output_btn">Sons</string>
 </resources>

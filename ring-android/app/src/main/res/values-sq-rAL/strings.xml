@@ -328,4 +328,7 @@
   <string name="bottomSheet_add_participants_btn">Shtoje</string>
   <string name="bottomSheet_change_camera_btn">Ndryshoje</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerë</string>
+  <string name="bottomSheet_hangup_btn">Përfundoje Thirrjen</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
+  <string name="bottomSheet_sound_output_btn">Tinguj</string>
 </resources>

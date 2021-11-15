@@ -323,4 +323,9 @@
   <string name="wizard_profile_skip">Saltear y hacerlo más tarde</string>
   <string name="fab_path_choose">Elegí otro archivo</string>
   <string name="chat_plugins">Complementos del chat</string>
+  <string name="bottomSheet_share_btn">Compartir</string>
+  <string name="bottomSheet_plugins_btn">Complementos</string>
+  <string name="bottomSheet_add_participants_btn">Añadir</string>
+  <string name="bottomSheet_change_camera_btn">Cambiar</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Cámara</string>
 </resources>

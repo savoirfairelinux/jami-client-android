@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_end_accept">Kết thúc cuộc gọi và trả lời</string>
+  <string name="action_call_mic_mute">Tắt tiếng micrô</string>
+  <!--Text messages-->
+  <string name="send_file">Gửi tập tin</string>
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <string name="prompt_hint_username">Username</string>
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <string name="bottomSheet_dialpad_btn">Bàn phím số</string>
+  <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
+  <string name="bottomSheet_mute_microphone_btn">Micrô</string>
+</resources>

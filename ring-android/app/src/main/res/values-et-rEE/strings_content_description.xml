@@ -2,4 +2,5 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_picture_description">Kontakti pilt</string>
+  <string name="dial_numeric_pad">Valimisklahvistik</string>
 </resources>

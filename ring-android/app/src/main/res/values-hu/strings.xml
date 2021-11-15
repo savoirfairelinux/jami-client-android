@@ -324,8 +324,12 @@
   <string name="fab_path_choose">Más fájl kiválasztása</string>
   <string name="chat_plugins">Csevegési beépülő modulok</string>
   <string name="bottomSheet_share_btn">Megosztás </string>
+  <string name="bottomSheet_dialpad_btn">Tárcsázó</string>
   <string name="bottomSheet_plugins_btn">Beépülő modulok</string>
   <string name="bottomSheet_add_participants_btn">Hozzáadás</string>
   <string name="bottomSheet_change_camera_btn">Változás</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Fényképezőgép</string>
+  <string name="bottomSheet_hangup_btn">Hívás befejezése</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
+  <string name="bottomSheet_sound_output_btn">Hangok</string>
 </resources>
