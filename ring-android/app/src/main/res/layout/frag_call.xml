@@ -396,9 +396,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{() -> presenter.speakerClicked()}"/>
 
                         <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_speaker"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_sound_output_btn"
                             android:layout_gravity="center"
@@ -430,9 +433,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{() -> presenter.micClicked()}"/>
 
                         <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_mic_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_mute_microphone_btn"
                             android:layout_gravity="center"
@@ -463,9 +469,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{() -> presenter.hangUpClicked()}"/>
 
                         <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_hng_up_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_hangup_btn"
                             android:layout_gravity="center"
@@ -495,9 +504,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{() -> presenter.switchCamera()}"/>
 
                         <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_videocam_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_camera_onoff_switch_btn"
                             android:layout_gravity="center"
@@ -527,9 +539,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{(v) -> presenter.cameraFlip()}"/>
 
                         <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_camera_flip_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_change_camera_btn"
                             android:layout_gravity="center"
@@ -560,9 +575,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{(v) -> presenter.addParticipantClicked()}"/>
 
                         <TextView
-                            android:id="@+id/textView_add_participant"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_add_participant_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_add_participants_btn"
                             android:layout_gravity="center"
@@ -593,9 +611,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:onClick="@{(v) -> presenter.shareScreenClicked()}"/>
 
                         <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_sharescreen_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_share_btn"
                             android:layout_gravity="center"
@@ -629,9 +650,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             />
 
                         <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_dialpad_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_dialpad_btn"
                             android:layout_gravity="center"
@@ -664,9 +688,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             />
 
                         <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView_call_plugins_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
                             android:layout_marginTop="2dp"
                             android:text="@string/bottomSheet_plugins_btn"
                             android:layout_gravity="center"
