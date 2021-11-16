@@ -558,7 +558,7 @@ class AccountService(
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
             val roots = conversation.swarmRoot
-            Log.w(TAG, "loadMore " + conversation.uri + " " + roots)
+            //Log.w(TAG, "loadMore " + conversation.uri + " " + roots)
             conversation.loading = ret
             if (roots.isEmpty())
                 loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong()
