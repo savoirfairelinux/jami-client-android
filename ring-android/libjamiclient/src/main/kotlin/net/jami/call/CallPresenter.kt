@@ -23,7 +23,9 @@ package net.jami.call
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.JamiService
@@ -147,7 +149,6 @@ class CallPresenter @Inject constructor(
             .share()
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
-
         if (!actionViewOnly) {
             mCompositeDisposable.add(callObservable
                 .firstOrError()
@@ -522,6 +523,7 @@ class CallPresenter @Inject constructor(
                         private var call: ParticipantInfo? = null
                         override fun onSubscribe(d: Disposable) {}
                         override fun onNext(sipCall: Call) {
+                            Log.w(TAG, "DEBUG addConferenceParticipant pendingObserver::onNext ${sipCall.callStatus}")
                             if (call == null) {
                                 call = ParticipantInfo(sipCall, sipCall.contact ?: conversation.contact!!, emptyMap(), pending = true)
                                     .apply { mPendingCalls.add(this) }
@@ -529,24 +531,37 @@ class CallPresenter @Inject constructor(
                             mPendingSubject.onNext(mPendingCalls)
                         }
 
-                        override fun onError(e: Throwable) {}
-                        override fun onComplete() {
+                        private fun onFinally()  {
                             if (call != null) {
                                 mPendingCalls.remove(call)
                                 mPendingSubject.onNext(mPendingCalls)
                                 call = null
                             }
                         }
+                        override fun onError(e: Throwable) {
+                            Log.w(TAG, "DEBUG addConferenceParticipant pendingObserver::onError", e)
+                            onFinally()
+                        }
+                        override fun onComplete() {
+                            Log.w(TAG, "DEBUG addConferenceParticipant pendingObserver::onComplete")
+                            onFinally()
+                        }
                     }
                     val contactUri = if (uri.isSwarm) conversation.contact!!.uri else uri
 
                     // Place new call, join to conference when answered
                     val newCall = mCallService.placeCallObservable(accountId, null, contactUri, wantVideo)
+                        .takeWhile{ c -> !c.callStatus.isOver }
                         .doOnEach(pendingObserver)
                         .filter(Call::isOnGoing)
+                        .doOnNext { call -> Log.w(TAG, "DEBUG placeCallObservable doOnNext ${call.callStatus}") }
                         .firstElement()
                         .delay(1, TimeUnit.SECONDS)
-                        .doOnEvent { v: Call?, e: Throwable? -> pendingObserver.onComplete() }
+                        .doOnEvent { call: Call?, e: Throwable? ->
+                            Log.w(TAG, "DEBUG addConferenceParticipant doOnEvent ${call?.callStatus}")
+                            pendingObserver.onComplete()
+                        }
+
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
                         val id = conference.id
                         if (conference.isConference) {
@@ -576,10 +591,28 @@ class CallPresenter @Inject constructor(
     }
 
     fun hangupParticipant(info: ParticipantInfo) {
-        if (info.call != null)
-            mCallService.hangUp(info.call.daemonIdString!!)
-        else
-            mCallService.hangupParticipant(mConference!!.id, info.contact.primaryNumber)
+        Log.w(TAG, "DEBUG hangupParticipant ${mPendingCalls.size}")
+        when {
+            info.pending -> removeParticipant(info)
+            info.call != null -> mCallService.hangUp(info.call.daemonIdString!!)
+            else -> mCallService.hangupParticipant(mConference!!.id, info.contact.primaryNumber)
+        }
+    }
+
+    private fun removeParticipant(info: ParticipantInfo) {
+        Log.w(TAG, "DEBUG removeParticipant --- we want to remove: ${info.contact.displayName}")
+        mConference?.participantInfo?.subscribe { elem ->
+            for(i in elem) Log.w(TAG, "DEBUG removeParticipant --- before filter we found: ${i.contact.displayName}")
+            elem.filterNot { participantInfo -> participantInfo.contact.uri == info.contact.uri }
+            for(i in elem) Log.w(TAG, "DEBUG removeParticipant --- after filter we found: ${i.contact.displayName}")
+        }
+
+      /*  for (pendingCall in mPendingCalls) {
+            Log.w(TAG, "DEBUG hangupParticipant ${pendingCall.contact.displayName}")
+            if (info.contact.uri == pendingCall.contact.uri){
+                mPendingCalls.remove(pendingCall)
+            }
+        }*/
     }
 
     /**
