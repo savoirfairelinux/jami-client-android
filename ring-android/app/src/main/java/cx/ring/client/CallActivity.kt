@@ -76,13 +76,10 @@ class CallActivity : AppCompatActivity() {
         mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
             WindowCompat.setDecorFitsSystemWindows(window, false)
             setOnClickListener {
-                if (!isFullscreen) {
-                    Log.w(TAG, "DEBUG setOnClickListener ---------------> hideSystemUI")
+                if (!isFullscreen)
                     hideSystemUI()
-                } else {
-                    Log.w(TAG, "DEBUG setOnClickListener ---------------> showSystemUI")
+                else
                     showSystemUI()
-                }
             }
         }
         intent?.let { handleNewIntent(it) }
@@ -98,7 +95,6 @@ class CallActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //Log.w(TAG, "DEBUG onResume -----> ")
         currentOrientation = resources.configuration.orientation
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
     }
@@ -109,17 +105,12 @@ class CallActivity : AppCompatActivity() {
     }
 
     public override fun onNewIntent(intent: Intent) {
-        //Log.w(TAG, "DEBUG onNewIntent $intent")
         super.onNewIntent(intent)
         setIntent(intent)
         handleNewIntent(intent)
     }
 
     private fun handleNewIntent(intent: Intent) {
- /*       Log.w(TAG, "DEBUG handleNewIntent intent: $intent")
-        Log.w(TAG, "DEBUG handleNewIntent intent.extras: ${intent.extras}")
-        Log.w(TAG, "DEBUG handleNewIntent intent.extras: ${intent.toUri(0)}")
-*/
         val action = intent.action
         val wantVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
         val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
@@ -143,16 +134,14 @@ class CallActivity : AppCompatActivity() {
 
     private val onNoInteraction = Runnable {
         if (!isFullscreen) {
-            Log.w(TAG, "DEBUG onNoInteraction ---------------> calling hideSystemUI")
             hideSystemUI()
         }
     }
 
     private fun restartNoInteractionTimer() {
-        Log.w(CallFragment.TAG, "DEBUG restartNoInteractionTimer ------------> ")
         handler?.let { handler ->
             handler.removeCallbacks(onNoInteraction)
-            handler.postDelayed(onNoInteraction, (5 * 1000).toLong())
+            handler.postDelayed(onNoInteraction, 5L * 1000L)
         }
     }
 
@@ -185,7 +174,6 @@ class CallActivity : AppCompatActivity() {
     }
 
     fun hideSystemUI() {
-        Log.w(TAG, "DEBUG hideSystemUI ---------------> ")
         val callFragment = callFragment ?: return
         KeyboardVisibilityManager.hideKeyboard(this)
         callFragment.resetBottomSheetState()
@@ -198,7 +186,6 @@ class CallActivity : AppCompatActivity() {
     }
 
     fun showSystemUI() {
-        Log.w(TAG, "DEBUG showSystemUI ---------------> ")
         val callFragment = callFragment ?: return
         mMainView?.apply {
             if (currentOrientation != 1) {

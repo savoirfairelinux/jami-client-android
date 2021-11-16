@@ -216,8 +216,6 @@ class CallService(
                 media.add(Media.DEFAULT_VIDEO.toMap())
             val callId = JamiService.placeCallWithMedia(account, number.uri, media)
             if (callId == null || callId.isEmpty()) return@fromCallable null
-            //Log.w(TAG, "DEBUG fn placeCall() -> La valeur de hasVideo est $hasVideo et la valeur de !hasVideo est ${!hasVideo}")
-
             val call = addCall(account, callId, number, Call.Direction.OUTGOING, if (hasVideo) listOf(Media.DEFAULT_AUDIO, Media.DEFAULT_VIDEO) else listOf(Media.DEFAULT_AUDIO))
             if (conversationUri != null && conversationUri.isSwarm) call.setSwarmInfo(conversationUri.rawRingId)
             updateConnectionCount()
@@ -242,7 +240,6 @@ class CallService(
     }*/
 
     fun accept(accountId:String, callId: String, hasVideo: Boolean = false) {
-        Log.w(TAG, "DEBUG fn accept [CallService.kt] -> based on value of hasvideo ( $hasVideo ) [IF] false then mute media type VIDEO and JamiService.accept [ELSE] add Media in VectMap and JamiService.acceptWithMedia() ")
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
             val call = currentCalls[callId] ?: return@execute
@@ -255,9 +252,8 @@ class CallService(
             }
 
             for (i in vectMapMedia){
-                Log.w(TAG, "DEBUG fn accept [CallService.kt] -> $i")
+                Log.w(TAG, "DEBUG accept -> $i")
             }
-            Log.w(TAG, "DEBUG fn accept [CallService.kt] -> value of hasvideo : $hasVideo => on accept un appel avec media")
             JamiService.acceptWithMedia(accountId, callId, vectMapMedia)
         }
     }

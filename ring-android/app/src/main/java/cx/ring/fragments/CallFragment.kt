@@ -146,15 +146,12 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var isMyMicMuted: Boolean = false
 
     override fun initPresenter(presenter: CallPresenter) {
-        //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> chose between prepareCall and initIncomingCall")
         val args = requireArguments()
         presenter.wantVideo = args.getBoolean(KEY_HAS_VIDEO, false)
         args.getString(KEY_ACTION)?.let { action ->
             if (action == Intent.ACTION_CALL) {
-                //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn prepareCall(false) ")
                 prepareCall(false)
             } else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
-                //Log.w(TAG, "DEBUG fn initPresenter [CallFragment.kt] -> requesting fn initIncomingCall( CONF_ID, GET_CALL)")
                 presenter.initIncomingCall(
                     args.getString(NotificationService.KEY_CALL_ID)!!,
                     action == Intent.ACTION_VIEW
@@ -248,7 +245,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
                     }
-
                 }
             }.apply { if (canDetectOrientation()) enable() }
 
@@ -379,13 +375,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.w(TAG, "DEBUG onResume --->")
-    }
-
     override fun onUserLeave() {
-        Log.w(TAG, "DEBUG onUserLeave -------------->")
         presenter.requestPipMode()
     }
 
@@ -415,7 +405,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     //todo: enable pip when only our video is displayed
     override fun enterPipMode(callId: String) {
-        Log.w(TAG, "DEBUG enterPipMode -------------->")
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return
         }
@@ -461,7 +450,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
-        Log.w(TAG, "DEBUG onPictureInPictureModeChanged --->")
         isInPIP = isInPictureInPictureMode
         if (isInPictureInPictureMode) {
             binding!!.callCoordinatorOptionContainer.visibility = View.GONE
@@ -796,15 +784,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
-        Log.w(TAG, "DEBUG updateConfInfo $participantInfo")
-        Log.w(
-            "ConfParticipantAdapter",
-            "updateConfInfo participantInfo.size: ${participantInfo.size}, participantInfo: $participantInfo"
-        )
-        for (i in participantInfo) {
-            Log.w("ConfParticipantAdapter", "updateConfInfo participant.name: ${i.contact.displayName} \n")
-        }
-
         val binding = binding ?: return
         mConferenceMode = participantInfo.isNotEmpty()
 
@@ -828,7 +807,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         ConversationPath.toUri(call.account!!, conversationUri), context, CallActivity::class.java
                     )
                         .apply { putExtra(NotificationService.KEY_CALL_ID, call.confId ?: call.daemonIdString) }
-                    Log.w(TAG, "DEBUG setIntent ${activity.intent}")
 
                     arguments = Bundle().apply {
                         putString(KEY_ACTION, Intent.ACTION_VIEW)
@@ -940,7 +918,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         onGoingCall: Boolean,
         hasActiveVideo: Boolean
     ) {
-        Log.w(TAG, "DEBUG updateBottomSheetButtonStatus  ----------> ")
         binding?.apply {
             dialpadBtnContainer.isVisible = canDial
             pluginsBtnContainer.isVisible = showPluginBtn
@@ -969,7 +946,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      *
      */
     private fun setBottomSheet(inset: WindowInsetsCompat) {
-        Log.w(TAG, "DEBUG setBottomSheet  ----------> presenter.isPipMode: ${isInPIP} ")
         val bsView = view?.findViewById<View>(R.id.call_options_bottom_sheet)!!
         if (!isInPIP || bsView.isVisible) {
             val dm = requireContext().resources.displayMetrics
@@ -1001,9 +977,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             view?.findViewById<View>(R.id.call_coordinator_option_container)?.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
             view?.findViewById<View>(R.id.call_options_bottom_sheet)?.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
 
-            Log.w(TAG, "DEBUG setBottomSheet  ----------> bsview.isvisible: ${bsView.isVisible}, bsview.w: ${bsView.layoutParams.width}, bsview.h: ${bsView.layoutParams.height}")
-            Log.w(TAG, "DEBUG setBottomSheet  ----------> gridView.isvisible: ${view?.findViewById<View>(R.id.call_parameters_grid)?.isVisible}, gridView.h: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.height}, gridView.w: ${view?.findViewById<View>(R.id.call_parameters_grid)?.layoutParams?.width}")
-
             bottomSheetParams?.let { bs ->
                 bs.expandedOffset =
                     if (orientation == Configuration.ORIENTATION_LANDSCAPE) (topInsets * dm.density).toInt()
@@ -1031,8 +1004,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val gridMinWidth = 350 //width size in dp
         val wRatio = (gridMinWidth
                 * dm.density).div(maxWidth)
-        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> dm.widthPixels: ${dm.widthPixels}, dm.heightPixels: ${dm.heightPixels}")
-        Log.w(TAG, "DEBUG getBottomSheetMaxWidth -------> gridMinWidth: $gridMinWidth, maxWidth: $maxWidth, wRatio: $wRatio")
         return when {
             wRatio < 0f -> -1
             wRatio < 0.5f -> (((gridMinWidth * dm.density).toInt() * 1.25).toInt())
@@ -1045,10 +1016,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun displayBottomSheet(display: Boolean) {
-        Log.w(TAG,"DEBUG displayBottomSheet -----> display: $display, presenter.mOnGoingCall: ${presenter.mOnGoingCall}")
         val binding = binding ?: return
         binding.callOptionsBottomSheet.isVisible = display && presenter.mOnGoingCall == true
-        Log.w(TAG,"DEBUG displayBottomSheet -----> callOptionsBottomSheet.isVisible: ${binding.callOptionsBottomSheet.isVisible}, callCoordinatorOptionContainer.isVisible: ${binding.callCoordinatorOptionContainer.isVisible}")
     }
 
     override fun resetBottomSheetState() {
@@ -1066,7 +1035,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         view?.let { mainView ->
             when (movement) {
                 BottomSheetAnimation.UP -> {
-                    //Log.w(TAG,"DEBUG moveBottomSheet -----> animate UP")
                     mainView.findViewById<View>(R.id.call_coordinator_option_container).let {
                         if(it.isVisible){
                             it.animate()
@@ -1078,7 +1046,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     displayBottomSheet(true)
                 }
                 BottomSheetAnimation.DOWN -> {
-                    //Log.w(TAG,"DEBUG moveBottomSheet -----> animate DOWN")
                     mainView.findViewById<View>(R.id.call_coordinator_option_container).apply {
                         this@apply.updatePadding(bottom = 0)
                         mainView.findViewById<View>(R.id.call_options_bottom_sheet).updatePadding(bottom = 0)
@@ -1106,7 +1073,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Init the Call view when the call is ongoing
      * */
     override fun initNormalStateDisplay() {
-        Log.w(CallPresenter.TAG, "DEBUG initNormalStateDisplay ---------------- >>  ")
         binding?.apply {
             shapeRipple.stopRipple()
             callRefuseBtn.visibility = View.GONE
@@ -1138,7 +1104,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     // change le ratio de la video mais ne change pas la taille du container
     override fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
-        //Log.w(TAG, "DEBUG ------ resetPreviewVideoSize ||  previewWidth: $previewWidth, previewHeight: $previewHeight, rot: $rot")
         if (previewWidth == -1 && previewHeight == -1) return
         mPreviewWidth = previewWidth
         mPreviewHeight = previewHeight
@@ -1157,7 +1122,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
-        //Log.w(TAG, "DEBUG ------ resetVideoSize ||  videoWidth: $videoWidth, videoHeight: $videoHeight")
         val rootView = view as ViewGroup? ?: return
         val videoRatio = videoWidth / videoHeight.toDouble()
         val screenRatio = rootView.width / rootView.height.toDouble()
@@ -1179,7 +1143,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
-        //Log.w(TAG, "DEBUG ------ configureTransform ||  viewWidth: $viewWidth, mPreviewWidth: $mPreviewWidth, viewHeight: $viewHeight,  mPreviewHeight: $mPreviewHeight,  ")
         val activity: Activity? = activity
         if (null == binding || null == activity) {
             return
@@ -1257,8 +1220,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val hasVideo = presenter.wantVideo
 
-        //Log.w(TAG, "DEBUG fn prepareCall -> define the permission based on hasVideo : $hasVideo and then call initializeCall($acceptIncomingCall, $hasVideo) ")
-
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
 
@@ -1274,14 +1235,12 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         }
@@ -1295,7 +1254,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
 
     private fun initializeCall(isIncoming: Boolean, hasVideo: Boolean) {
-        //Log.w(TAG, "DEBUG fn initializeCall [CallFragment.kt] -> if isIncoming ( = $isIncoming ) == true : presenter.AcceptCall(hasVideo: $hasVideo) : presenter.initOutGoing(conversation.accountId,conversation.conversationUri,args.getString(Intent.EXTRA_PHONE_NUMBER), hasVideo: $hasVideo)")
         if (isIncoming) {
             presenter.acceptCall(hasVideo)
         } else {
@@ -1576,7 +1534,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
         fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "DEBUG newInstance $action $path $contactId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
@@ -1588,7 +1545,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "DEBUG newInstance $action $confId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
