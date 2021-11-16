@@ -135,8 +135,6 @@ class CallPresenter @Inject constructor(
      * @param actionViewOnly true if only returning to call or if using full screen intent
      */
     fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
-        //getView().blockScreenRotation();
-
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
         val callObservable = mCallService.getConfUpdates(confId)
@@ -448,7 +446,6 @@ class CallPresenter @Inject constructor(
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
-            Log.w(TAG, "onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }

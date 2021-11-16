@@ -75,11 +75,10 @@ class CallActivity : AppCompatActivity() {
         mMainView = findViewById<View>(R.id.main_call_layout)?.apply {
             WindowCompat.setDecorFitsSystemWindows(window, false)
             setOnClickListener {
-                if (!isFullscreen) {
+                if (!isFullscreen)
                     hideSystemUI()
-                } else {
+                else
                     showSystemUI()
-                }
             }
         }
         intent?.let { handleNewIntent(it) }
@@ -141,7 +140,7 @@ class CallActivity : AppCompatActivity() {
     private fun restartNoInteractionTimer() {
         handler?.let { handler ->
             handler.removeCallbacks(onNoInteraction)
-            handler.postDelayed(onNoInteraction, (5 * 1000).toLong())
+            handler.postDelayed(onNoInteraction, 5L * 1000L)
         }
     }
 
