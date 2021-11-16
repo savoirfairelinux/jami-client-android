@@ -35,8 +35,7 @@ import android.text.format.Formatter
 import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.*
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
@@ -73,16 +72,16 @@ class NotificationServiceImpl(
     private val mDeviceRuntimeService: DeviceRuntimeService
 ) : NotificationService {
     private val mNotificationBuilders = SparseArray<NotificationCompat.Builder>()
-    private var notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
+    private val notificationManager: NotificationManagerCompat = NotificationManagerCompat.from(mContext)
     private val random = Random()
-    private var avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
+    private val avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            registerNotificationChannels(mContext)
+            registerNotificationChannels(mContext, notificationManager)
         }
     }
 
@@ -108,12 +107,12 @@ class NotificationServiceImpl(
         val viewIntent = PendingIntent.getActivity(mContext, random.nextInt(), Intent(Intent.ACTION_VIEW)
             .setClass(mContext, if (DeviceUtils.isTv(mContext)) TVCallActivity::class.java else CallActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), 0)
+            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_IMMUTABLE)
         val contact = call.contact!!
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
             messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.displayName))
+                .setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.displayName))
                 .setContentText(mContext.getText(R.string.notif_current_call))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(viewIntent)
@@ -129,7 +128,7 @@ class NotificationServiceImpl(
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                        PendingIntent.FLAG_ONE_SHOT))
+                        PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
@@ -156,14 +155,14 @@ class NotificationServiceImpl(
                                     .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
                                     .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                     .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT))
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                             .addAction(R.drawable.baseline_videocam_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_hold_accept_video),
                                 PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_HOLD_ACCEPT)
                                     .setClass(mContext, DRingService::class.java)
                                     .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
                                     .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                     .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                    .putExtra(CallFragment.KEY_HAS_VIDEO, true), PendingIntent.FLAG_ONE_SHOT))
+                                    .putExtra(CallFragment.KEY_HAS_VIDEO, true), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
 
                     } else {
                         messageNotificationBuilder.addAction(
@@ -173,7 +172,7 @@ class NotificationServiceImpl(
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
                                 .putExtra(NotificationService.KEY_END_ID, ongoingCallId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT)
+                                .putExtra(CallFragment.KEY_HAS_VIDEO, false), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
                         )
                     }
                 if (ongoingCallId != null) {
@@ -185,7 +184,7 @@ class NotificationServiceImpl(
                                 .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
                                 .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                            PendingIntent.FLAG_ONE_SHOT))
+                            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                 }
             } else {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
@@ -202,7 +201,7 @@ class NotificationServiceImpl(
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                            PendingIntent.FLAG_ONE_SHOT))
+                            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
             }
         } else {
             return null
@@ -231,7 +230,7 @@ class NotificationServiceImpl(
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setLargeIcon(getContactPicture(contact))
             .setContentText(mContext.getString(R.string.location_share_contact, contact.displayName))
-            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, 0))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(false)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         notificationManager.notify(
@@ -418,29 +417,27 @@ class NotificationServiceImpl(
             .setContentTitle(conversationProfile.second)
             .setContentText(last?.body)
             .setWhen(last?.timestamp ?: 0)
-            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, 0))
-            .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, 0))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, PendingIntent.FLAG_IMMUTABLE))
+            .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(true)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         val key = cpath.toKey()
         val conversationPerson = Person.Builder()
             .setKey(key)
             .setName(conversationProfile.second)
-            .setIcon(if (conversationProfile.first == null) null else IconCompat.createWithBitmap(conversationProfile.first))
+            .setIcon(IconCompat.createWithBitmap(conversationProfile.first))
             .build()
-        if (conversationProfile.first != null) {
-            messageNotificationBuilder.setLargeIcon(conversationProfile.first)
-            val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
-            intentBubble.putExtra(EXTRA_BUBBLE, true)
-            messageNotificationBuilder
-                .setBubbleMetadata(NotificationCompat.BubbleMetadata.Builder(
-                    PendingIntent.getActivity(mContext, 0, intentBubble, PendingIntent.FLAG_UPDATE_CURRENT),
-                    IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
-                    .setDesiredHeight(600)
-                    .build())
-                .addPerson(conversationPerson)
-                .setShortcutId(key)
-        }
+        messageNotificationBuilder.setLargeIcon(conversationProfile.first)
+        val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
+        intentBubble.putExtra(EXTRA_BUBBLE, true)
+        messageNotificationBuilder
+            .setBubbleMetadata(NotificationCompat.BubbleMetadata.Builder(
+                PendingIntent.getActivity(mContext, 0, intentBubble, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE),
+                IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
+                .setDesiredHeight(600)
+                .build())
+            .addPerson(conversationPerson)
+            .setShortcutId(key)
         if (texts.size == 1) {
             messageNotificationBuilder.setStyle(null)
         } else {
@@ -478,10 +475,10 @@ class NotificationServiceImpl(
             .build()
         val replyPendingIntent = PendingIntent.getService(mContext, replyId,
             Intent(DRingService.ACTION_CONV_REPLY_INLINE, path, mContext, DRingService::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
         val readPendingIntent = PendingIntent.getService(mContext, markAsReadId,
-            Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService::class.java), 0)
+            Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService::class.java), PendingIntent.FLAG_IMMUTABLE)
         messageNotificationBuilder
             .addAction(NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
@@ -509,7 +506,8 @@ class NotificationServiceImpl(
         val intentOpenTrustRequestFragment = Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
             .setClass(mContext, HomeActivity::class.java)
             .putExtra(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-        builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT))
+        builder.setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentOpenTrustRequestFragment,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
         builder.color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
         return builder
     }
@@ -536,15 +534,15 @@ class NotificationServiceImpl(
                     .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService::class.java),
-                        PendingIntent.FLAG_ONE_SHOT))
+                        PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                     .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse), PendingIntent.getService(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE, info, mContext, DRingService::class.java),
-                        PendingIntent.FLAG_ONE_SHOT))
+                        PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                     .addAction(R.drawable.baseline_block_24, mContext.getText(R.string.block), PendingIntent.getService(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK, info, mContext, DRingService::class.java),
-                        PendingIntent.FLAG_ONE_SHOT))
+                        PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                 getContactPicture(request)?.let { pic -> builder.setLargeIcon(pic) }
                 notificationManager.notify(notificationId, builder.build())
             }) { e: Throwable -> Log.w(TAG, "error showing notification", e) }
@@ -656,18 +654,18 @@ class NotificationServiceImpl(
                 .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
                     PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_FILE_ACCEPT, path, mContext, DRingService::class.java)
-                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT))
+                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
                 .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.refuse),
                     PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_FILE_CANCEL, path, mContext, DRingService::class.java)
-                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT))
+                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
             updateNotification(messageNotificationBuilder.build(), notificationId)
             return
         } else if (!event.isOver) {
             messageNotificationBuilder.addAction(R.drawable.baseline_cancel_24, mContext.getText(android.R.string.cancel),
                 PendingIntent.getService(mContext, random.nextInt(),
                     Intent(DRingService.ACTION_FILE_CANCEL, path, mContext, DRingService::class.java)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT))
+                        .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
         }
         dataTransferNotifications[notificationId] = messageNotificationBuilder.build()
         try {
@@ -696,7 +694,7 @@ class NotificationServiceImpl(
             .setOnlyAlertOnce(true)
             .setAutoCancel(true)
             .setContentText(contact.displayName)
-            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, PendingIntent.FLAG_ONE_SHOT))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
             .color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
         setContactPicture(contact, messageNotificationBuilder)
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
@@ -711,7 +709,7 @@ class NotificationServiceImpl(
                 .setContentTitle(mContext.getText(R.string.app_name))
                 .setContentText(mContext.getText(R.string.notif_background_service))
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setContentIntent(PendingIntent.getActivity(mContext, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setContentIntent(PendingIntent.getActivity(mContext, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setOngoing(true)
@@ -809,23 +807,20 @@ class NotificationServiceImpl(
         const val NOTIF_CALL_ID = 1001
 
         @RequiresApi(api = Build.VERSION_CODES.O)
-        fun registerNotificationChannels(context: Context) {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
+        fun registerNotificationChannels(context: Context, notificationManager: NotificationManagerCompat) {
             // Setting up groups
-            notificationManager.createNotificationChannelGroup(NotificationChannelGroup(NOTIF_CALL_GROUP, context.getString(R.string.notif_group_calls)))
+            notificationManager.createNotificationChannelGroup(NotificationChannelGroupCompat.Builder(NOTIF_CALL_GROUP)
+                .setName(context.getString(R.string.notif_group_calls))
+                .build())
 
             // Missed calls channel
-            val missedCallsChannel = NotificationChannel(
-                NOTIF_CHANNEL_MISSED_CALL,
-                context.getString(R.string.notif_channel_missed_calls),
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                lockscreenVisibility = Notification.VISIBILITY_SECRET
-                setSound(null, null)
-                enableVibration(false)
-                group = NOTIF_CALL_GROUP
-            }
+            val missedCallsChannel = NotificationChannelCompat.Builder(NOTIF_CHANNEL_MISSED_CALL, NotificationManager.IMPORTANCE_DEFAULT)
+                .setName(context.getString(R.string.notif_channel_missed_calls))
+                .setSound(null, null)
+                .setGroup(NOTIF_CALL_GROUP)
+                .setVibrationEnabled(false)
+                .build()
+            // lockscreenVisibility = Notification.VISIBILITY_SECRET
             notificationManager.createNotificationChannel(missedCallsChannel)
 
             // Incoming call channel

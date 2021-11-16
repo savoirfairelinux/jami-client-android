@@ -48,7 +48,6 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.percentlayout.widget.PercentFrameLayout
-import com.rodolfonavalon.shaperipplelibrary.model.Circle
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -184,7 +183,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         })
         view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
         binding!!.previewSurface.surfaceTextureListener = listener
-        binding!!.shapeRipple.rippleShape = Circle()
         runnable = Runnable { presenter.uiVisibilityChanged(false) }
     }
 
@@ -334,7 +332,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun initNormalStateDisplay() {
         mSession!!.isActive = true
         binding?.apply {
-            shapeRipple.stopRipple()
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
             callHangupBtn.visibility = View.VISIBLE
