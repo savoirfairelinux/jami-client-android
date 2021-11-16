@@ -508,7 +508,7 @@ class ConversationFacade(
         }) else null
 
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to $newState")
-        if ((call.isRinging || newState === CallStatus.CURRENT) && call.timestamp == 0L) {
+        if ((newState.isRinging || newState === CallStatus.CURRENT) && call.timestamp == 0L) {
             call.timestamp = System.currentTimeMillis()
         }
         if (incomingCall) {
@@ -517,7 +517,7 @@ class ConversationFacade(
         } else if (newState === CallStatus.CURRENT && call.isIncoming
             || newState === CallStatus.RINGING && !call.isIncoming) {
             mNotificationService.handleCallNotification(conference!!, false)
-        } else if (newState === CallStatus.HUNGUP || newState === CallStatus.BUSY || newState === CallStatus.FAILURE || newState === CallStatus.OVER) {
+        } else if (newState.isOver) {
             if (conference != null)
                 mNotificationService.handleCallNotification(conference, true)
             else {
@@ -528,7 +528,7 @@ class ConversationFacade(
             if (call.timestamp == 0L) {
                 call.timestamp = now
             }
-            if (newState === CallStatus.HUNGUP || call.timestampEnd == 0L) {
+            if (call.timestampEnd == 0L) {
                 call.timestampEnd = now
             }
             if (conference != null && conference.removeParticipant(call) && conversation != null && !conversation.isSwarm) {
@@ -540,7 +540,6 @@ class ConversationFacade(
                 }
                 account.updated(conversation)
             }
-            mCallService.removeCallForId(call.daemonIdString!!)
             if (conversation != null && conference != null && conference.participants.isEmpty()) {
                 conversation.removeConference(conference)
             }

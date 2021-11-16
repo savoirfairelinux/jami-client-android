@@ -38,7 +38,6 @@ import net.jami.model.Uri
 import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import java.util.*
-import java.util.concurrent.Callable
 import java.util.concurrent.ScheduledExecutorService
 
 class CallService(
@@ -431,21 +430,6 @@ class CallService(
 
     private fun getCurrentCallForId(callId: String): Call? {
         return currentCalls[callId]
-    }
-
-    /*public Call getCurrentCallForContactId(String contactId) {
-        for (Call call : currentCalls.values()) {
-            if (contactId.contains(call.getContact().getPrimaryNumber())) {
-                return call;
-            }
-        }
-        return null;
-    }*/
-    fun removeCallForId(callId: String) {
-        synchronized(currentCalls) {
-            currentCalls.remove(callId)
-            currentConferences.remove(callId)
-        }
     }
 
     private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, mediaList: List<Media>): Call {
