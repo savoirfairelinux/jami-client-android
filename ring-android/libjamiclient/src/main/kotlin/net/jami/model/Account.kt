@@ -103,7 +103,7 @@ class Account(
     }
 
     fun conversationStarted(conversation: Conversation) {
-        Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
+        //Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
         synchronized(conversations) {
             if (conversation.isSwarm) {
                 removeRequest(conversation.uri)
@@ -669,7 +669,7 @@ class Account(
                     p.observeOn(Schedulers.computation()).subscribe { profile -> c.setProfile(profile) }
                 } }
 
-                Log.w(TAG, "pendingRequestAdded $key")
+                //Log.w(TAG, "pendingRequestAdded $key")
                 pending[key] = conversation
                 if (!conversation.isSwarm) {
                     val contact = getContactFromCache(request.from)

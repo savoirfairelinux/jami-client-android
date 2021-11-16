@@ -245,7 +245,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
                     }
-
                 }
             }.apply { if (canDetectOrientation()) enable() }
 
@@ -374,10 +373,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
               })*/
             
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onUserLeave() {
@@ -1078,7 +1073,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Init the Call view when the call is ongoing
      * */
     override fun initNormalStateDisplay() {
-        Log.w(CallPresenter.TAG, "DEBUG initNormalStateDisplay ---------------- >>  ")
         binding?.apply {
             shapeRipple.stopRipple()
             callRefuseBtn.visibility = View.GONE
@@ -1239,14 +1233,12 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
-                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         } else {
             if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
             } else if (audioGranted) {
-                //Log.w(TAG, "DEBUG fn prepareCall [CallFragment.kt] -> calling initializeCall($acceptIncomingCall, $hasVideo) ")
                 initializeCall(acceptIncomingCall, hasVideo)
             }
         }
@@ -1540,7 +1532,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
         fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "newInstance $action $path $contactId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
@@ -1552,7 +1543,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
-            Log.w(TAG, "newInstance $action $confId $hasVideo")
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
