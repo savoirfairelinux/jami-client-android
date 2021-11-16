@@ -112,7 +112,6 @@ class CallPresenter @Inject constructor(
         if (!mHardwareService.hasCamera()) {
             pHasVideo = false
         }
-        Log.w(TAG, "DEBUG fn initOutGoing() -> value of pHasVideo : $pHasVideo")
         //getView().blockScreenRotation();
         val callObservable = mCallService
             .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
@@ -137,9 +136,6 @@ class CallPresenter @Inject constructor(
      * @param actionViewOnly true if only returning to call or if using full screen intent
      */
     fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
-        //getView().blockScreenRotation();
-        Log.w(TAG, "DEBUG initIncomingCall -------> actionViewOnly: $actionViewOnly ")
-
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
         val callObservable = mCallService.getConfUpdates(confId)
@@ -175,7 +171,6 @@ class CallPresenter @Inject constructor(
     }
 
     private fun showConference(conference: Observable<Conference>){
-        Log.w(TAG,"DEBUG showConference ---------------- ")
         val conference = conference.distinctUntilChanged()
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
@@ -392,7 +387,6 @@ class CallPresenter @Inject constructor(
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
         } else if (call.isRinging) {
-            //Log.w(TAG, "DEBUG fn confUpdate [CallPresenter] -> [ELSEIF] checking value of call.hasVideo() : ${call.hasVideo()}")
             val scall = call.call!!
             view.handleCallWakelock(!hasVideo)
             if (scall.isIncoming) {
@@ -439,11 +433,10 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        Log.w(TAG, "onVideoEvent  $event")
+        Log.w(TAG, "DEBUG onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
-            Log.w(TAG, "DEBUG --------- onVideoEvent local  $event")
             if (event.start) {
                 view.displayLocalVideo(true)
             }
@@ -491,7 +484,6 @@ class CallPresenter @Inject constructor(
     }
 
     fun requestPipMode() {
-        Log.w(TAG, "DEBUG requestPipMode ------------->")
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.enterPipMode(conference.id)
@@ -510,7 +502,6 @@ class CallPresenter @Inject constructor(
     }
 
     fun addConferenceParticipant(accountId: String, uri: Uri) {
-        Log.w(TAG, "DEBUG addConferenceParticipant ----> ")
         val conference = mConference ?: return
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, uri)
             .subscribe { conversation: Conversation ->
