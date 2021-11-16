@@ -144,7 +144,6 @@ class CallPresenter @Inject constructor(
             .share()
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
-
         if (!actionViewOnly) {
             mCompositeDisposable.add(callObservable
                 .firstOrError()
@@ -531,24 +530,33 @@ class CallPresenter @Inject constructor(
                             mPendingSubject.onNext(mPendingCalls)
                         }
 
-                        override fun onError(e: Throwable) {}
-                        override fun onComplete() {
+                        private fun onFinally()  {
                             if (call != null) {
                                 mPendingCalls.remove(call)
                                 mPendingSubject.onNext(mPendingCalls)
                                 call = null
                             }
                         }
+                        override fun onError(e: Throwable) {
+                            onFinally()
+                        }
+                        override fun onComplete() {
+                            onFinally()
+                        }
                     }
                     val contactUri = if (uri.isSwarm) conversation.contact!!.uri else uri
 
                     // Place new call, join to conference when answered
                     val newCall = mCallService.placeCallObservable(accountId, null, contactUri, wantVideo)
+                        .takeWhile{ c -> !c.callStatus.isOver }
                         .doOnEach(pendingObserver)
                         .filter(Call::isOnGoing)
                         .firstElement()
                         .delay(1, TimeUnit.SECONDS)
-                        .doOnEvent { v: Call?, e: Throwable? -> pendingObserver.onComplete() }
+                        .doOnEvent { call: Call?, e: Throwable? ->
+                            pendingObserver.onComplete()
+                        }
+
                     mCompositeDisposable.add(newCall.subscribe { call: Call ->
                         val id = conference.id
                         if (conference.isConference) {

@@ -190,9 +190,9 @@ class Call : Interaction {
             timestamp = timestamp
         }*/
     val isRinging: Boolean
-        get() = callStatus == CallStatus.CONNECTING || callStatus == CallStatus.RINGING || callStatus == CallStatus.NONE || callStatus == CallStatus.SEARCHING
+        get() = callStatus.isRinging
     val isOnGoing: Boolean
-        get() = callStatus == CallStatus.CURRENT || callStatus == CallStatus.HOLD || callStatus == CallStatus.UNHOLD
+        get() = callStatus.isOnGoing
     /*override var isIncoming: Direction
         get() = super.isIncoming
         set(direction) {
@@ -244,6 +244,13 @@ class Call : Interaction {
 
     enum class CallStatus {
         NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
+
+        val isRinging: Boolean
+            get() = this == CONNECTING || this == RINGING || this == NONE || this == SEARCHING
+        val isOnGoing: Boolean
+            get() = this == CURRENT || this == HOLD || this == UNHOLD
+        val isOver: Boolean
+            get() = this == HUNGUP || this == BUSY || this == FAILURE || this == OVER
 
         companion object {
             fun fromString(state: String): CallStatus {
