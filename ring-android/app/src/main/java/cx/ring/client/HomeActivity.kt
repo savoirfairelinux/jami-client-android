@@ -678,17 +678,19 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
+        Log.w(TAG, "setToolbarElevation $enable")
+        mBinding!!.appBar.isLifted = enable
+        //if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
     fun setToolbarOutlineState(enabled: Boolean) {
-        if (mBinding != null) {
+        /*if (mBinding != null) {
             if (!enabled) {
                 mBinding!!.appBar.outlineProvider = null
             } else {
                 mBinding!!.appBar.outlineProvider = mOutlineProvider
             }
-        }
+        }*/
     }
 
     fun popFragmentImmediate() {

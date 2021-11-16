@@ -32,7 +32,7 @@ class JamiApplicationFirebase : JamiApplication() {
             //Log.d(TAG, "setPushToken: $token");
             field = token
             if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationToken(token)
+                mAccountService.setPushNotificationToken(token ?: "")
             }
         }
 
@@ -56,7 +56,7 @@ class JamiApplicationFirebase : JamiApplication() {
 
     fun onMessageReceived(remoteMessage: RemoteMessage) {
         // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
-        mAccountService.pushNotificationReceived(remoteMessage.from, remoteMessage.data)
+        mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
     }
 
     companion object {

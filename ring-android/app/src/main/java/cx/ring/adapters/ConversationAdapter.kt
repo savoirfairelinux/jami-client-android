@@ -46,6 +46,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -91,7 +92,7 @@ class ConversationAdapter(
     private val mPreviewMaxSize: Int
     private val PICTURE_OPTIONS: GlideOptions
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
-    private var convColor = 0
+    @ColorInt private var convColor = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private var lastDisplayedPosition = -1
@@ -311,7 +312,7 @@ class ConversationAdapter(
         holder.compositeDisposable.clear()
     }
 
-    fun setPrimaryColor(color: Int) {
+    fun setPrimaryColor(@ColorInt color: Int) {
         convColor = color
         notifyDataSetChanged()
     }

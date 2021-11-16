@@ -33,6 +33,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.google.android.material.color.DynamicColors
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.service.DRingService
@@ -193,6 +194,8 @@ abstract class JamiApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        //DynamicColors.applyToActivitiesIfAvailable(this);
 
         RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
 
