@@ -16,6 +16,41 @@
       "message": "Hi, could you please explain the reason of this change ?\nThanks",
       "revId": "a31898219c883f985dc8ea8494223e91fd12e2f9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c054cfda_4a09c4b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 937
+      },
+      "writtenOn": "2021-11-17T21:15:26Z",
+      "side": 1,
+      "message": "Perhaps some changes were unnecessary, and the main problem was that the finish() was called after the start of the tv.main.HomeActivity and application was run without any main activity.",
+      "parentUuid": "2bad173d_91073d1b",
+      "revId": "a31898219c883f985dc8ea8494223e91fd12e2f9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3999a5b9_73979e49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 937
+      },
+      "writtenOn": "2021-11-17T21:15:26Z",
+      "side": 1,
+      "message": "Perhaps some changes were unnecessary, and the main problem was that the finish() was called after the start of the tv.main.HomeActivity and application was run without any main activity.",
+      "revId": "a31898219c883f985dc8ea8494223e91fd12e2f9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
