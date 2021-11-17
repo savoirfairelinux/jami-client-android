@@ -127,14 +127,22 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon()
+        
         // Switch to TV if appropriate (could happen with buggy launcher)
         if (DeviceUtils.isTv(this)) {
-            val intent = intent
-            intent.setClass(this, cx.ring.tv.main.HomeActivity::class.java)
-            startActivity(intent)
+            Log.d(TAG, "Switch to TV")
+            val intent = Intent(this, cx.ring.tv.main.HomeActivity::class.java)
+            intent.setAction(Intent.ACTION_MAIN)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK 
+                    or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                    or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
+
             finish()
+            startActivity(intent)
             return
         }
+        
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             setSupportActionBar(binding.mainToolbar)
