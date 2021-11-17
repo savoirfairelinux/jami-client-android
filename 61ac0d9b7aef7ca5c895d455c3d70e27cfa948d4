@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16b6c370_21f44d5a",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 26,
+        "startChar": 33,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502cd810_f92ee911",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "ununsed",
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0e21cf5_30629ae2",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 526,
+        "startChar": 15,
+        "endLine": 526,
+        "endChar": 118
+      },
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ab33da_413d4485",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56da5a81_cf93a621",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove log",
+      "range": {
+        "startLine": 546,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 100
+      },
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82ab2b6b_08a5f295",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fae1f85_b148d945",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6508e6_4749f27b",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c1259f1_b5af6418",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "not needed, would use info.call",
+      "range": {
+        "startLine": 596,
+        "startChar": 12,
+        "endLine": 596,
+        "endChar": 51
+      },
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5912acd0_9c4fdf11",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-17T20:02:33Z",
+      "side": 1,
+      "message": "remove unneeded function",
+      "range": {
+        "startLine": 602,
+        "startChar": 3,
+        "endLine": 616,
+        "endChar": 5
+      },
+      "revId": "61ac0d9b7aef7ca5c895d455c3d70e27cfa948d4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
