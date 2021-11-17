@@ -169,7 +169,7 @@ class CallActivity : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
         if (currentOrientation != newConfig.orientation) {
             currentOrientation = newConfig.orientation
-            if (!isInPictureInPictureMode && !isFullscreen) {
+            if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode) && !isFullscreen) {
                 mMainView?.let {
                     when (currentOrientation) {
                         Configuration.ORIENTATION_LANDSCAPE -> WindowInsetsControllerCompat(window, it).hide(
