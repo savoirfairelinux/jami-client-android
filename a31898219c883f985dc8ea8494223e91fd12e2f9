@@ -68,6 +68,24 @@
       "message": "* Start from the previous intent, like before, to preserve any other data the intent might include (extras, uri, etc.)\n* avoid overriding the action in case it\u0027s something else than Intent.ACTION_MAIN.\n\nThis would allow to correctly \"redirect\" intents targeting the wrong activity, not only the launcher intent.",
       "revId": "a31898219c883f985dc8ea8494223e91fd12e2f9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b8c16e8_35dd0709",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-18T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5399cc8c_02de4722",
+      "revId": "a31898219c883f985dc8ea8494223e91fd12e2f9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
