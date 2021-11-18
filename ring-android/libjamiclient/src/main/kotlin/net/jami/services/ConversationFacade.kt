@@ -130,8 +130,8 @@ class ConversationFacade(
     }
 
     fun sendTextMessage(c: Conversation, conf: Conference, txt: String) {
-        mCallService.sendTextMessage(conf.id, txt)
-        val message = TextMessage(null, c.accountId, conf.id, c, txt)
+        mCallService.sendTextMessage(conf.accountId, conf.id, txt)
+        val message = TextMessage(null, conf.accountId, conf.id, c, txt)
         message.read()
         mHistoryService.insertInteraction(c.accountId, c, message).subscribe()
         c.addTextMessage(message)
