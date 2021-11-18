@@ -33,7 +33,6 @@ import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.model.Conference
 import net.jami.utils.Log
-import net.jami.utils.Tuple
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Synchronized
@@ -94,9 +93,8 @@ abstract class HardwareService(
     abstract fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect)
     abstract fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int)
     abstract fun startCapture(camId: String?)
-    abstract fun startScreenShare(mediaProjection: Any?): Boolean
+    abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
-    abstract fun stopCapture()
     abstract fun endCapture()
     abstract fun stopScreenShare()
     abstract fun requestKeyFrame()
@@ -107,11 +105,11 @@ abstract class HardwareService(
     abstract fun addPreviewVideoSurface(holder: Any, conference: Conference?)
     abstract fun updatePreviewVideoSurface(conference: Conference)
     abstract fun removePreviewVideoSurface()
-    abstract fun switchInput(id: String, setDefaultCamera: Boolean)
+    abstract fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean = false, screenCaptureSession: Any? = null)
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract val cameraCount: Int
-    abstract val maxResolutions: Observable<Tuple<Int?, Int?>>
+    abstract val maxResolutions: Observable<Pair<Int?, Int?>>
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
     abstract fun unregisterCameraDetectionCallback()
@@ -123,9 +121,9 @@ abstract class HardwareService(
         mExecutor.execute { JamiService.connectivityChanged() }
     }
 
-    protected fun switchInput(id: String, uri: String) {
+    protected fun switchInput(accountId:String, callId: String, uri: String) {
         Log.i(TAG, "switchInput() $uri")
-        mExecutor.execute { JamiService.switchInput(id, uri) }
+        mExecutor.execute { JamiService.switchInput(accountId, callId, uri) }
     }
 
     fun setPreviewSettings(cameraMaps: Map<String, StringMap>) {

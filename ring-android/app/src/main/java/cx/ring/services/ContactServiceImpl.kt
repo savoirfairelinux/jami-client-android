@@ -43,7 +43,6 @@ import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
-import net.jami.utils.Tuple
 import net.jami.utils.VCardUtils
 
 class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesService,

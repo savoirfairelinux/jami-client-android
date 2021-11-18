@@ -20,7 +20,6 @@
 package net.jami.model
 
 import net.jami.utils.StringUtils
-import net.jami.utils.Tuple
 import java.io.Serializable
 import java.lang.StringBuilder
 import java.util.regex.Pattern
@@ -129,12 +128,12 @@ class Uri : Serializable {
             }
         }
 
-        fun fromStringWithName(uriString: String): Tuple<Uri, String?> {
+        fun fromStringWithName(uriString: String): Pair<Uri, String?> {
             val m = ANGLE_BRACKETS_PATTERN.matcher(uriString)
             return if (m.find()) {
-                Tuple(fromString(m.group(2)), m.group(1))
+                Pair(fromString(m.group(2)), m.group(1))
             } else {
-                Tuple(fromString(uriString), null)
+                Pair(fromString(uriString), null)
             }
         }
 
