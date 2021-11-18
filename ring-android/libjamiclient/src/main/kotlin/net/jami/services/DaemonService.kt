@@ -19,7 +19,6 @@
  */
 package net.jami.services
 
-import net.jami.call.CallPresenter
 import net.jami.daemon.*
 import net.jami.model.Uri
 import net.jami.utils.Log
@@ -200,8 +199,8 @@ class DaemonService(
     }
 
     internal inner class DaemonCallAndConferenceCallback : Callback() {
-        override fun callStateChanged(callId: String, newState: String, detailCode: Int) {
-            mCallService.callStateChanged(callId, newState, detailCode)
+        override fun callStateChanged(accountId: String, callId: String, newState: String, detailCode: Int) {
+            mCallService.callStateChanged(accountId, callId, newState, detailCode)
         }
 
         override fun audioMuted(callId: String, muted: Boolean) {
@@ -218,9 +217,6 @@ class DaemonService(
         }
 
         override fun incomingCallWithMedia(accountId: String, callId: String, from: String, mediaList: VectMap) {
-            for (i in mediaList){
-                Log.w(CallPresenter.TAG, "DEBUG fn incomingCallWithMedia [DaemonService] -> media.toMap() : ${i}")
-            }
             mCallService.incomingCallWithMedia(accountId, callId, from, mediaList)
         }
 
@@ -244,22 +240,22 @@ class DaemonService(
             mCallService.onConferenceInfoUpdated(confId, infos.toNative())
         }
 
-        override fun incomingMessage(callId: String, from: String, messages: StringMap) {
+        override fun incomingMessage(accountId: String, callId: String, from: String, messages: StringMap) {
             if (messages.isEmpty()) return
             val jmessages: Map<String, String> = messages.toNativeFromUtf8()
-            mExecutor.submit { mCallService.incomingMessage(callId, from, jmessages) }
+            mExecutor.submit { mCallService.incomingMessage(accountId, callId, from, jmessages) }
         }
 
-        override fun conferenceCreated(confId: String) {
-            mCallService.conferenceCreated(confId)
+        override fun conferenceCreated(accountId: String, confId: String) {
+            mCallService.conferenceCreated(accountId, confId)
         }
 
-        override fun conferenceRemoved(confId: String) {
-            mCallService.conferenceRemoved(confId)
+        override fun conferenceRemoved(accountId: String, confId: String) {
+            mCallService.conferenceRemoved(accountId, confId)
         }
 
-        override fun conferenceChanged(confId: String, state: String) {
-            mCallService.conferenceChanged(confId, state)
+        override fun conferenceChanged(accountId: String, confId: String, state: String) {
+            mCallService.conferenceChanged(accountId, confId, state)
         }
 
         override fun recordPlaybackFilepath(id: String, filename: String) {
@@ -315,12 +311,11 @@ class DaemonService(
         }
 
         override fun startCapture(camId: String) {
-            Log.d(TAG, "startCapture: $camId")
             mHardwareService.startCapture(camId)
         }
 
-        override fun stopCapture() {
-            mHardwareService.stopCapture()
+        override fun stopCapture(camId: String) {
+            mHardwareService.stopCapture(camId)
         }
     }
 

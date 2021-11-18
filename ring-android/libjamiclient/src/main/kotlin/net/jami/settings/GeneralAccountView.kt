@@ -20,12 +20,11 @@
 package net.jami.settings
 
 import net.jami.model.Account
-import net.jami.utils.Tuple
 
 interface GeneralAccountView {
     fun addJamiPreferences(accountId: String)
     fun addSipPreferences()
     fun accountChanged(account: Account)
     fun finish()
-    fun updateResolutions(maxResolution: Tuple<Int?, Int?>?, currentResolution: Int)
+    fun updateResolutions(maxResolution: Pair<Int, Int>?, currentResolution: Int)
 }

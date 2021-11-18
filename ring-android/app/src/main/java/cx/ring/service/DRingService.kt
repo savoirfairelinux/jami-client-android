@@ -238,8 +238,9 @@ class DRingService : Service() {
     }
 
     private fun handleCallAction(action: String, extras: Bundle) {
-        val callId = extras.getString(NotificationService.KEY_CALL_ID)
-        if (callId == null || callId.isEmpty()) {
+        val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
+        val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        if (callId.isEmpty() || accountId.isEmpty()) {
             return
         }
         when (action) {
@@ -257,7 +258,7 @@ class DRingService : Service() {
             }
             ACTION_CALL_HOLD_ACCEPT -> {
                 val holdId = extras.getString(NotificationService.KEY_HOLD_ID)!!
-                mCallService.hold(holdId)
+                mCallService.hold(accountId, holdId)
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
@@ -265,18 +266,18 @@ class DRingService : Service() {
             }
             ACTION_CALL_END_ACCEPT -> {
                 val endId = extras.getString(NotificationService.KEY_END_ID)!!
-                mCallService.hangUp(endId)
+                mCallService.hangUp(accountId, endId)
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             ACTION_CALL_REFUSE -> {
-                mCallService.refuse(callId)
+                mCallService.refuse(accountId, callId)
                 mHardwareService.closeAudioState()
             }
             ACTION_CALL_END -> {
-                mCallService.hangUp(callId)
+                mCallService.hangUp(accountId, callId)
                 mHardwareService.closeAudioState()
             }
             ACTION_CALL_VIEW -> {
