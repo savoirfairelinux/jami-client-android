@@ -68,11 +68,12 @@ class HardwareServiceImpl(
     private val mAudioManager: AudioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private var mBluetoothWrapper: BluetoothWrapper? = null
     private var currentFocus: AudioFocusRequestCompat? = null
-    private var mCapturingId: String? = null
-    private var mIsCapturing = false
+    //private var mCapturingId: String? = null
+    //private var mIsCapturing = false
     private var mIsScreenSharing = false
     private var pendingScreenSharingSession: MediaProjection? = null
-    private var mShouldCapture = false
+    //private var mShouldCapture = false
+    private val shouldCapture = HashSet<String>()
     private var mShouldSpeakerphone = false
     private val mHasSpeakerPhone: Boolean = hasSpeakerphone()
     private var mIsChoosePlugin = false
@@ -378,14 +379,14 @@ class HardwareServiceImpl(
 
     fun startScreenShare(projection: MediaProjection, surface: TextureView): Boolean {
         Log.d(TAG, "startScreenShare")
-        return if (!mIsScreenSharing && projection != null) {
+        return if (!mIsScreenSharing) {
             mIsScreenSharing = true
             projection.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {
                     stopScreenShare()
                 }
             }, cameraService.videoHandler)
-            if (!cameraService.startScreenSharing(projection, mContext.resources.displayMetrics)) {
+            if (!cameraService.startScreenSharing(projection, surface, mContext.resources.displayMetrics)) {
                 mIsScreenSharing = false
                 projection.stop()
                 return false
@@ -400,7 +401,7 @@ class HardwareServiceImpl(
         if (mIsScreenSharing) {
             cameraService.stopScreenSharing()
             mIsScreenSharing = false
-            if (mShouldCapture) startCapture(mCapturingId)
+            //if (mShouldCapture) startCapture(mCapturingId)
         }
     }
 
@@ -419,21 +420,18 @@ class HardwareServiceImpl(
     }
 
     override fun startCapture(camId: String?) {
-        Log.w(TAG, "startCapture: $camId")
-        mShouldCapture = true
-        if (mIsCapturing && mCapturingId != null && mCapturingId == camId) {
-            return
-        }
-        val cam = camId ?: mCapturingId ?: cameraService.switchInput(true)
-        val videoParams = cameraService.getParams(cam)
-        if (videoParams == null) {
-            Log.w(TAG, "startCapture: no video parameters ")
+        //mShouldCapture = true
+        val cam = camId ?: cameraService.switchInput(true) ?: return
+        Log.w(TAG, "DEBUG startCapture: $camId $cam")
+        shouldCapture.add(cam)
+        val videoParams = cameraService.getParams(cam) ?: return
+        if (videoParams.isCapturing) {
             return
         }
         val surface = mCameraPreviewSurface.get()
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.")
-            cameraService.setPreviewParams(videoParams)
+            //cameraService.setPreviewParams(videoParams)
             videoEvents.onNext(VideoEvent(start = true))
             return
         }
@@ -450,16 +448,18 @@ class HardwareServiceImpl(
             }
         }
         Log.w(TAG, "startCapture: cam " + cam + " " + videoParams.codec + " useHardwareCodec:" + useHardwareCodec + " bitrate:" + mPreferenceService.bitrate)
-        mIsCapturing = true
-        mCapturingId = videoParams.id
+        //mIsCapturing = true
+        //mCapturingId = videoParams.id
+        videoParams.isCapturing = true
         Log.d(TAG, "startCapture: openCamera " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation)
 
-        if (mCapturingId == CameraService.VideoDevices.SCREEN_SHARING) {
+        if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             startScreenShare(pendingScreenSharingSession!!, surface)
             pendingScreenSharingSession = null
             return
         }
 
+        Log.d(TAG, "cameraService.openCamera " + videoParams.id)
         mUiScheduler.scheduleDirect {
             cameraService.openCamera(videoParams, surface,
                 object : CameraListener {
@@ -478,7 +478,7 @@ class HardwareServiceImpl(
                     }
 
                     override fun onError() {
-                        stopCapture(cam ?: "")
+                        stopCapture(videoParams.id)
                     }
                 },
                 useHardwareCodec,
@@ -496,9 +496,10 @@ class HardwareServiceImpl(
     }
 
     override fun stopCapture(camId: String) {
-        Log.d(TAG, "stopCapture: " + cameraService.isOpen)
-        mShouldCapture = false
-        endCapture()
+        Log.d(TAG, "DEBUG stopCapture: " + camId)
+        //mShouldCapture = false
+        shouldCapture.remove(camId)
+        endCapture(camId)
     }
 
     override fun requestKeyFrame() {
@@ -509,14 +510,14 @@ class HardwareServiceImpl(
         cameraService.setBitrate(bitrate)
     }
 
-    override fun endCapture() {
-        if (cameraService.isOpen) {
+    fun endCapture(camId: String) {
+        cameraService.closeCamera(camId)
+        //if (cameraService.isOpen) {
             //final CameraService.VideoParams params = previewParams;
-            cameraService.closeCamera()
-            videoEvents.onNext(VideoEvent(started = false))
-        }
-        pendingScreenSharingSession = null
-        mIsCapturing = false
+        videoEvents.onNext(VideoEvent(started = false))
+       //}
+        //pendingScreenSharingSession = null
+        //mIsCapturing = false
     }
 
     @Synchronized override fun addVideoSurface(id: String, holder: Any) {
@@ -558,27 +559,33 @@ class HardwareServiceImpl(
     @Synchronized override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
         if (holder !is TextureView)
             return
-        Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId)
+        Log.w(TAG, "DEBUG addPreviewVideoSurface " + holder.hashCode() + " " + shouldCapture.size)
         if (mCameraPreviewSurface.get() === holder) return
         mCameraPreviewSurface = WeakReference(holder)
         mCameraPreviewCall = WeakReference(conference)
-        if (mShouldCapture && !mIsCapturing) {
+        for (c in shouldCapture)
+            startCapture(c)
+        /*if (mShouldCapture) {
+            //for ()
             startCapture(mCapturingId)
-        }
+        }*/
     }
 
     @Synchronized override fun updatePreviewVideoSurface(conference: Conference) {
-        val old = mCameraPreviewCall.get()
+        Log.w(TAG, "updatePreviewVideoSurface")
+
+        /*val old = mCameraPreviewCall.get()
         mCameraPreviewCall = WeakReference(conference)
         if (old !== conference && mIsCapturing) {
             val id = mCapturingId
-            stopCapture(id ?:  "")
+            if (id != null)
+                stopCapture(id)
             startCapture(id)
-        }
+        }*/
     }
 
     @Synchronized override fun removeVideoSurface(id: String) {
-        Log.i(TAG, "removeVideoSurface $id")
+        Log.i(TAG, "DEBUG removeVideoSurface $id")
         videoSurfaces.remove(id)
         val shm = videoInputs[id] ?: return
         if (shm.window != 0L) {
@@ -593,20 +600,20 @@ class HardwareServiceImpl(
     }
 
     override fun removePreviewVideoSurface() {
-        Log.w(TAG, "removePreviewVideoSurface")
+        Log.w(TAG, "DEBUG removePreviewVideoSurface")
         mCameraPreviewSurface.clear()
     }
 
     override fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean, screenCaptureSession: Any?) {
-        Log.w(TAG, "switchInput $callId")
-        mCapturingId = if (screenCaptureSession != null) {
+        Log.w(TAG, "DEBUG switchInput $callId $screenCaptureSession")
+        val camId = if (screenCaptureSession != null) {
             pendingScreenSharingSession = screenCaptureSession as MediaProjection
             CameraService.VideoDevices.SCREEN_SHARING
         } else {
             pendingScreenSharingSession = null
             cameraService.switchInput(setDefaultCamera)
         }
-        switchInput(accountId, callId, "camera://$mCapturingId")
+        switchInput(accountId, callId, "camera://$camId")
     }
 
     override fun setPreviewSettings() {
@@ -625,7 +632,7 @@ class HardwareServiceImpl(
 
     override fun setDeviceOrientation(rotation: Int) {
         cameraService.setOrientation(rotation)
-        mCapturingId?.let { id ->
+        /*mCapturingId?.let { id ->
             val videoParams = cameraService.getParams(id) ?: return
             videoEvents.onNext(VideoEvent(
                 started = true,
@@ -633,7 +640,7 @@ class HardwareServiceImpl(
                 h = videoParams.height,
                 rot = videoParams.rotation
             ))
-        }
+        }*/
     }
 
     override val videoDevices: List<String>

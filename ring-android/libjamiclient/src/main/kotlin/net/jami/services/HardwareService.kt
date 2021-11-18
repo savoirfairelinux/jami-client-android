@@ -95,7 +95,6 @@ abstract class HardwareService(
     abstract fun startCapture(camId: String?)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
-    abstract fun endCapture()
     abstract fun stopScreenShare()
     abstract fun requestKeyFrame()
     abstract fun setBitrate(device: String, bitrate: Int)
@@ -136,6 +135,7 @@ abstract class HardwareService(
     }
 
     fun startVideo(inputId: String, surface: Any, width: Int, height: Int): Long {
+        Log.i(TAG, "DEBUG startVideo $inputId ${width}x$height")
         val inputWindow = JamiService.acquireNativeWindow(surface)
         if (inputWindow == 0L) {
             return inputWindow
@@ -146,6 +146,7 @@ abstract class HardwareService(
     }
 
     fun stopVideo(inputId: String, inputWindow: Long) {
+        Log.i(TAG, "DEBUG stopVideo $inputId $inputWindow")
         if (inputWindow == 0L) {
             return
         }

@@ -335,7 +335,7 @@ class CallPresenter @Inject constructor(
 
     fun previewVideoSurfaceDestroyed() {
         mHardwareService.removePreviewVideoSurface()
-        mHardwareService.endCapture()
+        //mHardwareService.endCapture()
     }
 
     fun uiVisibilityChanged(displayed: Boolean) {

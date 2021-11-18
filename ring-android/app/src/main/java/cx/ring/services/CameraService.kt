@@ -60,13 +60,13 @@ import kotlin.math.max
 
 class CameraService internal constructor(c: Context) {
     private val manager = c.getSystemService(Context.CAMERA_SERVICE) as CameraManager?
-    private val mParams = HashMap<String?, VideoParams>()
+    private val mParams = HashMap<String, VideoParams>()
     private val mNativeParams: MutableMap<String, DeviceParams> = HashMap()
     private val t = HandlerThread("videoHandler")
     private val videoLooper: Looper
         get() = t.apply { if (state == Thread.State.NEW) start() }.looper
     val videoHandler: Handler by lazy { Handler(videoLooper) }
-    private var previewCamera: CameraDevice? = null
+    //private var previewCamera: CameraDevice? = null
     private var currentMediaProjection: MediaProjection? = null
     private var virtualDisplay: VirtualDisplay? = null
     private var currentCodec: MediaCodec? = null
@@ -75,15 +75,27 @@ class CameraService internal constructor(c: Context) {
     private var codecData: ByteBuffer? = null
     private val maxResolutionSubject: Subject<Pair<Int?, Int?>> = BehaviorSubject.createDefault(RESOLUTION_NONE)
     protected var devices: VideoDevices? = null
-    private var previewParams: VideoParams? = null
+    //private var previewParams: VideoParams? = null
     private val availabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
             Log.w(TAG, "onCameraAvailable $cameraId")
             filterCompatibleCamera(arrayOf(cameraId), manager!!).forEach { camera: Pair<String, CameraCharacteristics> ->
+                val devices = devices ?:  return
                 synchronized(addedDevices) {
-                    if (addedDevices.add(camera.first)) {
-                        if (!devices!!.cameras.contains(camera.first)) devices!!.cameras.add(camera.first)
-                        JamiService.addVideoDevice(camera.first)
+                    if (!devices.cameras.contains(camera.first)) {
+                        val facing = camera.second.get(CameraCharacteristics.LENS_FACING)
+                        if (facing == CameraCharacteristics.LENS_FACING_FRONT && devices.cameraFront == null) {
+                            devices.cameras.add(camera.first)
+                            devices.cameraFront = camera.first
+                        } else if (facing == CameraCharacteristics.LENS_FACING_BACK && devices.cameraBack == null) {
+                            devices.cameras.add(camera.first)
+                            devices.cameraBack = camera.first
+                        } else {
+                            devices.cameras.add(camera.first)
+                        }
+                        if (addedDevices.add(camera.first)) {
+                            JamiService.addVideoDevice(camera.first)
+                        }
                     }
                 }
             }
@@ -92,9 +104,14 @@ class CameraService internal constructor(c: Context) {
         override fun onCameraUnavailable(cameraId: String) {
             if (devices == null || devices!!.currentId == null || devices!!.currentId != cameraId) {
                 synchronized(addedDevices) {
+                    val devices = devices ?:  return
+                    devices.cameras.remove(cameraId)
+                    if (devices.cameraFront == cameraId)
+                        devices.cameraFront = null
+                    if (devices.cameraBack == cameraId)
+                        devices.cameraBack = null
                     if (addedDevices.remove(cameraId)) {
-                        Log.w(TAG, "onCameraUnavailable $cameraId current:$previewCamera")
-                        devices!!.cameras.remove(cameraId)
+                        Log.w(TAG, "onCameraUnavailable $cameraId")
                         JamiService.removeVideoDevice(cameraId)
                     }
                 }
@@ -109,6 +126,7 @@ class CameraService internal constructor(c: Context) {
         var currentId: String? = null
         var currentIndex = 0
         var cameraFront: String? = null
+        var cameraBack: String? = null
         fun switchInput(setDefaultCamera: Boolean): String? {
             if (setDefaultCamera && cameras.isNotEmpty()) {
                 currentId = cameras[0]
@@ -134,10 +152,7 @@ class CameraService internal constructor(c: Context) {
         Log.w(TAG, "getParams() $camId")
         if (camId != null) {
             return mParams[camId]
-        } else if (previewParams != null) {
-            Log.w(TAG, "getParams() previewParams")
-            return previewParams
-        } else if (devices != null && devices!!.cameras.isNotEmpty()) {
+        } else if (!devices?.cameras.isNullOrEmpty()) {
             Log.w(TAG, "getParams() fallback")
             devices!!.currentId = devices!!.cameras[0]
             return mParams[devices!!.currentId]
@@ -146,7 +161,7 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun setPreviewParams(params: VideoParams?) {
-        previewParams = params
+        //previewParams = params
     }
 
     fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int, rotation: Int) {
@@ -161,8 +176,6 @@ class CameraService internal constructor(c: Context) {
             params = VideoParams(camId, deviceParams.size.x, deviceParams.size.y, rate)
             mParams[camId] = params
         } else {
-            //params.id = camId;
-            //params.format = format;
             params.width = deviceParams.size.x
             params.height = deviceParams.size.y
             params.rate = rate
@@ -223,13 +236,16 @@ class CameraService internal constructor(c: Context) {
         return cameraCount > 0
     }
 
-    class VideoParams(val id: String, var width: Int, var height: Int, var rate: Int) {
+    data class VideoParams(val id: String, var width: Int, var height: Int, var rate: Int) {
         val inputUri: String = "camera://$id"
 
         //public int format;
         // size as captured by Android
         var rotation = 0
         var codec: String? = null
+        var isCapturing: Boolean = false
+        var camera: CameraDevice? = null
+
         fun getAndroidCodec(): String {
             return when (val codec = codec) {
                 "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
@@ -260,17 +276,20 @@ class CameraService internal constructor(c: Context) {
     private fun loadDevices(manager: CameraManager): Single<VideoDevices> {
         return Single.fromCallable {
             val devices = VideoDevices()
-            val cameras = filterCompatibleCamera(manager.cameraIdList, manager).toList()
-            val backCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_BACK).first()
-            val frontCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_FRONT).first()
+            val cameras = filterCompatibleCamera(manager.cameraIdList, manager)
+            val backCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_BACK).firstOrNull()
+            val frontCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_FRONT).firstOrNull()
             val externalCameras: List<String> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_EXTERNAL)
             } else {
                 emptyList()
             }
-            (listOf(frontCamera, backCamera) + externalCameras).forEach { id -> devices.cameras.add(id) }
+            if (frontCamera != null) devices.cameras.add(frontCamera)
+            if (backCamera != null) devices.cameras.add(backCamera)
+            devices.cameras.addAll(externalCameras)
             if (devices.cameras.isNotEmpty()) devices.currentId = devices.cameras[0]
             devices.cameraFront = frontCamera
+            devices.cameraBack = backCamera
             Log.w(TAG, "Loading video devices: found " + devices.cameras.size)
             devices
         }.subscribeOn(AndroidSchedulers.from(videoLooper))
@@ -309,7 +328,7 @@ class CameraService internal constructor(c: Context) {
                 devs
             }
             .ignoreElement()
-            .doOnError { e: Throwable? ->
+            .doOnError { e: Throwable ->
                 Log.e(TAG, "Error initializing video device", e)
                 maxResolutionSubject.onNext(RESOLUTION_NONE)
             }
@@ -327,12 +346,19 @@ class CameraService internal constructor(c: Context) {
         fun onError()
     }
 
-    fun closeCamera() {
-        previewCamera?.let { camera ->
+    fun closeCamera(camId: String) {
+        mParams[camId]?.let { params ->
+            params.camera?.let { camera ->
+                params.isCapturing = false
+                camera.close()
+                params.camera = null
+            }
+        }
+        /*previewCamera?.let { camera ->
             previewCamera = null
             camera.close()
             currentCodec = null
-        }
+        }*/
         stopScreenSharing()
     }
 
@@ -341,11 +367,12 @@ class CameraService internal constructor(c: Context) {
         mimeType: String?,
         handler: Handler,
         resolution: Int,
-        bitrate: Int
+        bitrate: Int,
+        surface: Surface? = null
     ): Pair<MediaCodec?, Surface?> {
         Log.d(TAG, "Video with codec " + mimeType + " resolution: " + videoParams.width + "x" + videoParams.height + " Bitrate: " + bitrate)
         val bitrateValue: Int = if (bitrate == 0) if (resolution >= 720) 192 * 8 * 1024 else 100 * 8 * 1024 else bitrate * 8 * 1024
-        val frameRate = 30 // 30 fps
+        val frameRate = videoParams.rate//30 // 30 fps
         val format = MediaFormat.createVideoFormat(mimeType!!, videoParams.width, videoParams.height).apply {
             setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
             setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue)
@@ -375,7 +402,7 @@ class CameraService internal constructor(c: Context) {
             params.putInt(MediaCodec.PARAMETER_KEY_VIDEO_BITRATE, bitrateValue)
             codec.setParameters(params)
             codec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
-            encoderInput = codec.createInputSurface()
+            encoderInput = /*surface?.also { codec!!.setInputSurface(it) } ?:*/ codec.createInputSurface()
             val callback: MediaCodec.Callback = object : MediaCodec.Callback() {
                 override fun onInputBufferAvailable(codec: MediaCodec, index: Int) {}
                 override fun onOutputBufferAvailable(codec: MediaCodec, index: Int, info: MediaCodec.BufferInfo) {
@@ -383,8 +410,9 @@ class CameraService internal constructor(c: Context) {
                         if (info.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM == 0) {
                             // Get and cache the codec data (SPS/PPS NALs)
                             val isConfigFrame = info.flags and MediaCodec.BUFFER_FLAG_CODEC_CONFIG != 0
+                            val buffer = codec.getOutputBuffer(index)
                             if (isConfigFrame) {
-                                codec.getOutputBuffer(index)?.let { outputBuffer ->
+                                buffer?.let { outputBuffer ->
                                     outputBuffer.position(info.offset)
                                     outputBuffer.limit(info.offset + info.size)
                                     codecData = ByteBuffer.allocateDirect(info.size).apply {
@@ -393,7 +421,6 @@ class CameraService internal constructor(c: Context) {
                                     }
                                     Log.i(TAG, "Cache new codec data (SPS/PPS, ...)")
                                 }
-                                codec.releaseOutputBuffer(index, false)
                             } else {
                                 val isKeyFrame = info.flags and MediaCodec.BUFFER_FLAG_KEY_FRAME != 0
                                 // If it's a key-frame, send the cached SPS/PPS NALs prior to
@@ -405,10 +432,9 @@ class CameraService internal constructor(c: Context) {
                                 }
 
                                 // Send the encoded frame
-                                val buffer = codec.getOutputBuffer(index)
                                 JamiService.captureVideoPacket(videoParams.inputUri, buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs,videoParams.rotation)
-                                codec.releaseOutputBuffer(index, false)
                             }
+                            codec.releaseOutputBuffer(index, false)
                         }
                     } catch (e: IllegalStateException) {
                         Log.e(TAG, "MediaCodec can't process buffer", e)
@@ -468,7 +494,7 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    private fun createVirtualDisplay(projection: MediaProjection, metrics: DisplayMetrics): Pair<MediaCodec?, VirtualDisplay>? {
+    private fun createVirtualDisplay(projection: MediaProjection, surface: TextureView, metrics: DisplayMetrics): Pair<MediaCodec?, VirtualDisplay>? {
         var screenWidth = metrics.widthPixels
         var screenHeight = metrics.heightPixels
         val screenDensity = metrics.densityDpi
@@ -480,7 +506,7 @@ class CameraService internal constructor(c: Context) {
         }
         while (screenWidth >= 320) {
             val params = VideoParams(VideoDevices.SCREEN_SHARING, screenWidth, screenHeight, 24)
-            r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0)
+            r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0, surface = Surface(surface.surfaceTexture))
             if (r.first == null) {
                 screenWidth /= 2
                 screenHeight /= 2
@@ -521,8 +547,8 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    fun startScreenSharing(mediaProjection: MediaProjection, metrics: DisplayMetrics): Boolean {
-        val r = createVirtualDisplay(mediaProjection, metrics)
+    fun startScreenSharing(mediaProjection: MediaProjection, surface: TextureView, metrics: DisplayMetrics): Boolean {
+        val r = createVirtualDisplay(mediaProjection, surface, metrics)
         if (r != null) {
             currentMediaProjection = mediaProjection
             currentCodec = r.first
@@ -551,7 +577,7 @@ class CameraService internal constructor(c: Context) {
         resolution: Int,
         bitrate: Int
     ) {
-        previewCamera?.close()
+        //previewCamera?.close()
         val handler = videoHandler
         try {
             val view = surface as AutoFitTextureView
@@ -594,7 +620,8 @@ class CameraService internal constructor(c: Context) {
                 override fun onOpened(camera: CameraDevice) {
                     try {
                         Log.w(TAG, "onOpened " + videoParams.id)
-                        previewCamera = camera
+                        //previewCamera = camera
+                        videoParams.camera = camera
                         texture!!.setDefaultBufferSize(previewSize.width, previewSize.height)
                         val builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
                         builder.addTarget(s)
@@ -665,15 +692,16 @@ class CameraService internal constructor(c: Context) {
                 override fun onClosed(camera: CameraDevice) {
                     Log.w(TAG, "onClosed")
                     try {
-                        if (previewCamera === camera) previewCamera = null
+                        if (videoParams.camera === camera)
+                            videoParams.camera = null
                         if (codec != null) {
-                            if (codec.first != null) {
-                                if (codecStarted[0]) codec.first!!.signalEndOfInputStream()
-                                codec.first!!.release()
-                                if (codec.first == currentCodec) currentCodec = null
+                            codec.first?.let { c ->
+                                if (codecStarted[0]) c.signalEndOfInputStream()
+                                c.release()
+                                if (c == currentCodec) currentCodec = null
                                 codecStarted[0] = false
                             }
-                            if (codec.second != null) codec.second!!.release()
+                            codec.second?.release()
                         }
                         reader?.close()
                         s.release()
@@ -689,8 +717,8 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    val isOpen: Boolean
-        get() = previewCamera != null || currentMediaProjection != null
+    /*val isOpen: Boolean
+        get() = previewCamera != null || currentMediaProjection != null*/
     val cameraIds: List<String>
         get() = devices?.cameras ?: ArrayList()
     val cameraCount: Int
@@ -811,7 +839,6 @@ class CameraService internal constructor(c: Context) {
                 .map { camera -> camera.first }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         private fun listSupportedCodecs(list: MediaCodecList) {
             try {
                 for (codecInfo in list.codecInfos) {
