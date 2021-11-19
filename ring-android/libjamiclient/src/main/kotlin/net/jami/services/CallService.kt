@@ -242,7 +242,6 @@ class CallService(
     }*/
 
     fun accept(accountId:String, callId: String, hasVideo: Boolean = false) {
-        Log.w(TAG, "DEBUG fn accept [CallService.kt] -> based on value of hasvideo ( $hasVideo ) [IF] false then mute media type VIDEO and JamiService.accept [ELSE] add Media in VectMap and JamiService.acceptWithMedia() ")
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
             val call = currentCalls[callId] ?: return@execute
@@ -254,10 +253,6 @@ class CallService(
                     media.toMap()
             }
 
-            for (i in vectMapMedia){
-                Log.w(TAG, "DEBUG fn accept [CallService.kt] -> $i")
-            }
-            Log.w(TAG, "DEBUG fn accept [CallService.kt] -> value of hasvideo : $hasVideo => on accept un appel avec media")
             JamiService.acceptWithMedia(accountId, callId, vectMapMedia)
         }
     }
@@ -448,7 +443,6 @@ class CallService(
 
     private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, mediaList: List<Media>): Call {
         synchronized(currentCalls) {
-            Log.w(TAG, "DEBUG fn addCall() [CallService] -> if call == null ? create a new call instance and return it : update medialist of the call and return it => we go back to previous fn who will push the call as the updated subject ")
             var call = currentCalls[callId]
             if (call == null) {
                 val account = mAccountService.getAccount(accountId)!!
@@ -573,7 +567,6 @@ class CallService(
     }
 
     fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
-        Log.w(TAG, "DEBUG fn mediaChangeRequested $accountId $callId $mediaList")
         currentCalls[callId]?.let { call ->
             if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
                 for (e in mediaList)
@@ -585,7 +578,6 @@ class CallService(
     }
 
     fun mediaNegotiationStatus(callId: String, event: String, mediaList: VectMap) {
-        Log.w(TAG, "DEBUG fn mediaNegotiationStatus $callId $event $mediaList")
         synchronized(currentCalls) {
             currentCalls[callId]?.let { call ->
                 call.mediaList = mediaList.mapTo(ArrayList(mediaList.size)) { media -> Media(media) }
@@ -595,7 +587,6 @@ class CallService(
     }
 
     fun requestVideoMedia(conf: Conference, enable: Boolean) {
-        Log.w(TAG, "DEBUG fn requestVideoMedia: ${conf.id} $enable")
         if (conf.isConference || conf.hasVideo()) {
             JamiService.muteLocalMedia(conf.accountId, conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
         } else if (enable) {

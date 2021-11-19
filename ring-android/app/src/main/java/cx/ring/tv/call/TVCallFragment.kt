@@ -273,13 +273,11 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         binding!!.contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
     }
     override fun displayPeerVideo(display: Boolean) {
-        Log.w(CallFragment.TAG, "DEBUG fn displayPeerVideo -> $display")
         binding!!.videoSurface.visibility = if (display) View.VISIBLE else View.GONE
         displayContactBubble(!display)
     }
 
     override fun displayLocalVideo(display: Boolean) {
-        Log.w(CallFragment.TAG, "DEBUG fn displayLocalVideo -> $display")
         binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
     }
 
@@ -469,12 +467,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
      */
     private fun initializeCall(isIncoming: Boolean) {
         val hasVideo : Boolean = presenter.wantVideo
-        Log.w(TAG, "DEBUG fn initializeCall() -> isIncoming = $isIncoming and hasVideo = $hasVideo")
         if (isIncoming) {
             presenter.acceptCall(hasVideo)
         } else {
             arguments?.let { args ->
-                Log.w(TAG, "initializeCall presenter.initOutGoing")
                 val conversation = ConversationPath.fromBundle(args)!!
                 presenter.initOutGoing(
                     conversation.accountId,

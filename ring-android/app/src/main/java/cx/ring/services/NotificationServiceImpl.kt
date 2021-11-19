@@ -147,7 +147,6 @@ class NotificationServiceImpl(
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE))
-                Log.w(TAG, "DEBUG fn buildCallNotification [NotificationServiceImpl.kt] -> conference.hasvideo = ${conference.hasVideo()} ")
 
                 if (conference.hasVideo()){
                         messageNotificationBuilder

@@ -319,8 +319,6 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun goToCall(withCamera: Boolean) {
-
-        Log.w(TAG, "DEBUG fn goToCall ||   hasVideo: $withCamera")
         if (!withCamera && !mHardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
             return

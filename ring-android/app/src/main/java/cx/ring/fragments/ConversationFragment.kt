@@ -914,7 +914,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
-        Log.w(TAG, "DEBUG fn goToCallActivity ----> conferenceId: ${conferenceId}, key_call_id: ${arguments?.get(NotificationService.KEY_CALL_ID)}")
         startActivity(Intent(Intent.ACTION_VIEW)
             .setClass(requireContext().applicationContext, CallActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -923,7 +922,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun goToCallActivityWithResult(accountId: String, conversationUri: net.jami.model.Uri, contactUri: net.jami.model.Uri, withCamera: Boolean) {
-        Log.w(TAG, "DEBUG fn goToCallActivityWithResult || hasVideo : $withCamera")
         val intent = Intent(Intent.ACTION_CALL)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .setClass(requireContext(), CallActivity::class.java)

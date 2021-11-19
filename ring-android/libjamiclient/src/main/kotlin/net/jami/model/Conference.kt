@@ -162,17 +162,6 @@ class Conference(val accountId: String, val id: String) {
         return false
     }
 
-
-    fun hasActiveAudio(user: String?) {
-        Log.w("Conference.kt", "DEBUG hasActiveAudio -------> init")
-        mParticipantInfo.subscribe {
-            Log.w("Conference.kt", "DEBUG hasActiveAudio -------> List<ParticipantInfo>: $it")
-            for (participants in it)
-                //if (user == participants.contact.username)
-                Log.w("Conference.kt", "DEBUG hasActiveAudio -------> ${participants.contact.displayName}, local audio muted : ${participants.audioLocalMuted}, moderator audio muted: ${participants.audioModeratorMuted}")
-        }
-    }
-
     val timestampStart: Long
         get() {
             var t = Long.MAX_VALUE
