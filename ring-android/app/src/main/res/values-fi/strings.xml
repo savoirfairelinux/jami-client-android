@@ -324,8 +324,12 @@
   <string name="fab_path_choose">Valitse toinen tiedosto</string>
   <string name="chat_plugins">Keskustelun lisäosat</string>
   <string name="bottomSheet_share_btn">Jako</string>
+  <string name="bottomSheet_dialpad_btn">Näppäimistö</string>
   <string name="bottomSheet_plugins_btn">Lisäosat</string>
   <string name="bottomSheet_add_participants_btn">Lisää</string>
   <string name="bottomSheet_change_camera_btn">Vaihda</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Lopeta puhelu</string>
+  <string name="bottomSheet_mute_microphone_btn">Pieni</string>
+  <string name="bottomSheet_sound_output_btn">Äänet</string>
 </resources>
