@@ -460,14 +460,12 @@ class CameraService internal constructor(c: Context) {
         return Pair(codec, encoderInput)
     }
 
-    fun requestKeyFrame() {
-        Log.w(TAG, "requestKeyFrame()")
+    fun requestKeyFrame(camId: String) {
+        Log.w(TAG, "requestKeyFrame() $camId")
         try {
-            /*if (currentCodec != null) {
-                val params = Bundle()
-                params.putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0)
-                currentCodec!!.setParameters(params)
-            }*/
+            mParams[camId]?.mediaCodec?.setParameters(Bundle().apply {
+                putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0)
+            })
         } catch (e: IllegalStateException) {
             Log.w(TAG, "Can't send keyframe request", e)
         }
