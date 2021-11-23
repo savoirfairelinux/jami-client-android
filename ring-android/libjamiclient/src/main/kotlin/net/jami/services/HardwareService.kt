@@ -95,7 +95,7 @@ abstract class HardwareService(
     abstract fun startCapture(camId: String?)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
-    abstract fun requestKeyFrame()
+    abstract fun requestKeyFrame(camId: String)
     abstract fun setBitrate(camId: String, bitrate: Int)
     abstract fun addVideoSurface(id: String, holder: Any)
     abstract fun updateVideoSurfaceId(currentId: String, newId: String)
