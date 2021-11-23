@@ -95,10 +95,8 @@ abstract class HardwareService(
     abstract fun startCapture(camId: String?)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
-    abstract fun endCapture()
-    abstract fun stopScreenShare()
     abstract fun requestKeyFrame()
-    abstract fun setBitrate(device: String, bitrate: Int)
+    abstract fun setBitrate(camId: String, bitrate: Int)
     abstract fun addVideoSurface(id: String, holder: Any)
     abstract fun updateVideoSurfaceId(currentId: String, newId: String)
     abstract fun removeVideoSurface(id: String)
@@ -136,6 +134,7 @@ abstract class HardwareService(
     }
 
     fun startVideo(inputId: String, surface: Any, width: Int, height: Int): Long {
+        Log.i(TAG, "startVideo $inputId ${width}x$height")
         val inputWindow = JamiService.acquireNativeWindow(surface)
         if (inputWindow == 0L) {
             return inputWindow
@@ -146,6 +145,7 @@ abstract class HardwareService(
     }
 
     fun stopVideo(inputId: String, inputWindow: Long) {
+        Log.i(TAG, "stopVideo $inputId $inputWindow")
         if (inputWindow == 0L) {
             return
         }
@@ -165,11 +165,9 @@ abstract class HardwareService(
     @Synchronized
     fun startLogs(): Observable<String> {
         return logs ?: Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<String> ->
-            Log.w(TAG, "ObservableOnSubscribe JamiService.monitor(true)")
             logEmitter = emitter
             JamiService.monitor(true)
             emitter.setCancellable {
-                Log.w(TAG, "ObservableOnSubscribe CANCEL JamiService.monitor(false)")
                 synchronized(this@HardwareService) {
                     JamiService.monitor(false)
                     logEmitter = null
@@ -178,7 +176,7 @@ abstract class HardwareService(
             }
         } as ObservableOnSubscribe<String>)
             .observeOn(Schedulers.io())
-            .scan(StringBuffer(1024), { sb: StringBuffer, message: String? -> sb.append(message).append('\n') })
+            .scan(StringBuffer(1024)) { sb: StringBuffer, message: String -> sb.append(message).append('\n') }
             .throttleLatest(500, TimeUnit.MILLISECONDS)
             .map { obj: StringBuffer -> obj.toString() }
             .replay(1)
@@ -203,7 +201,7 @@ abstract class HardwareService(
     }
 
     companion object {
-        private val TAG = HardwareService::class.java.simpleName
+        private val TAG = HardwareService::class.simpleName!!
         val STATE_SPEAKERS = AudioState(AudioOutput.SPEAKERS)
         val STATE_INTERNAL = AudioState(AudioOutput.INTERNAL)
     }
