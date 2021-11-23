@@ -303,7 +303,7 @@ class DaemonService(
         }
 
         override fun requestKeyFrame(camId: String) {
-            mHardwareService.requestKeyFrame()
+            mHardwareService.requestKeyFrame(camId)
         }
 
         override fun setBitrate(camId: String, bitrate: Int) {

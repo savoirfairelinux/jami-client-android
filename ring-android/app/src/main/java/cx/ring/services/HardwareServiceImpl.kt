@@ -468,8 +468,8 @@ class HardwareServiceImpl(
         videoEvents.onNext(VideoEvent(started = false))
     }
 
-    override fun requestKeyFrame() {
-        cameraService.requestKeyFrame()
+    override fun requestKeyFrame(camId: String) {
+        cameraService.requestKeyFrame(camId)
     }
 
     override fun setBitrate(camId: String, bitrate: Int) {
