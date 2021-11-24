@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.*
 import javax.inject.Inject
 
@@ -60,7 +60,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDisposableBag.add(mConversationFacade!!.contactList
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { conversations: MutableList<SmartListViewModel> ->
+            .subscribe { conversations: MutableList<ConversationItemViewModel> ->
                 if (binding == null) return@subscribe
                 adapter?.update(conversations)
             })
@@ -69,13 +69,13 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragContactPickerBinding.inflate(layoutInflater, container, false)
         adapter = SmartListAdapter(null, object : SmartListListeners {
-            override fun onItemClick(item: SmartListViewModel) {
+            override fun onItemClick(item: ConversationItemViewModel) {
                 mAccountId = item.accountId
                 val checked = !item.isChecked
                 item.isChecked = checked
                 adapter!!.update(item)
                 val remover = Runnable {
-                    mCurrentSelection.remove(item.contacts[0])
+                    mCurrentSelection.remove(item.contacts[0].contact)
                     if (mCurrentSelection.isEmpty()) binding!!.createGroupBtn.isEnabled = false
                     item.isChecked = false
                     adapter!!.update(item)
@@ -83,7 +83,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                     if (v != null) binding!!.selectedContacts.removeView(v)
                 }
                 if (checked) {
-                    if (mCurrentSelection.add(item.contacts[0])) {
+                    if (mCurrentSelection.add(item.contacts[0].contact)) {
                         val chip = Chip(requireContext(), null, R.style.Widget_MaterialComponents_Chip_Entry)
                         chip.text = item.contactName
                         chip.chipIcon = AvatarDrawable.Builder()
@@ -102,7 +102,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                 }
             }
 
-            override fun onItemLongClick(item: SmartListViewModel) {}
+            override fun onItemLongClick(item: ConversationItemViewModel) {}
         }, mDisposableBag)
         binding!!.createGroupBtn.setOnClickListener { v: View? ->
             mDisposableBag.add(

@@ -25,13 +25,12 @@ import ezvcard.VCard
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.daemon.Blob
 import net.jami.services.ConversationFacade
-import net.jami.model.Account
 import net.jami.model.Call
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.VCardService
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.VCardUtils.vcardToString
 import javax.inject.Inject
 import javax.inject.Named
@@ -49,11 +48,9 @@ class TVContactPresenter @Inject constructor(
         mAccountId = path.accountId
         mUri = path.conversationUri
         mCompositeDisposable.clear()
-        mCompositeDisposable.add(mConversationService
-            .getAccountSubject(path.accountId)
-            .map { a: Account -> SmartListViewModel(a.getByUri(mUri)!!, true) }
+        mCompositeDisposable.add(mConversationService.observeConversation(path.accountId, path.conversationUri, true)
             .observeOn(mUiScheduler)
-            .subscribe { c: SmartListViewModel -> view?.showContact(c) })
+            .subscribe { c: ConversationItemViewModel -> view?.showContact(c) })
     }
 
     fun contactClicked() {

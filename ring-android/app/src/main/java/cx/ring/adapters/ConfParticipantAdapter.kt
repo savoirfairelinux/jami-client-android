@@ -92,7 +92,7 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
 
     override fun getItemId(position: Int): Long {
         val info = calls[position]
-        return Objects.hash(info.contact.uri, info.call?.daemonIdString).toLong()
+        return Objects.hash(info.contact.contact.uri, info.call?.daemonIdString).toLong()
     }
 
     override fun getItemCount(): Int {
