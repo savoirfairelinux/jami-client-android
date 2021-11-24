@@ -150,9 +150,8 @@ class HomeActivity : FragmentActivity() {
 
     override fun onResume() {
         super.onResume()
-        //mDisposable.clear();
         mDisposableBag.add(
-            mAccountService!!.observableAccountList
+            mAccountService.observableAccountList
                 .observeOn(AndroidSchedulers.mainThread())
                 .firstElement()
                 .subscribe { accounts: List<Account?> ->

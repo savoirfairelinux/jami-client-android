@@ -28,9 +28,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.model.Uri.Companion.fromString
 import net.jami.utils.Log
-import net.jami.utils.StringUtils.isEmpty
 import java.util.*
 
 abstract class HistoryService {
@@ -58,7 +56,7 @@ abstract class HistoryService {
      * @return
      */
     fun clearHistory(contactId: String, accountId: String, deleteConversation: Boolean): Completable {
-        return if (isEmpty(accountId)) Completable.complete() else Completable.fromAction {
+        return if (accountId.isEmpty()) Completable.complete() else Completable.fromAction {
             var deleted = 0
             val conversation = getConversationDataDao(accountId).queryBuilder()
                 .where().eq(ConversationHistory.COLUMN_PARTICIPANT, contactId).queryForFirst() ?: return@fromAction
@@ -185,7 +183,7 @@ abstract class HistoryService {
 
     fun incomingMessage(accountId: String, daemonId: String?, from: String, message: String): Single<TextMessage> {
         return Single.fromCallable {
-            val fromUri = fromString(from).uri
+            val fromUri = Uri.fromString(from).uri
             val conversationDataDao = getConversationDataDao(accountId)
             val conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, fromUri)
                     .queryForFirst() ?: ConversationHistory(fromUri).apply {
@@ -206,7 +204,7 @@ abstract class HistoryService {
                 throw RuntimeException("accountMessageStatusChanged: not able to find message with id $daemonId in database")
             }
             val text = textList[0]
-            val participant = fromString(peer).uri
+            val participant = Uri.fromString(peer).uri
             if (text.conversation!!.participant != participant) {
                 throw RuntimeException("accountMessageStatusChanged: received an invalid text message")
             }

@@ -29,14 +29,14 @@ import cx.ring.databinding.ItemSmartlistHeaderBinding
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 class SmartListAdapter(
-    smartListViewModels: List<SmartListViewModel>?,
+    conversationItemViewModels: List<ConversationItemViewModel>?,
     private val listener: SmartListListeners,
     private val mDisposable: CompositeDisposable
 ) : RecyclerView.Adapter<SmartListViewHolder>() {
-    private var mSmartListViewModels: MutableList<SmartListViewModel> = if (smartListViewModels != null) ArrayList(smartListViewModels) else ArrayList()
+    private var mConversationItemViewModels: MutableList<ConversationItemViewModel> = if (conversationItemViewModels != null) ArrayList(conversationItemViewModels) else ArrayList()
     private var recyclerView: RecyclerView? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SmartListViewHolder {
@@ -51,8 +51,8 @@ class SmartListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val smartListViewModel = mSmartListViewModels[position]
-        return if (smartListViewModel.headerTitle == SmartListViewModel.Title.None) 0 else 1
+        val smartListViewModel = mConversationItemViewModels[position]
+        return if (smartListViewModel.headerTitle == ConversationItemViewModel.Title.None) 0 else 1
     }
 
     override fun onViewRecycled(holder: SmartListViewHolder) {
@@ -61,11 +61,11 @@ class SmartListAdapter(
     }
 
     override fun onBindViewHolder(holder: SmartListViewHolder, position: Int) {
-        holder.bind(listener, mSmartListViewModels[position])
+        holder.bind(listener, mConversationItemViewModels[position])
     }
 
     override fun getItemCount(): Int {
-        return mSmartListViewModels.size
+        return mConversationItemViewModels.size
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -73,9 +73,9 @@ class SmartListAdapter(
         this.recyclerView = recyclerView
     }
 
-    fun update(viewModels: MutableList<SmartListViewModel>?) {
-        val old: List<SmartListViewModel> = mSmartListViewModels
-        mSmartListViewModels = viewModels ?: ArrayList()
+    fun update(viewModels: MutableList<ConversationItemViewModel>?) {
+        val old: List<ConversationItemViewModel> = mConversationItemViewModels
+        mConversationItemViewModels = viewModels ?: ArrayList()
         if (viewModels != null) {
             val recyclerViewState = recyclerView?.layoutManager?.onSaveInstanceState()
             DiffUtil.calculateDiff(SmartListDiffUtil(old, viewModels))
@@ -86,11 +86,11 @@ class SmartListAdapter(
         }
     }
 
-    fun update(smartListViewModel: SmartListViewModel) {
-        for (i in mSmartListViewModels.indices) {
-            val old = mSmartListViewModels[i]
-            if (old.contacts === smartListViewModel.contacts) {
-                mSmartListViewModels[i] = smartListViewModel
+    fun update(conversationItemViewModel: ConversationItemViewModel) {
+        for (i in mConversationItemViewModels.indices) {
+            val old = mConversationItemViewModels[i]
+            if (old.contacts === conversationItemViewModel.contacts) {
+                mConversationItemViewModels[i] = conversationItemViewModel
                 notifyItemChanged(i)
                 return
             }

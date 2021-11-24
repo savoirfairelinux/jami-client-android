@@ -36,12 +36,10 @@ object StringUtils {
         Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
     ))
 
-    @JvmStatic
     fun isEmpty(s: String?): Boolean {
         return s == null || s.isEmpty()
     }
 
-    @JvmStatic
     fun isEmpty(s: CharSequence?): Boolean {
         return s == null || s.isEmpty()
     }
@@ -58,7 +56,6 @@ object StringUtils {
         }
     }
 
-    @JvmStatic
     fun toPassword(s: String): String {
         if (isEmpty(s)) {
             return ""
@@ -68,12 +65,10 @@ object StringUtils {
         return String(chars)
     }
 
-    @JvmStatic
     fun toNumber(s: String?): String? {
         return s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
     }
 
-    @JvmStatic
     fun getFileExtension(filename: String): String {
         val dot = filename.lastIndexOf('.')
         return if (dot == -1 || dot == 0) "" else filename.substring(dot + 1)
@@ -96,7 +91,6 @@ object StringUtils {
         }
     }
 
-    @JvmStatic
     fun isOnlyEmoji(message: String?): Boolean {
         if (message == null || message.isEmpty()) {
             return false
@@ -115,36 +109,5 @@ object StringUtils {
             }
         }
         return true
-    }
-
-    fun join(separator: String, values: List<String>): String {
-        if (values.isEmpty()) return "" //need at least one element
-        if (values.size == 1) return values[0]
-        //all string operations use a new array, so minimize all calls possible
-        val sep = separator.toCharArray()
-
-        // determine final size and normalize nulls
-        var totalSize = (values.size - 1) * sep.size // separator size
-        for (i in values.indices) {
-            totalSize += values[i].length
-        }
-
-        //exact size; no bounds checks or resizes
-        val joined = CharArray(totalSize)
-        var pos = 0
-        //note, we are iterating all the elements except the last one
-        var i = 0
-        val end = values.size - 1
-        while (i < end) {
-            System.arraycopy(values[i].toCharArray(), 0, joined, pos, values[i].length)
-            pos += values[i].length
-            System.arraycopy(sep, 0, joined, pos, sep.size)
-            pos += sep.size
-            i++
-        }
-        //now, add the last element;
-        //this is why we checked values.length == 0 off the hop
-        System.arraycopy(values[values.size - 1].toCharArray(), 0, joined, pos, values[values.size - 1].length)
-        return String(joined)
     }
 }
