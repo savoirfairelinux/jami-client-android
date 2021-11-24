@@ -165,7 +165,7 @@ class AccountService(
         accountsSubject.onNext(mAccountList)
     }
 
-    class RegisteredName(
+    data class RegisteredName(
         val accountId: String,
         val name: String,
         val address: String? = null,

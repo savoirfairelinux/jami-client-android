@@ -39,7 +39,16 @@ class ContactSearchPresenter @Inject constructor(
 
     override fun bindView(view: ContactSearchView) {
         super.bindView(view)
-        mCompositeDisposable.add(accountService.currentAccountSubject
+
+        mCompositeDisposable.add(conversationFacade.getFullList(accountService.currentAccountSubject, contactQuery
+            .debounce(350, TimeUnit.MILLISECONDS), false)
+            .switchMap { results -> Observable.combineLatest(results) { r ->
+                r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
+            } }
+            .observeOn(uiScheduler)
+            .subscribe { results -> this.view?.displayResults(results) })
+
+        /*mCompositeDisposable.add(accountService.currentAccountSubject
             .switchMap { account -> conversationFacade.getSearchResults(account, contactQuery
                 .debounce(350, TimeUnit.MILLISECONDS))
             }
@@ -47,7 +56,7 @@ class ContactSearchPresenter @Inject constructor(
                 r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
             } }
             .observeOn(uiScheduler)
-            .subscribe { results -> this.view?.displayResults(results) })
+            .subscribe { results -> this.view?.displayResults(results) })*/
     }
 
     fun queryTextChanged(query: String) {

@@ -92,11 +92,26 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
 
     override fun displayResults(contacts: List<ConversationItemViewModel>) {
         mRowsAdapter.clear()
-        val listRowAdapter = ArrayObjectAdapter(CardPresenterSelector(activity))
-        for (vm in contacts)
-            listRowAdapter.add(ContactCard(vm, Card.Type.SEARCH_RESULT))
-        val header = HeaderItem(getString(R.string.search_results))
-        mRowsAdapter.add(ListRow(header, listRowAdapter))
+        var listRow: ListRow? = null
+        for (item in contacts) {
+            if (item.headerTitle != ConversationItemViewModel.Title.None) {
+                if (listRow != null)
+                    mRowsAdapter.add(listRow)
+                val header = HeaderItem(getString(when(item.headerTitle) {
+                    ConversationItemViewModel.Title.PublicDirectory -> R.string.search_results
+                    ConversationItemViewModel.Title.Conversations -> R.string.navigation_item_conversation
+                    else -> -1
+                }))
+                listRow = ListRow(header, ArrayObjectAdapter(CardPresenterSelector(activity)))
+            } else {
+                if (listRow == null) {
+                    listRow = ListRow(HeaderItem(getString(R.string.search_results)), ArrayObjectAdapter(CardPresenterSelector(activity)))
+                }
+                (listRow.adapter as ArrayObjectAdapter).add(ContactCard(item, Card.Type.SEARCH_RESULT))
+            }
+        }
+        if (listRow != null)
+            mRowsAdapter.add(listRow)
     }
 
     override fun clearSearch() {

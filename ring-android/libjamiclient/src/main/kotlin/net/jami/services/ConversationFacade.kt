@@ -363,6 +363,10 @@ class ConversationFacade(
                 getSearchResults(account, query),
                 query
             ) { conversations: List<Conversation>, searchResults: List<Observable<ConversationItemViewModel>>, q: String ->
+
+
+
+
                 val newList: MutableList<Observable<ConversationItemViewModel>> =
                     ArrayList(conversations.size + searchResults.size + 2)
                 if (searchResults.isNotEmpty()) {
@@ -377,9 +381,12 @@ class ConversationFacade(
                         val lq = q.lowercase()
                         newList.add(ConversationItemViewModel.TITLE_CONVERSATIONS)
                         var nRes = 0
-                        for (conversation in conversations) {
+                        val clist = Observable.combineLatest(conversations.map { c -> observeConversation(account, c, hasPresence) }) { r ->
+                            r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
+                        }.blockingFirst()
+                        for (conversation in clist) {
                             if (conversation.matches(lq)) {
-                                newList.add(observeConversation(account, conversation, hasPresence))
+                                newList.add(Observable.just(conversation))
                                 nRes++
                             }
                         }

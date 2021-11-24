@@ -56,7 +56,7 @@ class SmartListPresenter @Inject constructor(
         mCompositeDisposable.add(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true)
             .switchMap { viewModels ->
                 if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
-                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size), {ob -> ob as ConversationItemViewModel}) }
+                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size)) { ob -> ob as ConversationItemViewModel } }
                     .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
             }
             .observeOn(mUiScheduler)

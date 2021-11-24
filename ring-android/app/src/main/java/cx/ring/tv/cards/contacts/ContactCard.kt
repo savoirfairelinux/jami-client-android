@@ -29,19 +29,17 @@ class ContactCard : Card {
     constructor(m: ConversationItemViewModel, type: Type) {
         mModel = m
         model = m
-        this.type = type
+        //this.type = type
     }
 
     var model: ConversationItemViewModel
         get() = mModel
         set(model) {
             mModel = model
-            title = model.contactName ?: ""
-            val contact = model.getContact()!!
-            val username = contact.displayUri
-            description = username
-            val isOnline = contact.contact.isOnline
-            type = if (model.contactName == username) {
+            title = model.contactName
+            description = model.uriTitle ?: ""
+            val isOnline = model.isOnline
+            type = if (title == description) {
                 if (isOnline) {
                     Type.CONTACT_ONLINE
                 } else {

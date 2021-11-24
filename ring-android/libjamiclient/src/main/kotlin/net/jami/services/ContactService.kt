@@ -69,7 +69,7 @@ abstract class ContactService(
         //Log.w(TAG, "observeContact " + accountId + " " + contact.getUri() + " " + contact.isUser());
         val observePresence = if (contact.isUser) false else withPresence
         val uri = contact.uri
-        val uriString = uri.rawUriString
+        val uriString = uri.rawRingId
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
                 Observable.create { emitter: ObservableEmitter<Boolean> ->
@@ -89,6 +89,7 @@ abstract class ContactService(
             val username = contact.username ?: run {
                 mAccountService.findRegistrationByAddress(accountId, "", uriString)
                     .map { registration ->
+                        Log.w(TAG, "username lookup response $registration")
                         if (registration.state > 2)
                             throw RuntimeException("lookup failed")
                         registration.name

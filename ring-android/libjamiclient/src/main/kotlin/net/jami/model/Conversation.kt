@@ -100,9 +100,9 @@ class Conversation : ConversationHistory {
     val isSwarm: Boolean
         get() = Uri.SWARM_SCHEME == uri.scheme
 
-    fun matches(query: String?): Boolean {
+    fun matches(query: String): Boolean {
         for (contact in contacts) {
-            if (contact.matches(query!!)) return true
+            if (contact.matches(query)) return true
         }
         return false
     }

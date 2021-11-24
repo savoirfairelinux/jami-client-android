@@ -121,6 +121,14 @@ class ConversationItemViewModel {
     val isSwarm: Boolean
         get() = uri.isSwarm
 
+
+    fun matches(query: String): Boolean {
+        for (contact in contacts)
+            if (contact.matches(query)) return true
+        return false
+    }
+
+
     /**
      * Used to get contact for one to one or legacy conversations
      */
@@ -129,7 +137,7 @@ class ConversationItemViewModel {
         for (c in contacts) {
             if (!c.contact.isUser) return c
         }
-        return null
+        return if (contacts.isNotEmpty()) contacts[0] else null
     }
 
     val lastInteractionTime: Long
@@ -180,7 +188,7 @@ class ConversationItemViewModel {
             return null
         }
 
-        fun getTitle(conversation: Conversation, contacts: List<ContactViewModel>): String  {
+        fun getTitle(conversation: Conversation, contacts: List<ContactViewModel>): String {
             if (contacts.isEmpty()) {
                 return if (conversation.mode.blockingFirst() == Conversation.Mode.Syncing) { "(Syncing)" } else ""
             } else if (contacts.size == 1) {
