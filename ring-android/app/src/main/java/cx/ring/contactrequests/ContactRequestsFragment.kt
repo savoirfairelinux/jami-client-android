@@ -30,7 +30,6 @@ import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPendingContactRequestsBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.utils.ActionHelper
 import cx.ring.utils.TextUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +37,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.contactrequests.ContactRequestsPresenter
 import net.jami.contactrequests.ContactRequestsView
 import net.jami.model.Uri
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 @AndroidEntryPoint
 class ContactRequestsFragment :
@@ -78,7 +77,7 @@ class ContactRequestsFragment :
         menu.clear()
     }
 
-    override fun updateView(list: MutableList<SmartListViewModel>, disposable: CompositeDisposable) {
+    override fun updateView(list: MutableList<ConversationItemViewModel>, disposable: CompositeDisposable) {
         val binding = binding ?: return
         if (list.isNotEmpty()) {
             binding.paneRingID.visibility = View.GONE
@@ -100,7 +99,7 @@ class ContactRequestsFragment :
         })
     }
 
-    override fun updateItem(item: SmartListViewModel) {
+    override fun updateItem(item: ConversationItemViewModel) {
         mAdapter?.update(item)
     }
 
@@ -118,11 +117,11 @@ class ContactRequestsFragment :
         Snackbar.make(binding!!.root, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun onItemClick(item: SmartListViewModel) {
+    override fun onItemClick(item: ConversationItemViewModel) {
         presenter.contactRequestClicked(item.accountId, item.uri)
     }
 
-    override fun onItemLongClick(item: SmartListViewModel) {
+    override fun onItemLongClick(item: ConversationItemViewModel) {
         MaterialAlertDialogBuilder(requireContext())
             .setItems(R.array.swarm_actions) { dialog, which ->
                 when (which) {
