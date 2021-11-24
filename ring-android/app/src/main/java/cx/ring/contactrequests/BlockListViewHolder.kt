@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.databinding.ItemContactBlacklistBinding
 import net.jami.model.Contact
 import cx.ring.views.AvatarFactory
+import net.jami.model.ContactViewModel
 
 class BlockListViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
     private val binding: ItemContactBlacklistBinding = ItemContactBlacklistBinding.bind(view)
-    fun bind(clickListener: BlockListListeners, contact: Contact) {
+    fun bind(clickListener: BlockListListeners, contact: ContactViewModel) {
         AvatarFactory.loadGlideAvatar(binding.photo, contact)
-        binding.displayName.text = contact.ringUsername
-        binding.unblock.setOnClickListener { clickListener.onUnblockClicked(contact) }
+        binding.displayName.text = contact.displayUri
+        binding.unblock.setOnClickListener { clickListener.onUnblockClicked(contact.contact) }
     }
 
     interface BlockListListeners {
