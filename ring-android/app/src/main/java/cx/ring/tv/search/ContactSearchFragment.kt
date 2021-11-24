@@ -18,28 +18,22 @@
  */
 package cx.ring.tv.search
 
-import cx.ring.utils.ConversationPath.Companion.toUri
-import dagger.hilt.android.AndroidEntryPoint
-import cx.ring.tv.search.BaseSearchFragment
-import cx.ring.tv.search.ContactSearchPresenter
-import androidx.leanback.app.SearchSupportFragment
-import cx.ring.tv.search.ContactSearchView
-import android.os.Bundle
-import cx.ring.tv.cards.contacts.ContactCard
-import androidx.core.content.ContextCompat
-import cx.ring.R
-import androidx.leanback.widget.SearchBar.SearchBarListener
-import net.jami.model.Contact
-import cx.ring.tv.cards.CardPresenterSelector
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.leanback.app.SearchSupportFragment
 import androidx.leanback.widget.*
-import cx.ring.client.CallActivity
-import cx.ring.utils.ConversationPath
+import androidx.leanback.widget.SearchBar.SearchBarListener
+import cx.ring.R
 import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.cards.Card
-import net.jami.smartlist.SmartListViewModel
+import cx.ring.tv.cards.CardPresenterSelector
+import cx.ring.tv.cards.contacts.ContactCard
 import cx.ring.tv.contact.TVContactActivity
+import cx.ring.utils.ConversationPath
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.smartlist.ConversationItemViewModel
 
 @AndroidEntryPoint
 class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
@@ -96,12 +90,28 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         return true
     }
 
-    override fun displayContact(accountId: String, contact: Contact) {
+    override fun displayResults(contacts: List<ConversationItemViewModel>) {
         mRowsAdapter.clear()
-        val listRowAdapter = ArrayObjectAdapter(CardPresenterSelector(activity))
-        listRowAdapter.add(ContactCard(accountId, contact, Card.Type.SEARCH_RESULT))
-        val header = HeaderItem(getString(R.string.search_results))
-        mRowsAdapter.add(ListRow(header, listRowAdapter))
+        var listRow: ListRow? = null
+        for (item in contacts) {
+            if (item.headerTitle != ConversationItemViewModel.Title.None) {
+                if (listRow != null)
+                    mRowsAdapter.add(listRow)
+                val header = HeaderItem(getString(when(item.headerTitle) {
+                    ConversationItemViewModel.Title.PublicDirectory -> R.string.search_results
+                    ConversationItemViewModel.Title.Conversations -> R.string.navigation_item_conversation
+                    else -> -1
+                }))
+                listRow = ListRow(header, ArrayObjectAdapter(CardPresenterSelector(activity)))
+            } else {
+                if (listRow == null) {
+                    listRow = ListRow(HeaderItem(getString(R.string.search_results)), ArrayObjectAdapter(CardPresenterSelector(activity)))
+                }
+                (listRow.adapter as ArrayObjectAdapter).add(ContactCard(item, Card.Type.SEARCH_RESULT))
+            }
+        }
+        if (listRow != null)
+            mRowsAdapter.add(listRow)
     }
 
     override fun clearSearch() {
@@ -109,16 +119,16 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     }
 
     override fun startCall(accountID: String, number: String) {
-        val intent = Intent(Intent.ACTION_CALL, toUri(accountID, number), activity, TVCallActivity::class.java)
+        val intent = Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), activity, TVCallActivity::class.java)
         intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number)
         startActivity(intent)
         activity?.finish()
     }
 
-    override fun displayContactDetails(model: SmartListViewModel) {
+    override fun displayContactDetails(model: ConversationItemViewModel) {
         val intent = Intent(activity, TVContactActivity::class.java)
         //intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
-        intent.setDataAndType(toUri(model.accountId, model.uri), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING)
+        intent.setDataAndType(ConversationPath.toUri(model.accountId, model.uri), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING)
         startActivity(intent)
         activity?.finish()
     }

@@ -29,8 +29,8 @@ open class Card {
     private var mDrawable: Drawable? = null
     var title = ""
     var description: CharSequence = ""
-    var type: Type? = null
-    var id: Long = 0
+    var type: Type = Type.DEFAULT
+    //var id: Long = 0
     var width = 0
     var height = 0
 

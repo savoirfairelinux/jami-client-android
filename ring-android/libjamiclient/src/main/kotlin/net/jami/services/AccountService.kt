@@ -36,7 +36,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.*
 import java.io.File
 import java.io.IOException
@@ -165,7 +165,7 @@ class AccountService(
         accountsSubject.onNext(mAccountList)
     }
 
-    class RegisteredName(
+    data class RegisteredName(
         val accountId: String,
         val name: String,
         val address: String? = null,
@@ -174,11 +174,11 @@ class AccountService(
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
         var results: MutableList<Contact>? = null
-        val resultsViewModels: List<Observable<SmartListViewModel>>
+        val resultsViewModels: List<Observable<ConversationItemViewModel>>
             get() {
-                val vms: MutableList<Observable<SmartListViewModel>> = ArrayList(results!!.size)
+                val vms: MutableList<Observable<ConversationItemViewModel>> = ArrayList(results!!.size)
                 for (user in results!!) {
-                    vms.add(Observable.just(SmartListViewModel(accountId, user, null)))
+                    //vms.add(Observable.just(SmartListViewModel(accountId, user, null)))
                 }
                 return vms
             }
@@ -346,12 +346,12 @@ class AccountService(
                             account.addRequest(TrustRequest(account.accountId, from, received, null, conversationUri))
                         }
                     }
-                    if (enabled) {
+                    /*if (enabled) {
                         for (contact in account.contacts.values) {
                             if (!contact.isUsernameLoaded)
                                 JamiService.lookupAddress(accountId, "", contact.uri.rawRingId)
                         }
-                    }
+                    }*/
                 }
             }
             mHasSipAccount = hasSip
@@ -1040,6 +1040,18 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
     }
 
+    fun findRegistrationByAddress(account: String, nameserver: String, address: String): Single<RegisteredName> {
+        return if (address.isEmpty()) {
+            Single.error(IllegalArgumentException())
+        } else registeredNames
+            .filter { r: RegisteredName -> account == r.accountId && address == r.address }
+            .firstOrError()
+            .doOnSubscribe {
+                mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
+            }
+            .subscribeOn(Schedulers.from(mExecutor))
+    }
+
     fun searchUser(account: String, query: String): Single<UserSearchResult> {
         if (StringUtils.isEmpty(query)) {
             return Single.just(UserSearchResult(account, query))
@@ -1284,9 +1296,9 @@ class AccountService(
     fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
         try {
             //Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-            if (address.isNotEmpty()) {
+            /*if (address.isNotEmpty()) {
                 getAccount(accountId)?.registeredNameFound(state, address, name)
-            }
+            }*/
             registeredNameSubject.onNext(RegisteredName(accountId, name, address, state))
         } catch (e: Exception) {
             Log.w(TAG, "registeredNameFound exception", e)
@@ -1304,8 +1316,13 @@ class AccountService(
             val lastName = m["lastName"]
             val picture_b64 = m["profilePicture"]
             val contact = account.getContactFromCache(uri)
-            if (username != null)
-                contact.setUsername(username)
+
+            if (username != null) {
+                synchronized(contact) {
+                    if (contact.username == null)
+                        contact.username = Single.just(username)
+                }
+            }
             contact.setProfile("$firstName $lastName", mVCardService.base64ToBitmap(picture_b64))
             contacts.add(contact)
         }
