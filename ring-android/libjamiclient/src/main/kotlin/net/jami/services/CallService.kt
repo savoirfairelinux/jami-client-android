@@ -90,6 +90,7 @@ class CallService(
 
     fun onConferenceInfoUpdated(confId: String, info: List<Map<String, String>>) {
         Log.w(TAG, "onConferenceInfoUpdated $confId $info")
+
         val conference = getConference(confId)
         var isModerator = false
         if (conference != null) {
@@ -99,21 +100,21 @@ class CallService(
             for (i in info) {
                 val uri = i["uri"]!!
                 val confInfo = if (uri.isEmpty()) {
-                    ParticipantInfo(null, account.getContactFromCache(Uri.fromId(account.username!!)), i)
+                    ParticipantInfo(null, mContactService.getLoadedContact(account.accountId, account.getContactFromCache(Uri.fromId(account.username!!))).blockingGet(), i)
                 } else {
                     val contactUri = Uri.fromString(uri)
                     val call = conference.findCallByContact(contactUri)
                     if (call != null) {
-                        ParticipantInfo(call, call.contact!!, i)
+                        ParticipantInfo(call, mContactService.getLoadedContact(call.account!!, call.contact!!).blockingGet(), i)
                     } else {
-                        ParticipantInfo(null, account.getContactFromCache(contactUri), i)
+                        ParticipantInfo(null, mContactService.getLoadedContact(account.accountId, account.getContactFromCache(contactUri)).blockingGet(), i)
                     }
                 }
                 if (confInfo.isEmpty) {
                     Log.w(TAG, "onConferenceInfoUpdated: ignoring empty entry $i")
                     continue
                 }
-                if (confInfo.contact.isUser && confInfo.isModerator) {
+                if (confInfo.contact.contact.isUser && confInfo.isModerator) {
                     isModerator = true
                 }
                 newInfo.add(confInfo)
@@ -477,9 +478,9 @@ class CallService(
             val account = mAccountService.getAccount(call.account!!)!!
             val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
             val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
-            if (registeredName != null && registeredName.isNotEmpty()) {
+            /*if (registeredName != null && registeredName.isNotEmpty()) {
                 contact.setUsername(registeredName)
-            }
+            }*/
             val conversation = account.getByUri(contact.conversationUri.blockingFirst())
             call.contact = contact
             call.conversation = conversation
@@ -665,7 +666,7 @@ class CallService(
         for (callId in participants) {
             val call = getCurrentCallForId(callId)
             if (call != null) {
-                Log.d(TAG, "conference created: adding participant " + callId + " " + call.contact!!.displayName)
+                Log.d(TAG, "conference created: adding participant " + callId + " " + call.contact)
                 call.confId = confId
                 conf.addParticipant(call)
             }
@@ -701,7 +702,7 @@ class CallService(
                 if (!conf.contains(callId)) {
                     val call = getCurrentCallForId(callId)
                     if (call != null) {
-                        Log.d(TAG, "conference changed: adding participant " + callId + " " + call.contact!!.displayName)
+                        Log.d(TAG, "conference changed: adding participant " + callId + " " + call.contact)
                         call.confId = confId
                         conf.addParticipant(call)
                     }
@@ -716,7 +717,7 @@ class CallService(
             while (i.hasNext()) {
                 val call = i.next()
                 if (!participants.contains(call.daemonIdString)) {
-                    Log.d(TAG, "conference changed: removing participant " + call.daemonIdString + " " + call.contact!!.displayName)
+                    Log.d(TAG, "conference changed: removing participant " + call.daemonIdString + " " + call.contact)
                     call.confId = null
                     i.remove()
                     removed = true

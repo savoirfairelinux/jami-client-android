@@ -39,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Uri
 import net.jami.services.NotificationService
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 @AndroidEntryPoint
 class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactView {
@@ -117,7 +117,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         }
     }
 
-    override fun showContact(model: SmartListViewModel) {
+    override fun showContact(model: ConversationItemViewModel) {
         val context = requireContext()
         val row = DetailsOverviewRow(model)
         val avatar = AvatarDrawable.Builder()

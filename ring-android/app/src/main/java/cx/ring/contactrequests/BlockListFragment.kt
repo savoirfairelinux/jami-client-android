@@ -34,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.contactrequests.BlockListPresenter
 import net.jami.contactrequests.BlockListView
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 
 @AndroidEntryPoint
 class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>(), BlockListView,
@@ -79,7 +80,7 @@ class BlockListFragment : BaseSupportFragment<BlockListPresenter, BlockListView>
         presenter.unblockClicked(contact)
     }
 
-    override fun updateView(list: Collection<Contact>) {
+    override fun updateView(list: Collection<ContactViewModel>) {
         binding!!.blocklist.visibility = View.VISIBLE
         if (binding!!.blocklist.adapter != null) {
             mAdapter!!.replaceAll(list)
