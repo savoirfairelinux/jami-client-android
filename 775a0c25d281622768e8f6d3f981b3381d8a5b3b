@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfec527f_d8855618",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-11-25T21:00:37Z",
+      "side": 1,
+      "message": "A problem I see is that the button are shown when answering (in the call view)",
+      "revId": "775a0c25d281622768e8f6d3f981b3381d8a5b3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
