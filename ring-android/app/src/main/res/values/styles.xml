@@ -1,7 +1,7 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Main Day/Night base theme -->
-    <style name="AppThemeBase" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppThemeBase" parent="@style/Theme.Material3.DayNight.NoActionBar">
         <item name="colorSurface">@color/background</item>
         <item name="colorOnSurface">@color/colorPrimary</item>
 
@@ -9,13 +9,19 @@
         <item name="colorPrimaryVariant">@color/colorSecondary</item>
         <item name="colorOnPrimary">@color/background</item>
 
+        <item name="colorPrimaryContainer">@color/colorPrimary</item>
+        <item name="colorOnPrimaryContainer">@color/background</item>
+
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
+        <item name="colorSecondaryContainer">@color/colorSecondary</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnSecondary</item>
 
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">@color/colorPrimary</item>
 
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <!--<item name="android:textColorSecondary">@color/colorPrimary</item>-->
 
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
@@ -30,7 +36,7 @@
     </style>
 
     <!-- Main dark base theme -->
-    <style name="AppThemeBase.Dark" parent="@style/Theme.MaterialComponents.NoActionBar">
+    <style name="AppThemeBase.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
@@ -40,7 +46,7 @@
     </style>
 
     <!-- Main light base theme -->
-    <style name="AppThemeBase.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppThemeBase.Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
@@ -89,14 +95,14 @@
     <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen" />
 
     <!-- Main action button -->
-    <style name="Widget.AppTheme.MainActionButton" parent="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
-        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+    <style name="Widget.AppTheme.MainActionButton" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <!--<item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>-->
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
         <item name="iconPadding">8dp</item>
     </style>
 
-    <style name="TextAppearance.AppTheme.MainActionButton" parent="@style/TextAppearance.MaterialComponents.Button">
+    <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textAllCaps">false</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textSize">16sp</item>
@@ -108,8 +114,6 @@
         <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
         <item name="background">@color/transparent_dark_grey</item>
     </style>
-
-    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
     <style name="MenuHeader" parent="AppThemeBase.Dark" />
 
@@ -131,7 +135,7 @@
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>
 
-    <style name="ButtonColoredInverse" parent="Widget.MaterialComponents.Button">
+    <style name="ButtonColoredInverse" parent="Widget.Material3.Button">
         <item name="colorButtonNormal">@color/color_primary_light</item>
         <item name="android:textColor">@color/text_color_primary_dark</item>
         <item name="android:paddingLeft">20dp</item>
@@ -140,38 +144,38 @@
         <item name="android:paddingEnd">20dp</item>
     </style>
 
-    <style name="ButtonColored" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/colorOnPrimary</item>
+    <style name="ButtonColored" parent="Widget.Material3.Button">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <!--<item name="android:textColor">@color/colorOnPrimary</item>
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textStyle">normal</item>-->
     </style>
 
-    <style name="ButtonOutLined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="ButtonOutLined" parent="Widget.Material3.Button.OutlinedButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <!--<item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textStyle">normal</item>-->
     </style>
 
-    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="TextButton" parent="Widget.Material3.Button.TextButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <!--<item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textStyle">normal</item>-->
     </style>
 
     <style name="WizardButton" parent="ButtonColored">
-        <item name="android:textColor">@color/white</item>
+        <!--<item name="android:textColor">@color/white</item>
         <item name="android:padding">@dimen/wizard_button_padding</item>
-        <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
+        <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>-->
     </style>
 
     <!-- AndroidTV Style -->
@@ -311,7 +315,7 @@
         <item name="android:navigationBarColor">@color/background</item>
     </style>
 
-    <style name="Widget.Jami.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <style name="Widget.Jami.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="boxBackgroundColor">@color/edit_text_background</item>
@@ -321,7 +325,7 @@
         <item name="boxCornerRadiusBottomEnd">@dimen/edit_text_radius</item>
     </style>
 
-    <style name="RoundedMaterialAlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="RoundedMaterialAlertDialog" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Dialog.Rounded</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:letterSpacing">0</item>
@@ -334,7 +338,7 @@
         <item name="cornerSize">@dimen/dialog_radius</item>
     </style>
 
-    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+    <style name="TitleTextStyle" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
     </style>
