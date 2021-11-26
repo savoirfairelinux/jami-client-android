@@ -8,7 +8,6 @@
                 android:drawable="@color/transparent_grey"
                 android:state_activated="true" />
 
-            <item android:drawable="@color/background" />
         </selector>
     </item>
 </ripple>
