@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb2ea58_b479d0dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-26T16:47:56Z",
+      "side": 1,
+      "message": "* merge with tv patch\n* rebase\n* use same layout for infos and hand",
+      "revId": "e7b15827af9ef7a1e0f7788e98c8238e9997060a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e01bfc8_fc405e93",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-11-26T16:47:56Z",
+      "side": 1,
+      "message": "use same layout",
+      "range": {
+        "startLine": 885,
+        "startChar": 24,
+        "endLine": 922,
+        "endChar": 0
+      },
+      "revId": "e7b15827af9ef7a1e0f7788e98c8238e9997060a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
