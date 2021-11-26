@@ -153,17 +153,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="230dp"
                 android:layout_height="230dp">
 
-                <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
-                    android:id="@+id/shape_ripple"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    app:enable_color_transition="true"
-                    app:ripple_color="@color/white"
-                    app:ripple_count="3"
-                    app:ripple_duration="3000"
-                    app:ripple_stroke_width="15dp" />
-
                 <ImageView
                     android:id="@+id/contact_bubble"
                     android:layout_width="160dp"
