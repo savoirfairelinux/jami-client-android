@@ -302,12 +302,12 @@ class DaemonService(
             mHardwareService.setParameters(camId, format, width, height, rate)
         }
 
-        override fun requestKeyFrame() {
+        override fun requestKeyFrame(camId: String) {
             mHardwareService.requestKeyFrame()
         }
 
-        override fun setBitrate(device: String, bitrate: Int) {
-            mHardwareService.setBitrate(device, bitrate)
+        override fun setBitrate(camId: String, bitrate: Int) {
+            mHardwareService.setBitrate(camId, bitrate)
         }
 
         override fun startCapture(camId: String) {
