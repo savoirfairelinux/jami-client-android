@@ -15,6 +15,7 @@
   <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких-либо гарантий. Дополнительные сведения смотрите <u>GNU General Public License версии 3 или позднее</u></string>
   <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
   <string name="credits">Авторы</string>
+  <string name="pip_title">Конференция Jami</string>
   <string name="call_service_description">Этот сервис необходима для того, чтобы ваши звонки продолжали работать поверх приложений. Это работает только во время звонков.</string>
   <string name="data_transfer_service_description">Этот сервис необходим для отображения уведомлений во время передачи файлов. Это работает только при передаче файлов. </string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">Рингтоны от </string>
   <!--RingActivity-->
   <string name="error_no_network">Отсутствует сетевое подключение</string>
+  <string name="error_account_offline">Учетная запись находится offline</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, разрешите доступ к мобильной сети в настройках</string>
   <!--AB menus-->
   <string name="ab_action_chat">Тестовое сообщение</string>
@@ -88,19 +90,28 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_hangup">Завершить</string>
+  <string name="action_call_maximize">На весь экран</string>
+  <string name="action_call_minimize">скрыть</string>
+  <string name="action_call_mute">Заглушить</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
   <string name="start_error_title">Не удаётся запустить Jami !</string>
   <string name="start_error_mic_required">Для Jami необходимо разрешить доступ к микрофону.</string>
   <string name="action_call_accept">Совершить звонок</string>
+  <string name="action_call_accept_audio">Ответить по аудио</string>
+  <string name="action_call_accept_video">Ответить по видео</string>
+  <string name="action_call_end_accept">Завершить и ответить на звонок</string>
   <string name="action_call_decline">Отказаться</string>
   <string name="action_call_mic_mute">Отключить микрофон</string>
   <string name="action_load_plugin">Загрузить плагин</string>
   <string name="ab_action_speakerphone">Включить звук</string>
   <string name="ab_action_contact_add">Добавить контакт</string>
   <string name="ab_action_contact_add_question">Добавить в контакты? </string>
+  <string name="hist_contact_invited">Контакт приглашён</string>
   <string name="hist_contact_added">Контакт добавлен</string>
+  <string name="hist_contact_left">Контакт вышел</string>
+  <string name="hist_contact_banned">Контакт заблокирован</string>
   <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Аудиовызов</string>
   <string name="ab_action_video_call">Видеозвонок</string>
@@ -110,6 +121,8 @@
   <string name="scan_qr">Сканировать QR-код</string>
   <string name="qr_code">QR-код</string>
   <string name="ab_action_flipcamera">Перевернуть камеру</string>
+  <string name="ab_action_hidepreview">Скрыть предпросмотр</string>
+  <string name="remote_recording">%s запись...</string>
   <!--Text messages-->
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
@@ -145,6 +158,7 @@
   <string name="clear_history_dialog_title">Очистить историю?</string>
   <string name="clear_history_dialog_message">Это действие нельзя будет отменить.</string>
   <string name="clear_history_completed">История очищена.</string>
+  <string name="clear_history">Очистить</string>
   <!--Conversation-->
   <string name="conversation_details">Контактная информация</string>
   <string name="conversation_action_delete_this">Удалить беседу</string>
@@ -168,6 +182,7 @@
   <string name="block_contact_completed">%1$sбыл заблокирован. </string>
   <string name="conversation_contact_is_typing">Собеседник печатает...</string>
   <string name="conversation_info_contact_you">Ты</string>
+  <string name="conversation_members">Участники</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -177,12 +192,14 @@
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
+  <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
   <string name="help_pin_enter">Введите PIN-код из другой учетной записи Jami. Используйте функцию \"экспорт учетной записи Jami\" для получения PIN-кода.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
+  <string name="profile_name">Имя профиля</string>
   <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
