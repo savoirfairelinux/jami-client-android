@@ -43,9 +43,10 @@ public class CardPresenterSelector extends PresenterSelector {
                 String.format("The PresenterSelector only supports data items of type '%s'",
                         Card.class.getName()));
         Card card = (Card) item;
-        Presenter presenter = presenters.get(card.getType());
+        Card.Type type = card.getType();
+        Presenter presenter = presenters.get(type);
         if (presenter == null) {
-            switch (card.getType()) {
+            switch (type) {
                 case ACCOUNT_ADD_DEVICE:
                 case ACCOUNT_EDIT_PROFILE:
                 case ACCOUNT_SHARE_ACCOUNT:
@@ -66,7 +67,7 @@ public class CardPresenterSelector extends PresenterSelector {
                     presenter = new ContactCardPresenter(mContext, R.style.ContactCompleteCardOnlineTheme);
                     break;
                 default:
-                    throw new InvalidParameterException("Uncatched card type");
+                    throw new InvalidParameterException("Uncatched card type " + type);
             }
             presenters.put(card.getType(), presenter);
         }

@@ -24,13 +24,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.contactrequests.BlockListViewHolder.BlockListListeners
-import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 
-class BlockListAdapter(viewModels: Collection<Contact>, listener: BlockListListeners) :
+class BlockListAdapter(viewModels: Collection<ContactViewModel>, listener: BlockListListeners) :
     RecyclerView.Adapter<BlockListViewHolder>() {
     private val mListener: BlockListListeners = listener
-    private val mBlacklisted: ArrayList<Contact> = ArrayList(viewModels)
-    fun replaceAll(viewModels: Collection<Contact>) {
+    private val mBlacklisted: ArrayList<ContactViewModel> = ArrayList(viewModels)
+    fun replaceAll(viewModels: Collection<ContactViewModel>) {
         mBlacklisted.clear()
         mBlacklisted.addAll(viewModels)
         notifyDataSetChanged()

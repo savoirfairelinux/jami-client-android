@@ -560,15 +560,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun displayContact(conversation: Conversation) {
-        val contacts = conversation.contact ?: return
+    override fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>) {
+        //val contacts = conversation.contact ?: return
         mCompositeDisposable.clear()
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
-            .doOnSuccess { d: Drawable ->
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, contacts, true)
+            .subscribe { d: Drawable ->
                 mConversationAvatar = d as AvatarDrawable?
-                mParticipantAvatars[contacts.primaryNumber] = AvatarDrawable(d)
-            }
-            .flatMapObservable { contacts.updatesSubject }
+                mParticipantAvatars[conversation.uri.uri] = AvatarDrawable(d)
+            })
+            /*.flatMapObservable { contacts.updatesSubject }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { c: Contact ->
                 val id = c.ringUsername
@@ -583,7 +583,22 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 mConversationAvatar!!.update(c)
                 mParticipantAvatars[contacts.primaryNumber]?.update(c)
                 mAdapter?.setPhoto()
-            })
+            })*/
+
+        for (c in contacts) {
+            val id = c.displayUri
+            val displayName = c.displayName
+            binding?.let { binding ->
+                binding.title.text = displayName
+                if (TextUtils.isEmpty(displayName) || displayName != id)
+                    binding.subtitle.text = id
+                else
+                    binding.subtitle.visibility = View.GONE
+            }
+            mConversationAvatar!!.update(c)
+            mParticipantAvatars[c.contact.primaryNumber]?.update(c)
+            mAdapter?.setPhoto()
+        }
     }
 
     override fun updateElement(element: Interaction) {
@@ -603,11 +618,11 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun scrollToEnd() {}
-    override fun updateContact(contact: Contact) {
+    override fun updateContact(contact: ContactViewModel) {
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { avatar: Drawable ->
-                mParticipantAvatars[contact.primaryNumber] = avatar as AvatarDrawable
+                mParticipantAvatars[contact.contact.primaryNumber] = avatar as AvatarDrawable
                 mAdapter!!.setPhoto()
             })
     }

@@ -32,7 +32,7 @@ import android.util.LongSparseArray
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import ezvcard.VCard
-import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
@@ -338,7 +338,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                     result.getLong(indexPhoto)
                 )
                 fillContactDetails(contact)
-                Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + contact.displayName)
+                //Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + contact.displayName)
             }
             result.close()
         } catch (e: Exception) {
@@ -352,18 +352,11 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         return contact
     }
 
-    override fun loadContactData(contact: Contact, accountId: String): Completable {
-        if (!contact.detailsLoaded) {
-            val profile: Single<Profile> =
-                if (contact.isFromSystem) loadSystemContactData(contact)
-                else loadVCardContactData(contact, accountId)
-            return profile
-                .doOnSuccess { p -> contact.setProfile(p) }
-                .doOnError { e: Throwable -> contact.setProfile(null, null) }
-                .ignoreElement()
-                .onErrorComplete()
-        }
-        return Completable.complete()
+    override fun loadContactData(contact: Contact, accountId: String): Single<Profile> {
+        val profile: Single<Profile> =
+            if (contact.isFromSystem) loadSystemContactData(contact)
+            else loadVCardContactData(contact, accountId)
+        return profile.onErrorReturn { Profile(null, null) }
     }
 
     override fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard) {
@@ -390,18 +383,28 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
     }
 
     private fun loadSystemContactData(contact: Contact): Single<Profile> {
-        val contactName = contact.displayName
-        val photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
-        return AndroidFileUtils
-            .loadBitmap(mContext, Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
-            .map { bitmap: Bitmap -> Profile(contactName, bitmap) }
-            .onErrorReturn { Profile(contactName, null) }
+        val contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
+
+        val nameSingle = Single.fromCallable<String> {
+            mContext.contentResolver.query(contactUri, arrayOf(ContactsContract.Contacts.DISPLAY_NAME), null, null, null)
+                ?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val idx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                        cursor.getString(idx);
+                    } else null
+                } }
+            .onErrorReturn { "" }
             .subscribeOn(Schedulers.io())
+
+        val photoSingle = AndroidFileUtils
+            .loadBitmap(mContext, Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+
+        return Single.zip(nameSingle, photoSingle) { name, photo -> Profile(name, photo) }
     }
 
     fun loadConversationAvatar(context: Context, conversation: Conversation): Single<Drawable> {
         return getLoadedContact(conversation.accountId, conversation.contacts, false)
-            .flatMap { AvatarFactory.getAvatar(context, conversation, false) }
+            .flatMap { contacts -> AvatarFactory.getAvatar(context, conversation, contacts, false) }
     }
 
     companion object {

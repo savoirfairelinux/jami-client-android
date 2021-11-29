@@ -21,7 +21,6 @@ package cx.ring.client
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -34,11 +33,8 @@ import android.widget.CompoundButton
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.Person
 import androidx.core.content.ContextCompat
-import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -56,14 +52,12 @@ import cx.ring.fragments.SmartListFragment
 import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
-import cx.ring.services.ContactServiceImpl
 import cx.ring.settings.SettingsFragment
 import cx.ring.settings.VideoSettingsFragment
 import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
 import cx.ring.settings.pluginssettings.PluginSettingsFragment
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
@@ -82,8 +76,7 @@ import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.NotificationService
-import net.jami.smartlist.SmartListViewModel
-import java.util.concurrent.Future
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -331,7 +324,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             val intent = intent
             val uri = intent?.data
             if ((intent == null || uri == null) && fConversation == null) {
-                var smartlist: Observable<List<Observable<SmartListViewModel>>>? = null
+                var smartlist: Observable<List<Observable<ConversationItemViewModel>>>? = null
                 if (fContent is SmartListFragment) smartlist =
                     mConversationFacade.getSmartList(false) else if (fContent is ContactRequestsFragment) smartlist =
                     mConversationFacade.pendingList
@@ -711,14 +704,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         var i = 0
         var maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this)
         if (maxCount == 0) maxCount = 4
-        val futureIcons: MutableList<Future<Bitmap>> =
-            ArrayList(conversations.size.coerceAtMost(maxCount))
+
+        /*val futureIcons: MutableList<Future<Bitmap>> =
+            ArrayList(min(conversations.size, maxCount))
         for (conversation in conversations) {
             val mode = conversation.mode.blockingFirst()
             if (mode == Conversation.Mode.Syncing)
                 continue
-            futureIcons.add(
-                (mContactService as ContactServiceImpl?)!!.loadConversationAvatar(this,conversation)
+            futureIcons.add((mContactService as ContactServiceImpl).getLoadedConversation(conversation)
                     .map { d -> BitmapUtils.drawableToBitmap(d, targetSize) }
                     .subscribeOn(Schedulers.computation())
                     .toFuture())
@@ -762,7 +755,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList)
         } catch (e: Exception) {
             Log.w(TAG, "Error adding shortcuts", e)
-        }
+        }*/
     }
 
     companion object {
