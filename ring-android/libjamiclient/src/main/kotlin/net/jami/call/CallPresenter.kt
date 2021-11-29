@@ -169,25 +169,38 @@ class CallPresenter @Inject constructor(
     }
 
     /**
-     * update the Observable<Conference> data before dispatching it to the element who are subscribed to
-     * this will lead to new conference data, which will impact your view
-     * @see: mCallService.getConfUpdate()
-     * @example: when a new participant is added to the conference, this will increase the List<participantInfo>
-     *     before dispatching it to the ui fonctions updateConfInfo(List<participantInfo>)
-     * */
+     * Show conference receive an Observable of conference.
+     *
+     * [1] create an observer used to pass updated data of type List<Conference.ParticipantInfo> to the view.
+     * It's using the observable characteristics to use Rx operators: a switchmap and a combine latest.
+     * CombineLatest takes 3 params: Observable<List<Conference.ParticipantInfo>>,  Subject<List<Conference.ParticipantInfo>>,  Observable<ContactViewModel>
+     * then return an updated : List<Conference.ParticipantInfo>! which will be passed as data for the onSubscribe()
+     * onSubscribe will use the participant info and update the view with the data
+     *
+     * [2] create an observer used to pass updated data of type List<ContactViewModel> to the view.
+     * It's using the observable characteristics to use Rx operators: a switchMap and a switchMapSingle
+     * SwitchMapSingle returns Single<List<ContactViewModel>>
+     * onSubscribe will use List<ContactViewModel> and update the view with this data
+     *
+     * @param conference: conference whose value have been updated
+     */
     private fun showConference(conference: Observable<Conference>){
+
         val conference = conference.distinctUntilChanged()
+
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject, if (obj.isConference) Observable.empty() else mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false)) { participants, pending, callContact ->
-                val p = if (participants.isEmpty() && !obj.isConference)
-                    listOf(ParticipantInfo(obj.call, callContact, emptyMap()))
-                else
-                    participants
-                if (p.isEmpty()) p else p + pending
+            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject,
+                if (obj.isConference)
+                    Observable.just(ContactViewModel(Contact(Uri.fromId("")), Profile(null, null)))
+                else mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
+            { participants, pending, callContact ->
+                Log.e(TAG, "DEBUG combineLatest ${participants.size} ${pending.size} ${obj.isConference}")
+                if (participants.isEmpty() && !obj.isConference) listOf(ParticipantInfo(obj.call, callContact, emptyMap())) else participants + pending
             }}
             .observeOn(mUiScheduler)
             .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+
         mCompositeDisposable.add(conference
             .switchMap { obj: Conference -> obj.participantRecording
                 .switchMapSingle { participants -> mContactService.getLoadedContact(obj.accountId, participants) } }
