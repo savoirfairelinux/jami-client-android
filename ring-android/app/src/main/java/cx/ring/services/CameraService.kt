@@ -67,8 +67,6 @@ class CameraService internal constructor(c: Context) {
         get() = t.apply { if (state == Thread.State.NEW) start() }.looper
     private val videoHandler: Handler by lazy { Handler(videoLooper) }
 
-    // SPS and PPS NALs (Config Data).
-    private var codecData: ByteBuffer? = null
     private val maxResolutionSubject: Subject<Pair<Int?, Int?>> = BehaviorSubject.createDefault(RESOLUTION_NONE)
     private var devices: VideoDevices? = null
     private val availabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
@@ -253,6 +251,8 @@ class CameraService internal constructor(c: Context) {
         var projection: MediaProjection? = null
         var display: VirtualDisplay? = null
         var mediaCodec: MediaCodec? = null
+        // SPS and PPS NALs (Config Data).
+        var codecData: ByteBuffer? = null
         var codecStarted: Boolean = false
 
         fun getAndroidCodec(): String {
@@ -422,7 +422,7 @@ class CameraService internal constructor(c: Context) {
                                 buffer?.let { outputBuffer ->
                                     outputBuffer.position(info.offset)
                                     outputBuffer.limit(info.offset + info.size)
-                                    codecData = ByteBuffer.allocateDirect(info.size).apply {
+                                    videoParams.codecData = ByteBuffer.allocateDirect(info.size).apply {
                                         put(outputBuffer)
                                         rewind()
                                     }
@@ -433,7 +433,7 @@ class CameraService internal constructor(c: Context) {
                                 // If it's a key-frame, send the cached SPS/PPS NALs prior to
                                 // sending key-frame.
                                 if (isKeyFrame) {
-                                    codecData?.let { data ->
+                                    videoParams.codecData?.let { data ->
                                         JamiService.captureVideoPacket(
                                             videoParams.inputUri,
                                             data,
@@ -990,13 +990,13 @@ class CameraService internal constructor(c: Context) {
         }
 
         private fun rotationToDegrees(rotation: Int): Int {
-            when (rotation) {
-                Surface.ROTATION_0 -> return 0
-                Surface.ROTATION_90 -> return 90
-                Surface.ROTATION_180 -> return 180
-                Surface.ROTATION_270 -> return 270
+            return when (rotation) {
+                Surface.ROTATION_0 -> 0
+                Surface.ROTATION_90 -> 90
+                Surface.ROTATION_180 -> 180
+                Surface.ROTATION_270 -> 270
+                else -> 0
             }
-            return 0
         }
     }
 }
