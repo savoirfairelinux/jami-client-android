@@ -95,7 +95,7 @@ class CallService(
         var isModerator = false
         if (conference != null) {
             val newInfo: MutableList<ParticipantInfo> = ArrayList(info.size)
-            val account = mAccountService.getAccount(conference.firstCall?.account) ?: return
+            val account = mAccountService.getAccount(conference.accountId) ?: return
 
             for (i in info) {
                 val uri = i["uri"]!!
