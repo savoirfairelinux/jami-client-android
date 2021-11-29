@@ -363,10 +363,6 @@ class ConversationFacade(
                 getSearchResults(account, query),
                 query
             ) { conversations: List<Conversation>, searchResults: List<Observable<ConversationItemViewModel>>, q: String ->
-
-
-
-
                 val newList: MutableList<Observable<ConversationItemViewModel>> =
                     ArrayList(conversations.size + searchResults.size + 2)
                 if (searchResults.isNotEmpty()) {
