@@ -101,7 +101,7 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
             }
         }
 
-        override fun onCreatePreferences(bundle: Bundle, rootKey: String) {
+        override fun onCreatePreferences(bundle: Bundle?, rootKey: String?) {
             val pm = preferenceManager
             pm.sharedPreferencesMode = Context.MODE_PRIVATE
             pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_VIDEO
