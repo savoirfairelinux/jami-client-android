@@ -46,13 +46,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <androidx.percentlayout.widget.PercentFrameLayout
             android:layout_gravity="center"
-            android:id="@+id/participant_label_container"
+            android:id="@+id/participant_overlay_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@id/video_surface"
             android:layout_alignBottom="@id/video_surface"
-            android:layout_alignLeft="@id/video_surface"
-            android:layout_alignRight="@id/video_surface"
+            android:layout_alignStart="@id/video_surface"
+            android:layout_alignEnd="@id/video_surface"
             android:visibility="gone"/>
 
         <androidx.cardview.widget.CardView
@@ -255,16 +255,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:srcCompat="@drawable/baseline_person_add_24"
             app:useCompatPadding="true"
             tools:visibility="visible" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/conf_control_group"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_conference_participant"
-            tools:itemCount="4" />
 
     </RelativeLayout>
 </layout>
