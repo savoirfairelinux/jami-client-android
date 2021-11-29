@@ -27,7 +27,7 @@ import androidx.leanback.widget.Presenter
 import cx.ring.R
 import cx.ring.tv.conversation.TvConversationFragment
 import cx.ring.utils.ConversationPath
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 class TVContactDetailPresenter : Presenter() {
     override fun onCreateViewHolder(viewGroup: ViewGroup): ViewHolder {
@@ -37,13 +37,13 @@ class TVContactDetailPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
-        (viewHolder as CustomViewHolder).bind(item as SmartListViewModel)
+        (viewHolder as CustomViewHolder).bind(item as ConversationItemViewModel)
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {}
 
     private class CustomViewHolder(view: View) : ViewHolder(view) {
-        fun bind(item: SmartListViewModel) {
+        fun bind(item: ConversationItemViewModel) {
             val fragment = TvConversationFragment.newInstance(ConversationPath.toBundle(item.accountId, item.uri))
             val fragmentManager = (view.context as FragmentActivity).supportFragmentManager
             fragmentManager.beginTransaction()

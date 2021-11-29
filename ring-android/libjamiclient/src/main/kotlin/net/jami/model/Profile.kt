@@ -20,4 +20,25 @@
  */
 package net.jami.model
 
-class Profile(val displayName: String?, val avatar: Any?)
+import io.reactivex.rxjava3.core.Observable
+
+open class Profile(val displayName: String?, val avatar: Any?)
+
+class ContactViewModel(val contact: Contact, val profile: Profile, val registeredName: String? = null, val presence: Boolean = false) {
+    val displayUri: String
+        get() = registeredName ?: contact.uri.toString()
+    val displayName: String
+        get() = profile.displayName ?: displayUri
+    val fullProfile: Profile
+        get() = Profile(displayName, profile.avatar)
+
+    fun matches(query: String): Boolean {
+        return (profile.displayName != null && profile.displayName.lowercase().contains(query)
+                || registeredName != null && registeredName.contains(query)
+                || contact.uri.toString().contains(query))
+    }
+
+    companion object {
+        val EMPTY_VM = Observable.just(ContactViewModel(Contact(Uri.fromId("")), Profile(null, null)))
+    }
+}

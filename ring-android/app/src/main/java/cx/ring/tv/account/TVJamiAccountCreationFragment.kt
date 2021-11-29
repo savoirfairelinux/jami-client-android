@@ -34,8 +34,7 @@ import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
 import net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus
 import net.jami.model.AccountCreationModel
-import net.jami.utils.StringUtils.isEmpty
-import net.jami.utils.StringUtils.toPassword
+import net.jami.utils.StringUtils
 
 @AndroidEntryPoint
 class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(), JamiAccountCreationView {
@@ -127,14 +126,14 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
 
     private fun passwordChanged(action: GuidedAction) {
         val password = action.editDescription.toString().apply { mPassword = this }
-        action.description = if (password.isNotEmpty()) toPassword(password) else getString(R.string.account_enter_password)
+        action.description = if (password.isNotEmpty()) StringUtils.toPassword(password) else getString(R.string.account_enter_password)
         notifyActionChanged(findActionPositionById(PASSWORD))
         presenter.passwordChanged(password)
     }
 
     private fun confirmPasswordChanged(action: GuidedAction) {
         val passwordConfirm = action.editDescription.toString().apply { mPasswordConfirm = this }
-        action.description = if (passwordConfirm.isNotEmpty()) toPassword(passwordConfirm) else getString(R.string.account_enter_password)
+        action.description = if (passwordConfirm.isNotEmpty()) StringUtils.toPassword(passwordConfirm) else getString(R.string.account_enter_password)
         notifyActionChanged(findActionPositionById(PASSWORD_CONFIRMATION))
         presenter.passwordConfirmChanged(passwordConfirm)
     }
@@ -213,7 +212,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
 
     override fun enableNextButton(enabled: Boolean) {
         var enabled = enabled
-        if (isEmpty(mPassword) && isEmpty(mPasswordConfirm)) {
+        if (StringUtils.isEmpty(mPassword) && StringUtils.isEmpty(mPasswordConfirm)) {
             mIsPasswordCorrect = true
         }
         enabled = mIsPasswordCorrect && enabled

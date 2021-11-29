@@ -36,7 +36,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.smartlist.SmartListViewModel
 import net.jami.utils.*
 import java.io.File
 import java.io.IOException
@@ -49,6 +48,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.absoluteValue
 import kotlin.math.min
 
 /**
@@ -161,11 +161,8 @@ class AccountService(
     private val messageSubject: Subject<Interaction> = PublishSubject.create()
     val dataTransfers: Subject<DataTransfer> = PublishSubject.create()
     private val incomingRequestsSubject: Subject<TrustRequest> = PublishSubject.create()
-    fun refreshAccounts() {
-        accountsSubject.onNext(mAccountList)
-    }
 
-    class RegisteredName(
+    data class RegisteredName(
         val accountId: String,
         val name: String,
         val address: String? = null,
@@ -174,14 +171,6 @@ class AccountService(
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
         var results: MutableList<Contact>? = null
-        val resultsViewModels: List<Observable<SmartListViewModel>>
-            get() {
-                val vms: MutableList<Observable<SmartListViewModel>> = ArrayList(results!!.size)
-                for (user in results!!) {
-                    vms.add(Observable.just(SmartListViewModel(accountId, user, null)))
-                }
-                return vms
-            }
     }
 
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
@@ -283,7 +272,6 @@ class AccountService(
                     hasSip = true
                 } else if (account.isJami) {
                     hasJami = true
-                    val enabled = account.isEnabled
                     account.devices = JamiService.getKnownRingDevices(accountId).toNative()
                     Log.w(TAG, "$accountId loading contacts")
                     account.setContacts(JamiService.getContacts(accountId).toNative())
@@ -346,12 +334,12 @@ class AccountService(
                             account.addRequest(TrustRequest(account.accountId, from, received, null, conversationUri))
                         }
                     }
-                    if (enabled) {
+                    /*if (enabled) {
                         for (contact in account.contacts.values) {
                             if (!contact.isUsernameLoaded)
                                 JamiService.lookupAddress(accountId, "", contact.uri.rawRingId)
                         }
-                    }
+                    }*/
                 }
             }
             mHasSipAccount = hasSip
@@ -499,7 +487,7 @@ class AccountService(
                 val nbTotal = stringVCard.length / VCARD_CHUNK_SIZE + if (stringVCard.length % VCARD_CHUNK_SIZE != 0) 1 else 0
                 var i = 1
                 val r = Random(System.currentTimeMillis())
-                val key = Math.abs(r.nextInt())
+                val key = r.nextInt().absoluteValue
                 Log.d(TAG, "sendProfile, vcard $callId")
                 while (i <= nbTotal) {
                     val chunk = HashMap<String, String>()
@@ -1040,6 +1028,18 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
     }
 
+    fun findRegistrationByAddress(account: String, nameserver: String, address: String): Single<RegisteredName> {
+        return if (address.isEmpty()) {
+            Single.error(IllegalArgumentException())
+        } else registeredNames
+            .filter { r: RegisteredName -> account == r.accountId && address == r.address }
+            .firstOrError()
+            .doOnSubscribe {
+                mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
+            }
+            .subscribeOn(Schedulers.from(mExecutor))
+    }
+
     fun searchUser(account: String, query: String): Single<UserSearchResult> {
         if (StringUtils.isEmpty(query)) {
             return Single.just(UserSearchResult(account, query))
@@ -1242,12 +1242,8 @@ class AccountService(
             else request.vCard = Ezvcard.parse(message).first()
             request.vCard?.let { vcard ->
                 val contact = account.getContactFromCache(fromUri)
-                if (!contact.detailsLoaded) {
-                    // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
-                    mVCardService.loadVCardProfile(vcard)
-                        .subscribeOn(Schedulers.computation())
-                        .subscribe { profile -> contact.setProfile(profile) }
-                }
+                contact.loadedProfile = mVCardService.loadVCardProfile(vcard)
+                    .subscribeOn(Schedulers.computation())
             }
             account.addRequest(request)
             // handleTrustRequest(account, Uri.fromString(from), request, ContactType.INVITATION_RECEIVED);
@@ -1284,9 +1280,9 @@ class AccountService(
     fun registeredNameFound(accountId: String, state: Int, address: String, name: String) {
         try {
             //Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-            if (address.isNotEmpty()) {
+            /*if (address.isNotEmpty()) {
                 getAccount(accountId)?.registeredNameFound(state, address, name)
-            }
+            }*/
             registeredNameSubject.onNext(RegisteredName(accountId, name, address, state))
         } catch (e: Exception) {
             Log.w(TAG, "registeredNameFound exception", e)
@@ -1304,9 +1300,13 @@ class AccountService(
             val lastName = m["lastName"]
             val picture_b64 = m["profilePicture"]
             val contact = account.getContactFromCache(uri)
-            if (username != null)
-                contact.setUsername(username)
-            contact.setProfile("$firstName $lastName", mVCardService.base64ToBitmap(picture_b64))
+            synchronized(contact) {
+                if (username != null) {
+                    if (contact.username == null)
+                        contact.username = Single.just(username)
+                }
+                contact.setProfile(Profile("$firstName $lastName", mVCardService.base64ToBitmap(picture_b64)))
+            }
             contacts.add(contact)
         }
         r.results = contacts

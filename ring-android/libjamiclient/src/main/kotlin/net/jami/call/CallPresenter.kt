@@ -169,31 +169,46 @@ class CallPresenter @Inject constructor(
     }
 
     /**
-     * update the Observable<Conference> data before dispatching it to the element who are subscribed to
-     * this will lead to new conference data, which will impact your view
-     * @see: mCallService.getConfUpdate()
-     * @example: when a new participant is added to the conference, this will increase the List<participantInfo>
-     *     before dispatching it to the ui fonctions updateConfInfo(List<participantInfo>)
-     * */
+     * Show conference receive an Observable of conference.
+     *
+     * [1] create an observer used to pass updated data of type List<Conference.ParticipantInfo> to the view.
+     * It's using the observable characteristics to use Rx operators: a switchmap and a combine latest.
+     * CombineLatest takes 3 params: Observable<List<Conference.ParticipantInfo>>,  Subject<List<Conference.ParticipantInfo>>,  Observable<ContactViewModel>
+     * then return an updated : List<Conference.ParticipantInfo>! which will be passed as data for the onSubscribe()
+     * onSubscribe will use the participant info and update the view with the data
+     *
+     * [2] create an observer used to pass updated data of type List<ContactViewModel> to the view.
+     * It's using the observable characteristics to use Rx operators: a switchMap and a switchMapSingle
+     * SwitchMapSingle returns Single<List<ContactViewModel>>
+     * onSubscribe will use List<ContactViewModel> and update the view with this data
+     *
+     * @param conference: conference whose value have been updated
+     */
     private fun showConference(conference: Observable<Conference>){
         val conference = conference.distinctUntilChanged()
+
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject) { participants, pending ->
-                val p = if (participants.isEmpty() && !obj.isConference) {
-                    listOf(ParticipantInfo(obj.call, obj.call!!.contact!!, emptyMap()))
-                } else {
+            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject,
+                if (obj.isConference)
+                    ContactViewModel.EMPTY_VM
+                else
+                    mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
+            { participants, pending, callContact ->
+                val p = if (participants.isEmpty() && !obj.isConference)
+                    listOf(ParticipantInfo(obj.call, callContact, emptyMap()))
+                else
                     participants
-                }
-                if (pending.isEmpty()) p else p + pending
-            }
-            }
+                if (p.isEmpty()) p else p + pending
+            }}
             .observeOn(mUiScheduler)
             .subscribe({ info: List<ParticipantInfo> -> view?.updateConfInfo(info) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
+
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> obj.participantRecording }
+            .switchMap { obj: Conference -> obj.participantRecording
+                .switchMapSingle { participants -> mContactService.getLoadedContact(obj.accountId, participants) } }
             .observeOn(mUiScheduler)
-            .subscribe({ contacts: Set<Contact> -> view?.updateParticipantRecording(contacts) })
+            .subscribe({ contacts -> view?.updateParticipantRecording(contacts) })
             { e: Throwable -> Log.e(TAG, "Error with initIncoming, action view flow: ", e) })
     }
 
@@ -419,10 +434,10 @@ class CallPresenter @Inject constructor(
     fun maximizeParticipant(info: ParticipantInfo?) {
         val conference = mConference ?: return
         val contact = info?.contact
-        val toMaximize = if (conference.maximizedParticipant == contact) null else info
-        conference.maximizedParticipant = contact
+        val toMaximize = if (conference.maximizedParticipant == contact?.contact) null else info
+        conference.maximizedParticipant = contact?.contact
         if (toMaximize != null) {
-            mCallService.setConfMaximizedParticipant(conference.accountId, conference.id, toMaximize.contact.uri)
+            mCallService.setConfMaximizedParticipant(conference.accountId, conference.id, toMaximize.contact.contact.uri)
         } else {
             mCallService.setConfGridLayout(conference.accountId, conference.id)
         }
@@ -521,7 +536,8 @@ class CallPresenter @Inject constructor(
                         override fun onSubscribe(d: Disposable) {}
                         override fun onNext(sipCall: Call) {
                             if (call == null) {
-                                call = ParticipantInfo(sipCall, sipCall.contact ?: conversation.contact!!, emptyMap(), pending = true)
+                                val contact = sipCall.contact ?: conversation.contact!!
+                                call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), emptyMap(), pending = true)
                                     .apply { mPendingCalls.add(this) }
                             }
                             mPendingSubject.onNext(mPendingCalls)
@@ -586,7 +602,7 @@ class CallPresenter @Inject constructor(
         if (info.call != null)
             mCallService.hangUp(info.call.account!!, info.call.daemonIdString!!)
         else
-            mCallService.hangupParticipant(mConference!!.accountId, mConference!!.id, info.contact.primaryNumber)
+            mCallService.hangupParticipant(mConference!!.accountId, mConference!!.id, info.contact.contact.primaryNumber)
     }
 
     /**
@@ -595,12 +611,12 @@ class CallPresenter @Inject constructor(
      * it allow user to mute when they are moderator
     * */
     fun muteParticipant(info: ParticipantInfo, mute: Boolean) {
-        mCallService.muteParticipant(mConference!!.accountId, mConference!!.id, info.contact.primaryNumber, mute)
+        mCallService.muteParticipant(mConference!!.accountId, mConference!!.id, info.contact.contact.primaryNumber, mute)
     }
 
     fun openParticipantContact(info: ParticipantInfo) {
         val call = info.call ?: mConference?.firstCall ?: return
-        view?.goToContact(call.account!!, info.contact)
+        view?.goToContact(call.account!!, info.contact.contact)
     }
 
     fun raiseParticipantHand(state: Boolean){
@@ -620,7 +636,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
-        return mConference?.maximizedParticipant == info.contact
+        return mConference?.maximizedParticipant == info.contact.contact
     }
 
     fun startPlugin(mediaHandlerId: String?) {
