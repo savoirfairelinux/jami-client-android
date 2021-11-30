@@ -144,7 +144,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun onBackPressed(): Boolean {
         if (mBinding == null) return false
         mIsVisible = false
-        if (activity is HomeActivity) (activity as HomeActivity).setToolbarOutlineState(true)
         if (mBinding!!.fragmentContainer.visibility != View.VISIBLE) {
             toggleView(mAccountId, mAccountIsJami)
             return true
@@ -260,11 +259,9 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
             binding.slidingTabs.elevation = binding.slidingTabs.resources.getDimension(R.dimen.toolbar_elevation)
             homeActivity.setToolbarElevation(true)
-            homeActivity.setToolbarOutlineState(false)
         } else {
             binding.slidingTabs.elevation = 0f
             homeActivity.setToolbarElevation(false)
-            homeActivity.setToolbarOutlineState(true)
         }
     }
 
