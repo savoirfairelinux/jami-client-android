@@ -1,3 +1,7 @@
+plugins {
+    id("org.jetbrains.dokka") version ("1.5.30")
+}
+
 buildscript {
     repositories {
         google()
@@ -15,6 +19,11 @@ buildscript {
         classpath ("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
     }
 }
+
+tasks.dokkaHtmlMultiModule.configure {
+    outputDirectory.set(buildDir.resolve("dokkaCustomMultiModuleOutput"))
+}
+
 allprojects {
     repositories {
         google()
