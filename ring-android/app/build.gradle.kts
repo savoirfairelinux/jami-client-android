@@ -1,7 +1,10 @@
+import org.jetbrains.dokka.DokkaDefaults.suppressInheritedMembers
+import java.net.URL
+
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
-val dokka_version: String by rootProject.extra
 val archs: CharSequence by project
+
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
 
 plugins {
@@ -9,6 +12,22 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("org.jetbrains.dokka")
+}
+
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+        suppressInheritedMembers.set(true)
+        suppressObviousFunctions.set(true)
+        configureEach {
+            //includes.from("Module.md")
+            sourceLink {
+                localDirectory.set(file("src/main/java")) // Unix based directory relative path to the root of the project (where you execute gradle respectively).
+                remoteUrl.set(URL("https://git.jami.net/savoirfairelinux/jami-client-android/-/blob/master/ring-android/app/src/main/java")) // URL showing where the source code can be accessed through the web browser
+                remoteLineSuffix.set("#L")  // Suffix which is used to append the line number to the URL. Use #L for GitHub
+            }
+        }
+    }
 }
 
 android {
@@ -105,28 +124,17 @@ dependencies {
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.11")
     implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
-
-    // ORM
-    implementation ("com.j256.ormlite:ormlite-android:5.6")
-
-    // Barcode scanning
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
+    implementation ("com.j256.ormlite:ormlite-android:5.6")                                 // ORM
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false } // Barcode scanning
     implementation ("com.google.zxing:core:3.3.3")
-
-    // Dagger dependency injection
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-
-    // Glide
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.google.dagger:hilt-android:$hilt_version")                          // Dagger dependency injection
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")                           // Dagger dependency injection
+    implementation ("com.github.bumptech.glide:glide:4.12.0")                               // Glide
     kapt ("com.github.bumptech.glide:compiler:4.12.0")
-
-    // RxAndroid
-    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.2")
-
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")                                 // RxAndroid
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.2")                                    // RxAndroid
     implementation ("com.jsibbold:zoomage:1.3.1")
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")                              // VCard parsing
 
     "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.0") {
         exclude(group= "com.google.firebase", module= "firebase-core")
