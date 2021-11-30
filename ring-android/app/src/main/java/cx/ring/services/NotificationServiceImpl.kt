@@ -151,13 +151,6 @@ class NotificationServiceImpl(
 
                 if (conference.hasVideo()){
                         messageNotificationBuilder
-                            .addAction(R.drawable.baseline_call_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_audio) else mContext.getText(R.string.action_call_hold_accept),
-                                PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_HOLD_ACCEPT)
-                                    .setClass(mContext, DRingService::class.java)
-                                    .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
-                                    .putExtra(NotificationService.KEY_HOLD_ID, ongoingCallId)
-                                    .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                    .putExtra(CallFragment.KEY_HAS_VIDEO, false), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
                             .addAction(R.drawable.baseline_videocam_24, if (ongoingCallId == null) mContext.getText(R.string.action_call_accept_video) else mContext.getText(R.string.action_call_hold_accept_video),
                                 PendingIntent.getService(mContext, random.nextInt(), Intent(if (ongoingCallId == null) DRingService.ACTION_CALL_ACCEPT else DRingService.ACTION_CALL_HOLD_ACCEPT)
                                     .setClass(mContext, DRingService::class.java)
