@@ -105,7 +105,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation_view"
         android:layout_width="320dp"
-        android:layout_height="@dimen/navigation_bottom_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation_bar" />

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:context=".client.HomeActivity">
@@ -35,8 +36,7 @@
             android:divider="@null"
             android:elevation="2dp"
             android:paddingBottom="8dp"
-            tools:listitem="@layout/item_contact"
-            android:layout_marginBottom="@dimen/navigation_bottom_height" />
+            tools:listitem="@layout/item_contact" />
 
         <LinearLayout
             android:id="@+id/placeholder"
@@ -51,7 +51,7 @@
             <ImageView
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:tint="@color/darker_gray"
+                app:tint="@color/darker_gray"
                 android:src="@drawable/baseline_group_add_24"
                 android:contentDescription="@string/no_requests" />
 
