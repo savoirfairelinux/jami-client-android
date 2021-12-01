@@ -60,7 +60,6 @@ import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.rodolfonavalon.shaperipplelibrary.model.Circle
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -249,7 +248,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
             }.apply { if (canDetectOrientation()) enable() }
 
-            binding.shapeRipple.rippleShape = Circle()
             binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
             binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
@@ -435,7 +433,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         context, Random().nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(context, JamiService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT
+                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
                     )
                 )
             )
@@ -1102,7 +1100,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun initNormalStateDisplay() {
         Log.w(CallPresenter.TAG, "initNormalStateDisplay")
         binding?.apply {
-            shapeRipple.stopRipple()
             callRefuseBtn.visibility = View.GONE
             contactBubbleLayout.visibility = View.VISIBLE
         }
