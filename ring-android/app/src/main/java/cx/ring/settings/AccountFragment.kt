@@ -99,6 +99,8 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
             .setTitle(R.string.account_delete_dialog_title)
             .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int ->
                 mAccountService.removeAccount(accountId)
+                if (activity is HomeActivity)
+                    (activity as HomeActivity).goToHome()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .create()
