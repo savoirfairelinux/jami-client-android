@@ -427,6 +427,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setToolbarElevation(false)
     }
 
+    fun goToHome() {
+        val item = mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS)
+        onNavigationItemSelected(item)
+        item.isChecked = true
+    }
+
     fun goToSettings() {
         if (fContent is SettingsFragment) {
             return
