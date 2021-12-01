@@ -21,7 +21,7 @@ package net.jami.account
 
 import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
-import net.jami.utils.StringUtils.isEmpty
+import net.jami.utils.StringUtils
 import javax.inject.Inject
 
 class JamiAccountConnectPresenter @Inject constructor() : RootPresenter<JamiConnectAccountView>() {
@@ -66,7 +66,7 @@ class JamiAccountConnectPresenter @Inject constructor() : RootPresenter<JamiConn
     }
 
     private val isFormValid: Boolean
-        get() = !isEmpty(mAccountCreationModel!!.password)
-                && !isEmpty(mAccountCreationModel!!.username)
-                && !isEmpty(mAccountCreationModel!!.managementServer)
+        get() = !StringUtils.isEmpty(mAccountCreationModel!!.password)
+                && !StringUtils.isEmpty(mAccountCreationModel!!.username)
+                && !StringUtils.isEmpty(mAccountCreationModel!!.managementServer)
 }
