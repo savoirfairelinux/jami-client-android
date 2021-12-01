@@ -110,8 +110,7 @@
                 android:divider="@null"
                 android:elevation="2dp"
                 android:paddingBottom="8dp"
-                tools:listitem="@layout/item_smartlist"
-                android:layout_marginBottom="@dimen/navigation_bottom_height"/>
+                tools:listitem="@layout/item_smartlist"/>
 
         </FrameLayout>
 
@@ -146,7 +145,7 @@
         android:id="@+id/conversation_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/separator"
-        android:layout_marginTop="?actionBarSize"/>
+        android:layout_marginTop="?actionBarSize"
+        android:layout_toEndOf="@+id/separator" />
 
 </RelativeLayout>
