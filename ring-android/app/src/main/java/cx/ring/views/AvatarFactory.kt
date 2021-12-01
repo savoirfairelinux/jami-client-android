@@ -31,19 +31,16 @@ import com.bumptech.glide.RequestManager
 import cx.ring.utils.BitmapUtils
 import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
-import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.model.Conversation
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 
 object AvatarFactory {
     const val SIZE_AB = 36
     const val SIZE_NOTIF = 48
     const val SIZE_PADDING = 8
-    fun loadGlideAvatar(view: ImageView, contact: Contact) {
-        getGlideAvatar(view.context, contact).into(view)
-    }
 
-    fun getAvatar(context: Context, contact: Contact?, presence: Boolean): Single<Drawable> {
+    fun getAvatar(context: Context, contact: ContactViewModel?, presence: Boolean): Single<Drawable> {
         return Single.fromCallable {
             AvatarDrawable.Builder()
                 .withContact(contact)
@@ -53,17 +50,17 @@ object AvatarFactory {
         }
     }
 
-    fun getAvatar(context: Context, conversation: Conversation, presence: Boolean): Single<Drawable> {
+    fun getAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean): Single<AvatarDrawable> {
         return Single.fromCallable {
             AvatarDrawable.Builder()
-                .withConversation(conversation)
+                .withConversation(conversation, contacts)
                 .withCircleCrop(true)
                 .withPresence(presence)
                 .build(context)
         }
     }
 
-    fun getAvatar(context: Context, vm: SmartListViewModel): Single<Drawable> {
+    fun getAvatar(context: Context, vm: ConversationItemViewModel): Single<Drawable> {
         return Single.fromCallable {
             AvatarDrawable.Builder()
                 .withViewModel(vm)
@@ -72,21 +69,21 @@ object AvatarFactory {
         }
     }
 
-    fun getAvatar(context: Context, contact: Contact?): Single<Drawable> {
+    fun getAvatar(context: Context, contact: ContactViewModel?): Single<Drawable> {
         return getAvatar(context, contact, true)
     }
 
-    fun getBitmapAvatar(context: Context, conversation: Conversation, size: Int, presence: Boolean): Single<Bitmap> {
-        return getAvatar(context, conversation, presence)
+    fun getBitmapAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, size: Int, presence: Boolean): Single<Bitmap> {
+        return getAvatar(context, conversation, contacts, presence)
             .map { d -> BitmapUtils.drawableToBitmap(d, size) }
     }
 
-    fun getBitmapAvatar(context: Context, contact: Contact?, size: Int, presence: Boolean): Single<Bitmap> {
+    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean): Single<Bitmap> {
         return getAvatar(context, contact, presence)
             .map { d -> BitmapUtils.drawableToBitmap(d, size) }
     }
 
-    fun getBitmapAvatar(context: Context, contact: Contact?, size: Int): Single<Bitmap> {
+    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int): Single<Bitmap> {
         return getBitmapAvatar(context, contact, size, true)
     }
 
@@ -111,11 +108,16 @@ object AvatarFactory {
         return request.load(getDrawable(context, photo, profileName, username, id))
     }
 
-    private fun getGlideAvatar(context: Context, manager: RequestManager, contact: Contact): RequestBuilder<Drawable> {
-        return getGlideRequest(context, manager.asDrawable(), contact.photo as Bitmap?, contact.profileName, contact.username, contact.primaryNumber)
+    private fun getGlideAvatar(context: Context, manager: RequestManager, contact: ContactViewModel): RequestBuilder<Drawable> {
+        return getGlideRequest(context, manager.asDrawable(), contact.profile.avatar as Bitmap?, contact.profile.displayName, contact.registeredName, contact.contact.primaryNumber)
     }
 
-    private fun getGlideAvatar(context: Context, contact: Contact): RequestBuilder<Drawable> {
+    private fun getGlideAvatar(context: Context, contact: ContactViewModel): RequestBuilder<Drawable> {
         return getGlideAvatar(context, Glide.with(context), contact)
     }
+
+    fun loadGlideAvatar(view: ImageView, contact: ContactViewModel) {
+        getGlideAvatar(view.context, contact).into(view)
+    }
+
 }

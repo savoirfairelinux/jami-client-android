@@ -74,6 +74,7 @@ import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
+import net.jami.model.ContactViewModel
 import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService.AudioState
@@ -575,7 +576,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun updateParticipantRecording(contacts: Set<Contact>) {
+    override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
         binding?.let { binding ->
             if (contacts.isEmpty()) {
                 binding.recordLayout.visibility = View.INVISIBLE

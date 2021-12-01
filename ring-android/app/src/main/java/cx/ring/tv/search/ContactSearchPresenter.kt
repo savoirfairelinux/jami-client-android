@@ -1,7 +1,6 @@
 /*
  *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,84 +19,55 @@
  */
 package cx.ring.tv.search
 
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.PublishSubject
-import net.jami.model.Account
-import net.jami.model.Contact
-import net.jami.model.Uri.Companion.fromString
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
-import net.jami.services.AccountService.RegisteredName
-import net.jami.smartlist.SmartListViewModel
+import net.jami.services.ConversationFacade
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
 class ContactSearchPresenter @Inject constructor(
-    private val mAccountService: AccountService,
-    @Named("UiScheduler") var mUiScheduler: Scheduler
+    private val accountService: AccountService,
+    private val conversationFacade: ConversationFacade,
+    @Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<ContactSearchView>() {
-    private var mContact: Contact? = null
     private val contactQuery = PublishSubject.create<String>()
 
     override fun bindView(view: ContactSearchView) {
         super.bindView(view)
-        mCompositeDisposable.add(contactQuery
-            .debounce(350, TimeUnit.MILLISECONDS)
-            .switchMapSingle { q: String ->
-                mAccountService.findRegistrationByName(mAccountService.currentAccount!!.accountId, "", q)
+
+        mCompositeDisposable.add(conversationFacade.getFullList(accountService.currentAccountSubject, contactQuery
+            .debounce(350, TimeUnit.MILLISECONDS), false)
+            .switchMap { results -> Observable.combineLatest(results) { r ->
+                r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
+            } }
+            .observeOn(uiScheduler)
+            .subscribe { results -> this.view?.displayResults(results) })
+
+        /*mCompositeDisposable.add(accountService.currentAccountSubject
+            .switchMap { account -> conversationFacade.getSearchResults(account, contactQuery
+                .debounce(350, TimeUnit.MILLISECONDS))
             }
-            .observeOn(mUiScheduler)
-            .subscribe { q: RegisteredName -> parseEventState(mAccountService.getAccount(q.accountId)!!, q.name, q.address, q.state) })
+            .switchMap { results -> Observable.combineLatest(results) { r ->
+                r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
+            } }
+            .observeOn(uiScheduler)
+            .subscribe { results -> this.view?.displayResults(results) })*/
     }
 
     fun queryTextChanged(query: String) {
-        if (query == "") {
+        if (query.isEmpty()) {
             view?.clearSearch()
         } else {
-            val currentAccount = mAccountService.currentAccount ?: return
-            val uri = fromString(query)
-            if (uri.isHexId) {
-                mContact = currentAccount.getContactFromCache(uri)
-                view?.displayContact(currentAccount.accountId, mContact!!)
-            } else {
-                view?.clearSearch()
-                contactQuery.onNext(query)
-            }
+            contactQuery.onNext(query)
         }
     }
 
-    private fun parseEventState(account: Account, name: String, address: String?, state: Int) {
-        when (state) {
-            0 -> {
-                // on found
-                mContact = account.getContactFromCache(address!!).apply { setUsername(name) }
-                view?.displayContact(account.accountId, mContact!!)
-            }
-            1 -> {
-                // invalid name
-                val uriName = fromString(name)
-                if (uriName.isHexId) {
-                    mContact = account.getContactFromCache(uriName)
-                    view?.displayContact(account.accountId, mContact!!)
-                } else {
-                    view?.clearSearch()
-                }
-            }
-            else -> {
-                // on error
-                val uriAddress = fromString(address!!)
-                if (uriAddress.isHexId) {
-                    mContact = account.getContactFromCache(uriAddress)
-                    view?.displayContact(account.accountId, mContact!!)
-                } else {
-                    view?.clearSearch()
-                }
-            }
-        }
-    }
-
-    fun contactClicked(model: SmartListViewModel) {
+    fun contactClicked(model: ConversationItemViewModel) {
         view?.displayContactDetails(model)
     }
 }

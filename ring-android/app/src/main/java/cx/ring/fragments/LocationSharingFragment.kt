@@ -67,7 +67,8 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.services.ConversationFacade
 import net.jami.model.Account
 import net.jami.model.Account.ContactLocation
-import net.jami.model.Contact
+import net.jami.model.ContactViewModel
+import net.jami.services.ContactService
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
@@ -91,25 +92,26 @@ class LocationSharingFragment : Fragment() {
 
     @Inject
     lateinit var mConversationFacade: ConversationFacade
+    @Inject
+    lateinit var contactService: ContactService
 
     private lateinit var mPath: ConversationPath
-    private var mContact: Contact? = null
+    private var mContact: ContactViewModel? = null
     private val mShowControlsSubject: Subject<Boolean> = BehaviorSubject.create()
     private val mIsSharingSubject: Subject<Boolean> = BehaviorSubject.create()
     private val mIsContactSharingSubject: Subject<Boolean> = BehaviorSubject.create()
     private val mShowMapSubject = Observable.combineLatest(
         mShowControlsSubject,
         mIsSharingSubject,
-        mIsContactSharingSubject,
-        { showControls, isSharing, isContactSharing ->
-            if (showControls)
-                MapState.FULL
-            else if (isSharing || isContactSharing)
-                MapState.MINI
-            else
-                MapState.NONE
-        })
-        .distinctUntilChanged()
+        mIsContactSharingSubject
+    ) { showControls, isSharing, isContactSharing ->
+        if (showControls)
+            MapState.FULL
+        else if (isSharing || isContactSharing)
+            MapState.MINI
+        else
+            MapState.NONE
+    }.distinctUntilChanged()
 
     private var bubbleSize = 0
     private var overlay: MyLocationNewOverlay? = null
@@ -139,12 +141,13 @@ class LocationSharingFragment : Fragment() {
         }
         val ctx = requireContext()
         val osmPath = File(ctx.cacheDir, "osm")
-        val configuration = Configuration.getInstance()
-        configuration.osmdroidBasePath = osmPath
-        configuration.osmdroidTileCache = File(osmPath, "tiles")
-        configuration.userAgentValue = "net.jami.android"
-        configuration.isMapViewHardwareAccelerated = true
-        configuration.isMapViewRecyclerFriendly = false
+        Configuration.getInstance().apply {
+            osmdroidBasePath = osmPath
+            osmdroidTileCache = File(osmPath, "tiles")
+            userAgentValue = "net.jami.android"
+            isMapViewHardwareAccelerated = true
+            isMapViewRecyclerFriendly = false
+        }
         bubbleSize = ctx.resources.getDimensionPixelSize(R.dimen.location_sharing_avatar_size)
     }
 
@@ -283,21 +286,21 @@ class LocationSharingFragment : Fragment() {
             .getAccountSubject(mPath.accountId)
             .flatMapObservable { account: Account ->
                 account.locationsUpdates
-                    .map<List<Observable<LocationViewModel>>> { locations ->
+                    .switchMapSingle { locations -> contactService.getLoadedContact(mPath.accountId, locations.keys).map { contacts ->
                         val r: MutableList<Observable<LocationViewModel>> = ArrayList(locations.size)
                         var isContactSharing = false
-                        for ((key, value) in locations) {
-                            if (key === account.getContactFromCache(contactUri)) {
+                        for (c in contacts) {
+                            if (c.contact === account.getContactFromCache(contactUri)) {
                                 isContactSharing = true
-                                mContact = key
+                                mContact = c
                             }
-                            r.add(value.map { cl -> LocationViewModel(key, cl) })
+                            locations[c.contact]?.let { location -> r.add(location.map { l -> LocationViewModel(c, l) }) }
                         }
                         mIsContactSharingSubject.onNext(isContactSharing)
                         r
-                    }
+                    } }
             }
-            .flatMap { locations: List<Observable<LocationViewModel>>? ->
+            .flatMap { locations: List<Observable<LocationViewModel>> ->
                 Observable.combineLatest<LocationViewModel, List<LocationViewModel>>(locations) { locsArray: Array<Any> ->
                     val list: MutableList<LocationViewModel> = ArrayList(locsArray.size)
                     for (vm in locsArray) list.add(vm as LocationViewModel)
@@ -435,7 +438,7 @@ class LocationSharingFragment : Fragment() {
         }
     }
 
-    internal class LocationViewModel(var contact: Contact, var location: ContactLocation)
+    internal class LocationViewModel(var contact: ContactViewModel, var location: ContactLocation)
 
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {

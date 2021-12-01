@@ -26,18 +26,16 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.application.JamiApplication
-import cx.ring.fragments.CallFragment
 import cx.ring.utils.ConversationPath
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.services.ConversationFacade
-import net.jami.model.Account
 import net.jami.model.Conference
 import net.jami.services.CallService
 import net.jami.services.NotificationService
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,14 +52,14 @@ class ConversationSelectionActivity : AppCompatActivity() {
     var mCallService: CallService
 
     private val adapter: SmartListAdapter = SmartListAdapter(null, object : SmartListListeners {
-        override fun onItemClick(item: SmartListViewModel) {
+        override fun onItemClick(item: ConversationItemViewModel) {
             val intent = Intent()
             intent.data = ConversationPath.toUri(item.accountId, item.uri)
             setResult(RESULT_OK, intent)
             finish()
         }
 
-        override fun onItemLongClick(item: SmartListViewModel) {}
+        override fun onItemLongClick(item: ConversationItemViewModel) {}
     }, mDisposable)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,15 +75,14 @@ class ConversationSelectionActivity : AppCompatActivity() {
         super.onStart()
         val conference: Conference? = intent?.getStringExtra(NotificationService.KEY_CALL_ID)?.let { confId -> mCallService.getConference(confId) }
         mDisposable.add(mConversationFacade
-            .currentAccountSubject
-            .switchMap { a: Account -> a.getConversationsViewModels(false) }
-            .map { vm: MutableList<SmartListViewModel> ->
+            .getConversationList()
+            .map { vm: MutableList<ConversationItemViewModel> ->
                 if (conference == null) return@map vm
-                val filteredVms: MutableList<SmartListViewModel> = ArrayList(vm.size)
+                val filteredVms: MutableList<ConversationItemViewModel> = ArrayList(vm.size)
                 models@ for (v in vm) {
                     val contact = v.getContact() ?: continue // We only add contacts and one to one
                     for (call in conference.participants) {
-                        if (call.contact === contact) {
+                        if (call.contact === contact.contact) {
                             continue@models
                         }
                     }

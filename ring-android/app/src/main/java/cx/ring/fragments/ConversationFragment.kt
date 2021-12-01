@@ -89,6 +89,7 @@ import net.jami.daemon.JamiService
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.services.NotificationService
+import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
 
@@ -862,8 +863,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun updateContact(contact: Contact) {
-        val contactKey = contact.primaryNumber
+    override fun updateContact(contact: ContactViewModel) {
+        val contactKey = contact.contact.primaryNumber
         val a = mSmallParticipantAvatars[contactKey]
         if (a != null) {
             a.update(contact)
@@ -884,14 +885,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun displayContact(conversation: Conversation) {
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
+    override fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>) {
+        val avatar = AvatarFactory.getAvatar(requireContext(), conversation, contacts, true).blockingGet()
+        mConversationAvatar = avatar
+        mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
+        setupActionbar(conversation, contacts)
+        /*mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { d ->
                 mConversationAvatar = d as AvatarDrawable
                 mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(d)
                 setupActionbar(conversation)
-            })
+            })*/
     }
 
     override fun displayOnGoingCallPane(display: Boolean) {
@@ -950,13 +955,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         startActivity(intent)
     }
 
-    private fun setupActionbar(conversation: Conversation) {
+    private fun setupActionbar(conversation: Conversation, contacts: List<ContactViewModel>) {
         if (!isVisible) {
             return
         }
         val activity: Activity = requireActivity()
-        val displayName = conversation.title
-        val identity = conversation.uriTitle
+        val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
+        val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
         val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
         val title = toolbar.findViewById<TextView>(R.id.contact_title)
         val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
@@ -966,7 +971,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         title.text = displayName
         title.textSize = 15f
         title.setTypeface(null, Typeface.NORMAL)
-        if (identity != null && identity != displayName) {
+        if (identity != displayName) {
             subtitle.text = identity
             subtitle.visibility = View.VISIBLE
         } else {

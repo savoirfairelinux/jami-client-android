@@ -27,7 +27,7 @@ import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.Log
 import java.util.*
 import javax.inject.Inject
@@ -42,10 +42,10 @@ class ContactRequestsPresenter @Inject internal constructor(
     override fun bindView(view: ContactRequestsView) {
         super.bindView(view)
         mCompositeDisposable.add(mConversationFacade.getPendingList(mAccount)
-            .switchMap { viewModels: List<Observable<SmartListViewModel>> ->
-                if (viewModels.isEmpty()) SmartListViewModel.EMPTY_RESULTS
+            .switchMap { viewModels: List<Observable<ConversationItemViewModel>> ->
+                if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
                 else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size))
-                    { ob -> ob as SmartListViewModel } }
+                    { ob -> ob as ConversationItemViewModel } }
             }
             .observeOn(mUiScheduler)
             .subscribe({ viewModels -> this.view?.updateView(viewModels, mCompositeDisposable) })
@@ -71,19 +71,19 @@ class ContactRequestsPresenter @Inject internal constructor(
         view?.goToConversation(accountId, uri)
     }
 
-    fun removeConversation(item: SmartListViewModel) {
+    fun removeConversation(item: ConversationItemViewModel) {
         mConversationFacade.discardRequest(item.accountId, item.uri)
     }
 
-    fun banContact(item: SmartListViewModel) {
+    fun banContact(item: ConversationItemViewModel) {
         mConversationFacade.discardRequest(item.accountId, item.uri)
         mAccountService.removeContact(item.accountId, item.uri.host, true)
     }
 
-    fun copyNumber(item: SmartListViewModel) {
+    fun copyNumber(item: ConversationItemViewModel) {
         val contact = item.getContact()
         if (contact != null) {
-            view?.copyNumber(contact.uri)
+            view?.copyNumber(contact.contact.uri)
         } else {
             view?.copyNumber(item.uri)
         }

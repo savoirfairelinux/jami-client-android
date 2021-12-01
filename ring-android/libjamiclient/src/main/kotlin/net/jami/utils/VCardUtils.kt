@@ -19,7 +19,6 @@
  */
 package net.jami.utils
 
-import net.jami.utils.StringUtils.isEmpty
 import net.jami.utils.FileUtils.moveFile
 import ezvcard.VCard
 import ezvcard.property.FormattedName
@@ -62,7 +61,7 @@ object VCardUtils {
             }
             val fname = vcard.formattedName
             if (fname != null) {
-                if (!isEmpty(fname.value)) {
+                if (!StringUtils.isEmpty(fname.value)) {
                     contactName = fname.value
                 }
             }
@@ -121,7 +120,7 @@ object VCardUtils {
      * @param path     the path of the vcf
      */
     private fun saveToDisk(vcard: VCard?, filename: String, path: File) {
-        if (vcard == null || isEmpty(filename)) {
+        if (vcard == null || StringUtils.isEmpty(filename)) {
             return
         }
         if (!path.exists()) {
