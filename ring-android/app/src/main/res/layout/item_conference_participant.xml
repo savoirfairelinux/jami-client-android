@@ -68,6 +68,7 @@ along with this program; if not, write to the Free Software
         android:layout_weight="0"
         android:background="?actionBarItemBackground"
         android:padding="12dp"
+        android:tint="@color/call_button"
         app:srcCompat="@drawable/baseline_mic_on_24"/>
 
     <cx.ring.views.CheckableImageButton

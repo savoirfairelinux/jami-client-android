@@ -56,6 +56,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
@@ -168,8 +169,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 binding = b
                 rp = RecyclerPicker(b.recyclerPicker, R.layout.item_picker, LinearLayout.HORIZONTAL, this)
                     .apply { setFirstLastElementsWidths(112, 112) }
-            bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
-        }.root
+                bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
+            }.root
     }
 
     @SuppressLint("ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout")
@@ -245,6 +246,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     if (mCurrentOrientation != rot) {
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
+                        setRvSize()
                     }
                 }
             }.apply { if (canDetectOrientation()) enable() }
@@ -371,8 +373,23 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
                   override fun afterTextChanged(s: Editable) {}
               })*/
-            
+
         }
+    }
+
+    fun setRvSize() {
+        val binding = binding ?: return
+        val dm = resources.displayMetrics
+        val orientation = resources.configuration.orientation
+        val gridViewHeight = binding.callParametersGrid.height
+
+        // define recyclerview maxheight based on screen orientation
+        val mConstrainLayout = binding.confControlGroup
+        val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
+        Log.w(TAG, "DEBUG bottomsheet setter --> gridViewHeight: $gridViewHeight, dm.heightPixels: ${dm.heightPixels}, lp.matchConstraintMaxHeight: ${lp.matchConstraintMaxHeight}")
+        lp.matchConstraintMaxHeight =
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) (dm.heightPixels - ( gridViewHeight + (100 * dm.density).toInt())) else ((dm.heightPixels-( gridViewHeight ) * 0.8).toInt())
+        mConstrainLayout.layoutParams = lp
     }
 
     override fun onUserLeave() {
@@ -431,10 +448,12 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     getString(R.string.action_call_hangup),
                     getString(R.string.action_call_hangup),
                     PendingIntent.getService(
-                        context, Random().nextInt(),
+                        context,
+                        Random().nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(context, JamiService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+                            .putExtra(NotificationService.KEY_CALL_ID, callId),
+                        PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
                     )
                 )
             )
@@ -695,14 +714,15 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
-        when(requestCode){
+        when (requestCode) {
             REQUEST_CODE_ADD_PARTICIPANT -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val path = ConversationPath.fromUri(data.data)
                     if (path != null) {
                         presenter.addConferenceParticipant(path.accountId, path.conversationUri)
                     }
-                } }
+                }
+            }
             REQUEST_CODE_SCREEN_SHARE -> {
                 Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
                 if (resultCode == Activity.RESULT_OK && data != null) {
@@ -747,13 +767,13 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun displayHangupButton(display: Boolean) {
         var display = display
         Log.w(TAG, "displayHangupButton $display")
-       /* display = display and !isChoosePluginMode
-        binding?.apply { confControlGroup.visibility = when {
-                mConferenceMode && display -> View.VISIBLE
-                mConferenceMode -> View.INVISIBLE
-                else -> View.GONE
-            }
-        }*/
+        /* display = display and !isChoosePluginMode
+         binding?.apply { confControlGroup.visibility = when {
+                 mConferenceMode && display -> View.VISIBLE
+                 mConferenceMode -> View.INVISIBLE
+                 else -> View.GONE
+             }
+         }*/
     }
 
     override fun displayDialPadKeyboard() {
@@ -784,6 +804,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+        Log.w(TAG, "DEBUG updateconfinfo")
         val binding = binding ?: return
         mConferenceMode = participantInfo.isNotEmpty()
 
@@ -816,8 +837,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     Log.w(TAG, "DEBUG null call")
                 }
             } else {
-                    Log.w(TAG, "DEBUG null activity")
-                }
+                Log.w(TAG, "DEBUG null activity")
+            }
             if (hasProfileName) {
                 binding.contactBubbleNumTxt.visibility = View.VISIBLE
                 binding.contactBubbleTxt.text = displayName
@@ -861,17 +882,17 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 confAdapter = this
                 binding.confControlGroup.adapter = this
             }
+        binding.root.post { setBottomSheet() }
     }
 
-    private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>){
-        val overlayViewBinding =  binding?.participantOverlayContainer ?: return
+    private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
+        val overlayViewBinding = binding?.participantOverlayContainer ?: return
         overlayViewBinding.removeAllViews()
         overlayViewBinding.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
 
         val inflater = LayoutInflater.from(overlayViewBinding.context)
 
         for (i in participantsInfo) {
-
             // adding name, mic etc..
             val displayName = i.contact.displayName
             if (!TextUtils.isEmpty(displayName)) {
@@ -883,7 +904,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 infoOverlayLayoutParams.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
                 infoOverlayLayoutParams.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
                 infoOverlayLayoutParams.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.bottomMarginPercent =  1f - (i.y + i.h) / mVideoHeight.toFloat()
+                infoOverlayLayoutParams.percentLayoutInfo.bottomMarginPercent =
+                    1f - (i.y + i.h) / mVideoHeight.toFloat()
 
                 participantInfoOverlay.participantName.text = displayName
                 //label.moderator.isVisible = i.isModerator
@@ -905,7 +927,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
         }
     }
-
 
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
@@ -951,7 +972,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             callVideocamBtn.apply {
                 isChecked = !hasActiveVideo
-                setImageResource(if(isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
+                setImageResource(if (isChecked) R.drawable.baseline_videocam_off_24 else R.drawable.baseline_videocam_on_24)
             }
             callCameraFlipBtn.apply {
                 isEnabled = !callVideocamBtn.isChecked
@@ -962,59 +983,65 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+
     /**
-     * Set the bottomSheet height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
+     * Set bottom sheet, define height for each state (Expanded/Half-expanded/Collapsed) based on current Display metrics (density & size)
      *
-     * // comment: For the expanded_state height we could also change it based on every bottomsheet elements heights
-     * grid height = gridView.height
-     * recyclerview height = (conf.participants.size * viewholder.height)
-     * then expandedstateoffset = (dm.height - [gridView.height + (conf.participants.size * viewholder.height)])
-     *
+     * @param inset
      */
-    private fun setBottomSheet(inset: WindowInsetsCompat) {
-        val bsView = view?.findViewById<View>(R.id.call_options_bottom_sheet)!!
-        if (!isInPIP || bsView.isVisible) {
-            val dm = requireContext().resources.displayMetrics
-            val orientation = requireContext().resources.configuration.orientation
-            val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
-            val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
-            val gridViewHeight = view?.findViewById<View>(R.id.call_parameters_grid)?.height
-            var halfExpandedRatio = (gridViewHeight?.plus((40 * dm.density)))?.div(dm.heightPixels)
+    private fun setBottomSheet(newInset: WindowInsetsCompat? = null) {
+        val binding = binding ?: return
+        val dm = resources.displayMetrics
+        val orientation = resources.configuration.orientation
+        val gridViewHeight = binding.callParametersGrid.height
 
-            val bsViewParam = bsView.layoutParams
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                bsViewParam.width = getBottomSheetMaxWidth()
-                bsView.layoutParams = bsViewParam
-            } else {
-                bsViewParam.width = -1
-                bsView.layoutParams = bsViewParam
-            }
-            var desiredPeekHeight = (((89) * dm.density) + bottomInsets)
-            /*Defining value of the bottom inset based on the size of the navbar*/
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                /* if (no navbar || landscape mode == true) then we must adapt the elements (bottomInsets, peekHeightsPx, halExpandedRatio) to the new display value */
-                if (gridViewHeight != null) {
-                    desiredPeekHeight =
-                        (10 * dm.density) + (gridViewHeight / 2) //peekHeight = the height of the fist row of the buttons grid + margintop
-                    halfExpandedRatio =
-                        (gridViewHeight + (10 * dm.density)).div(dm.heightPixels) //halfExpandedRatio = height of the buttons grid + margin / total screen height
-                }
-            }
-            view?.findViewById<View>(R.id.call_coordinator_option_container)?.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
-            view?.findViewById<View>(R.id.call_options_bottom_sheet)?.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
+      /*  // define recyclerview maxheight based on screen orientation
+        val mConstrainLayout = binding.confControlGroup
+        val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
+        Log.w(TAG, "DEBUG bottomsheet setter --> gridViewHeight: $gridViewHeight, dm.heightPixels: ${dm.heightPixels}, lp.matchConstraintMaxHeight: ${lp.matchConstraintMaxHeight}")
+        lp.matchConstraintMaxHeight =
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) (dm.heightPixels - ( gridViewHeight + (100 * dm.density).toInt())) else (dm.heightPixels - ( gridViewHeight + (250 * dm.density).toInt()))
+        mConstrainLayout.layoutParams = lp*/
 
-            bottomSheetParams?.let { bs ->
-                bs.expandedOffset =
-                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) (topInsets * dm.density).toInt()
-                    else (bottomInsets * dm.density).toInt()
-                if (halfExpandedRatio != null) {
-                    bs.halfExpandedRatio =
-                        if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
-                } else bs.halfExpandedRatio = 0.4f
+        val bsView = binding.callOptionsBottomSheet
+        val bsHeight = binding.constraintBsContainer.height
+        Log.w(TAG, "DEBUG bottomsheet setter --> bsHeight: $bsHeight")
+        if (isInPIP || !bsView.isVisible) return
+        // define bottomsheet width based on screen orientation
+        val bsViewParam = bsView.layoutParams
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) bsViewParam.width =
+            getBottomSheetMaxWidth() else bsViewParam.width = -1
+        bsView.layoutParams = bsViewParam
 
-                bs.peekHeight = desiredPeekHeight.toInt()
-                bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
-            }
+
+        val inset = newInset ?: ViewCompat.getRootWindowInsets(requireView()) ?: return
+        val bottomInsets: Int = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
+        val topInsets: Int = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
+
+        var halfExpandedRatio = (gridViewHeight + bottomInsets + (5 * dm.density)) / dm.heightPixels
+        //(gridViewHeight.plus(bottomInsets + (5 * dm.density))).div(dm.heightPixels) // halfExpandedRatio = gridheight + bottomInsets + (recyclingview elements * displaydensity)
+
+        var desiredPeekHeight = (91 * dm.density) + bottomInsets
+        /*Defining value of the bottom inset based on the size of the navbar*/
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            /* if (no navbar || landscape mode == true) then we must adapt the elements (bottomInsets, peekHeightsPx, halExpandedRatio) to the new display value */
+            desiredPeekHeight =
+                (10 * dm.density) + (gridViewHeight / 2) //peekHeight = the height of the fist row of the buttons grid + margintop
+            halfExpandedRatio =
+                (gridViewHeight + (10 * dm.density)).div(dm.heightPixels) //halfExpandedRatio = height of the buttons grid + margin / total screen height
+        }
+        val fullyExpandedOffset = dm.heightPixels - (bsHeight)
+        Log.w(TAG, "DEBUG dm.heightPixels : ${dm.heightPixels} - (bsHeight): $bsHeight")
+        binding.callCoordinatorOptionContainer.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
+        binding.callOptionsBottomSheet.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
+
+        bottomSheetParams?.let { bs ->
+            bs.expandedOffset =
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) fullyExpandedOffset
+                else fullyExpandedOffset + bottomInsets
+            bs.halfExpandedRatio = if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
+            bs.peekHeight = desiredPeekHeight.toInt()
+            bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
         }
     }
 
@@ -1062,13 +1089,14 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             when (movement) {
                 BottomSheetAnimation.UP -> {
                     mainView.findViewById<View>(R.id.call_coordinator_option_container).let {
-                        if(it.isVisible){
+                        if (it.isVisible) {
                             it.animate()
                                 .translationY(0f)
                                 .alpha(1.0f)
                                 .setListener(null)
                         }
                     }
+                    setBottomSheet()
                     displayBottomSheet(true)
                 }
                 BottomSheetAnimation.DOWN -> {
@@ -1366,7 +1394,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    fun raiseHandClicked(){
+    fun raiseHandClicked() {
         presenter.raiseParticipantHand(binding!!.callRaiseHandBtn.isChecked)
     }
 

@@ -33,6 +33,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -160,17 +161,20 @@ class CallActivity : AppCompatActivity() {
             if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode) && !isFullscreen) {
                 mMainView?.let {
                     when (currentOrientation) {
-                        Configuration.ORIENTATION_LANDSCAPE -> WindowInsetsControllerCompat(window, it).hide(
-                            WindowInsetsCompat.Type.systemBars()
-                        )
-                        Configuration.ORIENTATION_PORTRAIT -> WindowInsetsControllerCompat(window, it).show(
-                            WindowInsetsCompat.Type.systemBars()
-                        )
+                        Configuration.ORIENTATION_LANDSCAPE -> {
+                            WindowInsetsControllerCompat(window, it).hide(WindowInsetsCompat.Type.systemBars())
+
+                        }
+                        Configuration.ORIENTATION_PORTRAIT -> {
+                            WindowInsetsControllerCompat(window, it).show(WindowInsetsCompat.Type.systemBars())
+                        }
                     }
                 }
             }
         }
     }
+
+
 
     fun hideSystemUI() {
         val callFragment = callFragment ?: return

@@ -385,24 +385,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:id="@+id/call_coordinator_option_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:visibility="gone">
+        tools:visibility="visible">
     <!-- Bottom sheet -->
     <FrameLayout
             android:id="@+id/call_options_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:behavior_fitToContents="false"
             tools:visibility="visible"
+            app:behavior_fitToContents="false"
             android:layout_gravity="center"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_bs_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/background_call_menu"
-                >
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_call_menu">
                 <!-- handle bar -->
                 <FrameLayout
                     android:id="@+id/call_drawer_handle"
@@ -445,6 +444,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:padding="16dp"
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/baseline_sound_24"
+                            android:tint="@color/white"
                             android:onClick="@{() -> presenter.speakerClicked()}"/>
 
                         <TextView
@@ -478,6 +478,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:tint="@color/call_button"
                             android:background="@drawable/call_button_background_checkable"
                             android:contentDescription="@string/action_call_mic_mute"
                             android:padding="16dp"
@@ -550,7 +551,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@drawable/call_button_background_checkable"
+                        android:tint="@color/call_button"
+                        android:background="@drawable/call_button_background_checkable"
                             android:padding="16dp"
                             app:srcCompat="@drawable/baseline_videocam_24"
                             android:onClick="@{() -> presenter.switchCamera()}"/>
@@ -794,10 +796,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/conf_control_group"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="true"
                     app:layout_constraintTop_toBottomOf="@id/call_parameters_grid"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
