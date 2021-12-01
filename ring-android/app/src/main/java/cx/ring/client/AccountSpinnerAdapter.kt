@@ -55,7 +55,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
             holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile, true, account.isEnabled)) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ profile ->
                     holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
@@ -89,7 +89,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
             logoParam.height = logoSize
             holder.binding.logo.layoutParams = logoParam
             holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile, true, account.isEnabled)) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ profile ->
                     val subtitle = getUri(account, ip2ipString)
