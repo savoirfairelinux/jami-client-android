@@ -54,13 +54,17 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         }
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
-            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+            disposable.add(account.isEnabledObservable
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ profile ->
-                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
-                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
-                }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+                .subscribe{ isEnabled ->
+                    holder.loader.add(VCardServiceImpl.loadProfile(context, account)
+                        .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile, true, isEnabled)) }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ profile ->
+                            holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
+                            holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
+                        }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+                })
         }
         return view
     }
@@ -88,20 +92,24 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
             logoParam.width = logoSize
             logoParam.height = logoSize
             holder.binding.logo.layoutParams = logoParam
-            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+            disposable.add(account.isEnabledObservable
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ profile ->
-                    val subtitle = getUri(account, ip2ipString)
-                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
-                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
-                    if (profile.displayName == subtitle) {
-                        holder.binding.subtitle.visibility = View.GONE
-                    } else {
-                        holder.binding.subtitle.visibility = View.VISIBLE
-                        holder.binding.subtitle.text = subtitle
-                    }
-                }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+                .subscribe{ isEnabled ->
+                    holder.loader.add(VCardServiceImpl.loadProfile(context, account)
+                        .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile, true, isEnabled)) }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ profile ->
+                            val subtitle = getUri(account, ip2ipString)
+                            holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
+                            holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
+                            if (profile.displayName == subtitle) {
+                                holder.binding.subtitle.visibility = View.GONE
+                            } else {
+                                holder.binding.subtitle.visibility = View.VISIBLE
+                                holder.binding.subtitle.text = subtitle
+                            }
+                        }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+                })
         } else {
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)

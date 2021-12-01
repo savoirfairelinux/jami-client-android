@@ -66,8 +66,10 @@ class Account(
     private val pendingSubject: Subject<List<Conversation>> = BehaviorSubject.create()
     private val unreadConversationsSubject: Subject<Int> = BehaviorSubject.create()
     private val unreadPendingSubject: Subject<Int> = BehaviorSubject.create()
+    private val isEnabledSubject: Subject<Boolean> = BehaviorSubject.create()
     val unreadConversations: Observable<Int> = unreadConversationsSubject.distinctUntilChanged()
     val unreadPending: Observable<Int> = unreadPendingSubject.distinctUntilChanged()
+    val isEnabledObservable: Observable<Boolean> = isEnabledSubject.distinctUntilChanged()
     private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
@@ -478,10 +480,20 @@ class Account(
     }
 
     var isEnabled: Boolean
-        get() = config.getBool(ConfigKey.ACCOUNT_ENABLE)
+        get() {
+            val isEnable = config.getBool(ConfigKey.ACCOUNT_ENABLE)
+            updateIsEnabled(isEnable)
+            return isEnable
+        }
         set(isChecked) {
             config.put(ConfigKey.ACCOUNT_ENABLE, isChecked)
+            updateIsEnabled(isChecked)
         }
+
+    fun updateIsEnabled(isEnable: Boolean) {
+        isEnabledSubject.onNext(isEnable)
+    }
+
     val isActive: Boolean
         get() = mVolatileDetails.getBool(ConfigKey.ACCOUNT_ACTIVE)
 

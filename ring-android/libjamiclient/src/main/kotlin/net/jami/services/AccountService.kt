@@ -267,6 +267,7 @@ class AccountService(
         mAccountList = newAccounts
         synchronized(newAccounts) {
             for (account in newAccounts) {
+                account.isEnabled
                 val accountId = account.accountId
                 if (account.isSip) {
                     hasSip = true
