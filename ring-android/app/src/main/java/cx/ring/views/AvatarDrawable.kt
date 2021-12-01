@@ -93,13 +93,14 @@ class AvatarDrawable : Drawable {
             return VCardServiceImpl.loadProfile(context, account)
                 .map { profile -> build(context, account, profile, crop) }
         }
-        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true): AvatarDrawable {
+        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true, isOnline: Boolean = false): AvatarDrawable {
             return Builder()
-                        .withPhoto(profile.avatar as Bitmap?)
-                        .withNameData(profile.displayName, account.registeredName)
-                        .withId(account.uri)
-                        .withCircleCrop(crop)
-                        .build(context)
+                .withPhoto(profile.avatar as Bitmap?)
+                .withNameData(profile.displayName, account.registeredName)
+                .withId(account.uri)
+                .withCircleCrop(crop)
+                .withOnlineState(isOnline)
+                .build(context)
         }
 
         private fun getSubBounds(bounds: Rect, total: Int, i: Int): Rect? {
