@@ -31,8 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#424242"
         android:keepScreenOn="true"
+        android:background="#424242"
         tools:background="#424242">
 
         <!-- video surfaces layout -->
@@ -402,7 +402,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_bs_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/background_call_menu">
                     <!-- handle bar -->
                     <View
@@ -795,10 +795,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/conf_control_group"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="true"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/call_parameters_grid"
