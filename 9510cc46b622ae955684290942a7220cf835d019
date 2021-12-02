@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaab4b14_d2e1c89b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:39:41Z",
+      "side": 1,
+      "message": "throw a nullable error on android 7.0 device \n\nreplace by: \n\nval toolbarLayout: AppBarLayout  ?\u003d requireActivity().findViewById(R.id.toolbar_layout)\n\ntoolbarLayout?.isLifted \u003d true",
+      "range": {
+        "startLine": 283,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 41
+      },
+      "revId": "9510cc46b622ae955684290942a7220cf835d019",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "747492bc_5e6f6958",
+        "filename": "ring-android/app/src/main/res/layout/activity_conversation.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:39:41Z",
+      "side": 1,
+      "message": "this closing tag is a duplicate",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "9510cc46b622ae955684290942a7220cf835d019",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
