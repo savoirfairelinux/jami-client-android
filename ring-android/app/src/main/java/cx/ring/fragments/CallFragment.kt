@@ -103,10 +103,6 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     MediaButtonsHelperCallback, ItemSelectedListener {
     private var binding: FragCallBinding? = null
     private var mOrientationListener: OrientationEventListener? = null
-    private var dialPadBtn: MenuItem? = null
-    private var pluginsMenuBtn: MenuItem? = null
-    private var restartVideo = false
-    private var restartPreview = false
     private var mScreenWakeLock: PowerManager.WakeLock? = null
     private var mCurrentOrientation = 0
     private var mVideoWidth = -1
@@ -1102,7 +1098,13 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun initNormalStateDisplay() {
         Log.w(CallPresenter.TAG, "initNormalStateDisplay")
         binding?.apply {
-            callRefuseBtn.visibility = View.GONE
+            callBtnRow.isVisible = false
+            callAcceptBtn.isVisible = false
+            callAcceptBtnText.isVisible = false
+            callAcceptAudioBtn.isVisible = false
+            callAcceptAudioBtnText.isVisible = false
+            callRefuseBtn.isVisible = false
+            callRefuseBtnText.isVisible = false
             contactBubbleLayout.visibility = View.VISIBLE
         }
 
@@ -1113,19 +1115,27 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun initIncomingCallDisplay(hasVideo: Boolean) {
         Log.w(TAG, "initIncomingCallDisplay")
         binding?.apply {
-            if (hasVideo) callAcceptBtn.visibility = View.VISIBLE else callAcceptBtn.visibility = View.GONE
-            callAcceptAudioBtn.visibility = View.VISIBLE
-            callRefuseBtn.visibility = View.VISIBLE
-            contactBubbleLayout.visibility = View.VISIBLE
+            callBtnRow.isVisible = true
+            callAcceptBtn.isVisible = hasVideo
+            callAcceptBtnText.isVisible = hasVideo
+            callAcceptAudioBtn.isVisible = true
+            callAcceptAudioBtnText.isVisible = true
+            callRefuseBtn.isVisible = true
+            callRefuseBtnText.isVisible = true
+            contactBubbleLayout.isVisible = true
         }
     }
 
     override fun initOutGoingCallDisplay() {
         Log.w(TAG, "initOutGoingCallDisplay")
         binding?.apply {
-            callAcceptBtn.visibility = View.GONE
-            callRefuseBtn.visibility = View.VISIBLE
-            contactBubbleLayout.visibility = View.VISIBLE
+            callAcceptBtn.isVisible = false
+            callAcceptBtnText.isVisible = false
+            callAcceptAudioBtn.isVisible = false
+            callAcceptAudioBtnText.isVisible = false
+            callRefuseBtn.isVisible = true
+            callRefuseBtnText.isVisible = true
+            contactBubbleLayout.isVisible = true
         }
     }
 

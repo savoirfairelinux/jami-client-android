@@ -85,8 +85,9 @@ class CallActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(callFragment?.presenter?.mOnGoingCall == true && callFragment?.presenter?.isVideoActive == true) {
-            callFragment?.presenter?.requestPipMode()
+        val presenter = callFragment?.presenter
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && presenter?.mOnGoingCall == true && presenter.isVideoActive) {
+            presenter.requestPipMode()
         } else {
             super.onBackPressed()
         }
