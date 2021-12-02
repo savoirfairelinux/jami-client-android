@@ -55,7 +55,7 @@ interface ConversationView {
     fun removeElement(e: Interaction)
     fun setComposingStatus(composingStatus: ComposingStatus)
     fun setLastDisplayed(interaction: Interaction)
-    fun setConversationColor(integer: Int)
+    fun setConversationColor(color: Int)
     fun setConversationSymbol(symbol: CharSequence)
     fun startSaveFile(file: DataTransfer, fileAbsolutePath: String)
     fun startShareLocation(accountId: String, contactId: String)

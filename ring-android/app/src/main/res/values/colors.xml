@@ -10,7 +10,9 @@
     <color name="colorOnPrimary">@color/white</color>
 
     <color name="colorSecondary">@color/color_primary_light</color>
+    <color name="colorSecondaryContainer">@color/color_primary_light_container</color>
     <color name="colorOnSecondary">@color/white</color>
+    <color name="colorOnSecondaryContainer">@color/grey_700</color>
 
     <color name="colorError">#f44336</color>
     <color name="colorOnError">#ffffff</color>
@@ -55,6 +57,5 @@
     <color name="tv_contact_background">#00335C</color>
     <color name="tv_contact_row_background">#002B4E</color>
     <color name="tv_search_background">#0095EB</color>
-
 
 </resources>

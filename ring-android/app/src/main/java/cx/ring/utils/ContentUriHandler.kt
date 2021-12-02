@@ -19,6 +19,7 @@
  */
 package cx.ring.utils
 
+import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
@@ -45,6 +46,17 @@ object ContentUriHandler {
     val CONVERSATION_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "conversation")
     val ACCOUNTS_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "accounts")
     val CONTACT_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "contact")
+
+    fun immutable(flags: Int = 0): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            PendingIntent.FLAG_IMMUTABLE or flags
+        else flags
+    }
+    fun mutable(flags: Int = 0): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            PendingIntent.FLAG_MUTABLE or flags
+        else flags
+    }
 
     fun getUriForResource(context: Context, resourceId: Int): Uri {
         val resources = context.resources
