@@ -69,6 +69,8 @@ import kotlin.math.ceil
 class LocationSharingService : Service(), LocationListener {
     @Inject
     lateinit var mConversationFacade: ConversationFacade
+    @Inject
+    lateinit var contactService: ContactService
 
     private val mRandom = Random()
     private val binder: IBinder = LocalBinder()
@@ -247,6 +249,7 @@ class LocationSharingService : Service(), LocationListener {
         // Log.w(TAG, "getNotification " + firsPath.getContactId());
         return mConversationFacade.getAccountSubject(firsPath.accountId)
             .map { account -> account.getContactFromCache(firsPath.conversationUri) }
+            .flatMap { contact -> contactService.getLoadedContact(firsPath.accountId, contact) }
             .map { contact ->
                 val title: String
                 val stopIntent = Intent(ACTION_STOP).setClass(applicationContext, LocationSharingService::class.java)

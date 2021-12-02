@@ -41,7 +41,6 @@ import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.util.Pair
 import com.bumptech.glide.Glide
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
@@ -111,7 +110,8 @@ class NotificationServiceImpl(
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString), ContentUriHandler.immutable())
 
-        val contact = call.contact!!
+        val contact = getProfile(call.account!!, call.contact!!)
+
         val messageNotificationBuilder: NotificationCompat.Builder
         if (conference.isOnGoing) {
             messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS)
@@ -221,6 +221,8 @@ class NotificationServiceImpl(
 
     override fun showLocationNotification(first: Account, contact: Contact) {
         val path = ConversationPath.toUri(first.accountId, contact.uri)
+        val profile = getProfile(first.accountId, contact)
+
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true)
@@ -230,8 +232,8 @@ class NotificationServiceImpl(
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
-            .setLargeIcon(getContactPicture(contact))
-            .setContentText(mContext.getString(R.string.location_share_contact, contact.displayName))
+            .setLargeIcon(getContactPicture(profile))
+            .setContentText(mContext.getString(R.string.location_share_contact, profile.displayName))
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
             .setAutoCancel(false)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
@@ -387,7 +389,7 @@ class NotificationServiceImpl(
     private fun textNotification(accountId: String, texts: TreeMap<Long, TextMessage>, conversation: Conversation) {
         val cpath = ConversationPath(conversation)
         val path = cpath.toUri()
-        val conversationProfile = getProfile(conversation)
+        val conversationProfile = getProfile(conversation) ?: return
         var notificationVisibility = mPreferencesService.settings.notificationVisibility
         notificationVisibility = when (notificationVisibility) {
             SettingsFragment.NOTIFICATION_PUBLIC -> Notification.VISIBILITY_PUBLIC
@@ -444,10 +446,11 @@ class NotificationServiceImpl(
             val history = NotificationCompat.MessagingStyle(userPerson)
             for (textMessage in texts.values) {
                 val contact = textMessage.contact!!
-                val contactPicture = getContactPicture(contact)
+                val profile = getProfile(accountId, contact)
+                val contactPicture = getContactPicture(profile)
                 val contactPerson = Person.Builder()
                     .setKey(ConversationPath.toKey(cpath.accountId, contact.uri.uri))
-                    .setName(contact.displayName)
+                    .setName(profile.displayName)
                     .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                     .build()
                 history.addMessage(NotificationCompat.MessagingStyle.Message(
@@ -518,11 +521,11 @@ class NotificationServiceImpl(
             if (notifiedRequests.contains(contactKey)) {
                 return
             }
-            mContactService.getLoadedContact(account.accountId, request.contacts, false).subscribe({
+            mContactService.getLoadedConversation(request).subscribe({ vm ->
                 val builder = getRequestNotificationBuilder(account.accountId)
                 mPreferencesService.saveRequestPreferences(account.accountId, contactKey)
                 val info = ConversationPath.toUri(account.accountId, request.uri)
-                builder.setContentText(request.uriTitle)
+                builder.setContentText(vm.uriTitle)
                     .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept), PendingIntent.getService(
                         mContext, random.nextInt(),
                         Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService::class.java),
@@ -568,6 +571,8 @@ class NotificationServiceImpl(
         val dataTransferId = info.fileId ?: info.id.toString()
         val notificationId = getFileTransferNotificationId(path, dataTransferId)
         val intentViewConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
+        val profile = getProfile(conversation) ?: return
+
         if (event.isOver) {
             removeTransferNotification(path, dataTransferId)
             if (info.isOutgoing || info.isError) {
@@ -586,14 +591,14 @@ class NotificationServiceImpl(
                         .submit()
                         .get() as BitmapDrawable
                     img = d.bitmap
-                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture,conversation.title))
+                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, profile.second))
                     notif.setStyle(NotificationCompat.BigPictureStyle().bigPicture(img))
                 } catch (e: Exception) {
                     Log.w(TAG, "Can't load image for notification", e)
                     return
                 }
             } else {
-                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, conversation.title))
+                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, profile.second))
                 notif.setStyle(null)
             }
             val picture = getContactPicture(conversation)
@@ -607,7 +612,7 @@ class NotificationServiceImpl(
         val ongoing = event == InteractionStatus.TRANSFER_ONGOING || event == InteractionStatus.TRANSFER_ACCEPTED
         val titleMessage = mContext.getString(
             if (info.isOutgoing) R.string.notif_outgoing_file_transfer_title else R.string.notif_incoming_file_transfer_title,
-            conversation.title
+            profile.second
         )
         messageNotificationBuilder.setContentTitle(titleMessage)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -677,7 +682,8 @@ class NotificationServiceImpl(
         val path = ConversationPath.toUri(call)
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val contact = call.contact!!
+        val contact = getProfile(call.account!!, call.contact!!)
+
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -751,7 +757,7 @@ class NotificationServiceImpl(
         return (NOTIF_FILE_TRANSFER + path.toString() + dataTransferId).hashCode()
     }
 
-    private fun getContactPicture(contact: Contact): Bitmap? {
+    private fun getContactPicture(contact: ContactViewModel): Bitmap? {
         return try {
             AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize, false).blockingGet()
         } catch (e: Exception) {
@@ -761,7 +767,10 @@ class NotificationServiceImpl(
 
     private fun getContactPicture(conversation: Conversation): Bitmap? {
         return try {
-            AvatarFactory.getBitmapAvatar(mContext, conversation, avatarSize, false).blockingGet()
+            mContactService.getLoadedConversation(conversation).flatMap { vm ->
+                AvatarFactory.getAvatar(mContext, vm)
+                    .map { d -> BitmapUtils.drawableToBitmap(d, avatarSize) }
+            }.blockingGet()
         } catch (e: Exception) {
             null
         }
@@ -771,11 +780,23 @@ class NotificationServiceImpl(
         return AvatarFactory.getBitmapAvatar(mContext, account, avatarSize).blockingGet()
     }
 
-    private fun getProfile(conversation: Conversation): Pair<Bitmap?, String> {
-        return Pair.create(getContactPicture(conversation), conversation.title)
+    private fun getProfile(conversation: Conversation): Pair<Bitmap, String>? {
+        return try {
+            mContactService.getLoadedConversation(conversation).map { vm ->
+                Pair(AvatarFactory.getAvatar(mContext, vm)
+                    .map { d -> BitmapUtils.drawableToBitmap(d, avatarSize) }
+                    .blockingGet(), vm.contactName)
+            }.blockingGet()
+        } catch (e: Exception) {
+            null
+        }
     }
 
-    private fun setContactPicture(contact: Contact, messageNotificationBuilder: NotificationCompat.Builder) {
+    private fun getProfile(accountId:String, contact: Contact): ContactViewModel {
+        return mContactService.getLoadedContact(accountId, contact).blockingGet()
+    }
+
+    private fun setContactPicture(contact: ContactViewModel, messageNotificationBuilder: NotificationCompat.Builder) {
         getContactPicture(contact)?.let { pic -> messageNotificationBuilder.setLargeIcon(pic) }
     }
 
