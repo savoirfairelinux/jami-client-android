@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "573b5e69_d39aebbd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaab4b14_d2e1c89b",
+      "range": {
+        "startLine": 283,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 41
+      },
+      "revId": "9510cc46b622ae955684290942a7220cf835d019",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "747492bc_5e6f6958",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-02T22:39:41Z",
       "side": 1,
       "message": "this closing tag is a duplicate",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "9510cc46b622ae955684290942a7220cf835d019",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2035d38f_5255e027",
+        "filename": "ring-android/app/src/main/res/layout/activity_conversation.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747492bc_5e6f6958",
       "range": {
         "startLine": 13,
         "startChar": 40,
