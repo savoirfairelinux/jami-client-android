@@ -41,8 +41,8 @@ import cx.ring.application.JamiApplication
 import cx.ring.client.ConversationActivity
 import cx.ring.fragments.ConversationFragment
 import cx.ring.services.NotificationServiceImpl
+import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
-import cx.ring.utils.ConversationPath.Companion.fromIntent
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -54,9 +54,10 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
-import net.jami.services.ConversationFacade
 import net.jami.services.AccountService
 import net.jami.services.CallService
+import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -87,7 +88,7 @@ class LocationSharingService : Service(), LocationListener {
     val contactSharing: Observable<Set<ConversationPath>>
         get() = mContactSharingSubject
 
-    fun getContactSharingExpiration(path: ConversationPath?): Observable<Long> {
+    fun getContactSharingExpiration(path: ConversationPath): Observable<Long> {
         return Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
             .startWithItem(0L)
             .repeat()
@@ -97,7 +98,7 @@ class LocationSharingService : Service(), LocationListener {
 
     override fun onCreate() {
         super.onCreate()
-        mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         mHandler = Handler(mainLooper)
         mPreferences = getSharedPreferences(PREFERENCES_LOCATION, MODE_PRIVATE)
@@ -131,7 +132,7 @@ class LocationSharingService : Service(), LocationListener {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.w(TAG, "onStartCommand $intent")
         val action = intent.action
-        val path = fromIntent(intent)
+        val path = ConversationPath.fromIntent(intent)
         val now = SystemClock.elapsedRealtime()
         if (ACTION_START == action) {
             val duration = intent.getIntExtra(EXTRA_SHARING_DURATION, SHARE_DURATION_SEC)
@@ -278,22 +279,16 @@ class LocationSharingService : Service(), LocationListener {
                     .setSmallIcon(R.drawable.ic_ring_logo_white)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .setOnlyAlertOnce(true)
-                    .setDeleteIntent(
-                        PendingIntent.getService(
-                            applicationContext,
-                            mRandom.nextInt(),
-                            stopIntent,
-                            0
-                        )
-                    )
-                    .setContentIntent(
-                        PendingIntent.getActivity(
-                            applicationContext,
-                            mRandom.nextInt(),
-                            contentIntent,
-                            0
-                        )
-                    )
+                    .setDeleteIntent(PendingIntent.getService(
+                        applicationContext,
+                        mRandom.nextInt(),
+                        stopIntent,
+                        ContentUriHandler.immutable()))
+                    .setContentIntent(PendingIntent.getActivity(
+                        applicationContext,
+                        mRandom.nextInt(),
+                        contentIntent,
+                        ContentUriHandler.immutable()))
                     .addAction(
                         R.drawable.baseline_location_disabled_24,
                         getText(R.string.notif_location_action_stop),
@@ -301,9 +296,7 @@ class LocationSharingService : Service(), LocationListener {
                             applicationContext,
                             0,
                             stopIntent,
-                            PendingIntent.FLAG_ONE_SHOT
-                        )
-                    )
+                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
                     .build()
             }
             .subscribeOn(Schedulers.computation())

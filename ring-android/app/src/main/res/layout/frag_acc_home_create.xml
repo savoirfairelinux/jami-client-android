@@ -65,9 +65,7 @@
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cornerRadius="@dimen/wizard_button_corner_radius"
                 android:text="@string/account_link_archive_button"
-                android:padding="@dimen/wizard_button_padding"
                 android:drawableTint="@color/color_primary_dark"
                 android:drawableLeft="@drawable/baseline_backup_black_36"
                 android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
@@ -78,8 +76,6 @@
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cornerRadius="@dimen/wizard_button_corner_radius"
-                android:padding="@dimen/wizard_button_padding"
                 android:text="@string/account_connect_server_button"
                 android:drawableTint="@color/color_primary_dark"
                 android:drawableLeft="@drawable/baseline_router_black_36"

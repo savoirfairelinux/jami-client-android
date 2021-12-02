@@ -34,7 +34,7 @@ interface NotificationService {
     fun showIncomingTrustRequestNotification(account: Account)
     fun cancelTrustRequestNotification(accountID: String)
     fun showFileTransferNotification(conversation: Conversation, info: DataTransfer)
-    fun handleDataTransferNotification(transfer: DataTransfer, contact: Conversation, remove: Boolean)
+    fun handleDataTransferNotification(transfer: DataTransfer, conversation: Conversation, remove: Boolean)
     fun removeTransferNotification(accountId: String, conversationUri: Uri, fileId: String)
     fun getDataTransferNotification(notificationId: Int): Any?
     fun cancelFileNotification(notificationId: Int)
