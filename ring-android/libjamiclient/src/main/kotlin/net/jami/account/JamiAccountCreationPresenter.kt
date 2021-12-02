@@ -66,7 +66,7 @@ class JamiAccountCreationPresenter @Inject constructor(
      * animation if it has not been started before
      */
     fun userNameChanged(userName: String) {
-        if (mAccountCreationModel != null) mAccountCreationModel!!.username = userName
+        mAccountCreationModel?.username = userName
         contactQuery.onNext(userName)
         isUsernameCorrect = false
         if (showLoadingAnimation) {
@@ -193,6 +193,6 @@ class JamiAccountCreationPresenter @Inject constructor(
     companion object {
         val TAG = JamiAccountCreationPresenter::class.simpleName!!
         private const val PASSWORD_MIN_LENGTH = 6
-        private const val TYPING_DELAY = 350L
+        const val TYPING_DELAY = 350L
     }
 }
