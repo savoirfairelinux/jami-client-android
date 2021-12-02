@@ -35,6 +35,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60e568dc_0baa0220",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConfParticipantAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:46:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86c5d20_64fef296",
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d65f0b72_5aabae26",
@@ -71,6 +89,30 @@
       "writtenOn": "2021-11-12T19:52:01Z",
       "side": 1,
       "message": "deprecated ? can be delete ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "d1f7602745882127d5cc12bc99b79a88db5cadda",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff0d6e9_770c6c70",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:46:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f0954f_d9db22db",
       "range": {
         "startLine": 180,
         "startChar": 16,

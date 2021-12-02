@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e61639e_d931e62d",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/contacts/ContactCard.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 929
+      },
+      "writtenOn": "2021-12-02T22:46:47Z",
+      "side": 1,
+      "message": "This throw nullpointerexception, when we have a non-swarm contact with undefined porfile name we don\u0027t want to break the whole contact screen.\n\nShould be removed and replace the other var assignation with a null safety check \"?\"\n\nps: this contact with undefined name is weird because contactname shoudl be displayname or uri.",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "4375b1c244d5d70237fced9512b06faddf6a0ecc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
