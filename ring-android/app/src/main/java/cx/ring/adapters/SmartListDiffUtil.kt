@@ -19,12 +19,12 @@
  */
 package cx.ring.adapters
 
-import net.jami.smartlist.SmartListViewModel
+import net.jami.smartlist.ConversationItemViewModel
 import androidx.recyclerview.widget.DiffUtil
 
 class SmartListDiffUtil(
-    private val mOldList: List<SmartListViewModel>,
-    private val mNewList: List<SmartListViewModel>
+    private val mOldList: List<ConversationItemViewModel>,
+    private val mNewList: List<ConversationItemViewModel>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldList.size

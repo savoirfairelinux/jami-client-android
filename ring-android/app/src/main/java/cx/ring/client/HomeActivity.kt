@@ -56,7 +56,6 @@ import cx.ring.fragments.SmartListFragment
 import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
-import cx.ring.services.ContactServiceImpl
 import cx.ring.settings.SettingsFragment
 import cx.ring.settings.VideoSettingsFragment
 import cx.ring.settings.pluginssettings.PluginDetails
@@ -67,11 +66,13 @@ import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
+import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import cx.ring.views.SwitchButton
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.services.ConversationFacade
@@ -82,10 +83,10 @@ import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.NotificationService
-import net.jami.smartlist.SmartListViewModel
-import java.util.concurrent.Future
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.min
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -297,11 +298,22 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { count -> setBadge(R.id.navigation_home, count) })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
             mDisposable.add(mAccountService
                 .currentAccountSubject
                 .switchMap { obj -> obj.getConversationsSubject() }
                 .debounce(10, TimeUnit.SECONDS)
-                .observeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .switchMapSingle { conversations ->
+                    Single.zip(conversations.mapTo(ArrayList(conversations.size))
+                    { c -> mContactService.getLoadedConversation(c)
+                        .observeOn(Schedulers.computation())
+                        .map{ vm -> Pair(vm, BitmapUtils.drawableToBitmap(
+                            AvatarDrawable.Builder()
+                            .withViewModel(vm)
+                            .withCircleCrop(true)
+                            .build(this), targetSize)) } }) { obs -> obs }
+                }
                 .subscribe({ conversations -> setShareShortcuts(conversations) })
                 { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
         }
@@ -331,7 +343,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             val intent = intent
             val uri = intent?.data
             if ((intent == null || uri == null) && fConversation == null) {
-                var smartlist: Observable<List<Observable<SmartListViewModel>>>? = null
+                var smartlist: Observable<List<Observable<ConversationItemViewModel>>>? = null
                 if (fContent is SmartListFragment) smartlist =
                     mConversationFacade.getSmartList(false) else if (fContent is ContactRequestsFragment) smartlist =
                     mConversationFacade.pendingList
@@ -531,7 +543,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     .replace(fragmentContainerId, content, ACCOUNTS_TAG)
                     .addToBackStack(ACCOUNTS_TAG)
                     .commit()
-                //showProfileInfo();
                 showToolbarSpinner()
             }
         }
@@ -678,8 +689,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        Log.w(TAG, "setToolbarElevation $enable")
-        mBinding!!.appBar.isLifted = enable
+        mBinding?.appBar?.isLifted = enable
     }
 
     fun popFragmentImmediate() {
@@ -690,7 +700,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun selectNavigationItem(id: Int) {
-        if (mBinding != null) mBinding!!.navigationView.selectedItemId = id
+        val binding = mBinding ?: return
+        binding.navigationView.selectedItemId = id
     }
 
     private fun enableAccount(newValue: Boolean) {
@@ -706,46 +717,32 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     val switchButton: SwitchButton
         get() = mBinding!!.accountSwitch
 
-    private fun setShareShortcuts(conversations: Collection<Conversation>) {
-        val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
-        var i = 0
+    private fun setShareShortcuts(conversations: Array<*>) {
         var maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this)
         if (maxCount == 0) maxCount = 4
-        val futureIcons: MutableList<Future<Bitmap>> =
-            ArrayList(conversations.size.coerceAtMost(maxCount))
-        for (conversation in conversations) {
-            val mode = conversation.mode.blockingFirst()
-            if (mode == Conversation.Mode.Syncing)
-                continue
-            futureIcons.add(
-                (mContactService as ContactServiceImpl?)!!.loadConversationAvatar(this,conversation)
-                    .map { d -> BitmapUtils.drawableToBitmap(d, targetSize) }
-                    .subscribeOn(Schedulers.computation())
-                    .toFuture())
-            if (++i == maxCount) break
-        }
-        val shortcutInfoList: MutableList<ShortcutInfoCompat> = ArrayList(futureIcons.size)
-        i = 0
-        for (conversation in conversations) {
-            val mode = conversation.mode.blockingFirst()
+
+        val shortcutInfoList: MutableList<ShortcutInfoCompat> = ArrayList(min(maxCount, conversations.size))
+        for (c in conversations) {
+            val conversation = c as Pair<ConversationItemViewModel, Bitmap>
+            val mode = conversation.first.mode
             if (mode == Conversation.Mode.Syncing)
                 continue
             var icon: IconCompat? = null
             try {
-                icon = IconCompat.createWithBitmap(futureIcons[i].get())
+                icon = IconCompat.createWithBitmap(conversation.second)
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to load icon", e)
             }
-            val title = conversation.title ?: continue
+            val title = conversation.first.contactName
             if (title.isEmpty()) continue
-            val path = ConversationPath(conversation)
+            val path = ConversationPath(conversation.first.accountId, conversation.first.uri)
             val key = path.toKey()
             val person = Person.Builder()
-                .setName(conversation.title)
+                .setName(title)
                 .setKey(key)
                 .build()
             val shortcutInfo = ShortcutInfoCompat.Builder(this, key)
-                .setShortLabel(conversation.title  ?: "")
+                .setShortLabel(title)
                 .setPerson(person)
                 .setLongLived(true)
                 .setIcon(icon)
@@ -754,7 +751,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .putExtras(path.toBundle()))
                 .build()
             shortcutInfoList.add(shortcutInfo)
-            if (++i == maxCount) break
+            if (shortcutInfoList.size == maxCount) break
         }
         try {
             Log.d(TAG, "Adding shortcuts: " + shortcutInfoList.size)
