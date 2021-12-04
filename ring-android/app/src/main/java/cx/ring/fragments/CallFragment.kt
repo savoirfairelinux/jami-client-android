@@ -418,43 +418,35 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     //todo: enable pip when only our video is displayed
     override fun enterPipMode(callId: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             return
-        }
         val context = requireContext()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val paramBuilder = PictureInPictureParams.Builder()
-            if (binding!!.videoSurface.visibility == View.VISIBLE) {
-                val l = IntArray(2)
-                binding!!.videoSurface.getLocationInWindow(l)
-                val x = l[0]
-                val y = l[1]
-                val w = binding!!.videoSurface.width
-                val h = binding!!.videoSurface.height
-                val videoBounds = Rect(x, y, x + w, y + h)
-                paramBuilder.setAspectRatio(Rational(w, h))
-                paramBuilder.setSourceRectHint(videoBounds)
-            } else {
+            val binding = binding ?: return
+            if (binding.videoSurface.visibility != View.VISIBLE)
                 return
-            }
-            val actions = ArrayList<RemoteAction>(1)
-            actions.add(
-                RemoteAction(
-                    Icon.createWithResource(context, R.drawable.baseline_call_end_24),
-                    getString(R.string.action_call_hangup),
-                    getString(R.string.action_call_hangup),
-                    PendingIntent.getService(
-                        context,
-                        Random().nextInt(),
-                        Intent(DRingService.ACTION_CALL_END)
-                            .setClass(context, JamiService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, callId), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
-                    )
-                )
-            )
-            paramBuilder.setActions(actions)
+            val l = IntArray(2).apply { binding.videoSurface.getLocationInWindow(this) }
+            val x = l[0]
+            val y = l[1]
+            val w = binding.videoSurface.width
+            val h = binding.videoSurface.height
             try {
-                requireActivity().enterPictureInPictureMode(paramBuilder.build())
+                requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
+                    .setAspectRatio(Rational(w, h))
+                    .setSourceRectHint(Rect(x, y, x + w, y + h))
+                    .setActions(listOf(RemoteAction(
+                        Icon.createWithResource(context, R.drawable.baseline_call_end_24),
+                        getString(R.string.action_call_hangup),
+                        getString(R.string.action_call_hangup),
+                        PendingIntent.getService(
+                            context,
+                            Random().nextInt(),
+                            Intent(DRingService.ACTION_CALL_END)
+                                .setClass(context, JamiService::class.java)
+                                .putExtra(NotificationService.KEY_CALL_ID, callId), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
+                        )
+                    )))
+                    .build())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't enter  PIP mode", e)
             }
@@ -1170,9 +1162,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
         val rootView = view as ViewGroup? ?: return
+        val binding = binding ?: return
         val videoRatio = videoWidth / videoHeight.toDouble()
         val screenRatio = rootView.width / rootView.height.toDouble()
-        val params = binding!!.videoSurface.layoutParams as RelativeLayout.LayoutParams
+        val params = binding.videoSurface.layoutParams as RelativeLayout.LayoutParams
         val oldW = params.width
         val oldH = params.height
         if (videoRatio >= screenRatio) {
@@ -1183,17 +1176,41 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             params.width = (videoWidth * rootView.height.toDouble() / videoHeight.toDouble()).toInt()
         }
         if (oldW != params.width || oldH != params.height) {
-            binding!!.videoSurface.layoutParams = params
+            binding.videoSurface.layoutParams = params
         }
         mVideoWidth = videoWidth
         mVideoHeight = videoHeight
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            binding.videoSurface.post {
+                try {
+                    Log.w(TAG, "setPictureInPictureParams ${binding.videoSurface.isVisible}")
+                    if (binding.videoSurface.isVisible) {
+                        val l = IntArray(2).apply { binding.videoSurface.getLocationInWindow(this) }
+                        val w = binding.videoSurface.width
+                        val h = binding.videoSurface.height
+                        activity?.setPictureInPictureParams(
+                            PictureInPictureParams.Builder()
+                                .setAutoEnterEnabled(true)
+                                .setAspectRatio(Rational(w, h))
+                                .setSourceRectHint(Rect(l[0], l[1], l[0] + w, l[1] + h))
+                                .build())
+                    } else {
+                        activity?.setPictureInPictureParams(
+                            PictureInPictureParams.Builder()
+                                .setAutoEnterEnabled(false)
+                                .build())
+                    }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Can't set PIP params", e)
+                }
+
+            }
+        }
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
-        val activity: Activity? = activity
-        if (null == binding || null == activity) {
-            return
-        }
+        val activity = activity ?: return
+        val binding = binding ?: return
         val rotation = activity.windowManager.defaultDisplay.rotation
         val rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation
         val matrix = Matrix()
@@ -1211,7 +1228,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             matrix.postRotate(180f, centerX, centerY)
         }
         if (!isChoosePluginMode) {
-            binding!!.previewSurface.setTransform(matrix)
+            binding.previewSurface.setTransform(matrix)
         }
     }
 
@@ -1272,12 +1289,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
             if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val perms = ArrayList<String>()
-                if (!videoGranted) {
+                if (!videoGranted)
                     perms.add(Manifest.permission.CAMERA)
-                }
-                if (!audioGranted) {
+                if (!audioGranted)
                     perms.add(Manifest.permission.RECORD_AUDIO)
-                }
                 requestPermissions(perms.toTypedArray(), permissionType)
             } else if (audioGranted && videoGranted) {
                 initializeCall(acceptIncomingCall, hasVideo)
