@@ -331,7 +331,7 @@ class CallService(
 
     fun playDtmf(key: String) {
         mExecutor.execute {
-            Log.i(TAG, "playDTMF() running...")
+            Log.i(TAG, "playDTMF() running... $key")
             JamiService.playDTMF(key)
         }
     }

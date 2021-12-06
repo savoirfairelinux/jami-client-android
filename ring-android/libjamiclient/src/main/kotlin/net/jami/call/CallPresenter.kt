@@ -60,10 +60,6 @@ class CallPresenter @Inject constructor(
     private var permissionChanged = false
     private var incomingIsFullIntent = true
     private var callInitialized = false
-    private var videoWidth = -1
-    private var videoHeight = -1
-    private var previewWidth = -1
-    private var previewHeight = -1
     private var currentSurfaceId: String? = null
     private var currentPluginSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
@@ -457,7 +453,7 @@ class CallPresenter @Inject constructor(
     }
 
     private fun onVideoEvent(event: VideoEvent) {
-        //Log.w(TAG, "onVideoEvent  $event")
+        Log.w(TAG, "onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
         if (event.callId == null) {
@@ -465,17 +461,13 @@ class CallPresenter @Inject constructor(
                 view.displayLocalVideo(true)
             }
             if (event.started) {
-                previewWidth = event.w
-                previewHeight = event.h
-                view.resetPreviewVideoSize(previewWidth, previewHeight, event.rot)
+                view.resetPreviewVideoSize(event.w, event.h, event.rot)
             }
         } else if (conference != null && conference.id == event.callId) {
             if (event.start) {
                 view.displayPeerVideo(true)
             } else if (event.started) {
-                videoWidth = event.w
-                videoHeight = event.h
-                view.resetVideoSize(videoWidth, videoHeight)
+                view.resetVideoSize(event.w, event.h)
             } else {
                 view.displayPeerVideo(false)
             }
