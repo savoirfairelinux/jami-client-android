@@ -22,6 +22,7 @@ package cx.ring.adapters
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -66,27 +67,33 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
             .withPresence(false)
             .build(context))
 
-        participantBinding.muteParticipant.let {
-            it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
-        }
-
-        participantBinding.muteParticipant.setOnClickListener {
-            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
+        if (calls.size <= 2) {
+            participantBinding.muteParticipant.isVisible = false
+            participantBinding.kickParticipant.isVisible = false
+            participantBinding.extendParticipant.isVisible = false
+        } else {
             participantBinding.muteParticipant.let {
                 it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
             }
-        }
 
-        participantBinding.extendParticipant.setOnClickListener {
-            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Extend)
-        }
+            participantBinding.muteParticipant.setOnClickListener {
+                onSelectedCallback.onParticipantSelected(info, ParticipantAction.Mute)
+                participantBinding.muteParticipant.let {
+                    it.setImageResource(if (info.audioModeratorMuted || info.audioLocalMuted) R.drawable.baseline_mic_off_24 else R.drawable.baseline_mic_on_24)
+                }
+            }
 
-        participantBinding.kickParticipant.setOnClickListener {
-            onSelectedCallback.onParticipantSelected(info, ParticipantAction.Hangup)
-        }
+            participantBinding.extendParticipant.setOnClickListener {
+                onSelectedCallback.onParticipantSelected(info, ParticipantAction.Extend)
+            }
 
-        holder.itemView.setOnClickListener {
-            onSelectedCallback.onParticipantSelected(info, ParticipantAction.ShowDetails)
+            participantBinding.kickParticipant.setOnClickListener {
+                onSelectedCallback.onParticipantSelected(info, ParticipantAction.Hangup)
+            }
+
+            holder.itemView.setOnClickListener {
+                onSelectedCallback.onParticipantSelected(info, ParticipantAction.ShowDetails)
+            }
         }
     }
 
