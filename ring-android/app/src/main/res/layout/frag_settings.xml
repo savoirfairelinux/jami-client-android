@@ -243,7 +243,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:padding="8dp"
                 android:layout_marginStart="64dp"
                 android:text="@string/pref_category_privacy"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp" />
 
             <RelativeLayout
@@ -534,7 +534,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_system"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 android:layout_marginStart="64dp" />
 
@@ -743,7 +743,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_diagnostic"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 android:layout_marginStart="64dp" />
 

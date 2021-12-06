@@ -35,13 +35,14 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.Person
-import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.elevation.ElevationOverlayProvider
 import com.google.android.material.navigation.NavigationBarView
 import cx.ring.BuildConfig
 import cx.ring.R
@@ -138,6 +139,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             startActivity(intent)
             return
         }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
 
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
@@ -151,9 +154,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 enableAccount(isChecked)
             }
             binding.contactImage?.setOnClickListener { fConversation?.openContact() }
-        }
-        if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.bottom_navigation)
+
+            if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                window.navigationBarColor = ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(binding.navigationView.elevation)
+            }
         }
         handleIntent(intent)
     }

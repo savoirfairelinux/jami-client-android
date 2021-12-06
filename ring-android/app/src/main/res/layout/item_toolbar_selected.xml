@@ -21,7 +21,7 @@
         android:singleLine="true"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textSize="16sp"
         android:layout_marginStart="16dp"
         android:layout_alignParentTop="true"

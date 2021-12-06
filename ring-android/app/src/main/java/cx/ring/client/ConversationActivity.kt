@@ -64,8 +64,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar)
-        val ab = supportActionBar
-        ab?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.contactImage.setOnClickListener { mConversationFragment?.openContact() }
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {

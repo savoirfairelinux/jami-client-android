@@ -56,7 +56,7 @@ along with this program; if not, write to the Free Software
         android:maxLines="1"
         android:singleLine="true"
         android:textAlignment="viewStart"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="16sp"
         tools:text="contact_name" />

@@ -24,15 +24,14 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".client.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/app_bar"
-        app:elevation="4dp">
+        app:elevation="4dp"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_toolbar"
@@ -62,7 +61,7 @@ along with this program; if not, write to the Free Software
                 android:layout_marginStart="16dp"
                 android:dropDownWidth="260dp"
                 android:paddingStart="-60dp"
-                tools:listitem="@layout/item_toolbar_selected"/>
+                tools:listitem="@layout/item_toolbar_selected" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -81,7 +80,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/bottom_navigation"
+        app:elevation="8dp"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/navigation_bar" />
 

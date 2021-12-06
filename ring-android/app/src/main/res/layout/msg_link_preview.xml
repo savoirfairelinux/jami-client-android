@@ -26,7 +26,7 @@
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:visibility="visible"
         tools:text="@tools:sample/cities" />
 
@@ -40,7 +40,7 @@
         android:paddingHorizontal="8dp"
         android:paddingBottom="4dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:visibility="visible"
         tools:text="@tools:sample/lorem/random" />
 

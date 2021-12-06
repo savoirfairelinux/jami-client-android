@@ -10,6 +10,11 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+
+    <style name="AppTheme.Navigation" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
     <!-- Light themes -->
 
     <style name="AppTheme" parent="AppThemeBase">
@@ -25,8 +30,12 @@
     </style>
 
     <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen">
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:windowLightNavigationBar">?attr/isLightTheme</item>
+
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
     <style name="AppTheme.Call" parent="AppTheme.Call.Base">

@@ -133,7 +133,7 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="false"
-            android:layout_gravity="bottom|center_horizontal"
+            android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin_mini"
             android:elevation="6dp"
             android:text="@string/start_conversation"

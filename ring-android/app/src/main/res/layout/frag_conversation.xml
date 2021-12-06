@@ -56,7 +56,7 @@
                 android:background="@color/surface"
                 android:gravity="center"
                 android:padding="24dp"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/colorOnSurface"
                 tools:text="Jean is not in your contacts yet" />
 
             <View
