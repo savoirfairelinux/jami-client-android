@@ -480,7 +480,7 @@ class AvatarDrawable : Drawable {
             canvas.drawColor(color)
             if (avatarText != null) {
                 canvas.drawText(avatarText!!, textStartXPoint, textStartYPoint, textPaint)
-            } else {
+            } else if (placeholder != null) {
                 placeholder!!.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
                 placeholder!!.draw(canvas)
             }
