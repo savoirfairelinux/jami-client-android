@@ -42,7 +42,9 @@ import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Rational
 import android.view.*
@@ -99,7 +101,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @AndroidEntryPoint
-class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
+class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     MediaButtonsHelperCallback, ItemSelectedListener {
     private var binding: FragCallBinding? = null
     private var mOrientationListener: OrientationEventListener? = null
@@ -262,7 +264,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 val parent = v.parent as RelativeLayout
                 val params = v.layoutParams as RelativeLayout.LayoutParams
 
-                when (action) {
+                return@setOnTouchListener when (action) {
                     MotionEvent.ACTION_DOWN -> {
                         previewSnapAnimation.cancel()
                         previewDrag = PointF(event.x, event.y)
@@ -277,7 +279,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             parent.height - (v.y.toInt() + v.height)
                         )
                         v.layoutParams = params
-                        return@setOnTouchListener true
+                        true
                     }
                     MotionEvent.ACTION_MOVE -> {
                         if (previewDrag != null) {
@@ -297,9 +299,8 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                                 drapOut = min(1f, (currentXPosition + v.width - parent.width) / outPosition)
                             }
                             setPreviewDragHiddenState(drapOut)
-                            return@setOnTouchListener true
-                        }
-                        return@setOnTouchListener false
+                            true
+                        } else false
                     }
                     MotionEvent.ACTION_UP -> {
                         if (previewDrag != null) {
@@ -352,24 +353,23 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             }
                             setPreviewDragHiddenState(previewHiddenState)
                             previewSnapAnimation.start()
-                            return@setOnTouchListener true
-                        }
-                        return@setOnTouchListener false
+                            true
+                        } else false
                     }
-                    else -> {
-                        return@setOnTouchListener false
-                    }
+                    else -> false
                 }
             }
-            /*  binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
+            binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
                   override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                   override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                      presenter.sendDtmf(s.subSequence(start, start + count))
+                      if (before == 0)
+                        presenter.sendDtmf(s.subSequence(start, start + count))
                   }
-
-                  override fun afterTextChanged(s: Editable) {}
-              })*/
-
+                  override fun afterTextChanged(s: Editable) {
+                      if (s.isNotEmpty())
+                        s.clear()
+                  }
+              })
         }
     }
 
@@ -382,9 +382,10 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         // define recyclerview maxheight based on screen orientation
         val mConstrainLayout = binding.confControlGroup
         val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
-        Log.w(TAG, "DEBUG bottomsheet setter --> gridViewHeight: $gridViewHeight, dm.heightPixels: ${dm.heightPixels}, lp.matchConstraintMaxHeight: ${lp.matchConstraintMaxHeight}")
         lp.matchConstraintMaxHeight =
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) (dm.heightPixels - ( gridViewHeight + (100 * dm.density).toInt())) else ((dm.heightPixels-( gridViewHeight ) * 0.8).toInt())
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                dm.heightPixels - gridViewHeight - (100 * dm.density).toInt()
+            else (dm.heightPixels - gridViewHeight * 0.8).toInt()
         mConstrainLayout.layoutParams = lp
     }
 
@@ -727,27 +728,24 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun displayContactBubble(display: Boolean) {
         binding?.apply {
-            contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
+            contactBubbleLayout.isVisible = display
         }
     }
 
     override fun displayPeerVideo(display: Boolean) {
         Log.w(TAG, "displayPeerVideo -> $display")
-        binding!!.videoSurface.visibility = if (display) View.VISIBLE else View.GONE
+        binding!!.videoSurface.isVisible = display
         displayContactBubble(!display)
     }
 
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "displayLocalVideo -> $display")
-        if (isChoosePluginMode) {
-            binding!!.previewContainer.visibility = View.GONE
-            binding!!.pluginPreviewContainer.visibility = if (display) View.VISIBLE else View.GONE
-            binding!!.pluginPreviewSurface.visibility = if (display) View.VISIBLE else View.GONE
-            binding!!.pluginPreviewSurface.setZOrderMediaOverlay(true)
-        } else {
-            binding!!.pluginPreviewSurface.visibility = View.GONE
-            binding!!.pluginPreviewContainer.visibility = View.GONE
-            binding!!.previewContainer.visibility = if (display) View.VISIBLE else View.GONE
+        binding?.apply {
+            val pluginMode = isChoosePluginMode
+            previewContainer.isVisible = !pluginMode && display
+            pluginPreviewContainer.isVisible = pluginMode && display
+            pluginPreviewSurface.isVisible = pluginMode && display
+            if (pluginMode) pluginPreviewSurface.setZOrderMediaOverlay(true)
         }
     }
 
@@ -955,6 +953,7 @@ class CallFragment() : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callPluginsBtn.isClickable = showPluginBtn
             callRaiseHandBtn.isClickable = mConferenceMode
             callDialpadBtn.isClickable = canDial
+            dialpadBtnContainer.isVisible = canDial
 
             callVideocamBtn.apply {
                 isChecked = !hasActiveVideo
