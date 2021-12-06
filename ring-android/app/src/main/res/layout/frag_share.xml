@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/share_message"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textSize="16sp" />
 
     <com.google.android.material.button.MaterialButton

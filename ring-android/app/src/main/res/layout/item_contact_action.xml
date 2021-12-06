@@ -43,7 +43,7 @@
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAlignment="viewStart"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textSize="16sp"
         tools:text="Start Audio Call" />
 

@@ -31,7 +31,7 @@ along with this program; if not, write to the Free Software
         android:layout_marginEnd="16dp"
         android:layout_marginStart="72dp"
         android:gravity="center_vertical"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textSize="16sp"
         tools:text="H.264" />
 

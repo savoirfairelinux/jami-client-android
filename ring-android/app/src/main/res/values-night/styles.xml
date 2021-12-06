@@ -2,13 +2,13 @@
 
     <style name="AppTheme" parent="AppThemeBase">
         <item name="android:statusBarColor">@color/transparent</item>
+<!--
         <item name="android:navigationBarColor">@color/background</item>
+-->
     </style>
 
-    <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen" />
-
-    <style name="AppTheme.DarkToolbar" parent="AppThemeBase.DarkToolbar">
+ <!--   <style name="AppTheme.DarkToolbar" parent="AppThemeBase.DarkToolbar">
         <item name="android:navigationBarColor">@color/background</item>
-    </style>
+    </style>-->
 
 </resources>

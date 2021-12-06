@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/developed_by"
-            android:textColor="@color/textColorAccent"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
             android:layout_margin="@dimen/padding_small"/>
 
@@ -23,13 +23,13 @@
             android:text="@string/credits_developer"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_margin="@dimen/padding_small"
-            android:textColor="@color/textColorPrimary" />
+            android:textColor="@color/colorOnSurface" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ringtones_by"
-            android:textColor="@color/textColorAccent"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="18sp"
             android:layout_margin="@dimen/padding_small" />
 
@@ -39,7 +39,7 @@
             android:text="@string/credits_ringtones"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_margin="@dimen/padding_small"
-            android:textColor="@color/textColorPrimary" />
+            android:textColor="@color/colorOnSurface" />
 
 
     </LinearLayout>

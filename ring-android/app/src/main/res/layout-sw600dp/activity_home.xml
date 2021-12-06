@@ -10,7 +10,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/app_bar"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -61,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="middle"
                         android:singleLine="true"
-                        android:textColor="@color/textColorPrimary"
+                        android:textColor="@color/colorOnSurface"
                         android:textSize="16sp"
                         tools:text="@tools:sample/first_names" />
 

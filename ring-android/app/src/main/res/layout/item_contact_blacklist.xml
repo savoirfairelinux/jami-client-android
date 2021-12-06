@@ -29,7 +29,7 @@
         android:gravity="start"
         android:singleLine="true"
         android:textAlignment="viewStart"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="16sp"
         tools:text="display name" />

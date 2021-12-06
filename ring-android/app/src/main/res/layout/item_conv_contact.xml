@@ -60,7 +60,7 @@ along with this program; if not, write to the Free Software
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="false"
-            android:textColor="@color/textColorPrimary"
+            android:textColor="@color/colorOnSurface"
             android:textSize="14sp"
             tools:text="@string/hist_contact_added" />
 

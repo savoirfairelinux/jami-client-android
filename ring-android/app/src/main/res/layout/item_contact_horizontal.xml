@@ -49,7 +49,7 @@ along with this program; if not, write to the Free Software
         android:maxLines="1"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="14sp"
         tools:text="@tools:sample/full_names" />

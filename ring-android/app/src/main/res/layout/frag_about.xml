@@ -74,13 +74,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_gravity="start"
                 android:contentDescription="@string/version_section"
                 app:srcCompat="@drawable/ic_ring_logo_white"
-                android:tint="@color/colorPrimary"
+                app:tint="@color/colorPrimary"
                 android:layout_marginEnd="32dp"/>
 
             <TextView
                 android:id="@+id/version_title"
                 style="@style/ListPrimary"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
@@ -127,7 +127,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:text="@string/contribute_section"
                 style="@style/ListPrimary"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:layout_toEndOf="@id/contribute_image" />
 
             <TextView
@@ -163,7 +163,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:text="@string/copyright_section"
                 style="@style/ListPrimary"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:layout_toEndOf="@id/copyright_image" />
 
             <TextView
@@ -204,7 +204,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:text="@string/section_license"
                 style="@style/ListPrimary"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:layout_toEndOf="@id/license_image" />
 
             <TextView
@@ -245,7 +245,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:clickable="false"
                 android:text="@string/feedback_section"
                 style="@style/ListPrimary"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:layout_toEndOf="@id/feedback_image" />
 
             <TextView
@@ -272,7 +272,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sponsor_section"
-                android:textColor="@color/textColorAccent"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="15sp" />
 
             <ImageView

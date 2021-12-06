@@ -32,7 +32,7 @@
             android:background="@null"
             android:inputType="textMultiLine"
             android:singleLine="false"
-            android:textColor="@color/textColorPrimary"
+            android:textColor="@color/colorOnSurface"
             android:visibility="gone"
             tools:text="Test text message" />
 
