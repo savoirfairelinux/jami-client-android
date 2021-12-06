@@ -132,6 +132,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         interpolator = DecelerateInterpolator()
         addUpdateListener { a -> configurePreview(mPreviewSurfaceWidth, a.animatedFraction) }
     }
+    private var previewMargin: Float = 0f
     private val previewMargins = IntArray(4)
     private var previewHiddenState = 0f
 
@@ -161,6 +162,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        previewMargin = inflater.context.resources.getDimension(R.dimen.call_preview_margin)
         return (DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false) as FragCallBinding)
             .also { b ->
                 b.presenter = this
@@ -400,13 +402,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (mOrientationListener != null) {
-            mOrientationListener!!.disable()
-            mOrientationListener = null
-        }
+        mOrientationListener?.disable()
+        mOrientationListener = null
         mCompositeDisposable.clear()
-        if (mScreenWakeLock != null && mScreenWakeLock!!.isHeld) {
-            mScreenWakeLock!!.release()
+        mScreenWakeLock?.let {
+            if (it.isHeld)
+                it.release()
+            mScreenWakeLock = null
         }
         binding = null
     }
@@ -624,11 +626,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun configurePreview(width: Int, animatedFraction: Float) {
         Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
-
-        val context = context
-        if (context == null || binding == null) return
-        val margin = context.resources.getDimension(R.dimen.call_preview_margin)
-        val params = binding!!.previewContainer.layoutParams as RelativeLayout.LayoutParams
+        val binding = binding ?: return
+        val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
         val r = 1f - animatedFraction
         var hideMargin = 0f
         var targetHiddenState = 0f
@@ -638,15 +637,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             hideMargin = if (previewPosition == PreviewPosition.RIGHT) v else -v
         }
         setPreviewDragHiddenState(previewHiddenState * r + targetHiddenState * animatedFraction)
-        val f = margin * animatedFraction
+        val f = previewMargin * animatedFraction
         params.setMargins(
             (previewMargins[0] * r + f + hideMargin).toInt(),
             (previewMargins[1] * r + f).toInt(),
             (previewMargins[2] * r + f - hideMargin).toInt(),
             (previewMargins[3] * r + f).toInt()
         )
-        binding!!.previewContainer.layoutParams = params
-        binding!!.pluginPreviewContainer.layoutParams = params
+        binding.previewContainer.layoutParams = params
+        binding.pluginPreviewContainer.layoutParams = params
     }
 
     /**
@@ -663,7 +662,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
             mScreenWakeLock = powerManager.newWakeLock(
                 PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
-                "ring:callLock"
+                "jami:callLock"
             ).apply {
                 setReferenceCounted(false)
                 if (!isHeld)
@@ -750,21 +749,20 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayHangupButton(display: Boolean) {
-        var display = display
         Log.w(TAG, "displayHangupButton $display")
-        /* display = display and !isChoosePluginMode
-         binding?.apply { confControlGroup.visibility = when {
-                 mConferenceMode && display -> View.VISIBLE
-                 mConferenceMode -> View.INVISIBLE
-                 else -> View.GONE
-             }
-         }*/
+        /* binding?.apply { confControlGroup.visibility = when {
+            !mConferenceMode -> View.GONE
+            display && !isChoosePluginMode -> View.VISIBLE
+            else -> View.INVISIBLE
+        }} */
     }
 
     override fun displayDialPadKeyboard() {
-        binding!!.dialpadEditText.requestFocus()
-        val imm = binding!!.dialpadEditText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        val binding = binding ?: return
+        binding.dialpadEditText.requestFocus()
+        val imm = binding.dialpadEditText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.dialpadEditText, InputMethodManager.SHOW_FORCED)
+        //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     fun switchCamera() {
@@ -791,7 +789,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
         val binding = binding ?: return
         mConferenceMode = participantInfo.isNotEmpty()
-
 
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
@@ -974,68 +971,37 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private fun setBottomSheet(newInset: WindowInsetsCompat? = null) {
         val binding = binding ?: return
         val dm = resources.displayMetrics
-        val orientation = resources.configuration.orientation
+        val density = dm.density
+        val heightPixels = dm.heightPixels
         val gridViewHeight = binding.callParametersGrid.height
 
         val bsView = binding.callOptionsBottomSheet
         val bsHeight = binding.constraintBsContainer.height
         if (isInPIP || !bsView.isVisible) return
+        val land = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
         // define bottomsheet width based on screen orientation
         val bsViewParam = bsView.layoutParams
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) bsViewParam.width =
-            getBottomSheetMaxWidth() else bsViewParam.width = -1
+        bsViewParam.width = if (land) getBottomSheetMaxWidth(dm.widthPixels, density) else -1
         bsView.layoutParams = bsViewParam
 
         val inset = newInset ?: ViewCompat.getRootWindowInsets(requireView()) ?: return
-        val bottomInsets: Int = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
-        val topInsets: Int = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
+        val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
+        val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
 
-        var halfExpandedRatio = (gridViewHeight + bottomInsets + (5 * dm.density)) / dm.heightPixels
-        //(gridViewHeight.plus(bottomInsets + (5 * dm.density))).div(dm.heightPixels) // halfExpandedRatio = gridheight + bottomInsets + (recyclingview elements * displaydensity)
-
-        var desiredPeekHeight = (91 * dm.density) + bottomInsets
-        /*Defining value of the bottom inset based on the size of the navbar*/
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            /* if (no navbar || landscape mode == true) then we must adapt the elements (bottomInsets, peekHeightsPx, halExpandedRatio) to the new display value */
-            desiredPeekHeight =
-                (10 * dm.density) + (gridViewHeight / 2) //peekHeight = the height of the fist row of the buttons grid + margintop
-            halfExpandedRatio =
-                (gridViewHeight + (10 * dm.density)).div(dm.heightPixels) //halfExpandedRatio = height of the buttons grid + margin / total screen height
-        }
-        val fullyExpandedOffset: Int = if (dm.heightPixels <= bsHeight) (50 * dm.density).toInt() else (dm.heightPixels - bsHeight)
-        binding.callCoordinatorOptionContainer.updatePadding(bottom = if (orientation != 1) 0 else bottomInsets)
-        binding.callOptionsBottomSheet.updatePadding(bottom = if (orientation != 1) ((topInsets - 5) * dm.density).toInt() else (bottomInsets * dm.density).toInt())
+        val halfExpandedRatio = ((if (land) 10f else 5f) * density + gridViewHeight) / heightPixels
+        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2) else (91 * density) + bottomInsets
+        val fullyExpandedOffset = if (heightPixels <= bsHeight) (50 * density).toInt() else (heightPixels - bsHeight)
+        binding.callCoordinatorOptionContainer.updatePadding(bottom = if (land) 0 else bottomInsets)
+        binding.callOptionsBottomSheet.updatePadding(bottom = if (land) ((topInsets - 5) * density).toInt() else (bottomInsets * density).toInt())
 
         bottomSheetParams?.let { bs ->
             bs.expandedOffset =
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE) fullyExpandedOffset
+                if (land) fullyExpandedOffset
                 else fullyExpandedOffset + bottomInsets
             bs.halfExpandedRatio = if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
             bs.peekHeight = desiredPeekHeight.toInt()
             bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
-        }
-    }
-
-    /**
-     * getBottomSheetMaxWidth(): Int
-     *
-     * return the width value for the bottomSheet based on screen size, density and ratio
-     * */
-    private fun getBottomSheetMaxWidth(): Int {
-        val dm = requireContext().resources.displayMetrics
-        val maxWidth =
-            if (requireContext().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && dm.widthPixels >= dm.heightPixels) dm.widthPixels else dm.heightPixels
-        val gridMinWidth = 350 //width size in dp
-        val wRatio = (gridMinWidth
-                * dm.density).div(maxWidth)
-        return when {
-            wRatio < 0f -> -1
-            wRatio < 0.5f -> (((gridMinWidth * dm.density).toInt() * 1.25).toInt())
-            wRatio < 0.6f -> (((gridMinWidth * dm.density).toInt() * 1.20).toInt())
-            wRatio < 0.7f -> (((gridMinWidth * dm.density).toInt() * 1.15).toInt())
-            wRatio < 0.8f -> (((gridMinWidth * dm.density).toInt() * 1.10).toInt())
-            wRatio >= 1f -> -1
-            else -> -1
         }
     }
 
@@ -1067,8 +1033,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             .setListener(null)
                     }
                 }
-                setBottomSheet()
                 displayBottomSheet(true)
+                setBottomSheet()
             }
             BottomSheetAnimation.DOWN -> {
                 binding.callCoordinatorOptionContainer.apply {
@@ -1148,13 +1114,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val flip = rot % 180 != 0
         if (isChoosePluginMode) {
             binding?.pluginPreviewSurface?.setAspectRatio(
-                if (flip) mPreviewHeight else mPreviewWidth,
-                if (flip) mPreviewWidth else mPreviewHeight
+                if (flip) previewHeight else previewWidth,
+                if (flip) previewWidth else previewHeight
             )
         } else {
             binding?.previewSurface?.setAspectRatio(
-                if (flip) mPreviewHeight else mPreviewWidth,
-                if (flip) mPreviewWidth else mPreviewHeight
+                if (flip) previewHeight else previewWidth,
+                if (flip) previewWidth else previewHeight
             )
         }
     }
@@ -1631,6 +1597,25 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 CallStatus.OVER -> R.string.call_human_state_over
                 CallStatus.NONE -> R.string.call_human_state_none
                 else -> R.string.call_human_state_none
+            }
+        }
+
+        /**
+         * getBottomSheetMaxWidth(): Int
+         *
+         * return the width value for the bottomSheet based on screen size, density and ratio
+         * */
+        private fun getBottomSheetMaxWidth(width: Int, density: Float): Int {
+            val gridMinWidth = 350 * density //width size in dp
+            val wRatio = gridMinWidth / width
+            return when {
+                wRatio < 0f -> -1
+                wRatio < 0.5f -> (gridMinWidth * 1.25).toInt()
+                wRatio < 0.6f -> (gridMinWidth * 1.20).toInt()
+                wRatio < 0.7f -> (gridMinWidth * 1.15).toInt()
+                wRatio < 0.8f -> (gridMinWidth * 1.10).toInt()
+                wRatio >= 1f -> -1
+                else -> -1
             }
         }
     }
