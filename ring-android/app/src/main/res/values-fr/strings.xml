@@ -323,6 +323,7 @@
   <string name="wizard_profile_skip">Passer cette étape et faire cela ultérieurement</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>
   <string name="chat_plugins">Modules d\'extension de discussion</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partager</string>
   <string name="bottomSheet_dialpad_btn">Clavier numérique</string>
   <string name="bottomSheet_plugins_btn">Modules d\'extension</string>
@@ -332,4 +333,5 @@
   <string name="bottomSheet_hangup_btn">Terminer l\'appel</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
+  <string name="bottomSheet_raiseHand_btn">Lever la main</string>
 </resources>

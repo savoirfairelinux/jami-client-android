@@ -286,6 +286,7 @@
   <string name="tv_send_audio">Bidali audioa</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Sortu kontua</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partekatu</string>
   <string name="bottomSheet_add_participants_btn">Gehitu</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>

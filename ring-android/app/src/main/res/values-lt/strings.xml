@@ -230,6 +230,7 @@
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojamas</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>

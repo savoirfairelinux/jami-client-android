@@ -317,6 +317,7 @@
   <string name="wizard_profile_skip">تخطي وعمل ذلك فيما بعد</string>
   <string name="fab_path_choose">اختر وثيقة أخرى</string>
   <string name="chat_plugins">إضافات الدردشة</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">مشاركة</string>
   <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
   <string name="bottomSheet_plugins_btn">الإضافات</string>

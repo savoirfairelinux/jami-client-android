@@ -325,6 +325,7 @@
   <string name="wizard_profile_skip">Пропустить и сделать позже</string>
   <string name="fab_path_choose">Выбрать другой файл</string>
   <string name="chat_plugins">Плагины для чата</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поделиться</string>
   <string name="bottomSheet_plugins_btn">Плагины</string>
   <string name="bottomSheet_add_participants_btn">Добавить</string>

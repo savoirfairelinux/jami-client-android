@@ -15,14 +15,16 @@
   <string name="license">Ta programska oprema je na voljo \"kakršna je\", brez kakršnihkoli garancij. Za podrobnosti glej <u>GNU Splošna javna licenca različice 3 ali novejša</u></string>
   <string name="description">Jami je brezplačen program za univerzalno komunikacijo, ki spoštuje svobodo in zasebnost svojih uporabnikov.</string>
   <string name="credits">Zasluge</string>
+  <string name="pip_title">Konferenca Jami</string>
   <string name="call_service_description">Ta storitev je nujna za delovanje vaših klicev v ospredju. Deluje le med klici.</string>
   <string name="data_transfer_service_description">Ta storitev je nujna za prikaz obstojnih sporočil med prenosom datotek. Deluje le med prenašanjem datotek.</string>
   <!--About dialog-->
   <string name="developed_by">Razvoj</string>
   <string name="designed_by">Oblikovanje</string>
-  <string name="ringtones_by">Zvojnjenja </string>
+  <string name="ringtones_by">Zvonenja </string>
   <!--RingActivity-->
   <string name="error_no_network">Ni omrežne povezave</string>
+  <string name="error_account_offline">Račun ni povezan</string>
   <string name="error_mobile_network_available_but_disabled">Dovolite dostop do mobilnega omrežja v nastavitvah.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstovno sporočanje</string>
@@ -33,7 +35,7 @@
   <string name="menu_item_settings">Nastavitve</string>
   <string name="menu_item_plugin_list">Nastavitve vtičnikov</string>
   <string name="menu_item_share">Deli moj račun</string>
-  <string name="menu_item_about">O Jami</string>
+  <string name="menu_item_about">O programu Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kliči številko</string>
   <!--History Fragment-->
@@ -99,6 +101,10 @@
   <string name="start_error_title">Ne morem zagnati Jami-ja!</string>
   <string name="start_error_mic_required">Jami za delovanje potrebuje dovoljenje za uporabo mikrofona.</string>
   <string name="action_call_accept">Prevzemi klic</string>
+  <string name="action_call_accept_audio">Odgovori z zvokom</string>
+  <string name="action_call_accept_video">Odgovori z videom</string>
+  <string name="action_call_hold_accept">Zadrži in prevzemi zvočni klic</string>
+  <string name="action_call_hold_accept_video">Zadrži in prevzemi videoklic</string>
   <string name="action_call_end_accept">Končaj in prevzemi klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="action_call_mic_mute">Izključi mikrofon</string>
@@ -106,15 +112,18 @@
   <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Dodam med stike?</string>
+  <string name="hist_contact_invited">Stik povabljen</string>
   <string name="hist_contact_added">Stik je dodan</string>
+  <string name="hist_contact_left">Stik je odšel</string>
+  <string name="hist_contact_banned">Stik prepovedan</string>
   <string name="hist_invitation_received">Povabilo je sprejeto</string>
   <string name="ab_action_audio_call">Zvočni klic</string>
   <string name="ab_action_video_call">Video klic</string>
   <string name="ab_action_change_screen_orientation">Zammenjaj orientacijo zaslona</string>
   <string name="share_via">Deli preko</string>
   <string name="write_a_message">Napiši sporočilo</string>
-  <string name="scan_qr">Preberi QR kodo</string>
-  <string name="qr_code">QR koda</string>
+  <string name="scan_qr">Preberi QR-kodo</string>
+  <string name="qr_code">QR-koda</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
   <!--Text messages-->
@@ -175,6 +184,11 @@
   <string name="block_contact_dialog_message">%1$s vas ne bo mogel kontaktirati, dokler ga ne odblokirate.</string>
   <string name="block_contact_completed">%1$s je blokiran(a).</string>
   <string name="conversation_contact_is_typing">Stik piše...</string>
+  <string name="conversation_info_contact_you">Vi</string>
+  <string name="conversation_members">Člani</string>
+  <string name="conversation_preference_color">Barva pogovora</string>
+  <string name="conversation_preference_emoji">Emoji pogovora</string>
+  <string name="conversation_type_contact">Stik Jami</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>
@@ -217,6 +231,7 @@
   <string name="refuse">Zavrni</string>
   <string name="block">Blokiraj</string>
   <string name="contact_request_title">Zahteva za nov stik</string>
+  <string name="contact_request_msg">Imate%1$d zahtev za stik</string>
   <string name="contact_request_account">Za %1$s</string>
   <string name="no_requests">Ni zahtev za stik</string>
   <string name="message_contact_not_trusted_yet">%s se še ne nahaja v vaših stikih.\nAli sprejmate ali zavračate zahtevo za stik?</string>
@@ -255,6 +270,7 @@
   <string name="file_transfer_status_timed_out">poteklo</string>
   <string name="file_saved_in">Datoteka je shranjena v %s</string>
   <string name="file_saved_successfully">Datoteka je bila uspešno shranjena</string>
+  <string name="file_download">Prenesi</string>
   <string name="no_space_left_on_device">Na napravi ni prostora</string>
   <string name="title_media_viewer">Prikazovalnik vsebin</string>
   <string name="menu_file_open">Odpri datoteko</string>
@@ -285,6 +301,7 @@
   <string name="tv_send_text">Pošiljam besedilo</string>
   <string name="tv_send_audio">Pošiljam zvok</string>
   <string name="tv_send_video">Pošiljam medij</string>
+  <string name="tv_action_more">Dodatno</string>
   <string name="conversation_input_speech_hint">Recite nekaj...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Priporočeno</string>
@@ -303,8 +320,16 @@
   <string name="wizard_profile_button">Shrani profil</string>
   <string name="wizard_profile_skip">Preskoči in to naredi kasneje</string>
   <string name="fab_path_choose">Izberite še eno datoteko</string>
+  <string name="chat_plugins">Vstavki za klepet</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Deli</string>
+  <string name="bottomSheet_dialpad_btn">Številčnica</string>
   <string name="bottomSheet_plugins_btn">Vtičniki</string>
   <string name="bottomSheet_add_participants_btn">Dodaj</string>
   <string name="bottomSheet_change_camera_btn">remeni</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Končaj klic</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Zvoki</string>
+  <string name="bottomSheet_raiseHand_btn">Dvignite roko</string>
 </resources>

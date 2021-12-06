@@ -86,5 +86,6 @@
   <!--TV-->
   <string name="tv_dialog_send">שליחה</string>
   <!--Wizard-->
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
 </resources>

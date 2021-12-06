@@ -299,6 +299,7 @@
   <string name="wizard_profile_button">Gem profil</string>
   <string name="wizard_profile_skip">Springer over og gør det senere</string>
   <string name="fab_path_choose">Vælg en anden fil</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Del</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
 </resources>

@@ -36,6 +36,7 @@
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
+  <!--Bottom sheet-->
   <string name="bottomSheet_dialpad_btn">Yığım klaviaturası</string>
   <string name="bottomSheet_hangup_btn">Zəngi bitir</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>

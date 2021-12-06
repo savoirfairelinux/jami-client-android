@@ -294,5 +294,6 @@
   <string name="wizard_profile_button">ਪ੍ਰੋਫ਼ਾਈਲ ਸਾਂਭੋ</string>
   <string name="wizard_profile_skip">ਛੱਡੋ ਅਤੇ ਇਹ ਬਾਅਦ \'ਚ ਕਰੋ</string>
   <string name="fab_path_choose">ਕੋਈ ਹੋਰ ਫ਼ਾਈਲ ਚੁਣੋ</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ਸਾਂਝਾ ਕਰੋ</string>
 </resources>

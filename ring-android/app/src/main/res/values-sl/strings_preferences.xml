@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Zasebnost</string>
+  <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_mobileData_title">Mobilni podatki</string>
   <string name="pref_mobileData_summary">Dovoli da Jami poleg Wifi uporablja tudi 3G/LTE omrežja</string>
   <string name="pref_pushNotifications_title">Potisna sporočila</string>
@@ -26,12 +27,20 @@
   <string name="pref_startOnBoot_summary">Ob zagonu sistema zaženi Jami v ozadju.</string>
   <string name="pref_clearHistory_title">Počisti zgodovino</string>
   <string name="pref_clearHistory_summary">Izbriše vso zgodovino pogovorov. Tega dejanja ni mogoče razveljaviti.</string>
+  <string name="pref_notification_title">Vidnost obvestil</string>
+  <string name="pref_notification_summary">Določite vidnost sporočil programa na zaklenjenem zaslonu.</string>
   <string name="pref_blackList_title">Seznam blokiranih</string>
   <string name="pref_blackList_summary">Preverite svoj seznam blokiranih</string>
   <string name="pref_delete_account_title">Izbriši račun</string>
   <string name="pref_delete_account_summary">Izbrišite svoj račun s te naprave</string>
   <string name="pref_persistNotification_title">Zagon v ozadju</string>
   <string name="pref_persistNotification_summary">Dovoli izvajanje v ozadju za sprejemanje klicev in sporočil.</string>
+  <string name="pref_logs_start">Začni beležiti</string>
+  <string name="pref_logs_stop">Prenehaj beležiti</string>
+  <string name="pref_typing_title">Omogoči pokazatelja tipkanja</string>
+  <string name="pref_block_record_title">Blokiraj zajem slik in snemanje</string>
+  <string name="pref_block_record_summary">Blokirajte zajem slike ali snemanje videoposnetkov.</string>
+  <string name="pref_link_preview_title">Pokaži predogled povezav v pogovorih</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Vtičniki</string>

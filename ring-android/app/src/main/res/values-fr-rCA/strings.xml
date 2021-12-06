@@ -157,6 +157,8 @@
   <string name="tv_dialog_send">Envoyer</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Créer un compte</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partage</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Caméra</string>
+  <string name="bottomSheet_raiseHand_btn">Lever la main</string>
 </resources>

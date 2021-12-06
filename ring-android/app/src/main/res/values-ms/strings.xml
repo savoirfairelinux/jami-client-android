@@ -106,4 +106,5 @@
   <string name="tv_audio_play">Main</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Cipta akaun</string>
+  <!--Bottom sheet-->
 </resources>

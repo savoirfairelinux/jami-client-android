@@ -323,6 +323,7 @@
   <string name="wizard_profile_skip">Überspringen und später durchführen</string>
   <string name="fab_path_choose">Andere Datei auswählen</string>
   <string name="chat_plugins">Chat-Plugins</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Teilen</string>
   <string name="bottomSheet_dialpad_btn">Wähltasten</string>
   <string name="bottomSheet_plugins_btn">Plugins</string>
@@ -332,4 +333,5 @@
   <string name="bottomSheet_hangup_btn">Anruf beenden</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Töne</string>
+  <string name="bottomSheet_raiseHand_btn">Ihre Hand heben</string>
 </resources>

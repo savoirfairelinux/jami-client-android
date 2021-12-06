@@ -292,6 +292,7 @@
   <string name="wizard_password_switch">Зашифровать аккаунт с помощью пароля</string>
   <string name="wizard_password_warning">Учтите, что пароль не может быть восстановлен</string>
   <string name="wizard_profile_button">Сохранить профиль</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поделится</string>
   <string name="bottomSheet_plugins_btn">Плагины</string>
 </resources>

@@ -322,6 +322,7 @@
   <string name="wizard_profile_skip">略過並在稍後執行此動作</string>
   <string name="fab_path_choose">選擇其他檔案</string>
   <string name="chat_plugins">聊天外掛程式</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">分享</string>
   <string name="bottomSheet_dialpad_btn">撥號鍵盤</string>
   <string name="bottomSheet_plugins_btn">外掛程式</string>
@@ -331,4 +332,5 @@
   <string name="bottomSheet_hangup_btn">結束通話</string>
   <string name="bottomSheet_mute_microphone_btn">微</string>
   <string name="bottomSheet_sound_output_btn">聲音</string>
+  <string name="bottomSheet_raiseHand_btn">舉手</string>
 </resources>

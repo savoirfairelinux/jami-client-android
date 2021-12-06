@@ -309,9 +309,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_profile_skip">Pular e fazer depois</string>
   <string name="fab_path_choose">Escolha outro arquivo</string>
   <string name="chat_plugins">Plugins de bate-papo</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartilhar</string>
   <string name="bottomSheet_plugins_btn">Complementos</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
   <string name="bottomSheet_change_camera_btn">Mudar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmera</string>
+  <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
 </resources>

@@ -301,9 +301,11 @@
   <string name="wizard_profile_button">Uložit profil</string>
   <string name="wizard_profile_skip">Odložit na později</string>
   <string name="fab_path_choose">Vybrat jiný soubor</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Sdílet</string>
   <string name="bottomSheet_plugins_btn">Zásuvné moduly</string>
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
 </resources>

@@ -37,8 +37,10 @@
   <!--TV-->
   <string name="tv_audio_play">Mängi</string>
   <!--Wizard-->
+  <!--Bottom sheet-->
   <string name="bottomSheet_dialpad_btn">Valimisklahvistik</string>
   <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
+  <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
 </resources>

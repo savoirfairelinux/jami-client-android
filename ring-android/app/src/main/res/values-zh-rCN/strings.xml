@@ -308,9 +308,11 @@
   <string name="wizard_profile_skip">跳过此步骤稍后进行</string>
   <string name="fab_path_choose">选择另一个文件</string>
   <string name="chat_plugins">聊天插件</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共享</string>
   <string name="bottomSheet_plugins_btn">插件</string>
   <string name="bottomSheet_add_participants_btn">添加</string>
   <string name="bottomSheet_change_camera_btn">更改</string>
   <string name="bottomSheet_camera_onoff_switch_btn">摄像头</string>
+  <string name="bottomSheet_raiseHand_btn">举手</string>
 </resources>

@@ -323,6 +323,7 @@
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
   <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
   <string name="chat_plugins">Shtojca Fjalosjeje</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ndajeni me të tjerë</string>
   <string name="bottomSheet_plugins_btn">Shtojca</string>
   <string name="bottomSheet_add_participants_btn">Shtoje</string>
@@ -331,4 +332,5 @@
   <string name="bottomSheet_hangup_btn">Përfundoje Thirrjen</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
+  <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
 </resources>

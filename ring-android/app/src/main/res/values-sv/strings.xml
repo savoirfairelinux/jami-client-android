@@ -241,9 +241,11 @@
   <string name="wizard_username_info">Välj användarnamn för ditt konto</string>
   <string name="wizard_password_skip">Skapa konto</string>
   <string name="wizard_password_switch">Kryptera kontot med lösenord</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Dela</string>
   <string name="bottomSheet_plugins_btn">Insticksmoduler</string>
   <string name="bottomSheet_add_participants_btn">Lägg till</string>
   <string name="bottomSheet_change_camera_btn">Ändra</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
 </resources>

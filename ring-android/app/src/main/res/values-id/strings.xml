@@ -289,6 +289,7 @@
   <string name="wizard_profile_skip">Nanti saja</string>
   <string name="fab_path_choose">Pilih berkas lain</string>
   <string name="chat_plugins">Pengaya chat</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bagikan</string>
   <string name="bottomSheet_plugins_btn">Plugin</string>
 </resources>

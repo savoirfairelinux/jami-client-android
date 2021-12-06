@@ -126,6 +126,8 @@
   <string name="wizard_password_skip">Créer un compte</string>
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partager</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Caméra</string>
+  <string name="bottomSheet_raiseHand_btn">Lever la main</string>
 </resources>

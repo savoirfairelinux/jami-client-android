@@ -87,6 +87,7 @@
   <string name="tv_send_video">Enviar un mèdia</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Crear compte</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_plugins_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Ajustar</string>
 </resources>

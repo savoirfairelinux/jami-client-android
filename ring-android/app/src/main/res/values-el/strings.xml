@@ -214,6 +214,8 @@
   <string name="wizard_profile_info">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="wizard_profile_button">Αποθήκευση προφίλ</string>
   <string name="fab_path_choose">Επιλογή άλλου αρχείου</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
+  <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
 </resources>

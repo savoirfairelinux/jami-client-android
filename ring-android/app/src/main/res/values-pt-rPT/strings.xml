@@ -266,6 +266,7 @@
   <string name="tv_send_video">Enviar media</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Criar conta</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partilhar</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmara</string>

@@ -40,4 +40,6 @@
   <!--TV-->
   <string name="tv_audio_play">Reproducir</string>
   <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
 </resources>

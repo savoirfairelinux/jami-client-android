@@ -324,6 +324,7 @@
   <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
   <string name="fab_path_choose">Alege alt fișier</string>
   <string name="chat_plugins">Extensii pentru Discuții</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Distribuie</string>
   <string name="bottomSheet_dialpad_btn">Tastatura</string>
   <string name="bottomSheet_plugins_btn">Extensii</string>
@@ -333,4 +334,5 @@
   <string name="bottomSheet_hangup_btn">Închide apelul</string>
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
+  <string name="bottomSheet_raiseHand_btn">Ridică mîna</string>
 </resources>

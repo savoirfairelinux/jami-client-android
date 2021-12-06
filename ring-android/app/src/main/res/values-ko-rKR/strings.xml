@@ -47,4 +47,6 @@
   <string name="tv_audio_play">재생</string>
   <string name="tv_audio_pause">멈춤</string>
   <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_raiseHand_btn">손 들기</string>
 </resources>

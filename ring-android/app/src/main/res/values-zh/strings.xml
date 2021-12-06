@@ -54,6 +54,7 @@
   <string name="tv_audio_pause">暫停</string>
   <string name="tv_dialog_send">發送</string>
   <!--Wizard-->
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">分享</string>
   <string name="bottomSheet_camera_onoff_switch_btn">相機</string>
 </resources>

@@ -37,4 +37,6 @@
   <string name="navigation_item_conversation">Vestlused</string>
   <!--TV-->
   <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
 </resources>

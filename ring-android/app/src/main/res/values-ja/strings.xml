@@ -313,8 +313,10 @@
   <string name="wizard_profile_skip">スキップして後で行う</string>
   <string name="fab_path_choose">他のファイルを選択</string>
   <string name="chat_plugins">チャットの追加機能</string>
+  <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共有</string>
   <string name="bottomSheet_plugins_btn">拡張機能</string>
   <string name="bottomSheet_add_participants_btn">追加</string>
   <string name="bottomSheet_camera_onoff_switch_btn">カメラ</string>
+  <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
 </resources>
