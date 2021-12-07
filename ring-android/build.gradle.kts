@@ -6,7 +6,7 @@ buildscript {
     }
 
     val kotlin_version by extra { "1.6.0" }
-    val hilt_version by extra { "2.40.3" }
+    val hilt_version by extra { "2.40.4" }
 
     dependencies {
         classpath ("com.android.tools.build:gradle:7.0.3")
