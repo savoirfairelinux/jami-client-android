@@ -95,11 +95,11 @@ class AvatarDrawable : Drawable {
         }
         fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true): AvatarDrawable {
             return Builder()
-                        .withPhoto(profile.avatar as Bitmap?)
-                        .withNameData(profile.displayName, account.registeredName)
-                        .withId(account.uri)
-                        .withCircleCrop(crop)
-                        .build(context)
+                .withPhoto(profile.avatar as Bitmap?)
+                .withNameData(profile.displayName, account.registeredName)
+                .withId(account.uri)
+                .withCircleCrop(crop)
+                .build(context)
         }
 
         private fun getSubBounds(bounds: Rect, total: Int, i: Int): Rect? {

@@ -121,9 +121,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         if (position == super.getCount()) {
             return TYPE_CREATE_JAMI
         }
-        return if (position == super.getCount() + 1) {
-            TYPE_CREATE_SIP
-        } else TYPE_ACCOUNT
+        return if (position == super.getCount() + 1) TYPE_CREATE_SIP else TYPE_ACCOUNT
     }
 
     override fun getCount(): Int {
