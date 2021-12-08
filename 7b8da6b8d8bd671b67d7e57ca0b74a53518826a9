@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66ef8ee6_b33516c3",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-08T16:53:15Z",
+      "side": 1,
+      "message": "The call might not be using the current account. Use the account from the call instead.",
+      "range": {
+        "startLine": 624,
+        "startChar": 67,
+        "endLine": 624,
+        "endChar": 110
+      },
+      "revId": "7b8da6b8d8bd671b67d7e57ca0b74a53518826a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
