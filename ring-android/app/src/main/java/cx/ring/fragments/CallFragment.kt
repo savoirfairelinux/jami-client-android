@@ -973,6 +973,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val dm = resources.displayMetrics
         val density = dm.density
         val heightPixels = dm.heightPixels
+        val screenHeight = binding.callCoordinatorOptionContainer.height
         val gridViewHeight = binding.callParametersGrid.height
 
         val bsView = binding.callOptionsBottomSheet
@@ -989,16 +990,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
         val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
 
-        val halfExpandedRatio = ((if (land) 10f else 5f) * density + gridViewHeight) / heightPixels
-        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2) else (91 * density) + bottomInsets
-        val fullyExpandedOffset = if (heightPixels <= bsHeight) (50 * density).toInt() else (heightPixels - bsHeight)
+        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2) else (10f * density) + (gridViewHeight / 2) + bottomInsets
+        val halfExpandedRatio = ((10f * density) + gridViewHeight + bottomInsets) / screenHeight
+        val fullyExpandedOffset = if (heightPixels <= bsHeight) (50 * density).toInt() else (screenHeight - (bsHeight + bottomInsets ))
+
         binding.callCoordinatorOptionContainer.updatePadding(bottom = if (land) 0 else bottomInsets)
         binding.callOptionsBottomSheet.updatePadding(bottom = if (land) ((topInsets - 5) * density).toInt() else (bottomInsets * density).toInt())
 
         bottomSheetParams?.let { bs ->
-            bs.expandedOffset =
-                if (land) fullyExpandedOffset
-                else fullyExpandedOffset + bottomInsets
+            bs.expandedOffset = fullyExpandedOffset
             bs.halfExpandedRatio = if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
             bs.peekHeight = desiredPeekHeight.toInt()
             bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
