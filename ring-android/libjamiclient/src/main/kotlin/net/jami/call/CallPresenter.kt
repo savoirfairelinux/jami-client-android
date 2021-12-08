@@ -621,7 +621,7 @@ class CallPresenter @Inject constructor(
 
     fun raiseParticipantHand(state: Boolean){
         val call = mConference ?: return
-        mCallService.raiseParticipantHand(call.accountId, call.id, call.call?.contact?.primaryNumber ?: "", state)
+        mCallService.raiseParticipantHand(call.accountId, call.id, (mAccountService.currentAccount?.uri ?: ""), state)
     }
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
