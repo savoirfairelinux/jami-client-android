@@ -22,6 +22,30 @@
       },
       "revId": "7b8da6b8d8bd671b67d7e57ca0b74a53518826a9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e270c126_12430189",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-08T18:16:26Z",
+      "side": 1,
+      "message": "mAccountService.getAccount(call.accountId)?.uri!!",
+      "parentUuid": "66ef8ee6_b33516c3",
+      "range": {
+        "startLine": 624,
+        "startChar": 67,
+        "endLine": 624,
+        "endChar": 110
+      },
+      "revId": "7b8da6b8d8bd671b67d7e57ca0b74a53518826a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
