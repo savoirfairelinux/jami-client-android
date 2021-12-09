@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ccfe8d4_b5bbab80",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountSpinnerAdapter.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-09T19:27:39Z",
+      "side": 1,
+      "message": "fallback to account.alias, then to context.getString(R.string.ring_account)\n\ndisplayName -\u003e registeredName -\u003e alias -\u003e getString",
+      "range": {
+        "startLine": 60,
+        "startChar": 134,
+        "endLine": 60,
+        "endChar": 174
+      },
+      "revId": "733ed672927c7814ef7cba70ae7d2b8e0a334529",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
