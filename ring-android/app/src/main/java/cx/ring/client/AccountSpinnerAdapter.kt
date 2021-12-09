@@ -30,15 +30,25 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import android.widget.RelativeLayout
 import cx.ring.databinding.ItemToolbarSelectedBinding
 import cx.ring.databinding.ItemToolbarSpinnerBinding
-import cx.ring.services.VCardServiceImpl
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.model.Profile
+import net.jami.services.AccountService
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable) :
+class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable, var mAccountService: AccountService) :
     ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
+
+    private fun getTitle(account: Account, profile: Profile): String {
+        return profile.displayName.orEmpty().ifEmpty {
+            account.registeredName.ifEmpty {
+                account.alias.orEmpty().ifEmpty {
+                    context.getString(R.string.ring_account)
+                }
+            }
+        }
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -54,12 +64,11 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         }
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
-            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+            holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ profile ->
-                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
-                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
+                    holder.binding.logo.setImageDrawable(AvatarDrawable.build(holder.binding.root.context, profile.first, profile.second, true, profile.first.isRegistered))
+                    holder.binding.title.text = getTitle(profile.first, profile.second)
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         }
         return view
@@ -88,14 +97,13 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
             logoParam.width = logoSize
             logoParam.height = logoSize
             holder.binding.logo.layoutParams = logoParam
-            holder.loader.add(VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> Profile(profile.displayName ?: account.alias, AvatarDrawable.build(context, account, profile)) }
+            holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ profile ->
                     val subtitle = getUri(account, ip2ipString)
-                    holder.binding.logo.setImageDrawable(profile.avatar as AvatarDrawable)
-                    holder.binding.title.text = profile.displayName?.ifEmpty { context.getString(R.string.ring_account) }
-                    if (profile.displayName == subtitle) {
+                    holder.binding.logo.setImageDrawable(AvatarDrawable.build(holder.binding.root.context, profile.first, profile.second, true, profile.first.isRegistered))
+                    holder.binding.title.text = getTitle(profile.first, profile.second)
+                    if (holder.binding.title.text == subtitle) {
                         holder.binding.subtitle.visibility = View.GONE
                     } else {
                         holder.binding.subtitle.visibility = View.VISIBLE
