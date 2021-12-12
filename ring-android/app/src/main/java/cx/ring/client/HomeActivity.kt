@@ -318,7 +318,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             mBinding!!.spinnerToolbar.setSelection(0)
                         }
                     } ?: run {
-                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService).apply {
+                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
                             mAccountAdapter = this
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this

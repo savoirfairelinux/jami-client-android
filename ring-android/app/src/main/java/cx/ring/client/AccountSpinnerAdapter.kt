@@ -18,24 +18,30 @@
  */
 package cx.ring.client
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import android.widget.ArrayAdapter
-import cx.ring.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cx.ring.views.AvatarDrawable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import cx.ring.R
 import cx.ring.databinding.ItemToolbarSelectedBinding
 import cx.ring.databinding.ItemToolbarSpinnerBinding
+import cx.ring.views.AvatarDrawable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
+import net.jami.services.ConversationFacade
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable, var mAccountService: AccountService) :
+
+class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable,
+                            var mAccountService: AccountService, var mConversationFacade: ConversationFacade) :
     ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
@@ -73,6 +79,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         return view
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val type = getItemViewType(position)
         val holder: ViewHolder
@@ -109,6 +116,21 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
                         holder.binding.subtitle.text = subtitle
                     }
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+            holder.loader.add(mConversationFacade.getAccountSubject(account.accountId)
+                .flatMapObservable { acc -> acc.unreadConversations }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { count ->
+                    val mBadgeDrawable = BadgeDrawable.create(context).apply {
+                        number = count
+                        isVisible = count != 0
+                        badgeGravity = BadgeDrawable.BOTTOM_START
+                    }
+                    if (count == 0) {
+                        BadgeUtils.detachBadgeDrawable(mBadgeDrawable, holder.binding.badgeAnchor)
+                    } else {
+                        BadgeUtils.attachBadgeDrawable(mBadgeDrawable, holder.binding.badgeAnchor)
+                    }
+                })
         } else {
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)
