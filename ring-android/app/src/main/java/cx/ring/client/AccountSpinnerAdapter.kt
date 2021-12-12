@@ -34,8 +34,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
+import net.jami.services.ConversationFacade
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable, var mAccountService: AccountService) :
+class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable,
+                            var mAccountService: AccountService, var mConversationFacade: ConversationFacade) :
     ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
@@ -110,6 +112,17 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
                         holder.binding.subtitle.text = subtitle
                     }
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
+            holder.loader.add(mConversationFacade.getAccountSubject(account.accountId)
+                .flatMapObservable { acc -> acc.unreadConversations }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { count ->
+                    if (count == 0)
+                        holder.binding.unreadBadge.visibility = View.GONE
+                    else {
+                        holder.binding.unreadBadge.visibility = View.VISIBLE
+                        holder.binding.unreadBadge.text = count.toString()
+                    }
+                })
         } else {
             holder.binding.title.setText(
                 if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)

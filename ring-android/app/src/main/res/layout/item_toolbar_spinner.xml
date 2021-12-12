@@ -12,34 +12,47 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         tools:src="@drawable/baseline_account_circle_white_36"
-        tools:tint="@color/black"/>
+        tools:tint="@color/black" />
+
+    <cx.ring.views.BadgeView
+        android:id="@+id/unread_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:textSize="11sp"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:maxLines="1"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/logo"
         android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/colorOnSurface"
         android:textSize="16sp"
-        android:layout_marginStart="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/logo"
-        tools:text="Account Name"/>
+        tools:text="Account Name" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:maxLines="1"
+        android:layout_below="@+id/title"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/logo"
         android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/darker_gray"
         android:textSize="14sp"
-        android:layout_marginStart="16dp"
-        android:layout_below="@+id/title"
-        android:layout_toEndOf="@+id/logo"
-        tools:text="accounturi"/>
+        tools:text="accounturi" />
 
 </RelativeLayout>
