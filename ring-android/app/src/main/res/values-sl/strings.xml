@@ -126,6 +126,7 @@
   <string name="qr_code">QR-koda</string>
   <string name="ab_action_flipcamera">Zrcali kamero</string>
   <string name="ab_action_hidepreview">Skrij predogled</string>
+  <string name="remote_recording">%s snema …</string>
   <!--Text messages-->
   <string name="send_message">Pošlji sporočilo</string>
   <string name="message_sending">Pošiljanje sporočila...</string>

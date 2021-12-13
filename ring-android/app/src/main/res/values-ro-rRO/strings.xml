@@ -138,7 +138,7 @@
   <string name="conversation_send_video">Trimite mesaj video</string>
   <string name="conversation_share_location">Trimite poziția</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Permisiune pentru fotocameră</string>
+  <string name="permission_dialog_camera_title">Acces la fotocameră</string>
   <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la fotocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Eroare</string>

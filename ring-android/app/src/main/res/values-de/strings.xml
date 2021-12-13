@@ -333,5 +333,5 @@
   <string name="bottomSheet_hangup_btn">Anruf beenden</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Töne</string>
-  <string name="bottomSheet_raiseHand_btn">Ihre Hand heben</string>
+  <string name="bottomSheet_raiseHand_btn">Hand heben</string>
 </resources>

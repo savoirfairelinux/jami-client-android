@@ -325,4 +325,5 @@
   <string name="bottomSheet_hangup_btn">إنهاء المكالمة</string>
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
+  <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
 </resources>

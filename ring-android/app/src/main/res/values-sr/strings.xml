@@ -306,4 +306,5 @@
   <string name="chat_plugins">Dodatak za ćaskanje</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podeli</string>
+  <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
 </resources>

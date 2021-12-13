@@ -38,10 +38,15 @@
   <string name="pref_logs_start">Začni beležiti</string>
   <string name="pref_logs_stop">Prenehaj beležiti</string>
   <string name="pref_typing_title">Omogoči pokazatelja tipkanja</string>
+  <string name="pref_read_title">Omogoči potrditev branja</string>
+  <string name="pref_read_summary">Pošilja in prejema obvestila, da je bilo sporočilo prikazano.</string>
   <string name="pref_block_record_title">Blokiraj zajem slik in snemanje</string>
   <string name="pref_block_record_summary">Blokirajte zajem slike ali snemanje videoposnetkov.</string>
   <string name="pref_link_preview_title">Pokaži predogled povezav v pogovorih</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Javno \n(pokaži obvestila in njihovo vsebino na zaklenjenem zaslonu)\n</string>
+  <string name="notification_private">Zasebno \n(pokaži obvestila, vendar skrij njihovo vsebino na zaklenjenem zaslonu)\n</string>
+  <string name="notification_secret">Skrivno \n(ne pokaži obvestil na zaklenjenem zaslonu)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Vtičniki</string>
   <string name="pref_plugins_summary">Vklopite vtičnike in določite njihove parametre</string>

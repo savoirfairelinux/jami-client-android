@@ -270,4 +270,5 @@
   <string name="bottomSheet_share_btn">Partilhar</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmara</string>
+  <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
 </resources>

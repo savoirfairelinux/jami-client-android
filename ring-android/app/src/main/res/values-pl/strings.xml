@@ -308,4 +308,5 @@
   <string name="bottomSheet_add_participants_btn">Dodaj</string>
   <string name="bottomSheet_change_camera_btn">Zmień</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
 </resources>

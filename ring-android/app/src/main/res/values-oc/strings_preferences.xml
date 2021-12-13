@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Ret</string>
+  <string name="pref_category_contacts">Contactes</string>
   <string name="pref_category_video">Vidèo</string>
   <string name="pref_category_system">Sistèma</string>
   <string name="pref_clearHistory_title">Escafar l’istoric</string>

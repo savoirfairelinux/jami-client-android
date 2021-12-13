@@ -19,6 +19,10 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d conversacion</item>
+    <item quantity="other">%d conversacions</item>
+  </plurals>
   <!--ContactList Fragment-->
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -33,6 +37,7 @@
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
+  <string name="share_via">Partejar via</string>
   <string name="qr_code">Còdi QR</string>
   <!--Text messages-->
   <string name="send_message">Enviar messatge</string>
@@ -71,6 +76,7 @@
   <string name="send_request_title">Enviar una demanda de contacte</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Contactes</string>
   <!--File Transfer-->
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_delete">Suprimir</string>

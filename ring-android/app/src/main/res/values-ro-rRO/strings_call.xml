@@ -39,4 +39,6 @@ along with this program; if not, write to the Free Software
     <!-- Conferences -->
     <string name="call_moderator">Moderator</string>
     <string name="call_muted">Oprit</string>
-    </resources>
+    <string name="call_handRaised">Mînă ridicată</string>
+
+</resources>
