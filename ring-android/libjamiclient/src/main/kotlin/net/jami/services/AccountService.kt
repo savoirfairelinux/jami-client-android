@@ -529,7 +529,7 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
     }
 
-    fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) {
+    private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) {
         JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
     }
 
@@ -1137,7 +1137,7 @@ class AccountService(
     }
 
     fun incomingAccountMessage(accountId: String, messageId: String?, callId: String?, from: String, messages: Map<String, String>) {
-        Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size)
+        Log.d(TAG, "incomingAccountMessage ---> accountId: $accountId , messageId: $messageId, from: $from, messages.size: ${messages.size} messages: $messages")
         incomingMessageSubject.onNext(Message(accountId, messageId, callId, from, messages))
     }
 
