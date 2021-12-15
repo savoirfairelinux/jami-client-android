@@ -144,11 +144,11 @@ class AccountService(
                 if (obj.size() < 2) return@flatMapMaybe Maybe.empty<Location>()
                 return@flatMapMaybe Maybe.just(Location(msg.accountId, msg.callId, Uri.fromId(msg.author), obj["time"].asLong).apply {
                     val t = obj["type"]
-                    if (t == null || t.asString == Location.Type.Position.toString()) {
+                    if (t == null || t.asString.lowercase() == Location.Type.Position.toString().lowercase()) {
                         type = Location.Type.Position
                         latitude = obj["lat"].asDouble
                         longitude = obj["long"].asDouble
-                    } else if (t.asString == Location.Type.Stop.toString()) {
+                    } else if (t.asString.lowercase() == Location.Type.Stop.toString().lowercase()) {
                         type = Location.Type.Stop
                     }
                 })
