@@ -370,10 +370,10 @@ class Account(
         val transferEventCode = transfer.status
         if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
             conversation.addFileTransfer(transfer)
+            updated(conversation)
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode)
         }
-        updated(conversation)
         return conversation
     }
 
