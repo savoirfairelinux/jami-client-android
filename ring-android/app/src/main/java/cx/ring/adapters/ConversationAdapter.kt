@@ -145,6 +145,11 @@ class ConversationAdapter(
                     mInteractions.add(i, e)
                     notifyItemInserted(i)
                     return i == n - 1
+                } else if (e.parentId == mInteractions[i].messageId ) {
+                    Log.w("  ConversationAdapter", "DEBUG ------------------------- (add) A.2.2 > ${e.parentId} == ${mInteractions[i].messageId} n = $n , i = $i")
+                    mInteractions.add(i + 1, e)
+                    notifyItemInserted(i + 1)
+                    return true
                 }
                 i++
             }
