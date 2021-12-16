@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "163bc371_1270bf18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T22:57:35Z",
+      "side": 1,
+      "message": "Prevent cross platform communication ?",
+      "revId": "dcb3cca56cf72dd6b3eb731783fa2ee25d83869c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f32197ed_47a498b4",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T22:57:35Z",
+      "side": 1,
+      "message": "lowercase the incoming string too to ensure better compatibility",
+      "revId": "dcb3cca56cf72dd6b3eb731783fa2ee25d83869c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
