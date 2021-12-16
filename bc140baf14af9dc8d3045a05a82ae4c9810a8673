@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6878696_f514a429",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T23:11:24Z",
+      "side": 1,
+      "message": "What\u0027s the use-case for this ?",
+      "revId": "bc140baf14af9dc8d3045a05a82ae4c9810a8673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28b1966_18180c73",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/ContactService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T23:11:24Z",
+      "side": 1,
+      "message": "this was the only use for observePresence, so that swarms conversations would not always be \"online\" only because we are ourself online.",
+      "revId": "bc140baf14af9dc8d3045a05a82ae4c9810a8673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eb49b2e_54bc8001",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/ContactService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T23:11:24Z",
+      "side": 1,
+      "message": "simply \"contacts.first()\" instead of \"contacts.[contacts.size - 1]\" (same next line)",
+      "revId": "bc140baf14af9dc8d3045a05a82ae4c9810a8673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efde1c72_5a9c7423",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/ContactService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-12-16T23:11:24Z",
+      "side": 1,
+      "message": "\"return\" is redundant here",
+      "revId": "bc140baf14af9dc8d3045a05a82ae4c9810a8673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
