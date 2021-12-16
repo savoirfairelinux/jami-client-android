@@ -53,7 +53,7 @@ abstract class ContactService(
      * Load contacts from system and generate a local contact cache
      *
      * @param loadRingContacts if true, ring contacts will be taken care of
-     * @param loadSipContacts  if true, sip contacts will be taken care of
+     * @param loadSipContacts  if  true, sip contacts will be taken care of
      */
     fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> {
         return Single.fromCallable {
@@ -66,7 +66,6 @@ abstract class ContactService(
     }
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
-        //Log.w(TAG, "observeContact " + accountId + " " + contact.getUri() + " " + contact.isUser());
         val observePresence = if (contact.isUser) false else withPresence
         val uri = contact.uri
         val uriString = uri.rawRingId
@@ -102,7 +101,7 @@ abstract class ContactService(
                 contact.loadedProfile = loadContactData(contact, accountId).cache()
             }
 
-            return if (observePresence)
+            return if (withPresence)
                 Observable.combineLatest(contact.profile, username.toObservable(), presenceUpdates)
                 { profile, name, presence -> ContactViewModel(contact, profile, name.ifEmpty { null }, presence) }
             else
@@ -134,10 +133,9 @@ abstract class ContactService(
     fun observeContact(accountId: String, contacts: List<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> {
         return if (contacts.isEmpty()) {
             Observable.just(emptyList())
-        } /*else if (contacts.size() == 1 || contacts.size() == 2) {
-
-            return observeContact(accountId, contacts.get(contacts.size() - 1), withPresence).map(Collections::singletonList);
-        } */ else {
+        } else if (contacts.size == 1 && contacts[contacts.size - 1].isUser) {
+            return observeContact(accountId, contacts[contacts.size - 1], withPresence).map(Collections::singletonList)
+        }  else {
             val observables: MutableList<Observable<ContactViewModel>> = ArrayList(contacts.size)
             for (contact in contacts) {
                 if (!contact.isUser) observables.add(observeContact(accountId, contact, withPresence))
