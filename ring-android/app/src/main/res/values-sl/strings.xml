@@ -27,7 +27,7 @@
   <string name="error_account_offline">Račun ni povezan</string>
   <string name="error_mobile_network_available_but_disabled">Dovolite dostop do mobilnega omrežja v nastavitvah.</string>
   <!--AB menus-->
-  <string name="ab_action_chat">Tekstovno sporočanje</string>
+  <string name="ab_action_chat">Besedilno sporočanje</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Zahteve za povezavo</string>
   <string name="menu_item_accounts">Urejanje računov</string>
@@ -79,7 +79,7 @@
   <string name="notif_incoming_file_transfer_title">Dohodna datoteka od %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Pošiljanje datoteke do %1$s</string>
   <string name="notif_incoming_picture">Slika od %1$s</string>
-  <string name="notif_sync_title">Sinhronizacija podatkov...</string>
+  <string name="notif_sync_title">Sinhronizacija podatkov ...</string>
   <string name="notif_location_title">Deljenje lokacije z %1$s</string>
   <string name="location_share_contact">%1$s deli lokacijo z vami</string>
   <string name="notif_location_multi_title">Delijenje lokacije s %1$d kontaki</string>
@@ -147,15 +147,15 @@
   <string name="ringtone_error_size_too_big">Ta datoteka je prevelika. Največja velikost je %1$d kB.</string>
   <string name="ringtone_custom_prompt">Določi lastno zvonjenje</string>
   <string name="ringtone_custom_label">Lastno</string>
-  <string name="ringtone_jami_tones">Jami zvoki</string>
+  <string name="ringtone_jami_tones">Zvoki Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami potrebuje dovoljenje za \"dostop do stikov\", da bi uporabili to funkcijo. Potrdite ga.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami potrebuje dovoljenje za \"pisanje dnevnika klicev\", da bi uporabili to funkcijo. Potrdite ga.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Preberi QR kodo stika, ki ga želiš dodati.</string>
+  <string name="scan_qr_account_message">Preberi QR-kodo stika, ki ga želiš dodati.</string>
   <string name="title_activity_qrcode">Deli moj račun</string>
-  <string name="error_scan_no_camera_permissions">QR bralnik za delovanje potrebuje dovoljenje za kamero</string>
+  <string name="error_scan_no_camera_permissions">QR-bralnik za delovanje potrebuje dovoljenje za kamero</string>
   <string name="tab_code">Moja koda</string>
   <string name="tab_scan">Preberi kodo</string>
   <!--Settings-->
@@ -166,36 +166,39 @@
   <!--Conversation-->
   <string name="conversation_details">Podrobnosti stika</string>
   <string name="conversation_action_delete_this">Izbriši ta pogovor</string>
-  <string name="conversation_action_delete_this_title">Izbrišem ta pogovor ?</string>
+  <string name="conversation_action_delete_this_title">Ali želite izbrisati ta pogovor?</string>
   <string name="conversation_action_delete_this_message">Tega dejanja ni mogoče razveljaviti.</string>
   <string name="conversation_action_history_clear">Počisti zgodovino</string>
-  <string name="conversation_action_history_clear_title">Počistim zgodovino pogovora?</string>
+  <string name="conversation_action_history_clear_title">Ali želite počistiti zgodovino pogovora?</string>
   <string name="conversation_action_history_clear_message">To bo dokončno počistilo zgodovino pogovora.</string>
   <string name="conversation_action_remove_this">Izbriši stik</string>
-  <string name="conversation_action_remove_this_title">Izbrišem ta stik?</string>
+  <string name="conversation_action_remove_this_title">Ali želite izbrisati ta stik?</string>
   <string name="conversation_action_remove_this_message">To bo izbrisalo stik in dokončno počistilo zgodovino pogovora.</string>
   <string name="conversation_action_copy_peer_number">Kopiraj številko</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s skopirano na odlođižšče</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopirano na odlođižšče</string>
   <string name="conversation_action_select_peer_number">Izberi številko</string>
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_go_to_call">Vrnitev na aktivni klic</string>
   <string name="conversation_open_file_error">Ni nameščene aplikacije za odpiranje te vrste datotek.</string>
   <string name="clip_contact_uri">Naslov stika</string>
-  <string name="block_contact_dialog_title">Blokiram %1$s?</string>
+  <string name="block_contact_dialog_title">Ali želite blokirati %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vas ne bo mogel kontaktirati, dokler ga ne odblokirate.</string>
   <string name="block_contact_completed">%1$s je blokiran(a).</string>
-  <string name="conversation_contact_is_typing">Stik piše...</string>
+  <string name="conversation_contact_is_typing">Stik piše ...</string>
   <string name="conversation_info_contact_you">Vi</string>
   <string name="conversation_members">Člani</string>
+  <string name="conversation_syncing">Prenašanje pogovora od soležnika</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
+  <string name="conversation_type_private">Zasebni roj</string>
+  <string name="conversation_type_group">Skupinski roj</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_optional">Novo geslo (izbirno)</string>
   <string name="prompt_new_password_repeat">Ponovi novo geslo</string>
-  <string name="account_create_title">Ustvari Jami račun</string>
+  <string name="account_create_title">Ustvari račun Jami</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
   <string name="prompt_hint_username">Uporabniško ime</string>
   <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj Jami račun.</string>
@@ -221,12 +224,12 @@
   <string name="total_devices">Skupaj naprav:</string>
   <!--Share fragment-->
   <string name="share_message">Preberi kodo z Jamijem.</string>
-  <string name="share_message_no_account">Izberi račun, ki ga želiš deliti.</string>
+  <string name="share_message_no_account">Izberite račun, ki ga želite deliti.</string>
   <string name="share_your_account_information">Deli podatke o mojem stiku</string>
   <string name="share_label">Deli</string>
   <string name="generic_error_migration">Napaka</string>
   <string name="generic_error_migration_message">Zgodila se je napaka med selitvijo</string>
-  <string name="title_share_with">Deli z...</string>
+  <string name="title_share_with">Deli z ...</string>
   <!--Pending contact requests-->
   <string name="accept">Sprejmi</string>
   <string name="refuse">Zavrni</string>
@@ -292,18 +295,18 @@
   <string name="search_results_public_directory">Javna mapa</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Pošljem zvočno sporočilo?</string>
-  <string name="tv_send_image_dialog_message">Pošljem sliko?</string>
-  <string name="tv_send_video_dialog_message">Pošljem video?</string>
+  <string name="tv_send_image_dialog_message">Ali želite poslati sliko?</string>
+  <string name="tv_send_video_dialog_message">Ali želite poslati video?</string>
   <string name="tv_media_preview">Predogled</string>
   <string name="tv_audio_play">Predvajaj</string>
   <string name="tv_audio_pause">Pavza</string>
   <string name="tv_dialog_send">Pošlji</string>
-  <string name="tv_audio_recording">Snemanje...</string>
-  <string name="tv_send_text">Pošiljam besedilo</string>
-  <string name="tv_send_audio">Pošiljam zvok</string>
-  <string name="tv_send_video">Pošiljam medij</string>
+  <string name="tv_audio_recording">Snemanje ...</string>
+  <string name="tv_send_text">Pošlji besedilo</string>
+  <string name="tv_send_audio">Pošlji zvok</string>
+  <string name="tv_send_video">Pošlji medij</string>
   <string name="tv_action_more">Dodatno</string>
-  <string name="conversation_input_speech_hint">Recite nekaj...</string>
+  <string name="conversation_input_speech_hint">Recite nekaj ...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Priporočeno</string>
   <string name="wizard_status_optional">Izbirno</string>
