@@ -124,7 +124,7 @@
             android:layout_marginStart="@dimen/fab_margin_mini"
             android:layout_marginEnd="@dimen/fab_margin_mini"
             android:layout_marginTop="@dimen/fab_margin_mini"
-            android:layout_marginBottom="92dp"
+            android:layout_marginBottom="@dimen/fab_margin_mini"
             android:elevation="6dp"
             android:text="@string/start_conversation"
             app:elevation="6dp"
