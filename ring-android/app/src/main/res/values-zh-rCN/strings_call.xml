@@ -38,4 +38,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">已结束</string>
     <!-- Conferences -->
     <string name="call_moderator">管理员</string>
-    </resources>
+    <string name="call_muted">已静音</string>
+    <string name="call_handRaised">已举手</string>
+
+</resources>

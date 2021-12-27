@@ -201,7 +201,7 @@
   <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elegí una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
   <string name="help_password_enter">Ingresá la contraseña maestra de tu cuenta Jami.</string>
-  <string name="help_server_enter">Ingrese la URL del servidor de administración.</string>
+  <string name="help_server_enter">Ingresá la URL del servidor de administración.</string>
   <string name="help_pin_enter">Ingresá el PIN de la cuenta de Jami configurada en el otro dispositivo. Para obtener el PIN seleccioná la opción \"Exportar cuenta de Jami\".</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>

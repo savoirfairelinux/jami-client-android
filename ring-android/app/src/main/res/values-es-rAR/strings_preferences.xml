@@ -11,14 +11,14 @@
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
   <string name="pref_video_advanced_title">Configuraciones de video avanzadas</string>
-  <string name="pref_video_advanced_summary">Cambiá la tasa de bits y la resolución de video y accedé a características experimentales</string>
+  <string name="pref_video_advanced_summary">Cambiar la tasa de bits y la resolución de video y acceder a características experimentales</string>
   <string name="pref_hd_summary">Permitir enviar video en HD</string>
   <string name="pref_hwEncode_title">Habilitar cifrado acelerado</string>
   <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_videoBitrate_title">Tasa de bits de video</string>
-  <string name="pref_videoBitrate_summary">Elegí la tasa de bits (KB/s) predeterminada para la salida de video</string>
+  <string name="pref_videoBitrate_summary">Elegir la tasa de bits (KB/s) predeterminada para la salida de video</string>
   <string name="pref_videoResolution_title">Resolución de video</string>
-  <string name="pref_videoResolution_summary">Elegí la resolución predeterminada de salida de video</string>
+  <string name="pref_videoResolution_summary">Elegir la resolución predeterminada de salida de video</string>
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor</string>
   <string name="pref_systemDialer_title">Realizar llamadas del sistema mediante Jami</string>
@@ -28,7 +28,7 @@
   <string name="pref_clearHistory_title">Borrar historial</string>
   <string name="pref_clearHistory_summary">Borrar todo el historial de conversaciones. Esta operación no se puede deshacer.</string>
   <string name="pref_notification_title">Visibilidad de notificaciones</string>
-  <string name="pref_notification_summary">Establecé la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
+  <string name="pref_notification_summary">Establecer la visibilidad de las notificaciones en la pantalla de bloqueo.</string>
   <string name="pref_blackList_title">Lista de bloqueos</string>
   <string name="pref_blackList_summary">Revisar tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Eliminar cuenta</string>
@@ -45,7 +45,7 @@
   <string name="pref_read_summary">Enviar y recibir confirmaciones de lectura indicando que se ha visto un mensaje.</string>
   <string name="pref_block_record_title">Bloquear capturas de pantalla y grabaciones</string>
   <string name="pref_block_record_summary">Impedir que se hagan capturas de pantalla o se graben videos.</string>
-  <string name="pref_link_preview_title">Mostrar vistas previas de enlaces en las conversaciones</string>
+  <string name="pref_link_preview_title">Vistas previas de enlaces en conversaciones</string>
   <string name="pref_link_preview_summary">Las vistas previas requieren la descarga de contenido desde servidores de terceros.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Público \n(mostrar notificaciones y contenido en la pantalla bloqueada)\n</string>

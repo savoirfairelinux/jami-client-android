@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vídeo</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidade</string>
+  <string name="pref_category_diagnostic">Diagnósticos</string>
   <string name="pref_mobileData_title">Dados do Celular</string>
   <string name="pref_mobileData_summary">Permitir o Jami em redes 3G/LTE além do Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificações via push</string>
@@ -34,12 +35,18 @@
   <string name="pref_delete_account_summary">Exclua sua conta deste dispositivo</string>
   <string name="pref_persistNotification_title">Executar em segundo-plano</string>
   <string name="pref_persistNotification_summary">Permitir execução em segundo-plano para receber chamadas e mensagens.</string>
+  <string name="pref_logs_title">Logs do diagnóstico</string>
+  <string name="pref_logs_summary">Abrir as configurações dos logs de diagnóstico</string>
+  <string name="pref_logs_start">Começar a logar</string>
+  <string name="pref_logs_stop">Parar de logar</string>
   <string name="pref_typing_title">Habilitar indicadores de digitação</string>
   <string name="pref_typing_summary">Enviar e receber indicadores de escrita, mostrando que a mensagem está sendo escrita.</string>
   <string name="pref_read_title">Ativar verificação de leitura</string>
   <string name="pref_read_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
   <string name="pref_block_record_title">Bloquear captura de tela e gravação</string>
   <string name="pref_block_record_summary">Bloquear captura de tela e gravação de vídeo</string>
+  <string name="pref_link_preview_title">Mostrar uma pré-visualização dos links nas conversações</string>
+  <string name="pref_link_preview_summary">A pré-visualização é obtida baixando conteúdo de servidores de terceiros.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Público \n(mostra notificações e seu conteúdo na tela de bloqueio)\n</string>
   <string name="notification_private">Privado \n(mostrar notificações, mas ocultar o conteúdo na tela de bloqueio)\n</string>

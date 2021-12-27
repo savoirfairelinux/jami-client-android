@@ -71,7 +71,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_ringtone_path_label">Ubicación del tono</string>
   <string name="account_ringtone_custom_label">Usar tono de llamada personalizado</string>
   <string name="account_ringtone_title">Elegir tono de llamada</string>
-  <string name="account_ringtone_summary">Seleccioná un tono de llamada o elegí uno personalizado</string>
+  <string name="account_ringtone_summary">Seleccionar un tono de llamada o elegir uno personalizado</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Permitir video</string>
@@ -86,7 +86,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_stun_server_label">Servidor STUN</string>
   <string name="account_accept_files">Aceptar archivos entrantes automáticamente</string>
   <string name="account_conversation_settings_title">Ajustes de conversación</string>
-  <string name="account_accept_files_max_size">Tamaño máximo de archivo para aceptación automática</string>
+  <string name="account_accept_files_max_size">Tamaño máx. para descarga automática</string>
   <string name="account_accept_files_never">Nunca aceptar automáticamente</string>
   <string name="account_accept_files_always">Siempre aceptar automáticamente</string>
   <string name="size_mb">%1$dMB</string>
@@ -104,7 +104,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descubrimiento de pares locales</string>
   <string name="account_peer_discovery_enable_label">Habilitar descubrimiento de pares locales</string>
-  <string name="account_peer_discovery_enable_summary">Conéctese a otros nodos DHT que se anuncian en nuestra red local</string>
+  <string name="account_peer_discovery_enable_summary">Conectarse a otros nodos DHT que se anuncian en la red local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciales</string>
   <string name="account_credentials_edit">Editar credenciales</string>
@@ -138,8 +138,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor espere...</string>
   <string name="export_account_wait_message">Exportando la información de la cuenta</string>
-  <string name="account_export_file">Respaldá tu cuenta</string>
-  <string name="account_export_file_summary">Crea una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
+  <string name="account_export_file">Respaldar tu cuenta</string>
+  <string name="account_export_file_summary">Crear una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
   <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
   <string name="account_export_end_network_title">Error de red</string>
   <string name="account_export_end_network_message">No se pudo exportar su cuenta. Compruebe su conexión a internet.</string>

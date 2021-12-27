@@ -16,6 +16,7 @@
 Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u></string>
   <string name="description">Jami é um software livre para comunicação universal que respeita as liberdades e privacidade de seus usuários.</string>
   <string name="credits">Créditos</string>
+  <string name="pip_title">Conferência Jami</string>
   <string name="call_service_description">Este serviço é necessário para manter suas chamadas no primeiro plano. Ele só executa durante chamadas.</string>
   <string name="data_transfer_service_description">Este serviço é necessário para exibir notificações persistentes durante transferências de arquivos. Ele só executa durante transferência de arquivos.</string>
   <!--About dialog-->
@@ -99,6 +100,10 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="start_error_title">Não é possível iniciar o Jami!</string>
   <string name="start_error_mic_required">O Jami requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
+  <string name="action_call_accept_audio">Responder em áudio</string>
+  <string name="action_call_accept_video">Responder em vídeo</string>
+  <string name="action_call_hold_accept">Colocar em espera e fazer uma chamada em áudio</string>
+  <string name="action_call_hold_accept_video">Colocar em espera e fazer uma chamada em vídeo</string>
   <string name="action_call_end_accept">Finalizar e receba chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Desativar microfone</string>
@@ -106,7 +111,10 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
+  <string name="hist_contact_invited">Contato foi convidado</string>
   <string name="hist_contact_added">Contato adicionado</string>
+  <string name="hist_contact_left">O contato saiu</string>
+  <string name="hist_contact_banned">O contato foi banido</string>
   <string name="hist_invitation_received">Convite recebido</string>
   <string name="ab_action_audio_call">Chamada de áudio</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
@@ -178,6 +186,12 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_contact_is_typing">Contato está digitando...</string>
   <string name="conversation_info_contact_you">Você</string>
   <string name="conversation_members">Membros</string>
+  <string name="conversation_syncing">Baixando a conversação a partir do par</string>
+  <string name="conversation_preference_color">Cor da conversação</string>
+  <string name="conversation_preference_emoji">emoji da conversação</string>
+  <string name="conversation_type_contact">Contato Jami</string>
+  <string name="conversation_type_private">swarm privado</string>
+  <string name="conversation_type_group">swarm em grupo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
@@ -290,6 +304,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="tv_send_text">Enviar Texto</string>
   <string name="tv_send_audio">Enviar Áudio</string>
   <string name="tv_send_video">Enviar Mídia</string>
+  <string name="tv_action_more">Mais</string>
   <string name="conversation_input_speech_hint">Fale algo...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
@@ -311,9 +326,13 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="chat_plugins">Plugins de bate-papo</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartilhar</string>
+  <string name="bottomSheet_dialpad_btn">Teclado de discagem</string>
   <string name="bottomSheet_plugins_btn">Complementos</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
   <string name="bottomSheet_change_camera_btn">Mudar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmera</string>
+  <string name="bottomSheet_hangup_btn">Finalizar chamada</string>
+  <string name="bottomSheet_mute_microphone_btn">Microfone</string>
+  <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
 </resources>

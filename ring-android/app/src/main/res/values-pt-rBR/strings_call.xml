@@ -39,4 +39,6 @@ along with this program; if not, write to the Free Software
     <!-- Conferences -->
     <string name="call_moderator">Moderador</string>
     <string name="call_muted">Mutado</string>
-    </resources>
+    <string name="call_handRaised">Mão foi levantada</string>
+
+</resources>

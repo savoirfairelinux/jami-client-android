@@ -105,6 +105,7 @@
   <string name="ab_action_speakerphone">开启扬声器</string>
   <string name="ab_action_contact_add">加入通讯录</string>
   <string name="ab_action_contact_add_question">添加至通讯录吗？</string>
+  <string name="hist_contact_invited">联系人已邀请</string>
   <string name="hist_contact_added">已加入通讯录</string>
   <string name="hist_invitation_received">已接受邀请</string>
   <string name="ab_action_audio_call">语音通话</string>
@@ -176,6 +177,8 @@
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
   <string name="conversation_contact_is_typing">联系人正在输入...</string>
   <string name="conversation_members">成员</string>
+  <string name="conversation_preference_color">会话颜色</string>
+  <string name="conversation_preference_emoji">会画表情</string>
   <string name="conversation_type_contact">Jami 联系人</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
@@ -289,6 +292,7 @@
   <string name="tv_send_text">发送文本</string>
   <string name="tv_send_audio">发送音频</string>
   <string name="tv_send_video">发送媒体文件</string>
+  <string name="tv_action_more">更多</string>
   <string name="conversation_input_speech_hint">说点什么…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">推荐</string>
@@ -314,5 +318,6 @@
   <string name="bottomSheet_add_participants_btn">添加</string>
   <string name="bottomSheet_change_camera_btn">更改</string>
   <string name="bottomSheet_camera_onoff_switch_btn">摄像头</string>
+  <string name="bottomSheet_hangup_btn">结束通话</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
 </resources>
