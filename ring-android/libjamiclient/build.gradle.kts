@@ -22,7 +22,7 @@ dependencies {
     // Required -- JUnit 4 framework
     testImplementation ("junit:junit:4.13.2")
     // RxJava
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.2")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.3")
     // gson
     implementation ("com.google.code.gson:gson:2.8.9")
     api("com.google.dagger:dagger:$hilt_version")
