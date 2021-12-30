@@ -100,7 +100,7 @@ dependencies {
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.4.3")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("com.google.android.material:material:1.5.0-beta01")
+    implementation ("com.google.android.material:material:1.5.0-rc01")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.11")
     implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
