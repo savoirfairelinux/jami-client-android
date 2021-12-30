@@ -122,7 +122,7 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.2")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.3")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
