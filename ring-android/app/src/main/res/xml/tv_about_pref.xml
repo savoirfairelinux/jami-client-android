@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/about">
+    android:title="@string/about"
+    android:persistent="false">
 
     <PreferenceCategory android:title="@string/tv_about_version">
         <Preference
