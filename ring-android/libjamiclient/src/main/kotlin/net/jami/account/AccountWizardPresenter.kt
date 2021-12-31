@@ -246,11 +246,7 @@ class AccountWizardPresenter @Inject constructor(
                 Log.e(TAG, "Error creating account", e);
                 mCreatingAccount = false
                 //mCreationError = true;
-                val view = view
-                if (view != null) {
-                    view.displayGenericError()
-                    //view.finish(true)
-                }
+                view?.displayGenericError()
             })
     }
 

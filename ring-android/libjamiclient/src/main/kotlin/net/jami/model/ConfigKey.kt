@@ -125,7 +125,6 @@ enum class ConfigKey {
     }
 
     companion object {
-        @JvmStatic
         fun fromString(stringKey: String): ConfigKey? {
             for (confKey in values()) {
                 if (stringKey.contentEquals(confKey.mKey) || stringKey == confKey.mKey) {
