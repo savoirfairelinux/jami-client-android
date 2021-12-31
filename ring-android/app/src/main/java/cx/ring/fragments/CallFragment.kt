@@ -970,15 +970,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
     private fun setBottomSheet(newInset: WindowInsetsCompat? = null) {
         val binding = binding ?: return
-        val dm = resources.displayMetrics
-        val density = dm.density
-        val heightPixels = dm.heightPixels
-        val screenHeight = binding.callCoordinatorOptionContainer.height
-        val gridViewHeight = binding.callParametersGrid.height
-
         val bsView = binding.callOptionsBottomSheet
         val bsHeight = binding.constraintBsContainer.height
         if (isInPIP || !bsView.isVisible) return
+
+        val dm = resources.displayMetrics
+        val density = dm.density
+        val screenHeight = binding.callCoordinatorOptionContainer.height
+        val gridViewHeight = binding.callParametersGrid.height
         val land = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         // define bottomsheet width based on screen orientation
@@ -990,18 +989,22 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val bottomInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.navigationBars()).bottom
         val topInsets = inset.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.statusBars()).top
 
-        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2) else (10f * density) + (gridViewHeight / 2) + bottomInsets
-        val halfExpandedRatio = ((10f * density) + gridViewHeight + bottomInsets) / screenHeight
-        val fullyExpandedOffset = if (heightPixels <= bsHeight) (50 * density).toInt() else (screenHeight - (bsHeight + bottomInsets ))
+        val desiredPeekHeight = if (land) (10f * density) + (gridViewHeight / 2f) else (10f * density) + (gridViewHeight / 2f) + bottomInsets
+        val halfRatio = ((10f * density) + gridViewHeight + bottomInsets) / screenHeight
+
+        val fullyExpandedOffset = if (screenHeight <= bsHeight + bottomInsets)
+                (50 * density).toInt()
+        else
+                (screenHeight - bsHeight - bottomInsets)
 
         binding.callCoordinatorOptionContainer.updatePadding(bottom = if (land) 0 else bottomInsets)
-        binding.callOptionsBottomSheet.updatePadding(bottom = if (land) ((topInsets - 5) * density).toInt() else (bottomInsets * density).toInt())
+        binding.callOptionsBottomSheet.updatePadding(bottom = if (land) (topInsets - (5 * density)).toInt() else bottomInsets)
 
-        bottomSheetParams?.let { bs ->
-            bs.expandedOffset = fullyExpandedOffset
-            bs.halfExpandedRatio = if (halfExpandedRatio < 0 || halfExpandedRatio > 1) 0.4f else halfExpandedRatio
-            bs.peekHeight = desiredPeekHeight.toInt()
-            bs.saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
+        bottomSheetParams?.apply {
+            expandedOffset = fullyExpandedOffset
+            halfExpandedRatio = if (halfRatio <= 0 || halfRatio >= 1) 0.4f else halfRatio
+            peekHeight = desiredPeekHeight.toInt()
+            saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
         }
     }
 
