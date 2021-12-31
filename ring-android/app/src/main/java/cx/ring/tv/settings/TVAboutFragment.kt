@@ -27,54 +27,25 @@ import androidx.leanback.preference.LeanbackPreferenceFragmentCompat
 import androidx.preference.Preference
 import cx.ring.BuildConfig
 import cx.ring.R
-import net.jami.model.ConfigKey
 
 class TVAboutFragment : LeanbackPreferenceFragmentCompat() {
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.tv_about_pref, rootKey)
-        findPreference<Preference>("About.version")?.title = version
-        findPreference<Preference>("About.license")?.title = license
-        findPreference<Preference>("About.rights")?.title = rights
+        findPreference<Preference>("About.version")?.title = getString(R.string.app_release, BuildConfig.VERSION_NAME)
+        findPreference<Preference>("About.license")?.title = getString(R.string.license)
+        findPreference<Preference>("About.rights")?.title = getString(R.string.copyright)
         findPreference<Preference>("About.credits")?.title = credits
     }
 
-    override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        if (preference.key == ConfigKey.ACCOUNT_AUTOANSWER.key()) {
-        } else if (preference.key == ConfigKey.ACCOUNT_ISRENDEZVOUS.key()) {
-        }
-        return super.onPreferenceTreeClick(preference)
-    }
-
-    private val version: CharSequence
-        get() {
-            val version = SpannableString(requireContext().resources.getString(R.string.version_section))
-            version.setSpan(UnderlineSpan(), 0, version.length, 0)
-            return requireContext().resources.getString(R.string.app_release, BuildConfig.VERSION_NAME)
-        }
-    private val license: CharSequence
-        get() {
-            val licence = SpannableString(requireContext().resources.getString(R.string.section_license))
-            licence.setSpan(UnderlineSpan(), 0, licence.length, 0)
-            return requireContext().resources.getString(R.string.license)
-        }
-    private val rights: CharSequence
-        get() {
-            val licence = SpannableString(requireContext().resources.getString(R.string.copyright_section))
-            licence.setSpan(UnderlineSpan(), 0, licence.length, 0)
-            return requireContext().resources.getString(R.string.copyright)
-        }
     private val credits: CharSequence
         get() {
-            val developedby = SpannableString(requireContext().resources.getString(R.string.developed_by))
+            val developedby = SpannableString(getText(R.string.developed_by))
             developedby.setSpan(UnderlineSpan(), 0, developedby.length, 0)
-            val developed: CharSequence =
-                requireContext().resources.getString(R.string.credits_developer).replace("\n".toRegex(), "<br/>")
+            val developed = getString(R.string.credits_developer).replace("\n", "<br/>")
             return Html.fromHtml("<b><u>$developedby</u></b><br/>$developed")
         }
 
     companion object {
-        fun newInstance(): TVAboutFragment {
-            return TVAboutFragment()
-        }
+        fun newInstance() = TVAboutFragment()
     }
 }
