@@ -19,6 +19,7 @@
 package net.jami.model
 
 import java.util.*
+import kotlin.collections.HashMap
 
 class AccountConfig(details: Map<String, String>) {
     private val mValues: MutableMap<ConfigKey, String> = EnumMap(ConfigKey::class.java)
@@ -32,13 +33,7 @@ class AccountConfig(details: Map<String, String>) {
     }
 
     val all: HashMap<String, String>
-        get() {
-            val details = HashMap<String, String>(mValues.size)
-            for ((key, value) in mValues) {
-                details[key.key()] = value
-            }
-            return details
-        }
+        get() = mValues.mapKeysTo(HashMap(mValues.size)) { e -> e.key.key() }
 
     fun put(key: ConfigKey, value: String?) {
         if (value == null)

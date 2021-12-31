@@ -101,7 +101,7 @@ class AccountService(
         .map { l -> l[0] }
         .distinctUntilChanged()
 
-    class Message constructor (
+    data class Message(
         val accountId: String,
         val messageId: String?,
         val callId: String?,
@@ -176,21 +176,21 @@ class AccountService(
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
     private val searchResultSubject: Subject<UserSearchResult> = PublishSubject.create()
 
-    private class ExportOnRingResult (
-        var accountId: String,
-        var code: Int,
-        var pin: String?
+    private data class ExportOnRingResult (
+        val accountId: String,
+        val code: Int,
+        val pin: String?
     )
 
-    private class DeviceRevocationResult (
-        var accountId: String,
-        var deviceId: String,
-        var code: Int
+    private data class DeviceRevocationResult (
+        val accountId: String,
+        val deviceId: String,
+        val code: Int
     )
 
-    private class MigrationResult (
-        var accountId: String,
-        var state: String
+    private data class MigrationResult (
+        val accountId: String,
+        val state: String
     )
 
     private val mExportSubject: Subject<ExportOnRingResult> = PublishSubject.create()
@@ -422,8 +422,7 @@ class AccountService(
     fun getAccount(accountId: String?): Account? {
         if (accountId != null && accountId.isNotEmpty()) {
             synchronized(mAccountList) {
-                for (account in mAccountList)
-                    if (accountId == account.accountId) return account
+                return findAccount(mAccountList, accountId)
             }
         }
         return null
@@ -759,7 +758,7 @@ class AccountService(
             list.reserve(codecs.size.toLong())
             list.addAll(codecs)
             JamiService.setActiveCodecList(accountId, list)
-            observableAccounts.onNext(getAccount(accountId))
+            observableAccounts.onNext(getAccount(accountId) ?: return@execute)
         }
     }
 
@@ -1584,7 +1583,7 @@ class AccountService(
 
     fun dataTransferEvent(account: Account, conversation: Conversation?, interactionId: String?, fileId: String, eventCode: Int) {
         var conversation = conversation
-        val transferStatus = getDataTransferEventCode(eventCode)
+        val transferStatus = InteractionStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
         val from: String
         val total: Long
@@ -1703,28 +1702,16 @@ class AccountService(
         private const val PIN_GENERATION_SUCCESS = 0
         private const val PIN_GENERATION_WRONG_PASSWORD = 1
         private const val PIN_GENERATION_NETWORK_ERROR = 2
-        private fun findAccount(accounts: List<Account?>, accountId: String): Account? {
-            for (account in accounts) if (accountId == account!!.accountId) return account
+        private fun findAccount(accounts: List<Account>, accountId: String): Account? {
+            for (account in accounts) if (accountId == account.accountId) return account
             return null
         }
 
-        private fun getDataTransferEventCode(eventCode: Int): InteractionStatus {
-            var dataTransferEventCode = InteractionStatus.INVALID
-            try {
-                dataTransferEventCode = InteractionStatus.fromIntFile(eventCode)
-            } catch (ignored: ArrayIndexOutOfBoundsException) {
-                Log.e(TAG, "getEventCode: invalid data transfer status from daemon")
-            }
-            return dataTransferEventCode
-        }
-
-        private fun getDataTransferError(errorCode: Long): DataTransferError {
-            try {
-                return DataTransferError.values()[errorCode.toInt()]
-            } catch (ignored: ArrayIndexOutOfBoundsException) {
-                Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
-            }
-            return DataTransferError.UNKNOWN
+        private fun getDataTransferError(errorCode: Long): DataTransferError = try {
+            DataTransferError.values()[errorCode.toInt()]
+        } catch (ignored: ArrayIndexOutOfBoundsException) {
+            Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon")
+            DataTransferError.UNKNOWN
         }
     }
 }
