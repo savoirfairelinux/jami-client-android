@@ -43,9 +43,10 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
 
     override fun onPreferenceStartFragment(preferenceFragment: PreferenceFragmentCompat, preference: Preference): Boolean {
         val args = preference.extras
-        val f = childFragmentManager.fragmentFactory.instantiate(requireContext().classLoader, preference.fragment)
-        f.arguments = args
-        f.setTargetFragment(preferenceFragment, 0)
+        val f = childFragmentManager.fragmentFactory.instantiate(requireContext().classLoader, preference.fragment).apply {
+            arguments = args
+            setTargetFragment(preferenceFragment, 0)
+        }
         if (f is PreferenceFragmentCompat
             || f is PreferenceDialogFragmentCompat
         ) {
@@ -57,18 +58,16 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
     }
 
     override fun onPreferenceStartScreen(caller: PreferenceFragmentCompat, pref: PreferenceScreen): Boolean {
-        val prefsFragment: Fragment = PrefsFragment.newInstance()
-        val args = Bundle()
-        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.key)
-        prefsFragment.arguments = args
-        startPreferenceFragment(prefsFragment)
+        startPreferenceFragment(PrefsFragment.newInstance().apply {
+            arguments = Bundle().apply {
+                putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.key)
+            }
+        })
         return true
     }
 
     @AndroidEntryPoint
     class PrefsFragment : JamiPreferenceFragment<GeneralAccountPresenter>(), GeneralAccountView {
-        private var autoAnswer = false
-        private var rendezvousMode = false
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             presenter.init()
@@ -77,13 +76,8 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
         override fun addJamiPreferences(accountId: String) {}
         override fun addSipPreferences() {}
         override fun accountChanged(account: Account) {
-            // load information from account to ui
-            autoAnswer = account.config.getBool(ConfigKey.ACCOUNT_AUTOANSWER)
-            rendezvousMode = account.config.getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS)
-            val pref = findPreference<SwitchPreference>(ConfigKey.ACCOUNT_AUTOANSWER.key())
-            if (pref != null) pref.isChecked = autoAnswer
-            val prefRdv = findPreference<SwitchPreference>(ConfigKey.ACCOUNT_ISRENDEZVOUS.key())
-            if (prefRdv != null) prefRdv.isChecked = rendezvousMode
+            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_AUTOANSWER.key())?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_AUTOANSWER)
+            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_ISRENDEZVOUS.key())?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS)
         }
 
         override fun finish() {
@@ -94,17 +88,17 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
             val videoResolutionsNames = resources.getStringArray(R.array.video_resolutionStrings)
             val videoResolutionsValues =
                 filterResolutions(resources.getStringArray(R.array.video_resolutions), currentResolution, maxResolution)
-            val lpVideoResolution = findPreference<ListPreference>(SharedPreferencesServiceImpl.PREF_RESOLUTION)
-            if (lpVideoResolution != null) {
-                lpVideoResolution.entries = videoResolutionsNames.copyOfRange(0, videoResolutionsValues.size)
-                lpVideoResolution.entryValues = videoResolutionsValues
+            findPreference<ListPreference>(SharedPreferencesServiceImpl.PREF_RESOLUTION)?.apply {
+                entries = videoResolutionsNames.copyOfRange(0, videoResolutionsValues.size)
+                entryValues = videoResolutionsValues
             }
         }
 
         override fun onCreatePreferences(bundle: Bundle?, rootKey: String?) {
-            val pm = preferenceManager
-            pm.sharedPreferencesMode = Context.MODE_PRIVATE
-            pm.sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_VIDEO
+            preferenceManager?.apply {
+                sharedPreferencesMode = Context.MODE_PRIVATE
+                sharedPreferencesName = SharedPreferencesServiceImpl.PREFS_VIDEO
+            }
             setPreferencesFromResource(R.xml.tv_account_general_pref, rootKey)
         }
 
@@ -117,30 +111,21 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
             if (currentResolution > maxResolution.second) return videoResolutionsValues
             val resolutions = ArrayList<String>()
             for (videoResolutionsValue in videoResolutionsValues) {
-                val resolutionValueInt = videoResolutionsValue.toInt()
-                if (resolutionValueInt <= maxResolution.second) {
+                if (videoResolutionsValue.toInt() <= maxResolution.second)
                     resolutions.add(videoResolutionsValue)
-                }
             }
             return resolutions.toTypedArray()
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
-            if (preference.key == "Account.about") {
-            } else if (preference.key == ConfigKey.ACCOUNT_AUTOANSWER.key()) {
-                presenter.twoStatePreferenceChanged(ConfigKey.ACCOUNT_AUTOANSWER, !autoAnswer)
-                autoAnswer = !autoAnswer
-            } else if (preference.key == ConfigKey.ACCOUNT_ISRENDEZVOUS.key()) {
-                presenter.twoStatePreferenceChanged(ConfigKey.ACCOUNT_ISRENDEZVOUS, !rendezvousMode)
-                rendezvousMode = !rendezvousMode
-            }
+            val key = ConfigKey.fromString(preference.key)
+            if (key != null && key.isTwoState)
+                presenter.twoStatePreferenceChanged(key, (preference as SwitchPreference).isChecked)
             return super.onPreferenceTreeClick(preference)
         }
 
         companion object {
-            fun newInstance(): PrefsFragment {
-                return PrefsFragment()
-            }
+            fun newInstance(): PrefsFragment = PrefsFragment()
         }
     }
 }
