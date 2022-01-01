@@ -21,33 +21,30 @@ package cx.ring.adapters
 
 import net.jami.smartlist.ConversationItemViewModel
 import androidx.recyclerview.widget.DiffUtil
+import net.jami.model.Conversation
+import net.jami.services.ConversationFacade
 
 class SmartListDiffUtil(
-    private val mOldList: List<ConversationItemViewModel>,
-    private val mNewList: List<ConversationItemViewModel>
+    private val mOldList: ConversationFacade.ConversationList,
+    private val mNewList: ConversationFacade.ConversationList
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
-        return mOldList.size
+        return mOldList.getCombinedSize()
     }
 
     override fun getNewListSize(): Int {
-        return mNewList.size
+        return mNewList.getCombinedSize()
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = mOldList[oldItemPosition]
         val newItem = mNewList[newItemPosition]
-        if (newItem.headerTitle != oldItem.headerTitle) return false
-        if (newItem.contacts !== oldItem.contacts) {
-            if (newItem.contacts.size != oldItem.contacts.size) return false
-            for (i in newItem.contacts.indices) {
-                if (newItem.contacts[i] !== oldItem.contacts[i]) return false
-            }
-        }
-        return true
+        if (oldItem == null || newItem == null)
+            return oldItem === newItem
+        return newItem.uri == oldItem.uri
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mNewList[newItemPosition] == mOldList[oldItemPosition]
+        return mNewList[newItemPosition] === mOldList[oldItemPosition]
     }
 }

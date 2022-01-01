@@ -60,19 +60,15 @@ class ConversationPath {
         bundle.putString(KEY_ACCOUNT_ID, accountId)
         return bundle
     }
-    fun toUri(): android.net.Uri {
-        return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
-            .appendEncodedPath(accountId)
-            .appendEncodedPath(conversationId)
-            .build()
-    }
-    fun toKey(): String {
-        return TextUtils.join(",", listOf(accountId, conversationId))
-    }
 
-    override fun toString(): String {
-        return "ConversationPath{accountId='$accountId' conversationId='$conversationId'}"
-    }
+    fun toUri(): android.net.Uri = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+        .appendEncodedPath(accountId)
+        .appendEncodedPath(conversationId)
+        .build()
+
+    fun toKey(): String = TextUtils.join(",", listOf(accountId, conversationId))
+
+    override fun toString(): String = "ConversationPath{accountId='$accountId' conversationId='$conversationId'}"
 
     override fun equals(other: Any?): Boolean {
         if (other === this) return true
@@ -81,9 +77,7 @@ class ConversationPath {
                 && other.conversationId == conversationId)
     }
 
-    override fun hashCode(): Int {
-        return Objects.hash(accountId, conversationId)
-    }
+    override fun hashCode(): Int = Objects.hash(accountId, conversationId)
 
     companion object {
         const val KEY_CONVERSATION_URI = BuildConfig.APPLICATION_ID + ".conversationUri"

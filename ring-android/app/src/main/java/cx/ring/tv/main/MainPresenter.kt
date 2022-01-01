@@ -21,21 +21,19 @@
 package cx.ring.tv.main
 
 import android.util.Log
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.mvp.RootPresenter
 import net.jami.navigation.HomeNavigationViewModel
 import net.jami.services.AccountService
+import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.ConversationItemViewModel
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
 class MainPresenter @Inject constructor(
-    private val mAccountService: AccountService,
-    private val mConversationFacade: ConversationFacade,
+    private val accountService: AccountService,
+    val conversationFacade: ConversationFacade,
+    val contactService: ContactService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<MainView>() {
     override fun bindView(view: MainView) {
@@ -46,41 +44,29 @@ class MainPresenter @Inject constructor(
 
     private fun loadConversations() {
         view?.showLoading(true)
-        mCompositeDisposable.add(mConversationFacade.getSmartList(true)
-            .switchMap { viewModels: List<Observable<ConversationItemViewModel>> ->
-                if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
-                else Observable.combineLatest<ConversationItemViewModel, List<ConversationItemViewModel>>(viewModels)
-                { obs: Array<Any> -> obs.mapTo(ArrayList(obs.size)) { ob -> ob as ConversationItemViewModel } }
-            }
-            .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+        mCompositeDisposable.add(conversationFacade.getConversationSmartlist()
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels: List<ConversationItemViewModel> ->
+            .subscribe({ viewModels ->
                 val view = view ?: return@subscribe
                 view.showLoading(false)
                 view.showContacts(viewModels)
-            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
-        mCompositeDisposable.add(mConversationFacade.pendingList
-            .switchMap { viewModels: List<Observable<ConversationItemViewModel>> ->
-                if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
-                else Observable.combineLatest<ConversationItemViewModel, List<ConversationItemViewModel>>(viewModels)
-                { obs: Array<Any> -> obs.mapTo(ArrayList(obs.size)) { ob -> ob as ConversationItemViewModel } }
-            }
-            .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+            }) { e -> Log.w(TAG, "showConversations error ", e) })
+        mCompositeDisposable.add(conversationFacade.getPendingConversationList(conversationFacade.currentAccountSubject)
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels: List<ConversationItemViewModel> ->
-                view?.showContactRequests(viewModels)
-            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
+            .subscribe({ viewModels -> view?.showContactRequests(viewModels) })
+            { e -> Log.w(TAG, "showConversations error ", e) })
     }
 
     private fun reloadAccountInfo() {
-        mCompositeDisposable.add(mAccountService.currentProfileAccountSubject
+        mCompositeDisposable.add(accountService.currentProfileAccountSubject
             .observeOn(mUiScheduler)
             .subscribe({ accountProfile -> view?.displayAccountInfo(HomeNavigationViewModel(accountProfile.first, accountProfile.second)) })
-            { e: Throwable -> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e) })
+            { e -> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e) })
     }
 
     fun onExportClicked() {
-        view?.showExportDialog(mAccountService.currentAccount!!.accountId, mAccountService.currentAccount!!.hasPassword())
+        val account = accountService.currentAccount ?: return
+        view?.showExportDialog(account.accountId, account.hasPassword())
     }
 
     fun onEditProfileClicked() {

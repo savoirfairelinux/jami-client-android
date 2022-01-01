@@ -170,7 +170,7 @@ class AccountService(
     )
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
-        var results: MutableList<Contact>? = null
+        var results: List<Contact>? = null
     }
 
     private val registeredNameSubject: Subject<RegisteredName> = PublishSubject.create()
@@ -386,7 +386,7 @@ class AccountService(
     fun addAccount(map: Map<String, String>): Observable<Account> {
         return Observable.fromCallable {
             val accountId = JamiService.addAccount(StringMap.toSwig(map))
-            if (StringUtils.isEmpty(accountId)) {
+            if (accountId == null || accountId.isEmpty()) {
                 throw RuntimeException("Can't create account.")
             }
             var account = getAccount(accountId)
@@ -407,7 +407,7 @@ class AccountService(
         }
             .flatMap { account: Account ->
                 observableAccounts
-                    .filter { acc: Account? -> acc!!.accountId == account.accountId }
+                    .filter { acc: Account -> acc.accountId == account.accountId }
                     .startWithItem(account)
             }
             .subscribeOn(Schedulers.from(mExecutor))
@@ -420,7 +420,7 @@ class AccountService(
      * @return the Account from the local cache that matches the accountId
      */
     fun getAccount(accountId: String?): Account? {
-        if (!StringUtils.isEmpty(accountId)) {
+        if (accountId != null && accountId.isNotEmpty()) {
             synchronized(mAccountList) {
                 for (account in mAccountList)
                     if (accountId == account.accountId) return account
@@ -433,13 +433,10 @@ class AccountService(
         return accountsSubject
             .firstOrError()
             .map { accounts: List<Account> ->
-                for (account in accounts) {
-                    if (account.accountId == accountId) {
+                for (account in accounts)
+                    if (account.accountId == accountId)
                         return@map account
-                    }
-                }
-                Log.d(TAG, "getAccountSingle() can't find account $accountId")
-                throw IllegalArgumentException()
+                throw IllegalArgumentException("getAccountSingle() can't find account $accountId")
             }
     }
 
@@ -732,8 +729,8 @@ class AccountService(
             val details = JamiService.getAccountDetails(accountId)
             details[ConfigKey.ACCOUNT_DEVICE_NAME.key()] = newName
             JamiService.setAccountDetails(accountId, details)
-            account!!.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName)
-            account.devices = JamiService.getKnownRingDevices(accountId).toNative()
+            account?.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName)
+            account?.devices = JamiService.getKnownRingDevices(accountId).toNative()
         }
     }
 
@@ -770,19 +767,10 @@ class AccountService(
      * @return The account's codecs list from the Daemon
      */
     fun getCodecList(accountId: String): Single<List<Codec>> {
-        return Single.fromCallable<List<Codec>> {
-            val results: MutableList<Codec> = ArrayList()
-            val payloads = JamiService.getCodecList()
+        return Single.fromCallable {
             val activePayloads = JamiService.getActiveCodecList(accountId)
-            for (i in payloads.indices) {
-                val details = JamiService.getCodecDetails(accountId, payloads[i])
-                if (details.size > 1) {
-                    results.add(Codec(payloads[i], details.toNative(), activePayloads.contains(payloads[i])))
-                } else {
-                    Log.i(TAG, "Error loading codec $i")
-                }
-            }
-            results
+            JamiService.getCodecList()
+                .map { Codec(it, JamiService.getCodecDetails(accountId, it), activePayloads.contains(it)) }
         }.subscribeOn(Schedulers.from(mExecutor))
     }
 
@@ -1278,27 +1266,23 @@ class AccountService(
         }
     }
 
-    fun userSearchEnded(accountId: String, state: Int, query: String, results: ArrayList<Map<String, String>>) {
-        val account = getAccount(accountId)!!
+    fun userSearchEnded(accountId: String, state: Int, query: String, results: List<Map<String, String>>) {
+        val account = getAccount(accountId) ?: return
         val r = UserSearchResult(accountId, query, state)
-        val contacts = ArrayList<Contact>(results.size)
-        for (m in results) {
+        r.results = results.map { m ->
             val uri = m["id"]!!
-            val username = m["username"]
             val firstName = m["firstName"]
             val lastName = m["lastName"]
-            val picture_b64 = m["profilePicture"]
-            val contact = account.getContactFromCache(uri)
-            synchronized(contact) {
-                if (username != null) {
-                    if (contact.username == null)
-                        contact.username = Single.just(username)
+            account.getContactFromCache(uri).apply {
+                synchronized(this) {
+                    m["username"]?.let { name ->
+                        if (this.username == null)
+                            this.username = Single.just(name)
+                    }
+                    setProfile(Profile("$firstName $lastName", mVCardService.base64ToBitmap(m["profilePicture"])))
                 }
-                contact.setProfile(Profile("$firstName $lastName", mVCardService.base64ToBitmap(picture_b64)))
             }
-            contacts.add(contact)
         }
-        r.results = contacts
         searchResultSubject.onNext(r)
     }
 

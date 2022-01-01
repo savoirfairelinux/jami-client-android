@@ -20,30 +20,51 @@
 package cx.ring.tv.cards.contacts
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.tv.cards.AbstractCardPresenter
 import cx.ring.tv.cards.Card
 import cx.ring.tv.cards.CardView
 import cx.ring.views.AvatarDrawable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.services.ConversationFacade
 
-class ContactCardPresenter(context: Context, resId: Int) :
+class ContactCardPresenter(context: Context, val conversationFacade: ConversationFacade, resId: Int) :
     AbstractCardPresenter<CardView>(ContextThemeWrapper(context, resId)) {
-    override fun onCreateView(): CardView {
-        return CardView(context)
+    override fun onCreateView() = CardView(context).apply {
+        setMainImage(ContextCompat.getDrawable(context, R.drawable.tv_item_selected_background), false)
+        setTitleSingleLine(true)
+        setBackgroundColor(ContextCompat.getColor(context, R.color.tv_transparent))
+        setInfoAreaBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
     }
 
-    override fun onBindViewHolder(card: Card, cardView: CardView) {
-        val contact = card as ContactCard
-        cardView.titleText = card.title
-        cardView.contentText = card.description
-        cardView.setTitleSingleLine(true)
-        cardView.setBackgroundColor(context.resources.getColor(R.color.tv_transparent))
-        cardView.setInfoAreaBackgroundColor(context.resources.getColor(R.color.transparent))
-        cardView.mainImage = AvatarDrawable.Builder()
-            .withViewModel(contact.model)
-            .withPresence(false)
-            .withCircleCrop(false)
-            .build(context)
+    data class ConversationView (
+        val title: String,
+        val uri: String,
+        val avatar: Drawable,
+        val isOnline: Boolean
+    )
+
+    override fun onBindViewHolder(card: Card, cardView: CardView, disposable: CompositeDisposable) {
+        val badge = cardView.badgeImage
+        disposable.add(conversationFacade.observeConversation((card as ContactCard).model, card.type.hasPresence())
+            .map { vm -> ConversationView(vm.contactName, vm.uriTitle, AvatarDrawable.Builder()
+                .withViewModel(vm)
+                .withPresence(false)
+                .withCircleCrop(false)
+                .build(context), vm.isOnline) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { vm -> cardView.apply {
+                Log.w(TAG, "Present card $vm")
+                titleText = vm.title
+                contentText = vm.uri
+                badgeImage = if (vm.isOnline) badge else null
+                setMainImage(vm.avatar, true)
+            }
+        })
     }
 }

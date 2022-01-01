@@ -36,38 +36,41 @@ object IconCardHelper {
         }
     }
 
-    fun getAccountAddDeviceCard(pContext: Context): IconCard {
+    fun getAccountAddDeviceCard(context: Context): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_ADD_DEVICE,
-            pContext.getString(R.string.account_export_title),
+            context.getString(R.string.account_export_title),
             "",
+            context,
             R.drawable.baseline_androidtv_link_device
         )
     }
 
-    fun getAccountManagementCard(pContext: Context): IconCard {
+    fun getAccountManagementCard(context: Context): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_EDIT_PROFILE,
-            pContext.getString(R.string.account_edit_profile),
+            context.getString(R.string.account_edit_profile),
             "",
+            context,
             R.drawable.baseline_androidtv_account
         )
     }
 
-    fun getAccountShareCard(pContext: Context, bitmapDrawable: BitmapDrawable?): IconCard {
+    fun getAccountShareCard(context: Context, bitmapDrawable: BitmapDrawable?): IconCard {
         return IconCard(
             Card.Type.ACCOUNT_SHARE_ACCOUNT,
-            pContext.getString(R.string.menu_item_share),
+            context.getString(R.string.menu_item_share),
             "",
             bitmapDrawable
         )
     }
 
-    fun getAddContactCard(pContext: Context): IconCard {
+    fun getAddContactCard(context: Context): IconCard {
         return IconCard(
             Card.Type.ADD_CONTACT,
-            pContext.getString(R.string.account_tv_add_contact),
+            context.getString(R.string.account_tv_add_contact),
             "",
+            context,
             R.drawable.baseline_androidtv_add_user
         )
     }

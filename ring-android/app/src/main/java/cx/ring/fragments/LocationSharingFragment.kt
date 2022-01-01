@@ -556,7 +556,7 @@ class LocationSharingFragment : Fragment() {
     }
 
     companion object {
-        private val TAG = LocationSharingFragment::class.java.simpleName
+        private val TAG = LocationSharingFragment::class.simpleName!!
         private const val REQUEST_CODE_LOCATION = 47892
         private const val KEY_SHOW_CONTROLS = "showControls"
 

@@ -33,7 +33,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Call
 import net.jami.model.ContactEvent
+import net.jami.model.Conversation
 import net.jami.model.Interaction
+import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 
 class SmartListViewHolder : RecyclerView.ViewHolder {
@@ -53,52 +56,65 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
         parentDisposable.add(compositeDisposable)
     }
 
-    fun bind(clickListener: SmartListListeners, conversationItemViewModel: ConversationItemViewModel) {
+    fun bindHeader(title: ConversationItemViewModel.Title) {
+        headerBinding?.headerTitle?.setText(when(title) {
+            ConversationItemViewModel.Title.Conversations -> R.string.navigation_item_conversation
+            else -> R.string.search_results_public_directory
+        })
+    }
+
+    fun bind(conversationFacade: ConversationFacade, clickListener: SmartListListeners, conversation: Conversation) {
         //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear()
         if (binding != null) {
-            itemView.setOnClickListener { clickListener.onItemClick(conversationItemViewModel) }
-            conversationItemViewModel.selected?.let { selected ->
-                compositeDisposable.add(selected.observeOn(AndroidSchedulers.mainThread()).subscribe { activated ->
-                    binding.itemLayout.isActivated = activated
-                })
-            }
+            itemView.setOnClickListener { clickListener.onItemClick(conversation) }
             itemView.setOnLongClickListener {
-                clickListener.onItemLongClick(conversationItemViewModel)
+                clickListener.onItemLongClick(conversation)
                 true
             }
-            binding.convParticipant.text = conversationItemViewModel.contactName
-            val lastInteraction = conversationItemViewModel.lastInteractionTime
-            val lastInteractionStr =
-                if (lastInteraction == 0L) ""
-                else DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)
-                    .toString()
-            binding.convLastTime.text = lastInteractionStr
-            if (conversationItemViewModel.hasOngoingCall()) {
-                binding.convLastItem.visibility = View.VISIBLE
-                binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
-            } else if (conversationItemViewModel.lastEvent != null) {
-                binding.convLastItem.visibility = View.VISIBLE
-                binding.convLastItem.text = getLastEventSummary(conversationItemViewModel.lastEvent!!, itemView.context)
-            } else {
-                binding.convLastItem.visibility = View.GONE
-            }
-            if (conversationItemViewModel.hasUnreadTextMessage()) {
-                binding.convParticipant.setTypeface(null, Typeface.BOLD)
-                binding.convLastTime.setTypeface(null, Typeface.BOLD)
-                binding.convLastItem.setTypeface(null, Typeface.BOLD)
-            } else {
-                binding.convParticipant.setTypeface(null, Typeface.NORMAL)
-                binding.convLastTime.setTypeface(null, Typeface.NORMAL)
-                binding.convLastItem.setTypeface(null, Typeface.NORMAL)
-            }
-            binding.photo.setImageDrawable(AvatarDrawable.Builder()
-                    .withViewModel(conversationItemViewModel)
-                    .withCircleCrop(true)
-                    .build(binding.photo.context))
-        } else headerBinding?.headerTitle?.setText(
+
+            compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { conversationItemViewModel ->
+                    binding.convParticipant.text = conversationItemViewModel.contactName
+                    val lastInteraction = conversationItemViewModel.lastInteractionTime
+                    val lastInteractionStr =
+                        if (lastInteraction == 0L) ""
+                        else DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)
+                            .toString()
+                    binding.convLastTime.text = lastInteractionStr
+                    if (conversationItemViewModel.hasOngoingCall()) {
+                        binding.convLastItem.visibility = View.VISIBLE
+                        binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
+                    } else if (conversationItemViewModel.lastEvent != null) {
+                        binding.convLastItem.visibility = View.VISIBLE
+                        binding.convLastItem.text = getLastEventSummary(conversationItemViewModel.lastEvent!!, itemView.context)
+                    } else {
+                        binding.convLastItem.visibility = View.GONE
+                    }
+                    if (conversationItemViewModel.hasUnreadTextMessage()) {
+                        binding.convParticipant.setTypeface(null, Typeface.BOLD)
+                        binding.convLastTime.setTypeface(null, Typeface.BOLD)
+                        binding.convLastItem.setTypeface(null, Typeface.BOLD)
+                    } else {
+                        binding.convParticipant.setTypeface(null, Typeface.NORMAL)
+                        binding.convLastTime.setTypeface(null, Typeface.NORMAL)
+                        binding.convLastItem.setTypeface(null, Typeface.NORMAL)
+                    }
+                    binding.photo.setImageDrawable(AvatarDrawable.Builder()
+                        .withViewModel(conversationItemViewModel)
+                        .withCircleCrop(true)
+                        .build(binding.photo.context))
+                })
+
+            compositeDisposable.add(conversation.getVisible().observeOn(AndroidSchedulers.mainThread()).subscribe { activated ->
+                binding.itemLayout.isActivated = activated
+            })
+
+
+        } /*else headerBinding?.headerTitle?.setText(
             if (conversationItemViewModel.headerTitle == ConversationItemViewModel.Title.Conversations) R.string.navigation_item_conversation else R.string.search_results_public_directory
-        )
+        )*/
     }
 
     fun unbind() {
@@ -140,7 +156,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     }
 
     interface SmartListListeners {
-        fun onItemClick(item: ConversationItemViewModel)
-        fun onItemLongClick(item: ConversationItemViewModel)
+        fun onItemClick(item: Conversation)
+        fun onItemLongClick(item: Conversation)
     }
 }

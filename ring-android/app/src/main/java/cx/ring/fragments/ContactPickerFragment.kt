@@ -8,20 +8,17 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragContactPickerBinding
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
-import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.ConversationItemViewModel
 import java.util.*
 import javax.inject.Inject
 
@@ -33,18 +30,8 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     private var mAccountId: String? = null
     private val mCurrentSelection: MutableSet<Contact> = HashSet()
 
-    @JvmField
     @Inject
-    var mConversationFacade: ConversationFacade? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //setRetainInstance(true);
-        //((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
+    lateinit var conversationFacade: ConversationFacade
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bdialog = super.onCreateDialog(savedInstanceState)
@@ -58,19 +45,18 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mDisposableBag.add(mConversationFacade!!.contactList
+        /*mDisposableBag.add(conversationFacade.contactList
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { conversations: MutableList<ConversationItemViewModel> ->
-                if (binding == null) return@subscribe
+            .subscribe { conversations ->
                 adapter?.update(conversations)
-            })
+            })*/
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragContactPickerBinding.inflate(layoutInflater, container, false)
         adapter = SmartListAdapter(null, object : SmartListListeners {
-            override fun onItemClick(item: ConversationItemViewModel) {
-                mAccountId = item.accountId
+            override fun onItemClick(item: Conversation) {
+                /*mAccountId = item.accountId
                 val checked = !item.isChecked
                 item.isChecked = checked
                 adapter!!.update(item)
@@ -99,20 +85,19 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                     binding!!.createGroupBtn.isEnabled = true
                 } else {
                     remover.run()
-                }
+                }*/
             }
 
-            override fun onItemLongClick(item: ConversationItemViewModel) {}
-        }, mDisposableBag)
+            override fun onItemLongClick(item: Conversation) {}
+        }, conversationFacade, mDisposableBag)
         binding!!.createGroupBtn.setOnClickListener { v: View? ->
-            mDisposableBag.add(
-                mConversationFacade!!.createConversation(mAccountId!!, mCurrentSelection)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { conversation: Conversation ->
-                        (requireActivity() as HomeActivity).startConversation(conversation.accountId, conversation.uri)
-                        val dialog = dialog
-                        dialog?.cancel()
-                    })
+            mDisposableBag.add(conversationFacade.createConversation(mAccountId!!, mCurrentSelection)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { conversation: Conversation ->
+                    (requireActivity() as HomeActivity).startConversation(conversation.accountId, conversation.uri)
+                    val dialog = dialog
+                    dialog?.cancel()
+                })
         }
         binding!!.contactList.adapter = adapter
         return binding!!.root

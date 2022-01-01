@@ -33,9 +33,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.services.ConversationFacade
 import net.jami.model.Conference
+import net.jami.model.Conversation
 import net.jami.services.CallService
 import net.jami.services.NotificationService
-import net.jami.smartlist.ConversationItemViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -52,15 +52,15 @@ class ConversationSelectionActivity : AppCompatActivity() {
     var mCallService: CallService
 
     private val adapter: SmartListAdapter = SmartListAdapter(null, object : SmartListListeners {
-        override fun onItemClick(item: ConversationItemViewModel) {
+        override fun onItemClick(item: Conversation) {
             val intent = Intent()
             intent.data = ConversationPath.toUri(item.accountId, item.uri)
             setResult(RESULT_OK, intent)
             finish()
         }
 
-        override fun onItemLongClick(item: ConversationItemViewModel) {}
-    }, mDisposable)
+        override fun onItemLongClick(item: Conversation) {}
+    }, mConversationFacade, mDisposable)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,20 +75,18 @@ class ConversationSelectionActivity : AppCompatActivity() {
         super.onStart()
         val conference: Conference? = intent?.getStringExtra(NotificationService.KEY_CALL_ID)?.let { confId -> mCallService.getConference(confId) }
         mDisposable.add(mConversationFacade
-            .getConversationList()
-            .map { vm: MutableList<ConversationItemViewModel> ->
+            .getConversationSmartlist()
+            .map { vm: List<Conversation> ->
                 if (conference == null) return@map vm
-                val filteredVms: MutableList<ConversationItemViewModel> = ArrayList(vm.size)
-                models@ for (v in vm) {
-                    val contact = v.getContact() ?: continue // We only add contacts and one to one
+                return@map vm.filter { v ->
+                    val contact = v.contact ?: return@filter true
                     for (call in conference.participants) {
-                        if (call.contact === contact.contact) {
-                            continue@models
+                        if (call.contact === contact) {
+                            return@filter false
                         }
                     }
-                    filteredVms.add(v)
+                    return@filter true
                 }
-                filteredVms
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list -> adapter.update(list) })

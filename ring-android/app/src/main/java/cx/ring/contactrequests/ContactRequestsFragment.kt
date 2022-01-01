@@ -36,8 +36,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.contactrequests.ContactRequestsPresenter
 import net.jami.contactrequests.ContactRequestsView
+import net.jami.model.Conversation
 import net.jami.model.Uri
-import net.jami.smartlist.ConversationItemViewModel
+import net.jami.services.ConversationFacade
 
 @AndroidEntryPoint
 class ContactRequestsFragment :
@@ -77,7 +78,7 @@ class ContactRequestsFragment :
         menu.clear()
     }
 
-    override fun updateView(list: MutableList<ConversationItemViewModel>, disposable: CompositeDisposable) {
+    override fun updateView(list: List<Conversation>, conversationFacade: ConversationFacade, disposable: CompositeDisposable) {
         val binding = binding ?: return
         if (list.isNotEmpty()) {
             binding.paneRingID.visibility = View.GONE
@@ -88,7 +89,7 @@ class ContactRequestsFragment :
             adapter.update(list)
         } else {
             binding.requestsList.layoutManager = LinearLayoutManager(activity)
-            mAdapter = SmartListAdapter(list, this@ContactRequestsFragment, disposable).apply {
+            mAdapter = SmartListAdapter(ConversationFacade.ConversationList(list), this@ContactRequestsFragment, conversationFacade, disposable).apply {
                 binding.requestsList.adapter = this
             }
         }
@@ -99,8 +100,8 @@ class ContactRequestsFragment :
         })
     }
 
-    override fun updateItem(item: ConversationItemViewModel) {
-        mAdapter?.update(item)
+    override fun updateItem(item: Conversation) {
+        //mAdapter?.update(item)
     }
 
     override fun goToConversation(accountId: String, contactId: Uri) {
@@ -117,11 +118,11 @@ class ContactRequestsFragment :
         Snackbar.make(binding!!.root, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun onItemClick(item: ConversationItemViewModel) {
+    override fun onItemClick(item: Conversation) {
         presenter.contactRequestClicked(item.accountId, item.uri)
     }
 
-    override fun onItemLongClick(item: ConversationItemViewModel) {
+    override fun onItemLongClick(item: Conversation) {
         MaterialAlertDialogBuilder(requireContext())
             .setItems(R.array.swarm_actions) { dialog, which ->
                 when (which) {

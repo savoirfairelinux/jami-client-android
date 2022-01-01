@@ -80,9 +80,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .map { vcard -> readData(vcard) }
     }
 
-    override fun base64ToBitmap(base64: String?): Any? {
-        return BitmapUtils.base64ToBitmap(base64)
-    }
+    override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 
     companion object {
         fun loadProfile(context: Context, account: Account): Observable<Profile> {

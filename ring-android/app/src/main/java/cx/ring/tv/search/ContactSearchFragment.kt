@@ -33,7 +33,8 @@ import cx.ring.tv.cards.contacts.ContactCard
 import cx.ring.tv.contact.TVContactActivity
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
-import net.jami.smartlist.ConversationItemViewModel
+import net.jami.model.Conversation
+import net.jami.services.ConversationFacade
 
 @AndroidEntryPoint
 class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
@@ -41,6 +42,8 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
 
     private var mTextEditor: SearchEditText? = null
     private val mRowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+    private var directoryRow: ListRow? = null
+    private var conversationsRow: ListRow? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,32 +93,57 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         return true
     }
 
-    override fun displayResults(contacts: List<ConversationItemViewModel>) {
-        mRowsAdapter.clear()
-        var listRow: ListRow? = null
-        for (item in contacts) {
-            if (item.headerTitle != ConversationItemViewModel.Title.None) {
-                if (listRow != null)
-                    mRowsAdapter.add(listRow)
-                val header = HeaderItem(getString(when(item.headerTitle) {
-                    ConversationItemViewModel.Title.PublicDirectory -> R.string.search_results
-                    ConversationItemViewModel.Title.Conversations -> R.string.navigation_item_conversation
-                    else -> -1
-                }))
-                listRow = ListRow(header, ArrayObjectAdapter(CardPresenterSelector(activity)))
+    private val diff = object : DiffCallback<ContactCard>() {
+        override fun areItemsTheSame(oldItem: ContactCard, newItem: ContactCard): Boolean {
+            return oldItem.model === newItem.model
+        }
+
+        override fun areContentsTheSame(oldItem: ContactCard, newItem: ContactCard): Boolean {
+            return oldItem.model === newItem.model
+        }
+    }
+
+    override fun displayResults(contacts: ConversationFacade.ConversationList, conversationFacade: ConversationFacade) {
+        if (contacts.publicDirectory.isEmpty()) {
+            if (directoryRow != null) {
+                mRowsAdapter.remove(directoryRow)
+                directoryRow = null
+            }
+        } else {
+            if (directoryRow == null) {
+                val adapter = ArrayObjectAdapter(CardPresenterSelector(requireContext(), conversationFacade))
+                adapter.addAll(0, contacts.publicDirectory.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) })
+                directoryRow = ListRow(HeaderItem(getString(R.string.search_results)), adapter)
+                mRowsAdapter.add(0, directoryRow)
             } else {
-                if (listRow == null) {
-                    listRow = ListRow(HeaderItem(getString(R.string.search_results)), ArrayObjectAdapter(CardPresenterSelector(activity)))
-                }
-                (listRow.adapter as ArrayObjectAdapter).add(ContactCard(item, Card.Type.SEARCH_RESULT))
+                (directoryRow!!.adapter as ArrayObjectAdapter).setItems(
+                    contacts.publicDirectory.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) }, diff)
+            }
+            rowsSupportFragment.verticalGridView.smoothScrollToPosition(0)
+        }
+
+        if (contacts.conversations.isEmpty()) {
+            if (conversationsRow != null) {
+                mRowsAdapter.remove(conversationsRow)
+                conversationsRow = null
+            }
+        } else {
+            if (conversationsRow == null) {
+                val adapter = ArrayObjectAdapter(CardPresenterSelector(requireContext(), conversationFacade))
+                adapter.addAll(0, contacts.conversations.map { item -> ContactCard(item, Card.Type.CONTACT_ONLINE) })
+                conversationsRow = ListRow(HeaderItem(getString(R.string.navigation_item_conversation)), adapter)
+                mRowsAdapter.add(conversationsRow)
+            } else {
+                (conversationsRow!!.adapter as ArrayObjectAdapter).setItems(
+                    contacts.conversations.map { item -> ContactCard(item, Card.Type.CONTACT_ONLINE) }, diff)
             }
         }
-        if (listRow != null)
-            mRowsAdapter.add(listRow)
     }
 
     override fun clearSearch() {
         mRowsAdapter.clear()
+        directoryRow = null
+        conversationsRow = null
     }
 
     override fun startCall(accountID: String, number: String) {
@@ -125,7 +153,7 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         activity?.finish()
     }
 
-    override fun displayContactDetails(model: ConversationItemViewModel) {
+    override fun displayContactDetails(model: Conversation) {
         val intent = Intent(activity, TVContactActivity::class.java)
         //intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
         intent.setDataAndType(ConversationPath.toUri(model.accountId, model.uri), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING)

@@ -17,6 +17,7 @@ import android.content.Context
 import androidx.leanback.widget.BaseCardView
 import androidx.leanback.widget.Presenter
 import android.view.ViewGroup
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * This abstract, generic class will create and manage the
@@ -25,22 +26,23 @@ import android.view.ViewGroup
  *
  * @param <T> View type for the card.
 </T> */
-abstract class AbstractCardPresenter<T : BaseCardView>
-/**
- * @param context The current context.
- */(val context: Context) : Presenter() {
+abstract class AbstractCardPresenter<T : BaseCardView>(val context: Context) : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
-        val cardView = onCreateView()
-        return ViewHolder(cardView)
+        return CardViewHolder(onCreateView())
+    }
+
+    public class CardViewHolder<T : BaseCardView>(view: T) : ViewHolder(view) {
+        val disposable = CompositeDisposable()
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
         val card = item as Card
-        onBindViewHolder(card, viewHolder.view as T)
+        onBindViewHolder(card, viewHolder.view as T, (viewHolder as CardViewHolder<T>).disposable)
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
         onUnbindViewHolder(viewHolder.view as T)
+        (viewHolder as CardViewHolder<T>).disposable.clear()
     }
 
     fun onUnbindViewHolder(cardView: T) {
@@ -61,7 +63,7 @@ abstract class AbstractCardPresenter<T : BaseCardView>
      * @param cardView The view the card is bound to.
      * @see Presenter.onBindViewHolder
      */
-    abstract fun onBindViewHolder(card: Card, cardView: T)
+    abstract fun onBindViewHolder(card: Card, cardView: T, disposable: CompositeDisposable)
 
     companion object {
         private const val TAG = "AbstractCardPresenter"

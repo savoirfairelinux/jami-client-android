@@ -49,12 +49,10 @@ import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.*
-import androidx.core.view.inputmethod.InputContentInfoCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.math.MathUtils.lerp
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
@@ -92,6 +90,7 @@ import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
+
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
@@ -207,24 +206,24 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         }
                     })
             }
-            ViewCompat.setOnApplyWindowInsetsListener(layout) { v: View, insets: WindowInsetsCompat ->
+            ViewCompat.setOnApplyWindowInsetsListener(layout) { _, insets: WindowInsetsCompat ->
                 if (animating == 0)
                     layout.updatePadding(bottom = insets.systemWindowInsetBottom)
                 WindowInsetsCompat.CONSUMED
             }
             binding.ongoingcallPane.visibility = View.GONE
-            binding.msgInputTxt.setMediaListener { contentInfo: InputContentInfoCompat ->
-                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), contentInfo.contentUri)
-                        .flatMapCompletable { file: File -> sendFile(file) }
-                        .doFinally { contentInfo.releasePermission() })
+            ViewCompat.setOnReceiveContentListener(binding.msgInputTxt, SUPPORTED_MIME_TYPES) { _, contentInfo ->
+                for (i in 0 until contentInfo.clip.itemCount) {
+                    val item: ClipData.Item = contentInfo.clip.getItemAt(i)
+                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), item.uri)
+                        .flatMapCompletable { sendFile(it) })
+                }
+                null
             }
             binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
             binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 if (hasFocus) {
-                    val fragment = childFragmentManager.findFragmentById(R.id.mapLayout)
-                    if (fragment != null) {
-                        (fragment as LocationSharingFragment).hideControls()
-                    }
+                    (childFragmentManager.findFragmentById(R.id.mapLayout) as LocationSharingFragment?)?.hideControls()
                 }
             }
             binding.msgInputTxt.addTextChangedListener(object : TextWatcher {
@@ -567,8 +566,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (resultCode == Activity.RESULT_OK && resultData != null) {
                 val clipData = resultData.clipData
                 if (clipData != null) { // checking multiple selection or not
-                    val fNb = clipData.itemCount
-                    for (i in 0 until fNb) {
+                    for (i in 0 until clipData.itemCount) {
                         val uri = clipData.getItemAt(i).uri
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .observeOn(AndroidSchedulers.mainThread())
@@ -1102,11 +1100,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (type.startsWith("text/plain")) {
                 binding!!.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT))
             } else {
-                var uri = intent.data
-                val clip = intent.clipData
-                if (uri == null && clip != null && clip.itemCount > 0) uri = clip.getItemAt(0).uri
-                if (uri == null) return
-                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
+                val intentUri = intent.data
+                if (intentUri != null)
+                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), intentUri).flatMapCompletable { file -> sendFile(file) })
+                intent.clipData?.let { clipData ->
+                    for (i in 0 until clipData.itemCount) {
+                        val uri = clipData.getItemAt(i).uri
+                        if (uri != intentUri)
+                            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable { file -> sendFile(file) })
+                    }
+                }
             }
         } else if (Intent.ACTION_VIEW == action) {
             val path = ConversationPath.fromIntent(intent)
@@ -1204,5 +1207,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             return 0
         }
+
+        private val SUPPORTED_MIME_TYPES = arrayOf("image/png", "image/jpg", "image/gif", "image/webp")
     }
 }
