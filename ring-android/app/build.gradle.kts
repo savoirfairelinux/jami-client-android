@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 31
-        versionCode = 324
-        versionName = "20211210-01"
+        versionCode = 325
+        versionName = "20220102-01"
     }
     sourceSets {
         getByName("main") {
