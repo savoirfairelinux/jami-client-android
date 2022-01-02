@@ -20,6 +20,7 @@
  */
 package cx.ring.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -29,30 +30,44 @@ import cx.ring.databinding.ItemSmartlistHeaderBinding
 import cx.ring.viewholders.SmartListViewHolder
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.smartlist.ConversationItemViewModel
+import net.jami.model.Conversation
+import net.jami.services.ConversationFacade
 
 class SmartListAdapter(
-    conversationItemViewModels: List<ConversationItemViewModel>?,
+    conversations: ConversationFacade.ConversationList?,
     private val listener: SmartListListeners,
-    private val mDisposable: CompositeDisposable
+    private val conversationFacade: ConversationFacade,
+    private val disposable: CompositeDisposable
 ) : RecyclerView.Adapter<SmartListViewHolder>() {
-    private var mConversationItemViewModels: MutableList<ConversationItemViewModel> = if (conversationItemViewModels != null) ArrayList(conversationItemViewModels) else ArrayList()
+    private var conversations = setItems(conversations ?: ConversationFacade.ConversationList())
     private var recyclerView: RecyclerView? = null
+    private var itemCount: Int = 0
+    private var searchHeaderIndex: Int = -1
+    private var convHeaderIndex: Int = -1
+
+    fun setItems(list: ConversationFacade.ConversationList): ConversationFacade.ConversationList {
+        itemCount = list.getCombinedSize()
+        if (list.publicDirectory.isNotEmpty()) {
+            searchHeaderIndex = 0
+            convHeaderIndex = if (list.conversations.isEmpty()) -1 else list.publicDirectory.size + 1
+        } else {
+            searchHeaderIndex = -1
+            convHeaderIndex = -1
+        }
+        return list
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SmartListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return if (viewType == 0) {
-            val itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false)
-            SmartListViewHolder(itemBinding, mDisposable)
-        } else {
-            val itemBinding = ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false)
-            SmartListViewHolder(itemBinding, mDisposable)
-        }
+        return if (viewType == 0) SmartListViewHolder(ItemSmartlistBinding.inflate(layoutInflater, parent, false), disposable)
+        else SmartListViewHolder(ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false), disposable)
     }
 
     override fun getItemViewType(position: Int): Int {
-        val smartListViewModel = mConversationItemViewModels[position]
-        return if (smartListViewModel.headerTitle == ConversationItemViewModel.Title.None) 0 else 1
+        return when(position) {
+            searchHeaderIndex, convHeaderIndex -> 1
+            else -> 0
+        }
     }
 
     override fun onViewRecycled(holder: SmartListViewHolder) {
@@ -61,39 +76,35 @@ class SmartListAdapter(
     }
 
     override fun onBindViewHolder(holder: SmartListViewHolder, position: Int) {
-        holder.bind(listener, mConversationItemViewModels[position])
+        conversations[position]?.let { conversation ->
+            return holder.bind(conversationFacade, listener, conversation)
+        }
+        conversations.getHeader(position).let { title ->
+            return holder.bindHeader(title)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return mConversationItemViewModels.size
-    }
+    override fun getItemCount(): Int = itemCount
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
     }
 
-    fun update(viewModels: MutableList<ConversationItemViewModel>?) {
-        val old: List<ConversationItemViewModel> = mConversationItemViewModels
-        mConversationItemViewModels = viewModels ?: ArrayList()
-        if (viewModels != null) {
+    fun update(viewModels: List<Conversation>) {
+        update(ConversationFacade.ConversationList(viewModels))
+    }
+
+    fun update(viewModels: ConversationFacade.ConversationList) {
+        val old: ConversationFacade.ConversationList = conversations
+        conversations = setItems(viewModels)
+        if (!viewModels.isEmpty()) {
             val recyclerViewState = recyclerView?.layoutManager?.onSaveInstanceState()
             DiffUtil.calculateDiff(SmartListDiffUtil(old, viewModels))
                 .dispatchUpdatesTo(this)
             recyclerView?.layoutManager?.onRestoreInstanceState(recyclerViewState)
         } else {
             notifyDataSetChanged()
-        }
-    }
-
-    fun update(conversationItemViewModel: ConversationItemViewModel) {
-        for (i in mConversationItemViewModels.indices) {
-            val old = mConversationItemViewModels[i]
-            if (old.contacts === conversationItemViewModel.contacts) {
-                mConversationItemViewModels[i] = conversationItemViewModel
-                notifyItemChanged(i)
-                return
-            }
         }
     }
 }

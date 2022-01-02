@@ -26,25 +26,27 @@ import cx.ring.R
 import android.graphics.PorterDuff
 import android.view.ContextThemeWrapper
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
 import cx.ring.tv.cards.Card
 import cx.ring.tv.cards.CardView
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class IconCardPresenter(context: Context) : AbstractCardPresenter<CardView>(ContextThemeWrapper(context, R.style.ContactCardTheme)) {
-    override fun onCreateView(): CardView {
-        val cardView = CardView(context)
-        cardView.setBackgroundColor(context.resources.getColor(R.color.tv_transparent))
-        cardView.setInfoAreaBackgroundColor(context.resources.getColor(R.color.transparent))
-        val image = cardView.mainImageView
-        image.setPadding(IMAGE_PADDING, IMAGE_PADDING, IMAGE_PADDING, IMAGE_PADDING)
-        image.setColorFilter(context.resources.getColor(android.R.color.white), PorterDuff.Mode.SRC_IN)
-        cardView.titleTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        return cardView
+    override fun onCreateView() = CardView(context).apply {
+        setBackgroundColor(ContextCompat.getColor(context, R.color.tv_transparent))
+        setInfoAreaBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+        mainImageView.apply {
+            setPadding(IMAGE_PADDING)
+            setColorFilter(ContextCompat.getColor(context, android.R.color.white), PorterDuff.Mode.SRC_IN)
+        }
+        titleTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
     }
 
-    override fun onBindViewHolder(card: Card, cardView: CardView) {
+    override fun onBindViewHolder(card: Card, cardView: CardView, disposable: CompositeDisposable) {
         cardView.titleText = card.title
         cardView.contentText = card.description
-        cardView.mainImage = card.getDrawable(cardView.context)
+        cardView.mainImage = card.drawable
     }
 
     companion object {

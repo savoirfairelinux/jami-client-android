@@ -37,9 +37,9 @@ import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Conversation
 import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.ConversationItemViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,7 +61,7 @@ class ShareWithFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = SmartListAdapter(null, object : SmartListListeners {
-            override fun onItemClick(item: ConversationItemViewModel) {
+            override fun onItemClick(item: Conversation) {
                 mPendingIntent?.let { intent ->
                     mPendingIntent = null
                     val type = intent.type
@@ -74,8 +74,8 @@ class ShareWithFragment : Fragment() {
                 }
             }
 
-            override fun onItemLongClick(item: ConversationItemViewModel) {}
-        }, mDisposable)
+            override fun onItemLongClick(item: Conversation) {}
+        }, mConversationFacade, mDisposable)
 
         val binding = FragSharewithBinding.inflate(inflater).apply {
             shareList.layoutManager = LinearLayoutManager(inflater.context)
@@ -128,7 +128,7 @@ class ShareWithFragment : Fragment() {
             return
         }
         mDisposable.add(mConversationFacade
-            .getConversationList()
+            .getConversationSmartlist()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list -> adapter?.update(list) })
         binding?.let { binding ->

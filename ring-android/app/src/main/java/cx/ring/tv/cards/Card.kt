@@ -16,43 +16,10 @@
  */
 package cx.ring.tv.cards
 
-import android.content.Context
-import android.graphics.Color
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 
-open class Card {
-    @DrawableRes
-    var localImageResource = -1
-    private var mDrawable: Drawable? = null
-    var title = ""
-    var description: CharSequence = ""
-    var type: Type = Type.DEFAULT
-    //var id: Long = 0
-    var width = 0
-    var height = 0
-
-    /*not used at the moment but will be use in futur*/
-    private var mFooterColor: String? = null
-
-    fun setDrawable(bitmapDrawable: Drawable?) {
-        mDrawable = bitmapDrawable
-    }
-
-    fun getDrawable(context: Context): Drawable {
-        return mDrawable ?: if (localImageResource != -1) ContextCompat.getDrawable(context, localImageResource)!! else ColorDrawable(0x00000000)
-    }
-
-    /*not used at the moment but will be use in futur*/
-    val footerColor: Int
-        get() = if (mFooterColor == null) -1 else Color.parseColor(mFooterColor)
-
-    /*not used at the moment but will be use in futur*/
-    fun setFooterColor(footerColor: String) {
-        mFooterColor = footerColor
-    }
+abstract class Card(val type: Type, val title: String = "", val description: CharSequence = "") {
+    var drawable: Drawable? = null
 
     enum class Type {
         DEFAULT,
@@ -64,8 +31,8 @@ open class Card {
         CONTACT,
         CONTACT_ONLINE,
         CONTACT_WITH_USERNAME,
-        CONTACT_WITH_USERNAME_ONLINE,
-        CONTACT_REQUEST,
-        CONTACT_REQUEST_WITH_USERNAME
+        CONTACT_WITH_USERNAME_ONLINE;
+
+        fun hasPresence() = this == CONTACT_ONLINE || this == CONTACT_WITH_USERNAME_ONLINE
     }
 }
