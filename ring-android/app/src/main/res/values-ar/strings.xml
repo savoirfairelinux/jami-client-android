@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">الإنطباع</string>
+  <string name="feedback_section">سبر راي</string>
   <string name="report"><u>راسلنا بالبريد الإلكتروني</u></string>
   <string name="section_license">الرخصة</string>
   <string name="sponsor_section">جامي هو برنامج حر طٌور و دٌعم من قبل</string>

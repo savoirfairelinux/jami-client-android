@@ -86,7 +86,7 @@
   <string name="notif_location_action_stop">Oprește distribuirea poziției</string>
   <string name="location_share_action_start">Pornește distribuirea</string>
   <string name="location_share_action_stop">Oprește distribuirea</string>
-  <string name="location_share_about_title">Detalii pe Hartă</string>
+  <string name="location_share_about_title">Detalii despre Hartă</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>
@@ -334,5 +334,5 @@
   <string name="bottomSheet_hangup_btn">Închide apelul</string>
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
-  <string name="bottomSheet_raiseHand_btn">Ridică mîna</string>
+  <string name="bottomSheet_raiseHand_btn">RidicăMîna</string>
 </resources>

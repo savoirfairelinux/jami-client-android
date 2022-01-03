@@ -15,6 +15,7 @@
   <string name="license">Denna app tillhandahålles i \"befintligt skick\", utan några som helst garantier. För detaljerad info, se <u>GNU General Public License version 3 eller senare</u></string>
   <string name="description">Jami är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
   <string name="credits">Tack till</string>
+  <string name="pip_title">Jami Konferens</string>
   <!--About dialog-->
   <string name="developed_by">Utvecklad av</string>
   <string name="designed_by">Designad av</string>
@@ -41,6 +42,7 @@
     <item quantity="other">%d konversationer</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Sök namn eller telefonnummer...</string>
   <string name="choose_number">Välj ett nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -60,6 +62,7 @@
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
   <string name="notif_channel_file_transfer">Filöverföring</string>
+  <string name="notif_channel_sync">Datasynkronisering</string>
   <string name="notif_channel_background_service">Bakgrundstjänst</string>
   <string name="notif_channel_background_service_descr">Tillåt alltid inkommande samtal och meddelanden.</string>
   <string name="notif_group_calls">Samtal</string>
@@ -70,6 +73,14 @@
   <string name="notif_incoming_file_transfer_title">Inkommande fil från %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Skickar fil till %1$s</string>
   <string name="notif_incoming_picture">Bild från %1$s</string>
+  <string name="notif_sync_title">Synkroniserar data...</string>
+  <string name="notif_location_title">Delar plats med %1$s</string>
+  <string name="notif_location_multi_title">Dela plats med %1$d kontakt</string>
+  <string name="notif_location_remaining">%1$d minuter kvar</string>
+  <string name="notif_location_action_stop">Sluta dela plats</string>
+  <string name="location_share_action_start">Börja dela</string>
+  <string name="location_share_action_stop">Sluta dela</string>
+  <string name="location_share_about_title">Kartinformation</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>
@@ -81,8 +92,11 @@
   <string name="start_error_title">Kan inte starta Jami!</string>
   <string name="start_error_mic_required">Jami behöver mikrofonbehörighet för att fungera.</string>
   <string name="action_call_accept">Svara</string>
+  <string name="action_call_accept_audio">Svara i ljud</string>
+  <string name="action_call_accept_video">Svara i video</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Stäng av mikrofon</string>
+  <string name="action_load_plugin">Ladda tillägg</string>
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Lägga till i kontakter?</string>
@@ -96,6 +110,7 @@
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="qr_code">QR-kod</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
+  <string name="remote_recording">%s spelar in...</string>
   <!--Text messages-->
   <string name="send_message">Skicka meddelande</string>
   <string name="message_sending">Skickar meddelande...</string>
@@ -104,6 +119,9 @@
   <string name="send_file">Skicka fil</string>
   <string name="hist_file_sent">Fil skickad</string>
   <string name="hist_file_received">Fil mottagen</string>
+  <string name="conversation_send_audio">Spela in ljudklipp</string>
+  <string name="conversation_send_video">Spela in videoklipp</string>
+  <string name="conversation_share_location">Dela plats</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -111,7 +129,9 @@
   <string name="ringtone_error_title">Fel</string>
   <string name="ringtone_error_format_not_supported">Detta format saknar stöd.</string>
   <string name="ringtone_error_size_too_big">Denna fil är för stor. Maximal storlek är %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Ställ in en anpassad ringsignal</string>
   <string name="ringtone_custom_label">Anpassad</string>
+  <string name="ringtone_jami_tones">Jami Tones</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->
@@ -148,6 +168,9 @@
   <string name="block_contact_dialog_title">Blockera %1$s?</string>
   <string name="block_contact_dialog_message">%1$s kommer inte att kunna kontakta dig, innan du avblockerat.</string>
   <string name="block_contact_completed">%1$s blockerades.</string>
+  <string name="conversation_info_contact_you">Du</string>
+  <string name="conversation_members">Medlemmar</string>
+  <string name="conversation_type_contact">Jami kontakt</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
@@ -163,9 +186,11 @@
   <string name="wizard_skip">Hopa över</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Profilnamn</string>
   <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
+  <string name="profile_name_hint">Ange ditt namn</string>
   <string name="registered_name">Registrerat namn</string>
   <string name="identity">Identitet</string>
   <string name="account">Konto</string>
@@ -178,12 +203,15 @@
   <string name="share_label">Dela</string>
   <string name="generic_error_migration">Fel</string>
   <string name="generic_error_migration_message">Ett fel inträffade vid migrering</string>
+  <string name="title_share_with">Dela med...</string>
   <!--Pending contact requests-->
   <string name="accept">Acceptera</string>
   <string name="refuse">Neka</string>
   <string name="block">Blockera</string>
   <string name="contact_request_title">Ny kontaktförfrågan</string>
+  <string name="contact_request_msg">Du har %1$d kontaktförfrågningar</string>
   <string name="contact_request_account">För %1$s</string>
+  <string name="no_requests">Du har inga kontaktförfrågningar</string>
   <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <string name="message_contact_not_trusted">%s finns inte i dina kontakter.\nVill du lägga till ny kontakt?</string>
   <!--Send contact requests-->
@@ -194,7 +222,9 @@
   <string name="no_blocked_contact">Inga blockerade kontakter</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktförfrågan skickad</string>
+  <string name="conversation_placeholder">Du har inga konversationer än</string>
   <string name="contact_request_sent">Kontaktförfrågan skickad</string>
+  <string name="start_conversation">Starta konversation</string>
   <string name="search_results">Sökresultat</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
@@ -213,6 +243,8 @@
   <string name="file_transfer_status_closed_by_peer">stängd av motpart</string>
   <string name="file_transfer_status_invalid_pathname">ogiltigt sökvägsnamn</string>
   <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
+  <string name="file_transfer_status_cancelled">avbruten</string>
+  <string name="file_transfer_status_error">misslyckades på grund av fel</string>
   <string name="file_saved_in">Fil sparad i %s</string>
   <string name="file_saved_successfully">Filen sparade korrekt</string>
   <string name="no_space_left_on_device">Det finns inget utrymme kvar på enheten</string>
@@ -226,26 +258,41 @@
   <string name="menu_message_delete">Ta bort meddelandet</string>
   <string name="menu_message_cancel">Avbryt meddelandet</string>
   <string name="menu_delete">Ta bort</string>
+  <string name="pref_darkTheme_title">Mörkt tema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversationer</string>
   <string name="navigation_item_contact_request">Kontaktförfrågningar</string>
   <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Offentlig mapp</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Skicka ljudmeddelande?</string>
   <string name="tv_audio_play">Spela</string>
   <string name="tv_audio_pause">Paus</string>
   <string name="tv_dialog_send">Skicka</string>
+  <string name="tv_audio_recording">Spelar in...</string>
+  <string name="tv_send_text">Skicka text</string>
+  <string name="tv_send_audio">Skicka ljud</string>
+  <string name="tv_send_video">Skicka media</string>
+  <string name="tv_action_more">Mer</string>
+  <string name="conversation_input_speech_hint">Säg någonting...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekommendera</string>
   <string name="wizard_status_optional">Valfri</string>
   <string name="wizard_status_required">Obligatorisk</string>
   <string name="wizard_username_info">Välj användarnamn för ditt konto</string>
+  <string name="wizard_username_button">Välj användarnamn</string>
+  <string name="wizard_password_info">Kontolösenord</string>
+  <string name="wizard_password_button">Välj lösenord</string>
   <string name="wizard_password_skip">Skapa konto</string>
   <string name="wizard_password_switch">Kryptera kontot med lösenord</string>
+  <string name="wizard_profile_button">Spara profil</string>
+  <string name="fab_path_choose">Välj en annan fil</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Dela</string>
   <string name="bottomSheet_plugins_btn">Insticksmoduler</string>
   <string name="bottomSheet_add_participants_btn">Lägg till</string>
   <string name="bottomSheet_change_camera_btn">Ändra</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
 </resources>

@@ -37,12 +37,16 @@
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
   <string name="pref_logs_title">诊断日志</string>
   <string name="pref_logs_summary">打开诊断日志设置</string>
+  <string name="pref_logs_start">开启日志</string>
+  <string name="pref_logs_stop">停止日志</string>
   <string name="pref_typing_title">启用输入状态显示</string>
   <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
   <string name="pref_read_title">启用已读回执</string>
   <string name="pref_read_summary">接收并发送显示一个消息已读的回执。</string>
   <string name="pref_block_record_title">阻止截屏和录屏</string>
   <string name="pref_block_record_summary">阻止截屏或录屏</string>
+  <string name="pref_link_preview_title">在对话中显示链接预览</string>
+  <string name="pref_link_preview_summary">预览需要从第三方服务器下载内容。</string>
   <!--Notifications Visibility-->
   <string name="notification_public">公开\n（在锁定屏幕上显示通知与内容）\n</string>
   <string name="notification_private">隐私\n（在锁定屏幕上显示通知，但隐藏内容）\n</string>

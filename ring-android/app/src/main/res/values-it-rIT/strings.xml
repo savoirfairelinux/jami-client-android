@@ -33,7 +33,7 @@
   <string name="menu_item_accounts">Gestisci account</string>
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
-  <string name="menu_item_plugin_list">Impostazioni dei plugin</string>
+  <string name="menu_item_plugin_list">Impostazioni plugin</string>
   <string name="menu_item_share">Condividi il mio account</string>
   <string name="menu_item_about">Informazioni su Jami</string>
   <!--Dialing Fragment-->
@@ -333,5 +333,5 @@
   <string name="bottomSheet_hangup_btn">Termina chiamata</string>
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Suono</string>
-  <string name="bottomSheet_raiseHand_btn">Alza la mano</string>
+  <string name="bottomSheet_raiseHand_btn">Alza mano</string>
 </resources>

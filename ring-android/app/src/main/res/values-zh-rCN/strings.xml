@@ -98,6 +98,10 @@
   <string name="start_error_title">无法启动 Jami！</string>
   <string name="start_error_mic_required">Jami 需要麦克风权限以正常工作。</string>
   <string name="action_call_accept">接听</string>
+  <string name="action_call_accept_audio">以语音回复</string>
+  <string name="action_call_accept_video">以视频回复</string>
+  <string name="action_call_hold_accept">保持并以音频呼叫</string>
+  <string name="action_call_hold_accept_video">保持并以视频呼叫</string>
   <string name="action_call_end_accept">结束并呼叫</string>
   <string name="action_call_decline">拒接</string>
   <string name="action_call_mic_mute">关闭麦克风</string>
@@ -107,6 +111,8 @@
   <string name="ab_action_contact_add_question">添加至通讯录吗？</string>
   <string name="hist_contact_invited">联系人已邀请</string>
   <string name="hist_contact_added">已加入通讯录</string>
+  <string name="hist_contact_left">联系人离开</string>
+  <string name="hist_contact_banned">联系人已封禁</string>
   <string name="hist_invitation_received">已接受邀请</string>
   <string name="ab_action_audio_call">语音通话</string>
   <string name="ab_action_video_call">视频通话</string>
@@ -176,10 +182,14 @@
   <string name="block_contact_dialog_message">您将不能联系%1$s直到您解除屏蔽。</string>
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
   <string name="conversation_contact_is_typing">联系人正在输入...</string>
+  <string name="conversation_info_contact_you">您</string>
   <string name="conversation_members">成员</string>
+  <string name="conversation_syncing">正在从 Peer 下载对话</string>
   <string name="conversation_preference_color">会话颜色</string>
   <string name="conversation_preference_emoji">会画表情</string>
   <string name="conversation_type_contact">Jami 联系人</string>
+  <string name="conversation_type_private">私人 swarm</string>
+  <string name="conversation_type_group">群组 swarm</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密码</string>
@@ -314,10 +324,13 @@
   <string name="chat_plugins">聊天插件</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共享</string>
+  <string name="bottomSheet_dialpad_btn">拨号盘</string>
   <string name="bottomSheet_plugins_btn">插件</string>
   <string name="bottomSheet_add_participants_btn">添加</string>
   <string name="bottomSheet_change_camera_btn">更改</string>
   <string name="bottomSheet_camera_onoff_switch_btn">摄像头</string>
   <string name="bottomSheet_hangup_btn">结束通话</string>
+  <string name="bottomSheet_mute_microphone_btn">麦克风</string>
+  <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
 </resources>

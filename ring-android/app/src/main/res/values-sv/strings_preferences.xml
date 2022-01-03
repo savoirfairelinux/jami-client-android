@@ -9,9 +9,12 @@
   <string name="pref_mobileData_summary">Tillåt Jami på 3G/LTE-nätverk, som tillägg till WiFi</string>
   <string name="pref_pushNotifications_title">Använd aviseringar</string>
   <string name="pref_pushNotifications_summary">Använd Google-servrar för att ta emot samtal/meddelanden i bakgrunden</string>
+  <string name="pref_video_advanced_title">Avancerade video inställningar</string>
+  <string name="pref_video_advanced_summary">Ändra videons bithastighet, upplösning och få tillgång till experimentella funktioner</string>
   <string name="pref_hd_summary">Aktivera att skicka HD-video</string>
   <string name="pref_hwEncode_title">Aktivera accelererad kodning</string>
   <string name="pref_hwEncode_summary">Experimentell funktion</string>
+  <string name="pref_videoResolution_title">Videoupplösning</string>
   <string name="pref_systemContacts_title">Använd systemkontakter</string>
   <string name="pref_systemContacts_summary">Använd systemkontakter för att visa uppringaren info</string>
   <string name="pref_systemDialer_title">Använd Jami till systemsamtal</string>
@@ -19,10 +22,18 @@
   <string name="pref_startOnBoot_title">Starta Jami vid systemstart</string>
   <string name="pref_startOnBoot_summary">Kör Jami i bakgrunden när systemet startas</string>
   <string name="pref_clearHistory_title">Rensa historik</string>
+  <string name="pref_blackList_title">Blocklista</string>
   <string name="pref_delete_account_title">Ta bort konto</string>
+  <string name="pref_delete_account_summary">Ta bort ditt konto från denna enhet</string>
   <string name="pref_persistNotification_title">Kör i bakgrunden</string>
   <string name="pref_persistNotification_summary">Tillåt bakgrundskörning för inkommande samtal och meddelanden.</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
   <string name="pref_plugins_title">Insticksmoduler</string>
+  <string name="fab_plugins_add">Lägg till ett nytt tillägg</string>
+  <string name="plugin_uninstall_title">Avinstallera tillägg?</string>
+  <string name="plugin_install_failure">Misslyckades med att installera tillägg: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Du har samma version av <b>%1$s</b> installerad</string>
+  <string name="plugin_force_install">tvinga \n installation</string>
+  <string name="plugin_path_image_add">Lägg till en ny bild</string>
 </resources>
