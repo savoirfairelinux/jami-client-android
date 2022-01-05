@@ -117,7 +117,7 @@ open class Interaction {
     }
 
     var type: InteractionType
-        get() = InteractionType.fromString(mType)
+        get() = if (mType != null) InteractionType.fromString(mType!!) else InteractionType.INVALID
         set(type) {
             mType = type.toString()
         }
@@ -208,14 +208,7 @@ open class Interaction {
         INVALID, TEXT, CALL, CONTACT, DATA_TRANSFER;
 
         companion object {
-            fun fromString(str: String?): InteractionType {
-                for (type in values()) {
-                    if (type.name == str) {
-                        return type
-                    }
-                }
-                return INVALID
-            }
+            fun fromString(str: String) = try { valueOf(str) } catch (e: Exception) { INVALID }
         }
     }
 

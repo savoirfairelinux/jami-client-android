@@ -17,10 +17,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.contact.more;
+package cx.ring.tv.contact.more
 
-public interface TVContactMoreView {
-
-    void finishView(boolean finishParent);
-
+interface TVContactMoreView {
+    fun finishView(finishParent: Boolean)
 }

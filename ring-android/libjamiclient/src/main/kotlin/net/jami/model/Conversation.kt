@@ -28,23 +28,21 @@ import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
 import kotlin.jvm.Synchronized
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import java.lang.IllegalStateException
-import java.lang.StringBuilder
 import java.util.*
 
 class Conversation : ConversationHistory {
     val accountId: String
     val uri: Uri
     val contacts: MutableList<Contact>
-    val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
+    private val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
     private var lastDisplayed: Interaction? = null
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val lastDisplayedSubject: Subject<Interaction> = BehaviorSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
-    private val callsSubject: Subject<List<Conference>> = BehaviorSubject.create()
+    private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.create()
     private val symbol: Subject<CharSequence> = BehaviorSubject.create()
@@ -66,6 +64,53 @@ class Conversation : ConversationHistory {
     // indicate the list needs sorting
     private var mDirty = false
     private var mLoadingSubject: SingleSubject<Conversation>? = null
+
+    val mode: Observable<Mode>
+        get() = mMode
+    val isSwarm: Boolean
+        get() = Uri.SWARM_SCHEME == uri.scheme
+
+    val contactUpdates: Observable<List<Contact>>
+        get() = mContactSubject
+
+    var loading: SingleSubject<Conversation>?
+        get() = mLoadingSubject
+        set(l) {
+            mLoadingSubject?.let { loading ->
+                if (!loading.hasValue() && !loading.hasThrowable())
+                    loading.onError(IllegalStateException())
+            }
+            mLoadingSubject = l
+        }
+
+    enum class ElementStatus {
+        UPDATE, REMOVE, ADD
+    }
+
+    val updatedElements: Observable<Pair<Interaction, ElementStatus>>
+        get() = updatedElementSubject
+
+    val cleared: Observable<List<Interaction>>
+        get() = clearedSubject
+    val calls: Observable<List<Conference>>
+        get() = callsSubject
+    val composingStatus: Observable<Account.ComposingStatus>
+        get() = composingStatusSubject
+
+    val sortedHistory: Single<List<Interaction>> = Single.fromCallable {
+        sortHistory()
+        aggregateHistory
+    }
+    val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
+    val currentStateSubject: Observable<Pair<Interaction, Boolean>> = Observable.combineLatest(lastEventSubject, callsSubject.map { calls ->
+        for (call in calls)
+            if (call.isOnGoing)
+                return@map true
+        false
+    }) { event, hasCurrentCall -> Pair(event, hasCurrentCall) }
+
+    val swarmRoot: Collection<String>
+        get() = mRoots
 
     constructor(accountId: String, contact: Contact) {
         this.accountId = accountId
@@ -95,11 +140,6 @@ class Conversation : ConversationHistory {
         composingStatusSubject.onNext(composing)
     }
 
-    val mode: Observable<Mode>
-        get() = mMode
-    val isSwarm: Boolean
-        get() = Uri.SWARM_SCHEME == uri.scheme
-
     fun matches(query: String): Boolean {
         for (contact in contacts) {
             if (contact.matches(query)) return true
@@ -120,65 +160,37 @@ class Conversation : ConversationHistory {
         mContactSubject.onNext(contacts)
     }
 
-    /*val title: String?
-        get() {
-            if (contacts.isEmpty()) {
-                return if (mMode.blockingFirst() == Mode.Syncing) { "(Syncing)" } else null
-            } else if (contacts.size == 1) {
-                return contacts[0].displayName
-            }
-            val names = ArrayList<String>(contacts.size)
-            var target = contacts.size
-            for (c in contacts) {
-                if (c.isUser) {
-                    target--
-                    continue
-                }
-                val displayName = c.displayName
-                if (displayName.isNotEmpty()) {
-                    names.add(displayName)
-                    if (names.size == 3) break
-                }
-            }
-            val ret = StringBuilder()
-            ret.append(StringUtils.join(", ", names))
-            if (names.isNotEmpty() && names.size < target) {
-                ret.append(" + ").append(contacts.size - names.size)
-            }
-            return ret.toString().ifEmpty { uri.rawUriString }
-        }
-
-    val uriTitle: String?
-        get() {
-            if (contacts.isEmpty()) {
-                return null
-            } else if (contacts.size == 1) {
-                return contacts[0].ringUsername
-            }
-            val names = ArrayList<String>(contacts.size)
-            for (c in contacts) {
-                if (c.isUser) continue
-                c.ringUsername.let { names.add(it) }
-            }
-            return StringUtils.join(", ", names)
-        }*/
-    //val
-
-    val contactUpdates: Observable<List<Contact>>
-        get() = mContactSubject
-
     @Synchronized
-    fun readMessages(): String? {
-        var interaction: Interaction? = null
-        if (aggregateHistory.isNotEmpty()) {
-            val i = aggregateHistory[aggregateHistory.size - 1]
-            if (!i.isRead) {
-                i.read()
-                interaction = i
-                lastRead = i.messageId
+    fun readMessages(): List<Interaction> {
+        val interactions = ArrayList<Interaction>()
+        if (isSwarm) {
+            if (aggregateHistory.isNotEmpty()) {
+                var n = aggregateHistory.size
+                do {
+                    if (n == 0) break
+                    val i = aggregateHistory[--n]
+                    if (!i.isRead) {
+                        i.read()
+                        interactions.add(i)
+                        lastRead = i.messageId
+                    }
+                } while (i.type == Interaction.InteractionType.INVALID)
+            }
+        } else {
+            for (e in rawHistory.descendingMap().values) {
+                if (e.type != Interaction.InteractionType.TEXT) continue
+                if (e.isRead) {
+                    break
+                }
+                e.read()
+                interactions.add(e)
             }
         }
-        return interaction?.messageId
+        // Update the last event if it was just read
+        interactions.firstOrNull { it.type != Interaction.InteractionType.INVALID }?.let {
+            lastEventSubject.onNext(it)
+        }
+        return interactions
     }
 
     @Synchronized
@@ -194,16 +206,6 @@ class Conversation : ConversationHistory {
         lastNotified = lastMessage
     }
 
-    var loading: SingleSubject<Conversation>?
-        get() = mLoadingSubject
-        set(l) {
-            mLoadingSubject?.let { loading ->
-                if (!loading.hasValue() && !loading.hasThrowable())
-                     loading.onError(IllegalStateException())
-            }
-            mLoadingSubject = l
-        }
-
     fun stopLoading(): Boolean {
         val ret = mLoadingSubject
         mLoadingSubject = null
@@ -218,23 +220,7 @@ class Conversation : ConversationHistory {
         mMode.onNext(mode)
     }
 
-    enum class ElementStatus {
-        UPDATE, REMOVE, ADD
-    }
-
-    val updatedElements: Observable<Pair<Interaction, ElementStatus>>
-        get() = updatedElementSubject
-
-    fun getLastDisplayed(): Observable<Interaction> {
-        return lastDisplayedSubject
-    }
-
-    val cleared: Observable<List<Interaction>>
-        get() = clearedSubject
-    val calls: Observable<List<Conference>>
-        get() = callsSubject
-    val composingStatus: Observable<Account.ComposingStatus>
-        get() = composingStatusSubject
+    fun getLastDisplayed(): Observable<Interaction> = lastDisplayedSubject
 
     fun addConference(conference: Conference?) {
         if (conference == null) {
@@ -266,9 +252,7 @@ class Conversation : ConversationHistory {
             mVisibleSubject.onNext(mVisible)
         }
 
-    fun getVisible(): Observable<Boolean> {
-        return mVisibleSubject
-    }
+    fun getVisible(): Observable<Boolean> = mVisibleSubject
 
     val contact: Contact?
         get() {
@@ -332,10 +316,7 @@ class Conversation : ConversationHistory {
     }
 
     fun addContactEvent(contact: Contact) {
-        val event = ContactEvent(contact)
-        mDirty = true
-        aggregateHistory.add(event)
-        updatedElementSubject.onNext(Pair(event, ElementStatus.ADD))
+        addContactEvent(ContactEvent(contact))
     }
 
     fun addContactEvent(contactEvent: ContactEvent) {
@@ -368,7 +349,7 @@ class Conversation : ConversationHistory {
     }
 
     fun updateInteraction(element: Interaction) {
-        Log.e(TAG, "updateInteraction: " + element.messageId + " " + element.status)
+        Log.e(TAG, "updateInteraction: ${element.messageId} ${element.status}")
         val lastDisplayed = lastDisplayed
         if (isSwarm) {
             val e = mMessages[element.messageId]
@@ -382,7 +363,7 @@ class Conversation : ConversationHistory {
                     }
                 }
             } else {
-                Log.e(TAG, "Can't find swarm message to update: " + element.messageId)
+                Log.e(TAG, "Can't find swarm message to update: ${element.messageId}")
             }
         } else {
             setInteractionProperties(element)
@@ -401,13 +382,8 @@ class Conversation : ConversationHistory {
                     return
                 }
             }
-            Log.e(TAG, "Can't find message to update: " + element.id)
+            Log.e(TAG, "Can't find message to update: ${element.id}")
         }
-    }
-
-    val sortedHistory: Single<List<Interaction>> = Single.fromCallable {
-        sortHistory()
-        aggregateHistory
     }
 
     fun sortHistory() {
@@ -415,6 +391,11 @@ class Conversation : ConversationHistory {
             Log.w(TAG, "sortHistory()")
             synchronized(aggregateHistory) {
                 aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
+                for (i in aggregateHistory.asReversed())
+                    if (i.type != Interaction.InteractionType.INVALID) {
+                        lastEventSubject.onNext(aggregateHistory.last())
+                        break
+                    }
             }
             mDirty = false
         }
@@ -423,8 +404,9 @@ class Conversation : ConversationHistory {
     val lastEvent: Interaction?
         get() {
             sortHistory()
-            return if (aggregateHistory.isEmpty()) null else aggregateHistory[aggregateHistory.size - 1]
+            return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
         }
+
     val currentCall: Conference?
         get() = if (currentCalls.isEmpty()) null else currentCalls[0]
     private val callHistory: Collection<Call>
@@ -518,6 +500,7 @@ class Conversation : ConversationHistory {
             lastDisplayed = last
             lastDisplayedSubject.onNext(last)
         }
+        lastEvent?.let { lastEventSubject.onNext(it) }
         mDirty = false
     }
 
@@ -546,9 +529,8 @@ class Conversation : ConversationHistory {
         if (lastNotified != null && lastNotified == interaction.messageId) interaction.isNotified = true
         var newLeaf = false
         var added = false
-        if (aggregateHistory.isEmpty() || aggregateHistory[aggregateHistory.size - 1].messageId == interaction.parentId) {
+        if (aggregateHistory.isEmpty() || aggregateHistory.last().messageId == interaction.parentId) {
             // New leaf
-            // Log.w(TAG, "@@@ New end LEAF");
             added = true
             newLeaf = true
             aggregateHistory.add(interaction)
@@ -567,7 +549,6 @@ class Conversation : ConversationHistory {
             if (!added) {
                 for (i in aggregateHistory.indices.reversed()) {
                     if (aggregateHistory[i].messageId == interaction.parentId) {
-                        //Log.w(TAG, "@@@ New leaf at " + (i+1));
                         added = true
                         newLeaf = true
                         aggregateHistory.add(i + 1, interaction)
@@ -582,12 +563,11 @@ class Conversation : ConversationHistory {
                 interaction.read()
                 setLastMessageRead(interaction.messageId)
             }
+            if (interaction.type != Interaction.InteractionType.INVALID)
+                lastEventSubject.onNext(interaction)
         }
         if (!added) {
-            Log.e(
-                TAG,
-                "Can't attach interaction " + interaction.messageId + " with parent " + interaction.parentId
-            )
+            Log.e(TAG, "Can't attach interaction ${interaction.messageId} with parent ${interaction.parentId}")
         }
         return newLeaf
     }
@@ -595,9 +575,6 @@ class Conversation : ConversationHistory {
     fun isLoaded(): Boolean {
         return mMessages.isNotEmpty() && mRoots.isEmpty()
     }
-
-    val swarmRoot: Collection<String>
-        get() = mRoots
 
     fun updateFileTransfer(transfer: DataTransfer, eventCode: Interaction.InteractionStatus) {
         val dataTransfer = (if (isSwarm) transfer else findConversationElement(transfer.id)) as DataTransfer?

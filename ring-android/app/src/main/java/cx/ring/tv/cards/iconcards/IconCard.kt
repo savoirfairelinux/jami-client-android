@@ -19,22 +19,19 @@
  */
 package cx.ring.tv.cards.iconcards
 
+import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import cx.ring.tv.cards.Card
 
 class IconCard : Card {
-    constructor(pType: Type, name: String, description: CharSequence, @DrawableRes imageId: Int) {
-        type = pType
-        title = name
-        this.description = description
-        localImageResource = imageId
+    constructor(type: Type, name: String, description: CharSequence, context: Context, @DrawableRes imageId: Int) : super(type, name, description) {
+        drawable = if (imageId != -1) ContextCompat.getDrawable(context, imageId)!! else ColorDrawable(0x00000000)
     }
 
-    constructor(pType: Type, name: String, description: CharSequence, bitmapDrawable: BitmapDrawable?) {
-        type = pType
-        title = name
-        this.description = description
-        setDrawable(bitmapDrawable)
+    constructor(type: Type, name: String, description: CharSequence, bitmapDrawable: BitmapDrawable?) : super(type, name, description) {
+        drawable = bitmapDrawable
     }
 }

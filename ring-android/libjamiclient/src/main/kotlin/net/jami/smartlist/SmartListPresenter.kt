@@ -28,11 +28,11 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Account
+import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.ConversationFacade
 import net.jami.utils.Log
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -53,7 +53,7 @@ class SmartListPresenter @Inject constructor(
     override fun bindView(view: SmartListView) {
         super.bindView(view)
         view.setLoading(true)
-        mCompositeDisposable.add(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true)
+        /*mCompositeDisposable.add(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true)
             .switchMap { viewModels ->
                 if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
                 else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size)) { ob -> ob as ConversationItemViewModel } }
@@ -70,8 +70,21 @@ class SmartListPresenter @Inject constructor(
                     v.hideNoConversationMessage()
                     v.updateList(viewModels, mCompositeDisposable)
                 }
-            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })
+            }) { e: Throwable -> Log.w(TAG, "showConversations error ", e) })*/
 
+        mCompositeDisposable.add(mConversationFacade.getFullConversationList(accountSubject, mCurrentQuery)
+            .observeOn(mUiScheduler)
+            .subscribe { list ->
+                val v = this.view ?: return@subscribe
+                v.setLoading(false)
+                if (list.isEmpty()) {
+                    v.hideList()
+                    v.displayNoConversationMessage()
+                } else {
+                    v.hideNoConversationMessage()
+                    v.updateList(list, mConversationFacade, mCompositeDisposable)
+                }
+            })
     }
 
     fun queryTextChanged(query: String) {
@@ -89,11 +102,11 @@ class SmartListPresenter @Inject constructor(
         }
     }
 
-    fun conversationClicked(viewModel: ConversationItemViewModel) {
+    fun conversationClicked(viewModel: Conversation) {
         startConversation(viewModel.accountId, viewModel.uri)
     }
 
-    fun conversationLongClicked(conversationItemViewModel: ConversationItemViewModel) {
+    fun conversationLongClicked(conversationItemViewModel: Conversation) {
         view?.displayConversationDialog(conversationItemViewModel)
     }
 
@@ -113,16 +126,16 @@ class SmartListPresenter @Inject constructor(
         view?.goToConversation(mAccount!!.accountId, uri)
     }
 
-    fun copyNumber(conversationItemViewModel: ConversationItemViewModel) {
-        val contact = conversationItemViewModel.getContact()
+    fun copyNumber(conversationItemViewModel: Conversation) {
+        val contact = conversationItemViewModel.contact
         if (contact != null) {
-            view?.copyNumber(contact.contact.uri)
+            view?.copyNumber(contact.uri)
         } else {
             view?.copyNumber(conversationItemViewModel.uri)
         }
     }
 
-    fun clearConversation(conversationItemViewModel: ConversationItemViewModel) {
+    fun clearConversation(conversationItemViewModel: Conversation) {
         view?.displayClearDialog(conversationItemViewModel.uri)
     }
 
@@ -132,7 +145,7 @@ class SmartListPresenter @Inject constructor(
             .subscribeOn(Schedulers.computation()).subscribe())
     }
 
-    fun removeConversation(conversationItemViewModel: ConversationItemViewModel) {
+    fun removeConversation(conversationItemViewModel: Conversation) {
         view?.displayDeleteDialog(conversationItemViewModel.uri)
     }
 
@@ -141,15 +154,12 @@ class SmartListPresenter @Inject constructor(
             .subscribe())
     }
 
-    fun banContact(conversationItemViewModel: ConversationItemViewModel) {
+    fun banContact(conversationItemViewModel: Conversation) {
         mConversationFacade.banConversation(conversationItemViewModel.accountId, conversationItemViewModel.uri)
     }
 
     fun clickQRSearch() {
         view?.goToQRFragment()
-    }
-
-    private fun showConversations(conversations: Observable<List<Observable<ConversationItemViewModel>>>) {
     }
 
     companion object {

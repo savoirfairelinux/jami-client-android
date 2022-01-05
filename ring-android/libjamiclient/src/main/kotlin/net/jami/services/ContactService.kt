@@ -53,7 +53,7 @@ abstract class ContactService(
      * Load contacts from system and generate a local contact cache
      *
      * @param loadRingContacts if true, ring contacts will be taken care of
-     * @param loadSipContacts  if  true, sip contacts will be taken care of
+     * @param loadSipContacts  if true, sip contacts will be taken care of
      */
     fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> {
         return Single.fromCallable {
@@ -66,6 +66,7 @@ abstract class ContactService(
     }
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
+        Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val observePresence = if (contact.isUser) false else withPresence
         val uri = contact.uri
         val uriString = uri.rawRingId

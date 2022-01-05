@@ -19,14 +19,12 @@
  */
 package cx.ring.tv.search
 
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.PublishSubject
+import net.jami.model.Conversation
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-import net.jami.smartlist.ConversationItemViewModel
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -39,24 +37,9 @@ class ContactSearchPresenter @Inject constructor(
 
     override fun bindView(view: ContactSearchView) {
         super.bindView(view)
-
-        mCompositeDisposable.add(conversationFacade.getFullList(accountService.currentAccountSubject, contactQuery
-            .debounce(350, TimeUnit.MILLISECONDS), false)
-            .switchMap { results -> Observable.combineLatest(results) { r ->
-                r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
-            } }
+        mCompositeDisposable.add(conversationFacade.getFullConversationList(accountService.currentAccountSubject, contactQuery)
             .observeOn(uiScheduler)
-            .subscribe { results -> this.view?.displayResults(results) })
-
-        /*mCompositeDisposable.add(accountService.currentAccountSubject
-            .switchMap { account -> conversationFacade.getSearchResults(account, contactQuery
-                .debounce(350, TimeUnit.MILLISECONDS))
-            }
-            .switchMap { results -> Observable.combineLatest(results) { r ->
-                r.mapTo(ArrayList(r.size)) { ob -> ob as ConversationItemViewModel }
-            } }
-            .observeOn(uiScheduler)
-            .subscribe { results -> this.view?.displayResults(results) })*/
+            .subscribe { results -> this.view?.displayResults(results, conversationFacade) })
     }
 
     fun queryTextChanged(query: String) {
@@ -67,7 +50,7 @@ class ContactSearchPresenter @Inject constructor(
         }
     }
 
-    fun contactClicked(model: ConversationItemViewModel) {
+    fun contactClicked(model: Conversation) {
         view?.displayContactDetails(model)
     }
 }

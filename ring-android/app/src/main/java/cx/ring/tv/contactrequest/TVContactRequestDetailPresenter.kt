@@ -26,7 +26,7 @@ class TVContactRequestDetailPresenter : AbstractDetailsDescriptionPresenter() {
     override fun onBindDescription(viewHolder: ViewHolder, item: Any) {
         val viewModel = item as ConversationItemViewModel?
         if (viewModel != null) {
-            val id = viewModel.getContact()!!.displayUri
+            val id = viewModel.uriTitle
             val displayName = viewModel.contactName
             viewHolder.title.text = displayName
             if (displayName != id)

@@ -17,30 +17,23 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.contact;
+package cx.ring.tv.contact
 
-import android.os.Bundle;
-
-import androidx.fragment.app.FragmentActivity;
-
-import cx.ring.R;
-import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.FragmentActivity
+import android.os.Bundle
+import cx.ring.R
 
 @AndroidEntryPoint
-public class TVContactActivity extends FragmentActivity {
-    private static final String TAG = TVContactActivity.class.getSimpleName();
-
-    public static final String SHARED_ELEMENT_NAME = "photo";
-    public static final String TYPE_CONTACT_REQUEST_INCOMING = "incoming";
-    public static final String TYPE_CONTACT_REQUEST_OUTGOING = "outgoing";
-
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tv_frag_contact);
+class TVContactActivity : FragmentActivity() {
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.tv_frag_contact)
     }
 
+    companion object {
+        const val SHARED_ELEMENT_NAME = "photo"
+        const val TYPE_CONTACT_REQUEST_INCOMING = "incoming"
+        const val TYPE_CONTACT_REQUEST_OUTGOING = "outgoing"
+    }
 }

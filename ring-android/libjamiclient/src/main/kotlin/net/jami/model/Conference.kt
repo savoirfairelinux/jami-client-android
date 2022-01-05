@@ -137,7 +137,6 @@ class Conference(val accountId: String, val id: String) {
     val isOnGoing: Boolean
         get() = mParticipants.size == 1 && mParticipants[0].isOnGoing || mParticipants.size > 1
 
-
     fun getMediaList(): List<Media>? {
         return if (mParticipants.size == 1) mParticipants[0].mediaList else ArrayList()
     }

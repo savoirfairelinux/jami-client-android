@@ -53,11 +53,12 @@ import cx.ring.utils.DeviceUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
-import net.jami.smartlist.ConversationItemViewModel
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
@@ -267,7 +268,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding!!.placeholder.visibility = View.GONE
     }
 
-    override fun displayConversationDialog(conversationItemViewModel: ConversationItemViewModel) {
+    override fun displayConversationDialog(conversationItemViewModel: Conversation) {
         if (conversationItemViewModel.isSwarm) {
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.swarm_actions) { dialog, which ->
@@ -310,13 +311,14 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun hideList() {
         binding!!.confsList.visibility = View.GONE
-        mSmartListAdapter?.update(null)
+        mSmartListAdapter?.update(ConversationFacade.ConversationList())
     }
 
-    override fun updateList(conversationItemViewModels: MutableList<ConversationItemViewModel>?, parentDisposable: CompositeDisposable) {
+    override fun updateList(conversations: ConversationFacade.ConversationList, conversationFacade: ConversationFacade, parentDisposable: CompositeDisposable) {
+        //Log.w(TAG, "updateList ${conversations.publicDirectory.size} ${conversations.conversations.size}")
         binding?.apply {
             if (confsList.adapter == null) {
-                confsList.adapter = SmartListAdapter(conversationItemViewModels, this@SmartListFragment, parentDisposable).apply {
+                confsList.adapter = SmartListAdapter(conversations, this@SmartListFragment, conversationFacade, parentDisposable).apply {
                     mSmartListAdapter = this
                 }
                 confsList.setHasFixedSize(true)
@@ -324,7 +326,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     orientation = RecyclerView.VERTICAL
                 }
             } else {
-                mSmartListAdapter?.update(conversationItemViewModels)
+                mSmartListAdapter?.update(conversations)
             }
             confsList.visibility = View.VISIBLE
         }
@@ -335,8 +337,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.notifyItemChanged(position)
     }
 
-    override fun update(model: ConversationItemViewModel) {
-        mSmartListAdapter?.update(model)
+    override fun update(model: Conversation) {
+        //mSmartListAdapter?.update(model)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -375,11 +377,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding?.apply { confsList.scrollToPosition(0) }
     }
 
-    override fun onItemClick(item: ConversationItemViewModel) {
+    override fun onItemClick(item: Conversation) {
         presenter.conversationClicked(item)
     }
 
-    override fun onItemLongClick(item: ConversationItemViewModel) {
+    override fun onItemLongClick(item: Conversation) {
         presenter.conversationLongClicked(item)
     }
 
@@ -411,7 +413,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     companion object {
-        private val TAG = SmartListFragment::class.simpleName!!
+        val TAG = SmartListFragment::class.simpleName!!
         private val STATE_LOADING = "$TAG.STATE_LOADING"
         private const val SCROLL_DIRECTION_UP = -1
     }

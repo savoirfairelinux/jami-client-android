@@ -36,37 +36,26 @@ import java.nio.ByteBuffer
  */
 object BitmapUtils {
     private val TAG = BitmapUtils::class.simpleName!!
-    @JvmStatic
-    fun bitmapToPhoto(image: Bitmap): Photo {
-        return Photo(bitmapToPng(image), ImageType.PNG)
+
+    fun bitmapToPhoto(image: Bitmap) = Photo(bitmapToPng(image), ImageType.PNG)
+
+    fun bitmapToPng(image: Bitmap): ByteArray = ByteArrayOutputStream()
+        .apply { image.compress(Bitmap.CompressFormat.PNG, 100, this) }
+        .toByteArray()
+
+    fun bitmapToBytes(bmp: Bitmap): ByteArray = ByteBuffer.allocate(bmp.byteCount)
+        .apply { bmp.copyPixelsToBuffer(this) }
+        .array()
+
+    fun base64ToBitmap(base64: String?): Bitmap? = if (base64 == null) null else try {
+        bytesToBitmap(Base64.decode(base64, Base64.DEFAULT))
+    } catch (e: IllegalArgumentException) {
+        null
     }
 
-    fun bitmapToPng(image: Bitmap): ByteArray {
-        val stream = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        return stream.toByteArray()
-    }
-
-    fun bitmapToBytes(bmp: Bitmap): ByteArray {
-        val bytes = bmp.byteCount
-        val buffer = ByteBuffer.allocate(bytes) //Create a new buffer
-        bmp.copyPixelsToBuffer(buffer) //Move the byte data to the buffer
-        return buffer.array()
-    }
-
-    fun base64ToBitmap(base64: String?): Bitmap? {
-        return if (base64 == null) null else try {
-            bytesToBitmap(Base64.decode(base64, Base64.DEFAULT))
-        } catch (e: IllegalArgumentException) {
-            null
-        }
-    }
-
-    fun bytesToBitmap(imageData: ByteArray?): Bitmap? {
-        return if (imageData != null && imageData.isNotEmpty()) {
-            BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-        } else null
-    }
+    fun bytesToBitmap(imageData: ByteArray?): Bitmap? = if (imageData != null && imageData.isNotEmpty()) {
+        BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+    } else null
 
     fun bytesToBitmap(data: ByteArray, maxSize: Int): Bitmap {
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -122,8 +111,6 @@ object BitmapUtils {
         return Bitmap.createScaledBitmap(bitmap, width, height, true)
     }
 
-    @JvmStatic
-    @JvmOverloads
     fun drawableToBitmap(drawable: Drawable, size: Int = -1, padding: Int = 0): Bitmap {
         if (drawable is BitmapDrawable) {
             return drawable.bitmap
