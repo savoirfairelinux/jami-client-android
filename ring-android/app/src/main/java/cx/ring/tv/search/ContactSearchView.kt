@@ -19,11 +19,13 @@
  */
 package cx.ring.tv.search
 
+import net.jami.model.Conversation
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 
 interface ContactSearchView {
-    fun displayResults(contacts: List<ConversationItemViewModel>)
+    fun displayResults(contacts: ConversationFacade.ConversationList, conversationFacade: ConversationFacade)
     fun clearSearch()
     fun startCall(accountID: String, number: String)
-    fun displayContactDetails(model: ConversationItemViewModel)
+    fun displayContactDetails(model: Conversation)
 }

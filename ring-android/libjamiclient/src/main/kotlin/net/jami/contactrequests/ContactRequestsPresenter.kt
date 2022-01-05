@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Account
+import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
@@ -39,16 +40,12 @@ class ContactRequestsPresenter @Inject internal constructor(
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<ContactRequestsView>() {
     private val mAccount = BehaviorSubject.create<Account>()
+
     override fun bindView(view: ContactRequestsView) {
         super.bindView(view)
-        mCompositeDisposable.add(mConversationFacade.getPendingList(mAccount)
-            .switchMap { viewModels: List<Observable<ConversationItemViewModel>> ->
-                if (viewModels.isEmpty()) ConversationItemViewModel.EMPTY_RESULTS
-                else Observable.combineLatest(viewModels) { obs -> obs.mapTo(ArrayList(obs.size))
-                    { ob -> ob as ConversationItemViewModel } }
-            }
+        mCompositeDisposable.add(mConversationFacade.getPendingConversationList(mAccount)
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels -> this.view?.updateView(viewModels, mCompositeDisposable) })
+            .subscribe({ viewModels -> this.view?.updateView(viewModels, mConversationFacade, mCompositeDisposable) })
             { e: Throwable -> Log.d(TAG, "updateList subscribe onError", e) })
     }
 
@@ -71,19 +68,19 @@ class ContactRequestsPresenter @Inject internal constructor(
         view?.goToConversation(accountId, uri)
     }
 
-    fun removeConversation(item: ConversationItemViewModel) {
+    fun removeConversation(item: Conversation) {
         mConversationFacade.discardRequest(item.accountId, item.uri)
     }
 
-    fun banContact(item: ConversationItemViewModel) {
+    fun banContact(item: Conversation) {
         mConversationFacade.discardRequest(item.accountId, item.uri)
         mAccountService.removeContact(item.accountId, item.uri.host, true)
     }
 
-    fun copyNumber(item: ConversationItemViewModel) {
-        val contact = item.getContact()
+    fun copyNumber(item: Conversation) {
+        val contact = item.contact
         if (contact != null) {
-            view?.copyNumber(contact.contact.uri)
+            view?.copyNumber(contact.uri)
         } else {
             view?.copyNumber(item.uri)
         }

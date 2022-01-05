@@ -66,7 +66,7 @@ abstract class ContactService(
     }
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
-        //Log.w(TAG, "observeContact " + accountId + " " + contact.getUri() + " " + contact.isUser());
+        Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val observePresence = if (contact.isUser) false else withPresence
         val uri = contact.uri
         val uriString = uri.rawRingId

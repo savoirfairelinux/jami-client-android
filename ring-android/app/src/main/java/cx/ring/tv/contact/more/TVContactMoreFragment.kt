@@ -56,7 +56,7 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            presenter.setContact(fromIntent(requireActivity().intent))
+            presenter.setContact(fromIntent(requireActivity().intent)!!)
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {

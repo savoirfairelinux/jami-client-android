@@ -19,12 +19,14 @@
 package net.jami.contactrequests
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Conversation
 import net.jami.model.Uri
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 
 interface ContactRequestsView {
-    fun updateView(list: MutableList<ConversationItemViewModel>, disposable: CompositeDisposable)
-    fun updateItem(item: ConversationItemViewModel)
+    fun updateView(list: List<Conversation>, conversationFacade: ConversationFacade, disposable: CompositeDisposable)
+    fun updateItem(item: Conversation)
     fun goToConversation(accountId: String, contactId: Uri)
     fun copyNumber(uri: Uri)
 }

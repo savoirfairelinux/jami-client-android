@@ -542,11 +542,7 @@ class Account(
 
     private fun getUri(display: Boolean): String? {
         val username = if (display) displayUsername else username
-        return if (isJami) {
-            username
-        } else {
-            "$username@$host"
-        }
+        return if (isJami) username else "$username@$host"
     }
 
     val uri: String?

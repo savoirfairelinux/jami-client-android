@@ -18,6 +18,7 @@
  */
 package cx.ring.tv.main
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -60,8 +61,10 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
+import net.jami.model.Conversation
 import net.jami.model.Profile
 import net.jami.navigation.HomeNavigationViewModel
+import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
@@ -88,7 +91,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mTitleView = view.findViewById(R.id.browse_title_group)
         super.onViewCreated(view, savedInstanceState)
-        setupUIElements(requireContext())
+        setupUIElements(requireContext(), presenter.conversationFacade)
     }
 
     override fun onDestroyView() {
@@ -96,12 +99,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         mDisposable.clear()
     }
 
-    private fun setupUIElements(context: Context) {
-        selector = CardPresenterSelector(context)
+    private fun setupUIElements(context: Context, conversationFacade: ConversationFacade) {
+        selector = CardPresenterSelector(context, conversationFacade)
         cardRowAdapter = ArrayObjectAdapter(selector)
 
         /* Contact Presenter */
-        val contactRow = CardRow(CardRow.TYPE_DEFAULT, false, getString(R.string.tv_contact_row_header), ArrayList())
+        val contactRow = CardRow(false, getString(R.string.tv_contact_row_header), ArrayList())
         val cardPresenterHeader = HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header))
         val contactListRow = CardListRow(cardPresenterHeader, cardRowAdapter, contactRow)
         accountSettingsRow = createAccountSettingsRow(context)
@@ -117,7 +120,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     private fun createRow(titleSection: String, cards: List<Card>, shadow: Boolean): ListRow {
-        val row = CardRow(CardRow.TYPE_DEFAULT, shadow, titleSection, cards)
+        val row = CardRow(shadow, titleSection, cards)
         val listRowAdapter = ArrayObjectAdapter(selector)
         for (card in cards) {
             listRowAdapter.add(card)
@@ -135,7 +138,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     private fun createContactRequestRow(): CardListRow {
-        val contactRequestRow = CardRow(CardRow.TYPE_DEFAULT, false, getString(R.string.menu_item_contact_request), ArrayList<ContactCard>())
+        val contactRequestRow = CardRow(false, getString(R.string.menu_item_contact_request), ArrayList<ContactCard>())
         contactRequestRowAdapter = ArrayObjectAdapter(selector)
         return CardListRow(HeaderItem(HEADER_MISC, getString(R.string.menu_item_contact_request)), contactRequestRowAdapter, contactRequestRow)
     }
@@ -150,21 +153,36 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         }
     }
 
-    override fun refreshContact(index: Int, contact: ConversationItemViewModel) {
+    /*override fun refreshContact(index: Int, contact: ConversationItemViewModel) {
         val contactCard = cardRowAdapter!![index] as ContactCard
         contactCard.model = contact
         cardRowAdapter!!.replace(index, contactCard)
+    }*/
+
+    private val diff = object : DiffCallback<Card>() {
+        override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
+            if (oldItem.type != newItem.type) return false
+            if (oldItem is ContactCard && newItem is ContactCard)
+                return oldItem.model === newItem.model
+            if (oldItem is IconCard && newItem is IconCard)
+                return oldItem.title == newItem.title
+            return false
+        }
+
+        override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
+            return areItemsTheSame(oldItem, newItem)
+        }
     }
 
-    override fun showContacts(contacts: List<ConversationItemViewModel>) {
+    override fun showContacts(contacts: List<Conversation>) {
         val cards: MutableList<Card> = ArrayList(contacts.size + 1)
         cards.add(IconCardHelper.getAddContactCard(requireContext()))
-        for (contact in contacts) cards.add(ContactCard(contact, Card.Type.CONTACT))
-        cardRowAdapter!!.setItems(cards, null)
+        for (contact in contacts) cards.add(ContactCard(contact, Card.Type.CONTACT_WITH_USERNAME_ONLINE))
+        cardRowAdapter!!.setItems(cards, diff)
         buildHomeChannel(requireContext().applicationContext, contacts)
     }
 
-    private fun buildHomeChannel(context: Context, contacts: List<ConversationItemViewModel>) {
+    private fun buildHomeChannel(context: Context, contacts: List<Conversation>) {
         if (contacts.isEmpty()) return
 
         // Get launcher package name
@@ -183,32 +201,29 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     cr.delete(TvContractCompat.buildPreviewProgramsUriForChannel(channelId), null, null)
                 }
             }
-            .flatMapObservable { channelId: Long ->
-                Observable.fromIterable(contacts)
-                    .concatMapEager({ contact: ConversationItemViewModel ->
-                        buildProgram(context, contact, launcherName, channelId)
-                            .toObservable()
-                            .subscribeOn(Schedulers.io())
-                    }, 8, 1)
+            .flatMapObservable { channelId -> Observable.fromIterable(contacts)
+                .concatMapEager({ contact -> presenter.contactService.getLoadedConversation(contact)
+                    .flatMap { vm -> buildProgram(context, vm, launcherName, channelId) }
+                    .toObservable()
+                    .subscribeOn(Schedulers.io())
+                }, 8, 1)
             }
             .subscribeOn(Schedulers.io())
             .subscribe({ program -> cr.insert(TvContractCompat.PreviewPrograms.CONTENT_URI, program.toContentValues()) }
             ) { e: Throwable -> Log.w(TAG, "Error updating home channel", e) })
     }
 
-    override fun showContactRequests(contacts: List<ConversationItemViewModel>) {
+    override fun showContactRequests(contacts: List<Conversation>) {
         val adapter = adapter as ArrayObjectAdapter
         val row = adapter[TRUST_REQUEST_ROW_POSITION] as CardListRow?
         val isRowDisplayed = row === requestsRow
-        val cards: MutableList<ContactCard> = ArrayList(contacts.size)
-        for (contact in contacts)
-            cards.add(ContactCard(contact, Card.Type.CONTACT))
-        if (isRowDisplayed && contacts.isEmpty()) {
+        val cards = contacts.map { contact -> ContactCard(contact, Card.Type.CONTACT_WITH_USERNAME) }
+        if (isRowDisplayed && cards.isEmpty()) {
             adapter.removeItems(TRUST_REQUEST_ROW_POSITION, 1)
         } else if (contacts.isNotEmpty()) {
             if (requestsRow == null)
                 requestsRow = createContactRequestRow()
-            contactRequestRowAdapter!!.setItems(cards, null)
+            contactRequestRowAdapter!!.setItems(cards, diff)
             if (!isRowDisplayed)
                 adapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
         }
@@ -239,7 +254,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             logoView.setImageDrawable(AvatarDrawable.build(context, account, profile, true))
         }
         prepareAccountQr(context, account.uri)?.let { qr ->
-            qrCard?.setDrawable(qr)
+            qrCard?.drawable = qr
             accountSettingsRow?.adapter?.notifyItemRangeChanged(QR_ITEM_POSITION, 1)
         }
     }
@@ -340,6 +355,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             return channelId
         }
 
+        @SuppressLint("RestrictedApi")
         private fun buildProgram(context: Context, vm: ConversationItemViewModel, launcherName: String?, channelId: Long): Single<PreviewProgram> {
             return AvatarDrawable.Builder()
                 .withViewModel(vm)
@@ -361,7 +377,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                         .setChannelId(channelId)
                         .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
                         .setTitle(vm.contactName)
-                        .setAuthor(vm.contacts[0].displayUri)
+                        .setAuthor(vm.uriTitle)
                         .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                         .setPosterArtUri(uri)
                         .setIntentUri(Uri.Builder()
