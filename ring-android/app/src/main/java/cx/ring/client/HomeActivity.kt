@@ -139,8 +139,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             startActivity(intent)
             return
         }
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
+        if (!DeviceUtils.isTablet(this)) {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
 
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
@@ -154,7 +155,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 enableAccount(isChecked)
             }
             binding.contactImage?.setOnClickListener { fConversation?.openContact() }
-
             if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 window.navigationBarColor = ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(binding.navigationView.elevation)
             }
