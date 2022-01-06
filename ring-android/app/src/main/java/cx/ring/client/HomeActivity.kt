@@ -21,6 +21,7 @@ package cx.ring.client
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Build
@@ -29,6 +30,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.CompoundButton
 import androidx.annotation.StringRes
@@ -76,13 +78,13 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import net.jami.services.ConversationFacade
 import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
@@ -99,16 +101,20 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var mOutlineProvider: ViewOutlineProvider? = null
     private var mOrientation = 0
 
-    @Inject lateinit
+    @Inject
+    lateinit
     var mContactService: ContactService
 
-    @Inject lateinit
+    @Inject
+    lateinit
     var mAccountService: AccountService
 
-    @Inject lateinit
+    @Inject
+    lateinit
     var mConversationFacade: ConversationFacade
 
-    @Inject lateinit
+    @Inject
+    lateinit
     var mNotificationService: NotificationService
 
     private var mBinding: ActivityHomeBinding? = null
@@ -139,8 +145,22 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             startActivity(intent)
             return
         }
+
         if (!DeviceUtils.isTablet(this)) {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+            } else {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+            }
+        } else {
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val attr = window.attributes
+            attr.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
@@ -156,10 +176,24 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             binding.contactImage?.setOnClickListener { fConversation?.openContact() }
             if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window.navigationBarColor = ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(binding.navigationView.elevation)
+                window.navigationBarColor =
+                    ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(
+                        binding.navigationView.elevation
+                    )
             }
         }
         handleIntent(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (!DeviceUtils.isTablet(this)) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+            } else {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+            }
+        }
+        super.onConfigurationChanged(newConfig)
     }
 
     override fun onDestroy() {
@@ -184,7 +218,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val action = intent.action
         when (action) {
             ACTION_PRESENT_TRUST_REQUEST_FRAGMENT -> {
-                presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
+                presentTrustRequestFragment(
+                    extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return
+                )
             }
             Intent.ACTION_SEND,
             Intent.ACTION_SEND_MULTIPLE -> {
@@ -281,7 +317,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             mBinding!!.spinnerToolbar.setSelection(0)
                         }
                     } ?: run {
-                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService).apply {
+                        AccountSpinnerAdapter(
+                            this@HomeActivity,
+                            ArrayList(accounts),
+                            mDisposable,
+                            mAccountService
+                        ).apply {
                             mAccountAdapter = this
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
@@ -310,19 +351,27 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .observeOn(Schedulers.computation())
                 .switchMapSingle { conversations ->
                     Single.zip(conversations.mapTo(ArrayList(conversations.size))
-                    { c -> mContactService.getLoadedConversation(c)
-                        .observeOn(Schedulers.computation())
-                        .map{ vm -> Pair(vm, BitmapUtils.drawableToBitmap(
-                            AvatarDrawable.Builder()
-                            .withViewModel(vm)
-                            .withCircleCrop(true)
-                            .build(this), targetSize)) } }) { obs -> obs }
+                    { c ->
+                        mContactService.getLoadedConversation(c)
+                            .observeOn(Schedulers.computation())
+                            .map { vm ->
+                                Pair(
+                                    vm, BitmapUtils.drawableToBitmap(
+                                        AvatarDrawable.Builder()
+                                            .withViewModel(vm)
+                                            .withCircleCrop(true)
+                                            .build(this), targetSize
+                                    )
+                                )
+                            }
+                    }) { obs -> obs }
                 }
                 .subscribe({ conversations -> setShareShortcuts(conversations) })
                 { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
         }
         if (fConversation == null)
-            fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
+            fConversation =
+                supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
         val newOrientation = resources.configuration.orientation
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation
@@ -357,7 +406,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .map { list -> list[0].firstOrError() }
                         .firstElement()
                         .flatMapSingle { e -> e }
-                        .subscribe { element -> startConversation(element.accountId, element.uri) })
+                        .subscribe { element ->
+                            startConversation(
+                                element.accountId,
+                                element.uri
+                            )
+                        })
                 }
             }
         }
@@ -370,9 +424,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun startConversation(conversationId: String) {
         mDisposable.add(mAccountService.currentAccountSubject
-                .firstElement()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { account -> startConversation(account.accountId, Uri.fromString(conversationId)) })
+            .firstElement()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { account ->
+                startConversation(
+                    account.accountId,
+                    Uri.fromString(conversationId)
+                )
+            })
     }
 
     fun startConversation(accountId: String, conversationId: Uri) {
@@ -382,7 +441,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun startConversation(path: ConversationPath) {
         Log.w(TAG, "startConversation $path")
         if (!DeviceUtils.isTablet(this)) {
-            startActivity(Intent(Intent.ACTION_VIEW, path.toUri(), this, ConversationActivity::class.java))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    path.toUri(),
+                    this,
+                    ConversationActivity::class.java
+                )
+            )
         } else {
             startConversationTablet(path.toBundle())
         }
@@ -396,7 +462,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
         showTabletToolbar()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.conversation_container, fConversation!!, ConversationFragment::class.java.simpleName)
+            .replace(
+                R.id.conversation_container,
+                fConversation!!,
+                ConversationFragment::class.java.simpleName
+            )
             .commit()
     }
 
@@ -407,7 +477,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             return
         }
         val content = ContactRequestsFragment().apply {
-            arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
+            arguments =
+                Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
         }
         fContent = content
         mBinding!!.navigationView.menu.getItem(NAVIGATION_CONTACT_REQUESTS).isChecked = true
@@ -536,7 +607,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
                 val intent = Intent()
                     .setClass(this, AccountWizardActivity::class.java)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId))
+                    .setData(
+                        android.net.Uri.withAppendedPath(
+                            ContentUriHandler.ACCOUNTS_CONTENT_URI,
+                            account.accountId
+                        )
+                    )
                 startActivityForResult(intent, 1)
             } else {
                 Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
@@ -586,29 +662,35 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun hideTabletToolbar() {
-        mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
-            binding.contactTitle?.text = null
-            binding.contactSubtitle?.text = null
-            binding.contactImage?.setImageDrawable(null)
-            toolbar.visibility = View.GONE
-        }}
+        mBinding?.let { binding ->
+            binding.tabletToolbar?.let { toolbar ->
+                binding.contactTitle?.text = null
+                binding.contactSubtitle?.text = null
+                binding.contactImage?.setImageDrawable(null)
+                toolbar.visibility = View.GONE
+            }
+        }
     }
 
     private fun showTabletToolbar() {
         if (DeviceUtils.isTablet(this))
-            mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
-                toolbar.visibility = View.VISIBLE
-            }}
+            mBinding?.let { binding ->
+                binding.tabletToolbar?.let { toolbar ->
+                    toolbar.visibility = View.VISIBLE
+                }
+            }
     }
 
     fun setTabletTitle(@StringRes titleRes: Int) {
-        mBinding?.let { binding -> binding.tabletToolbar?.let { toolbar ->
-            binding.contactTitle?.setText(titleRes)
-            binding.contactTitle?.textSize = 19f
-            binding.contactTitle?.setTypeface(null, Typeface.BOLD)
-            binding.contactImage?.visibility = View.GONE
-            toolbar.visibility = View.VISIBLE
-        }}
+        mBinding?.let { binding ->
+            binding.tabletToolbar?.let { toolbar ->
+                binding.contactTitle?.setText(titleRes)
+                binding.contactTitle?.textSize = 19f
+                binding.contactTitle?.setTypeface(null, Typeface.BOLD)
+                binding.contactImage?.visibility = View.GONE
+                toolbar.visibility = View.VISIBLE
+            }
+        }
         /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
         params.removeRule(RelativeLayout.ALIGN_TOP);
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -731,7 +813,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         var maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this)
         if (maxCount == 0) maxCount = 4
 
-        val shortcutInfoList: MutableList<ShortcutInfoCompat> = ArrayList(min(maxCount, conversations.size))
+        val shortcutInfoList: MutableList<ShortcutInfoCompat> =
+            ArrayList(min(maxCount, conversations.size))
         for (c in conversations) {
             val conversation = c as Pair<ConversationItemViewModel, Bitmap>
             val mode = conversation.first.mode
@@ -757,8 +840,15 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .setLongLived(true)
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
-                .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
-                        .putExtras(path.toBundle()))
+                .setIntent(
+                    Intent(
+                        Intent.ACTION_SEND,
+                        android.net.Uri.EMPTY,
+                        this,
+                        HomeActivity::class.java
+                    )
+                        .putExtras(path.toBundle())
+                )
                 .build()
             shortcutInfoList.add(shortcutInfo)
             if (shortcutInfoList.size == maxCount) break
@@ -790,7 +880,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
         const val VIDEO_SETTINGS_TAG = "VideoPrefs"
-        const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
+        const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT =
+            BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
         const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
         const val PLUGIN_SETTINGS_TAG = "PluginSettings"
         const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"

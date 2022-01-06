@@ -21,10 +21,12 @@
 package cx.ring.client
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
-import android.view.View
+import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -35,6 +37,7 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.interfaces.Colorable
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,7 +59,20 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             finish()
             return
         }
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        if (!DeviceUtils.isTablet(this)) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+            } else {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val attr = window.attributes
+            attr.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
 
         conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
@@ -79,6 +95,18 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action || Intent.ACTION_VIEW == action) {
             mPendingIntent = intent
         }
+    }
+
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (!DeviceUtils.isTablet(this)) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                WindowCompat.setDecorFitsSystemWindows(window, true)
+            } else {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
+            }
+        }
+        super.onConfigurationChanged(newConfig)
     }
 
     override fun onContextMenuClosed(menu: Menu) {
