@@ -19,16 +19,16 @@
  */
 package cx.ring.client
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewOutlineProvider
+import android.view.*
 import android.widget.AdapterView
 import android.widget.CompoundButton
 import androidx.annotation.StringRes
@@ -39,6 +39,8 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -139,8 +141,15 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             startActivity(intent)
             return
         }
-        if (!DeviceUtils.isTablet(this)) {
+         if (!DeviceUtils.isTablet(this)) {
             WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val attr = window.attributes
+            attr.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
@@ -161,6 +170,26 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
         handleIntent(intent)
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (!DeviceUtils.isTablet(this)){
+            mBinding?.let {
+                if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    WindowInsetsControllerCompat(window, it.root).apply {
+                        hide(WindowInsetsCompat.Type.navigationBars())
+                        systemBarsBehavior =
+                            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    }
+                } else {
+                    WindowInsetsControllerCompat(window, it.root).apply {
+                        show(WindowInsetsCompat.Type.navigationBars())
+                    }
+                }
+            }
+        }
+        super.onConfigurationChanged(newConfig)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

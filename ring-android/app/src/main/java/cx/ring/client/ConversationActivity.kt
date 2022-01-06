@@ -20,14 +20,17 @@
  */
 package cx.ring.client
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.View
+import android.view.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityConversationBinding
@@ -35,6 +38,7 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.interfaces.Colorable
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +61,11 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             return
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val attr = window.attributes
+            attr.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
         conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon()
@@ -79,6 +87,25 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         if (Intent.ACTION_SEND == action || Intent.ACTION_SEND_MULTIPLE == action || Intent.ACTION_VIEW == action) {
             mPendingIntent = intent
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        if (!DeviceUtils.isTablet(this)){
+            mConversationFragment?.view?.let {
+                if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    WindowInsetsControllerCompat(window, it).apply {
+                        hide(WindowInsetsCompat.Type.navigationBars())
+                        systemBarsBehavior =
+                            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    }
+                } else {
+                    WindowInsetsControllerCompat(window, it).apply {
+                        show(WindowInsetsCompat.Type.navigationBars())
+                    }
+                }
+            }
+        }
+        super.onConfigurationChanged(newConfig)
     }
 
     override fun onContextMenuClosed(menu: Menu) {
