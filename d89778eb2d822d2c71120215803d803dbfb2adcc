@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb42a35_237b9a2e",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-07T17:17:32Z",
+      "side": 1,
+      "message": "I seems to have frequent lock here.\n\nEasily reproductible when switching between 2 accounts and send/receive messages\n\n\"main@15801\" prio\u003d5 tid\u003d0x2 nid\u003dNA waiting for monitor entry\n  java.lang.Thread.State: BLOCKED\n\t waiting for DRing@16634 to release lock on \u003c0x6539\u003e (a java.util.ArrayList)\n\t  at net.jami.services.AccountService.getAccount(AccountService.kt:424)\n\t  at net.jami.services.AccountService.getObservableAccount$lambda-22(AccountService.kt:456)\n\t  at net.jami.services.AccountService.$r8$lambda$Tm3SyDK6WaMoBtrF01hQ1ShPKWA(Unknown Source:-1)\n\t  at net.jami.services.AccountService$$ExternalSyntheticLambda87.call(Unknown Source:-1)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableFromCallable.get(ObservableFromCallable.java:61)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMap$ConcatMapDelayErrorObserver.drain(ObservableConcatMap.java:456)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMap$ConcatMapDelayErrorObserver.onSubscribe(ObservableConcatMap.java:330)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableFromArray.subscribeActual(ObservableFromArray.java:32)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13176)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableConcatMap.subscribeActual(ObservableConcatMap.java:56)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13176)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableFlatMap.subscribeActual(ObservableFlatMap.java:52)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13176)\n\t  at io.reactivex.rxjava3.internal.operators.observable.ObservableObserveOn.subscribeActual(ObservableObserveOn.java:46)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13176)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13121)\n\t  at io.reactivex.rxjava3.core.Observable.subscribe(Observable.java:13085)\n\t  at cx.ring.client.AccountSpinnerAdapter.getView(AccountSpinnerAdapter.kt:69)\n\t  at android.widget.AbsSpinner.onMeasure(AbsSpinner.java:206)\n\t  at android.widget.Spinner.onMeasure(Spinner.java:614)\n\t  at androidx.appcompat.widget.AppCompatSpinner.onMeasure(AppCompatSpinner.java:438)\n\t  at android.view.View.measure(View.java:25532)\n\t  at androidx.appcompat.widget.Toolbar.measureChildCollapseMargins(Toolbar.java:1717)\n\t  at androidx.appcompat.widget.Toolbar.onMeasure(Toolbar.java:1825)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.LinearLayout.measureChildBeforeLayout(LinearLayout.java:1552)\n\t  at android.widget.LinearLayout.measureVertical(LinearLayout.java:842)\n\t  at android.widget.LinearLayout.onMeasure(LinearLayout.java:721)\n\t  at com.google.android.material.appbar.AppBarLayout.onMeasure(AppBarLayout.java:454)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.widget.RelativeLayout.measureChildHorizontal(RelativeLayout.java:735)\n\t  at android.widget.RelativeLayout.onMeasure(RelativeLayout.java:481)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.FrameLayout.onMeasure(FrameLayout.java:194)\n\t  at androidx.appcompat.widget.ContentFrameLayout.onMeasure(ContentFrameLayout.java:145)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.LinearLayout.measureChildBeforeLayout(LinearLayout.java:1552)\n\t  at android.widget.LinearLayout.measureVertical(LinearLayout.java:842)\n\t  at android.widget.LinearLayout.onMeasure(LinearLayout.java:721)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.FrameLayout.onMeasure(FrameLayout.java:194)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.LinearLayout.measureChildBeforeLayout(LinearLayout.java:1552)\n\t  at android.widget.LinearLayout.measureVertical(LinearLayout.java:842)\n\t  at android.widget.LinearLayout.onMeasure(LinearLayout.java:721)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6957)\n\t  at android.widget.FrameLayout.onMeasure(FrameLayout.java:194)\n\t  at com.android.internal.policy.DecorView.onMeasure(DecorView.java:794)\n\t  at android.view.View.measure(View.java:25532)\n\t  at android.view.ViewRootImpl.performMeasure(ViewRootImpl.java:3534)\n\t  at android.view.ViewRootImpl.measureHierarchy(ViewRootImpl.java:2373)\n\t  at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:2636)\n\t  at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:2048)\n\t  at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:8409)\n\t  at android.view.Choreographer$CallbackRecord.run(Choreographer.java:972)\n\t  at android.view.Choreographer.doCallbacks(Choreographer.java:796)\n\t  at android.view.Choreographer.doFrame(Choreographer.java:731)\n\t  at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:957)\n\t  at android.os.Handler.handleCallback(Handler.java:938)\n\t  at android.os.Handler.dispatchMessage(Handler.java:99)\n\t  at android.os.Looper.loop(Looper.java:250)\n\t  at android.app.ActivityThread.main(ActivityThread.java:7877)\n\t  at java.lang.reflect.Method.invoke(Method.java:-1)\n\t  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)\n\t  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:958)",
+      "range": {
+        "startLine": 424,
+        "startChar": 12,
+        "endLine": 424,
+        "endChar": 39
+      },
+      "revId": "d89778eb2d822d2c71120215803d803dbfb2adcc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f02e688_71a640d8",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/smartlist/SmartListPresenter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-07T17:17:32Z",
+      "side": 1,
+      "message": "should be removed",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "d89778eb2d822d2c71120215803d803dbfb2adcc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
