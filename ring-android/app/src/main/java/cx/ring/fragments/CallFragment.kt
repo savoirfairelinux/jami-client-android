@@ -34,6 +34,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
@@ -63,6 +64,7 @@ import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.zxing.Dimension
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -181,11 +183,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val windowManager = view.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         mCurrentOrientation = windowManager.defaultDisplay.rotation
         val dpRatio = requireActivity().resources.displayMetrics.density
+        val previewContainerMargin = resources.getDimensionPixelSize(R.dimen.call_preview_margin)
         animation.addUpdateListener { valueAnimator ->
             binding?.let { binding ->
                 val upBy = valueAnimator.animatedValue as Int
                 val layoutParams = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
-                layoutParams.setMargins(0, 0, 0, (upBy * dpRatio).toInt())
+                layoutParams.setMargins(previewContainerMargin, previewContainerMargin, previewContainerMargin, (upBy * dpRatio).toInt())
                 binding.previewContainer.layoutParams = layoutParams
             }
         }
@@ -253,14 +256,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
+
             binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
             }
-            binding.previewSurface.surfaceTextureListener = listener
-            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
-            }
-            binding.previewContainer.setOnTouchListener(previewTouchListener)
             binding.pluginPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
                 val action = event.actionMasked
                 val parent = v.parent as RelativeLayout
@@ -361,6 +360,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     else -> false
                 }
             }
+
+            binding.previewSurface.surfaceTextureListener = listener
+            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+            }
+            binding.previewContainer.setOnTouchListener(previewTouchListener)
+
             binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
                   override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                   override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
