@@ -185,7 +185,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding?.let { binding ->
                 val upBy = valueAnimator.animatedValue as Int
                 val layoutParams = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
-                layoutParams.setMargins(0, 0, 0, (upBy * dpRatio).toInt())
+                val marginValue = (12 * dpRatio).toInt()
+                layoutParams.setMargins(marginValue, marginValue, marginValue, (upBy * dpRatio).toInt())
                 binding.previewContainer.layoutParams = layoutParams
             }
         }
@@ -253,14 +254,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
+
             binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
             }
-            binding.previewSurface.surfaceTextureListener = listener
-            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
-            }
-            binding.previewContainer.setOnTouchListener(previewTouchListener)
             binding.pluginPreviewContainer.setOnTouchListener { v: View, event: MotionEvent ->
                 val action = event.actionMasked
                 val parent = v.parent as RelativeLayout
@@ -361,6 +358,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     else -> false
                 }
             }
+
+            binding.previewSurface.surfaceTextureListener = listener
+            binding.previewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight)
+            }
+            binding.previewContainer.setOnTouchListener(previewTouchListener)
+
             binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
                   override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                   override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
