@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea45990_a6a22c40",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-12T20:58:31Z",
+      "side": 1,
+      "message": "* use @dimen/call_preview_margin\n* get the pixel value for it only once",
+      "range": {
+        "startLine": 188,
+        "startChar": 20,
+        "endLine": 188,
+        "endChar": 31
+      },
+      "revId": "60df59900fabef6363212eaa2f6d37fda3048e39",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
