@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38befd76_e2d93e26",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-12T21:14:07Z",
+      "side": 1,
+      "message": "I saw the future ^^\u0027:\n\n* get the pixel value for it only once\n\n(instead of every animation update)",
+      "range": {
+        "startLine": 190,
+        "startChar": 16,
+        "endLine": 190,
+        "endChar": 93
+      },
+      "revId": "66846c10ba27f725215ee6ba3ab3d816a139cc41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
