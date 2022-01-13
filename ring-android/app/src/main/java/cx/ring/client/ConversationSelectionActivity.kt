@@ -51,23 +51,24 @@ class ConversationSelectionActivity : AppCompatActivity() {
     @Singleton lateinit
     var mCallService: CallService
 
-    private val adapter: SmartListAdapter = SmartListAdapter(null, object : SmartListListeners {
-        override fun onItemClick(item: Conversation) {
-            val intent = Intent()
-            intent.data = ConversationPath.toUri(item.accountId, item.uri)
-            setResult(RESULT_OK, intent)
-            finish()
-        }
-
-        override fun onItemLongClick(item: Conversation) {}
-    }, mConversationFacade, mDisposable)
+    var adapter: SmartListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.frag_selectconv)
         val list = findViewById<RecyclerView>(R.id.conversationList)
         list.layoutManager = LinearLayoutManager(this)
-        list.adapter = adapter
+        list.adapter = SmartListAdapter(null, object : SmartListListeners {
+            override fun onItemClick(item: Conversation) {
+                setResult(RESULT_OK, Intent().apply {
+                    data = ConversationPath.toUri(item.accountId, item.uri)
+                })
+                finish()
+            }
+
+            override fun onItemLongClick(item: Conversation) {}
+        }, mConversationFacade, mDisposable)
+            .apply { adapter = this }
         JamiApplication.instance?.startDaemon()
     }
 
@@ -89,7 +90,7 @@ class ConversationSelectionActivity : AppCompatActivity() {
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { list -> adapter.update(list) })
+            .subscribe { list -> adapter?.update(list) })
     }
 
     public override fun onStop() {
@@ -99,7 +100,6 @@ class ConversationSelectionActivity : AppCompatActivity() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        findViewById<RecyclerView>(R.id.conversationList).adapter = null
-        adapter.update(ArrayList())
+        adapter = null
     }
 }
