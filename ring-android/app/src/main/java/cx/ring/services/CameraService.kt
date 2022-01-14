@@ -525,22 +525,23 @@ class CameraService internal constructor(c: Context) {
         if (params.rate == 0) {
             params.rate = 24
         }
-        while (params.width >= 320) {
-            Log.e(TAG, "createVirtualDisplay ${params.width}x${params.height} at ${params.rate}")
-            r = openEncoder(
-                params,
-                MediaFormat.MIMETYPE_VIDEO_AVC,
-                handler,
-                720,
-                0,
-                surface = Surface(surface.surfaceTexture)
-            )
-            if (r.first == null) {
-                params.width /= 2
-                params.height /= 2
-            } else break
+       Log.w(TAG, "createVirtualDisplay ${params.width}x${params.height} at ${params.rate}")
+       params.width = (params.width / 16) * 16
+       params.height = (params.height / 16) * 16
+
+        r = openEncoder(
+            params,
+            MediaFormat.MIMETYPE_VIDEO_AVC,
+            handler,
+            params.width,
+            0,
+            surface = Surface(surface.surfaceTexture)
+        )
+
+        if (r.first == null || r == null) {
+            return null
         }
-        if (r == null) return null
+
         val surface = r.second
         val codec = r.first
         codec?.start()
@@ -780,12 +781,17 @@ class CameraService internal constructor(c: Context) {
                 val metrics = context.resources.displayMetrics
                 var screenWidth = metrics.widthPixels
                 var screenHeight = metrics.heightPixels
-                while (max(screenWidth, screenHeight) > max(minVideoSize.x, minVideoSize.y)) {
-                    screenWidth /= 2
-                    screenHeight /= 2
+             
+                if(screenWidth % 2 != 0) screenWidth += 1
+                if(screenHeight % 2 != 0) screenHeight += 1
+                if (screenWidth >= minVideoSize.x || screenHeight >= minVideoSize.y) {
+                    p.size.x = minVideoSize.x
+                    p.size.y = minVideoSize.y
+                } else {
+                    p.size.x = screenWidth
+                    p.size.y = screenHeight
                 }
-                p.size.x = screenWidth
-                p.size.y = screenHeight
+
                 p.rate = 24
                 rates.add(p.rate)
                 return
