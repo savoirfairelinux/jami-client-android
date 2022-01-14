@@ -454,6 +454,8 @@ class HardwareServiceImpl(
                 mPreferenceService.bitrate
             )
         }
+
+        Log.w(TAG, "DEBUG ------ startCapture before video event: ")
         videoEvents.onNext(VideoEvent(
             started = true,
             w = videoParams.width,
@@ -552,7 +554,6 @@ class HardwareServiceImpl(
     }
 
     override fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean, screenCaptureSession: Any?) {
-        Log.w(TAG, "DEBUG switchInput $callId $screenCaptureSession")
         val camId = if (screenCaptureSession != null) {
             pendingScreenSharingSession = screenCaptureSession as MediaProjection
             CameraService.VideoDevices.SCREEN_SHARING
