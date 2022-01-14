@@ -150,18 +150,22 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun getParams(camId: String?): VideoParams? {
+        Log.w(TAG, "DEBUG ------ getParams() $camId")
         Log.w(TAG, "getParams() $camId")
         if (camId != null) {
+            Log.w(TAG, "DEBUG ------ getParams() mParams[camId]: ${mParams[camId]}")
             return mParams[camId]
         } else if (!devices?.cameras.isNullOrEmpty()) {
             Log.w(TAG, "getParams() fallback")
             devices!!.currentId = devices!!.cameras[0]
+            Log.w(TAG, "DEBUG ------ getParams() mParams[devices!!.currentId]: ${mParams[devices!!.currentId]}")
             return mParams[devices!!.currentId]
         }
         return null
     }
 
     fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int, rotation: Int) {
+        Log.w(TAG, "DEBUG ------ setParameters() $camId $format $width $height $rate $rotation")
         Log.w(TAG, "setParameters() $camId $format $width $height $rate $rotation")
         val deviceParams = mNativeParams[camId]
         if (deviceParams == null) {
@@ -206,6 +210,8 @@ class CameraService internal constructor(c: Context) {
         minVideoSize: Point,
         context: Context
     ) {
+        Log.w(TAG, "DEBUG ------ getCameraInfo: $camId min size: $minVideoSize")
+
         Log.d(TAG, "getCameraInfo: $camId min size: $minVideoSize")
         val p = DeviceParams()
         rates.clear()
@@ -519,28 +525,35 @@ class CameraService internal constructor(c: Context) {
         surface: TextureView,
         metrics: DisplayMetrics
     ): Pair<MediaCodec?, VirtualDisplay>? {
+        Log.w(TAG, "DEBUG ------ createVirtualDisplay")
         val screenDensity = metrics.densityDpi
         val handler = videoHandler
         var r: Pair<MediaCodec?, Surface?>? = null
         if (params.rate == 0) {
             params.rate = 24
         }
-        while (params.width >= 320) {
+
+        while (params.width >= 720) {
+            Log.w(TAG, "DEBUG ------ createVirtualDisplay ---> params( w: ${params.width}, h: ${params.height})")
             Log.e(TAG, "createVirtualDisplay ${params.width}x${params.height} at ${params.rate}")
-            r = openEncoder(
-                params,
-                MediaFormat.MIMETYPE_VIDEO_AVC,
-                handler,
-                720,
-                0,
-                surface = Surface(surface.surfaceTexture)
-            )
-            if (r.first == null) {
-                params.width /= 2
-                params.height /= 2
-            } else break
+            params.width /= 2
+            params.height /= 2
         }
-        if (r == null) return null
+
+        r = openEncoder(
+            params,
+            MediaFormat.MIMETYPE_VIDEO_AVC,
+            handler,
+            720,
+            0,
+            surface = Surface(surface.surfaceTexture)
+        )
+
+        if (r.first == null || r == null) {
+            Log.w(TAG, "DEBUG ------ createVirtualDisplay ---> r == null, return null")
+            return null
+        }
+
         val surface = r.second
         val codec = r.first
         codec?.start()
@@ -568,6 +581,7 @@ class CameraService internal constructor(c: Context) {
                 )
             )
         } catch (e: Exception) {
+            Log.w(TAG, "DEBUG ------ Exception")
             Log.e(TAG, "Exception creating virtual display", e)
             if (codec != null) {
                 codec.stop()
@@ -584,8 +598,10 @@ class CameraService internal constructor(c: Context) {
         surface: TextureView,
         metrics: DisplayMetrics
     ): Boolean {
+        Log.w(TAG, "DEBUG ------ startscreensharing params: $params, surface: ${surface.id}, metrics: $metrics")
         val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
         if (r != null) {
+            Log.w(TAG, "DEBUG ------ startscreensharing  -----> r != null")
             mediaProjection.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {
                     params.mediaCodec?.let { codec ->
