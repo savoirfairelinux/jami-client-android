@@ -61,7 +61,11 @@ Update translations using the Transifex client (tx) :
 
 Retrieve client log from device (client must be running before executing this)
 
-    adb logcat *:D | grep `adb shell ps | egrep 'cx.ring' | cut -c10-15` > logring.txt
+```sh
+jami_pid=$(adb shell ps | egrep 'cx.ring' | cut -c10-15) \
+    && test -n "$jami_pid" || (echo "failed to retrieve jami pid" && exit 1) \
+    && adb logcat '*:D' | grep "$jami_pid" | tee jami.log
+```
 
 ## Common issues
 
