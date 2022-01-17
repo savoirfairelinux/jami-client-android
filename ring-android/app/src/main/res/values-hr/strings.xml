@@ -60,14 +60,20 @@
   <string name="notif_channel_background_service">Pozadinska usluga</string>
   <string name="notif_channel_background_service_descr">Dopušta primanje poziva i poruka bilo kada.</string>
   <string name="notif_group_calls">Pozivi</string>
+  <string name="notif_background_service">Jami je trenutno pokrenut u pozadini</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_reply">Odgovori</string>
   <string name="notif_incoming_file_transfer_title">Dolazna datoteka od %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Slanje datoteke za %1$s</string>
   <string name="notif_sync_title">Sinkroniziram podatke...</string>
+  <string name="notif_location_title">Podijeli lokaciju s %1$s</string>
+  <string name="location_share_contact">%1$s dijeli lokaciju s Vama</string>
+  <string name="location_share_action_start">Počni dijeliti</string>
+  <string name="location_share_action_stop">Prestani dijeliti</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Poklopi</string>
+  <string name="action_call_maximize">Maksimiziraj</string>
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
@@ -95,6 +101,7 @@
   <string name="send_file">Pošalji datoteku</string>
   <string name="hist_file_sent">Datoteka poslana</string>
   <string name="hist_file_received">Datoteka primljena</string>
+  <string name="conversation_share_location">Podijeli lokaciju</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
@@ -109,6 +116,8 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
   <string name="title_activity_qrcode">Dijeli moj račun</string>
+  <string name="tab_code">Moj kod</string>
+  <string name="tab_scan">Skeniraj kod</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Obrisati povijest?</string>
   <string name="clear_history_completed">Povijest je očišćena.</string>
@@ -119,18 +128,24 @@
   <string name="conversation_action_delete_this_message"> Ova se radnja ne može poništiti.</string>
   <string name="conversation_action_history_clear">Očisti povijest</string>
   <string name="conversation_action_history_clear_title">Očistiti povijest razgovora?</string>
+  <string name="conversation_action_history_clear_message">Ovo će definitivno obrisati povijest razgovora.</string>
   <string name="conversation_action_remove_this">Izbriši kontakt</string>
   <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
+  <string name="conversation_action_remove_this_message">Ovo će obrisati kontakt i definitivno obrisati povijest razgovora.</string>
   <string name="conversation_action_copy_peer_number">Kopiraj broj</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
+  <string name="conversation_action_go_to_call">Vrati se na poziv u tijeku</string>
   <string name="clip_contact_uri">Adresa kontakta</string>
   <string name="block_contact_dialog_title">Blokirati %1$s?</string>
   <string name="block_contact_completed">%1$s je bio blokiran.</string>
+  <string name="conversation_contact_is_typing">Kontakt tipka...</string>
+  <string name="conversation_members">Članovi</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodati %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>
+  <string name="prompt_new_password_optional">Nova lozinka (opcionalno)</string>
   <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
   <string name="account_create_title">Napravite Jami račun</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
@@ -144,7 +159,9 @@
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografiraj</string>
+  <string name="profile_name_hint">Unesite svoje ime</string>
   <string name="account">Račun</string>
+  <string name="devices">Povezani uređaji</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="share_label">Podijeli</string>
@@ -183,8 +200,12 @@
   <string name="tv_dialog_send">Pošalji</string>
   <!--Wizard-->
   <string name="wizard_password_skip">Napravi račun</string>
+  <string name="wizard_password_switch">Kriptiraj račun s lozinkom</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podijeli</string>
+  <string name="bottomSheet_plugins_btn">Dodaci</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Završi poziv</string>
+  <string name="bottomSheet_sound_output_btn">Zvukovi</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
 </resources>

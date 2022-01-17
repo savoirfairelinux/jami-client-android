@@ -102,8 +102,8 @@
   <string name="action_call_accept">Răspunde</string>
   <string name="action_call_accept_audio">Vocal</string>
   <string name="action_call_accept_video">Video</string>
-  <string name="action_call_hold_accept">Așteptare și răspunde doar vocal</string>
-  <string name="action_call_hold_accept_video">Așteptare și răspunde cu video</string>
+  <string name="action_call_hold_accept">Pauză și răspunde doar vocal</string>
+  <string name="action_call_hold_accept_video">Pauză și răspunde cu video</string>
   <string name="action_call_end_accept">Închide și răspunde la apel</string>
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>

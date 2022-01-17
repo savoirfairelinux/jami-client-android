@@ -4,4 +4,5 @@
   <string name="contact_quick_call_description">Brzi poziv</string>
   <string name="contact_picture_description">Slika kontakta</string>
   <string name="dial_numeric_pad">Numerička tipkovnica</string>
+  <string name="contact_unblock">Deblokiraj</string>
 </resources>

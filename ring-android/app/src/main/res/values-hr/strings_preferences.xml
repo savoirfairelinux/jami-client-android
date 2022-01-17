@@ -11,4 +11,5 @@
   <string name="pref_clearHistory_title">Očisti povijest</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
+  <string name="pref_plugins_title">Dodaci</string>
 </resources>

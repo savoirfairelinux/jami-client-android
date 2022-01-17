@@ -45,6 +45,8 @@
   <string name="pref_read_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
   <string name="pref_block_record_title">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <string name="pref_block_record_summary">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
+  <string name="pref_link_preview_title">نشان دادن پیش نمایش پیوندها در مکالمات</string>
+  <string name="pref_link_preview_summary">پیش نمایش ها نیاز به دانلود محتوا از سرورهای شخص ثالث دارند.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">عمومی \n(نمایش اعلان‌ها و محتوای آنها در صفحه قفل)\n</string>
   <string name="notification_private">خضوصی \n(نمایش اعلان‌ها و مخفی‌کردن محتوای آنها در صفحه قفل)\n</string>

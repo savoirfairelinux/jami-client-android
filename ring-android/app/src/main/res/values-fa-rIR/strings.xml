@@ -34,7 +34,7 @@
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_plugin_list">تنظیمات افزونه</string>
-  <string name="menu_item_share">هم‌رسانی حساب من</string>
+  <string name="menu_item_share">به اشتراک گذاری حساب من</string>
   <string name="menu_item_about">درباره جمی</string>
   <!--Dialing Fragment-->
   <string name="dial_number">شماره‌گیری کن</string>
@@ -99,6 +99,10 @@
   <string name="start_error_title">نمی‌توان جمی را راه‌اندازی کرد!</string>
   <string name="start_error_mic_required">جمی برای کار به مجوز میکروفون نیاز دارد.</string>
   <string name="action_call_accept">پذیرش تماس</string>
+  <string name="action_call_accept_audio">پاسخ به صورت صوتی</string>
+  <string name="action_call_accept_video">پاسخ به صورت ویدیویی</string>
+  <string name="action_call_hold_accept">در حالت انتظار نگه داشتن تماس فعلی و ‍ پذیرفتن تماس بعدی</string>
+  <string name="action_call_hold_accept_video">در حالت انتظار نگه داشتن تماس فعلی و پذیرفتن تماس ویدیویی</string>
   <string name="action_call_end_accept">این را قطع کن و تماس بعدی را بپذیر</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
@@ -106,7 +110,11 @@
   <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
+  <string name="hist_contact_invited">مخاطب افزوده شد
+ </string>
   <string name="hist_contact_added">مخاطب افزوده شد</string>
+  <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
+  <string name="hist_contact_banned">مخاطب مسدود شد</string>
   <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
   <string name="ab_action_video_call">تماس تصویری</string>
@@ -178,11 +186,12 @@
   <string name="conversation_contact_is_typing">مخاطب در حال نوشتن است...</string>
   <string name="conversation_info_contact_you">شما</string>
   <string name="conversation_members">اعضا</string>
+  <string name="conversation_syncing">بارگیری مکالمه از طرف دیگر</string>
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>
-  <string name="conversation_type_private">دسته خصوصی</string>
-  <string name="conversation_type_group">دسته گروهی</string>
+  <string name="conversation_type_private">Swarm خصوصی</string>
+  <string name="conversation_type_group">Swarm گروهی</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
@@ -295,6 +304,7 @@
   <string name="tv_send_text">ارسال متن</string>
   <string name="tv_send_audio">ارسال صدا</string>
   <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>
+  <string name="tv_action_more">بیشتر</string>
   <string name="conversation_input_speech_hint">چیزی بگویید...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">توصیه‌شده</string>
@@ -315,8 +325,14 @@
   <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
   <string name="chat_plugins">افزونه‌های گفتگو</string>
   <!--Bottom sheet-->
-  <string name="bottomSheet_share_btn">هم‌رسانی</string>
+  <string name="bottomSheet_share_btn">اشتراک گذاری</string>
+  <string name="bottomSheet_dialpad_btn">صفحه ی شماره گیری</string>
   <string name="bottomSheet_plugins_btn">افزونه‌ها</string>
   <string name="bottomSheet_add_participants_btn">افزودن</string>
+  <string name="bottomSheet_change_camera_btn">تغییر</string>
   <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
+  <string name="bottomSheet_hangup_btn">پایان دادن به تماس</string>
+  <string name="bottomSheet_mute_microphone_btn">میکروفون</string>
+  <string name="bottomSheet_sound_output_btn">صداها</string>
+  <string name="bottomSheet_raiseHand_btn">بالا بردن دست </string>
 </resources>
