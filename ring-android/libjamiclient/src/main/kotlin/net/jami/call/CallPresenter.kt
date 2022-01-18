@@ -620,7 +620,7 @@ class CallPresenter @Inject constructor(
     fun startScreenShare(mediaProjection: Any?): Boolean {
         val conference = mConference ?: return false
         mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
-        return true//mHardwareService.startScreenShare(mediaProjection)
+        return true
     }
 
     fun stopScreenShare() {
