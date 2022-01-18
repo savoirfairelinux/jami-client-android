@@ -389,7 +389,7 @@ class HardwareServiceImpl(
 
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
-        Log.w(TAG, "DEBUG startCapture: $camId $cam")
+        Log.w(TAG, "startCapture: $camId $cam")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
         if (videoParams.isCapturing) {
@@ -454,6 +454,7 @@ class HardwareServiceImpl(
                 mPreferenceService.bitrate
             )
         }
+
         videoEvents.onNext(VideoEvent(
             started = true,
             w = videoParams.width,
@@ -552,7 +553,6 @@ class HardwareServiceImpl(
     }
 
     override fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean, screenCaptureSession: Any?) {
-        Log.w(TAG, "DEBUG switchInput $callId $screenCaptureSession")
         val camId = if (screenCaptureSession != null) {
             pendingScreenSharingSession = screenCaptureSession as MediaProjection
             CameraService.VideoDevices.SCREEN_SHARING

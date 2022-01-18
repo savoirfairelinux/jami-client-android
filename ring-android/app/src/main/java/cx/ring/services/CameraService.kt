@@ -513,6 +513,34 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
+    private fun getSmallerResolution(screenHeight: Int, screenWidth: Int) : Map<String, Int> {
+        val resolution = mutableMapOf("x" to 0, "y" to 0)
+        val ratioDeviceScreen = screenHeight.toFloat().div(screenWidth.toFloat())
+        when {
+            screenWidth > 2160 -> {
+                resolution["x"] = 2160
+                resolution["y"] = (2160 * ratioDeviceScreen).toInt()
+            }
+            screenWidth > 1080 -> {
+                resolution["x"] = 1080
+                resolution["y"] = (1080 * ratioDeviceScreen).toInt()
+            }
+            screenWidth > 720 -> {
+                resolution["x"] = 720
+                resolution["y"] = (720 * ratioDeviceScreen).toInt()
+            }
+            else -> {
+                resolution["x"] = 480
+                resolution["y"] = (480 * ratioDeviceScreen).toInt()
+            }
+        }
+
+        // Assuring multiplicity by 16 to ease the encoder work
+        resolution["x"] = (resolution["x"]!! / 16) * 16
+        resolution["y"] = (resolution["y"]!! / 16) * 16
+        return resolution
+    }
+
     private fun createVirtualDisplay(
         params: VideoParams,
         projection: MediaProjection,
@@ -521,29 +549,34 @@ class CameraService internal constructor(c: Context) {
     ): Pair<MediaCodec?, VirtualDisplay>? {
         val screenDensity = metrics.densityDpi
         val handler = videoHandler
-        var r: Pair<MediaCodec?, Surface?>? = null
+        var r: Pair<MediaCodec?, Surface?>?
         if (params.rate == 0) {
             params.rate = 24
         }
-        while (params.width >= 320) {
-            Log.e(TAG, "createVirtualDisplay ${params.width}x${params.height} at ${params.rate}")
-            r = openEncoder(
-                params,
-                MediaFormat.MIMETYPE_VIDEO_AVC,
-                handler,
-                720,
-                0,
-                surface = Surface(surface.surfaceTexture)
-            )
-            if (r.first == null) {
-                params.width /= 2
-                params.height /= 2
-            } else break
+
+        r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+        if (r.first == null) {
+            Log.e(TAG, "Error while opening the encoder, trying to open it with a lower resolution")
+            while (params.width > 480){
+                val res = getSmallerResolution(params.height, params.width)
+                Log.d(TAG, "createVirtualDisplay >> resolution has been reduce from: (${params.height} * ${params.width}) to: (${res["y"]!!} * ${res["x"]!!}) ")
+                params.width = res["x"]!!
+                params.height = res["y"]!!
+                r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+                if (r.first == null) {
+                    continue
+                } else break
+            }
+            if (r == null) {
+                Log.e(TAG, "createVirtualDisplay failed, can't open encoder")
+                return null
+            }
         }
-        if (r == null) return null
+
         val surface = r.second
         val codec = r.first
         codec?.start()
+        Log.d(TAG, "createVirtualDisplay success, resolution set to: (${params.height} * ${params.width})")
         return try {
             Pair(
                 codec, projection.createVirtualDisplay(
@@ -765,6 +798,35 @@ class CameraService internal constructor(c: Context) {
             0
         }
 
+
+    private fun displayResolutionMatchingResolutionParameters(paramHeight: Int, paramWidth: Int, context: Context): Map<String, Int> {
+        val metrics = context.resources.displayMetrics
+        var screenWidth = metrics.widthPixels
+        var screenHeight = metrics.heightPixels
+        val ratioDeviceScreen = screenHeight.toFloat().div(screenWidth.toFloat())
+        val ratioParamsResolution = paramWidth.toFloat().div(paramHeight.toFloat())
+        val ratioCheck = ratioDeviceScreen == ratioParamsResolution
+        val resolution = mutableMapOf("x" to 0, "y" to 0)
+
+        if (ratioCheck && (screenWidth >= paramWidth || screenHeight >= paramHeight)) {
+            resolution["x"] = paramWidth
+            resolution["y"] = paramHeight
+        } else {
+            if (screenWidth >= paramWidth){
+                screenWidth = paramWidth
+                screenHeight = (paramWidth * ratioDeviceScreen).toInt()
+            }
+
+            // Assuring multiplicity by 16 to ease the encoder work
+            screenWidth = (screenWidth / 16) * 16
+            screenHeight = (screenHeight / 16) * 16
+
+            resolution["x"] = screenWidth
+            resolution["y"] = screenHeight
+        }
+        return resolution
+    }
+
     private fun fillCameraInfo(
         p: DeviceParams,
         camId: String,
@@ -777,15 +839,10 @@ class CameraService internal constructor(c: Context) {
         if (manager == null) return
         try {
             if (camId == VideoDevices.SCREEN_SHARING) {
-                val metrics = context.resources.displayMetrics
-                var screenWidth = metrics.widthPixels
-                var screenHeight = metrics.heightPixels
-                while (max(screenWidth, screenHeight) > max(minVideoSize.x, minVideoSize.y)) {
-                    screenWidth /= 2
-                    screenHeight /= 2
-                }
-                p.size.x = screenWidth
-                p.size.y = screenHeight
+                val res = displayResolutionMatchingResolutionParameters(minVideoSize.x, minVideoSize.y, context)
+                p.size.x = res["x"]!!
+                p.size.y = res["y"]!!
+                Log.d(TAG, "fillCameraInfo >> Screen sharing resolution set to: (${p.size.y} * ${p.size.x})")
                 p.rate = 24
                 rates.add(p.rate)
                 return
