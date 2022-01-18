@@ -384,6 +384,7 @@ class CallPresenter @Inject constructor(
         }
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
+        val hasActiveScreenShare = call.hasActiveScreenSharing()
         videoIsMuted = !hasActiveVideo
         val view = view ?: return
         if (call.isOnGoing) {
@@ -395,7 +396,7 @@ class CallPresenter @Inject constructor(
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
                 pluginSurfaceUpdateId(call.pluginId)
-                view.displayLocalVideo(hasActiveVideo && mDeviceRuntimeService.hasVideoPermission())
+                view.displayLocalVideo(hasActiveVideo && !hasActiveScreenShare && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
                     mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
                     permissionChanged = false

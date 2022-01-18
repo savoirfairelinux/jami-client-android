@@ -242,6 +242,15 @@ class Call : Interaction {
         return false
     }
 
+    fun hasActiveScreenSharing(): Boolean {
+        val mediaList = mediaList ?: return false
+        for (media in mediaList) {
+            if (media.source == "camera://desktop" && media.isEnabled && !media.isMuted)
+                return true
+        }
+        return false
+    }
+
     enum class CallStatus {
         NONE, SEARCHING, CONNECTING, RINGING, CURRENT, HUNGUP, BUSY, FAILURE, HOLD, UNHOLD, INACTIVE, OVER;
 

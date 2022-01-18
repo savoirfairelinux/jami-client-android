@@ -466,22 +466,33 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
         isInPIP = isInPictureInPictureMode
+        val binding = binding ?: return
+
         if (isInPictureInPictureMode) {
-            binding!!.callCoordinatorOptionContainer.visibility = View.GONE
+            binding.callCoordinatorOptionContainer.visibility = View.GONE
             val callActivity = activity as CallActivity?
             callActivity?.hideSystemUI()
-            binding!!.pluginPreviewContainer.visibility = View.GONE
-            binding!!.pluginPreviewSurface.visibility = View.GONE
-            binding!!.previewContainer.visibility = View.GONE
-            binding!!.previewSurface.visibility = View.GONE
+            binding.pluginPreviewContainer.visibility = View.GONE
+            binding.pluginPreviewSurface.visibility = View.GONE
+            binding.previewContainer.visibility = View.GONE
+            binding.previewSurface.visibility = View.GONE
 
         } else {
-            mBackstackLost = true
-            binding!!.callCoordinatorOptionContainer.visibility = View.VISIBLE
-            binding!!.pluginPreviewContainer.visibility = View.VISIBLE
-            binding!!.pluginPreviewSurface.visibility = View.VISIBLE
-            binding!!.previewContainer.visibility = View.VISIBLE
-            binding!!.previewSurface.visibility = View.VISIBLE
+            if(binding.callSharescreenBtn.isChecked){
+                mBackstackLost = true
+                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
+                binding.pluginPreviewContainer.visibility = View.GONE
+                binding.pluginPreviewSurface.visibility = View.GONE
+                binding.previewContainer.visibility = View.GONE
+                binding.previewSurface.visibility = View.GONE
+            } else {
+                mBackstackLost = true
+                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
+                binding.pluginPreviewContainer.visibility = View.VISIBLE
+                binding.pluginPreviewSurface.visibility = View.VISIBLE
+                binding.previewContainer.visibility = View.VISIBLE
+                binding.previewSurface.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -631,7 +642,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configurePreview(width: Int, animatedFraction: Float) {
-        Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
+        //Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
         val binding = binding ?: return
         val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
         val r = 1f - animatedFraction
@@ -1325,31 +1336,27 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun startScreenShare(mediaProjection: MediaProjection?) {
-        Log.w(TAG, "[screenshare] startScreenShare ---> mediaProjection: $mediaProjection ")
-
         if (presenter.startScreenShare(mediaProjection)) {
             if (isChoosePluginMode) {
+                Log.w(TAG, "DEBUG --- startScreenShare >> displayLocalVideo(false)")
                 binding!!.pluginPreviewSurface.visibility = View.GONE
             } else {
+                Log.w(TAG, "DEBUG --- startScreenShare >> displayLocalVideo(false)")
                 binding!!.previewContainer.visibility = View.GONE
+                displayLocalVideo(false)
             }
         } else {
             Toast.makeText(requireContext(), "Can't start screen sharing", Toast.LENGTH_SHORT)
                 .show()
         }
     }
-
-    private fun stopShareScreen() {
-        binding?.previewContainer?.visibility = View.VISIBLE
-        presenter.stopScreenShare()
-    }
-
+    
     fun shareScreenClicked() {
-        if (binding?.callSharescreenBtn?.isChecked == false) {
-            Log.w(TAG, "[screenshare] shareScreenClicked ---> stop screen sharing ")
-            stopShareScreen()
+        val binding = binding ?: return
+        if (!binding.callSharescreenBtn.isChecked) {
+            presenter.stopScreenShare()
+            displayLocalVideo(true)
         } else {
-            Log.w(TAG, "[screenshare] shareScreenClicked ---> startActivityForResult ")
             startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE_SCREEN_SHARE)
         }
     }
