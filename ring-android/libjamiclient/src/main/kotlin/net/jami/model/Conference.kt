@@ -154,6 +154,12 @@ class Conference(val accountId: String, val id: String) {
         return mParticipants.size == 1 && mParticipants[0].hasMedia(Media.MediaType.MEDIA_TYPE_VIDEO)
     }*/
 
+    fun hasActiveScreenSharing(): Boolean {
+        for (call in mParticipants)
+            if(call.hasActiveScreenSharing()) return true
+        return false
+    }
+
     fun hasActiveVideo(): Boolean {
         for (call in mParticipants)
             if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
