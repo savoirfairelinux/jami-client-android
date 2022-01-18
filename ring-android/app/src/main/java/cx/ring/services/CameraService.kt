@@ -513,6 +513,30 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
+    private fun getSmallerResolution(screenHeight: Int, screenWidth: Int) : Size {
+        val resolutions = HardwareServiceImpl.resolutions
+        val flip = screenHeight > screenWidth
+        for (resolution  in resolutions) {
+            if(resolution.x * resolution.y < screenHeight * screenWidth){
+                val pWidth = if (flip) resolution.y else resolution.x
+                val pHeight = if (flip) resolution.x else resolution.y
+                val ra = pHeight * screenWidth
+                val rb = pWidth * screenHeight
+                return when {
+                    (rb > ra) -> {
+                        val w = ra / screenHeight
+                        Size((w / 16) * 16, pHeight)
+                    }
+                    else -> {
+                        val h = rb / screenWidth
+                        Size(pWidth, (h / 16) * 16)
+                    }
+                }
+            }
+        }
+        return if(flip) Size(480, 720) else Size(720, 480)
+    }
+
     private fun createVirtualDisplay(
         params: VideoParams,
         projection: MediaProjection,
@@ -521,29 +545,32 @@ class CameraService internal constructor(c: Context) {
     ): Pair<MediaCodec?, VirtualDisplay>? {
         val screenDensity = metrics.densityDpi
         val handler = videoHandler
-        var r: Pair<MediaCodec?, Surface?>? = null
+        var r: Pair<MediaCodec?, Surface?>?
         if (params.rate == 0) {
             params.rate = 24
         }
-        while (params.width >= 320) {
-            Log.e(TAG, "createVirtualDisplay ${params.width}x${params.height} at ${params.rate}")
-            r = openEncoder(
-                params,
-                MediaFormat.MIMETYPE_VIDEO_AVC,
-                handler,
-                720,
-                0,
-                surface = Surface(surface.surfaceTexture)
-            )
-            if (r.first == null) {
-                params.width /= 2
-                params.height /= 2
-            } else break
+
+        r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+        if (r.first == null) {
+            Log.e(TAG, "Error while opening the encoder, trying to open it with a lower resolution")
+            while (params.width > 320){
+                val res = getSmallerResolution(params.height, params.width)
+                Log.d(TAG, "createVirtualDisplay >> resolution has been reduce from: (${params.width} * ${params.height}) to: (${res.width} * ${res.height}) ")
+                params.width = res.width
+                params.height = res.height
+                r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+                if (r.first != null) break
+            }
+            if (r == null ) {
+                Log.e(TAG, "createVirtualDisplay failed, can't open encoder")
+                return null
+            }
         }
-        if (r == null) return null
+
         val surface = r.second
         val codec = r.first
         codec?.start()
+        Log.d(TAG, "createVirtualDisplay success, resolution set to: (${params.width}) * ${params.height}")
         return try {
             Pair(
                 codec, projection.createVirtualDisplay(
@@ -765,6 +792,31 @@ class CameraService internal constructor(c: Context) {
             0
         }
 
+
+    private fun resolutionFit(paramWidth: Int, paramHeight: Int, context: Context): Size {
+        val metrics = context.resources.displayMetrics
+        val screenWidth = metrics.widthPixels
+        val screenHeight = metrics.heightPixels
+        val flip = screenHeight > screenWidth
+        val pWidth = if (flip) paramHeight else paramWidth
+        val pHeight = if (flip) paramWidth else paramHeight
+        val ra = pHeight * screenWidth
+        val rb = pWidth * screenHeight
+
+        return when {
+            (screenWidth < pWidth && screenHeight < pHeight) ->
+                Size((screenWidth/ 16) * 16, (screenHeight/ 16) * 16)
+            (rb > ra) -> {
+                val w = ra / screenHeight
+                Size((w / 16) * 16, pHeight)
+            }
+            else -> {
+                val h = rb / screenWidth
+                Size(pWidth, (h / 16) * 16)
+            }
+        }
+    }
+
     private fun fillCameraInfo(
         p: DeviceParams,
         camId: String,
@@ -777,15 +829,10 @@ class CameraService internal constructor(c: Context) {
         if (manager == null) return
         try {
             if (camId == VideoDevices.SCREEN_SHARING) {
-                val metrics = context.resources.displayMetrics
-                var screenWidth = metrics.widthPixels
-                var screenHeight = metrics.heightPixels
-                while (max(screenWidth, screenHeight) > max(minVideoSize.x, minVideoSize.y)) {
-                    screenWidth /= 2
-                    screenHeight /= 2
-                }
-                p.size.x = screenWidth
-                p.size.y = screenHeight
+                val res = resolutionFit(minVideoSize.x, minVideoSize.y, context)
+                p.size.x = res.width
+                p.size.y = res.height
+                Log.d(TAG, "fillCameraInfo >> Screen sharing resolution set to: (${p.size.y} * ${p.size.x})")
                 p.rate = 24
                 rates.add(p.rate)
                 return
