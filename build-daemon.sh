@@ -100,10 +100,6 @@ FLAGS_COMMON="-fPIC -g"
 EXTRA_CFLAGS="${EXTRA_CFLAGS} ${FLAGS_COMMON}"
 EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} ${FLAGS_COMMON}"
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -g"
-if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
-fi
 
 ############
 # Contribs #
