@@ -32,6 +32,7 @@ import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.HomeActivity
 import cx.ring.services.NotificationServiceImpl
+import cx.ring.utils.ContentUriHandler
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.services.NotificationService
 import java.util.*
@@ -64,8 +65,8 @@ class SyncService : Service() {
                     .setSmallIcon(R.drawable.ic_ring_logo_white)
                     .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                     .setOnlyAlertOnce(true)
-                    .setDeleteIntent(PendingIntent.getService(applicationContext, mRandom.nextInt(), deleteIntent, 0))
-                    .setContentIntent(PendingIntent.getActivity(applicationContext, mRandom.nextInt(), contentIntent, 0))
+                    .setDeleteIntent(PendingIntent.getService(applicationContext, mRandom.nextInt(), deleteIntent, ContentUriHandler.immutable()))
+                    .setContentIntent(PendingIntent.getActivity(applicationContext, mRandom.nextInt(), contentIntent, ContentUriHandler.immutable()))
                     .build()
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
