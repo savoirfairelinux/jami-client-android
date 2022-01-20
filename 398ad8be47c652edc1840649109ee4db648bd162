@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f49e84ed_73257c84",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c958ba_a73da50f",
+      "range": {
+        "startLine": 516,
+        "startChar": 76,
+        "endLine": 516,
+        "endChar": 92
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23ea8edf_dcdbfdbb",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-19T01:45:14Z",
       "side": 1,
       "message": "use an const array of supported resolutions and iterate",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 536,
+        "endChar": 9
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "552c98ae_42e4d36e",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ea8edf_dcdbfdbb",
       "range": {
         "startLine": 519,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aea4f143_07a04ead",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c592a5e_7fdc84a3",
+      "range": {
+        "startLine": 560,
+        "startChar": 34,
+        "endLine": 560,
+        "endChar": 37
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01c8c94d_2c45e1bd",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-19T01:45:14Z",
       "side": 1,
       "message": "duplicated call to openEncoder",
+      "range": {
+        "startLine": 565,
+        "startChar": 20,
+        "endLine": 565,
+        "endChar": 140
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c32b2335_287be6c7",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01c8c94d_2c45e1bd",
       "range": {
         "startLine": 565,
         "startChar": 20,
@@ -116,6 +212,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4bfe1e0_89d4fb8a",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0518160d_0f71a97a",
+      "range": {
+        "startLine": 802,
+        "startChar": 116,
+        "endLine": 802,
+        "endChar": 132
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63e01406_7fa4828d",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-01-19T01:45:14Z",
       "side": 1,
       "message": "might sometimes be false because of floating point precision issues.\n\nUse loss-less integer computations instead:\n screenHeight * paramWidth \u003d\u003d paramHeight * screenWidth",
+      "range": {
+        "startLine": 808,
+        "startChar": 25,
+        "endLine": 808,
+        "endChar": 67
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "331c44f7_a4db77cf",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e01406_7fa4828d",
       "range": {
         "startLine": 808,
         "startChar": 25,
@@ -162,6 +306,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb88b16f_c0e27de9",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4c5b638_5b3a1cb5",
+      "range": {
+        "startLine": 815,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 41
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "733a1a3b_a90e2c6b",
@@ -175,6 +343,30 @@
       "writtenOn": "2022-01-19T01:45:14Z",
       "side": 1,
       "message": "might also use integer computation here",
+      "range": {
+        "startLine": 817,
+        "startChar": 45,
+        "endLine": 817,
+        "endChar": 62
+      },
+      "revId": "398ad8be47c652edc1840649109ee4db648bd162",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5a2adcc_d8427301",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T23:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733a1a3b_a90e2c6b",
       "range": {
         "startLine": 817,
         "startChar": 45,
