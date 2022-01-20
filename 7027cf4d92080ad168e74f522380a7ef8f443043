@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dae366e4_fde14cd1",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T19:44:03Z",
+      "side": 1,
+      "message": "move to HardwareServiceImpl.Companion",
+      "range": {
+        "startLine": 518,
+        "startChar": 8,
+        "endLine": 518,
+        "endChar": 224
+      },
+      "revId": "7027cf4d92080ad168e74f522380a7ef8f443043",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c2338fc_05050477",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T19:44:03Z",
+      "side": 1,
+      "message": "don\u0027t assume a screen orientation.",
+      "range": {
+        "startLine": 520,
+        "startChar": 0,
+        "endLine": 528,
+        "endChar": 0
+      },
+      "revId": "7027cf4d92080ad168e74f522380a7ef8f443043",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bc547aa_d66c4e87",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-01-20T19:44:03Z",
+      "side": 1,
+      "message": "To allow a 720p screen to show up in native res if the 720p pref is selected, you might start by something like:\n val flip \u003d screenHeight \u003e screenWidth\n val pWidth \u003d if (flip) paramHeight else paramWidth\n val pHeight \u003d if (flip) paramWidth else paramHeight\n\nAnd simplify to standard box-fit:\n\n val ra \u003d pHeight * screenWidth\n val rb \u003d pWidth * screenHeight\n return if (ra \u003d\u003d rb)\n     Size(pWidth, pHeight)\n else if (ra \u003e rb)\n    Size(ra / screenHeight, pHeight)\n else\n    Size(pWidth, rb / screenWidth)",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 805,
+        "endChar": 9
+      },
+      "revId": "7027cf4d92080ad168e74f522380a7ef8f443043",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
