@@ -90,17 +90,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </LinearLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="6dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_account"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_share"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/title_margin"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="@string/navigation_item_account"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
@@ -110,6 +117,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/btn_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/txt_account"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_qr"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_centerHorizontal="true"
                     android:layout_marginEnd="4dp"
                     android:layout_toStartOf="@+id/btn_qr"
@@ -125,6 +136,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/btn_qr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/btn_share"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
                     android:text="@string/qr_code"
@@ -135,15 +150,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:chipIconTint="@color/colorOnPrimary"
                     app:iconStartPadding="6dp" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- A dummy input to fill the registration button background-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:enabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/register_name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:hint="@string/registered_username"
                     android:textColorHint="@color/text_hint"
                     app:hintEnabled="true"
@@ -167,6 +203,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/register_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/input_username"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="8dp"
@@ -176,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:chipBackgroundColor="@color/chip_background"
                     tools:visibility="visible" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/group_registering_name"
