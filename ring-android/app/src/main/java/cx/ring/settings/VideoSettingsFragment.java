@@ -49,9 +49,21 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        ((HomeActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((HomeActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     private static void handleResolutionIcon(Preference resolutionPref, String resolution) {

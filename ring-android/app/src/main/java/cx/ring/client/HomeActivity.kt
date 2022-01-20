@@ -560,6 +560,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val account = mAccountService.currentAccount ?: return false
         val bundle = Bundle()
