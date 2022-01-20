@@ -118,9 +118,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/btn_share"
+                    android:layout_marginEnd="8dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/title_margin"
                     android:text="@string/navigation_item_account"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
