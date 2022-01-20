@@ -117,6 +117,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun onStart() {
         super.onStart()
         activity?.intent?.let { handleIntent(it) }
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
     fun handleIntent(intent: Intent) {
@@ -207,6 +208,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
     private fun startNewGroup() {
