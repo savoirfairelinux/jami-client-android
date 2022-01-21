@@ -215,8 +215,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             ViewCompat.setOnReceiveContentListener(binding.msgInputTxt, SUPPORTED_MIME_TYPES) { _, contentInfo ->
                 for (i in 0 until contentInfo.clip.itemCount) {
                     val item: ClipData.Item = contentInfo.clip.getItemAt(i)
-                    startFileSend(AndroidFileUtils.getCacheFile(requireContext(), item.uri)
-                        .flatMapCompletable { sendFile(it) })
+                    if (item.uri == null && item.text != null) {
+                        binding.msgInputTxt.setText(item.text)
+                    } else {
+                        startFileSend(AndroidFileUtils.getCacheFile(requireContext(), item.uri)
+                            .flatMapCompletable { sendFile(it) })
+                    }
                 }
                 null
             }
