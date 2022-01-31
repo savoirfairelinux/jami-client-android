@@ -120,8 +120,8 @@
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
   <string name="share_via">Condividi con</string>
   <string name="write_a_message">Scrivi un messaggio</string>
-  <string name="scan_qr">Leggi codice QR</string>
-  <string name="qr_code">QR Code</string>
+  <string name="scan_qr">Scansiona codice QR</string>
+  <string name="qr_code">Codice QR</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
   <string name="remote_recording">%s in registrazione…</string>
