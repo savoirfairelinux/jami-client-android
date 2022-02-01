@@ -78,7 +78,6 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { state ->
                     val lastEvent = state.first
-                    Log.w("SmartListViewHolder", "@@@ New last event ${lastEvent.messageId} ${lastEvent.timestamp} ${lastEvent.type}")
                     val lastInteraction = lastEvent.timestamp
                     binding.convLastTime.text = if (lastInteraction == 0L) ""
                     else DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)

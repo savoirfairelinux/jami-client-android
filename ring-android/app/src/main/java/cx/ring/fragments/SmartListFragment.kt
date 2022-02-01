@@ -210,8 +210,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     private fun startNewGroup() {
-        val fragment = ContactPickerFragment.newInstance()
-        fragment.show(parentFragmentManager, ContactPickerFragment.TAG)
+        ContactPickerFragment.newInstance()
+            .show(parentFragmentManager, ContactPickerFragment.TAG)
         binding!!.qrCode.visibility = View.GONE
         //binding.newGroup.setVisibility(View.GONE);
         setTabletQRLayout(false)

@@ -31,6 +31,7 @@ import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
 import android.util.Log
+import android.util.Size
 import android.view.SurfaceHolder
 import android.view.TextureView
 import android.view.WindowManager
@@ -145,7 +146,7 @@ class HardwareServiceImpl(
     }
 
     @Synchronized
-    override fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean) {
+    override fun updateAudioState(state: CallStatus, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean) {
         Log.d(TAG, "updateAudioState: Call state updated to $state Call is incoming: $incomingCall Call is video: $isOngoingVideo")
         val callEnded = state == CallStatus.HUNGUP || state == CallStatus.FAILURE || state == CallStatus.OVER
         try {
@@ -171,7 +172,7 @@ class HardwareServiceImpl(
                 }
                 CallStatus.HOLD, CallStatus.UNHOLD, CallStatus.INACTIVE -> {
                 }
-                else -> closeAudioState()
+                else -> if (callEnded) closeAudioState()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error updating audio state", e)
@@ -184,7 +185,8 @@ class HardwareServiceImpl(
     If it is a bluetooth device, it takes priority and does not play on speaker regardless. Otherwise, it returns mShouldSpeakerphone which was updated in updateaudiostate.
      */
     override fun shouldPlaySpeaker(): Boolean {
-        return if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth() && mBluetoothWrapper!!.isBTHeadsetConnected) false else mShouldSpeakerphone
+        val bt = mBluetoothWrapper
+        return if (bt != null && bt.canBluetooth() && bt.isBTHeadsetConnected) false else mShouldSpeakerphone
     }
 
     @Synchronized
@@ -224,7 +226,8 @@ class HardwareServiceImpl(
 
     private fun setAudioRouting(requestSpeakerOn: Boolean) {
         // prioritize bluetooth by checking for bluetooth device first
-        if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth() && mBluetoothWrapper!!.isBTHeadsetConnected) {
+        val bt = mBluetoothWrapper
+        if (bt != null && bt.canBluetooth() && bt.isBTHeadsetConnected) {
             routeToBTHeadset()
         } else if (!mAudioManager.isWiredHeadsetOn && mHasSpeakerPhone && requestSpeakerOn) {
             routeToSpeaker()
@@ -353,13 +356,14 @@ class HardwareServiceImpl(
         val useLargerSize =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() || mPreferenceService.isHardwareAccelerationEnabled)
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
-        val minVideoSize: Point = if (useLargerSize) parseResolution(mPreferenceService.resolution) else VIDEO_SIZE_LOW
+        val minVideoSize: Size = if (useLargerSize) parseResolution(mPreferenceService.resolution) else VIDEO_SIZE_LOW
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, mContext)
     }
 
-    private fun parseResolution(resolution: Int): Point {
+    private fun parseResolution(resolution: Int): Size {
         return when (resolution) {
-            480 -> VIDEO_SIZE_DEFAULT
+            320 -> VIDEO_SIZE_LOW
+            480 -> VIDEO_SIZE_SD
             720 -> VIDEO_SIZE_HD
             1080 -> VIDEO_SIZE_FULL_HD
             2160 -> VIDEO_SIZE_ULTRA_HD
@@ -414,9 +418,7 @@ class HardwareServiceImpl(
                 videoParams.codec = null
             }
         }
-        Log.w(TAG,
-            "startCapture: id:$cam codec:${videoParams.codec} size:${videoParams.width}x${videoParams.height} rot${videoParams.rotation} hw:$useHardwareCodec bitrate:${mPreferenceService.bitrate}"
-        )
+        Log.w(TAG, "startCapture: id:$cam codec:${videoParams.codec} size:${videoParams.width}x${videoParams.height} rot${videoParams.rotation} hw:$useHardwareCodec bitrate:${mPreferenceService.bitrate}")
         videoParams.isCapturing = true
 
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
@@ -602,12 +604,13 @@ class HardwareServiceImpl(
     }
 
     companion object {
-        private val VIDEO_SIZE_LOW = Point(320, 240)
-        private val VIDEO_SIZE_DEFAULT = Point(720, 480)
-        private val VIDEO_SIZE_HD = Point(1280, 720)
-        private val VIDEO_SIZE_FULL_HD = Point(1920, 1080)
-        private val VIDEO_SIZE_ULTRA_HD = Point(3840, 2160)
-        val resolutions = listOf(VIDEO_SIZE_ULTRA_HD,VIDEO_SIZE_FULL_HD,VIDEO_SIZE_HD,VIDEO_SIZE_DEFAULT,VIDEO_SIZE_LOW)
+        private val VIDEO_SIZE_LOW = Size(320, 240)
+        private val VIDEO_SIZE_SD = Size(720, 480)
+        private val VIDEO_SIZE_HD = Size(1280, 720)
+        private val VIDEO_SIZE_FULL_HD = Size(1920, 1080)
+        private val VIDEO_SIZE_ULTRA_HD = Size(3840, 2160)
+        val VIDEO_SIZE_DEFAULT = VIDEO_SIZE_SD
+        val resolutions = listOf(VIDEO_SIZE_ULTRA_HD, VIDEO_SIZE_FULL_HD, VIDEO_SIZE_HD, VIDEO_SIZE_SD, VIDEO_SIZE_LOW)
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
