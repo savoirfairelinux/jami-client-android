@@ -22,6 +22,7 @@ package net.jami.model
 
 import net.jami.utils.HashUtils
 import net.jami.utils.StringUtils
+import net.jami.utils.toHex
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -135,9 +136,9 @@ class DataTransfer : Interaction {
                 if (ext.length > 8) ext = ext.substring(0, 8)
                 val dId = daemonId
                 if (dId == null || dId == 0L) {
-                    id.toLong().toString() + '_' + HashUtils.sha1(b) + '.' + ext
+                    id.toLong().toString() + '_' + HashUtils.sha1(b)?.toHex() + '.' + ext
                 } else {
-                    dId.toString() + '_' + HashUtils.sha1(b) + '.' + ext
+                    dId.toString() + '_' + HashUtils.sha1(b)?.toHex() + '.' + ext
                 }
             }
         }
@@ -158,10 +159,8 @@ class DataTransfer : Interaction {
     }
 
     val publicPath: File?
-        get() = if (daemonPath == null) {
-            null
-        } else try {
-            daemonPath!!.canonicalFile
+        get() = try {
+            daemonPath?.canonicalFile
         } catch (e: IOException) {
             null
         }
