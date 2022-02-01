@@ -19,29 +19,24 @@
  */
 package net.jami.utils
 
-import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
+fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
+
 object HashUtils {
-    private val TAG = HashUtils::class.java.simpleName
-    fun md5(s: String): String? {
-        return hash(s, "MD5")
+    private val TAG = HashUtils::class.simpleName!!
+    fun md5(s: String) = hash(s, "MD5")
+    fun sha1(s: String) = hash(s, "SHA-1")
+
+    private fun hashRaw(bytes: ByteArray, algo: String) = try {
+        MessageDigest.getInstance(algo)
+            .apply { update(bytes, 0, bytes.size) }
+            .digest()
+    } catch (e: NoSuchAlgorithmException) {
+        Log.e(TAG, "Can't find hash algorithm $algo")
+        null
     }
 
-    fun sha1(s: String): String? {
-        return hash(s, "SHA-1")
-    }
-
-    private fun hash(s: String, algo: String): String? {
-        var result: String? = null
-        try {
-            val messageDigest = MessageDigest.getInstance(algo)
-            messageDigest.update(s.toByteArray(), 0, s.length)
-            result = BigInteger(1, messageDigest.digest()).toString(16)
-        } catch (e: NoSuchAlgorithmException) {
-            Log.e(TAG, "Not able to find MD5 algorithm", e)
-        }
-        return result
-    }
+    private inline fun hash(s: String, algo: String) = hashRaw(s.toByteArray(), algo)
 }

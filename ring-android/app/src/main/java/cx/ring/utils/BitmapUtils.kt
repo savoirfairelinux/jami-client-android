@@ -115,10 +115,8 @@ object BitmapUtils {
         if (drawable is BitmapDrawable) {
             return drawable.bitmap
         }
-        var width = drawable.intrinsicWidth
-        width = if (width > 0) width else size
-        var height = drawable.intrinsicHeight
-        height = if (height > 0) height else size
+        val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: size
+        val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: size
         val bitmap =
             Bitmap.createBitmap(width + 2 * padding, height + 2 * padding, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
