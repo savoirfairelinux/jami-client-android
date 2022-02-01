@@ -317,12 +317,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             mBinding!!.spinnerToolbar.setSelection(0)
                         }
                     } ?: run {
-                        AccountSpinnerAdapter(
-                            this@HomeActivity,
-                            ArrayList(accounts),
-                            mDisposable,
-                            mAccountService
-                        ).apply {
+                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService).apply {
                             mAccountAdapter = this
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
@@ -350,21 +345,18 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .debounce(10, TimeUnit.SECONDS)
                 .observeOn(Schedulers.computation())
                 .switchMapSingle { conversations ->
-                    Single.zip(conversations.mapTo(ArrayList(conversations.size))
-                    { c ->
-                        mContactService.getLoadedConversation(c)
+                    if (conversations.isEmpty())
+                        Single.just(emptyArray<Any>())
+                    else
+                        Single.zip(conversations.mapTo(ArrayList(conversations.size))
+                        { c -> mContactService.getLoadedConversation(c)
                             .observeOn(Schedulers.computation())
-                            .map { vm ->
-                                Pair(
-                                    vm, BitmapUtils.drawableToBitmap(
-                                        AvatarDrawable.Builder()
-                                            .withViewModel(vm)
-                                            .withCircleCrop(true)
-                                            .build(this), targetSize
-                                    )
-                                )
+                            .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
+                                .withViewModel(vm)
+                                .withCircleCrop(true)
+                                .build(this), targetSize))
                             }
-                    }) { obs -> obs }
+                        }) { obs -> obs }
                 }
                 .subscribe({ conversations -> setShareShortcuts(conversations) })
                 { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
@@ -809,7 +801,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     val switchButton: SwitchButton
         get() = mBinding!!.accountSwitch
 
-    private fun setShareShortcuts(conversations: Array<*>) {
+    private fun setShareShortcuts(conversations: Array<Any>) {
         var maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this)
         if (maxCount == 0) maxCount = 4
 
@@ -840,15 +832,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 .setLongLived(true)
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
-                .setIntent(
-                    Intent(
-                        Intent.ACTION_SEND,
-                        android.net.Uri.EMPTY,
-                        this,
-                        HomeActivity::class.java
-                    )
-                        .putExtras(path.toBundle())
-                )
+                .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
+                        .putExtras(path.toBundle()))
                 .build()
             shortcutInfoList.add(shortcutInfo)
             if (shortcutInfoList.size == maxCount) break
