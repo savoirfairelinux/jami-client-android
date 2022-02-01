@@ -24,6 +24,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.VectorDrawable
 import android.util.TypedValue
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.services.VCardServiceImpl
@@ -67,6 +68,10 @@ class AvatarDrawable : Drawable {
     private val presenceFillPaint: Paint
     private val presenceStrokePaint: Paint
     private val checkedPaint: Paint
+    private val cropCircle: Boolean
+    private var isOnline = false
+    private var isChecked = false
+    private var showPresence = false
 
     companion object {
         private val TAG = AvatarDrawable::class.simpleName!!
@@ -87,21 +92,23 @@ class AvatarDrawable : Drawable {
             R.color.amber_500, R.color.deep_orange_500,
             R.color.brown_500, R.color.blue_grey_500
         )
-        private val drawPaint = Paint()
-
-        fun load(context: Context, account: Account, crop: Boolean = true): Observable<AvatarDrawable> {
-            return VCardServiceImpl.loadProfile(context, account)
-                .map { profile -> build(context, account, profile, crop) }
+        private val drawPaint = Paint().apply {
+            isAntiAlias = true
+            isFilterBitmap = true
         }
-        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true, isOnline: Boolean = false): AvatarDrawable {
-            return Builder()
+
+        fun load(context: Context, account: Account, crop: Boolean = true): Observable<AvatarDrawable> =
+            VCardServiceImpl.loadProfile(context, account)
+                .map { profile -> build(context, account, profile, crop) }
+
+        fun build(context: Context, account: Account, profile: Profile, crop: Boolean = true, isOnline: Boolean = false) =
+            Builder()
                 .withPhoto(profile.avatar as Bitmap?)
                 .withNameData(profile.displayName, account.registeredName)
                 .withId(account.uri)
                 .withCircleCrop(crop)
                 .withOnlineState(isOnline)
                 .build(context)
-        }
 
         private fun getSubBounds(bounds: Rect, total: Int, i: Int): Rect? {
             if (total == 1) return bounds
@@ -146,30 +153,19 @@ class AvatarDrawable : Drawable {
             }
             val x = (iw - w) / 2
             val y = (ih - h) / 2
-            if (ret is Rect) ret[x, y, x + w] =
-                y + h else if (ret is RectF) ret[x.toFloat(), y.toFloat(), (x + w).toFloat()] =
-                (y + h).toFloat()
+            if (ret is Rect) ret.set(x, y, x + w, y + h)
+            else if (ret is RectF) ret.set(x.toFloat(), y.toFloat(), (x + w).toFloat(), (y + h).toFloat())
         }
 
+        @ColorRes
         private fun getAvatarColor(id: String?): Int {
             if (id == null) {
                 return R.color.grey_500
             }
             val md5 = HashUtils.md5(id) ?: return R.color.grey_500
-            val colorIndex = (md5[0].toString() + "").toInt(16)
-            return contactColors[colorIndex % contactColors.size]
-        }
-
-        init {
-            drawPaint.isAntiAlias = true
-            drawPaint.isFilterBitmap = true
+            return contactColors[(md5[0].toUInt() % contactColors.size.toUInt()).toInt()]
         }
     }
-
-    private val cropCircle: Boolean
-    private var isOnline = false
-    private var isChecked = false
-    private var showPresence = false
 
     class Builder {
         private var photos: MutableList<Bitmap>? = null
@@ -220,16 +216,14 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withNameData(profileName: String?, username: String?): Builder {
-            return withName(if (profileName.isNullOrEmpty()) username else profileName)
-        }
+        fun withNameData(profileName: String?, username: String?) =
+            withName(if (profileName.isNullOrEmpty()) username else profileName)
 
-        fun withContact(contact: ContactViewModel?): Builder {
-            return if (contact == null) this else withPhoto(contact.profile.avatar as Bitmap?)
+        fun withContact(contact: ContactViewModel?) = if (contact == null) this else
+            withPhoto(contact.profile.avatar as Bitmap?)
                 .withId(contact.contact.primaryNumber)
                 .withOnlineState(contact.contact.isOnline)
                 .withNameData(contact.profile.displayName, contact.registeredName)
-        }
 
         private fun withContacts(contacts: List<ContactViewModel>): Builder {
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
@@ -288,9 +282,7 @@ class AvatarDrawable : Drawable {
             return avatarDrawable
         }
 
-        fun buildAsync(context: Context): Single<AvatarDrawable> {
-            return Single.fromCallable { build(context) }
-        }
+        fun buildAsync(context: Context): Single<AvatarDrawable> = Single.fromCallable { build(context) }
     }
 
     fun update(contact: ContactViewModel) {
