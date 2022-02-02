@@ -2,7 +2,6 @@ val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
 val dokka_version: String by rootProject.extra
 
-
 plugins {
     id("kotlin")
     id("java")
