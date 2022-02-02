@@ -20,6 +20,7 @@ android {
         targetSdk = 31
         versionCode = 326
         versionName = "20220121-01"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
         getByName("main") {
@@ -114,6 +115,10 @@ dependencies {
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
+    implementation("androidx.test.ext:junit-ktx:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // Glide
