@@ -137,16 +137,144 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var previewMargin: Float = 0f
     private val previewMargins = IntArray(4)
     private var previewHiddenState = 0f
-
-    private enum class PreviewPosition { LEFT, RIGHT }
-
-    private var previewPosition = PreviewPosition.LEFT
-
+    private enum class PreviewPosition { START, END }
+    private var previewPosition = PreviewPosition.START
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var isMyMicMuted: Boolean = false
+    private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
+        override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+            Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
+            mPreviewSurfaceWidth = width
+            mPreviewSurfaceHeight = height
+            Log.w(
+                TAG,
+                " onSurfaceTextureAvailable -------->  mPreviewSurfaceWidth: $mPreviewSurfaceWidth, mPreviewSurfaceHeight: $mPreviewSurfaceHeight"
+            )
+            presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
+        }
+
+        override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+            Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
+            mPreviewSurfaceWidth = width
+            mPreviewSurfaceHeight = height
+            configurePreview(width, 1f)
+        }
+
+        override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+            presenter.previewVideoSurfaceDestroyed()
+            return true
+        }
+
+        override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+    }
+    private val previewTouchListener = object : View.OnTouchListener {
+        @SuppressLint("ClickableViewAccessibility")
+        override fun onTouch(v: View, event: MotionEvent): Boolean {
+            val action = event.actionMasked
+            val parent = v.parent as RelativeLayout
+            val params = v.layoutParams as RelativeLayout.LayoutParams
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    previewSnapAnimation.cancel()
+                    previewDrag = PointF(event.x, event.y)
+                    v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation_dragged)
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                    params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+                    params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                    params.marginStart = v.x.toInt()
+                    params.marginEnd = parent.width - (v.x.toInt() + v.width)
+                    params.updateMargins(top = v.y.toInt(), bottom = parent.height - (v.y.toInt() + v.height) )
+                    v.layoutParams = params
+                    return true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (previewDrag != null) {
+                        val currentXPosition = params.marginStart + (event.x - previewDrag!!.x).toInt()
+                        val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
+
+                        params.marginStart = currentXPosition
+                        params.marginEnd = -(currentXPosition + v.width - event.x.toInt())
+                        params.updateMargins(top = currentYPosition, bottom = -(currentYPosition + v.height - event.y.toInt()) )
+                        v.layoutParams = params
+
+                        val outPosition = binding!!.previewContainer.width * 0.85f
+                        var drapOut = 0f
+                        if (currentXPosition < 0) {
+                            drapOut = min(1f, -currentXPosition / outPosition)
+                        } else if (currentXPosition + v.width > parent.width) {
+                            drapOut = min(1f, (currentXPosition + v.width - parent.width) / outPosition)
+                        }
+                        setPreviewDragHiddenState(drapOut)
+                        return true
+                    }
+                    return false
+                }
+                MotionEvent.ACTION_UP -> {
+                    if (previewDrag != null) {
+                        val currentXPosition = params.marginStart + (event.x - previewDrag!!.x).toInt()
+                        previewSnapAnimation.cancel()
+                        previewDrag = null
+                        v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
+                        var ml = 0
+                        var mr = 0
+                        var mt = 0
+                        var mb = 0
+                        val hp = binding!!.previewHandle.layoutParams as FrameLayout.LayoutParams
+                        if (params.marginStart + v.width / 2 > parent.width / 2) {
+                            params.removeRule(RelativeLayout.ALIGN_PARENT_START)
+                            params.addRule(RelativeLayout.ALIGN_PARENT_END)
+                            mr = (parent.width - v.width - v.x).toInt()
+                            previewPosition = PreviewPosition.END
+                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.START
+                        } else {
+                            params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                            params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                            ml = v.x.toInt()
+                            previewPosition = PreviewPosition.START
+                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.END
+                        }
+                        binding!!.previewHandle.layoutParams = hp
+                        if (params.topMargin + v.height / 2 > parent.height / 2) {
+                            params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
+                            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                            mb = (parent.height - v.height - v.y).toInt()
+                        } else {
+                            params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                            params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+                            mt = v.y.toInt()
+                        }
+                        previewMargins[0] = ml
+                        previewMargins[1] = mt
+                        previewMargins[2] = mr
+                        previewMargins[3] = mb
+
+                        params.marginStart = ml
+                        params.marginEnd = mr
+                        params.updateMargins(top = mt, bottom = mb)
+                        v.layoutParams = params
+
+                        val outPosition = binding!!.previewContainer.width * 0.85f
+                        previewHiddenState = when {
+                            currentXPosition < 0 ->
+                                min(1f, -currentXPosition / outPosition)
+                            currentXPosition + v.width > parent.width ->
+                                min(1f, (currentXPosition + v.width - parent.width) / outPosition)
+                            else -> 0f
+                        }
+                        setPreviewDragHiddenState(previewHiddenState)
+                        previewSnapAnimation.start()
+                        return true
+                    }
+                    return false
+                }
+                else -> return false
+            }
+        }
+    }
 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
@@ -223,6 +351,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     presenter.videoSurfaceDestroyed()
                 }
             })
+            // listener created for the videoSize of the videoSurface which is corresponding to the video stream received from distant participant
+            view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
+
             binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBA_8888)
             binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
@@ -236,11 +367,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
             })
 
-            val insets = ViewCompat.getRootWindowInsets(view)
+            //todo: check usage of this code below
+           /* val insets = ViewCompat.getRootWindowInsets(view)
             insets?.apply {
                 presenter.uiVisibilityChanged(this.isVisible(WindowInsetsCompat.Type.navigationBars()))
-            }
-            view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
+            }*/
 
             // todo: doublon with CallActivity.onConfigurationChanged ??
             mOrientationListener = object : OrientationEventListener(context) {
@@ -249,6 +380,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     if (mCurrentOrientation != rot) {
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
+                        if (rot == 0 || rot == 2) resetPreviewVideoSize( null, null, 90) else resetPreviewVideoSize( null, null, 180)
                         setRvSize()
                     }
                 }
@@ -270,27 +402,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         previewSnapAnimation.cancel()
                         previewDrag = PointF(event.x, event.y)
                         v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation_dragged)
-                        params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_END)
                         params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                        params.setMargins(
-                            v.x.toInt(), v.y.toInt(),
-                            parent.width - (v.x.toInt() + v.width),
-                            parent.height - (v.y.toInt() + v.height)
-                        )
+                        params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                        params.marginStart = v.x.toInt()
+                        params.marginEnd = parent.width - (v.x.toInt() + v.width)
+                        params.updateMargins(top = v.y.toInt(), bottom = parent.height - (v.y.toInt() + v.height) )
                         v.layoutParams = params
                         true
                     }
                     MotionEvent.ACTION_MOVE -> {
                         if (previewDrag != null) {
-                            val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
+                            val currentXPosition = params.marginStart + (event.x - previewDrag!!.x).toInt()
                             val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
-                            params.setMargins(
-                                currentXPosition, currentYPosition,
-                                -(currentXPosition + v.width - event.x.toInt()),
-                                -(currentYPosition + v.height - event.y.toInt())
-                            )
+                            params.marginStart = currentXPosition
+                            params.marginEnd = -(currentXPosition + v.width - event.x.toInt())
+                            params.updateMargins(top = currentYPosition, bottom = -(currentYPosition + v.height - event.y.toInt()) )
                             v.layoutParams = params
                             val outPosition = binding.pluginPreviewContainer.width * 0.85f
                             var drapOut = 0f
@@ -305,27 +433,27 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     }
                     MotionEvent.ACTION_UP -> {
                         if (previewDrag != null) {
-                            val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
+                            val currentXPosition = params.marginStart + (event.x - previewDrag!!.x).toInt()
                             previewSnapAnimation.cancel()
                             previewDrag = null
                             v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                            var ml = 0;
-                            var mr = 0;
-                            var mt = 0;
+                            var ml = 0
+                            var mr = 0
+                            var mt = 0
                             var mb = 0
                             val hp = binding.pluginPreviewHandle.layoutParams as FrameLayout.LayoutParams
-                            if (params.leftMargin + v.width / 2 > parent.width / 2) {
-                                params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                            if (params.marginStart + v.width / 2 > parent.width / 2) {
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_START)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_END)
                                 mr = (parent.width - v.width - v.x).toInt()
-                                previewPosition = PreviewPosition.RIGHT
-                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
+                                previewPosition = PreviewPosition.END
+                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.START
                             } else {
-                                params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+                                params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                                params.addRule(RelativeLayout.ALIGN_PARENT_START)
                                 ml = v.x.toInt()
-                                previewPosition = PreviewPosition.LEFT
-                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
+                                previewPosition = PreviewPosition.START
+                                hp.gravity = Gravity.CENTER_VERTICAL or Gravity.END
                             }
                             binding.pluginPreviewHandle.layoutParams = hp
                             if (params.topMargin + v.height / 2 > parent.height / 2) {
@@ -341,7 +469,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             previewMargins[1] = mt
                             previewMargins[2] = mr
                             previewMargins[3] = mb
-                            params.setMargins(ml, mt, mr, mb)
+                            params.marginStart = ml
+                            params.marginEnd = mr
+                            params.updateMargins(top = mt, bottom = mb )
                             v.layoutParams = params
                             val outPosition = binding.pluginPreviewContainer.width * 0.85f
                             previewHiddenState = when {
@@ -368,33 +498,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             binding.previewContainer.setOnTouchListener(previewTouchListener)
 
             binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
-                  override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                  override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                      if (before == 0)
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    if (before == 0)
                         presenter.sendDtmf(s.subSequence(start, start + count))
-                  }
-                  override fun afterTextChanged(s: Editable) {
-                      if (s.isNotEmpty())
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    if (s.isNotEmpty())
                         s.clear()
-                  }
-              })
+                }
+            })
         }
-    }
-
-    fun setRvSize() {
-        val binding = binding ?: return
-        val dm = resources.displayMetrics
-        val orientation = resources.configuration.orientation
-        val gridViewHeight = binding.callParametersGrid.height
-
-        // define recyclerview maxheight based on screen orientation
-        val mConstrainLayout = binding.confControlGroup
-        val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
-        lp.matchConstraintMaxHeight =
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-                dm.heightPixels - gridViewHeight - (100 * dm.density).toInt()
-            else (dm.heightPixels - gridViewHeight * 0.8).toInt()
-        mConstrainLayout.layoutParams = lp
     }
 
     override fun onUserLeave() {
@@ -424,8 +539,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         mCompositeDisposable.dispose()
     }
 
-
-    //todo: enable pip when only our video is displayed
     override fun enterPipMode(callId: String) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             return
@@ -496,33 +609,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    private val listener: SurfaceTextureListener = object : SurfaceTextureListener {
-        override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureAvailable -------->  width: $width, height: $height")
-            mPreviewSurfaceWidth = width
-            mPreviewSurfaceHeight = height
-            Log.w(
-                TAG,
-                " onSurfaceTextureAvailable -------->  mPreviewSurfaceWidth: $mPreviewSurfaceWidth, mPreviewSurfaceHeight: $mPreviewSurfaceHeight"
-            )
-            presenter.previewVideoSurfaceCreated(binding!!.previewSurface)
-        }
-
-        override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
-            Log.w(TAG, " onSurfaceTextureSizeChanged ------>  width: $width, height: $height")
-            mPreviewSurfaceWidth = width
-            mPreviewSurfaceHeight = height
-            configurePreview(width, 1f)
-        }
-
-        override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-            presenter.previewVideoSurfaceDestroyed()
-            return true
-        }
-
-        override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
-    }
-
     /**
      * @param hiddenState 0.f if fully shown, 1.f if fully hidden.
      */
@@ -535,135 +621,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    private val previewTouchListener = object : View.OnTouchListener {
-        @SuppressLint("ClickableViewAccessibility")
-        override fun onTouch(v: View, event: MotionEvent): Boolean {
-            val action = event.actionMasked
-            val parent = v.parent as RelativeLayout
-            val params = v.layoutParams as RelativeLayout.LayoutParams
-            when (action) {
-                MotionEvent.ACTION_DOWN -> {
-                    previewSnapAnimation.cancel()
-                    previewDrag = PointF(event.x, event.y)
-                    v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation_dragged)
-                    params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                    params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                    params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                    params.setMargins(
-                        v.x.toInt(),
-                        v.y.toInt(),
-                        parent.width - (v.x.toInt() + v.width),
-                        parent.height - (v.y.toInt() + v.height)
-                    )
-                    v.layoutParams = params
-                    return true
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    if (previewDrag != null) {
-                        val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
-                        val currentYPosition = params.topMargin + (event.y - previewDrag!!.y).toInt()
-                        params.setMargins(
-                            currentXPosition,
-                            currentYPosition,
-                            -(currentXPosition + v.width - event.x.toInt()),
-                            -(currentYPosition + v.height - event.y.toInt())
-                        )
-                        v.layoutParams = params
-                        val outPosition = binding!!.previewContainer.width * 0.85f
-                        var drapOut = 0f
-                        if (currentXPosition < 0) {
-                            drapOut = min(1f, -currentXPosition / outPosition)
-                        } else if (currentXPosition + v.width > parent.width) {
-                            drapOut = min(1f, (currentXPosition + v.width - parent.width) / outPosition)
-                        }
-                        setPreviewDragHiddenState(drapOut)
-                        return true
-                    }
-                    return false
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (previewDrag != null) {
-                        val currentXPosition = params.leftMargin + (event.x - previewDrag!!.x).toInt()
-                        previewSnapAnimation.cancel()
-                        previewDrag = null
-                        v.elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                        var ml = 0
-                        var mr = 0
-                        var mt = 0
-                        var mb = 0
-                        val hp = binding!!.previewHandle.layoutParams as FrameLayout.LayoutParams
-                        if (params.leftMargin + v.width / 2 > parent.width / 2) {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                            mr = (parent.width - v.width - v.x).toInt()
-                            previewPosition = PreviewPosition.RIGHT
-                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
-                        } else {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-                            ml = v.x.toInt()
-                            previewPosition = PreviewPosition.LEFT
-                            hp.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                        }
-                        binding!!.previewHandle.layoutParams = hp
-                        if (params.topMargin + v.height / 2 > parent.height / 2) {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_TOP)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                            mb = (parent.height - v.height - v.y).toInt()
-                        } else {
-                            params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                            params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                            mt = v.y.toInt()
-                        }
-                        previewMargins[0] = ml
-                        previewMargins[1] = mt
-                        previewMargins[2] = mr
-                        previewMargins[3] = mb
-                        params.setMargins(ml, mt, mr, mb)
-                        v.layoutParams = params
-                        val outPosition = binding!!.previewContainer.width * 0.85f
-                        previewHiddenState = when {
-                            currentXPosition < 0 ->
-                                min(1f, -currentXPosition / outPosition)
-                            currentXPosition + v.width > parent.width ->
-                                min(1f, (currentXPosition + v.width - parent.width) / outPosition)
-                            else -> 0f
-                        }
-                        setPreviewDragHiddenState(previewHiddenState)
-                        previewSnapAnimation.start()
-                        return true
-                    }
-                    return false
-                }
-                else -> return false
-            }
-        }
-    }
-
-    private fun configurePreview(width: Int, animatedFraction: Float) {
-        //Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
-        val binding = binding ?: return
-        val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
-        val r = 1f - animatedFraction
-        var hideMargin = 0f
-        var targetHiddenState = 0f
-        if (previewHiddenState > 0f) {
-            targetHiddenState = 1f
-            val v = width * 0.85f * animatedFraction
-            hideMargin = if (previewPosition == PreviewPosition.RIGHT) v else -v
-        }
-        setPreviewDragHiddenState(previewHiddenState * r + targetHiddenState * animatedFraction)
-        val f = previewMargin * animatedFraction
-        params.setMargins(
-            (previewMargins[0] * r + f + hideMargin).toInt(),
-            (previewMargins[1] * r + f).toInt(),
-            (previewMargins[2] * r + f - hideMargin).toInt(),
-            (previewMargins[3] * r + f).toInt()
-        )
-        binding.previewContainer.layoutParams = params
-        binding.pluginPreviewContainer.layoutParams = params
-    }
 
     /**
      * Releases current wakelock and acquires a new proximity wakelock if current call is audio only.
@@ -1078,6 +1035,21 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    fun setRvSize() {
+        val binding = binding ?: return
+        val dm = resources.displayMetrics
+        val orientation = resources.configuration.orientation
+        val gridViewHeight = binding.callParametersGrid.height
+
+        // define recyclerview maxheight based on screen orientation
+        val mConstrainLayout = binding.confControlGroup
+        val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
+        lp.matchConstraintMaxHeight =
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+                dm.heightPixels - gridViewHeight - (100 * dm.density).toInt()
+            else (dm.heightPixels - gridViewHeight * 0.8).toInt()
+        mConstrainLayout.layoutParams = lp
+    }
 
     /**
      * Init the Call view when the call is ongoing
@@ -1126,21 +1098,41 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    private fun configurePreview(width: Int, animatedFraction: Float) {
+        val binding = binding ?: return
+        val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
+        val r = 1f - animatedFraction
+        var hideMargin = 0f
+        var targetHiddenState = 0f
+        if (previewHiddenState > 0f) {
+            targetHiddenState = 1f
+            val v = width * 0.85f * animatedFraction
+            hideMargin = if (previewPosition == PreviewPosition.END) v else -v
+        }
+        setPreviewDragHiddenState(previewHiddenState * r + targetHiddenState * animatedFraction)
+        val f = previewMargin * animatedFraction
+        params.marginStart =  (previewMargins[0] * r + f + hideMargin).toInt()
+        params.marginEnd = (previewMargins[2] * r + f - hideMargin).toInt()
+        params.updateMargins(top = (previewMargins[1] * r + f).toInt(), bottom = (previewMargins[3] * r + f).toInt())
+        binding.previewContainer.layoutParams = params
+        binding.pluginPreviewContainer.layoutParams = params
+    }
+
     // change le ratio de la video mais ne change pas la taille du container
-    override fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
+    override fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int) {
         if (previewWidth == -1 && previewHeight == -1) return
-        mPreviewWidth = previewWidth
-        mPreviewHeight = previewHeight
+        if (previewWidth != null ) mPreviewWidth = previewWidth
+        if (previewHeight != null ) mPreviewHeight = previewHeight
         val flip = rot % 180 != 0
         if (isChoosePluginMode) {
             binding?.pluginPreviewSurface?.setAspectRatio(
-                if (flip) previewHeight else previewWidth,
-                if (flip) previewWidth else previewHeight
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
             )
         } else {
             binding?.previewSurface?.setAspectRatio(
-                if (flip) previewHeight else previewWidth,
-                if (flip) previewWidth else previewHeight
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
             )
         }
     }
@@ -1489,7 +1481,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
         if (isChoosePluginMode) {
             // hide hang up button and other call buttons
-            displayHangupButton(false)
+            //displayHangupButton(false)
             // Display the plugins recyclerpicker
             binding!!.recyclerPicker.visibility = View.VISIBLE
             movePreview(true)
