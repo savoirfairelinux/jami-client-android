@@ -249,6 +249,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     if (mCurrentOrientation != rot) {
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
+                        if (rot == 0 || rot == 2) resetPreviewVideoSize( null, null, 90) else resetPreviewVideoSize( null, null, 180)
                         setRvSize()
                     }
                 }
@@ -1127,20 +1128,20 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     // change le ratio de la video mais ne change pas la taille du container
-    override fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
+    override fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int) {
         if (previewWidth == -1 && previewHeight == -1) return
-        mPreviewWidth = previewWidth
-        mPreviewHeight = previewHeight
+        if (previewWidth != null ) mPreviewWidth = previewWidth
+        if (previewHeight != null ) mPreviewHeight = previewHeight
         val flip = rot % 180 != 0
         if (isChoosePluginMode) {
             binding?.pluginPreviewSurface?.setAspectRatio(
-                if (flip) previewHeight else previewWidth,
-                if (flip) previewWidth else previewHeight
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
             )
         } else {
             binding?.previewSurface?.setAspectRatio(
-                if (flip) previewHeight else previewWidth,
-                if (flip) previewWidth else previewHeight
+                if (flip) mPreviewHeight else mPreviewWidth,
+                if (flip) mPreviewWidth else mPreviewHeight
             )
         }
     }
