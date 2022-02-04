@@ -40,7 +40,7 @@ interface CallView {
     fun initNormalStateDisplay()
     fun initIncomingCallDisplay(hasVideo: Boolean)
     fun initOutGoingCallDisplay()
-    fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int)
+    fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int)
     fun resetVideoSize(videoWidth: Int, videoHeight: Int)
     fun goToConversation(accountId: String, conversationId: Uri)
     fun goToAddContact(contact: Contact)

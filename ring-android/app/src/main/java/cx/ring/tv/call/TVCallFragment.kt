@@ -363,10 +363,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    override fun resetPreviewVideoSize(previewWidth: Int, previewHeight: Int, rot: Int) {
+    override fun resetPreviewVideoSize(previewWidth: Int?, previewHeight: Int?, rot: Int) {
         if (previewWidth == -1 && previewHeight == -1) return
-        mPreviewWidth = previewWidth
-        mPreviewHeight = previewHeight
+        if (previewWidth != null ) mPreviewWidth = previewWidth
+        if (previewHeight != null ) mPreviewHeight = previewHeight
         val flip = rot % 180 != 0
         binding!!.previewSurface.setAspectRatio(
             if (flip) mPreviewHeight else mPreviewWidth,
