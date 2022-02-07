@@ -3,4 +3,5 @@
   <string name="pref_category_video">Video</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
+  <string name="pref_plugins_title">Complementos</string>
 </resources>
