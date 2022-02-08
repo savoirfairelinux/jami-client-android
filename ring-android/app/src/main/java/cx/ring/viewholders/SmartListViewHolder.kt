@@ -23,6 +23,9 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.format.DateUtils
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.DecelerateInterpolator
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.databinding.ItemSmartlistBinding
@@ -35,10 +38,8 @@ import net.jami.model.Call
 import net.jami.model.ContactEvent
 import net.jami.model.Conversation
 import net.jami.model.Interaction
-import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
-import net.jami.utils.Log
 
 class SmartListViewHolder : RecyclerView.ViewHolder {
     val binding: ItemSmartlistBinding?
@@ -64,6 +65,11 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
         })
     }
 
+    private fun fadeIn() = AlphaAnimation(0f, 1f).apply {
+        interpolator = DecelerateInterpolator()
+        duration = 500
+    }
+
     fun bind(conversationFacade: ConversationFacade, clickListener: SmartListListeners, conversation: Conversation) {
         //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear()
@@ -77,13 +83,12 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             compositeDisposable.add(conversation.currentStateSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { state ->
+                    val fade = !binding.convLastItem.isVisible || binding.convLastItem.text.isBlank()
                     val lastEvent = state.first
                     Log.w("SmartListViewHolder", "@@@ New last event ${lastEvent.messageId} ${lastEvent.timestamp} ${lastEvent.type}")
                     val lastInteraction = lastEvent.timestamp
                     binding.convLastTime.text = if (lastInteraction == 0L) ""
                     else DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)
-                    binding.convLastItem.visibility = View.VISIBLE
-                    binding.convLastItem.text = getLastEventSummary(lastEvent, itemView.context)
                     if (state.second) {
                         binding.convLastItem.visibility = View.VISIBLE
                         binding.convLastItem.text = itemView.context.getString(R.string.ongoing_call)
@@ -102,16 +107,24 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                         binding.convLastTime.setTypeface(null, Typeface.NORMAL)
                         binding.convLastItem.setTypeface(null, Typeface.NORMAL)
                     }
+                    if (fade) {
+                        binding.convLastItem.startAnimation(fadeIn())
+                        binding.convLastTime.startAnimation(fadeIn())
+                        binding.convParticipant.startAnimation(fadeIn())
+                    }
                 })
 
             compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { conversationItemViewModel ->
                     binding.convParticipant.text = conversationItemViewModel.contactName
+                    val fade = binding.photo.drawable !is AvatarDrawable
                     binding.photo.setImageDrawable(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)
                         .withCircleCrop(true)
                         .build(binding.photo.context))
+                    if (fade)
+                        binding.photo.startAnimation(fadeIn())
                 })
 
             compositeDisposable.add(conversation.getVisible().observeOn(AndroidSchedulers.mainThread()).subscribe { activated ->
@@ -119,12 +132,11 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             })
 
 
-        } /*else headerBinding?.headerTitle?.setText(
-            if (conversationItemViewModel.headerTitle == ConversationItemViewModel.Title.Conversations) R.string.navigation_item_conversation else R.string.search_results_public_directory
-        )*/
+        }
     }
 
     fun unbind() {
+        binding?.photo?.setImageDrawable(null)
         compositeDisposable.clear()
     }
 
