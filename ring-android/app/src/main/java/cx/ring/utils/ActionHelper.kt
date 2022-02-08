@@ -36,23 +36,23 @@ object ActionHelper {
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
 
-    fun launchClearAction(context: Context, uri: Uri, callback: ConversationActionCallback) {
+    fun launchClearAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_history_clear_title)
             .setMessage(R.string.conversation_action_history_clear_message)
             .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
-                callback.clearConversation(uri)
+                callback.clearConversation(accountId, uri)
             }
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
             .show()
     }
 
-    fun launchDeleteAction(context: Context, uri: Uri, callback: ConversationActionCallback) {
+    fun launchDeleteAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_remove_this_title)
             .setMessage(R.string.conversation_action_remove_this_message)
             .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
-                callback.removeConversation(uri)
+                callback.removeConversation(accountId, uri)
             }
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
             .show()

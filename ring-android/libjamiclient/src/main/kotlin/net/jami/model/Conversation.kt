@@ -621,8 +621,8 @@ class Conversation : ConversationHistory {
     }
 
     interface ConversationActionCallback {
-        fun removeConversation(conversationUri: Uri)
-        fun clearConversation(conversationUri: Uri)
+        fun removeConversation(accountId: String, conversationUri: Uri)
+        fun clearConversation(accountId: String, conversationUri: Uri)
         fun copyContactNumberToClipboard(contactNumber: String)
     }
 

@@ -231,12 +231,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         menu?.findItem(R.id.menu_overflow)?.isVisible = visible
     }
 
-    override fun removeConversation(conversationUri: Uri) {
-        presenter.removeConversation(conversationUri)
+    override fun removeConversation(accountId: String, conversationUri: Uri) {
+        presenter.removeConversation(accountId, conversationUri)
     }
 
-    override fun clearConversation(conversationUri: Uri) {
-        presenter.clearConversation(conversationUri)
+    override fun clearConversation(accountId: String, conversationUri: Uri) {
+        presenter.clearConversation(accountId, conversationUri)
     }
 
     override fun copyContactNumberToClipboard(contactNumber: String) {
@@ -293,12 +293,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         }
     }
 
-    override fun displayClearDialog(conversationUri: Uri) {
-        ActionHelper.launchClearAction(requireContext(), conversationUri, this@SmartListFragment)
+    override fun displayClearDialog(accountId: String, conversationUri: Uri) {
+        ActionHelper.launchClearAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
 
-    override fun displayDeleteDialog(conversationUri: Uri) {
-        ActionHelper.launchDeleteAction(requireContext(), conversationUri, this@SmartListFragment)
+    override fun displayDeleteDialog(accountId: String, conversationUri: Uri) {
+        ActionHelper.launchDeleteAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
 
     override fun copyNumber(uri: Uri) {
