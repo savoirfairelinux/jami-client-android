@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca056de_c9aa2601",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-02-08T21:04:31Z",
+      "side": 1,
+      "message": "Code seems good, will check if it solves the conversation removal",
+      "revId": "1e6f7d4ec8196843e261b3a11f52b2609495a3dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
