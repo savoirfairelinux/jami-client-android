@@ -21,7 +21,6 @@ package cx.ring.services
 
 import android.content.Context
 import android.graphics.ImageFormat
-import android.graphics.Point
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback
 import android.hardware.camera2.CameraManager.AvailabilityCallback
@@ -42,6 +41,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.TextureView
 import androidx.annotation.RequiresApi
+import cx.ring.utils.*
 import cx.ring.views.AutoFitTextureView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -56,7 +56,6 @@ import net.jami.daemon.UintVect
 import java.nio.ByteBuffer
 import java.util.*
 import kotlin.math.abs
-import kotlin.math.max
 
 class CameraService internal constructor(c: Context) {
     private val manager = c.getSystemService(Context.CAMERA_SERVICE) as CameraManager?
@@ -170,11 +169,10 @@ class CameraService internal constructor(c: Context) {
         }
         var params = mParams[camId]
         if (params == null) {
-            params = VideoParams(camId, deviceParams.size.x, deviceParams.size.y, rate)
+            params = VideoParams(camId, deviceParams.size, rate)
             mParams[camId] = params
         } else {
-            params.width = deviceParams.size.x
-            params.height = deviceParams.size.y
+            params.size = deviceParams.size
             params.rate = rate
         }
         params.rotation = getCameraDisplayRotation(deviceParams, rotation)
@@ -203,23 +201,23 @@ class CameraService internal constructor(c: Context) {
         formats: IntVect?,
         sizes: UintVect,
         rates: UintVect,
-        minVideoSize: Point,
+        minVideoSize: Size,
         context: Context
     ) {
         Log.d(TAG, "getCameraInfo: $camId min size: $minVideoSize")
-        val p = DeviceParams()
         rates.clear()
-        fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize, context)
-        sizes.add(p.size.x.toLong())
-        sizes.add(p.size.y.toLong())
+        val p = getCameraInfo(camId, minVideoSize, context)
+        sizes.add(p.size.width.toLong())
+        sizes.add(p.size.height.toLong())
+        rates.add(p.rate)
         mNativeParams[camId] = p
     }
 
-    private val maxResolution: Point?
+    private val maxResolution: Size?
         get() {
-            var max: Point? = null
+            var max: Size? = null
             for (deviceParams in mNativeParams.values) {
-                if (max == null || max.x * max.y < deviceParams.maxSize.x * deviceParams.maxSize.y)
+                if (max == null || max.surface() < deviceParams.maxSize.surface())
                     max = deviceParams.maxSize
             }
             return max
@@ -239,7 +237,7 @@ class CameraService internal constructor(c: Context) {
         return cameraCount > 0
     }
 
-    data class VideoParams(val id: String, var width: Int, var height: Int, var rate: Int) {
+    data class VideoParams(val id: String, var size: Size, var rate: Int) {
         val inputUri: String = "camera://$id"
 
         //public int format;
@@ -255,30 +253,26 @@ class CameraService internal constructor(c: Context) {
         var codecData: ByteBuffer? = null
         var codecStarted: Boolean = false
 
-        fun getAndroidCodec(): String {
-            return when (val codec = codec) {
-                "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
-                "H265" -> MediaFormat.MIMETYPE_VIDEO_HEVC
-                "VP8" -> MediaFormat.MIMETYPE_VIDEO_VP8
-                "VP9" -> MediaFormat.MIMETYPE_VIDEO_VP9
-                "MP4V-ES" -> MediaFormat.MIMETYPE_VIDEO_MPEG4
-                null -> MediaFormat.MIMETYPE_VIDEO_AVC
-                else -> codec
-            }
+        fun getAndroidCodec() = when (val codec = codec) {
+            "H264" -> MediaFormat.MIMETYPE_VIDEO_AVC
+            "H265" -> MediaFormat.MIMETYPE_VIDEO_HEVC
+            "VP8" -> MediaFormat.MIMETYPE_VIDEO_VP8
+            "VP9" -> MediaFormat.MIMETYPE_VIDEO_VP9
+            "MP4V-ES" -> MediaFormat.MIMETYPE_VIDEO_MPEG4
+            null -> MediaFormat.MIMETYPE_VIDEO_AVC
+            else -> codec
         }
     }
 
     class DeviceParams {
-        val size: Point = Point(0, 0)
-        val maxSize: Point = Point(0, 0)
+        var size: Size = Size(0, 0)
+        var maxSize: Size = Size(0, 0)
         var rate: Long = 0
         var facing = 0
         var orientation = 0
-        fun toMap(): StringMap {
-            val map = StringMap()
-            map["size"] = size.x.toString() + "x" + size.y
-            map["rate"] = rate.toString()
-            return map
+        fun toMap() = StringMap().also {
+            it["size"] = "${size.width}x${size.height}"
+            it["rate"] = rate.toString()
         }
     }
 
@@ -344,7 +338,7 @@ class CameraService internal constructor(c: Context) {
             .doOnComplete {
                 val max = maxResolution
                 Log.w(TAG, "Found max resolution: $max")
-                maxResolutionSubject.onNext(if (max == null) RESOLUTION_NONE else Pair(max.x, max.y))
+                maxResolutionSubject.onNext(if (max == null) RESOLUTION_NONE else Pair(max.width, max.height))
                 manager.registerAvailabilityCallback(availabilityCallback, videoHandler)
             }
             .onErrorComplete()
@@ -371,16 +365,17 @@ class CameraService internal constructor(c: Context) {
 
     private fun openEncoder(
         videoParams: VideoParams,
-        mimeType: String?,
+        mimeType: String,
         handler: Handler,
         resolution: Int,
-        bitrate: Int,
-        surface: Surface? = null
+        bitrate: Int
     ): Pair<MediaCodec?, Surface?> {
-        Log.d(TAG, "Video with codec " + mimeType + " resolution: " + videoParams.width + "x" + videoParams.height + " Bitrate: " + bitrate)
-        val bitrateValue: Int = if (bitrate == 0) if (resolution >= 720) 192 * 8 * 1024 else 100 * 8 * 1024 else bitrate * 8 * 1024
+        Log.d(TAG, "Video with codec $mimeType resolution: ${videoParams.size} Bitrate: $bitrate")
+        val bitrateValue: Int = if (bitrate == 0)
+                if (resolution >= 720) 192 * 8 * 1024 else 100 * 8 * 1024
+        else bitrate * 8 * 1024
         val frameRate = videoParams.rate//30 // 30 fps
-        val format = MediaFormat.createVideoFormat(mimeType!!, videoParams.width, videoParams.height).apply {
+        val format = MediaFormat.createVideoFormat(mimeType, videoParams.size.width, videoParams.size.height).apply {
             setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
             setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue)
             setInteger(MediaFormat.KEY_COLOR_FORMAT, CodecCapabilities.COLOR_FormatSurface)
@@ -513,28 +508,14 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    private fun getSmallerResolution(screenHeight: Int, screenWidth: Int) : Size {
-        val resolutions = HardwareServiceImpl.resolutions
-        val flip = screenHeight > screenWidth
-        for (resolution  in resolutions) {
-            if(resolution.x * resolution.y < screenHeight * screenWidth){
-                val pWidth = if (flip) resolution.y else resolution.x
-                val pHeight = if (flip) resolution.x else resolution.y
-                val ra = pHeight * screenWidth
-                val rb = pWidth * screenHeight
-                return when {
-                    (rb > ra) -> {
-                        val w = ra / screenHeight
-                        Size((w / 16) * 16, pHeight)
-                    }
-                    else -> {
-                        val h = rb / screenWidth
-                        Size(pWidth, (h / 16) * 16)
-                    }
-                }
-            }
+    private fun getSmallerResolution(screenSize: Size) : Size {
+        val flip = screenSize.height > screenSize.width
+        val surface = screenSize.surface()
+        for (resolution  in HardwareServiceImpl.resolutions) {
+            if (resolution.surface() < surface)
+                return resolution.flip(flip).fit(screenSize).round()
         }
-        return if(flip) Size(480, 720) else Size(720, 480)
+        return HardwareServiceImpl.VIDEO_SIZE_DEFAULT.flip(flip)
     }
 
     private fun createVirtualDisplay(
@@ -550,15 +531,14 @@ class CameraService internal constructor(c: Context) {
             params.rate = 24
         }
 
-        r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+        r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.size.width, 0)
         if (r.first == null) {
             Log.e(TAG, "Error while opening the encoder, trying to open it with a lower resolution")
-            while (params.width > 320){
-                val res = getSmallerResolution(params.height, params.width)
-                Log.d(TAG, "createVirtualDisplay >> resolution has been reduce from: (${params.width} * ${params.height}) to: (${res.width} * ${res.height}) ")
-                params.width = res.width
-                params.height = res.height
-                r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.width, 0, surface = Surface(surface.surfaceTexture))
+            while (params.size.width > 320){
+                val res = getSmallerResolution(params.size)
+                Log.d(TAG, "createVirtualDisplay >> resolution has been reduce from: ${params.size} to: $res")
+                params.size = res
+                r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, params.size.width, 0)
                 if (r.first != null) break
             }
             if (r == null ) {
@@ -570,30 +550,28 @@ class CameraService internal constructor(c: Context) {
         val surface = r.second
         val codec = r.first
         codec?.start()
-        Log.d(TAG, "createVirtualDisplay success, resolution set to: (${params.width}) * ${params.height}")
+        Log.d(TAG, "createVirtualDisplay success, resolution set to: ${params.size}")
         return try {
-            Pair(
-                codec, projection.createVirtualDisplay(
-                    "ScreenSharing", params.width, params.height, screenDensity,
-                    DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, surface, object : VirtualDisplay.Callback() {
-                        override fun onPaused() {
-                            Log.w(TAG, "VirtualDisplay.onPaused")
-                        }
+            Pair(codec, projection.createVirtualDisplay(
+                "ScreenSharing", params.size.width, params.size.height, screenDensity,
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, surface, object : VirtualDisplay.Callback() {
+                    override fun onPaused() {
+                        Log.w(TAG, "VirtualDisplay.onPaused")
+                    }
 
-                        override fun onResumed() {
-                            Log.w(TAG, "VirtualDisplay.onResumed")
-                        }
+                    override fun onResumed() {
+                        Log.w(TAG, "VirtualDisplay.onResumed")
+                    }
 
-                        override fun onStopped() {
-                            Log.w(TAG, "VirtualDisplay.onStopped")
-                            if (surface != null) {
-                                surface.release()
-                                codec?.release()
-                            }
+                    override fun onStopped() {
+                        Log.w(TAG, "VirtualDisplay.onStopped")
+                        if (surface != null) {
+                            surface.release()
+                            codec?.release()
                         }
-                    }, handler
-                )
-            )
+                    }
+                }, handler
+            ))
         } catch (e: Exception) {
             Log.e(TAG, "Exception creating virtual display", e)
             if (codec != null) {
@@ -655,12 +633,12 @@ class CameraService internal constructor(c: Context) {
             val previewSize = chooseOptimalSize(
                 streamConfigs?.getOutputSizes(SurfaceHolder::class.java),
                 if (flip) view.height else view.width, if (flip) view.width else view.height,
-                videoParams.width, videoParams.height,
-                Size(videoParams.width, videoParams.height)
+                videoParams.size.width, videoParams.size.height,
+                videoParams.size
             )
             Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: " + videoParams.rate)
             view.setAspectRatio(previewSize.height, previewSize.width)
-            val texture = view.surfaceTexture
+            val texture = view.surfaceTexture ?: throw IllegalStateException()
             val s = Surface(texture)
             val codec = if (hw_accel)
                 openEncoder(videoParams, videoParams.getAndroidCodec(), handler, resolution, bitrate)
@@ -671,7 +649,7 @@ class CameraService internal constructor(c: Context) {
             if (codec?.second != null) {
                 targets.add(codec.second!!)
             } else {
-                tmpReader = ImageReader.newInstance(videoParams.width, videoParams.height, ImageFormat.YUV_420_888, 8)
+                tmpReader = ImageReader.newInstance(videoParams.size.width, videoParams.size.height, ImageFormat.YUV_420_888, 8)
                 tmpReader.setOnImageAvailableListener(OnImageAvailableListener { r: ImageReader ->
                     val image = r.acquireLatestImage()
                     if (image != null) {
@@ -689,19 +667,19 @@ class CameraService internal constructor(c: Context) {
                         //previewCamera = camera
                         videoParams.camera = camera
                         videoParams.mediaCodec = codec?.first
-                        texture!!.setDefaultBufferSize(previewSize.width, previewSize.height)
-                        val builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-                        builder.addTarget(s)
-                        if (codec?.second != null) {
-                            builder.addTarget(codec.second!!)
-                        } else if (reader != null) {
-                            builder.addTarget(reader.surface)
-                        }
-                        builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
-                        builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                        builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
-                        builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
-                        val request = builder.build()
+                        texture.setDefaultBufferSize(previewSize.width, previewSize.height)
+                        val request = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
+                            addTarget(s)
+                            if (codec?.second != null) {
+                                addTarget(codec.second!!)
+                            } else if (reader != null) {
+                                addTarget(reader.surface)
+                            }
+                            set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO)
+                            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                            set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
+                            set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+                        }.build()
                         camera.createCaptureSession(targets, object : CameraCaptureSession.StateCallback() {
                             override fun onConfigured(session: CameraCaptureSession) {
                                 Log.w(TAG, "onConfigured")
@@ -792,85 +770,52 @@ class CameraService internal constructor(c: Context) {
             0
         }
 
-
-    private fun resolutionFit(paramWidth: Int, paramHeight: Int, context: Context): Size {
-        val metrics = context.resources.displayMetrics
-        val screenWidth = metrics.widthPixels
-        val screenHeight = metrics.heightPixels
-        val flip = screenHeight > screenWidth
-        val pWidth = if (flip) paramHeight else paramWidth
-        val pHeight = if (flip) paramWidth else paramHeight
-        val ra = pHeight * screenWidth
-        val rb = pWidth * screenHeight
-
-        return when {
-            (screenWidth < pWidth && screenHeight < pHeight) ->
-                Size((screenWidth/ 16) * 16, (screenHeight/ 16) * 16)
-            (rb > ra) -> {
-                val w = ra / screenHeight
-                Size((w / 16) * 16, pHeight)
-            }
-            else -> {
-                val h = rb / screenWidth
-                Size(pWidth, (h / 16) * 16)
-            }
-        }
-    }
-
-    private fun fillCameraInfo(
-        p: DeviceParams,
+    private fun getCameraInfo(
         camId: String,
-        formats: IntVect?,
-        sizes: UintVect?,
-        rates: UintVect,
-        minVideoSize: Point,
+        minVideoSize: Size,
         context: Context
-    ) {
-        if (manager == null) return
+    ): DeviceParams {
+        val p = DeviceParams()
+        if (manager == null) return p
         try {
             if (camId == VideoDevices.SCREEN_SHARING) {
-                val res = resolutionFit(minVideoSize.x, minVideoSize.y, context)
-                p.size.x = res.width
-                p.size.y = res.height
-                Log.d(TAG, "fillCameraInfo >> Screen sharing resolution set to: (${p.size.y} * ${p.size.x})")
+                val metrics = context.resources.displayMetrics
+                p.size = resolutionFit(minVideoSize, Size(metrics.widthPixels, metrics.heightPixels))
                 p.rate = 24
-                rates.add(p.rate)
-                return
+                Log.d(TAG, "fillCameraInfo >> Screen sharing resolution set to: ${p.size}")
+                return p
             }
             val cc = manager.getCameraCharacteristics(camId)
-            val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: return
+            val streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: return p
             val rawSizes = streamConfigs.getOutputSizes(ImageFormat.YUV_420_888)
             var newSize = rawSizes[0]
             for (s in rawSizes) {
                 if (s.width < s.height) {
                     continue
                 }
-                if (s.width == minVideoSize.x && s.height == minVideoSize.y // Has height closer but still higher than target
-                    || (if (newSize.height < minVideoSize.y) s.height > newSize.height else s.height >= minVideoSize.y && s.height < newSize.height) // Has width closer but still higher than target
-                    || if (s.height == newSize.height && newSize.width < minVideoSize.x)
+                if (s == minVideoSize // Has height closer but still higher than target
+                    || (if (newSize.height < minVideoSize.height) s.height > newSize.height else s.height >= minVideoSize.height && s.height < newSize.height) // Has width closer but still higher than target
+                    || if (s.height == newSize.height && newSize.width < minVideoSize.width)
                         s.width > newSize.width
                     else
-                        s.width >= minVideoSize.x && s.width < newSize.width
+                        s.width >= minVideoSize.width && s.width < newSize.width
                 ) {
-                    if (s.width * s.height > p.maxSize.x * p.maxSize.y) {
-                        p.maxSize.x = s.width
-                        p.maxSize.y = s.height
+                    if (s.surface() > p.maxSize.surface()) {
+                        p.maxSize = s
                     }
                     newSize = s
                 }
             }
-            p.size.x = newSize.width
-            p.size.y = newSize.height
+            p.size = newSize
             val minDuration = streamConfigs.getOutputMinFrameDuration(ImageFormat.YUV_420_888, newSize)
-            val maxfps = 1000e9 / minDuration
-            val fps = maxfps.toLong()
-            rates.add(fps)
-            p.rate = fps
+            val fps = 1000e9 / minDuration
+            p.rate = fps.toLong()
             p.orientation = cc.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
             p.facing = cc.get(CameraCharacteristics.LENS_FACING)!!
         } catch (e: Exception) {
             Log.e(TAG, "An error occurred getting camera info", e)
         }
+        return p
     }
 
     /**
@@ -923,13 +868,9 @@ class CameraService internal constructor(c: Context) {
                 }
         }
 
-        private fun filterCameraIdsFacing(
-            cameras: List<Pair<String, CameraCharacteristics>>,
-            facing: Int
-        ): List<String> {
-            return cameras.filter { camera -> camera.second.get(CameraCharacteristics.LENS_FACING) == facing }
+        private fun filterCameraIdsFacing(cameras: List<Pair<String, CameraCharacteristics>>, facing: Int) =
+            cameras.filter { camera -> camera.second.get(CameraCharacteristics.LENS_FACING) == facing }
                 .map { camera -> camera.first }
-        }
 
         private fun listSupportedCodecs(list: MediaCodecList) {
             try {
@@ -1045,5 +986,10 @@ class CameraService internal constructor(c: Context) {
                 else -> 0
             }
         }
+
+        private fun resolutionFit(param: Size, screenSize: Size) =
+            param.flip(screenSize.height > screenSize.width)
+                .fit(screenSize)
+                .round()
     }
 }
