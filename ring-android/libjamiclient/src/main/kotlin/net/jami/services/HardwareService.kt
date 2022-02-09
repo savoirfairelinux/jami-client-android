@@ -64,13 +64,8 @@ abstract class HardwareService(
     protected val audioStateSubject: Subject<AudioState> = BehaviorSubject.createDefault(STATE_INTERNAL)
     protected val connectivityEvents: Subject<Boolean> = BehaviorSubject.create()
 
-    fun getVideoEvents(): Observable<VideoEvent> {
-        return videoEvents
-    }
-
-    fun getBluetoothEvents(): Observable<BluetoothEvent> {
-        return bluetoothEvents
-    }
+    fun getVideoEvents(): Observable<VideoEvent> = videoEvents
+    fun getBluetoothEvents(): Observable<BluetoothEvent> = bluetoothEvents
 
     val audioState: Observable<AudioState>
         get() = audioStateSubject
@@ -79,7 +74,7 @@ abstract class HardwareService(
 
     abstract fun initVideo(): Completable
     abstract val isVideoAvailable: Boolean
-    abstract fun updateAudioState(state: CallStatus?, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean)
+    abstract fun updateAudioState(state: CallStatus, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean)
     abstract fun closeAudioState()
     abstract val isSpeakerphoneOn: Boolean
 
