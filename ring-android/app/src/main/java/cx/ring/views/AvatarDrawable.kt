@@ -484,11 +484,11 @@ class AvatarDrawable : Drawable {
         presence.radius = (0.29289321881 * bounds.width().toDouble() * 0.5).toInt()
         presence.cx = bounds.right - presence.radius
         presence.cy = bounds.bottom - presence.radius
-        val presenceStrokeWidth = presence.radius / 3
-        presenceStrokePaint.strokeWidth = presenceStrokeWidth.toFloat()
-        checkedPaint.strokeWidth = presenceStrokeWidth.toFloat()
-        presence.radius -= (presenceStrokeWidth * 0.5).toInt()
-        if (checkedIcon != null) checkedIcon!!.setBounds(
+        val presenceStrokeWidth = (presence.radius / 3).toFloat()
+        presenceStrokePaint.strokeWidth = presenceStrokeWidth
+        checkedPaint.strokeWidth = presenceStrokeWidth
+        presence.radius -= (presenceStrokeWidth * 0.5f).toInt()
+        checkedIcon?.setBounds(
             presence.cx - presence.radius,
             presence.cy - presence.radius,
             presence.cx + presence.radius,
@@ -512,14 +512,14 @@ class AvatarDrawable : Drawable {
     }
 
     private fun drawChecked(canvas: Canvas) {
-        if (checkedIcon != null) {
+        checkedIcon?.let { icon ->
             canvas.drawCircle(
                 presence.cx.toFloat(),
                 presence.cy.toFloat(),
                 presence.radius.toFloat(),
                 checkedPaint
             )
-            checkedIcon!!.draw(canvas)
+            icon.draw(canvas)
         }
     }
 
@@ -529,10 +529,10 @@ class AvatarDrawable : Drawable {
         val d = min(bounds.width(), bounds.height())
         val iw = if (cropCircle) d else bounds.width()
         val ih = if (cropCircle) d else bounds.height()
-        if (placeholder != null) {
+        placeholder?.let {
             val cx = (iw - d) / 2
             val cy = (ih - d) / 2
-            placeholder!!.setBounds(cx, cy, cx + d, cy + d)
+            it.setBounds(cx, cy, cx + d, cy + d)
         }
         for (i in workspace.indices) {
             if (workspace[i] != null) {
@@ -593,42 +593,29 @@ class AvatarDrawable : Drawable {
         }
     }
 
-    override fun getMinimumWidth(): Int {
-        return minSize
-    }
+    override fun getMinimumWidth(): Int = minSize
 
-    override fun getMinimumHeight(): Int {
-        return minSize
-    }
+    override fun getMinimumHeight(): Int = minSize
 
     fun setInSize(s: Int) {
         inSize = s
     }
 
-    override fun getIntrinsicWidth(): Int {
-        return inSize
-    }
+    override fun getIntrinsicWidth(): Int = inSize
 
-    override fun getIntrinsicHeight(): Int {
-        return inSize
-    }
+    override fun getIntrinsicHeight(): Int = inSize
 
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
     private fun setAvatarTextValues(width: Int, height: Int) {
         if (avatarText != null) {
             textPaint.textSize = height * DEFAULT_TEXT_SIZE_PERCENTAGE
-            val stringWidth = textPaint.measureText(avatarText)
-
+            val stringWidth = textPaint.measureText(avatarText ?: return)
             textStartXPoint = width / 2f - stringWidth / 2f
             textStartYPoint = height / 2f - (textPaint.ascent() + textPaint.descent()) / 2f
         }
     }
 
-    private fun convertNameToAvatarText(name: String?): String? {
-        return if (name.isNullOrEmpty()) null
+    private fun convertNameToAvatarText(name: String?): String? = if (name.isNullOrEmpty()) null
         else String(Character.toChars(name.codePointAt(0))).uppercase(Locale.getDefault())
-    }
 }
