@@ -39,6 +39,7 @@ along with this program; if not, write to the Free Software
         tools:src="@drawable/ic_contact_picture_fallback" />
 
     <RelativeLayout
+        android:id="@+id/conv_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
