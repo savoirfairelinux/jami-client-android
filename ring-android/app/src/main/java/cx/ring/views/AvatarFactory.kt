@@ -40,84 +40,67 @@ object AvatarFactory {
     const val SIZE_NOTIF = 48
     const val SIZE_PADDING = 8
 
-    fun getAvatar(context: Context, contact: ContactViewModel?, presence: Boolean): Single<Drawable> {
-        return Single.fromCallable {
+    fun getAvatar(context: Context, contact: ContactViewModel, presence: Boolean = true): Single<Drawable> =
+        Single.fromCallable {
             AvatarDrawable.Builder()
                 .withContact(contact)
                 .withCircleCrop(true)
                 .withPresence(presence)
                 .build(context)
         }
-    }
 
-    fun getAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean): Single<AvatarDrawable> {
-        return Single.fromCallable {
+    fun getAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean): Single<AvatarDrawable> =
+        Single.fromCallable {
             AvatarDrawable.Builder()
                 .withConversation(conversation, contacts)
                 .withCircleCrop(true)
                 .withPresence(presence)
                 .build(context)
         }
-    }
 
-    fun getAvatar(context: Context, vm: ConversationItemViewModel): Single<Drawable> {
-        return Single.fromCallable {
+    fun getAvatar(context: Context, vm: ConversationItemViewModel): Single<Drawable> =
+        Single.fromCallable {
             AvatarDrawable.Builder()
                 .withViewModel(vm)
                 .withCircleCrop(true)
                 .build(context)
         }
-    }
 
-    fun getAvatar(context: Context, contact: ContactViewModel?): Single<Drawable> {
-        return getAvatar(context, contact, true)
-    }
+    fun getBitmapAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, size: Int, presence: Boolean): Single<Bitmap> =
+        getAvatar(context, conversation, contacts, presence)
+            .map { BitmapUtils.drawableToBitmap(it, size) }
 
-    fun getBitmapAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, size: Int, presence: Boolean): Single<Bitmap> {
-        return getAvatar(context, conversation, contacts, presence)
-            .map { d -> BitmapUtils.drawableToBitmap(d, size) }
-    }
+    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean): Single<Bitmap> =
+        getAvatar(context, contact, presence)
+            .map { BitmapUtils.drawableToBitmap(it, size) }
 
-    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean): Single<Bitmap> {
-        return getAvatar(context, contact, presence)
-            .map { d -> BitmapUtils.drawableToBitmap(d, size) }
-    }
+    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int): Single<Bitmap> =
+        getBitmapAvatar(context, contact, size, true)
 
-    fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int): Single<Bitmap> {
-        return getBitmapAvatar(context, contact, size, true)
-    }
-
-    fun getBitmapAvatar(context: Context, account: Account, size: Int): Single<Bitmap> {
-        return AvatarDrawable.load(context, account)
+    fun getBitmapAvatar(context: Context, account: Account, size: Int): Single<Bitmap> =
+        AvatarDrawable.load(context, account)
             .firstOrError()
-            .map { d -> BitmapUtils.drawableToBitmap(d, size) }
-    }
+            .map { BitmapUtils.drawableToBitmap(it, size) }
 
-    private fun getDrawable(context: Context, photo: Bitmap?, profileName: String?, username: String?, id: String): Drawable {
-        return AvatarDrawable.Builder()
+    private fun getDrawable(context: Context, photo: Bitmap?, profileName: String?, username: String?, id: String): Drawable =
+        AvatarDrawable.Builder()
             .withPhoto(photo)
             .withName(if (TextUtils.isEmpty(profileName)) username else profileName)
             .withId(id)
             .withCircleCrop(true)
             .build(context)
-    }
 
     fun clearCache() {}
 
-    private fun <T> getGlideRequest(context: Context, request: RequestBuilder<T>, photo: Bitmap?, profileName: String?, username: String?, id: String): RequestBuilder<T> {
-        return request.load(getDrawable(context, photo, profileName, username, id))
-    }
+    private fun <T> getGlideRequest(context: Context, request: RequestBuilder<T>, photo: Bitmap?, profileName: String?, username: String?, id: String): RequestBuilder<T> =
+        request.load(getDrawable(context, photo, profileName, username, id))
 
-    private fun getGlideAvatar(context: Context, manager: RequestManager, contact: ContactViewModel): RequestBuilder<Drawable> {
-        return getGlideRequest(context, manager.asDrawable(), contact.profile.avatar as Bitmap?, contact.profile.displayName, contact.registeredName, contact.contact.primaryNumber)
-    }
+    private fun getGlideAvatar(context: Context, manager: RequestManager, contact: ContactViewModel): RequestBuilder<Drawable> =
+        getGlideRequest(context, manager.asDrawable(), contact.profile.avatar as Bitmap?, contact.profile.displayName, contact.registeredName, contact.contact.primaryNumber)
 
-    private fun getGlideAvatar(context: Context, contact: ContactViewModel): RequestBuilder<Drawable> {
-        return getGlideAvatar(context, Glide.with(context), contact)
-    }
+    private fun getGlideAvatar(context: Context, contact: ContactViewModel): RequestBuilder<Drawable> =
+        getGlideAvatar(context, Glide.with(context), contact)
 
-    fun loadGlideAvatar(view: ImageView, contact: ContactViewModel) {
-        getGlideAvatar(view.context, contact).into(view)
-    }
+    fun loadGlideAvatar(view: ImageView, contact: ContactViewModel) = getGlideAvatar(view.context, contact).into(view)
 
 }
