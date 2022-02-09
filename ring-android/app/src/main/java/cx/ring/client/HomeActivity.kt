@@ -87,6 +87,7 @@ import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
+import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.min
@@ -339,11 +340,15 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .subscribe { count -> setBadge(R.id.navigation_home, count) })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
+            val maxShortcuts = getMaxShareShortcuts()
             mDisposable.add(mAccountService
                 .currentAccountSubject
                 .switchMap { obj -> obj.getConversationsSubject() }
                 .debounce(10, TimeUnit.SECONDS)
                 .observeOn(Schedulers.computation())
+                .map { conversations -> conversations.takeFirstWhile(maxShortcuts)
+                    { it.mode.blockingFirst() != Conversation.Mode.Syncing }
+                }
                 .switchMapSingle { conversations ->
                     if (conversations.isEmpty())
                         Single.just(emptyArray<Any>())
@@ -358,7 +363,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             }
                         }) { obs -> obs }
                 }
-                .subscribe({ conversations -> setShareShortcuts(conversations) })
+                .subscribe(this::setShareShortcuts)
                 { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
         }
         if (fConversation == null)
@@ -801,17 +806,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     val switchButton: SwitchButton
         get() = mBinding!!.accountSwitch
 
-    private fun setShareShortcuts(conversations: Array<Any>) {
-        var maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this)
-        if (maxCount == 0) maxCount = 4
+    private fun getMaxShareShortcuts() =
+        ShortcutManagerCompat.getMaxShortcutCountPerActivity(this).takeIf { it > 0 } ?: 4
 
-        val shortcutInfoList: MutableList<ShortcutInfoCompat> =
-            ArrayList(min(maxCount, conversations.size))
-        for (c in conversations) {
+    private fun setShareShortcuts(conversations: Array<Any>) {
+        val shortcutInfoList = conversations.map { c ->
             val conversation = c as Pair<ConversationItemViewModel, Bitmap>
-            val mode = conversation.first.mode
-            if (mode == Conversation.Mode.Syncing)
-                continue
             var icon: IconCompat? = null
             try {
                 icon = IconCompat.createWithBitmap(conversation.second)
@@ -819,24 +819,20 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 Log.w(TAG, "Failed to load icon", e)
             }
             val title = conversation.first.contactName
-            if (title.isEmpty()) continue
             val path = ConversationPath(conversation.first.accountId, conversation.first.uri)
             val key = path.toKey()
-            val person = Person.Builder()
-                .setName(title)
-                .setKey(key)
-                .build()
-            val shortcutInfo = ShortcutInfoCompat.Builder(this, key)
+            ShortcutInfoCompat.Builder(this, key)
                 .setShortLabel(title)
-                .setPerson(person)
+                .setPerson(Person.Builder()
+                    .setName(title)
+                    .setKey(key)
+                    .build())
                 .setLongLived(true)
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
                 .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
                         .putExtras(path.toBundle()))
                 .build()
-            shortcutInfoList.add(shortcutInfo)
-            if (shortcutInfoList.size == maxCount) break
         }
         try {
             Log.d(TAG, "Adding shortcuts: " + shortcutInfoList.size)
