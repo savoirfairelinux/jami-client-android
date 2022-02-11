@@ -130,8 +130,10 @@ class NotificationServiceImpl(
                     PendingIntent.getService(mContext, random.nextInt(),
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
-                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
-                        ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
+                            .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
+
+            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
         } else if (conference.isRinging) {
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
@@ -195,7 +197,8 @@ class NotificationServiceImpl(
                         PendingIntent.getService(mContext, random.nextInt(),
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString),
+                                .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
             }
         } else {
