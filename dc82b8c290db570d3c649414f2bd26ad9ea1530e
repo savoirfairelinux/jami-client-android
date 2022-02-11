@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12eeae0f_e2a9db23",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-02-11T21:46:22Z",
+      "side": 1,
+      "message": "missing KEY_ACCOUNT_ID",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 200,
+        "endChar": 95
+      },
+      "revId": "dc82b8c290db570d3c649414f2bd26ad9ea1530e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
