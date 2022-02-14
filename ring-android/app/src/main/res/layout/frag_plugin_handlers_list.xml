@@ -20,8 +20,8 @@
         android:id="@+id/handler_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/chat_plugins_toolbar"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/frag_plugins_list_item"
-        android:layout_below="@+id/chat_plugins_toolbar"/>
+        tools:listitem="@layout/frag_plugins_list_item" />
 </RelativeLayout>

@@ -642,7 +642,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configurePreview(width: Int, animatedFraction: Float) {
-        //Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
         val binding = binding ?: return
         val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
         val r = 1f - animatedFraction
@@ -1424,7 +1423,24 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayPluginsButton(): Boolean {
-        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+        val t = JamiService.getPluginsEnabled()
+        val s = JamiService.getCallMediaHandlers().size
+        Log.w(TAG, "DEBUG displayPluginsButton t: $t, s: $s")
+        return JamiService.getPluginsEnabled()
+        //return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+    }
+
+    fun PluginsButtonClicked() {
+        Log.w(TAG, "DEBUG Plugins list will be shown")
+        val binding = binding ?: return
+        if(binding.callPluginsBtn.isChecked){
+            binding.confControlGroup.isVisible = false
+            binding.pluginslistContainer.isVisible = true
+        } else {
+            binding.confControlGroup.isVisible = true
+            binding.pluginslistContainer.isVisible = false
+        }
+
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
