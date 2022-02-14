@@ -727,11 +727,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     /**
      * Changes the current main fragment to a plugins list settings fragment
      */
-    fun goToPluginsListSettings() {
+    fun goToPluginsListSettings(accountId: String? = "") {
         if (fContent is PluginsListSettingsFragment) {
             return
         }
-        val content = PluginsListSettingsFragment()
+        val content = PluginsListSettingsFragment.newInstance(accountId)
         fContent = content
         supportFragmentManager
             .beginTransaction()
@@ -778,7 +778,17 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        mBinding?.appBar?.isLifted = enable
+        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
+    }
+
+    fun setToolbarOutlineState(enabled: Boolean) {
+        if (mBinding != null) {
+            if (!enabled) {
+                mBinding!!.appBar.outlineProvider = null
+            } else {
+                mBinding!!.appBar.outlineProvider = mOutlineProvider
+            }
+        }
     }
 
     fun popFragmentImmediate() {
@@ -788,7 +798,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fContent = fm.findFragmentById(entry.id)
     }
 
-    private fun selectNavigationItem(id: Int) {
+    fun selectNavigationItem(id: Int) {
         val binding = mBinding ?: return
         binding.navigationView.selectedItemId = id
     }
