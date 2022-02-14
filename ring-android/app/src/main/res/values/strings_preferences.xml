@@ -83,7 +83,8 @@
     <string name="plugin_uninstall_title">Uninstall Plugin ?</string>
     <string name="plugin_reset_preferences">Reset plugin preferences</string>
     <string name="plugin_reset_preferences_summary">Your plugin settings will be defaulted</string>
-    <string name="plugin_reset_preferences_ask">Do you want to reset the plugin settings ?</string>
+    <string name="plugin_reset_preferences_ask">Do you want to reset the general plugin settings ?</string>
+    <string name="plugin_reset_account_preferences_ask">Do you want to reset the account plugin settings ?</string>
     <string name="plugin_successfully_installed">Plugin <b>%1$s</b> successfully installed</string>
     <string name="plugin_install_failure">Failed to install plugin: <b>%1$s</b></string>
     <string name="plugin_recent_version_exception">You have a more recent version of: <b>%1$s</b></string>
