@@ -41,34 +41,13 @@
         android:layout_marginTop="16dp"
         android:weightSum="2">
 
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/plugin_setting_load"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:clickable="true">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/plugin_setting_load_image"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:src="@drawable/baseline_delete_24"-->
-<!--                android:layout_centerHorizontal="true"/>-->
-
-<!--            <TextView-->
-<!--                android:layout_below="@+id/plugin_setting_load_image"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Activate"-->
-<!--                android:layout_centerHorizontal="true"/>-->
-
-<!--        </RelativeLayout>-->
         <RelativeLayout
             android:id="@+id/plugin_setting_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/plugin_setting_reset_image"
@@ -81,7 +60,7 @@
                 android:layout_below="@+id/plugin_setting_reset_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reset"
+                android:text="@string/reset"
                 android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
@@ -104,19 +83,32 @@
                 android:layout_below="@+id/plugin_setting_install_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Uninstall"
+                android:text="@string/uninstall"
                 android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 
     </LinearLayout>
 
-
     <View
+        android:id="@+id/divisor"
         android:layout_below="@+id/plugin_setting_buttons"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/plugin_account_setting_redirect"
+        style="@style/ButtonColored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divisor"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:drawableTint="@color/colorOnPrimary"
+        android:focusable="true"
+        android:text="@string/open_account_plugin_settings" />
 
 </android.widget.RelativeLayout>

@@ -59,6 +59,7 @@ import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.fragments.*
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.AccountFragment
+import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
@@ -613,6 +614,10 @@ class JamiAccountSummaryFragment :
 
     override fun goToAdvanced(accountId: String) {
         changeFragment(fragmentWithBundle(AdvancedAccountFragment(), accountId), AdvancedAccountFragment.TAG)
+    }
+
+    override fun goToPlugin(accountId: String) {
+        changeFragment(PluginsListSettingsFragment.newInstance(accountId), PluginsListSettingsFragment.TAG)
     }
 
     fun goToBlackList(accountId: String?) {

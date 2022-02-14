@@ -93,6 +93,9 @@ along with this program; if not, write to the Free Software
     <string name="account_upnp_label">Enable UPnP</string>
     <string name="account_proxy_field">Proxy</string>
 
+    <!-- Plugin Details -->
+    <string name="account_preference_plugin_tab">Plugins</string>
+
     <!-- Audio Details -->
     <string name="account_audio_label">Audio</string>
     <string name="account_preferences_media_tab">Media</string>

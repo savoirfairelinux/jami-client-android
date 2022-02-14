@@ -64,8 +64,17 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
                     var defaultPath = preferenceAttributes["defaultValue"]
                     if (defaultPath != null && defaultPath.isNotEmpty()) {
                         defaultPath = defaultPath.substring(0, defaultPath.lastIndexOf("/"))
-                        for (file in File(defaultPath).listFiles()!!)
-                            pathList.add(file.toString())
+                        for (file in File(defaultPath).listFiles()) {
+                            if (supportedMimeTypes.equals("*/*")) {
+                                pathList.add(file.toString())
+                            } else {
+                                for (mime in supportedMimeTypes) {
+                                    if (file.toString()
+                                            .endsWith(mime.replace("*/", "."))
+                                    ) pathList.add(file.toString())
+                                }
+                            }
+                        }
                         break
                     }
                 }
