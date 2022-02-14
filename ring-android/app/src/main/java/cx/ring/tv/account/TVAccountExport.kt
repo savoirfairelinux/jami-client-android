@@ -170,6 +170,7 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     override fun goToMedia(accountId: String) {}
     override fun goToSystem(accountId: String) {}
     override fun goToAdvanced(accountId: String) {}
+    override fun goToPlugin(accountId: String) {}
     override fun goToAccount(accountId: String) {}
     override fun setSwitchStatus(account: Account) {}
     override fun showRevokingProgressDialog() {}

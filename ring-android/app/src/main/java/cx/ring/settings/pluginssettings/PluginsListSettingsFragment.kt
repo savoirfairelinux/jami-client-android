@@ -1,7 +1,6 @@
 package cx.ring.settings.pluginssettings
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,11 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.account.JamiAccountSummaryFragment
+import cx.ring.account.AccountEditionFragment
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPluginsListSettingsBinding
 import cx.ring.plugins.PluginUtils.getInstalledPlugins
@@ -29,46 +27,32 @@ import java.io.File
 import java.io.IOException
 
 class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
-    private val mOnBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            this.isEnabled = false
-            val fragment = parentFragment as JamiAccountSummaryFragment?
-            fragment?.popBackStack()
-        }
-    }
     private var binding: FragPluginsListSettingsBinding? = null
     private var mAdapter: PluginsListAdapter? = null
     private val mCompositeDisposable = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPluginsListSettingsBinding.inflate(inflater, container, false)
+        val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         binding!!.pluginsList.setHasFixedSize(true)
 
-        // specify an adapter (see also next example)
-        mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this)
+        mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this, accountId)
         binding!!.pluginsList.adapter = mAdapter
 
         //Fab
-        binding!!.pluginsListSettingsFab.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "*/*"
-            startActivityForResult(intent, ARCHIVE_REQUEST_CODE)
+        if (accountId.isEmpty()) {
+            binding!!.pluginsListSettingsFab.visibility = View.VISIBLE
+            binding!!.pluginsListSettingsFab.setOnClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "*/*"
+                startActivityForResult(intent, ARCHIVE_REQUEST_CODE)
+            }
         }
         return binding!!.root
-    }
-
-    override fun onResume() {
-        mOnBackPressedCallback.isEnabled = true
-        super.onResume()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this, mOnBackPressedCallback)
     }
 
     /**
@@ -181,5 +165,11 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
     companion object {
         val TAG = PluginsListSettingsFragment::class.java.simpleName
         private const val ARCHIVE_REQUEST_CODE = 42
+
+        fun newInstance(accountId: String?): PluginsListSettingsFragment {
+            val fragment = PluginsListSettingsFragment()
+            fragment.arguments = Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
+            return fragment
+        }
     }
 }

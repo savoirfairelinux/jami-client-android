@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragPluginHandlersListBinding
 import cx.ring.plugins.PluginUtils
 import cx.ring.settings.pluginssettings.PluginDetails
@@ -26,7 +27,7 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
         return FragPluginHandlersListBinding.inflate(inflater, container, false).also { b ->
             b.handlerList.setHasFixedSize(true)
             b.handlerList.adapter = PluginsListAdapter(
-                PluginUtils.getChatHandlersDetails(b.handlerList.context, mPath.accountId, mPath.conversationId.removePrefix("swarm:")), this)
+                PluginUtils.getChatHandlersDetails(b.handlerList.context, mPath.accountId, mPath.conversationId.removePrefix("swarm:")), this, "")
             binding = b
         }.root
     }
