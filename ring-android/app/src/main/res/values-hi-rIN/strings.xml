@@ -56,4 +56,5 @@
   <string name="wizard_password_skip">खाता बनाएं</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">बाटें </string>
+  <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
 </resources>

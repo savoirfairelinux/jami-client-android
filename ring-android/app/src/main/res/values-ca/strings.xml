@@ -267,4 +267,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Comparteix</string>
   <string name="bottomSheet_add_participants_btn">Afegir</string>
+  <string name="bottomSheet_hangup_btn">Finalitza la trucada</string>
 </resources>

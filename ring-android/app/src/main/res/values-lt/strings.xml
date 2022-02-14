@@ -234,4 +234,5 @@
   <string name="bottomSheet_share_btn">Bendrinti</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
 </resources>

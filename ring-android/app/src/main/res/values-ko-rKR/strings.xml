@@ -48,5 +48,6 @@
   <string name="tv_audio_pause">멈춤</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">통화 종료</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
 </resources>

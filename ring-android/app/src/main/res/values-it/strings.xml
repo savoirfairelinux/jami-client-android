@@ -120,7 +120,7 @@
   <string name="ab_action_change_screen_orientation">Cambia orientamento dello schermo</string>
   <string name="share_via">Condividi tramite</string>
   <string name="write_a_message">Scrivi un messaggio</string>
-  <string name="scan_qr">Scansiona Codice QR</string>
+  <string name="scan_qr">Scansiona codice QR</string>
   <string name="qr_code">Codice QR</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
@@ -151,7 +151,7 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami ha bisogno dell\'autorizzazione \"Scrittura del registro chiamate\" per attivare questa funzionalità. Per favore concedila.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scansiona il QR Code del profilo che desideri aggiungere.</string>
+  <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio contatto</string>
   <string name="error_scan_no_camera_permissions">Lo scanner QR richiede il permesso di usare la fotocamera per funzionare</string>
   <string name="tab_code">Il mio Codice</string>

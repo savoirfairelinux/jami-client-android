@@ -39,5 +39,6 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
   <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
 </resources>

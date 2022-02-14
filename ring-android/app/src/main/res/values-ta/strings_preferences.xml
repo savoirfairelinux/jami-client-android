@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_video">காணொளி</string>
+  <string name="pref_category_system">அமைப்பு</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>
