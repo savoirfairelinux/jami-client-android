@@ -633,6 +633,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun startPlugin(mediaHandlerId: String?) {
+        Log.w(TAG, "DEBUG startPlugin >> mediaHandlerId: $mediaHandlerId")
         mHardwareService.startMediaHandler(mediaHandlerId)
         mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }

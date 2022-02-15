@@ -68,14 +68,18 @@ import com.google.zxing.Dimension
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
+import cx.ring.adapters.PluginsAdapter
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
 import cx.ring.databinding.ItemParticipantHandContainerBinding
 import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.plugins.PluginUtils
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager.ItemSelectedListener
 import cx.ring.service.DRingService
+import cx.ring.settings.pluginssettings.PluginDetails
+import cx.ring.settings.pluginssettings.PluginsListAdapter
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
@@ -147,6 +151,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var isMyMicMuted: Boolean = false
+    private var pluginsAdapter: PluginsAdapter? = null
 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
@@ -378,6 +383,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         s.clear()
                   }
               })
+
         }
     }
 
@@ -642,7 +648,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configurePreview(width: Int, animatedFraction: Float) {
-        //Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
         val binding = binding ?: return
         val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
         val r = 1f - animatedFraction
@@ -881,6 +886,34 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 binding.confControlGroup.adapter = this
             }
         binding.root.post { setBottomSheet() }
+
+        pluginsAdapter = PluginsAdapter(
+            PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context),
+            object : PluginsAdapter.PluginListItemListener {
+                override fun onPluginItemClicked(pluginDetails: PluginDetails) {
+                    val mediaHandlers = callMediaHandlers ?: run {
+                        val mediaHandlers = JamiService.getCallMediaHandlers().toList().apply { callMediaHandlers = this }
+                        for (callMediaHandler in mediaHandlers) {
+                            Log.w(TAG, "DEBUG onPluginItemClicked:callMediaHandler: $callMediaHandler")
+                            val details = getCallMediaHandlerDetails(callMediaHandler)
+                            for ((key, value) in details) Log.w(TAG, "DEBUG getCallMediaHandlerDetails:details: [$key & $value]")
+                        }
+                        mediaHandlers
+                    }
+                    val d = pluginDetails.details
+                    for ((key, value) in d) Log.w(TAG, "DEBUG pluginDetails:details: [$key & $value]")
+
+                    Log.w(TAG, "DEBUG onPluginItemClicked >> name: ${pluginDetails.name}")
+                    Log.w(TAG, "DEBUG onPluginItemClicked >> accountId: ${pluginDetails.accountId}")
+                    Log.w(TAG, "DEBUG onPluginItemClicked >> isEnabled: ${pluginDetails.isEnabled}")
+                    Log.w(TAG, "DEBUG onPluginItemClicked >> handlerId: ${pluginDetails.handlerId}")
+                    //presenter.startPlugin()
+                }
+                override fun onPluginEnabled(pluginDetails: PluginDetails) {
+                    Log.w(TAG, "DEBUG onPluginEnabled")
+                }
+            }, participantInfo[0].call?.account)
+        binding.pluginslistContainer.adapter = pluginsAdapter
     }
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
@@ -925,7 +958,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
         }
     }
-
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
         binding?.let { binding ->
@@ -1077,7 +1109,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         }
     }
-
 
     /**
      * Init the Call view when the call is ongoing
@@ -1424,7 +1455,23 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayPluginsButton(): Boolean {
-        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+        val t = JamiService.getPluginsEnabled()
+        val s = JamiService.getCallMediaHandlers().size
+        Log.w(TAG, "DEBUG displayPluginsButton t: $t, s: $s")
+        return JamiService.getPluginsEnabled()
+        //return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+    }
+
+    fun PluginsButtonClicked() {
+        Log.w(TAG, "DEBUG Plugins list will be shown")
+        val binding = binding ?: return
+        if(binding.callPluginsBtn.isChecked){
+            binding.confControlGroup.isVisible = false
+            binding.pluginslistContainer.isVisible = true
+        } else {
+            binding.confControlGroup.isVisible = true
+            binding.pluginslistContainer.isVisible = false
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -1443,6 +1490,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+  /*  // refactored onConfigurationChanged with deleted recyclerpicker
+    override fun onConfigurationChanged(newConfig: Configuration) {
+     super.onConfigurationChanged(newConfig)
+     movePreview(isChoosePluginMode)
+    }*/
+
+    // could probably be deleted
     fun toggleVideoPluginsCarousel(toggle: Boolean) {
         val binding = binding ?: return
         if (isChoosePluginMode) {
@@ -1466,6 +1520,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun displayVideoPluginsCarousel() {
+        Log.w(TAG, "DEBUG displayVideoPluginsCarousel")
         isChoosePluginMode = !isChoosePluginMode
         val context: Context = requireActivity()
 
@@ -1477,6 +1532,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             // Search for plugin call media handlers icons
             // If a call media handler doesn't have an icon use a standard android icon
             for (callMediaHandler in mediaHandlers) {
+                Log.w(TAG, "DEBUG callMediaHandler: $callMediaHandler")
                 val details = getCallMediaHandlerDetails(callMediaHandler)
                 var drawablePath = details["iconPath"]
                 if (drawablePath != null && drawablePath.endsWith("svg"))
@@ -1554,8 +1610,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
             val callActivity = activity as CallActivity?
             callActivity?.showSystemUI()
-            toggleVideoPluginsCarousel(false)
-            displayVideoPluginsCarousel()
+            //toggleVideoPluginsCarousel(false)
+            //displayVideoPluginsCarousel()
         }
     }
 
