@@ -33,6 +33,7 @@ import android.os.Build
 import android.util.Log
 import android.util.Size
 import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.TextureView
 import android.view.WindowManager
 import androidx.media.AudioAttributesCompat
@@ -54,7 +55,6 @@ import net.jami.services.HardwareService
 import net.jami.services.PreferencesService
 import java.io.File
 import java.lang.ref.WeakReference
-import java.util.*
 import java.util.concurrent.ScheduledExecutorService
 
 class HardwareServiceImpl(
@@ -393,15 +393,14 @@ class HardwareServiceImpl(
 
     override fun startCapture(camId: String?) {
         val cam = camId ?: cameraService.switchInput(true) ?: return
-        Log.w(TAG, "startCapture: $camId $cam")
+        Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChoosePlugin: $mIsChoosePlugin")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
-        if (videoParams.isCapturing) {
-            return
-        }
+        if (videoParams.isCapturing) return
+
         val surface = mCameraPreviewSurface.get()
         if (surface == null) {
-            Log.w(TAG, "Can't start capture: no surface registered.")
+            Log.e(TAG, "Can't start capture: no surface registered.")
             //cameraService.setPreviewParams(videoParams)
             videoEvents.onNext(VideoEvent(start = true))
             return
@@ -436,8 +435,9 @@ class HardwareServiceImpl(
                     override fun onOpened() {
                         val currentCall = conf?.id ?: return
                         if (mPluginCallId != null && mPluginCallId != currentCall) {
-                            if (mMediaHandlerId != null)
-                                JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall, false)
+                            if (mMediaHandlerId != null) {
+                                JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall,false)
+                            }
                             mIsChoosePlugin = false
                             mMediaHandlerId = null
                             mPluginCallId = null
@@ -446,7 +446,6 @@ class HardwareServiceImpl(
                             toggleMediaHandler(currentCall)
                         }
                     }
-
                     override fun onError() {
                         stopCapture(videoParams.id)
                     }
@@ -480,21 +479,19 @@ class HardwareServiceImpl(
     }
 
     @Synchronized override fun addVideoSurface(id: String, holder: Any) {
-        if (holder !is SurfaceHolder) {
-            return
-        }
-        Log.w(TAG, "addVideoSurface $id")
+        Log.w(TAG, " addVideoSurface $id $holder")
+        if (holder !is SurfaceHolder) return
         val shm = videoInputs[id]
         val surfaceHolder = WeakReference(holder)
         videoSurfaces[id] = surfaceHolder
-        if (shm != null && shm.window == 0L) {
-            shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
-        }
-        if (shm == null || shm.window == 0L) {
-            Log.i(TAG, "DJamiService.addVideoSurface() no window !")
-            //videoEvents.onNext(VideoEvent(id, start = true))
-        } else {
-            videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
+
+        when {
+            shm != null && shm.window == 0L -> shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
+            shm == null || shm.window == 0L -> {
+                Log.i(TAG, "JamiService.addVideoSurface() no window !")
+                //videoEvents.onNext(VideoEvent(id, start = true))
+            }
+            else -> videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
         }
     }
 
@@ -516,13 +513,12 @@ class HardwareServiceImpl(
     }
 
     @Synchronized override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
-        if (holder !is TextureView)
-            return
+        Log.w(TAG, "addPreviewVideoSurface > holder:$holder")
+        if (holder !is TextureView) return
         if (mCameraPreviewSurface.get() === holder) return
         mCameraPreviewSurface = WeakReference(holder)
         mCameraPreviewCall = WeakReference(conference)
-        for (c in shouldCapture)
-            startCapture(c)
+        for (c in shouldCapture) startCapture(c)
     }
 
     @Synchronized override fun updatePreviewVideoSurface(conference: Conference) {
@@ -595,7 +591,7 @@ class HardwareServiceImpl(
     override val videoDevices: List<String>
         get() = cameraService.cameraIds
 
-    private class Shm (val id: String, val w: Int, val h: Int) {
+    private data class Shm (val id: String, val w: Int, val h: Int) {
         var window: Long = 0
     }
 
@@ -613,6 +609,7 @@ class HardwareServiceImpl(
         val resolutions = listOf(VIDEO_SIZE_ULTRA_HD, VIDEO_SIZE_FULL_HD, VIDEO_SIZE_HD, VIDEO_SIZE_SD, VIDEO_SIZE_LOW)
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
+        private var mCameraPluginPreviewSurface = WeakReference<SurfaceView>(null)
         private var mCameraPreviewCall = WeakReference<Conference>(null)
         private val videoSurfaces = HashMap<String, WeakReference<SurfaceHolder>>()
     }
