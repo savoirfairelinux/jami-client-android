@@ -2,11 +2,12 @@ package cx.ring.plugins
 
 import android.content.Context
 import android.util.Log
+import cx.ring.fragments.CallFragment
 import cx.ring.settings.pluginssettings.PluginDetails
 import net.jami.daemon.JamiService
 import java.io.File
 import java.lang.StringBuilder
-import java.util.ArrayList
+import java.util.*
 
 object PluginUtils {
     val TAG = PluginUtils::class.simpleName!!
@@ -26,16 +27,31 @@ object PluginUtils {
         for (pluginPath in pluginsPaths) {
             val pluginFolder = File(pluginPath)
             if (pluginFolder.isDirectory) {
+                val pluginHandler = retrieveHandlerId(pluginFolder.name)
                 pluginsList.add(
                     PluginDetails(
                         pluginFolder.name,
                         pluginFolder.absolutePath,
-                        loadedPluginsPaths.contains(pluginPath)
+                        loadedPluginsPaths.contains(pluginPath),
+                        pluginHandler
                     )
                 )
             }
         }
         return pluginsList
+    }
+
+    private fun retrieveHandlerId(name: String): String{
+        var res  = ""
+        val mediaHandlers = JamiService.getCallMediaHandlers().toList()
+        for (callMediaHandler in mediaHandlers) {
+            val pDetail = JamiService.getCallMediaHandlerDetails(callMediaHandler)
+            if (pDetail["pluginId"]!!.lowercase(Locale.getDefault()).contains(name.lowercase(Locale.getDefault())))
+            {
+                res = callMediaHandler!!
+            }
+        }
+        return res
     }
 
     /**
