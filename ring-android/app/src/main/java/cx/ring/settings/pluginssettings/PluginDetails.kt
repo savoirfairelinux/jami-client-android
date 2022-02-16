@@ -19,17 +19,21 @@
 package cx.ring.settings.pluginssettings
 
 import android.graphics.drawable.Drawable
+import android.util.Log
+import cx.ring.fragments.CallFragment
 import cx.ring.utils.ConversationPath
 import net.jami.daemon.JamiService
 import java.io.File
+import java.util.*
 
 /**
  * Class that contains PluginDetails like name, rootPath
  */
-class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, val handlerId: String? = null, var accountId: String? = "") {
+class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, var handlerId: String?= null, var accountId: String? = "") {
     private val details: Map<String, String> = pluginDetails
     var icon: Drawable? = null
         private set
+    var isRunning: Boolean = false
 
     fun setIcon() {
         var iconPath = details["iconPath"]
@@ -41,6 +45,22 @@ class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boole
                 icon = Drawable.createFromPath(iconPath)
             }
         }
+    }
+
+    var pluginHandler = retrieveHandlerId()
+    private fun retrieveHandlerId(): String{
+        var res = ""
+        val mediaHandlers = JamiService.getCallMediaHandlers().toList()
+        for (callMediaHandler in mediaHandlers) {
+            val pDetail = JamiService.getCallMediaHandlerDetails(callMediaHandler)
+            for ((key, value) in pDetail) Log.w(CallFragment.TAG, "DEBUG getCallMediaHandlerDetails:details: [$key & $value]")
+            if (pDetail["name"]!!.lowercase(Locale.getDefault()) == name.lowercase(
+                    Locale.getDefault())) {
+                Log.w(CallFragment.TAG, "DEBUG found handler for plugin ${name}: $callMediaHandler")
+                res = callMediaHandler!!
+            }
+        }
+    return res
     }
 
     private val pluginDetails: Map<String, String>
