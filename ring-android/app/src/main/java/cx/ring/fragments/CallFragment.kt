@@ -34,9 +34,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
@@ -56,7 +54,6 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -64,18 +61,18 @@ import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.zxing.Dimension
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
+import cx.ring.adapters.PluginsAdapter
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
 import cx.ring.databinding.ItemParticipantHandContainerBinding
 import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
-import cx.ring.plugins.RecyclerPicker.RecyclerPicker
-import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager.ItemSelectedListener
+import cx.ring.plugins.PluginUtils
 import cx.ring.service.DRingService
+import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
@@ -104,7 +101,7 @@ import kotlin.math.min
 
 @AndroidEntryPoint
 class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
-    MediaButtonsHelperCallback, ItemSelectedListener {
+    MediaButtonsHelperCallback {
     private var binding: FragCallBinding? = null
     private var mOrientationListener: OrientationEventListener? = null
     private var mScreenWakeLock: PowerManager.WakeLock? = null
@@ -122,10 +119,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var mConferenceMode = false
     var isChoosePluginMode = false
         private set
-    private var pluginsModeFirst = true
-    private var callMediaHandlers: List<String>? = null
-    private var previousPluginPosition = -1
-    private var rp: RecyclerPicker? = null
+    private var callMediaHandlers: List<PluginDetails> ?= null
     private val animation = ValueAnimator().apply { duration = 150 }
     private var previewDrag: PointF? = null
     private val previewSnapAnimation = ValueAnimator().apply {
@@ -137,16 +131,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var previewMargin: Float = 0f
     private val previewMargins = IntArray(4)
     private var previewHiddenState = 0f
-
     private enum class PreviewPosition { LEFT, RIGHT }
-
     private var previewPosition = PreviewPosition.LEFT
-
     @Inject
     lateinit var mDeviceRuntimeService: DeviceRuntimeService
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var isMyMicMuted: Boolean = false
+    private var pluginsAdapter: PluginsAdapter? = null
 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
@@ -169,8 +161,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             .also { b ->
                 b.presenter = this
                 binding = b
-                rp = RecyclerPicker(b.recyclerPicker, R.layout.item_picker, LinearLayout.HORIZONTAL, this)
-                    .apply { setFirstLastElementsWidths(112, 112) }
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
     }
@@ -250,7 +240,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         mCurrentOrientation = rot
                         presenter.configurationChanged(rot)
                         if (rot == 0 || rot == 2) resetPreviewVideoSize( null, null, 90) else resetPreviewVideoSize( null, null, 180)
-                        setRvSize()
                     }
                 }
             }.apply { if (canDetectOrientation()) enable() }
@@ -379,23 +368,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         s.clear()
                   }
               })
+
         }
-    }
-
-    fun setRvSize() {
-        val binding = binding ?: return
-        val dm = resources.displayMetrics
-        val orientation = resources.configuration.orientation
-        val gridViewHeight = binding.callParametersGrid.height
-
-        // define recyclerview maxheight based on screen orientation
-        val mConstrainLayout = binding.confControlGroup
-        val lp = mConstrainLayout.layoutParams as ConstraintLayout.LayoutParams
-        lp.matchConstraintMaxHeight =
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE)
-                dm.heightPixels - gridViewHeight - (100 * dm.density).toInt()
-            else (dm.heightPixels - gridViewHeight * 0.8).toInt()
-        mConstrainLayout.layoutParams = lp
     }
 
     override fun onUserLeave() {
@@ -470,29 +444,29 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val binding = binding ?: return
 
         if (isInPictureInPictureMode) {
-            binding.callCoordinatorOptionContainer.visibility = View.GONE
+            binding.callCoordinatorOptionContainer.isVisible = false
             val callActivity = activity as CallActivity?
             callActivity?.hideSystemUI()
-            binding.pluginPreviewContainer.visibility = View.GONE
-            binding.pluginPreviewSurface.visibility = View.GONE
-            binding.previewContainer.visibility = View.GONE
-            binding.previewSurface.visibility = View.GONE
+            binding.pluginPreviewContainer.isVisible = false
+            binding.pluginPreviewSurface.isVisible = false
+            binding.previewContainer.isVisible = false
+            binding.previewSurface.isVisible = false
 
         } else {
             if(binding.callSharescreenBtn.isChecked){
                 mBackstackLost = true
                 binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
-                binding.pluginPreviewContainer.visibility = View.GONE
-                binding.pluginPreviewSurface.visibility = View.GONE
-                binding.previewContainer.visibility = View.GONE
-                binding.previewSurface.visibility = View.GONE
+                binding.pluginPreviewContainer.isVisible = false
+                binding.pluginPreviewSurface.isVisible = false
+                binding.previewContainer.isVisible = false
+                binding.previewSurface.isVisible = false
             } else {
                 mBackstackLost = true
-                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
-                binding.pluginPreviewContainer.visibility = View.VISIBLE
-                binding.pluginPreviewSurface.visibility = View.VISIBLE
-                binding.previewContainer.visibility = View.VISIBLE
-                binding.previewSurface.visibility = View.VISIBLE
+                binding.callCoordinatorOptionContainer.isVisible = true
+                binding.pluginPreviewContainer.isVisible = true
+                binding.pluginPreviewSurface.isVisible = true
+                binding.previewContainer.isVisible = true
+                binding.previewSurface.isVisible = true
             }
         }
     }
@@ -643,7 +617,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     private fun configurePreview(width: Int, animatedFraction: Float) {
-        //Log.w(TAG, " configurePreview --------->  width: $width, animatedFraction: $animatedFraction")
         val binding = binding ?: return
         val params = binding.previewContainer.layoutParams as RelativeLayout.LayoutParams
         val r = 1f - animatedFraction
@@ -882,6 +855,37 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 binding.confControlGroup.adapter = this
             }
         binding.root.post { setBottomSheet() }
+
+        if(callMediaHandlers == null) callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
+        pluginsAdapter = PluginsAdapter(
+            callMediaHandlers!!,
+            object : PluginsAdapter.PluginListItemListener {
+                override fun onPluginItemClicked(pluginDetails: PluginDetails) {
+                    Log.w(TAG, "DEBUG plugin isEnabled: ${pluginDetails.isEnabled}")
+                    Log.w(TAG, "DEBUG plugin isRunning: ${pluginDetails.isRunning}")
+                    Log.w(TAG, "DEBUG plugin isChoosePluginMode: $isChoosePluginMode")
+                }
+                override fun onPluginEnabled(pluginDetails: PluginDetails) {
+                    Log.w(TAG, "DEBUG onPluginEnabled, ${pluginDetails.name}, ${pluginDetails.isEnabled}")
+                    pluginDetails.isRunning = !pluginDetails.isRunning
+                    if(!isChoosePluginMode) {
+                        presenter.startPlugin(pluginDetails.handlerId!!)
+                        isChoosePluginMode = true
+                    } else {
+                        if (pluginDetails.isRunning) {
+                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, true)
+                        }
+                        else {
+                            presenter.toggleCallMediaHandler(pluginDetails.handlerId!!, false)
+                            for(handler in callMediaHandlers!!) if (handler.isRunning) break else {
+                                presenter.stopPlugin()
+                                isChoosePluginMode = false
+                            }
+                        }
+                    }
+                }
+            }, participantInfo[0].call?.account)
+        binding.pluginslistContainer.adapter = pluginsAdapter
     }
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
@@ -923,10 +927,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
             raisedHandBadge.raisedHand.isVisible = i.isHandRaised
             overlayViewBinding.addView(raisedHandBadge.root, raisedHandBadgeLayoutParam)
-
         }
     }
-
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
         binding?.let { binding ->
@@ -1078,7 +1080,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         }
     }
-
 
     /**
      * Init the Call view when the call is ongoing
@@ -1425,31 +1426,27 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayPluginsButton(): Boolean {
-        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+        val t = JamiService.getPluginsEnabled()
+        val s = JamiService.getCallMediaHandlers().size
+        Log.w(TAG, "DEBUG displayPluginsButton t: $t, s: $s")
+        return JamiService.getPluginsEnabled()
+        //return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Reset the padding of the RecyclerPicker on each
-        rp!!.setFirstLastElementsWidths(112, 112)
-        binding!!.recyclerPicker.visibility = View.GONE
-        if (isChoosePluginMode) {
-            binding!!.recyclerPicker.visibility = View.VISIBLE
-            movePreview(true)
-            if (previousPluginPosition != -1) {
-                rp!!.scrollToPosition(previousPluginPosition)
-            }
-        } else {
-            movePreview(false)
-        }
-    }
-
-    fun toggleVideoPluginsCarousel(toggle: Boolean) {
+    fun pluginsButtonClicked() {
+        Log.w(TAG, "DEBUG Plugins list will be shown")
         val binding = binding ?: return
-        if (isChoosePluginMode) {
-            binding.recyclerPicker.isInvisible = !toggle
-            movePreview(toggle)
+        if(binding.callPluginsBtn.isChecked){
+            binding.confControlGroup.adapter = pluginsAdapter
+        } else {
+            binding.confControlGroup.adapter = confAdapter
         }
+    }
+
+    // refactored onConfigurationChanged with deleted recyclerpicker
+    override fun onConfigurationChanged(newConfig: Configuration) {
+     super.onConfigurationChanged(newConfig)
+     //movePreview(isChoosePluginMode)
     }
 
     fun movePreview(up: Boolean) {
@@ -1460,104 +1457,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             animation.setIntValues(128, 12)
         }
         animation.start()
-    }
-
-    /**
-     * Function that is called to show/hide the plugins recycler viewer and update UI
-     */
-    @SuppressLint("UseCompatLoadingForDrawables")
-    fun displayVideoPluginsCarousel() {
-        isChoosePluginMode = !isChoosePluginMode
-        val context: Context = requireActivity()
-
-        // Create callMediaHandlers and videoPluginsItems in a lazy manner
-        val mediaHandlers = callMediaHandlers ?: run {
-            val mediaHandlers = JamiService.getCallMediaHandlers().toList().apply { callMediaHandlers = this }
-            val videoPluginsItems: MutableList<Drawable> = ArrayList(mediaHandlers.size + 1)
-            videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24)!!)
-            // Search for plugin call media handlers icons
-            // If a call media handler doesn't have an icon use a standard android icon
-            for (callMediaHandler in mediaHandlers) {
-                val details = getCallMediaHandlerDetails(callMediaHandler)
-                var drawablePath = details["iconPath"]
-                if (drawablePath != null && drawablePath.endsWith("svg"))
-                    drawablePath = drawablePath.replace(".svg", ".png")
-                val handlerIcon = Drawable.createFromPath(drawablePath) ?: context.getDrawable(R.drawable.ic_jami)!!
-                videoPluginsItems.add(handlerIcon)
-            }
-            rp!!.updateData(videoPluginsItems)
-            mediaHandlers
-        }
-        if (isChoosePluginMode) {
-            // hide hang up button and other call buttons
-            displayHangupButton(false)
-            // Display the plugins recyclerpicker
-            binding!!.recyclerPicker.visibility = View.VISIBLE
-            movePreview(true)
-
-            // Start loading the first or previous plugin if one was active
-            if (mediaHandlers.isNotEmpty()) {
-                // If no previous plugin was active, take the first, else previous
-                val position: Int
-                if (previousPluginPosition < 1) {
-                    rp!!.scrollToPosition(1)
-                    position = 1
-                    previousPluginPosition = 1
-                } else {
-                    position = previousPluginPosition
-                }
-                val callMediaId = mediaHandlers[position - 1]
-                presenter.startPlugin(callMediaId)
-            }
-        } else {
-            if (previousPluginPosition > 0) {
-                val callMediaId = mediaHandlers[previousPluginPosition - 1]
-                presenter.toggleCallMediaHandler(callMediaId, false)
-                rp!!.scrollToPosition(previousPluginPosition)
-            }
-            presenter.stopPlugin()
-            binding!!.recyclerPicker.visibility = View.GONE
-            movePreview(false)
-        }
-    }
-
-    /**
-     * Called whenever a plugin drawable in the recycler picker is clicked or scrolled to
-     */
-    override fun onItemSelected(position: Int) {
-        Log.i(TAG, "selected position: $position")
-        /* If there was a different plugin before, unload it
-         * If previousPluginPosition = -1 or 0, there was no plugin
-         */if (previousPluginPosition > 0) {
-            val callMediaId = callMediaHandlers!![previousPluginPosition - 1]
-            presenter.toggleCallMediaHandler(callMediaId, false)
-        }
-        if (position > 0) {
-            previousPluginPosition = position
-            val callMediaId = callMediaHandlers!![position - 1]
-            presenter.toggleCallMediaHandler(callMediaId, true)
-        }
-    }
-
-    /**
-     * Called whenever a plugin drawable in the recycler picker is clicked
-     */
-    override fun onItemClicked(position: Int) {
-        Log.i(TAG, "selected position: $position")
-        if (position == 0) {
-            /* If there was a different plugin before, unload it
-             * If previousPluginPosition = -1 or 0, there was no plugin
-             */
-            if (previousPluginPosition > 0) {
-                val callMediaId = callMediaHandlers!![previousPluginPosition - 1]
-                presenter.toggleCallMediaHandler(callMediaId, false)
-                rp!!.scrollToPosition(previousPluginPosition)
-            }
-            val callActivity = activity as CallActivity?
-            callActivity?.showSystemUI()
-            toggleVideoPluginsCarousel(false)
-            displayVideoPluginsCarousel()
-        }
     }
 
     private val blinkingAnimation: Animation

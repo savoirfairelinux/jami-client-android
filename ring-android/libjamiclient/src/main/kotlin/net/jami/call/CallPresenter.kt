@@ -508,6 +508,7 @@ class CallPresenter @Inject constructor(
     }
 
     fun toggleCallMediaHandler(id: String, toggle: Boolean) {
+        Log.w(TAG, "DEBUG toggleCallMediaHandler id: $id, toggle: $toggle")
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
             view?.toggleCallMediaHandler(id, conference.id, toggle)
@@ -632,7 +633,8 @@ class CallPresenter @Inject constructor(
         return mConference?.maximizedParticipant == info.contact.contact
     }
 
-    fun startPlugin(mediaHandlerId: String?) {
+    fun startPlugin(mediaHandlerId: String) {
+        Log.w(TAG, "DEBUG startPlugin >> mediaHandlerId: $mediaHandlerId")
         mHardwareService.startMediaHandler(mediaHandlerId)
         mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }

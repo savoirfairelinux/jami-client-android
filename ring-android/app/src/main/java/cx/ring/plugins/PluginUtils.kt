@@ -2,11 +2,12 @@ package cx.ring.plugins
 
 import android.content.Context
 import android.util.Log
+import cx.ring.fragments.CallFragment
 import cx.ring.settings.pluginssettings.PluginDetails
 import net.jami.daemon.JamiService
 import java.io.File
 import java.lang.StringBuilder
-import java.util.ArrayList
+import java.util.*
 
 object PluginUtils {
     val TAG = PluginUtils::class.simpleName!!
@@ -18,6 +19,7 @@ object PluginUtils {
      * @return List of PluginDetails
      */
     fun getInstalledPlugins(mContext: Context): List<PluginDetails> {
+        Log.w(TAG, "DEBUG getInstalledPlugins")
         tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
         tree(mContext.cacheDir.absolutePath, 0)
         val pluginsPaths: List<String> = JamiService.getInstalledPlugins()
@@ -26,16 +28,34 @@ object PluginUtils {
         for (pluginPath in pluginsPaths) {
             val pluginFolder = File(pluginPath)
             if (pluginFolder.isDirectory) {
+                val pluginHandler = retrieveHandlerId(pluginFolder.name)
+                Log.w(TAG, "DEBUG getInstalledPlugins »» pluginHandler: $pluginHandler")
                 pluginsList.add(
                     PluginDetails(
                         pluginFolder.name,
                         pluginFolder.absolutePath,
-                        loadedPluginsPaths.contains(pluginPath)
+                        loadedPluginsPaths.contains(pluginPath),
+                        pluginHandler
                     )
                 )
             }
         }
         return pluginsList
+    }
+
+    private fun retrieveHandlerId(name: String): String{
+        var res  = ""
+        val mediaHandlers = JamiService.getCallMediaHandlers().toList()
+        for (callMediaHandler in mediaHandlers) {
+            val pDetail = JamiService.getCallMediaHandlerDetails(callMediaHandler)
+            for ((key, value) in pDetail) Log.w(CallFragment.TAG, "DEBUG getCallMediaHandlerDetails:details: [$key & $value]")
+            if (pDetail["name"]!!.lowercase(Locale.getDefault()) == name.lowercase(Locale.getDefault()))
+            {
+                Log.w(TAG, "DEBUG found handler for plugin ${name}: $callMediaHandler")
+                res = callMediaHandler!!
+            }
+        }
+        return res
     }
 
     /**

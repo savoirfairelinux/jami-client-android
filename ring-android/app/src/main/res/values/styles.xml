@@ -37,11 +37,11 @@
 
     <!-- Main dark base theme -->
     <style name="AppThemeBase.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSecondary">@color/color_primary_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
 
@@ -73,11 +73,7 @@
     </style>
 
     <!-- Call Base theme -->
-    <style name="AppTheme.Call.Base" parent="AppThemeBase">
-        <item name="colorPrimary">@color/color_primary_dark</item>
-        <item name="colorSecondary">@color/color_primary_light</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSecondary">@color/white</item>
+    <style name="AppTheme.Call.Base" parent="AppThemeBase.Dark">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:navigationBarColor">@color/transparent</item>
@@ -182,6 +178,7 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>-->
     </style>
+
 
     <style name="TextButton" parent="Widget.Material3.Button.TextButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
