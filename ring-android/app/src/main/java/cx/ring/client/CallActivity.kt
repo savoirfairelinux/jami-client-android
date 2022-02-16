@@ -178,7 +178,7 @@ class CallActivity : AppCompatActivity() {
         callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.DOWN)
         isFullscreen = true
         if (!callFragment.isChoosePluginMode) {
-            callFragment.toggleVideoPluginsCarousel(false)
+            //callFragment.toggleVideoPluginsCarousel(false)
         }
         handler?.removeCallbacks(onNoInteraction)
     }
@@ -194,7 +194,7 @@ class CallActivity : AppCompatActivity() {
                 WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.systemBars())
             }
             callFragment.moveBottomSheet(CallFragment.BottomSheetAnimation.UP)
-            callFragment.toggleVideoPluginsCarousel(true)
+            //callFragment.toggleVideoPluginsCarousel(true)
             restartNoInteractionTimer()
         }
         isFullscreen = false

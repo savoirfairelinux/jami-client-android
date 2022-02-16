@@ -46,14 +46,13 @@ class PluginPreferences : Preference {
         openPluginSettingsListener = clickListener
     }
 
-    constructor(context: Context?, pluginDetails: PluginDetails?, accountId: String? = "") : super(context) {
+    constructor(context: Context?, pluginDetails: PluginDetails?, accountId: String? = "") : super(
+        context!!
+    ) {
         mPluginDetails = pluginDetails
         mAccountId = accountId
         layoutResource = R.layout.frag_plugin_settings
     }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)

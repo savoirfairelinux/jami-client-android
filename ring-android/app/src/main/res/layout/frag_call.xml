@@ -73,7 +73,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_marginBottom="@dimen/call_preview_margin"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/black"
-                app:cardCornerRadius="16dp"
                 app:cardPreventCornerOverlap="false"
                 tools:visibility="visible">
 
@@ -369,25 +368,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:layoutManager="LinearLayoutManager"
-            tools:ignore="MissingConstraints"
-            tools:listitem="@layout/item_picker" />
-
         <!-- Bottom sheet coordinator -->
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/call_coordinator_option_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="gone">
+            tools:visibility="visible">
             <!-- Bottom sheet -->
             <FrameLayout
                 android:id="@+id/call_options_bottom_sheet"
@@ -760,7 +746,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_columnWeight="1"
                             android:orientation="vertical"
                             android:padding="5dp"
-                            android:visibility="gone"
                             tools:visibility="visible">
 
                             <cx.ring.views.CheckableImageButton
@@ -770,6 +755,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:layout_gravity="center"
                                 android:background="@drawable/call_button_background_checkable"
                                 android:padding="16dp"
+                                android:onClick="@{() -> presenter.pluginsButtonClicked()}"
                                 app:srcCompat="@drawable/baseline_settings_24"
                                 app:tint="@color/white" />
 
@@ -785,8 +771,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:text="@string/bottomSheet_plugins_btn"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:textSize="11sp"
-                                tools:text="modules d'extensions" />
+                                android:textSize="11sp" />
                         </LinearLayout>
 
                     </GridLayout>
@@ -801,8 +786,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/call_parameters_grid"
+                        tools:visibility="gone"
                         tools:itemCount="2"
                         tools:listitem="@layout/item_conference_participant" />
+
+                    <!-- Recycler view for participants in call -->
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pluginslist_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/call_parameters_grid"                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/frag_plugins_list_item" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
