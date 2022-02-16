@@ -19,17 +19,21 @@
 package cx.ring.settings.pluginssettings
 
 import android.graphics.drawable.Drawable
+import android.util.Log
+import cx.ring.fragments.CallFragment
 import cx.ring.utils.ConversationPath
 import net.jami.daemon.JamiService
 import java.io.File
+import java.util.*
 
 /**
  * Class that contains PluginDetails like name, rootPath
  */
-class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, val handlerId: String? = null, var accountId: String? = "") {
+class PluginDetails(val name: String, val rootPath: String, var isEnabled: Boolean, var handlerId: String?= null, var accountId: String? = "") {
     private val details: Map<String, String> = pluginDetails
     var icon: Drawable? = null
         private set
+    var isRunning: Boolean = false
 
     fun setIcon() {
         var iconPath = details["iconPath"]

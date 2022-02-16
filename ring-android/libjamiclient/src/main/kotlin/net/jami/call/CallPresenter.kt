@@ -312,15 +312,21 @@ class CallPresenter @Inject constructor(
 
     fun pluginSurfaceCreated(holder: Any) {
         val conference = mConference ?: return
-        val newId = conference.pluginId
-        if (newId != currentPluginSurfaceId) {
-            currentPluginSurfaceId?.let { id ->
-                mHardwareService.removeVideoSurface(id)
+        var newId : String
+        if(conference.hasActiveVideo()){
+            val mediaList = conference.getMediaList()!!
+            for (m in mediaList) if (m.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
+                newId = m.source!!
+                if (newId != currentPluginSurfaceId) {
+                    currentPluginSurfaceId?.let { id ->
+                        mHardwareService.removeVideoSurface(id)
+                    }
+                    currentPluginSurfaceId = newId
+                }
+                mHardwareService.addVideoSurface(newId, holder)
+                view?.displayContactBubble(false)
             }
-            currentPluginSurfaceId = newId
         }
-        mHardwareService.addVideoSurface(conference.pluginId, holder)
-        view?.displayContactBubble(false)
     }
 
     private fun pluginSurfaceUpdateId(newId: String) {
@@ -632,7 +638,7 @@ class CallPresenter @Inject constructor(
         return mConference?.maximizedParticipant == info.contact.contact
     }
 
-    fun startPlugin(mediaHandlerId: String?) {
+    fun startPlugin(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
         mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
