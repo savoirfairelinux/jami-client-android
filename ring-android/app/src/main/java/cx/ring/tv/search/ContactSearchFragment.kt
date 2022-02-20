@@ -20,6 +20,7 @@ package cx.ring.tv.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.SearchSupportFragment
@@ -139,17 +140,31 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     }
 
     override fun startCall(accountID: String, number: String) {
-        val intent = Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), activity, TVCallActivity::class.java)
-        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number)
-        startActivity(intent)
-        activity?.finish()
+        try {
+            val intent = Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), activity, TVCallActivity::class.java)
+            intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number)
+            startActivity(intent)
+            activity?.finish()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting activity", e)
+        }
     }
 
     override fun displayContactDetails(model: Conversation) {
-        val intent = Intent(activity, TVContactActivity::class.java)
-        //intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
-        intent.setDataAndType(ConversationPath.toUri(model.accountId, model.uri), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING)
-        startActivity(intent)
-        activity?.finish()
+        try {
+            val intent = Intent(activity, TVContactActivity::class.java)
+            intent.setDataAndType(
+                ConversationPath.toUri(model.accountId, model.uri),
+                TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING
+            )
+            startActivity(intent)
+            activity?.finish()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting activity", e)
+        }
+    }
+
+    companion object {
+        private val TAG = ContactSearchFragment::class.simpleName!!
     }
 }
