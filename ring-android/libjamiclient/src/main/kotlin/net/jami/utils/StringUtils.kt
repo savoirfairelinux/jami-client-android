@@ -36,16 +36,12 @@ object StringUtils {
         Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
     ))
 
-    fun isEmpty(s: String?): Boolean {
-        return s == null || s.isEmpty()
-    }
+    inline fun isEmpty(s: String?): Boolean = s.isNullOrEmpty()
 
-    fun isEmpty(s: CharSequence?): Boolean {
-        return s == null || s.isEmpty()
-    }
+    inline fun isEmpty(s: CharSequence?): Boolean = s.isNullOrEmpty()
 
     fun capitalize(s: String): String {
-        if (isEmpty(s)) {
+        if (s.isEmpty()) {
             return ""
         }
         val first = s[0]
@@ -57,7 +53,7 @@ object StringUtils {
     }
 
     fun toPassword(s: String): String {
-        if (isEmpty(s)) {
+        if (s.isEmpty()) {
             return ""
         }
         val chars = CharArray(s.length)
@@ -65,34 +61,25 @@ object StringUtils {
         return String(chars)
     }
 
-    fun toNumber(s: String?): String? {
-        return s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
-    }
+    fun toNumber(s: String?): String? = s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
 
     fun getFileExtension(filename: String): String {
         val dot = filename.lastIndexOf('.')
         return if (dot == -1 || dot == 0) "" else filename.substring(dot + 1)
     }
 
-    private fun codePoints(string: String): Iterable<Int> {
-        return Iterable {
-            object : Iterator<Int> {
-                var nextIndex = 0
-                override fun hasNext(): Boolean {
-                    return nextIndex < string.length
-                }
+    private fun codePoints(string: String) = Iterable {
+        object : Iterator<Int> {
+            var nextIndex = 0
+            override fun hasNext() = nextIndex < string.length
 
-                override fun next(): Int {
-                    val result = string.codePointAt(nextIndex)
-                    nextIndex += Character.charCount(result)
-                    return result
-                }
-            }
+            override fun next() = string.codePointAt(nextIndex)
+                .apply { nextIndex += Character.charCount(this) }
         }
     }
 
     fun isOnlyEmoji(message: String?): Boolean {
-        if (message == null || message.isEmpty()) {
+        if (message.isNullOrEmpty()) {
             return false
         }
         for (codePoint in codePoints(message)) {
