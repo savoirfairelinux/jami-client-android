@@ -18,124 +18,78 @@
  */
 package cx.ring.utils
 
-import android.os.Bundle
-import net.jami.model.Interaction
-import android.text.TextUtils
-import androidx.core.content.pm.ShortcutManagerCompat
 import android.content.Intent
+import android.os.Bundle
+import androidx.core.content.pm.ShortcutManagerCompat
 import cx.ring.BuildConfig
 import net.jami.model.Conversation
+import net.jami.model.Interaction
 import net.jami.model.Uri
-import net.jami.utils.StringUtils
-import java.util.*
 
-class ConversationPath {
-    val accountId: String
+data class ConversationPath(
+    val accountId: String,
     val conversationId: String
-    val conversationUri: Uri
-        get() = Uri.fromString(conversationId)
+) {
+    val conversationUri: Uri by lazy { Uri.fromString(conversationId) }
 
-    constructor(account: String, contact: String) {
-        accountId = account
-        conversationId = contact
-    }
+    constructor(account: String, conversationUri: Uri) : this(account, conversationUri.uri)
 
-    constructor(account: String, conversationUri: Uri) {
-        accountId = account
-        conversationId = conversationUri.uri
-    }
+    constructor(conversation: Conversation) : this(conversation.accountId, conversation.uri.uri)
 
-    constructor(conversation: Conversation) {
-        accountId = conversation.accountId
-        conversationId = conversation.uri.uri
-    }
-
-    fun toBundle(bundle: Bundle) {
+    inline fun toBundle(bundle: Bundle) {
         bundle.putString(KEY_CONVERSATION_URI, conversationId)
         bundle.putString(KEY_ACCOUNT_ID, accountId)
     }
-    fun toBundle(): Bundle {
-        val bundle = Bundle()
-        bundle.putString(KEY_CONVERSATION_URI, conversationId)
-        bundle.putString(KEY_ACCOUNT_ID, accountId)
-        return bundle
-    }
+    fun toBundle() = Bundle().apply { toBundle(accountId, conversationId) }
 
     fun toUri(): android.net.Uri = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
         .appendEncodedPath(accountId)
         .appendEncodedPath(conversationId)
         .build()
 
-    fun toKey(): String = TextUtils.join(",", listOf(accountId, conversationId))
-
-    override fun toString(): String = "ConversationPath{accountId='$accountId' conversationId='$conversationId'}"
-
-    override fun equals(other: Any?): Boolean {
-        if (other === this) return true
-        if (other !is ConversationPath) return false
-        return (other.accountId == accountId
-                && other.conversationId == conversationId)
-    }
-
-    override fun hashCode(): Int = Objects.hash(accountId, conversationId)
+    fun toKey() = toKey(accountId, conversationId)
 
     companion object {
-        const val KEY_CONVERSATION_URI = BuildConfig.APPLICATION_ID + ".conversationUri"
-        const val KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".accountId"
+        const val KEY_CONVERSATION_URI = "${BuildConfig.APPLICATION_ID}.conversationUri"
+        const val KEY_ACCOUNT_ID = "${BuildConfig.APPLICATION_ID}.accountId"
 
-        fun toUri(accountId: String, contactId: String): android.net.Uri {
-            return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+        fun toUri(accountId: String, contactId: String): android.net.Uri =
+            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(contactId)
                 .build()
-        }
 
-        fun toUri(accountId: String, conversationUri: Uri): android.net.Uri {
-            return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+        fun toUri(accountId: String, conversationUri: Uri): android.net.Uri =
+            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
                 .appendEncodedPath(conversationUri.uri)
                 .build()
+
+        fun toUri(conversation: Conversation) = toUri(conversation.accountId, conversation.uri)
+
+        fun toUri(interaction: Interaction)=  if (interaction.conversation is Conversation)
+            toUri(interaction.account!!, (interaction.conversation as Conversation).uri)
+        else
+            toUri(interaction.account!!, Uri.fromString(interaction.conversation!!.participant!!))
+
+        inline fun toBundle(accountId: String, uri: String) = Bundle().apply {
+            putString(KEY_CONVERSATION_URI, uri)
+            putString(KEY_ACCOUNT_ID, accountId)
         }
 
-        fun toUri(conversation: Conversation): android.net.Uri {
-            return toUri(conversation.accountId, conversation.uri)
-        }
+        fun toBundle(accountId: String, uri: Uri) = toBundle(accountId, uri.uri)
 
-        fun toUri(interaction: Interaction): android.net.Uri {
-            return if (interaction.conversation is Conversation)
-                toUri(interaction.account!!, (interaction.conversation as Conversation).uri)
-            else
-                toUri(interaction.account!!, Uri.fromString(interaction.conversation!!.participant!!))
-        }
+        fun toBundle(conversation: Conversation) = toBundle(conversation.accountId, conversation.uri)
 
-        fun toBundle(accountId: String, uri: String): Bundle {
-            val bundle = Bundle()
-            bundle.putString(KEY_CONVERSATION_URI, uri)
-            bundle.putString(KEY_ACCOUNT_ID, accountId)
-            return bundle
-        }
+        inline fun toKey(accountId: String, uri: String) = "$accountId,$uri"
 
-        fun toBundle(accountId: String, uri: Uri): Bundle {
-            return toBundle(accountId, uri.uri)
-        }
-
-        fun toBundle(conversation: Conversation): Bundle {
-            return toBundle(conversation.accountId, conversation.uri)
-        }
-
-        fun toKey(accountId: String, uri: String): String {
-            return TextUtils.join(",", listOf(accountId, uri))
-        }
-
-        fun fromKey(key: String?): ConversationPath? {
-            if (key != null) {
-                val keys = TextUtils.split(key, ",")
-                if (keys.size > 1) {
-                    val accountId = keys[0]
-                    val contactId = keys[1]
-                    if (!StringUtils.isEmpty(accountId) && !StringUtils.isEmpty(contactId)) {
-                        return ConversationPath(accountId, contactId)
-                    }
+        fun fromKey(key: String): ConversationPath? {
+            val keys = key.split(',')
+            if (keys.size > 1) {
+                val accountId = keys[0]
+                val contactId = keys[1]
+                if (accountId.isNotEmpty() && contactId.isNotEmpty()) {
+                    return ConversationPath(accountId, contactId)
                 }
             }
             return null
@@ -156,22 +110,18 @@ class ConversationPath {
             if (bundle != null) {
                 val accountId = bundle.getString(KEY_ACCOUNT_ID)
                 val contactId = bundle.getString(KEY_CONVERSATION_URI)
-                if (accountId != null && contactId != null) {
-                    return ConversationPath(accountId, contactId)
-                } else {
+                return if (accountId != null && contactId != null)
+                    ConversationPath(accountId, contactId)
+                else
                     bundle.getString(ShortcutManagerCompat.EXTRA_SHORTCUT_ID)?.let { shortcutId ->
-                        return fromKey(shortcutId)
+                        fromKey(shortcutId)
                     }
-                }
             }
             return null
         }
 
-        fun fromIntent(intent: Intent?): ConversationPath? {
-            if (intent != null) {
-                return fromUri(intent.data) ?: fromBundle(intent.extras)
-            }
-            return null
-        }
+        fun fromIntent(intent: Intent?): ConversationPath? = if (intent != null) {
+            fromUri(intent.data) ?: fromBundle(intent.extras)
+        } else null
     }
 }
