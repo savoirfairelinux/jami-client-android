@@ -70,35 +70,33 @@ object AndroidFileUtils {
      * @param toPath a directory in internal storage
      * @return true if success
      */
-    fun copyAssetFolder(assetManager: AssetManager, fromAssetPath: String, toPath: File): Boolean {
-        return try {
-            var res = true
+    fun copyAssetFolder(assetManager: AssetManager, fromAssetPath: String, toPath: File): Boolean = try {
+        var res = true
 
-            // mkdirs checks if the folder exists and if not creates it
-            toPath.mkdirs()
+        // mkdirs checks if the folder exists and if not creates it
+        toPath.mkdirs()
 
-            // List the files of this asset directory
-            val files = assetManager.list(fromAssetPath)
-            if (files != null) {
-                for (file in files) {
-                    val subAsset = fromAssetPath + File.separator + file
-                    if (isAssetDirectory(assetManager, subAsset)) {
-                        val destination = toPath.absolutePath + File.separator + file
-                        val newDir = File(destination)
-                        copyAssetFolder(assetManager, subAsset, newDir)
-                        Log.d(TAG, "Copied folder: $subAsset to $newDir")
-                    } else {
-                        val newFile = File(toPath, file)
-                        res = res and copyAsset(assetManager, fromAssetPath + File.separator + file, newFile)
-                        Log.d(TAG, "Copied file: $subAsset to $newFile")
-                    }
+        // List the files of this asset directory
+        val files = assetManager.list(fromAssetPath)
+        if (files != null) {
+            for (file in files) {
+                val subAsset = fromAssetPath + File.separator + file
+                if (isAssetDirectory(assetManager, subAsset)) {
+                    val destination = toPath.absolutePath + File.separator + file
+                    val newDir = File(destination)
+                    copyAssetFolder(assetManager, subAsset, newDir)
+                    Log.d(TAG, "Copied folder: $subAsset to $newDir")
+                } else {
+                    val newFile = File(toPath, file)
+                    res = res and copyAsset(assetManager, fromAssetPath + File.separator + file, newFile)
+                    Log.d(TAG, "Copied file: $subAsset to $newFile")
                 }
             }
-            res
-        } catch (e: IOException) {
-            Log.e(TAG, "Error while copying asset folder", e)
-            false
         }
+        res
+    } catch (e: IOException) {
+        Log.e(TAG, "Error while copying asset folder", e)
+        false
     }
 
     /**
@@ -146,19 +144,17 @@ object AndroidFileUtils {
         }
     }
 
-    fun copyAsset(assetManager: AssetManager, fromAssetPath: String, toPath: File): Boolean {
-        try {
-            assetManager.open(fromAssetPath).use { input ->
-                FileOutputStream(toPath).use { out ->
-                    FileUtils.copyFile(input, out)
-                    out.flush()
-                    return true
-                }
+    fun copyAsset(assetManager: AssetManager, fromAssetPath: String, toPath: File): Boolean = try {
+        assetManager.open(fromAssetPath).use { input ->
+            FileOutputStream(toPath).use { out ->
+                FileUtils.copyFile(input, out)
+                out.flush()
+                return true
             }
-        } catch (e: IOException) {
-            Log.e(TAG, "Error while copying asset", e)
-            return false
         }
+    } catch (e: IOException) {
+        Log.e(TAG, "Error while copying asset", e)
+        false
     }
 
     fun getRealPathFromURI(context: Context, uri: Uri): String? {
@@ -223,12 +219,11 @@ object AndroidFileUtils {
         return result ?: uri.lastPathSegment!!
     }
 
-    private fun getMimeType(cr: ContentResolver, uri: Uri): String? {
-        return if (ContentResolver.SCHEME_CONTENT == uri.scheme)
+    private fun getMimeType(cr: ContentResolver, uri: Uri): String? =
+        if (ContentResolver.SCHEME_CONTENT == uri.scheme)
             cr.getType(uri)
         else
             getMimeType(uri.toString())
-    }
 
     fun getMimeType(filename: String): String {
         val pos = filename.lastIndexOf(".")
@@ -250,51 +245,21 @@ object AndroidFileUtils {
         return "application/octet-stream"
     }
 
-    fun getTempShareDir(context: Context): File {
-        val tmp = File(context.cacheDir, "tmp")
-        tmp.mkdir()
-        return tmp
-    }
+    fun getTempShareDir(context: Context) = File(context.cacheDir, "tmp").apply { mkdir() }
 
-    @Throws(IOException::class)
-    fun createImageFile(context: Context): File {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val imageFileName = "img_" + timeStamp + "_"
+    private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 
-        // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".jpg", getTempShareDir(context))
-    }
+    fun createImageFile(context: Context): File =
+        File.createTempFile("img_${dateFormat.format(Date())}_", ".jpg", getTempShareDir(context))
 
-    @Throws(IOException::class)
-    fun createAudioFile(context: Context): File {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val imageFileName = "audio_" + timeStamp + "_"
+    fun createAudioFile(context: Context): File =
+        File.createTempFile("audio_${dateFormat.format(Date())}_", ".mp3", getTempShareDir(context))
 
-        // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".mp3", getTempShareDir(context))
-    }
+    fun createVideoFile(context: Context): File =
+        File.createTempFile("video_${dateFormat.format(Date())}_", ".webm", getTempShareDir(context))
 
-    @Throws(IOException::class)
-    fun createVideoFile(context: Context): File {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val imageFileName = "video_" + timeStamp + "_"
-
-        // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".webm", getTempShareDir(context))
-    }
-
-    @Throws(IOException::class)
-    fun createLogFile(context: Context): File {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val imageFileName = "log_" + timeStamp + "_"
-
-        // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".log", getTempShareDir(context))
-    }
+    fun createLogFile(context: Context): File =
+        File.createTempFile("log_${dateFormat.format(Date())}_", ".log", getTempShareDir(context))
 
     /**
      * Copies a file from a uri whether locally on a remote location to the local cache
@@ -334,17 +299,15 @@ object AndroidFileUtils {
         }.subscribeOn(Schedulers.io())
     }
 
-    fun moveToUri(cr: ContentResolver, input: File, outUri: Uri): Completable {
-        return Completable.fromAction {
-            FileInputStream(input).use { inputStream ->
-                cr.openOutputStream(outUri).use { output ->
-                    if (output == null) throw FileNotFoundException()
-                    FileUtils.copyFile(inputStream, output)
-                }
+    fun moveToUri(cr: ContentResolver, input: File, outUri: Uri): Completable = Completable.fromAction {
+        FileInputStream(input).use { inputStream ->
+            cr.openOutputStream(outUri).use { output ->
+                if (output == null) throw FileNotFoundException()
+                FileUtils.copyFile(inputStream, output)
             }
-            input.delete()
-        }.subscribeOn(Schedulers.io())
-    }
+        }
+        input.delete()
+    }.subscribeOn(Schedulers.io())
 
     /**
      * Copies a file to a predefined Uri destination
@@ -354,14 +317,12 @@ object AndroidFileUtils {
      * @param outUri the uri destination
      * @return success value
      */
-    fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri): Completable {
-        return Completable.fromAction {
-            FileInputStream(input).use { inputStream ->
-                cr.openOutputStream(outUri)?.use { outputStream ->
-                    FileUtils.copyFile(inputStream, outputStream)
-                } }
-        }.subscribeOn(Schedulers.io())
-    }
+    fun copyFileToUri(cr: ContentResolver, input: File?, outUri: Uri): Completable = Completable.fromAction {
+        FileInputStream(input).use { inputStream ->
+            cr.openOutputStream(outUri)?.use { outputStream ->
+                FileUtils.copyFile(inputStream, outputStream)
+            } }
+    }.subscribeOn(Schedulers.io())
 
     @Throws(IOException::class)
     fun getConversationFile(context: Context, uri: Uri, conversationId: String, name: String): File {
@@ -373,13 +334,9 @@ object AndroidFileUtils {
         return file
     }
 
-    fun getCachePath(context: Context, filename: String): File {
-        return File(context.cacheDir, filename)
-    }
+    fun getCachePath(context: Context, filename: String) = File(context.cacheDir, filename)
 
-    fun getFilePath(context: Context, filename: String): File {
-        return context.getFileStreamPath(filename)
-    }
+    fun getFilePath(context: Context, filename: String): File = context.getFileStreamPath(filename)
 
     fun getConversationDir(context: Context, conversationId: String): File {
         val conversationsDir = getFilePath(context, "conversation_data")
@@ -399,13 +356,11 @@ object AndroidFileUtils {
         return conversationDir
     }
 
-    fun getConversationPath(context: Context, conversationId: String, name: String): File {
-        return File(getConversationDir(context, conversationId), name)
-    }
+    fun getConversationPath(context: Context, conversationId: String, name: String) =
+        File(getConversationDir(context, conversationId), name)
 
-    fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String): File {
-        return File(getConversationDir(context, accountId, conversationId), name)
-    }
+    fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String) =
+        File(getConversationDir(context, accountId, conversationId), name)
 
     fun getTempPath(context: Context, conversationId: String, name: String): File {
         val conversationsDir = getCachePath(context, "conversation_data")
@@ -441,17 +396,14 @@ object AndroidFileUtils {
             return Environment.MEDIA_MOUNTED == state
         }
 
-    private fun isExternalStorageDocument(uri: Uri): Boolean {
-        return "com.android.externalstorage.documents" == uri.authority
-    }
+    private fun isExternalStorageDocument(uri: Uri): Boolean =
+        "com.android.externalstorage.documents" == uri.authority
 
-    private fun isDownloadsDocument(uri: Uri): Boolean {
-        return "com.android.providers.downloads.documents" == uri.authority
-    }
+    private fun isDownloadsDocument(uri: Uri): Boolean =
+        "com.android.providers.downloads.documents" == uri.authority
 
-    private fun isMediaDocument(uri: Uri): Boolean {
-        return "com.android.providers.media.documents" == uri.authority
-    }
+    private fun isMediaDocument(uri: Uri): Boolean =
+        "com.android.providers.media.documents" == uri.authority
 
     private fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
         var path: String? = null
@@ -487,45 +439,43 @@ object AndroidFileUtils {
         }
     }
 
-    fun loadBitmap(context: Context, uriImage: Uri): Single<Bitmap> {
-        return Single.fromCallable<Bitmap> {
-            val dbo = BitmapFactory.Options()
-            dbo.inJustDecodeBounds = true
-            context.contentResolver.openInputStream(uriImage).use { `is` -> BitmapFactory.decodeStream(`is`, null, dbo) }
-            val rotatedWidth: Int
-            val rotatedHeight: Int
-            val orientation = getOrientation(context, uriImage)
-            if (orientation == ORIENTATION_LEFT || orientation == ORIENTATION_RIGHT) {
-                rotatedWidth = dbo.outHeight
-                rotatedHeight = dbo.outWidth
-            } else {
-                rotatedWidth = dbo.outWidth
-                rotatedHeight = dbo.outHeight
-            }
-            var srcBitmap: Bitmap?
-            context.contentResolver.openInputStream(uriImage).use { `is` ->
-                if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
-                    val widthRatio = rotatedWidth.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
-                    val heightRatio = rotatedHeight.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
-                    val maxRatio = max(widthRatio, heightRatio)
+    fun loadBitmap(context: Context, uriImage: Uri): Single<Bitmap> = Single.fromCallable<Bitmap> {
+        val dbo = BitmapFactory.Options()
+        dbo.inJustDecodeBounds = true
+        context.contentResolver.openInputStream(uriImage).use { `is` -> BitmapFactory.decodeStream(`is`, null, dbo) }
+        val rotatedWidth: Int
+        val rotatedHeight: Int
+        val orientation = getOrientation(context, uriImage)
+        if (orientation == ORIENTATION_LEFT || orientation == ORIENTATION_RIGHT) {
+            rotatedWidth = dbo.outHeight
+            rotatedHeight = dbo.outWidth
+        } else {
+            rotatedWidth = dbo.outWidth
+            rotatedHeight = dbo.outHeight
+        }
+        var srcBitmap: Bitmap?
+        context.contentResolver.openInputStream(uriImage).use { stream ->
+            if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
+                val widthRatio = rotatedWidth.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
+                val heightRatio = rotatedHeight.toFloat() / MAX_IMAGE_DIMENSION.toFloat()
+                val maxRatio = max(widthRatio, heightRatio)
 
-                    // Create the bitmap from file
-                    val options = BitmapFactory.Options()
-                    options.inSampleSize = maxRatio.toInt()
-                    srcBitmap = BitmapFactory.decodeStream(`is`, null, options)
-                } else {
-                    srcBitmap = BitmapFactory.decodeStream(`is`)
-                }
+                // Create the bitmap from file
+                val options = BitmapFactory.Options()
+                options.inSampleSize = maxRatio.toInt()
+                srcBitmap = BitmapFactory.decodeStream(stream, null, options)
+            } else {
+                srcBitmap = BitmapFactory.decodeStream(stream)
             }
-            if (orientation > 0) {
-                val matrix = Matrix()
-                matrix.postRotate(orientation.toFloat())
-                srcBitmap = Bitmap.createBitmap(srcBitmap!!, 0, 0, srcBitmap!!.width,
-                        srcBitmap!!.height, matrix, true)
-            }
-            srcBitmap
-        }.subscribeOn(Schedulers.io())
-    }
+        }
+        if (orientation > 0) {
+            val matrix = Matrix()
+            matrix.postRotate(orientation.toFloat())
+            srcBitmap = Bitmap.createBitmap(srcBitmap!!, 0, 0, srcBitmap!!.width,
+                    srcBitmap!!.height, matrix, true)
+        }
+        srcBitmap
+    }.subscribeOn(Schedulers.io())
 
     private fun getOrientation(context: Context, photoUri: Uri): Int {
         val resolver = context.contentResolver ?: return 0
@@ -564,11 +514,7 @@ object AndroidFileUtils {
         }
     }
 
-    fun isImage(s: String): Boolean {
-        return getMimeType(s).startsWith("image")
-    }
+    fun isImage(s: String): Boolean = getMimeType(s).startsWith("image")
 
-    fun getFileName(s: String): String {
-        return s.split('/').last()
-    }
+    fun getFileName(s: String): String = s.split('/').last()
 }
