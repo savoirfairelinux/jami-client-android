@@ -71,26 +71,27 @@ class CameraService internal constructor(c: Context) {
     private val availabilityCallback: AvailabilityCallback = object : AvailabilityCallback() {
         override fun onCameraAvailable(cameraId: String) {
             Log.w(TAG, "onCameraAvailable $cameraId")
-            filterCompatibleCamera(
-                arrayOf(cameraId),
-                manager!!
-            ).forEach { camera: Pair<String, CameraCharacteristics> ->
-                val devices = devices ?: return
-                synchronized(addedDevices) {
-                    if (!devices.cameras.contains(camera.first)) {
-                        when (camera.second.get(CameraCharacteristics.LENS_FACING)) {
-                            CameraCharacteristics.LENS_FACING_FRONT -> if (devices.cameraFront == null) {
-                                devices.addCamera(camera.first)
-                                devices.cameraFront = camera.first
+            try {
+                filterCompatibleCamera(arrayOf(cameraId), manager!!).forEach { camera ->
+                    val devices = devices ?: return
+                    synchronized(addedDevices) {
+                        if (!devices.cameras.contains(camera.first)) {
+                            when (camera.second.get(CameraCharacteristics.LENS_FACING)) {
+                                CameraCharacteristics.LENS_FACING_FRONT -> if (devices.cameraFront == null) {
+                                    devices.addCamera(camera.first)
+                                    devices.cameraFront = camera.first
+                                }
+                                CameraCharacteristics.LENS_FACING_BACK -> if (devices.cameraBack == null) {
+                                    devices.addCamera(camera.first)
+                                    devices.cameraBack = camera.first
+                                }
+                                else -> devices.addCamera(camera.first)
                             }
-                            CameraCharacteristics.LENS_FACING_BACK -> if (devices.cameraBack == null) {
-                                devices.addCamera(camera.first)
-                                devices.cameraBack = camera.first
-                            }
-                            else -> devices.addCamera(camera.first)
                         }
                     }
                 }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error handling camera", e)
             }
         }
 
@@ -833,14 +834,13 @@ class CameraService internal constructor(c: Context) {
     }
 
     companion object {
-        private val TAG = CameraService::class.java.simpleName
+        private val TAG = CameraService::class.simpleName!!
         private const val FPS_MAX = 30
         private const val FPS_TARGET = 15
         private val addedDevices: MutableSet<String> = HashSet()
         private val RESOLUTION_NONE = Pair<Int?, Int?>(null, null)
-        private fun getCameraDisplayRotation(device: DeviceParams, screenRotation: Int): Int {
-            return getCameraDisplayRotation(device.orientation, rotationToDegrees(screenRotation), device.facing)
-        }
+        private fun getCameraDisplayRotation(device: DeviceParams, screenRotation: Int): Int =
+            getCameraDisplayRotation(device.orientation, rotationToDegrees(screenRotation), device.facing)
 
         private fun getCameraDisplayRotation(sensorOrientation: Int, screenOrientation: Int, cameraFacing: Int): Int {
             val rotation = if (cameraFacing == CameraCharacteristics.LENS_FACING_FRONT) {
@@ -851,22 +851,18 @@ class CameraService internal constructor(c: Context) {
             return (180 - rotation + 180) % 360
         }
 
-        private fun filterCompatibleCamera(
-            cameras: Array<String>,
-            cameraManager: CameraManager
-        ): List<Pair<String, CameraCharacteristics>> {
-            return cameras.map { id: String -> Pair(id, cameraManager.getCameraCharacteristics(id)) }
+        private fun filterCompatibleCamera(cameras: Array<String>, cameraManager: CameraManager) =
+            cameras.map { id -> Pair(id, cameraManager.getCameraCharacteristics(id)) }
                 .filter { camera: Pair<String, CameraCharacteristics> ->
                     try {
-                        val caps = camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)!!
-                        for (c in caps) if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_MONOCHROME) return@filter false
+                        val caps = camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES) ?: return@filter false
+                        for (c in caps) if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_MONOCHROME ) return@filter false
                         for (c in caps) if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE) return@filter true
                     } catch (e: Exception) {
                         return@filter false
                     }
                     false
                 }
-        }
 
         private fun filterCameraIdsFacing(cameras: List<Pair<String, CameraCharacteristics>>, facing: Int) =
             cameras.filter { camera -> camera.second.get(CameraCharacteristics.LENS_FACING) == facing }
