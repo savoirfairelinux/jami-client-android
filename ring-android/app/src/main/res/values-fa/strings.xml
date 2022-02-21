@@ -76,4 +76,5 @@
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">پایان دادن به تماس</string>
 </resources>

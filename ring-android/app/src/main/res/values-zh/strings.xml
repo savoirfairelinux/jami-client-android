@@ -57,5 +57,6 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">分享</string>
   <string name="bottomSheet_camera_onoff_switch_btn">相機</string>
+  <string name="bottomSheet_hangup_btn">結束通話</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
 </resources>

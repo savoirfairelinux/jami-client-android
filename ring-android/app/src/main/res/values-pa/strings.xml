@@ -296,4 +296,5 @@
   <string name="fab_path_choose">ਕੋਈ ਹੋਰ ਫ਼ਾਈਲ ਚੁਣੋ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
 </resources>

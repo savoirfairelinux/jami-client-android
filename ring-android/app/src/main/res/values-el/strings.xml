@@ -217,5 +217,6 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
+  <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
 </resources>

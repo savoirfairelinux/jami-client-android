@@ -40,4 +40,5 @@
   <string name="tv_dialog_send">Zie</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Kwụsị oku</string>
 </resources>

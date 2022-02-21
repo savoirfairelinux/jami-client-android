@@ -102,8 +102,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_proxy_server_label">DHT Proxy Adresse</string>
   <string name="account_proxy_server_list_label">DHT Proxy Liste URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Lokale Peer Erkennung</string>
-  <string name="account_peer_discovery_enable_label">Erlaube das finden von lokalen Peers</string>
+  <string name="account_peer_discovery_label">Lokale Teilnehmer-Erkennung</string>
+  <string name="account_peer_discovery_enable_label">Erlaube das finden von lokalen Teilnehmern</string>
   <string name="account_peer_discovery_enable_summary">Verbinde zu anderen sich meldenden DHT Knoten in unserem lokalen Netzwerk</string>
   <!--Security Details-->
   <string name="account_credentials_label">Anmeldeinformationen</string>

@@ -293,6 +293,7 @@
   <string name="bottomSheet_add_participants_btn">Lägg till</string>
   <string name="bottomSheet_change_camera_btn">Ändra</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Avsluta samtal</string>
   <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
 </resources>

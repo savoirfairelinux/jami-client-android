@@ -88,4 +88,5 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
+  <string name="bottomSheet_hangup_btn">סיום שיחה</string>
 </resources>
