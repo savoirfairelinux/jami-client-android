@@ -124,6 +124,8 @@ make $MAKEFLAGS
 DAEMON_BUILD_DIR="${DAEMON_DIR}/build-android-${TARGET}"
 mkdir -p ${DAEMON_BUILD_DIR}
 
+export JAMI_DATADIR="/data/data/cx.ring/files"
+
 cd ${DAEMON_DIR}
 if [ ! -f configure ]; then
     ./autogen.sh
@@ -137,7 +139,6 @@ if [ ! -f config.h ]; then
     CPPFLAGS="${CPPFLAGS} -I${DAEMON_DIR}/contrib/${TARGET}/include " \
     LDFLAGS="${EXTRA_LDFLAGS} -L${DAEMON_DIR}/contrib/${TARGET}/lib " \
     PKG_CONFIG_LIBDIR=$DAEMON_DIR/contrib/$TARGET/lib/pkgconfig \
-    JAMI_DATADIR="/data/data/cx.ring/files" \
     ${DAEMON_DIR}/configure --host=$TARGET $EXTRA_PARAMS \
                    --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --enable-accel\
                    --prefix=$DAEMON_DIR/install-android-$TARGET \
