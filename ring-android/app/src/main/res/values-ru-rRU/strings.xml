@@ -295,4 +295,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поделится</string>
   <string name="bottomSheet_plugins_btn">Плагины</string>
+  <string name="bottomSheet_hangup_btn">Завершить вызов</string>
 </resources>

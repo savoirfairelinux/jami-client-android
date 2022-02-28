@@ -41,4 +41,5 @@
   <string name="tv_audio_play">प्ले करा</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">कॉल समाप्त करा</string>
 </resources>

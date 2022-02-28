@@ -23,7 +23,7 @@
   <string name="designed_by">Progettato da</string>
   <string name="ringtones_by">Suoneria di</string>
   <!--RingActivity-->
-  <string name="error_no_network">Assenza di connessione di rete</string>
+  <string name="error_no_network">Nessuna connessione di rete</string>
   <string name="error_account_offline">L\'account è offline</string>
   <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
@@ -120,8 +120,8 @@
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
   <string name="share_via">Condividi con</string>
   <string name="write_a_message">Scrivi un messaggio</string>
-  <string name="scan_qr">Leggi codice QR</string>
-  <string name="qr_code">QR Code</string>
+  <string name="scan_qr">Scansiona codice QR</string>
+  <string name="qr_code">Codice QR</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
   <string name="remote_recording">%s in registrazione…</string>
