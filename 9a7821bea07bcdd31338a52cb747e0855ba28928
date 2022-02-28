@@ -16,6 +16,23 @@
       "message": "looks like these are needed with the addition of new languages,\ne.g. per https://review.jami.net/c/jami-client-android/+/21158",
       "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b41a061f_7fca96b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2022-02-28T19:59:11Z",
+      "side": 1,
+      "message": "Is it possible to check if all the languages on Transifex are required? For example, Polish and Polish (Poland) be merged into one? Thank you",
+      "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
