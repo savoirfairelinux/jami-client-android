@@ -33,6 +33,24 @@
       "message": "Is it possible to check if all the languages on Transifex are required? For example, Polish and Polish (Poland) be merged into one? Thank you",
       "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f9e836_ee30e539",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-02-28T20:31:25Z",
+      "side": 1,
+      "message": "I don\u0027t have a concrete answer to this myself.  Anyone know if Android\ncan pick localized strings from a region-specific locale if available\nand otherwise fall back on the \"main\" or the most generic one?  And\nwould such a thing even make sense?\n\nFor example, let\u0027s say there\u0027s a main ar (\"Arabic\") language and then\nregional variations like ar-EG (for Egypt).  If someone uses ar-EG on\ntheir phone, would Android pick any strings that are available in the\nar-EG version and pick the rest from ar?  Or would it only pick from\nar-EG and for the missing ones fall back to English?\n\nIn short, if there are no serious downsides to having region-specific\nvariants then I guess I\u0027d be in favour of keeping them, since at least\nin principle they would enable more users to use Jami in a language\nmost close to theirs.\n\nWhat do you think?  Adrien, Séb, Mehdi?",
+      "parentUuid": "b41a061f_7fca96b5",
+      "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
