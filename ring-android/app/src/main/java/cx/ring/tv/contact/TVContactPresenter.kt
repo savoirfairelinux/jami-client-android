@@ -50,7 +50,7 @@ class TVContactPresenter @Inject constructor(
         mCompositeDisposable.clear()
         mCompositeDisposable.add(mConversationService.observeConversation(path.accountId, path.conversationUri, true)
             .observeOn(mUiScheduler)
-            .subscribe { c: ConversationItemViewModel -> view?.showContact(c) })
+            .subscribe({ c: ConversationItemViewModel -> view?.showContact(c) }, {view?.finishView()}))
     }
 
     fun contactClicked() {
