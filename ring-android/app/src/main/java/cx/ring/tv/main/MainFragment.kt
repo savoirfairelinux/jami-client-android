@@ -230,8 +230,17 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun callContact(accountID: String, number: String) {
-        val intent = Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), activity, TVCallActivity::class.java)
-        startActivity(intent, null)
+        try {
+            val intent = Intent(
+                Intent.ACTION_CALL,
+                ConversationPath.toUri(accountID, number),
+                activity,
+                TVCallActivity::class.java
+            )
+            startActivity(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting activity", e)
+        }
     }
 
     override fun displayAccountInfo(viewModel: HomeNavigationViewModel) {
@@ -274,12 +283,19 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun showAccountShare() {
-        val intent = Intent(activity, TVShareActivity::class.java)
-        startActivity(intent)
+        try {
+            startActivity(Intent(activity, TVShareActivity::class.java))
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting activity", e)
+        }
     }
 
     override fun showSettings() {
-        startActivity(Intent(activity, TVSettingsActivity::class.java))
+        try {
+            startActivity(Intent(activity, TVSettingsActivity::class.java))
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting activity", e)
+        }
     }
 
     private inner class ItemViewClickedListener : OnItemViewClickedListener {
@@ -298,18 +314,25 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     .addToBackStack(TVContactFragment.TAG)
                     .commit()
             } else if (item is IconCard) {
-                when (item.type) {
-                    Card.Type.ACCOUNT_ADD_DEVICE -> presenter.onExportClicked()
-                    Card.Type.ACCOUNT_EDIT_PROFILE -> presenter.onEditProfileClicked()
-                    Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
-                        val view = (itemViewHolder.view as CardView).mainImageView
-                        val intent = Intent(activity, TVShareActivity::class.java)
-                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, TVShareActivity.SHARED_ELEMENT_NAME).toBundle()
-                        requireActivity().startActivity(intent, bundle)
+                try {
+                    when (item.type) {
+                        Card.Type.ACCOUNT_ADD_DEVICE -> presenter.onExportClicked()
+                        Card.Type.ACCOUNT_EDIT_PROFILE -> presenter.onEditProfileClicked()
+                        Card.Type.ACCOUNT_SHARE_ACCOUNT -> {
+                            val view = (itemViewHolder.view as CardView).mainImageView
+                            val intent = Intent(activity, TVShareActivity::class.java)
+                            val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                requireActivity(),
+                                view,
+                                TVShareActivity.SHARED_ELEMENT_NAME
+                            ).toBundle()
+                            startActivity(intent, bundle)
+                        }
+                        Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
+                        else -> {}
                     }
-                    Card.Type.ADD_CONTACT -> startActivity(Intent(activity, SearchActivity::class.java))
-                    else -> {
-                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error starting activity", e)
                 }
             }
         }

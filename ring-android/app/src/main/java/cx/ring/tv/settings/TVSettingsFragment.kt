@@ -22,7 +22,6 @@ package cx.ring.tv.settings
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat
 import androidx.preference.*
 import cx.ring.R

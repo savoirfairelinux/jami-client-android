@@ -74,7 +74,6 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.conversation.ConversationView
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
-import net.jami.utils.StringUtils
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -224,15 +223,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
         val input = File(path)
-        mCompositeDisposable.add(
-            copyFileToUri(cr, input, data)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
-                { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
+        mCompositeDisposable.add(copyFileToUri(cr, input, data)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
+            { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
 
     private fun createTextDialog(spokenText: String) {
-        if (StringUtils.isEmpty(spokenText)) {
+        if (spokenText.isEmpty()) {
             return
         }
         val alertDialog =
@@ -240,14 +238,11 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
                 .setTitle(spokenText)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
-                    presenter!!.sendTextMessage(
-                        spokenText
-                    )
+                    presenter.sendTextMessage(spokenText)
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .create()
-        alertDialog.window!!
-            .setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
+        alertDialog.window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(requireActivity())
         alertDialog.setOnShowListener { dialog: DialogInterface? ->
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -283,16 +278,21 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             positive.isFocusableInTouchMode = true
             positive.requestFocus()
             val button = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-            button.setOnClickListener { v: View? ->
-                if (type == CustomCameraActivity.TYPE_IMAGE) {
-                    val i = Intent(context, MediaViewerActivity::class.java)
-                    i.setAction(Intent.ACTION_VIEW).setDataAndType(media, "image/*").flags =
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    startActivity(i)
-                } else {
-                    val intent = Intent(Intent.ACTION_VIEW, media)
-                    intent.setDataAndType(media, "video/*").flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    startActivity(intent)
+            button.setOnClickListener {
+                try {
+                    if (type == CustomCameraActivity.TYPE_IMAGE) {
+                        val i = Intent(context, MediaViewerActivity::class.java)
+                        i.setAction(Intent.ACTION_VIEW).setDataAndType(media, "image/*").flags =
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        startActivity(i)
+                    } else {
+                        val intent = Intent(Intent.ACTION_VIEW, media)
+                        intent.setDataAndType(media, "video/*").flags =
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error starting activity", e)
                 }
             }
         }
@@ -304,7 +304,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(R.string.tv_send_audio_dialog_message)
                 .setMessage("")
-                .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int -> sendAudio() }
+                .setPositiveButton(R.string.tv_dialog_send) { _, _ -> sendAudio() }
                 .setNegativeButton(android.R.string.cancel, null)
                 .setNeutralButton(R.string.tv_audio_play, null)
                 .create()
@@ -317,16 +317,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             positive.isFocusableInTouchMode = true
             positive.requestFocus()
             val button = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-            button.setOnClickListener { v: View? ->
+            button.setOnClickListener {
                 onPlay(mStartPlaying)
                 if (mStartPlaying) {
                     button.setText(R.string.tv_audio_pause)
-                    if (player != null) {
-                        player!!.setOnCompletionListener { mp: MediaPlayer? ->
-                            button.setText(R.string.tv_audio_play)
-                            mStartPlaying = true
-                        }
-                    }
+                    player?.let { player -> player.setOnCompletionListener {
+                        button.setText(R.string.tv_audio_play)
+                        mStartPlaying = true
+                    } }
                 } else {
                     button.setText(R.string.tv_audio_play)
                 }
@@ -345,19 +343,16 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val c = context ?: return
         try {
             val fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
-            if (fileUri != null) {
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val type = c.contentResolver.getType(fileUri)
-                sendIntent.setDataAndType(fileUri, type)
-                sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-                startActivity(Intent.createChooser(sendIntent, null))
+            val type = c.contentResolver.getType(fileUri)
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                setDataAndType(fileUri, type)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                putExtra(Intent.EXTRA_STREAM, fileUri)
             }
+            startActivity(Intent.createChooser(sendIntent, null))
         } catch (e: Exception) {
-            Snackbar.make(
-                requireView(),
-                "Error sharing file: " + e.localizedMessage,
+            Snackbar.make(requireView(),
+                "Error sharing file: ${e.localizedMessage}",
                 Snackbar.LENGTH_SHORT
             ).show()
         }
@@ -367,15 +362,13 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val c = context ?: return
         try {
             val fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
-            if (fileUri != null) {
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_VIEW
-                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val type = c.contentResolver.getType(fileUri)
-                sendIntent.setDataAndType(fileUri, type)
-                sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-                startActivity(Intent.createChooser(sendIntent, null))
+            val type = c.contentResolver.getType(fileUri)
+            val openIntent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(fileUri, type)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                putExtra(Intent.EXTRA_STREAM, fileUri)
             }
+            startActivity(Intent.createChooser(openIntent, null))
         } catch (e: IllegalArgumentException) {
             Snackbar.make(
                 requireView(),
