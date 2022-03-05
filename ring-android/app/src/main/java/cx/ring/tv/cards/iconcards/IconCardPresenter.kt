@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
  *  Author: Loïc Siret <loic.siret@savoirfairelinux.com>
  *  Author: AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>

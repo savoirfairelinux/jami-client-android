@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016-2021 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2022 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
