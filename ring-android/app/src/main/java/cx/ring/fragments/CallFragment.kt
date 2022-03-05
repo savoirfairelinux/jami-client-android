@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
