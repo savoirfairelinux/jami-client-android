@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
     <string name="ring_contribute_website" translatable="false">https://jami.net/contribute</string>
     <string name="savoirfairelinux_website" translatable="false">https://savoirfairelinux.com</string>
 
-    <string name="copyright" translatable="false">2004&#8211;2021 Savoir-faire Linux Inc.</string>
+    <string name="copyright" translatable="false">2004&#8211;2022 Savoir-faire Linux Inc.</string>
     <string name="feedback_section">Feedback</string>
     <string name="report"><u>Send us an email</u></string>
     <string name="section_license">License</string>
