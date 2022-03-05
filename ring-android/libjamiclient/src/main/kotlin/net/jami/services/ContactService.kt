@@ -95,6 +95,7 @@ abstract class ContactService(
                         registration.name
                     }
                     .doOnError { contact.username = null }
+                    .onErrorReturn { "" }
                     .cache()
                     .apply { contact.username = this }
             }
