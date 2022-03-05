@@ -1613,7 +1613,7 @@ class AccountService(
             progress = progressA[0]
             total = totalA[0]
             if (transfer == null && interactionId != null && interactionId.isNotEmpty()) {
-                transfer = conversation.getMessage(interactionId) as DataTransfer
+                transfer = conversation.getMessage(interactionId) as DataTransfer?
             }
             if (transfer == null) return
             transfer.conversation = conversation
