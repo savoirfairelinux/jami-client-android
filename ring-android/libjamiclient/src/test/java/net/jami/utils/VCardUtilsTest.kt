@@ -18,30 +18,29 @@
  * along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package net.jami.utils
 
-package net.jami.utils;
+import net.jami.utils.VCardUtils.vcardToString
+import ezvcard.VCard
+import ezvcard.property.FormattedName
+import net.jami.utils.VCardUtils
+import org.junit.Assert
+import org.junit.Test
 
-import net.jami.utils.VCardUtils;
-
-import org.junit.Test;
-
-import ezvcard.VCard;
-import ezvcard.property.FormattedName;
-
-import static org.junit.Assert.assertTrue;
-
-public class VCardUtilsTest {
-
+class VCardUtilsTest {
     @Test
-    public void testVCardToString() {
-        VCard vcard = new VCard();
-        vcard.addFormattedName(new FormattedName("SFL Test"));
-
-        String result = VCardUtils.vcardToString(vcard);
-        assertTrue(result.contentEquals("BEGIN:VCARD\r\n" +
-                "VERSION:2.1\r\n" +
-                "X-PRODID:ez-vcard 0.10.2\r\n" +
-                "FN:SFL Test\r\n" +
-                "END:VCARD\r\n"));
+    fun testVCardToString() {
+        val result = vcardToString(VCard().apply {
+            addFormattedName(FormattedName("SFL Test"))
+        })
+        Assert.assertTrue(result.contentEquals(
+                """
+    BEGIN:VCARD
+    VERSION:2.1
+    X-PRODID:ez-vcard 0.10.2
+    FN:SFL Test
+    END:VCARD
+    
+    """.trimIndent()))
     }
 }
