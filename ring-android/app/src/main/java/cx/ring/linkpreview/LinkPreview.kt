@@ -1,7 +1,7 @@
 package cx.ring.linkpreview
 
 import android.util.Log
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -11,20 +11,23 @@ import org.jsoup.nodes.Document
 object LinkPreview {
     private fun extractUrls(input: String): List<String> {
         val result: MutableList<String> = ArrayList()
-        val words = input.split("\\s+".toRegex())
-        for (word in words)
-            if (Patterns.WEB_URL.matcher(word).find()) {
-                if (!word.lowercase().contains("http://") && !word.lowercase().contains("https://")) {
-                    result.add("https://$word")
-                } else {
-                    result.add(word)
+        val matcher = PatternsCompat.AUTOLINK_WEB_URL.matcher(input)
+        while (matcher.find()) {
+            val word = matcher.group()
+            if (!word.startsWith("http://", ignoreCase = true) && !word.startsWith("https://", ignoreCase = true)) {
+                if (PatternsCompat.EMAIL_ADDRESS.matcher(word).matches()) {
+                    continue
                 }
+                result.add("https://$word")
+            } else {
+                result.add(word)
             }
+        }
         return result
     }
 
-    fun getFirstUrl(input: String) : Maybe<String> {
-        return Maybe.fromCallable { extractUrls(input).firstOrNull() }
+    fun getFirstUrl(input: String): Maybe<String> = Maybe.fromCallable {
+        extractUrls(input).firstOrNull()
     }
 
     private fun getTile(doc: Document): String {
@@ -59,25 +62,20 @@ object LinkPreview {
         return ""
     }
 
-    private fun loadUrl(url: String): Single<Document> {
-        return Single.create { e ->
-            try {
-                e.onSuccess(Jsoup.connect(url)
-                    .userAgent("Mozilla")
-                    .get())
-            } catch (ex: Exception) {
-                if (!e.isDisposed)
-                    e.onError(ex)
-            }
+    private fun loadUrl(url: String): Single<Document> = Single.create { e ->
+        Log.w("LinkPreview", "load $url")
+        try {
+            e.onSuccess(Jsoup.connect(url)
+                .userAgent("Mozilla")
+                .get())
+        } catch (ex: Exception) {
+            if (!e.isDisposed)
+                e.onError(ex)
         }
     }
 
-    fun load(url: String): Maybe<PreviewData> {
-        Log.w("LinkPreview", "load $url")
-        return loadUrl(url)
-            .map { doc -> PreviewData(getTile(doc), getDescription(doc), getImage(doc), url) }
-            .filter { preview -> preview.isNotEmpty() }
-            .subscribeOn(Schedulers.io())
-    }
-
+    fun load(url: String): Maybe<PreviewData> = loadUrl(url)
+        .map { doc -> PreviewData(getTile(doc), getDescription(doc), getImage(doc), url) }
+        .filter { preview -> preview.isNotEmpty() }
+        .subscribeOn(Schedulers.io())
 }
