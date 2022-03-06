@@ -29,19 +29,14 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
+        debug {
             isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-
-            packagingOptions{
-                doNotStrip("*/armeabi/*.so")
-                doNotStrip("*/armeabi-v7a/*.so")
-                doNotStrip("*/arm64-v8a/*.so")
-                doNotStrip("*/x86/*.so")
-                doNotStrip("*/x86_64/*.so")
+            packagingOptions {
+                jniLibs.keepDebugSymbols += "**/*.so"
             }
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
