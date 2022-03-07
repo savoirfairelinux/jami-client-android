@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Personvern</string>
+  <string name="pref_category_diagnostic">Feilfinning</string>
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillat Jami på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-varsler</string>
@@ -26,17 +27,30 @@
   <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
   <string name="pref_clearHistory_summary">Tøm samtalehistorikken. Denne handlingen kan ikke angres.</string>
+  <string name="pref_notification_title">Synlige varsler</string>
+  <string name="pref_notification_summary">Vis varsler på låsekjermen</string>
   <string name="pref_blackList_title">Blokkeringsliste</string>
   <string name="pref_blackList_summary">Sjekk din blokkeringsliste.</string>
   <string name="pref_delete_account_title">Slett konto</string>
   <string name="pref_delete_account_summary">Slett din konto på denne enheten</string>
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
+  <string name="pref_logs_title">Feilfinningslogger</string>
+  <string name="pref_logs_summary">Åpne innstillinger for feilfinningsloggen</string>
+  <string name="pref_logs_start">Sett i gang loggføring</string>
+  <string name="pref_logs_stop">Stans loggføring</string>
   <string name="pref_typing_title">Aktiver inntastingindikator</string>
   <string name="pref_typing_summary">Send og motta inntastingindikatorer som viser at en melding blir tastet.</string>
   <string name="pref_read_title">Aktiver lesekvitteringer</string>
   <string name="pref_read_summary">Send og motta kvitteringer som indikerer at en melding er blitt vist.</string>
+  <string name="pref_block_record_title">Hindre skjermdump og -opptak</string>
+  <string name="pref_block_record_summary">Hindre skjermdump og -opptak</string>
+  <string name="pref_link_preview_title">Forhåndsvis linker i samtaler</string>
+  <string name="pref_link_preview_summary">Forhåndsvisninger betyr at Jami må laste ned media fra tredjeparts servere.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Offentlig \n(vis varsler og innholdet på låseskjermen)</string>
+  <string name="notification_private">Privat \n(vis varsler, men ikke innholdet på låseskjermen)</string>
+  <string name="notification_secret">Hemmelig \n(vis ikke varsler på låseskjermen)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Utvidelser</string>
   <string name="pref_plugins_summary">Aktiver utvidelser og angi innstillinger</string>

@@ -318,5 +318,6 @@
   <string name="bottomSheet_plugins_btn">拡張機能</string>
   <string name="bottomSheet_add_participants_btn">追加</string>
   <string name="bottomSheet_camera_onoff_switch_btn">カメラ</string>
+  <string name="bottomSheet_hangup_btn">通話を終了</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
 </resources>

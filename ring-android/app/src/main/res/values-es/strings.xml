@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Opiniones</string>
-  <string name="report"><u>Envíanos un correo electrónico</u></string>
+  <string name="report"><u>Envíenos un correo electrónico</u></string>
   <string name="section_license">Licencia</string>
   <string name="sponsor_section">Jami es software libre desarrollado y mantenido por</string>
   <string name="copyright_section">Copyright</string>

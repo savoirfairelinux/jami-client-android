@@ -15,6 +15,7 @@
   <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
   <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
   <string name="credits">Bidragsytere</string>
+  <string name="pip_title">Jami-konferanse</string>
   <string name="call_service_description">Denne tjenesten er nødvendig for å holde samtalene dine i forgrunnen. Tjenesten kjører bare under samtaler.</string>
   <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende varsler under filoverføring. Tjenesten kjøres bare under filoverføring.</string>
   <!--About dialog-->
@@ -98,6 +99,10 @@
   <string name="start_error_title">Klarte ikke starte Jami!</string>
   <string name="start_error_mic_required">Jami krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Svar</string>
+  <string name="action_call_accept_audio">Svar med lyd</string>
+  <string name="action_call_accept_video">Svar med bilde</string>
+  <string name="action_call_hold_accept">Sett på vent og motta anrop med kun lyd</string>
+  <string name="action_call_hold_accept_video">Sett på vent og motta anrop med bilde</string>
   <string name="action_call_end_accept">Legg på og svar</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
@@ -105,7 +110,10 @@
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
+  <string name="hist_contact_invited">Er invitert</string>
   <string name="hist_contact_added">Kontakt lagt til</string>
+  <string name="hist_contact_left">Har forlatt samtalen</string>
+  <string name="hist_contact_banned">Blokkert</string>
   <string name="hist_invitation_received">Invitasjon mottatt</string>
   <string name="ab_action_audio_call">Talesamtale</string>
   <string name="ab_action_video_call">Videosamtale</string>
@@ -175,6 +183,14 @@
   <string name="block_contact_dialog_message">%1$s vil ikke være i stand til å kontakte deg inntil du fjerner blokkeringen.</string>
   <string name="block_contact_completed">%1$s ble blokkert.</string>
   <string name="conversation_contact_is_typing">Kontakten skriver...</string>
+  <string name="conversation_info_contact_you">Deg</string>
+  <string name="conversation_members">Medlemmer</string>
+  <string name="conversation_syncing">Laster ned samtale fra meddeler</string>
+  <string name="conversation_preference_color">Samtalefarge</string>
+  <string name="conversation_preference_emoji">Samtale-emoji</string>
+  <string name="conversation_type_contact">Jami-kontakt</string>
+  <string name="conversation_type_private">Privat sverm</string>
+  <string name="conversation_type_group">Gruppesverm</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
@@ -217,6 +233,7 @@
   <string name="refuse">Avslå</string>
   <string name="block">Blokker</string>
   <string name="contact_request_title">Ny kontaktforespørsel</string>
+  <string name="contact_request_msg">Du har %1$d kontaktforespørsler</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">Du har ingen kontaktforespørsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
@@ -255,6 +272,7 @@
   <string name="file_transfer_status_timed_out">tidsavbrudd</string>
   <string name="file_saved_in">Fil lagret i %s</string>
   <string name="file_saved_successfully">Filen er lagret</string>
+  <string name="file_download">Last ned</string>
   <string name="no_space_left_on_device">Ingen plass igjen på enheten</string>
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_open">Åpne fil</string>
@@ -285,6 +303,7 @@
   <string name="tv_send_text">Send tekst</string>
   <string name="tv_send_audio">Send lyd</string>
   <string name="tv_send_video">Send media</string>
+  <string name="tv_action_more">Mer</string>
   <string name="conversation_input_speech_hint">Si noe...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Anbefalt</string>
@@ -303,10 +322,16 @@
   <string name="wizard_profile_button">Lagre profil</string>
   <string name="wizard_profile_skip">Hopp over og gjør dette senere</string>
   <string name="fab_path_choose">Velg en annen fil</string>
+  <string name="chat_plugins">Samtaleutvidelser</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Del</string>
+  <string name="bottomSheet_dialpad_btn">Nummertaster</string>
   <string name="bottomSheet_plugins_btn">Utvidelser</string>
   <string name="bottomSheet_add_participants_btn">Legg til</string>
   <string name="bottomSheet_change_camera_btn">Endre</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Lyder</string>
+  <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
 </resources>
