@@ -69,6 +69,24 @@
       "parentUuid": "27f9e836_ee30e539",
       "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32f5bc85_5f28531c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-03-07T16:01:15Z",
+      "side": 1,
+      "message": "The fact is that many times, regional language variations are not needed and duplicate with the general (non-regionalized) language translation, sometimes with a lower translation quality because of the duplicate work.\nFor instance, there might be no need for both pl and pl-PL as mentioned by Óvári.\n\nMost often the extra regions mean duplicate work for translators, especially for languages that are mostly spoken in a single country.\n\nHowever, without good knowledge about every region and language, it\u0027s hard to know if a given regional variation is wanted or not. A mistake can be easily taken as an offense or a political statement.\n\nMy understanding is that Android would fallback to the main (general) language and then to English (default app language) if a string is not available:\nhttps://developer.android.com/guide/topics/resources/multilingual-support\n\nEven if we accept regional variations, the general principle should be to favor region-less languages when possible, especially when this language has a low translation coverage.",
+      "parentUuid": "3dd99d9e_52d726c9",
+      "revId": "9a7821bea07bcdd31338a52cb747e0855ba28928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
