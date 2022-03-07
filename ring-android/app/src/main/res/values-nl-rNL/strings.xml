@@ -60,6 +60,8 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">geannuleerd</string>
+  <string name="menu_message_cancel">Bericht annuleren</string>
   <string name="menu_delete">Verwijderen</string>
   <!--Bottom Navigation-->
   <!--TV-->

@@ -22,8 +22,8 @@
   <string name="dialog_wait_update">アカウントの更新</string>
   <string name="dialog_wait_update_details">アカウントを更新しています。しばらくお待ちください...</string>
   <string name="dialog_warn_ip2ip_account_title">空のSIPアカウントを作成しますか？</string>
-  <string name="dialog_warn_ip2ip_account_message">正しいホスト名なしのSIPアカウントを作成しようとしています。
-これは、直接のIP呼び出しによる発着信しかできません。
+  <string name="dialog_warn_ip2ip_account_message">有効なホスト名なしのSIPアカウントを作成しようとしています。
+この設定では直接のIP呼び出しによる発着信しかできません。
 アカウントを後で編集してください。</string>
   <string name="account_type_ip2ip">IPアカウント</string>
   <string name="help_ring">Jamiアカウントを使って、完全に分散したネットワークを通じ、ピアツーピアで安全に連絡を取ることができます。</string>
@@ -45,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">未知のデバイスです。</string>
   <string name="account_device_revocation_error_unknown">未知のエラー。</string>
   <string name="account_password_change">パスワードの変更</string>
+  <string name="account_password_set">パスワードを設定</string>
+  <string name="account_password_summary">アカウントのパスワードを管理します</string>
   <string name="account_password_change_wait_message">アカウントのパスワードを変更中</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">全般</string>
@@ -57,13 +59,15 @@
   <string name="account_optionnal_category">任意の設定</string>
   <string name="account_useragent_label">ユーザーエージェント</string>
   <string name="account_autoanswer_label">自動応答</string>
+  <string name="account_rendezvous_label">会議モード</string>
+  <string name="account_rendezvous_summary">「会議モード」では、新たにかかってきた通話は会議室に追加されます。</string>
   <string name="account_upnp_label">UPnPを有効化</string>
   <string name="account_proxy_field">プロキシ</string>
   <!--Audio Details-->
   <string name="account_audio_label">音声</string>
   <string name="account_preferences_media_tab">メディア</string>
   <string name="account_ringtone_label">着信音</string>
-  <string name="account_ringtone_enabled_label">着信音を使用</string>
+  <string name="account_ringtone_enabled_label">着信音を有効化</string>
   <string name="account_ringtone_path_label">着信音のパス</string>
   <string name="account_ringtone_custom_label">カスタム着信音を使用</string>
   <string name="account_ringtone_title">着信音を設定</string>
@@ -81,6 +85,7 @@
   <string name="account_stun_enable_label">Stunを使用</string>
   <string name="account_stun_server_label">Stunサーバー</string>
   <string name="account_accept_files">ファイルの受信を自動で許可する</string>
+  <string name="account_conversation_settings_title">会話の設定</string>
   <string name="account_accept_files_max_size">自動で許可する最大ファイルサイズ</string>
   <string name="account_accept_files_never">常に自動で拒否する</string>
   <string name="account_accept_files_always">常に自動で許可する</string>
@@ -107,6 +112,8 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">セキュリティ</string>
   <string name="account_srtp_switch_label">メディアストリームを暗号化 (SRTP)</string>
+  <string name="account_srtp_enable_sdes">SDESを鍵交換プロトコルとして有効化</string>
+  <string name="account_srtp_rtp_fallback">SRTPが失敗した際にRTPを代替として使う</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transportを使用</string>
@@ -120,16 +127,19 @@
   <string name="account_tls_server_name_label">サーバー名</string>
   <string name="account_tls_verify_server_label">検証サーバー</string>
   <string name="account_tls_verify_client_label">検証クライアント</string>
+  <string name="account_require_client_certificate_label">TLSにはクライアント証明書が必要です</string>
   <string name="account_tls_negotiation_timeout_sec">ネゴシエーションタイムアウト (秒)</string>
   <string name="account_rtp_max_port">最大</string>
   <string name="account_rtp_min_port">最小</string>
   <string name="account_rtp_port_range">音声 RTP ポートの範囲</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">アカウントをロック解除するメインパスワードを入力してください</string>
+  <string name="account_new_device_password">アカウントのロックを解除するメインパスワードを入力してください</string>
   <string name="error_password_char_count">6文字以上</string>
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
   <string name="export_account_wait_message">アカウント情報をエクスポートしています</string>
+  <string name="account_export_file">バックアップアカウント</string>
+  <string name="account_export_file_summary">後から復旧できるようにアカウントをデバイスにバックアップします</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
   <string name="account_export_end_network_message">ネットワーク上でアカウントをエクスポートできませんでした。 接続を確認してください。</string>
@@ -139,8 +149,8 @@
   <string name="account_share_body">Jami分散コミュニケーションプラットフォームで \'%1$s\' を使用してご連絡ください: %2$s</string>
   <string name="account_share_body_with_username">Jami分散コミュニケーションプラットフォームで \'%1$s\' または公開ユーザー名 \'%2$s\' を使用してご連絡ください: %3$s</string>
   <string name="account_contact_me">Jamiでご連絡ください。</string>
-  <string name="update_account">アカウントの更新</string>
-  <string name="account_migration">Jamiアカウントが更新可能です。\nあなたの暗証語を入力してください。</string>
+  <string name="update_account">アカウントを更新</string>
+  <string name="account_migration">Jamiアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
   <string name="ring_account">Jamiアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
@@ -160,22 +170,28 @@
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
   <!--TV-->
+  <string name="account_tv_settings_header">アカウント設定</string>
   <string name="account_tv_advance_settings_header">詳細設定</string>
   <string name="account_tv_add_contact">連絡先を追加</string>
+  <string name="account_tv_advanced_settings">一般の設定を変更する</string>
   <string name="account_tv_about">Jamiについて</string>
   <string name="tv_about_version">バージョン</string>
   <string name="tv_about_license">ライセンス</string>
   <string name="tv_about_credits">謝辞</string>
+  <string name="account_link_device">他のデバイスから接続する</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_new_button">Jamiアカウントを作成</string>
   <string name="account_link_export_button">新しいデバイスをリンク</string>
-  <string name="account_link_export_info">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
+  <string name="account_link_show_button">さらに%d個のデバイスを表示</string>
+  <string name="account_link_hide_button">リンクされたデバイスを隠す</string>
+  <string name="account_link_export_info">別のデバイスでこのアカウントを使用するには、まずJamiでこのアカウントを公開する必要があります。これにより新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
   <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>
-  <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\n処理を完了するには、新しいデバイスでJamiを開く必要があります。\"このデバイスをアカウントとリンク\" して新しいアカウントを作成してください。PINの有効期間は10分です。</string>
+  <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\n処理を完了するには、新しいデバイスでJamiを開く必要があります。「このデバイスをアカウントとリンク」 して新しいアカウントを作成してください。PINの有効期間は10分です。</string>
   <string name="account_link_export_info_light">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
+  <string name="account_export_title">アカウントを他のデバイスとリンク</string>
   <string name="account_connect_server_button">管理サーバーに接続</string>
   <string name="account_connect_button">接続</string>
   <string name="prompt_server">Jami管理サーバーのURL</string>
@@ -184,7 +200,7 @@
   <string name="account_connect_prompt_username">ユーザー名</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
-  <string name="no_registered_name_for_account">登録名ではありません</string>
+  <string name="no_registered_name_for_account">登録された名前がありません</string>
   <string name="username_available">使用可能なユーザー名です</string>
   <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
@@ -192,7 +208,7 @@
   <string name="register_username">公開ユーザー名を登録</string>
   <string name="register_recommended">推奨</string>
   <string name="username_already_taken">すでに取得されているユーザー名です</string>
-  <string name="invalid_username">無効なユーザー名</string>
+  <string name="invalid_username">無効なユーザー名です</string>
   <string name="unknown_error">原因不明のエラーが発生しました。ネットワークの接続を確認してください。</string>
   <string name="looking_for_username_availability">利用可能なユーザー名を検索中…</string>
   <string name="account_status_connecting">接続中</string>
@@ -203,16 +219,17 @@
   <string name="account_status_error">エラー</string>
   <!--Create account-->
   <string name="account_creation_home">Jamiへようこそ</string>
-  <string name="account_creation_profile">個人情報を作成する</string>
+  <string name="account_creation_profile">プロフィールを作成する</string>
   <string name="account_creation_ring">Jamiアカウントを作成</string>
-  <string name="account_link_title">この機器を関連付ける</string>
+  <string name="account_link_title">このデバイスをリンクする</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">アカウントを編集</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">確認の暗証語を入力</string>
   <string name="enter_password">暗証語を入力してください</string>
-  <string name="revoke_device_title">機器の破棄</string>
-  <string name="revoke_device_message">%1$s を破棄してもよろしいですか？</string>
+  <string name="revoke_device_title">デバイスを取り消し</string>
+  <string name="revoke_device_message">%1$s を取り消してもよろしいですか？</string>
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
   <string name="revoke_device_wait_message">機器を破棄しています</string>
   <string name="rename_device_title">この機器の名前を変更</string>

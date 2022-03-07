@@ -30,7 +30,7 @@
   <string name="pref_notification_title">Sichtbarkeit der Benachrichtigung</string>
   <string name="pref_notification_summary">Sichtbarkeit von Anwendungsbenachrichtigungen auf dem Sperrbildschirm einstellen.</string>
   <string name="pref_blackList_title">Blockierte Kontakte</string>
-  <string name="pref_blackList_summary">Überprüfe deine Sperrliste.</string>
+  <string name="pref_blackList_summary">Überprüfen Sie Ihre Sperrliste.</string>
   <string name="pref_delete_account_title">Konto löschen</string>
   <string name="pref_delete_account_summary">Dein Konto von diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
@@ -58,11 +58,11 @@
   <string name="plugin_uninstall_title">Plugin deinstallieren ?</string>
   <string name="plugin_reset_preferences">Plugin-Einstellungen zurücksetzen</string>
   <string name="plugin_reset_preferences_summary">Die Plugin-Einstellungen werden voreingestellt</string>
-  <string name="plugin_reset_preferences_ask">Willst du die Einstellungen des Plugins zurücksetzen ?</string>
+  <string name="plugin_reset_preferences_ask">Wollen Sie die Einstellungen des Plugins zurücksetzen ?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> erfolgreich installiert</string>
   <string name="plugin_install_failure">Installation des Plugins ist fehlgeschlagen: <b>%1$s</b></string>
-  <string name="plugin_recent_version_exception">Du hast eine neuere Version von: <b>%1$s</b></string>
-  <string name="plugin_same_version_exception">Du hast die gleiche Version von <b>%1$s</b> installiert</string>
+  <string name="plugin_recent_version_exception">Sie haben eine neuere Version von: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Sie haben die gleiche Version von <b>%1$s</b> installiert</string>
   <string name="plugin_force_install">Erzwinge \n Installation</string>
   <string name="plugin_path_image_add">Ein neues Bild hinzufügen</string>
 </resources>
