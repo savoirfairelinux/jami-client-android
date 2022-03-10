@@ -177,12 +177,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     }
 
     override fun askPhotoPermission() {
-        requestPermissions(
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ), REQUEST_PERMISSION_CAMERA
-        )
+        requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_PERMISSION_CAMERA)
     }
 
     override fun goToNext(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {

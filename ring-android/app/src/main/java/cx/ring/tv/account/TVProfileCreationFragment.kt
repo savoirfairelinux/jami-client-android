@@ -142,8 +142,12 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun goToPhotoCapture() {
-        val intent = Intent(activity, CustomCameraActivity::class.java)
-        startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO)
+        try {
+            startActivityForResult(Intent(activity, CustomCameraActivity::class.java),
+                ProfileCreationFragment.REQUEST_CODE_PHOTO)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error opening camera", e)
+        }
     }
 
     override fun askStoragePermission() {
@@ -154,10 +158,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun askPhotoPermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA
-        )
+        requestPermissions(arrayOf(Manifest.permission.CAMERA), ProfileCreationFragment.REQUEST_PERMISSION_CAMERA)
     }
 
     override fun goToNext(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
