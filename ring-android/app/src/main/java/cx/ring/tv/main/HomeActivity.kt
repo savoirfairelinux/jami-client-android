@@ -287,10 +287,8 @@ class HomeActivity : FragmentActivity() {
     }
 
     private fun askCameraPermission() {
-        ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                ProfileCreationFragment.REQUEST_PERMISSION_CAMERA
-        )
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),
+            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

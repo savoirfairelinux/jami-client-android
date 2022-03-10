@@ -72,9 +72,7 @@ class ProfileCreationPresenter @Inject constructor(
     }
 
     fun cameraClick() {
-        val hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                mDeviceRuntimeService.hasWriteExternalStoragePermission()
-        if (hasPermission) {
+        if (mDeviceRuntimeService.hasVideoPermission()) {
             view?.goToPhotoCapture()
         } else {
             view?.askPhotoPermission()

@@ -133,10 +133,6 @@ class DeviceRuntimeServiceImpl(
         return checkPermission(Manifest.permission.WRITE_CALL_LOG)
     }
 
-    override fun hasWriteExternalStoragePermission(): Boolean {
-        return checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    }
-
     override fun hasGalleryPermission(): Boolean {
         return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     }

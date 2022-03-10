@@ -158,24 +158,17 @@ class JamiAccountSummaryPresenter @Inject constructor(
     }
 
     fun cameraClicked() {
-        val hasPermission = mDeviceRuntimeService.hasVideoPermission() && mDeviceRuntimeService.hasWriteExternalStoragePermission()
-        val view = view
-        if (view != null) {
-            if (hasPermission) {
-                view.gotToImageCapture()
-            } else {
-                view.askCameraPermission()
-            }
-        }
+        if (mDeviceRuntimeService.hasVideoPermission())
+            view?.gotToImageCapture()
+        else
+            view?.askCameraPermission()
     }
 
     fun galleryClicked() {
-        val hasPermission = mDeviceRuntimeService.hasGalleryPermission()
-        if (hasPermission) {
-            view!!.goToGallery()
-        } else {
-            view!!.askGalleryPermission()
-        }
+        if (mDeviceRuntimeService.hasGalleryPermission())
+            view?.goToGallery()
+        else
+            view?.askGalleryPermission()
     }
 
     fun goToAccount() {

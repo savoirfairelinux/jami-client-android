@@ -130,22 +130,17 @@ class HomeNavigationPresenter @Inject constructor(
     }
 
     fun cameraClicked() {
-        val hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                mDeviceRuntimeService.hasWriteExternalStoragePermission()
-        if (hasPermission) {
+        if (mDeviceRuntimeService.hasVideoPermission())
             view?.gotToImageCapture()
-        } else {
+        else
             view?.askCameraPermission()
-        }
     }
 
     fun galleryClicked() {
-        val hasPermission = mDeviceRuntimeService.hasGalleryPermission()
-        if (hasPermission) {
+        if (mDeviceRuntimeService.hasGalleryPermission())
             view?.goToGallery()
-        } else {
+        else
             view?.askGalleryPermission()
-        }
     }
 
     fun cameraPermissionChanged(isGranted: Boolean) {

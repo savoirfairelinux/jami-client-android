@@ -59,7 +59,6 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     abstract fun hasContactPermission(): Boolean
     abstract fun hasCallLogPermission(): Boolean
     abstract fun hasGalleryPermission(): Boolean
-    abstract fun hasWriteExternalStoragePermission(): Boolean
     abstract val profileName: String?
     abstract fun hardLinkOrCopy(source: File, dest: File): Boolean
 }
