@@ -43,7 +43,6 @@ interface ConversationView {
     fun switchToConversationView()
     fun switchToSyncingView()
     fun switchToEndedView()
-    fun askWriteExternalStoragePermission()
     fun openFilePicker()
     fun acceptFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
     fun refuseFile(accountId: String, conversationUri: Uri, transfer: DataTransfer)
