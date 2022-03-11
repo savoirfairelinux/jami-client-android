@@ -535,13 +535,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun askWriteExternalStoragePermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            JamiApplication.PERMISSIONS_REQUEST
-        )
-    }
-
     override fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)

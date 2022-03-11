@@ -613,10 +613,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         return mParticipantAvatars[uri]
     }
 
-    override fun askWriteExternalStoragePermission() {
-        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), JamiApplication.PERMISSIONS_REQUEST)
-    }
-
     override fun scrollToEnd() {}
     override fun updateContact(contact: ContactViewModel) {
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
