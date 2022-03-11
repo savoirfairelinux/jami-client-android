@@ -119,7 +119,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     // Create an intent that can start the Speech Recognizer activity
     private fun displaySpeechRecognizer() {
-        if (!checkAudioPermission()) return
+        if (!checkAudioPermission(REQUEST_RECORD_AUDIO_PERMISSION)) return
         try {
             startActivityForResult(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
                 .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -150,9 +150,8 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         binding!!.let { binding ->
             binding.buttonText.setOnClickListener { displaySpeechRecognizer() }
             binding.buttonVideo.setOnClickListener {
-                val intent = Intent(activity, CustomCameraActivity::class.java)
-                    .setAction(MediaStore.ACTION_VIDEO_CAPTURE)
-                startActivityForResult(intent, REQUEST_CODE_PHOTO)
+                if (checkAudioPermission(REQUEST_AUDIO_PERMISSION_FOR_VIDEO))
+                    openVideoRecorder()
             }
 
             binding.buttonAudio.setOnClickListener {
@@ -182,10 +181,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    private fun checkAudioPermission(): Boolean {
+    private fun checkAudioPermission(code: Int): Boolean {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION)
+            requestPermissions(permissions, code)
             return false
         }
         return true
@@ -417,8 +416,15 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            // NOOP
+        when (requestCode) {
+            REQUEST_AUDIO_PERMISSION_FOR_VIDEO -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openVideoRecorder()
+            }
+            REQUEST_RECORD_AUDIO_PERMISSION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startRecording()
+            } else {
+                mStartRecording = !mStartRecording
+            }
         }
     }
 
@@ -457,7 +463,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     private fun startRecording() {
-        if (!checkAudioPermission()) return
+        if (!checkAudioPermission(REQUEST_RECORD_AUDIO_PERMISSION)) return
         if (recorder != null) {
             return
         }
@@ -478,6 +484,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Error starting recording: " + e.localizedMessage, Toast.LENGTH_LONG).show()
+            mStartRecording = !mStartRecording
             recorder?.let { rec ->
                 rec.release()
                 recorder = null
@@ -692,6 +699,12 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId))
     }
 
+    private fun openVideoRecorder() {
+        val intent = Intent(activity, CustomCameraActivity::class.java)
+            .setAction(MediaStore.ACTION_VIDEO_CAPTURE)
+        startActivityForResult(intent, REQUEST_CODE_PHOTO)
+    }
+
     companion object {
         private val TAG = TvConversationFragment::class.java.simpleName
         private const val ARG_MODEL = "model"
@@ -703,6 +716,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         private const val DIALOG_HEIGHT = 400
         private val permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
         private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
+        private const val REQUEST_AUDIO_PERMISSION_FOR_VIDEO = 201
 
         fun newInstance(args: Bundle?): TvConversationFragment {
             return TvConversationFragment().apply {
