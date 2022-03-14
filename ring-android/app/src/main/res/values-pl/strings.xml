@@ -15,11 +15,13 @@
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz <u>GNU General Public License wersja 3 lub późniejsza</u></string>
   <string name="description">Jami jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
   <string name="credits">Podziękowania</string>
+  <string name="pip_title">Konferencja Jami</string>
   <string name="call_service_description">Ta usługa jest niezbędna, aby Twoje połączenia telefoniczne działały na pierwszym planie. Działa ona tylko podczas połączeń.</string>
   <string name="data_transfer_service_description">Ta usługa jest niezbędna, aby wyświetlać utrzymujące się powiadomienia podczas transferu plików. Działa ona tylko podczas transferu plików.</string>
   <!--About dialog-->
   <string name="developed_by">Rozwijany przez</string>
   <string name="designed_by">Zaprojektowany przez</string>
+  <string name="ringtones_by">Dzwonki wykonane przez</string>
   <!--RingActivity-->
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_account_offline">To konto jest offline</string>
@@ -99,6 +101,10 @@
   <string name="start_error_title">Nie udało się uruchomić Jami!</string>
   <string name="start_error_mic_required">Jami wymaga zezwolenia na korzystanie z mikrofonu, by działać.</string>
   <string name="action_call_accept">Odbierz</string>
+  <string name="action_call_accept_audio">Odpowiedź audio</string>
+  <string name="action_call_accept_video">Odpowiedź video</string>
+  <string name="action_call_hold_accept">Wstrzymaj i odbierz połączenie audio</string>
+  <string name="action_call_hold_accept_video">Wstrzymaj i odbierz połączenie video</string>
   <string name="action_call_end_accept">Zakończ i odbierz połączenie</string>
   <string name="action_call_decline">Odrzuć</string>
   <string name="action_call_mic_mute">Wycisz mikrofon</string>
@@ -106,7 +112,10 @@
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
+  <string name="hist_contact_invited">Kontakt zaproszony</string>
   <string name="hist_contact_added">Kontakt dodany</string>
+  <string name="hist_contact_left">Kontakt opuścił</string>
+  <string name="hist_contact_banned">Kontakt został zablokowany</string>
   <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <string name="ab_action_audio_call">Połączenie głosowe</string>
   <string name="ab_action_video_call">Połączenie wideo</string>
@@ -117,6 +126,7 @@
   <string name="qr_code">Kod QR</string>
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <string name="ab_action_hidepreview">Ukryj podgląd</string>
+  <string name="remote_recording">%s nagrywanie...</string>
   <!--Text messages-->
   <string name="send_message">Wyślij wiadomość</string>
   <string name="message_sending">Trwa wysyłanie wiadomości...</string>
@@ -137,6 +147,7 @@
   <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
   <string name="ringtone_custom_prompt">Ustaw niestandardowy dzwonek</string>
   <string name="ringtone_custom_label">Wartość własna</string>
+  <string name="ringtone_jami_tones">Dzwonki Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami potrzebuje pozwolenia na czytanie kontaktów, by włączyć tą funkcję.</string>
   <!--Write call log permission-->
@@ -174,6 +185,12 @@
   <string name="block_contact_dialog_message">%1$snie będzie w stanie się z tobą skontaktować, dopóki kontakt nie zostanie odblokowany.</string>
   <string name="block_contact_completed">Kontakt %1$s został zablokowany.</string>
   <string name="conversation_contact_is_typing">Kontakt pisze...</string>
+  <string name="conversation_info_contact_you">Ty</string>
+  <string name="conversation_members">Użytkownicy</string>
+  <string name="conversation_syncing">Pobieranie rozmowy od peera</string>
+  <string name="conversation_preference_color">Kolor rozmowy</string>
+  <string name="conversation_preference_emoji">Emoji rozmowy</string>
+  <string name="conversation_type_contact">Kontakty Jami</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
@@ -216,6 +233,7 @@
   <string name="refuse">Odmów</string>
   <string name="block">Blokuj</string>
   <string name="contact_request_title">Nowe zaproszenie</string>
+  <string name="contact_request_msg">Masz %1$d zaproszeń do dodania kontaktu</string>
   <string name="contact_request_account">Dla %1$s</string>
   <string name="no_requests">Nie masz nowych zaproszeń</string>
   <string name="message_contact_not_trusted_yet">%s nie jest jeszcze w kontaktach. Chcesz zaakceptować, czy odrzucić prośbę zaproszenia?</string>
@@ -249,10 +267,12 @@
   <string name="file_transfer_status_closed_by_peer">zakończono przez peera</string>
   <string name="file_transfer_status_invalid_pathname">nieprawidłowa ścieżka</string>
   <string name="file_transfer_status_unjoinable_peer">nieosiągalny klient</string>
-  <string name="file_transfer_status_cancelled">anulowany</string>
+  <string name="file_transfer_status_cancelled">anulowano</string>
   <string name="file_transfer_status_error">Nie udało się, bo wystąpił błąd</string>
+  <string name="file_transfer_status_timed_out">Czas upłynął</string>
   <string name="file_saved_in">Plik zapisano w  %s</string>
   <string name="file_saved_successfully">Plik został zapisany poprawnie</string>
+  <string name="file_download">Pobierz</string>
   <string name="no_space_left_on_device">Brak wolnego miejsca</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>
@@ -283,6 +303,7 @@
   <string name="tv_send_text">Wyślij Tekst</string>
   <string name="tv_send_audio">Wyślij dźwięk</string>
   <string name="tv_send_video">Wyślij Multimedia</string>
+  <string name="tv_action_more">Więcej</string>
   <string name="conversation_input_speech_hint">Powiedz coś...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Zalecane</string>
@@ -308,5 +329,7 @@
   <string name="bottomSheet_add_participants_btn">Dodaj</string>
   <string name="bottomSheet_change_camera_btn">Zmień</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Skończ rozmowę</string>
+  <string name="bottomSheet_sound_output_btn">Dźwięk</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
 </resources>

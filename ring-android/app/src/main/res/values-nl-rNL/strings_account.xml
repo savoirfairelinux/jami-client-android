@@ -98,6 +98,7 @@
   <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken, dient u Jami een PIN te laten genereren. Deze PIN kunt u op het andere apparaat invoeren tijdens het toevoegen van een Jami-account door te koppelen met een apparaat. De PIN is 10 minuten geldig.</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
+  <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
   <string name="account_status_error">Fout</string>
   <!--Create account-->
   <string name="account_creation_home">Welkom bij Jami</string>
@@ -110,7 +111,7 @@
   <string name="account_revoke_device_hint">Wachtwoord ter controle nogmaals invoeren</string>
   <string name="enter_password">Wachtwoord invoeren</string>
   <string name="revoke_device_title">Apparaat terugtrekken</string>
-  <string name="revoke_device_message">Weet u zeker dat u %1$s wilt ontkoppelen ?</string>
+  <string name="revoke_device_message">Weet u zeker dat u %1$s wilt intrekken?</string>
   <string name="revoke_device_wait_title">Een moment a.u.b...</string>
   <string name="revoke_device_wait_message">Apparaat aan het ontkoppelen</string>
   <string name="rename_device_title">Dit apparaat hernoemen</string>

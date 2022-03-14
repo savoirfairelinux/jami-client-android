@@ -252,7 +252,7 @@
   <string name="file_transfer_status_closed_by_peer">Pareak itxitakoa</string>
   <string name="file_transfer_status_invalid_pathname">bide-izen baliogabea</string>
   <string name="file_transfer_status_unjoinable_peer">pareareakin harremanetan hastea ez da posible </string>
-  <string name="file_transfer_status_cancelled">baztertuta</string>
+  <string name="file_transfer_status_cancelled">bertan behera utzita</string>
   <string name="file_transfer_status_error">errorea</string>
   <string name="file_transfer_status_timed_out">denbora-muga gaindituta</string>
   <string name="file_saved_in">Fitxategi gordetuta</string>
@@ -267,7 +267,7 @@
   <string name="menu_file_share">Partekatu fitxategia</string>
   <string name="menu_message_copy">Kopiatu</string>
   <string name="menu_message_delete">Ezabatu mezua</string>
-  <string name="menu_message_cancel">Ezeztatu mezua</string>
+  <string name="menu_message_cancel">Utzi mezua</string>
   <string name="menu_delete">Ezabatu</string>
   <string name="pref_darkTheme_title">Gai iluna</string>
   <string name="pref_darkTheme_summary">Gaitu beti gai iluna sistemaren portaerari jarraitu ordez</string>
@@ -290,4 +290,5 @@
   <string name="bottomSheet_share_btn">Partekatu</string>
   <string name="bottomSheet_add_participants_btn">Gehitu</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Amaitu deia</string>
 </resources>

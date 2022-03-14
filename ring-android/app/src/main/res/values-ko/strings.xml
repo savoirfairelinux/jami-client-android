@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <string name="send_file">파일 보내기</string>
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">취소됨</string>
+  <string name="menu_message_cancel">메시지 취소</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">통화 종료</string>
+  <string name="bottomSheet_raiseHand_btn">손 들기</string>
+</resources>

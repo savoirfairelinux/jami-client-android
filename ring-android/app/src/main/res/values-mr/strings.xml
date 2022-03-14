@@ -36,9 +36,12 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">रद्द केले</string>
+  <string name="menu_message_cancel">संदेश रद्द करा</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">प्ले करा</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">कॉल समाप्त करा</string>
 </resources>

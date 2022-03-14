@@ -225,7 +225,7 @@
   <string name="account_revoke_device_hint">أدخل كلمة المرور للتأكيد</string>
   <string name="enter_password">أدخِل كلمة المرور</string>
   <string name="revoke_device_title">إبطال جهاز</string>
-  <string name="revoke_device_message">هل أنت متأكد من أنك تريد إبطال %1$s ⸮</string>
+  <string name="revoke_device_message">هل أنت متأكد من أنك تريد إبطال %1$s⸮</string>
   <string name="revoke_device_wait_title">الرجاء الإنتظار...</string>
   <string name="revoke_device_wait_message">إبطال الجهاز</string>
   <string name="rename_device_title">أعد تسمية هذا الجهاز</string>

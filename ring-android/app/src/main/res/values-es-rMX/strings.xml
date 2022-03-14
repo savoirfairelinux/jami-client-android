@@ -1,19 +1,71 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Retroalimentación</string>
+  <string name="report">Envíanos un correo electrónico</string>
+  <string name="section_license">Licencia</string>
+  <string name="sponsor_section">Soportado por</string>
+  <string name="copyright_section">Derechos Reservados</string>
+  <string name="contribute_section">Contribuir</string>
+  <string name="version_section">Versión</string>
+  <string name="no_email_app_installed">No se encontró una app de correo electrónico, instale una y envíenos un reporte</string>
+  <string name="no_browser_app_installed">No se encontró algún navegador web, instale uno para ver esta página</string>
+  <string name="email_chooser_title">Envíe un correo usando...</string>
+  <string name="website_chooser_title">Ver sitio web usando...</string>
+  <string name="license">Este software se proporciona \"tal cual\" sin garantía de ningún tipo. Para mas información, vea 1 GNU General Public License versión 3 o superior</string>
+  <string name="description">Jami es un software libre para la comunicación universal que respeta las libertades y la privacidad de sus usuarios.</string>
+  <string name="credits">Creditos</string>
+  <string name="pip_title">Conferencia Jami</string>
+  <string name="call_service_description">Este servicio es necesario para mantener sus llamadas funcionando en primer plano. Solo funciona durante las llamadas.</string>
+  <string name="data_transfer_service_description">Este servicio es necesario para mostrar notificaciones persistentes durante las transferencias de archivos. Solo se ejecuta durante las transferencias de archivos.</string>
   <!--About dialog-->
+  <string name="developed_by">Desarrollado por</string>
+  <string name="designed_by">Diseñado por</string>
+  <string name="ringtones_by">Timbres de llamada por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sin conexión de red</string>
+  <string name="error_account_offline">La cuenta se encuentra desconectada</string>
+  <string name="error_mobile_network_available_but_disabled">Por favor otorgue permisos a la red celular en la pantalla de configuración</string>
   <!--AB menus-->
+  <string name="ab_action_chat">Mensaje de Texto</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Solicitud de contacto</string>
+  <string name="menu_item_accounts">Administración de Cuentas</string>
+  <string name="menu_item_account">Administración de Cuenta</string>
+  <string name="menu_item_settings">Configuraciones</string>
+  <string name="menu_item_plugin_list">Configuración de complementos</string>
+  <string name="menu_item_share">Compartir mi cuenta</string>
+  <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Marcar un numero</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Buscar nombre o numero de teléfono</string>
+  <string name="choose_number">Seleccionar un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Llamada entrante perdida</string>
+  <string name="notif_missed_outgoing_call">Lllamada saliente perdida</string>
+  <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
+  <string name="notif_incoming_call">Llamada entrante</string>
+  <string name="notif_outgoing_call_title">Llamando a %1$s</string>
+  <string name="notif_outgoing_call">Lllamando a </string>
+  <string name="notif_channel_call_in_progress">Lllamada en Progreso</string>
+  <string name="notif_channel_calls">Lllamdas</string>
+  <string name="notif_channel_missed_calls">Llamadas perdidas</string>
+  <string name="notif_channel_incoming_calls">Llamadas entrantes</string>
+  <string name="notif_channel_messages">Mensajes</string>
+  <string name="notif_channel_requests">Solicitudes</string>
+  <string name="notif_channel_file_transfer">Transferencia de archivo</string>
+  <string name="notif_channel_sync">Sincronizar Datos</string>
+  <string name="notif_channel_background_service">Servicio en Segundo Plano</string>
+  <string name="notif_channel_background_service_descr">Permitir recibir llamadas y mensajes en cualquier momento.</string>
+  <string name="notif_group_calls">Lllamdas</string>
+  <string name="notif_background_service">Jami esta funcionando actualmente en segundo plano.</string>
+  <string name="notif_mark_as_read">Marcar como leido</string>
   <!--Call Fragment-->
   <!--Text messages-->
   <string name="message_failed">Falló</string>
@@ -22,6 +74,7 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">Compartir mi cuenta</string>
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
@@ -29,17 +82,60 @@
   <!--Account Summary-->
   <string name="account">Cuenta</string>
   <!--Share fragment-->
+  <string name="share_label">Compartir</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <string name="send_request_button">Envíar</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">cancelado</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversaciones</string>
+  <string name="navigation_item_contact_request">Solicitud de contacto</string>
   <string name="navigation_item_account">Cuenta</string>
+  <string name="search_results_public_directory">Directorio Público</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Desea enviar mensaje de audio?</string>
+  <string name="tv_send_image_dialog_message">Desea enviar la imagen?</string>
+  <string name="tv_send_video_dialog_message">Desea enviar el vídeo?</string>
+  <string name="tv_media_preview">Pevisualizar</string>
   <string name="tv_audio_play">Reproducir</string>
+  <string name="tv_audio_pause">Pausa</string>
+  <string name="tv_dialog_send">Envíar</string>
+  <string name="tv_audio_recording">Grabando...</string>
+  <string name="tv_send_text">Envíar Texto</string>
+  <string name="tv_send_audio">Enviar Audio</string>
+  <string name="tv_send_video">Enviar un Archivo Multimedia</string>
+  <string name="tv_action_more">Maś</string>
+  <string name="conversation_input_speech_hint">Diga algo...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Recomendado</string>
+  <string name="wizard_status_optional">Opcional</string>
+  <string name="wizard_status_required">Requerido</string>
+  <string name="wizard_username_info">Escoja un nombre de usuario para su cuenta</string>
+  <string name="wizard_username_button">Escoger nombre de usuario</string>
+  <string name="wizard_username_skip">Saltar escoger nombre de usuario</string>
+  <string name="wizard_password_info">Contraseña de la cuenta</string>
+  <string name="wizard_password_placeholder">Escoja una contraseña para cifrar la cuenta</string>
+  <string name="wizard_password_button">Escoger contraseña</string>
+  <string name="wizard_password_skip">Crear una cuenta</string>
+  <string name="wizard_password_switch">Cifrar la cuenta con contraseña</string>
+  <string name="wizard_password_warning">Note que la contraseña no puede ser recuperada</string>
+  <string name="wizard_profile_info">El perfil sera compartido solo con sus contactos</string>
+  <string name="wizard_profile_button">Guardar perfil</string>
+  <string name="wizard_profile_skip">Ignore esto y ejecútelo más tarde</string>
+  <string name="fab_path_choose">Escoja otro archivo</string>
+  <string name="chat_plugins">Complementos de charla</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Compartir</string>
+  <string name="bottomSheet_dialpad_btn">Teclado de marcación</string>
+  <string name="bottomSheet_plugins_btn">Complementos</string>
+  <string name="bottomSheet_add_participants_btn">Agregar</string>
+  <string name="bottomSheet_change_camera_btn">Cambio</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Cámara</string>
+  <string name="bottomSheet_hangup_btn">Finalizar llamada</string>
+  <string name="bottomSheet_mute_microphone_btn">Micrófono</string>
+  <string name="bottomSheet_sound_output_btn">Sonidos</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
 </resources>

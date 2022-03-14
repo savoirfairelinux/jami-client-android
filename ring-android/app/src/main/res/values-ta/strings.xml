@@ -36,8 +36,10 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">ரத்து செய்யப்பட்டது</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">அழைப்பை முடித்திடுக</string>
 </resources>
