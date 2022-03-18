@@ -17,6 +17,7 @@
 
 -keep,includedescriptorclasses class net.jami.daemon.** { *; }
 -keepclassmembers class net.jami.daemon.** { *; }
+-keep class cx.ring.tv.settings.TVAboutFragment
 
 # ORMLite
 -keep class com.j256.**
