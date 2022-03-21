@@ -2,7 +2,9 @@
 <resources>
   <string name="pref_category_contacts">Kontakti</string>
   <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">Sistem</string>
   <string name="pref_clearHistory_title">Izbriši istoriju</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
+  <string name="pref_plugins_title">Dodaci</string>
 </resources>

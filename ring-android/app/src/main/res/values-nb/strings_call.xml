@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Parker</string>
     <string name="call_human_state_unhold">Gjenoppta</string>
     <string name="call_human_state_over">Over</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Ordstyrer</string>
+    <string name="call_muted">Dempet</string>
+    <string name="call_handRaised">Rekker opp hånd</string>
+
+</resources>

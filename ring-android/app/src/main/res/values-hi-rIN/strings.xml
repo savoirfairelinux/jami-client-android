@@ -48,6 +48,8 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">संपर्क</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">रद्द किया गया</string>
+  <string name="menu_message_cancel">संदेश रद्द करें</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_account">खाता</string>
   <!--TV-->
@@ -56,4 +58,5 @@
   <string name="wizard_password_skip">खाता बनाएं</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">बाटें </string>
+  <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
 </resources>

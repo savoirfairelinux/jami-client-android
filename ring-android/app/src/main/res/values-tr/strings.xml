@@ -310,5 +310,6 @@
   <string name="bottomSheet_add_participants_btn">Ekle</string>
   <string name="bottomSheet_change_camera_btn">Değiştir</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Çağrıyı sonlandır</string>
   <string name="bottomSheet_raiseHand_btn">Elinizi kaldırın</string>
 </resources>

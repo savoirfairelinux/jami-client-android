@@ -95,8 +95,10 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontaktoj</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">nuligita</string>
   <string name="menu_file_share">Kunhavigi dosieron</string>
   <string name="menu_message_copy">Kopii</string>
+  <string name="menu_message_cancel">Nuligi mesaĝon</string>
   <string name="menu_delete">Forigi</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversacioj</string>
@@ -110,4 +112,5 @@
   <string name="bottomSheet_share_btn">Kunhavi</string>
   <string name="bottomSheet_add_participants_btn">Aldoni</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
+  <string name="bottomSheet_hangup_btn">Finigi vokon</string>
 </resources>

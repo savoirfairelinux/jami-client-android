@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Tilbakemelding</string>
+  <!--About dialog-->
+  <string name="developed_by">Utvikla av</string>
+  <string name="designed_by">Utforma av</string>
+  <!--RingActivity-->
+  <string name="error_account_offline">Denne kontoen er avlogga</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Tekstmeldingar</string>
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <string name="send_file">Sende fil</string>
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">avbrutt</string>
+  <string name="menu_message_cancel">Avbryt melding</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+  <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
+  <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
+</resources>

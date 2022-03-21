@@ -24,7 +24,7 @@
   <string name="ringtones_by">Мелодии звонка</string>
   <!--RingActivity-->
   <string name="error_no_network">Нет подключения к сети</string>
-  <string name="error_account_offline">Учетная запись находится в автономном режиме</string>
+  <string name="error_account_offline">Учетная запись находится в оффлайн-режиме</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, предоставьте доступ к сотовой сети в настройках.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Сообщения</string>
