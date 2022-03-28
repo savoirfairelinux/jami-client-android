@@ -71,9 +71,12 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">لغو شده</string>
+  <string name="menu_message_cancel">لغو پیام</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">درخواست های مخاطبین</string>
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">پایان دادن به تماس</string>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="account_device_revoke">إبطال جهاز</string>
+  <string name="account_device_revocation_success">تم إبطال الجهاز الان</string>
+  <string name="account_device_revocation_error_title">لم يتم التمكن من إبطال الجهاز</string>
+  <!--Basic Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <!--Name registration-->
+  <string name="looking_for_username_availability">جاري البحث عن توفر اسم المستخدم…</string>
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+  <string name="revoke_device_title">إبطال جهاز</string>
+  <string name="revoke_device_message">هل أنت متأكد من أنك تريد إبطال %1$s⸮</string>
+  <string name="revoke_device_wait_message">إبطال الجهاز</string>
+</resources>

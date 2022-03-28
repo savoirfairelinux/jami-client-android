@@ -325,6 +325,7 @@
   <string name="chat_plugins">Shtojca Fjalosjeje</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Ndajeni me të tjerë</string>
+  <string name="bottomSheet_dialpad_btn">Blloku i formimit të numrit</string>
   <string name="bottomSheet_plugins_btn">Shtojca</string>
   <string name="bottomSheet_add_participants_btn">Shtoje</string>
   <string name="bottomSheet_change_camera_btn">Ndryshoje</string>

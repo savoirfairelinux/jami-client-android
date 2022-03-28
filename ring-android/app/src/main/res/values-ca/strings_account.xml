@@ -45,6 +45,8 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_device_revocation_unknown_device">Dispositiu desconegut.</string>
   <string name="account_device_revocation_error_unknown">Error desconegut.</string>
   <string name="account_password_change">Canvia la contrasenya</string>
+  <string name="account_password_set">Assignar contrasenya</string>
+  <string name="account_password_summary">Gestionar la contrasenya del vostre compte</string>
   <string name="account_password_change_wait_message">Canviant contrasenya del compte</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -81,6 +83,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_stun_enable_label">Utilitza Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_accept_files">Accepta arxius entrants automàticament</string>
+  <string name="account_conversation_settings_title">Configuració de la conversa</string>
   <string name="account_accept_files_max_size">Mida màxima d\'arxiu que es pot acceptar automàticament</string>
   <string name="account_accept_files_never">No acceptar mai automàticament</string>
   <string name="account_accept_files_always">Accepta sempre automàticament</string>

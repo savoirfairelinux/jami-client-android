@@ -9,7 +9,7 @@
   <string name="add_sip_account_title">SIP-Konto hinzufügen</string>
   <string name="ring_account_default_name">Jami-Konto %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Rechnername</string>
+  <string name="prompt_hostname">Veranstalter-Name</string>
   <string name="prompt_username">Benutzername</string>
   <string name="prompt_password">Passwort</string>
   <string name="action_create">Konto erstellen</string>
@@ -85,7 +85,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
   <string name="account_accept_files">Erlaube automatisches empfangen von Dateien</string>
-  <string name="account_conversation_settings_title">Gesprächseinstellungen</string>
+  <string name="account_conversation_settings_title">Konversationseinstellungen</string>
   <string name="account_accept_files_max_size">Maximale Dateigröße für den automatischen Empfang</string>
   <string name="account_accept_files_never">Niemals automatisch empfangen</string>
   <string name="account_accept_files_always">Immer automatisch empfangen</string>
@@ -102,8 +102,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_proxy_server_label">DHT Proxy Adresse</string>
   <string name="account_proxy_server_list_label">DHT Proxy Liste URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
-  <string name="account_peer_discovery_label">Lokale Peer Erkennung</string>
-  <string name="account_peer_discovery_enable_label">Erlaube das finden von lokalen Peers</string>
+  <string name="account_peer_discovery_label">Lokale Teilnehmer-Erkennung</string>
+  <string name="account_peer_discovery_enable_label">Erlaube das Finden von lokalen Teilnehmern</string>
   <string name="account_peer_discovery_enable_summary">Verbinde zu anderen sich meldenden DHT Knoten in unserem lokalen Netzwerk</string>
   <!--Security Details-->
   <string name="account_credentials_label">Anmeldeinformationen</string>
@@ -204,7 +204,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="no_registered_name_for_account">Kein registrierter Name</string>
   <string name="username_available">Benutzername verfügbar !</string>
   <string name="register_name">Registriere Namen</string>
-  <string name="trying_to_register_name">Name wird registriert</string>
+  <string name="trying_to_register_name">Versuche Namen zu registrieren</string>
   <string name="registered_username">Benutzername wurde registriert</string>
   <string name="register_username">Öffentlichen Benutzernamen registrieren</string>
   <string name="register_recommended">Empfohlen</string>
