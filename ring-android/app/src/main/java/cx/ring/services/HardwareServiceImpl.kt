@@ -91,7 +91,7 @@ class HardwareServiceImpl(
         val pm = mContext.packageManager
         var hasMicrophone = pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
         if (!hasMicrophone) {
-            val recorder = MediaRecorder()
+            val recorder = MediaRecorder(mContext)
             val testFile = File(mContext.cacheDir, "MediaUtil#micAvailTestFile")
             hasMicrophone = try {
                 recorder.setAudioSource(MediaRecorder.AudioSource.MIC)

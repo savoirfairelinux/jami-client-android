@@ -39,14 +39,13 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
             screen.addPreference(preference)
         }
         preferenceScreen = screen
-        return root!!
+        return root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plugin_edition, menu)
         val item = menu.findItem(R.id.menuitem_delete)
         item.isVisible = false
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     /**
