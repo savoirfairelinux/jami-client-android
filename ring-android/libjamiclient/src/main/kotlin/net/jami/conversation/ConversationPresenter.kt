@@ -33,6 +33,7 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.model.Conversation.ElementStatus
 import net.jami.mvp.RootPresenter
 import net.jami.services.*
+import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.Log
 import net.jami.utils.VCardUtils
 import java.io.File
@@ -132,7 +133,7 @@ class ConversationPresenter @Inject constructor(
                 val uri = conversation.uri
                 val req = account.getRequest(uri)
                 if (req == null) {
-                    view.switchToUnknownView(uri.rawUriString)
+                    view.switchToUnknownView(ConversationItemViewModel.getTitle(conversation, contacts))
                 } else {
                     view.switchToIncomingTrustRequestView(req.displayName)
                 }
