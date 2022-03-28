@@ -197,7 +197,7 @@ abstract class JamiApplication : Application() {
 
         //DynamicColors.applyToActivitiesIfAvailable(this);
 
-        RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
+        //RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
