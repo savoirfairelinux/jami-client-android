@@ -34,10 +34,7 @@ import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.Call
-import net.jami.model.ContactEvent
-import net.jami.model.Conversation
-import net.jami.model.Interaction
+import net.jami.model.*
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 
@@ -45,6 +42,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
     private val binding: ItemSmartlistBinding?
     private val headerBinding: ItemSmartlistHeaderBinding?
     private val compositeDisposable = CompositeDisposable()
+    private var currentUri: Uri? = null
 
     constructor(b: ItemSmartlistBinding, parentDisposable: CompositeDisposable) : super(b.root) {
         binding = b
@@ -74,6 +72,14 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
         //Log.w("SmartListViewHolder", "bind " + smartListViewModel.getContact() + " " +smartListViewModel.showPresence());
         compositeDisposable.clear()
         if (binding != null) {
+            if (conversation.uri != currentUri) {
+                currentUri = conversation.uri
+                binding.convLastItem.text = ""
+                binding.convLastTime.text = ""
+                binding.convParticipant.text = ""
+                binding.photo.setImageDrawable(null)
+            }
+
             itemView.setOnClickListener { clickListener.onItemClick(conversation) }
             itemView.setOnLongClickListener {
                 clickListener.onItemLongClick(conversation)
