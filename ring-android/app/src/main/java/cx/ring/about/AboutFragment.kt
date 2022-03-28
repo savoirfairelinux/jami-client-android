@@ -38,20 +38,9 @@ import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAboutBinding
 
 class AboutFragment : Fragment() {
-    private var binding: FragAboutBinding? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragAboutBinding.inflate(inflater, container, false)
-        return binding!!.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
-        binding!!.apply {
+        return FragAboutBinding.inflate(inflater, container, false).apply {
             release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
             logo.setOnClickListener { openWebsite(getString(R.string.app_website)) }
             sflLogo.setOnClickListener { openWebsite(getString(R.string.savoirfairelinux_website)) }
@@ -59,7 +48,7 @@ class AboutFragment : Fragment() {
             licenseContainer.setOnClickListener { openWebsite(getString(R.string.gnu_license_website)) }
             emailReportContainer.setOnClickListener { sendFeedbackEmail() }
             credits.setOnClickListener { creditsClicked() }
-        }
+        }.root
     }
 
     override fun onResume() {

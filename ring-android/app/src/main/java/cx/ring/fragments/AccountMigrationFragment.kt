@@ -103,9 +103,8 @@ class AccountMigrationFragment : Fragment() {
         migratingAccount = true
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
-        val activity: Activity? = activity
-        if (activity != null) requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        mProgress = ProgressDialog(getActivity()).apply {
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        mProgress = ProgressDialog(requireContext()).apply {
             setTitle(R.string.dialog_wait_update)
             setMessage(getString(R.string.dialog_wait_update_details))
             setCancelable(false)

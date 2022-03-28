@@ -91,7 +91,6 @@ import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.util.*
 
-
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
     MediaButtonsHelperCallback, ConversationView, OnSharedPreferenceChangeListener {
@@ -934,27 +933,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
         startActivity(Intent(Intent.ACTION_VIEW)
-            .setClass(requireContext().applicationContext, CallActivity::class.java)
+            .setClass(requireContext(), CallActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(NotificationService.KEY_CALL_ID, conferenceId)
-        )
+            .putExtra(NotificationService.KEY_CALL_ID, conferenceId))
     }
 
     override fun goToCallActivityWithResult(accountId: String, conversationUri: net.jami.model.Uri, contactUri: net.jami.model.Uri, withCamera: Boolean) {
-        val intent = Intent(Intent.ACTION_CALL)
+        startActivity(Intent(Intent.ACTION_CALL)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .setClass(requireContext(), CallActivity::class.java)
             .putExtras(ConversationPath.toBundle(accountId, conversationUri))
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
-            .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera)
-        startActivity(intent)
+            .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera))
     }
 
     private fun setupActionbar(conversation: Conversation, contacts: List<ContactViewModel>) {
-        if (!isVisible) {
-            return
-        }
-        val activity: Activity = requireActivity()
+        val activity = activity ?: return
         val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
         val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
         val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
