@@ -55,8 +55,56 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
         if (savedInstanceState != null && model == null) {
             model = savedInstanceState.getSerializable(KEY_MODEL) as AccountCreationModelImpl?
         }
-        binding = FragAccJamiPasswordBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return FragAccJamiPasswordBinding.inflate(inflater, container, false).apply {
+            createAccount.setOnClickListener { presenter.createAccount() }
+            ringPasswordSwitch.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+                mIsChecked = isChecked
+                if (isChecked) {
+                    passwordTxtBox.visibility = View.VISIBLE
+                    ringPasswordRepeatTxtBox.visibility = View.VISIBLE
+                    placeholder.visibility = View.GONE
+                    val password: CharSequence? = password.text
+                    presenter.passwordChanged(password.toString(), ringPasswordRepeat.text!!)
+                } else {
+                    passwordTxtBox.visibility = View.GONE
+                    ringPasswordRepeatTxtBox.visibility = View.GONE
+                    placeholder.visibility = View.VISIBLE
+                    presenter.passwordUnset()
+                }
+            }
+            password.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    presenter.passwordChanged(s.toString())
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+            ringPasswordRepeat.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    presenter.passwordConfirmChanged(s.toString())
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+            ringPasswordRepeat.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    presenter.createAccount()
+                }
+                false
+            }
+            ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
+                    val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
+                    presenter.createAccount()
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+            binding = this
+        }.root
     }
 
     override fun onDestroyView() {
@@ -66,53 +114,6 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.createAccount.setOnClickListener { presenter.createAccount() }
-        binding!!.ringPasswordSwitch.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
-            mIsChecked = isChecked
-            if (isChecked) {
-                binding!!.passwordTxtBox.visibility = View.VISIBLE
-                binding!!.ringPasswordRepeatTxtBox.visibility = View.VISIBLE
-                binding!!.placeholder.visibility = View.GONE
-                val password: CharSequence? = binding!!.ringPassword.text
-                presenter.passwordChanged(password.toString(), binding!!.ringPasswordRepeat.text!!)
-            } else {
-                binding!!.passwordTxtBox.visibility = View.GONE
-                binding!!.ringPasswordRepeatTxtBox.visibility = View.GONE
-                binding!!.placeholder.visibility = View.VISIBLE
-                presenter.passwordUnset()
-            }
-        }
-        binding!!.ringPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                presenter.passwordChanged(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
-        binding!!.ringPasswordRepeat.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                presenter.passwordConfirmChanged(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
-        binding!!.ringPasswordRepeat.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                presenter.createAccount()
-            }
-            false
-        }
-        binding!!.ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
-                val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
-                presenter.createAccount()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
         presenter.init(model)
     }
 
@@ -131,16 +132,12 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
     }
 
     override fun goToAccountCreation(accountCreationModel: AccountCreationModel) {
-        val wizardActivity: Activity? = activity
-        if (wizardActivity is AccountWizardActivity) {
-            wizardActivity.createAccount(accountCreationModel)
-            val parent = parentFragment as JamiAccountCreationFragment?
-            if (parent != null) {
-                parent.scrollPagerFragment(accountCreationModel)
-                val imm = wizardActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding!!.ringPassword.windowToken, 0)
-            }
-        }
+        val wizardActivity = activity as AccountWizardActivity? ?: return
+        wizardActivity.createAccount(accountCreationModel)
+        val parent = parentFragment as JamiAccountCreationFragment?
+        parent?.scrollPagerFragment(accountCreationModel)
+        val imm = wizardActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(binding!!.password.windowToken, 0)
     }
 
     override fun cancel() {
