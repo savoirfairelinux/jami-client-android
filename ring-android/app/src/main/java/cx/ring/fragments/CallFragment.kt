@@ -58,6 +58,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
@@ -145,6 +146,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var isMyMicMuted: Boolean = false
+
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            switchCamera()
+        }
+    }
 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
@@ -789,10 +798,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     fun switchCamera() {
         val videoGranted = mDeviceRuntimeService.hasVideoPermission()
-        if (!videoGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val perms = ArrayList<String>()
-            perms.add(Manifest.permission.CAMERA)
-            requestPermissions(perms.toTypedArray(), REQUEST_PERMISSION_CAMERA)
+        if (!videoGranted) {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            binding!!.callVideocamBtn.isChecked = true
             return
         }
         binding!!.callSpeakerBtn.isChecked = false
