@@ -34,7 +34,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
@@ -59,12 +58,12 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.percentlayout.widget.PercentFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.zxing.Dimension
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -147,6 +146,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private val mCompositeDisposable = CompositeDisposable()
     private var bottomSheetParams: BottomSheetBehavior<View>? = null
     private var isMyMicMuted: Boolean = false
+
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            switchCamera()
+        }
+    }
 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
@@ -692,6 +699,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == REQUEST_PERMISSION_CAMERA && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            switchCamera()
+            return
+        }
+
         if (requestCode != REQUEST_PERMISSION_INCOMING && requestCode != REQUEST_PERMISSION_OUTGOING) return
         var i = 0
         val n = permissions.size
@@ -784,6 +797,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     fun switchCamera() {
+        val videoGranted = mDeviceRuntimeService.hasVideoPermission()
+        if (!videoGranted) {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            binding!!.callVideocamBtn.isChecked = true
+            return
+        }
         binding!!.callSpeakerBtn.isChecked = false
         presenter.switchOnOffCamera()
     }
@@ -1576,6 +1595,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_CODE_ADD_PARTICIPANT = 6
         private const val REQUEST_PERMISSION_INCOMING = 1003
         private const val REQUEST_PERMISSION_OUTGOING = 1004
+        private const val REQUEST_PERMISSION_CAMERA = 1005
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
         fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
