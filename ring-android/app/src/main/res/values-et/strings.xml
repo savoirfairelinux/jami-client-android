@@ -34,10 +34,13 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">tühistatud</string>
+  <string name="menu_message_cancel">Tühista sõnum</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Vestlused</string>
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
   <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
 </resources>

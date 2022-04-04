@@ -33,6 +33,8 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">ləğv edilib</string>
+  <string name="menu_message_cancel">Mesajı ləğv edin</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->

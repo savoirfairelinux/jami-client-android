@@ -34,6 +34,7 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">đã hủy bỏ</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <!--Wizard-->

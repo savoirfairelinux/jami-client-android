@@ -35,9 +35,12 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">A kagbuola ihe omume ahụ.</string>
+  <string name="menu_message_cancel">Kagbuo ozi</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_dialog_send">Zie</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Kwụsị oku</string>
 </resources>
