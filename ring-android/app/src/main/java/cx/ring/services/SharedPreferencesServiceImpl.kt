@@ -52,6 +52,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             .putBoolean(PREF_SHOW_TYPING, settings.enableTypingIndicator)
             .putBoolean(PREF_SHOW_READ, settings.enableReadIndicator)
             .putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
+            .putBoolean(PREF_LINK_PREVIEWS, settings.enableLinkPreviews)
             .putInt(PREF_NOTIFICATION_VISIBILITY, settings.notificationVisibility)
             .apply()
     }
