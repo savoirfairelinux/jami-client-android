@@ -124,16 +124,13 @@ class ConversationPresenter @Inject constructor(
             if (mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(contacts[0].displayName ?: conversation.uri.uri)
+                view.switchToIncomingTrustRequestView(ConversationItemViewModel.getUriTitle(conversation.uri, contacts))
             } else if (conversation.isSwarm || account.isContact(conversation)) {
-                //if (conversation.isEnded())
-                //    conversation.s
                 view.switchToConversationView()
             } else {
-                val uri = conversation.uri
-                val req = account.getRequest(uri)
+                val req = account.getRequest(conversation.uri)
                 if (req == null) {
-                    view.switchToUnknownView(ConversationItemViewModel.getTitle(conversation, contacts))
+                    view.switchToUnknownView(ConversationItemViewModel.getUriTitle(conversation.uri, contacts))
                 } else {
                     view.switchToIncomingTrustRequestView(req.displayName)
                 }
