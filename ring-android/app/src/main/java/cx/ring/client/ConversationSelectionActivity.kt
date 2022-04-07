@@ -80,11 +80,15 @@ class ConversationSelectionActivity : AppCompatActivity() {
             .map { vm: List<Conversation> ->
                 if (conference == null) return@map vm
                 return@map vm.filter { v ->
-                    val contact = v.contact ?: return@filter true
-                    for (call in conference.participants) {
-                        if (call.contact === contact) {
-                            return@filter false
+                    try {
+                        val contact = v.contact ?: return@filter false
+                        for (call in conference.participants) {
+                            if (call.contact === contact) {
+                                return@filter false
+                            }
                         }
+                    } catch (e: Exception) {
+                        return@filter false
                     }
                     return@filter true
                 }
