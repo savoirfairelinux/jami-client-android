@@ -35,11 +35,12 @@ along with this program; if not, write to the Free Software
         android:orientation="vertical"
         app:bounded_width="380dp">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:animateLayoutChanges="false">
+            android:animateLayoutChanges="false"
+            app:cardElevation="4dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -66,7 +67,7 @@ along with this program; if not, write to the Free Software
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ring_password"
+                        android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/account_enter_password"
@@ -92,7 +93,7 @@ along with this program; if not, write to the Free Software
                         android:textColor="@color/red_800"/>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/ring_migrate_btn"
+                        android:id="@+id/migrate_btn"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +130,7 @@ along with this program; if not, write to the Free Software
 
             </RelativeLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </cx.ring.views.BoundedLinearLayout>
 
