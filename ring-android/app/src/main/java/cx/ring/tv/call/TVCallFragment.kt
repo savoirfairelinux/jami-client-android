@@ -122,7 +122,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
                 prepareCall(false)
             else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT)
-                presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
+                presenter.initIncomingCall(
+                    args.getString(ConversationPath.KEY_ACCOUNT_ID)!!,
+                    args.getString(NotificationService.KEY_CALL_ID)!!,
+                    action == Intent.ACTION_VIEW)
         }
     }
 

@@ -40,6 +40,7 @@ import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
+import cx.ring.utils.ConversationPath
 import cx.ring.utils.ConversationPath.Companion.fromIntent
 import cx.ring.utils.KeyboardVisibilityManager
 import cx.ring.utils.MediaButtonsHelper
@@ -112,6 +113,7 @@ class CallActivity : AppCompatActivity() {
         val action = intent.action
         val wantVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
         val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
+        val accountId = intent.getStringExtra(ConversationPath.KEY_ACCOUNT_ID)
         when (action) {
             Intent.ACTION_CALL -> {
                 val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
@@ -122,7 +124,7 @@ class CallActivity : AppCompatActivity() {
             Intent.ACTION_VIEW, ACTION_CALL_ACCEPT -> {
                 val currentId = callFragment?.arguments?.getString(NotificationService.KEY_CALL_ID)
                 if (currentId != confId) {
-                    val callFragment = CallFragment.newInstance(action, confId, wantVideo)
+                    val callFragment = CallFragment.newInstance(action, accountId, confId, wantVideo)
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
                 }

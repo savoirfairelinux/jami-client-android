@@ -67,8 +67,8 @@ class CallService(
             .startWithItem(conf)
     }
 
-    fun getConfUpdates(confId: String): Observable<Conference> {
-        return getCurrentCallForId(confId)?.let { getConfUpdates(it) }
+    fun getConfUpdates(accountId: String, confId: String): Observable<Conference> {
+        return getCurrentCallForId(accountId, confId)?.let { getConfUpdates(it) }
             ?: Observable.error(IllegalArgumentException())
         /*Conference call = currentConferences.get(confId);
         return call == null ? Observable.error(new IllegalArgumentException()) : conferenceSubject
@@ -138,12 +138,12 @@ class CallService(
         mExecutor.execute { JamiService.setConferenceLayout(accountId, confId, 0) }
     }
 
-    fun remoteRecordingChanged(callId: String, peerNumber: Uri, state: Boolean) {
+    fun remoteRecordingChanged(accountId: String, callId: String, peerNumber: Uri, state: Boolean) {
         Log.w(TAG, "remoteRecordingChanged $callId $peerNumber $state")
         var conference = getConference(callId)
         val call: Call?
         if (conference == null) {
-            call = getCurrentCallForId(callId)
+            call = getCurrentCallForId(accountId, callId)
             if (call != null) {
                 conference = getConference(call)
             }
@@ -427,7 +427,7 @@ class CallService(
         }.subscribeOn(Schedulers.from(mExecutor))
     }
 
-    private fun getCurrentCallForId(callId: String): Call? {
+    private fun getCurrentCallForId(accountId: String, callId: String): Call? {
         return currentCalls[callId]
     }
 
@@ -468,7 +468,7 @@ class CallService(
             call.setCallState(callState)
             call.setDetails(JamiService.getCallDetails(accountId, callId).toNative())
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
-            val callDetails: Map<String, String> = JamiService.getCallDetails(accountId, callId)
+            val callDetails = JamiService.getCallDetails(accountId, callId)
             call = Call(callId, callDetails)
             if (StringUtils.isEmpty(call.contactNumber)) {
                 Log.w(TAG, "No number")
@@ -478,9 +478,12 @@ class CallService(
             val account = mAccountService.getAccount(call.account!!)!!
             val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
             val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
-            /*if (registeredName != null && registeredName.isNotEmpty()) {
-                contact.setUsername(registeredName)
-            }*/
+            if (!registeredName.isNullOrEmpty()) {
+                synchronized(contact) {
+                    if (contact.username == null)
+                        contact.username = Single.just(registeredName)
+                }
+            }
             val conversation = account.getByUri(contact.conversationUri.blockingFirst())
             call.contact = contact
             call.conversation = conversation
@@ -664,7 +667,7 @@ class CallService(
         val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
         for (callId in participants) {
-            val call = getCurrentCallForId(callId)
+            val call = getCurrentCallForId(accountId, callId)
             if (call != null) {
                 Log.d(TAG, "conference created: adding participant " + callId + " " + call.contact)
                 call.confId = confId
@@ -700,7 +703,7 @@ class CallService(
             // Add new participants
             for (callId in participants) {
                 if (!conf.contains(callId)) {
-                    val call = getCurrentCallForId(callId)
+                    val call = getCurrentCallForId(accountId, callId)
                     if (call != null) {
                         Log.d(TAG, "conference changed: adding participant " + callId + " " + call.contact)
                         call.confId = confId

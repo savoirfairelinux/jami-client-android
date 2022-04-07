@@ -165,6 +165,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 prepareCall(false)
             } else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
                 presenter.initIncomingCall(
+                    args.getString(ConversationPath.KEY_ACCOUNT_ID)!!,
                     args.getString(NotificationService.KEY_CALL_ID)!!,
                     action == Intent.ACTION_VIEW
                 )
@@ -1604,10 +1605,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         }
 
-        fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
+        fun newInstance(action: String, accountId: String?, confId: String?, hasVideo: Boolean): CallFragment {
             return CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
+                    putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
                     putString(NotificationService.KEY_CALL_ID, confId)
                     putBoolean(KEY_HAS_VIDEO, hasVideo)
                 }

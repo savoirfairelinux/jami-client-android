@@ -130,10 +130,10 @@ class CallPresenter @Inject constructor(
      * @param confId         the call id
      * @param actionViewOnly true if only returning to call or if using full screen intent
      */
-    fun initIncomingCall(confId: String, actionViewOnly: Boolean) {
+    fun initIncomingCall(accountId: String, confId: String, actionViewOnly: Boolean) {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly
-        val callObservable = mCallService.getConfUpdates(confId)
+        val callObservable = mCallService.getConfUpdates(accountId, confId)
             .observeOn(mUiScheduler)
             .share()
 
