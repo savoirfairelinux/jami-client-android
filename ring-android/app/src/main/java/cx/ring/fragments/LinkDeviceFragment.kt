@@ -68,7 +68,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             }
         }
         mBinding!!.btnStartExport.setOnClickListener { onClickStart() }
-        mBinding!!.ringPassword.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
+        mBinding!!.password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
             onPasswordEditorAction(pwd, actionId, event)
         }
         mBinding!!.passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
@@ -146,7 +146,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun showPasswordError() {
         mBinding!!.passwordLayout.error = getString(R.string.account_export_end_decryption_message)
-        mBinding!!.ringPassword.setText("")
+        mBinding!!.password.setText("")
     }
 
     override fun showGenericError() {
@@ -159,7 +159,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun showPIN(pin: String) {
         dismissExportingProgress()
-        mBinding!!.ringPassword.setText("")
+        mBinding!!.password.setText("")
         mBinding!!.passwordLayout.visibility = View.GONE
         mBinding!!.btnStartExport.visibility = View.GONE
         val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
@@ -180,7 +180,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     private fun onClickStart() {
         mBinding!!.passwordLayout.error = null
-        val password = mBinding!!.ringPassword.text.toString()
+        val password = mBinding!!.password.text.toString()
         presenter.startAccountExport(password)
     }
 

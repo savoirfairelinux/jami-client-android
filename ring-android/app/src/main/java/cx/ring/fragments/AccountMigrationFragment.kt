@@ -42,7 +42,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.AccountConfig
-import net.jami.model.ConfigKey
 import net.jami.services.AccountService
 import javax.inject.Inject
 
@@ -55,26 +54,26 @@ class AccountMigrationFragment : Fragment() {
     private var mProgress: ProgressDialog? = null
     private var migratingAccount = false
     private val mDisposableBag = CompositeDisposable()
+
     override fun onDestroy() {
         super.onDestroy()
         mDisposableBag.clear()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragAccountMigrationBinding.inflate(inflater, parent, false).apply {
-            ringPassword.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
-                actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccountMigrationBinding.inflate(inflater, parent, false).apply {
+            password.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+                actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v)
             }
-            ringPassword.onFocusChangeListener = View.OnFocusChangeListener { v: View, hasFocus: Boolean ->
+            password.onFocusChangeListener = View.OnFocusChangeListener { v: View, hasFocus: Boolean ->
                 if (!hasFocus) {
-                    checkPassword(v as TextView, null)
+                    checkPassword(v as TextView)
                 }
             }
-            ringMigrateBtn.setOnClickListener { initAccountMigration(ringPassword.text.toString()) }
+            migrateBtn.setOnClickListener { initAccountMigration(password.text.toString()) }
             deleteBtn.setOnClickListener { initAccountDelete() }
             binding = this
         }.root
-    }
 
     override fun onResume() {
         super.onResume()
@@ -96,11 +95,15 @@ class AccountMigrationFragment : Fragment() {
 
     private fun deleteAccount() {
         mAccountService.removeAccount(mAccountId!!)
+        val activity = activity ?: return
+        activity.setResult(Activity.RESULT_OK, Intent())
+        activity.finish()
     }
 
     private fun initAccountMigration(password: String) {
         if (migratingAccount) return
         migratingAccount = true
+        val accountId = mAccountId ?: return
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
@@ -111,17 +114,12 @@ class AccountMigrationFragment : Fragment() {
             setCanceledOnTouchOutside(false)
             show()
         }
-        val accountId = mAccountId!!
-        val account = mAccountService.getAccount(accountId)!!
-        val details = account.details
-        details[ConfigKey.ARCHIVE_PASSWORD.key()] = password
-        mAccountService.setAccountDetails(account.accountId, details)
         mDisposableBag.add(mAccountService.migrateAccount(accountId, password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { newState: String -> handleMigrationState(newState) })
     }
 
-    private fun checkPassword(pwd: TextView, confirm: TextView?): Boolean {
+    private fun checkPassword(pwd: TextView): Boolean {
         var error = false
         if (pwd.text.isEmpty()) {
             error = true
@@ -131,15 +129,6 @@ class AccountMigrationFragment : Fragment() {
                 error = true
             } else {
                 pwd.error = null
-            }
-        }
-        if (confirm != null) {
-            if (pwd.text.toString() != confirm.text.toString()) {
-                confirm.error = getString(R.string.error_passwords_not_equals)
-                confirm.requestFocus()
-                error = true
-            } else {
-                confirm.error = null
             }
         }
         return error
