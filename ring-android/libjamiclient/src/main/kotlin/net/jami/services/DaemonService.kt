@@ -233,7 +233,7 @@ class DaemonService(
         }
 
         override fun remoteRecordingChanged(call_id: String, peer_number: String, state: Boolean) {
-            mCallService.remoteRecordingChanged(call_id, Uri.fromString(peer_number), state)
+            mCallService.remoteRecordingChanged("", call_id, Uri.fromString(peer_number), state)
         }
 
         override fun onConferenceInfosUpdated(confId: String, infos: VectMap) {
