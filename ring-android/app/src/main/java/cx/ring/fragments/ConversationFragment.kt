@@ -148,7 +148,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val bottomViewHeight = bottomView.height
         if (bottomViewHeight != 0) {
             val padding = bottomViewHeight + marginPxTotal
-            binding.histList.updatePadding(bottom = padding)
             val params = binding.mapCard.layoutParams as RelativeLayout.LayoutParams
             params.bottomMargin = padding
             binding.mapCard.layoutParams = params
