@@ -45,8 +45,9 @@ class ContactRequestsPresenter @Inject internal constructor(
         super.bindView(view)
         mCompositeDisposable.add(mConversationFacade.getPendingConversationList(mAccount)
             .observeOn(mUiScheduler)
-            .subscribe({ viewModels -> this.view?.updateView(viewModels, mConversationFacade, mCompositeDisposable) })
-            { e: Throwable -> Log.d(TAG, "updateList subscribe onError", e) })
+            .subscribe { viewModels ->
+                this.view?.updateView(viewModels,mConversationFacade, mCompositeDisposable)
+            })
     }
 
     override fun onDestroy() {
