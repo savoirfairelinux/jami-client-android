@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2c6fd46_daf31c42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-04-08T17:14:55Z",
+      "side": 1,
+      "message": "The app crashes while receving a call when the phone is locked:\n\njava.lang.NullPointerException\nat cx.ring.fragments.CallFragment.initPresenter(CallFragment.kt:168)",
+      "revId": "20453707116c8acb19c86387c1e9e896348587a4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
