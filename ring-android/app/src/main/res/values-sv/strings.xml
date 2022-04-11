@@ -22,6 +22,7 @@
   <string name="ringtones_by">Ringsignaler av</string>
   <!--RingActivity-->
   <string name="error_no_network">Ingen nätverksanslutning</string>
+  <string name="error_account_offline">kontot är offline</string>
   <string name="error_mobile_network_available_but_disabled">Bevilja tillgång till mobilnätet på inställningssidan.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textmeddelande</string>
@@ -30,6 +31,7 @@
   <string name="menu_item_accounts">Hantera konton</string>
   <string name="menu_item_account">Hantera konto</string>
   <string name="menu_item_settings">Inställningar</string>
+  <string name="menu_item_plugin_list">Modul inställningar</string>
   <string name="menu_item_share">Dela mitt konto</string>
   <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
@@ -75,6 +77,7 @@
   <string name="notif_incoming_picture">Bild från %1$s</string>
   <string name="notif_sync_title">Synkroniserar data...</string>
   <string name="notif_location_title">Delar plats med %1$s</string>
+  <string name="location_share_contact">%1$sdelar sin position med dig</string>
   <string name="notif_location_multi_title">Dela plats med %1$d kontakt</string>
   <string name="notif_location_remaining">%1$d minuter kvar</string>
   <string name="notif_location_action_stop">Sluta dela plats</string>
@@ -85,7 +88,9 @@
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>
   <string name="action_call_maximize">Maximera</string>
+  <string name="action_call_minimize">Minska</string>
   <string name="action_call_mute">Tysta</string>
+  <string name="action_call_unmute">Slå på ljudet</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
@@ -94,13 +99,19 @@
   <string name="action_call_accept">Svara</string>
   <string name="action_call_accept_audio">Svara i ljud</string>
   <string name="action_call_accept_video">Svara i video</string>
+  <string name="action_call_hold_accept">Pausa och ta samtalet</string>
+  <string name="action_call_hold_accept_video">Pausa och ta videosamtalet</string>
+  <string name="action_call_end_accept">Avsluta och ta samtalet</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Stäng av mikrofon</string>
   <string name="action_load_plugin">Ladda tillägg</string>
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Lägga till i kontakter?</string>
+  <string name="hist_contact_invited">Mottagaren är inbjuden</string>
   <string name="hist_contact_added">Kontakt tillagt</string>
+  <string name="hist_contact_left">Mottagaren lämnade</string>
+  <string name="hist_contact_banned">Mottagaren är förbjuden</string>
   <string name="hist_invitation_received">Inbjudan mottagen</string>
   <string name="ab_action_audio_call">Ljudsamtal</string>
   <string name="ab_action_video_call">Videosamtal</string>
@@ -110,6 +121,7 @@
   <string name="scan_qr">Skanna QR-kod</string>
   <string name="qr_code">QR-kod</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
+  <string name="ab_action_hidepreview">Dölj förhandsvisningen</string>
   <string name="remote_recording">%s spelar in...</string>
   <!--Text messages-->
   <string name="send_message">Skicka meddelande</string>
@@ -168,9 +180,15 @@
   <string name="block_contact_dialog_title">Blockera %1$s?</string>
   <string name="block_contact_dialog_message">%1$s kommer inte att kunna kontakta dig, innan du avblockerat.</string>
   <string name="block_contact_completed">%1$s blockerades.</string>
+  <string name="conversation_contact_is_typing">Mottagaren skriver...</string>
   <string name="conversation_info_contact_you">Du</string>
   <string name="conversation_members">Medlemmar</string>
+  <string name="conversation_syncing">Ladda ner konversationen från \"peer\"</string>
+  <string name="conversation_preference_color">Konversationsfärg</string>
+  <string name="conversation_preference_emoji">Konversations emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_private">Privat \"swarm\"</string>
+  <string name="conversation_type_group">Grupp \"swarm\"</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
@@ -192,10 +210,12 @@
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn</string>
   <string name="registered_name">Registrerat namn</string>
+  <string name="no_registered_name">Inget namn är registrerat</string>
   <string name="identity">Identitet</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Koppla en ny enhet</string>
   <string name="devices">Kopplade enheter</string>
+  <string name="total_devices">Totalt antal enheter:</string>
   <!--Share fragment-->
   <string name="share_message">Skanna den här koden med Jami</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>
@@ -245,8 +265,10 @@
   <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
   <string name="file_transfer_status_cancelled">avbruten</string>
   <string name="file_transfer_status_error">misslyckades på grund av fel</string>
+  <string name="file_transfer_status_timed_out">avbrott</string>
   <string name="file_saved_in">Fil sparad i %s</string>
   <string name="file_saved_successfully">Filen sparade korrekt</string>
+  <string name="file_download">Ladda ner</string>
   <string name="no_space_left_on_device">Det finns inget utrymme kvar på enheten</string>
   <string name="title_media_viewer">Mediaspelare</string>
   <string name="menu_file_open">Öppna fil</string>
@@ -266,6 +288,9 @@
   <string name="search_results_public_directory">Offentlig mapp</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Skicka ljudmeddelande?</string>
+  <string name="tv_send_image_dialog_message">Skicka bilden?</string>
+  <string name="tv_send_video_dialog_message">Skicka filmen?</string>
+  <string name="tv_media_preview">Förhandsvisa</string>
   <string name="tv_audio_play">Spela</string>
   <string name="tv_audio_pause">Paus</string>
   <string name="tv_dialog_send">Skicka</string>
@@ -281,18 +306,21 @@
   <string name="wizard_status_required">Obligatorisk</string>
   <string name="wizard_username_info">Välj användarnamn för ditt konto</string>
   <string name="wizard_username_button">Välj användarnamn</string>
+  <string name="wizard_username_skip">Hoppa över användarnamn</string>
   <string name="wizard_password_info">Kontolösenord</string>
   <string name="wizard_password_button">Välj lösenord</string>
   <string name="wizard_password_skip">Skapa konto</string>
   <string name="wizard_password_switch">Kryptera kontot med lösenord</string>
   <string name="wizard_profile_button">Spara profil</string>
   <string name="fab_path_choose">Välj en annan fil</string>
+  <string name="chat_plugins">Chat Modul</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Dela</string>
   <string name="bottomSheet_plugins_btn">Insticksmoduler</string>
   <string name="bottomSheet_add_participants_btn">Lägg till</string>
   <string name="bottomSheet_change_camera_btn">Ändra</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Avsluta samtal</string>
   <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
 </resources>

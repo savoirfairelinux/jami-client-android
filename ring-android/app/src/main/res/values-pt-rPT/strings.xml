@@ -231,7 +231,7 @@
   <string name="file_transfer_status_closed_by_peer">fechado pelo destinatário</string>
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contacto indisponível</string>
-  <string name="file_transfer_status_cancelled">cancelado</string>
+  <string name="file_transfer_status_cancelled">cancelada</string>
   <string name="file_transfer_status_error">falhou devido a erro</string>
   <string name="file_transfer_status_timed_out">expirou o tempo</string>
   <string name="file_saved_in">Ficheiro gravado em %s</string>
@@ -270,5 +270,6 @@
   <string name="bottomSheet_share_btn">Partilhar</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmara</string>
+  <string name="bottomSheet_hangup_btn">Terminar chamada</string>
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
 </resources>

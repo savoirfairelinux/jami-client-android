@@ -53,6 +53,7 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Contactos</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">cancelado</string>
   <string name="menu_delete">Borrar</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversaciones</string>

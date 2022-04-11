@@ -33,6 +33,8 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">tühistatud</string>
+  <string name="menu_message_cancel">Tühista sõnum</string>
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">Mängi</string>

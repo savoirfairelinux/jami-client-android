@@ -96,10 +96,13 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">रद्द किया गया</string>
+  <string name="menu_message_cancel">संदेश रद्द करें</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">संपर्क अनुरोध</string>
   <!--TV-->
   <string name="tv_audio_play"> चलाएँ</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
 </resources>
