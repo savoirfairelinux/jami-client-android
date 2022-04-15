@@ -689,15 +689,16 @@ class JamiAccountSummaryFragment :
     private fun setLinkedDevicesAdapter(account: Account) {
         if (account.devices.size == 1) {
             mBinding!!.chipMore.visibility = View.GONE
+            collapse(mBinding!!.devicesList)
         } else {
-            mBinding!!.chipMore.visibility = View.VISIBLE
             if (mDeviceAdapter == null) {
                 mDeviceAdapter = DeviceAdapter(requireContext(), account.devices, account.deviceId, this@JamiAccountSummaryFragment)
-                mBinding!!.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
                 mBinding!!.devicesList.adapter = mDeviceAdapter
             } else {
                 mDeviceAdapter!!.setData(account.devices, account.deviceId)
             }
+            mBinding!!.chipMore.visibility = View.VISIBLE
+            mBinding!!.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
         }
     }
 
