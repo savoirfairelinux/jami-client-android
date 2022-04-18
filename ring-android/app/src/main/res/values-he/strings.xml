@@ -75,10 +75,12 @@
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
   <string name="invalid_file">קובץ לא חוקי</string>
+  <string name="file_transfer_status_cancelled">מבוטל</string>
   <string name="menu_file_open">פתיחת קובץ</string>
   <string name="menu_file_save">שמירת קובץ</string>
   <string name="menu_file_share">שיתוף קובץ</string>
   <string name="menu_message_copy">העתקה</string>
+  <string name="menu_message_cancel">בטל הודעה</string>
   <string name="menu_delete">מחיקה</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">דיונים</string>
@@ -88,4 +90,5 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
+  <string name="bottomSheet_hangup_btn">סיום שיחה</string>
 </resources>
