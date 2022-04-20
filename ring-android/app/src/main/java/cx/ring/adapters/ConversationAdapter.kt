@@ -211,7 +211,7 @@ class ConversationAdapter(
      * Updates the contact photo to use for this conversation
      */
     fun setPhoto() {
-        //notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
