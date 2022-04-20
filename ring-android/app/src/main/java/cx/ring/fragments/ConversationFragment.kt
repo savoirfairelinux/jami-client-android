@@ -864,17 +864,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mParticipantAvatars[contactKey]!!.update(contact)
             mAdapter?.setPhoto()
         } else {
-            mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { avatar ->
-                    mParticipantAvatars[contactKey] = avatar as AvatarDrawable
-                    mSmallParticipantAvatars[contactKey] = AvatarDrawable.Builder()
-                        .withContact(contact)
-                        .withCircleCrop(true)
-                        .withPresence(false)
-                        .build(requireContext())
-                    mAdapter?.setPhoto()
-                })
+            val builder = AvatarDrawable.Builder()
+                .withContact(contact)
+                .withCircleCrop(true)
+            mParticipantAvatars[contactKey] = builder
+                .withPresence(true)
+                .build(requireContext())
+            mSmallParticipantAvatars[contactKey] = builder
+                .withPresence(false)
+                .build(requireContext())
         }
     }
 
