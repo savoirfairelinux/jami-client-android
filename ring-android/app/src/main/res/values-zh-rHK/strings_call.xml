@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">通话已取消。未检测到麦克风。</string>
+    <string name="call_error_no_camera_no_microphone">通话已取消。未检测到摄像头或麦克风。</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">搜尋</string>
+    <string name="call_human_state_incoming">來電</string>
+    <string name="call_human_state_connecting">連接中</string>
+    <string name="call_human_state_ringing">響鈴中</string>
+    <string name="call_human_state_current">正在通话</string>
+    <string name="call_human_state_hungup">已结束</string>
+    <string name="call_human_state_busy">忙碌</string>
+    <string name="call_human_state_failure">失败</string>
+    <string name="call_human_state_hold">通話保留</string>
+    <string name="call_human_state_unhold">繼續通話</string>
+    <string name="call_human_state_over">已结束</string>
+    <!-- Conferences -->
+    <string name="call_moderator">主持人</string>
+    <string name="call_muted">已静音</string>
+    <string name="call_handRaised">已举手</string>
+
+</resources>

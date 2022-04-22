@@ -87,12 +87,14 @@
   <string name="notif_location_action_stop">Прекратить делиться местоположением</string>
   <string name="location_share_action_start">Начать делиться</string>
   <string name="location_share_action_stop">Прекратить делиться</string>
+  <string name="location_share_about_title">Информация о карте</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_hangup">Завершить</string>
   <string name="action_call_maximize">На весь экран</string>
   <string name="action_call_minimize">скрыть</string>
   <string name="action_call_mute">Заглушить</string>
+  <string name="action_call_unmute">Включить звук</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
@@ -101,6 +103,8 @@
   <string name="action_call_accept">Совершить звонок</string>
   <string name="action_call_accept_audio">Ответить по аудио</string>
   <string name="action_call_accept_video">Ответить по видео</string>
+  <string name="action_call_hold_accept">Удержание и прием вызова</string>
+  <string name="action_call_hold_accept_video">Удержание и прием видео вызова</string>
   <string name="action_call_end_accept">Завершить и ответить на звонок</string>
   <string name="action_call_decline">Отказаться</string>
   <string name="action_call_mic_mute">Отключить микрофон</string>
@@ -183,6 +187,12 @@
   <string name="conversation_contact_is_typing">Собеседник печатает...</string>
   <string name="conversation_info_contact_you">Ты</string>
   <string name="conversation_members">Участники</string>
+  <string name="conversation_syncing">Загрузка разговора с участником сети</string>
+  <string name="conversation_preference_color">Цвет беседы</string>
+  <string name="conversation_preference_emoji">Эмоджи беседы</string>
+  <string name="conversation_type_contact">Контакт Jami</string>
+  <string name="conversation_type_private">Частный рой</string>
+  <string name="conversation_type_group">Групповой рой</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -193,6 +203,7 @@
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
   <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
+  <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN-код из другой учетной записи Jami. Используйте функцию \"экспорт учетной записи Jami\" для получения PIN-кода.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
@@ -203,9 +214,14 @@
   <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
+  <string name="profile_name_hint">Введите своё имя</string>
   <string name="registered_name">Зарегистрированное имя</string>
+  <string name="no_registered_name">Имя не зарегистрировано</string>
   <string name="identity">Идентичность</string>
   <string name="account">Учётная запись</string>
+  <string name="link_new_device">Привязать новое устройство</string>
+  <string name="devices">Привязанные устройства</string>
+  <string name="total_devices">Всего устройств:</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте код с помощью Jami</string>
   <string name="share_message_no_account">Выберите контакт, чтобы поделиться</string>
@@ -219,7 +235,9 @@
   <string name="refuse">Отказать</string>
   <string name="block">Заблокировать</string>
   <string name="contact_request_title">Запрос на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$dзапросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">Нет запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%sеще нет в ваших контактах.\nВы хотите принять или отклонить запрос?</string>
   <string name="message_contact_not_trusted">%sеще нет в ваших контактах.\nДобавить его в контакты?</string>
   <!--Send contact requests-->
@@ -227,8 +245,10 @@
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
   <string name="send_request_msg">Для связи с этим пользователем необходимо отправить запрос на добавление в контакты. Пока ваш контакт не принял запрос, вы можете отправлять сообщения, но он не может отвечать.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Нет заблокированных контактов</string>
   <!--Smartlist-->
   <string name="no_contact_request">Нет запросов на добавление в контакты</string>
+  <string name="conversation_placeholder">У вас еще нет бесед</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
   <string name="start_conversation">Начать беседу</string>
   <string name="search_results">Результаты поиска</string>
@@ -254,6 +274,7 @@
   <string name="file_transfer_status_timed_out">истекло время</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
   <string name="file_saved_successfully">Файл успешно сохранён</string>
+  <string name="file_download">Загрузить</string>
   <string name="no_space_left_on_device">На устройстве не осталось места</string>
   <string name="title_media_viewer">Просмотр медиа</string>
   <string name="menu_file_open">Открыть файл</string>
@@ -284,15 +305,35 @@
   <string name="tv_send_text">Отправить Текст</string>
   <string name="tv_send_audio">Отправить Запись</string>
   <string name="tv_send_video">Отправить Медиа</string>
+  <string name="tv_action_more">Подробнее</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Рекомендуется</string>
+  <string name="wizard_status_optional">По желанию</string>
+  <string name="wizard_status_required">Требуется</string>
+  <string name="wizard_username_info">Выберите имя пользователя для вашей учётной записи</string>
+  <string name="wizard_username_button">Выберите имя пользователя</string>
+  <string name="wizard_username_skip">Пропустить выбор имени пользователя</string>
   <string name="wizard_password_info">Пароль аккаунта</string>
+  <string name="wizard_password_placeholder">Придумайте пароль для шифрования учётной записи на этом устройстве</string>
   <string name="wizard_password_button">Выберите пароль</string>
   <string name="wizard_password_skip">Создать аккаунт</string>
   <string name="wizard_password_switch">Зашифровать аккаунт с помощью пароля</string>
   <string name="wizard_password_warning">Учтите, что пароль не может быть восстановлен</string>
+  <string name="wizard_profile_info">Ваш профиль доступен только вашим контактам</string>
   <string name="wizard_profile_button">Сохранить профиль</string>
+  <string name="wizard_profile_skip">Пропустить и сделать позже</string>
+  <string name="fab_path_choose">Выбрать другой файл</string>
+  <string name="chat_plugins">Плагины для чата</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поделится</string>
+  <string name="bottomSheet_dialpad_btn">Цифровая панель</string>
   <string name="bottomSheet_plugins_btn">Плагины</string>
+  <string name="bottomSheet_add_participants_btn">Добавить</string>
+  <string name="bottomSheet_change_camera_btn">Изменить</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
+  <string name="bottomSheet_hangup_btn">Завершить вызов</string>
+  <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
+  <string name="bottomSheet_sound_output_btn">Звуки</string>
+  <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
 </resources>

@@ -15,6 +15,7 @@
   <string name="license">Este programa é fornecido \"tal qual como está\", sem qualquer tipo de garantia. Para mais detalhes ver <u>Licença Pública Geral GNU versão 3 ou posterior</u></string>
   <string name="description">O Jami é um programa livre para comunicação universal que respeita as liberdades e privacidade dos seus utilizadores.</string>
   <string name="credits">Créditos</string>
+  <string name="pip_title">Conferência Jami</string>
   <string name="call_service_description">Este serviço é necessário para manter a execução das suas chamadas. Só é executado durante chamadas.</string>
   <string name="data_transfer_service_description">Este serviço é necessário para exibir notificações persistentes durante a transferência de ficheiros. Só é executado durante a transferência de ficheiros.</string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">Toques de chamada por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sem conectividade à rede</string>
+  <string name="error_account_offline">A conta está offline</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso à rede móvel no ecrã de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
@@ -31,6 +33,7 @@
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
+  <string name="menu_item_plugin_list">Configurações dos complementos</string>
   <string name="menu_item_share">Partilhar a minha conta</string>
   <string name="menu_item_about">Sobre o Jami</string>
   <!--Dialing Fragment-->
@@ -82,21 +85,35 @@
   <string name="notif_location_action_stop">Parar a partilha de localização</string>
   <string name="location_share_action_start">Iniciar a partilha</string>
   <string name="location_share_action_stop">Parar a partilha</string>
+  <string name="location_share_about_title">Informações do mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
+  <string name="action_call_maximize">Maximizar</string>
+  <string name="action_call_minimize">Reduzir</string>
+  <string name="action_call_mute">Mudo</string>
+  <string name="action_call_unmute">Não silenciar</string>
   <string name="ongoing_call">Chamada a decorrer</string>
   <string name="hist_in_call">Chamada recebida de %1$s</string>
   <string name="hist_out_call">Chamada feita para %1$s</string>
   <string name="start_error_title">Não foi possível iniciar o Jami!</string>
   <string name="start_error_mic_required">O Jami necessita da permissão de uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
+  <string name="action_call_accept_audio">Responder em áudio</string>
+  <string name="action_call_accept_video">Responder em vídeo</string>
+  <string name="action_call_hold_accept">Colocar em espera e fazer uma chamada em áudio</string>
+  <string name="action_call_hold_accept_video">Colocar em espera e fazer uma chamada em vídeo</string>
+  <string name="action_call_end_accept">Finalizar e receba chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Desativar microfone</string>
+  <string name="action_load_plugin">Carregue complemento</string>
   <string name="ab_action_speakerphone">Ativar alta-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contactos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contactos?</string>
+  <string name="hist_contact_invited">Contato foi convidado</string>
   <string name="hist_contact_added">Contacto adicionado</string>
+  <string name="hist_contact_left">O contato saiu</string>
+  <string name="hist_contact_banned">O contato foi banido</string>
   <string name="hist_invitation_received">Convite recebido</string>
   <string name="ab_action_audio_call">Chamada de voz</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
@@ -106,6 +123,8 @@
   <string name="scan_qr">Digitalizar Código QR</string>
   <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Virar câmara</string>
+  <string name="ab_action_hidepreview">Oculta visualização</string>
+  <string name="remote_recording">%sgravando...</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">A enviar mensagem...</string>
@@ -164,6 +183,14 @@
   <string name="block_contact_dialog_message">%1$s não poderá contactá-lo até que o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
   <string name="conversation_contact_is_typing">O contacto está a escrever...</string>
+  <string name="conversation_info_contact_you">Você</string>
+  <string name="conversation_members">Membros</string>
+  <string name="conversation_syncing">Baixando a conversação a partir do par</string>
+  <string name="conversation_preference_color">Cor da conversação</string>
+  <string name="conversation_preference_emoji">emoji da conversação</string>
+  <string name="conversation_type_contact">Contato Jami</string>
+  <string name="conversation_type_private">swarm privado</string>
+  <string name="conversation_type_group">swarm em grupo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova palavra-chave</string>
@@ -173,20 +200,26 @@
   <string name="prompt_new_username">Introduza o seu nome de utilizador</string>
   <string name="prompt_hint_username">Nome de utilizador</string>
   <string name="help_password_choose">Escolha uma palavra-chave forte que se lembre para proteger a sua conta Jami.</string>
+  <string name="help_password_enter">Digite a senha principal da sua conta Jami.</string>
+  <string name="help_server_enter">Digite URL do servidor de gerenciamento.</string>
   <string name="help_pin_enter">Introduza o seu PIN de uma outra conta Jami já configurada. Utilize a opção \"Exportar conta no Jami\" para obter um PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Ignorar</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">O seu perfil é partilhado apenas com seus contactos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
+  <string name="profile_name_hint">Digite seu nome</string>
   <string name="registered_name">Nome Registado</string>
+  <string name="no_registered_name">Sem nome registrado</string>
   <string name="identity">Identificação</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Associar a um novo dispositivo</string>
   <string name="devices">Dispositivos associados</string>
+  <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
   <string name="share_message">Digitalizar este código com o Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para partilhar.</string>
@@ -200,7 +233,9 @@
   <string name="refuse">Recusar</string>
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Novo pedido de contacto</string>
+  <string name="contact_request_msg">Você possui %1$d solicitações de contato</string>
   <string name="contact_request_account">Para %1$s</string>
+  <string name="no_requests">Você não tem nenhum pedido de contato</string>
   <string name="message_contact_not_trusted_yet">%s ainda não está nos seus contactos.\nAceita ou recusa este pedido de contacto?</string>
   <string name="message_contact_not_trusted">%s não está nos seus contactos.\nAdicionar o novo contacto?</string>
   <!--Send contact requests-->
@@ -211,6 +246,7 @@
   <string name="no_blocked_contact">Sem contactos bloqueados</string>
   <!--Smartlist-->
   <string name="no_contact_request">Nenhuma solicitação de contacto enviada</string>
+  <string name="conversation_placeholder">Você ainda não tem conversas</string>
   <string name="contact_request_sent">A solicitação de contacto foi enviada</string>
   <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Pesquisa</string>
@@ -231,11 +267,12 @@
   <string name="file_transfer_status_closed_by_peer">fechado pelo destinatário</string>
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contacto indisponível</string>
-  <string name="file_transfer_status_cancelled">cancelado</string>
+  <string name="file_transfer_status_cancelled">cancelada</string>
   <string name="file_transfer_status_error">falhou devido a erro</string>
   <string name="file_transfer_status_timed_out">expirou o tempo</string>
   <string name="file_saved_in">Ficheiro gravado em %s</string>
   <string name="file_saved_successfully">Ficheiro gravado com sucesso</string>
+  <string name="file_download">Obter</string>
   <string name="no_space_left_on_device">Sem espaço disponível no dispositivo</string>
   <string name="title_media_viewer">Visualizador de média</string>
   <string name="menu_file_open">Abrir ficheiro</string>
@@ -253,6 +290,7 @@
   <string name="navigation_item_conversation">Conversas</string>
   <string name="navigation_item_contact_request">Solicitações de contactos</string>
   <string name="navigation_item_account">Conta</string>
+  <string name="search_results_public_directory">Diretório público</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Enviar mensagem de áudio?</string>
   <string name="tv_send_image_dialog_message">Enviar a imagem?</string>
@@ -261,14 +299,39 @@
   <string name="tv_audio_play">Reproduzir</string>
   <string name="tv_audio_pause">Pausa</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Gravando...</string>
   <string name="tv_send_text">Enviar Texto</string>
   <string name="tv_send_audio">Enviar Áudio</string>
   <string name="tv_send_video">Enviar media</string>
+  <string name="tv_action_more">Mais</string>
+  <string name="conversation_input_speech_hint">Fale algo...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Recomendado</string>
+  <string name="wizard_status_optional">Opcional</string>
+  <string name="wizard_status_required">Requerido</string>
+  <string name="wizard_username_info">Escolha nome de usuário para sua conta</string>
+  <string name="wizard_username_button">Escolha nome de usuário</string>
+  <string name="wizard_username_skip">Pular a escolha do nome do usuário</string>
+  <string name="wizard_password_info">Senha da conta</string>
+  <string name="wizard_password_placeholder">Escolha uma senha para criptografar a chave da conta neste dispositivo</string>
+  <string name="wizard_password_button">Escolha senha</string>
   <string name="wizard_password_skip">Criar conta</string>
+  <string name="wizard_password_switch">Criptografar conta com senha</string>
+  <string name="wizard_password_warning">Note que a senha não pode ser recuperada</string>
+  <string name="wizard_profile_info">O perfil só é compartilhado com contatos</string>
+  <string name="wizard_profile_button">Salvar perfil</string>
+  <string name="wizard_profile_skip">Pular e fazer depois</string>
+  <string name="fab_path_choose">Escolha outro arquivo</string>
+  <string name="chat_plugins">Plugins de bate-papo</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partilhar</string>
+  <string name="bottomSheet_dialpad_btn">Teclado de discagem</string>
+  <string name="bottomSheet_plugins_btn">Complementos</string>
   <string name="bottomSheet_add_participants_btn">Adicionar</string>
+  <string name="bottomSheet_change_camera_btn">Mudar</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Câmara</string>
+  <string name="bottomSheet_hangup_btn">Terminar chamada</string>
+  <string name="bottomSheet_mute_microphone_btn">Microfone</string>
+  <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
 </resources>

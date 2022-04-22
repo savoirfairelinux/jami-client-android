@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Обратна връзка</string>
+  <string name="report">Изпратете ни емайл</string>
+  <string name="section_license">Лиценз</string>
+  <string name="sponsor_section">Jami е безплатен софтуер, разработен и поддържан от</string>
+  <string name="copyright_section">Авторски права</string>
+  <string name="contribute_section">Принос</string>
+  <string name="version_section">Версия</string>
+  <string name="no_email_app_installed">Не е открито приложение за е-поща. Инсталирайте такова и ни изпратете доклад.</string>
+  <string name="no_browser_app_installed">Не е открито приложение-браузър. Инсталирайте такова, за да видите тази страница.</string>
+  <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
+  <string name="website_chooser_title">Преглед на уеб сайта чрез…</string>
+  <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте <u>Общия публичен лиценз на GNU, версия 3 или по-нов</u></string>
+  <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
+  <string name="credits">Заслуги</string>
+  <!--About dialog-->
+  <string name="developed_by">Разработен от</string>
+  <string name="designed_by">Проектиран от</string>
+  <!--RingActivity-->
+  <string name="error_no_network">Няма връзка с мрежата</string>
+  <string name="error_mobile_network_available_but_disabled">Моля, разрешете достъпа до мобилната мрежа от настройките.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Текстово съобщение</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">Заявки за нови контакти</string>
+  <string name="menu_item_accounts">Управление на профилите</string>
+  <string name="menu_item_account">Управление на профила</string>
+  <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_about">Относно Jami</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Наберете номер</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="choose_number">Изберете номер</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Пропуснато входящо обаждане</string>
+  <string name="notif_missed_outgoing_call">Пропуснато изходящо обаждане</string>
+  <string name="notif_incoming_call_title">Входящо обаждане от %1$s</string>
+  <string name="notif_incoming_call">Входящо обаждане</string>
+  <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
+  <string name="notif_outgoing_call">Изходящо обаждане</string>
+  <string name="notif_current_call">Текущо обаждане</string>
+  <string name="notif_channel_calls">Обаждания</string>
+  <string name="notif_channel_missed_calls">Пропуснати обаждания</string>
+  <string name="notif_channel_messages">Съобщения</string>
+  <string name="notif_channel_requests">Заявки</string>
+  <string name="notif_channel_file_transfer">Прехвърляне на файлове</string>
+  <string name="notif_channel_background_service">Фонов режим</string>
+  <string name="notif_channel_background_service_descr">Позволява получаването на обаждания и съобщения по всяко време.</string>
+  <string name="notif_group_calls">Обаждания</string>
+  <string name="notif_background_service">Jami в момента работи във фонов режим</string>
+  <string name="notif_mark_as_read">Маркиране като прочетено</string>
+  <string name="notif_dismiss">Отказ</string>
+  <string name="notif_reply">Отговор</string>
+  <string name="notif_incoming_file_transfer_title">Входящ файл от %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Изпращане на файл до %1$s</string>
+  <string name="notif_incoming_picture">Снимка от %1$s</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Вие:</string>
+  <string name="action_call_hangup">Затваряне</string>
+  <string name="ongoing_call">Текущо обаждане</string>
+  <string name="hist_in_call">Входящо обаждане от %1$s</string>
+  <string name="hist_out_call">Изходящо обаждане до %1$s</string>
+  <string name="start_error_title">Jami не успя да стартира!</string>
+  <string name="start_error_mic_required">Ring се нуждае от правото за ползване на микрофона, за да работи.</string>
+  <string name="action_call_accept">Приемане</string>
+  <string name="action_call_decline">Отказ</string>
+  <string name="action_call_mic_mute">Заглушаване на микрофона</string>
+  <string name="ab_action_speakerphone">Активиране на високоговорител</string>
+  <string name="ab_action_contact_add">Добавяне към контактите</string>
+  <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
+  <string name="hist_contact_added">Контактът е добавен</string>
+  <string name="hist_invitation_received">Поканата е приета</string>
+  <string name="ab_action_audio_call">Гласово обаждане</string>
+  <string name="ab_action_video_call">Обаждане с видео</string>
+  <string name="ab_action_change_screen_orientation">Промяна на ориентацията на екрана</string>
+  <string name="share_via">Споделяне чрез</string>
+  <string name="write_a_message">Напишете съобщение</string>
+  <string name="scan_qr">Сканиране на QR-код</string>
+  <string name="ab_action_flipcamera">Обръщане на камерата</string>
+  <!--Text messages-->
+  <string name="send_message">Изпращане на съобщение</string>
+  <string name="message_sending">Изпращане на съобщение…</string>
+  <string name="message_failed">Неуспешно</string>
+  <string name="time_just_now">Току-що</string>
+  <string name="send_file">Изпращане на файл</string>
+  <string name="hist_file_sent">Файлът е изпратен</string>
+  <string name="hist_file_received">Файлът е получен</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Право за използване на камерата</string>
+  <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Грешка</string>
+  <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
+  <string name="ringtone_error_size_too_big">Този файл е твърде голям. Максималният размер е %1$dkB.</string>
+  <string name="ringtone_custom_label">Персонализиран</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami се нуждае от разрешението \"Четене на контакти\", за да активира тази функция. Моля, предоставете го.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami се нуждае от разрешението \"Запис на повиквания\", за да активира тази функция. Моля, предоставете го.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Сканирайте QR-кода на профила, който искате да добавите.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Изчистване на историята?</string>
+  <string name="clear_history_dialog_message">Това действие е необратимо.</string>
+  <string name="clear_history_completed">Историята беше изчистена.</string>
+  <!--Conversation-->
+  <string name="conversation_details">Подробности за контакта</string>
+  <string name="conversation_action_delete_this">Изтриване на този разговор</string>
+  <string name="conversation_action_delete_this_title">Изтриване на този разговор?</string>
+  <string name="conversation_action_delete_this_message">Това действие е необратимо.</string>
+  <string name="conversation_action_history_clear">Изчистване на историята</string>
+  <string name="conversation_action_history_clear_title">Изчистване на историята на повикванията?</string>
+  <string name="conversation_action_history_clear_message">Това определено ще изчисти историята на повикванията.</string>
+  <string name="conversation_action_remove_this">Изтриване на контакт</string>
+  <string name="conversation_action_remove_this_title">Изтриване на този контакт?</string>
+  <string name="conversation_action_remove_this_message">Това определено ще изтрие този контакт и ще изчисти историята на повикванията.</string>
+  <string name="conversation_action_copy_peer_number">Копиране на номера</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s е копиран</string>
+  <string name="conversation_action_select_peer_number">Изберете номер</string>
+  <string name="conversation_action_block_this">Блокиране на контакт</string>
+  <string name="conversation_action_go_to_call">Обратно към текущо обаждане</string>
+  <string name="clip_contact_uri">Адрес за контакт</string>
+  <string name="block_contact_dialog_title">Блокиране на %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s няма да може да се свърже с вас, докато не го деблокирате.</string>
+  <string name="block_contact_completed">%1$s бе блокиран.</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
+  <string name="prompt_new_password">Нова парола</string>
+  <string name="prompt_new_password_optional">Нова парола (незадължително)</string>
+  <string name="prompt_new_password_repeat">Повторете новата парола</string>
+  <string name="account_create_title">Създаване на профил в Jami</string>
+  <string name="prompt_new_username">Въведете ново потребителско име</string>
+  <string name="prompt_hint_username">Потребителско име</string>
+  <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
+  <string name="help_pin_enter">Въведете ПИН-кода на друг настроен профил за Jami. Използвайте функцията „Изнасяне на профила от Jami“, за да получите ПИН.</string>
+  <string name="wizard_next">Напред</string>
+  <string name="wizard_back">Назад</string>
+  <string name="wizard_skip">Пропускане</string>
+  <!--Account Summary-->
+  <string name="profile">Профил</string>
+  <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
+  <string name="open_the_gallery">Отваряне на галерията</string>
+  <string name="take_a_photo">Снимане</string>
+  <string name="registered_name">Регистрирано име</string>
+  <string name="account">Профил</string>
+  <!--Share fragment-->
+  <string name="share_message">Сканирайте този код с Jami</string>
+  <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>
+  <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
+  <string name="share_label">Споделяне</string>
+  <string name="generic_error_migration">Грешка</string>
+  <string name="generic_error_migration_message">Възникна грешка при прехвърлянето</string>
+  <!--Pending contact requests-->
+  <string name="accept">Приемане</string>
+  <string name="refuse">Отказ</string>
+  <string name="block">Блокиране</string>
+  <string name="contact_request_title">Заявка за свързване с нов контакт</string>
+  <string name="contact_request_account">За %1$s</string>
+  <string name="message_contact_not_trusted_yet">%sвсе още не е в контактите ви.\nПриемате ли или отказвате тази заявка за контакт? </string>
+  <string name="message_contact_not_trusted">%s не е в контактите ви.\nДобавяне на контакт?</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Изпращане</string>
+  <string name="send_request_title">Изпращане на заявка за свързване с нов контакт</string>
+  <string name="send_request_msg">Трябва да изпратите заявка за контакт, за да комуникирате с този потребител. Докато вашият контакт не е приел заявката, можете да изпращате съобщения, но той няма да може да отговори.</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <string name="no_contact_request">Няма изпратени заявки за свързване с нови контакти</string>
+  <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
+  <string name="search_results">Резултати от търсенето</string>
+  <string name="tv_contact_row_header">Контакти</string>
+  <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
+  <string name="gallery_error_message">Не е намерено приложение на устройството, което да отвори Галерия</string>
+  <string name="generic_error">Възникна неизвестна грешка</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Невалиден файл</string>
+  <string name="file_transfer_status_created">инициализиране на трансфер</string>
+  <string name="file_transfer_status_unsupported">неподдържан</string>
+  <string name="file_transfer_status_wait_peer_acceptance">чакаме пиъра да приеме</string>
+  <string name="file_transfer_status_wait_host_acceptance">чакаме хоста да приеме</string>
+  <string name="file_transfer_status_ongoing">текущ</string>
+  <string name="file_transfer_status_finished">завършен</string>
+  <string name="file_transfer_status_closed_by_host">затворен от хост</string>
+  <string name="file_transfer_status_closed_by_peer">затворен от пиър</string>
+  <string name="file_transfer_status_cancelled">отменено</string>
+  <string name="file_saved_in">Файлът е запазен в %s</string>
+  <string name="no_space_left_on_device">Няма повече свободно място на устройството</string>
+  <string name="menu_file_open">Отваряне на файл</string>
+  <string name="menu_file_download">Теглене на файл</string>
+  <string name="menu_file_delete">Изтриване на файл</string>
+  <string name="menu_file_share">Споделяне на файл</string>
+  <string name="menu_message_copy">Копиране</string>
+  <string name="menu_message_cancel">Отмяна на съобщение</string>
+  <string name="menu_delete">Изтриване</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Разговори</string>
+  <string name="navigation_item_contact_request">Заявки за нови контакти</string>
+  <string name="navigation_item_account">Профил</string>
+  <!--TV-->
+  <string name="tv_audio_play">Пускане</string>
+  <string name="tv_audio_pause">Пауза</string>
+  <string name="tv_dialog_send">Изпращане</string>
+  <!--Wizard-->
+  <string name="wizard_password_skip">Създаване на профил</string>
+  <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Споделяне</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
+  <string name="bottomSheet_hangup_btn">Край на разговора</string>
+  <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
+</resources>

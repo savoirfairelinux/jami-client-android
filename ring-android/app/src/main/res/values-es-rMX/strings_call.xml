@@ -30,8 +30,15 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">Conectado</string>
     <string name="call_human_state_ringing">Marcando</string>
     <string name="call_human_state_current">Hablando</string>
+    <string name="call_human_state_hungup">Terminado</string>
     <string name="call_human_state_busy">Ocupado</string>
     <string name="call_human_state_failure">Falló</string>
     <string name="call_human_state_hold">En espera</string>
     <string name="call_human_state_unhold">Reanudar</string>
-    </resources>
+    <string name="call_human_state_over">Terminado</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderador</string>
+    <string name="call_muted">Silenciado</string>
+    <string name="call_handRaised">Mano levantada</string>
+
+</resources>

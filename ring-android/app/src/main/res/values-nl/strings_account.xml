@@ -45,6 +45,8 @@ U kunt uw account later bewerken</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
   <string name="account_password_change">Wachtwoord wijzigen</string>
+  <string name="account_password_set">Wachtwoord Instellen</string>
+  <string name="account_password_summary">Beheer het wachtwoord van uw account</string>
   <string name="account_password_change_wait_message">Accountwachtwoord wordt gewijzigd</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
@@ -57,6 +59,7 @@ U kunt uw account later bewerken</string>
   <string name="account_optionnal_category">Optionele instellingen</string>
   <string name="account_useragent_label">Gebruikersagent</string>
   <string name="account_autoanswer_label">Automatisch beantwoorden</string>
+  <string name="account_rendezvous_summary">In Rendezvous mode, worden inkomende oproepen aan een conferentie toegevoegd</string>
   <string name="account_upnp_label">UPnP inschakelen</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -74,11 +77,17 @@ U kunt uw account later bewerken</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
   <string name="account_call_settings_title">Oproepinstellingen</string>
+  <string name="account_dht_public_in_calls_label">Sta inkomende oproepen van onbekende contacten toe</string>
   <string name="account_registration_exp_label">Verval registratie</string>
   <string name="account_local_interface_label">Lokale interface</string>
   <string name="account_local_port_label">Lokale poort</string>
   <string name="account_stun_enable_label">Stun gebruiken</string>
   <string name="account_stun_server_label">Stunserver</string>
+  <string name="account_accept_files">Automatisch inkomende bestanden accepteren</string>
+  <string name="account_conversation_settings_title">Gespreksinstellingen</string>
+  <string name="account_accept_files_max_size">Maximale bestandsgrootte wat automatisch geaccepteerd wordt</string>
+  <string name="account_accept_files_never">Nooit automatisch accepteren</string>
+  <string name="account_accept_files_always">Altijd automatisch accepteren</string>
   <string name="account_turn_enable_label">TURN gebruiken</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-gebruikersnaam</string>
@@ -90,6 +99,9 @@ U kunt uw account later bewerken</string>
   <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
   <string name="account_proxy_server_label">DHT-proxyadres</string>
   <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_peer_discovery_label">Lokale verwanten ontdekken</string>
+  <string name="account_peer_discovery_enable_label">Lokale verwanten ontdekken inschakelen</string>
+  <string name="account_peer_discovery_enable_summary">Verbinden met andere DHT nodes die zich kenbaar maken binnen het LAN waar u zich bevind</string>
   <!--Security Details-->
   <string name="account_credentials_label">Legitimatie</string>
   <string name="account_credentials_edit">Legitimatie wijzigen</string>
@@ -155,11 +167,14 @@ U kunt uw account later bewerken</string>
   <string name="tv_about_version">Versie</string>
   <string name="tv_about_license">Licentie</string>
   <string name="tv_about_credits">Met dank aan</string>
+  <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Voer pincode in</string>
   <string name="account_new_button">Een Jami-account aanmaken</string>
   <string name="account_link_export_button">Een nieuw apparaat koppelen</string>
+  <string name="account_link_show_button">Toon %d meer gekoppelde apparaten</string>
+  <string name="account_link_hide_button">Gekoppelde apparaten verbergen</string>
   <string name="account_link_export_info">Om dit account op andere apparaten te gebruiken dient u deze eerst op Jami bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>

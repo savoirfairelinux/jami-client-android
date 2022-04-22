@@ -20,6 +20,10 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Panggilan dibatalkan. Tiada mikrofon dikesan.</string>
+    <string name="call_error_no_camera_no_microphone">Panggilan dibatalkan. Tiada kamera atau mikrofon dikesan.</string>
+
     <string name="call_human_state_connecting">Menyambung</string>
     <string name="call_human_state_ringing">Berdering</string>
     <string name="call_human_state_current">Bercakap</string>

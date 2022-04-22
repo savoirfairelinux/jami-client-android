@@ -1,0 +1,333 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Povratna informacija</string>
+  <string name="report"><u>Pošaljite nam imejl</u></string>
+  <string name="section_license">Licenca</string>
+  <string name="sponsor_section">Jami je besplatan softver napravljen i održavan od strane </string>
+  <string name="copyright_section">Autorksa prava</string>
+  <string name="contribute_section">Doprinose</string>
+  <string name="version_section">Verzija</string>
+  <string name="no_email_app_installed">Nije pronađena imejl aplikacija, instalirajte jednu kako biste poslali prijavu</string>
+  <string name="no_browser_app_installed">Nije pronađena internet pretraživač, instalirajte jednu kako biste videli ovu stranicu</string>
+  <string name="email_chooser_title">Pošaljite nam imejl koristeći...</string>
+  <string name="website_chooser_title">Pogledajte stranicu pomoću...</string>
+  <string name="license">Ovaj softver se pruža „takav kakav je“, bez bilo kakvih garancija. Za detalje pogledajte<u> GNU General Public License verzija 3 ili novija</u></string>
+  <string name="description">Jami je besplatan softver za komunikaciju koja poštuje slobodu i privatnost svojih korisnika.</string>
+  <string name="credits">Zasluge</string>
+  <string name="pip_title">Jami konferencija</string>
+  <string name="call_service_description">Ova usluga je neophodna da bi vaši pozivi bili u prvom planu. Aktivna je samo tokom poziva.</string>
+  <string name="data_transfer_service_description">Ova usluga je neophodna za prikazivanje trajnih obaveštenja tokom prenosa datoteka. Aktivna je se samo tokom prenosa datoteka.</string>
+  <!--About dialog-->
+  <string name="developed_by">Razvijena od strane</string>
+  <string name="designed_by">Dizajnirano od strane </string>
+  <string name="ringtones_by">Melodije napravljene od strane</string>
+  <!--RingActivity-->
+  <string name="error_no_network">Nema internet konekcije</string>
+  <string name="error_account_offline">Nalog nije aktivan</string>
+  <string name="error_mobile_network_available_but_disabled">Dozvolite pristup mobilnoj mreži na ekranu podešavanja.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Tekst poruke</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">Zahtevi za kontakt</string>
+  <string name="menu_item_accounts">Upravljanjem nalogom</string>
+  <string name="menu_item_account">Upravljanjem nalogom</string>
+  <string name="menu_item_settings">Podešavanja</string>
+  <string name="menu_item_plugin_list">Podešavanja dodataka</string>
+  <string name="menu_item_share">Podeli moj nalog</string>
+  <string name="menu_item_about">O Jami</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Birajte broj</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Preraži ime ili broj telefona...</string>
+  <string name="choose_number">Izaberi broj</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Propušten dolazeći poziv</string>
+  <string name="notif_missed_outgoing_call">Propušten odlazeći poziv</string>
+  <string name="notif_incoming_call_title">Dolazeći poziv od %1$s</string>
+  <string name="notif_incoming_call">Dolazeći poziv</string>
+  <string name="notif_outgoing_call_title">Poziva se %1$s</string>
+  <string name="notif_outgoing_call">Poziva se</string>
+  <string name="notif_current_call_title">Trenutni poziv sa %1$s</string>
+  <string name="notif_current_call">Trenutni poziv</string>
+  <string name="notif_channel_call_in_progress">Poziv u toku</string>
+  <string name="notif_channel_calls">Poziva</string>
+  <string name="notif_channel_missed_calls">Propuštenih poziva</string>
+  <string name="notif_channel_incoming_calls">Dolazećih poziva</string>
+  <string name="notif_channel_messages">Poruka</string>
+  <string name="notif_channel_requests">Zahteva</string>
+  <string name="notif_channel_file_transfer">Prenos podatka</string>
+  <string name="notif_channel_sync">Sinhonizovanje podataka</string>
+  <string name="notif_channel_background_service">Usluga u pozadini</string>
+  <string name="notif_channel_background_service_descr">Dozoli primanje poziva i poruka u bilo kom trenutku.</string>
+  <string name="notif_group_calls">Poziva</string>
+  <string name="notif_background_service">Jami trenutno radi u pozadini</string>
+  <string name="notif_mark_as_read">Označi kao pročitano</string>
+  <string name="notif_dismiss">Otpusti</string>
+  <string name="notif_reply">Odgovori</string>
+  <string name="notif_incoming_file_transfer_title">Primanje podataka od %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Slanje podataka %1$s</string>
+  <string name="notif_incoming_picture">Slika od %1$s</string>
+  <string name="notif_sync_title">Sinhronizanje podataka...</string>
+  <string name="notif_location_title">Podeli lokaciju sa %1$s</string>
+  <string name="location_share_contact">%1$s deli lokaciju sa tobom</string>
+  <string name="notif_location_multi_title">Deli se lokacija sa %1$d kontakta</string>
+  <string name="notif_location_remaining">%1$dminuta preostalo</string>
+  <string name="notif_location_action_stop">Prestani sa deljenjem lokacije</string>
+  <string name="location_share_action_start">Kreni sa deljenjem</string>
+  <string name="location_share_action_stop">Prestani sa deljenjem</string>
+  <string name="location_share_about_title">Informacije o mapi</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Ti: </string>
+  <string name="action_call_hangup">Prekini poziv</string>
+  <string name="action_call_maximize">Uveličati</string>
+  <string name="action_call_minimize">Smanjiti</string>
+  <string name="action_call_mute">Blokirati mikrofon</string>
+  <string name="action_call_unmute">Aktivirati mikrofon</string>
+  <string name="ongoing_call">Trenutni poziv</string>
+  <string name="hist_in_call">Dolazeći poziv od %1$s</string>
+  <string name="hist_out_call">Odlazeći poziv od %1$s</string>
+  <string name="start_error_title">Ne može Jami da se pokrene!</string>
+  <string name="start_error_mic_required">Jami zahteva pristup mikrofonu da bi radio.</string>
+  <string name="action_call_accept">Prihvati poziv</string>
+  <string name="action_call_accept_audio">Odgovori zvukom</string>
+  <string name="action_call_accept_video">Odgovori videom</string>
+  <string name="action_call_hold_accept">Zaustavi i preuzmi zvučni poziv</string>
+  <string name="action_call_hold_accept_video">Zaustavi i preuzmi video poziv</string>
+  <string name="action_call_end_accept">Prekini i prihvati poziv</string>
+  <string name="action_call_decline">Odbij</string>
+  <string name="action_call_mic_mute">Blokiraj mikrofon</string>
+  <string name="action_load_plugin">Učitaj dodatke</string>
+  <string name="ab_action_speakerphone">Omogući zvučnik</string>
+  <string name="ab_action_contact_add">Dodaj kontakt</string>
+  <string name="ab_action_contact_add_question">Dotati u kontakte?</string>
+  <string name="hist_contact_invited">Kontakt je pozvan</string>
+  <string name="hist_contact_added">Kontakt dodat</string>
+  <string name="hist_contact_left">Kontakt napušten</string>
+  <string name="hist_contact_banned">Kontakt zabranjen</string>
+  <string name="hist_invitation_received">Primljen poziv</string>
+  <string name="ab_action_audio_call">Audio poziv</string>
+  <string name="ab_action_video_call">Video poziv</string>
+  <string name="ab_action_change_screen_orientation">Promeni orijentaciju ekrana</string>
+  <string name="share_via">Podeli uz pomoć</string>
+  <string name="write_a_message">Napiši poruku</string>
+  <string name="scan_qr">Skeniraj QR kod</string>
+  <string name="qr_code">QR kod</string>
+  <string name="ab_action_flipcamera">Obrni kameru</string>
+  <string name="ab_action_hidepreview">Sakrij pregled</string>
+  <string name="remote_recording">%ssnimanje...</string>
+  <!--Text messages-->
+  <string name="send_message">Pošalji poruku</string>
+  <string name="message_sending">Slanje poruke...</string>
+  <string name="message_failed">Neuspešno</string>
+  <string name="time_just_now">Upravo sada</string>
+  <string name="send_file">Pošalji podatak</string>
+  <string name="hist_file_sent">Podatak poslat</string>
+  <string name="hist_file_received">Podatak primljen</string>
+  <string name="conversation_send_audio">Snimi audio snimak</string>
+  <string name="conversation_send_video">Snimi video snimak</string>
+  <string name="conversation_share_location">Podeli lokaciju</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Dozvola za kameru</string>
+  <string name="permission_dialog_camera_message">Video razgovori zahtevaju dozvolu kamere za rad. Molim Vas uključite je.</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Greška</string>
+  <string name="ringtone_error_format_not_supported">Format nije podržan</string>
+  <string name="ringtone_error_size_too_big">Podatak je prevelik. Maksimalna veličina je %1$d kB.</string>
+  <string name="ringtone_custom_prompt">Podesite melodiju</string>
+  <string name="ringtone_custom_label">Običaj</string>
+  <string name="ringtone_jami_tones">Jami tonovi</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami treba dozvola „Čitaj kontakte“ da bi omogućila ovu funkciju. Molim te, odobri.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami treba dozvola „Napiši evidenciju poziva“ da bi omogućila ovu funkciju. Molim te, odobri.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skeniraj QR kod naloga kog želite da dodate.</string>
+  <string name="title_activity_qrcode">Podeli moj nalog</string>
+  <string name="error_scan_no_camera_permissions">QR skeneru je potrebna dozvola kamere kako bi radila</string>
+  <string name="tab_code">Moj kod</string>
+  <string name="tab_scan">Skeniraj kod</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Izbriši istoriju?</string>
+  <string name="clear_history_dialog_message">Akcija ne može da se povrati.</string>
+  <string name="clear_history_completed">Istorija je izbrisana.</string>
+  <string name="clear_history">Jasno</string>
+  <!--Conversation-->
+  <string name="conversation_details">Detalji o kontaktu</string>
+  <string name="conversation_action_delete_this">Izbrišite razgovor</string>
+  <string name="conversation_action_delete_this_title">Izbrišite razgovor?</string>
+  <string name="conversation_action_delete_this_message">Ova akcija je nepovratna</string>
+  <string name="conversation_action_history_clear">Izbriši istoriju</string>
+  <string name="conversation_action_history_clear_title">Izbriši istoriju razgovora?</string>
+  <string name="conversation_action_history_clear_message">Ovo će definitivno obrisati istoriju poruka.</string>
+  <string name="conversation_action_remove_this">Obriši kontakt</string>
+  <string name="conversation_action_remove_this_title">Da li želite da obrišete ovaj kontakt?</string>
+  <string name="conversation_action_remove_this_message">Ovo će zasigurno da obriše kontakt i istoriju razgovora.</string>
+  <string name="conversation_action_copy_peer_number">Kopiraj broj</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$skopiran broj</string>
+  <string name="conversation_action_select_peer_number">Izaberi broj</string>
+  <string name="conversation_action_block_this">Blokiraj kontakt</string>
+  <string name="conversation_action_go_to_call">Vratite se na tekući poziv</string>
+  <string name="conversation_open_file_error">Ne postoji instalirana aplikacija koja može otvoriti ovaj tip datoteke.</string>
+  <string name="clip_contact_uri">Kontakt adresa</string>
+  <string name="block_contact_dialog_title">Da li želite da blokirate %1$s</string>
+  <string name="block_contact_dialog_message">%1$sneće moći da Vas kontaktira dok ih ne odblokirate.</string>
+  <string name="block_contact_completed">%1$s je blokiran</string>
+  <string name="conversation_contact_is_typing">Kontakt piše...</string>
+  <string name="conversation_info_contact_you">Ti</string>
+  <string name="conversation_members">Članovi</string>
+  <string name="conversation_syncing">Preuzimanje razgovora od parnjaka</string>
+  <string name="conversation_preference_color">Boja razgovora</string>
+  <string name="conversation_preference_emoji">emoji razgovora</string>
+  <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_private">Privatni roj</string>
+  <string name="conversation_type_group">Grupni roj</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Da li želite da dodate %1$s?</string>
+  <string name="prompt_new_password">Nova šifra</string>
+  <string name="prompt_new_password_optional">Nova šifra (opciono)</string>
+  <string name="prompt_new_password_repeat">Ponovite novu šifru</string>
+  <string name="account_create_title">Kreirajte Jami nalog</string>
+  <string name="prompt_new_username">Unesite novo korisničko ime</string>
+  <string name="prompt_hint_username">Korisničko ime</string>
+  <string name="help_password_choose">Izaberite jaku lozinku koju ćete pamtiti da biste zaštitili svoj Jami nalog.</string>
+  <string name="help_password_enter">Unesite šifru za Jami nalog.</string>
+  <string name="help_server_enter">Unesite URL of servera za upravljanje.</string>
+  <string name="help_pin_enter">Unesite PIN sa drugog konfigurisanog Jami naloga. Koristite funkciju „izvezi Jami račun“ da biste dobili PIN.</string>
+  <string name="wizard_next">Sledeći</string>
+  <string name="wizard_back">Nazad</string>
+  <string name="wizard_skip">Preskoči</string>
+  <!--Account Summary-->
+  <string name="profile">Profil</string>
+  <string name="profile_name">Ime profila</string>
+  <string name="profile_message_warning">Vaš profile je podeljen samo sa Vašim kontaktima</string>
+  <string name="open_the_gallery">Otvorite galeriju</string>
+  <string name="take_a_photo">Slikati</string>
+  <string name="profile_name_hint">Unesite Vaše ime</string>
+  <string name="registered_name">Registrujte Vaše ime</string>
+  <string name="no_registered_name">Nema registrovanog imena</string>
+  <string name="identity">Identitet</string>
+  <string name="account">Nalog</string>
+  <string name="link_new_device">Povežite novi uređaj</string>
+  <string name="devices">Povežite uređaj</string>
+  <string name="total_devices">Ukupno uređaja:</string>
+  <!--Share fragment-->
+  <string name="share_message">Skenirajte kod sa Jami aplikacijom</string>
+  <string name="share_message_no_account">Izaberite nalog za deljenje</string>
+  <string name="share_your_account_information">Podeli moj kontakt informacije</string>
+  <string name="share_label">Podeli</string>
+  <string name="generic_error_migration">Greška</string>
+  <string name="generic_error_migration_message">Greška se pojavila tokom migracije</string>
+  <string name="title_share_with">Podeli sa...</string>
+  <!--Pending contact requests-->
+  <string name="accept">Prihvati</string>
+  <string name="refuse">Odbij</string>
+  <string name="block">Blokiraj</string>
+  <string name="contact_request_title">Novi zahtev za konkat </string>
+  <string name="contact_request_msg">Imate %1$dzahteva za kontakt</string>
+  <string name="contact_request_account">Za %1$s</string>
+  <string name="no_requests">Nemate nove zahteve za kontakt</string>
+  <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima. \nDa li prihvatate ili odbijate ovaj zahtev za kontakt?</string>
+  <string name="message_contact_not_trusted">%s nije u Vašim kontaktima.\nDodajte ga u kontakte?</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Pošalji</string>
+  <string name="send_request_title">Pošaljite zahtev za kontakt</string>
+  <string name="send_request_msg">Morate poslati zahtev za kontakt da biste komunicirali sa ovim korisnikom. Sve dok Vaš kontakt ne prihvati zahtev, možete da šaljete poruke, ali on neće moći da odgovori.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">Nemate blokiranih kontakta</string>
+  <!--Smartlist-->
+  <string name="no_contact_request">Nemate poslatih zahteva za kontakt</string>
+  <string name="conversation_placeholder">Nemate još razgovor</string>
+  <string name="contact_request_sent">Zahtev za kontakt je poslat</string>
+  <string name="start_conversation">Započnite razgovor</string>
+  <string name="search_results">Rezultat pretrage</string>
+  <string name="tv_contact_row_header">Kontakti</string>
+  <string name="gallery_error_title">Nije pronađena aplikacija za galeriju</string>
+  <string name="gallery_error_message">Nije pronađena aplikacija koja će otvoriti galeriju</string>
+  <string name="generic_error">Nepoznata greška se pojavila</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Neispravan fajl</string>
+  <string name="not_able_to_write_file">Nije moguće da se napiše fajl</string>
+  <string name="file_transfer_status_created">inicijalizacija prenosa</string>
+  <string name="file_transfer_status_unsupported">nepodržana</string>
+  <string name="file_transfer_status_wait_peer_acceptance">čekanje da peer prihvati</string>
+  <string name="file_transfer_status_wait_host_acceptance">čekanje da host prihvati</string>
+  <string name="file_transfer_status_ongoing">u toku</string>
+  <string name="file_transfer_status_finished">završen</string>
+  <string name="file_transfer_status_closed_by_host">zatvoren od strane hosta</string>
+  <string name="file_transfer_status_closed_by_peer">zatvoren od strane peera</string>
+  <string name="file_transfer_status_invalid_pathname">nevažeće ime putanje</string>
+  <string name="file_transfer_status_unjoinable_peer">ne pridružljiv peer</string>
+  <string name="file_transfer_status_cancelled">otkazan</string>
+  <string name="file_transfer_status_error">neuspešno zbog greške</string>
+  <string name="file_transfer_status_timed_out">Isteklo je vreme</string>
+  <string name="file_saved_in">Podatak je sačuvan u %s</string>
+  <string name="file_saved_successfully">Uspešno je sačuvan podatak</string>
+  <string name="file_download">Preuzimanje</string>
+  <string name="no_space_left_on_device">Nema dovoljlno mesta na uređaju</string>
+  <string name="title_media_viewer">Pregledač medije</string>
+  <string name="menu_file_open">Otvorite podatak</string>
+  <string name="menu_file_download">Skinite podatak</string>
+  <string name="menu_file_save">Sačuvajte podatak</string>
+  <string name="menu_file_delete">Izbrišite podatak</string>
+  <string name="menu_file_share">Podeli podatak</string>
+  <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_message_delete">Izbriši poruku</string>
+  <string name="menu_message_cancel">Otkaži poruku</string>
+  <string name="menu_delete">Izbriši</string>
+  <string name="pref_darkTheme_title">Tamna tema</string>
+  <string name="pref_darkTheme_summary">Uvek omogućite tamnu temu umesto da koristite sistemsko ponašanje</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Konverzacija</string>
+  <string name="navigation_item_contact_request">Zahtevi za kontakt</string>
+  <string name="navigation_item_account">Nalog</string>
+  <string name="search_results_public_directory">Javni direktorijum</string>
+  <!--TV-->
+  <string name="tv_send_audio_dialog_message">Da li želite da pošaljete audio poruku?</string>
+  <string name="tv_send_image_dialog_message">Da li želite da pošaljete sliku?</string>
+  <string name="tv_send_video_dialog_message">Da li želite da pošaljete video?</string>
+  <string name="tv_media_preview">Pregled</string>
+  <string name="tv_audio_play">Пусти</string>
+  <string name="tv_audio_pause">Pauziraj</string>
+  <string name="tv_dialog_send">Pošalji</string>
+  <string name="tv_audio_recording">Snimanje...</string>
+  <string name="tv_send_text">Pošaljite tekst</string>
+  <string name="tv_send_audio">Pošaljite audio</string>
+  <string name="tv_send_video">Pošaljite mediju</string>
+  <string name="tv_action_more">Više</string>
+  <string name="conversation_input_speech_hint">Kažite nešto...</string>
+  <!--Wizard-->
+  <string name="wizard_status_recommended">Preporučeno</string>
+  <string name="wizard_status_optional">Opciono</string>
+  <string name="wizard_status_required">Zahteva</string>
+  <string name="wizard_username_info">Izaberite korisnićko ime za Vaš nalog</string>
+  <string name="wizard_username_button">Izaberite korisničko ime</string>
+  <string name="wizard_username_skip">Preskočite biranje korisničkog imena</string>
+  <string name="wizard_password_info">Šifra naloga</string>
+  <string name="wizard_password_placeholder">Izaberite lozinku za šifrovanje ključa naloga na ovom uređaju</string>
+  <string name="wizard_password_button">Izaberite šifru</string>
+  <string name="wizard_password_skip">Napravi nalog</string>
+  <string name="wizard_password_switch">Šifrujte nalog sa lozinkom</string>
+  <string name="wizard_password_warning">Imajte na umu da se lozinka ne može povratiti</string>
+  <string name="wizard_profile_info">Profil se jedino deli sa kontaktima</string>
+  <string name="wizard_profile_button">Sačuvaj profil</string>
+  <string name="wizard_profile_skip">Preskoči i odradite kasnije</string>
+  <string name="fab_path_choose">Izaberite drugi podatak</string>
+  <string name="chat_plugins">Dodatak za ćaskanje</string>
+  <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Podeli</string>
+  <string name="bottomSheet_dialpad_btn">Brojčanik</string>
+  <string name="bottomSheet_plugins_btn">Dodaci</string>
+  <string name="bottomSheet_add_participants_btn">Dodaj</string>
+  <string name="bottomSheet_change_camera_btn">Promeni</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Završi poziv</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Zvuci</string>
+  <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
+</resources>

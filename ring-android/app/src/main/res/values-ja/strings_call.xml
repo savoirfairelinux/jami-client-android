@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">保留</string>
     <string name="call_human_state_unhold">保留解除</string>
     <string name="call_human_state_over">通話終了</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">モデレータ</string>
+    <string name="call_muted">ミュート中</string>
+    <string name="call_handRaised">挙手</string>
+
+</resources>

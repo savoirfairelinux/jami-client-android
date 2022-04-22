@@ -45,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">Неизвестное устройство</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка</string>
   <string name="account_password_change">Изменить Пароль</string>
+  <string name="account_password_set">Установить пароль</string>
+  <string name="account_password_summary">Управление паролем вашей учетной записи.</string>
   <string name="account_password_change_wait_message">Изменение пароля аккаунта</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Основные</string>
@@ -57,6 +59,8 @@
   <string name="account_optionnal_category">Дополнительные настройки</string>
   <string name="account_useragent_label">Агент пользователя</string>
   <string name="account_autoanswer_label">Автоматический ответ</string>
+  <string name="account_rendezvous_label">Режим рандеву</string>
+  <string name="account_rendezvous_summary">В режиме Rendezvous входящие звонки будут добавляться в конференц-зал.</string>
   <string name="account_upnp_label">Включить UPnP</string>
   <string name="account_proxy_field">Прокси</string>
   <!--Audio Details-->
@@ -80,6 +84,12 @@
   <string name="account_local_port_label">Локальный порт</string>
   <string name="account_stun_enable_label">Использовать STUN</string>
   <string name="account_stun_server_label">Сервер STUN</string>
+  <string name="account_accept_files">Принимать входящие файлы автоматически</string>
+  <string name="account_conversation_settings_title">Настройки разговора</string>
+  <string name="account_accept_files_max_size">Максимальный размер файла для автоматической загрузки</string>
+  <string name="account_accept_files_never">Никогда не принимать автоматически</string>
+  <string name="account_accept_files_always">Всегда принимать автоматически</string>
+  <string name="size_mb">%1$dМб</string>
   <string name="account_turn_enable_label">Использовать TURN</string>
   <string name="account_turn_server_label">Сервер TURN</string>
   <string name="account_turn_username_label">Имя пользователя</string>
@@ -90,7 +100,11 @@
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">адрес прокси для DHT</string>
+  <string name="account_proxy_server_list_label">DHT прокси список URL</string>
   <string name="account_sip_proxy_label">Прокси</string>
+  <string name="account_peer_discovery_label">Обнаружение локальных пиров</string>
+  <string name="account_peer_discovery_enable_label">Включить обнаружение локальных пиров</string>
+  <string name="account_peer_discovery_enable_summary">Подключаться к другим DHT узлам в локальной сети</string>
   <!--Security Details-->
   <string name="account_credentials_label">Учетные данные</string>
   <string name="account_credentials_edit">Редактировать учетные данные</string>
@@ -98,6 +112,8 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
   <string name="account_srtp_switch_label">Шифровать медиа потоки (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Включить SDES в качестве протокола обмена ключами</string>
+  <string name="account_srtp_rtp_fallback">Возврат к RTP в случае сбоя SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>
@@ -111,6 +127,7 @@
   <string name="account_tls_server_name_label">Имя сервера</string>
   <string name="account_tls_verify_server_label">Проверка сервера</string>
   <string name="account_tls_verify_client_label">Проверка клиента</string>
+  <string name="account_require_client_certificate_label">TLS требует сертификат клиента</string>
   <string name="account_tls_negotiation_timeout_sec">Тайм-аут (сек)</string>
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Минимум</string>
@@ -121,6 +138,8 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="export_account_wait_message">Экспортировать информацию об аккаунте</string>
+  <string name="account_export_file">Создать резервную копию учётной записи</string>
+  <string name="account_export_file_summary">Сделать резервную копию своей учетной записи на устройстве, чтобы восстановить ее позже.</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт с помощью этого пароля.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт в сети. Проверьте подключение.</string>
@@ -153,19 +172,27 @@
   <!--TV-->
   <string name="account_tv_settings_header">Настройки аккаунта</string>
   <string name="account_tv_advance_settings_header">Дополнительные настройки</string>
+  <string name="account_tv_add_contact">Добавить контакт</string>
+  <string name="account_tv_advanced_settings">Изменить основные настройки</string>
   <string name="account_tv_about">О Jami</string>
   <string name="tv_about_version">Версия</string>
   <string name="tv_about_license">Лицензия</string>
+  <string name="tv_about_author">Авторские права</string>
   <string name="tv_about_credits">Авторы</string>
+  <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключиться из сети</string>
   <string name="account_link_archive_button">Подключиться через резервную копию</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
+  <string name="account_link_export_button">Привязать новое устройство</string>
+  <string name="account_link_show_button">Показать еще %d присоединенных устройств</string>
+  <string name="account_link_hide_button">Скрыть присоединенное устройство</string>
   <string name="account_link_export_info">Чтобы использовать эту учетную запись на других устройствах, вы должны сначала предоставить ее в Jami. При этом будет сгенерирован PIN-код, который необходимо ввести на новом устройстве. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN </string>
   <string name="account_end_export_button">закрыть</string>
   <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\n\Чтобы завершить процесс, вам нужно открыть Jami на новом устройстве. Создайте новую учетную запись с помощью \"связать это устройство с аккаунтом\". Ваш PIN-код действителен в течение 10 минут.</string>
   <string name="account_link_export_info_light">Чтобы использовать эту учетную запись на других устройствах, вы должны сначала предоставить ее в Jami. При этом будет сгенерирован PIN-код, который необходимо ввести на новом устройстве. PIN-код действителен в течение 10 минут.</string>
+  <string name="account_export_title">Подключить учётную запись к другому устройству</string>
   <string name="account_connect_server_button">Подключиться к серверу управления</string>
   <string name="account_connect_button">Соединение...</string>
   <string name="prompt_server">URL управляющего сервера Jami</string>
@@ -174,10 +201,13 @@
   <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
+  <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>
   <string name="username_available">Имя пользователя доступно !</string>
+  <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попробовать зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать общедоступное имя пользователя</string>
+  <string name="register_recommended">Рекомендуется</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="unknown_error">Неизвестная ошибка. Пожалуйста, проверьте ваше интернет соединение</string>
@@ -195,6 +225,7 @@
   <string name="account_link_title">Привязать это устройство</string>
   <string name="account_sip_cannot_be_registered">Не удаётся зарегистрировать аккаунт</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Редактировать мою учётную запись</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Введите пароль для подтверждения</string>
   <string name="enter_password">Введите пароль</string>
@@ -207,5 +238,6 @@
   <string name="rename_device_button">Переименовать устройство</string>
   <string name="account_rename_device_hint">Выберите новое имя для устройства</string>
   <string name="account_device_name_empty">В имени устройства должно быть не пусто</string>
+  <string name="account_device_this_indicator">Это устройство</string>
   <string name="account_disabled_indicator">отключено</string>
 </resources>

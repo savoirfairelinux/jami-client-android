@@ -53,7 +53,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_basic_category">Impostazioni di base</string>
   <string name="account_alias_label">Nome account</string>
   <string name="account_hostname_label">Nome host</string>
-  <string name="account_bootstrap_label">Avvio</string>
+  <string name="account_bootstrap_label">Server di avvio</string>
   <string name="account_username_label">Nome utente</string>
   <string name="account_password_label">Password</string>
   <string name="account_optionnal_category">Impostazioni facoltative</string>
@@ -95,8 +95,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
   <string name="account_published_same_as_local_label">Pubblico uguale a quello locale</string>
-  <string name="account_published_port_label">Porta pubblica</string>
-  <string name="account_published_address_label">Indirizzo Pubblico</string>
+  <string name="account_published_port_label">Porta pubblicata</string>
+  <string name="account_published_address_label">Indirizzo pubblicato</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
@@ -137,7 +137,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_password_char_count">Minimo 6 caratteri</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Attendere…</string>
-  <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
+  <string name="export_account_wait_message">Esportazione dell\'account in corso</string>
   <string name="account_export_file">Backup dell\'account</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
