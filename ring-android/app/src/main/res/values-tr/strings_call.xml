@@ -39,4 +39,6 @@ along with this program; if not, write to the Free Software
     <!-- Conferences -->
     <string name="call_moderator">Moderatör</string>
     <string name="call_muted">Sessiz</string>
-    </resources>
+    <string name="call_handRaised">El kaldırıldı</string>
+
+</resources>

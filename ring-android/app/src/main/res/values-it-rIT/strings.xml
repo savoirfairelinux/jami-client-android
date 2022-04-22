@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report">Inviaci una mail</string>
+  <string name="report"><u>Inviaci un\'e-mail</u></string>
   <string name="section_license">Licenza</string>
   <string name="sponsor_section">Jami è un software gratuito sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
@@ -10,9 +10,9 @@
   <string name="version_section">Versione</string>
   <string name="no_email_app_installed">Nessuna applicazione email trovata, installane una per inviarci la tua opinione</string>
   <string name="no_browser_app_installed">Nessuna applicazione browser trovata, installane una per visualizzare questa pagina</string>
-  <string name="email_chooser_title">Invia email con...</string>
+  <string name="email_chooser_title">Invia e-mail con...</string>
   <string name="website_chooser_title">Visualizza sito web con...</string>
-  <string name="license">Questo software è fornito \"così come è\", senza alcuna garanzia di sorta. Per dettagli consultare la GNU General Public License versione 3 o successiva</string>
+  <string name="license">Questo software è fornito \"così com\'è\", senza garanzie di alcun tipo. Per dettagli, vedi <u>GNU General Public License versione 3 o successiva</u></string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
   <string name="pip_title">Conferenza Jami</string>
@@ -23,13 +23,13 @@
   <string name="designed_by">Progettato da</string>
   <string name="ringtones_by">Suoneria di</string>
   <!--RingActivity-->
-  <string name="error_no_network">Assenza di connessione di rete</string>
+  <string name="error_no_network">Nessuna connessione di rete</string>
   <string name="error_account_offline">L\'account è offline</string>
   <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
-  <string name="ab_action_chat">Messaggiare</string>
+  <string name="ab_action_chat">Messaggi di testo</string>
   <!--Sections-->
-  <string name="menu_item_contact_request">Richiesta di contatto</string>
+  <string name="menu_item_contact_request">Richieste di contatto</string>
   <string name="menu_item_accounts">Gestisci account</string>
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
@@ -65,7 +65,7 @@
   <string name="notif_channel_incoming_calls">Chiamate in arrivo</string>
   <string name="notif_channel_messages">Messaggi</string>
   <string name="notif_channel_requests">Richieste</string>
-  <string name="notif_channel_file_transfer">trasferimento file</string>
+  <string name="notif_channel_file_transfer">Trasferimento file</string>
   <string name="notif_channel_sync">Sincronizzazione dei dati</string>
   <string name="notif_channel_background_service">Servizio in background</string>
   <string name="notif_channel_background_service_descr">Consenti sempre di ricevere chiamate e messaggi.</string>
@@ -120,15 +120,15 @@
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
   <string name="share_via">Condividi con</string>
   <string name="write_a_message">Scrivi un messaggio</string>
-  <string name="scan_qr">Leggi codice QR</string>
-  <string name="qr_code">QR Code</string>
+  <string name="scan_qr">Scansiona codice QR</string>
+  <string name="qr_code">Codice QR</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
   <string name="remote_recording">%s in registrazione…</string>
   <!--Text messages-->
   <string name="send_message">Invia messaggio</string>
   <string name="message_sending">Sto inviando il messaggio...</string>
-  <string name="message_failed">Errore</string>
+  <string name="message_failed">Fallito</string>
   <string name="time_just_now">Proprio ora</string>
   <string name="send_file">Invia file</string>
   <string name="hist_file_sent">File inviato</string>
@@ -181,7 +181,7 @@
   <string name="clip_contact_uri">Indirizzo di contatto</string>
   <string name="block_contact_dialog_title">Blocca %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non sara\' in grado di contattare l\'utente fino a sbloccarlo.</string>
-  <string name="block_contact_completed">%1$sè bloccato.</string>
+  <string name="block_contact_completed">%1$s è bloccato.</string>
   <string name="conversation_contact_is_typing">Il contatto sta scrivendo…</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>

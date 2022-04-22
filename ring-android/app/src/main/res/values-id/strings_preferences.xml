@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privasi</string>
+  <string name="pref_category_diagnostic">Diagnostik</string>
   <string name="pref_mobileData_title">Data ponsel</string>
   <string name="pref_mobileData_summary">Izinkan Jami pada jaringan 3G/LTE tambahan ke Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifikasi push</string>
@@ -34,12 +35,18 @@
   <string name="pref_delete_account_summary">Hapus akun anda dari perangkat ini</string>
   <string name="pref_persistNotification_title">Berjalan di latar belakang</string>
   <string name="pref_persistNotification_summary">Izinkan berjalan di latar belakang untuk menerima telepon dan pesan.</string>
+  <string name="pref_logs_title">Log diagnostik</string>
+  <string name="pref_logs_summary">Buka pengaturan log diagnostik</string>
+  <string name="pref_logs_start">Mulai logging</string>
+  <string name="pref_logs_stop">Hentikan logging</string>
   <string name="pref_typing_title">Aktifkan indikator pengetikan</string>
   <string name="pref_typing_summary">Kirim dan terima indikator pengetikan yang menunjukkan bahwa pesan sedang diketik.</string>
   <string name="pref_read_title">Aktifkan tanda terima telah dibaca</string>
   <string name="pref_read_summary">Kirim dan terima tanda terima yang menunjukkan bahwa pesan telah ditampilkan.</string>
   <string name="pref_block_record_title">Cegah tangkapan layar dan rekaman</string>
   <string name="pref_block_record_summary">Cegah pengambilan tangkapan layar atau rekaman video.</string>
+  <string name="pref_link_preview_title">Tampilkan tautan pratinjau di obrolan</string>
+  <string name="pref_link_preview_summary">Pratinjau perlu mengunduh konten dari server pihak ketiga.</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Publik \n(tampilkan notifikasi dan kontennya di layar kunci)\n</string>
   <string name="notification_private">Pribadi \n(tampilkan notifikasi tetapi sembunyikan kontennya di layar kunci)\n</string>

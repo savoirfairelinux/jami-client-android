@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vídeo</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidade</string>
+  <string name="pref_category_diagnostic">Diagnósticos</string>
   <string name="pref_mobileData_title">Dados móveis</string>
   <string name="pref_mobileData_summary">Permitir Jami em redes 3G/LTE para além do Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificações push (do servidor)</string>
@@ -14,6 +15,10 @@
   <string name="pref_hd_summary">Ativar envio de vídeo em HD</string>
   <string name="pref_hwEncode_title">Ativar codificação acelerada</string>
   <string name="pref_hwEncode_summary">Funcionalidade experimental</string>
+  <string name="pref_videoBitrate_title">Taxa de bits de vídeo</string>
+  <string name="pref_videoBitrate_summary">Selecione a taxa de bits padrão de saída de vídeo (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolução de vídeo</string>
+  <string name="pref_videoResolution_summary">Selecione a resolução padrão de saída de vídeo</string>
   <string name="pref_systemContacts_title">Usar contactos do sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos do sistema para mostrar detalhes de quem telefona.</string>
   <string name="pref_systemDialer_title">Fazer chamadas de sistema utilizando o Jami</string>
@@ -22,9 +27,42 @@
   <string name="pref_startOnBoot_summary">Executar o Jami em segundo plano ao iniciar o sistema.</string>
   <string name="pref_clearHistory_title">Limpar histórico</string>
   <string name="pref_clearHistory_summary">Apagar o histórico de todas as conversas. Esta ação não pode ser revertida.</string>
+  <string name="pref_notification_title">Visibilidade de notificação</string>
+  <string name="pref_notification_summary">Defina a visibilidade das notificações de aplicativos na tela de bloqueio.</string>
+  <string name="pref_blackList_title">Lista de bloqueio</string>
+  <string name="pref_blackList_summary">Verifique sua lista de bloqueios.</string>
   <string name="pref_delete_account_title">Eliminar conta</string>
+  <string name="pref_delete_account_summary">Exclua sua conta deste dispositivo</string>
   <string name="pref_persistNotification_title">Executar em segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ser executado em segundo plano para receber chamadas e mensagens</string>
+  <string name="pref_logs_title">Logs do diagnóstico</string>
+  <string name="pref_logs_summary">Abrir as configurações dos logs de diagnóstico</string>
+  <string name="pref_logs_start">Começar a logar</string>
+  <string name="pref_logs_stop">Parar de logar</string>
+  <string name="pref_typing_title">Habilitar indicadores de digitação</string>
+  <string name="pref_typing_summary">Enviar e receber indicadores de escrita, mostrando que a mensagem está sendo escrita.</string>
+  <string name="pref_read_title">Ativar verificação de leitura</string>
+  <string name="pref_read_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
+  <string name="pref_block_record_title">Bloquear captura de tela e gravação</string>
+  <string name="pref_block_record_summary">Bloquear captura de tela e gravação de vídeo</string>
+  <string name="pref_link_preview_title">Mostrar uma pré-visualização dos links nas conversações</string>
+  <string name="pref_link_preview_summary">A pré-visualização é obtida baixando conteúdo de servidores de terceiros.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Público \n(mostra notificações e seu conteúdo na tela de bloqueio)\n</string>
+  <string name="notification_private">Privado \n(mostrar notificações, mas ocultar o conteúdo na tela de bloqueio)\n</string>
+  <string name="notification_secret">Segredo \n(não mostrar notificações na tela de bloqueio)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Complementos</string>
+  <string name="pref_plugins_summary">Ativar os complementos e definir seus parâmetros</string>
+  <string name="fab_plugins_add">Adicionar um novo complemento</string>
+  <string name="plugin_uninstall_title">Desinstalar Complemento ?</string>
+  <string name="plugin_reset_preferences">Redefinir preferências de complemento</string>
+  <string name="plugin_reset_preferences_summary">Suas configurações de complemento serão padronizadas</string>
+  <string name="plugin_reset_preferences_ask">Você deseja redefinir as configurações dos complementos ?</string>
+  <string name="plugin_successfully_installed">Complemento <b>%1$s</b> instalado com êxito</string>
+  <string name="plugin_install_failure">Falha na instalação do complemento: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Você tem uma versão mais recente de: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Você tem a mesma versão de <b>%1$s</b> instalada</string>
+  <string name="plugin_force_install">forçar a instalação</string>
+  <string name="plugin_path_image_add">Adicionar uma nova imagem</string>
 </resources>

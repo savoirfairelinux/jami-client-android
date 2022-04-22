@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">تماس لغو شد. هیچ میکروفونی شناسایی نشد.</string>
+    <string name="call_error_no_camera_no_microphone">تماس لغو شد. هیچ دوربین یا میکروفونی شناسایی نشد.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">در حال جستجو</string>
+    <string name="call_human_state_incoming">ورودی</string>
+    <string name="call_human_state_connecting">در حال اتصال</string>
+    <string name="call_human_state_ringing">در حال زنگ</string>
+    <string name="call_human_state_current">در حال صحبت</string>
+    <string name="call_human_state_hungup">پایان</string>
+    <string name="call_human_state_busy">مشغول</string>
+    <string name="call_human_state_failure">انجام نشد</string>
+    <string name="call_human_state_hold">نگه‌داشتن</string>
+    <string name="call_human_state_unhold">رها کردن</string>
+    <string name="call_human_state_over">پایان</string>
+    <!-- Conferences -->
+    <string name="call_moderator">مدیر</string>
+    <string name="call_muted">بی‌صدا</string>
+    <string name="call_handRaised">دست بالاست</string>
+
+</resources>

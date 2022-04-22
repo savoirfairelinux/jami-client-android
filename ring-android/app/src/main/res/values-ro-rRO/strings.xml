@@ -259,7 +259,7 @@
   <string name="invalid_file">Fișier greșit</string>
   <string name="not_able_to_write_file">Fișierul nu poate fi scris</string>
   <string name="file_transfer_status_created">Inițializarea transferului</string>
-  <string name="file_transfer_status_unsupported">Neacceptat</string>
+  <string name="file_transfer_status_unsupported">neacceptat</string>
   <string name="file_transfer_status_wait_peer_acceptance">Se așteaptă acceptarea</string>
   <string name="file_transfer_status_wait_host_acceptance">Se așteaptă acceptarea</string>
   <string name="file_transfer_status_ongoing">în curs</string>

@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">سبر راي</string>
+  <string name="report"><u>راسلنا بالبريد الإلكتروني</u></string>
+  <string name="section_license">الرخصة</string>
+  <string name="sponsor_section">جامي هو برنامج حر طٌور و دٌعم من قبل</string>
+  <string name="copyright_section">حقوق النشر</string>
+  <string name="contribute_section">مساهمة</string>
+  <string name="version_section">الإصدار</string>
+  <string name="no_email_app_installed">ﻻ يوجد برنامج بريد الكتروني, قم بتثبيت أحدهم لترسل لنا تقريراً</string>
+  <string name="no_browser_app_installed">ﻻ يوجد برنامج متصفح للويب, قم بتثبيت أحدهم لترى هذه الصفحة</string>
+  <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
+  <string name="website_chooser_title">معاينة الموقع الإلكتروني بواسطة...</string>
+  <string name="license">هذا البرنامج مقدم \"كما هو\", بدون ضمان من أي نوع, للتفاصيل, أنظر <u>رخصة غنو العمومية إصدار الترخيص 3 أو ما بعدها</u></string>
+  <string name="description">جامى هو برنامج حر مجانى للتواصل العالمى الذى يحترم حريات وخصوصيات مستخدميه.</string>
+  <string name="credits">الأطراف الداعمة</string>
+  <string name="pip_title">اجتماع جامي مرئي</string>
+  <string name="call_service_description">هذه الخدمه ضرورية لتبقي المكالمات تعمل في الواجهة. إنها تعمل فقط أثناء المكالمات.</string>
+  <string name="data_transfer_service_description">هذه الخدمة ضرورية لعرض الإعلامات المستمرة أثناء نقل الملفات. تعمل فقط أثناء نقل الملفات.</string>
+  <!--About dialog-->
+  <string name="developed_by">طٌوّر بواسطة</string>
+  <string name="designed_by">صٌمم بواسطة</string>
+  <string name="ringtones_by">النغمات بواسطة</string>
+  <!--RingActivity-->
+  <string name="error_no_network">لا يوجد اتصال بالشبكة</string>
+  <string name="error_account_offline">الحساب غير متصل</string>
+  <string name="error_mobile_network_available_but_disabled">الرجاء إعطاء صلاحيات الوصول إلى الشبكة الخلوية في شاشة الإعدادات.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">رسائل نصية</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">طلبات جهات إتصال</string>
+  <string name="menu_item_accounts">إدارة الحسابات</string>
+  <string name="menu_item_account">إدارة الحساب</string>
+  <string name="menu_item_settings">الإعدادات</string>
+  <string name="menu_item_plugin_list">إعدادت الإضافات</string>
+  <string name="menu_item_share">مشاركة حسابي</string>
+  <string name="menu_item_about">حول جامي</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">إتصال برقم</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">بحث عن إسم أو رقم هاتف...</string>
+  <string name="choose_number">إختيار رقم</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">مكالمة واردة فائتة</string>
+  <string name="notif_missed_outgoing_call">مكالمة صادرة فائتة</string>
+  <string name="notif_incoming_call_title">مكالمة واردة من %1$s</string>
+  <string name="notif_incoming_call">مكالمة واردة</string>
+  <string name="notif_outgoing_call_title">مكالمة صادرة إلى %1$s</string>
+  <string name="notif_outgoing_call">مكالمة صادرة</string>
+  <string name="notif_current_call_title">مكالمة جارية مع %1$s</string>
+  <string name="notif_current_call">مكالمة جارية</string>
+  <string name="notif_channel_call_in_progress">يتم اجراء مكالمة</string>
+  <string name="notif_channel_calls">مكالمات</string>
+  <string name="notif_channel_missed_calls">مكالمات فائتة</string>
+  <string name="notif_channel_incoming_calls">مكالمات واردة</string>
+  <string name="notif_channel_messages">رسائل</string>
+  <string name="notif_channel_requests">طلبات</string>
+  <string name="notif_channel_file_transfer">نقل ملف</string>
+  <string name="notif_channel_sync">مزامنة البيانات</string>
+  <string name="notif_channel_background_service">خدمة تعمل في الخلفية</string>
+  <string name="notif_channel_background_service_descr">السماح بإستقبال مكالمات ورسائل بأي وقت.</string>
+  <string name="notif_group_calls">مكالمات</string>
+  <string name="notif_background_service">جامي يعمل حاليا في الخلفية</string>
+  <string name="notif_mark_as_read">وضع علامة مقروء</string>
+  <string name="notif_dismiss">رفض</string>
+  <string name="notif_reply">رد</string>
+  <string name="notif_incoming_file_transfer_title">ملف وارد من %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">إرسال ملف الى %1$s</string>
+  <string name="notif_incoming_picture">صورة من %1$s</string>
+  <string name="notif_sync_title">مزامنة البيانات...</string>
+  <string name="notif_location_title">مشاركة الموقع مع %1$s</string>
+  <string name="location_share_contact">%1$s يشارك الموقع معك</string>
+  <string name="notif_location_multi_title">مشاركة الموقع مع %1$d جهة إتصال</string>
+  <string name="notif_location_remaining">%1$d دقائق متبقية</string>
+  <string name="notif_location_action_stop">إيقاف مشاركة الموقع</string>
+  <string name="location_share_action_start">بدء المشاركة</string>
+  <string name="location_share_action_stop">إيقاف المشاركة</string>
+  <string name="location_share_about_title">خريطة المعلومات</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">أنت:</string>
+  <string name="action_call_hangup">إنهاء</string>
+  <string name="action_call_maximize">تكبير</string>
+  <string name="action_call_minimize">تقليص</string>
+  <string name="action_call_mute">كتم الصوت</string>
+  <string name="action_call_unmute">إعادة الصوت</string>
+  <string name="ongoing_call">مكالمة جارية</string>
+  <string name="hist_in_call">مكالمة واردة من %1$s</string>
+  <string name="hist_out_call">مكالمة صادرة من %1$s</string>
+  <string name="start_error_title">ﻻ يمكن تشغيل جامي !</string>
+  <string name="start_error_mic_required">جامي يستوجب الحصول على صلاحيات المايكروفون للعمل.</string>
+  <string name="action_call_accept">قبول مكالمة</string>
+  <string name="action_call_end_accept">إنهاء وإجراء مكالمة</string>
+  <string name="action_call_decline">رفض</string>
+  <string name="action_call_mic_mute">كتم ميكروفون</string>
+  <string name="action_load_plugin">جلب إضافة</string>
+  <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
+  <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
+  <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
+  <string name="hist_contact_added">تم إضافة جهة إتصال</string>
+  <string name="hist_invitation_received">تم تلقي دعوة</string>
+  <string name="ab_action_audio_call">مكالمة صوتية</string>
+  <string name="ab_action_video_call">مكالمة فيديو</string>
+  <string name="ab_action_change_screen_orientation">تغيير إتجاه الشاشة</string>
+  <string name="share_via">مشاركة عبر</string>
+  <string name="write_a_message">كتابة رسالة</string>
+  <string name="scan_qr">مسح رمز الإستجابة السريعة</string>
+  <string name="qr_code">رمز الإستجابة السريعة</string>
+  <string name="ab_action_flipcamera">قلب كاميرا</string>
+  <string name="ab_action_hidepreview">إخفاء معاينة</string>
+  <string name="remote_recording">%s تسجيل... </string>
+  <!--Text messages-->
+  <string name="send_message">إرسال رسالة</string>
+  <string name="message_sending">يتم إرسال رسالة...</string>
+  <string name="message_failed">فشل</string>
+  <string name="time_just_now">للتوّ</string>
+  <string name="send_file">إرسال ملف</string>
+  <string name="hist_file_sent">تم إرسال ملف</string>
+  <string name="hist_file_received">تم تلقي ملف</string>
+  <string name="conversation_send_audio">تسجيل مقطع صوتي</string>
+  <string name="conversation_send_video">تسجيل مقطع فيديو</string>
+  <string name="conversation_share_location">مشاركة الموقع</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">صلاحيات الكاميرا</string>
+  <string name="permission_dialog_camera_message">محادثات الفيديو تستوجب صلاحيات الكاميرا للعمل. الرجاء النظر في تفعيلها.</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">خطأ</string>
+  <string name="ringtone_error_format_not_supported">هذا التنسيق غير مدعوم.</string>
+  <string name="ringtone_error_size_too_big">هذا الملف كبير جداً. الحجم الأقصى هو %1$dكيلو بايت.</string>
+  <string name="ringtone_custom_prompt">تعيين نغمة رنين مخصصة</string>
+  <string name="ringtone_custom_label">تخصيص</string>
+  <string name="ringtone_jami_tones">نغمات جامي</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">جامي يحتاج الى صلاحيات \"قراءة جهات الإتصال\" لكي يتم تفعيل هذه الميزة. الرجاء منح الصلاحيات.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">جامي يحتاج إلى صلاحيات \"كتابة سجل المكالمات\" لكي يتم تفعيل هذه الميزة. الرجاء منح الصلاحيات.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">مسح رمز الاستجابة السريعة للحساب الذي تريد إضافته.</string>
+  <string name="title_activity_qrcode">مشاركة حسابي</string>
+  <string name="error_scan_no_camera_permissions">الماسح الضوئي QR يتطلب صلاحيات الكاميرا للعمل</string>
+  <string name="tab_code">الكود الخاص بي</string>
+  <string name="tab_scan">قراءة الكود</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">حذف المحفوظات؟</string>
+  <string name="clear_history_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
+  <string name="clear_history_completed">تم حذف المحفوظات.</string>
+  <!--Conversation-->
+  <string name="conversation_details">تفاصيل جهة الأتصال</string>
+  <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
+  <string name="conversation_action_delete_this_title">حذف هذه المحادثة؟</string>
+  <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>
+  <string name="conversation_action_history_clear">حذف المحفوظات</string>
+  <string name="conversation_action_history_clear_title">حذف محفوظات المحادثة؟</string>
+  <string name="conversation_action_history_clear_message">هذا بالتأكيد سيزيل تاريخ المحادثة.</string>
+  <string name="conversation_action_remove_this">حذف جهة إتصال</string>
+  <string name="conversation_action_remove_this_title">حذف جهة الإتصال؟</string>
+  <string name="conversation_action_remove_this_message">هذا سيزيل جهة الإتصال و بالتأكيد سيزيل تاريخ المحادثة.</string>
+  <string name="conversation_action_copy_peer_number">نسخ رقم</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$sتم النسخ إلى الحافظة</string>
+  <string name="conversation_action_select_peer_number">إختيار رقم</string>
+  <string name="conversation_action_block_this">حظر جهة إتصال</string>
+  <string name="conversation_action_go_to_call">العودة إلى المكالمة الجارية</string>
+  <string name="conversation_open_file_error">ﻻ يوجد برنامج مثبت يمكنه فتح هذا النوع من الملفات.</string>
+  <string name="clip_contact_uri">عنوان جهة إتصال</string>
+  <string name="block_contact_dialog_title">حظر %1$s؟</string>
+  <string name="block_contact_dialog_message">%1$s لن يتمكن من الاتصال بك حتى تقوم بإلغاء حظره.</string>
+  <string name="block_contact_completed">تم حظر %1$s.</string>
+  <string name="conversation_contact_is_typing">جهة إتصال تكتب…</string>
+  <string name="conversation_info_contact_you">أنت</string>
+  <string name="conversation_members">الأعضاء</string>
+  <string name="conversation_preference_color">لون المحادثة</string>
+  <string name="conversation_preference_emoji">إيموجي المحادثة</string>
+  <string name="conversation_type_contact">جهة اتصال جامي</string>
+  <string name="conversation_type_private">سرب خاص</string>
+  <string name="conversation_type_group">سرب مجموعة</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
+  <string name="prompt_new_password">كلمة مرور جديدة</string>
+  <string name="prompt_new_password_optional">كلمة مرور جديدة (إختياري)</string>
+  <string name="prompt_new_password_repeat">إعادة كلمة مرور جديدة</string>
+  <string name="account_create_title">إنشاء حساب جامي</string>
+  <string name="prompt_new_username">إدخال إسم مستخدم جديد</string>
+  <string name="prompt_hint_username">اسم المستخدم</string>
+  <string name="help_password_choose">إختيار كلمة مرور قوية يمكن تذكرها لحماية حساب جامي الخاص بك.</string>
+  <string name="help_password_enter">إدخال كلمة مرور حسابك الرئيسي على جامي.</string>
+  <string name="help_server_enter">إدخال رابط خادم الإدارة.</string>
+  <string name="help_pin_enter">إدخال رمز الأمان من حساب جامي آخر مٌهيء. إستعمل \"تصدير حساب جامي\" للحصول على رمز الأمان.</string>
+  <string name="wizard_next">التالي</string>
+  <string name="wizard_back">السابق</string>
+  <string name="wizard_skip">تخطي</string>
+  <!--Account Summary-->
+  <string name="profile">الملف الشخصى</string>
+  <string name="profile_name">اسم الملف الشخصى</string>
+  <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
+  <string name="open_the_gallery">فتح المعرض</string>
+  <string name="take_a_photo">إلتقاط صورة</string>
+  <string name="profile_name_hint">إدخال إسمك</string>
+  <string name="registered_name">الاسم المسجل</string>
+  <string name="no_registered_name">لا يوجد اسم مسجل</string>
+  <string name="identity">الهوية</string>
+  <string name="account">الحساب</string>
+  <string name="link_new_device">ربط جهاز جديد</string>
+  <string name="devices">الأجهزة المتصلة</string>
+  <string name="total_devices">الأجهزة الكلية</string>
+  <!--Share fragment-->
+  <string name="share_message">إمسح هذا الكود بإستعمال جامي</string>
+  <string name="share_message_no_account">الرجاء إختيار حساب للمشاركة.</string>
+  <string name="share_your_account_information">شارك معلومات الإتصال الخاصة بي</string>
+  <string name="share_label">مشاركة</string>
+  <string name="generic_error_migration">خطأ</string>
+  <string name="generic_error_migration_message">حدث خطأ أثناء الترحيل</string>
+  <string name="title_share_with">شارك مع...</string>
+  <!--Pending contact requests-->
+  <string name="accept">اقبل</string>
+  <string name="refuse">أرفض</string>
+  <string name="block">حظر</string>
+  <string name="contact_request_title">طلب جهة إتصال جديد</string>
+  <string name="contact_request_msg">لديك %1$d طلبات جهات اتصال</string>
+  <string name="contact_request_account">لـ%1$s</string>
+  <string name="no_requests">لا يوجد لديك طلبات جهة إتصال جديدة</string>
+  <string name="message_contact_not_trusted_yet">%s ليس في جهات إتصالك بعد.\nهل تقبل أم ترفض جهة الإتصال هذه؟</string>
+  <string name="message_contact_not_trusted">%s ليس في جهات إتصالك.\nإضافة جهة إتصال جديدة؟</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">إرسال</string>
+  <string name="send_request_title">إرسل طلب جهة إتصال</string>
+  <string name="send_request_msg">يجب أن ترسل طلب جهة إتصال لتتواصل مع هذا المستخدم. طالما لم يقبل المستخدم هذا الطلب, يمكنك إرسال رسائل و لكنه لن يستطيع الرد.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">لا توجد جهات إتصال محظورة</string>
+  <!--Smartlist-->
+  <string name="no_contact_request">لم يتم إرسال طلب جهة إتصال</string>
+  <string name="conversation_placeholder">لا يوجد محادثات لك بعد</string>
+  <string name="contact_request_sent">تم إرسال طلب جهة إتصال</string>
+  <string name="start_conversation">بدء محادثة</string>
+  <string name="search_results">نتائج البحث</string>
+  <string name="tv_contact_row_header">جهات الاتصال</string>
+  <string name="gallery_error_title">لا يوجد برنامج المعرض</string>
+  <string name="gallery_error_message">لم يتم إيجاد برنامج على الجهاز لفتح المعرض</string>
+  <string name="generic_error">حدث خطأ غير معروف</string>
+  <!--File Transfer-->
+  <string name="invalid_file">ملف غير صالح</string>
+  <string name="not_able_to_write_file">غير قابل على كتابة ملف</string>
+  <string name="file_transfer_status_created">تهيئة النقل</string>
+  <string name="file_transfer_status_unsupported">غير مدعوم</string>
+  <string name="file_transfer_status_wait_peer_acceptance">بإنتظار قبول الند</string>
+  <string name="file_transfer_status_wait_host_acceptance">بإنتظار قبول المضيف</string>
+  <string name="file_transfer_status_ongoing">جاري</string>
+  <string name="file_transfer_status_finished">انتهى</string>
+  <string name="file_transfer_status_closed_by_host">مغلق من قبل المضيف</string>
+  <string name="file_transfer_status_closed_by_peer">غلق من قبل الند</string>
+  <string name="file_transfer_status_invalid_pathname">اسم مسار غير صالح</string>
+  <string name="file_transfer_status_unjoinable_peer">ند غير قابل للإنضمام</string>
+  <string name="file_transfer_status_cancelled">ملغي</string>
+  <string name="file_transfer_status_error">فشل لحدوث خطأ</string>
+  <string name="file_transfer_status_timed_out">نفذت المهلة</string>
+  <string name="file_saved_in">تم تخزين الملف في %s</string>
+  <string name="file_saved_successfully">تم تخزين الملف بنجاح</string>
+  <string name="file_download">تنزيل</string>
+  <string name="no_space_left_on_device">ﻻ توجد مساحة باقية على الجهاز</string>
+  <string name="title_media_viewer">عارض الوسائط</string>
+  <string name="menu_file_open">فتح ملف</string>
+  <string name="menu_file_download">تحميل ملف</string>
+  <string name="menu_file_save">حفظ ملف</string>
+  <string name="menu_file_delete">إزالة ملف</string>
+  <string name="menu_file_share">مشاركة ملف</string>
+  <string name="menu_message_copy">نسخ</string>
+  <string name="menu_message_delete">حذف رسالة</string>
+  <string name="menu_message_cancel">إلغاء رسالة</string>
+  <string name="menu_delete">حذف</string>
+  <string name="pref_darkTheme_title">وضع داكن</string>
+  <string name="pref_darkTheme_summary">قم دائمًا بتمكين الوضع الداكن بدلاً من استخدام سلوك النظام</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">محادثات</string>
+  <string name="navigation_item_contact_request">طلبات جهات إتصال</string>
+  <string name="navigation_item_account">الحساب</string>
+  <string name="search_results_public_directory">الدليل عام</string>
+  <!--TV-->
+  <string name="tv_send_audio_dialog_message">إرسال رسالة صوتية؟</string>
+  <string name="tv_send_image_dialog_message">إرسال الصورة؟</string>
+  <string name="tv_send_video_dialog_message">إرسال الفيديو؟</string>
+  <string name="tv_media_preview">معاينة</string>
+  <string name="tv_audio_play">تشغيل</string>
+  <string name="tv_audio_pause">إيقاف مؤقت</string>
+  <string name="tv_dialog_send">إرسال</string>
+  <string name="tv_audio_recording">تسجيل...</string>
+  <string name="tv_send_text">إرسال نص</string>
+  <string name="tv_send_audio">إرسال صوت</string>
+  <string name="tv_send_video">إرسال وسائط متعددة</string>
+  <string name="conversation_input_speech_hint">قل شيئا...</string>
+  <!--Wizard-->
+  <string name="wizard_status_recommended">موصى به</string>
+  <string name="wizard_status_optional">اختياري</string>
+  <string name="wizard_status_required">مطلوب</string>
+  <string name="wizard_username_info">إختار إسم مستخدم لحسابك</string>
+  <string name="wizard_username_button">إختار إسم مستخدم</string>
+  <string name="wizard_username_skip">تخطي إختيار إسم مستخدم</string>
+  <string name="wizard_password_info">كلمة مرور الحساب</string>
+  <string name="wizard_password_placeholder">إختيار كلمة مرور لتشفير مفتاح الحساب على هذا الجهاز</string>
+  <string name="wizard_password_button">إختيار كلمة مرور</string>
+  <string name="wizard_password_skip">إنشاء حساب</string>
+  <string name="wizard_password_switch">تشفير الحساب بكلمة مرور</string>
+  <string name="wizard_password_warning">لاحظ أنه لا يمكن استعادة كلمة المرور</string>
+  <string name="wizard_profile_info">الملف الشخصي تتم مشاركته فقط مع جهات الإتصال</string>
+  <string name="wizard_profile_button">حفظ الملف الشخصي</string>
+  <string name="wizard_profile_skip">تخطي وعمل ذلك فيما بعد</string>
+  <string name="fab_path_choose">اختر وثيقة أخرى</string>
+  <string name="chat_plugins">إضافات الدردشة</string>
+  <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">مشاركة</string>
+  <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
+  <string name="bottomSheet_plugins_btn">الإضافات</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">كاميرا</string>
+  <string name="bottomSheet_hangup_btn">إنهاء المكالمة</string>
+  <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
+  <string name="bottomSheet_sound_output_btn">الأصوات</string>
+  <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
+</resources>

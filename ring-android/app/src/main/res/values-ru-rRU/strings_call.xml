@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Удержать</string>
     <string name="call_human_state_unhold">Возврат</string>
     <string name="call_human_state_over">Окончен</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Модератор</string>
+    <string name="call_muted">Беззвучно </string>
+    <string name="call_handRaised">Поднятая рука</string>
+
+</resources>
