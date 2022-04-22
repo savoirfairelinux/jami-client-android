@@ -53,7 +53,7 @@
   <string name="account_basic_category">Reglări simple</string>
   <string name="account_alias_label">Numele contului</string>
   <string name="account_hostname_label">Numele serverului</string>
-  <string name="account_bootstrap_label">Server de conectare</string>
+  <string name="account_bootstrap_label">Server de pornire</string>
   <string name="account_username_label">Nume de utilizator</string>
   <string name="account_password_label">Parola</string>
   <string name="account_optionnal_category">Reglări facultative</string>
@@ -96,7 +96,7 @@
   <string name="account_turn_password_label">Parolă TURN</string>
   <string name="account_published_same_as_local_label">Public ca cel local</string>
   <string name="account_published_port_label">Port Public</string>
-  <string name="account_published_address_label">Adresa publică</string>
+  <string name="account_published_address_label">Adresa publicată</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Folosește DHT proxy</string>
   <string name="account_proxy_server_label">Adresa proxy DHT</string>
@@ -137,7 +137,7 @@
   <string name="error_password_char_count">minimum 6 caractere</string>
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
-  <string name="export_account_wait_message">Exportă contul Jami</string>
+  <string name="export_account_wait_message">Se exportă contul Jami</string>
   <string name="account_export_file">Copiază contul</string>
   <string name="account_export_file_summary">Fă o copie de rezervă a contului pentru a-l recupera la nevoie.</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>

@@ -45,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Alterar palavra-chave</string>
+  <string name="account_password_set">Configurar senha</string>
+  <string name="account_password_summary">Gerenciar a senha da sua conta.</string>
   <string name="account_password_change_wait_message">Alterar palavra-chave da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
@@ -57,6 +59,8 @@
   <string name="account_optionnal_category">Configurações Opcionais</string>
   <string name="account_useragent_label">Agende do Utilizador</string>
   <string name="account_autoanswer_label">Resposta Automática</string>
+  <string name="account_rendezvous_label">Modo de Encontro</string>
+  <string name="account_rendezvous_summary">No Modo de Encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
   <string name="account_upnp_label">Ativar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -74,12 +78,14 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
+  <string name="account_dht_public_in_calls_label">Permitir chamadas de contatos desconhecidos</string>
   <string name="account_registration_exp_label">O Registo Expirou</string>
   <string name="account_local_interface_label">Interface Local</string>
   <string name="account_local_port_label">Porta Local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_accept_files">Permitir receber ficheiros automáticamente</string>
+  <string name="account_conversation_settings_title">Configurações de conversa</string>
   <string name="account_accept_files_max_size">Tamanho máximo de ficheiro a aceitar automáticamente</string>
   <string name="account_accept_files_never">Nunca aceitar automáticamente</string>
   <string name="account_accept_files_always">Aceitar sempre automáticamente</string>
@@ -106,6 +112,8 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
   <string name="account_srtp_switch_label">Encriptar fluxo de média (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Ativar SDES como protocolo de troca de chaves</string>
+  <string name="account_srtp_rtp_fallback">Retornar para RTP se SRTP falhar</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar Transporte TLS</string>
@@ -119,6 +127,7 @@
   <string name="account_tls_server_name_label">Nome do Servidor</string>
   <string name="account_tls_verify_server_label">Verificar Servidor</string>
   <string name="account_tls_verify_client_label">Verificar Cliente</string>
+  <string name="account_require_client_certificate_label">TLS Requer Certificado de Cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Tempo de Espera de Negociação (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
@@ -129,6 +138,8 @@
   <string name="error_passwords_not_equals">As palavras-chave não são iguais</string>
   <string name="export_account_wait_title">Por favor aguarde...</string>
   <string name="export_account_wait_message">Exportar a informação da conta</string>
+  <string name="account_export_file">Backup da conta</string>
+  <string name="account_export_file_summary">Faça backup de sua conta no dispositivo para restaurá-la mais tarde.</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-chave fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique a sua conexão..</string>
@@ -159,22 +170,29 @@
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Configurações da conta</string>
   <string name="account_tv_advance_settings_header">Configurações avançadas</string>
   <string name="account_tv_add_contact">Adicionar contacto</string>
+  <string name="account_tv_advanced_settings">Mude as configurações gerais</string>
   <string name="account_tv_about">Sobre o Jami</string>
   <string name="tv_about_version">Versão</string>
   <string name="tv_about_license">Licença</string>
+  <string name="tv_about_author">Direitos de autor</string>
   <string name="tv_about_credits">Créditos</string>
+  <string name="account_link_device">Conectar de outro dispositivo</string>
   <string name="account_link_button">Conectar da rede</string>
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
   <string name="account_link_export_button">Associar a um novo dispositivo</string>
+  <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
+  <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
   <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
+  <string name="account_export_title">Conectar a conta a outros dispositivos</string>
   <string name="account_connect_server_button">Ligar ao servidor de gestão</string>
   <string name="account_connect_button">Ligar</string>
   <string name="prompt_server">URL do servidor de gestão do Jami</string>
@@ -183,10 +201,13 @@
   <string name="account_connect_prompt_username">Nome de utilizador</string>
   <!--Name registration-->
   <string name="error_username_empty">Introduza um nome de utilizador</string>
+  <string name="no_registered_name_for_account">Sem nome registrado</string>
   <string name="username_available">Nome de utilizador disponível!</string>
+  <string name="register_name">Nome de registro</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
   <string name="register_username">Registar nome de utilizador público</string>
+  <string name="register_recommended">Recomendado</string>
   <string name="username_already_taken">O nome de utilizador já está registado</string>
   <string name="invalid_username">O nome de utilizador não é válido</string>
   <string name="unknown_error">Erro desconhecido. Por favor verifique a sua ligação à rede!</string>
@@ -204,6 +225,7 @@
   <string name="account_link_title">Associar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Não foi possível registar a conta</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Editar minha conta</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduza a palavra-chave para confirmar</string>
   <string name="enter_password">introduza a palavra-chave</string>

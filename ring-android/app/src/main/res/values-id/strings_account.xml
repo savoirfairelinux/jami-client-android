@@ -9,6 +9,7 @@
   <string name="add_sip_account_title">Tambahkan akun SIP</string>
   <string name="ring_account_default_name">Akun Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Nama host</string>
   <string name="prompt_username">Nama pengguna</string>
   <string name="prompt_password">Kata sandi</string>
   <string name="action_create">Buat akun</string>
@@ -17,8 +18,13 @@
   <string name="action_settings">Setelan</string>
   <string name="error_field_required">Bidang ini harus diisi</string>
   <string name="dialog_wait_create">Menambahkan akun</string>
+  <string name="dialog_wait_create_details">Mohon tunggu...</string>
   <string name="dialog_wait_update">Memperbarui akun</string>
+  <string name="dialog_wait_update_details">Mohon tunggu...</string>
+  <string name="dialog_warn_ip2ip_account_title">Buat akun SIP kosong?</string>
   <string name="account_type_ip2ip">Akun IP</string>
+  <string name="help_sip_title">Tambah akun SIP anda</string>
+  <string name="help_sip">Konfigurasikan akun SIP yang ada.</string>
   <string name="create_sip_account">Tambahkan akun SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Hapus akun?</string>
@@ -30,72 +36,125 @@
   <string name="account_device_revoke">Hapus perangkat</string>
   <string name="account_device_revocation_success_title">Sukses</string>
   <string name="account_device_revocation_success">Perangkat telah dihapus</string>
+  <string name="account_device_revocation_error_title">Tak dapat menghapus perangkat</string>
   <string name="account_device_revocation_wrong_password">Kata sandi salah.</string>
   <string name="account_device_revocation_unknown_device">Perangkat tidak diketahui.</string>
+  <string name="account_device_revocation_error_unknown">Error tak dikenal.</string>
   <string name="account_password_change">Ubah kata sandi</string>
   <string name="account_password_set">Atur kata sandi</string>
+  <string name="account_password_summary">Atur kata sandi akun anda.</string>
+  <string name="account_password_change_wait_message">Mengganti kata sandi akun</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Umum</string>
   <string name="account_basic_category">Pengaturan Dasar</string>
   <string name="account_alias_label">Nama akun</string>
+  <string name="account_hostname_label">Nama host</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Nama pengguna</string>
   <string name="account_password_label">Kata sandi</string>
   <string name="account_optionnal_category">Pengaturan Opsional</string>
+  <string name="account_autoanswer_label">Jawab Otomatis</string>
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
   <!--Audio Details-->
   <string name="account_audio_label">Suara</string>
+  <string name="account_preferences_media_tab">Media</string>
   <string name="account_ringtone_label">Nada dering</string>
+  <string name="account_ringtone_enabled_label">Aktifkan nada dering</string>
+  <string name="account_ringtone_path_label">Lokasi nada dering</string>
+  <string name="account_ringtone_custom_label">Gunakan nada dering kustom</string>
   <string name="account_ringtone_title">Pilih nada dering</string>
+  <string name="account_ringtone_summary">Pilih nada dering</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Aktifkan Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lanjutan</string>
   <string name="account_call_settings_title">Pengaturan telepon</string>
+  <string name="account_dht_public_in_calls_label">Izinkan panggilan dari kontak tak dikenal</string>
+  <string name="account_registration_exp_label">Registrasi Kedaluarsa</string>
   <string name="account_local_interface_label">Antarmuka Lokal</string>
   <string name="account_local_port_label">Port Lokal</string>
   <string name="account_stun_enable_label">Gunakan Stun</string>
   <string name="account_stun_server_label">Peladen Stun</string>
+  <string name="account_accept_files">Terima file masuk secara otomatis</string>
   <string name="account_conversation_settings_title">Pengaturan obrolan</string>
+  <string name="account_accept_files_max_size">Ukuran maksimal file yang diterima otomatis</string>
+  <string name="account_accept_files_never">Jangan pernah terima secara otomatis</string>
+  <string name="account_accept_files_always">Selalu terima secara otomatis</string>
   <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Gunakan TURN</string>
   <string name="account_turn_username_label">Nama pengguna TURN</string>
   <string name="account_turn_password_label">Kata sandi TURN</string>
+  <string name="account_published_port_label">Port yang dipublikasikan</string>
+  <string name="account_published_address_label">Alamat yang dipublikasikan</string>
+  <string name="account_proxy_label">Proksi DHT</string>
+  <string name="account_proxy_enable_label">Gunakan proksi DHT</string>
+  <string name="account_proxy_server_label">Alamat proksi DHT</string>
+  <string name="account_proxy_server_list_label">Daftar URL proksi DHT</string>
   <string name="account_sip_proxy_label">Proksi</string>
+  <string name="account_peer_discovery_label">Temukan kawan lokal</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredensial</string>
   <string name="account_credentials_edit">Ubah kredensial</string>
   <string name="account_credentials_add">Tambahkan kredensial</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Keamanan</string>
+  <string name="account_srtp_switch_label">Enkripsi media stream (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Aktifkan SDES sebagai key exchange protokol</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Gunakan TLS Transport</string>
   <string name="account_tls_port_label">Port TLS Listener</string>
+  <string name="account_tls_certificate_list_label">Sertifikat Otoritas</string>
   <string name="account_tls_certificate_file_label">Berkas Sertifikat</string>
+  <string name="account_tls_private_key_file_label">File Kunci Privat</string>
+  <string name="account_tls_password_label">Kata sandi Kunci Privat</string>
+  <string name="account_tls_method_label">Metode TLS</string>
+  <string name="account_tls_ciphers_label">TLS Ciphers</string>
+  <string name="account_tls_server_name_label">Nama Server</string>
+  <string name="account_tls_verify_server_label">Verifikasi Server</string>
+  <string name="account_tls_verify_client_label">Verifikasi Klien</string>
+  <string name="account_require_client_certificate_label">TLS membutuhkan Sertifikat Klien</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Rentang Port Audio RTP</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Masukkan kata sandi utama untuk membuka akun</string>
   <string name="error_password_char_count">Minimum 6 karakter</string>
   <string name="error_passwords_not_equals">Kata sandi tidak cocok</string>
   <string name="export_account_wait_title">Harap tunggu...</string>
+  <string name="export_account_wait_message">Mengekspor informasi akun</string>
+  <string name="account_export_file">Cadangkan Akun</string>
+  <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
   <string name="account_export_end_network_title">Galat jaringan</string>
   <string name="account_export_end_error_title">Eror</string>
   <string name="account_enter_password">Masukan kata sandi</string>
+  <string name="account_contact_me">Kontak saya di Jami !</string>
   <string name="update_account">Perbarui akun</string>
   <string name="ring_account">Akun Jami</string>
   <string name="ring_account_identity">Identitas</string>
   <string name="account_migration_title_dialog">Migrasi akun</string>
+  <string name="account_update_needed">Perlu diperbarui</string>
   <string name="account_cannot_be_found_title">Akun tidak ditemukan</string>
   <string name="account_no_network_title">Tidak dapat terhubung ke jaringan</string>
   <string name="account_device_added_title">Akun perangkat ditambahkan</string>
+  <string name="account_device_added_message">Setup akun anda telah selesai.</string>
   <string name="account_device_updated_title">Akun perangkat diperbarui</string>
+  <string name="account_device_updated_message">Akun jami anda berhasil diperbarui.</string>
+  <string name="account_cannot_be_updated_message">Akun perangkat tidak dapat diperbarui. Harap periksa kata sandi anda.</string>
+  <string name="account_sip_success_title">Akun SIP terdaftarkan</string>
+  <string name="account_sip_success_message">Anda telah berhasil mendaftarkan akun SIP</string>
+  <string name="account_sip_register_anyway">Daftar saja</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Pengaturan akun</string>
   <string name="account_tv_advance_settings_header">Pengaturan lanjutan</string>
+  <string name="account_tv_add_contact">Tambah kontak</string>
+  <string name="account_tv_advanced_settings">Ubah pengaturan umum</string>
   <string name="account_tv_about">Tentang Jami</string>
   <string name="tv_about_version">Versi</string>
   <string name="tv_about_license">Lisensi</string>
+  <string name="tv_about_author">Hak pemilik</string>
   <string name="tv_about_credits">Partisipan</string>
   <string name="account_link_device">Hubungkan melalui perangkat lain</string>
   <string name="account_link_button">Hubungkan melalui jaringan</string>
@@ -103,8 +162,10 @@
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Buat akun Jami</string>
   <string name="account_link_export_button">Hubungkan perangkat baru</string>
+  <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
   <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
+  <string name="account_export_title">Tautkan akun ke perangkat lain</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
   <string name="account_connect_button">Hubungkan</string>
   <string name="prompt_server">URL peladen manajemen Jami</string>
@@ -113,6 +174,7 @@
   <string name="account_connect_prompt_username">Nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
+  <string name="no_registered_name_for_account">Nama tidak terdaftar</string>
   <string name="username_available">Nama pengguna tersedia !</string>
   <string name="register_name">Nama Pendaftar</string>
   <string name="trying_to_register_name">Mencoba mendaftarkan nama</string>
@@ -136,6 +198,7 @@
   <string name="account_link_title">Hubungkan perangkat ini</string>
   <string name="account_sip_cannot_be_registered">Tidak bisa mendaftarkan akun</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Edit akun saya</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Masukkan kata sandi untuk konfirmasi</string>
   <string name="enter_password">Masukan kata sandi</string>

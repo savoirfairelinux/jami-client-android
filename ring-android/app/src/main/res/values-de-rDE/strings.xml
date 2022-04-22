@@ -100,6 +100,10 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="start_error_title">Kann Jami nicht starten!</string>
   <string name="start_error_mic_required">Jami benötigt die Mikrofonberechtigung, um zu funktionieren.</string>
   <string name="action_call_accept">Annehmen</string>
+  <string name="action_call_accept_audio">Mit Audio antworten</string>
+  <string name="action_call_accept_video">Mit Video antworten</string>
+  <string name="action_call_hold_accept">Audioanruf halten und annehmen</string>
+  <string name="action_call_hold_accept_video">Videoanruf halten und annehmen</string>
   <string name="action_call_end_accept">Aktuellen Anruf beenden und Neuen annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
@@ -107,7 +111,10 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
   <string name="ab_action_contact_add">Kontakt hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
+  <string name="hist_contact_invited">Kontakt eingeladen</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>
+  <string name="hist_contact_left">Kontakt weg</string>
+  <string name="hist_contact_banned">Kontakt gesperrt</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
@@ -179,9 +186,12 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt etwas ...</string>
   <string name="conversation_info_contact_you">Du</string>
   <string name="conversation_members">Teilnehmer</string>
+  <string name="conversation_syncing">Gespräch vom Teilnehmer herunterladen</string>
   <string name="conversation_preference_color">Unterhaltungs Farbe</string>
   <string name="conversation_preference_emoji">Unterhaltungs Emoji</string>
   <string name="conversation_type_contact">Jami Kontakt</string>
+  <string name="conversation_type_private">privater Schwarm</string>
+  <string name="conversation_type_group">Schwarmgruppe</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -294,6 +304,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="tv_send_text">Sende einen Text</string>
   <string name="tv_send_audio">Sende eine Sprachnachricht</string>
   <string name="tv_send_video">Sende eine Datei</string>
+  <string name="tv_action_more">Mehr</string>
   <string name="conversation_input_speech_hint">Sage etwas...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Empfohlen</string>
@@ -315,9 +326,13 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="chat_plugins">Chat-Plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Freigeben</string>
+  <string name="bottomSheet_dialpad_btn">Wähltasten</string>
   <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Hinzufügen</string>
   <string name="bottomSheet_change_camera_btn">Ändern</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Anruf beenden</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
+  <string name="bottomSheet_sound_output_btn">Töne</string>
   <string name="bottomSheet_raiseHand_btn">Ihre Hand heben</string>
 </resources>

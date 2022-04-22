@@ -99,6 +99,8 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kenalan</string>
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">dibatalkan</string>
+  <string name="menu_message_cancel">Batalkan mesej</string>
   <string name="menu_delete">Hapus</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_account">Akaun</string>
@@ -107,4 +109,5 @@
   <!--Wizard-->
   <string name="wizard_password_skip">Cipta akaun</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">Tamatkan panggilan</string>
 </resources>

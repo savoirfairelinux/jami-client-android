@@ -173,9 +173,11 @@
   <string name="account_tv_settings_header">Konto-Einstellungen</string>
   <string name="account_tv_advance_settings_header">Erweiterte Einstellungen</string>
   <string name="account_tv_add_contact">Kontakt hinzufügen</string>
+  <string name="account_tv_advanced_settings">Allgemeine Einstellungen ändern</string>
   <string name="account_tv_about">Über Jami</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Lizenz</string>
+  <string name="tv_about_author">Autorenrechte</string>
   <string name="tv_about_credits">Mitwirkende</string>
   <string name="account_link_device">Mit einem anderen Gerät verbinden</string>
   <string name="account_link_button">Mit Netzwerk verbinden</string>
@@ -190,6 +192,7 @@
   <string name="account_end_export_button">Schließen</string>
   <string name="account_end_export_infos">Deine PIN ist:\n\n%%\n\nUm diesen Vorgang abzuschließen, musst du Jami auf dem neuen Gerät starten. Erstelle ein neues Konto mittels \"Dieses Gerät mit einem Konto verknüpfen\". Deine PIN ist für 10 Minuten gültig.</string>
   <string name="account_link_export_info_light">Um dieses Konto auf anderen Geräten zu verwenden, muss es zuerst auf Jami veröffentlichen werden. Dadurch wird ein PIN-Code erzeugt, den du auf dem neuen Gerät bei der Einrichtung des Kontos eingeben musst. Diese PIN ist für 10 Minuten gültig.</string>
+  <string name="account_export_title">Konto mit anderen Geräten verbinden</string>
   <string name="account_connect_server_button">Mit dem Verwaltungs-Server verbinden</string>
   <string name="account_connect_button">Verbinden</string>
   <string name="prompt_server">URL des Jami-Verwaltungs-Servers</string>
@@ -222,6 +225,7 @@
   <string name="account_link_title">Dieses Gerät verknüpfen</string>
   <string name="account_sip_cannot_be_registered">Konto kann nicht angelegt werden</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Mein Konto bearbeiten</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Passwort zur Bestätigung eingeben</string>
   <string name="enter_password">Passwort eingeben</string>

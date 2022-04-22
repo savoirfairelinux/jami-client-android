@@ -307,5 +307,6 @@
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Ukončit hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
 </resources>

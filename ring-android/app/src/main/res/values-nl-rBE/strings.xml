@@ -23,6 +23,7 @@
   <string name="ringtones_by">Beltonen door</string>
   <!--RingActivity-->
   <string name="error_no_network">Geen netwerkverbinding</string>
+  <string name="error_account_offline">Het account is offline</string>
   <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstberichten</string>
@@ -31,6 +32,7 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_plugin_list">Plugins instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
   <!--Dialing Fragment-->
@@ -85,14 +87,20 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>
+  <string name="action_call_maximize">Maximaliseren</string>
+  <string name="action_call_minimize">Verkleinen</string>
+  <string name="action_call_mute">Dempen</string>
+  <string name="action_call_unmute">Dempen opheffen</string>
   <string name="ongoing_call">Lopende oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="start_error_title">Jami kan niet opgestart worden!</string>
   <string name="start_error_mic_required">Jami vereist toegang tot de microfoon.</string>
   <string name="action_call_accept">Oproep aannemen</string>
+  <string name="action_call_end_accept">Ophangen en oproep opnemen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
+  <string name="action_load_plugin">Plugin laden</string>
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
@@ -106,6 +114,8 @@
   <string name="scan_qr">QR-code scannen</string>
   <string name="qr_code">QR-code</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
+  <string name="ab_action_hidepreview">Verberg voorbeeld</string>
+  <string name="remote_recording">%s aan het opnemen...</string>
   <!--Text messages-->
   <string name="send_message">Bericht versturen</string>
   <string name="message_sending">Bericht wordt verstuurd…</string>
@@ -173,20 +183,26 @@
   <string name="prompt_new_username">Geef nieuwe gebruikersnaam in</string>
   <string name="prompt_hint_username">Gebruikersnaam</string>
   <string name="help_password_choose">Kies een sterk paswoord om uw Jami-account te beschermen.</string>
+  <string name="help_password_enter">Voer het wachtwoord van uw Jami-account in.</string>
+  <string name="help_server_enter">Voer URL van beheerserver in.</string>
   <string name="help_pin_enter">Geef de pincode in vanuit uw Jami-account die al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Jami-account exporteren’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
   <!--Account Summary-->
   <string name="profile">Profiel</string>
+  <string name="profile_name">Profielnaam</string>
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
+  <string name="profile_name_hint">Voer uw scherm naam in</string>
   <string name="registered_name">Geregistreerde naam</string>
+  <string name="no_registered_name">Geen naam geregistreerd</string>
   <string name="identity">Identiteit</string>
   <string name="account">Account</string>
   <string name="link_new_device">Een nieuw apparaat koppelen</string>
   <string name="devices">Gekoppelde apparaten</string>
+  <string name="total_devices">Totaal aantal apparaten:</string>
   <!--Share fragment-->
   <string name="share_message">Scan deze code met Jami</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
@@ -201,6 +217,7 @@
   <string name="block">Blokkeren</string>
   <string name="contact_request_title">Nieuw contactverzoek</string>
   <string name="contact_request_account">Voor %1$s</string>
+  <string name="no_requests">U heeft geen contactverzoeken</string>
   <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek aanvaarden of weigeren?</string>
   <string name="message_contact_not_trusted">%s staat niet in uw contacten.\nNieuw contact toevoegen?</string>
   <!--Send contact requests-->
@@ -211,6 +228,7 @@
   <string name="no_blocked_contact">Geen geblokkeerde contacten</string>
   <!--Smartlist-->
   <string name="no_contact_request">Geen contactverzoek verstuurd</string>
+  <string name="conversation_placeholder">U heeft nog geen gesprekken</string>
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
   <string name="start_conversation">Gesprek beginnen</string>
   <string name="search_results">Zoekresultaten</string>
@@ -253,6 +271,7 @@
   <string name="navigation_item_conversation">Gesprekken</string>
   <string name="navigation_item_contact_request">Contactverzoeken</string>
   <string name="navigation_item_account">Account</string>
+  <string name="search_results_public_directory">Openbare catalogus</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Verzend audiobericht?</string>
   <string name="tv_send_image_dialog_message">Verzend de afbeelding?</string>
@@ -261,13 +280,31 @@
   <string name="tv_audio_play">Afspelen</string>
   <string name="tv_audio_pause">Pauze</string>
   <string name="tv_dialog_send">Versturen</string>
+  <string name="tv_audio_recording">Aan het opnemen...</string>
   <string name="tv_send_text">Verzend Tekst</string>
   <string name="tv_send_audio">Verzend Audio</string>
   <string name="tv_send_video">Verzend Media</string>
+  <string name="conversation_input_speech_hint">Zeg iets...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Aanbevolen</string>
+  <string name="wizard_status_optional">Optioneel</string>
+  <string name="wizard_status_required">Vereist</string>
+  <string name="wizard_username_info">Kies een unieke naam waarop men u kan zoeken</string>
+  <string name="wizard_username_button">Registreer gebruikersnaam</string>
+  <string name="wizard_username_skip">Gebruikersnaam registratie overslaan</string>
+  <string name="wizard_password_info">Account wachtwoord</string>
+  <string name="wizard_password_placeholder">Kies een sterk wachtwoord om uw Jami-account te beschermen</string>
+  <string name="wizard_password_button">Kies wachtwoord</string>
   <string name="wizard_password_skip">Account aanmaken</string>
+  <string name="wizard_password_switch">Account versleutelen met wachtwoord</string>
+  <string name="wizard_password_warning">Let op! Het wachtwoord kan niet worden opgevraagd. Bewaar het goed</string>
+  <string name="wizard_profile_info">Uw profiel wordt enkel gedeeld met uw contacten</string>
+  <string name="wizard_profile_button">Profiel opslaan</string>
+  <string name="wizard_profile_skip">Overslaan en dit later doen</string>
+  <string name="fab_path_choose">Kies een ander bestand</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Delen</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
+  <string name="bottomSheet_hangup_btn">Oproep beëindigen</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
 </resources>

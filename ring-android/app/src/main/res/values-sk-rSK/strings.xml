@@ -276,5 +276,6 @@
   <string name="bottomSheet_share_btn">Zdieľať</string>
   <string name="bottomSheet_add_participants_btn">Pridať</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Ukončiť hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
 </resources>

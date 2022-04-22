@@ -45,6 +45,8 @@
   <string name="pref_read_summary">Bir mesajın görüntülendiğini belirten onay bilgilerini gönderin ve alın.</string>
   <string name="pref_block_record_title">Ekran görüntüsünü ve kaydını engelle</string>
   <string name="pref_block_record_summary">Ekran görüntüsü ya da kaydını almayı engelleyin.</string>
+  <string name="pref_link_preview_title">Konuşmalarda bağlantı önizlemelerini göster</string>
+  <string name="pref_link_preview_summary">Önizlemeler üçüncü taraf sunuculardan içerik indirmeyi gerektirir</string>
   <!--Notifications Visibility-->
   <string name="notification_public">Herkese açık \n(bildirimleri ve içeriklerini kilit ekranında göster)\n</string>
   <string name="notification_private">Özel \n(bildirimleri göster ancak içeriklerini kilit ekranında gizle)\n</string>

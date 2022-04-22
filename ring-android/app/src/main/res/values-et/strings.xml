@@ -14,6 +14,8 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_end_accept">Lõpeta kõne ja vasta</string>
+  <string name="action_call_mic_mute">Vaigista mikrofon</string>
   <!--Text messages-->
   <string name="send_file">Saada fail</string>
   <!--MediaPreferenceFragment-->
@@ -34,10 +36,17 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">tühistatud</string>
+  <string name="menu_message_cancel">Tühista sõnum</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Vestlused</string>
   <!--TV-->
+  <string name="tv_audio_play">Mängi</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_dialpad_btn">Valimisklahvistik</string>
+  <string name="bottomSheet_hangup_btn">Lõpeta kõne</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
+  <string name="bottomSheet_sound_output_btn">Helid</string>
   <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
 </resources>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">شبكة</string>
+  <string name="pref_category_contacts">جهات الاتصال</string>
+  <string name="pref_category_video">شريط</string>
+  <string name="pref_category_system">نظام</string>
+  <string name="pref_category_privacy">خصوصية</string>
+  <string name="pref_mobileData_title">بيانات هاتف</string>
+  <string name="pref_mobileData_summary">السماح لـ جامي باستخدام شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
+  <string name="pref_pushNotifications_title">الإشعارات المنبثقة</string>
+  <string name="pref_pushNotifications_summary">استخدام خدمات غوغل للسماح باستقبال المكالمات والرسائل في الخلفية</string>
+  <string name="pref_video_advanced_title">إعدادات فيديو متقدمة</string>
+  <string name="pref_video_advanced_summary">تغيير معدل البت والدقة للفيديو والوصول إلى الميزات التجريبية</string>
+  <string name="pref_hd_summary">تفعيل إرسال فيديو بدقة عالية HD</string>
+  <string name="pref_hwEncode_title">تفعيل الترميز المُسرَّع</string>
+  <string name="pref_hwEncode_summary">ميزة تجريبية</string>
+  <string name="pref_videoBitrate_title">معدل بت الفيديو</string>
+  <string name="pref_videoBitrate_summary">تحديد معدل بت الفيديو الصادر الافتراضي (كيلوبايت/ثانية)</string>
+  <string name="pref_videoResolution_title">دقة الفيديو</string>
+  <string name="pref_videoResolution_summary">تحديد دقة الفيديو الصادرة الافتراضية</string>
+  <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
+  <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل.</string>
+  <string name="pref_systemDialer_title">إجراء مكالمات النظام باستخدام جامي</string>
+  <string name="pref_systemDialer_summary">استخدم جامي لإجراء مكالمات النظام عند الإمكان.</string>
+  <string name="pref_startOnBoot_title">بدء جامي عند بدء تشغيل الجهاز</string>
+  <string name="pref_startOnBoot_summary">تشغيل جامي في الخلفية عندما يبدأ النظام</string>
+  <string name="pref_clearHistory_title">حذف المحفوظات</string>
+  <string name="pref_clearHistory_summary">مسح كامل المحادثات المؤرخة. لا يمكن التراجع عن هذا الخيار فيما بعد.</string>
+  <string name="pref_blackList_title">قائمة الحظر</string>
+  <string name="pref_blackList_summary">تحقق من قائمة الحظر.</string>
+  <string name="pref_delete_account_title">حذف الحساب</string>
+  <string name="pref_delete_account_summary">حذف حسابك من هذا الجهاز</string>
+  <string name="pref_persistNotification_title">التشغيل في الخلفية</string>
+  <string name="pref_persistNotification_summary">السماح بالتشغيل في الخلفية لاستقبال المكالمات والرسائل.</string>
+  <string name="pref_typing_title">تمكين مؤشرات الكتابة</string>
+  <string name="pref_typing_summary">إرسال مؤشرات الكتابة واستلامها إظهار أن الرسالة تتم كتابتها</string>
+  <string name="pref_read_title">تمكين إيصالات القراءة</string>
+  <string name="pref_read_summary">إرسال الإيصالات واستلامها للإشارة إلى عرض رسالة.</string>
+  <!--Notifications Visibility-->
+  <!--Plugin-->
+  <string name="pref_plugins_title">الإضافات</string>
+  <string name="pref_plugins_summary">تفعيل الإضافات وتعيين معاملاتها</string>
+  <string name="fab_plugins_add">إدخال إضافة جديدة</string>
+  <string name="plugin_uninstall_title">إلغاء تثبيت إضافة؟</string>
+  <string name="plugin_reset_preferences">إعادة تعيين أذونات إضافة</string>
+  <string name="plugin_reset_preferences_summary">إعدادت إضافتك ستكون إفتراضية</string>
+  <string name="plugin_reset_preferences_ask">هل تريد إعادة تعيين إعدادت الإضافة؟</string>
+  <string name="plugin_successfully_installed">إضافة <b>%1$s</b> تم تثبيتها بنجاح</string>
+  <string name="plugin_install_failure">فشل عند تثبيت إضافة: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">انت تملك اكثر من إصدار عن: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">انت تملك نفس الإصدار عن <b>%1$s</b> مثبت بالفعل</string>
+  <string name="plugin_force_install">سريع \n تثبيت</string>
+  <string name="plugin_path_image_add">إضافة صورة جديدة</string>
+</resources>

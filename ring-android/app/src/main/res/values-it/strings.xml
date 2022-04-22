@@ -2,15 +2,15 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report"><u>Inviaci un\'email</u></string>
+  <string name="report"><u>Inviaci un\'e-mail</u></string>
   <string name="section_license">Licenza</string>
   <string name="sponsor_section">Jami è un software gratuito sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
-  <string name="no_email_app_installed">Applicazione email non trovata, installane una per inviarci un rapporto</string>
+  <string name="no_email_app_installed">Applicazione e-mail non trovata, installane una per inviarci un rapporto</string>
   <string name="no_browser_app_installed">Browser web non trovato, installane uno per vedere questa pagina</string>
-  <string name="email_chooser_title">Inviaci un\'email usando...</string>
+  <string name="email_chooser_title">Inviaci un\'e-mail usando...</string>
   <string name="website_chooser_title">Visita il sito usando...</string>
   <string name="license">Questo software è fornito \"così com\'è\", senza garanzie di alcun tipo. Per dettagli, vedi <u>GNU General Public License versione 3 o successiva</u></string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
@@ -23,11 +23,11 @@
   <string name="designed_by">Progettato da</string>
   <string name="ringtones_by">Suonerie di</string>
   <!--RingActivity-->
-  <string name="error_no_network">Connessione di rete assente</string>
+  <string name="error_no_network">Nessuna connessione di rete</string>
   <string name="error_account_offline">L\'account è offline</string>
   <string name="error_mobile_network_available_but_disabled">Consenti l\'acceso alla rete cellulare dalla schermata impostazioni.</string>
   <!--AB menus-->
-  <string name="ab_action_chat">Messaggio di testo</string>
+  <string name="ab_action_chat">Messaggi di testo</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Richieste di contatto</string>
   <string name="menu_item_accounts">Gestisci account</string>
@@ -79,7 +79,7 @@
   <string name="notif_incoming_picture">Foto da %1$s</string>
   <string name="notif_sync_title">Sincronizzazione dati…</string>
   <string name="notif_location_title">Condivisione della posizione con %1$s</string>
-  <string name="location_share_contact">%1$s sta condividendo la posizione con te. </string>
+  <string name="location_share_contact">%1$s sta condividendo la posizione con te</string>
   <string name="notif_location_multi_title">Condivisione posizione con %1$d contatti</string>
   <string name="notif_location_remaining">%1$d minuti rimanenti</string>
   <string name="notif_location_action_stop">Ferma condivisione della posizione</string>
@@ -88,7 +88,7 @@
   <string name="location_share_about_title">Informazioni mappa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_hangup">Riattacca</string>
+  <string name="action_call_hangup">Chiudi</string>
   <string name="action_call_maximize">Massimizza</string>
   <string name="action_call_minimize">Riduci</string>
   <string name="action_call_mute">Disattiva</string>
@@ -120,7 +120,7 @@
   <string name="ab_action_change_screen_orientation">Cambia orientamento dello schermo</string>
   <string name="share_via">Condividi tramite</string>
   <string name="write_a_message">Scrivi un messaggio</string>
-  <string name="scan_qr">Scansiona Codice QR</string>
+  <string name="scan_qr">Scansiona codice QR</string>
   <string name="qr_code">Codice QR</string>
   <string name="ab_action_flipcamera">Cambia fotocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
@@ -149,9 +149,9 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami ha bisogno dell\'autorizzazione \"Lettura contatti\" per attivare questa funzionalità. Per favore concedila.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami ha bisogno dell\'autorizzazione \"Scrittura del registro chiamate\" per attivare questa funzionalità. Per favore concedila.</string>
+  <string name="permission_dialog_write_call_log_message">Jami necessita dell\'autorizzazione \"Accedere al registro chiamate\" per attivare questa funzione. Concedere l\'autorizzazione.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scansiona il QR Code del profilo che desideri aggiungere.</string>
+  <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
   <string name="title_activity_qrcode">Condividi il mio contatto</string>
   <string name="error_scan_no_camera_permissions">Lo scanner QR richiede il permesso di usare la fotocamera per funzionare</string>
   <string name="tab_code">Il mio Codice</string>

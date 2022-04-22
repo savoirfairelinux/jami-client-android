@@ -211,7 +211,7 @@
   <string name="username_already_taken">نام کاربری قبلا گرفته شده است</string>
   <string name="invalid_username">نام کاربری نامعتبر</string>
   <string name="unknown_error">خطای نامشخص. لطفا اتصال شبکه خود را بررسی کنید!</string>
-  <string name="looking_for_username_availability">در حال جستجو برای در دسترس بودن نام کاربری ...</string>
+  <string name="looking_for_username_availability">در حال جستجو برای در دسترس بودن نام کاربری …</string>
   <string name="account_status_connecting">در حال اتصال</string>
   <string name="account_status_connection_error">خطای ارتباط</string>
   <string name="account_status_online">آنلاین</string>

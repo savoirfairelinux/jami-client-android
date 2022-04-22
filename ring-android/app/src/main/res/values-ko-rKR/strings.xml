@@ -38,8 +38,10 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">취소됨</string>
   <string name="menu_file_share">파일 공유하기</string>
   <string name="menu_message_copy">복사하기</string>
+  <string name="menu_message_cancel">메시지 취소</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">대화</string>
   <string name="navigation_item_account">계정</string>
@@ -48,5 +50,6 @@
   <string name="tv_audio_pause">멈춤</string>
   <!--Wizard-->
   <!--Bottom sheet-->
+  <string name="bottomSheet_hangup_btn">통화 종료</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
 </resources>

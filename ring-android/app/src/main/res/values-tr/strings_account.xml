@@ -59,6 +59,8 @@
   <string name="account_optionnal_category">İsteğe Bağlı Ayarlar</string>
   <string name="account_useragent_label">Kullanıcı Aracısı</string>
   <string name="account_autoanswer_label">Kendiliğinden Yanıtla</string>
+  <string name="account_rendezvous_label">Buluşma Modu</string>
+  <string name="account_rendezvous_summary">Buluşma modunda, gelen aramalar bir konferans odasına eklenecek.</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
   <!--Audio Details-->
@@ -125,6 +127,7 @@
   <string name="account_tls_server_name_label">Sunucu Adı</string>
   <string name="account_tls_verify_server_label">Sunucu Doğrula</string>
   <string name="account_tls_verify_client_label">İstemciyi Doğrula</string>
+  <string name="account_require_client_certificate_label">TLS İstemci Sertifikası Gerektirir</string>
   <string name="account_tls_negotiation_timeout_sec">Görüşme Zaman Aşımı (saniye)</string>
   <string name="account_rtp_max_port">Azami</string>
   <string name="account_rtp_min_port">Asgari</string>
@@ -170,9 +173,11 @@
   <string name="account_tv_settings_header">Hesap ayarları</string>
   <string name="account_tv_advance_settings_header">Gelişmiş ayarlar</string>
   <string name="account_tv_add_contact">Kişi ekle</string>
+  <string name="account_tv_advanced_settings">Genel ayarları değiştir</string>
   <string name="account_tv_about">Jami Hakkında</string>
   <string name="tv_about_version">Sürüm</string>
   <string name="tv_about_license">Lisans</string>
+  <string name="tv_about_author">Yönetici izinleri</string>
   <string name="tv_about_credits">Emeği geçenler</string>
   <string name="account_link_device">Başka aygıttan bağlan</string>
   <string name="account_link_button">Ağdan bağlan</string>
@@ -187,6 +192,7 @@
   <string name="account_end_export_button">kapat</string>
   <string name="account_end_export_infos">PIN\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı hesaba bağla\" ile yeni hesap oluşturun. PIN\'iniz 10 dakikalığına geçerlidir.</string>
   <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açığa çıkarmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken PIN kodu oluşturacak. PIN, 10 dakikalığına geçerlidir.</string>
+  <string name="account_export_title">Hesabı diğer cihazlara bağla</string>
   <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
   <string name="prompt_server">Jami Yönetim Sunucusu URL\'si</string>
@@ -219,6 +225,7 @@
   <string name="account_link_title">Bu aygıtı bağla</string>
   <string name="account_sip_cannot_be_registered">Hesap kaydedilemiyor</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Hesabımı düzenle</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Onaylamak için parolayı girin</string>
   <string name="enter_password">Parolayı gir</string>

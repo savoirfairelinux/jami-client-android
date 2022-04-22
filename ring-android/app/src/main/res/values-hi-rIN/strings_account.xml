@@ -23,6 +23,7 @@
   <!--restore/backup-->
   <string name="account_enter_password">पासवर्ड दर्ज करें</string>
   <!--TV-->
+  <string name="account_tv_about">जामी के बारे में</string>
   <string name="tv_about_version">वर्श़न/उल्था</string>
   <string name="tv_about_license">अनुज्ञा पत्र</string>
   <string name="tv_about_credits">आभार</string>

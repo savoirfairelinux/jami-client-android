@@ -183,6 +183,7 @@
   <!--File Transfer-->
   <string name="invalid_file">Neispravna datoteka</string>
   <string name="file_transfer_status_unsupported">nepodržano</string>
+  <string name="file_transfer_status_cancelled">otkazano</string>
   <string name="file_saved_in">Datoteka je spremljena u %s</string>
   <string name="no_space_left_on_device">Nije preostalo prostora na uređaju</string>
   <string name="menu_file_open">Otvori datoteku</string>
@@ -190,6 +191,7 @@
   <string name="menu_file_delete">Izbriši datoteku</string>
   <string name="menu_file_share">Dijeli datoteku</string>
   <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_message_cancel">Otkaži poruku</string>
   <string name="menu_delete">Izbriši</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Razgovori</string>

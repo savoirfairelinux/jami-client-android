@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">별칭</string>
+  <string name="prompt_hostname">호스트명</string>
+  <string name="prompt_username">사용자명</string>
+  <string name="prompt_password">암호</string>
+  <string name="action_create_short">생성하기</string>
+  <string name="action_settings">설정</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="account_device_revocation_wrong_password">잘못된 암호입니다.</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">일반</string>
+  <string name="account_hostname_label">호스트명</string>
+  <string name="account_username_label">사용자명</string>
+  <string name="account_password_label">암호</string>
+  <string name="account_proxy_field">프록시</string>
+  <!--Audio Details-->
+  <!--Video Details-->
+  <string name="account_video_label">비디오</string>
+  <!--Advanced Details-->
+  <string name="account_turn_enable_label">TURN 사용</string>
+  <string name="account_published_address_label">공개 주소</string>
+  <string name="account_sip_proxy_label">프록시</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">보안</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <string name="account_connect_prompt_username">사용자명</string>
+  <!--Name registration-->
+  <!--Create account-->
+  <string name="account_creation_profile">프로필 만들기</string>
+  <!--Edit profile-->
+  <!--Devices-->
+</resources>

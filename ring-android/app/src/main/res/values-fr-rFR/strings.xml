@@ -15,6 +15,7 @@
   <string name="license">Ce logiciel est fourni en l\'état, sans garantie d\'aucune sorte. Pour plus de détails, se référer à la <u>GNU General Public License version 3 ou plus récente</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
+  <string name="pip_title">Conférence Jami</string>
   <string name="call_service_description">Ce service est nécessaire pour permettre à vos appels de fonctionner en arrière-plan. Il ne s\'exécute qu\'au moment des appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher des notifications persistantes lors des transferts de fichiers. Il ne s\'exécute que lors des transferts de fichiers.</string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">Sonneries par</string>
   <!--RingActivity-->
   <string name="error_no_network">Aucune connexion au réseau n\'est possible</string>
+  <string name="error_account_offline">Le compte est déconnecté</string>
   <string name="error_mobile_network_available_but_disabled">Merci d\'accéder au réseau mobile dans les paramètres de l\'écran</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messages textes</string>
@@ -89,12 +91,18 @@
   <string name="action_call_hangup">Raccrocher</string>
   <string name="action_call_maximize">Agrandir</string>
   <string name="action_call_minimize">Réduire</string>
+  <string name="action_call_mute">Couper le micro</string>
+  <string name="action_call_unmute">Ouvrir le micro</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
   <string name="start_error_title">Impossible de démarrer Jami !</string>
   <string name="start_error_mic_required">Jami requiert la permission d\'accéder à votre microphone pour fonctionner.</string>
   <string name="action_call_accept">Prendre un appel</string>
+  <string name="action_call_accept_audio">Répondre en audio</string>
+  <string name="action_call_accept_video">Répondre en vidéo</string>
+  <string name="action_call_hold_accept">Mettre en attente et prendre l\'appel audio</string>
+  <string name="action_call_hold_accept_video">Mettre en attente et prendre l\'appel vidéo</string>
   <string name="action_call_end_accept">Terminer et prendre l\'appel</string>
   <string name="action_call_decline">Refuser</string>
   <string name="action_call_mic_mute">Couper le micro</string>
@@ -102,7 +110,10 @@
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter dans les contacts</string>
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
+  <string name="hist_contact_invited">Contact invité</string>
   <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_contact_left">Le contact a quitté</string>
+  <string name="hist_contact_banned">Contact bloqué</string>
   <string name="hist_invitation_received">Invitation reçue</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
@@ -113,6 +124,7 @@
   <string name="qr_code">Code QR</string>
   <string name="ab_action_flipcamera">Inverser la caméra</string>
   <string name="ab_action_hidepreview">Cacher la prévisualisation</string>
+  <string name="remote_recording">%s En cours d\'enregistrement...</string>
   <!--Text messages-->
   <string name="send_message">Envoyer un message</string>
   <string name="message_sending">Envoi du message en cours</string>
@@ -171,6 +183,14 @@
   <string name="block_contact_dialog_message">%1$s ne sera plus en mesure de vous contacter tant que vous ne l\'aurez pas débloqué.</string>
   <string name="block_contact_completed">%1$s a été bloqué.</string>
   <string name="conversation_contact_is_typing">Le contact est en train d\'écrire...</string>
+  <string name="conversation_info_contact_you">Vous</string>
+  <string name="conversation_members">Membres</string>
+  <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
+  <string name="conversation_preference_color">Couleur de la conversation</string>
+  <string name="conversation_preference_emoji">Émoji de conversation</string>
+  <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Swarm privé</string>
+  <string name="conversation_type_group">Swarm</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -213,6 +233,7 @@
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
   <string name="contact_request_title">Nouvelle demande de contact</string>
+  <string name="contact_request_msg">Vous avez %1$d demande(s) de contact</string>
   <string name="contact_request_account">Pour %1$s</string>
   <string name="no_requests">Vous n\'avez pas de demande de contact</string>
   <string name="message_contact_not_trusted_yet">%s n\'est pas encore dans vos contacts.\nAcceptez-vous ou non cette demande de contact ?</string>
@@ -251,6 +272,7 @@
   <string name="file_transfer_status_timed_out">temps dépassé</string>
   <string name="file_saved_in">Fichier enregistré dans %s</string>
   <string name="file_saved_successfully">Fichier enregistré avec succès</string>
+  <string name="file_download">Télécharger</string>
   <string name="no_space_left_on_device">Pas d\'espace disponible sur l\'appareil</string>
   <string name="title_media_viewer">Visionneuse</string>
   <string name="menu_file_open">Ouvrir le fichier</string>
@@ -281,6 +303,7 @@
   <string name="tv_send_text">Envoyer du texte</string>
   <string name="tv_send_audio">Envoyer de l\'audio</string>
   <string name="tv_send_video">Envoyer le média</string>
+  <string name="tv_action_more">Plus</string>
   <string name="conversation_input_speech_hint">Dites quelque chose..</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Recommandé</string>
@@ -299,7 +322,16 @@
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="wizard_profile_skip">Passer et faire ça plus tard</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>
+  <string name="chat_plugins">Modules d\'extension de discussion</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partager</string>
+  <string name="bottomSheet_dialpad_btn">Clavier numérique</string>
+  <string name="bottomSheet_plugins_btn">Modules d\'extension</string>
+  <string name="bottomSheet_add_participants_btn">Ajouter</string>
+  <string name="bottomSheet_change_camera_btn">Modifier</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Caméra</string>
+  <string name="bottomSheet_hangup_btn">Terminer l\'appel</string>
+  <string name="bottomSheet_mute_microphone_btn">Micro</string>
+  <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Lever la main</string>
 </resources>

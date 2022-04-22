@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">快速撥打電話</string>
+  <string name="contact_picture_description">聯絡人的照片</string>
+  <string name="dial_numeric_pad">電話按鍵鍵盤</string>
+  <string name="contact_unblock">取消屏蔽</string>
+  <string name="video_plugins">视频插件</string>
+</resources>
