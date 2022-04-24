@@ -500,7 +500,7 @@ class ConversationFacade(
             }
         }
         getAccountSubject(accountId)
-            .flatMapObservable { obj: Account -> obj.getConversationsSubject() }
+            .flatMapObservable { account: Account -> account.getConversationsSubject() }
             .firstOrError()
             .subscribeOn(Schedulers.io())
             .subscribe({ c: List<Conversation> -> updateTextNotifications(txt.account!!, c) })

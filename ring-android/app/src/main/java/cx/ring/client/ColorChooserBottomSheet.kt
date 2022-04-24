@@ -11,55 +11,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 
-class ColorChooserBottomSheet : BottomSheetDialogFragment() {
-    interface IColorSelected {
-        fun onColorSelected(color: Int)
-    }
-
-    private var callback: IColorSelected? = null
-    fun setCallback(cb: IColorSelected?) {
-        callback = cb
-    }
-
-    private inner class ColorView(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        val view: ImageView = itemView as ImageView
-        var color = 0
-
-        init {
-            itemView.setOnClickListener {
-                if (callback != null) callback!!.onColorSelected(color)
-                dismiss()
-            }
-        }
-    }
+class ColorChooserBottomSheet(val onColorSelected: ((Int) -> Unit)? = null) : BottomSheetDialogFragment() {
+    private inner class ColorView(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private inner class ColorAdapter : RecyclerView.Adapter<ColorView>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorView {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false)
-            return ColorView(v)
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ColorView(LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false))
 
         override fun onBindViewHolder(holder: ColorView, position: Int) {
-            val color = colors[position]
-            holder.color = resources.getColor(color)
-            ImageViewCompat.setImageTintList(holder.view, ColorStateList.valueOf(holder.color))
+            val color = resources.getColor(colors[position])
+            holder.itemView.setOnClickListener {
+                onColorSelected?.invoke(color)
+                dismiss()
+            }
+            ImageViewCompat.setImageTintList(holder.itemView as ImageView, ColorStateList.valueOf(color))
         }
 
-        override fun getItemCount(): Int {
-            return colors.size
-        }
+        override fun getItemCount() = colors.size
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView
-        view.adapter = ColorAdapter()
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        (inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView)
+            .apply { adapter = ColorAdapter() }
 
     companion object {
         private val colors = intArrayOf(

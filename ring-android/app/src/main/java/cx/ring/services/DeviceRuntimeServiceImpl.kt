@@ -70,29 +70,21 @@ class DeviceRuntimeServiceImpl(
         }
     }
 
-    override fun provideFilesDir(): File {
-        return mContext.filesDir
-    }
+    override fun provideFilesDir(): File = mContext.filesDir
 
-    override fun getFilePath(filename: String): File {
-        return AndroidFileUtils.getFilePath(mContext, filename)
-    }
+    override fun getFilePath(filename: String) = AndroidFileUtils.getFilePath(mContext, filename)
 
-    override fun getConversationPath(conversationId: String, name: String): File {
-        return AndroidFileUtils.getConversationPath(mContext, conversationId, name)
-    }
+    override fun getConversationPath(conversationId: String, name: String): File =
+        AndroidFileUtils.getConversationPath(mContext, conversationId, name)
 
-    override fun getConversationPath(accountId: String, conversationId: String,name: String): File {
-        return AndroidFileUtils.getConversationPath(mContext, accountId, conversationId, name)
-    }
+    override fun getConversationPath(accountId: String, conversationId: String,name: String): File =
+        AndroidFileUtils.getConversationPath(mContext, accountId, conversationId, name)
 
-    override fun getTemporaryPath(conversationId: String, name: String): File {
-        return AndroidFileUtils.getTempPath(mContext, conversationId, name)
-    }
+    override fun getTemporaryPath(conversationId: String, name: String): File =
+        AndroidFileUtils.getTempPath(mContext, conversationId, name)
 
-    override fun getConversationDir(conversationId: String): File {
-        return AndroidFileUtils.getConversationDir(mContext, conversationId)
-    }
+    override fun getConversationDir(conversationId: String): File =
+        AndroidFileUtils.getConversationDir(mContext, conversationId)
 
     override val cacheDir: File
         get() = mContext.cacheDir
@@ -117,25 +109,11 @@ class DeviceRuntimeServiceImpl(
     override val isConnectedEthernet: Boolean
         get() = isNetworkConnectedForType(ConnectivityManager.TYPE_ETHERNET)
 
-    override fun hasVideoPermission(): Boolean {
-        return checkPermission(Manifest.permission.CAMERA)
-    }
-
-    override fun hasAudioPermission(): Boolean {
-        return checkPermission(Manifest.permission.RECORD_AUDIO)
-    }
-
-    override fun hasContactPermission(): Boolean {
-        return checkPermission(Manifest.permission.READ_CONTACTS)
-    }
-
-    override fun hasCallLogPermission(): Boolean {
-        return checkPermission(Manifest.permission.WRITE_CALL_LOG)
-    }
-
-    override fun hasGalleryPermission(): Boolean {
-        return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-    }
+    override fun hasVideoPermission() = checkPermission(Manifest.permission.CAMERA)
+    override fun hasAudioPermission() = checkPermission(Manifest.permission.RECORD_AUDIO)
+    override fun hasContactPermission() = checkPermission(Manifest.permission.READ_CONTACTS)
+    override fun hasCallLogPermission() = checkPermission(Manifest.permission.WRITE_CALL_LOG)
+    override fun hasGalleryPermission() = checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     override val profileName: String?
         get() {
@@ -147,19 +125,17 @@ class DeviceRuntimeServiceImpl(
             return null
         }
 
-    override fun hardLinkOrCopy(source: File, dest: File): Boolean {
+    override fun hardLinkOrCopy(source: File, dest: File): Boolean =
         try {
             Os.link(source.absolutePath, dest.absolutePath)
+            true
         } catch (e: ErrnoException) {
             Log.w(TAG, "Can't create hardlink, copying instead: " + e.message)
-            return FileUtils.copyFile(source, dest)
+            FileUtils.copyFile(source, dest)
         }
-        return true
-    }
 
-    private fun checkPermission(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun checkPermission(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED
 
     override fun getHardwareAudioFormat(ret: IntVect) {
         var sampleRate = 44100

@@ -40,15 +40,14 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
 
-    private fun getTitle(account: Account, profile: Profile): String {
-        return profile.displayName.orEmpty().ifEmpty {
+    private fun getTitle(account: Account, profile: Profile): String =
+        profile.displayName.orEmpty().ifEmpty {
             account.registeredName.ifEmpty {
                 account.alias.orEmpty().ifEmpty {
                     context.getString(R.string.ring_account)
                 }
             }
         }
-    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -132,9 +131,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         return if (position == super.getCount() + 1) TYPE_CREATE_SIP else TYPE_ACCOUNT
     }
 
-    override fun getCount(): Int {
-        return super.getCount() + 2
-    }
+    override fun getCount(): Int = super.getCount() + 2
 
     private class ViewHolder(val binding: ItemToolbarSpinnerBinding, parentDisposable: CompositeDisposable) {
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
@@ -144,9 +141,8 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 
-    private fun getUri(account: Account, defaultNameSip: CharSequence): String {
-        return if (account.isIP2IP) defaultNameSip.toString() else account.displayUri!!
-    }
+    private fun getUri(account: Account, defaultNameSip: CharSequence): String =
+        if (account.isIP2IP) defaultNameSip.toString() else account.displayUri!!
 
     companion object {
         private val TAG = AccountSpinnerAdapter::class.simpleName!!

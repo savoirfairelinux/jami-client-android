@@ -183,9 +183,7 @@ class Account(
         }
     }
 
-    fun getConversationsSubject(): Observable<List<Conversation>> {
-        return conversationsSubject
-    }
+    fun getConversationsSubject(): Observable<List<Conversation>> = conversationsSubject
 
     /*fun getConversationsViewModels(withPresence: Boolean): Observable<MutableList<SmartListViewModel>> {
         return conversationsSubject

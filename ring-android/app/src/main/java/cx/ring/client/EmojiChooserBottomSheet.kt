@@ -29,55 +29,33 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 
-class EmojiChooserBottomSheet : BottomSheetDialogFragment() {
-    interface IEmojiSelected {
-        fun onEmojiSelected(emoji: String?)
-    }
-
-    private var callback: IEmojiSelected? = null
-    fun setCallback(cb: IEmojiSelected?) {
-        callback = cb
-    }
-
-    private inner class EmojiView constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+class EmojiChooserBottomSheet(val onEmojiSelected: ((String?) -> Unit)? = null) : BottomSheetDialogFragment() {
+    private inner class EmojiView(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val view: TextView = itemView as TextView
         var emoji: String? = null
 
         init {
-            itemView.setOnClickListener { v: View? ->
-                if (callback != null) callback!!.onEmojiSelected(emoji)
+            itemView.setOnClickListener {
+                onEmojiSelected?.invoke(emoji)
                 dismiss()
             }
         }
     }
 
-    private inner class ColorAdapter(@ArrayRes arrayResId: Int) :
-        RecyclerView.Adapter<EmojiView>() {
+    private inner class ColorAdapter(@ArrayRes arrayResId: Int) : RecyclerView.Adapter<EmojiView>() {
         private val emojis: Array<String> = resources.getStringArray(arrayResId)
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojiView {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.item_emoji, parent, false)
-            return EmojiView(v)
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            EmojiView(LayoutInflater.from(parent.context).inflate(R.layout.item_emoji, parent, false))
 
         override fun onBindViewHolder(holder: EmojiView, position: Int) {
             holder.emoji = emojis[position]
             holder.view.text = holder.emoji
         }
 
-        override fun getItemCount(): Int {
-            return emojis.size
-        }
-
+        override fun getItemCount() = emojis.size
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView
-        view.adapter = ColorAdapter(R.array.conversation_emojis)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        (inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView)
+            .apply { adapter = ColorAdapter(R.array.conversation_emojis) }
 }

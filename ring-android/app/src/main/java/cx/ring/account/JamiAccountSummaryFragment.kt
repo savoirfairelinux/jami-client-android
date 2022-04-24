@@ -42,6 +42,7 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -165,7 +166,7 @@ class JamiAccountSummaryFragment :
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as HomeActivity).let { activity ->
+        (activity as HomeActivity?)?.let { activity ->
             activity.showAccountStatus(true)
             activity.switchButton.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.enableAccount(isChecked)
@@ -175,7 +176,7 @@ class JamiAccountSummaryFragment :
 
     override fun onPause() {
         super.onPause()
-        (requireActivity() as HomeActivity).let { activity ->
+        (activity as HomeActivity?)?.let { activity ->
             activity.showAccountStatus(false)
             activity.switchButton.setOnCheckedChangeListener(null)
         }
@@ -262,9 +263,7 @@ class JamiAccountSummaryFragment :
         setSwitchStatus(account)
     }
 
-    fun onBackPressed(): Boolean {
-        return false
-    }
+    fun onBackPressed() = false
 
     private fun showWizard(accountId: String) {
         LinkDeviceFragment.newInstance(accountId)
@@ -301,14 +300,12 @@ class JamiAccountSummaryFragment :
         mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { a -> profilePhoto.setImageDrawable(a) })
-        val cameraView = view.findViewById<ImageButton>(R.id.camera)
-        cameraView.setOnClickListener { presenter.cameraClicked() }
-        val gallery = view.findViewById<ImageButton>(R.id.gallery)
-        gallery.setOnClickListener { presenter.galleryClicked() }
+        view.findViewById<ImageButton>(R.id.camera)?.setOnClickListener { presenter.cameraClicked() }
+        view.findViewById<ImageButton>(R.id.gallery)?.setOnClickListener { presenter.galleryClicked() }
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.profile)
             .setView(view)
-            .setNegativeButton(android.R.string.cancel) { dialog, which -> dialog.cancel() }
+            .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 mSourcePhoto?.let { source ->
                     presenter.saveVCard(mBinding!!.username.text.toString(),
@@ -576,10 +573,11 @@ class JamiAccountSummaryFragment :
 
     private fun shareAccount(username: String?) {
         if (!StringUtils.isEmpty(username)) {
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me))
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, username, getText(R.string.app_website)))
+            val sharingIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, username, getText(R.string.app_website)))
+            }
             startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
         }
     }
@@ -669,41 +667,46 @@ class JamiAccountSummaryFragment :
             View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.AT_MOST)
         )
         val targetHeight = summary.measuredHeight
-        val animator = slideAnimator(0, targetHeight, summary)
-        animator.start()
+        slideAnimator(0, targetHeight, summary).start()
         mBinding!!.chipMore.setText(R.string.account_link_hide_button)
     }
 
     private fun collapse(summary: View) {
-        val finalHeight = summary.height
-        val mAnimator = slideAnimator(finalHeight, 0, summary)
-        mAnimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationEnd(animator: Animator) {
-                // Height=0, but it set visibility to GONE
-                summary.visibility = View.GONE
+        val startHeight = summary.height
+        if (startHeight != 0) {
+            slideAnimator(startHeight, 0, summary).apply {
+                addListener(object : Animator.AnimatorListener {
+                    override fun onAnimationEnd(animator: Animator) {
+                        // Height=0, but it set visibility to GONE
+                        summary.visibility = View.GONE
+                    }
+                    override fun onAnimationStart(animator: Animator) {}
+                    override fun onAnimationCancel(animator: Animator) {}
+                    override fun onAnimationRepeat(animator: Animator) {}
+                })
+                start()
             }
-
-            override fun onAnimationStart(animator: Animator) {}
-            override fun onAnimationCancel(animator: Animator) {}
-            override fun onAnimationRepeat(animator: Animator) {}
-        })
-        mAnimator.start()
-        mBinding!!.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
+        }
+        val binding = mBinding ?: return
+        val adapter = mDeviceAdapter ?: return
+        if (binding.chipMore.isVisible)
+            binding.chipMore.text = getString(R.string.account_link_show_button, adapter.count)
     }
 
     private fun setLinkedDevicesAdapter(account: Account) {
+        val binding = mBinding!!
         if (account.devices.size == 1) {
-            mBinding!!.chipMore.visibility = View.GONE
-            collapse(mBinding!!.devicesList)
+            binding.chipMore.visibility = View.GONE
+            collapse(binding.devicesList)
         } else {
             if (mDeviceAdapter == null) {
                 mDeviceAdapter = DeviceAdapter(requireContext(), account.devices, account.deviceId, this@JamiAccountSummaryFragment)
-                mBinding!!.devicesList.adapter = mDeviceAdapter
+                binding.devicesList.adapter = mDeviceAdapter
             } else {
                 mDeviceAdapter!!.setData(account.devices, account.deviceId)
             }
-            mBinding!!.chipMore.visibility = View.VISIBLE
-            mBinding!!.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
+            binding.chipMore.visibility = View.VISIBLE
+            binding.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
         }
     }
 
@@ -715,16 +718,15 @@ class JamiAccountSummaryFragment :
         private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"
         private const val WRITE_REQUEST_CODE = 43
         private const val SCROLL_DIRECTION_UP = -1
-        private fun slideAnimator(start: Int, end: Int, summary: View): ValueAnimator {
-            val animator = ValueAnimator.ofInt(start, end)
-            animator.addUpdateListener { valueAnimator: ValueAnimator ->
-                // Update Height
-                val value = valueAnimator.animatedValue as Int
-                val layoutParams = summary.layoutParams
-                layoutParams.height = value
-                summary.layoutParams = layoutParams
-            }
-            return animator
-        }
+
+        private fun slideAnimator(start: Int, end: Int, summary: View) = ValueAnimator.ofInt(start, end).apply {
+             addUpdateListener { valueAnimator: ValueAnimator ->
+                 // Update Height
+                 val value = valueAnimator.animatedValue as Int
+                 val layoutParams = summary.layoutParams
+                 layoutParams.height = value
+                 summary.layoutParams = layoutParams
+             }
+         }
     }
 }

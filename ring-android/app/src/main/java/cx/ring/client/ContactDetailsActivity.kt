@@ -39,8 +39,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.application.JamiApplication
-import cx.ring.client.ColorChooserBottomSheet.IColorSelected
-import cx.ring.client.EmojiChooserBottomSheet.IEmojiSelected
 import cx.ring.databinding.ActivityContactDetailsBinding
 import cx.ring.databinding.ItemContactActionBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
@@ -291,34 +289,25 @@ class ContactDetailsActivity : AppCompatActivity() {
         binding.conversationType.setText(infoString)
         //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
         colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
-            val frag = ColorChooserBottomSheet()
-            frag.setCallback(object : IColorSelected {
-                override fun onColorSelected(color: Int) {
-                    colorAction!!.iconTint = color
-                    adapter.notifyItemChanged(colorActionPosition)
-                    preferences.edit()
-                        .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
-                        .apply()
-                }
-            })
-            frag.show(supportFragmentManager, "colorChooser")
+            ColorChooserBottomSheet { color ->
+                colorAction!!.iconTint = color
+                adapter.notifyItemChanged(colorActionPosition)
+                preferences.edit()
+                    .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
+                    .apply()
+            }.show(supportFragmentManager, "colorChooser")
         }
         val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
         colorAction!!.iconTint = color
         adapter.actions.add(colorAction!!)
         symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-            EmojiChooserBottomSheet().apply {
-                setCallback(object : IEmojiSelected {
-                    override fun onEmojiSelected(emoji: String?) {
-                        symbolAction?.setSymbol(emoji)
-                        adapter.notifyItemChanged(symbolActionPosition)
-                        preferences.edit()
-                            .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
-                            .apply()
-                    }
-                })
-                show(supportFragmentManager, "colorChooser")
-            }
+            EmojiChooserBottomSheet{ emoji ->
+                symbolAction?.setSymbol(emoji)
+                adapter.notifyItemChanged(symbolActionPosition)
+                preferences.edit()
+                    .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
+                    .apply()
+            }.show(supportFragmentManager, "colorChooser")
         }.apply {
             setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
             adapter.actions.add(this)

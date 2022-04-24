@@ -19,22 +19,15 @@
  */
 package cx.ring.adapters
 
-import net.jami.smartlist.ConversationItemViewModel
 import androidx.recyclerview.widget.DiffUtil
-import net.jami.model.Conversation
 import net.jami.services.ConversationFacade
 
 class SmartListDiffUtil(
     private val mOldList: ConversationFacade.ConversationList,
     private val mNewList: ConversationFacade.ConversationList
 ) : DiffUtil.Callback() {
-    override fun getOldListSize(): Int {
-        return mOldList.getCombinedSize()
-    }
-
-    override fun getNewListSize(): Int {
-        return mNewList.getCombinedSize()
-    }
+    override fun getOldListSize(): Int = mOldList.getCombinedSize()
+    override fun getNewListSize(): Int = mNewList.getCombinedSize()
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = mOldList[oldItemPosition]
@@ -44,7 +37,6 @@ class SmartListDiffUtil(
         return newItem.uri == oldItem.uri
     }
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mNewList[newItemPosition] === mOldList[oldItemPosition]
-    }
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+        mNewList[newItemPosition] === mOldList[oldItemPosition]
 }
