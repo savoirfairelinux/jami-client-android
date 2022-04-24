@@ -92,7 +92,7 @@ dependencies {
     implementation( "androidx.leanback:leanback:1.2.0-alpha02")
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha02")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
-    implementation ("androidx.media:media:1.5.0")
+    implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("com.google.android.material:material:1.5.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
@@ -117,17 +117,17 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
-    kapt ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.github.bumptech.glide:glide:4.13.1")
+    kapt ("com.github.bumptech.glide:compiler:4.13.1")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.3")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.4")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.0") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.3") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
