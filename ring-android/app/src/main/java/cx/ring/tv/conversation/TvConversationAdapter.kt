@@ -404,7 +404,6 @@ class TvConversationAdapter(
                 } catch (e: Exception) {
                     // Left blank
                 }
-                player.release()
                 viewHolder.surface?.let {
                     viewHolder.surface = null
                     it.release()
