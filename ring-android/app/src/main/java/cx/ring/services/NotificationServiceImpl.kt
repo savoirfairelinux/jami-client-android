@@ -428,35 +428,31 @@ class NotificationServiceImpl(
                 .build())
             .addPerson(conversationPerson)
             .setShortcutId(key)
-        if (texts.size == 1) {
-            messageNotificationBuilder.setStyle(null)
-        } else {
-            val account = mAccountService.getAccount(accountId)
-            val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
-            val myPic = account?.let { getContactPicture(it) }
-            val userPerson = Person.Builder()
-                .setKey(accountId)
-                .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
-                .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
+        val account = mAccountService.getAccount(accountId)
+        val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
+        val myPic = account?.let { getContactPicture(it) }
+        val userPerson = Person.Builder()
+            .setKey(accountId)
+            .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
+            .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
+            .build()
+        val history = NotificationCompat.MessagingStyle(userPerson)
+        for (textMessage in texts.values) {
+            val contact = textMessage.contact!!
+            val profile = getProfile(accountId, contact)
+            val contactPicture = getContactPicture(profile)
+            val contactPerson = Person.Builder()
+                .setKey(ConversationPath.toKey(cpath.accountId, contact.uri.uri))
+                .setName(profile.displayName)
+                .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
-            val history = NotificationCompat.MessagingStyle(userPerson)
-            for (textMessage in texts.values) {
-                val contact = textMessage.contact!!
-                val profile = getProfile(accountId, contact)
-                val contactPicture = getContactPicture(profile)
-                val contactPerson = Person.Builder()
-                    .setKey(ConversationPath.toKey(cpath.accountId, contact.uri.uri))
-                    .setName(profile.displayName)
-                    .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
-                    .build()
-                history.addMessage(NotificationCompat.MessagingStyle.Message(
-                    textMessage.body,
-                    textMessage.timestamp,
-                    if (textMessage.isIncoming) contactPerson else null
-                ))
-            }
-            messageNotificationBuilder.setStyle(history)
+            history.addMessage(NotificationCompat.MessagingStyle.Message(
+                textMessage.body,
+                textMessage.timestamp,
+                if (textMessage.isIncoming) contactPerson else null
+            ))
         }
+        messageNotificationBuilder.setStyle(history)
         val notificationId = getTextNotificationId(conversation.accountId, conversation.uri)
         val replyId = notificationId + 1
         val markAsReadId = notificationId + 2
