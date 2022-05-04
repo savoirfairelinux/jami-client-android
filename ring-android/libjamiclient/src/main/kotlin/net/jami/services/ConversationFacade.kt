@@ -166,20 +166,28 @@ class ConversationFacade(
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
-        if (conversation.isSwarm)
-            return
         if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
             val transfer = element as DataTransfer
             if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
                 mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
             } else {
                 val file = mDeviceRuntimeService.getConversationPath(conversation.uri.rawRingId, transfer.storagePath)
-                mDisposableBag.add(Completable.mergeArrayDelayError(
-                    mHistoryService.deleteInteraction(element.id, element.account!!),
-                    Completable.fromAction { file.delete() }
-                        .subscribeOn(Schedulers.io()))
-                    .subscribe({ conversation.removeInteraction(transfer) })
+                if (conversation.isSwarm) {
+                    mDisposableBag.add(Completable.fromAction { file.delete() }
+                        .subscribeOn(Schedulers.io())
+                        .subscribe({
+                            transfer.status = InteractionStatus.FILE_AVAILABLE
+                            conversation.updateInteraction(transfer)
+                        })
                         { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })
+                } else {
+                    mDisposableBag.add(Completable.mergeArrayDelayError(
+                        mHistoryService.deleteInteraction(element.id, element.account!!),
+                        Completable.fromAction { file.delete() }
+                            .subscribeOn(Schedulers.io()))
+                        .subscribe({ conversation.removeInteraction(transfer) })
+                        { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })
+                }
             }
         } else {
             // handling is the same for calls and texts
