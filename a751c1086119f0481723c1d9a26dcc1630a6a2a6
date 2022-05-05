@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8509094b_ebfe68e5",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/ConversationFacade.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-05-05T16:57:39Z",
+      "side": 1,
+      "message": "not needed for swarms",
+      "range": {
+        "startLine": 177,
+        "startChar": 24,
+        "endLine": 177,
+        "endChar": 88
+      },
+      "revId": "a751c1086119f0481723c1d9a26dcc1630a6a2a6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
