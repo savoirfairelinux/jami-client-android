@@ -388,7 +388,7 @@ class Conversation : ConversationHistory {
 
     fun sortHistory() {
         if (mDirty) {
-            Log.w(TAG, "sortHistory()")
+            //Log.w(TAG, "sortHistory()")
             synchronized(aggregateHistory) {
                 aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
                 for (i in aggregateHistory.asReversed())
