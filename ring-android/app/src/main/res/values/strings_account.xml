@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
     <string name="ic_blacklist_menu">Blocked contacts</string>
 
     <!-- Strings related to account creation -->
-    <string name="add_ring_account_title">Add Jami account</string>
+    <string name="add_account_title">Add account</string>
     <string name="add_sip_account_title">Add SIP account</string>
     <string name="ring_account_default_name">Jami account %1$s</string>
 

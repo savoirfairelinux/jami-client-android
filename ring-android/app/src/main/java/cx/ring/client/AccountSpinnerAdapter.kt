@@ -111,7 +111,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
         } else {
             holder.binding.title.setText(
-                if (type == TYPE_CREATE_JAMI) R.string.add_ring_account_title else R.string.add_sip_account_title)
+                if (type == TYPE_CREATE_ACCOUNT) R.string.add_account_title else R.string.add_sip_account_title)
             holder.binding.subtitle.visibility = View.GONE
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
             logoParam.width = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -126,12 +126,12 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
 
     override fun getItemViewType(position: Int): Int {
         if (position == super.getCount()) {
-            return TYPE_CREATE_JAMI
+            return TYPE_CREATE_ACCOUNT
         }
-        return if (position == super.getCount() + 1) TYPE_CREATE_SIP else TYPE_ACCOUNT
+        return TYPE_ACCOUNT
     }
 
-    override fun getCount(): Int = super.getCount() + 2
+    override fun getCount(): Int = super.getCount() + 1
 
     private class ViewHolder(val binding: ItemToolbarSpinnerBinding, parentDisposable: CompositeDisposable) {
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
@@ -147,8 +147,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
     companion object {
         private val TAG = AccountSpinnerAdapter::class.simpleName!!
         const val TYPE_ACCOUNT = 0
-        const val TYPE_CREATE_JAMI = 1
-        const val TYPE_CREATE_SIP = 2
+        const val TYPE_CREATE_ACCOUNT = 1
     }
 
 }

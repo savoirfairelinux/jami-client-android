@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Розширені налаштування</string>
   <string name="ic_blacklist_menu">Заблоковані контакти</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Додати обліковий запис Джамі</string>
+  <string name="add_account_title">Додати обліковий запис Джамі</string>
   <string name="add_sip_account_title">Додати обліковий запис SIP</string>
   <string name="prompt_alias">Додаткове ім’я</string>
   <string name="prompt_hostname">Ім\'я хоста</string>

@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Uitgebreide instellingen</string>
   <string name="ic_blacklist_menu">Geblokkeerde contacten</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami-account toevoegen</string>
+  <string name="add_account_title">Jami-account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
   <string name="ring_account_default_name">Jami account %1$s</string>
   <string name="prompt_alias">Alias</string>

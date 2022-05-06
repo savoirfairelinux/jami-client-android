@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Avancerade inställningar</string>
   <string name="ic_blacklist_menu">Blockerade kontakter</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Lägg till Jami-konto</string>
+  <string name="add_account_title">Lägg till Jami-konto</string>
   <string name="add_sip_account_title">Lägg till SIP-konto</string>
   <string name="ring_account_default_name">Jami-konto %1$s</string>
   <string name="prompt_alias">Alias</string>

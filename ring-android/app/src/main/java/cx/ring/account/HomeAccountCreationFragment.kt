@@ -35,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
+import net.jami.model.AccountConfig
 import java.io.File
 
 @AndroidEntryPoint
@@ -49,6 +50,7 @@ class HomeAccountCreationFragment :
             ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
             accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
             ringImportAccount.setOnClickListener {performFileSearch() }
+            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
             binding = this
         }.root
     }
@@ -75,6 +77,12 @@ class HomeAccountCreationFragment :
             isLink = true
         })
         replaceFragmentWithSlide(fragment, R.id.wizard_container)
+    }
+
+    override fun goToSIPAccountCreation() {
+        val intent = Intent(activity, AccountWizardActivity::class.java)
+        intent.action = AccountConfig.ACCOUNT_TYPE_SIP
+        startActivityForResult(intent, ADD_SIP_ACCOUNT)
     }
 
     private fun performFileSearch() {
@@ -105,11 +113,17 @@ class HomeAccountCreationFragment :
                             Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
                     }
             }
+        } else if (requestCode == ADD_SIP_ACCOUNT && resultCode == Activity.RESULT_OK) {
+            val wizardActivity: Activity? = activity
+            if (wizardActivity is AccountWizardActivity) {
+                wizardActivity.displaySuccessDialog()
+            }
         }
     }
 
     companion object {
         private const val ARCHIVE_REQUEST_CODE = 42
+        private const val ADD_SIP_ACCOUNT = 101
         val TAG = HomeAccountCreationFragment::class.simpleName!!
     }
 }

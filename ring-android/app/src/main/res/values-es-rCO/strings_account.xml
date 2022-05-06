@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Configuración avanzada</string>
   <string name="ic_blacklist_menu">Contactos bloqueados</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Agregar cuenta de Jami</string>
+  <string name="add_account_title">Agregar cuenta de Jami</string>
   <string name="add_sip_account_title">Añadir cuenta SIP</string>
   <string name="ring_account_default_name">Cuenta Jami %1$s</string>
   <string name="prompt_alias">Alias</string>

@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Pokročilá nastavení</string>
   <string name="ic_blacklist_menu">Blokované kontakty</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Přidat účet Jami</string>
+  <string name="add_account_title">Přidat účet Jami</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
   <string name="ring_account_default_name">Účet Jami %1$s</string>
   <string name="prompt_alias">Přezdívka</string>

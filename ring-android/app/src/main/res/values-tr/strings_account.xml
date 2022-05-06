@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Gelişmiş ayarlar</string>
   <string name="ic_blacklist_menu">Engellenmiş kişiler</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami hesabı ekle</string>
+  <string name="add_account_title">Jami hesabı ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
   <string name="ring_account_default_name">Jami hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
