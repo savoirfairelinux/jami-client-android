@@ -34,4 +34,8 @@ class HomeAccountCreationPresenter @Inject constructor() : RootPresenter<HomeAcc
     fun clickOnConnectAccount() {
         view?.goToAccountConnect()
     }
+
+    fun clickOnCreateSIPAccount() {
+        view?.goToSIPAccountCreation()
+    }
 }
