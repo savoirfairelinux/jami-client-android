@@ -642,9 +642,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         } else {
             val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
-            if (type == AccountSpinnerAdapter.TYPE_CREATE_SIP) {
-                intent.action = AccountConfig.ACCOUNT_TYPE_SIP
-            }
             startActivity(intent)
             mBinding!!.spinnerToolbar.setSelection(mAccountService.currentAccountIndex)
         }

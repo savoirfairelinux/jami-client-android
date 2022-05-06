@@ -76,9 +76,21 @@
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
                 android:text="@string/account_connect_server_button"
                 android:drawableTint="@color/color_primary_dark"
                 android:drawableLeft="@drawable/baseline_router_black_36"
+                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sip_add_account"
+                style="@style/ButtonOutLined"
+                android:layout_width="@dimen/wizard_button_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/add_sip_account_title"
+                android:drawableTint="@color/color_primary_dark"
+                android:drawableLeft="@drawable/baseline_dialer_sip_24"
                 android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
 
         </LinearLayout>
