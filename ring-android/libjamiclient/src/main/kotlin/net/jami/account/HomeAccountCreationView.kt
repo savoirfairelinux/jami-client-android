@@ -23,4 +23,5 @@ interface HomeAccountCreationView {
     fun goToAccountCreation()
     fun goToAccountLink()
     fun goToAccountConnect()
+    fun goToSIPAccountCreation()
 }
