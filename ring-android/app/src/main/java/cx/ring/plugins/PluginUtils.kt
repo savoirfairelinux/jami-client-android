@@ -19,8 +19,8 @@ object PluginUtils {
      * @return List of PluginDetails
      */
     fun getInstalledPlugins(mContext: Context): List<PluginDetails> {
-        tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
-        tree(mContext.cacheDir.absolutePath, 0)
+        //tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
+        //tree(mContext.cacheDir.absolutePath, 0)
         val pluginsPaths: List<String> = JamiService.getInstalledPlugins()
         val loadedPluginsPaths: List<String> = JamiService.getLoadedPlugins()
         val pluginsList: MutableList<PluginDetails> = ArrayList(pluginsPaths.size)
@@ -63,8 +63,8 @@ object PluginUtils {
      * @return List of PluginDetails
      */
     fun getChatHandlersDetails(mContext: Context, accountId: String, peerId: String): List<PluginDetails> {
-        tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
-        tree(mContext.cacheDir.absolutePath, 0)
+        //tree(mContext.filesDir.toString() + File.separator + "plugins", 0)
+        //tree(mContext.cacheDir.absolutePath, 0)
         val chatHandlersId: List<String> = JamiService.getChatHandlers()
         val chatHandlerStatus: List<String> = JamiService.getChatHandlerStatus(accountId, peerId)
         val handlersList: MutableList<PluginDetails> = ArrayList(chatHandlersId.size)

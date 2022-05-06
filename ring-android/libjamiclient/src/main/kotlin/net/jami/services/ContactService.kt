@@ -66,7 +66,7 @@ abstract class ContactService(
     }
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
-        Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
+        // Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val observePresence = if (contact.isUser) false else withPresence
         val uri = contact.uri
         val uriString = uri.rawRingId
@@ -89,7 +89,7 @@ abstract class ContactService(
             val username = contact.username ?: run {
                 mAccountService.findRegistrationByAddress(accountId, "", uriString)
                     .map { registration ->
-                        Log.w(TAG, "username lookup response $registration")
+                        // Log.w(TAG, "username lookup response $registration")
                         if (registration.state > 2)
                             throw RuntimeException("lookup failed")
                         registration.name
