@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.databinding.FragAccHomeCreateBinding
+import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.getCacheFile
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +50,7 @@ class HomeAccountCreationFragment :
             ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
             accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
             ringImportAccount.setOnClickListener {performFileSearch() }
+            sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
             binding = this
         }.root
     }
@@ -74,6 +76,11 @@ class HomeAccountCreationFragment :
         val fragment: Fragment = JamiAccountConnectFragment.newInstance(AccountCreationModelImpl().apply {
             isLink = true
         })
+        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+    }
+
+    override fun goToSIPAccountCreation() {
+        val fragment: Fragment = SIPAccountCreationFragment()
         replaceFragmentWithSlide(fragment, R.id.wizard_container)
     }
 

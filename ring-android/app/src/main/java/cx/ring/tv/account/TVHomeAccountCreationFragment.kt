@@ -45,6 +45,10 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         //TODO
     }
 
+    override fun goToSIPAccountCreation() {
+        //TODO
+    }
+
     override fun onProvideTheme(): Int {
         return R.style.Theme_Ring_Leanback_GuidedStep_First
     }
