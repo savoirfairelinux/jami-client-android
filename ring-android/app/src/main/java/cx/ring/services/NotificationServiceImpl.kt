@@ -285,9 +285,13 @@ class NotificationServiceImpl(
         if (notification != null) {
             val nid = random.nextInt()
             callNotifications[nid] = notification
-            ContextCompat.startForegroundService(mContext,
-                Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
-                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid))
+            try {
+                ContextCompat.startForegroundService(mContext,
+                    Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
+                        .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid))
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't show call notification", e)
+            }
         } else {
             removeCallNotification(0)
         }
