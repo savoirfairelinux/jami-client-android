@@ -54,12 +54,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/participant_overlay_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignStart="@id/video_surface"
-                android:layout_alignTop="@id/video_surface"
-                android:layout_alignEnd="@id/video_surface"
-                android:layout_alignBottom="@id/video_surface"
                 android:layout_gravity="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:animateLayoutChanges="true"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/plugin_preview_container"
