@@ -125,6 +125,8 @@ class CallActivity : AppCompatActivity() {
                     val callFragment = CallFragment.newInstance(action, confId, wantVideo)
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
+                } else if (action == ACTION_CALL_ACCEPT) {
+                    callFragment?.handleIntent(action, confId, wantVideo)
                 }
             }
         }

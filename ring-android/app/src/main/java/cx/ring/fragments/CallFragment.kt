@@ -156,11 +156,18 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             if (action == Intent.ACTION_CALL) {
                 prepareCall(false)
             } else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
-                presenter.initIncomingCall(
-                    args.getString(NotificationService.KEY_CALL_ID)!!,
-                    action == Intent.ACTION_VIEW
-                )
+                presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
             }
+
+        }
+    }
+
+    fun handleIntent(action: String, callId: String?, wantVideo: Boolean) {
+        if (action == CallActivity.ACTION_CALL_ACCEPT) {
+            if (wantVideo)
+                acceptClicked()
+            else
+                acceptAudioClicked()
         }
     }
 
