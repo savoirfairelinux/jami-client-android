@@ -376,9 +376,7 @@ class HardwareServiceImpl(
         else videoEvents.filter { it.sinkId == id }.firstOrError().map { e -> Pair(e.w, e.h) }
     }
 
-    override fun hasInput(id: String): Boolean {
-        return videoInputs[id] !== null
-    }
+    override fun hasInput(id: String): Boolean = videoInputs[id] !== null
 
     override fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
@@ -389,15 +387,13 @@ class HardwareServiceImpl(
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, mContext)
     }
 
-    private fun parseResolution(resolution: Int): Size {
-        return when (resolution) {
-            320 -> VIDEO_SIZE_LOW
-            480 -> VIDEO_SIZE_SD
-            720 -> VIDEO_SIZE_HD
-            1080 -> VIDEO_SIZE_FULL_HD
-            2160 -> VIDEO_SIZE_ULTRA_HD
-            else -> VIDEO_SIZE_HD
-        }
+    private fun parseResolution(resolution: Int): Size = when (resolution) {
+        320 -> VIDEO_SIZE_LOW
+        480 -> VIDEO_SIZE_SD
+        720 -> VIDEO_SIZE_HD
+        1080 -> VIDEO_SIZE_FULL_HD
+        2160 -> VIDEO_SIZE_ULTRA_HD
+        else -> VIDEO_SIZE_HD
     }
 
     override fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int) {
@@ -412,7 +408,7 @@ class HardwareServiceImpl(
     }
 
     private fun toggleMediaHandler(callId: String) {
-        if (mMediaHandlerId != null) JamiService.toggleCallMediaHandler(mMediaHandlerId, callId, true)
+        mMediaHandlerId?.let { id -> JamiService.toggleCallMediaHandler(id, callId, true) }
     }
 
     override fun stopMediaHandler() {

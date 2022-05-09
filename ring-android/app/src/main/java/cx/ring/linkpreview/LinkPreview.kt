@@ -30,37 +30,29 @@ object LinkPreview {
         extractUrls(input).firstOrNull()
     }
 
-    private fun getTile(doc: Document): String {
+    private fun getTile(doc: Document): String =
         doc.selectFirst("meta[property=og:title]")
             ?.attr("content")
             ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        return doc.title()
-    }
+            ?: doc.title()
 
-    private fun getDescription(doc: Document): String {
+    private fun getDescription(doc: Document): String =
         doc.selectFirst("meta[property=og:description]")
             ?.attr("content")
             ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        doc.selectFirst("meta[name=description]")
-            ?.attr("content")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        return ""
-    }
+            ?: doc.selectFirst("meta[name=description]")
+                ?.attr("content")
+                ?.takeIf { it.isNotEmpty() }
+            ?: ""
 
-    private fun getImage(doc: Document): String {
+    private fun getImage(doc: Document): String =
         doc.selectFirst("meta[property=og:image]")
             ?.attr("content")
             ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        doc.selectFirst("link[rel=image_src]")
-            ?.attr("href")
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
-        return ""
-    }
+            ?: doc.selectFirst("link[rel=image_src]")
+                ?.attr("href")
+                ?.takeIf { it.isNotEmpty() }
+            ?: ""
 
     private fun loadUrl(url: String): Single<Document> = Single.create { e ->
         Log.w("LinkPreview", "load $url")
