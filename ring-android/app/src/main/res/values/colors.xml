@@ -44,6 +44,7 @@
 
     <color name="online_indicator">#0B8271</color>
     <color name="fab_background">#00273F</color>
+    <color name="menu_icon">#0A84FF</color>
 
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#f5f5f5</color>

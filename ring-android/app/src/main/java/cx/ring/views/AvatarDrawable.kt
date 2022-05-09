@@ -484,7 +484,7 @@ class AvatarDrawable : Drawable {
         presence.radius = (0.29289321881 * bounds.width().toDouble() * 0.5).toInt()
         presence.cx = bounds.right - presence.radius
         presence.cy = bounds.bottom - presence.radius
-        val presenceStrokeWidth = (presence.radius / 3).toFloat()
+        val presenceStrokeWidth = (presence.radius / 4).toFloat()
         presenceStrokePaint.strokeWidth = presenceStrokeWidth
         checkedPaint.strokeWidth = presenceStrokeWidth
         presence.radius -= (presenceStrokeWidth * 0.5f).toInt()
