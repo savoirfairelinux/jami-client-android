@@ -52,8 +52,8 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        cd $TOP && gradle $GRADLE_PROPERTIES assembleRelease
+        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
     else
-        cd $TOP && gradle $GRADLE_PROPERTIES assembleDebug
+        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
     fi
 fi
