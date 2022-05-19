@@ -43,7 +43,7 @@ abstract class HardwareService(
     protected val mUiScheduler: Scheduler
 ) {
     data class VideoEvent (
-        val callId: String? = null,
+        val sinkId: String,
         val start: Boolean = false,
         val started: Boolean = false,
         val w: Int = 0,
@@ -60,11 +60,14 @@ abstract class HardwareService(
     class AudioState(val outputType: AudioOutput, val outputName: String? = null)
 
     protected val videoEvents: Subject<VideoEvent> = PublishSubject.create()
+    protected val cameraEvents: Subject<VideoEvent> = PublishSubject.create()
     protected val bluetoothEvents: Subject<BluetoothEvent> = PublishSubject.create()
     protected val audioStateSubject: Subject<AudioState> = BehaviorSubject.createDefault(STATE_INTERNAL)
     protected val connectivityEvents: Subject<Boolean> = BehaviorSubject.create()
 
     fun getVideoEvents(): Observable<VideoEvent> = videoEvents
+    fun getCameraEvents(): Observable<VideoEvent> = cameraEvents
+
     fun getBluetoothEvents(): Observable<BluetoothEvent> = bluetoothEvents
 
     val audioState: Observable<AudioState>
@@ -147,6 +150,9 @@ abstract class HardwareService(
         JamiService.unregisterVideoCallback(inputId, inputWindow)
         JamiService.releaseNativeWindow(inputWindow)
     }
+
+    abstract fun connectSink(id: String, windowId: Long): Observable<Pair<Int, Int>>
+    abstract fun getSinkSize(id: String): Single<Pair<Int, Int>>
 
     abstract fun setDeviceOrientation(rotation: Int)
     protected abstract val videoDevices: List<String>
