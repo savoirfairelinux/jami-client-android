@@ -23,7 +23,6 @@ package cx.ring.services
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
@@ -46,6 +45,7 @@ import cx.ring.utils.Ringer
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.UintVect
@@ -91,7 +91,7 @@ class HardwareServiceImpl(
         val pm = mContext.packageManager
         var hasMicrophone = pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
         if (!hasMicrophone) {
-            val recorder = MediaRecorder(mContext)
+            val recorder = MediaRecorder()
             val testFile = File(mContext.cacheDir, "MediaUtil#micAvailTestFile")
             hasMicrophone = try {
                 recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -322,19 +322,20 @@ class HardwareServiceImpl(
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
         val shm = Shm(id, width, height)
         videoInputs[id] = shm
-        videoEvents.onNext(VideoEvent(id, start = true))
+        videoEvents.onNext(VideoEvent(id, start = true, w = shm.w, h = shm.h))
         videoSurfaces[id]?.get()?.let { holder ->
             shm.window = startVideo(id, holder.surface, width, height)
             if (shm.window == 0L) {
                 Log.w(TAG, "decodingStarted() no window !")
             } else {
-                videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
+                videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
             }
         }
     }
 
     @Synchronized override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
         Log.i(TAG, "decodingStopped() $id")
+        videoEvents.onNext(VideoEvent(id, started = true))
         val shm = videoInputs.remove(id) ?: return
         if (shm.window != 0L) {
             try {
@@ -345,6 +346,34 @@ class HardwareServiceImpl(
             shm.window = 0
             videoEvents.onNext(VideoEvent(id, started = false))
         }
+    }
+
+    override fun connectSink(id: String, windowId: Long): Observable<Pair<Int, Int>> {
+        var registered = JamiService.registerVideoCallback(id, windowId)
+        Log.w(TAG, "init registerVideoCallback success:$registered: $id $windowId")
+        val ret = videoEvents.filter { e -> e.sinkId == id }
+            .doOnDispose {
+                Log.w(TAG, "doOnDispose unregisterVideoCallback: $id $windowId")
+                JamiService.unregisterVideoCallback(id, windowId)
+            }
+            .map { c ->
+                if (!registered && c.start && !c.started) {
+                    Log.w(TAG, "registerVideoCallback: $id $windowId")
+                    if (JamiService.registerVideoCallback(id, windowId))
+                        registered = true
+                } else if (!c.start && c.started) {
+                    registered = false
+                }
+                Pair(c.w, c.h)
+            }
+        val input = videoInputs[id]
+        return if (input != null) ret.startWithItem(Pair(input.w, input.h)) else ret
+    }
+
+    @Synchronized override fun getSinkSize(id: String): Single<Pair<Int, Int>> {
+        val p = videoInputs[id]?.let { input -> Pair(input.w, input.h) }
+        return if (p != null) Single.just(p)
+        else videoEvents.filter { it.sinkId == id }.firstOrError().map { e -> Pair(e.w, e.h) }
     }
 
     override fun hasInput(id: String): Boolean {
@@ -402,7 +431,7 @@ class HardwareServiceImpl(
         if (surface == null) {
             Log.e(TAG, "Can't start capture: no surface registered.")
             //cameraService.setPreviewParams(videoParams)
-            videoEvents.onNext(VideoEvent(start = true))
+            cameraEvents.onNext(VideoEvent(cam, start = true))
             return
         }
         val conf = mCameraPreviewCall.get()
@@ -456,7 +485,7 @@ class HardwareServiceImpl(
             )
         }
 
-        videoEvents.onNext(VideoEvent(
+        cameraEvents.onNext(VideoEvent(cam,
             started = true,
             w = videoParams.size.width,
             h = videoParams.size.height,
@@ -467,7 +496,7 @@ class HardwareServiceImpl(
     override fun stopCapture(camId: String) {
         shouldCapture.remove(camId)
         cameraService.closeCamera(camId)
-        videoEvents.onNext(VideoEvent(started = false))
+        cameraEvents.onNext(VideoEvent(camId, started = false))
     }
 
     override fun requestKeyFrame(camId: String) {
@@ -491,7 +520,7 @@ class HardwareServiceImpl(
             Log.i(TAG, "JamiService.addVideoSurface() no window !")
             //videoEvents.onNext(VideoEvent(id, start = true))
         } else {
-            videoEvents.onNext(VideoEvent(shm.id, started = true, w = shm.w, h = shm.h))
+            videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
         }
     }
 
