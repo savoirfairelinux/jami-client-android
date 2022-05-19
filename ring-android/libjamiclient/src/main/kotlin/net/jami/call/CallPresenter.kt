@@ -88,9 +88,12 @@ class CallPresenter @Inject constructor(
 
     override fun bindView(view: CallView) {
         super.bindView(view)
-        mCompositeDisposable.add(mHardwareService.getVideoEvents()
+        /*mCompositeDisposable.add(mHardwareService.getVideoEvents()
             .observeOn(mUiScheduler)
-            .subscribe { event: VideoEvent -> onVideoEvent(event) })
+            .subscribe { event: VideoEvent -> onVideoEvent(event) })*/
+        mCompositeDisposable.add(mHardwareService.getCameraEvents()
+            .observeOn(mUiScheduler)
+            .subscribe { event: VideoEvent -> onCameraEvent(event) })
         mCompositeDisposable.add(mHardwareService.audioState
             .observeOn(mUiScheduler)
             .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
@@ -190,7 +193,7 @@ class CallPresenter @Inject constructor(
                     mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
             { participants, pending, callContact ->
                 val p = if (participants.isEmpty() && !obj.isConference)
-                    listOf(ParticipantInfo(obj.call, callContact, emptyMap()))
+                    listOf(ParticipantInfo(obj.call, callContact, mapOf("sinkId" to (obj.call?.daemonIdString ?: ""))))
                 else
                     participants
                 if (p.isEmpty()) p else p + pending
@@ -323,7 +326,7 @@ class CallPresenter @Inject constructor(
                     currentPluginSurfaceId = newId
                 }
                 mHardwareService.addVideoSurface(newId, holder)
-                view?.displayContactBubble(false)
+                //view?.displayContactBubble(false)
             }
         }
     }
@@ -407,9 +410,9 @@ class CallPresenter @Inject constructor(
                     permissionChanged = false
                 }
             }
-            if (mHardwareService.hasInput(call.id)) {
+            /*if (mHardwareService.hasInput(call.id)) {
                 view.displayPeerVideo(true)
-            }
+            }*/
             timeUpdateTask?.dispose()
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect({ updateTime() }, 0, 1, TimeUnit.SECONDS)
         } else if (call.isRinging) {
@@ -458,25 +461,35 @@ class CallPresenter @Inject constructor(
         }
     }
 
-    private fun onVideoEvent(event: VideoEvent) {
+    /*private fun onVideoEvent(event: VideoEvent) {
         Log.w(TAG, "onVideoEvent  $event")
         val view = view ?: return
         val conference = mConference
-        if (event.callId == null) {
+        if (conference != null && conference.id == event.sinkId) {
             if (event.start) {
-                view.displayLocalVideo(true)
-            }
-            if (event.started) {
-                view.resetPreviewVideoSize(event.w, event.h, event.rot)
-            }
-        } else if (conference != null && conference.id == event.callId) {
-            if (event.start) {
-                view.displayPeerVideo(true)
-            } else if (event.started) {
-                view.resetVideoSize(event.w, event.h)
+                if (event.started) {
+                    view.resetVideoSize(event.w, event.h)
+                } else {
+                    view.displayPeerVideo(true)
+                }
             } else {
-                view.displayPeerVideo(false)
+                if (event.started) {
+
+                } else {
+                    view.displayPeerVideo(false)
+                }
             }
+        }
+    }*/
+
+    private fun onCameraEvent(event: VideoEvent) {
+        Log.w(TAG, "onVideoEvent  $event")
+        val view = view ?: return
+        if (event.start) {
+            view.displayLocalVideo(true)
+        }
+        if (event.started) {
+            view.resetPreviewVideoSize(event.w, event.h, event.rot)
         }
     }
 
@@ -535,7 +548,7 @@ class CallPresenter @Inject constructor(
                         override fun onNext(sipCall: Call) {
                             if (call == null) {
                                 val contact = sipCall.contact ?: conversation.contact!!
-                                call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), emptyMap(), pending = true)
+                                call = ParticipantInfo(sipCall, ContactViewModel(contact, contact.profile.blockingFirst()), mapOf("sinkId" to (sipCall.daemonIdString ?: "")), pending = true)
                                     .apply { mPendingCalls.add(this) }
                             }
                             mPendingSubject.onNext(mPendingCalls)
