@@ -461,14 +461,13 @@ class CallService(
         return conference
     }
 
-    private fun parseCallState(accountId:String, callId: String, newState: String): Call? {
+    private fun parseCallState(accountId: String, callId: String, newState: String, callDetails: Map<String, String>): Call? {
         val callState = CallStatus.fromString(newState)
         var call = currentCalls[callId]
         if (call != null) {
             call.setCallState(callState)
-            call.setDetails(JamiService.getCallDetails(accountId, callId).toNative())
+            call.setDetails(callDetails)
         } else if (callState !== CallStatus.OVER && callState !== CallStatus.FAILURE) {
-            val callDetails: Map<String, String> = JamiService.getCallDetails(accountId, callId)
             call = Call(callId, callDetails)
             if (StringUtils.isEmpty(call.contactNumber)) {
                 Log.w(TAG, "No number")
@@ -477,8 +476,8 @@ class CallService(
             call.setCallState(callState)
             val account = mAccountService.getAccount(call.account!!)!!
             val contact = mContactService.findContact(account, Uri.fromString(call.contactNumber!!))
-            val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
-            /*if (registeredName != null && registeredName.isNotEmpty()) {
+            /*val registeredName = callDetails[Call.KEY_REGISTERED_NAME]
+            if (registeredName != null && registeredName.isNotEmpty()) {
                 contact.setUsername(registeredName)
             }*/
             val conversation = account.getByUri(contact.conversationUri.blockingFirst())
@@ -506,10 +505,11 @@ class CallService(
     }
 
     fun callStateChanged(accountId: String, callId: String, newState: String, detailCode: Int) {
+        val callDetails = JamiService.getCallDetails(accountId, callId)
         Log.d(TAG, "call state changed: $callId, $newState, $detailCode")
         try {
             synchronized(currentCalls) {
-                parseCallState(accountId, callId, newState)?.let { call ->
+                parseCallState(accountId, callId, newState, callDetails)?.let { call ->
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
                         currentCalls.remove(call.daemonIdString)
