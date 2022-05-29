@@ -29,14 +29,13 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.leanback.app.GuidedStepSupportFragment
+import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
-import cx.ring.account.AccountCreationModelImpl
+import cx.ring.account.AccountCreationViewModel
 import cx.ring.account.ProfileCreationFragment
 import cx.ring.tv.camera.CustomCameraActivity
 import cx.ring.utils.AndroidFileUtils.loadBitmap
@@ -45,11 +44,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import net.jami.account.ProfileCreationPresenter
 import net.jami.account.ProfileCreationView
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresenter, ProfileCreationView>(), ProfileCreationView {
-    private var mModel: AccountCreationModelImpl? = null
+    private val model: AccountCreationViewModel by activityViewModels()
+
     private var iconSize = -1
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         when (requestCode) {
@@ -85,20 +84,22 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (mModel == null) {
+        val m = model.model.value
+        if (m == null) {
             activity?.finish()
             return
         }
         iconSize = resources.getDimension(R.dimen.tv_avatar_size).toInt()
-        presenter.initPresenter(mModel!!)
+        presenter.initPresenter(m)
     }
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_create_title)
         val breadcrumb = ""
         val description = getString(R.string.profile_message_warning)
+        val m = model.model.value
         return Guidance(title, description, breadcrumb, AvatarDrawable.Builder()
-            .withNameData(mModel?.fullName, mModel?.username)
+            .withNameData(m?.fullName, m?.username)
             .withCircleCrop(true)
             .build(requireContext()))
     }
@@ -165,19 +166,16 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         requestPermissions(arrayOf(Manifest.permission.CAMERA), ProfileCreationFragment.REQUEST_PERMISSION_CAMERA)
     }
 
-    override fun goToNext(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
-        val wizardActivity: Activity? = activity
-        if (wizardActivity is TVAccountWizard) {
-            wizardActivity.profileCreated(accountCreationModel, saveProfile)
-        }
+    override fun goToNext(saveProfile: Boolean) {
+        (activity as TVAccountWizard?)?.profileCreated(saveProfile)
     }
 
-    override fun setProfile(accountCreationModel: AccountCreationModel) {
-        val model = accountCreationModel as AccountCreationModelImpl
-        val newAccount = model.newAccount
+    override fun setProfile() {
+        val m = model.model.value ?: return
+        val newAccount = m.newAccount
         val avatar = AvatarDrawable.Builder()
-            .withPhoto(model.photo as Bitmap?)
-            .withNameData(accountCreationModel.fullName, accountCreationModel.username)
+            .withPhoto(m.photo as Bitmap?)
+            .withNameData(m.fullName, m.username)
             .withId(newAccount?.username)
             .withCircleCrop(true)
             .build(requireContext())
@@ -203,7 +201,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         if (action.id == USER_NAME) {
             val username = action.editTitle.toString()
             presenter.fullNameUpdated(username)
-            if (TextUtils.isEmpty(username)) action.title =
+            if (username.isEmpty()) action.title =
                 getString(R.string.profile_name_hint) else action.title = username
         }
         super.onGuidedActionEditCanceled(action)
@@ -214,11 +212,5 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         private const val GALLERY = 2L
         private const val CAMERA = 3L
         private const val NEXT = 4L
-
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): GuidedStepSupportFragment {
-            val fragment = TVProfileCreationFragment()
-            fragment.mModel = ringAccountViewModel
-            return fragment
-        }
     }
 }

@@ -28,83 +28,70 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import cx.ring.databinding.FragAccJamiConnectBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountConnectPresenter
 import net.jami.account.JamiConnectAccountView
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class JamiAccountConnectFragment : BaseSupportFragment<JamiAccountConnectPresenter, JamiConnectAccountView>(),
     JamiConnectAccountView {
-    private var model: AccountCreationModel? = null
-    private var mBinding: FragAccJamiConnectBinding? = null
+    private val model: AccountCreationViewModel by activityViewModels()
+    private var binding: FragAccJamiConnectBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mBinding = FragAccJamiConnectBinding.inflate(inflater, container, false)
-        return mBinding!!.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccJamiConnectBinding.inflate(inflater, container, false).apply {
+            connectButton.setOnClickListener { presenter.connectClicked() }
+            usernameTxt.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.usernameChanged(s.toString())
+                }
+            })
+            passwordTxt.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.passwordChanged(s.toString())
+                }
+            })
+            promptServer.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.serverChanged(s.toString())
+                }
+            })
+            passwordTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    presenter.connectClicked()
+                }
+                false
+            }
+            binding = this
+        }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
+        binding = null
     }
 
     override fun initPresenter(presenter: JamiAccountConnectPresenter) {
-        presenter.init(model)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mBinding!!.connectButton.setOnClickListener { presenter.connectClicked() }
-        mBinding!!.usernameTxt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.usernameChanged(s.toString())
-            }
-        })
-        mBinding!!.passwordTxt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.passwordChanged(s.toString())
-            }
-        })
-        mBinding!!.promptServer.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.serverChanged(s.toString())
-            }
-        })
-        mBinding!!.passwordTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                presenter.connectClicked()
-            }
-            false
-        }
+        presenter.init(model.model.value)
     }
 
     override fun enableConnectButton(enable: Boolean) {
-        mBinding!!.connectButton.isEnabled = enable
+        binding!!.connectButton.isEnabled = enable
     }
 
-    override fun createAccount(accountCreationModel: AccountCreationModel) {
-        (requireActivity() as AccountWizardActivity).createAccount(accountCreationModel)
+    override fun createAccount() {
+        (activity as AccountWizardActivity?)?.createAccount()
     }
 
     override fun cancel() {
         activity?.onBackPressed()
-    }
-
-    companion object {
-        val TAG = JamiAccountConnectFragment::class.simpleName!!
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): JamiAccountConnectFragment {
-            val fragment = JamiAccountConnectFragment()
-            fragment.model = ringAccountViewModel
-            return fragment
-        }
     }
 }

@@ -27,6 +27,6 @@ interface ProfileCreationView {
     fun goToPhotoCapture()
     fun askStoragePermission()
     fun askPhotoPermission()
-    fun goToNext(accountCreationModel: AccountCreationModel, saveProfile: Boolean)
-    fun setProfile(model: AccountCreationModel)
+    fun goToNext(saveProfile: Boolean)
+    fun setProfile()
 }

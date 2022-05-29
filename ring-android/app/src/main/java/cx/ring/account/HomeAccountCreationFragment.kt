@@ -25,7 +25,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.databinding.FragAccHomeCreateBinding
@@ -43,17 +43,17 @@ class HomeAccountCreationFragment :
     BaseSupportFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
     HomeAccountCreationView {
     private var binding: FragAccHomeCreateBinding? = null
+    private val model: AccountCreationViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccHomeCreateBinding.inflate(inflater, container, false).apply {
             ringAddAccount.setOnClickListener {presenter.clickOnLinkAccount() }
             ringCreateBtn.setOnClickListener { presenter.clickOnCreateAccount() }
             accountConnectServer.setOnClickListener { presenter.clickOnConnectAccount() }
-            ringImportAccount.setOnClickListener {performFileSearch() }
+            ringImportAccount.setOnClickListener { performFileSearch() }
             sipAddAccount.setOnClickListener { presenter.clickOnCreateSIPAccount() }
             binding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -61,22 +61,22 @@ class HomeAccountCreationFragment :
     }
 
     override fun goToAccountCreation() {
-        val fragment: Fragment = JamiAccountCreationFragment()
-        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+        model.model.value = AccountCreationModelImpl()
+        replaceFragmentWithSlide(JamiAccountCreationFragment(), R.id.wizard_container)
     }
 
     override fun goToAccountLink() {
-        val fragment: Fragment = JamiLinkAccountFragment.newInstance(AccountCreationModelImpl().apply {
+        model.model.value = AccountCreationModelImpl().apply {
             isLink = true
-        })
-        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+        }
+        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {
-        val fragment: Fragment = JamiAccountConnectFragment.newInstance(AccountCreationModelImpl().apply {
+        model.model.value = AccountCreationModelImpl().apply {
             isLink = true
-        })
-        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+        }
+        replaceFragmentWithSlide(JamiAccountConnectFragment(), R.id.wizard_container)
     }
 
     override fun goToSIPAccountCreation() {
@@ -87,10 +87,9 @@ class HomeAccountCreationFragment :
 
     private fun performFileSearch() {
         try {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("*/*")
-            startActivityForResult(intent, ARCHIVE_REQUEST_CODE)
+                .setType("*/*"), ARCHIVE_REQUEST_CODE)
         } catch (e: Exception) {
             view?.let { v ->
                 Snackbar.make(v, "No file browser available on this device", Snackbar.LENGTH_SHORT).show() }
@@ -103,21 +102,18 @@ class HomeAccountCreationFragment :
                 getCacheFile(requireContext(), uri)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ file: File ->
-                        val ringAccountViewModel = AccountCreationModelImpl()
-                        ringAccountViewModel.isLink = true
-                        ringAccountViewModel.archive = file
-                        val fragment: Fragment = JamiLinkAccountFragment.newInstance(ringAccountViewModel)
-                        replaceFragmentWithSlide(fragment, R.id.wizard_container)
+                        model.model.value = AccountCreationModelImpl().apply {
+                            isLink = true
+                            archive = file
+                        }
+                        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
                     }) { e: Throwable ->
                         view?.let { v ->
                             Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
                     }
             }
         } else if (requestCode == ADD_SIP_ACCOUNT && resultCode == Activity.RESULT_OK) {
-            val wizardActivity: Activity? = activity
-            if (wizardActivity is AccountWizardActivity) {
-                wizardActivity.displaySuccessDialog()
-            }
+            (activity as AccountWizardActivity?)?.displaySuccessDialog()
         }
     }
 

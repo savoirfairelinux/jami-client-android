@@ -98,6 +98,8 @@ dependencies {
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.11")
     implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.1")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.6")

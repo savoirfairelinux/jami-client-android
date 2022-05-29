@@ -22,10 +22,11 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.leanback.app.GuidedStepSupportFragment
 import cx.ring.R
-import cx.ring.account.AccountCreationModelImpl
+import cx.ring.account.AccountCreationViewModel
 import cx.ring.application.JamiApplication
 import cx.ring.mvp.BaseActivity
 import cx.ring.services.VCardServiceImpl
@@ -37,7 +38,6 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.model.AccountCreationModel
 import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
@@ -50,6 +50,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon()
+        val model: AccountCreationViewModel by viewModels()
         val intent = intent
         if (intent != null) {
             mAccountType = intent.action
@@ -78,11 +79,13 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         super.onDestroy()
     }
 
-    fun createAccount(accountCreationModel: AccountCreationModel) {
-        if (accountCreationModel.isLink) {
-            presenter.initJamiAccountLink(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+    fun createAccount() {
+        val viewModel: AccountCreationViewModel by viewModels()
+        val model = viewModel.model.value ?: return
+        if (model.isLink) {
+            presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
         } else {
-            presenter.initJamiAccountCreation(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
         }
     }
 
@@ -97,8 +100,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         }
     }
 
-    override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
-        GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment.newInstance(accountCreationModel as AccountCreationModelImpl))
+    override fun goToProfileCreation() {
+        GuidedStepSupportFragment.add(supportFragmentManager, TVProfileCreationFragment())
     }
 
     override fun displayProgress(display: Boolean) {
@@ -140,9 +143,10 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         }
     }
 
-    override fun saveProfile(account: Account, accountCreationModel: AccountCreationModel): Single<VCard> {
+    override fun saveProfile(account: Account): Single<VCard> {
         val filedir = filesDir
-        return accountCreationModel.toVCard()
+        val model: AccountCreationViewModel by viewModels()
+        return model.model.value!!.toVCard()
             .flatMap { vcard ->
                 account.loadedProfile = Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
                 VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
@@ -192,7 +196,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
         finish()
     }
 
-    fun profileCreated(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
-        presenter.profileCreated(accountCreationModel, saveProfile)
+    fun profileCreated(saveProfile: Boolean) {
+        presenter.profileCreated(saveProfile)
     }
 }

@@ -30,74 +30,70 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import cx.ring.R
 import cx.ring.databinding.FragAccJamiLinkPasswordBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
     JamiLinkAccountView {
-    private var model: AccountCreationModel? = null
-    private var mBinding: FragAccJamiLinkPasswordBinding? = null
+    private val model: AccountCreationViewModel by activityViewModels()
+    private var binding: FragAccJamiLinkPasswordBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (model == null) return null
-        mBinding = FragAccJamiLinkPasswordBinding.inflate(inflater, container, false)
-        return mBinding!!.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
+            linkButton.setOnClickListener { presenter.linkClicked() }
+            ringAddPin.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    presenter.linkClicked()
+                }
+                false
+            }
+            ringAddPin.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.pinChanged(s.toString())
+                }
+            })
+            ringExistingPassword.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.passwordChanged(s.toString())
+                }
+            })
+            binding = this
+        }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mBinding!!.linkButton.setOnClickListener { v: View? -> presenter.linkClicked() }
-        mBinding!!.ringAddPin.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                presenter.linkClicked()
-            }
-            false
-        }
-        mBinding!!.ringAddPin.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.pinChanged(s.toString())
-            }
-        })
-        mBinding!!.ringExistingPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.passwordChanged(s.toString())
-            }
-        })
+        binding = null
     }
 
     override fun initPresenter(presenter: JamiLinkAccountPresenter) {
-        presenter.init(model)
+        presenter.init(model.model.value)
     }
 
     override fun enableLinkButton(enable: Boolean) {
-        mBinding!!.linkButton.isEnabled = enable
+        binding!!.linkButton.isEnabled = enable
     }
 
     override fun showPin(show: Boolean) {
-        mBinding!!.pinBox.visibility = if (show) View.VISIBLE else View.GONE
-        mBinding!!.pinHelpMessage.visibility = if (show) View.VISIBLE else View.GONE
-        mBinding!!.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
+        val binding = binding ?: return
+        binding.pinBox.visibility = if (show) View.VISIBLE else View.GONE
+        binding.pinHelpMessage.visibility = if (show) View.VISIBLE else View.GONE
+        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
     }
 
-    override fun createAccount(accountCreationModel: AccountCreationModel) {
-        (requireActivity() as AccountWizardActivity).createAccount(accountCreationModel)
-        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(mBinding!!.ringExistingPassword.windowToken, 0)
+    override fun createAccount() {
+        (activity as AccountWizardActivity?)?.createAccount()
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(binding!!.ringExistingPassword.windowToken, 0)
     }
 
     override fun cancel() {
@@ -106,10 +102,5 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
 
     companion object {
         val TAG = JamiLinkAccountPasswordFragment::class.simpleName!!
-        fun newInstance(ringAccountViewModel: AccountCreationModel): JamiLinkAccountPasswordFragment {
-            val fragment = JamiLinkAccountPasswordFragment()
-            fragment.model = ringAccountViewModel
-            return fragment
-        }
     }
 }

@@ -68,17 +68,17 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountConnect(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initRingAccountDetails(defaultAccountName)
+        val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
-                if (!StringUtils.isEmpty(accountCreationModel.managementServer)) {
+                if (!accountCreationModel.managementServer.isNullOrBlank()) {
                     accountDetails[ConfigKey.MANAGER_URI.key()] = accountCreationModel.managementServer!!
-                    if (!StringUtils.isEmpty(accountCreationModel.username)) {
+                    if (accountCreationModel.username.isNotBlank()) {
                         accountDetails[ConfigKey.MANAGER_USERNAME.key()] = accountCreationModel.username
                     }
-                } else if (!StringUtils.isEmpty(accountCreationModel.username)) {
+                } else if (accountCreationModel.username.isNotBlank()) {
                     accountDetails[ConfigKey.ACCOUNT_USERNAME.key()] = accountCreationModel.username
                 }
-                if (!StringUtils.isEmpty(accountCreationModel.password)) {
+                if (accountCreationModel.password.isNotEmpty()) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
@@ -88,12 +88,12 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountCreation(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initRingAccountDetails(defaultAccountName)
+        val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
-                if (!StringUtils.isEmpty(accountCreationModel.username)) {
+                if (accountCreationModel.username.isNotBlank()) {
                     accountDetails[ConfigKey.ACCOUNT_REGISTERED_NAME.key()] = accountCreationModel.username
                 }
-                if (!StringUtils.isEmpty(accountCreationModel.password)) {
+                if (accountCreationModel.password.isNotEmpty()) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
@@ -103,14 +103,14 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     fun initJamiAccountLink(accountCreationModel: AccountCreationModel, defaultAccountName: String) {
-        val newAccount = initRingAccountDetails(defaultAccountName)
+        val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 val settings = mPreferences.settings
                 if (settings.enablePushNotifications) {
                     accountCreationModel.isPush = true
                     setProxyDetails(accountCreationModel, accountDetails)
                 }
-                if (!StringUtils.isEmpty(accountCreationModel.password)) {
+                if (accountCreationModel.password.isNotEmpty()) {
                     accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
                 }
                 if (accountCreationModel.archive != null) {
@@ -150,7 +150,7 @@ class AccountWizardPresenter @Inject constructor(
                             mCreatingAccount = false
                             if (accountCreationModel.archive == null) view.displayCannotBeFoundError() else view.displayGenericError()
                         } else {
-                            view.goToProfileCreation(accountCreationModel)
+                            view.goToProfileCreation()
                         }
                     }
                 }) {
@@ -159,7 +159,7 @@ class AccountWizardPresenter @Inject constructor(
                     view!!.displayCannotBeFoundError()
                 })
         } else {
-            view?.goToProfileCreation(accountCreationModel)
+            view?.goToProfileCreation()
         }
     }
 
@@ -167,7 +167,7 @@ class AccountWizardPresenter @Inject constructor(
         view?.finish(true)
     }
 
-    private fun initRingAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> {
+    private fun initJamiAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> {
         return initAccountDetails().map { accountDetails: HashMap<String, String> ->
             accountDetails[ConfigKey.ACCOUNT_ALIAS.key()] = mAccountService.getNewAccountName(defaultAccountName)
             accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key()] = AccountConfig.TRUE_STR
@@ -198,7 +198,7 @@ class AccountWizardPresenter @Inject constructor(
         }
             .firstElement()
             .subscribe { a: Account ->
-                if (!model.isLink && a.isJami && !StringUtils.isEmpty(model.username))
+                if (!model.isLink && a.isJami && model.username.isNotEmpty())
                     mAccountService.registerName(a, model.password, model.username)
                 mAccountService.currentAccount = a
                 if (model.isPush) {
@@ -212,7 +212,7 @@ class AccountWizardPresenter @Inject constructor(
         return account
     }
 
-    fun profileCreated(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
+    fun profileCreated(saveProfile: Boolean) {
         view!!.blockOrientation()
         view!!.displayProgress(true)
         var newAccount = mAccountCreationModel!!.accountObservable!!.filter { a: Account ->
@@ -222,7 +222,7 @@ class AccountWizardPresenter @Inject constructor(
             .firstOrError()
         if (saveProfile) {
             newAccount = newAccount.flatMap { a: Account ->
-                view!!.saveProfile(a, accountCreationModel).map { a }
+                view!!.saveProfile(a).map { a }
             }
         }
         mCompositeDisposable.add(newAccount

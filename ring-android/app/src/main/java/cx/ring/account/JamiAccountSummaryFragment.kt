@@ -243,7 +243,7 @@ class JamiAccountSummaryFragment :
             mBestName = "$mBestName.gz"
             val username = account.registeredName
             val currentRegisteredName = account.registeringUsername
-            val hasRegisteredName = !currentRegisteredName && username != null && username.isNotEmpty()
+            val hasRegisteredName = !currentRegisteredName && username.isNotEmpty()
             binding.groupRegisteringName.visibility = if (currentRegisteredName) View.VISIBLE else View.GONE
             binding.btnShare.setOnClickListener { shareAccount(if (hasRegisteredName) username else account.username) }
             binding.registerName.visibility = if (hasRegisteredName) View.GONE else View.VISIBLE
@@ -572,7 +572,7 @@ class JamiAccountSummaryFragment :
     }
 
     private fun shareAccount(username: String?) {
-        if (!StringUtils.isEmpty(username)) {
+        if (!username.isNullOrEmpty()) {
             val sharingIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me))

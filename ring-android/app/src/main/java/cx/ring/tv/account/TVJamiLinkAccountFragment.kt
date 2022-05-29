@@ -20,26 +20,27 @@ package cx.ring.tv.account
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
-import cx.ring.account.AccountCreationModelImpl
+import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
-import net.jami.model.AccountCreationModel
 import net.jami.utils.StringUtils.toPassword
 
 @AndroidEntryPoint
 class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
     JamiLinkAccountView {
-    private var model: AccountCreationModelImpl? = null
+    private val model: AccountCreationViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(model)
-        if (model != null && model!!.photo != null) {
-            guidanceStylist.iconView.setImageBitmap(model!!.photo as Bitmap?)
+        val m = model.model.value!!
+        presenter.init(m)
+        if (m.photo != null) {
+            guidanceStylist.iconView.setImageBitmap(m.photo as Bitmap?)
         }
     }
 
@@ -61,9 +62,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         addDisabledAction(context, actions, LINK, getString(R.string.account_link_title), "", null, true)
     }
 
-    override fun onProvideTheme(): Int {
-        return R.style.Theme_Ring_Leanback_GuidedStep_First
-    }
+    override fun onProvideTheme(): Int = R.style.Theme_Ring_Leanback_GuidedStep_First
 
     override fun onGuidedActionClicked(action: GuidedAction) {
         if (action.id == LINK) {
@@ -82,8 +81,8 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         // TODO
     }
 
-    override fun createAccount(accountCreationModel: AccountCreationModel) {
-        (activity as TVAccountWizard?)!!.createAccount(accountCreationModel)
+    override fun createAccount() {
+        (activity as TVAccountWizard?)?.createAccount()
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
@@ -110,9 +109,5 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         private const val PASSWORD = 1L
         private const val PIN = 2L
         private const val LINK = 3L
-
-        fun newInstance(accountViewModel: AccountCreationModelImpl): TVJamiLinkAccountFragment {
-            return TVJamiLinkAccountFragment().apply { model = accountViewModel }
-        }
     }
 }
