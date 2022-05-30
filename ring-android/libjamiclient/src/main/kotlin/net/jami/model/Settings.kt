@@ -22,6 +22,7 @@ package net.jami.model
 data class Settings(
     val enablePushNotifications: Boolean,
     val enablePermanentService: Boolean,
+    val enableAddGroup: Boolean,
     val useSystemContacts: Boolean,
     val allowPlaceSystemCalls: Boolean,
     val runOnStartup: Boolean,

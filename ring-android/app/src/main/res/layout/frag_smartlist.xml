@@ -26,38 +26,50 @@ along with this program; if not, write to the Free Software
     tools:context=".client.HomeActivity"
     android:animateLayoutChanges="true">
 
+    <View android:id="@+id/anchor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"/>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/qr_code"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="@dimen/button_corner_radius"
+        android:layout_toStartOf="@id/new_group"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:visibility="gone"
-        tools:visibility="visible" >
+        app:cardCornerRadius="@dimen/button_corner_radius"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTint="@color/colorPrimary"
             android:text="@string/qr_code"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:layout_gravity="center"
-            android:drawableTint="@color/colorPrimary"
             app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
 
     </com.google.android.material.card.MaterialCardView>
 
-    <!--
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/new_group"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="@dimen/wizard_button_width_half"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/qr_code"
-        app:cardCornerRadius="@dimen/button_corner_radius"
-        android:layout_margin="8dp"
+        android:layout_alignStart="@id/anchor"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:visibility="gone"
+        app:cardCornerRadius="@dimen/button_corner_radius"
         tools:visibility="visible">
 
         <TextView
@@ -72,7 +84,6 @@ along with this program; if not, write to the Free Software
             android:textSize="16sp" />
 
     </com.google.android.material.card.MaterialCardView>
-    -->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/list_coordinator"
