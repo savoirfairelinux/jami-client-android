@@ -110,7 +110,8 @@ class DataTransfer : Interaction {
     val extension: String?
         get() {
             if (body == null) return null
-            if (mExtension == null) mExtension = StringUtils.getFileExtension(body!!).lowercase()
+            if (mExtension == null)
+                mExtension = StringUtils.getFileExtension(body!!).lowercase()
             return mExtension
         }
     val isPicture: Boolean
@@ -130,7 +131,7 @@ class DataTransfer : Interaction {
         get() {
             val b = body
             return if (b == null) {
-                if (StringUtils.isEmpty(fileId)) { "Error" } else fileId!!
+                if (fileId.isNullOrEmpty()) { "Error" } else fileId!!
             } else {
                 var ext = StringUtils.getFileExtension(b)
                 if (ext.length > 8) ext = ext.substring(0, 8)

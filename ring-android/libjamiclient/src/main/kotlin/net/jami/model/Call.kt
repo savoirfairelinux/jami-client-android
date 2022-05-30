@@ -153,8 +153,7 @@ class Call : Interaction {
         isVideoMuted = details[KEY_VIDEO_MUTED].toBoolean()
         audioCodec = details[KEY_AUDIO_CODEC]
         videoCodec = details[KEY_VIDEO_CODEC]
-        val confId = details[KEY_CONF_ID]
-        this.confId = if (StringUtils.isEmpty(confId)) null else confId
+        confId = details[KEY_CONF_ID]?.ifEmpty { null }
     }
     val isConferenceParticipant: Boolean
         get() = confId != null
