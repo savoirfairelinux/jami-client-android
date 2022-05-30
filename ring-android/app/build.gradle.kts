@@ -12,12 +12,12 @@ plugins {
 }
 
 android {
-    compileSdk = 31
-    buildToolsVersion = "31.0.0"
+    compileSdk = 32
+    buildToolsVersion = "32.0.0"
     ndkVersion = "23.0.7599858"
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 331
         versionName = "20220527-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -95,7 +95,7 @@ dependencies {
     implementation ("androidx.media:media:1.6.0")
     implementation ("com.google.android.material:material:1.6.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("org.osmdroid:osmdroid-android:6.1.11")
+    implementation ("org.osmdroid:osmdroid-android:6.1.13")
     implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.1")
@@ -118,8 +118,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.13.1")
-    kapt ("com.github.bumptech.glide:compiler:4.13.1")
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    kapt ("com.github.bumptech.glide:compiler:4.13.2")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
@@ -128,7 +128,7 @@ dependencies {
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.3") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.5") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
