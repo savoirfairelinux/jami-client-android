@@ -61,7 +61,7 @@ object VCardUtils {
             }
             val fname = vcard.formattedName
             if (fname != null) {
-                if (!StringUtils.isEmpty(fname.value)) {
+                if (!fname.value.isNullOrEmpty()) {
                     contactName = fname.value
                 }
             }
@@ -120,7 +120,7 @@ object VCardUtils {
      * @param path     the path of the vcf
      */
     private fun saveToDisk(vcard: VCard?, filename: String, path: File) {
-        if (vcard == null || StringUtils.isEmpty(filename)) {
+        if (vcard == null || filename.isEmpty()) {
             return
         }
         if (!path.exists()) {

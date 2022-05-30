@@ -36,7 +36,10 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.utils.*
+import net.jami.utils.FileUtils
+import net.jami.utils.Log
+import net.jami.utils.SwigNativeConverter
+import net.jami.utils.VCardUtils
 import java.io.File
 import java.io.IOException
 import java.io.UnsupportedEncodingException
@@ -308,7 +311,7 @@ class AccountService(
                                     contact = account.getContactFromCache(uri)
                                     conversation.addContact(contact)
                                 }
-                                if (!StringUtils.isEmpty(lastDisplayed) && contact.isUser) {
+                                if (!lastDisplayed.isNullOrEmpty() && contact.isUser) {
                                     conversation.setLastMessageRead(lastDisplayed)
                                 }
                             }
@@ -486,11 +489,10 @@ class AccountService(
                 val key = r.nextInt().absoluteValue
                 Log.d(TAG, "sendProfile, vcard $callId")
                 while (i <= nbTotal) {
+                    Log.d(TAG, "length vcard ${stringVCard.length} id $key part $i nbTotal $nbTotal")
                     val chunk = HashMap<String, String>()
-                    Log.d(TAG, "length vcard " + stringVCard.length + " id " + key + " part " + i + " nbTotal " + nbTotal)
-                    val keyHashMap = VCardUtils.MIME_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal
-                    val message = stringVCard.substring(0, min(VCARD_CHUNK_SIZE, stringVCard.length))
-                    chunk[keyHashMap] = message
+                    val keyHashMap = "${VCardUtils.MIME_PROFILE_VCARD}; id=$key,part=$i,of=$nbTotal"
+                    chunk[keyHashMap] = stringVCard.substring(0, min(VCARD_CHUNK_SIZE, stringVCard.length))
                     JamiService.sendTextMessage(accountId, callId, StringMap.toSwig(chunk), "Me", false)
                     if (stringVCard.length > VCARD_CHUNK_SIZE) {
                         stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE)
@@ -995,7 +997,7 @@ class AccountService(
     }
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> {
-        Log.w(TAG, "findRegistrationByName " + name)
+        Log.w(TAG, "findRegistrationByName $name")
         return if (name.isEmpty()) {
             Single.just(RegisteredName(account, name))
         } else registeredNames
@@ -1020,7 +1022,7 @@ class AccountService(
     }
 
     fun searchUser(account: String, query: String): Single<UserSearchResult> {
-        if (StringUtils.isEmpty(query)) {
+        if (query.isEmpty()) {
             return Single.just(UserSearchResult(account, query))
         }
         val encodedUrl: String = try {
@@ -1137,7 +1139,7 @@ class AccountService(
     ) {
         val newStatus = InteractionStatus.fromIntTextMessage(status)
         Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $peer, $newStatus")
-        if (StringUtils.isEmpty(conversationId)) {
+        if (conversationId.isEmpty()) {
             mHistoryService
                 .accountMessageStatusChanged(accountId, messageId, peer, newStatus)
                 .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
@@ -1352,7 +1354,7 @@ class AccountService(
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.contact = contact
-        interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (StringUtils.isEmpty(parent)) null else parent)
+        interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
         if (conversation.addSwarmElement(interaction)) {
             /*if (conversation.isVisible)
@@ -1504,7 +1506,7 @@ class AccountService(
             val dataTransferInfo = DataTransferInfo()
             dataTransferInfo.accountId = dataTransfer.account
             val conversationId = dataTransfer.conversationId
-            if (!StringUtils.isEmpty(conversationId))
+            if (!conversationId.isNullOrEmpty())
                 dataTransferInfo.conversationId = conversationId
             else
                 dataTransferInfo.peer = dataTransfer.conversation?.participant
