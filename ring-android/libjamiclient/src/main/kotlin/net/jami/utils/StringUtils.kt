@@ -36,29 +36,17 @@ object StringUtils {
         Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
     ))
 
-    inline fun isEmpty(s: String?): Boolean = s.isNullOrEmpty()
-
-    inline fun isEmpty(s: CharSequence?): Boolean = s.isNullOrEmpty()
-
     fun capitalize(s: String): String {
         if (s.isEmpty()) {
             return ""
         }
         val first = s[0]
-        return if (Character.isUpperCase(first)) {
-            s
-        } else {
-            Character.toUpperCase(first).toString() + s.substring(1)
-        }
+        return if (first.isUpperCase()) s else first.uppercase() + s.substring(1)
     }
 
     fun toPassword(s: String): String {
-        if (s.isEmpty()) {
-            return ""
-        }
-        val chars = CharArray(s.length)
-        Arrays.fill(chars, '*')
-        return String(chars)
+        if (s.isEmpty()) return ""
+        return String(CharArray(s.length).apply { Arrays.fill(this, '*') })
     }
 
     fun toNumber(s: String?): String? = s?.replace("(", "")?.replace(")", "")?.replace("-", "")?.replace(" ", "")
