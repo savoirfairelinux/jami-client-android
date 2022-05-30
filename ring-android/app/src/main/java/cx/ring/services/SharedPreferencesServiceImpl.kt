@@ -49,6 +49,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             .putBoolean(PREF_ON_STARTUP, settings.runOnStartup)
             .putBoolean(PREF_PUSH_NOTIFICATIONS, settings.enablePushNotifications)
             .putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.enablePermanentService)
+            .putBoolean(PREF_ADD_GROUP, settings.enableAddGroup)
             .putBoolean(PREF_SHOW_TYPING, settings.enableTypingIndicator)
             .putBoolean(PREF_SHOW_READ, settings.enableReadIndicator)
             .putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
@@ -65,6 +66,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             runOnStartup = appPrefs.getBoolean(PREF_ON_STARTUP, true),
             enablePushNotifications = appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false),
             enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false),
+            enableAddGroup = appPrefs.getBoolean(PREF_ADD_GROUP, false),
             enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),
             enableReadIndicator = appPrefs.getBoolean(PREF_SHOW_READ, true),
             isRecordingBlocked = appPrefs.getBoolean(PREF_BLOCK_RECORD, false),
@@ -155,6 +157,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         const val PREFS_ACCOUNT = "account_"
         private const val PREF_PUSH_NOTIFICATIONS = "push_notifs"
         private const val PREF_PERSISTENT_NOTIFICATION = "persistent_notif"
+        private const val PREF_ADD_GROUP = "add_group"
         private const val PREF_SHOW_TYPING = "persistent_typing"
         private const val PREF_SHOW_READ = "persistent_read"
         private const val PREF_BLOCK_RECORD = "persistent_block_record"

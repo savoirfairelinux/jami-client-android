@@ -54,6 +54,9 @@
     <string name="pref_persistNotification_title">Run in background</string>
     <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
 
+    <string name="pref_newGroup_title">Enable group chat</string>
+    <string name="pref_newGroup_summary">Enable creating groups in Jami.</string>
+
     <string name="pref_logs_title">Diagnostic logs</string>
     <string name="pref_logs_summary">Open diagnostic log settings</string>
     <string name="pref_logs_start">Start Logging</string>
