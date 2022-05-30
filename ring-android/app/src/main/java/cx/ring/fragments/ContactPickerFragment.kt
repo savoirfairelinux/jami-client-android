@@ -2,36 +2,42 @@ package cx.ring.fragments
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
 import cx.ring.R
-import cx.ring.adapters.SmartListAdapter
+import cx.ring.adapters.ContactPickerAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragContactPickerBinding
-import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
+import cx.ring.viewholders.ContactPickerViewHolder.ContactPickerListeners
+import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.Conversation
+import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-import java.util.*
+import net.jami.smartlist.ConversationItemViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactPickerFragment : BottomSheetDialogFragment() {
     private var binding: FragContactPickerBinding? = null
-    private var adapter: SmartListAdapter? = null
+    private var adapter: ContactPickerAdapter? = null
     private val mDisposableBag = CompositeDisposable()
     private var mAccountId: String? = null
     private val mCurrentSelection: MutableSet<Contact> = HashSet()
 
     @Inject
-    lateinit var conversationFacade: ConversationFacade
+    lateinit var mConversationFacade: ConversationFacade
+    @Inject
+    lateinit var mAccountService: AccountService
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bdialog = super.onCreateDialog(savedInstanceState)
@@ -45,23 +51,25 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        /*mDisposableBag.add(conversationFacade.contactList
+        mDisposableBag.add(mConversationFacade.getConversationList()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { conversations ->
-                adapter?.update(conversations)
-            })*/
+            .subscribe({ conversations ->
+                val contacts = conversations.filter { it.mode == Conversation.Mode.Legacy || it.mode == Conversation.Mode.OneToOne }
+                adapter?.update(contacts)
+            }){ e -> Log.e(TAG, "No contact to create a group!", e) })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragContactPickerBinding.inflate(layoutInflater, container, false)
-        adapter = SmartListAdapter(null, object : SmartListListeners {
-            override fun onItemClick(item: Conversation) {
-                /*mAccountId = item.accountId
+        adapter = ContactPickerAdapter(null, object : ContactPickerListeners {
+            override fun onItemClick(item: ConversationItemViewModel) {
+                mAccountId = item.accountId
                 val checked = !item.isChecked
                 item.isChecked = checked
                 adapter!!.update(item)
+                val contact = item.getContact() ?: return
                 val remover = Runnable {
-                    mCurrentSelection.remove(item.contacts[0].contact)
+                    mCurrentSelection.remove(contact.contact)
                     if (mCurrentSelection.isEmpty()) binding!!.createGroupBtn.isEnabled = false
                     item.isChecked = false
                     adapter!!.update(item)
@@ -69,29 +77,31 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                     if (v != null) binding!!.selectedContacts.removeView(v)
                 }
                 if (checked) {
-                    if (mCurrentSelection.add(item.contacts[0].contact)) {
-                        val chip = Chip(requireContext(), null, R.style.Widget_MaterialComponents_Chip_Entry)
-                        chip.text = item.contactName
-                        chip.chipIcon = AvatarDrawable.Builder()
-                            .withViewModel(item)
-                            .withCircleCrop(true)
-                            .withCheck(false)
-                            .build(binding!!.root.context)
-                        chip.isCloseIconVisible = true
-                        chip.tag = item
-                        chip.setOnCloseIconClickListener { v: View? -> remover.run() }
+                    if (mCurrentSelection.add(contact.contact)) {
+                        val chip = Chip(requireContext(), null, R.style.Widget_MaterialComponents_Chip_Entry).apply {
+                            text = item.contactName
+                            chipIcon = AvatarDrawable.Builder()
+                                .withContact(contact)
+                                .withCircleCrop(true)
+                                .withCheck(false)
+                                .withPresence(false)
+                                .build(binding!!.root.context)
+                            isCloseIconVisible = true
+                            tag = item
+                            setOnCloseIconClickListener { remover.run() }
+                        }
                         binding!!.selectedContacts.addView(chip)
                     }
                     binding!!.createGroupBtn.isEnabled = true
                 } else {
                     remover.run()
-                }*/
+                }
             }
 
-            override fun onItemLongClick(item: Conversation) {}
-        }, conversationFacade, mDisposableBag)
+            override fun onItemLongClick(item: ConversationItemViewModel) {}
+        }, mDisposableBag)
         binding!!.createGroupBtn.setOnClickListener { v: View? ->
-            mDisposableBag.add(conversationFacade.createConversation(mAccountId!!, mCurrentSelection)
+            mDisposableBag.add(mConversationFacade.createConversation(mAccountId!!, mCurrentSelection)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { conversation: Conversation ->
                     (requireActivity() as HomeActivity).startConversation(conversation.accountId, conversation.uri)
