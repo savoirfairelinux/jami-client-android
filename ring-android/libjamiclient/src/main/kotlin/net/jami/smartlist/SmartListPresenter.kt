@@ -29,6 +29,7 @@ import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.ConversationFacade
+import net.jami.services.PreferencesService
 import net.jami.utils.Log
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -36,6 +37,7 @@ import javax.inject.Named
 
 class SmartListPresenter @Inject constructor(
     private val conversationFacade: ConversationFacade,
+    private val preferencesService: PreferencesService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
     private val querySubject = BehaviorSubject.createDefault("")
@@ -128,6 +130,14 @@ class SmartListPresenter @Inject constructor(
 
     fun clickQRSearch() {
         view?.goToQRFragment()
+    }
+
+    fun clickNewGroup() {
+        view?.startNewGroup()
+    }
+
+    fun isAddGroupEnabled(): Boolean {
+        return preferencesService.settings.enableAddGroup
     }
 
     companion object {
