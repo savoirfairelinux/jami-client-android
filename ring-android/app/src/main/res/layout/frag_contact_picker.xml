@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:minHeight="200dp"
         android:paddingTop="16dp"
+        android:paddingBottom="120dp"
         android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

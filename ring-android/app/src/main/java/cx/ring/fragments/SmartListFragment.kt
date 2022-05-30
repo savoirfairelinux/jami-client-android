@@ -81,7 +81,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 setOverflowMenuVisible(menu, true)
                 changeSeparatorHeight(false)
                 binding!!.qrCode.visibility = View.GONE
-                //binding.newGroup.setVisibility(View.GONE);
+                binding!!.newGroup!!.visibility = View.GONE
                 setTabletQRLayout(false)
                 return true
             }
@@ -92,7 +92,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 setOverflowMenuVisible(menu, false)
                 changeSeparatorHeight(true)
                 binding!!.qrCode.visibility = View.VISIBLE
-                //binding.newGroup.setVisibility(View.VISIBLE);
+                binding!!.newGroup!!.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
                 setTabletQRLayout(true)
                 return true
             }
@@ -186,6 +186,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         setHasOptionsMenu(true)
         return FragSmartlistBinding.inflate(inflater, container, false).apply {
             qrCode.setOnClickListener { presenter.clickQRSearch() }
+            newGroup!!.setOnClickListener{ presenter.clickNewGroup() }
             newconvFab.setOnClickListener { presenter.fabButtonClicked() }
             confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -209,11 +210,9 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding = null
     }
 
-    private fun startNewGroup() {
-        ContactPickerFragment.newInstance()
-            .show(parentFragmentManager, ContactPickerFragment.TAG)
-        binding!!.qrCode.visibility = View.GONE
-        //binding.newGroup.setVisibility(View.GONE);
+    override fun startNewGroup() {
+        ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
+        mSearchMenuItem!!.collapseActionView()
         setTabletQRLayout(false)
     }
 
@@ -368,8 +367,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun goToQRFragment() {
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
-        binding!!.qrCode.visibility = View.GONE
-        //binding.newGroup.setVisibility(View.GONE);
+        mSearchMenuItem!!.collapseActionView()
         setTabletQRLayout(false)
     }
 
