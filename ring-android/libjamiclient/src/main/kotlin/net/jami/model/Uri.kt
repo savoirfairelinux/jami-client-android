@@ -19,7 +19,6 @@
  */
 package net.jami.model
 
-import net.jami.utils.StringUtils
 import java.io.Serializable
 import java.lang.StringBuilder
 import java.util.regex.Pattern
@@ -68,16 +67,16 @@ class Uri : Serializable {
 
     override fun toString(): String {
         val builder = StringBuilder(64)
-        if (!StringUtils.isEmpty(scheme)) {
+        if (!scheme.isNullOrEmpty()) {
             builder.append(scheme)
         }
-        if (!StringUtils.isEmpty(username)) {
+        if (!username.isNullOrEmpty()) {
             builder.append(username).append('@')
         }
-        if (!StringUtils.isEmpty(mHost)) {
+        if (mHost.isNotEmpty()) {
             builder.append(mHost)
         }
-        if (!StringUtils.isEmpty(port)) {
+        if (!port.isNullOrEmpty()) {
             builder.append(':').append(port)
         }
         return builder.toString()
@@ -102,7 +101,7 @@ class Uri : Serializable {
     }
 
     val isEmpty: Boolean
-        get() = StringUtils.isEmpty(username) && StringUtils.isEmpty(host)
+        get() = username.isNullOrEmpty() && host.isEmpty()
     val host: String
         get() = mHost
 
