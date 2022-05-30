@@ -29,7 +29,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import java.lang.IllegalStateException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -93,7 +92,7 @@ class Account(
     }
 
     fun canSearch(): Boolean {
-        return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI))
+        return !getDetail(ConfigKey.MANAGER_URI).isNullOrEmpty()
     }
 
     fun isContact(conversation: Conversation): Boolean {
@@ -611,8 +610,8 @@ class Account(
         val contactId = contact[CONTACT_ID]!!
         val callContact = mContacts[contactId] ?: getContactFromCache(Uri.fromId(contactId))
         val addedStr = contact[CONTACT_ADDED]
-        if (!StringUtils.isEmpty(addedStr)) {
-            val added = contact[CONTACT_ADDED]!!.toLong()
+        if (!addedStr.isNullOrEmpty()) {
+            val added = addedStr.toLong()
             callContact.addedDate = Date(added * 1000)
         }
         if (contact.containsKey(CONTACT_BANNED) && contact[CONTACT_BANNED] == "true") {
@@ -807,7 +806,7 @@ class Account(
     }
 
     fun composingStatusChanged(conversationId: String, contactUri: Uri, status: ComposingStatus?) {
-        val isSwarm = !StringUtils.isEmpty(conversationId)
+        val isSwarm = conversationId.isNotEmpty()
         val conversation = if (isSwarm) getSwarm(conversationId) else getByUri(contactUri)
         if (conversation != null) {
             val contact = if (isSwarm) conversation.findContact(contactUri) else getContactFromCache(contactUri)
@@ -895,10 +894,7 @@ class Account(
      * Registered name, fallback to Alias
      */
     private val jamiAlias: String
-        get() {
-            val registeredName = registeredName
-            return if (StringUtils.isEmpty(registeredName)) alias!! else registeredName
-        }
+        get() = registeredName.ifEmpty { alias!! }
 
     fun getDataTransfer(id: String): DataTransfer? {
         return mDataTransfers[id]
