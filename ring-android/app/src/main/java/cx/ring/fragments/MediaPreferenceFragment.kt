@@ -124,7 +124,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
 
     private fun setPreferenceDetails(details: AccountConfig) {
         for (confKey in details.keys) {
-            val pref = findPreference<Preference>(confKey.key())
+            val pref = findPreference<Preference>(confKey.key)
             if (pref != null) {
                 if (pref is TwoStatePreference) {
                     pref.isChecked = details.getBool(confKey)
@@ -143,7 +143,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
     }
 
     private fun addPreferenceListener(key: ConfigKey, listener: Preference.OnPreferenceChangeListener) {
-        findPreference<Preference>(key.key())?.onPreferenceChangeListener = listener
+        findPreference<Preference>(key.key)?.onPreferenceChangeListener = listener
     }
 
     companion object {

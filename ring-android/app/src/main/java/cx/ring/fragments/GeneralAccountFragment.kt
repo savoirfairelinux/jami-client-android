@@ -164,18 +164,18 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
 
     private fun setPreferenceDetails(details: AccountConfig) {
         for (confKey in details.keys) {
-            val pref = findPreference<Preference>(confKey.key()) ?: continue
-            if (!confKey.isTwoState) {
-                val `val` = details[confKey]
-                (pref as EditTextPreference).text = `val`
+            val pref = findPreference<Preference>(confKey.key) ?: continue
+            if (!confKey.isBool) {
+                val value = details[confKey]
+                (pref as EditTextPreference).text = value
                 if (pref is PasswordPreference) {
                     val tmp = StringBuilder()
-                    for (i in 0 until `val`.length) {
+                    for (i in value.indices) {
                         tmp.append("*")
                     }
                     pref.setSummary(tmp.toString())
                 } else {
-                    pref.setSummary(`val`)
+                    pref.setSummary(value)
                 }
             } else {
                 (pref as TwoStatePreference).isChecked = details.getBool(confKey)
@@ -185,7 +185,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
 
     private fun setPreferenceListener(details: AccountConfig, listener: Preference.OnPreferenceChangeListener) {
         for (confKey in details.keys) {
-            val pref = findPreference<Preference>(confKey.key())
+            val pref = findPreference<Preference>(confKey.key)
             if (pref != null) {
                 pref.onPreferenceChangeListener = listener
             }

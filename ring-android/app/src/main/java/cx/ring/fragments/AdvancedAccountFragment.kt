@@ -76,7 +76,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
 
     override fun initView(config: AccountConfig, networkInterfaces: ArrayList<CharSequence>) {
         for (confKey in config.keys) {
-            val pref = findPreference<Preference>(confKey.key())
+            val pref = findPreference<Preference>(confKey.key)
             if (pref != null) {
                 pref.onPreferenceChangeListener = this
                 if (confKey == ConfigKey.LOCAL_INTERFACE) {
@@ -87,7 +87,7 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                     listPref.entryValues = display
                     listPref.summary = value
                     listPref.value = value
-                } else if (!confKey.isTwoState) {
+                } else if (!confKey.isBool) {
                     val value = config[confKey]
                     pref.summary = value
                     if (pref is EditTextPreference) {
@@ -98,22 +98,22 @@ class AdvancedAccountFragment : BasePreferenceFragment<AdvancedAccountPresenter>
                 }
             }
         }
-        val isJamiAccount = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_RING
-        val bootstrap = findPreference<Preference>(ConfigKey.ACCOUNT_HOSTNAME.key())
+        val isJamiAccount = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
+        val bootstrap = findPreference<Preference>(ConfigKey.ACCOUNT_HOSTNAME.key)
         bootstrap?.isVisible = isJamiAccount
-        val sipLocalPort = findPreference<Preference>(ConfigKey.LOCAL_PORT.key())
+        val sipLocalPort = findPreference<Preference>(ConfigKey.LOCAL_PORT.key)
         sipLocalPort?.isVisible = !isJamiAccount
-        val sipLocalInterface = findPreference<Preference>(ConfigKey.LOCAL_INTERFACE.key())
+        val sipLocalInterface = findPreference<Preference>(ConfigKey.LOCAL_INTERFACE.key)
         sipLocalInterface?.isVisible = !isJamiAccount
-        val registrationExpire = findPreference<Preference>(ConfigKey.REGISTRATION_EXPIRE.key())
+        val registrationExpire = findPreference<Preference>(ConfigKey.REGISTRATION_EXPIRE.key)
         registrationExpire?.isVisible = !isJamiAccount
-        val publishedSameAsLocal = findPreference<Preference>(ConfigKey.PUBLISHED_SAMEAS_LOCAL.key())
+        val publishedSameAsLocal = findPreference<Preference>(ConfigKey.PUBLISHED_SAMEAS_LOCAL.key)
         publishedSameAsLocal?.isVisible = !isJamiAccount
-        val publishedPort = findPreference<Preference>(ConfigKey.PUBLISHED_PORT.key())
+        val publishedPort = findPreference<Preference>(ConfigKey.PUBLISHED_PORT.key)
         publishedPort?.isVisible = !isJamiAccount
-        val publishedAddress = findPreference<Preference>(ConfigKey.PUBLISHED_ADDRESS.key())
+        val publishedAddress = findPreference<Preference>(ConfigKey.PUBLISHED_ADDRESS.key)
         publishedAddress?.isVisible = !isJamiAccount
-        val dhtproxy = findPreference<Preference>(ConfigKey.PROXY_ENABLED.key())
+        val dhtproxy = findPreference<Preference>(ConfigKey.PROXY_ENABLED.key)
         dhtproxy?.parent?.isVisible = isJamiAccount
     }
 

@@ -60,10 +60,10 @@ class AccountWizardPresenter @Inject constructor(
 
     private fun setProxyDetails(accountCreationModel: AccountCreationModel, details: MutableMap<String, String>) {
         if (accountCreationModel.isPush) {
-            details[ConfigKey.PROXY_ENABLED.key()] = AccountConfig.TRUE_STR
+            details[ConfigKey.PROXY_ENABLED.key] = AccountConfig.TRUE_STR
             val pushToken = mDeviceService.pushToken
             if (pushToken != null && pushToken.isNotEmpty())
-                details[ConfigKey.PROXY_PUSH_TOKEN.key()] = pushToken
+                details[ConfigKey.PROXY_PUSH_TOKEN.key] = pushToken
         }
     }
 
@@ -71,15 +71,15 @@ class AccountWizardPresenter @Inject constructor(
         val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 if (!accountCreationModel.managementServer.isNullOrBlank()) {
-                    accountDetails[ConfigKey.MANAGER_URI.key()] = accountCreationModel.managementServer!!
+                    accountDetails[ConfigKey.MANAGER_URI.key] = accountCreationModel.managementServer!!
                     if (accountCreationModel.username.isNotBlank()) {
-                        accountDetails[ConfigKey.MANAGER_USERNAME.key()] = accountCreationModel.username
+                        accountDetails[ConfigKey.MANAGER_USERNAME.key] = accountCreationModel.username
                     }
                 } else if (accountCreationModel.username.isNotBlank()) {
-                    accountDetails[ConfigKey.ACCOUNT_USERNAME.key()] = accountCreationModel.username
+                    accountDetails[ConfigKey.ACCOUNT_USERNAME.key] = accountCreationModel.username
                 }
                 if (accountCreationModel.password.isNotEmpty()) {
-                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
+                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
                 accountDetails
@@ -91,10 +91,10 @@ class AccountWizardPresenter @Inject constructor(
         val newAccount = initJamiAccountDetails(defaultAccountName)
             .map<Map<String, String>> { accountDetails ->
                 if (accountCreationModel.username.isNotBlank()) {
-                    accountDetails[ConfigKey.ACCOUNT_REGISTERED_NAME.key()] = accountCreationModel.username
+                    accountDetails[ConfigKey.ACCOUNT_REGISTERED_NAME.key] = accountCreationModel.username
                 }
                 if (accountCreationModel.password.isNotEmpty()) {
-                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
+                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key] = accountCreationModel.password
                 }
                 setProxyDetails(accountCreationModel, accountDetails)
                 accountDetails
@@ -111,12 +111,12 @@ class AccountWizardPresenter @Inject constructor(
                     setProxyDetails(accountCreationModel, accountDetails)
                 }
                 if (accountCreationModel.password.isNotEmpty()) {
-                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key()] = accountCreationModel.password
+                    accountDetails[ConfigKey.ARCHIVE_PASSWORD.key] = accountCreationModel.password
                 }
                 if (accountCreationModel.archive != null) {
-                    accountDetails[ConfigKey.ARCHIVE_PATH.key()] = accountCreationModel.archive!!.absolutePath
+                    accountDetails[ConfigKey.ARCHIVE_PATH.key] = accountCreationModel.archive!!.absolutePath
                 } else if (accountCreationModel.pin.isNotEmpty()) {
-                    accountDetails[ConfigKey.ARCHIVE_PIN.key()] = accountCreationModel.pin
+                    accountDetails[ConfigKey.ARCHIVE_PIN.key] = accountCreationModel.pin
                 }
                 accountDetails
             }
@@ -169,8 +169,8 @@ class AccountWizardPresenter @Inject constructor(
 
     private fun initJamiAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> {
         return initAccountDetails().map { accountDetails: HashMap<String, String> ->
-            accountDetails[ConfigKey.ACCOUNT_ALIAS.key()] = mAccountService.getNewAccountName(defaultAccountName)
-            accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key()] = AccountConfig.TRUE_STR
+            accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = mAccountService.getNewAccountName(defaultAccountName)
+            accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key] = AccountConfig.TRUE_STR
             accountDetails
         }
     }
@@ -179,8 +179,8 @@ class AccountWizardPresenter @Inject constructor(
         return if (mAccountType == null) Single.error(IllegalStateException())
         else mAccountService.getAccountTemplate(mAccountType!!)
             .map { accountDetails: HashMap<String, String> ->
-                accountDetails[ConfigKey.VIDEO_ENABLED.key()] = true.toString()
-                accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key()] = "sipinfo"
+                accountDetails[ConfigKey.VIDEO_ENABLED.key] = true.toString()
+                accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key] = "sipinfo"
                 accountDetails
             }
     }
