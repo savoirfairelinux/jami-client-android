@@ -58,13 +58,13 @@ class SecurityAccountFragment : BasePreferenceFragment<SecurityAccountPresenter>
         false
     }
     private val filePickerListener = Preference.OnPreferenceClickListener { preference: Preference ->
-        if (preference.key.contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
+        if (preference.key.contentEquals(ConfigKey.TLS_CA_LIST_FILE.key)) {
             performFileSearch(SELECT_CA_LIST_RC)
         }
-        if (preference.key.contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
+        if (preference.key.contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key)) {
             performFileSearch(SELECT_PRIVATE_KEY_RC)
         }
-        if (preference.key.contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
+        if (preference.key.contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key)) {
             performFileSearch(SELECT_CERTIFICATE_RC)
         }
         true
@@ -202,12 +202,12 @@ class SecurityAccountFragment : BasePreferenceFragment<SecurityAccountPresenter>
     }
 
     private fun checkForRSAKey(f: File) {
-        tlsCategory!!.findPreference<Preference>(ConfigKey.TLS_PRIVATE_KEY_FILE.key())!!.isEnabled = !findRSAKey(f)
+        tlsCategory!!.findPreference<Preference>(ConfigKey.TLS_PRIVATE_KEY_FILE.key)!!.isEnabled = !findRSAKey(f)
     }
 
     private fun setFeedbackIcon(current: Preference?, certFile: File) {
         val c = current!!.context
-        val isKey = ConfigKey.TLS_PRIVATE_KEY_FILE.key() == current.key
+        val isKey = ConfigKey.TLS_PRIVATE_KEY_FILE.key == current.key
         if (isKey && findRSAKey(certFile) || !isKey && checkCertificate(certFile)) {
             val icon = c.getDrawable(R.drawable.baseline_check_circle_24)!!
             icon.setTint(c.resources.getColor(R.color.green_500))
@@ -247,19 +247,19 @@ class SecurityAccountFragment : BasePreferenceFragment<SecurityAccountPresenter>
         val preference: Preference?
         when (requestCode) {
             SELECT_CA_LIST_RC -> {
-                preference = tlsCategory!!.findPreference(ConfigKey.TLS_CA_LIST_FILE.key())
+                preference = tlsCategory!!.findPreference(ConfigKey.TLS_CA_LIST_FILE.key)
                 preference!!.summary = myFile.name
                 key = ConfigKey.TLS_CA_LIST_FILE
                 setFeedbackIcon(preference, myFile)
             }
             SELECT_PRIVATE_KEY_RC -> {
-                preference = tlsCategory!!.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key())
+                preference = tlsCategory!!.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key)
                 preference!!.summary = myFile.name
                 key = ConfigKey.TLS_PRIVATE_KEY_FILE
                 setFeedbackIcon(preference, myFile)
             }
             SELECT_CERTIFICATE_RC -> {
-                preference = tlsCategory!!.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key())
+                preference = tlsCategory!!.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key)
                 preference!!.summary = myFile.name
                 key = ConfigKey.TLS_CERTIFICATE_FILE
                 setFeedbackIcon(preference, myFile)
