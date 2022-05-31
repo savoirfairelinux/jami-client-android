@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y  --no-install-recommends \
 	software-properties-common \
 	wget
 
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
-	apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
+#RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
+#	apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	asciidoc \
@@ -51,18 +51,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN echo "prefer-family = IPv6" >> /etc/wgetrc
 ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip && \
 	mkdir -p ${ANDROID_HOME} && \
 	unzip -q -d ${ANDROID_HOME} /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
 	chown -R root:root ${ANDROID_HOME}
 ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
 
-# Swig 4.0.1
-RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.1.tar.gz && \
+# Swig 4.0.2
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.2.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
-	cd /opt/swig-rel-4.0.1/ && ./autogen.sh && ./configure && make && make install && \
-	cd .. && rm -rf /opt/swig-rel-4.0.1 /tmp/swig.tar.gz
+	cd /opt/swig-rel-4.0.2/ && ./autogen.sh && ./configure && make && make install && \
+	cd .. && rm -rf /opt/swig-rel-4.0.2 /tmp/swig.tar.gz
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
@@ -70,9 +70,9 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${AND
 	'platforms;android-31'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
-	'ndk;23.0.7599858'
+	'ndk;23.1.7779620'
 ENV ANDROID_SDK=${ANDROID_HOME}
-ENV ANDROID_NDK=${ANDROID_HOME}/ndk/23.0.7599858
+ENV ANDROID_NDK=${ANDROID_HOME}/ndk/23.1.7779620
 
 # Fastlane
 RUN gem install fastlane -NV
