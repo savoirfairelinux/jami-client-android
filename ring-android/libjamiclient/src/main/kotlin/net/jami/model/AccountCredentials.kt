@@ -28,9 +28,9 @@ class AccountCredentials : Serializable {
     var realm: String? = null
 
     constructor(pref: Map<String, String>) {
-        username = pref[ConfigKey.ACCOUNT_USERNAME.key()]
-        password = pref[ConfigKey.ACCOUNT_PASSWORD.key()]
-        realm = pref[ConfigKey.ACCOUNT_REALM.key()]
+        username = pref[ConfigKey.ACCOUNT_USERNAME.key]
+        password = pref[ConfigKey.ACCOUNT_PASSWORD.key]
+        realm = pref[ConfigKey.ACCOUNT_REALM.key]
     }
 
     constructor(username: String?, password: String?, realm: String?) {
@@ -42,9 +42,9 @@ class AccountCredentials : Serializable {
     val details: HashMap<String, String>
         get() {
             val details = HashMap<String, String>()
-            details[ConfigKey.ACCOUNT_USERNAME.key()] = username ?: ""
-            details[ConfigKey.ACCOUNT_PASSWORD.key()] = password ?: ""
-            details[ConfigKey.ACCOUNT_REALM.key()] = realm ?: ""
+            details[ConfigKey.ACCOUNT_USERNAME.key] = username ?: ""
+            details[ConfigKey.ACCOUNT_PASSWORD.key] = password ?: ""
+            details[ConfigKey.ACCOUNT_REALM.key] = realm ?: ""
             return details
         }
 
@@ -53,6 +53,7 @@ class AccountCredentials : Serializable {
             ConfigKey.ACCOUNT_USERNAME -> username = value
             ConfigKey.ACCOUNT_PASSWORD -> password = value
             ConfigKey.ACCOUNT_REALM -> realm = value
+            else -> {}
         }
     }
 

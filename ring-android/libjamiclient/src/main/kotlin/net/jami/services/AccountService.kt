@@ -600,7 +600,7 @@ class AccountService(
             .firstOrError()
             .doOnSubscribe {
                 val details = getAccount(accountId)!!.details
-                details[ConfigKey.ARCHIVE_PASSWORD.key()] = password
+                details[ConfigKey.ARCHIVE_PASSWORD.key] = password
                 mExecutor.execute { JamiService.setAccountDetails(accountId, StringMap.toSwig(details)) }
             }
             .subscribeOn(Schedulers.from(mExecutor))
@@ -728,7 +728,7 @@ class AccountService(
         mExecutor.execute {
             Log.i(TAG, "renameDevice() thread running... $newName")
             val details = JamiService.getAccountDetails(accountId)
-            details[ConfigKey.ACCOUNT_DEVICE_NAME.key()] = newName
+            details[ConfigKey.ACCOUNT_DEVICE_NAME.key] = newName
             JamiService.setAccountDetails(accountId, details)
             account?.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName)
             account?.devices = JamiService.getKnownRingDevices(accountId).toNative()
@@ -1689,7 +1689,7 @@ class AccountService(
                         Log.d(TAG, (if (enabled) "Enabling" else "Disabling") + " proxy for account " + acc.accountId)
                         acc.isDhtProxyEnabled = enabled
                         val details = JamiService.getAccountDetails(acc.accountId)
-                        details[ConfigKey.PROXY_ENABLED.key()] = if (enabled) "true" else "false"
+                        details[ConfigKey.PROXY_ENABLED.key] = if (enabled) "true" else "false"
                         JamiService.setAccountDetails(acc.accountId, details)
                     }
                 }

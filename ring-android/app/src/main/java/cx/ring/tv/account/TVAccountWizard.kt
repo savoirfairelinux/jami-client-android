@@ -56,14 +56,14 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
             mAccountType = intent.action
         }
         if (mAccountType == null) {
-            mAccountType = AccountConfig.ACCOUNT_TYPE_RING
+            mAccountType = AccountConfig.ACCOUNT_TYPE_JAMI
         }
         if (savedInstanceState == null) {
             GuidedStepSupportFragment.addAsRoot(this, TVHomeAccountCreationFragment(), android.R.id.content)
         } else {
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount")
         }
-        presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_RING)
+        presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

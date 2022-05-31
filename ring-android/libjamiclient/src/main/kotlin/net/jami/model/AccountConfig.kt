@@ -22,18 +22,17 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class AccountConfig(details: Map<String, String>) {
-    private val mValues: MutableMap<ConfigKey, String> = EnumMap(ConfigKey::class.java)
-
-    operator fun get(key: ConfigKey): String {
-        return mValues[key] ?: ""
+    private val mValues = EnumMap<ConfigKey, String>(ConfigKey::class.java).apply {
+        for ((key, value) in details)
+            ConfigKey.fromString(key)?.let { this[it] = value }
     }
 
-    fun getBool(key: ConfigKey): Boolean {
-        return TRUE_STR == get(key)
-    }
+    operator fun get(key: ConfigKey): String = mValues[key] ?: ""
+
+    fun getBool(key: ConfigKey): Boolean = TRUE_STR == get(key)
 
     val all: HashMap<String, String>
-        get() = mValues.mapKeysTo(HashMap(mValues.size)) { e -> e.key.key() }
+        get() = mValues.mapKeysTo(HashMap(mValues.size)) { e -> e.key.key }
 
     fun put(key: ConfigKey, value: String?) {
         if (value == null)
@@ -52,10 +51,9 @@ class AccountConfig(details: Map<String, String>) {
         get() = mValues.entries
 
     companion object {
-        private val TAG = AccountConfig::class.java.simpleName
         const val TRUE_STR = "true"
         const val FALSE_STR = "false"
-        const val ACCOUNT_TYPE_RING = "RING"
+        const val ACCOUNT_TYPE_JAMI = "RING"
         const val ACCOUNT_TYPE_SIP = "SIP"
         const val STATE_REGISTERED = "REGISTERED"
         const val STATE_READY = "READY"
@@ -75,14 +73,5 @@ class AccountConfig(details: Map<String, String>) {
         const val STATE_NEED_MIGRATION = "ERROR_NEED_MIGRATION"
         const val STATE_SUCCESS = "SUCCESS"
         const val STATE_INVALID = "INVALID"
-    }
-
-    init {
-        for ((key, value) in details) {
-            val confKey = ConfigKey.fromString(key)
-            if (confKey != null) {
-                mValues[confKey] = value
-            }
-        }
     }
 }
