@@ -52,7 +52,7 @@ class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAcc
 
     fun linkClicked() {
         if (isFormValid) {
-            view?.createAccount(mAccountCreationModel!!)
+            view?.createAccount()
         }
     }
 

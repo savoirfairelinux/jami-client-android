@@ -18,6 +18,7 @@ dependencies {
     implementation( "javax.inject:javax.inject:1")
     // ORM
     implementation ("com.j256.ormlite:ormlite-core:5.6")
+
     // Required -- JUnit 4 framework
     testImplementation ("junit:junit:4.13.2")
     // RxJava
