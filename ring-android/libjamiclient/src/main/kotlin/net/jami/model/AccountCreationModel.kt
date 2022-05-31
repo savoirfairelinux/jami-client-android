@@ -25,9 +25,8 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.io.File
-import java.io.Serializable
 
-abstract class AccountCreationModel : Serializable {
+abstract class AccountCreationModel {
     var managementServer: String? = null
     var username = ""
     var password = ""
@@ -35,24 +34,20 @@ abstract class AccountCreationModel : Serializable {
     var isLink = false
     var isPush = true
 
-    @Transient
     var newAccount: Account? = null
         set(account) {
             field = account
             profile.onNext(this)
         }
 
-    @Transient
     open var photo: Any? = null
         set(photo) {
             field = photo
             profile.onNext(this)
         }
 
-    @Transient
     var accountObservable: Observable<Account>? = null
 
-    @Transient
     protected val profile: Subject<AccountCreationModel> = BehaviorSubject.createDefault(this)
 
     var fullName: String = ""

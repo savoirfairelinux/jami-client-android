@@ -18,10 +18,12 @@
 package cx.ring.tv.account
 
 import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
 import cx.ring.account.AccountCreationModelImpl
+import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.HomeAccountCreationPresenter
 import net.jami.account.HomeAccountCreationView
@@ -29,16 +31,20 @@ import net.jami.account.HomeAccountCreationView
 @AndroidEntryPoint
 class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreationPresenter, HomeAccountCreationView>(),
     HomeAccountCreationView {
+    private val model: AccountCreationViewModel by activityViewModels()
+
     override fun goToAccountCreation() {
-        add(parentFragmentManager, TVJamiAccountCreationFragment.newInstance(AccountCreationModelImpl().apply {
+        model.model = AccountCreationModelImpl().apply {
             isLink = false
-        }))
+        }
+        add(parentFragmentManager, TVJamiAccountCreationFragment())
     }
 
     override fun goToAccountLink() {
-        add(parentFragmentManager, TVJamiLinkAccountFragment.newInstance(AccountCreationModelImpl().apply {
+        model.model = AccountCreationModelImpl().apply {
             isLink = true
-        }))
+        }
+        add(parentFragmentManager, TVJamiLinkAccountFragment())
     }
 
     override fun goToAccountConnect() {
@@ -49,9 +55,7 @@ class TVHomeAccountCreationFragment : JamiGuidedStepFragment<HomeAccountCreation
         //TODO
     }
 
-    override fun onProvideTheme(): Int {
-        return R.style.Theme_Ring_Leanback_GuidedStep_First
-    }
+    override fun onProvideTheme(): Int = R.style.Theme_Ring_Leanback_GuidedStep_First
 
     override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
         val title = getString(R.string.account_creation_home)

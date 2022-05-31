@@ -26,6 +26,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,7 +45,6 @@ import net.jami.account.AccountWizardPresenter
 import net.jami.account.AccountWizardView
 import net.jami.model.Account
 import net.jami.model.AccountConfig
-import net.jami.model.AccountCreationModel
 import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
@@ -56,6 +56,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon()
+        val model: AccountCreationViewModel by viewModels()
         setContentView(R.layout.activity_wizard)
         var accountToMigrate: String? = null
         val intent = intent
@@ -97,9 +98,10 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         super.onDestroy()
     }
 
-    override fun saveProfile(account: Account, accountCreationModel: AccountCreationModel): Single<VCard> {
+    override fun saveProfile(account: Account): Single<VCard> {
         val filedir = filesDir
-        return accountCreationModel.toVCard()
+        val model: AccountCreationViewModel by viewModels()
+        return model.model.toVCard()
             .flatMap { vcard: VCard ->
                 account.loadedProfile = Single.fromCallable { VCardServiceImpl.readData(vcard) }.cache()
                 VCardUtils.saveLocalProfileToDisk(vcard, account.accountId, filedir)
@@ -107,13 +109,15 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             .subscribeOn(Schedulers.io())
     }
 
-    fun createAccount(accountCreationModel: AccountCreationModel) {
-        if (!TextUtils.isEmpty(accountCreationModel.managementServer)) {
-            presenter.initJamiAccountConnect(accountCreationModel, getText(R.string.ring_account_default_name).toString())
-        } else if (accountCreationModel.isLink) {
-            presenter.initJamiAccountLink(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+    fun createAccount() {
+        val viewModel: AccountCreationViewModel by viewModels()
+        val model = viewModel.model
+        if (!TextUtils.isEmpty(model.managementServer)) {
+            presenter.initJamiAccountConnect(model, getText(R.string.ring_account_default_name).toString())
+        } else if (model.isLink) {
+            presenter.initJamiAccountLink(model, getText(R.string.ring_account_default_name).toString())
         } else {
-            presenter.initJamiAccountCreation(accountCreationModel, getText(R.string.ring_account_default_name).toString())
+            presenter.initJamiAccountCreation(model, getText(R.string.ring_account_default_name).toString())
         }
     }
 
@@ -132,14 +136,14 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             .commit()
     }
 
-    override fun goToProfileCreation(accountCreationModel: AccountCreationModel) {
+    override fun goToProfileCreation() {
         val fragments = supportFragmentManager.fragments
         if (fragments.size > 0) {
             val fragment = fragments[0]
             if (fragment is JamiLinkAccountFragment) {
-                fragment.scrollPagerFragment(accountCreationModel)
+                fragment.scrollPagerFragment()
             } else if (fragment is JamiAccountConnectFragment) {
-                profileCreated(accountCreationModel, false)
+                profileCreated(false)
             }
         }
     }
@@ -229,8 +233,8 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         presenter.successDialogClosed()
     }
 
-    fun profileCreated(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
-        presenter.profileCreated(accountCreationModel, saveProfile)
+    fun profileCreated(saveProfile: Boolean) {
+        presenter.profileCreated(saveProfile)
     }
 
     companion object {

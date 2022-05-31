@@ -31,10 +31,10 @@ interface AccountWizardView {
     fun displayCreationError()
     fun blockOrientation()
     fun finish(affinity: Boolean)
-    fun saveProfile(account: Account, accountCreationModel: AccountCreationModel): Single<VCard>
+    fun saveProfile(account: Account): Single<VCard>
     fun displayGenericError()
     fun displayNetworkError()
     fun displayCannotBeFoundError()
     fun displaySuccessDialog()
-    fun goToProfileCreation(accountCreationModel: AccountCreationModel)
+    fun goToProfileCreation()
 }

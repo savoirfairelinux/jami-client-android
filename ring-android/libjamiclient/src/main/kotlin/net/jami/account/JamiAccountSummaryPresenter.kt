@@ -122,7 +122,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
         mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
             .doOnSuccess { vcard: VCard ->
                 val previousName = vcard.formattedName?.value
-                if ( (StringUtils.isEmpty(previousName) && StringUtils.isEmpty(username)) || previousName == username)
+                if ((previousName.isNullOrEmpty() && username.isNullOrEmpty()) || previousName == username)
                     throw IllegalArgumentException("Name didn't change")
                 vcard.setFormattedName(username)
                 vcard.removeProperties(RawProperty::class.java)
@@ -143,7 +143,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
             photo
         ) { vcard: VCard, pic: Photo ->
             vcard.uid = Uid(ringId)
-            if (!StringUtils.isEmpty(username)) {
+            if (!username.isNullOrEmpty()) {
                 vcard.setFormattedName(username)
             }
             vcard.removeProperties(Photo::class.java)

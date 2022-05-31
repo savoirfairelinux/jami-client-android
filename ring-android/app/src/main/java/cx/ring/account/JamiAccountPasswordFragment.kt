@@ -32,6 +32,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import cx.ring.R
 import cx.ring.databinding.FragAccJamiPasswordBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -44,20 +45,14 @@ import net.jami.model.AccountCreationModel
 @AndroidEntryPoint
 class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(),
     JamiAccountCreationView {
-    private var model: AccountCreationModel? = null
+    private val model: AccountCreationViewModel by activityViewModels()
     private var binding: FragAccJamiPasswordBinding? = null
     private var mIsChecked = false
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (model != null) outState.putSerializable(KEY_MODEL, model)
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        if (savedInstanceState != null && model == null) {
-            model = savedInstanceState.getSerializable(KEY_MODEL) as AccountCreationModelImpl?
-        }
-        return FragAccJamiPasswordBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccJamiPasswordBinding.inflate(inflater, container, false).apply {
             createAccount.setOnClickListener { presenter.createAccount() }
-            ringPasswordSwitch.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            ringPasswordSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 mIsChecked = isChecked
                 if (isChecked) {
                     passwordTxtBox.visibility = View.VISIBLE
@@ -96,8 +91,8 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
             }
             ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
-                    val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
+                    val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+                    inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
                     presenter.createAccount()
                     return@setOnEditorActionListener true
                 }
@@ -105,7 +100,6 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
             }
             binding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -114,7 +108,7 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(model)
+        presenter.init(model.model)
     }
 
     override fun updateUsernameAvailability(status: UsernameAvailabilityStatus) {}
@@ -131,30 +125,16 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
         binding!!.createAccount.isEnabled = if (mIsChecked) enabled else true
     }
 
-    override fun goToAccountCreation(accountCreationModel: AccountCreationModel) {
+    override fun goToAccountCreation() {
         val wizardActivity = activity as AccountWizardActivity? ?: return
-        wizardActivity.createAccount(accountCreationModel)
+        wizardActivity.createAccount()
         val parent = parentFragment as JamiAccountCreationFragment?
-        parent?.scrollPagerFragment(accountCreationModel)
-        val imm = wizardActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        parent?.scrollPagerFragment()
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(binding!!.password.windowToken, 0)
     }
 
     override fun cancel() {
-        val wizardActivity: Activity? = activity
-        wizardActivity?.onBackPressed()
-    }
-
-    fun setUsername(username: String) {
-        model!!.username = username
-    }
-
-    companion object {
-        private const val KEY_MODEL = "model"
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): JamiAccountPasswordFragment {
-            val fragment = JamiAccountPasswordFragment()
-            fragment.model = ringAccountViewModel
-            return fragment
-        }
+        activity?.onBackPressed()
     }
 }

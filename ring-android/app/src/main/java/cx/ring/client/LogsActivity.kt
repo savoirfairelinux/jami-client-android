@@ -92,7 +92,7 @@ class LogsActivity : AppCompatActivity() {
             if (mHardwareService.isLogging)
                 return mHardwareService.startLogs().firstElement()
             val log = binding.logView.text
-            return if (StringUtils.isEmpty(log)) Maybe.empty()
+            return if (log.isNullOrEmpty()) Maybe.empty()
             else Maybe.just(log.toString())
         }
     private val logFile: Maybe<File>

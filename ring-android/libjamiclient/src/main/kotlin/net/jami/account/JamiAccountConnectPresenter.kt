@@ -21,17 +21,16 @@ package net.jami.account
 
 import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
-import net.jami.utils.StringUtils
 import javax.inject.Inject
 
 class JamiAccountConnectPresenter @Inject constructor() : RootPresenter<JamiConnectAccountView>() {
-    private var mAccountCreationModel: AccountCreationModel? = null
-    fun init(accountCreationModel: AccountCreationModel?) {
-        mAccountCreationModel = accountCreationModel
-        if (mAccountCreationModel == null) {
+    private var accountCreationModel: AccountCreationModel? = null
+    fun init(model: AccountCreationModel?) {
+        if (model == null) {
             view?.cancel()
             return
         }
+        accountCreationModel = model
         /*boolean hasArchive = mAccountCreationModel.getArchive() != null;
         JamiConnectAccountView view = getView();
         if (view != null) {
@@ -41,23 +40,23 @@ class JamiAccountConnectPresenter @Inject constructor() : RootPresenter<JamiConn
     }
 
     fun passwordChanged(password: String) {
-        mAccountCreationModel!!.password = password
+        accountCreationModel?.password = password
         showConnectButton()
     }
 
     fun usernameChanged(username: String) {
-        mAccountCreationModel!!.username = username
+        accountCreationModel!!.username = username
         showConnectButton()
     }
 
     fun serverChanged(server: String?) {
-        mAccountCreationModel!!.managementServer = server
+        accountCreationModel!!.managementServer = server
         showConnectButton()
     }
 
     fun connectClicked() {
         if (isFormValid) {
-            view?.createAccount(mAccountCreationModel!!)
+            view?.createAccount()
         }
     }
 
@@ -66,7 +65,7 @@ class JamiAccountConnectPresenter @Inject constructor() : RootPresenter<JamiConn
     }
 
     private val isFormValid: Boolean
-        get() = !StringUtils.isEmpty(mAccountCreationModel!!.password)
-                && !StringUtils.isEmpty(mAccountCreationModel!!.username)
-                && !StringUtils.isEmpty(mAccountCreationModel!!.managementServer)
+        get() = accountCreationModel!!.password.isNotEmpty()
+                && accountCreationModel!!.username.isNotBlank()
+                && !accountCreationModel!!.managementServer.isNullOrEmpty()
 }
