@@ -34,7 +34,6 @@ import net.jami.services.DeviceRuntimeService
 import net.jami.services.HardwareService
 import net.jami.services.VCardService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import net.jami.utils.VCardUtils
 import javax.inject.Inject
 import javax.inject.Named
@@ -109,7 +108,7 @@ class HomeNavigationPresenter @Inject constructor(
             photo
         ) { vcard: VCard, pic: Photo ->
             vcard.uid = Uid(ringId)
-            if (!StringUtils.isEmpty(username)) {
+            if (!username.isNullOrEmpty()) {
                 vcard.setFormattedName(username)
             }
             vcard.removeProperties(Photo::class.java)

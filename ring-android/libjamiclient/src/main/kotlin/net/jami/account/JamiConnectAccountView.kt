@@ -19,10 +19,8 @@
  */
 package net.jami.account
 
-import net.jami.model.AccountCreationModel
-
 interface JamiConnectAccountView {
     fun enableConnectButton(enable: Boolean)
-    fun createAccount(accountCreationModel: AccountCreationModel)
+    fun createAccount()
     fun cancel()
 }

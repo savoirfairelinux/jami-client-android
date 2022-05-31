@@ -26,38 +26,38 @@ import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.AccountService.RegisteredName
-import net.jami.utils.StringUtils.isEmpty
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
 class JamiAccountCreationPresenter @Inject constructor(
-    var mAccountService: AccountService,
-    @param:Named("UiScheduler") var mUiScheduler: Scheduler
+    private val accountService: AccountService,
+    @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ): RootPresenter<JamiAccountCreationView>() {
     private val contactQuery = PublishSubject.create<String>()
 
-    private var mAccountCreationModel: AccountCreationModel? = null
+    private var accountCreationModel: AccountCreationModel? = null
     private var isUsernameCorrect = false
     private var isPasswordCorrect = true
     private var isConfirmCorrect = true
     private var showLoadingAnimation = true
-    private var mPasswordConfirm: CharSequence = ""
+    private var passwordConfirm: CharSequence = ""
 
     override fun bindView(view: JamiAccountCreationView) {
         super.bindView(view)
         mCompositeDisposable.add(contactQuery
             .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
-            .switchMapSingle { q: String -> mAccountService.findRegistrationByName("", "", q) }
-            .observeOn(mUiScheduler)
+            .switchMapSingle { q: String -> accountService.findRegistrationByName("", "", q) }
+            .observeOn(uiScheduler)
             .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) })
     }
 
-    fun init(accountCreationModel: AccountCreationModel?) {
-        if (accountCreationModel == null) {
+    fun init(model: AccountCreationModel?) {
+        if (model == null) {
             view?.cancel()
+            return
         }
-        mAccountCreationModel = accountCreationModel
+        accountCreationModel = model
     }
 
     /**
@@ -66,17 +66,17 @@ class JamiAccountCreationPresenter @Inject constructor(
      * animation if it has not been started before
      */
     fun userNameChanged(userName: String) {
-        mAccountCreationModel?.username = userName
-        contactQuery.onNext(userName)
+        accountCreationModel?.username = userName
         isUsernameCorrect = false
         if (showLoadingAnimation) {
             view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING)
             showLoadingAnimation = false
         }
+        contactQuery.onNext(userName)
     }
 
     fun registerUsernameChanged(isChecked: Boolean) {
-        mAccountCreationModel?.let  { model ->
+        accountCreationModel?.let  { model ->
             if (!isChecked) {
                 model.username = ""
             }
@@ -85,7 +85,7 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun passwordUnset() {
-        if (mAccountCreationModel != null) mAccountCreationModel!!.password = ""
+        accountCreationModel?.password = ""
         isPasswordCorrect = true
         isConfirmCorrect = true
         view?.showInvalidPasswordError(false)
@@ -93,20 +93,20 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun passwordChanged(password: String, repeat: CharSequence) {
-        mPasswordConfirm = repeat
+        passwordConfirm = repeat
         passwordChanged(password)
     }
 
     fun passwordChanged(password: String) {
-        mAccountCreationModel?.password = password
+        accountCreationModel?.password = password
         if (password.isNotEmpty() && password.length < PASSWORD_MIN_LENGTH) {
             view?.showInvalidPasswordError(true)
             isPasswordCorrect = false
         } else {
             view?.showInvalidPasswordError(false)
             isPasswordCorrect = true
-            isConfirmCorrect = if (!password.contentEquals(mPasswordConfirm)) {
-                if (mPasswordConfirm.isNotEmpty())
+            isConfirmCorrect = if (!password.contentEquals(passwordConfirm)) {
+                if (passwordConfirm.isNotEmpty())
                     view?.showNonMatchingPasswordError(true)
                 false
             } else {
@@ -118,27 +118,27 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun passwordConfirmChanged(passwordConfirm: String) {
-        isConfirmCorrect = if (passwordConfirm != mAccountCreationModel!!.password) {
+        isConfirmCorrect = if (passwordConfirm != accountCreationModel?.password) {
             view?.showNonMatchingPasswordError(true)
             false
         } else {
             view?.showNonMatchingPasswordError(false)
             true
         }
-        mPasswordConfirm = passwordConfirm
+        this.passwordConfirm = passwordConfirm
         view?.enableNextButton(isPasswordCorrect && isConfirmCorrect)
     }
 
     fun createAccount() {
         if (isInputValid) {
-            view?.goToAccountCreation(mAccountCreationModel!!)
+            view?.goToAccountCreation()
         }
     }
 
     private val isInputValid: Boolean
         get() {
             val passwordOk = isPasswordCorrect && isConfirmCorrect
-            val usernameOk = mAccountCreationModel?.username != null || isUsernameCorrect
+            val usernameOk = accountCreationModel?.username != null || isUsernameCorrect
             return passwordOk && usernameOk
         }
 
@@ -173,7 +173,7 @@ class JamiAccountCreationPresenter @Inject constructor(
                 2 -> {
                     // available
                     view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE)
-                    mAccountCreationModel!!.username = name
+                    accountCreationModel?.username = name
                     isUsernameCorrect = true
                 }
                 else -> {
@@ -187,7 +187,7 @@ class JamiAccountCreationPresenter @Inject constructor(
     }
 
     fun setPush(push: Boolean) {
-        mAccountCreationModel?.isPush = push
+        accountCreationModel?.isPush = push
     }
 
     companion object {

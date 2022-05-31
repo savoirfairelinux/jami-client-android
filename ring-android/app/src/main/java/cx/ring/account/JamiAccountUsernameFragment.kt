@@ -31,6 +31,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
 import cx.ring.R
 import cx.ring.databinding.FragAccJamiUsernameBinding
@@ -40,23 +41,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
 import net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus
-import net.jami.model.AccountCreationModel
 
 @AndroidEntryPoint
 class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(),
     JamiAccountCreationView {
-    private var model: AccountCreationModel? = null
+    private val model: AccountCreationViewModel by activityViewModels()
     private var binding: FragAccJamiUsernameBinding? = null
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (model != null) outState.putSerializable(KEY_MODEL, model)
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        retainInstance = true
-        if (savedInstanceState != null && model == null) {
-            model = savedInstanceState.getSerializable(KEY_MODEL) as AccountCreationModelImpl?
-        }
-        return FragAccJamiUsernameBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccJamiUsernameBinding.inflate(inflater, container, false).apply {
             ringUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
             createAccount.setOnClickListener { presenter.createAccount() }
             skip.setOnClickListener {
@@ -82,7 +75,6 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
             })
             binding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -94,7 +86,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
         binding!!.ringUsername.requestFocus()
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding!!.ringUsername, InputMethodManager.SHOW_IMPLICIT)
-        presenter.init(model)
+        presenter.init(model.model)
         presenter.setPush(true)
     }
 
@@ -146,26 +138,16 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
         binding!!.createAccount.isEnabled = enabled
     }
 
-    override fun goToAccountCreation(accountCreationModel: AccountCreationModel) {
+    override fun goToAccountCreation() {
         val parent = parentFragment as JamiAccountCreationFragment?
         if (parent != null) {
-            parent.scrollPagerFragment(accountCreationModel)
+            parent.scrollPagerFragment()
             val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding!!.ringUsername.windowToken, 0)
         }
     }
 
     override fun cancel() {
-        val wizardActivity: Activity? = activity
-        wizardActivity?.onBackPressed()
-    }
-
-    companion object {
-        private const val KEY_MODEL = "model"
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): JamiAccountUsernameFragment {
-            val fragment = JamiAccountUsernameFragment()
-            fragment.model = ringAccountViewModel
-            return fragment
-        }
+        activity?.onBackPressed()
     }
 }

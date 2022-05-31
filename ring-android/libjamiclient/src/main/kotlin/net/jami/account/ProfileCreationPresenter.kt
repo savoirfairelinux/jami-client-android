@@ -49,7 +49,7 @@ class ProfileCreationPresenter @Inject constructor(
         mCompositeDisposable.add(accountCreationModel
             .profileUpdates
             .observeOn(mUiScheduler)
-            .subscribe { model -> view?.setProfile(model) })
+            .subscribe { view?.setProfile() })
     }
 
     fun fullNameUpdated(fullName: String) {
@@ -88,11 +88,11 @@ class ProfileCreationPresenter @Inject constructor(
     }
 
     fun nextClick() {
-        view?.goToNext(mAccountCreationModel!!, true)
+        view?.goToNext( true)
     }
 
     fun skipClick() {
-        view?.goToNext(mAccountCreationModel!!, false)
+        view?.goToNext(false)
     }
 
     companion object {

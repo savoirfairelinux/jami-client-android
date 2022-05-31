@@ -19,8 +19,6 @@
  */
 package net.jami.account
 
-import net.jami.model.AccountCreationModel
-
 interface JamiAccountCreationView {
     enum class UsernameAvailabilityStatus {
         ERROR_USERNAME_TAKEN, ERROR_USERNAME_INVALID, ERROR, LOADING, AVAILABLE, RESET
@@ -30,6 +28,6 @@ interface JamiAccountCreationView {
     fun showInvalidPasswordError(display: Boolean)
     fun showNonMatchingPasswordError(display: Boolean)
     fun enableNextButton(enabled: Boolean)
-    fun goToAccountCreation(accountCreationModel: AccountCreationModel)
+    fun goToAccountCreation()
     fun cancel()
 }
