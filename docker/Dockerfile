@@ -66,8 +66,8 @@ RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.2.tar.
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
-RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${ANDROID_HOME} 'build-tools;31.0.0' \
-	'platforms;android-31'\
+RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${ANDROID_HOME} 'build-tools;32.0.0' \
+	'platforms;android-32'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
 	'ndk;25.0.8528842'
