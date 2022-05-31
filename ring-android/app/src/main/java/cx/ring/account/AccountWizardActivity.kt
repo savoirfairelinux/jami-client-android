@@ -68,7 +68,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
             }
         }
         if (mAccountType == null) {
-            mAccountType = AccountConfig.ACCOUNT_TYPE_RING
+            mAccountType = AccountConfig.ACCOUNT_TYPE_JAMI
         }
         if (savedInstanceState == null) {
             if (accountToMigrate != null) {
@@ -80,7 +80,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                     .replace(R.id.wizard_container, fragment)
                     .commit()
             } else {
-                presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_RING)
+                presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
             }
         }
     }
