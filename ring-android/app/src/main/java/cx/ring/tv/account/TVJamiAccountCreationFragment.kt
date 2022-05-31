@@ -25,20 +25,20 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
 import cx.ring.R
-import cx.ring.account.AccountCreationModelImpl
+import cx.ring.account.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.JamiAccountCreationPresenter
 import net.jami.account.JamiAccountCreationView
 import net.jami.account.JamiAccountCreationView.UsernameAvailabilityStatus
-import net.jami.model.AccountCreationModel
 import net.jami.utils.StringUtils
 
 @AndroidEntryPoint
 class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreationPresenter, JamiAccountCreationView>(), JamiAccountCreationView {
-    private var model: AccountCreationModelImpl? = null
+    private val model: AccountCreationViewModel by activityViewModels()
     private var mIsPasswordCorrect = true
     private var mPassword: String? = null
     private var mPasswordConfirm: String? = null
@@ -60,11 +60,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (model == null) {
-            Log.e(TAG, "Not able to get model")
-            return
-        }
-        presenter.init(model)
+        presenter.init(model.model)
         presenter.registerUsernameChanged(false)
     }
 
@@ -120,7 +116,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
             val text = view.findViewById<EditText>(R.id.guidedactions_item_title)
             text.removeTextChangedListener(mUsernameWatcher)
         }
-        action.title = if (username.isEmpty()) getString(R.string.register_username) else username
+        action.title = username.ifEmpty { getString(R.string.register_username) }
         notifyActionChanged(findActionPositionById(PASSWORD))
     }
 
@@ -133,7 +129,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
 
     private fun confirmPasswordChanged(action: GuidedAction) {
         val passwordConfirm = action.editDescription.toString().apply { mPasswordConfirm = this }
-        action.description = if (passwordConfirm.isNotEmpty()) StringUtils.toPassword(passwordConfirm) else getString(R.string.account_enter_password)
+        action.description = if (passwordConfirm.isNotEmpty()) StringUtils.toPassword(passwordConfirm) else getText(R.string.account_enter_password)
         notifyActionChanged(findActionPositionById(PASSWORD_CONFIRMATION))
         presenter.passwordConfirmChanged(passwordConfirm)
     }
@@ -211,11 +207,10 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun enableNextButton(enabled: Boolean) {
-        var enabled = enabled
-        if (StringUtils.isEmpty(mPassword) && StringUtils.isEmpty(mPasswordConfirm)) {
+        if (mPassword.isNullOrEmpty() && mPasswordConfirm.isNullOrEmpty()) {
             mIsPasswordCorrect = true
         }
-        enabled = mIsPasswordCorrect && enabled
+        val enabled = mIsPasswordCorrect && enabled
         Log.d(TAG, "enableNextButton: $enabled")
         val actionContinue = findActionById(CONTINUE)
         if (enabled) actionContinue.icon = null
@@ -223,16 +218,12 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         notifyActionChanged(findActionPositionById(CONTINUE))
     }
 
-    override fun goToAccountCreation(accountCreationModel: AccountCreationModel) {
-        val wizardActivity: Activity? = activity
-        if (wizardActivity is TVAccountWizard) {
-            wizardActivity.createAccount(accountCreationModel)
-        }
+    override fun goToAccountCreation() {
+        (activity as TVAccountWizard?)?.createAccount()
     }
 
     override fun cancel() {
-        val wizardActivity: Activity? = activity
-        wizardActivity?.onBackPressed()
+        activity?.onBackPressed()
     }
 
     override fun onGuidedActionClicked(action: GuidedAction) {
@@ -258,9 +249,5 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         private const val PASSWORD_CONFIRMATION = 2L
         private const val CHECK = 3L
         private const val CONTINUE = 4L
-
-        fun newInstance(accountViewModel: AccountCreationModelImpl): TVJamiAccountCreationFragment {
-            return TVJamiAccountCreationFragment().apply { model = accountViewModel }
-        }
     }
 }

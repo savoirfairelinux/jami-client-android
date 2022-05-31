@@ -28,9 +28,8 @@ import cx.ring.utils.BitmapUtils
 import ezvcard.property.Photo
 import ezvcard.property.RawProperty
 import io.reactivex.rxjava3.core.Single
-import java.io.Serializable
 
-class AccountCreationModelImpl : AccountCreationModel(), Serializable {
+class AccountCreationModelImpl : AccountCreationModel() {
     override fun toVCard(): Single<VCard> {
         return Single.fromCallable {
             val vcard = VCard()

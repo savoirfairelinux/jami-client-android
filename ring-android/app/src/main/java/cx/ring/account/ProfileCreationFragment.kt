@@ -36,6 +36,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import cx.ring.R
 import cx.ring.databinding.FragAccProfileCreateBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -48,24 +49,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import net.jami.account.ProfileCreationPresenter
 import net.jami.account.ProfileCreationView
-import net.jami.model.AccountCreationModel
 import java.io.IOException
 
 @AndroidEntryPoint
 class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, ProfileCreationView>(), ProfileCreationView {
-    var model: AccountCreationModel? = null
-        private set
+    private val model: AccountCreationViewModel by activityViewModels()
     private var tmpProfilePhotoUri: Uri? = null
     private var binding: FragAccProfileCreateBinding? = null
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return FragAccProfileCreateBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccProfileCreateBinding.inflate(inflater, container, false).apply {
+            gallery.setOnClickListener { presenter.galleryClick() }
+            camera.setOnClickListener { presenter.cameraClick() }
+            nextCreateAccount.setOnClickListener { presenter.nextClick() }
+            skipCreateAccount.setOnClickListener { presenter.skipClick() }
+            username.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    presenter.fullNameUpdated(s.toString())
+                }
+            })
             binding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -74,31 +79,13 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        retainInstance = true
-        if (model == null) {
-            activity?.finish()
-            return
-        }
         if (binding!!.profilePhoto.drawable == null) {
-            binding!!.profilePhoto.setImageDrawable(
-                AvatarDrawable.Builder()
-                    .withNameData(model!!.fullName, model!!.username)
-                    .withCircleCrop(true)
-                    .build(view.context)
-            )
+            binding!!.profilePhoto.setImageDrawable(AvatarDrawable.Builder()
+                .withNameData(model.model.fullName, model.model.username)
+                .withCircleCrop(true)
+                .build(view.context))
         }
-        presenter.initPresenter(model!!)
-        binding!!.gallery.setOnClickListener { presenter.galleryClick() }
-        binding!!.camera.setOnClickListener { presenter.cameraClick() }
-        binding!!.nextCreateAccount.setOnClickListener { presenter.nextClick() }
-        binding!!.skipCreateAccount.setOnClickListener { presenter.skipClick() }
-        binding!!.username.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                presenter.fullNameUpdated(s.toString())
-            }
-        })
+        presenter.initPresenter(model.model)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -180,21 +167,17 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_PERMISSION_CAMERA)
     }
 
-    override fun goToNext(accountCreationModel: AccountCreationModel, saveProfile: Boolean) {
-        val wizardActivity: Activity? = activity
-        if (wizardActivity is AccountWizardActivity) {
-            wizardActivity.profileCreated(accountCreationModel, saveProfile)
-        }
+    override fun goToNext(saveProfile: Boolean) {
+        (activity as AccountWizardActivity?)?.profileCreated(saveProfile)
     }
 
-    override fun setProfile(accountCreationModel: AccountCreationModel) {
-        val model = accountCreationModel as AccountCreationModelImpl
-        val newAccount = model.newAccount
+    override fun setProfile() {
+        val m = model.model
         binding!!.profilePhoto.setImageDrawable(
             AvatarDrawable.Builder()
-                .withPhoto(model.photo as Bitmap?)
-                .withNameData(accountCreationModel.fullName, accountCreationModel.username)
-                .withId(newAccount?.username)
+                .withPhoto(m.photo as Bitmap?)
+                .withNameData(m.fullName, m.username)
+                .withId(m.newAccount?.username)
                 .withCircleCrop(true)
                 .build(requireContext())
         )
@@ -206,11 +189,5 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         const val REQUEST_CODE_GALLERY = 2
         const val REQUEST_PERMISSION_CAMERA = 3
         const val REQUEST_PERMISSION_READ_STORAGE = 4
-
-        fun newInstance(model: AccountCreationModelImpl): ProfileCreationFragment {
-            val fragment = ProfileCreationFragment()
-            fragment.model = model
-            return fragment
-        }
     }
 }

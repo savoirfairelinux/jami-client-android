@@ -29,12 +29,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import cx.ring.databinding.FragAccJamiLinkBinding
-import net.jami.model.AccountCreationModel
 
 class JamiLinkAccountFragment : Fragment() {
-    private lateinit var model: AccountCreationModel
+    private val model: AccountCreationViewModel by activityViewModels()
     private var mBinding: FragAccJamiLinkBinding? = null
     private var mCurrentFragment: Fragment? = null
 
@@ -42,47 +42,37 @@ class JamiLinkAccountFragment : Fragment() {
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 if (mCurrentFragment is ProfileCreationFragment) {
-                    val fragment = mCurrentFragment as ProfileCreationFragment
-                    (activity as AccountWizardActivity?)!!.profileCreated(fragment.model!!, false)
+                    //val fragment = mCurrentFragment as ProfileCreationFragment
+                    (activity as AccountWizardActivity).profileCreated(false)
                     return
                 }
                 mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
             }
         }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("model", model)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
+            val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
+            pager.apply {
+                disableScroll(true)
+                adapter = pagerAdapter
+                addOnPageChangeListener(object : OnPageChangeListener {
+                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        if (savedInstanceState != null) {
-            model = savedInstanceState.getSerializable("model") as AccountCreationModel
-        }
-        return FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
+                    override fun onPageSelected(position: Int) {
+                        mCurrentFragment = pagerAdapter.getRegisteredFragment(position)
+                        onBackPressedCallback.isEnabled = mCurrentFragment is ProfileCreationFragment
+                    }
+
+                    override fun onPageScrollStateChanged(state: Int) {}
+                })
+            }
             mBinding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         mBinding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager, model)
-        mBinding!!.pager.adapter = pagerAdapter
-        mBinding!!.pager.disableScroll(true)
-        mBinding!!.pager.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageSelected(position: Int) {
-                mCurrentFragment = pagerAdapter.getRegisteredFragment(position)
-                onBackPressedCallback.isEnabled = mCurrentFragment is ProfileCreationFragment
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
     }
 
     override fun onAttach(context: Context) {
@@ -90,8 +80,10 @@ class JamiLinkAccountFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
-    fun scrollPagerFragment(accountCreationModel: AccountCreationModel?) {
-        if (accountCreationModel == null) {
+    fun scrollPagerFragment() {
+        mBinding?.let { it.pager.currentItem = it.pager.currentItem + 1 }
+        //mBinding!!.pager.currentItem = mBinding!!.pager.currentItem + 1
+        /*if (accountCreationModel == null) {
             mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
             return
         }
@@ -100,21 +92,19 @@ class JamiLinkAccountFragment : Fragment() {
             if (fragment is JamiAccountPasswordFragment) {
                 fragment.setUsername(accountCreationModel.username)
             }
-        }
+        }*/
     }
 
-    private class ScreenSlidePagerAdapter(fm: FragmentManager, model: AccountCreationModel) :
+    private class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm) {
-        var ringAccountViewModel: AccountCreationModelImpl = model as AccountCreationModelImpl
+        //var ringAccountViewModel: AccountCreationModelImpl = model as AccountCreationModelImpl
         var mRegisteredFragments = SparseArray<Fragment>()
-        override fun getItem(position: Int): Fragment {
-            var fragment: Fragment? = null
+        override fun getItem(position: Int): Fragment =
             when (position) {
-                0 -> fragment = JamiLinkAccountPasswordFragment.newInstance(ringAccountViewModel)
-                1 -> fragment = ProfileCreationFragment.newInstance(ringAccountViewModel)
+                0 -> JamiLinkAccountPasswordFragment()
+                1 -> ProfileCreationFragment()
+                else -> throw IllegalArgumentException()
             }
-            return fragment!!
-        }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val fragment = super.instantiateItem(container, position) as Fragment
@@ -140,11 +130,5 @@ class JamiLinkAccountFragment : Fragment() {
     companion object {
         val TAG = JamiLinkAccountFragment::class.simpleName!!
         private const val NUM_PAGES = 2
-
-        fun newInstance(ringAccountViewModel: AccountCreationModelImpl): JamiLinkAccountFragment {
-            val fragment = JamiLinkAccountFragment()
-            fragment.model = ringAccountViewModel
-            return fragment
-        }
     }
 }

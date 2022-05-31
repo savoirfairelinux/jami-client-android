@@ -33,54 +33,50 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import cx.ring.databinding.FragAccJamiCreateBinding
 import cx.ring.views.WizardViewPager
-import net.jami.model.AccountCreationModel
 
 class JamiAccountCreationFragment : Fragment() {
-    private var mBinding: FragAccJamiCreateBinding? = null
-    private var mCurrentFragment: Fragment? = null
+    private var binding: FragAccJamiCreateBinding? = null
+    private var currentFragment: Fragment? = null
     private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                if (mCurrentFragment is ProfileCreationFragment) {
-                    val fragment = mCurrentFragment as ProfileCreationFragment
-                    (activity as AccountWizardActivity?)?.profileCreated(fragment.model!!, false)
+                if (currentFragment is ProfileCreationFragment) {
+                    (activity as AccountWizardActivity?)?.profileCreated( false)
                     return
                 }
-                mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
+                binding?.apply { pager.currentItem = pager.currentItem - 1 }
             }
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-        return FragAccJamiCreateBinding.inflate(inflater, container, false).apply { mBinding = this }.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View =
+        FragAccJamiCreateBinding.inflate(inflater, container, false).apply {
+            val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
+            pager.apply {
+                adapter = pagerAdapter
+                disableScroll(true)
+                offscreenPageLimit = 1
+                addOnPageChangeListener(object : OnPageChangeListener {
+                    override fun onPageScrolled(position: Int,positionOffset: Float, positionOffsetPixels: Int) {}
+
+                    override fun onPageSelected(position: Int) {
+                        currentFragment = pagerAdapter.getRegisteredFragment(position)
+                        val enable = currentFragment is JamiAccountPasswordFragment || currentFragment is ProfileCreationFragment
+                        onBackPressedCallback.isEnabled = enable
+                    }
+
+                    override fun onPageScrollStateChanged(state: Int) {}
+                })
+            }
+            indicator.setupWithViewPager(pager, true)
+            val tabStrip = indicator.getChildAt(0) as LinearLayout
+            for (i in 0 until tabStrip.childCount) {
+                tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
+            }
+            binding = this
+        }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBinding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        retainInstance = true
-        val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
-        mBinding!!.pager.adapter = pagerAdapter
-        mBinding!!.pager.disableScroll(true)
-        mBinding!!.pager.offscreenPageLimit = 1
-        mBinding!!.indicator.setupWithViewPager(mBinding!!.pager, true)
-        mBinding!!.pager.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(position: Int,positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageSelected(position: Int) {
-                mCurrentFragment = pagerAdapter.getRegisteredFragment(position)
-                val enable = mCurrentFragment is JamiAccountPasswordFragment || mCurrentFragment is ProfileCreationFragment
-                onBackPressedCallback.isEnabled = enable
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
-        val tabStrip = mBinding!!.indicator.getChildAt(0) as LinearLayout
-        for (i in 0 until tabStrip.childCount) {
-            tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
-        }
+        binding = null
     }
 
     override fun onAttach(context: Context) {
@@ -88,38 +84,28 @@ class JamiAccountCreationFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
-    fun scrollPagerFragment(accountCreationModel: AccountCreationModel?) {
-        if (accountCreationModel == null) {
-            mBinding!!.pager.currentItem = mBinding!!.pager.currentItem - 1
-            return
-        }
-        mBinding!!.pager.currentItem = mBinding!!.pager.currentItem + 1
-        for (fragment in childFragmentManager.fragments) {
-            if (fragment is JamiAccountPasswordFragment) {
-                fragment.setUsername(accountCreationModel.username)
-            }
-        }
+    fun scrollPagerFragment() {
+        binding?.apply { pager.currentItem = pager.currentItem + 1 }
     }
 
     private class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
-        var mRegisteredFragments = SparseArray<Fragment>()
-        private var mCurrentPosition = -1
-        override fun getItem(position: Int): Fragment {
-            val accountViewModel = AccountCreationModelImpl()
-            return when (position) {
-                0 -> JamiAccountUsernameFragment.newInstance(accountViewModel)
-                1 -> JamiAccountPasswordFragment.newInstance(accountViewModel)
-                2 -> ProfileCreationFragment.newInstance(accountViewModel)
-                else -> throw IllegalStateException()
-            }
+        val registeredFragments = SparseArray<Fragment>()
+        private var currentPosition = -1
+        override fun getItem(position: Int): Fragment = when (position) {
+            0 -> JamiAccountUsernameFragment()
+            1 -> JamiAccountPasswordFragment()
+            2 -> ProfileCreationFragment()
+            else -> throw IllegalStateException()
         }
+
+        override fun getCount(): Int = 3
 
         override fun setPrimaryItem(container: ViewGroup, position: Int, o: Any) {
             super.setPrimaryItem(container, position, o)
-            if (position != mCurrentPosition && container is WizardViewPager) {
+            if (position != currentPosition && container is WizardViewPager) {
                 val fragment = o as Fragment
                 if (fragment.view != null) {
-                    mCurrentPosition = position
+                    currentPosition = position
                     container.measureCurrentView(fragment.view)
                 }
             }
@@ -127,25 +113,15 @@ class JamiAccountCreationFragment : Fragment() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val fragment = super.instantiateItem(container, position) as Fragment
-            mRegisteredFragments.put(position, fragment)
-            return super.instantiateItem(container, position)
+            registeredFragments.put(position, fragment)
+            return fragment
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, o: Any) {
-            mRegisteredFragments.remove(position)
+            registeredFragments.remove(position)
             super.destroyItem(container, position, o)
         }
 
-        override fun getCount(): Int {
-            return NUM_PAGES
-        }
-
-        fun getRegisteredFragment(position: Int): Fragment? {
-            return mRegisteredFragments[position]
-        }
-    }
-
-    companion object {
-        private const val NUM_PAGES = 3
+        fun getRegisteredFragment(position: Int): Fragment? = registeredFragments[position]
     }
 }
