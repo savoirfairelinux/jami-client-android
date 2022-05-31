@@ -464,7 +464,7 @@ class Account(
     val isSip: Boolean
         get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_SIP
     val isJami: Boolean
-        get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_RING
+        get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
 
     private fun getDetail(key: ConfigKey): String? {
         return config[key]

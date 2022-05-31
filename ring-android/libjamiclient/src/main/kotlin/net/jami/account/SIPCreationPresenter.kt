@@ -77,15 +77,15 @@ class SIPCreationPresenter @Inject constructor(
         } else {
             val accountDetails = initAccountDetails()
             if (username != null)
-                accountDetails[ConfigKey.ACCOUNT_ALIAS.key()] = username
+                accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = username
             if (hostname != null && hostname.isNotEmpty()) {
-                accountDetails[ConfigKey.ACCOUNT_HOSTNAME.key()] = hostname
+                accountDetails[ConfigKey.ACCOUNT_HOSTNAME.key] = hostname
                 if (proxy != null)
-                    accountDetails[ConfigKey.ACCOUNT_ROUTESET.key()] = proxy
+                    accountDetails[ConfigKey.ACCOUNT_ROUTESET.key] = proxy
                 if (username != null)
-                    accountDetails[ConfigKey.ACCOUNT_USERNAME.key()] = username
+                    accountDetails[ConfigKey.ACCOUNT_USERNAME.key] = username
                 if (password != null)
-                    accountDetails[ConfigKey.ACCOUNT_PASSWORD.key()] = password
+                    accountDetails[ConfigKey.ACCOUNT_PASSWORD.key] = password
             }
             registerAccount(accountDetails)
         }
@@ -142,11 +142,11 @@ class SIPCreationPresenter @Inject constructor(
         for ((key, value) in accountDetails) {
             Log.d(TAG, "Default account detail: $key -> $value")
         }
-        accountDetails[ConfigKey.VIDEO_ENABLED.key()] = true.toString()
+        accountDetails[ConfigKey.VIDEO_ENABLED.key] = true.toString()
 
         //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
         //~ This will have to be removed when it will be supported.
-        accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key()] = "sipinfo"
+        accountDetails[ConfigKey.ACCOUNT_DTMF_TYPE.key] = "sipinfo"
         return accountDetails
     }
 

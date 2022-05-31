@@ -166,7 +166,7 @@ class DeviceRuntimeServiceImpl(
         if (model.startsWith(manufacturer)) {
             ret.add(StringUtils.capitalize(model))
         } else {
-            ret.add(StringUtils.capitalize(manufacturer) + " " + model)
+            ret.add("${StringUtils.capitalize(manufacturer)} $model")
         }
     }
 

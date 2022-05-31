@@ -19,7 +19,7 @@
  */
 package net.jami.model
 
-enum class ConfigKey {
+enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     MAILBOX("Account.mailbox"),
     REGISTRATION_EXPIRE("Account.registrationExpire"),
     CREDENTIAL_NUMBER("Credential.count"),
@@ -103,31 +103,14 @@ enum class ConfigKey {
     MANAGER_URI("Account.managerUri"),
     MANAGER_USERNAME("Account.managerUsername");
 
-    private val mKey: String
-    val isTwoState: Boolean
-
-    constructor(key: String) {
-        mKey = key
-        isTwoState = false
-    }
-
-    constructor(key: String, isBool: Boolean) {
-        mKey = key
-        isTwoState = isBool
-    }
-
-    fun key(): String {
-        return mKey
-    }
-
     fun equals(other: ConfigKey?): Boolean {
-        return other != null && mKey == other.mKey
+        return other != null && key == other.key
     }
 
     companion object {
         fun fromString(stringKey: String): ConfigKey? {
             for (confKey in values()) {
-                if (stringKey.contentEquals(confKey.mKey) || stringKey == confKey.mKey) {
+                if (stringKey.contentEquals(confKey.key) || stringKey == confKey.key) {
                     return confKey
                 }
             }

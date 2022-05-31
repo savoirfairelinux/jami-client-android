@@ -75,8 +75,8 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
         override fun addJamiPreferences(accountId: String) {}
         override fun addSipPreferences() {}
         override fun accountChanged(account: Account) {
-            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_AUTOANSWER.key())?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_AUTOANSWER)
-            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_ISRENDEZVOUS.key())?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS)
+            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_AUTOANSWER.key)?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_AUTOANSWER)
+            findPreference<SwitchPreference>(ConfigKey.ACCOUNT_ISRENDEZVOUS.key)?.isChecked = account.config.getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS)
         }
 
         override fun finish() {
@@ -118,7 +118,7 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
             val key = ConfigKey.fromString(preference.key)
-            if (key != null && key.isTwoState)
+            if (key != null && key.isBool)
                 presenter.twoStatePreferenceChanged(key, (preference as SwitchPreference).isChecked)
             return super.onPreferenceTreeClick(preference)
         }
