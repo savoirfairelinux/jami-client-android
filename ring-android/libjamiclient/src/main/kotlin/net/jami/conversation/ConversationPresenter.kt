@@ -427,6 +427,10 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    fun getNumberOfParticipants() : Int {
+        return mConversation?.contacts?.size ?: 0
+    }
+
     private fun showTypingIndicator(): Boolean {
         return preferencesService.settings.enableTypingIndicator
     }
