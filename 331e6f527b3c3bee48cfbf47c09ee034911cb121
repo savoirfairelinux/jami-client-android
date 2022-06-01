@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b7f3d7_1dfb3bb6",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactPickerAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 115
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "443792ba_cf01a28f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ContactPickerFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "disable showing presence in the chip icon",
+      "range": {
+        "startLine": 83,
+        "startChar": 39,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddbfc365_38298d45",
+        "filename": "ring-android/app/src/main/java/cx/ring/viewholders/ContactPickerViewHolder.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "non-null",
+      "range": {
+        "startLine": 34,
+        "startChar": 45,
+        "endLine": 34,
+        "endChar": 46
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f49e16b_9f6738ef",
+        "filename": "ring-android/app/src/main/java/cx/ring/viewholders/ContactPickerViewHolder.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0764420b_8b22b877",
+        "filename": "ring-android/app/src/main/java/cx/ring/viewholders/ContactPickerViewHolder.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae8018c1_a1397500",
+        "filename": "ring-android/app/src/main/java/cx/ring/viewholders/ContactPickerViewHolder.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-06-01T16:55:53Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "331e6f527b3c3bee48cfbf47c09ee034911cb121",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
