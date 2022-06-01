@@ -85,24 +85,11 @@
                             android:id="@+id/info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toLeftOf="@id/status"
+                            android:layout_alignParentRight="true"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="4dp"
                             android:textStyle="bold"
                             android:text="@string/help_sip" />
-
-                        <TextView
-                            android:id="@+id/status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="@string/wizard_status_required"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="#ff1f62"
-                            android:background="@drawable/background_status_required"
-                            android:padding="6dp"/>
 
                     </RelativeLayout>
 
