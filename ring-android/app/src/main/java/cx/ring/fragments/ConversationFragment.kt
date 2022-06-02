@@ -498,6 +498,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     putExtra("android.intent.extras.CAMERA_FACING", Camera.CameraInfo.CAMERA_FACING_FRONT)
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
+                    putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
                     putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, AndroidFileUtils.createVideoFile(context).apply {
                         mCurrentPhoto = this
                     }))
