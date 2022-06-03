@@ -256,7 +256,7 @@ object AndroidFileUtils {
         File.createTempFile("audio_${dateFormat.format(Date())}_", ".mp3", getTempShareDir(context))
 
     fun createVideoFile(context: Context): File =
-        File.createTempFile("video_${dateFormat.format(Date())}_", ".webm", getTempShareDir(context))
+        File.createTempFile("video_${dateFormat.format(Date())}_", ".mp4", getTempShareDir(context))
 
     fun createLogFile(context: Context): File =
         File.createTempFile("log_${dateFormat.format(Date())}_", ".log", getTempShareDir(context))
