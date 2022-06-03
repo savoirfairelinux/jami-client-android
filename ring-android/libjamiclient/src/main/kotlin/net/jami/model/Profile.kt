@@ -1,9 +1,7 @@
 /*
  *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *  Author: Raphaël Brulé <raphael.brule@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,6 +37,7 @@ class ContactViewModel(val contact: Contact, val profile: Profile, val registere
     }
 
     companion object {
-        val EMPTY_VM = Observable.just(ContactViewModel(Contact(Uri.fromId("")), Profile(null, null)))
+        val EMPTY_VM: Observable<ContactViewModel> =
+            Observable.just(ContactViewModel(Contact(Uri.fromId("")), Profile(null, null)))
     }
 }
