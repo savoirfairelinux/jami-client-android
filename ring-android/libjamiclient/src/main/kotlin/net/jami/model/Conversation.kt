@@ -140,13 +140,6 @@ class Conversation : ConversationHistory {
         composingStatusSubject.onNext(composing)
     }
 
-    fun matches(query: String): Boolean {
-        for (contact in contacts) {
-            if (contact.matches(query)) return true
-        }
-        return false
-    }
-
     /*val displayName: String?
         get() = contacts[0].displayName*/
 

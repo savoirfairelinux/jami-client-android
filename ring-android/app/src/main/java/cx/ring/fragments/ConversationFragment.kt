@@ -56,7 +56,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
-import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.ConversationActivity
