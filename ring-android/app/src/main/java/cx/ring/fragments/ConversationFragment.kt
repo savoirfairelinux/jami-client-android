@@ -985,7 +985,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val visible = binding!!.cvMessageInput.visibility == View.VISIBLE && presenter.getNumberOfParticipants() < 2
+        val visible = binding!!.cvMessageInput.visibility == View.VISIBLE && presenter.getNumberOfParticipants() <= 2
         mAudioCallBtn?.isVisible = visible
         mVideoCallBtn?.isVisible = visible
     }
