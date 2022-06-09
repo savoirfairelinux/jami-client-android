@@ -41,7 +41,10 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import cx.ring.BuildConfig
@@ -77,7 +80,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
-import net.jami.model.AccountConfig
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -162,6 +164,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
+        val pagerAdapter = ScreenSlidePagerAdapter(this)
+
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             setSupportActionBar(binding.mainToolbar)
@@ -173,6 +177,13 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
                 enableAccount(isChecked)
             }
             binding.contactImage?.setOnClickListener { fConversation?.openContact() }
+            binding.pager?.adapter = pagerAdapter
+            binding.pager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.tabLayout!!.getTabAt(position)!!.select()
+                }
+            })
         }
         handleIntent(intent)
     }
@@ -482,39 +493,32 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface!!.onBackPressed()) {
             return
         }
+        val pager = mBinding?.pager
+        if (pager?.visibility == View.VISIBLE && pager.currentItem == 1) {
+            pager.currentItem = pager.currentItem - 1
+            return
+        }
         super.onBackPressed()
         fContent = supportFragmentManager.findFragmentById(R.id.main_frame)
         if (fContent is SmartListFragment) {
-            mBinding!!.tabLayout!!.visibility = if (mHasBadge) View.VISIBLE else View.GONE
-            mBinding!!.tabLayout!!.getTabAt(TAB_CONVERSATIONS)!!.select()
-            //showProfileInfo();
+            goToHome()
             showToolbarSpinner()
             hideTabletToolbar()
         }
     }
 
-    private fun popCustomBackStack() {
-        val fragmentManager = supportFragmentManager
-        val entryCount = fragmentManager.backStackEntryCount
-        for (i in 0 until entryCount) {
-            fragmentManager.popBackStackImmediate()
-        }
-        //fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        hideTabletToolbar()
-        setToolbarElevation(false)
-    }
-
     fun goToHome() {
-        mBinding!!.tabLayout!!.visibility = if (mHasBadge) View.VISIBLE else View.GONE
+        switchTabLayoutVisibility()
         mBinding!!.tabLayout!!.getTabAt(TAB_CONVERSATIONS)!!.select()
+        mBinding!!.pager!!.visibility = View.VISIBLE
+        mBinding!!.mainFrame.visibility = View.INVISIBLE
     }
 
     fun goToAdvancedSettings() {
         if (fContent is SettingsFragment) {
             return
         }
-        popCustomBackStack()
-        hideToolbarSpinner()
+        hideToolbar()
         val content = SettingsFragment()
         fContent = content
         supportFragmentManager
@@ -523,14 +527,15 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .replace(fragmentContainerId, content, SETTINGS_TAG)
             .addToBackStack(SETTINGS_TAG).commit()
         mBinding!!.tabLayout!!.visibility = View.GONE
+        mBinding!!.pager!!.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
     fun goToAbout() {
         if (fContent is AboutFragment) {
             return
         }
-        popCustomBackStack()
-        hideToolbarSpinner()
+        hideToolbar()
         val content = AboutFragment()
         fContent = content
         supportFragmentManager
@@ -539,6 +544,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .replace(fragmentContainerId, content, ABOUT_TAG)
             .addToBackStack(ABOUT_TAG).commit()
         mBinding!!.tabLayout!!.visibility = View.GONE
+        mBinding!!.pager!!.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
     fun goToVideoSettings() {
@@ -553,6 +560,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
         mBinding!!.tabLayout!!.visibility = View.GONE
+        mBinding!!.pager!!.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
     fun goToAccountSettings() {
@@ -573,7 +582,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
             bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
             if (fContent !is AccountEditionFragment) {
-                popCustomBackStack()
+                hideToolbar()
                 val content = AccountEditionFragment()
                 content.arguments = bundle
                 fContent = content
@@ -584,6 +593,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
                     .commit()
                 showToolbarSpinner()
                 mBinding!!.tabLayout!!.visibility = View.GONE
+                mBinding!!.pager!!.visibility = View.GONE
+                mBinding!!.mainFrame.visibility = View.VISIBLE
             }
         }
     }
@@ -595,6 +606,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             adapter.getItem(position)?.let { account ->
                 mAccountService.currentAccount = account
                 showAccountStatus(fContent is AccountEditionFragment && !account.isSip)
+                switchTabLayoutVisibility()
             }
         } else {
             val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
@@ -615,6 +627,17 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             mBinding!!.tabLayout?.visibility = View.VISIBLE
             mHasBadge = true
         }
+    }
+
+    private fun hideToolbar() {
+        hideTabletToolbar()
+        setToolbarElevation(false)
+        hideToolbarSpinner()
+    }
+
+    private fun switchTabLayoutVisibility () {
+        mBinding!!.tabLayout!!.visibility = if (mHasBadge) View.VISIBLE else View.GONE
+        mBinding!!.pager!!.isUserInputEnabled = mHasBadge
     }
 
     private fun hideTabletToolbar() {
@@ -757,11 +780,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         fContent = fm.findFragmentById(entry.id)
     }
 
-//    fun selectNavigationItem(id: Int) {
-//        val binding = mBinding ?: return
-//        binding.tabLayout!!.getTabAt(id)!!.select()
-//    }
-
     private fun enableAccount(newValue: Boolean) {
         val account = mAccountService.currentAccount
         if (account == null) {
@@ -813,48 +831,24 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        when (tab!!.position) {
-            0 -> {
-                if (fContent !is SmartListFragment) {
-                    popCustomBackStack()
-                    val fcontent = supportFragmentManager.findFragmentById(R.id.main_frame)
-                    if (fcontent is SmartListFragment) {
-                        fContent = fcontent
-                    } else {
-                        val content = SmartListFragment()
-                        fContent = content
-                        supportFragmentManager.beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .replace(R.id.main_frame, content, HOME_TAG)
-                            .setReorderingAllowed(true)
-                            .commit()
-                        showToolbarSpinner()
-                    }
-                }
-            }
-            1 -> {
-                if (fContent is ContactRequestsFragment) {
-                    (fContent as ContactRequestsFragment).presentForAccount(null)
-                } else {
-                    popCustomBackStack()
-                    val content = ContactRequestsFragment()
-                    fContent = content
-                    supportFragmentManager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, content, CONTACT_REQUESTS_TAG)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(CONTACT_REQUESTS_TAG)
-                        .commit()
-                    showToolbarSpinner()
-                }
-            }
-        }
+        mBinding?.pager?.setCurrentItem(tab!!.position, true)
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+
+        val fragments = listOf(SmartListFragment(), ContactRequestsFragment())
+
+        override fun getItemCount(): Int = fragments.size
+
+        override fun createFragment(position: Int): Fragment {
+            return fragments[position] as Fragment
+        }
     }
 
     companion object {
