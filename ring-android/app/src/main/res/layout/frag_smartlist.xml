@@ -76,7 +76,7 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:drawableLeft="@drawable/baseline_group_add_24"
+            app:drawableStartCompat="@drawable/baseline_group_add_24"
             android:drawablePadding="8dp"
             android:drawableTint="@color/colorPrimary"
             android:text="Add group"
