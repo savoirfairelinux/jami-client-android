@@ -139,7 +139,7 @@ along with this program; if not, write to the Free Software
             tools:visibility="visible"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            style="@style/Widget.AppTheme.MainActionButton"
+            app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
             android:id="@+id/newconv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,9 +149,12 @@ along with this program; if not, write to the Free Software
             android:elevation="6dp"
             android:text="@string/start_conversation"
             app:elevation="6dp"
-            app:icon="@drawable/baseline_group_add_24"
+            app:icon="@drawable/baseline_chat_24"
             app:pressedTranslationZ="12dp"
-            app:layout_anchorGravity="bottom|center_horizontal" />
+            android:textColor="@color/white"
+            app:iconTint="@color/white"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            android:backgroundTint="@color/fab_background"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

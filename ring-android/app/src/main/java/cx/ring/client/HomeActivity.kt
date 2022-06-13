@@ -27,7 +27,6 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.view.WindowManager
@@ -40,12 +39,16 @@ import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.elevation.ElevationOverlayProvider
-import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.tabs.TabLayout
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
@@ -79,7 +82,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
-import net.jami.model.AccountConfig
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -90,17 +92,19 @@ import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.math.min
+
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
+class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
     AdapterView.OnItemSelectedListener, Colorable {
     private var fContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var mAccountAdapter: AccountSpinnerAdapter? = null
+    private var mPagerAdapter: ScreenSlidePagerAdapter? = null
     private var mAccountFragmentBackHandlerInterface: BackHandlerInterface? = null
     private var mOutlineProvider: ViewOutlineProvider? = null
     private var mOrientation = 0
+    private var mHasBadge = false
 
     @Inject
     lateinit
@@ -155,7 +159,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         } else {
             WindowCompat.setDecorFitsSystemWindows(window, true)
-
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -164,23 +167,33 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
+        mPagerAdapter = ScreenSlidePagerAdapter(this)
+
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
             setSupportActionBar(binding.mainToolbar)
             supportActionBar?.title = ""
-            binding.navigationView.setOnItemSelectedListener(this)
-            binding.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked = true
+            binding.tabLayout.addOnTabSelectedListener(this)
             mOutlineProvider = binding.appBar.outlineProvider
             binding.spinnerToolbar.onItemSelectedListener = this
             binding.accountSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
                 enableAccount(isChecked)
             }
             binding.contactImage?.setOnClickListener { fConversation?.openContact() }
-            if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window.navigationBarColor =
-                    ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(
-                        binding.navigationView.elevation
-                    )
+            binding.pager.adapter = mPagerAdapter
+            binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.tabLayout.getTabAt(position)!!.select()
+                }
+            })
+            ViewCompat.setOnApplyWindowInsetsListener(binding.pager) { v, insets ->
+                v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
+                insets
+            }
+            ViewCompat.setOnApplyWindowInsetsListener(binding.mainFrame) { v, insets ->
+                v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
+                insets
             }
         }
         handleIntent(intent)
@@ -240,18 +253,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     startConversation(path)
             }
         }
-        val fragmentManager = supportFragmentManager
-        fContent = fragmentManager.findFragmentById(R.id.main_frame)
-        if (fContent == null || Intent.ACTION_SEARCH == action) {
-            if (fContent is SmartListFragment) {
-                (fContent as SmartListFragment).handleIntent(intent)
-            } else {
-                val content = SmartListFragment()
-                fContent = content
-                fragmentManager.beginTransaction()
-                    .replace(R.id.main_frame, content, HOME_TAG)
-                    .commitNow()
-            }
+        val fragment = mPagerAdapter!!.fragments[TAB_CONVERSATIONS]
+        if (Intent.ACTION_SEARCH == action) {
+                (fragment as SmartListFragment).handleIntent(intent)
         }
     }
 
@@ -264,7 +268,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .setMessage(R.string.account_migration_message_dialog)
             .setIcon(R.drawable.baseline_warning_24)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                selectNavigationItem(R.id.navigation_settings)
+                goToAccountSettings()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
@@ -332,12 +336,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .currentAccountSubject
             .switchMap { obj -> obj.unreadPending }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count -> setBadge(R.id.navigation_requests, count) })
-        mDisposable.add(mAccountService
-            .currentAccountSubject
-            .switchMap { obj -> obj.unreadConversations }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count -> setBadge(R.id.navigation_home, count) })
+            .subscribe { count -> setBadge(TAB_INVITATIONS, count) })
+//        mDisposable.add(mAccountService
+//            .currentAccountSubject
+//            .switchMap { obj -> obj.unreadConversations }
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                    count -> setBadge(TAB_CONVERSATIONS, count)
+//            })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
             val maxShortcuts = getMaxShareShortcuts()
@@ -374,7 +380,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             mOrientation = newOrientation
             hideTabletToolbar()
             if (DeviceUtils.isTablet(this)) {
-                selectNavigationItem(R.id.navigation_home)
+                goToHome()
                 showTabletToolbar()
             } else {
                 // Remove ConversationFragment that might have been restored after an orientation change
@@ -455,7 +461,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fConversation = ConversationFragment()
         fConversation!!.arguments = bundle
         if (fContent !is ContactRequestsFragment) {
-            selectNavigationItem(R.id.navigation_home)
+            goToHome()
         }
         showTabletToolbar()
         supportFragmentManager.beginTransaction()
@@ -469,60 +475,39 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun presentTrustRequestFragment(accountId: String) {
         mNotificationService.cancelTrustRequestNotification(accountId)
-        if (fContent is ContactRequestsFragment) {
-            (fContent as ContactRequestsFragment).presentForAccount(accountId)
-            return
-        }
-        val content = ContactRequestsFragment().apply {
-            arguments =
-                Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
-        }
-        fContent = content
-        mBinding!!.navigationView.menu.getItem(NAVIGATION_CONTACT_REQUESTS).isChecked = true
-        supportFragmentManager.beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.main_frame, content, CONTACT_REQUESTS_TAG)
-            .addToBackStack(CONTACT_REQUESTS_TAG).commit()
+        val fragment = mPagerAdapter!!.fragments[TAB_INVITATIONS]
+        (fragment as ContactRequestsFragment).presentForAccount(accountId)
+        mBinding!!.pager!!.currentItem = TAB_INVITATIONS
     }
 
     override fun onBackPressed() {
         if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface!!.onBackPressed()) {
             return
         }
+        val pager = mBinding?.pager
+        if (pager?.visibility == View.VISIBLE && pager.currentItem == TAB_INVITATIONS) {
+            pager.currentItem = TAB_CONVERSATIONS
+            return
+        }
         super.onBackPressed()
-        fContent = supportFragmentManager.findFragmentById(R.id.main_frame)
-        if (fContent is SmartListFragment) {
-            mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked =
-                true
-            //showProfileInfo();
+            goToHome()
             showToolbarSpinner()
             hideTabletToolbar()
-        }
-    }
-
-    private fun popCustomBackStack() {
-        val fragmentManager = supportFragmentManager
-        val entryCount = fragmentManager.backStackEntryCount
-        for (i in 0 until entryCount) {
-            fragmentManager.popBackStackImmediate()
-        }
-        //fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        hideTabletToolbar()
-        setToolbarElevation(false)
     }
 
     fun goToHome() {
-        val item = mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS)
-        onNavigationItemSelected(item)
-        item.isChecked = true
+//        val pendingCount = mAccountService.currentAccount!!.getPending().size
+        mBinding!!.tabLayout.visibility = if (mHasBadge) View.VISIBLE else View.GONE
+        mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
+        mBinding!!.pager.visibility = View.VISIBLE
+        mBinding!!.mainFrame.visibility = View.INVISIBLE
     }
 
-    fun goToSettings() {
+    fun goToAdvancedSettings() {
         if (fContent is SettingsFragment) {
             return
         }
-        popCustomBackStack()
-        hideToolbarSpinner()
+        hideToolbar()
         val content = SettingsFragment()
         fContent = content
         supportFragmentManager
@@ -530,14 +515,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, SETTINGS_TAG)
             .addToBackStack(SETTINGS_TAG).commit()
+        mBinding!!.tabLayout.visibility = View.GONE
+        mBinding!!.pager.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
     fun goToAbout() {
         if (fContent is AboutFragment) {
             return
         }
-        popCustomBackStack()
-        hideToolbarSpinner()
+        hideToolbar()
         val content = AboutFragment()
         fContent = content
         supportFragmentManager
@@ -545,6 +532,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, ABOUT_TAG)
             .addToBackStack(ABOUT_TAG).commit()
+        mBinding!!.tabLayout.visibility = View.GONE
+        mBinding!!.pager.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
     fun goToVideoSettings() {
@@ -558,66 +548,30 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
+        mBinding!!.tabLayout.visibility = View.GONE
+        mBinding!!.pager.visibility = View.GONE
+        mBinding!!.mainFrame.visibility = View.VISIBLE
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val account = mAccountService.currentAccount ?: return false
+    fun goToAccountSettings() {
+        val account = mAccountService.currentAccount
         val bundle = Bundle()
-        val itemId = item.itemId
-        if (itemId == R.id.navigation_requests) {
-            if (fContent is ContactRequestsFragment) {
-                (fContent as ContactRequestsFragment).presentForAccount(null)
-                return true
-            }
-            popCustomBackStack()
-            val content = ContactRequestsFragment()
-            fContent = content
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, content, CONTACT_REQUESTS_TAG)
-                .setReorderingAllowed(true)
-                .addToBackStack(CONTACT_REQUESTS_TAG)
-                .commit()
-            //showProfileInfo();
-            showToolbarSpinner()
-        } else if (itemId == R.id.navigation_home) {
-            if (fContent is SmartListFragment) {
-                return true
-            }
-            popCustomBackStack()
-            val fcontent = supportFragmentManager.findFragmentById(R.id.main_frame)
-            if (fcontent is SmartListFragment) {
-                fContent = fcontent
-                return true
-            }
-            val content = SmartListFragment()
-            fContent = content
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, content, HOME_TAG)
-                .setReorderingAllowed(true)
-                .commit()
-            //showProfileInfo();
-            showToolbarSpinner()
-        } else if (itemId == R.id.navigation_settings) {
-            if (account.needsMigration()) {
-                Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
-                val intent = Intent()
-                    .setClass(this, AccountWizardActivity::class.java)
-                    .setData(
-                        android.net.Uri.withAppendedPath(
-                            ContentUriHandler.ACCOUNTS_CONTENT_URI,
-                            account.accountId
-                        )
+        if (account!!.needsMigration()) {
+            Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
+            val intent = Intent()
+                .setClass(this, AccountWizardActivity::class.java)
+                .setData(
+                    android.net.Uri.withAppendedPath(
+                        ContentUriHandler.ACCOUNTS_CONTENT_URI,
+                        account.accountId
                     )
-                startActivityForResult(intent, 1)
-            } else {
-                Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
-                bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
-                if (fContent is AccountEditionFragment) {
-                    return true
-                }
-                popCustomBackStack()
+                )
+            startActivityForResult(intent, 1)
+        } else {
+            Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
+            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
+            if (fContent !is AccountEditionFragment) {
+                hideToolbar()
                 val content = AccountEditionFragment()
                 content.arguments = bundle
                 fContent = content
@@ -627,9 +581,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     .addToBackStack(ACCOUNTS_TAG)
                     .commit()
                 showToolbarSpinner()
+                mBinding!!.tabLayout.visibility = View.GONE
+                mBinding!!.pager.visibility = View.GONE
+                mBinding!!.mainFrame.visibility = View.VISIBLE
             }
         }
-        return true
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -639,6 +595,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             adapter.getItem(position)?.let { account ->
                 mAccountService.currentAccount = account
                 showAccountStatus(fContent is AccountEditionFragment && !account.isSip)
+//                val pendingCount = mAccountService.currentAccount!!.getPending().size
+                mBinding!!.tabLayout.visibility = if (mHasBadge) View.VISIBLE else View.GONE
+                mBinding!!.pager.isUserInputEnabled = mHasBadge
             }
         } else {
             val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
@@ -650,9 +609,21 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun setBadge(menuId: Int, number: Int) {
-        if (number == 0) mBinding!!.navigationView.removeBadge(menuId) else mBinding!!.navigationView.getOrCreateBadge(
-            menuId
-        ).number = number
+        val tab = mBinding!!.tabLayout.getTabAt(menuId)
+        if (number == 0) {
+            tab!!.removeBadge()
+            mHasBadge = false
+        } else {
+            tab!!.orCreateBadge.number = number
+            mBinding!!.tabLayout.visibility = View.VISIBLE
+            mHasBadge = true
+        }
+    }
+
+    private fun hideToolbar() {
+        hideTabletToolbar()
+        setToolbarElevation(false)
+        hideToolbarSpinner()
     }
 
     private fun hideTabletToolbar() {
@@ -795,11 +766,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fContent = fm.findFragmentById(entry.id)
     }
 
-    fun selectNavigationItem(id: Int) {
-        val binding = mBinding ?: return
-        binding.navigationView.selectedItemId = id
-    }
-
     private fun enableAccount(newValue: Boolean) {
         val account = mAccountService.currentAccount
         if (account == null) {
@@ -850,6 +816,27 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        mBinding?.pager?.setCurrentItem(tab!!.position, true)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+
+        val fragments = listOf(SmartListFragment(), ContactRequestsFragment())
+
+        override fun getItemCount(): Int = fragments.size
+
+        override fun createFragment(position: Int): Fragment {
+            return fragments[position] as Fragment
+        }
+    }
+
     companion object {
         val TAG: String = HomeActivity::class.simpleName!!
         const val REQUEST_CODE_CALL = 3
@@ -859,9 +846,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
-        private const val NAVIGATION_CONTACT_REQUESTS = 0
-        private const val NAVIGATION_CONVERSATIONS = 1
-        private const val NAVIGATION_ACCOUNT = 2
         const val HOME_TAG = "Home"
         const val CONTACT_REQUESTS_TAG = "Trust request"
         const val ACCOUNTS_TAG = "Accounts"
@@ -874,5 +858,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val PLUGIN_SETTINGS_TAG = "PluginSettings"
         const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
         private const val CONVERSATIONS_CATEGORY = "conversations"
+        private const val TAB_CONVERSATIONS = 0
+        private const val TAB_INVITATIONS = 1
     }
+
 }
