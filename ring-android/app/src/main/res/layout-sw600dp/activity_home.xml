@@ -94,20 +94,44 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorSecondary"
+            app:tabSelectedTextColor="@color/colorOnSurface"
+            app:tabTextColor="@color/textColorSecondary"
+            android:background="@null"
+            android:visibility="gone">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_item_conversation"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_item_contact_request"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar" />
+        android:layout_below="@id/app_bar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="invisible"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navigation_bar" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

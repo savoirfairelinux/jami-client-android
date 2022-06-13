@@ -155,8 +155,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 }
                 return true
             }
-            R.id.menu_settings -> {
-                (requireActivity() as HomeActivity).goToSettings()
+            R.id.menu_account_settings -> {
+                (requireActivity() as HomeActivity).goToAccountSettings()
+                return true
+            }
+            R.id.menu_advanced_settings -> {
+                (requireActivity() as HomeActivity).goToAdvancedSettings()
                 return true
             }
             R.id.menu_about -> {
