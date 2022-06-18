@@ -268,10 +268,10 @@ class CallService(
         }
     }
 
-    fun hangupParticipant(accountId:String, confId: String?, peerId: String) {
+    fun hangupParticipant(accountId:String, confId: String, peerId: String, deviceId: String = "") {
         mExecutor.execute {
             Log.i(TAG, "hangup participant... $peerId")
-            JamiService.hangupParticipant(accountId, confId, peerId)
+            JamiService.hangupParticipant(accountId, confId, peerId, deviceId)
         }
     }
 
