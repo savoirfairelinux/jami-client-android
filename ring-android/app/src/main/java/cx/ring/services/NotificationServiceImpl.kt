@@ -401,7 +401,7 @@ class NotificationServiceImpl(
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val intentDelete = Intent(DRingService.ACTION_CONV_DISMISS, path, mContext, DRingService::class.java)
-            .putExtra(DRingService.KEY_MESSAGE_ID, last?.messageId ?: last?.daemonId)
+            .putExtra(DRingService.KEY_MESSAGE_ID, last?.messageId ?: last?.daemonIdString)
         val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setPriority(Notification.PRIORITY_HIGH)
