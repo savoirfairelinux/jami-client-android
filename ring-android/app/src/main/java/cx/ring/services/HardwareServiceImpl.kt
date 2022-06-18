@@ -604,9 +604,10 @@ class HardwareServiceImpl(
         private val VIDEO_SIZE_SD = Size(720, 480)
         private val VIDEO_SIZE_HD = Size(1280, 720)
         private val VIDEO_SIZE_FULL_HD = Size(1920, 1080)
+        private val VIDEO_SIZE_QUAD_HD = Size(2560, 1440)
         private val VIDEO_SIZE_ULTRA_HD = Size(3840, 2160)
         val VIDEO_SIZE_DEFAULT = VIDEO_SIZE_SD
-        val resolutions = listOf(VIDEO_SIZE_ULTRA_HD, VIDEO_SIZE_FULL_HD, VIDEO_SIZE_HD, VIDEO_SIZE_SD, VIDEO_SIZE_LOW)
+        val resolutions = listOf(VIDEO_SIZE_ULTRA_HD, VIDEO_SIZE_QUAD_HD, VIDEO_SIZE_FULL_HD, VIDEO_SIZE_HD, VIDEO_SIZE_SD, VIDEO_SIZE_LOW)
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
         private var mCameraPluginPreviewSurface = WeakReference<SurfaceView>(null)
