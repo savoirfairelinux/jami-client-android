@@ -158,8 +158,7 @@ class ConversationPresenter @Inject constructor(
             .subscribe())
         disposable.add(c.mode
             .switchMap { mode: Conversation.Mode ->
-                if (mode === Conversation.Mode.Legacy || mode === Conversation.Mode.Request)
-                    c.contact!!.conversationUri else Observable.empty() }
+                if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri else Observable.empty() }
             .observeOn(uiScheduler)
             .subscribe { uri: Uri -> init(uri, account.accountId) })
         disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
@@ -185,9 +184,7 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "Can't update elements", e)
             })
         disposable.add(c.contactUpdates
-            .switchMap { contacts ->
-                Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true))
-            }
+            .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
             .observeOn(uiScheduler)
             .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
         disposable.add(c.updatedElements
@@ -199,8 +196,7 @@ class ConversationPresenter @Inject constructor(
                     ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
                     ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
                 }
-            }, { e: Throwable -> Log.e(TAG, "Can't update element", e) })
-        )
+            }, { e: Throwable -> Log.e(TAG, "Can't update element", e) }))
         if (showTypingIndicator()) {
             disposable.add(c.composingStatus
                 .observeOn(uiScheduler)
@@ -230,8 +226,7 @@ class ConversationPresenter @Inject constructor(
             .subscribe {
                 Log.e(TAG, "getLocationUpdates: update")
                 this.view?.showMap(c.accountId, c.uri.uri, false)
-            }
-        )
+            })
     }
 
     fun loadMore() {
