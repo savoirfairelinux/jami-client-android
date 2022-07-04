@@ -903,13 +903,15 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val mainWidth = overlayViewBinding.width.toFloat()
         val mainHeight = overlayViewBinding.height.toFloat()
 
+        val participants = participantsInfo.filterNot { it.contact.contact.isUser && it.device == presenter.getDeviceId() }
+
         for (childView in overlayViewBinding.children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || participantsInfo.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null)
+            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null)
                 overlayViewBinding.removeView(childView)
         }
-        val activeParticipants = participantsInfo.count { it.active }
-        val inactiveParticipants = participantsInfo.size - activeParticipants
+        val activeParticipants = participants.count { it.active }
+        val inactiveParticipants = participants.size - activeParticipants
         val grid = activeParticipants == 0
 
         val maxCol = if (grid) (if (mainWidth < mainHeight) 1 else 3) else 3
@@ -920,17 +922,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val inactiveWidth = 1f/inactiveMaxCols
         val gridRows = if (grid) inactiveParticipants / inactiveMaxCols else 0
         val inactiveHeight = if (grid) (1f / gridRows) else activeSeparation
-        val margin = if (participantsInfo.size < 2) 0 else overlayViewBinding.context.resources.getDimensionPixelSize(R.dimen.call_participant_margin)
-        val cornerRadius = if (participantsInfo.size < 2) 0f else overlayViewBinding.context.resources.getDimension(R.dimen.call_participant_corner_radius)
+        val margin = if (participants.size < 2) 0 else overlayViewBinding.context.resources.getDimensionPixelSize(R.dimen.call_participant_margin)
+        val cornerRadius = if (participants.size < 2) 0f else overlayViewBinding.context.resources.getDimension(R.dimen.call_participant_corner_radius)
 
-        Log.w(TAG, "generateParticipantOverlay count:${participantsInfo.size} grid:$grid ($maxCol by $gridRows) active:$activeWidth inactive: $inactiveWidth $inactiveHeight")
+        Log.w(TAG, "generateParticipantOverlay count:${participants.size} grid:$grid ($maxCol by $gridRows) active:$activeWidth inactive: $inactiveWidth $inactiveHeight")
 
         //overlayViewBinding.layoutTransition.setStartDelay(LayoutTransition.CHANGING, 1000)
 
         var iActive = 0
         var iInactive = 0
         val toAdd: MutableList<View> = ArrayList()
-        for (i in participantsInfo) {
+        for (i in participants) {
             if (!i.active && !grid && iInactive >= maxCol)
                 break
 

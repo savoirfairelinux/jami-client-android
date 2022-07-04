@@ -661,6 +661,11 @@ class CallPresenter @Inject constructor(
         mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
 
+    fun getDeviceId(): String? {
+        val conference = mConference ?: return null
+        return mAccountService.getAccount(conference.accountId)?.deviceId
+    }
+
     companion object {
         val TAG = CallPresenter::class.simpleName!!
     }
