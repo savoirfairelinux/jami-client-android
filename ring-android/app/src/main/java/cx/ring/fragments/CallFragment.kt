@@ -260,7 +260,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 }
             }.apply { if (canDetectOrientation()) enable() }
 
-            binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn
+            binding.callSpeakerBtn.isChecked = presenter.isSpeakerphoneOn()
             binding.callMicBtn.isChecked = presenter.isMicrophoneMuted
 
             binding.pluginPreviewSurface.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->

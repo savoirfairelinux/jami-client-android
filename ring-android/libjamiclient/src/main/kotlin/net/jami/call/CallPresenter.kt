@@ -63,14 +63,13 @@ class CallPresenter @Inject constructor(
     private var currentSurfaceId: String? = null
     private var currentPluginSurfaceId: String? = null
     private var timeUpdateTask: Disposable? = null
-    val isSpeakerphoneOn: Boolean
-        get() = mHardwareService.isSpeakerphoneOn
+    fun isSpeakerphoneOn(): Boolean = mHardwareService.isSpeakerphoneOn()
     var isMicrophoneMuted: Boolean = false
     var wantVideo = false
     var videoIsMuted = false
         private set
-    var isVideoActive: Boolean = false
-        get() = mConference?.hasActiveVideo() == true
+
+    fun isVideoActive(): Boolean = mConference?.hasActiveVideo() == true
 
     fun cameraPermissionChanged(isGranted: Boolean) {
         if (isGranted && mHardwareService.isVideoAvailable) {
@@ -214,12 +213,12 @@ class CallPresenter @Inject constructor(
     private fun prepareBottomSheetButtonsStatus(conference: Conference) {
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         val canDial = mOnGoingCall
-        val displayPluginsButton = view!!.displayPluginsButton()
+        val displayPluginsButton = view?.displayPluginsButton() == true
         val showPluginBtn = displayPluginsButton && mOnGoingCall
         val hasActiveVideo = conference.hasActiveVideo()
-        val hasMultipleCamera = mHardwareService.cameraCount > 1 && mOnGoingCall && hasActiveVideo
+        val hasMultipleCamera = mHardwareService.cameraCount() > 1 && mOnGoingCall && hasActiveVideo
         val isConference = conference.isConference
-        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn, conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
     }
 
     fun chatClick() {
@@ -313,7 +312,7 @@ class CallPresenter @Inject constructor(
     fun pluginSurfaceCreated(holder: Any) {
         val conference = mConference ?: return
         var newId : String
-        if(conference.hasActiveVideo()){
+        if (conference.hasActiveVideo()) {
             val mediaList = conference.getMediaList()!!
             for (m in mediaList) if (m.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
                 newId = m.source!!

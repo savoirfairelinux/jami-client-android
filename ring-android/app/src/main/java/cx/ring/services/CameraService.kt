@@ -146,7 +146,7 @@ class CameraService internal constructor(c: Context) {
     }
 
     fun switchInput(setDefaultCamera: Boolean): String? {
-        return if (devices == null) null else devices!!.switchInput(setDefaultCamera)
+        return devices?.switchInput(setDefaultCamera)
     }
 
     fun getParams(camId: String?): VideoParams? {
@@ -183,7 +183,7 @@ class CameraService internal constructor(c: Context) {
 
     fun setOrientation(rotation: Int) {
         Log.w(TAG, "setOrientation() $rotation")
-        for (id in cameraIds) setDeviceOrientation(id, rotation)
+        for (id in cameraIds()) setDeviceOrientation(id, rotation)
     }
 
     private fun setDeviceOrientation(camId: String, screenRotation: Int) {
@@ -228,15 +228,13 @@ class CameraService internal constructor(c: Context) {
     val previewSettings: Map<String, StringMap>
         get() {
             val camSettings: MutableMap<String, StringMap> = HashMap()
-            for (id in cameraIds) {
+            for (id in cameraIds()) {
                 mNativeParams[id]?.let { params -> camSettings[id] = params.toMap() }
             }
             return camSettings
         }
 
-    fun hasCamera(): Boolean {
-        return cameraCount > 0
-    }
+    fun hasCamera(): Boolean = getCameraCount() > 0
 
     data class VideoParams(val id: String, var size: Size, var rate: Int) {
         val inputUri: String = "camera://$id"
@@ -762,20 +760,14 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    val cameraIds: List<String>
-        get() = devices?.cameras ?: ArrayList()
-    val cameraCount: Int
-        get() = try {
-            devices?.cameras?.size ?: manager!!.cameraIdList.size
-        } catch (e: CameraAccessException) {
-            0
-        }
+    fun cameraIds(): List<String> = devices?.cameras ?: ArrayList()
+    fun getCameraCount(): Int = try {
+        devices?.cameras?.size ?: manager?.cameraIdList?.size ?: 0
+    } catch (e: CameraAccessException) {
+        0
+    }
 
-    private fun getCameraInfo(
-        camId: String,
-        minVideoSize: Size,
-        context: Context
-    ): DeviceParams {
+    private fun getCameraInfo(camId: String, minVideoSize: Size, context: Context): DeviceParams {
         val p = DeviceParams()
         if (manager == null) return p
         try {
@@ -856,8 +848,10 @@ class CameraService internal constructor(c: Context) {
                 .filter { camera: Pair<String, CameraCharacteristics> ->
                     try {
                         val caps = camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES) ?: return@filter false
-                        for (c in caps) if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_MONOCHROME ) return@filter false
-                        for (c in caps) if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE) return@filter true
+                        for (c in caps) {
+                            if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_MONOCHROME) return@filter false
+                            if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE) return@filter true
+                        }
                     } catch (e: Exception) {
                         return@filter false
                     }
@@ -973,14 +967,12 @@ class CameraService internal constructor(c: Context) {
             return range ?: Range(FPS_TARGET, FPS_TARGET)
         }
 
-        private fun rotationToDegrees(rotation: Int): Int {
-            return when (rotation) {
-                Surface.ROTATION_0 -> 0
-                Surface.ROTATION_90 -> 90
-                Surface.ROTATION_180 -> 180
-                Surface.ROTATION_270 -> 270
-                else -> 0
-            }
+        private fun rotationToDegrees(rotation: Int) = when (rotation) {
+            Surface.ROTATION_0 -> 0
+            Surface.ROTATION_90 -> 90
+            Surface.ROTATION_180 -> 180
+            Surface.ROTATION_270 -> 270
+            else -> 0
         }
 
         private fun resolutionFit(param: Size, screenSize: Size) =

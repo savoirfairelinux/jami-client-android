@@ -23,7 +23,6 @@ package cx.ring.services
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Point
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
@@ -58,15 +57,15 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.ScheduledExecutorService
 
 class HardwareServiceImpl(
-    private val mContext: Context,
+    private val context: Context,
     executor: ScheduledExecutorService,
     preferenceService: PreferencesService,
     uiScheduler: Scheduler
 ) : HardwareService(executor, preferenceService, uiScheduler), OnAudioFocusChangeListener, BluetoothChangeListener {
     private val videoInputs: MutableMap<String, Shm> = HashMap()
-    private val cameraService = CameraService(mContext)
-    private val mRinger = Ringer(mContext)
-    private val mAudioManager: AudioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val cameraService = CameraService(context)
+    private val mRinger = Ringer(context)
+    private val mAudioManager: AudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private var mBluetoothWrapper: BluetoothWrapper? = null
     private var currentFocus: AudioFocusRequestCompat? = null
     private var pendingScreenSharingSession: MediaProjection? = null
@@ -77,45 +76,40 @@ class HardwareServiceImpl(
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
 
-    override fun initVideo(): Completable {
-        Log.i(TAG, "initVideo()")
-        return cameraService.init()
-    }
+    override fun initVideo(): Completable = cameraService.init()
 
     override val maxResolutions: Observable<Pair<Int?, Int?>>
         get() = cameraService.maxResolutions
     override val isVideoAvailable: Boolean
-        get() = mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera()
+        get() = context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera()
 
     override fun hasMicrophone(): Boolean {
-        val pm = mContext.packageManager
-        var hasMicrophone = pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)
-        if (!hasMicrophone) {
-            val recorder = MediaRecorder(mContext)
-            val testFile = File(mContext.cacheDir, "MediaUtil#micAvailTestFile")
-            hasMicrophone = try {
-                recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-                recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
-                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
-                recorder.setOutputFile(testFile.absolutePath)
-                recorder.prepare()
-                recorder.start()
-                true
-            } catch (e: IllegalStateException) {
-                // Microphone is already in use
-                true
-            } catch (exception: Exception) {
-                false
-            } finally {
-                recorder.release()
-                testFile.delete()
+        if (context.packageManager.hasSystemFeature(PackageManager.FEATURE_MICROPHONE))
+            return true
+        val recorder = MediaRecorder()
+        val testFile = File(context.cacheDir, "MediaUtil#micAvailTestFile")
+        return try {
+            with(recorder) {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
+                setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+                setOutputFile(testFile.absolutePath)
+                prepare()
+                start()
             }
+            true
+        } catch (e: IllegalStateException) {
+            // Microphone is already in use
+            true
+        } catch (exception: Exception) {
+            false
+        } finally {
+            recorder.release()
+            testFile.delete()
         }
-        return hasMicrophone
     }
 
-    override val isSpeakerphoneOn: Boolean
-        get() = mAudioManager.isSpeakerphoneOn
+    override fun isSpeakerphoneOn(): Boolean = mAudioManager.isSpeakerphoneOn
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
         .setAudioAttributes(AudioAttributesCompat.Builder()
@@ -151,7 +145,7 @@ class HardwareServiceImpl(
         val callEnded = state == CallStatus.HUNGUP || state == CallStatus.FAILURE || state == CallStatus.OVER
         try {
             if (mBluetoothWrapper == null && !callEnded) {
-                mBluetoothWrapper = BluetoothWrapper(mContext, this)
+                mBluetoothWrapper = BluetoothWrapper(context, this)
             }
             when (state) {
                 CallStatus.RINGING -> {
@@ -239,7 +233,7 @@ class HardwareServiceImpl(
     private fun hasSpeakerphone(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Check FEATURE_AUDIO_OUTPUT to guard against false positives.
-            val packageManager = mContext.packageManager
+            val packageManager = context.packageManager
             if (!packageManager.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
                 return false
             }
@@ -347,9 +341,7 @@ class HardwareServiceImpl(
         }
     }
 
-    override fun hasInput(id: String): Boolean {
-        return videoInputs[id] !== null
-    }
+    override fun hasInput(id: String): Boolean = videoInputs[id] !== null
 
     override fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
@@ -357,23 +349,12 @@ class HardwareServiceImpl(
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() || mPreferenceService.isHardwareAccelerationEnabled)
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
         val minVideoSize: Size = if (useLargerSize) parseResolution(mPreferenceService.resolution) else VIDEO_SIZE_LOW
-        cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, mContext)
-    }
-
-    private fun parseResolution(resolution: Int): Size {
-        return when (resolution) {
-            320 -> VIDEO_SIZE_LOW
-            480 -> VIDEO_SIZE_SD
-            720 -> VIDEO_SIZE_HD
-            1080 -> VIDEO_SIZE_FULL_HD
-            2160 -> VIDEO_SIZE_ULTRA_HD
-            else -> VIDEO_SIZE_HD
-        }
+        cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, context)
     }
 
     override fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int) {
         Log.d(TAG, "setParameters: $camId, $format, $width, $height, $rate")
-        val windowManager = mContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         cameraService.setParameters(camId, format, width, height, rate, windowManager.defaultDisplay.rotation)
     }
 
@@ -423,7 +404,7 @@ class HardwareServiceImpl(
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             val projection = pendingScreenSharingSession ?: return
             pendingScreenSharingSession = null
-            if (!cameraService.startScreenSharing(videoParams, projection, surface, mContext.resources.displayMetrics)) {
+            if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
                 projection.stop()
             }
             return
@@ -558,19 +539,19 @@ class HardwareServiceImpl(
             pendingScreenSharingSession = null
             cameraService.switchInput(setDefaultCamera)
         }
-        switchInput(accountId, callId, "camera://$camId")
+        if (camId != null)
+            switchInput(accountId, callId, "camera://$camId")
     }
 
     override fun setPreviewSettings() {
         setPreviewSettings(cameraService.previewSettings)
     }
 
-    override val cameraCount: Int
-        get() = cameraService.cameraCount
+    override fun cameraCount(): Int = cameraService.getCameraCount()
 
-    override fun hasCamera(): Boolean {
-        return cameraService.hasCamera()
-    }
+    override fun hasCamera(): Boolean = cameraService.hasCamera()
+
+    override fun videoDevices() = cameraService.cameraIds()
 
     override val isPreviewFromFrontCamera: Boolean
         get() = cameraService.isPreviewFromFrontCamera
@@ -588,9 +569,6 @@ class HardwareServiceImpl(
         }*/
     }
 
-    override val videoDevices: List<String>
-        get() = cameraService.cameraIds
-
     private data class Shm (val id: String, val w: Int, val h: Int) {
         var window: Long = 0
     }
@@ -600,7 +578,7 @@ class HardwareServiceImpl(
     }
 
     companion object {
-        private val VIDEO_SIZE_LOW = Size(320, 240)
+        private val VIDEO_SIZE_LOW = Size(480, 320)
         private val VIDEO_SIZE_SD = Size(720, 480)
         private val VIDEO_SIZE_HD = Size(1280, 720)
         private val VIDEO_SIZE_FULL_HD = Size(1920, 1080)
@@ -608,6 +586,15 @@ class HardwareServiceImpl(
         private val VIDEO_SIZE_ULTRA_HD = Size(3840, 2160)
         val VIDEO_SIZE_DEFAULT = VIDEO_SIZE_SD
         val resolutions = listOf(VIDEO_SIZE_ULTRA_HD, VIDEO_SIZE_QUAD_HD, VIDEO_SIZE_FULL_HD, VIDEO_SIZE_HD, VIDEO_SIZE_SD, VIDEO_SIZE_LOW)
+
+        private fun parseResolution(resolution: Int): Size {
+            for (res in resolutions) {
+                if (res.height <= resolution)
+                    return res
+            }
+            return VIDEO_SIZE_DEFAULT
+        }
+
         private val TAG = HardwareServiceImpl::class.simpleName!!
         private var mCameraPreviewSurface = WeakReference<TextureView>(null)
         private var mCameraPluginPreviewSurface = WeakReference<SurfaceView>(null)

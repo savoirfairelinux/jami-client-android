@@ -76,7 +76,7 @@ abstract class HardwareService(
     abstract val isVideoAvailable: Boolean
     abstract fun updateAudioState(state: CallStatus, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean)
     abstract fun closeAudioState()
-    abstract val isSpeakerphoneOn: Boolean
+    abstract fun isSpeakerphoneOn(): Boolean
 
     abstract fun toggleSpeakerphone(checked: Boolean)
     abstract fun startRinging()
@@ -101,7 +101,7 @@ abstract class HardwareService(
     abstract fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean = false, screenCaptureSession: Any? = null)
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
-    abstract val cameraCount: Int
+    abstract fun cameraCount(): Int
     abstract val maxResolutions: Observable<Pair<Int?, Int?>>
     abstract val isPreviewFromFrontCamera: Boolean
     abstract fun shouldPlaySpeaker(): Boolean
@@ -131,25 +131,23 @@ abstract class HardwareService(
     fun startVideo(inputId: String, surface: Any, width: Int, height: Int): Long {
         Log.i(TAG, "startVideo $inputId ${width}x$height")
         val inputWindow = JamiService.acquireNativeWindow(surface)
-        if (inputWindow == 0L) {
-            return inputWindow
+        if (inputWindow != 0L) {
+            JamiService.setNativeWindowGeometry(inputWindow, width, height)
+            JamiService.registerVideoCallback(inputId, inputWindow)
         }
-        JamiService.setNativeWindowGeometry(inputWindow, width, height)
-        JamiService.registerVideoCallback(inputId, inputWindow)
         return inputWindow
     }
 
     fun stopVideo(inputId: String, inputWindow: Long) {
         Log.i(TAG, "stopVideo $inputId $inputWindow")
-        if (inputWindow == 0L) {
-            return
+        if (inputWindow != 0L) {
+            JamiService.unregisterVideoCallback(inputId, inputWindow)
+            JamiService.releaseNativeWindow(inputWindow)
         }
-        JamiService.unregisterVideoCallback(inputId, inputWindow)
-        JamiService.releaseNativeWindow(inputWindow)
     }
 
     abstract fun setDeviceOrientation(rotation: Int)
-    protected abstract val videoDevices: List<String>
+    protected abstract fun videoDevices(): List<String>
     private var logs: Observable<String>? = null
     private var logEmitter: Emitter<String>? = null
 
