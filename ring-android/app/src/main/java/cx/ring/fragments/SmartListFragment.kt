@@ -81,7 +81,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 setOverflowMenuVisible(menu, true)
                 changeSeparatorHeight(false)
                 binding!!.qrCode.visibility = View.GONE
-                binding!!.newGroup!!.visibility = View.GONE
+                binding!!.newGroup.visibility = View.GONE
                 setTabletQRLayout(false)
                 return true
             }
@@ -92,7 +92,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 setOverflowMenuVisible(menu, false)
                 changeSeparatorHeight(true)
                 binding!!.qrCode.visibility = View.VISIBLE
-                binding!!.newGroup!!.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
+                binding!!.newGroup.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
                 setTabletQRLayout(true)
                 return true
             }
@@ -121,37 +121,37 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     fun handleIntent(intent: Intent) {
         val searchView = mSearchView ?: return
-        if (intent.action != null) {
-            when (intent.action) {
-                Intent.ACTION_VIEW, Intent.ACTION_CALL -> searchView.setQuery(intent.dataString, true)
-                Intent.ACTION_DIAL -> {
-                    mSearchMenuItem?.expandActionView()
-                    searchView.setQuery(intent.dataString, false)
-                }
-                Intent.ACTION_SEARCH -> {
-                    mSearchMenuItem?.expandActionView()
-                    searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
-                }
-                else -> {}
+        when (intent.action) {
+            Intent.ACTION_CALL -> {
+                mSearchMenuItem?.expandActionView()
+                searchView.setQuery(intent.dataString, true)
             }
+            Intent.ACTION_DIAL -> {
+                mSearchMenuItem?.expandActionView()
+                searchView.setQuery(intent.dataString, false)
+            }
+            Intent.ACTION_SEARCH -> {
+                mSearchMenuItem?.expandActionView()
+                searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
+            }
+            else -> {}
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_contact_search -> {
-                mSearchView!!.inputType = (EditorInfo.TYPE_CLASS_TEXT
-                        or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-                        )
+                mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
                 return false
             }
             R.id.menu_contact_dial -> {
-                if (mSearchView!!.inputType == EditorInfo.TYPE_CLASS_PHONE) {
-                    mSearchView!!.inputType = EditorInfo.TYPE_CLASS_TEXT
-                    mDialpadMenuItem!!.setIcon(R.drawable.baseline_dialpad_24)
+                val searchView = mSearchView ?: return false
+                if (searchView.inputType == EditorInfo.TYPE_CLASS_PHONE) {
+                    searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
+                    mDialpadMenuItem?.setIcon(R.drawable.baseline_dialpad_24)
                 } else {
-                    mSearchView!!.inputType = EditorInfo.TYPE_CLASS_PHONE
-                    mDialpadMenuItem!!.setIcon(R.drawable.baseline_keyboard_24)
+                    searchView.inputType = EditorInfo.TYPE_CLASS_PHONE
+                    mDialpadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
                 }
                 return true
             }
@@ -186,7 +186,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         setHasOptionsMenu(true)
         return FragSmartlistBinding.inflate(inflater, container, false).apply {
             qrCode.setOnClickListener { presenter.clickQRSearch() }
-            newGroup!!.setOnClickListener{ presenter.clickNewGroup() }
+            newGroup.setOnClickListener{ presenter.clickNewGroup() }
             newconvFab.setOnClickListener { presenter.fabButtonClicked() }
             confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
