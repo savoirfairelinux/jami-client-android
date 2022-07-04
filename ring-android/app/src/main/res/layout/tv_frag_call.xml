@@ -35,24 +35,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:keepScreenOn="true"
         tools:background="@color/cardview_dark_background">
 
-        <SurfaceView
-            android:id="@+id/video_surface"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <androidx.percentlayout.widget.PercentFrameLayout
+        <FrameLayout
             android:layout_gravity="center"
             android:id="@+id/participant_overlay_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@id/video_surface"
-            android:layout_alignBottom="@id/video_surface"
-            android:layout_alignStart="@id/video_surface"
-            android:layout_alignEnd="@id/video_surface"
             android:visibility="gone"/>
 
         <androidx.cardview.widget.CardView
