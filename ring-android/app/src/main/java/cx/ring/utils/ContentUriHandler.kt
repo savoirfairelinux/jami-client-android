@@ -22,6 +22,7 @@ package cx.ring.utils
 import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
+import android.content.res.Resources
 import android.net.Uri
 import androidx.core.content.FileProvider
 import android.os.Build
@@ -47,26 +48,17 @@ object ContentUriHandler {
     val ACCOUNTS_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "accounts")
     val CONTACT_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "contact")
 
-    fun immutable(flags: Int = 0): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            PendingIntent.FLAG_IMMUTABLE or flags
-        else flags
-    }
-    fun mutable(flags: Int = 0): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            PendingIntent.FLAG_MUTABLE or flags
-        else flags
-    }
+    fun immutable(flags: Int = 0): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            PendingIntent.FLAG_IMMUTABLE or flags else flags
+    fun mutable(flags: Int = 0): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            PendingIntent.FLAG_MUTABLE or flags else flags
 
-    fun getUriForResource(context: Context, resourceId: Int): Uri {
-        val resources = context.resources
-        return Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(resourceId))
-            .appendPath(resources.getResourceTypeName(resourceId))
-            .appendPath(resources.getResourceEntryName(resourceId))
-            .build()
-    }
+    fun getUriForResource(resources: Resources, resourceId: Int): Uri = Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        .authority(resources.getResourcePackageName(resourceId))
+        .appendPath(resources.getResourceTypeName(resourceId))
+        .appendPath(resources.getResourceEntryName(resourceId))
+        .build()
 
     /**
      * The following is a workaround used to mitigate getUriForFile exceptions

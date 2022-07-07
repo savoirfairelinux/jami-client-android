@@ -23,7 +23,7 @@ import net.jami.model.Account
 interface LinkDeviceView {
     fun showExportingProgress()
     fun dismissExportingProgress()
-    fun accountChanged(account: Account?)
+    fun accountChanged(account: Account)
     fun showNetworkError()
     fun showPasswordError()
     fun showGenericError()

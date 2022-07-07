@@ -38,7 +38,6 @@ object KeyboardVisibilityManager {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
-    @JvmStatic
     fun hideKeyboard(activity: Activity?) {
         if (null == activity) {
             Log.d(TAG, "hideKeyboard: no activity")

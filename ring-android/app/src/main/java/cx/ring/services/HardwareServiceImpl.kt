@@ -197,8 +197,8 @@ class HardwareServiceImpl(
         mRinger.stopRing()
     }
 
-    override fun onAudioFocusChange(arg0: Int) {
-        Log.i(TAG, "onAudioFocusChange $arg0")
+    override fun onAudioFocusChange(focusChange: Int) {
+        Log.i(TAG, "onAudioFocusChange $focusChange")
     }
 
     @Synchronized

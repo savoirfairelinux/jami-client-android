@@ -28,20 +28,18 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class LinkDevicePresenter @Inject constructor(
-    private val mAccountService: AccountService,
+    private val accountService: AccountService,
     @Named("UiScheduler")
-    private var mUiScheduler: Scheduler
+    private val uiScheduler: Scheduler
 ) : RootPresenter<LinkDeviceView>() {
     private var mAccountID: String? = null
 
-    fun startAccountExport(password: String?) {
-        if (view == null) {
-            return
-        }
-        view?.showExportingProgress()
-        mCompositeDisposable.add(mAccountService
-            .exportOnRing(mAccountID!!, password!!)
-            .observeOn(mUiScheduler)
+    fun startAccountExport(password: String) {
+        val v = view ?: return
+        v.showExportingProgress()
+        mCompositeDisposable.add(accountService
+            .exportOnRing(mAccountID!!, password)
+            .observeOn(uiScheduler)
             .subscribe({ pin: String -> view?.showPIN(pin) })
             { error: Throwable ->
                 view?.dismissExportingProgress()
@@ -56,11 +54,11 @@ class LinkDevicePresenter @Inject constructor(
     fun setAccountId(accountID: String) {
         mCompositeDisposable.clear()
         mAccountID = accountID
-        val account = mAccountService.getAccount(accountID)
-        if (account != null)
+        accountService.getAccount(accountID)?.let { account ->
             view?.accountChanged(account)
-        mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(accountID)
-            .observeOn(mUiScheduler)
+        }
+        mCompositeDisposable.add(accountService.getObservableAccountUpdates(accountID)
+            .observeOn(uiScheduler)
             .subscribe { a: Account -> view?.accountChanged(a) })
     }
 
