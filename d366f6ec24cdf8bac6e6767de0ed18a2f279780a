@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b565303e_af5d4aa1",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/conversation/TvConversationFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-07T15:13:23Z",
+      "side": 1,
+      "message": "I didn\u0027t check the underlying code yet, will do, but for your informations, for the Title, with client-qt, we check:\n\n1. conversation.infos[\"title\"] (from ConfigurationManager::instance().conversationInfos) which is the profile of the conversation (or in the metadatas for conversations requests)\n\n2. The best name of the member(s) of the conversation \n\n\n\n1. can be set with \"updateConversationInfos({{\"title\": \"whatever\"}})",
+      "range": {
+        "startLine": 558,
+        "startChar": 52,
+        "endLine": 558,
+        "endChar": 60
+      },
+      "revId": "d366f6ec24cdf8bac6e6767de0ed18a2f279780a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
