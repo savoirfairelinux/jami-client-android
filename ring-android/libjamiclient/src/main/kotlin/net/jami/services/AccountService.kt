@@ -918,35 +918,6 @@ class AccountService(
         }
     }
 
-    /**
-     * Handles adding contacts and is the initial point of conversation creation
-     *
-     * @param conversation    the user's account
-     * @param contactUri the contacts raw string uri
-     */
-    private fun handleTrustRequest(conversation: Conversation, contactUri: Uri, request: TrustRequest?, type: ContactType) {
-        val event = ContactEvent()
-        when (type) {
-            ContactType.ADDED -> {
-            }
-            ContactType.INVITATION_RECEIVED -> {
-                event.status = InteractionStatus.UNKNOWN
-                event.author = contactUri.rawRingId
-                event.timestamp = request!!.timestamp
-            }
-            ContactType.INVITATION_ACCEPTED -> {
-                event.status = InteractionStatus.SUCCESS
-                event.author = contactUri.rawRingId
-            }
-            ContactType.INVITATION_DISCARDED -> {
-                mHistoryService.clearHistory(contactUri.rawRingId, conversation.accountId, true)
-                    .subscribe()
-                return
-            }
-        }
-        mHistoryService.insertInteraction(conversation.accountId, conversation, event).subscribe()
-    }
-
     private enum class ContactType {
         ADDED, INVITATION_RECEIVED, INVITATION_ACCEPTED, INVITATION_DISCARDED
     }
@@ -973,10 +944,9 @@ class AccountService(
     /**
      * Sends a new trust request
      */
-    fun sendTrustRequest(conversation: Conversation, to: Uri, message: Blob?) {
+    fun sendTrustRequest(conversation: Conversation, to: Uri, message: Blob = Blob()) {
         Log.i(TAG, "sendTrustRequest() " + conversation.accountId + " " + to)
-        handleTrustRequest(conversation, to, null, ContactType.ADDED)
-        mExecutor.execute { JamiService.sendTrustRequest(conversation.accountId, to.rawRingId, message ?: Blob()) }
+        mExecutor.execute { JamiService.sendTrustRequest(conversation.accountId, to.rawRingId, message) }
     }
 
     /**
@@ -984,7 +954,6 @@ class AccountService(
      */
     fun addContact(accountId: String, uri: String) {
         Log.i(TAG, "addContact() $accountId $uri")
-        //handleTrustRequest(accountId, Uri.fromString(uri), null, ContactType.ADDED);
         mExecutor.execute { JamiService.addContact(accountId, uri) }
     }
 

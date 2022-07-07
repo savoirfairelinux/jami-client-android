@@ -78,11 +78,11 @@ class TVContactPresenter @Inject constructor(
     }
 
     private fun sendTrustRequest(accountId: String, conversationUri: Uri) {
-        val conversation = mAccountService.getAccount(accountId)!!.getByUri(conversationUri)
+        val conversation = mAccountService.getAccount(accountId)?.getByUri(conversationUri) ?: return
         mVCardService.loadSmallVCardWithDefault(accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribe({ vCard: VCard ->
-                mAccountService.sendTrustRequest(conversation!!, conversationUri, Blob.fromString(vcardToString(vCard))) })
-            { mAccountService.sendTrustRequest(conversation!!, conversationUri, null) }
+                mAccountService.sendTrustRequest(conversation, conversationUri, Blob.fromString(vcardToString(vCard))) })
+            { mAccountService.sendTrustRequest(conversation, conversationUri) }
     }
 
     fun acceptTrustRequest() {
