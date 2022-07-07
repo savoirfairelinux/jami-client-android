@@ -395,7 +395,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                     val contactBuilder = PreviewProgram.Builder()
                         .setChannelId(channelId)
                         .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
-                        .setTitle(vm.contactName)
+                        .setTitle(vm.title)
                         .setAuthor(vm.uriTitle)
                         .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                         .setPosterArtUri(uri)

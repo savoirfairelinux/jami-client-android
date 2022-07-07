@@ -298,6 +298,7 @@ class AccountService(
                             }*/
                             val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
+                            conversation.updateInfo(info)
                             conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
                             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                                 /*for (Map.Entry<String, String> i : member.entrySet()) {
@@ -1384,8 +1385,7 @@ class AccountService(
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/
-        val modeInt = info["mode"]!!.toInt()
-        val mode = Conversation.Mode.values()[modeInt]
+        val mode = Conversation.Mode.values()[info["mode"]!!.toInt()]
         val uri = Uri(Uri.SWARM_SCHEME, conversationId)
         var c = account.getByUri(uri)//getSwarm(conversationId) ?: account.getByUri(Uri(Uri.SWARM_SCHEME, conversationId))
         var setMode = false
@@ -1400,6 +1400,7 @@ class AccountService(
         }
         val conversation = c
         synchronized(conversation) {
+            conversation.updateInfo(info)
             // Making sure to add contacts before changing the mode
             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                 val memberUri = Uri.fromId(member["uri"]!!)

@@ -56,6 +56,8 @@ class Conversation : ConversationHistory {
     var lastNotified: String? = null
         private set
     private val mMode: Subject<Mode>
+    private var title: String? = null
+    private var description: String? = null
 
     // runtime flag set to true if the user is currently viewing this conversation
     private var mVisible = false
@@ -600,13 +602,17 @@ class Conversation : ConversationHistory {
         symbol.onNext(s)
     }
 
-    fun getColor(): Observable<Int> {
-        return color
+    fun getColor(): Observable<Int> = color
+
+    fun getSymbol(): Observable<CharSequence> = symbol
+
+    fun updateInfo(info: Map<String, String>) {
+        title = info["title"]
+        description = info["description"]
     }
 
-    fun getSymbol(): Observable<CharSequence> {
-        return symbol
-    }
+    fun getTitle() = title
+    fun getDescription() = description
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes

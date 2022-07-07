@@ -120,7 +120,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { conversationItemViewModel ->
-                    binding.convParticipant.text = conversationItemViewModel.contactName
+                    binding.convParticipant.text = conversationItemViewModel.title
                     val fade = binding.photo.drawable !is AvatarDrawable
                     binding.photo.setImageDrawable(AvatarDrawable.Builder()
                         .withViewModel(conversationItemViewModel)

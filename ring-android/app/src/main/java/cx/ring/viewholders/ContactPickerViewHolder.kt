@@ -52,7 +52,7 @@ class ContactPickerViewHolder(b: ItemSmartlistBinding) :
             true
         }
 
-        binding.convParticipant.text = conversation.contactName
+        binding.convParticipant.text = conversation.title
         val fade = binding.photo.drawable !is AvatarDrawable
         binding.photo.setImageDrawable(AvatarDrawable.Builder()
             .withViewModel(conversation)

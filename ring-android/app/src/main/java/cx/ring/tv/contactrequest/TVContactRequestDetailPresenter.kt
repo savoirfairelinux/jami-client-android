@@ -27,7 +27,7 @@ class TVContactRequestDetailPresenter : AbstractDetailsDescriptionPresenter() {
         val viewModel = item as ConversationItemViewModel?
         if (viewModel != null) {
             val id = viewModel.uriTitle
-            val displayName = viewModel.contactName
+            val displayName = viewModel.title
             viewHolder.title.text = displayName
             if (displayName != id)
                 viewHolder.subtitle.text = id

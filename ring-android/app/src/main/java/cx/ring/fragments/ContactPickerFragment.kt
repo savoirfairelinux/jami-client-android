@@ -76,7 +76,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
                 if (checked) {
                     if (mCurrentSelection.add(contact.contact)) {
                         val chip = Chip(requireContext(), null, R.style.Widget_MaterialComponents_Chip_Entry).apply {
-                            text = item.contactName
+                            text = item.title
                             chipIcon = AvatarDrawable.Builder()
                                 .withContact(contact)
                                 .withCircleCrop(true)

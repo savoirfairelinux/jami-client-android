@@ -781,7 +781,7 @@ class NotificationServiceImpl(
             mContactService.getLoadedConversation(conversation).map { vm ->
                 Pair(AvatarFactory.getAvatar(mContext, vm)
                     .map { d -> BitmapUtils.drawableToBitmap(d, avatarSize) }
-                    .blockingGet(), vm.contactName)
+                    .blockingGet(), vm.title)
             }.blockingGet()
         } catch (e: Exception) {
             null

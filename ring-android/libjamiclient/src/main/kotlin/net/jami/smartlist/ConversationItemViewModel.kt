@@ -30,7 +30,7 @@ class ConversationItemViewModel {
     val mode: Conversation.Mode
     val contacts: List<ContactViewModel>
     val uuid: String?
-    val contactName: String
+    val title: String
     private val showPresence: Boolean
     val isOnline: Boolean
     var isChecked = false
@@ -48,7 +48,7 @@ class ConversationItemViewModel {
         uri = contact.contact.uri
         mode = Conversation.Mode.Legacy
         uuid = uri.rawUriString
-        contactName = contact.displayName
+        title = contact.displayName
         this.lastEvent = lastEvent
         showPresence = true
         isOnline = contact.contact.isOnline
@@ -60,7 +60,7 @@ class ConversationItemViewModel {
         uri = contact.contact.uri
         mode = Conversation.Mode.Legacy
         uuid = id
-        contactName = contact.displayName
+        title = contact.displayName
         this.lastEvent = lastEvent
         showPresence = true
         isOnline = contact.contact.isOnline
@@ -72,7 +72,7 @@ class ConversationItemViewModel {
         uri = conversation.uri
         mode = conversation.mode.blockingFirst()
         uuid = uri.rawUriString
-        contactName = getTitle(conversation, contacts)
+        title = getTitle(conversation, contacts)
         val lastEvent = conversation.lastEvent
         this.lastEvent = lastEvent
         selected = conversation.getVisible()
@@ -120,7 +120,7 @@ class ConversationItemViewModel {
     override fun equals(other: Any?): Boolean {
         if (other !is ConversationItemViewModel) return false
         return contacts === other.contacts
-                && contactName == other.contactName
+                && title == other.title
                 && isOnline == other.isOnline
                 && lastEvent === other.lastEvent
     }
@@ -136,6 +136,7 @@ class ConversationItemViewModel {
         }
 
         fun getTitle(conversation: Conversation, contacts: List<ContactViewModel>): String {
+            conversation.getTitle()?.let { title -> return title }
             if (contacts.isEmpty()) {
                 return if (conversation.mode.blockingFirst() == Conversation.Mode.Syncing) { "(Syncing)" } else ""
             } else if (contacts.size == 1) {

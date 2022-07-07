@@ -79,7 +79,6 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
-import net.jami.model.AccountConfig
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -90,7 +89,6 @@ import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.math.min
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -825,7 +823,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to load icon", e)
             }
-            val title = conversation.first.contactName
+            val title = conversation.first.title
             val path = ConversationPath(conversation.first.accountId, conversation.first.uri)
             val key = path.toKey()
             ShortcutInfoCompat.Builder(this, key)

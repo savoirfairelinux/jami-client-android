@@ -21,7 +21,6 @@ package cx.ring.tv.cards.contacts
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import cx.ring.R
@@ -52,7 +51,7 @@ class ContactCardPresenter(context: Context, val conversationFacade: Conversatio
     override fun onBindViewHolder(card: Card, cardView: CardView, disposable: CompositeDisposable) {
         val badge = cardView.badgeImage
         disposable.add(conversationFacade.observeConversation((card as ContactCard).model, card.type.hasPresence())
-            .map { vm -> ConversationView(vm.contactName, vm.uriTitle, AvatarDrawable.Builder()
+            .map { vm -> ConversationView(vm.title, vm.uriTitle, AvatarDrawable.Builder()
                 .withViewModel(vm)
                 .withPresence(false)
                 .withCircleCrop(false)

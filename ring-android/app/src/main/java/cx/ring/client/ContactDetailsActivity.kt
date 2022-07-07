@@ -259,7 +259,7 @@ class ContactDetailsActivity : AppCompatActivity() {
                 .withCircleCrop(true)
                 .build(this))
 
-            supportActionBar?.title = vm.contactName
+            supportActionBar?.title = vm.title
             binding.contactListLayout.visibility =
                 if (conversation.isSwarm) View.VISIBLE else View.GONE
             if (conversation.isSwarm) {
