@@ -307,7 +307,7 @@ class ConversationPresenter @Inject constructor(
         vCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribeOn(Schedulers.computation())
             .subscribe({ vCard -> accountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard)))})
-            { accountService.sendTrustRequest(conversation, contact.uri, null) }
+            { accountService.sendTrustRequest(conversation, contact.uri) }
     }
 
     fun clickOnGoingPane() {
