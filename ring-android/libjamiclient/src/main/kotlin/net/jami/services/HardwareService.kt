@@ -51,13 +51,13 @@ abstract class HardwareService(
         val rot: Int = 0
     )
 
-    class BluetoothEvent (val connected: Boolean)
+    data class BluetoothEvent(val connected: Boolean)
 
     enum class AudioOutput {
         INTERNAL, SPEAKERS, BLUETOOTH
     }
 
-    class AudioState(val outputType: AudioOutput, val outputName: String? = null)
+    data class AudioState(val outputType: AudioOutput, val outputName: String? = null)
 
     protected val videoEvents: Subject<VideoEvent> = PublishSubject.create()
     protected val bluetoothEvents: Subject<BluetoothEvent> = PublishSubject.create()

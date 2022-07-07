@@ -42,10 +42,9 @@ abstract class HistoryService {
     abstract fun getLastMessageNotified(accountId: String, conversationUri: Uri): String?
 
     protected abstract fun deleteAccountHistory(accountId: String)
-    fun clearHistory(accountId: String): Completable {
-        return Completable.fromAction { deleteAccountHistory(accountId) }
-            .subscribeOn(scheduler)
-    }
+    fun clearHistory(accountId: String): Completable = Completable
+        .fromAction { deleteAccountHistory(accountId) }
+        .subscribeOn(scheduler)
 
     /**
      * Clears a conversation's history
@@ -55,8 +54,8 @@ abstract class HistoryService {
      * @param deleteConversation true to completely delete the conversation including contact events
      * @return
      */
-    fun clearHistory(contactId: String, accountId: String, deleteConversation: Boolean): Completable {
-        return if (accountId.isEmpty()) Completable.complete() else Completable.fromAction {
+    fun clearHistory(contactId: String, accountId: String, deleteConversation: Boolean): Completable =
+        if (accountId.isEmpty()) Completable.complete() else Completable.fromAction {
             var deleted = 0
             val conversation = getConversationDataDao(accountId).queryBuilder()
                 .where().eq(ConversationHistory.COLUMN_PARTICIPANT, contactId).queryForFirst() ?: return@fromAction
@@ -74,7 +73,6 @@ abstract class HistoryService {
             deleted += deleteBuilder.delete()
             Log.w(TAG, "clearHistory: removed $deleted elements")
         }.subscribeOn(scheduler)
-    }
 
     /**
      * Clears all interactions in the app. Maintains contact events and actual conversations.
@@ -82,27 +80,22 @@ abstract class HistoryService {
      * @param accounts the list of accounts in the app
      * @return a completable
      */
-    fun clearHistory(accounts: List<Account>): Completable {
-        return Completable.fromAction {
-            for (account in accounts) {
-                getInteractionDataDao(account.accountId).deleteBuilder().let { deleteBuilder ->
-                    deleteBuilder.where().ne(Interaction.COLUMN_TYPE, Interaction.InteractionType.CONTACT.toString())
-                    deleteBuilder.delete()
-                }
+    fun clearHistory(accounts: List<Account>): Completable = Completable.fromAction {
+        for (account in accounts) {
+            getInteractionDataDao(account.accountId).deleteBuilder().let { deleteBuilder ->
+                deleteBuilder.where().ne(Interaction.COLUMN_TYPE, Interaction.InteractionType.CONTACT.toString())
+                deleteBuilder.delete()
             }
-        }.subscribeOn(scheduler)
-    }
+        }
+    }.subscribeOn(scheduler)
 
-    fun updateInteraction(interaction: Interaction, accountId: String): Completable {
-        return Completable.fromAction { getInteractionDataDao(accountId).update(interaction) }
-            .subscribeOn(scheduler)
-    }
+    fun updateInteraction(interaction: Interaction, accountId: String): Completable = Completable
+        .fromAction { getInteractionDataDao(accountId).update(interaction) }
+        .subscribeOn(scheduler)
 
-    fun deleteInteraction(id: Int, accountId: String): Completable {
-        return Completable
-            .fromAction { getInteractionDataDao(accountId).deleteById(id) }
-            .subscribeOn(scheduler)
-    }
+    fun deleteInteraction(id: Int, accountId: String): Completable = Completable
+        .fromAction { getInteractionDataDao(accountId).deleteById(id) }
+        .subscribeOn(scheduler)
 
     /**
      * Inserts an interaction into the database, and if necessary, a conversation
@@ -112,19 +105,17 @@ abstract class HistoryService {
      * @param interaction  the interaction to insert
      * @return a conversation single
      */
-    fun insertInteraction(accountId: String, conversation: Conversation, interaction: Interaction): Completable {
-        return Completable.fromAction {
-            Log.d(TAG, "Inserting interaction for account -> $accountId")
-            val conversationDataDao = getConversationDataDao(accountId)
-            val history = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.participant).queryForFirst() ?:
-            conversationDataDao.createIfNotExists(ConversationHistory(conversation.participant!!))!!
-            //interaction.setConversation(conversation);
-            conversation.id = history.id
-            getInteractionDataDao(accountId).create(interaction)
-        }
-            .doOnError { e: Throwable -> Log.e(TAG, "Can't insert interaction", e) }
-            .subscribeOn(scheduler)
+    fun insertInteraction(accountId: String, conversation: Conversation, interaction: Interaction): Completable = Completable.fromAction {
+        Log.d(TAG, "Inserting interaction for account -> $accountId")
+        val conversationDataDao = getConversationDataDao(accountId)
+        val history = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.participant).queryForFirst() ?:
+        conversationDataDao.createIfNotExists(ConversationHistory(conversation.participant!!))!!
+        //interaction.setConversation(conversation);
+        conversation.id = history.id
+        getInteractionDataDao(accountId).create(interaction)
     }
+        .doOnError { e: Throwable -> Log.e(TAG, "Can't insert interaction", e) }
+        .subscribeOn(scheduler)
 
     /**
      * Loads data required to load the smartlist. Only requires the most recent message or contact action.
@@ -132,11 +123,11 @@ abstract class HistoryService {
      * @param accountId required to query the appropriate account database
      * @return a list of the most recent interactions with each contact
      */
-    fun getSmartlist(accountId: String): Single<List<Interaction>> {
+    fun getSmartlist(accountId: String): Single<List<Interaction>> = Single.fromCallable {
         Log.d(TAG, "Loading smartlist")
-        return Single.fromCallable { // a raw query is done as MAX is not supported by ormlite without a raw query and a raw query cannot be combined with an orm query so a complete raw query is done
-            // raw row mapper maps the sqlite result which is a list of strings, into the interactions object
-            getInteractionDataDao(accountId).queryRaw("""
+        // a raw query is done as MAX is not supported by ormlite without a raw query and a raw query cannot be combined with an orm query so a complete raw query is done
+        // raw row mapper maps the sqlite result which is a list of strings, into the interactions object
+        getInteractionDataDao(accountId).queryRaw("""
     SELECT * FROM (SELECT DISTINCT id, author, conversation, MAX(timestamp), body, type, status, daemon_id, is_read, extra_data from interactions GROUP BY interactions.conversation) as final
     JOIN conversations
     WHERE conversations.id = final.conversation
@@ -154,13 +145,11 @@ abstract class HistoryService {
                     resultColumns[7],
                     resultColumns[8],
                     resultColumns[9]
-                )
-            }).results
-        }
-            .subscribeOn(scheduler)
-            .doOnError { e: Throwable -> Log.e(TAG, "Can't load smartlist from database", e) }
-            .onErrorReturn { ArrayList() }
+                )}).results
     }
+        .subscribeOn(scheduler)
+        .doOnError { e: Throwable -> Log.e(TAG, "Can't load smartlist from database", e) }
+        .onErrorReturn { ArrayList() }
 
     /**
      * Retrieves an entire conversations history
@@ -169,52 +158,47 @@ abstract class HistoryService {
      * @param conversationId the conversation id
      * @return a conversation and all of its interactions
      */
-    fun getConversationHistory(accountId: String, conversationId: Int): Single<List<Interaction>> {
+    fun getConversationHistory(accountId: String, conversationId: Int): Single<List<Interaction>> = Single.fromCallable {
         Log.d(TAG, "Loading conversation history:  Account ID -> $accountId, ConversationID -> $conversationId")
-        return Single.fromCallable {
-            val interactionDataDao = getInteractionDataDao(accountId)
-            interactionDataDao.query(interactionDataDao.queryBuilder()
-                    .orderBy(Interaction.COLUMN_TIMESTAMP, true)
-                    .where().eq(Interaction.COLUMN_CONVERSATION, conversationId)
-                    .prepare())
-        }.subscribeOn(scheduler).doOnError { e: Throwable -> Log.e(TAG, "Can't load conversation from database", e) }
-            .onErrorReturn { ArrayList() }
-    }
+        val interactionDataDao = getInteractionDataDao(accountId)
+        interactionDataDao.query(interactionDataDao.queryBuilder()
+                .orderBy(Interaction.COLUMN_TIMESTAMP, true)
+                .where().eq(Interaction.COLUMN_CONVERSATION, conversationId)
+                .prepare())
+    }.subscribeOn(scheduler)
+        .doOnError { e: Throwable -> Log.e(TAG, "Can't load conversation from database", e) }
+        .onErrorReturn { ArrayList() }
 
-    fun incomingMessage(accountId: String, daemonId: String?, from: String, message: String): Single<TextMessage> {
-        return Single.fromCallable {
-            val fromUri = Uri.fromString(from).uri
-            val conversationDataDao = getConversationDataDao(accountId)
-            val conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, fromUri)
-                    .queryForFirst() ?: ConversationHistory(fromUri).apply {
-                id = conversationDataDao.extractId(conversationDataDao.createIfNotExists(this))
-            }
-            val txt = TextMessage(fromUri, accountId, daemonId, conversation, message)
-            txt.status = InteractionStatus.SUCCESS
-            Log.w(TAG, "New text messsage " + txt.author + " " + txt.daemonId + " " + txt.body)
-            getInteractionDataDao(accountId).create(txt)
-            txt
-        }.subscribeOn(scheduler)
-    }
+    fun incomingMessage(accountId: String, daemonId: String?, from: String, message: String): Single<TextMessage> = Single.fromCallable {
+        val fromUri = Uri.fromString(from).uri
+        val conversationDataDao = getConversationDataDao(accountId)
+        val conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, fromUri)
+                .queryForFirst() ?: ConversationHistory(fromUri).apply {
+            id = conversationDataDao.extractId(conversationDataDao.createIfNotExists(this))
+        }
+        val txt = TextMessage(fromUri, accountId, daemonId, conversation, message)
+        txt.status = InteractionStatus.SUCCESS
+        Log.w(TAG, "New text messsage " + txt.author + " " + txt.daemonId + " " + txt.body)
+        getInteractionDataDao(accountId).create(txt)
+        txt
+    }.subscribeOn(scheduler)
 
-    fun accountMessageStatusChanged(accountId: String, daemonId: String, peer: String, status: InteractionStatus): Single<TextMessage> {
-        return Single.fromCallable {
-            val textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId)
-            if (textList == null || textList.isEmpty()) {
-                throw RuntimeException("accountMessageStatusChanged: not able to find message with id $daemonId in database")
-            }
-            val text = textList[0]
-            val participant = Uri.fromString(peer).uri
-            if (text.conversation!!.participant != participant) {
-                throw RuntimeException("accountMessageStatusChanged: received an invalid text message")
-            }
-            val msg = TextMessage(text)
-            msg.status = status
-            getInteractionDataDao(accountId).update(msg)
-            msg.account = accountId
-            msg
-        }.subscribeOn(scheduler)
-    }
+    fun accountMessageStatusChanged(accountId: String, daemonId: String, peer: String, status: InteractionStatus): Single<TextMessage> = Single.fromCallable {
+        val textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId)
+        if (textList == null || textList.isEmpty()) {
+            throw RuntimeException("accountMessageStatusChanged: not able to find message with id $daemonId in database")
+        }
+        val text = textList[0]
+        val participant = Uri.fromString(peer).uri
+        if (text.conversation!!.participant != participant) {
+            throw RuntimeException("accountMessageStatusChanged: received an invalid text message")
+        }
+        val msg = TextMessage(text)
+        msg.status = status
+        getInteractionDataDao(accountId).update(msg)
+        msg.account = accountId
+        msg
+    }.subscribeOn(scheduler)
 
     companion object {
         private val TAG = HistoryService::class.java.simpleName

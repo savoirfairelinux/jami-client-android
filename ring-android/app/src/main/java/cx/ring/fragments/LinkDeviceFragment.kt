@@ -54,11 +54,14 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     private var mBinding: FragLinkDeviceBinding? = null
     private var mAccountHasPassword = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        super.onCreateView(inflater, container, savedInstanceState)
-        mBinding = FragLinkDeviceBinding.inflate(inflater, container, false)
-        return mBinding!!.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragLinkDeviceBinding.inflate(inflater, container, false).apply {
+            btnStartExport.setOnClickListener { onClickStart() }
+            password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
+                onPasswordEditorAction(pwd, actionId, event)
+            }
+            mBinding = this
+        }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,11 +70,9 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
                 presenter.setAccountId(accountId)
             }
         }
-        mBinding!!.btnStartExport.setOnClickListener { onClickStart() }
-        mBinding!!.password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
-            onPasswordEditorAction(pwd, actionId, event)
+        mBinding?.apply {
+            passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
         }
-        mBinding!!.passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
@@ -91,27 +92,18 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun onResume() {
         super.onResume()
-        addGlobalLayoutListener(requireView())
-    }
-
-    private fun addGlobalLayoutListener(view: View) {
-        view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+        view?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                setPeekHeight(v.measuredHeight)
+                bottomSheetBehaviour?.peekHeight = v.measuredHeight
                 v.removeOnLayoutChangeListener(this)
             }
         })
     }
 
-    fun setPeekHeight(peekHeight: Int) {
-        bottomSheetBehaviour?.peekHeight = peekHeight
-    }
-
     private val bottomSheetBehaviour: BottomSheetBehavior<*>?
         get() {
             val layoutParams = (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
-            val behavior = layoutParams.behavior
-            return if (behavior is BottomSheetBehavior<*>) behavior else null
+            return layoutParams.behavior as BottomSheetBehavior<*>?
         }
 
     override fun showExportingProgress() {
@@ -132,8 +124,8 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         }
     }
 
-    override fun accountChanged(account: Account?) {
-        mAccountHasPassword = account!!.hasPassword()
+    override fun accountChanged(account: Account) {
+        mAccountHasPassword = account.hasPassword()
     }
 
     override fun showNetworkError() {
@@ -159,29 +151,27 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun showPIN(pin: String) {
         dismissExportingProgress()
-        mBinding!!.password.setText("")
-        mBinding!!.passwordLayout.visibility = View.GONE
-        mBinding!!.btnStartExport.visibility = View.GONE
         val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
-        val styledResultText = SpannableString(pined)
-        val pos = pined.lastIndexOf(pin)
-        styledResultText.setSpan(
-            AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER),
-            pos,
-            pos + pin.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        styledResultText.setSpan(StyleSpan(Typeface.BOLD), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        styledResultText.setSpan(RelativeSizeSpan(2.8f), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding!!.accountLinkInfo.text = styledResultText
-        mBinding!!.accountLinkInfo.requestFocus()
+        mBinding?.let { binding ->
+            binding.password.setText("")
+            binding.passwordLayout.visibility = View.GONE
+            binding.btnStartExport.visibility = View.GONE
+            binding.accountLinkInfo.text = SpannableString(pined).apply {
+                val pos = pined.lastIndexOf(pin)
+                setSpan(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(StyleSpan(Typeface.BOLD), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(RelativeSizeSpan(2.8f), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            binding.accountLinkInfo.requestFocus()
+        }
         hideKeyboard(activity)
     }
 
     private fun onClickStart() {
-        mBinding!!.passwordLayout.error = null
-        val password = mBinding!!.password.text.toString()
-        presenter.startAccountExport(password)
+        mBinding?.let { binding ->
+            binding.passwordLayout.error = null
+            presenter.startAccountExport(binding.password.text.toString())
+        }
     }
 
     private fun onPasswordEditorAction(pwd: TextView, actionId: Int, event: KeyEvent?): Boolean {
@@ -199,12 +189,10 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     companion object {
         val TAG = LinkDeviceFragment::class.simpleName!!
-        fun newInstance(accountId: String): LinkDeviceFragment {
-            val fragment = LinkDeviceFragment()
-            val args = Bundle()
-            args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-            fragment.arguments = args
-            return fragment
+        fun newInstance(accountId: String) = LinkDeviceFragment().apply {
+            arguments = Bundle().apply {
+                putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
+            }
         }
     }
 }
