@@ -49,19 +49,13 @@ import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.application.JamiApplication
 import cx.ring.client.MediaViewerActivity
 import cx.ring.databinding.FragConversationTvBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.tv.camera.CustomCameraActivity
-import cx.ring.utils.AndroidFileUtils.copyFileToUri
-import cx.ring.utils.AndroidFileUtils.createAudioFile
-import cx.ring.utils.AndroidFileUtils.getCacheFile
-import cx.ring.utils.AndroidFileUtils.getMimeTypeFromExtension
-import cx.ring.utils.AndroidFileUtils.getSpaceLeft
+import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
@@ -74,6 +68,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.conversation.ConversationView
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
+import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -107,9 +102,8 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         fileName?.let { file -> outState.putString(KEY_AUDIOFILE, file.absolutePath) }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragConversationTvBinding.inflate(inflater, container, false).apply { binding = this }.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragConversationTvBinding.inflate(inflater, container, false).apply { binding = this }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -222,7 +216,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
         val input = File(path)
-        mCompositeDisposable.add(copyFileToUri(cr, input, data)
+        mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(cr, input, data)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
             { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
@@ -257,7 +251,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             return
         }
         val activity = activity ?: return
-        val file = getCacheFile(activity, media)
+        val file = AndroidFileUtils.getCacheFile(activity, media)
         val alertDialog =
             MaterialAlertDialogBuilder(activity, R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(if (type == CustomCameraActivity.TYPE_IMAGE) R.string.tv_send_image_dialog_message else R.string.tv_send_video_dialog_message)
@@ -341,7 +335,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun shareFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
+            val fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
             val type = c.contentResolver.getType(fileUri)
             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                 setDataAndType(fileUri, type)
@@ -360,7 +354,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun openFile(path: File, displayName: String) {
         val c = context ?: return
         try {
-            val fileUri = getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
+            val fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path)
             val type = c.contentResolver.getType(fileUri)
             val openIntent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(fileUri, type)
@@ -389,7 +383,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         try {
             // Use Android Storage File Access to download the file
             val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            downloadFileIntent.type = getMimeTypeFromExtension(file.extension)
+            downloadFileIntent.type = AndroidFileUtils.getMimeTypeFromExtension(file.extension)
             downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
             downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
@@ -468,7 +462,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             return
         }
         try {
-            fileName = createAudioFile(requireContext())
+            fileName = AndroidFileUtils.createAudioFile(requireContext())
             recorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFile(fileName!!.absolutePath)
@@ -561,43 +555,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>) {
-        //val contacts = conversation.contact ?: return
-        mCompositeDisposable.clear()
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, contacts, true)
-            .subscribe { d: Drawable ->
-                mConversationAvatar = d as AvatarDrawable?
-                mParticipantAvatars[conversation.uri.uri] = AvatarDrawable(d)
-            })
-            /*.flatMapObservable { contacts.updatesSubject }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { c: Contact ->
-                val id = c.ringUsername
-                val displayName = c.displayName
-                if (binding != null) {
-                    binding!!.title.text = displayName
-                    if (TextUtils.isEmpty(displayName) || displayName != id)
-                        binding!!.subtitle.text = id
-                    else
-                        binding!!.subtitle.visibility = View.GONE
-                }
-                mConversationAvatar!!.update(c)
-                mParticipantAvatars[contacts.primaryNumber]?.update(c)
-                mAdapter?.setPhoto()
-            })*/
-
-        for (c in contacts) {
-            val id = c.displayUri
-            val displayName = c.displayName
-            binding?.let { binding ->
-                binding.title.text = displayName
-                if (TextUtils.isEmpty(displayName) || displayName != id)
-                    binding.subtitle.text = id
-                else
-                    binding.subtitle.visibility = View.GONE
-            }
-            mConversationAvatar!!.update(c)
-            mParticipantAvatars[c.contact.primaryNumber]?.update(c)
-            mAdapter?.setPhoto()
+        val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
+        val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
+        binding?.let { binding ->
+            binding.title.text = displayName
+            if (TextUtils.isEmpty(displayName) || displayName != identity)
+                binding.subtitle.text = identity
+            else
+                binding.subtitle.visibility = View.GONE
         }
     }
 
@@ -675,7 +640,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun openFilePicker() {}
     override fun acceptFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
         val cacheDir = requireContext().cacheDir
-        val spaceLeft = getSpaceLeft(cacheDir.toString())
+        val spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString())
         if (spaceLeft == -1L || transfer.totalSize > spaceLeft) {
             presenter.noSpaceLeft()
             return

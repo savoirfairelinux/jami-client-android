@@ -27,14 +27,12 @@ import androidx.leanback.widget.Presenter
 import cx.ring.R
 import cx.ring.tv.conversation.TvConversationFragment
 import cx.ring.utils.ConversationPath
+import net.jami.model.Conversation
 import net.jami.smartlist.ConversationItemViewModel
 
 class TVContactDetailPresenter : Presenter() {
-    override fun onCreateViewHolder(viewGroup: ViewGroup): ViewHolder {
-        return CustomViewHolder(
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.tv, viewGroup, false)
-        )
-    }
+    override fun onCreateViewHolder(viewGroup: ViewGroup): ViewHolder = CustomViewHolder(
+        LayoutInflater.from(viewGroup.context).inflate(R.layout.tv, viewGroup, false))
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
         (viewHolder as CustomViewHolder).bind(item as ConversationItemViewModel)

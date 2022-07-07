@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import net.jami.daemon.Blob
 import net.jami.services.ConversationFacade
 import net.jami.model.Call
+import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
@@ -48,9 +49,14 @@ class TVContactPresenter @Inject constructor(
         mAccountId = path.accountId
         mUri = path.conversationUri
         mCompositeDisposable.clear()
-        mCompositeDisposable.add(mConversationService.observeConversation(path.accountId, path.conversationUri, true)
+
+        mCompositeDisposable.add(mConversationService.getAccountSubject(path.accountId)
+            .flatMapObservable { account ->
+                val conversation = account.getByUri(path.conversationUri)!!
+                mConversationService.observeConversation(account, conversation, true).map { vm -> Pair(account, vm) }
+            }
             .observeOn(mUiScheduler)
-            .subscribe({ c: ConversationItemViewModel -> view?.showContact(c) }, {view?.finishView()}))
+            .subscribe({(account, c) -> view?.showContact(account, c) }, {view?.finishView()}))
     }
 
     fun contactClicked() {
@@ -78,11 +84,11 @@ class TVContactPresenter @Inject constructor(
     }
 
     private fun sendTrustRequest(accountId: String, conversationUri: Uri) {
-        val conversation = mAccountService.getAccount(accountId)!!.getByUri(conversationUri)
+        val conversation = mAccountService.getAccount(accountId)?.getByUri(conversationUri) ?: return
         mVCardService.loadSmallVCardWithDefault(accountId, VCardService.MAX_SIZE_REQUEST)
             .subscribe({ vCard: VCard ->
-                mAccountService.sendTrustRequest(conversation!!, conversationUri, Blob.fromString(vcardToString(vCard))) })
-            { mAccountService.sendTrustRequest(conversation!!, conversationUri, null) }
+                mAccountService.sendTrustRequest(conversation, conversationUri, Blob.fromString(vcardToString(vCard))) })
+            { mAccountService.sendTrustRequest(conversation, conversationUri) }
     }
 
     fun acceptTrustRequest() {

@@ -33,7 +33,5 @@ class TVContactActivity : FragmentActivity() {
 
     companion object {
         const val SHARED_ELEMENT_NAME = "photo"
-        const val TYPE_CONTACT_REQUEST_INCOMING = "incoming"
-        const val TYPE_CONTACT_REQUEST_OUTGOING = "outgoing"
     }
 }

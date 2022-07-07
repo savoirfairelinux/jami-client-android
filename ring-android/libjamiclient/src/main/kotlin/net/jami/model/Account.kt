@@ -97,8 +97,10 @@ class Account(
 
     fun isContact(conversation: Conversation): Boolean {
         val contact = conversation.contact
-        return contact != null && getContact(contact.uri.rawRingId) != null
+        return contact != null && isContact(contact.uri)
     }
+
+    fun isContact(uri: Uri): Boolean = getContact(uri.rawRingId) != null
 
     fun conversationStarted(conversation: Conversation) {
         //Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
