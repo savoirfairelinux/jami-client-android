@@ -82,9 +82,9 @@ android {
 dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation ("androidx.core:core-ktx:1.7.0")
-    implementation ("androidx.appcompat:appcompat:1.4.1")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation ("androidx.core:core-ktx:1.8.0")
+    implementation ("androidx.appcompat:appcompat:1.4.2")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.legacy:legacy-support-core-utils:1.0.0")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.0")
@@ -95,8 +95,8 @@ dependencies {
     implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation ("com.google.android.material:material:1.6.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
+    implementation ("com.google.android.material:material:1.6.1")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.13")
 
