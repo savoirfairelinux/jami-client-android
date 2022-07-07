@@ -44,7 +44,6 @@ import cx.ring.tv.cards.*
 import cx.ring.tv.cards.contacts.ContactCard
 import cx.ring.tv.cards.iconcards.IconCard
 import cx.ring.tv.cards.iconcards.IconCardHelper
-import cx.ring.tv.contact.TVContactActivity
 import cx.ring.tv.contact.TVContactFragment
 import cx.ring.tv.search.SearchActivity
 import cx.ring.tv.settings.TVSettingsActivity
@@ -302,15 +301,12 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         override fun onItemClicked(itemViewHolder: Presenter.ViewHolder, item: Any, rowViewHolder: RowPresenter.ViewHolder, row: Row) {
             if (item is ContactCard) {
                 val model = item.model
-                val bundle = ConversationPath.toBundle(model.accountId, model.uri)
-                if (row === requestsRow) {
-                    bundle.putString("type", TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING)
+                val contactFragment = TVContactFragment().apply {
+                    arguments = ConversationPath.toBundle(model.accountId, model.uri)
                 }
-                val mContactFragment = TVContactFragment()
-                mContactFragment.arguments = bundle
                 parentFragmentManager.beginTransaction()
                     .hide(this@MainFragment)
-                    .add(R.id.fragment_container, mContactFragment, TVContactFragment.TAG)
+                    .add(R.id.fragment_container, contactFragment, TVContactFragment.TAG)
                     .addToBackStack(TVContactFragment.TAG)
                     .commit()
             } else if (item is IconCard) {

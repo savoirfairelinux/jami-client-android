@@ -37,6 +37,8 @@ import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.model.Account
+import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
@@ -46,42 +48,27 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     private val mDisposableBag = CompositeDisposable()
     private var mAdapter: ArrayObjectAdapter? = null
     private var iconSize = -1
-    private var isIncomingRequest = false
-    private var isOutgoingRequest = false
     private lateinit var mConversationPath: ConversationPath
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val type: String?
-        if (arguments != null) {
-            mConversationPath = ConversationPath.fromBundle(arguments)!!
-            type = arguments?.getString("type")
-        } else {
-            mConversationPath = ConversationPath.fromIntent(requireActivity().intent)!!
-            type = activity?.intent?.type
-        }
-        if (type != null) {
-            when (type) {
-                TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING -> isIncomingRequest = true
-                TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING -> isOutgoingRequest = true
-            }
-        }
-        setupAdapter()
-        val res = resources
-        iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size)
+        mConversationPath = if (arguments != null)
+            ConversationPath.fromBundle(arguments)!!
+        else
+            ConversationPath.fromIntent(requireActivity().intent)!!
+        iconSize = resources.getDimensionPixelSize(R.dimen.tv_avatar_size)
         presenter.setContact(mConversationPath)
+
+        setupAdapter()
     }
 
     private fun setupAdapter() {
         // Set detail background and style.
-        val detailsPresenter: FullWidthDetailsOverviewRowPresenter = if (isIncomingRequest || isOutgoingRequest) {
-            FullWidthDetailsOverviewRowPresenter(TVContactRequestDetailPresenter(),DetailsOverviewLogoPresenter())
-        } else {
-            FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter())
+        val detailsPresenter =  FullWidthDetailsOverviewRowPresenter(TVContactDetailPresenter(), DetailsOverviewLogoPresenter()).apply {
+            backgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
+            actionsBackgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
+            initialState = FullWidthDetailsOverviewRowPresenter.STATE_HALF
         }
-        detailsPresenter.backgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_background)
-        detailsPresenter.actionsBackgroundColor = ContextCompat.getColor(requireContext(), R.color.tv_contact_row_background)
-        detailsPresenter.initialState = FullWidthDetailsOverviewRowPresenter.STATE_HALF
 
         // Hook up transition element.
         val activity: Activity? = activity
@@ -103,10 +90,11 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                         .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
             }
         }
-        val mPresenterSelector = ClassPresenterSelector()
-        mPresenterSelector.addClassPresenter(DetailsOverviewRow::class.java, detailsPresenter)
-        mPresenterSelector.addClassPresenter(ListRow::class.java, ListRowPresenter())
-        mAdapter = ArrayObjectAdapter(mPresenterSelector)
+        mAdapter?.clear()
+        mAdapter = ArrayObjectAdapter(ClassPresenterSelector().apply {
+            addClassPresenter(DetailsOverviewRow::class.java, detailsPresenter)
+            addClassPresenter(ListRow::class.java, ListRowPresenter())
+        })
         adapter = mAdapter
     }
 
@@ -117,7 +105,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         }
     }
 
-    override fun showContact(model: ConversationItemViewModel) {
+    override fun showContact(account: Account, model: ConversationItemViewModel) {
         val context = requireContext()
         val row = DetailsOverviewRow(model)
         val avatar = AvatarDrawable.Builder()
@@ -127,17 +115,28 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         avatar.setInSize(iconSize)
         row.imageDrawable = avatar
         val adapter = ArrayObjectAdapter()
-        if (isIncomingRequest) {
+        var isRequest = true
+        if (model.mode == Conversation.Mode.Request) {
             adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
             adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
             adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
-        } else if (isOutgoingRequest) {
-            adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
-        } else {
+        } else if (model.isSwarm || account.isContact(model.uri)) {
+            isRequest = false
             adapter.add(Action(ACTION_CALL, resources.getString(R.string.ab_action_video_call), null, context.getDrawable(R.drawable.baseline_videocam_24)))
             adapter.add(Action(ACTION_MORE, resources.getString(R.string.tv_action_more), null, context.getDrawable(R.drawable.baseline_more_vert_24)))
+        } else {
+            val req = account.getRequest(model.uri)
+            if (req == null) {
+                adapter.add(Action(ACTION_ADD_CONTACT, resources.getString(R.string.ab_action_contact_add)))
+            } else {
+                adapter.add(Action(ACTION_ACCEPT, resources.getString(R.string.accept)))
+                adapter.add(Action(ACTION_REFUSE, resources.getString(R.string.refuse)))
+                adapter.add(Action(ACTION_BLOCK, resources.getString(R.string.block)))
+            }
         }
+        //setupAdapter(isRequest)
         row.actionsAdapter = adapter
+        mAdapter?.clear()
         mAdapter?.add(row)
     }
 
@@ -155,9 +154,6 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun switchToConversationView() {
-        isIncomingRequest = false
-        isOutgoingRequest = false
-        setupAdapter()
         presenter.setContact(mConversationPath)
     }
 

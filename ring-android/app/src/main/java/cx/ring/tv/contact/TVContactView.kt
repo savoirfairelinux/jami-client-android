@@ -20,11 +20,12 @@
  */
 package cx.ring.tv.contact
 
+import net.jami.model.Account
 import net.jami.model.Uri
 import net.jami.smartlist.ConversationItemViewModel
 
 interface TVContactView {
-    fun showContact(model: ConversationItemViewModel)
+    fun showContact(account: Account, model: ConversationItemViewModel)
     fun callContact(accountId: String, conversationUri: Uri, uri: Uri)
     fun goToCallActivity(id: String)
     fun switchToConversationView()

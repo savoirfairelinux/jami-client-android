@@ -152,12 +152,9 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
 
     override fun displayContactDetails(model: Conversation) {
         try {
-            val intent = Intent(activity, TVContactActivity::class.java)
-            intent.setDataAndType(
+            startActivity(Intent(Intent.ACTION_VIEW,
                 ConversationPath.toUri(model.accountId, model.uri),
-                TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING
-            )
-            startActivity(intent)
+                activity, TVContactActivity::class.java))
             activity?.finish()
         } catch (e: Exception) {
             Log.e(TAG, "Error starting activity", e)

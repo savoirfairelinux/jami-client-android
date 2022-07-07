@@ -256,7 +256,7 @@ class ConversationFacade(
         return observeConversation(account, conversation, hasPresence)
     }
 
-    private fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> =
+    fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> =
          Observable.combineLatest(account.getConversationSubject()
             .filter { c: Conversation -> c == conversation }
             .startWithItem(conversation),
