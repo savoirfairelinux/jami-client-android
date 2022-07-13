@@ -30,11 +30,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.database.ContentObserver
-import android.net.ConnectivityManager
-import android.net.Uri
+import android.net.*
+import android.net.ConnectivityManager.NetworkCallback
 import android.os.*
 import android.provider.ContactsContract
-import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.RemoteInput
 import androidx.legacy.content.WakefulBroadcastReceiver
@@ -47,12 +46,12 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.services.ConversationFacade
 import net.jami.model.Conversation
 import net.jami.model.Settings
 import net.jami.services.*
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @AndroidEntryPoint
 class DRingService : Service() {
@@ -102,6 +101,36 @@ class DRingService : Service() {
     private val mDisposableBag = CompositeDisposable()
     private val mConnectivityChecker = Runnable { updateConnectivityState() }
 
+    private val monitor = object : NetworkCallback() {
+        private val networkRequest: NetworkRequest = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
+            .addTransportType(NetworkCapabilities.TRANSPORT_VPN)
+            //.addTransportType(NetworkCapabilities.TRANSPORT_USB)
+            .build()
+
+        fun enable(context: Context) {
+            val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
+            connectivityManager?.registerNetworkCallback(networkRequest, this)
+        }
+
+        fun disable(context: Context) {
+            val connectivityManager = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
+            connectivityManager?.unregisterNetworkCallback(this)
+        }
+
+        override fun onAvailable(network: Network) {
+            Log.w(TAG, "onAvailable ${network}")
+            updateConnectivityState(true)
+        }
+
+        override fun onUnavailable() {
+            Log.w(TAG, "onUnavailable")
+            updateConnectivityState(false)
+        }
+    }
+
     private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
@@ -139,6 +168,7 @@ class DRingService : Service() {
         mDisposableBag.add(mPreferencesService.settingsSubject.subscribe { settings: Settings ->
             showSystemNotification(settings)
         })
+        monitor.enable(this)
         JamiApplication.instance!!.apply {
             bindDaemon()
             bootstrapDaemon()
@@ -150,6 +180,7 @@ class DRingService : Service() {
         Log.i(TAG, "onDestroy()")
         unregisterReceiver(receiver)
         contentResolver.unregisterContentObserver(contactContentObserver)
+        monitor.disable(this)
         mHardwareService.unregisterCameraDetectionCallback()
         mDisposableBag.clear()
         isRunning = false
@@ -184,11 +215,12 @@ class DRingService : Service() {
      * *********************************
      */
     private fun updateConnectivityState() {
+        updateConnectivityState(mPreferencesService.hasNetworkConnected())
+    }
+
+    private fun updateConnectivityState(isConnected: Boolean) {
         if (mDaemonService.isStarted) {
-            val isConnected = mPreferencesService.hasNetworkConnected()
             mAccountService.setAccountsActive(isConnected)
-            // Execute connectivityChanged to reload UPnP
-            // and reconnect active accounts if necessary.
             mHardwareService.connectivityChanged(isConnected)
         }
     }
