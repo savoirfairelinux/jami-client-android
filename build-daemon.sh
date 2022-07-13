@@ -13,7 +13,8 @@ if [ -z "$ANDROID_ABI" ]; then
 fi
 
 platform=$(echo "`uname`" | tr '[:upper:]' '[:lower:]')
-arch=`uname -m`
+arch='x86_64'
+#arch=`uname -m`
 
 ANDROID_TOPLEVEL_DIR="`pwd`"
 ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
@@ -89,7 +90,7 @@ PACKAGEDIR=$ANDROID_APP_DIR/libjamiclient/src/main/java/net/jami/daemon $JNIDIR/
 
 # Setup cross-compilation build environemnt
 export AR=$TOOLCHAIN/bin/llvm-ar
-export AS=$TOOLCHAIN/bin/$TARGET-as
+export AS="$TOOLCHAIN/bin/$TARGET_CC$API-clang -c"
 export CC=$TOOLCHAIN/bin/$TARGET_CC$API-clang
 export CXX=$TOOLCHAIN/bin/$TARGET_CC$API-clang++
 export LD=$TOOLCHAIN/bin/ld
@@ -185,7 +186,8 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 LIBRING_JNI_UNSTRIPPED_DIR=${ANDROID_APP_DIR}/unstripped/${ANDROID_ABI}
-LIBCPP=$ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so
+#LIBCPP=$ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so
+LIBCPP=$TOOLCHAIN/sysroot/usr/lib/$TARGET/libc++_shared.so
 
 echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
