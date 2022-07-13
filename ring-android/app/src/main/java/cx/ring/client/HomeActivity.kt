@@ -401,11 +401,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .map { list -> list[0].firstOrError() }
                         .firstElement()
                         .flatMapSingle { e -> e }
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe { element ->
-                            startConversation(
-                                element.accountId,
-                                element.uri
-                            )
+                            startConversation(element.accountId, element.uri)
                         })
                 }
             }
@@ -422,10 +420,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .firstElement()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { account ->
-                startConversation(
-                    account.accountId,
-                    Uri.fromString(conversationId)
-                )
+                startConversation(account.accountId, Uri.fromString(conversationId))
             })
     }
 
