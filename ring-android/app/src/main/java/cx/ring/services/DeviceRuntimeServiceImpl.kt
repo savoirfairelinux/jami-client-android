@@ -58,7 +58,7 @@ class DeviceRuntimeServiceImpl(
 
     override fun loadNativeLibrary() {
         logService.w(TAG, "loadNativeLibrary")
-        mExecutor.execute {
+        //mExecutor.execute {
             Log.w(TAG, "System.loadLibrary")
             try {
                 System.loadLibrary("ring")
@@ -67,7 +67,7 @@ class DeviceRuntimeServiceImpl(
                 Process.killProcess(Process.myPid())
                 exitProcess(0)
             }
-        }
+        //}
     }
 
     override fun provideFilesDir(): File = mContext.filesDir
