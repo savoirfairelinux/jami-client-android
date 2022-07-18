@@ -312,8 +312,12 @@ class AccountService(
                                     contact = account.getContactFromCache(uri)
                                     conversation.addContact(contact)
                                 }
-                                if (!lastDisplayed.isNullOrEmpty() && contact.isUser) {
-                                    conversation.setLastMessageRead(lastDisplayed)
+                                if (!lastDisplayed.isNullOrEmpty()) {
+                                    if (contact.isUser) {
+                                        conversation.setLastMessageRead(lastDisplayed)
+                                    } else {
+                                        conversation.setLastMessageDisplayed(uri.host, lastDisplayed)
+                                    }
                                 }
                             }
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
@@ -1100,25 +1104,18 @@ class AccountService(
         incomingMessageSubject.onNext(Message(accountId, messageId, callId, from, messages))
     }
 
-    fun accountMessageStatusChanged(
-        accountId: String,
-        conversationId: String,
-        messageId: String,
-        peer: String,
-        status: Int
-    ) {
+    fun accountMessageStatusChanged(accountId: String, conversationId: String, messageId: String, contactId: String, status: Int) {
         val newStatus = InteractionStatus.fromIntTextMessage(status)
-        Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $peer, $newStatus")
+        Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $contactId, $newStatus")
         if (conversationId.isEmpty()) {
             mHistoryService
-                .accountMessageStatusChanged(accountId, messageId, peer, newStatus)
+                .accountMessageStatusChanged(accountId, messageId, contactId, newStatus)
                 .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
                     Log.e(TAG, "Error updating message: " + e.localizedMessage) }
         } else {
-            val msg = Interaction(accountId)
-            msg.status = newStatus
-            msg.setSwarmInfo(conversationId, messageId, null)
-            messageSubject.onNext(msg)
+            getAccount(accountId)
+                ?.getSwarm(conversationId)
+                ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), newStatus)
         }
     }
 

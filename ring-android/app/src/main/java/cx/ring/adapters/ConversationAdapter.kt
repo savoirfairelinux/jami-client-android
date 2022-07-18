@@ -51,6 +51,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
@@ -95,8 +96,8 @@ class ConversationAdapter(
     @ColorInt private var convColor = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
-    private var lastDisplayedPosition = -1
-    private val timestampUpdateTimer: Observable<Long>
+    private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        .startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
     private var mShowReadIndicator = true
@@ -256,6 +257,16 @@ class ConversationAdapter(
         return ConversationViewHolder(v, type)
     }
 
+    private fun configureDisplayIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+        conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
+            .getLoadedContact(interaction.account!!,
+                interaction.conversation as Conversation?, interaction.displayedContacts)
+            .subscribe { contacts ->
+                conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
+                conversationViewHolder.mStatusIcon?.update(contacts)
+            })
+    }
+
     override fun onBindViewHolder(conversationViewHolder: ConversationViewHolder, position: Int) {
         if (isComposing && position == mInteractions.size) {
             configureForTypingIndicator(conversationViewHolder)
@@ -269,6 +280,10 @@ class ConversationAdapter(
             animation.startOffset = 150
             conversationViewHolder.itemView.startAnimation(animation)
         }
+
+        conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
+
+        //conversationViewHolder.mStatusIcon?. // (conversationViewHolder.itemView as ViewGroup).addView()
 
         //Log.w(TAG, "onBindViewHolder " + interaction.getType() + " " + interaction);
         val type = interaction.type
@@ -333,20 +348,6 @@ class ConversationAdapter(
 
     fun setReadIndicatorStatus(show: Boolean) {
         mShowReadIndicator = show
-    }
-
-    fun setLastDisplayed(interaction: Interaction) {
-        Log.w(TAG, "setLastDisplayed " + interaction.daemonId)
-        for (i in mInteractions.indices.reversed()) {
-            val element = mInteractions[i]
-            if (interaction.id == element.id) {
-                if (lastDisplayedPosition != -1) notifyItemChanged(lastDisplayedPosition)
-                lastDisplayedPosition = i
-                notifyItemChanged(i)
-                Log.w(TAG, "new displayed item $i")
-                break
-            }
-        }
     }
 
     private class RecyclerViewContextMenuInfo(
@@ -549,7 +550,6 @@ class ConversationAdapter(
                     TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
             }
         })
-        viewHolder.compositeDisposable.clear()
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                 viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
@@ -566,7 +566,7 @@ class ConversationAdapter(
                 if (contact != null)
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
-        } else {
+        } /*else {
             val statusIcon = viewHolder.mStatusIcon ?: return
             when (interaction.status) {
                 InteractionStatus.SENDING -> {
@@ -587,7 +587,7 @@ class ConversationAdapter(
                     lastDeliveredPosition = position
                 }
             }
-        }
+        }*/
         val type = viewHolder.type.transferType
         val longPressView = when (type) {
             MessageType.TransferType.IMAGE -> viewHolder.mImage
@@ -660,7 +660,7 @@ class ConversationAdapter(
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
         AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->
-            viewHolder.mStatusIcon?.setImageDrawable(anim)
+            viewHolder.mIcon?.setImageDrawable(anim)
             anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
                 override fun onAnimationEnd(drawable: Drawable) {
                     anim.start()
@@ -798,7 +798,7 @@ class ConversationAdapter(
                     avatar.visibility = View.INVISIBLE
                 }
             }
-        } else {
+        } /* else {
             val statusIcon = convViewHolder.mStatusIcon ?: return
             when (textMessage.status) {
                 InteractionStatus.SENDING -> {
@@ -825,7 +825,7 @@ class ConversationAdapter(
                     statusIcon.setImageDrawable(null)
                 }
             }
-        }
+        }*/
         setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1082,7 +1082,5 @@ class ConversationAdapter(
             .fitCenter()
             .override(mPictureMaxSize)
             .transform(RoundedCorners(corner))
-        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-            .startWithItem(0L)
     }
 }
