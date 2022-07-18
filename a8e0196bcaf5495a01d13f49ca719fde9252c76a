@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc822521_cf878a41",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-18T14:34:26Z",
+      "side": 1,
+      "message": "not related but seems a bit ugly",
+      "range": {
+        "startLine": 896,
+        "startChar": 59,
+        "endLine": 896,
+        "endChar": 74
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e98ba98_9ffcbe21",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-18T14:34:26Z",
+      "side": 1,
+      "message": "I get an issue with 5 videos (1 local, 4 remotes)\n\nIn vertical mode, I see preview + 1 column of 4 videos (ok), but in horizontal mode I see 1 preview + 3 videos (not the fourth one) and no scroll available.\n\n\nAlso, if one video get maximized, other previews overlaps  on the top left.",
+      "range": {
+        "startLine": 907,
+        "startChar": 13,
+        "endLine": 907,
+        "endChar": 76
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "962e1aff_c4d3a4ad",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-18T14:34:26Z",
+      "side": 1,
+      "message": "maybe some cleanup as a lot got commented out",
+      "range": {
+        "startLine": 173,
+        "startChar": 9,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
