@@ -292,7 +292,7 @@ class AccountService(
                     Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
                     for (conversationId in conversations) {
                         try {
-                            val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId).toNative()
+                            val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId)
                             /*for (Map.Entry<String, String> i : info.entrySet()) {
                                 Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                             }*/
@@ -342,12 +342,6 @@ class AccountService(
                             account.addRequest(TrustRequest(account.accountId, from, received, null, conversationUri))
                         }
                     }
-                    /*if (enabled) {
-                        for (contact in account.contacts.values) {
-                            if (!contact.isUsernameLoaded)
-                                JamiService.lookupAddress(accountId, "", contact.uri.rawRingId)
-                        }
-                    }*/
                 }
             }
             mHasSipAccount = hasSip
@@ -713,8 +707,8 @@ class AccountService(
      * @param deviceId  id of the device to revoke
      * @param password  password of the account
      */
-    fun revokeDevice(accountId: String, password: String, deviceId: String): Single<Int> {
-        return mDeviceRevocationSubject
+    fun revokeDevice(accountId: String, password: String, deviceId: String): Single<Int> =
+        mDeviceRevocationSubject
             .filter { r: DeviceRevocationResult -> r.accountId == accountId && r.deviceId == deviceId }
             .firstOrError()
             .map { r: DeviceRevocationResult -> r.code }
@@ -722,7 +716,6 @@ class AccountService(
                 JamiService.revokeDevice(accountId, password, deviceId)
             }}
             .subscribeOn(Schedulers.io())
-    }
 
     /**
      * @param accountId id of the account used with the device
@@ -1121,14 +1114,7 @@ class AccountService(
 
     fun composingStatusChanged(accountId: String, conversationId: String, contactUri: String, status: Int) {
         Log.d(TAG, "composingStatusChanged: $accountId, $contactUri, $conversationId, $status")
-        getAccountSingle(accountId)
-            .subscribe { account: Account ->
-                account.composingStatusChanged(
-                    conversationId,
-                    Uri.fromId(contactUri),
-                    Account.ComposingStatus.fromInt(status)
-                )
-            }
+        getAccount(accountId)?.composingStatusChanged(conversationId, Uri.fromId(contactUri), Account.ComposingStatus.fromInt(status))
     }
 
     fun errorAlert(alert: Int) {
@@ -1254,11 +1240,7 @@ class AccountService(
         searchResultSubject.onNext(r)
     }
 
-    private fun addMessage(
-        account: Account,
-        conversation: Conversation,
-        message: Map<String, String>
-    ): Interaction {
+    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, isNew: Boolean = false): Interaction {
         /*for ((key, value) in message) {
             Log.w(TAG, "$key -> $value")
         }*/
@@ -1317,6 +1299,11 @@ class AccountService(
                 Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
                     message["duration"]?.let { d -> duration = d.toLong() }
                 }
+            "application/update-profile" -> {
+                if (isNew)
+                    conversation.updateInfo(JamiService.conversationInfos(account.accountId, conversation.uri.rawRingId))
+                Interaction(conversation, Interaction.InteractionType.INVALID)
+            }
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
@@ -1456,7 +1443,7 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message)
+                val interaction = addMessage(account, conversation, message, isNew = true)
                 account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)

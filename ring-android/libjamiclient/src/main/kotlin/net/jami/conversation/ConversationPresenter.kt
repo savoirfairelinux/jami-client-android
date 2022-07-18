@@ -112,25 +112,22 @@ class ConversationPresenter @Inject constructor(
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
     }
 
-    private fun initContact(
-        account: Account,
-        conversation: Conversation,
-        contacts: List<ContactViewModel>,
-        mode: Conversation.Mode,
-        view: ConversationView
+    private fun initContact(account: Account,
+                            c: ConversationItemViewModel,
+                            view: ConversationView
     ) {
         if (account.isJami) {
-            Log.w(TAG, "initContact " + conversation.uri + " mode: " + mode)
-            if (mode === Conversation.Mode.Syncing) {
+            Log.w(TAG, "initContact " + c.uri + " mode: " + c.mode)
+            if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
-            } else if (mode == Conversation.Mode.Request) {
-                view.switchToIncomingTrustRequestView(ConversationItemViewModel.getUriTitle(conversation.uri, contacts))
-            } else if (conversation.isSwarm || account.isContact(conversation)) {
+            } else if (c.mode == Conversation.Mode.Request) {
+                view.switchToIncomingTrustRequestView(c.uriTitle/*ConversationItemViewModel.getUriTitle(conversation.uri, contacts)*/)
+            } else if (c.isSwarm || account.isContact(c.uri)) {
                 view.switchToConversationView()
             } else {
-                val req = account.getRequest(conversation.uri)
+                val req = account.getRequest(c.uri)
                 if (req == null) {
-                    view.switchToUnknownView(ConversationItemViewModel.getUriTitle(conversation.uri, contacts))
+                    view.switchToUnknownView(c.uriTitle)
                 } else {
                     view.switchToIncomingTrustRequestView(req.displayName)
                 }
@@ -138,7 +135,7 @@ class ConversationPresenter @Inject constructor(
         } else {
             view.switchToConversationView()
         }
-        view.displayContact(conversation, contacts)
+        view.displayContact(c)
     }
 
     private fun initView(account: Account, c: Conversation, view: ConversationView) {
@@ -150,10 +147,10 @@ class ConversationPresenter @Inject constructor(
 
         view.hideNumberSpinner()
         disposable.add(c.mode
-            .switchMapSingle { mode: Conversation.Mode ->
-                contactService.getLoadedContact(c.accountId, c.contacts, true)
+            .switchMap { mode: Conversation.Mode ->
+                conversationFacade.observeConversation(account, c, true)
                     .observeOn(uiScheduler)
-                    .doOnSuccess { contacts -> initContact(account, c, contacts, mode, this.view!!) }
+                    .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
             }
             .subscribe())
         disposable.add(c.mode
