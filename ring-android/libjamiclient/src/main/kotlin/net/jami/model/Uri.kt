@@ -21,31 +21,26 @@ package net.jami.model
 
 import java.io.Serializable
 import java.lang.StringBuilder
+import java.util.*
 import java.util.regex.Pattern
 
 class Uri : Serializable {
     val scheme: String?
     val username: String?
-    private val mHost: String
+    val host: String
     val port: String?
 
-    constructor() {
-        scheme = null
-        username = null
-        mHost = ""
-        port = null
-    }
     constructor(scheme: String?, user: String?, host: String, port: String?) {
         this.scheme = scheme
         username = user
-        mHost = host
+        this.host = host
         this.port = port
     }
 
     constructor(scheme: String?, host: String) {
         this.scheme = scheme
         username = null
-        mHost = host
+        this.host = host
         port = null
     }
 
@@ -73,8 +68,8 @@ class Uri : Serializable {
         if (!username.isNullOrEmpty()) {
             builder.append(username).append('@')
         }
-        if (mHost.isNotEmpty()) {
-            builder.append(mHost)
+        if (host.isNotEmpty()) {
+            builder.append(host)
         }
         if (!port.isNullOrEmpty()) {
             builder.append(':').append(port)
@@ -100,10 +95,10 @@ class Uri : Serializable {
                 && host == other.host)
     }
 
+    override fun hashCode(): Int = Objects.hash(scheme, username, host, port)
+
     val isEmpty: Boolean
         get() = username.isNullOrEmpty() && host.isEmpty()
-    val host: String
-        get() = mHost
 
     companion object {
         private val ANGLE_BRACKETS_PATTERN = Pattern.compile("^\\s*([^<>]+)?\\s*<([^<>]+)>\\s*$")
@@ -136,9 +131,7 @@ class Uri : Serializable {
             }
         }
 
-        fun fromId(conversationId: String): Uri {
-            return Uri(null, null, conversationId, null)
-        }
+        fun fromId(conversationId: String): Uri = Uri(null, conversationId)
 
         /**
          * Determine if the given string is a valid IPv4 or IPv6 address.  This method
