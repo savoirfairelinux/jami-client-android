@@ -41,7 +41,7 @@ interface ConversationView {
     fun goToContactActivity(accountId: String, uri: Uri)
     fun switchToUnknownView(name: String)
     fun switchToIncomingTrustRequestView(name: String)
-    fun switchToConversationView()
+    fun switchToConversationView(isLegacy: Boolean = false)
     fun switchToSyncingView()
     fun switchToEndedView()
     fun openFilePicker()

@@ -624,7 +624,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         // todo
     }
 
-    override fun switchToConversationView() {
+    override fun switchToConversationView(isLegacy: Boolean) {
         // todo
     }
 
