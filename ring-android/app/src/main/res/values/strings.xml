@@ -243,6 +243,11 @@ along with this program; if not, write to the Free Software
     <string name="conversation_info_contact_you">You</string>
     <string name="conversation_members">Members</string>
     <string name="conversation_syncing">Downloading conversation from peer</string>
+    <string name="conversation_ended">Conversation ended</string>
+    <string name="conversation_legacy">This is a legacy read-only conversation.</string>
+    <string name="conversation_migrate">Migrate conversation</string>
+    <string name="conversation_migrate_title">Clear history and migrate to Swarm?</string>
+    <string name="conversation_migrate_help">Migrating to the Swarm technology will enable syncing this conversation across multiple devices and improve reliability. The legacy conversation history will be cleared in the process.</string>
 
     <string name="conversation_preference_color">Conversation color</string>
     <string name="conversation_preference_emoji">Conversation emoji</string>

@@ -973,6 +973,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun switchToUnknownView(name: String) {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
+            unknownContactPrompt.text = getString(R.string.ab_action_contact_add)
             unknownContactPrompt.visibility = View.VISIBLE
             trustRequestPrompt.visibility = View.GONE
             tvTrustRequestMessage.text = getString(R.string.message_contact_not_trusted, name)
@@ -996,13 +997,25 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         updateListPadding()
     }
 
-    override fun switchToConversationView() {
-        binding?.apply {
-            cvMessageInput.visibility = View.VISIBLE
-            unknownContactPrompt.visibility = View.GONE
-            trustRequestPrompt.visibility = View.GONE
-            trustRequestMessageLayout.visibility = View.GONE
-            currentBottomView = cvMessageInput
+    override fun switchToConversationView(isLegacy: Boolean) {
+        if (isLegacy) {
+            binding?.apply {
+                cvMessageInput.visibility = View.GONE
+                unknownContactPrompt.text = getString(R.string.conversation_migrate)
+                unknownContactPrompt.visibility = View.VISIBLE
+                trustRequestPrompt.visibility = View.GONE
+                tvTrustRequestMessage.text = getString(R.string.conversation_legacy)
+                trustRequestMessageLayout.visibility = View.VISIBLE
+                currentBottomView = unknownContactPrompt
+            }
+        } else {
+            binding?.apply {
+                cvMessageInput.visibility = View.VISIBLE
+                unknownContactPrompt.visibility = View.GONE
+                trustRequestPrompt.visibility = View.GONE
+                trustRequestMessageLayout.visibility = View.GONE
+                currentBottomView = cvMessageInput
+            }
         }
         requireActivity().invalidateOptionsMenu()
         updateListPadding()
@@ -1027,7 +1040,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = "Conversation ended"
+            tvTrustRequestMessage.text = getString(R.string.conversation_ended)
         }
         currentBottomView = null
         requireActivity().invalidateOptionsMenu()
