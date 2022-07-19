@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87197f1d_1a5fdac2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:41:54Z",
+      "side": 1,
+      "message": "cleanup this patch too",
+      "range": {
+        "startLine": 938,
+        "startChar": 17,
+        "endLine": 939,
+        "endChar": 16
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30a1b51e_18d68cd8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:41:54Z",
+      "side": 1,
+      "message": "Also, can be done later, but it\u0027s also possible to change the avatar of the conversation in the profile!",
+      "range": {
+        "startLine": 946,
+        "startChar": 27,
+        "endLine": 946,
+        "endChar": 39
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "218025f6_eb1eb2a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:41:54Z",
+      "side": 1,
+      "message": "just a note, for homogeneity I\u0027d rename uriTitle or subtitle to keep only one concept",
+      "range": {
+        "startLine": 950,
+        "startChar": 12,
+        "endLine": 950,
+        "endChar": 49
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51e17603_2d509c4d",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:41:54Z",
+      "side": 1,
+      "message": "may change with: https://review.jami.net/c/jami-daemon/+/21802 (I just need to add tests)",
+      "range": {
+        "startLine": 1304,
+        "startChar": 22,
+        "endLine": 1304,
+        "endChar": 121
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
