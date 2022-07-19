@@ -591,10 +591,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun setComposingStatus(composingStatus: ComposingStatus) {}
     override fun setConversationColor(integer: Int) {}
     override fun setConversationSymbol(symbol: CharSequence) {}
-    override fun startShareLocation(accountId: String, contactId: String) {}
+    override fun startShareLocation(accountId: String, conversationId: String) {}
     override fun showMap(accountId: String, contactId: String, open: Boolean) {}
     override fun hideMap() {}
-    override fun showPluginListHandlers(accountId: String, peerId: String) {}
+    override fun showPluginListHandlers(accountId: String, contactId: String) {}
     override fun hideErrorPanel() {}
     override fun displayNetworkErrorPanel() {}
     override fun displayAccountOfflineErrorPanel() {}
