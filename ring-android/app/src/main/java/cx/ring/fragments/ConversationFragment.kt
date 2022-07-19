@@ -29,7 +29,6 @@ import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.graphics.Typeface
-import android.hardware.Camera
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -80,6 +79,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.conversation.ConversationPresenter
 import net.jami.conversation.ConversationView
 import net.jami.daemon.JamiService
@@ -189,10 +189,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         override fun onPrepare(animation: WindowInsetsAnimationCompat) {
                             animating++
                         }
-                        override fun onProgress(
-                            insets: WindowInsetsCompat,
-                            runningAnimations: List<WindowInsetsAnimationCompat>
-                        ): WindowInsetsCompat {
+                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
                             layout.updatePadding(bottom = insets.systemWindowInsetBottom)
                             return insets
                         }
@@ -325,14 +322,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding = null
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return if (mAdapter!!.onContextItemSelected(item)) true
+    override fun onContextItemSelected(item: MenuItem): Boolean =
+        if (mAdapter!!.onContextItemSelected(item)) true
         else super.onContextItemSelected(item)
-    }
 
     fun updateAdapterItem() {
         if (mSelectedPosition != -1) {
-            mAdapter!!.notifyItemChanged(mSelectedPosition)
+            mAdapter?.notifyItemChanged(mSelectedPosition)
             mSelectedPosition = -1
         }
     }
@@ -493,7 +489,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             try {
                 val context = requireContext()
                 val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
-                    putExtra("android.intent.extras.CAMERA_FACING", Camera.CameraInfo.CAMERA_FACING_FRONT)
+                    putExtra("android.intent.extras.CAMERA_FACING", 1)
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
                     putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
@@ -544,9 +540,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         return Completable.fromAction { presenter.sendFile(file) }
     }
 
-    private fun startFileSend(op: Completable) {
+    private fun startFileSend(op: Completable): Disposable {
         setLoading(true)
-        op.observeOn(AndroidSchedulers.mainThread())
+        return op.observeOn(AndroidSchedulers.mainThread())
             .doFinally { setLoading(false) }
             .subscribe({}) { e ->
                 Log.e(TAG, "startFileSend: not able to create cache file", e)
@@ -649,15 +645,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun updateElement(element: Interaction) {
-        mAdapter!!.update(element)
+        mAdapter?.update(element)
     }
 
     override fun removeElement(element: Interaction) {
-        mAdapter!!.remove(element)
+        mAdapter?.remove(element)
     }
 
     override fun setComposingStatus(composingStatus: ComposingStatus) {
-        mAdapter!!.setComposingStatus(composingStatus)
+        mAdapter?.setComposingStatus(composingStatus)
         if (composingStatus == ComposingStatus.Active) scrollToEnd()
     }
 
@@ -933,8 +929,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private fun setupActionbar(conversation: ConversationItemViewModel) {
         val activity = activity ?: return
-        //val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
-        //val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
         val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
         val title = toolbar.findViewById<TextView>(R.id.contact_title)
         val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
@@ -1099,17 +1093,18 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
      * This intent is then received by applications that can handle it like
      * Downloads or Google drive
      * @param file DataTransfer of the file that is going to be stored
-     * @param currentFileAbsolutePath absolute path of the file we want to save
+     * @param fileAbsolutePath absolute path of the file we want to save
      */
-    override fun startSaveFile(file: DataTransfer, currentFileAbsolutePath: String) {
+    override fun startSaveFile(file: DataTransfer, fileAbsolutePath: String) {
         //Get the current file absolute path and store it
-        mCurrentFileAbsolutePath = currentFileAbsolutePath
+        mCurrentFileAbsolutePath = fileAbsolutePath
         try {
             //Use Android Storage File Access to download the file
-            val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-            downloadFileIntent.type = AndroidFileUtils.getMimeTypeFromExtension(file.extension)
-            downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
-            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
+            val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                type = AndroidFileUtils.getMimeTypeFromExtension(file.extension)
+                addCategory(Intent.CATEGORY_OPENABLE)
+                putExtra(Intent.EXTRA_TITLE, file.displayName)
+            }
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
         } catch (e: Exception) {
             Log.i(TAG, "No app detected for saving files.")
@@ -1152,7 +1147,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     companion object {
-        private val TAG = ConversationFragment::class.java.simpleName
+        private val TAG = ConversationFragment::class.simpleName
         const val REQ_ADD_CONTACT = 42
         const val KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage"
         const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
