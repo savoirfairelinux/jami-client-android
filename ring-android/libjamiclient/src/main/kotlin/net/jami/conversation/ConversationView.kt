@@ -64,5 +64,4 @@ interface ConversationView {
     fun displayNetworkErrorPanel()
     fun displayAccountOfflineErrorPanel()
     fun setSettings(readIndicator: Boolean, linkPreviews: Boolean)
-    fun updateLastRead(last: String)
 }
