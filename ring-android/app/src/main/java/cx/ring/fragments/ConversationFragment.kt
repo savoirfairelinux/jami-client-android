@@ -113,7 +113,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private val mSmallParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
     private var mapWidth = 0
     private var mapHeight = 0
-    private var mLastRead: String? = null
     private var loading = true
     private var animating = 0
 
@@ -645,7 +644,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun addElement(element: Interaction) {
-        if (mLastRead != null && mLastRead == element.messageId) element.read()
         if (mAdapter!!.add(element)) scrollToEnd()
         loading = false
     }
@@ -809,7 +807,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 preferences.registerOnSharedPreferenceChangeListener(this)
                 presenter.setConversationColor(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
                 presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
-                mLastRead = preferences.getString(KEY_PREFERENCE_CONVERSATION_LAST_READ, null)
+                preferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Can't load conversation preferences")
@@ -1162,12 +1160,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun updateLastRead(last: String) {
-        Log.w(TAG, "Updated last read $mLastRead")
-        mLastRead = last
-        mPreferences?.edit()?.putString(KEY_PREFERENCE_CONVERSATION_LAST_READ, last)?.apply()
-    }
-
     override fun hideErrorPanel() {
         binding?.errorMsgPane?.visibility = View.GONE
     }
@@ -1177,6 +1169,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         const val REQ_ADD_CONTACT = 42
         const val KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage"
         const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
+        @Deprecated("Use daemon feature")
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
         const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
         const val EXTRA_SHOW_MAP = "showMap"
