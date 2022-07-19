@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83a10bf8_d37438a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:42:39Z",
+      "side": 1,
+      "message": "Also, in 1:1 if I rotate the screen, only a part of it is used.",
+      "range": {
+        "startLine": 909,
+        "startChar": 43,
+        "endLine": 909,
+        "endChar": 47
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "962e1aff_c4d3a4ad",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
         "patchSetId": 14
