@@ -72,6 +72,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d82e1ed3_4f8fe909",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-19T16:00:42Z",
+      "side": 1,
+      "message": "\u0027Subtitle\u0027 is a layout/UI concept. uriTitle is the model concept. At some point, these concepts have to meet (in this case, we chose to use the conversation URI as the toolbar subtitle)",
+      "parentUuid": "218025f6_eb1eb2a2",
+      "range": {
+        "startLine": 950,
+        "startChar": 12,
+        "endLine": 950,
+        "endChar": 49
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51e17603_2d509c4d",
         "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
         "patchSetId": 1
