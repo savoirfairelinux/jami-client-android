@@ -123,7 +123,7 @@ class ConversationPresenter @Inject constructor(
             } else if (c.mode == Conversation.Mode.Request) {
                 view.switchToIncomingTrustRequestView(c.uriTitle/*ConversationItemViewModel.getUriTitle(conversation.uri, contacts)*/)
             } else if (c.isSwarm || account.isContact(c.uri)) {
-                view.switchToConversationView()
+                view.switchToConversationView(c.mode == Conversation.Mode.Legacy)
             } else {
                 val req = account.getRequest(c.uri)
                 if (req == null) {
@@ -297,11 +297,15 @@ class ConversationPresenter @Inject constructor(
     private fun sendTrustRequest() {
         val conversation = mConversation ?: return
         val contact = conversation.contact ?: return
-        contact.status = Contact.Status.REQUEST_SENT
-        vCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
-            .subscribeOn(Schedulers.computation())
-            .subscribe({ vCard -> accountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard)))})
-            { accountService.sendTrustRequest(conversation, contact.uri) }
+        if (conversation.mode.blockingFirst() == Conversation.Mode.Legacy) {
+            accountService.addContact(conversation.accountId, contact.uri.rawRingId)
+        } else {
+            contact.status = Contact.Status.REQUEST_SENT
+            vCardService.loadSmallVCardWithDefault(conversation.accountId, VCardService.MAX_SIZE_REQUEST)
+                .subscribeOn(Schedulers.computation())
+                .subscribe({ vCard -> accountService.sendTrustRequest(conversation, contact.uri, Blob.fromString(VCardUtils.vcardToString(vCard))) })
+                { accountService.sendTrustRequest(conversation, contact.uri) }
+        }
     }
 
     fun clickOnGoingPane() {
