@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8deb0f85_6d4ba040",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:40:45Z",
+      "side": 1,
+      "message": "just some cleanup, but it works like a charm",
+      "revId": "db2435b8e7754795572d3c98a5b3733227779928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "388a22db_c671783e",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:40:45Z",
+      "side": 1,
+      "message": "cleanup?",
+      "range": {
+        "startLine": 286,
+        "startChar": 31,
+        "endLine": 288,
+        "endChar": 28
+      },
+      "revId": "db2435b8e7754795572d3c98a5b3733227779928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72d30f5_37ea5255",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:40:45Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 569,
+        "startChar": 13,
+        "endLine": 569,
+        "endChar": 16
+      },
+      "revId": "db2435b8e7754795572d3c98a5b3733227779928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31914e0e_312b30b5",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:40:45Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 801,
+        "startChar": 13,
+        "endLine": 801,
+        "endChar": 19
+      },
+      "revId": "db2435b8e7754795572d3c98a5b3733227779928",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

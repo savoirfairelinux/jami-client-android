@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "447f442a_cefea024",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-19T13:40:45Z",
+      "side": 0,
+      "message": "yeay no more timer",
+      "range": {
+        "startLine": 1085,
+        "startChar": 16,
+        "endLine": 1085,
+        "endChar": 18
+      },
+      "revId": "00bf3d34ef8e4a14bf15cc36e257de1729d9d828",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
