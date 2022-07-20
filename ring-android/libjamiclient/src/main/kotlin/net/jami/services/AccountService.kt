@@ -296,7 +296,7 @@ class AccountService(
                             /*for (Map.Entry<String, String> i : info.entrySet()) {
                                 Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                             }*/
-                            val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
+                            val mode = if ("true" == info.getOrDefault("syncing", null)) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                             val conversation = account.newSwarm(conversationId, mode)
                             conversation.updateInfo(info)
                             conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
@@ -323,7 +323,7 @@ class AccountService(
                             conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
                             account.conversationStarted(conversation)
                         } catch (e: Exception) {
-                            Log.w(TAG, "Error loading conversation", e)
+                            Log.w(TAG, "Error loading conversation $conversationId", e)
                         }
                     }
                     Log.w(TAG, "$accountId loading conversation requests")
