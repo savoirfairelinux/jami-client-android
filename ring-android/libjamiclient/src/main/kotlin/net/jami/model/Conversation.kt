@@ -356,8 +356,8 @@ class Conversation : ConversationHistory {
     @Synchronized
     fun updateSwarmInteraction(messageId: String, contactUri: Uri, newStatus: Interaction.InteractionStatus) {
         val e = mMessages[messageId] ?: return
+        Log.w(TAG, "updateSwarmInteraction $newStatus")
         if (newStatus == Interaction.InteractionStatus.DISPLAYED) {
-            Log.w(TAG, "updateSwarmInteraction DISPLAYED")
             findContact(contactUri)?.let { contact ->
                 if (!contact.isUser)
                     setLastMessageDisplayed(contactUri.host, messageId)
