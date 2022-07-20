@@ -49,6 +49,7 @@ import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
@@ -253,21 +254,22 @@ class ContactDetailsActivity : AppCompatActivity() {
         colorActionPosition = 0
         symbolActionPosition = 1
 
-        mDisposableBag.add(mConversationFacade.observeConversation(conversation).subscribe { vm ->
-            binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
-                .withViewModel(vm)
-                .withCircleCrop(true)
-                .build(this))
-
-            supportActionBar?.title = vm.title
-            binding.contactListLayout.visibility =
-                if (conversation.isSwarm) View.VISIBLE else View.GONE
-            if (conversation.isSwarm) {
-                binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
-                { contact -> copyAndShow(contact.uri.rawUriString) }
-            }
-            binding.conversationId.text = vm.uriTitle
-        })
+        mDisposableBag.add(mConversationFacade.observeConversation(conversation)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { vm ->
+                binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
+                    .withViewModel(vm)
+                    .withCircleCrop(true)
+                    .build(this))
+                supportActionBar?.title = vm.title
+                binding.contactListLayout.visibility =
+                    if (conversation.isSwarm) View.VISIBLE else View.GONE
+                if (conversation.isSwarm) {
+                    binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
+                    { contact -> copyAndShow(contact.uri.rawUriString) }
+                }
+                binding.conversationId.text = vm.uriTitle
+            })
 
         /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());
         for (Map.Entry<String, String> e : details.entrySet()) {

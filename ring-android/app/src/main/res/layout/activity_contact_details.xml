@@ -112,10 +112,11 @@
                     android:text="@string/conversation_members" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:clipToPadding="false"
+                    android:paddingHorizontal="16dp"
                     android:id="@+id/contact_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
