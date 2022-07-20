@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "daf347a2_19de34ab",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-20T17:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87197f1d_1a5fdac2",
+      "range": {
+        "startLine": 938,
+        "startChar": 17,
+        "endLine": 939,
+        "endChar": 16
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30a1b51e_18d68cd8",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-07-19T13:41:54Z",
       "side": 1,
       "message": "Also, can be done later, but it\u0027s also possible to change the avatar of the conversation in the profile!",
+      "range": {
+        "startLine": 946,
+        "startChar": 27,
+        "endLine": 946,
+        "endChar": 39
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb94a5a_ab374aad",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-20T17:25:01Z",
+      "side": 1,
+      "message": "To be implemented later",
+      "parentUuid": "30a1b51e_18d68cd8",
       "range": {
         "startLine": 946,
         "startChar": 27,
@@ -84,6 +132,30 @@
       "side": 1,
       "message": "\u0027Subtitle\u0027 is a layout/UI concept. uriTitle is the model concept. At some point, these concepts have to meet (in this case, we chose to use the conversation URI as the toolbar subtitle)",
       "parentUuid": "218025f6_eb1eb2a2",
+      "range": {
+        "startLine": 950,
+        "startChar": 12,
+        "endLine": 950,
+        "endChar": 49
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8c8424_d39f9567",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-20T17:25:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d82e1ed3_4f8fe909",
       "range": {
         "startLine": 950,
         "startChar": 12,
