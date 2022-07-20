@@ -318,6 +318,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         binding?.apply {
             if (confsList.adapter == null) {
                 confsList.adapter = SmartListAdapter(conversations, this@SmartListFragment, conversationFacade, parentDisposable).apply {
+                    setItems(conversations)
                     mSmartListAdapter = this
                 }
                 confsList.setHasFixedSize(true)
