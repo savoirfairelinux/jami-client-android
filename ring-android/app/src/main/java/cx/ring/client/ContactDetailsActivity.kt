@@ -265,23 +265,24 @@ class ContactDetailsActivity : AppCompatActivity() {
                 binding.contactListLayout.visibility =
                     if (conversation.isSwarm) View.VISIBLE else View.GONE
                 if (conversation.isSwarm) {
+                    binding.conversationId.text = vm.uri.toString()
                     binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
                     { contact -> copyAndShow(contact.uri.rawUriString) }
+                } else {
+                    binding.conversationId.text = vm.uriTitle
                 }
-                binding.conversationId.text = vm.uriTitle
             })
 
         /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());
         for (Map.Entry<String, String> e : details.entrySet()) {
             Log.w(TAG, e.getKey() + " -> " + e.getValue());
         }*/
-        @StringRes val infoString =
-            if (conversation.isSwarm)
-                if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
-                    R.string.conversation_type_private
-                else
-                    R.string.conversation_type_group
-            else R.string.conversation_type_contact
+        @StringRes val infoString = if (conversation.isSwarm)
+            if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
+                R.string.conversation_type_private
+            else
+                R.string.conversation_type_group
+        else R.string.conversation_type_contact
         /*@DrawableRes int infoIcon = conversation.isSwarm()
                 ? (conversation.getMode() == Conversation.Mode.OneToOne
                 ? R.drawable.baseline_person_24
