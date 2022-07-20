@@ -30,6 +30,7 @@ import kotlin.jvm.Synchronized
 import net.jami.utils.Log
 import java.lang.IllegalStateException
 import java.util.*
+import kotlin.collections.HashMap
 
 class Conversation : ConversationHistory {
     val accountId: String
@@ -38,9 +39,10 @@ class Conversation : ConversationHistory {
     private val rawHistory: NavigableMap<Long, Interaction> = TreeMap()
     private val currentCalls = ArrayList<Conference>()
     val aggregateHistory = ArrayList<Interaction>(32)
-    private var lastDisplayed: Interaction? = null
+
+    private val lastDisplayedMessages: MutableMap<String, String> = HashMap()
+
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
-    private val lastDisplayedSubject: Subject<Interaction> = BehaviorSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
@@ -138,7 +140,7 @@ class Conversation : ConversationHistory {
         return null
     }
 
-    fun composingStatusChanged(contact: Contact?, composing: Account.ComposingStatus) {
+    fun composingStatusChanged(contact: Contact, composing: Account.ComposingStatus) {
         composingStatusSubject.onNext(composing)
     }
 
@@ -215,8 +217,6 @@ class Conversation : ConversationHistory {
         mMode.onNext(mode)
     }
 
-    fun getLastDisplayed(): Observable<Interaction> = lastDisplayedSubject
-
     fun addConference(conference: Conference?) {
         if (conference == null) {
             return
@@ -283,14 +283,7 @@ class Conversation : ConversationHistory {
         }
     }
 
-    fun findContact(uri: Uri): Contact? {
-        for (contact in contacts) {
-            if (contact.uri == uri) {
-                return contact
-            }
-        }
-        return null
-    }
+    fun findContact(uri: Uri): Contact? = contacts.firstOrNull { it.uri == uri }
 
     fun addTextMessage(txt: TextMessage) {
         if (mVisible)
@@ -343,20 +336,45 @@ class Conversation : ConversationHistory {
         }
     }
 
+    @Synchronized
+    fun setLastMessageDisplayed(contactId: String, messageId: String) {
+        // Remove contact from previous interaction
+        lastDisplayedMessages[contactId]?.let { mId ->
+            mMessages[mId]?.let { e ->
+                e.displayedContacts.remove(contactId)
+                updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+            }
+        }
+        // Add contact to new displayed interaction
+        lastDisplayedMessages[contactId] = messageId
+        mMessages[messageId]?.let { e ->
+            e.displayedContacts.add(contactId)
+            updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+        }
+    }
+
+    @Synchronized
+    fun updateSwarmInteraction(messageId: String, contactUri: Uri, newStatus: Interaction.InteractionStatus) {
+        val e = mMessages[messageId] ?: return
+        if (newStatus == Interaction.InteractionStatus.DISPLAYED) {
+            Log.w(TAG, "updateSwarmInteraction DISPLAYED")
+            findContact(contactUri)?.let { contact ->
+                if (!contact.isUser)
+                    setLastMessageDisplayed(contactUri.host, messageId)
+            }
+        } else {
+            e.status = newStatus
+            updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
+        }
+    }
+
     fun updateInteraction(element: Interaction) {
         Log.e(TAG, "updateInteraction: ${element.messageId} ${element.status}")
-        val lastDisplayed = lastDisplayed
         if (isSwarm) {
             val e = mMessages[element.messageId]
             if (e != null) {
                 e.status = element.status
                 updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
-                if (e.status == Interaction.InteractionStatus.DISPLAYED) {
-                    if (lastDisplayed == null || isAfter(lastDisplayed, e)) {
-                        this.lastDisplayed = e
-                        lastDisplayedSubject.onNext(e)
-                    }
-                }
             } else {
                 Log.e(TAG, "Can't find swarm message to update: ${element.messageId}")
             }
@@ -368,12 +386,6 @@ class Conversation : ConversationHistory {
                 if (txt.id == element.id) {
                     txt.status = element.status
                     updatedElementSubject.onNext(Pair(txt, ElementStatus.UPDATE))
-                    if (element.status == Interaction.InteractionStatus.DISPLAYED) {
-                        if (lastDisplayed == null || isAfter(lastDisplayed, element)) {
-                            this.lastDisplayed = element
-                            lastDisplayedSubject.onNext(element)
-                        }
-                    }
                     return
                 }
             }
@@ -483,17 +495,11 @@ class Conversation : ConversationHistory {
 
     fun setHistory(loadedConversation: List<Interaction>) {
         aggregateHistory.ensureCapacity(loadedConversation.size)
-        var last: Interaction? = null
         for (i in loadedConversation) {
             val interaction = getTypedInteraction(i)
             setInteractionProperties(interaction)
             aggregateHistory.add(interaction)
             rawHistory[interaction.timestamp] = interaction
-            if (!i.isIncoming && i.status == Interaction.InteractionStatus.DISPLAYED) last = i
-        }
-        if (last != null) {
-            lastDisplayed = last
-            lastDisplayedSubject.onNext(last)
         }
         lastEvent?.let { lastEventSubject.onNext(it) }
         mDirty = false
@@ -519,6 +525,11 @@ class Conversation : ConversationHistory {
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
+        }
+        for ((contactId, messageId) in lastDisplayedMessages.entries) {
+            if (interaction.messageId == messageId) {
+                interaction.displayedContacts.add(contactId)
+            }
         }
         if (lastRead != null && lastRead == interaction.messageId) interaction.read()
         if (lastNotified != null && lastNotified == interaction.messageId) interaction.isNotified = true

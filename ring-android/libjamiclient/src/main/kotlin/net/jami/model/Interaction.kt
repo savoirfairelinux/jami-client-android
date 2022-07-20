@@ -55,6 +55,7 @@ open class Interaction {
     @DatabaseField(columnName = COLUMN_DAEMON_ID)
     var daemonId: Long? = null
 
+    /** True if this interaction has been displayed by the user */
     @DatabaseField(columnName = COLUMN_IS_READ)
     var mIsRead = 0
 
@@ -62,6 +63,7 @@ open class Interaction {
     var mExtraFlag = JsonObject().toString()
 
     var isNotified = false
+    val displayedContacts: MutableList<String> = ArrayList()
 
     // Swarm
     var conversationId: String? = null
@@ -145,7 +147,7 @@ open class Interaction {
         get() = mIsRead == 1
 
     val isSwarm: Boolean
-        get() = messageId != null && messageId!!.isNotEmpty()
+        get() = !messageId.isNullOrEmpty()
 
     fun setSwarmInfo(conversationId: String) {
         this.conversationId = conversationId
@@ -170,36 +172,25 @@ open class Interaction {
             get() = isError || this == TRANSFER_FINISHED
 
         companion object {
-            fun fromString(str: String): InteractionStatus {
-                for (s in values()) {
-                    if (s.name == str) {
-                        return s
-                    }
-                }
-                return INVALID
+            fun fromString(str: String): InteractionStatus = values().firstOrNull { it.name == str } ?: INVALID
+
+            fun fromIntTextMessage(n: Int): InteractionStatus = try {
+                values()[n]
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                INVALID
             }
 
-            fun fromIntTextMessage(n: Int): InteractionStatus {
-                return try {
-                    values()[n]
-                } catch (e: ArrayIndexOutOfBoundsException) {
-                    INVALID
-                }
-            }
-
-            fun fromIntFile(n: Int): InteractionStatus {
-                return when (n) {
-                    0 -> INVALID
-                    1 -> TRANSFER_CREATED
-                    2, 9 -> TRANSFER_ERROR
-                    3 -> TRANSFER_AWAITING_PEER
-                    4 -> TRANSFER_AWAITING_HOST
-                    5 -> TRANSFER_ONGOING
-                    6 -> TRANSFER_FINISHED
-                    7, 8, 10 -> TRANSFER_UNJOINABLE_PEER
-                    11 -> TRANSFER_TIMEOUT_EXPIRED
-                    else -> UNKNOWN
-                }
+            fun fromIntFile(n: Int): InteractionStatus = when (n) {
+                0 -> INVALID
+                1 -> TRANSFER_CREATED
+                2, 9 -> TRANSFER_ERROR
+                3 -> TRANSFER_AWAITING_PEER
+                4 -> TRANSFER_AWAITING_HOST
+                5 -> TRANSFER_ONGOING
+                6 -> TRANSFER_FINISHED
+                7, 8, 10 -> TRANSFER_UNJOINABLE_PEER
+                11 -> TRANSFER_TIMEOUT_EXPIRED
+                else -> UNKNOWN
             }
         }
     }

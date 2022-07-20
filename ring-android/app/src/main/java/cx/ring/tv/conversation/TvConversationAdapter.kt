@@ -463,7 +463,7 @@ class TvConversationAdapter(
                 if (contact != null)
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
-        } else {
+        } /*else {
             when (interaction.status) {
                 InteractionStatus.SENDING -> {
                     viewHolder.mStatusIcon?.visibility = View.VISIBLE
@@ -479,7 +479,7 @@ class TvConversationAdapter(
                     lastDeliveredPosition = position
                 }
             }
-        }
+        }*/
         val type = viewHolder.type.transferType
 
         val longPressView = viewHolder.itemView
@@ -598,7 +598,7 @@ class TvConversationAdapter(
         if (textMessage.isIncoming) {
             convViewHolder.mAvatar!!.setImageBitmap(null)
             convViewHolder.mAvatar.visibility = View.VISIBLE
-        } else {
+        } /*else {
             when (textMessage.status) {
                 InteractionStatus.SENDING -> {
                     convViewHolder.mStatusIcon!!.visibility = View.VISIBLE
@@ -616,7 +616,7 @@ class TvConversationAdapter(
                     convViewHolder.mStatusIcon!!.visibility = View.GONE
                 }
             }
-        }
+        }*/
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
             setBottomMargin(convViewHolder.mMsgTxt, 8)
             if (textMessage.isIncoming) {

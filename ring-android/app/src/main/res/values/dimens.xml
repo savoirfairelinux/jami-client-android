@@ -36,6 +36,8 @@ along with this program; if not, write to the Free Software
     <dimen name="conversation_message_radius">18dp</dimen>
     <dimen name="conversation_message_minor_radius">3dp</dimen>
     <dimen name="conversation_timestamp_textsize">12sp</dimen>
+    <dimen name="conversation_status_icon_size">14dp</dimen>
+
     <dimen name="location_sharing_avatar_size">36dp</dimen>
     <dimen name="location_sharing_minmap_width">260dp</dimen>
     <dimen name="location_sharing_minmap_height">160dp</dimen>

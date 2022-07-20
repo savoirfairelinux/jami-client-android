@@ -44,7 +44,7 @@ class ConversationPresenter @Inject constructor(
     private val contactService: ContactService,
     private val accountService: AccountService,
     private val hardwareService: HardwareService,
-    private val conversationFacade: ConversationFacade,
+    val conversationFacade: ConversationFacade,
     private val vCardService: VCardService,
     val deviceRuntimeService: DeviceRuntimeService,
     private val preferencesService: PreferencesService,
@@ -202,9 +202,6 @@ class ConversationPresenter @Inject constructor(
                 .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
-        disposable.add(c.getLastDisplayed()
-            .observeOn(uiScheduler)
-            .subscribe { interaction: Interaction -> this.view?.setLastDisplayed(interaction) })
         disposable.add(c.calls
             .observeOn(uiScheduler)
             .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->

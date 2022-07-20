@@ -589,7 +589,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun setComposingStatus(composingStatus: ComposingStatus) {}
-    override fun setLastDisplayed(interaction: Interaction) {}
     override fun setConversationColor(integer: Int) {}
     override fun setConversationSymbol(symbol: CharSequence) {}
     override fun startShareLocation(accountId: String, contactId: String) {}
