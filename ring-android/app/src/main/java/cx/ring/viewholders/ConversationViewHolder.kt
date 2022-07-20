@@ -33,6 +33,7 @@ import android.view.View
 import android.widget.ImageView
 import cx.ring.R
 import cx.ring.adapters.MessageType
+import cx.ring.views.MessageStatusView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView.ViewHolder(v) {
@@ -59,19 +60,19 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
         else -> null
     }
-    val mStatusIcon: ImageView? = when (type) {
+    val mStatusIcon: MessageStatusView? = when (type) {
         MessageType.OUTGOING_TEXT_MESSAGE,
         MessageType.OUTGOING_FILE,
         MessageType.OUTGOING_IMAGE,
         MessageType.OUTGOING_AUDIO,
-        MessageType.OUTGOING_VIDEO,
-        MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
+        MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,
         MessageType.OUTGOING_FILE -> v.findViewById(R.id.file_icon)
+        MessageType.COMPOSING_INDICATION -> v.findViewById(R.id.status_icon)
         else -> null
     }
     var mHistTxt: TextView? = null

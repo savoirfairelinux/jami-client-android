@@ -258,7 +258,7 @@ class ConversationFacade(
 
     fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> =
          Observable.combineLatest(account.getConversationSubject()
-            .filter { c: Conversation -> c == conversation }
+            .filter { c: Conversation -> c === conversation }
             .startWithItem(conversation),
             mContactService.observeContact(conversation.accountId, conversation.contacts, hasPresence)
          ) { c, contacts -> ConversationItemViewModel(c, contacts, hasPresence) }
@@ -658,6 +658,12 @@ class ConversationFacade(
         val contactIds = currentSelection.map { contact -> contact.primaryNumber }
         return mAccountService.startConversation(accountId, contactIds)
     }
+
+    fun getLoadedContact(accountId: String, conversation: Conversation?, contactIds: Collection<String>): Observable<List<ContactViewModel>> =
+        getAccountSubject(accountId).flatMapObservable { account ->
+            val contacts = contactIds.map { id -> conversation?.findContact(Uri.fromId(id)) ?: account.getContactFromCache(Uri.fromId(id)) }
+            return@flatMapObservable mContactService.observeContact(accountId, contacts, false)
+        }
 
     companion object {
         private val TAG = ConversationFacade::class.simpleName!!

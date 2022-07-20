@@ -58,7 +58,7 @@ object AvatarFactory {
                 .build(context)
         }
 
-    fun getAvatar(context: Context, vm: ConversationItemViewModel): Single<Drawable> =
+    fun getAvatar(context: Context, vm: ConversationItemViewModel): Single<AvatarDrawable> =
         Single.fromCallable {
             AvatarDrawable.Builder()
                 .withViewModel(vm)

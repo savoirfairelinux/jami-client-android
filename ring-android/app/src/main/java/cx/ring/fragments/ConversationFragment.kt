@@ -663,10 +663,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (composingStatus == ComposingStatus.Active) scrollToEnd()
     }
 
-    override fun setLastDisplayed(interaction: Interaction) {
-        mAdapter!!.setLastDisplayed(interaction)
-    }
-
     override fun acceptFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
         if (transfer.messageId == null && transfer.fileId == null)
             return

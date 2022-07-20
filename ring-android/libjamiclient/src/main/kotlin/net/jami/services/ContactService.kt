@@ -132,7 +132,7 @@ abstract class ContactService(
         }
     }
 
-    fun observeContact(accountId: String, contacts: List<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> {
+    fun observeContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> {
         return if (contacts.isEmpty()) {
             Observable.just(emptyList())
         } else if (contacts.size == 1 && contacts.first().isUser) {

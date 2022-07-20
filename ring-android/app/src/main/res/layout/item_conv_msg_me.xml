@@ -91,15 +91,13 @@ along with this program; if not, write to the Free Software
             android:theme="@style/OutgoingTextView"
             tools:text="yo this is the test of a long long text can not be_found_message" />
 
-        <ImageView
+        <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_alignBottom="@id/msg_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msg_txt"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            app:srcCompat="@drawable/round_check_circle_24"
-            app:tint="@color/grey_500" />
+            android:layout_marginEnd="5dp" />
 
     </RelativeLayout>
 
