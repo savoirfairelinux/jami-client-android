@@ -39,11 +39,11 @@ class SmartListAdapter(
     private val conversationFacade: ConversationFacade,
     private val disposable: CompositeDisposable
 ) : RecyclerView.Adapter<SmartListViewHolder>() {
-    private var conversations = setItems(conversations ?: ConversationFacade.ConversationList())
     private var recyclerView: RecyclerView? = null
     private var itemCount: Int = 0
     private var searchHeaderIndex: Int = -1
     private var convHeaderIndex: Int = -1
+    private var conversations = setItems(conversations ?: ConversationFacade.ConversationList())
 
     fun setItems(list: ConversationFacade.ConversationList): ConversationFacade.ConversationList {
         itemCount = list.getCombinedSize()
@@ -63,11 +63,9 @@ class SmartListAdapter(
         else SmartListViewHolder(ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false), disposable)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when(position) {
-            searchHeaderIndex, convHeaderIndex -> 1
-            else -> 0
-        }
+    override fun getItemViewType(position: Int): Int = when(position) {
+        searchHeaderIndex, convHeaderIndex -> 1
+        else -> 0
     }
 
     override fun onViewRecycled(holder: SmartListViewHolder) {
