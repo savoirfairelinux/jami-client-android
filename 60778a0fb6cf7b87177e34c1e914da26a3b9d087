@@ -187,6 +187,30 @@
       },
       "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9af17e43_b9e94f3b",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-07-21T20:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e17603_2d509c4d",
+      "range": {
+        "startLine": 1304,
+        "startChar": 22,
+        "endLine": 1304,
+        "endChar": 121
+      },
+      "revId": "60778a0fb6cf7b87177e34c1e914da26a3b9d087",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
