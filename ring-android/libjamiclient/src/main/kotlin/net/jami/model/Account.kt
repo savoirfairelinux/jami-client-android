@@ -251,16 +251,18 @@ class Account(
         }
     }
 
-    fun conversationUpdated(conversation: Conversation?) {
+    fun conversationUpdated(conversation: Conversation) {
         synchronized(conversations) {
             if (!historyLoaded) return
             if (conversationsChanged) {
                 getSortedConversations()
             } else {
-                conversation?.sortHistory()
+                conversation.sortHistory()
                 sortedConversations.sortWith { a: Conversation, b: Conversation ->
                     Interaction.compare(b.lastEvent, a.lastEvent) }
             }
+            // TODO: remove next line when profile is updated through dedicated signal
+            conversationSubject.onNext(conversation)
             conversationsSubject.onNext(ArrayList(sortedConversations))
             updateUnreadConversations()
         }
@@ -801,19 +803,18 @@ class Account(
         if (contact.isOnline == isOnline) return
         contact.isOnline = isOnline
         synchronized(conversations) {
-            val conversation = conversations[contactUri]
-            conversation?.let { conversationRefreshed(it) }
+            conversations[contactUri]?.let { conversationRefreshed(it) }
         }
         synchronized(pending) { if (pending.containsKey(contactUri)) pendingRefreshed() }
     }
 
-    fun composingStatusChanged(conversationId: String, contactUri: Uri, status: ComposingStatus?) {
+    fun composingStatusChanged(conversationId: String, contactUri: Uri, status: ComposingStatus) {
         val isSwarm = conversationId.isNotEmpty()
         val conversation = if (isSwarm) getSwarm(conversationId) else getByUri(contactUri)
         if (conversation != null) {
             val contact = if (isSwarm) conversation.findContact(contactUri) else getContactFromCache(contactUri)
             if (contact != null) {
-                conversation.composingStatusChanged(contact, status!!)
+                conversation.composingStatusChanged(contact, status)
             }
         }
     }

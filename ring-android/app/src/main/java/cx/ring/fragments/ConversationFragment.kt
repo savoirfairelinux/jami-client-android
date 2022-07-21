@@ -872,18 +872,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>) {
-        val avatar = AvatarFactory.getAvatar(requireContext(), conversation, contacts, true).blockingGet()
+    override fun displayContact(conversation: ConversationItemViewModel) {
+        val avatar = AvatarFactory.getAvatar(requireContext(), conversation).blockingGet()
         mConversationAvatar = avatar
         mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(avatar)
-        setupActionbar(conversation, contacts)
-        /*mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { d ->
-                mConversationAvatar = d as AvatarDrawable
-                mParticipantAvatars[conversation.uri.rawRingId] = AvatarDrawable(d)
-                setupActionbar(conversation)
-            })*/
+        setupActionbar(conversation)
     }
 
     override fun displayOnGoingCallPane(display: Boolean) {
@@ -940,21 +933,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera))
     }
 
-    private fun setupActionbar(conversation: Conversation, contacts: List<ContactViewModel>) {
+    private fun setupActionbar(conversation: ConversationItemViewModel) {
         val activity = activity ?: return
-        val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
-        val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
+        //val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
+        //val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
         val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
         val title = toolbar.findViewById<TextView>(R.id.contact_title)
         val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
         val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
         logo.setImageDrawable(mConversationAvatar)
         logo.visibility = View.VISIBLE
-        title.text = displayName
+        title.text = conversation.title
         title.textSize = 15f
         title.setTypeface(null, Typeface.NORMAL)
-        if (identity != displayName) {
-            subtitle.text = identity
+        if (conversation.uriTitle != conversation.title) {
+            subtitle.text = conversation.uriTitle
             subtitle.visibility = View.VISIBLE
         } else {
             subtitle.text = ""

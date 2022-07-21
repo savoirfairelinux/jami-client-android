@@ -21,13 +21,14 @@ package net.jami.conversation
 
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
+import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 
 interface ConversationView {
     fun refreshView(conversation: List<Interaction>)
     fun scrollToEnd()
     fun updateContact(contact: ContactViewModel)
-    fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>)
+    fun displayContact(conversation: ConversationItemViewModel)
     fun displayOnGoingCallPane(display: Boolean)
     fun displayNumberSpinner(conversation: Conversation, number: Uri)
     fun displayErrorToast(error: Error)

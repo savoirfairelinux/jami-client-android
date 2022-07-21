@@ -554,13 +554,11 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
-    override fun displayContact(conversation: Conversation, contacts: List<ContactViewModel>) {
-        val displayName = ConversationItemViewModel.getTitle(conversation, contacts)
-        val identity = ConversationItemViewModel.getUriTitle(conversation.uri, contacts)
+    override fun displayContact(conversation: ConversationItemViewModel) {
         binding?.let { binding ->
-            binding.title.text = displayName
-            if (TextUtils.isEmpty(displayName) || displayName != identity)
-                binding.subtitle.text = identity
+            binding.title.text = conversation.title
+            if (conversation.title.isEmpty() || conversation.title != conversation.uriTitle)
+                binding.subtitle.text = conversation.uriTitle
             else
                 binding.subtitle.visibility = View.GONE
         }
