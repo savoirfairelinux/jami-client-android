@@ -56,7 +56,6 @@ abstract class HistoryService {
      */
     fun clearHistory(contactId: String, accountId: String, deleteConversation: Boolean): Completable =
         if (accountId.isEmpty()) Completable.complete() else Completable.fromAction {
-            var deleted = 0
             val conversation = getConversationDataDao(accountId).queryBuilder()
                 .where().eq(ConversationHistory.COLUMN_PARTICIPANT, contactId).queryForFirst() ?: return@fromAction
             val deleteBuilder = getInteractionDataDao(accountId).deleteBuilder()
@@ -70,7 +69,7 @@ abstract class HistoryService {
                     .eq(Interaction.COLUMN_CONVERSATION, conversation.id).and()
                     .ne(Interaction.COLUMN_TYPE, Interaction.InteractionType.CONTACT.toString())
             }
-            deleted += deleteBuilder.delete()
+            val deleted = deleteBuilder.delete()
             Log.w(TAG, "clearHistory: removed $deleted elements")
         }.subscribeOn(scheduler)
 

@@ -125,7 +125,8 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun banContact(conversation: Conversation) {
-        conversationFacade.banConversation(conversation.accountId, conversation.uri)
+        mCompositeDisposable.add(conversationFacade.banConversation(conversation.accountId, conversation.uri)
+            .subscribe())
     }
 
     fun clickQRSearch() {

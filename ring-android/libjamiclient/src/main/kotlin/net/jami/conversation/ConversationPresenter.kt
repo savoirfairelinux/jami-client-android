@@ -298,6 +298,7 @@ class ConversationPresenter @Inject constructor(
         val conversation = mConversation ?: return
         val contact = conversation.contact ?: return
         if (conversation.mode.blockingFirst() == Conversation.Mode.Legacy) {
+            conversationFacade.clearLegacyConversation(conversation.accountId, contact.uri).subscribe()
             accountService.addContact(conversation.accountId, contact.uri.rawRingId)
         } else {
             contact.status = Contact.Status.REQUEST_SENT
@@ -347,7 +348,7 @@ class ConversationPresenter @Inject constructor(
     fun onBlockIncomingContactRequest() {
         mConversation?.let { conversation ->
             conversationFacade.discardRequest(conversation.accountId, conversation.uri)
-            accountService.removeContact(conversation.accountId, conversation.uri.host, true)
+            accountService.removeContact(conversation.accountId, conversation.uri.host, true).subscribe()
         }
         view?.goToHome()
     }

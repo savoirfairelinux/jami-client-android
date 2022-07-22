@@ -476,7 +476,7 @@ class AccountService(
     /**
      * Send profile through SIP
      */
-    fun sendProfile(callId: String, accountId: String) {
+    fun sendProfile(callId: String, accountId: String) =
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP)
             .subscribeOn(Schedulers.computation())
             .observeOn(Schedulers.from(mExecutor))
@@ -499,7 +499,6 @@ class AccountService(
                     i++
                 }
             }) { e: Throwable -> Log.w(TAG, "Not sending empty profile", e) }
-    }
 
     fun setMessageDisplayed(accountId: String?, conversationUri: Uri, messageId: String) {
         mExecutor.execute { JamiService.setMessageDisplayed(accountId, conversationUri.uri, messageId, 3) }
@@ -521,10 +520,9 @@ class AccountService(
         }.subscribeOn(Schedulers.from(mExecutor))
     }
 
-    fun removeConversation(accountId: String, conversationUri: Uri): Completable {
-        return Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
+    fun removeConversation(accountId: String, conversationUri: Uri): Completable =
+        Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
             .subscribeOn(Schedulers.from(mExecutor))
-    }
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) {
         JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
@@ -733,21 +731,19 @@ class AccountService(
         }
     }
 
-    fun exportToFile(accountId: String, absolutePath: String, password: String): Completable {
-        return Completable.fromAction {
+    fun exportToFile(accountId: String, absolutePath: String, password: String): Completable =
+        Completable.fromAction {
             require(JamiService.exportToFile(accountId, absolutePath, password)) { "Can't export archive" }
         }.subscribeOn(Schedulers.from(mExecutor))
-    }
 
     /**
      * @param accountId   id of the account
      * @param oldPassword old account password
      */
-    fun setAccountPassword(accountId: String, oldPassword: String, newPassword: String): Completable {
-        return Completable.fromAction {
+    fun setAccountPassword(accountId: String, oldPassword: String, newPassword: String): Completable =
+        Completable.fromAction {
             require(JamiService.changeAccountPassword(accountId, oldPassword, newPassword)) { "Can't change password" }
         }.subscribeOn(Schedulers.from(mExecutor))
-    }
 
     /**
      * Sets the active codecs list of the account in the Daemon
@@ -765,13 +761,11 @@ class AccountService(
     /**
      * @return The account's codecs list from the Daemon
      */
-    fun getCodecList(accountId: String): Single<List<Codec>> {
-        return Single.fromCallable {
-            val activePayloads = JamiService.getActiveCodecList(accountId)
-            JamiService.getCodecList()
-                .map { Codec(it, JamiService.getCodecDetails(accountId, it), activePayloads.contains(it)) }
-        }.subscribeOn(Schedulers.from(mExecutor))
-    }
+    fun getCodecList(accountId: String): Single<List<Codec>> = Single.fromCallable {
+        val activePayloads = JamiService.getActiveCodecList(accountId)
+        JamiService.getCodecList()
+            .map { Codec(it, JamiService.getCodecDetails(accountId, it), activePayloads.contains(it)) }
+    }.subscribeOn(Schedulers.from(mExecutor))
 
     fun validateCertificatePath(
         accountID: String,
@@ -870,21 +864,14 @@ class AccountService(
      * Registers a new name on the blockchain for the account
      */
     fun registerName(account: Account, password: String?, name: String) {
-        if (account.registeringUsername) {
-            Log.w(TAG, "Already trying to register username")
-            return
+        synchronized(account) {
+            if (!account.registeringUsername) {
+                account.registeringUsername = true
+                mExecutor.execute { JamiService.registerName(account.accountId, password ?: "", name) }
+            }
         }
-        account.registeringUsername = true
-        registerName(account.accountId, password ?: "", name)
     }
 
-    /**
-     * Register a new name on the blockchain for the account Id
-     */
-    fun registerName(account: String, password: String, name: String) {
-        Log.i(TAG, "registerName()")
-        mExecutor.execute { JamiService.registerName(account, password, name) }
-    }
     /* contact requests */
     /**
      * @return all trust requests from the daemon for the account Id
@@ -914,10 +901,6 @@ class AccountService(
             else
                 JamiService.acceptTrustRequest(accountId, from.rawRingId)
         }
-    }
-
-    private enum class ContactType {
-        ADDED, INVITATION_RECEIVED, INVITATION_ACCEPTED, INVITATION_DISCARDED
     }
 
     /**
@@ -958,10 +941,9 @@ class AccountService(
     /**
      * Remove an existing contact for the account Id on the Daemon
      */
-    fun removeContact(accountId: String, uri: String, ban: Boolean) {
-        Log.i(TAG, "removeContact() $accountId $uri ban:$ban")
-        mExecutor.execute { JamiService.removeContact(accountId, uri, ban) }
-    }
+    fun removeContact(accountId: String, uri: String, ban: Boolean): Completable =
+        Completable.fromAction { JamiService.removeContact(accountId, uri, ban) }
+            .subscribeOn(Schedulers.from(mExecutor))
 
     fun findRegistrationByName(account: String, nameserver: String, name: String): Single<RegisteredName> {
         Log.w(TAG, "findRegistrationByName $name")

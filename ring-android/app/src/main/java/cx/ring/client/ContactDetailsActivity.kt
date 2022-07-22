@@ -342,9 +342,13 @@ class ContactDetailsActivity : AppCompatActivity() {
                 MaterialAlertDialogBuilder(this@ContactDetailsActivity)
                     .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
                     .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
-                    .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
-                        mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
-                        Toast.makeText(applicationContext, getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
+                    .setPositiveButton(R.string.conversation_action_block_this) { d: DialogInterface, _: Int ->
+                        mDisposableBag.add(mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe {
+                                Toast.makeText(applicationContext, getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
+                            })
+                        d.dismiss()
                         finish()
                     }
                     .setNegativeButton(android.R.string.cancel, null)

@@ -54,13 +54,11 @@ object AndroidFileUtils {
     private const val ORIENTATION_RIGHT = 90
     private const val MAX_IMAGE_DIMENSION = 1024
 
-    fun linkOrCopy(oldPath: String, newPath: String): Boolean {
-        try {
-            Os.symlink(oldPath, newPath)
-        } catch (e: Exception) {
-            return FileUtils.copyFile(File(oldPath), File(newPath))
-        }
-        return true
+    fun linkOrCopy(oldPath: String, newPath: String): Boolean = try {
+        Os.symlink(oldPath, newPath)
+        true
+    } catch (e: Exception) {
+        FileUtils.copyFile(File(oldPath), File(newPath))
     }
 
     /**

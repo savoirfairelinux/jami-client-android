@@ -614,45 +614,60 @@ class ConversationFacade(
             }
     }
 
-    fun removeConversation(accountId: String, conversationUri: Uri): Completable {
-        val account = mAccountService.getAccount(accountId) ?: return Completable.error(IllegalArgumentException("Unknown account"))
-        return if (conversationUri.isSwarm) {
+    fun clearLegacyConversation(accountId: String, conversationUri: Uri): Completable {
+        return if (conversationUri.isSwarm) Completable.complete()
+        else Completable.merge(listOf(
+            mHistoryService.clearHistory(conversationUri.uri, accountId, true)
+                .onErrorComplete(),
+            Completable.fromAction { mDeviceRuntimeService.getConversationDir(accountId, conversationUri.rawRingId).deleteRecursively() }
+                .onErrorComplete()
+                .subscribeOn(Schedulers.io()),
+            Completable.fromAction { mAccountService.getAccount(accountId)?.clearHistory(conversationUri, true) }
+                .subscribeOn(Schedulers.computation()),
+        ))
+    }
+
+    fun removeConversation(accountId: String, conversationUri: Uri): Completable =
+        if (conversationUri.isSwarm) {
             // For a one to one conversation, contact is strongly related, so remove the contact.
             // This will remove related conversations
-            val conversation = account.getSwarm(conversationUri.rawRingId)
-            if (conversation != null && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
-                val contact = conversation.contact
-                mAccountService.removeContact(accountId, contact!!.uri.rawRingId, false)
-                Completable.complete()
-            } else {
-                mAccountService.removeConversation(accountId, conversationUri)
-            }
+            Completable.merge(listOf(
+                mAccountService.getAccount(accountId)?.getSwarm(conversationUri.rawRingId)?.let { conversation ->
+                    conversation.mode.firstOrError().flatMapCompletable { mode ->
+                        if (mode === Conversation.Mode.OneToOne)
+                            mAccountService.removeContact(accountId, conversation.contact!!.uri.rawRingId, false)
+                        else
+                            mAccountService.removeConversation(accountId, conversationUri)
+                    }
+                } ?: Completable.complete(),
+                mDeviceRuntimeService.deleteConversationDir(accountId, conversationUri.rawRingId)
+            ))
         } else {
             mHistoryService
                 .clearHistory(conversationUri.uri, accountId, true)
                 .doOnSubscribe {
-                    account.clearHistory(conversationUri, true)
+                    mAccountService.getAccount(accountId)?.clearHistory(conversationUri, true)
                     mAccountService.removeContact(accountId, conversationUri.rawRingId, false)
-                }
+                }.mergeWith (mDeviceRuntimeService.deleteConversationDir(accountId, conversationUri.rawRingId))
         }
-    }
 
-    fun banConversation(accountId: String, conversationUri: Uri) {
+    fun banConversation(accountId: String, conversationUri: Uri): Completable =
         if (conversationUri.isSwarm) {
-            startConversation(accountId, conversationUri)
-                .subscribe { conversation: Conversation ->
-                    try {
-                        val contact = conversation.contact
-                        mAccountService.removeContact(accountId, contact!!.uri.rawUriString, true)
-                    } catch (e: Exception) {
-                        mAccountService.removeConversation(accountId, conversationUri)
+            Completable.merge(listOf(
+                mAccountService.getAccount(accountId)?.getSwarm(conversationUri.rawRingId)?.let { conversation ->
+                    conversation.mode.firstOrError().flatMapCompletable { mode ->
+                        if (mode === Conversation.Mode.OneToOne)
+                            mAccountService.removeContact(accountId, conversation.contact!!.uri.rawRingId, true)
+                        else
+                            mAccountService.removeConversation(accountId, conversationUri)
                     }
-                }
-            //return mAccountService.removeConversation(accountId, conversationUri);
+                } ?: Completable.complete(),
+                mDeviceRuntimeService.deleteConversationDir(accountId, conversationUri.rawRingId)
+            ))
         } else {
             mAccountService.removeContact(accountId, conversationUri.rawUriString, true)
+                .mergeWith (mDeviceRuntimeService.deleteConversationDir(accountId, conversationUri.rawRingId))
         }
-    }
 
     fun createConversation(accountId: String, currentSelection: Collection<Contact>): Single<Conversation> {
         val contactIds = currentSelection.map { contact -> contact.primaryNumber }

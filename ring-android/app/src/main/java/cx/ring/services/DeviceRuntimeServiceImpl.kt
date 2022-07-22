@@ -86,6 +86,9 @@ class DeviceRuntimeServiceImpl(
     override fun getConversationDir(conversationId: String): File =
         AndroidFileUtils.getConversationDir(mContext, conversationId)
 
+    override fun getConversationDir(accountId: String, conversationId: String): File =
+        AndroidFileUtils.getConversationDir(mContext, accountId, conversationId)
+
     override val cacheDir: File
         get() = mContext.cacheDir
 
@@ -119,7 +122,7 @@ class DeviceRuntimeServiceImpl(
         get() {
             mContext.contentResolver.query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    return cursor.getString(cursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
+                    return cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
                 }
             }
             return null

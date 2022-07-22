@@ -263,8 +263,9 @@ class DRingService : Service() {
                 ACTION_TRUST_REQUEST_REFUSE -> mConversationFacade.discardRequest(path.accountId, path.conversationUri)
                 ACTION_TRUST_REQUEST_BLOCK -> {
                     mConversationFacade.discardRequest(path.accountId, path.conversationUri)
-                    mAccountService.removeContact(path.accountId, path.conversationUri.rawRingId, true)
+                    mAccountService.removeContact(path.accountId, path.conversationUri.rawRingId, true).subscribe()
                 }
+                else -> {}
             }
         }
     }

@@ -19,6 +19,8 @@
  */
 package net.jami.services
 
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.services.DaemonService.SystemInfoCallbacks
 import net.jami.model.DataTransfer
 import java.io.File
@@ -47,7 +49,13 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     }
 
     abstract fun getTemporaryPath(conversationId: String, name: String): File
-    abstract fun getConversationDir(conversationId: String): File?
+    abstract fun getConversationDir(conversationId: String): File
+    abstract fun getConversationDir(accountId: String, conversationId: String): File
+
+    fun deleteConversationDir(accountId: String, conversationId: String): Completable = Completable.fromAction {
+        getConversationDir(accountId, conversationId).deleteRecursively()
+    }.subscribeOn(Schedulers.io())
+
     abstract val pushToken: String?
     abstract val isConnectedMobile: Boolean
     abstract val isConnectedEthernet: Boolean

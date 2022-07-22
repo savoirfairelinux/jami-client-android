@@ -148,10 +148,10 @@ class Account(
             val conversation = swarmConversations.remove(conversationId)
             if (conversation != null) {
                 try {
-                    val c = conversations.remove(conversation.uri.uri)
-                    val contact = c!!.contact
-                    Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact!!.conversationUri.blockingFirst() + " " + c.uri)
+                    val c = conversations.remove(conversation.uri.uri)!!
+                    val contact = c.contact!!
                     if (contact.conversationUri.blockingFirst().equals(c.uri)) {
+                        Log.w(TAG, "removeSwarm: adding back contact conversation " + contact + " " + contact.conversationUri.blockingFirst() + " " + c.uri)
                         contact.setConversationUri(contact.uri)
                         contactAdded(contact)
                     }
@@ -289,9 +289,8 @@ class Account(
      * @param delete  true if you want to remove the conversation
      */
     fun clearHistory(contact: Uri?, delete: Boolean) {
-        val conversation = getByUri(contact)
+        getByUri(contact)?.clearHistory(delete || isSip)
         // if it is a sip account, we do not add a contact event
-        conversation!!.clearHistory(delete || isSip)
         conversationChanged()
     }
 
