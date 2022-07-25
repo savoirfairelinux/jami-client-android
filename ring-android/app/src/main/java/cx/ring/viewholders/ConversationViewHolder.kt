@@ -58,6 +58,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
+        MessageType.CONTACT_EVENT -> v.findViewById(R.id.imageView)
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {

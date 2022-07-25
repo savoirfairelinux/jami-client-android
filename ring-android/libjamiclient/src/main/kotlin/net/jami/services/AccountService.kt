@@ -1253,22 +1253,24 @@ class AccountService(
         val contact = conversation.findContact(authorUri) ?: account.getContactFromCache(authorUri)
         val interaction: Interaction = when (type) {
             "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
-                    val invited = message["invited"]!!
-                    var invitedContact = conversation.findContact(Uri.fromId(invited))
-                    if (invitedContact == null) {
-                        invitedContact = account.getContactFromCache(invited)
-                    }
-                    invitedContact.addedDate = Date(timestamp)
-                    ContactEvent(invitedContact).setEvent(ContactEvent.Event.fromConversationAction("add"))
-                } else {
-                    Interaction(conversation, Interaction.InteractionType.INVALID)
+                val invited = message["invited"]!!
+                var invitedContact = conversation.findContact(Uri.fromId(invited))
+                if (invitedContact == null) {
+                    invitedContact = account.getContactFromCache(invited)
                 }
+                Log.w(TAG, "invited $invited ${invitedContact}")
+                invitedContact.addedDate = Date(timestamp)
+                ContactEvent(account.accountId, invitedContact).setEvent(ContactEvent.Event.INVITED)
+            } else {
+                Interaction(conversation, Interaction.InteractionType.INVALID)
+            }
             "member" -> {
                 val action = message["action"]!!
                 val uri = message["uri"]!!
+                Log.w(TAG, "member $action $uri")
                 val member = conversation.findContact(Uri.fromId(uri)) ?: account.getContactFromCache(uri)
                 member.addedDate = Date(timestamp)
-                ContactEvent(member).setEvent(ContactEvent.Event.fromConversationAction(action))
+                ContactEvent(account.accountId, member).setEvent(ContactEvent.Event.fromConversationAction(action))
             }
             "text/plain" -> TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
             "application/data-transfer+json" -> {
@@ -1305,7 +1307,8 @@ class AccountService(
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
-        interaction.contact = contact
+        if (interaction.contact == null)
+            interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
         if (conversation.addSwarmElement(interaction)) {
@@ -1456,30 +1459,28 @@ class AccountService(
         }}
     }
 
-    fun sendFile(file: File, dataTransfer: DataTransfer): Single<DataTransfer> {
-        return Single.fromCallable {
-            mStartingTransfer = dataTransfer
-            val dataTransferInfo = DataTransferInfo()
-            dataTransferInfo.accountId = dataTransfer.account
-            val conversationId = dataTransfer.conversationId
-            if (!conversationId.isNullOrEmpty())
-                dataTransferInfo.conversationId = conversationId
-            else
-                dataTransferInfo.peer = dataTransfer.conversation?.participant
-            dataTransferInfo.path = file.absolutePath
-            dataTransferInfo.displayName = dataTransfer.displayName
-            Log.i(TAG, "sendFile() id=" + dataTransfer.id + " accountId=" + dataTransferInfo.accountId + ", peer=" + dataTransferInfo.peer + ", filePath=" + dataTransferInfo.path)
-            val id = LongArray(1)
-            val err = getDataTransferError(JamiService.sendFileLegacy(dataTransferInfo, id))
-            if (err != DataTransferError.SUCCESS) {
-                throw IOException(err.name)
-            } else {
-                Log.e(TAG, "sendFile: got ID " + id[0])
-                dataTransfer.daemonId = id[0]
-            }
-            dataTransfer
-        }.subscribeOn(Schedulers.from(mExecutor))
-    }
+    fun sendFile(file: File, dataTransfer: DataTransfer): Single<DataTransfer> = Single.fromCallable {
+        mStartingTransfer = dataTransfer
+        val dataTransferInfo = DataTransferInfo()
+        dataTransferInfo.accountId = dataTransfer.account
+        val conversationId = dataTransfer.conversationId
+        if (!conversationId.isNullOrEmpty())
+            dataTransferInfo.conversationId = conversationId
+        else
+            dataTransferInfo.peer = dataTransfer.conversation?.participant
+        dataTransferInfo.path = file.absolutePath
+        dataTransferInfo.displayName = dataTransfer.displayName
+        Log.i(TAG, "sendFile() id=" + dataTransfer.id + " accountId=" + dataTransferInfo.accountId + ", peer=" + dataTransferInfo.peer + ", filePath=" + dataTransferInfo.path)
+        val id = LongArray(1)
+        val err = getDataTransferError(JamiService.sendFileLegacy(dataTransferInfo, id))
+        if (err != DataTransferError.SUCCESS) {
+            throw IOException(err.name)
+        } else {
+            Log.e(TAG, "sendFile: got ID " + id[0])
+            dataTransfer.daemonId = id[0]
+        }
+        dataTransfer
+    }.subscribeOn(Schedulers.from(mExecutor))
 
     fun sendFile(conversation: Conversation, file: File) {
         mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }

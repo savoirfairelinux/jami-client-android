@@ -22,7 +22,6 @@ package net.jami.model
 
 class ContactEvent : Interaction {
     var request: TrustRequest? = null
-    @JvmField
     var event: Event
 
     constructor(interaction: Interaction) {
@@ -46,8 +45,9 @@ class ContactEvent : Interaction {
         mIsRead = 1
     }
 
-    constructor(contact: Contact) {
+    constructor(accountId: String, contact: Contact) {
         this.contact = contact
+        account = accountId
         author = contact.uri.uri
         mType = InteractionType.CONTACT.toString()
         event = Event.ADDED
@@ -56,7 +56,8 @@ class ContactEvent : Interaction {
         mIsRead = 1
     }
 
-    constructor(contact: Contact, request: TrustRequest) {
+    constructor(accountId: String, contact: Contact, request: TrustRequest) {
+        account = accountId
         this.request = request
         this.contact = contact
         author = contact.uri.uri
@@ -71,14 +72,12 @@ class ContactEvent : Interaction {
         UNKNOWN, INCOMING_REQUEST, INVITED, ADDED, REMOVED, BANNED;
 
         companion object {
-            fun fromConversationAction(action: String): Event {
-                return when (action) {
-                    "add" -> INVITED
-                    "join" -> ADDED
-                    "remove" -> REMOVED
-                    "ban" -> BANNED
-                    else -> UNKNOWN
-                }
+            fun fromConversationAction(action: String): Event = when (action) {
+                "add" -> INVITED
+                "join" -> ADDED
+                "remove" -> REMOVED
+                "ban" -> BANNED
+                else -> UNKNOWN
             }
         }
     }
