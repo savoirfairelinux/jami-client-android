@@ -263,7 +263,7 @@ class ConversationAdapter(
                 interaction.conversation as Conversation?, interaction.displayedContacts)
             .subscribe { contacts ->
                 conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
-                conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
+                conversationViewHolder.mStatusIcon?.update(contacts, interaction.status)
             })
     }
 

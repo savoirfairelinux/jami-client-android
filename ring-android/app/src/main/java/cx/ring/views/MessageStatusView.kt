@@ -1,13 +1,28 @@
+/*
+ *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 package cx.ring.views
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import cx.ring.R
@@ -18,17 +33,11 @@ class MessageStatusView : LinearLayout {
     private val iconSize = resources.getDimensionPixelSize(R.dimen.conversation_status_icon_size)
     private val iconTint by lazy(LazyThreadSafetyMode.NONE) { ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey_500)) }
 
-    constructor(context: Context) : super(context) {
-        //init(null, 0)
-    }
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        //init(attrs, 0)
-    }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        //init(attrs, defStyle)
-    }
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     /*private fun init(attrs: AttributeSet?, defStyle: Int) {
         if (isInEditMode) {
@@ -56,8 +65,8 @@ class MessageStatusView : LinearLayout {
         }
     }
 
-    fun update(contacts: Collection<ContactViewModel>, status: Interaction.InteractionStatus, @IdRes resId: Int = View.NO_ID) {
-        val showStatus = contacts.isEmpty() && (status == Interaction.InteractionStatus.SUCCESS || status == Interaction.InteractionStatus.SENDING)
+    fun update(contacts: Collection<ContactViewModel>, status: Interaction.InteractionStatus) {
+        val showStatus = contacts.isEmpty() && (status == Interaction.InteractionStatus.SUCCESS || status == Interaction.InteractionStatus.SENDING || status == Interaction.InteractionStatus.FAILURE)
         if (showStatus) {
             resize(1)
             (getChildAt(0) as ImageView).apply {
@@ -82,15 +91,15 @@ class MessageStatusView : LinearLayout {
                 }
             }
         }
-        if (resId != View.NO_ID) {
+        (parent as ViewGroup?)?.let {
             val params = layoutParams as RelativeLayout.LayoutParams? ?: return
             val fitRight = showStatus || contacts.size < 2
             if (fitRight) {
                 params.removeRule(RelativeLayout.BELOW)
-                params.addRule(RelativeLayout.ALIGN_BOTTOM, resId)
+                params.addRule(RelativeLayout.ALIGN_BOTTOM, it.id)
             } else {
                 params.removeRule(RelativeLayout.ALIGN_BOTTOM)
-                params.addRule(RelativeLayout.BELOW, resId)
+                params.addRule(RelativeLayout.BELOW, it.id)
             }
             layoutParams = params
         }
