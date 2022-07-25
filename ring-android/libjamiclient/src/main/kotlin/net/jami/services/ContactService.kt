@@ -65,6 +65,12 @@ abstract class ContactService(
         }
     }
 
+    fun observeContact(accountId: String, contactUri: Uri, withPresence: Boolean): Observable<ContactViewModel> {
+        val account = mAccountService.getAccount(accountId) ?: return Observable.error(IllegalArgumentException())
+        val contact = account.getContactFromCache(contactUri)
+        return observeContact(accountId, contact, withPresence)
+    }
+
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
         // Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val observePresence = if (contact.isUser) false else withPresence

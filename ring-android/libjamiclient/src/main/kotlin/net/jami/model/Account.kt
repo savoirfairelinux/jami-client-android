@@ -655,7 +655,7 @@ class Account(
                                 setConversationUri(request.conversationUri)
                         }
                         addContact(contact)
-                        addContactEvent(ContactEvent(contact, request))
+                        addContactEvent(ContactEvent(accountId, contact, request))
                     }
                 else
                     getByKey(key)

@@ -161,11 +161,6 @@ along with this program; if not, write to the Free Software
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
-    <string name="hist_contact_invited">Contact invited</string>
-    <string name="hist_contact_added">Contact added</string>
-    <string name="hist_contact_left">Contact left</string>
-    <string name="hist_contact_banned">Contact banned</string>
-    <string name="hist_invitation_received">Invitation received</string>
     <string name="ab_action_audio_call">Audio call</string>
     <string name="ab_action_video_call">Video call</string>
     <string name="ab_action_change_screen_orientation">Change screen orientation</string>
@@ -254,6 +249,10 @@ along with this program; if not, write to the Free Software
     <string name="conversation_type_contact">Jami contact</string>
     <string name="conversation_type_private">Private swarm</string>
     <string name="conversation_type_group">Group swarm</string>
+    <string name="conversation_contact_invited">%1$s was invited</string>
+    <string name="conversation_contact_added">%1$s joined</string>
+    <string name="conversation_contact_left">%1$s left</string>
+    <string name="conversation_contact_banned">%1$s was banned</string>
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s?</string>
@@ -270,6 +269,11 @@ along with this program; if not, write to the Free Software
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
     <string name="wizard_skip">Skip</string>
+    <string name="hist_contact_invited">Contact invited</string>
+    <string name="hist_contact_added">Contact added</string>
+    <string name="hist_contact_left">Contact left</string>
+    <string name="hist_contact_banned">Contact banned</string>
+    <string name="hist_invitation_received">Invitation received</string>
 
     <!-- Account Summary -->
     <string name="profile">Profile</string>

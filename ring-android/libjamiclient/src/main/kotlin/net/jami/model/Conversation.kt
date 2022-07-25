@@ -297,14 +297,14 @@ class Conversation : ConversationHistory {
 
     fun addRequestEvent(request: TrustRequest, contact: Contact) {
         if (isSwarm) return
-        val event = ContactEvent(contact, request)
+        val event = ContactEvent(accountId, contact, request)
         mDirty = true
         aggregateHistory.add(event)
         updatedElementSubject.onNext(Pair(event, ElementStatus.ADD))
     }
 
     fun addContactEvent(contact: Contact) {
-        addContactEvent(ContactEvent(contact))
+        addContactEvent(ContactEvent(accountId, contact))
     }
 
     fun addContactEvent(contactEvent: ContactEvent) {
@@ -488,8 +488,8 @@ class Conversation : ConversationHistory {
         aggregateHistory.clear()
         rawHistory.clear()
         mDirty = false
-        if (!delete && contacts.size == 1)
-            aggregateHistory.add(ContactEvent(contacts[0]))
+        if (!delete && !isSwarm && contacts.size == 1)
+            aggregateHistory.add(ContactEvent(accountId, contacts[0]))
         clearedSubject.onNext(aggregateHistory)
     }
 

@@ -66,6 +66,7 @@ import cx.ring.linkpreview.PreviewData
 import cx.ring.utils.*
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
+import cx.ring.views.AvatarDrawable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -807,18 +808,55 @@ class ConversationAdapter(
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
-        viewHolder.mMsgTxt?.setText(when (event.event) {
-            ContactEvent.Event.ADDED -> R.string.hist_contact_added
-            ContactEvent.Event.INVITED -> R.string.hist_contact_invited
-            ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-            ContactEvent.Event.BANNED -> R.string.hist_contact_banned
-            ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
-            else -> R.string.hist_contact_added
-        })
-        viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-            val timeSeparationString = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
-            viewHolder.mMsgDetailTxt?.text = timeSeparationString
-        })
+        Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
+        viewHolder.mMsgDetailTxt?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+
+        if (interaction.isSwarm) {
+            viewHolder.compositeDisposable.add(
+                presenter.contactService.observeContact(event.account!!, event.contact!!, false)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { vm ->
+                    viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
+                        .withContact(vm)
+                        .withCircleCrop(true)
+                        .build(viewHolder.itemView.context))
+                    viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(when (event.event) {
+                        ContactEvent.Event.ADDED -> R.string.conversation_contact_added
+                        ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
+                        ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
+                        ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                        else -> R.string.hist_contact_added
+                    }, vm.displayName)
+                })
+            /*viewHolder.compositeDisposable.add(Observable.combineLatest(
+                presenter.contactService.observeContact(event.account!!, event.contact!!, false),
+                presenter.contactService.observeContact(event.account!!, Uri(null, event.author!!), false)
+            ) { target, author -> Pair(target, author) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { vm ->
+                    viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
+                        .withContact(vm.first)
+                        .withCircleCrop(true)
+                        .build(viewHolder.itemView.context))
+                    viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(when (event.event) {
+                        ContactEvent.Event.ADDED -> R.string.conversation_contact_added
+                        ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
+                        ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
+                        ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                        else -> R.string.hist_contact_added
+                    }, vm.first.displayName)
+                })*/
+        } else {
+            viewHolder.mImage?.setImageResource(R.drawable.baseline_person_24)
+            viewHolder.mMsgTxt?.setText(when (event.event) {
+                ContactEvent.Event.ADDED -> R.string.hist_contact_added
+                ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+                ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+                ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+                else -> R.string.hist_contact_added
+            })
+        }
     }
 
     /**
