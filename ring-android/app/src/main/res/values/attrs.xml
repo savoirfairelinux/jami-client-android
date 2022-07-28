@@ -12,4 +12,10 @@
 
     <bool name="isTablet">false</bool>
 
+    <declare-styleable name="VideoSinkView">
+        <attr name="ratioWidth" format="dimension"/>
+        <attr name="ratioHeight" format="dimension"/>
+        <attr name="fitToContent" format="boolean"/>
+    </declare-styleable>
+
 </resources>
