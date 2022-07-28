@@ -193,7 +193,10 @@ class CallPresenter @Inject constructor(
                     mContactService.observeContact(obj.accountId, obj.call!!.contact!!, false))
             { participants, pending, callContact ->
                 val p = if (participants.isEmpty() && !obj.isConference)
-                    listOf(ParticipantInfo(obj.call, callContact, mapOf("sinkId" to (obj.call?.daemonIdString ?: ""))))
+                    listOf(ParticipantInfo(obj.call, callContact, mapOf(
+                        "sinkId" to (obj.call?.daemonIdString ?: ""),
+                        "active" to "true"
+                    )))
                 else
                     participants
                 if (p.isEmpty()) p else p + pending
