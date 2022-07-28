@@ -48,7 +48,6 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
-import androidx.percentlayout.widget.PercentFrameLayout
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
 import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
@@ -98,8 +97,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     private var mTextureAvailable = false
     private var confAdapter: ConfParticipantAdapter? = null
     private var mConferenceMode = false
-    private var mVideoWidth = -1
-    private var mVideoHeight = -1
     private val fadeOutAnimation: Animation by lazy { AlphaAnimation(1f, 0f).apply {
         interpolator = AccelerateInterpolator()
         startOffset = 1000
@@ -172,19 +169,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE, "ring:callLock")
             .apply { setReferenceCounted(false) }
-        binding!!.videoSurface.holder.setFormat(PixelFormat.RGBA_8888)
-        binding!!.videoSurface.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                presenter.videoSurfaceCreated(holder)
-            }
-
-            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
-
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                presenter.videoSurfaceDestroyed()
-            }
-        })
-        view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
         binding!!.previewSurface.surfaceTextureListener = listener
         runnable = Runnable { presenter.uiVisibilityChanged(false) }
     }
@@ -258,24 +242,16 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         when(isInPictureInPictureMode){
             true -> {
                 binding!!.previewContainer.visibility = View.GONE
-                binding!!.videoSurface.setZOrderOnTop(false)
-                binding!!.videoSurface.setZOrderMediaOverlay(false)
             }
             false -> {
                 mBackstackLost = true
                 binding!!.previewContainer.visibility = View.VISIBLE
-                binding!!.videoSurface.setZOrderMediaOverlay(true)
-                binding!!.videoSurface.setZOrderOnTop(true)
             }
         }
     }
 
     override fun displayContactBubble(display: Boolean) {
         binding!!.contactBubbleLayout.visibility = if (display) View.VISIBLE else View.GONE
-    }
-    override fun displayPeerVideo(display: Boolean) {
-        binding!!.videoSurface.visibility = if (display) View.VISIBLE else View.GONE
-        displayContactBubble(!display)
     }
 
     override fun displayLocalVideo(display: Boolean) {
@@ -338,7 +314,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.GONE
             callHangupBtn.visibility = View.VISIBLE
-            contactBubbleLayout.visibility = View.VISIBLE
+            contactBubbleLayout.isVisible = false
+            participantOverlayContainer.isVisible = true
         }
         requireActivity().invalidateOptionsMenu()
         handleVisibilityTimer()
@@ -352,6 +329,8 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             callAcceptBtn.requestFocus()
             callRefuseBtn.visibility = View.VISIBLE
             callHangupBtn.visibility = View.GONE
+            contactBubbleLayout.isVisible = true
+            participantOverlayContainer.isVisible = false
         }
     }
 
@@ -360,6 +339,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             callAcceptBtn.visibility = View.GONE
             callRefuseBtn.visibility = View.VISIBLE
             callHangupBtn.visibility = View.GONE
+            contactBubbleLayout.isVisible = true
         }
     }
 
@@ -372,28 +352,6 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
             if (flip) mPreviewHeight else mPreviewWidth,
             if (flip) mPreviewWidth else mPreviewHeight
         )
-    }
-
-    override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
-        Log.w(TAG, "resetVideoSize " + videoWidth + "x" + videoHeight)
-        val rootView = view as ViewGroup? ?: return
-        val videoRatio = videoWidth / videoHeight.toDouble()
-        val screenRatio = rootView.width / rootView.height.toDouble()
-        val params = binding!!.videoSurface.layoutParams as RelativeLayout.LayoutParams
-        val oldW = params.width
-        val oldH = params.height
-        if (videoRatio >= screenRatio) {
-            params.width = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.height = (videoHeight * rootView.width.toDouble() / videoWidth.toDouble()).toInt()
-        } else {
-            params.height = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.width = (videoWidth * rootView.height.toDouble() / videoHeight.toDouble()).toInt()
-        }
-        if (oldW != params.width || oldH != params.height) {
-            binding!!.videoSurface.layoutParams = params
-        }
-        mVideoWidth = videoWidth
-        mVideoHeight = videoHeight
     }
 
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
@@ -535,45 +493,12 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
     }
 
-    private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>){
-        val overlayViewBinding =  binding?.participantOverlayContainer ?: return
-        overlayViewBinding.removeAllViews()
-        overlayViewBinding.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
-        val inflater = LayoutInflater.from(overlayViewBinding.context)
-        for (i in participantsInfo) {
-
-            // adding name, mic etc..
-            val displayName = i.contact.displayName
-            if (!TextUtils.isEmpty(displayName)) {
-                val participantInfoOverlay = ItemParticipantLabelBinding.inflate(inflater)
-                val infoOverlayLayoutParams = PercentFrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                infoOverlayLayoutParams.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.bottomMarginPercent =  1f - (i.y + i.h) / mVideoHeight.toFloat()
-
-                participantInfoOverlay.participantName.text = displayName
-                //label.moderator.isVisible = i.isModerator
-                participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
-                overlayViewBinding.addView(participantInfoOverlay.root, infoOverlayLayoutParams)
-            }
-
-            val raisedHandBadge = ItemParticipantHandContainerBinding.inflate(inflater)
-            val raisedHandBadgeLayoutParam = PercentFrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-            )
-            raisedHandBadgeLayoutParam.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
-            raisedHandBadgeLayoutParam.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
-            raisedHandBadgeLayoutParam.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-
-            raisedHandBadge.raisedHand.isVisible = i.isHandRaised
-            overlayViewBinding.addView(raisedHandBadge.root, raisedHandBadgeLayoutParam)
-
+    private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
+        val overlayViewBinding = binding?.participantOverlayContainer ?: return
+        overlayViewBinding.participants = participantsInfo.filterNot {
+            it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
+        overlayViewBinding.init()
     }
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
@@ -653,13 +578,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val paramBuilder = PictureInPictureParams.Builder()
-            if (binding!!.videoSurface.visibility == View.VISIBLE) {
+            if (binding!!.participantOverlayContainer.visibility == View.VISIBLE) {
                 val l = IntArray(2)
-                binding!!.videoSurface.getLocationInWindow(l)
+                binding!!.participantOverlayContainer.getLocationInWindow(l)
                 val x = l[0]
                 val y = l[1]
-                val w = binding!!.videoSurface.width
-                val h = binding!!.videoSurface.height
+                val w = binding!!.participantOverlayContainer.width
+                val h = binding!!.participantOverlayContainer.height
                 val videoBounds = Rect(x, y, x + w, y + h)
                 paramBuilder.setAspectRatio(Rational(w, h))
                 paramBuilder.setSourceRectHint(videoBounds)

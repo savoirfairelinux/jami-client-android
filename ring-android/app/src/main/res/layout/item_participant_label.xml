@@ -1,50 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/call_participant_margin"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"/>
+
+    <cx.ring.views.VideoSinkView
+        android:id="@+id/sink"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ratioWidth="720dp"
+        tools:ratioHeight="1280dp"
+        android:layout_gravity="center"
+        tools:fitToContent="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_gravity="bottom|start"
         android:background="@drawable/background_conference_label"
         android:gravity="center_vertical"
-        android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/participant_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="12sp"
+            android:layout_weight="1"
             tools:text="Georges Longname of Chateaubrillant" />
 
         <ImageView
             android:id="@+id/moderator"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_margin="4dp"
+            android:layout_marginHorizontal="8dp"
             android:contentDescription="@string/call_moderator"
             android:src="@drawable/baseline_moderateur"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:layout_weight="0"
+            app:tint="@color/colorOnSecondary" />
 
         <ImageView
             android:id="@+id/mute"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_margin="4dp"
+            android:layout_marginHorizontal="8dp"
             android:contentDescription="@string/call_muted"
             android:src="@drawable/baseline_mic_off_24"
             android:visibility="gone"
+            android:layout_weight="0"
             tools:visibility="visible" />
 
     </LinearLayout>
-</FrameLayout>
+</androidx.cardview.widget.CardView>

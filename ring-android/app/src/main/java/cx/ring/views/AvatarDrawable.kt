@@ -539,7 +539,7 @@ class AvatarDrawable : Drawable {
             if (workspace[i] != null) {
                 workspace[i]!!.recycle()
                 workspace[i] = null
-                clipPaint!![i].shader = null
+                clipPaint?.get(i)?.shader = null//[i].shader = null
             }
         }
         if (iw <= 0 || ih <= 0) {
