@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:background="#424242"
         tools:background="#424242">
 
-        <FrameLayout
+        <cx.ring.views.ParticipantContainer
             android:id="@+id/participant_overlay_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
