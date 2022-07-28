@@ -887,84 +887,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
         val overlayViewBinding = binding?.participantOverlayContainer ?: return
-
-        val inflater = LayoutInflater.from(overlayViewBinding.context)
-
-        val mainWidth = overlayViewBinding.width.toFloat()
-        val mainHeight = overlayViewBinding.height.toFloat()
-
-        val participants = participantsInfo.filterNot { it.contact.contact.isUser && it.device == presenter.getDeviceId() }
-
-        for (childView in overlayViewBinding.children) {
-            val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null)
-                overlayViewBinding.removeView(childView)
+        overlayViewBinding.participants = participantsInfo.filterNot {
+            it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
-        val activeParticipants = participants.count { it.active }
-        val inactiveParticipants = participants.size - activeParticipants
-        val grid = activeParticipants == 0
-
-        val maxCol = if (grid) (if (mainWidth < mainHeight) 1 else 3) else 3
-        val activeSeparation = if (inactiveParticipants == 0) 0f else .2f
-        val activeWidth = 1f/activeParticipants
-        val inactiveMaxCols = min(maxCol, inactiveParticipants)
-        val inactiveWidth = 1f/inactiveMaxCols
-        val gridRows = if (grid) inactiveParticipants / inactiveMaxCols else 0
-        val inactiveHeight = if (grid) (1f / gridRows) else activeSeparation
-        val margin = if (participants.size < 2) 0 else overlayViewBinding.context.resources.getDimensionPixelSize(R.dimen.call_participant_margin)
-        val cornerRadius = if (participants.size < 2) 0f else overlayViewBinding.context.resources.getDimension(R.dimen.call_participant_corner_radius)
-
-        Log.w(TAG, "generateParticipantOverlay count:${participants.size} grid:$grid ($maxCol by $gridRows) active:$activeWidth inactive: $inactiveWidth $inactiveHeight")
-
-        var iActive = 0
-        var iInactive = 0
-        val toAdd: MutableList<View> = ArrayList()
-        for (i in participants) {
-            if (!i.active && !grid && iInactive >= maxCol)
-                break
-
-            val viewTag = i.sinkId ?: i.contact.contact.uri.uri
-            val view: View? = overlayViewBinding.findViewWithTag(viewTag)
-            // adding name, mic etc..
-            val participantInfoOverlay = if (view != null) ItemParticipantLabelBinding.bind(view) else ItemParticipantLabelBinding.inflate(inflater).apply {
-                root.tag = viewTag
-            }
-
-            participantInfoOverlay.root.radius = cornerRadius
-            participantInfoOverlay.sink.setFitToContent(i.active)
-            participantInfoOverlay.sink.setSinkId(i.sinkId)
-
-            participantInfoOverlay.participantName.text = i.contact.displayName
-            participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
-
-            val col = if (i.active) iActive.toFloat() else (if (grid) (iInactive % inactiveMaxCols).toFloat() else iInactive.toFloat() / inactiveMaxCols.toFloat())
-            val x = if (i.active) col * activeWidth else col * inactiveWidth
-            val y = if (i.active) activeSeparation else (if (grid) ((iInactive / inactiveMaxCols).toFloat()/gridRows) else 0f)
-            val w = if (i.active) activeWidth else inactiveWidth
-            val h = if (i.active) 1f-activeSeparation else inactiveHeight
-            Log.w(TAG, "generateParticipantOverlay index $iActive $iInactive x:$x y:$y w:$w h:$h")
-
-            val infoOverlayLayoutParams = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                leftMargin = (x * mainWidth).toInt() + margin
-                width = (w * mainWidth).toInt() - 2*margin
-                topMargin = (y * mainHeight).toInt() + margin
-                height = (h * mainHeight).toInt() - 2*margin
-            }
-
-            participantInfoOverlay.root.layoutParams = infoOverlayLayoutParams
-            if  (view == null)
-                toAdd.add(participantInfoOverlay.root)
-
-            if (i.active)
-                iActive++
-            else
-                iInactive++
-        }
-
-        for (v in toAdd) overlayViewBinding.addView(v)
+        overlayViewBinding.init()
     }
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
