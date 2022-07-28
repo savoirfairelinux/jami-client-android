@@ -41,6 +41,11 @@ class Conference(val accountId: String, val id: String) {
         val audioLocalMuted: Boolean = i["audioLocalMuted"].toBoolean()
         val isModerator: Boolean = i["isModerator"].toBoolean()
         val isHandRaised: Boolean = i["handRaised"].toBoolean()
+
+        val active: Boolean = i["active"].toBoolean()
+        val device: String? = i["device"]
+        val sinkId: String? = i["sinkId"]
+
         val isEmpty: Boolean
             get() = x == 0 && y == 0 && w == 0 && h == 0
     }

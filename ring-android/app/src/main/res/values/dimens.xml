@@ -75,6 +75,8 @@ along with this program; if not, write to the Free Software
     <dimen name="call_preview_margin">12dp</dimen>
     <dimen name="call_preview_margin_big">65dp</dimen>
     <dimen name="call_preview_margin_handle">12dp</dimen>
+    <dimen name="call_participant_margin">8dp</dimen>
+    <dimen name="call_participant_corner_radius">16dp</dimen>
 
     <!--  Buttons  -->
     <dimen name="button_padding">16dp</dimen>

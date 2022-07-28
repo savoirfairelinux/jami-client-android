@@ -23,6 +23,7 @@ package cx.ring.fragments
 import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.LayoutTransition
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -42,7 +43,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Rational
@@ -57,10 +57,8 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.percentlayout.widget.PercentFrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
@@ -68,7 +66,6 @@ import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
 import cx.ring.adapters.PluginsAdapter
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
-import cx.ring.databinding.ItemParticipantHandContainerBinding
 import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.plugins.PluginUtils
@@ -107,8 +104,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var mOrientationListener: OrientationEventListener? = null
     private var mScreenWakeLock: PowerManager.WakeLock? = null
     private var mCurrentOrientation = 0
-    private var mVideoWidth = -1
-    private var mVideoHeight = -1
     private var mPreviewWidth = 720
     private var mPreviewHeight = 1280
     private var mPreviewSurfaceWidth = 0
@@ -141,9 +136,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     private var isMyMicMuted: Boolean = false
     private var pluginsAdapter: PluginsAdapter? = null
 
-    private val cameraPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
+    private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
             switchCamera()
         }
@@ -217,19 +210,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
 
         binding?.let { binding ->
-            binding.videoSurface.holder.setFormat(PixelFormat.RGBA_8888)
-            binding.videoSurface.holder.addCallback(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    presenter.videoSurfaceCreated(holder)
-                }
+            binding.participantOverlayContainer.layoutTransition.apply {
+                disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
+                disableTransitionType(LayoutTransition.CHANGE_APPEARING)
+            }
 
-                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
-
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    presenter.videoSurfaceDestroyed()
-                }
-            })
-            binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBA_8888)
+            binding.pluginPreviewSurface.holder.setFormat(PixelFormat.RGBX_8888)
             binding.pluginPreviewSurface.holder.addCallback(object : SurfaceHolder.Callback {
                 override fun surfaceCreated(holder: SurfaceHolder) {
                     presenter.pluginSurfaceCreated(holder)
@@ -246,7 +232,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             insets?.apply {
                 presenter.uiVisibilityChanged(this.isVisible(WindowInsetsCompat.Type.navigationBars()))
             }
-            view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> resetVideoSize(mVideoWidth, mVideoHeight) }
 
             // todo: doublon with CallActivity.onConfigurationChanged ??
             mOrientationListener = object : OrientationEventListener(context) {
@@ -423,13 +408,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val context = requireContext()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val binding = binding ?: return
-            if (binding.videoSurface.visibility != View.VISIBLE)
+            if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
-            val l = IntArray(2).apply { binding.videoSurface.getLocationInWindow(this) }
+            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
             val x = l[0]
             val y = l[1]
-            val w = binding.videoSurface.width
-            val h = binding.videoSurface.height
+            val w = binding.participantOverlayContainer.width
+            val h = binding.participantOverlayContainer.height
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(w, h))
@@ -443,8 +428,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             Random().nextInt(),
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(context, JamiService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, callId), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
-                        )
+                                .putExtra(NotificationService.KEY_CALL_ID, callId), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT))
                     )))
                     .build())
             } catch (e: Exception) {
@@ -738,12 +722,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun displayPeerVideo(display: Boolean) {
-        Log.w(TAG, "displayPeerVideo -> $display")
-        binding!!.videoSurface.isVisible = display
-        displayContactBubble(!display)
-    }
-
     override fun displayLocalVideo(display: Boolean) {
         Log.w(TAG, "displayLocalVideo -> $display")
         binding?.apply {
@@ -803,6 +781,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val binding = binding ?: return
         mConferenceMode = participantInfo.isNotEmpty()
 
+        Log.w(TAG, "updateConfInfo ${participantInfo.size}")
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
             val username = if (participantInfo.size > 1)
@@ -849,12 +828,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .build(requireActivity())
             )
             generateParticipantOverlay(participantInfo)
+        } else  {
+            displayContactBubble(true)
         }
 
         binding.confControlGroup.visibility = View.VISIBLE
-        confAdapter?.apply {
-            updateFromCalls(participantInfo)
-        }
+        confAdapter?.updateFromCalls(participantInfo)
         // Create new adapter
             ?: ConfParticipantAdapter(participantInfo, object : ConfParticipantSelected {
                 override fun onParticipantSelected(
@@ -908,44 +887,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
         val overlayViewBinding = binding?.participantOverlayContainer ?: return
-        overlayViewBinding.removeAllViews()
-        overlayViewBinding.visibility = if (participantsInfo.isEmpty()) View.GONE else View.VISIBLE
-
-        val inflater = LayoutInflater.from(overlayViewBinding.context)
-
-        for (i in participantsInfo) {
-            // adding name, mic etc..
-            val displayName = i.contact.displayName
-            if (!TextUtils.isEmpty(displayName)) {
-                val participantInfoOverlay = ItemParticipantLabelBinding.inflate(inflater)
-                val infoOverlayLayoutParams = PercentFrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                infoOverlayLayoutParams.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-                infoOverlayLayoutParams.percentLayoutInfo.bottomMarginPercent =
-                    1f - (i.y + i.h) / mVideoHeight.toFloat()
-
-                participantInfoOverlay.participantName.text = displayName
-                //label.moderator.isVisible = i.isModerator
-                participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
-                overlayViewBinding.addView(participantInfoOverlay.root, infoOverlayLayoutParams)
-            }
-
-            val raisedHandBadge = ItemParticipantHandContainerBinding.inflate(inflater)
-            val raisedHandBadgeLayoutParam = PercentFrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-            )
-            raisedHandBadgeLayoutParam.percentLayoutInfo.startMarginPercent = i.x / mVideoWidth.toFloat()
-            raisedHandBadgeLayoutParam.percentLayoutInfo.endMarginPercent = 1f - (i.x + i.w) / mVideoWidth.toFloat()
-            raisedHandBadgeLayoutParam.percentLayoutInfo.topMarginPercent = i.y / mVideoHeight.toFloat()
-
-            raisedHandBadge.raisedHand.isVisible = i.isHandRaised
-            overlayViewBinding.addView(raisedHandBadge.root, raisedHandBadgeLayoutParam)
+        overlayViewBinding.participants = participantsInfo.filterNot {
+            it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
+        overlayViewBinding.init()
     }
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
@@ -1112,7 +1057,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callAcceptAudioBtnText.isVisible = false
             callRefuseBtn.isVisible = false
             callRefuseBtnText.isVisible = false
-            contactBubbleLayout.visibility = View.VISIBLE
+            contactBubbleLayout.isVisible = false
+            participantOverlayContainer.isVisible = true
         }
 
         val callActivity = activity as CallActivity?
@@ -1130,6 +1076,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             callRefuseBtn.isVisible = true
             callRefuseBtnText.isVisible = true
             contactBubbleLayout.isVisible = true
+            participantOverlayContainer.isVisible = false
         }
     }
 
@@ -1165,54 +1112,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun resetVideoSize(videoWidth: Int, videoHeight: Int) {
-        val rootView = view as ViewGroup? ?: return
-        val binding = binding ?: return
-        val videoRatio = videoWidth / videoHeight.toDouble()
-        val screenRatio = rootView.width / rootView.height.toDouble()
-        val params = binding.videoSurface.layoutParams as RelativeLayout.LayoutParams
-        val oldW = params.width
-        val oldH = params.height
-        if (videoRatio >= screenRatio) {
-            params.width = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.height = (videoHeight * rootView.width.toDouble() / videoWidth.toDouble()).toInt()
-        } else {
-            params.height = RelativeLayout.LayoutParams.MATCH_PARENT
-            params.width = (videoWidth * rootView.height.toDouble() / videoHeight.toDouble()).toInt()
-        }
-        if (oldW != params.width || oldH != params.height) {
-            binding.videoSurface.layoutParams = params
-        }
-        mVideoWidth = videoWidth
-        mVideoHeight = videoHeight
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            binding.videoSurface.post {
-                try {
-                    Log.w(TAG, "setPictureInPictureParams ${binding.videoSurface.isVisible}")
-                    if (binding.videoSurface.isVisible) {
-                        val l = IntArray(2).apply { binding.videoSurface.getLocationInWindow(this) }
-                        val w = binding.videoSurface.width
-                        val h = binding.videoSurface.height
-                        activity?.setPictureInPictureParams(
-                            PictureInPictureParams.Builder()
-                                .setAutoEnterEnabled(true)
-                                .setAspectRatio(Rational(w, h))
-                                .setSourceRectHint(Rect(l[0], l[1], l[0] + w, l[1] + h))
-                                .build())
-                    } else {
-                        activity?.setPictureInPictureParams(
-                            PictureInPictureParams.Builder()
-                                .setAutoEnterEnabled(false)
-                                .build())
-                    }
-                } catch (e: Exception) {
-                    Log.w(TAG, "Can't set PIP params", e)
-                }
-
-            }
-        }
-    }
-
     private fun configureTransform(viewWidth: Int, viewHeight: Int) {
         val activity = activity ?: return
         val binding = binding ?: return
@@ -1240,25 +1139,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun goToConversation(accountId: String, conversationId: Uri) {
         val context = requireContext()
         if (isTablet(context)) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    ConversationPath.toUri(accountId, conversationId),
-                    context,
-                    HomeActivity::class.java
-                )
-            )
+            startActivity(Intent(Intent.ACTION_VIEW,
+                ConversationPath.toUri(accountId, conversationId),
+                context,
+                HomeActivity::class.java))
         } else {
-            startActivityForResult(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    ConversationPath.toUri(accountId, conversationId),
-                    context,
-                    ConversationActivity::class.java
-                )
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT),
-                HomeActivity.REQUEST_CODE_CONVERSATION
-            )
+            startActivityForResult(Intent(Intent.ACTION_VIEW,
+                ConversationPath.toUri(accountId, conversationId),
+                context,
+                ConversationActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT),
+                HomeActivity.REQUEST_CODE_CONVERSATION)
         }
     }
 
@@ -1267,14 +1158,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun goToContact(accountId: String, contact: Contact) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                ConversationPath.toUri(accountId, contact.uri),
-                requireContext(),
-                ContactDetailsActivity::class.java
-            )
-        )
+        startActivity(Intent(Intent.ACTION_VIEW,
+            ConversationPath.toUri(accountId, contact.uri),
+            requireContext(),
+            ContactDetailsActivity::class.java))
     }
 
     /**
@@ -1447,7 +1334,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
     }
 
-    fun pluginsButtonClicked() {
+    public fun pluginsButtonClicked() {
         val binding = binding ?: return
         if(binding.callPluginsBtn.isChecked){
             binding.confControlGroup.adapter = pluginsAdapter
