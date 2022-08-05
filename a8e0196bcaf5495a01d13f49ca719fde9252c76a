@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "453aaf9d_49ac18dd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T17:19:57Z",
+      "side": 1,
+      "message": "The overlap problem is fixed.\n\nFor this version the scroll is not supported and the supported number of inactive participants is up to 3. They will be resolved in the next versions.",
+      "parentUuid": "4e98ba98_9ffcbe21",
+      "range": {
+        "startLine": 907,
+        "startChar": 13,
+        "endLine": 907,
+        "endChar": 76
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83a10bf8_d37438a2",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
         "patchSetId": 14
@@ -60,6 +84,30 @@
       "writtenOn": "2022-07-19T13:42:39Z",
       "side": 1,
       "message": "Also, in 1:1 if I rotate the screen, only a part of it is used.",
+      "range": {
+        "startLine": 909,
+        "startChar": 43,
+        "endLine": 909,
+        "endChar": 47
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a7cd9c3_f6c2bc09",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T17:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a10bf8_d37438a2",
       "range": {
         "startLine": 909,
         "startChar": 43,
@@ -83,6 +131,30 @@
       "writtenOn": "2022-07-18T14:34:26Z",
       "side": 1,
       "message": "maybe some cleanup as a lot got commented out",
+      "range": {
+        "startLine": 173,
+        "startChar": 9,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53713301_c82dddd9",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T17:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962e1aff_c4d3a4ad",
       "range": {
         "startLine": 173,
         "startChar": 9,
