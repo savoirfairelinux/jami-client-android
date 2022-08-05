@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58729135_cc1fac0b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80db2387_5e23154a",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 60
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5e48ad2_32f327cc",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 348,
+        "startChar": 8,
+        "endLine": 348,
+        "endChar": 83
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da268291_10ca04d4",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e48ad2_32f327cc",
       "range": {
         "startLine": 348,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b96685_ca54de33",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e18439_a7a1fe42",
+      "range": {
+        "startLine": 351,
+        "startChar": 16,
+        "endLine": 351,
+        "endChar": 80
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a162c93d_118ccf8b",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 356,
+        "startChar": 20,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b83a8d_d55fe8a1",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a162c93d_118ccf8b",
       "range": {
         "startLine": 356,
         "startChar": 20,
@@ -116,6 +212,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e497a8c1_9c955757",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7b3e99_1870a792",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97fd64ea_cbf02237",
@@ -139,6 +259,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21e6ca43_97bb5be2",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97fd64ea_cbf02237",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 0
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24262846_98415c45",
@@ -152,6 +296,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 0
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5086f7_a47a5f0b",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24262846_98415c45",
       "range": {
         "startLine": 260,
         "startChar": 0,
@@ -187,6 +355,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "715f57ac_24eebb1f",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/ParticipantsContainerView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "It would work but updating the UI in the main thread happens with a delay in some devices like the Samsung test device.",
+      "parentUuid": "a8ce788b_7da68294",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "338b8dee_89854111",
         "filename": "ring-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
         "patchSetId": 16
@@ -198,6 +390,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42fd5522_87edabe3",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "338b8dee_89854111",
       "range": {
         "startLine": 47,
         "startChar": 8,
@@ -231,6 +447,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "591c8b82_5ff183af",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dad9398_8c3de4b2",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51113e50_1db63ef4",
@@ -244,6 +484,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 72
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2a3ccfd_329ea87a",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51113e50_1db63ef4",
       "range": {
         "startLine": 162,
         "startChar": 8,
@@ -277,6 +541,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aba0f73a_94ab6982",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/VideoSinkView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "809be6f6_57443dd4",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 47
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9deb5d89_784b2288",
@@ -300,6 +588,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37854695_0bc7f1a2",
+        "filename": "ring-android/app/src/main/res/values/attrs.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9deb5d89_784b2288",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94ab9f87_1b5a542d",
@@ -313,6 +625,30 @@
       "writtenOn": "2022-08-05T18:38:35Z",
       "side": 1,
       "message": "to cleanup",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 70
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46316d95_620816db",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2022-08-05T19:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ab9f87_1b5a542d",
       "range": {
         "startLine": 91,
         "startChar": 0,
