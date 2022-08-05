@@ -216,13 +216,10 @@ class ConversationAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return mInteractions.size + if (isComposing) 1 else 0
-    }
+    override fun getItemCount(): Int = mInteractions.size + if (isComposing) 1 else 0
 
-    override fun getItemId(position: Int): Long {
-        return if (isComposing && position == mInteractions.size) Long.MAX_VALUE else mInteractions[position].id.toLong()
-    }
+    override fun getItemId(position: Int): Long =
+        if (isComposing && position == mInteractions.size) Long.MAX_VALUE else mInteractions[position].id.toLong()
 
     override fun getItemViewType(position: Int): Int {
         if (isComposing && position == mInteractions.size) return MessageType.COMPOSING_INDICATION.ordinal
@@ -975,12 +972,14 @@ class ConversationAdapter(
         val nextMsg = getNextMessageFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
-                return SequenceType.FIRST
+            return if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
+                 SequenceType.FIRST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
-                return SequenceType.LAST
+                SequenceType.LAST
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
-                return if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
+                if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
+            } else {
+                SequenceType.SINGLE
             }
         }
         return SequenceType.SINGLE
