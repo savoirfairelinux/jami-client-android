@@ -410,8 +410,10 @@ class Conversation : ConversationHistory {
 
     val lastEvent: Interaction?
         get() {
-            sortHistory()
-            return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
+            synchronized(aggregateHistory) {
+                sortHistory()
+                return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
+            }
         }
 
     val currentCall: Conference?
