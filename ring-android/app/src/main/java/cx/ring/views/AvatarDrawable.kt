@@ -222,6 +222,7 @@ class AvatarDrawable : Drawable {
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
             withPhoto(contact.profile.avatar as Bitmap?)
                 .withId(contact.contact.primaryNumber)
+                .withPresence(contact.presence)
                 .withOnlineState(contact.contact.isOnline)
                 .withNameData(contact.profile.displayName, contact.registeredName)
 
