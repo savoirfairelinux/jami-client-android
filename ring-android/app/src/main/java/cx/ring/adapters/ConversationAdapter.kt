@@ -256,9 +256,12 @@ class ConversationAdapter(
     }
 
     private fun configureDisplayIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+        val conversation = interaction.conversation as Conversation? ?: run {
+            conversationViewHolder.mStatusIcon?.isVisible = false
+            return
+        }
         conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
-            .getLoadedContact(interaction.account!!,
-                interaction.conversation as Conversation?, interaction.displayedContacts)
+            .getLoadedContact(interaction.account!!, conversation, interaction.displayedContacts)
             .subscribe { contacts ->
                 conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
