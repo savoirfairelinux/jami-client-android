@@ -688,10 +688,8 @@ class ConversationFacade(
                 { Log.e(TAG, "Error showing contact request") })
         mDisposableBag.add(mAccountService
             .incomingMessages
-            .concatMapSingle { msg: TextMessage ->
-                getAccountSubject(msg.account!!)
-                    .map { a: Account ->
-                        a.addTextMessage(msg)
+            .concatMapSingle { msg: TextMessage -> getAccountSubject(msg.account!!)
+                    .map { a: Account -> a.addTextMessage(msg)
                         msg }
             }
             .subscribe({ txt: TextMessage -> parseNewMessage(txt) })

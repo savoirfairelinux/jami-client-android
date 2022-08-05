@@ -74,8 +74,7 @@ abstract class ContactService(
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
         // Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
         val observePresence = if (contact.isUser) false else withPresence
-        val uri = contact.uri
-        val uriString = uri.rawRingId
+        val uriString = contact.uri.rawRingId
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
                 Observable.create { emitter: ObservableEmitter<Boolean> ->
@@ -115,26 +114,6 @@ abstract class ContactService(
             else
                 Observable.combineLatest(contact.profile, username.toObservable())
                 { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
-
-            /*val contactUpdates = contact.updates ?: run {
-                Observable.combineLatest(contact.profile, username.toObservable()) { profile, name -> ContactProfile(contact, profile, name, false) }
-                    .apply { contact.updates = this }
-            }
-            val contactUpdates = contact.updates ?: run {
-                contact.updatesSubject
-                    .doOnSubscribe {
-                        if (!contact.isUsernameLoaded)
-                            mAccountService.lookupAddress(accountId, "", uri.rawRingId)
-                        loadContactData(contact, accountId)
-                            .subscribe({}) { }
-                    }
-                    .filter { c: Contact -> c.isUsernameLoaded && c.detailsLoaded }
-                    .replay(1)
-                    .refCount()
-                    .apply { contact.updates = this }
-            }
-            return if (presence) Observable.combineLatest(contactUpdates, presenceUpdates) { c: Contact, p: Boolean -> c }
-            else contactUpdates*/
         }
     }
 

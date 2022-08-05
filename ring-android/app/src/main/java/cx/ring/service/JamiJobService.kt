@@ -29,7 +29,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import cx.ring.application.JamiApplication
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class JamiJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         if (params.jobId != JOB_ID) return false
