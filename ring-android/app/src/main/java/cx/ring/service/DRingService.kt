@@ -187,10 +187,14 @@ class DRingService : Service() {
     }
 
     private fun showSystemNotification(settings: Settings) {
-        if (settings.enablePermanentService) {
-            startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)
-        } else {
-            stopForeground(true)
+        try {
+            if (settings.enablePermanentService) {
+                startForeground(NOTIFICATION_ID, mNotificationService.serviceNotification as Notification)
+            } else {
+                stopForeground(true)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Can't start or stop foreground service: ${e.message}")
         }
     }
 
