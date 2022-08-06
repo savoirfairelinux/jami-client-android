@@ -95,9 +95,9 @@ dependencies {
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha02")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.6.0")
-    implementation ("androidx.sharetarget:sharetarget:1.2.0-rc01")
+    implementation ("androidx.sharetarget:sharetarget:1.2.0-rc02")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation ("com.google.android.material:material:1.6.1")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.13")
@@ -132,7 +132,7 @@ dependencies {
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.5") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.7") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
