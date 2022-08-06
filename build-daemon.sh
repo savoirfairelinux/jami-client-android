@@ -40,7 +40,7 @@ else
 fi
 TARGET_CC=${TARGET_CC:-$TARGET}
 
-export API=21
+export API=24
 export ANDROID_API=android-$API
 export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/$platform-$arch
 export TARGET

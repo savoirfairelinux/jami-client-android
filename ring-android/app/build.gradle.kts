@@ -16,7 +16,7 @@ android {
     buildToolsVersion = "32.0.0"
     ndkVersion = "25.0.8528842"
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
         targetSdk = 32
         versionCode = 339
         versionName = "20220805-01"
@@ -109,7 +109,7 @@ dependencies {
 
     // Barcode scanning
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation ("com.google.zxing:core:3.3.3")
+    implementation ("com.google.zxing:core:3.5.0")
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")

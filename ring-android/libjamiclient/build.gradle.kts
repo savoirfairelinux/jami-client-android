@@ -13,7 +13,7 @@ dependencies {
     // VCard parsing
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
     // QRCode encoding
-    implementation ("com.google.zxing:core:3.4.1")
+    implementation ("com.google.zxing:core:3.5.0")
     // dependency injection
     implementation( "javax.inject:javax.inject:1")
     // ORM
