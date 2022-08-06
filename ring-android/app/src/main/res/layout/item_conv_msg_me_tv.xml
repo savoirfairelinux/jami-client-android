@@ -85,7 +85,6 @@ along with this program; if not, write to the Free Software
             android:minHeight="@dimen/conversation_avatar_size"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="24dp"
-            android:autoLink="all"
             android:background="@drawable/textmsg_bg_out"
             android:ellipsize="marquee"
             android:focusable="true"

@@ -69,8 +69,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="@dimen/conversation_avatar_size"
             android:background="@null"
             android:layout_alignBottom="@id/msg_txt"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/msg_txt"
@@ -81,7 +80,6 @@ along with this program; if not, write to the Free Software
             android:layout_marginEnd="20dp"
             android:minWidth="@dimen/conversation_avatar_size"
             android:minHeight="@dimen/conversation_avatar_size"
-            android:autoLink="all"
             android:background="@drawable/textmsg_bg_in"
             android:ellipsize="marquee"
             android:focusable="true"

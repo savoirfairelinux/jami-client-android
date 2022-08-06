@@ -50,6 +50,8 @@ import cx.ring.client.MediaViewerActivity
 import cx.ring.utils.*
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
+import io.noties.markwon.Markwon
+import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -77,6 +79,9 @@ class TvConversationAdapter(
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long>
+    private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
+        .usePlugin(LinkifyPlugin.create())
+        .build()
 
     /**
      * Refreshes the data and notifies the changes
@@ -153,30 +158,29 @@ class TvConversationAdapter(
             return MessageType.HEADER.ordinal
         }
         val interaction = mInteractions[position]
-        if (interaction != null) {
-            when (interaction.type) {
-                Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
-                Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
-                Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
-                    MessageType.INCOMING_TEXT_MESSAGE.ordinal
-                } else {
-                    MessageType.OUTGOING_TEXT_MESSAGE.ordinal
-                }
-                Interaction.InteractionType.DATA_TRANSFER -> {
-                    val file = interaction as DataTransfer
-                    val out = if (interaction.isIncoming) 0 else 4
-                    if (file.isComplete) {
-                        if (file.isPicture) {
-                            return MessageType.INCOMING_IMAGE.ordinal + out
-                        } else if (file.isAudio) {
-                            return MessageType.INCOMING_AUDIO.ordinal + out
-                        } else if (file.isVideo) {
-                            return MessageType.INCOMING_VIDEO.ordinal + out
-                        }
-                    }
-                    return out
-                }
+        when (interaction.type) {
+            Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
+            Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
+                MessageType.INCOMING_TEXT_MESSAGE.ordinal
+            } else {
+                MessageType.OUTGOING_TEXT_MESSAGE.ordinal
             }
+            Interaction.InteractionType.DATA_TRANSFER -> {
+                val file = interaction as DataTransfer
+                val out = if (interaction.isIncoming) 0 else 4
+                if (file.isComplete) {
+                    if (file.isPicture) {
+                        return MessageType.INCOMING_IMAGE.ordinal + out
+                    } else if (file.isAudio) {
+                        return MessageType.INCOMING_AUDIO.ordinal + out
+                    } else if (file.isVideo) {
+                        return MessageType.INCOMING_VIDEO.ordinal + out
+                    }
+                }
+                return out
+            }
+            else -> {}
         }
         return MessageType.CALL_INFORMATION.ordinal
     }
@@ -580,21 +584,22 @@ class TvConversationAdapter(
         }
         val isTimeShown = hasPermanentTimeString(textMessage, position)
         val msgSequenceType = getMsgSequencing(position, isTimeShown)
+        val msgTxt = convViewHolder.mMsgTxt ?: return
         if (isOnlyEmoji(message)) {
-            convViewHolder.mMsgTxt!!.background.alpha = 0
-            convViewHolder.mMsgTxt!!.textSize = 32.0f
-            convViewHolder.mMsgTxt!!.setPadding(0, 0, 0, 0)
+            msgTxt.background.alpha = 0
+            msgTxt.textSize = 32.0f
+            msgTxt.setPadding(0, 0, 0, 0)
         } else {
             val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            convViewHolder.mMsgTxt!!.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+            msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
             if (convColor != 0 && !textMessage.isIncoming) {
-                convViewHolder.mMsgTxt!!.background.setTint(convColor)
+                msgTxt.background.setTint(convColor)
             }
-            convViewHolder.mMsgTxt!!.background.alpha = 255
-            convViewHolder.mMsgTxt!!.textSize = 16f
-            convViewHolder.mMsgTxt!!.setPadding(hPadding, vPadding, hPadding, vPadding)
+            msgTxt.background.alpha = 255
+            msgTxt.textSize = 16f
+            msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
         }
-        convViewHolder.mMsgTxt!!.text = message
+        msgTxt.text = markwon.toMarkdown(message)
         if (textMessage.isIncoming) {
             convViewHolder.mAvatar!!.setImageBitmap(null)
             convViewHolder.mAvatar.visibility = View.VISIBLE

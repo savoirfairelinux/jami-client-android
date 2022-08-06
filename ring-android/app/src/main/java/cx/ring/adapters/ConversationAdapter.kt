@@ -67,6 +67,8 @@ import cx.ring.utils.*
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
+import io.noties.markwon.Markwon
+import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -79,7 +81,6 @@ import java.io.File
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 import kotlin.math.max
 
 class ConversationAdapter(
@@ -103,6 +104,9 @@ class ConversationAdapter(
     private var isComposing = false
     private var mShowReadIndicator = true
     var showLinkPreviews = true
+    private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
+        .usePlugin(LinkifyPlugin.create())
+        .build()
 
     /**
      * Refreshes the data and notifies the changes
@@ -752,7 +756,7 @@ class ConversationAdapter(
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
             }
         }
-        msgTxt.text = message
+        msgTxt.text = markwon.toMarkdown(message)
         val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         if (textMessage.isIncoming) {
             val avatar = convViewHolder.mAvatar ?: return
