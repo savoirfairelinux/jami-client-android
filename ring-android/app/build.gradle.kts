@@ -79,6 +79,8 @@ android {
     namespace = "cx.ring"
 }
 
+val markwon_version = "4.6.2"
+
 dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
@@ -99,6 +101,8 @@ dependencies {
     implementation ("com.google.android.material:material:1.6.1")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.13")
+    implementation ("io.noties.markwon:core:$markwon_version")
+    implementation ("io.noties.markwon:linkify:$markwon_version")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.6")
