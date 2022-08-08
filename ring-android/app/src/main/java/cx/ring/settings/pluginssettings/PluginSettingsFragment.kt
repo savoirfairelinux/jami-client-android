@@ -16,7 +16,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private var mPreferencesAttributes: List<Map<String, String>>? = null
     private var pluginDetails: PluginDetails? = null
     private var ppds: PluginPreferencesDataStore? = null
-    private var accountId: String? = null
+    private var accountId: String? = ""
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {}
 

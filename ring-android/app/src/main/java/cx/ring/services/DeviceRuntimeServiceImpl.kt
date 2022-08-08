@@ -41,6 +41,7 @@ import net.jami.services.LogService
 import net.jami.utils.FileUtils
 import net.jami.utils.StringUtils
 import java.io.File
+import java.util.Locale
 import java.util.concurrent.ScheduledExecutorService
 import kotlin.system.exitProcess
 
@@ -58,6 +59,7 @@ class DeviceRuntimeServiceImpl(
 
     override fun loadNativeLibrary() {
         logService.w(TAG, "loadNativeLibrary")
+        Os.setenv("JAMI_LANG", Locale.getDefault().toString(), true)
         //mExecutor.execute {
             Log.w(TAG, "System.loadLibrary")
             try {
