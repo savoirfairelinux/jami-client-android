@@ -519,10 +519,8 @@ class Conversation : ConversationHistory {
     }
 
     fun addSwarmElement(interaction: Interaction): Boolean {
-        if (mMessages.containsKey(interaction.messageId)) {
-            return false
-        }
-        mMessages[interaction.messageId!!] = interaction
+        val previous = mMessages.put(interaction.messageId!!, interaction)
+        val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
         mRoots.remove(interaction.messageId)
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
@@ -542,14 +540,14 @@ class Conversation : ConversationHistory {
             added = true
             newLeaf = true
             aggregateHistory.add(interaction)
-            updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
+            updatedElementSubject.onNext(Pair(interaction, action))
         } else {
             // New root or normal node
             for (i in aggregateHistory.indices) {
                 if (interaction.messageId == aggregateHistory[i].parentId) {
                     //Log.w(TAG, "@@@ New root node at " + i);
                     aggregateHistory.add(i, interaction)
-                    updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
+                    updatedElementSubject.onNext(Pair(interaction, action))
                     added = true
                     break
                 }
@@ -560,7 +558,7 @@ class Conversation : ConversationHistory {
                         added = true
                         newLeaf = true
                         aggregateHistory.add(i + 1, interaction)
-                        updatedElementSubject.onNext(Pair(interaction, ElementStatus.ADD))
+                        updatedElementSubject.onNext(Pair(interaction, action))
                         break
                     }
                 }
