@@ -87,13 +87,17 @@ class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
     private val presenter: ConversationPresenter
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
-
     private val mInteractions = ArrayList<Interaction>()
-    private val hPadding: Int
-    private val vPadding: Int
-    private val mPictureMaxSize: Int
-    private val mPreviewMaxSize: Int
-    private val PICTURE_OPTIONS: GlideOptions
+    private val res = conversationFragment.resources
+    private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
+    private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
+    private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private val mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
+    private val pictureOptions = GlideOptions()
+        .transform(CenterInside())
+        .fitCenter()
+        .override(mPictureMaxSize)
+        .transform(RoundedCorners(res.getDimension(R.dimen.conversation_message_radius).toInt()))
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     private var expandedItemPosition = -1
@@ -390,7 +394,7 @@ class ConversationAdapter(
         val context = viewHolder.itemView.context
         GlideApp.with(context)
             .load(path)
-            .apply(PICTURE_OPTIONS)
+            .apply(pictureOptions)
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
         viewHolder.mImage?.setOnClickListener { v: View ->
             try {
@@ -599,7 +603,7 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.adapterPosition)
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
+                longPressView.background.setTint(res.getColor(R.color.grey_500))
             }
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
             false
@@ -693,9 +697,9 @@ class ConversationAdapter(
             }
             conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
             if (textMessage.isIncoming) {
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
+                longPressView.background.setTint(res.getColor(R.color.grey_500))
             } else {
-                longPressView.background.setTint(conversationFragment.resources.getColor(R.color.blue_900))
+                longPressView.background.setTint(res.getColor(R.color.blue_900))
             }
             mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
             false
@@ -884,7 +888,7 @@ class ConversationAdapter(
                     menu.removeItem(R.id.conv_action_copy_text)
                 }
                 setOnLongClickListener { v: View ->
-                    background.setTint(conversationFragment.resources.getColor(R.color.grey_500))
+                    background.setTint(res.getColor(R.color.grey_500))
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
                     mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
                     false
@@ -922,11 +926,9 @@ class ConversationAdapter(
      * @param position The initial position
      * @return the previous TextMessage if any, null otherwise
      */
-    private fun getPreviousMessageFromPosition(position: Int): Interaction? {
-        return if (mInteractions.isNotEmpty() && position > 0) {
-            mInteractions[position - 1]
-        } else null
-    }
+    private fun getPreviousMessageFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position > 0) mInteractions[position - 1]
+        else null
 
     /**
      * Helper method to return the next TextMessage relative to an initial position.
@@ -934,19 +936,10 @@ class ConversationAdapter(
      * @param position The initial position
      * @return the next TextMessage if any, null otherwise
      */
-    private fun getNextMessageFromPosition(position: Int): Interaction? {
-        return if (mInteractions.isNotEmpty() && position < mInteractions.size - 1) {
+    private fun getNextMessageFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
             mInteractions[position + 1]
-        } else null
-    }
-
-    private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
-        return StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type != Interaction.InteractionType.TEXT || second.type != Interaction.InteractionType.TEXT
-    }
-
-    private fun isAlwaysSingleMsg(msg: Interaction): Boolean {
-        return msg.type != Interaction.InteractionType.TEXT || StringUtils.isOnlyEmoji(msg.body)
-    }
+        else null
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
@@ -1062,19 +1055,13 @@ class ConversationAdapter(
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
         }
+
+        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
+            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
+
+        private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
+            (msg.type !== Interaction.InteractionType.TEXT
+                    || StringUtils.isOnlyEmoji(msg.body))
     }
 
-    init {
-        val res = conversationFragment.resources
-        hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
-        vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
-        mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-        mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
-        val corner = res.getDimension(R.dimen.conversation_message_radius).toInt()
-        PICTURE_OPTIONS = GlideOptions()
-            .transform(CenterInside())
-            .fitCenter()
-            .override(mPictureMaxSize)
-            .transform(RoundedCorners(corner))
-    }
 }

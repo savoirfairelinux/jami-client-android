@@ -69,16 +69,24 @@ class TvConversationAdapter(
     private val conversationFragment: TvConversationFragment,
     private val presenter: ConversationPresenter
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
+    private val res = conversationFragment.resources
     private val mInteractions = ArrayList<Interaction>()
-    private val hPadding: Int
-    private val vPadding: Int
-    private val mPictureMaxSize: Int
-    private val PICTURE_OPTIONS: GlideOptions
+    private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
+    private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
+    private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private val pictureOptions = GlideOptions()
+        .transform(CenterInside())
+        .fitCenter()
+        .override(mPictureMaxSize)
+        .transform(RoundedCorners(res.getDimension(R.dimen.conversation_message_radius).toInt()))
+    private val timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .startWithItem(0L)
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     private var convColor = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
-    private val timestampUpdateTimer: Observable<Long>
     private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
         .usePlugin(LinkifyPlugin.create())
         .build()
@@ -271,7 +279,7 @@ class TvConversationAdapter(
         val context = viewHolder.itemView.context
         GlideApp.with(context)
             .load(path)
-            .apply(PICTURE_OPTIONS)
+            .apply(pictureOptions)
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
         viewHolder.itemView.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             viewHolder.itemView.setBackgroundResource(if (hasFocus) R.drawable.tv_item_selected_background else R.drawable.tv_item_unselected_background)
@@ -623,14 +631,14 @@ class TvConversationAdapter(
             }
         }*/
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            setBottomMargin(convViewHolder.mMsgTxt, 8)
+            setBottomMargin(msgTxt, 8)
             if (textMessage.isIncoming) {
                 convViewHolder.mAvatar!!.setImageDrawable(
                     conversationFragment.getConversationAvatar(contact.primaryNumber)
                 )
             }
         } else {
-            setBottomMargin(convViewHolder.mMsgTxt, 0)
+            setBottomMargin(msgTxt, 0)
         }
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe { t: Long? ->
@@ -716,11 +724,9 @@ class TvConversationAdapter(
      * @param position The initial position
      * @return the previous TextMessage if any, null otherwise
      */
-    private fun getPreviousMessageFromPosition(position: Int): Interaction? {
-        return if (mInteractions.isNotEmpty() && position > 0) {
-            mInteractions[position - 1]
-        } else null
-    }
+    private fun getPreviousMessageFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position > 0) mInteractions[position - 1]
+        else null
 
     /**
      * Helper method to return the next TextMessage relative to an initial position.
@@ -728,20 +734,10 @@ class TvConversationAdapter(
      * @param position The initial position
      * @return the next TextMessage if any, null otherwise
      */
-    private fun getNextMessageFromPosition(position: Int): Interaction? {
-        return if (!mInteractions.isEmpty() && position < mInteractions.size - 1) {
+    private fun getNextMessageFromPosition(position: Int): Interaction? =
+        if (mInteractions.isNotEmpty() && position < mInteractions.size - 1)
             mInteractions[position + 1]
-        } else null
-    }
-
-    private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
-        return isOnlyEmoji(first.body) != isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
-    }
-
-    private fun isAlwaysSingleMsg(msg: Interaction): Boolean {
-        return (msg.type !== Interaction.InteractionType.TEXT
-                || isOnlyEmoji(msg.body))
-    }
+        else null
 
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
@@ -853,27 +849,18 @@ class TvConversationAdapter(
             R.drawable.textmsg_bg_in
         )
 
-        private fun setBottomMargin(view: View?, value: Int) {
-            val targetSize = (value * view!!.context.resources.displayMetrics.density).toInt()
+        private fun setBottomMargin(view: View, value: Int) {
+            val targetSize = (value * view.context.resources.displayMetrics.density).toInt()
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
         }
+
+        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
+            isOnlyEmoji(first.body) != isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
+
+        private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
+            (msg.type !== Interaction.InteractionType.TEXT
+                    || isOnlyEmoji(msg.body))
     }
 
-    init {
-        val res = conversationFragment.resources
-        hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
-        vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
-        mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-        val corner = res.getDimension(R.dimen.conversation_message_radius).toInt()
-        PICTURE_OPTIONS = GlideOptions()
-            .transform(CenterInside())
-            .fitCenter()
-            .override(mPictureMaxSize)
-            .transform(RoundedCorners(corner))
-        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .startWithItem(0L)
-    }
 }
