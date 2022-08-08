@@ -78,6 +78,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.daemon.JamiService
 import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Uri
@@ -87,8 +88,10 @@ import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.takeFirstWhile
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -213,6 +216,9 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun handleIntent(intent: Intent) {
         Log.d(TAG, "handleIntent: $intent")
+
+        JamiService.setLanguage(Locale.getDefault().toString())
+
         val extra = intent.extras
         val action = intent.action
         when (action) {
