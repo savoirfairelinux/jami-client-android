@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1cfc76a_2113fa5a",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-08-08T20:02:49Z",
+      "side": 1,
+      "message": "should be in DRingService after or before init()",
+      "revId": "2f4023eacec8fbec332b28e9e78512900dd745cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
