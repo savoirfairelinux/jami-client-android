@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af163c5_566e50c3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-08-08T20:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc822521_cf878a41",
+      "range": {
+        "startLine": 896,
+        "startChar": 59,
+        "endLine": 896,
+        "endChar": 74
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e98ba98_9ffcbe21",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "The overlap problem is fixed.\n\nFor this version the scroll is not supported and the supported number of inactive participants is up to 3. They will be resolved in the next versions.",
       "parentUuid": "4e98ba98_9ffcbe21",
+      "range": {
+        "startLine": 907,
+        "startChar": 13,
+        "endLine": 907,
+        "endChar": 76
+      },
+      "revId": "a8e0196bcaf5495a01d13f49ca719fde9252c76a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "495817cf_2a71e6ab",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-08-08T20:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453aaf9d_49ac18dd",
       "range": {
         "startLine": 907,
         "startChar": 13,
