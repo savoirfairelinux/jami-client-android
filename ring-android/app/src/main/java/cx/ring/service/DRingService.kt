@@ -46,9 +46,11 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import net.jami.daemon.JamiService
 import net.jami.model.Conversation
 import net.jami.model.Settings
 import net.jami.services.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -173,6 +175,7 @@ class DRingService : Service() {
             bindDaemon()
             bootstrapDaemon()
         }
+        JamiService.setLanguage(Locale.getDefault().toString())
     }
 
     override fun onDestroy() {
