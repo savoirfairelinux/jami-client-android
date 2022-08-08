@@ -377,6 +377,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8394e791_71985b0e",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/ParticipantsContainerView.kt",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-08-08T20:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "715f57ac_24eebb1f",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "14b34619a3bab931cc64bee719ae9238423dd15f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "338b8dee_89854111",
