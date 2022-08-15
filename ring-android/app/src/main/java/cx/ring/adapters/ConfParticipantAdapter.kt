@@ -22,6 +22,7 @@ package cx.ring.adapters
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -30,7 +31,6 @@ import cx.ring.fragments.CallFragment
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.ParticipantView
 import net.jami.model.Conference.ParticipantInfo
-import net.jami.utils.Log
 import java.util.*
 
 class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private val onSelectedCallback: ConfParticipantSelected) :
@@ -58,6 +58,10 @@ class ConfParticipantAdapter(private var calls: List<ParticipantInfo>, private v
             participantBinding.displayName.text = displayName
             participantBinding.photo.alpha = 1f
         }
+
+        participantBinding.muteParticipant.isVisible = calls.size > 1
+        participantBinding.extendParticipant.isVisible = calls.size > 1
+        participantBinding.kickParticipant.isVisible = calls.size > 1
 
         holder.disposable?.dispose()
         participantBinding.photo.setImageDrawable(AvatarDrawable.Builder()
