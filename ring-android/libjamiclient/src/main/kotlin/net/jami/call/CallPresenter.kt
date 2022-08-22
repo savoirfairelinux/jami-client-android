@@ -213,8 +213,8 @@ class CallPresenter @Inject constructor(
     /**
      * Get all the call details in order to display each elements correctly
      * */
-    private fun prepareBottomSheetButtonsStatus(conference: Conference) {
-        //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
+    fun prepareBottomSheetButtonsStatus() {
+        val conference = mConference ?: return
         val canDial = mOnGoingCall
         val displayPluginsButton = view?.displayPluginsButton() == true
         val showPluginBtn = displayPluginsButton && mOnGoingCall
@@ -398,7 +398,7 @@ class CallPresenter @Inject constructor(
         if (call.isOnGoing) {
             mOnGoingCall = true
             view.initNormalStateDisplay()
-            prepareBottomSheetButtonsStatus(call)
+            prepareBottomSheetButtonsStatus()
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)

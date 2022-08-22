@@ -779,7 +779,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
         val binding = binding ?: return
-        mConferenceMode = participantInfo.isNotEmpty()
+        mConferenceMode = participantInfo.size > 1
 
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
@@ -827,6 +827,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .build(requireActivity())
             )
             generateParticipantOverlay(participantInfo)
+            presenter.prepareBottomSheetButtonsStatus()
         } else  {
             displayContactBubble(true)
         }
@@ -930,8 +931,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         hasActiveVideo: Boolean
     ) {
         binding?.apply {
-            callPluginsBtn.isClickable = showPluginBtn
-            callRaiseHandBtn.isClickable = mConferenceMode
+            pluginsBtnContainer.isVisible = showPluginBtn
+            raiseHandBtnContainer.isVisible = mConferenceMode
             callDialpadBtn.isClickable = canDial
             dialpadBtnContainer.isVisible = canDial
 
@@ -1331,7 +1332,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun displayPluginsButton(): Boolean {
-        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0
+        return JamiService.getPluginsEnabled() && JamiService.getCallMediaHandlers().size > 0 && mConferenceMode
     }
 
     public fun pluginsButtonClicked() {
