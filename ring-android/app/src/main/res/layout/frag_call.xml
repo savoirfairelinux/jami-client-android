@@ -653,39 +653,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!-- Raise Hand button -->
-                        <LinearLayout
-                            android:id="@+id/raiseHand_btn_container"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-
-                            <cx.ring.views.CheckableImageButton
-                                android:id="@+id/call_raiseHand_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/call_button_background_checkable"
-                                android:onClick="@{() -> presenter.raiseHandClicked()}"
-                                android:padding="16dp"
-                                app:srcCompat="@drawable/baseline_raisehand_24" />
-
-                            <TextView
-                                android:id="@+id/textView_raiseHand"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="2dp"
-                                android:ellipsize="middle"
-                                android:scrollHorizontally="false"
-                                android:singleLine="true"
-                                android:text="@string/bottomSheet_raiseHand_btn"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
                         <!-- Dialpad button -->
                         <LinearLayout
                             android:id="@+id/dialpad_btn_container"
@@ -719,6 +686,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:scrollHorizontally="false"
                                 android:singleLine="true"
                                 android:text="@string/bottomSheet_dialpad_btn"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!-- Raise Hand button -->
+                        <LinearLayout
+                            android:id="@+id/raiseHand_btn_container"
+                            android:layout_rowWeight="1"
+                            android:layout_columnWeight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <cx.ring.views.CheckableImageButton
+                                android:id="@+id/call_raiseHand_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/call_button_background_checkable"
+                                android:onClick="@{() -> presenter.raiseHandClicked()}"
+                                android:padding="16dp"
+                                app:srcCompat="@drawable/baseline_raisehand_24" />
+
+                            <TextView
+                                android:id="@+id/textView_raiseHand"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="middle"
+                                android:scrollHorizontally="false"
+                                android:singleLine="true"
+                                android:text="@string/bottomSheet_raiseHand_btn"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="11sp" />
