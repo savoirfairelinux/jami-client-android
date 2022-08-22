@@ -66,7 +66,6 @@ import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
 import cx.ring.adapters.PluginsAdapter
 import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
-import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.plugins.PluginUtils
 import cx.ring.service.DRingService
@@ -779,7 +778,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
         val binding = binding ?: return
-        mConferenceMode = participantInfo.isNotEmpty()
+        mConferenceMode = participantInfo.size > 1
 
         if (participantInfo.isNotEmpty()) {
             isMyMicMuted = participantInfo[0].audioLocalMuted
@@ -827,6 +826,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                     .build(requireActivity())
             )
             generateParticipantOverlay(participantInfo)
+            presenter.prepareBottomSheetButtonsStatus()
         } else  {
             displayContactBubble(true)
         }
@@ -930,8 +930,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         hasActiveVideo: Boolean
     ) {
         binding?.apply {
-            callPluginsBtn.isClickable = showPluginBtn
-            callRaiseHandBtn.isClickable = mConferenceMode
+            pluginsBtnContainer.isVisible = showPluginBtn
+            raiseHandBtnContainer.isVisible = mConferenceMode
             callDialpadBtn.isClickable = canDial
             dialpadBtnContainer.isVisible = canDial
 
