@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd3c131a_2892abdc",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-24T17:12:39Z",
+      "side": 1,
+      "message": "plugins must be showable in 1:1, it will work\n\nThe bug is not this, it\u0027s that the plugin button is shown even if no plugin is available (cf client-qt with plugins from dl.jami.net/plugins/)",
+      "revId": "5d00c97a50d026a2bd7876d67e147243b9336a55",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
