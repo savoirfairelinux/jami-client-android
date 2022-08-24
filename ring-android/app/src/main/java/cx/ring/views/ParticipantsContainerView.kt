@@ -33,10 +33,14 @@ class ParticipantsContainerView @JvmOverloads constructor(
         val mainWidth = width.toFloat()
         val mainHeight = height.toFloat()
 
+        val toRemove: MutableList<View> = ArrayList()
+
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null) removeView(childView)
+            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null) toRemove.add(childView)
         }
+        for (v in toRemove) removeView(v)
+
         val activeParticipants = participants.count { it.active }
         val inactiveParticipants = participants.size - activeParticipants
         val grid = activeParticipants == 0
