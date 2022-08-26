@@ -87,9 +87,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:resizeableActivity="true"
         android:supportsRtl="true"
         tools:ignore="UnusedAttribute" >
-        <meta-data
+        <!--<meta-data
             android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
+            android:resource="@xml/automotive_app_desc" />-->
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
             android:value="true" />
