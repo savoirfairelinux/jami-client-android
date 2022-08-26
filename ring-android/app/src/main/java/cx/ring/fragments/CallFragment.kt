@@ -930,8 +930,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         hasActiveVideo: Boolean
     ) {
         binding?.apply {
-            pluginsBtnContainer.isVisible = showPluginBtn
-            raiseHandBtnContainer.isVisible = mConferenceMode
+            callPluginsBtn.isEnabled = showPluginBtn
+            callRaiseHandBtn.isEnabled = mConferenceMode
             callDialpadBtn.isClickable = canDial
             dialpadBtnContainer.isVisible = canDial
 

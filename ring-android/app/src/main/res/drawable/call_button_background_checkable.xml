@@ -12,7 +12,7 @@
         </shape>
     </item>
 
-    <item>
+    <item android:state_enabled="true">>
         <shape
             android:innerRadius="0dp"
             android:shape="ring"
@@ -22,6 +22,17 @@
 
             <stroke android:width="2dp" android:color="@android:color/background_dark" />
         </shape>
+    </item>
 
+    <item android:state_enabled="false">
+        <shape
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="2"
+            android:useLevel="false">
+            <solid android:color="@android:color/darker_gray" />
+
+            <stroke android:width="2dp" android:color="@android:color/darker_gray" />
+        </shape>
     </item>
 </selector>
