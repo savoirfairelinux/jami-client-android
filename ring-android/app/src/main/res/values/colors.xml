@@ -42,6 +42,10 @@
     <color name="background_status_recommended">#8ee0d0</color>
     <color name="background_status_required">#fee4e9</color>
 
+    <color name="online_indicator">#0B8271</color>
+    <color name="fab_background">#00273F</color>
+    <color name="menu_icon">#0A84FF</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#f5f5f5</color>
     <color name="text_color">#414141</color>
