@@ -29,12 +29,20 @@
 
         <menu>
 
-            <item android:id="@+id/menu_settings"
+            <item android:id="@+id/menu_account_settings"
                 app:showAsAction="ifRoom"
-                android:title="@string/menu_item_settings" />
+                android:icon="@drawable/baseline_account_settings_24dp"
+                android:title="@string/menu_item_account_settings" />
+
+            <item android:id="@+id/menu_advanced_settings"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/baseline_advanced_settings_24dp"
+                android:title="@string/menu_item_advanced_settings" />
 
             <item android:id="@+id/menu_about"
                 app:showAsAction="ifRoom"
+                android:iconTintMode="src_in"
+                android:icon="@drawable/ic_jami_24"
                 android:title="@string/menu_item_about" />
 
         </menu>

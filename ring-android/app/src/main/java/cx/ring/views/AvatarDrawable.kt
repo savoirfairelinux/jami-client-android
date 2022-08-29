@@ -81,7 +81,7 @@ class AvatarDrawable : Drawable {
         private const val PLACEHOLDER_ICON = R.drawable.baseline_account_crop_24
         private const val PLACEHOLDER_ICON_GROUP = R.drawable.baseline_group_24
         private const val CHECKED_ICON = R.drawable.baseline_check_circle_24
-        private const val PRESENCE_COLOR = R.color.green_A700
+        private const val PRESENCE_COLOR = R.color.online_indicator
         private val contactColors = intArrayOf(
             R.color.red_500, R.color.pink_500,
             R.color.purple_500, R.color.deep_purple_500,
@@ -485,7 +485,7 @@ class AvatarDrawable : Drawable {
         presence.radius = (0.29289321881 * bounds.width().toDouble() * 0.5).toInt()
         presence.cx = bounds.right - presence.radius
         presence.cy = bounds.bottom - presence.radius
-        val presenceStrokeWidth = (presence.radius / 3).toFloat()
+        val presenceStrokeWidth = (presence.radius / 4).toFloat()
         presenceStrokePaint.strokeWidth = presenceStrokeWidth
         checkedPaint.strokeWidth = presenceStrokeWidth
         presence.radius -= (presenceStrokeWidth * 0.5f).toInt()
