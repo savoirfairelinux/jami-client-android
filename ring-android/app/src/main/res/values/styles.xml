@@ -146,10 +146,12 @@
 
     <!-- Main action button -->
     <style name="Widget.AppTheme.MainActionButton" parent="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
-        <!--<item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
-        <item name="iconPadding">8dp</item>-->
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
+<!--        <item name="android:textStyle">normal</item>-->
+<!--        <item name="iconPadding">8dp</item>-->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
     </style>
 
     <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
