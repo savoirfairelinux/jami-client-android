@@ -928,23 +928,23 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun setupActionbar(conversation: ConversationItemViewModel) {
-        val activity = activity ?: return
-        val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
-        val title = toolbar.findViewById<TextView>(R.id.contact_title)
-        val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
-        val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
-        logo.setImageDrawable(mConversationAvatar)
-        logo.visibility = View.VISIBLE
-        title.text = conversation.title
-        title.textSize = 15f
-        title.setTypeface(null, Typeface.NORMAL)
-        if (conversation.uriTitle != conversation.title) {
-            subtitle.text = conversation.uriTitle
-            subtitle.visibility = View.VISIBLE
-        } else {
-            subtitle.text = ""
-            subtitle.visibility = View.GONE
-        }
+//        val activity = activity ?: return
+//        val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
+//        val title = toolbar.findViewById<TextView>(R.id.contact_title)
+//        val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
+//        val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
+//        logo.setImageDrawable(mConversationAvatar)
+//        logo.visibility = View.VISIBLE
+//        title.text = conversation.title
+//        title.textSize = 15f
+//       title.setTypeface(null, Typeface.NORMAL)
+//       if (conversation.uriTitle != conversation.title) {
+//            subtitle.text = conversation.uriTitle
+//            subtitle.visibility = View.VISIBLE
+//        } else {
+//            subtitle.text = ""
+//            subtitle.visibility = View.GONE
+//       }
     }
 
     fun blockContactRequest() {

@@ -79,10 +79,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 dialpadMenuItem.isVisible = false
                 binding!!.newconvFab.show()
                 setOverflowMenuVisible(menu, true)
-                changeSeparatorHeight(false)
                 binding!!.qrCode.visibility = View.GONE
                 binding!!.newGroup.visibility = View.GONE
-                setTabletQRLayout(false)
                 return true
             }
 
@@ -90,10 +88,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 dialpadMenuItem.isVisible = true
                 binding!!.newconvFab.hide()
                 setOverflowMenuVisible(menu, false)
-                changeSeparatorHeight(true)
                 binding!!.qrCode.visibility = View.VISIBLE
                 binding!!.newGroup.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
-                setTabletQRLayout(true)
                 return true
             }
         })
@@ -155,8 +151,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 }
                 return true
             }
-            R.id.menu_settings -> {
-                (requireActivity() as HomeActivity).goToSettings()
+            R.id.menu_account_settings -> {
+                (requireActivity() as HomeActivity).goToAccountSettings()
+                return true
+            }
+            R.id.menu_advanced_settings -> {
+                (requireActivity() as HomeActivity).goToAdvancedSettings()
                 return true
             }
             R.id.menu_about -> {
@@ -213,7 +213,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun startNewGroup() {
         ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
         mSearchMenuItem!!.collapseActionView()
-        setTabletQRLayout(false)
     }
 
     override fun setLoading(loading: Boolean) {
@@ -368,7 +367,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
         mSearchMenuItem!!.collapseActionView()
-        setTabletQRLayout(false)
     }
 
     override fun scrollToTop() {
@@ -381,33 +379,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onItemLongClick(item: Conversation) {
         presenter.conversationLongClicked(item)
-    }
-
-    private fun changeSeparatorHeight(open: Boolean) {
-        binding?.let { binding -> binding.separator?.let { separator ->
-            if (DeviceUtils.isTablet(binding.root.context)) {
-                val params = separator.layoutParams as RelativeLayout.LayoutParams
-                params.topMargin = if (open) activity?.findViewById<Toolbar>(R.id.main_toolbar)?.height ?: 0 else 0
-                separator.layoutParams = params
-            }
-        }}
-    }
-
-    private fun setTabletQRLayout(show: Boolean) {
-        val context = requireContext()
-        if (!DeviceUtils.isTablet(context)) return
-        val params = binding!!.listCoordinator.layoutParams as RelativeLayout.LayoutParams
-        if (show) {
-            params.addRule(RelativeLayout.BELOW, R.id.qr_code)
-            params.topMargin = 0
-        } else {
-            params.removeRule(RelativeLayout.BELOW)
-            val value = TypedValue()
-            if (context.theme.resolveAttribute(android.R.attr.actionBarSize, value, true)) {
-                params.topMargin = TypedValue.complexToDimensionPixelSize(value.data, context.resources.displayMetrics)
-            }
-        }
-        binding!!.listCoordinator.layoutParams = params
     }
 
     companion object {

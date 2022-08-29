@@ -50,8 +50,8 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/conv_last_time"
             android:ellipsize="marquee"
+            android:fontFamily="@font/ubuntu_medium"
             android:gravity="start"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
@@ -59,14 +59,18 @@ along with this program; if not, write to the Free Software
             android:textAlignment="viewStart"
             android:textColor="@color/colorOnSurface"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="Person Name" />
 
         <TextView
             android:id="@+id/conv_last_item"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/conv_participant"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/conv_last_time"
             android:ellipsize="end"
+            android:fontFamily="@font/ubuntu_light"
             android:gravity="start"
             android:maxLines="1"
             android:textAlignment="viewStart"
@@ -78,10 +82,11 @@ along with this program; if not, write to the Free Software
             android:id="@+id/conv_last_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/conv_participant"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
+            android:layout_below="@+id/conv_participant"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="14sp"
+            android:textStyle="bold"
             tools:text="2 days ago" />
 
     </RelativeLayout>
