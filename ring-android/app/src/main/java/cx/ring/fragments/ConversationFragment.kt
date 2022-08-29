@@ -951,14 +951,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         logo.visibility = View.VISIBLE
         title.text = conversation.title
         title.textSize = 15f
-        title.setTypeface(null, Typeface.NORMAL)
-        if (conversation.uriTitle != conversation.title) {
+       title.setTypeface(null, Typeface.NORMAL)
+       if (conversation.uriTitle != conversation.title) {
             subtitle.text = conversation.uriTitle
             subtitle.visibility = View.VISIBLE
         } else {
             subtitle.text = ""
             subtitle.visibility = View.GONE
-        }
+       }
     }
 
     fun blockContactRequest() {
