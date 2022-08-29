@@ -104,6 +104,8 @@ dependencies {
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
+	implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
+
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
