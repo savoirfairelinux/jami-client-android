@@ -52,8 +52,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:icon="@drawable/baseline_cloud_24"
             android:key="Account.proxyEnabled"
             android:persistent="false"
-            android:summaryOff="Disabled"
-            android:summaryOn="Enabled"
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"
             android:title="@string/account_proxy_enable_label" />
 
         <EditTextPreference
@@ -88,8 +88,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <SwitchPreference
             android:key="STUN.enable"
             android:persistent="false"
-            android:summaryOff="Disabled"
-            android:summaryOn="Enabled"
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"
             android:title="@string/account_stun_enable_label" />
 
         <EditTextPreference
@@ -103,8 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <SwitchPreference
             android:key="TURN.enable"
             android:persistent="false"
-            android:summaryOff="Disabled"
-            android:summaryOn="Enabled"
+            android:summaryOff="@string/disabled"
+            android:summaryOn="@string/enabled"
             android:title="@string/account_turn_enable_label" />
 
         <EditTextPreference
