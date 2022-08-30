@@ -24,7 +24,7 @@ like this in your .bashrc (or equivalent):
     export ANDROID_HOME=$ANDROID_SDK
     export PATH=$ANDROID_SDK/platform-tools:${PATH}
 
-install swig-2.0.6 or later and python-2.7 or later on your system
+install swig-4.0.0 or later and python-3.7 or later on your system
 
 ## Build instructions
 
