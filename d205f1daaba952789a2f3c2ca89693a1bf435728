@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c79cad8_4d8f9ce1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-30T14:40:15Z",
+      "side": 1,
+      "message": "add GitLab\u0027s reference (and ideally design reference to compare/validate)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "d205f1daaba952789a2f3c2ca89693a1bf435728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cdee0a4_3927691f",
+        "filename": "ring-android/app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-30T14:40:15Z",
+      "side": 1,
+      "message": "lot of weird indentations (and commented code)",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 1
+      },
+      "revId": "d205f1daaba952789a2f3c2ca89693a1bf435728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc597bc4_b620074d",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-30T14:40:15Z",
+      "side": 1,
+      "message": "On contact requests, I have the bubble on top of the text, also, if the layout is horizontal, the UI seems weird",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "d205f1daaba952789a2f3c2ca89693a1bf435728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
