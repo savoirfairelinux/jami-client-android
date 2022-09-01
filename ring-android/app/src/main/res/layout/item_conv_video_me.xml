@@ -67,15 +67,13 @@
 
         </androidx.cardview.widget.CardView>
 
-        <ImageView
+        <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_alignBottom="@id/video_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/video_frame"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500"
-            app:srcCompat="@drawable/round_check_circle_24" />
+            android:layout_marginEnd="5dp" />
 
         <TextView
             android:id="@+id/msg_details_txt"
