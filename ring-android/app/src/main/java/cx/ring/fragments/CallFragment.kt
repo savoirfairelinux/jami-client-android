@@ -1030,7 +1030,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                         .translationY(250f)
                         .alpha(0.0f)
                         .setListener(object : AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator?) {
+                            override fun onAnimationEnd(animation: Animator) {
                                 displayBottomSheet(false)
                             }
                         })

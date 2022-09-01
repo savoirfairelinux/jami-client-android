@@ -12,12 +12,12 @@ plugins {
 }
 
 android {
-    compileSdk = 32
-    buildToolsVersion = "32.0.0"
-    ndkVersion = "25.0.8528842"
+    compileSdk = 33
+    buildToolsVersion = "33.0.0"
+    ndkVersion = "25.1.8937393"
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 341
         versionName = "20220826-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
