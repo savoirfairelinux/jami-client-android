@@ -85,7 +85,7 @@ dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation ("androidx.core:core-ktx:1.8.0")
-    implementation ("androidx.appcompat:appcompat:1.4.2")
+    implementation ("androidx.appcompat:appcompat:1.5.0")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.legacy:legacy-support-core-utils:1.0.0")
     implementation ("androidx.cardview:cardview:1.0.0")
@@ -128,12 +128,12 @@ dependencies {
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
-    implementation ("io.reactivex.rxjava3:rxjava:3.1.4")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.7") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.8") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
