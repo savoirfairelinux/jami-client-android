@@ -270,6 +270,7 @@ class ConversationAdapter(
         }
         conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
             .getLoadedContact(interaction.account!!, conversation, interaction.displayedContacts)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { contacts ->
                 conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
