@@ -244,10 +244,6 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun selectFile() {
-        view?.openFilePicker()
-    }
-
     fun sendFile(file: File) {
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
             conversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
