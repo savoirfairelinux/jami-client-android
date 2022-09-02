@@ -42,6 +42,8 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
@@ -116,9 +118,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var loading = true
     private var animating = 0
 
-    fun getConversationAvatar(uri: String): AvatarDrawable? {
-        return mParticipantAvatars[uri]
-    }
+    private val pickMultipleMedia =
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
+            for (uri in uris) {
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .flatMapCompletable { file: File -> sendFile(file) })
+            }
+        }
+
+    fun getConversationAvatar(uri: String): AvatarDrawable? = mParticipantAvatars[uri]
 
     fun getSmallConversationAvatar(uri: String): AvatarDrawable? {
         synchronized(mSmallParticipantAvatars) { return mSmallParticipantAvatars[uri] }
@@ -352,7 +361,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             when (item.itemId) {
                 R.id.conv_send_audio -> sendAudioMessage()
                 R.id.conv_send_video -> sendVideoMessage()
-                R.id.conv_send_file -> presenter.selectFile()
+                R.id.conv_send_file -> openFilePicker()
+                R.id.conv_select_media -> openGallery()
                 R.id.conv_share_location -> shareLocation()
                 R.id.chat_plugins -> presenter.showPluginListHandlers()
             }
@@ -536,8 +546,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         startActivityForResult(intent, REQUEST_CODE_FILE_PICKER)
     }
 
-    private fun sendFile(file: File): Completable {
-        return Completable.fromAction { presenter.sendFile(file) }
+    private fun openGallery() {
+        pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+    }
+
+    private fun sendFile(file: File): Completable = Completable.fromAction {
+        presenter.sendFile(file)
     }
 
     private fun startFileSend(op: Completable): Disposable {

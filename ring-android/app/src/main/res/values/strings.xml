@@ -178,6 +178,7 @@ along with this program; if not, write to the Free Software
     <string name="message_failed">Failed</string>
     <string name="time_just_now">Just now</string>
     <string name="send_file">Send file</string>
+    <string name="select_media">Open gallery</string>
     <string name="hist_file_sent">File sent</string>
     <string name="hist_file_received">File received</string>
     <string name="conversation_send_audio">Record audio clip</string>
