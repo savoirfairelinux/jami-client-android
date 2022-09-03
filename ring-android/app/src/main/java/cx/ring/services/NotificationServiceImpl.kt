@@ -35,6 +35,8 @@ import android.text.format.Formatter
 import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.RequiresApi
+import androidx.car.app.notification.CarAppExtender
+import androidx.car.app.notification.CarNotificationManager
 import androidx.core.app.*
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
@@ -238,7 +240,7 @@ class NotificationServiceImpl(
             messageNotificationBuilder.build()
         )
     }
-
+x
     override fun cancelLocationNotification(first: Account, contact: Contact) {
         notificationManager.cancel(
             Objects.hash("Location", ConversationPath.toUri(first.accountId, contact.uri))
@@ -471,6 +473,7 @@ class NotificationServiceImpl(
         val readPendingIntent = PendingIntent.getService(mContext, markAsReadId,
             Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService::class.java), ContentUriHandler.immutable())
         messageNotificationBuilder
+            .extend(CarAppExtender.Builder().build())
             .addAction(NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
                 .addRemoteInput(remoteInput)
@@ -481,7 +484,7 @@ class NotificationServiceImpl(
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
                 .setShowsUserInterface(false)
                 .build())
-        notificationManager.notify(notificationId, messageNotificationBuilder.build())
+        CarNotificationManager.from(mContext).notify(notificationId, messageNotificationBuilder)
         mNotificationBuilders.put(notificationId, messageNotificationBuilder)
     }
 
