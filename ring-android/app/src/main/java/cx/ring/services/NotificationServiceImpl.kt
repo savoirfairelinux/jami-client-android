@@ -65,6 +65,7 @@ import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashMap
 
 class NotificationServiceImpl(
@@ -240,7 +241,7 @@ class NotificationServiceImpl(
             messageNotificationBuilder.build()
         )
     }
-x
+
     override fun cancelLocationNotification(first: Account, contact: Contact) {
         notificationManager.cancel(
             Objects.hash("Location", ConversationPath.toUri(first.accountId, contact.uri))
@@ -418,11 +419,11 @@ x
             .setAutoCancel(true)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         val key = cpath.toKey()
-        val conversationPerson = Person.Builder()
+        /*val conversationPerson = Person.Builder()
             .setKey(key)
             .setName(conversationProfile.second)
             .setIcon(IconCompat.createWithBitmap(conversationProfile.first))
-            .build()
+            .build()*/
         messageNotificationBuilder.setLargeIcon(conversationProfile.first)
         val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
         intentBubble.putExtra(EXTRA_BUBBLE, true)
@@ -432,7 +433,7 @@ x
                 IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
                 .setDesiredHeight(600)
                 .build())
-            .addPerson(conversationPerson)
+            //.addPerson(conversationPerson)
             .setShortcutId(key)
         val account = mAccountService.getAccount(accountId)
         val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
@@ -443,8 +444,11 @@ x
             .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
             .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
-        for (textMessage in texts.values) {
-            val contact = textMessage.contact!!
+        history.isGroupConversation = conversation.isGroup()
+        history.conversationTitle = conversationProfile.second
+        val persons = HashMap<String, Person>()
+        for (contact in conversation.contacts) {
+            if (contact.isUser) continue
             val profile = getProfile(accountId, contact)
             val contactPicture = getContactPicture(profile)
             val contactPerson = Person.Builder()
@@ -452,10 +456,16 @@ x
                 .setName(profile.displayName)
                 .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
+            messageNotificationBuilder.addPerson(contactPerson)
+            persons[contact.uri.uri] = contactPerson
+        }
+        for (textMessage in texts.values) {
+            val contact = textMessage.contact!!
+            val contactPerson = if (contact.isUser) userPerson else persons[contact.uri.uri]
             history.addMessage(NotificationCompat.MessagingStyle.Message(
                 textMessage.body,
                 textMessage.timestamp,
-                if (textMessage.isIncoming) contactPerson else null
+                contactPerson
             ))
         }
         messageNotificationBuilder.setStyle(history)
@@ -476,6 +486,7 @@ x
             .extend(CarAppExtender.Builder().build())
             .addAction(NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                .setShowsUserInterface(false)
                 .addRemoteInput(remoteInput)
                 .extend(NotificationCompat.Action.WearableExtender()
                     .setHintDisplayActionInline(true))
