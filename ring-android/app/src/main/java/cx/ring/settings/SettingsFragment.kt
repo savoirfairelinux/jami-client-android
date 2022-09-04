@@ -50,8 +50,8 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragSettingsBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragSettingsBinding.inflate(inflater, container, false).apply {
             settingsPluginsLayout.setOnClickListener {
                 val activity = activity as HomeActivity?
                 if (activity != null && JamiService.getPluginsEnabled()) {
@@ -114,7 +114,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             }
             binding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

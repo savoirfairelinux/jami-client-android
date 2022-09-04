@@ -48,14 +48,13 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
     @Inject
     lateinit var mAccountService: AccountService
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragAccountBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccountBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@AccountFragment)
             settingsChangePassword.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onPasswordChangeAsked() }
             settingsExport.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onClickExport() }
             mBinding = this
         }.root
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -99,8 +98,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
             .setTitle(R.string.account_delete_dialog_title)
             .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int ->
                 mAccountService.removeAccount(accountId)
-                if (activity is HomeActivity)
-                    (activity as HomeActivity).goToHome()
+                (activity as HomeActivity?)?.goToHome()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .create()
@@ -111,12 +109,10 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
     companion object {
         val TAG = AccountFragment::class.simpleName!!
         private const val SCROLL_DIRECTION_UP = -1
-        fun newInstance(accountId: String): AccountFragment {
-            val bundle = Bundle()
-            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-            val accountFragment = AccountFragment()
-            accountFragment.arguments = bundle
-            return accountFragment
+        fun newInstance(accountId: String) = AccountFragment().apply {
+            arguments = Bundle().apply {
+                putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
+            }
         }
     }
 }
