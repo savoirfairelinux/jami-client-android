@@ -624,6 +624,7 @@ class Conversation : ConversationHistory {
 
     fun getTitle() = title
     fun getDescription() = description
+    fun isGroup(): Boolean = isSwarm && contacts.size > 2
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes

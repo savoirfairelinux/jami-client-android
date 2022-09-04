@@ -35,6 +35,8 @@ import android.text.format.Formatter
 import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.RequiresApi
+import androidx.car.app.notification.CarAppExtender
+import androidx.car.app.notification.CarNotificationManager
 import androidx.core.app.*
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
@@ -63,6 +65,7 @@ import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.*
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashMap
 
 class NotificationServiceImpl(
@@ -416,11 +419,11 @@ class NotificationServiceImpl(
             .setAutoCancel(true)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
         val key = cpath.toKey()
-        val conversationPerson = Person.Builder()
+        /*val conversationPerson = Person.Builder()
             .setKey(key)
             .setName(conversationProfile.second)
             .setIcon(IconCompat.createWithBitmap(conversationProfile.first))
-            .build()
+            .build()*/
         messageNotificationBuilder.setLargeIcon(conversationProfile.first)
         val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
         intentBubble.putExtra(EXTRA_BUBBLE, true)
@@ -430,7 +433,7 @@ class NotificationServiceImpl(
                 IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
                 .setDesiredHeight(600)
                 .build())
-            .addPerson(conversationPerson)
+            //.addPerson(conversationPerson)
             .setShortcutId(key)
         val account = mAccountService.getAccount(accountId)
         val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
@@ -441,8 +444,11 @@ class NotificationServiceImpl(
             .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
             .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
-        for (textMessage in texts.values) {
-            val contact = textMessage.contact!!
+        history.isGroupConversation = conversation.isGroup()
+        history.conversationTitle = conversationProfile.second
+        val persons = HashMap<String, Person>()
+        for (contact in conversation.contacts) {
+            if (contact.isUser) continue
             val profile = getProfile(accountId, contact)
             val contactPicture = getContactPicture(profile)
             val contactPerson = Person.Builder()
@@ -450,10 +456,16 @@ class NotificationServiceImpl(
                 .setName(profile.displayName)
                 .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
+            messageNotificationBuilder.addPerson(contactPerson)
+            persons[contact.uri.uri] = contactPerson
+        }
+        for (textMessage in texts.values) {
+            val contact = textMessage.contact!!
+            val contactPerson = if (contact.isUser) userPerson else persons[contact.uri.uri]
             history.addMessage(NotificationCompat.MessagingStyle.Message(
                 textMessage.body,
                 textMessage.timestamp,
-                if (textMessage.isIncoming) contactPerson else null
+                contactPerson
             ))
         }
         messageNotificationBuilder.setStyle(history)
@@ -471,8 +483,10 @@ class NotificationServiceImpl(
         val readPendingIntent = PendingIntent.getService(mContext, markAsReadId,
             Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService::class.java), ContentUriHandler.immutable())
         messageNotificationBuilder
+            .extend(CarAppExtender.Builder().build())
             .addAction(NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                .setShowsUserInterface(false)
                 .addRemoteInput(remoteInput)
                 .extend(NotificationCompat.Action.WearableExtender()
                     .setHintDisplayActionInline(true))
@@ -481,7 +495,7 @@ class NotificationServiceImpl(
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
                 .setShowsUserInterface(false)
                 .build())
-        notificationManager.notify(notificationId, messageNotificationBuilder.build())
+        CarNotificationManager.from(mContext).notify(notificationId, messageNotificationBuilder)
         mNotificationBuilders.put(notificationId, messageNotificationBuilder)
     }
 
