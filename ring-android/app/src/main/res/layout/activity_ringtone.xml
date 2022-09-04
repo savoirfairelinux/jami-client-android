@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:elevation="@dimen/toolbar_elevation"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        style="@style/Widget.Material3.Toolbar.Surface"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/account_ringtone_title" />-->
 

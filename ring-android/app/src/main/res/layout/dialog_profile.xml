@@ -45,7 +45,7 @@
                 android:layout_toStartOf="@+id/anchor"
                 android:contentDescription="@string/open_the_gallery"
                 android:text="@string/open_the_gallery"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                style="@style/Widget.Material3.FloatingActionButton.Primary"
                 app:tint="@color/colorPrimary"
                 app:backgroundTint="@color/surface"
                 app:rippleColor="@android:color/white"
@@ -67,7 +67,7 @@
                 android:contentDescription="@string/take_a_photo"
                 android:text="@string/take_a_photo"
                 app:tint="@color/colorPrimary"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                style="@style/Widget.Material3.FloatingActionButton.Primary"
                 app:backgroundTint="@color/surface"
                 app:rippleColor="@android:color/white"
                 app:srcCompat="@drawable/baseline_photo_camera_24" />
