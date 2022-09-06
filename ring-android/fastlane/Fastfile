@@ -38,7 +38,7 @@ platform :android do
     upload_to_play_store(
       track: options[:store_track],
       json_key: options[:json_key],
-      mapping: options[:mapping]
+      mapping_paths: options[:mapping_paths]
     )
   end
 
@@ -60,7 +60,7 @@ platform :android do
     upload_to_play_store(
       track: "beta",
       json_key: options[:json_key],
-      mapping: options[:mapping]
+      mapping_paths: options[:mapping_paths]
     )
   end
 
@@ -82,7 +82,7 @@ platform :android do
     upload_to_play_store(
       track: "production",
       json_key: options[:json_key],
-      mapping: options[:mapping]
+      mapping_paths: options[:mapping_paths]
     )
   end
 
