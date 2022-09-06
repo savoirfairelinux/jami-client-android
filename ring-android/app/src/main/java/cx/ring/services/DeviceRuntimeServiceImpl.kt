@@ -60,7 +60,7 @@ class DeviceRuntimeServiceImpl(
     override fun loadNativeLibrary() {
         logService.w(TAG, "loadNativeLibrary")
         Os.setenv("JAMI_LANG", Locale.getDefault().toString(), true)
-        //mExecutor.execute {
+        mExecutor.execute {
             Log.w(TAG, "System.loadLibrary")
             try {
                 System.loadLibrary("ring")
@@ -69,7 +69,7 @@ class DeviceRuntimeServiceImpl(
                 Process.killProcess(Process.myPid())
                 exitProcess(0)
             }
-        //}
+        }
     }
 
     override fun provideFilesDir(): File = mContext.filesDir
