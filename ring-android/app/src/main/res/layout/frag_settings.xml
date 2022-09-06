@@ -71,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_toEndOf="@id/theme_image"
                     android:layout_below="@id/theme_title" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_dark_theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_plugins_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -285,7 +285,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_typing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -336,7 +336,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_read"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -387,7 +387,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_block_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -439,7 +439,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_link_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -577,7 +577,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_push_notifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -627,7 +627,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_place_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -677,7 +677,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_startup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -727,7 +727,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_persistNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -777,7 +777,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/settings_new_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

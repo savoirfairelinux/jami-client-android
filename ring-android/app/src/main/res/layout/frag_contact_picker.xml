@@ -9,7 +9,7 @@
     android:animateLayoutChanges="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/Widget.MaterialComponents.AppBarLayout.Surface"
+        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/selected_contacts_tooolbar"
@@ -19,14 +19,14 @@
         android:animateLayoutChanges="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            style="@style/Widget.Material3.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Create a swarm"
             app:navigationIcon="@drawable/baseline_group_add_24" />
 
         <com.google.android.material.chip.ChipGroup
-            style="@style/Widget.MaterialComponents.ChipGroup"
+            style="@style/Widget.Material3.ChipGroup"
             android:id="@+id/selected_contacts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

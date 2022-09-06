@@ -23,19 +23,19 @@ along with this program; if not, write to the Free Software
 
     <androidx.preference.PreferenceCategory android:title="@string/account_call_settings_title">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/baseline_call_received_24"
             android:key="DHT.PublicInCalls"
             android:persistent="false"
             android:title="@string/account_dht_public_in_calls_label" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/baseline_call_24"
             android:key="Account.autoAnswer"
             android:persistent="false"
             android:title="@string/account_autoanswer_label" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="Account.rendezVous"
             android:persistent="false"

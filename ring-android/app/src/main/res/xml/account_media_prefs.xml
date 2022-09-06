@@ -38,7 +38,7 @@ along with this program; if not, write to the Free Software
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_video_label">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="Account.videoEnabled"
             android:persistent="false"
             android:title="@string/account_video_enable"

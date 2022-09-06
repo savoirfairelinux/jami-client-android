@@ -42,13 +42,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:persistent="false"
         android:title="@string/account_local_port_label" />
 
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:key="Account.upnpEnabled"
         android:persistent="false"
         android:title="@string/account_upnp_label" />
 
     <PreferenceCategory android:title="@string/account_proxy_label">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:icon="@drawable/baseline_cloud_24"
             android:key="Account.proxyEnabled"
             android:persistent="false"
@@ -74,7 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_peer_discovery_label">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:icon="@drawable/baseline_grain_24"
             android:key="Account.peerDiscovery"
             android:persistent="false"
@@ -85,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PreferenceCategory android:title="@string/account_published_address_label">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="STUN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_stun_server_label" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="TURN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"

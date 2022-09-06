@@ -30,9 +30,28 @@
 
         <item name="textInputStyle">@style/Widget.Jami.TextInputLayout</item>
 
+        <item name="alertDialogTheme">@style/RoundedMaterialAlertDialog</item>
         <item name="materialAlertDialogTheme">@style/RoundedMaterialAlertDialog</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton</item>
+
+        <item name="preferenceTheme">@style/JamiPreferenceThemeOverlay</item>
+    </style>
+
+    <style name="JamiPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+        <item name="switchPreferenceCompatStyle">@style/AppThemeBase.Preference.SwitchPreferenceCompat</item>
+        <item name="checkBoxPreferenceStyle">@style/AppThemeBase.Preference.CheckboxPreferenceCompat</item>
+        <item name="seekBarPreferenceStyle">@style/AppThemeBase.Preference.SliderCompat</item>
+    </style>
+
+    <style name="AppThemeBase.Preference.SwitchPreferenceCompat" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/preference_widget_material_switch</item>
+    </style>
+    <style name="AppThemeBase.Preference.CheckboxPreferenceCompat" parent="Preference.CheckBoxPreference.Material">
+        <item name="android:widgetLayout">@layout/preference_widget_material_checkbox</item>
+    </style>
+    <style name="AppThemeBase.Preference.SliderCompat" parent="Preference.SeekBarPreference.Material">
+        <item name="android:widgetLayout">@layout/preference_widget_material_slider</item>
     </style>
 
     <!-- Main dark base theme -->
@@ -304,10 +323,9 @@
         <item name="imageCardViewStyle">@style/ContactTitleViewOnlineStyle</item>
         <item name="imageCardViewBadgeStyle">@style/OnlineBadgeStyle</item>
     </style>
-
-
+    
     <style name="LeanbackPreferences" parent="Theme.Leanback">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Leanback</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlayLeanback</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
