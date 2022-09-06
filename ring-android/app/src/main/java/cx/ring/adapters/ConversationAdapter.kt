@@ -264,7 +264,8 @@ class ConversationAdapter(
     }
 
     private fun configureDisplayIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
-        val conversation = interaction.conversation as Conversation? ?: run {
+        val conversation = interaction.conversation
+        if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mStatusIcon?.isVisible = false
             return
         }
