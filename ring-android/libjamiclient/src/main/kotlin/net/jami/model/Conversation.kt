@@ -367,6 +367,7 @@ class Conversation : ConversationHistory {
         }
     }
 
+    @Synchronized
     fun updateInteraction(element: Interaction) {
         Log.e(TAG, "updateInteraction: ${element.messageId} ${element.status}")
         if (isSwarm) {
@@ -540,14 +541,16 @@ class Conversation : ConversationHistory {
             // New leaf
             added = true
             newLeaf = true
-            aggregateHistory.add(interaction)
+            if (action == ElementStatus.ADD)
+                aggregateHistory.add(interaction)
             updatedElementSubject.onNext(Pair(interaction, action))
         } else {
             // New root or normal node
             for (i in aggregateHistory.indices) {
                 if (id == aggregateHistory[i].parentId) {
                     //Log.w(TAG, "@@@ New root node at " + i);
-                    aggregateHistory.add(i, interaction)
+                    if (action == ElementStatus.ADD)
+                        aggregateHistory.add(i, interaction)
                     updatedElementSubject.onNext(Pair(interaction, action))
                     added = true
                     break
@@ -558,7 +561,8 @@ class Conversation : ConversationHistory {
                     if (aggregateHistory[i].messageId == interaction.parentId) {
                         added = true
                         newLeaf = true
-                        aggregateHistory.add(i + 1, interaction)
+                        if (action == ElementStatus.ADD)
+                            aggregateHistory.add(i + 1, interaction)
                         updatedElementSubject.onNext(Pair(interaction, action))
                         break
                     }
