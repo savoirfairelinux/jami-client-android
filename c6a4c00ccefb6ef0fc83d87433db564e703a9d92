@@ -16,6 +16,23 @@
       "message": "`",
       "revId": "c6a4c00ccefb6ef0fc83d87433db564e703a9d92",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb1eb52_fe25fd5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-09-08T16:05:29Z",
+      "side": 1,
+      "message": "Seems good, I odn\u0027t know if the checkbox design changes is intended in the settings but I don\u0027t have the weird issue (however didn\u0027T test on a larger device)",
+      "revId": "c6a4c00ccefb6ef0fc83d87433db564e703a9d92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
