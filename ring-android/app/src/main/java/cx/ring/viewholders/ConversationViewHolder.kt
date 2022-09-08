@@ -69,6 +69,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_VIDEO -> v.findViewById(R.id.status_icon)
         else -> null
     }
+    val mReplyTo: TextView? = v.findViewById(R.id.msg_reply)
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,

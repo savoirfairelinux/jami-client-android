@@ -53,6 +53,7 @@ class Conversation : ConversationHistory {
     var lastElementLoaded: Completable? = null
     private val mRoots: MutableSet<String> = HashSet(2)
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
+    private val mPendingMessages: MutableMap<String, SingleSubject<Interaction>> = HashMap(8)
     var lastRead: String? = null
         private set
     var lastNotified: String? = null
@@ -191,9 +192,7 @@ class Conversation : ConversationHistory {
     }
 
     @Synchronized
-    fun getMessage(messageId: String): Interaction? {
-        return mMessages[messageId]
-    }
+    fun getMessage(messageId: String): Interaction? = mMessages[messageId]
 
     fun setLastMessageRead(lastMessageRead: String?) {
         lastRead = lastMessageRead
@@ -518,21 +517,23 @@ class Conversation : ConversationHistory {
         }
     }
 
+    @Synchronized
     fun addSwarmElement(interaction: Interaction): Boolean {
-        val previous = mMessages.put(interaction.messageId!!, interaction)
+        val id = interaction.messageId!!
+        val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
-        mRoots.remove(interaction.messageId)
+        mRoots.remove(id)
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
         }
         for ((contactId, messageId) in lastDisplayedMessages.entries) {
-            if (interaction.messageId == messageId) {
+            if (id == messageId) {
                 interaction.displayedContacts.add(contactId)
             }
         }
-        if (lastRead != null && lastRead == interaction.messageId) interaction.read()
-        if (lastNotified != null && lastNotified == interaction.messageId) interaction.isNotified = true
+        if (lastRead != null && lastRead == id) interaction.read()
+        if (lastNotified != null && lastNotified == id) interaction.isNotified = true
         var newLeaf = false
         var added = false
         if (aggregateHistory.isEmpty() || aggregateHistory.last().messageId == interaction.parentId) {
@@ -544,7 +545,7 @@ class Conversation : ConversationHistory {
         } else {
             // New root or normal node
             for (i in aggregateHistory.indices) {
-                if (interaction.messageId == aggregateHistory[i].parentId) {
+                if (id == aggregateHistory[i].parentId) {
                     //Log.w(TAG, "@@@ New root node at " + i);
                     aggregateHistory.add(i, interaction)
                     updatedElementSubject.onNext(Pair(interaction, action))
@@ -567,14 +568,15 @@ class Conversation : ConversationHistory {
         if (newLeaf) {
             if (isVisible) {
                 interaction.read()
-                setLastMessageRead(interaction.messageId)
+                setLastMessageRead(id)
             }
             if (interaction.type != Interaction.InteractionType.INVALID)
                 lastEventSubject.onNext(interaction)
         }
         if (!added) {
-            Log.e(TAG, "Can't attach interaction ${interaction.messageId} with parent ${interaction.parentId}")
+            Log.e(TAG, "Can't attach interaction $id with parent ${interaction.parentId}")
         }
+        mPendingMessages.remove(id)?.onSuccess(interaction)
         return newLeaf
     }
 
@@ -625,6 +627,15 @@ class Conversation : ConversationHistory {
     fun getTitle() = title
     fun getDescription() = description
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
+    @Synchronized
+    fun loadMessage(id: String, load: () -> Unit): Single<Interaction>? {
+        val msg = getMessage(id)
+        return if (msg != null) Single.just(msg)
+        else mPendingMessages.computeIfAbsent(id) {
+            load()
+            SingleSubject.create()
+        }
+    }
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes

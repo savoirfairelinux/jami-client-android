@@ -398,6 +398,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         }
     }
 
+    override fun startReplyTo(interaction: Interaction) {
+        TODO("Not yet implemented")
+    }
+
     override fun refreshView(conversation: List<Interaction>) {
         mAdapter?.updateDataset(conversation)
         requireActivity().invalidateOptionsMenu()

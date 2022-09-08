@@ -385,35 +385,33 @@ class AccountService(
      * @param map the account details
      * @return the created Account
      */
-    fun addAccount(map: Map<String, String>): Observable<Account> {
-        return Observable.fromCallable {
-            val accountId = JamiService.addAccount(StringMap.toSwig(map))
-            if (accountId == null || accountId.isEmpty()) {
-                throw RuntimeException("Can't create account.")
-            }
-            var account = getAccount(accountId)
-            if (account == null) {
-                val accountDetails: Map<String, String> = JamiService.getAccountDetails(accountId).toNative()
-                val accountCredentials: List<Map<String, String>> = JamiService.getCredentials(accountId).toNative()
-                val accountVolatileDetails: Map<String, String> = JamiService.getVolatileAccountDetails(accountId).toNative()
-                val accountDevices: Map<String, String> = JamiService.getKnownRingDevices(accountId).toNative()
-                account = Account(accountId, accountDetails, accountCredentials, accountVolatileDetails)
-                account.devices = accountDevices
-                if (account.isSip) {
-                    account.setRegistrationState(AccountConfig.STATE_READY, -1)
-                }
-                mAccountList.add(account)
-                accountsSubject.onNext(mAccountList)
-            }
-            account
+    fun addAccount(map: Map<String, String>): Observable<Account> = Observable.fromCallable {
+        val accountId = JamiService.addAccount(StringMap.toSwig(map))
+        if (accountId == null || accountId.isEmpty()) {
+            throw RuntimeException("Can't create account.")
         }
-            .flatMap { account: Account ->
-                observableAccounts
-                    .filter { acc: Account -> acc.accountId == account.accountId }
-                    .startWithItem(account)
+        var account = getAccount(accountId)
+        if (account == null) {
+            val accountDetails: Map<String, String> = JamiService.getAccountDetails(accountId).toNative()
+            val accountCredentials: List<Map<String, String>> = JamiService.getCredentials(accountId).toNative()
+            val accountVolatileDetails: Map<String, String> = JamiService.getVolatileAccountDetails(accountId).toNative()
+            val accountDevices: Map<String, String> = JamiService.getKnownRingDevices(accountId).toNative()
+            account = Account(accountId, accountDetails, accountCredentials, accountVolatileDetails)
+            account.devices = accountDevices
+            if (account.isSip) {
+                account.setRegistrationState(AccountConfig.STATE_READY, -1)
             }
-            .subscribeOn(Schedulers.from(mExecutor))
+            mAccountList.add(account)
+            accountsSubject.onNext(mAccountList)
+        }
+        account
     }
+        .flatMap { account: Account ->
+            observableAccounts
+                .filter { acc: Account -> acc.accountId == account.accountId }
+                .startWithItem(account)
+        }
+        .subscribeOn(Schedulers.from(mExecutor))
 
     val currentAccountIndex: Int
         get() = mAccountList.indexOf(currentAccount)
@@ -555,10 +553,10 @@ class AccountService(
         }
     }
 
-    fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String) {
+    fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?) {
         mExecutor.execute {
-            Log.w(TAG, "sendConversationMessages " + conversationUri.rawRingId + " : " + txt)
-            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, "")
+            Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo")
+            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "")
         }
     }
     /**
@@ -1258,7 +1256,7 @@ class AccountService(
                 if (invitedContact == null) {
                     invitedContact = account.getContactFromCache(invited)
                 }
-                Log.w(TAG, "invited $invited ${invitedContact}")
+                Log.w(TAG, "invited $invited $invitedContact")
                 invitedContact.addedDate = Date(timestamp)
                 ContactEvent(account.accountId, invitedContact).setEvent(ContactEvent.Event.INVITED)
             } else {
@@ -1301,11 +1299,14 @@ class AccountService(
                 Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
                     message["duration"]?.let { d -> duration = d.toLong() }
                 }
-            "application/update-profile" -> {
-                Interaction(conversation, Interaction.InteractionType.INVALID)
-            }
+            "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
+        }
+        val replyTo = message["reply-to"]
+        interaction.replyToId = replyTo
+        if (replyTo != null) {
+            interaction.replyTo = conversation.loadMessage(replyTo) { JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo) }
         }
         if (interaction.contact == null)
             interaction.contact = contact

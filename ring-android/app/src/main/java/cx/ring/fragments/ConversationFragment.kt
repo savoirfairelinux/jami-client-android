@@ -109,6 +109,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private var mCurrentFileAbsolutePath: String? = null
     private val mCompositeDisposable = CompositeDisposable()
     private var mSelectedPosition = 0
+    private var replyingTo: Interaction? = null
     private var mIsBubble = false
     private var mConversationAvatar: AvatarDrawable? = null
     private val mParticipantAvatars: MutableMap<String, AvatarDrawable> = HashMap()
@@ -254,6 +255,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                 }
             })
+            binding.replyCloseBtn.setOnClickListener {
+                clearReply()
+            }
             setHasOptionsMenu(true)
             binding.root
         }
@@ -342,14 +346,24 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    private fun clearReply() {
+        if (replyingTo != null) {
+            replyingTo = null
+            binding?.apply {
+                replyGroup.isVisible = false
+            }
+        }
+    }
+
     fun sendMessageText() {
         val message = binding!!.msgInputTxt.text.toString()
+        presenter.sendTextMessage(message, replyingTo)
         clearMsgEdit()
-        presenter.sendTextMessage(message)
     }
 
     fun sendEmoji() {
-        presenter.sendTextMessage(binding!!.emojiSend.text.toString())
+        presenter.sendTextMessage(binding!!.emojiSend.text.toString(), replyingTo)
+        clearReply()
     }
 
     @SuppressLint("RestrictedApi")
@@ -902,6 +916,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun clearMsgEdit() {
+        clearReply()
         binding!!.msgInputTxt.setText("")
     }
 
@@ -1127,6 +1142,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 directory.mkdirs()
             }
             writeToFile(Uri.fromFile(File(directory, file.displayName)))
+        }
+    }
+
+    override fun startReplyTo(interaction: Interaction) {
+        replyingTo = interaction
+        binding?.apply {
+            if (interaction is TextMessage) {
+                replyMessage.text = interaction.body
+                replyMessage.isVisible = true
+            }
+            replyGroup.isVisible = true
         }
     }
 
