@@ -33,6 +33,23 @@
       "message": "Seems good, I odn\u0027t know if the checkbox design changes is intended in the settings but I don\u0027t have the weird issue (however didn\u0027T test on a larger device)",
       "revId": "c6a4c00ccefb6ef0fc83d87433db564e703a9d92",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff636248_26429eb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-09-08T17:59:59Z",
+      "side": 1,
+      "message": "flickering on smartlist scroll. Seems to be an androidx or material library bug",
+      "revId": "c6a4c00ccefb6ef0fc83d87433db564e703a9d92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
