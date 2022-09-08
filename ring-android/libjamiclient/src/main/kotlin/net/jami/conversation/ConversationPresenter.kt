@@ -231,14 +231,14 @@ class ConversationPresenter @Inject constructor(
         mConversation?.let { conversation -> view?.goToContactActivity(conversation.accountId, conversation.uri) }
     }
 
-    fun sendTextMessage(message: String?) {
+    fun sendTextMessage(message: String?, replyTo: Interaction? = null) {
         val conversation = mConversation
         if (message == null || message.isEmpty() || conversation == null) {
             return
         }
         val conference = conversation.currentCall
         if (conversation.isSwarm || conference == null || !conference.isOnGoing) {
-            conversationFacade.sendTextMessage(conversation, conversation.uri, message).subscribe()
+            conversationFacade.sendTextMessage(conversation, conversation.uri, message, replyTo?.messageId).subscribe()
         } else {
             conversationFacade.sendTextMessage(conversation, conference, message)
         }
@@ -279,11 +279,15 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun refuseFile(transfer: DataTransfer) {
-        view!!.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
+        view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
 
     fun deleteConversationItem(element: Interaction) {
         conversationFacade.deleteConversationItem(mConversation!!, element)
+    }
+
+    fun startReplyTo(interaction: Interaction) {
+        view?.startReplyTo(interaction)
     }
 
     fun cancelMessage(message: Interaction) {

@@ -51,15 +51,32 @@ along with this program; if not, write to the Free Software
         android:paddingBottom="2dp"
         tools:text="@string/time_just_now" />
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
         android:paddingEnd="2dp">
 
+        <TextView
+            android:id="@+id/msg_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="72dp"
+            android:layout_marginEnd="24dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:visibility="visible"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            android:gravity="center_vertical"
+            android:drawableStart="@drawable/baseline_reply_24"
+            android:drawableTint="@color/colorSecondary"
+            tools:text="Replying to Bob" />
+
         <include
             layout="@layout/msg_link_preview"
+            android:layout_below="@id/msg_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"

@@ -44,7 +44,7 @@ class TextMessage : Interaction {
         body = message
     }
 
-    constructor(author: String?, account: String, timestamp: Long, conversation: ConversationHistory?, message: String, isIncoming: Boolean) {
+    constructor(author: String?, account: String, timestamp: Long, conversation: ConversationHistory?, message: String, isIncoming: Boolean, replyToId: String? = null) {
         this.author = author
         this.account = account
         this.timestamp = timestamp
@@ -52,6 +52,7 @@ class TextMessage : Interaction {
         this.conversation = conversation
         this.isIncoming = isIncoming
         body = message
+        this.replyToId = replyToId
     }
 
     constructor(interaction: Interaction) {

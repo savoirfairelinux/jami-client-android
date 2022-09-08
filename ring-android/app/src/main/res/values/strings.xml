@@ -361,6 +361,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_message_copy">Copy</string>
     <string name="menu_message_delete">Delete message</string>
     <string name="menu_message_cancel">Cancel message</string>
+    <string name="menu_message_reply">Reply</string>
     <string name="menu_delete">Delete</string>
     <string name="pref_darkTheme_title">Dark theme</string>
     <string name="pref_darkTheme_summary">Always enable dark theme instead of using system behavior</string>
