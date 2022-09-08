@@ -34,6 +34,7 @@ import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
+import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.util.Log
@@ -51,6 +52,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.text.bold
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
@@ -278,6 +280,35 @@ class ConversationAdapter(
             })
     }
 
+    private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+        val conversation = interaction.conversation
+        if (conversation == null || conversation !is Conversation) {
+            conversationViewHolder.mReplyTo?.isVisible = false
+            return
+        }
+        conversationViewHolder.mReplyTo?.let { replyView ->
+            val replyTo = interaction.replyTo
+            if (replyTo != null)  {
+                conversationViewHolder.compositeDisposable.add(replyTo
+                    .flatMapObservable { reply -> presenter.contactService
+                        .observeContact(interaction.account!!, reply.contact!!, false)
+                        .map { contact -> Pair(reply, contact) }}
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ i ->
+                        replyView.text = SpannableStringBuilder()
+                            .bold {
+                                append(i.second.displayName)
+                                append(": ")
+                            }
+                            .append(i.first.body)
+                        replyView.isVisible = true
+                    }) { replyView.isVisible = false })
+            } else {
+                replyView.isVisible = false
+            }
+        }
+    }
+
     override fun onBindViewHolder(conversationViewHolder: ConversationViewHolder, position: Int) {
         if (isComposing && position == mInteractions.size) {
             configureForTypingIndicator(conversationViewHolder)
@@ -293,6 +324,7 @@ class ConversationAdapter(
         }
 
         conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
+        conversationViewHolder.mReplyTo?.let { configureReplyIndicator(conversationViewHolder, interaction) }
 
         //Log.w(TAG, "onBindViewHolder " + interaction.getType() + " " + interaction);
         val type = interaction.type
@@ -379,6 +411,7 @@ class ConversationAdapter(
             R.id.conv_action_open -> presenter.openFile(interaction)
             R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
             R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
+            R.id.conv_action_reply -> presenter.startReplyTo(interaction)
             R.id.conv_action_copy_text -> addToClipboard(interaction.body)
         }
         return true

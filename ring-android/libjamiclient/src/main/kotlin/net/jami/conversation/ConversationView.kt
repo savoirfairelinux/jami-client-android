@@ -56,6 +56,7 @@ interface ConversationView {
     fun setConversationColor(color: Int)
     fun setConversationSymbol(symbol: CharSequence)
     fun startSaveFile(file: DataTransfer, fileAbsolutePath: String)
+    fun startReplyTo(interaction: Interaction)
     fun startShareLocation(accountId: String, conversationId: String)
     fun showMap(accountId: String, contactId: String, open: Boolean)
     fun hideMap()

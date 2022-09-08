@@ -24,12 +24,15 @@ import com.google.gson.JsonParser
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 open class Interaction {
     var account: String? = null
     var isIncoming = false
     var contact: Contact? = null
+    var replyToId: String? = null
+    var replyTo: Single<Interaction>? = null
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0

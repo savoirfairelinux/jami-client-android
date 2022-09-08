@@ -111,9 +111,9 @@ class ConversationFacade(
         return lastRead
     }
 
-    fun sendTextMessage(c: Conversation, to: Uri, txt: String): Completable {
+    fun sendTextMessage(c: Conversation, to: Uri, txt: String, replyTo: String? = null): Completable {
         if (c.isSwarm) {
-            mAccountService.sendConversationMessage(c.accountId, c.uri, txt)
+            mAccountService.sendConversationMessage(c.accountId, c.uri, txt, replyTo)
             return Completable.complete()
         }
         return mCallService.sendAccountTextMessage(c.accountId, to.rawUriString, txt)
