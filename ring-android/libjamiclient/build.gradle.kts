@@ -17,14 +17,14 @@ dependencies {
     // dependency injection
     implementation( "javax.inject:javax.inject:1")
     // ORM
-    implementation ("com.j256.ormlite:ormlite-core:5.6")
+    implementation ("com.j256.ormlite:ormlite-core:5.7")
 
     // Required -- JUnit 4 framework
     testImplementation ("junit:junit:4.13.2")
     // RxJava
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
     // gson
-    implementation ("com.google.code.gson:gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.9.1")
     api("com.google.dagger:dagger:$hilt_version")
     kapt("com.google.dagger:dagger-compiler:$hilt_version")
 }

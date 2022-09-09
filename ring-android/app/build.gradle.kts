@@ -106,7 +106,7 @@ dependencies {
     implementation ("io.noties.markwon:linkify:$markwon_version")
 
     // ORM
-    implementation ("com.j256.ormlite:ormlite-android:5.6")
+    implementation ("com.j256.ormlite:ormlite-android:5.7")
 
     // Barcode scanning
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
