@@ -135,9 +135,9 @@ class DataTransfer : Interaction {
                 if (ext.length > 8) ext = ext.substring(0, 8)
                 val dId = daemonId
                 if (dId == null || dId == 0L) {
-                    id.toLong().toString() + '_' + HashUtils.sha1(b)?.toHex() + '.' + ext
+                    id.toLong().toString() + '_' + HashUtils.sha1(b).toHex() + '.' + ext
                 } else {
-                    dId.toString() + '_' + HashUtils.sha1(b)?.toHex() + '.' + ext
+                    dId.toString() + '_' + HashUtils.sha1(b).toHex() + '.' + ext
                 }
             }
         }

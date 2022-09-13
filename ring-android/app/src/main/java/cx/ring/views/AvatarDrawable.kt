@@ -162,7 +162,7 @@ class AvatarDrawable : Drawable {
             if (id == null) {
                 return R.color.grey_500
             }
-            val md5 = HashUtils.md5(id) ?: return R.color.grey_500
+            val md5 = HashUtils.md5(id)
             return contactColors[(md5[0].toUInt() % contactColors.size.toUInt()).toInt()]
         }
     }
