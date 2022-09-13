@@ -252,11 +252,11 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withConversation(conversation: Conversation, contacts: List<ContactViewModel>): Builder {
-            return if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
+        fun withConversation(conversation: Conversation, contacts: List<ContactViewModel>): Builder =
+            if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
                 withContacts(contacts).setGroup()
-            else withContact(ConversationItemViewModel.getContact(contacts))
-        }
+            else
+                withContact(ConversationItemViewModel.getContact(contacts))
 
         private fun setGroup(): Builder {
             isGroup = true
@@ -274,11 +274,10 @@ class AvatarDrawable : Drawable {
         }
 
         fun build(context: Context): AvatarDrawable {
-            val avatarDrawable = AvatarDrawable(
-                context, photos, name, id, circleCrop, isGroup
-            )
-            avatarDrawable.setOnline(isOnline)
-            avatarDrawable.setChecked(isChecked)
+            val avatarDrawable = AvatarDrawable(context, photos, name, id, circleCrop, isGroup).apply {
+                setOnline(isOnline)
+                setChecked(isChecked)
+            }
             avatarDrawable.showPresence = showPresence
             return avatarDrawable
         }
@@ -321,7 +320,7 @@ class AvatarDrawable : Drawable {
         crop: Boolean,
         group: Boolean
     ) {
-        //Log.w("AvatarDrawable", "AvatarDrawable " + (photos == null ? null : photos.size()) + " " + name);
+        //Log.w("AvatarDrawable", "AvatarDrawable name:$name id:$id");
         cropCircle = crop
         isGroup = group
         minSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB.toFloat(), context.resources.displayMetrics).toInt()

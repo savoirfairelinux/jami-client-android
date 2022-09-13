@@ -365,7 +365,7 @@ class DRingService : Service() {
             return
         }
         mContactService.loadContacts(
-            mAccountService.hasRingAccount(),
+            mAccountService.hasJamiAccount(),
             mAccountService.hasSipAccount(),
             mAccountService.currentAccount
         )

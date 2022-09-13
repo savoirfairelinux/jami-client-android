@@ -8,24 +8,10 @@
     android:orientation="vertical"
     tools:context=".client.HomeActivity">
 
-    <TextView
-        android:id="@+id/pane_ringID"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#e3c1c1"
-        android:ellipsize="middle"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="@string/contact_request_account"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/colorOnSurface"
-        android:visibility="gone" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requests_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pane_ringID"
         android:clipToPadding="false"
         android:divider="@null"
         android:paddingTop="8dp"

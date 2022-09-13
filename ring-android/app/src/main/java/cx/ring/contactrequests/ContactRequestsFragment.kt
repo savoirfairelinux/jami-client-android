@@ -80,9 +80,6 @@ class ContactRequestsFragment :
 
     override fun updateView(list: List<Conversation>, conversationFacade: ConversationFacade, disposable: CompositeDisposable) {
         val binding = binding ?: return
-        if (list.isNotEmpty()) {
-            binding.paneRingID.visibility = View.GONE
-        }
         binding.placeholder.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         val adapter = mAdapter
         if (adapter != null) {
