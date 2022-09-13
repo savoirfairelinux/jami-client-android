@@ -192,7 +192,7 @@ class AvatarDrawable : Drawable {
         }
 
         fun withName(name: String?): Builder {
-            this.name = name
+            this.name = name?.trim()
             return this
         }
 
