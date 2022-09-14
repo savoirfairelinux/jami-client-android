@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Avancerade inställningar</string>
   <string name="ic_blacklist_menu">Blockerade kontakter</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Lägg till Jami-konto</string>
+  <string name="add_ring_account_title">Lägg till konto</string>
   <string name="add_sip_account_title">Lägg till SIP-konto</string>
   <string name="ring_account_default_name">Jami-konto %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -45,6 +45,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_revocation_unknown_device">Okänd enhet.</string>
   <string name="account_device_revocation_error_unknown">Okänt fel.</string>
   <string name="account_password_change">Byt lösenord</string>
+  <string name="account_password_set">Ange lösenord </string>
   <string name="account_password_summary">Hantera ditt kontolösenord.</string>
   <string name="account_password_change_wait_message">Ändrar kontolösenord</string>
   <!--Basic Details-->
@@ -58,8 +59,12 @@ Du kan ändra kontot senare.</string>
   <string name="account_optionnal_category">Extra inställningar</string>
   <string name="account_useragent_label">Användaragent</string>
   <string name="account_autoanswer_label">Autosvar</string>
+  <string name="account_rendezvous_label">Mötesläge</string>
+  <string name="account_rendezvous_summary">I Mötesläge, inkommande samtal läggs till ett konferensrum. </string>
   <string name="account_upnp_label">Aktivera UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Insticksmoduler</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ljud</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -94,10 +99,15 @@ Du kan ändra kontot senare.</string>
   <string name="account_published_same_as_local_label">Publicerad samma som lokal</string>
   <string name="account_published_port_label">Publicerad port</string>
   <string name="account_published_address_label">Publiserad adress</string>
+  <string name="enabled">Aktiverad</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Använd DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxyadress</string>
+  <string name="account_proxy_server_list_label">DHL proxy lista URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_peer_discovery_label">Upptäck lokal anslutningspunkt</string>
+  <string name="account_peer_discovery_enable_label">Möjliggör upptäckt av lokal anslutningspunkt </string>
+  <string name="account_peer_discovery_enable_summary">Anslut till annan DHT nod som annonseras på vårt lokala nätverk </string>
   <!--Security Details-->
   <string name="account_credentials_label">Inloggningsuppgifter</string>
   <string name="account_credentials_edit">Redigera inloggningsuppgifter</string>
@@ -105,6 +115,8 @@ Du kan ändra kontot senare.</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Säkerhet</string>
   <string name="account_srtp_switch_label">Kryptera mediaströmmar (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Använd SDES som nyckelprotokoll </string>
+  <string name="account_srtp_rtp_fallback">Återgå till RTP om SRTP misslyckas </string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
@@ -130,6 +142,7 @@ Du kan ändra kontot senare.</string>
   <string name="export_account_wait_title">Vänta...</string>
   <string name="export_account_wait_message">Exporterar kontoinformation</string>
   <string name="account_export_file">Säkerhetskopiera konto</string>
+  <string name="account_export_file_summary">Säkerhetskopiera ditt konto på din enhet för att kunna återställa senare. </string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
   <string name="account_export_end_network_title">Nätverksfel</string>
   <string name="account_export_end_network_message">Kunde inte exportera kontot över nätverket. Kontrollera din uppkoppling.</string>
@@ -163,9 +176,11 @@ Du kan ändra kontot senare.</string>
   <string name="account_tv_settings_header">Kontoinställningar</string>
   <string name="account_tv_advance_settings_header">Avancerade inställningar</string>
   <string name="account_tv_add_contact">Lägg till kontakt</string>
+  <string name="account_tv_advanced_settings">Ändra systeminställningar</string>
   <string name="account_tv_about">Om Jami</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licens</string>
+  <string name="tv_about_author">Utgivarens rättigheter</string>
   <string name="tv_about_credits">Tack till</string>
   <string name="account_link_device">Anslut från en annan enhet</string>
   <string name="account_link_button">Anslut från nätverk</string>
@@ -173,12 +188,19 @@ Du kan ändra kontot senare.</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_new_button">Skapa ett Jami-konto</string>
   <string name="account_link_export_button">Koppla en ny enhet</string>
+  <string name="account_link_show_button">Visa %d fler anslutna enheter</string>
+  <string name="account_link_hide_button">Dölj ansluten enhet</string>
   <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Jami. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
   <string name="account_start_export_button">Generera PIN-kod</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra processen måste du starta Jami på den nya enheten. Skapa ett nytt konto med \"Koppla denna enhet till ett konto\". Din PIN-kod är giltig i 10 minuter.</string>
   <string name="account_link_export_info_light">För att använda detta konto på en annan enhet, måste du först exponera det på Jami. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
+  <string name="account_export_title">Anslut konto till andra enheter </string>
+  <string name="account_connect_server_button">Anslut till administrations server </string>
   <string name="account_connect_button">Anslut</string>
+  <string name="prompt_server">Jami administrationsserver URL</string>
+  <string name="help_credentials_enter">Ange din organisations inloggningsdata </string>
+  <string name="help_connect_password_enter">Ange din organisations lösenord </string>
   <string name="account_connect_prompt_username">Användarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>

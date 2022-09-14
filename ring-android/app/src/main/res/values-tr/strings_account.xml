@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Gelişmiş ayarlar</string>
   <string name="ic_blacklist_menu">Engellenmiş kişiler</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami hesabı ekle</string>
+  <string name="add_ring_account_title">Hesap ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
   <string name="ring_account_default_name">Jami hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
@@ -63,6 +63,8 @@
   <string name="account_rendezvous_summary">Buluşma modunda, gelen aramalar bir konferans odasına eklenecek.</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Eklentiler</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ses</string>
   <string name="account_preferences_media_tab">Ortam</string>
@@ -97,6 +99,7 @@
   <string name="account_published_same_as_local_label">Yayımlanan yerel ile aynı</string>
   <string name="account_published_port_label">Yayımlanan Bağlantı Noktası</string>
   <string name="account_published_address_label">Yayımlanan Yer</string>
+  <string name="enabled">Etkin</string>
   <string name="account_proxy_label">DHT vekil</string>
   <string name="account_proxy_enable_label">DHT vekil sunucu kullan</string>
   <string name="account_proxy_server_label">DHT vekil adresi</string>

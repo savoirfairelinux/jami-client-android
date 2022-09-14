@@ -104,8 +104,6 @@
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
-  <string name="hist_contact_added">Contact toegevoegd</string>
-  <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <string name="ab_action_audio_call">Audio-oproep</string>
   <string name="ab_action_video_call">Video-oproep</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
@@ -189,6 +187,8 @@
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
+  <string name="hist_contact_added">Contact toegevoegd</string>
+  <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <!--Account Summary-->
   <string name="profile">Profiel</string>
   <string name="profile_name">Profielnaam</string>
@@ -264,6 +264,7 @@
   <string name="menu_message_copy">Kopiëren</string>
   <string name="menu_message_delete">Bericht verwijderen</string>
   <string name="menu_message_cancel">Bericht annuleren</string>
+  <string name="menu_message_reply">Beantwoorden</string>
   <string name="menu_delete">Verwijderen</string>
   <string name="pref_darkTheme_title">Donker thema</string>
   <string name="pref_darkTheme_summary">Donker thema altijd gebruiken in plaats van systeemgedrag te volgen</string>

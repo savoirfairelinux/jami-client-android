@@ -40,6 +40,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_autoanswer_label">Jawab panggilan secara automatik</string>
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Bunyi</string>
   <string name="account_preferences_media_tab">Media</string>

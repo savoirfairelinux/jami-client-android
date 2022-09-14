@@ -44,7 +44,6 @@
   <string name="plugin_uninstall_title">إلغاء تثبيت إضافة؟</string>
   <string name="plugin_reset_preferences">إعادة تعيين أذونات إضافة</string>
   <string name="plugin_reset_preferences_summary">إعدادت إضافتك ستكون إفتراضية</string>
-  <string name="plugin_reset_preferences_ask">هل تريد إعادة تعيين إعدادت الإضافة؟</string>
   <string name="plugin_successfully_installed">إضافة <b>%1$s</b> تم تثبيتها بنجاح</string>
   <string name="plugin_install_failure">فشل عند تثبيت إضافة: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">انت تملك اكثر من إصدار عن: <b>%1$s</b></string>

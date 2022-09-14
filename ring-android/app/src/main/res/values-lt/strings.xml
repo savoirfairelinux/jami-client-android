@@ -81,8 +81,6 @@
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie adresatų</string>
   <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
-  <string name="hist_contact_added">Adresatas pridėtas</string>
-  <string name="hist_invitation_received">Gautas pakvietimas</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
@@ -149,6 +147,8 @@
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
+  <string name="hist_contact_added">Adresatas pridėtas</string>
+  <string name="hist_invitation_received">Gautas pakvietimas</string>
   <!--Account Summary-->
   <string name="profile">Profilis</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
@@ -211,6 +211,7 @@
   <string name="menu_message_copy">Kopijuoti</string>
   <string name="menu_message_delete">Ištrinti žinutę</string>
   <string name="menu_message_cancel">Atsisakyti žinutės</string>
+  <string name="menu_message_reply">Atsakyti</string>
   <string name="menu_delete">Ištrinti</string>
   <string name="pref_darkTheme_title">Tamsus apipavidalinimas</string>
   <string name="pref_darkTheme_summary">Vietoj sistemos elgsenos, visada naudoti tamsų apipavidalinimą</string>

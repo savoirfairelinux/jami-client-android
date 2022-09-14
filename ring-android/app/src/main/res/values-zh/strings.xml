@@ -106,11 +106,6 @@
   <string name="ab_action_speakerphone">啟用喇叭</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <string name="ab_action_contact_add_question">添加至通讯录吗？</string>
-  <string name="hist_contact_invited">联系人已邀请</string>
-  <string name="hist_contact_added">已加入通讯录</string>
-  <string name="hist_contact_left">联系人离开</string>
-  <string name="hist_contact_banned">联系人已封禁</string>
-  <string name="hist_invitation_received">已接受邀请</string>
   <string name="ab_action_audio_call">语音通话</string>
   <string name="ab_action_video_call">视频通话</string>
   <string name="ab_action_change_screen_orientation">變更螢幕方向</string>
@@ -202,6 +197,11 @@
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">前一個</string>
   <string name="wizard_skip">跳过</string>
+  <string name="hist_contact_invited">联系人已邀请</string>
+  <string name="hist_contact_added">已加入通讯录</string>
+  <string name="hist_contact_left">联系人离开</string>
+  <string name="hist_contact_banned">联系人已封禁</string>
+  <string name="hist_invitation_received">已接受邀请</string>
   <!--Account Summary-->
   <string name="profile">個人檔案</string>
   <string name="profile_name">账户资料名称</string>
@@ -279,6 +279,7 @@
   <string name="menu_message_copy">複製</string>
   <string name="menu_message_delete">删除消息</string>
   <string name="menu_message_cancel">取消消息</string>
+  <string name="menu_message_reply">回复</string>
   <string name="menu_delete">刪除</string>
   <string name="pref_darkTheme_title">黑色主题</string>
   <string name="pref_darkTheme_summary">总是使用黑色主题，而不是跟随系统</string>
@@ -330,4 +331,6 @@
   <string name="bottomSheet_mute_microphone_btn">麦克风</string>
   <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
+  <string name="uninstall">卸载</string>
+  <string name="reset">重置</string>
 </resources>

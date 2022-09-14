@@ -7,6 +7,7 @@
   <!--AccountManagementFragment-->
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">பொது</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">கேள்விமாற்றி</string>
   <string name="account_ringtone_label">ரிங்டோன்கள்</string>

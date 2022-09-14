@@ -106,11 +106,6 @@
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj kontakt</string>
   <string name="ab_action_contact_add_question">Dotati u kontakte?</string>
-  <string name="hist_contact_invited">Kontakt je pozvan</string>
-  <string name="hist_contact_added">Kontakt dodat</string>
-  <string name="hist_contact_left">Kontakt napušten</string>
-  <string name="hist_contact_banned">Kontakt zabranjen</string>
-  <string name="hist_invitation_received">Primljen poziv</string>
   <string name="ab_action_audio_call">Audio poziv</string>
   <string name="ab_action_video_call">Video poziv</string>
   <string name="ab_action_change_screen_orientation">Promeni orijentaciju ekrana</string>
@@ -202,6 +197,11 @@
   <string name="wizard_next">Sledeći</string>
   <string name="wizard_back">Nazad</string>
   <string name="wizard_skip">Preskoči</string>
+  <string name="hist_contact_invited">Kontakt je pozvan</string>
+  <string name="hist_contact_added">Kontakt dodat</string>
+  <string name="hist_contact_left">Kontakt napušten</string>
+  <string name="hist_contact_banned">Kontakt zabranjen</string>
+  <string name="hist_invitation_received">Primljen poziv</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
@@ -279,6 +279,7 @@
   <string name="menu_message_copy">Kopiraj</string>
   <string name="menu_message_delete">Izbriši poruku</string>
   <string name="menu_message_cancel">Otkaži poruku</string>
+  <string name="menu_message_reply">Odgovori</string>
   <string name="menu_delete">Izbriši</string>
   <string name="pref_darkTheme_title">Tamna tema</string>
   <string name="pref_darkTheme_summary">Uvek omogućite tamnu temu umesto da koristite sistemsko ponašanje</string>

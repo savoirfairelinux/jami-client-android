@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Haladó beállítások</string>
   <string name="ic_blacklist_menu">Letiltott kapcsolatok</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami-fiók hozzáadása</string>
+  <string name="add_ring_account_title">Fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP-fiók hozzáadása</string>
   <string name="ring_account_default_name">Jami-fiók: %1$s</string>
   <string name="prompt_alias">Álnév</string>
@@ -63,6 +63,8 @@
   <string name="account_rendezvous_summary">A találkozási pont módban a bejövő hívások hozzáadódnak egy konferenciaterembe.</string>
   <string name="account_upnp_label">UPnP engedélyezése</string>
   <string name="account_proxy_field">Meghatalmazás</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Beépülő modulok</string>
   <!--Audio Details-->
   <string name="account_audio_label">Hang</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -71,7 +73,7 @@
   <string name="account_ringtone_path_label">Csengőhang útvonal</string>
   <string name="account_ringtone_custom_label">Egyéni csengőhang használata</string>
   <string name="account_ringtone_title">Csengőhang kiválasztása</string>
-  <string name="account_ringtone_summary">Válasszon csengőhangot, vagy keresse ki a sajátját</string>
+  <string name="account_ringtone_summary">Csengőhang kijelölése vagy saját kikeresse</string>
   <!--Video Details-->
   <string name="account_video_label">Videó</string>
   <string name="account_video_enable">Videó engedélyezése</string>
@@ -97,6 +99,7 @@
   <string name="account_published_same_as_local_label">Helyiként közzétéve</string>
   <string name="account_published_port_label">Közzétett kikötő</string>
   <string name="account_published_address_label">Nyilvános cím</string>
+  <string name="enabled">Engedélyezve</string>
   <string name="account_proxy_label">DHT-meghatalmazás</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazás használata</string>
   <string name="account_proxy_server_label">DHT-meghatalmazás-cím</string>
@@ -170,7 +173,7 @@
   <string name="account_sip_success_message">Sikeresen regisztrálta a SIP-fiókját.</string>
   <string name="account_sip_register_anyway">Regisztráció mindenképp</string>
   <!--TV-->
-  <string name="account_tv_settings_header">Fiók beállítások</string>
+  <string name="account_tv_settings_header">Fiókbeállítások</string>
   <string name="account_tv_advance_settings_header">Haladó beállítások</string>
   <string name="account_tv_add_contact">Kapcsolat hozzáadása</string>
   <string name="account_tv_advanced_settings">Általános beállítások szerkesztése</string>
@@ -181,7 +184,7 @@
   <string name="tv_about_credits">Készítők</string>
   <string name="account_link_device">Fiók létrehozása más eszközről</string>
   <string name="account_link_button">Kapcsolódás a hálózatról</string>
-  <string name="account_link_archive_button">Kapcsolódás biztonsági mentésből</string>
+  <string name="account_link_archive_button">Kapcsolódás biztonsági másolatból</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami-fiók létrehozása</string>
   <string name="account_link_export_button">Eszköz összekapcsolása fiókhoz</string>
@@ -236,7 +239,7 @@
   <string name="rename_device_title">Eszköz átnevezése</string>
   <string name="rename_device_message">Válasszon egy új nevet, amely azonosítja ezt az eszközt a Jami-fiókjában</string>
   <string name="rename_device_button">Eszköz átnevezése</string>
-  <string name="account_rename_device_hint">Válasszon új eszköznevet</string>
+  <string name="account_rename_device_hint">Új eszköznév kiválasztása</string>
   <string name="account_device_name_empty">Az eszköz neve nem lehet üres</string>
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>

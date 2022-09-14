@@ -111,11 +111,6 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
   <string name="ab_action_contact_add">Kontakt hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
-  <string name="hist_contact_invited">Kontakt eingeladen</string>
-  <string name="hist_contact_added">Kontakt hinzugefügt</string>
-  <string name="hist_contact_left">Kontakt weg</string>
-  <string name="hist_contact_banned">Kontakt gesperrt</string>
-  <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
   <string name="ab_action_change_screen_orientation">Ändern der Bildschirmausrichtung</string>
@@ -207,6 +202,11 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
+  <string name="hist_contact_invited">Kontakt eingeladen</string>
+  <string name="hist_contact_added">Kontakt hinzugefügt</string>
+  <string name="hist_contact_left">Kontakt weg</string>
+  <string name="hist_contact_banned">Kontakt gesperrt</string>
+  <string name="hist_invitation_received">Einladung erhalten</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilname</string>
@@ -284,6 +284,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="menu_message_copy">Kopieren</string>
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Abbruch mit folgendem Hinweis:</string>
+  <string name="menu_message_reply">Antworten</string>
   <string name="menu_delete">Löschen</string>
   <string name="pref_darkTheme_title">Dunkles Design</string>
   <string name="pref_darkTheme_summary">Immer dunkles Design aktivieren, statt den Systemstandard zu verwenden</string>
@@ -335,4 +336,6 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Töne</string>
   <string name="bottomSheet_raiseHand_btn">Ihre Hand heben</string>
+  <string name="uninstall">Deinstallieren</string>
+  <string name="reset">Zurücksetzen</string>
 </resources>

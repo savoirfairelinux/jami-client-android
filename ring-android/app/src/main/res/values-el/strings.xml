@@ -14,12 +14,14 @@
   <string name="website_chooser_title">Προβολή σελίδας με...</string>
   <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
   <string name="credits">Συντελεστές</string>
+  <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
   <!--About dialog-->
-  <string name="developed_by">Ανάπτυξη</string>
-  <string name="designed_by">Σχεδιασμός</string>
-  <string name="ringtones_by">Ήχοι Κλήσης</string>
+  <string name="developed_by">Ανάπτυξη από</string>
+  <string name="designed_by">Σχεδιασμός από</string>
+  <string name="ringtones_by">Ήχοι Κλήσης από</string>
   <!--RingActivity-->
   <string name="error_no_network">Χωρίς σύνδεση στο δίκτυο</string>
+  <string name="error_account_offline">Ο λογαριασμός είναι εκτός σύνδεσης</string>
   <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Μήνυμα κειμένου</string>
@@ -29,6 +31,7 @@
   <string name="menu_item_account">Διαχείριση Λογαριασμού</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
+  <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>
@@ -51,6 +54,7 @@
   <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
   <string name="notif_outgoing_call_title">Εξερχόμενη κλήση  %1$s</string>
   <string name="notif_outgoing_call">Εξερχόμενη κλήση</string>
+  <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
   <string name="notif_current_call">Εξερχόμενη κλήση</string>
   <string name="notif_channel_call_in_progress">Κλήση σε Εξέλιξη</string>
   <string name="notif_channel_calls">Κλήσεις</string>
@@ -61,20 +65,42 @@
   <string name="notif_channel_file_transfer">Μεταφορά Αρχείων</string>
   <string name="notif_channel_sync">Συγχρονισμός Δεδομένων</string>
   <string name="notif_channel_background_service">Υπηρεσία Παρασκηνίου</string>
+  <string name="notif_channel_background_service_descr">Επιτρέπει τη λήψη κλήσεων και μηνυμάτων οποτεδήποτε.</string>
   <string name="notif_group_calls">Κλήσεις</string>
+  <string name="notif_mark_as_read">Σημείωση ως αναγνωσμένο</string>
+  <string name="notif_dismiss">Απόρριψη</string>
   <string name="notif_reply">Απάντηση</string>
+  <string name="notif_incoming_file_transfer_title">Εισερχόμενο αρχείο από %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Αποστολή αρχείου σε %1$s</string>
+  <string name="notif_incoming_picture">Εικόνα από %1$s</string>
+  <string name="notif_sync_title">Συγχρονισμός δεδομένων</string>
+  <string name="notif_location_title">Κοινοποίηση τοποθεσίας με %1$s</string>
+  <string name="notif_location_multi_title">Κοινοποίηση τοποθεσίας με %1$dεπαφές</string>
+  <string name="notif_location_action_stop">Τερματισμός κοινοποίησης τοποθεσίας</string>
+  <string name="location_share_action_start">Έναρξη κοινοποίησης</string>
+  <string name="location_share_action_stop">Τερματισμός κοινοποίησης</string>
+  <string name="location_share_about_title">Στοιχεία χάρτη</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Εσύ</string>
   <string name="action_call_hangup">Κλείσιμο</string>
+  <string name="action_call_maximize">Μεγιστοποίηση</string>
+  <string name="action_call_minimize">Ελαχιστοποίηση</string>
+  <string name="action_call_mute">Σίγαση</string>
+  <string name="action_call_unmute">Μη σίγαση</string>
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
   <string name="action_call_accept">Κάνε μια κλήση</string>
+  <string name="action_call_accept_audio">Απάντησε με φωνή</string>
+  <string name="action_call_accept_video">Απάντησε με βίντεο</string>
+  <string name="action_call_hold_accept">Αναμονή και λήψη κλήσης φωνής</string>
+  <string name="action_call_hold_accept_video">Αναμονή και λήψη κλήσης βίντεο</string>
+  <string name="action_call_end_accept">Τερματισμός και λήψη κλήσης</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
+  <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
   <string name="ab_action_speakerphone">Μεγάφωνο</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
-  <string name="hist_contact_added">Η επαφή προστέθηκε</string>
   <string name="ab_action_audio_call">Κλήση φωνής</string>
   <string name="ab_action_video_call">Κλήση βίντεο</string>
   <string name="ab_action_change_screen_orientation">Στρίψτε την οθόνη</string>
@@ -83,6 +109,7 @@
   <string name="scan_qr">Σάρωση QR κώδικα</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
+  <string name="remote_recording">%s καταγράφει...</string>
   <!--Text messages-->
   <string name="send_message">Στείλε μήνυμα</string>
   <string name="message_sending">Μήνυμα αποστέλλεται...</string>
@@ -91,21 +118,26 @@
   <string name="send_file">Αποστολή αρχείου</string>
   <string name="hist_file_sent">Το αρχείο στάλθηκε</string>
   <string name="hist_file_received">Το αρχείο ελήγθη</string>
-  <string name="conversation_send_audio">Εγγραφή ήχου</string>
-  <string name="conversation_send_video">Εγγραφή βίντεο</string>
+  <string name="conversation_send_audio">Εγγραφή κλιπ ήχου</string>
+  <string name="conversation_send_video">Εγγραφή κλιπ βίντεο</string>
+  <string name="conversation_share_location">Κοινοποίηση τοποθεσίας</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
+  <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος αρχείου είναι %1$d kb.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
+  <string name="title_activity_qrcode">Κοινοποίηση λογαριασμού</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Διαγραφή ιστορικού;</string>
+  <string name="clear_history_dialog_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
   <string name="clear_history_completed">Το ιστορικό έχει διαγραφεί.</string>
+  <string name="clear_history">Εκκαθάριση</string>
   <!--Conversation-->
   <string name="conversation_details">Λεπτομέρειες επαφών</string>
   <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
@@ -113,8 +145,10 @@
   <string name="conversation_action_delete_this_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
   <string name="conversation_action_history_clear">Διαγραφή ιστορικού</string>
   <string name="conversation_action_history_clear_title">Διαγραφή ιστορικού συνομιλιών;</string>
+  <string name="conversation_action_history_clear_message">Αυτό σίγουρα θα διαγράψει το ιστορικό συνομιλίας.</string>
   <string name="conversation_action_remove_this">Διαγραφή επαφής</string>
   <string name="conversation_action_remove_this_title">Διαγραφή αυτής της επαφής;</string>
+  <string name="conversation_action_remove_this_message">Αυτό θα διαγράψει την επαφή και σίγουρα και το ιστορικό συνομιλίας.</string>
   <string name="conversation_action_copy_peer_number">Αντιγραφή αριθμού </string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
@@ -122,7 +156,14 @@
   <string name="conversation_action_go_to_call">Επιστροφή στην κλήση σε εξέλιξη</string>
   <string name="conversation_open_file_error">Δεν υπάρχει εγκατεστημένη εφαρμογή για το άνοιγμα αυτού του τύπου αρχείου</string>
   <string name="clip_contact_uri">Διεύθυνση επαφής</string>
+  <string name="block_contact_dialog_title">Μπλοκάρισμα %1$s;</string>
   <string name="conversation_contact_is_typing">Η επαφή πληκτρολογεί</string>
+  <string name="conversation_info_contact_you">Εσύ</string>
+  <string name="conversation_members">Μέλη</string>
+  <string name="conversation_syncing">Λήψη συνομιλίας από χρήστη</string>
+  <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
+  <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
+  <string name="conversation_type_contact">Επαφή Jami</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>
@@ -132,8 +173,15 @@
   <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
   <string name="prompt_hint_username">Όνομα χρήστη</string>
   <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
+  <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Jami.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
+  <string name="wizard_skip">Παράληψη</string>
+  <string name="hist_contact_invited">Η επαφή προσκλήθηκε</string>
+  <string name="hist_contact_added">Η επαφή προστέθηκε</string>
+  <string name="hist_contact_left">Η επαφή αποχώρησε</string>
+  <string name="hist_contact_banned">Η επαφή αποκλείστηκε</string>
+  <string name="hist_invitation_received">Η πρόσκληση παραλήφθηκε</string>
   <!--Account Summary-->
   <string name="profile">Προφίλ</string>
   <string name="profile_name">Όνομα προφίλ</string>
@@ -141,39 +189,67 @@
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
   <string name="profile_name_hint">Εισάγετε το όνομά σας</string>
+  <string name="registered_name">Καταχωρημένο Όνομα</string>
+  <string name="no_registered_name">Δεν καταχωρήθηκε όνομα</string>
   <string name="identity">Ταυτότητα</string>
   <string name="account">Λογαριασμός</string>
+  <string name="link_new_device">Σύνδεση νέας συσκευής</string>
+  <string name="devices">Συνδεδεμένες συσκευές</string>
+  <string name="total_devices">Σύνολο συσκευών:</string>
   <!--Share fragment-->
+  <string name="share_message">Σάρωσε αυτό τον κώδικα με το Jami</string>
   <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="share_label">Κοινοποίηση</string>
   <string name="generic_error_migration">Σφάλμα</string>
   <string name="generic_error_migration_message">Δημιουργήθηκε σφάλμα κατα την μετακίνηση</string>
+  <string name="title_share_with">Κοινοποίησε με...</string>
   <!--Pending contact requests-->
   <string name="accept">Αποδοχή</string>
   <string name="refuse">Άρνηση</string>
   <string name="block">Μπλοκάρισμα</string>
   <string name="contact_request_title">Νέο αίτημα επαφής</string>
+  <string name="contact_request_msg">Έχεις %1$d αιτήματα επαφών</string>
   <string name="contact_request_account">Για %1$s</string>
+  <string name="no_requests">Δεν έχεις αιτήματα επαφών</string>
+  <string name="message_contact_not_trusted">%s δεν είναι στις επαφές σου. Να καταχωρηθεί νέα επαφή;</string>
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
   <string name="send_request_title">Αποστολή αίτημα επαφής</string>
+  <string name="send_request_msg">Πρέπει να αποστείλεις αίτημα επαφής για να επικοινωνήσεις με αυτό το χρήστη. Για όσο διάστημα το αίτημα δεν γίνεται αποδεκτό, μπορείς να αποστέλλεις μηνύματα αλλά δεν θα μπορούν να απαντηθούν.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Μη μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->
   <string name="no_contact_request">Δεν έχουν αποσταλλέι αιτήματα επαφής</string>
+  <string name="conversation_placeholder">Δεν έχεις συνομιλίες ακόμη</string>
   <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
+  <string name="start_conversation">Έναρξη συνομιλίας</string>
   <string name="search_results">Αποτελέσματα αναζήτησης</string>
   <string name="tv_contact_row_header">Επαφές</string>
+  <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>
+  <string name="gallery_error_message">Δεν βρέθηκε εφαρμογή σε αυτή τη συσκευή για άνοιγμα της Συλλογής</string>
   <string name="generic_error">Προέκυψε ένα άγνωστο σφάλμα</string>
   <!--File Transfer-->
   <string name="invalid_file">Μη έγκυρο αρχείο</string>
+  <string name="not_able_to_write_file">Μη δυνατή η εγγραφή αρχείου</string>
   <string name="file_transfer_status_created">Αρχικοποίηση μεταφοράς</string>
   <string name="file_transfer_status_unsupported">Δεν υποστηρίζεται</string>
+  <string name="file_transfer_status_wait_peer_acceptance">αναμονή αποδοχής χρήστη</string>
+  <string name="file_transfer_status_wait_host_acceptance">αναμονή αποδοχής διακομιστή</string>
   <string name="file_transfer_status_ongoing">σε εξέλιξη</string>
   <string name="file_transfer_status_finished">ολοκληρώθηκε</string>
+  <string name="file_transfer_status_closed_by_host">τερματισμός από διακομιστή</string>
+  <string name="file_transfer_status_closed_by_peer">διακοπή από χρήστη</string>
+  <string name="file_transfer_status_invalid_pathname">μη έγκυρο όνομα διαδρομής</string>
+  <string name="file_transfer_status_unjoinable_peer">ασύνδετος χρήστης</string>
   <string name="file_transfer_status_cancelled">ακυρώθηκε</string>
   <string name="file_transfer_status_error">αποτυχία λόγω σφάλματος</string>
+  <string name="file_transfer_status_timed_out">έληξε</string>
+  <string name="file_saved_in">Το αρχείο αποθηκεύτηκε σε %s</string>
   <string name="file_saved_successfully">Το αρχείο αποθηκεύτηκε επιτυχώς</string>
+  <string name="file_download">Λήψη</string>
+  <string name="no_space_left_on_device">Δεν υπάρχει χώρος στη συσκευή</string>
+  <string name="title_media_viewer">Προβολέας πολυμέσων</string>
   <string name="menu_file_open">Άνοιγμα αρχείου</string>
   <string name="menu_file_download">Λήψη αρχείου</string>
   <string name="menu_file_save">Αποθήκευση αρχείου</string>
@@ -182,11 +258,15 @@
   <string name="menu_message_copy">Αντιγραφή</string>
   <string name="menu_message_delete">Διαγραφή μηνύματος</string>
   <string name="menu_message_cancel">Ακύρωση μηνύματος</string>
+  <string name="menu_message_reply">Απάντηση</string>
   <string name="menu_delete">Διαγραφή</string>
+  <string name="pref_darkTheme_title">Σκούρο θέμα</string>
+  <string name="pref_darkTheme_summary">Κράτησε πάντα ενεργοποιημένο το σκούρο θέμα αντί αυτό του συστήματος</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Συνομιλίες</string>
   <string name="navigation_item_contact_request">Αιτήματα επαφών</string>
   <string name="navigation_item_account">Λογαριασμός</string>
+  <string name="search_results_public_directory">Δημόσιος κατάλογος</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Αποστολή ηχητικού μηνύματος;</string>
   <string name="tv_send_image_dialog_message">Αποστολή της εικόνας;</string>
@@ -199,6 +279,7 @@
   <string name="tv_send_text">Αποστολή κειμένου</string>
   <string name="tv_send_audio">Αποστολή ήχου</string>
   <string name="tv_send_video">Αποστολή Πολυμέσων</string>
+  <string name="tv_action_more">Περισσότερα</string>
   <string name="conversation_input_speech_hint">Πείτε κάτι...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Προτεινόμενα</string>
@@ -206,17 +287,24 @@
   <string name="wizard_status_required">Υποχρεωτικό</string>
   <string name="wizard_username_info">Επιλέξτε ένα όνομα χρήστη για τον λογαριασμό σας</string>
   <string name="wizard_username_button">Επιλογή Ονόματος Χρήστη</string>
+  <string name="wizard_username_skip">Παράληψη επιλογής Ονόματος Χρήστη</string>
   <string name="wizard_password_info">Κωδικός λογαριασμού</string>
   <string name="wizard_password_placeholder">Επιλέξτε έναν κωδικό για την κρυπτογράφηση του κλειδιού του λογαριασμού για αυτή την συσκευή</string>
   <string name="wizard_password_button">Επιλογή κωδικού</string>
   <string name="wizard_password_skip">Δημιουργία λογαριασμού</string>
   <string name="wizard_password_switch">Κρυπτογράφηση λογαριασμού με κωδικό</string>
+  <string name="wizard_password_warning">Σημειώστε ότι ο κωδικός δεν μπορεί να ανακτηθεί</string>
   <string name="wizard_profile_info">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="wizard_profile_button">Αποθήκευση προφίλ</string>
+  <string name="wizard_profile_skip">Παράλειψε και εκτέλεσε το αργότερα</string>
   <string name="fab_path_choose">Επιλογή άλλου αρχείου</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
+  <string name="bottomSheet_dialpad_btn">Πληκτρολόγιο κλήσης</string>
+  <string name="bottomSheet_add_participants_btn">Προσθήκη</string>
+  <string name="bottomSheet_change_camera_btn">Αλλαγή</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
   <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
+  <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
 </resources>

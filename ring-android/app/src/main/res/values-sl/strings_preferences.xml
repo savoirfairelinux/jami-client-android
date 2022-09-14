@@ -7,7 +7,7 @@
   <string name="pref_category_privacy">Zasebnost</string>
   <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_mobileData_title">Mobilni podatki</string>
-  <string name="pref_mobileData_summary">Dovoli da Jami poleg Wifi uporablja tudi omrežja 3G/LTE</string>
+  <string name="pref_mobileData_summary">Dovoli, da Jami poleg Wifi uporablja tudi omrežja 3G/LTE</string>
   <string name="pref_pushNotifications_title">Potisna sporočila</string>
   <string name="pref_pushNotifications_summary">Uporabi strežnike Google za sprejemanje klicev/sporočil v ozadju</string>
   <string name="pref_video_advanced_title">Napredne nastavitve videa</string>
@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Ali želite odstraniti vtičnik?</string>
   <string name="plugin_reset_preferences">Ponastavi nastavitve vtičnika</string>
   <string name="plugin_reset_preferences_summary">Nastavitve vašega vtičnika bodo ponastavljene</string>
-  <string name="plugin_reset_preferences_ask">Ali bi radi ponastavili nastavitve vtičnika?</string>
   <string name="plugin_successfully_installed">Vtičnik <b>%1$s</b> je bil uspešno nameščen</string>
   <string name="plugin_install_failure">Namestiev vtičnika ni uspela: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Nameščeno imate novejšo različico <b>%1$s</b></string>

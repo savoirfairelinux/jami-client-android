@@ -106,8 +106,6 @@
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
-  <string name="hist_contact_added">Spojení přidáno</string>
-  <string name="hist_invitation_received">Pozvání přijato</string>
   <string name="ab_action_audio_call">Audio hovor</string>
   <string name="ab_action_video_call">Video hovor</string>
   <string name="ab_action_change_screen_orientation">Změnit natočení obrazovky</string>
@@ -190,6 +188,8 @@
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
   <string name="wizard_skip">Přeskočit</string>
+  <string name="hist_contact_added">Spojení přidáno</string>
+  <string name="hist_invitation_received">Pozvání přijato</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Název profilu</string>
@@ -263,6 +263,7 @@
   <string name="menu_message_copy">Zkopírovat</string>
   <string name="menu_message_delete">Smazat zprávu</string>
   <string name="menu_message_cancel">Zrušit zprávu</string>
+  <string name="menu_message_reply">Odpovědět</string>
   <string name="menu_delete">Odstranit</string>
   <string name="pref_darkTheme_title">Tmavý motiv</string>
   <string name="pref_darkTheme_summary">Vždy povolit tmavý motiv namísto použití systémového nastavení</string>
@@ -309,4 +310,6 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Ukončit hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
+  <string name="uninstall">Odinstalovat</string>
+  <string name="reset">Resetovat</string>
 </resources>

@@ -98,7 +98,7 @@
   <string name="ongoing_call">Aktivni klic</string>
   <string name="hist_in_call">Dohodni klic od %1$s</string>
   <string name="hist_out_call">Odhodni klic do %1$s</string>
-  <string name="start_error_title">Ne morem zagnati Jami-ja!</string>
+  <string name="start_error_title">Jami ni možno zagnati!</string>
   <string name="start_error_mic_required">Jami za delovanje potrebuje dovoljenje za uporabo mikrofona.</string>
   <string name="action_call_accept">Prevzemi klic</string>
   <string name="action_call_accept_audio">Odgovori z zvokom</string>
@@ -112,11 +112,6 @@
   <string name="ab_action_speakerphone">Vklopi zvočnik</string>
   <string name="ab_action_contact_add">Dodaj med stike</string>
   <string name="ab_action_contact_add_question">Dodam med stike?</string>
-  <string name="hist_contact_invited">Stik povabljen</string>
-  <string name="hist_contact_added">Stik je dodan</string>
-  <string name="hist_contact_left">Stik je odšel</string>
-  <string name="hist_contact_banned">Stik prepovedan</string>
-  <string name="hist_invitation_received">Povabilo je sprejeto</string>
   <string name="ab_action_audio_call">Zvočni klic</string>
   <string name="ab_action_video_call">Video klic</string>
   <string name="ab_action_change_screen_orientation">Zammenjaj orientacijo zaslona</string>
@@ -201,13 +196,18 @@
   <string name="account_create_title">Ustvari račun Jami</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
   <string name="prompt_hint_username">Uporabniško ime</string>
-  <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj Jami račun.</string>
+  <string name="help_password_choose">Izberite močno geslo, ki si ga boste zapomnili in z njim zaščitili svoj račun Jami.</string>
   <string name="help_password_enter">Vnesite glavno geslo svojega Jami računa.</string>
   <string name="help_server_enter">Vnesite URL upravljalnega stržnika.</string>
-  <string name="help_pin_enter">Vnesite PIN z drugega nastavljenega Jami računa. Uporabite \"izvozi Jami račun\", da pridobite PIN.</string>
+  <string name="help_pin_enter">Vnesite PIN z drugega nastavljenega računa Jami. Uporabite \"izvozi račun Jami\", da pridobite PIN.</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
   <string name="wizard_skip">Preskoči</string>
+  <string name="hist_contact_invited">Stik povabljen</string>
+  <string name="hist_contact_added">Stik je dodan</string>
+  <string name="hist_contact_left">Stik je odšel</string>
+  <string name="hist_contact_banned">Stik prepovedan</string>
+  <string name="hist_invitation_received">Povabilo je sprejeto</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
@@ -285,6 +285,7 @@
   <string name="menu_message_copy">Kopiraj</string>
   <string name="menu_message_delete">Izbriši sporočilo</string>
   <string name="menu_message_cancel">Prekini sporočilo</string>
+  <string name="menu_message_reply">Odgovori</string>
   <string name="menu_delete">Pobriši</string>
   <string name="pref_darkTheme_title">Temna tema</string>
   <string name="pref_darkTheme_summary">Vedno vklopi temno temo, namesto sistemskih nastavitev</string>
@@ -336,4 +337,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvoki</string>
   <string name="bottomSheet_raiseHand_btn">Dvignite roko</string>
+  <string name="uninstall">Odstrani</string>
+  <string name="reset">Ponastavi</string>
 </resources>

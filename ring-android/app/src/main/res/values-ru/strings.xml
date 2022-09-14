@@ -112,11 +112,6 @@
   <string name="ab_action_speakerphone">Включить динамик</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
   <string name="ab_action_contact_add_question">Добавить в контакты?</string>
-  <string name="hist_contact_invited">Контакт приглашён</string>
-  <string name="hist_contact_added">Контакт добавлен</string>
-  <string name="hist_contact_left">Контакт вышел</string>
-  <string name="hist_contact_banned">Контакт запрещён</string>
-  <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Голосовой звонок</string>
   <string name="ab_action_video_call">Видео звонок</string>
   <string name="ab_action_change_screen_orientation">Изменить поворот экрана</string>
@@ -144,7 +139,7 @@
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Ошибка</string>
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
-  <string name="ringtone_error_size_too_big">Этот файл слишком большой. Максимальный размер — %1$dКб.</string>
+  <string name="ringtone_error_size_too_big">Этот файл слишком большой. Максимальный размер %1$d Кб.</string>
   <string name="ringtone_custom_prompt">Установить свою мелодию</string>
   <string name="ringtone_custom_label">Настраиваемый</string>
   <string name="ringtone_jami_tones">Тоны Jami </string>
@@ -153,7 +148,7 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami требуется разрешение «Запись в журнал звонков», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Считайте QR-код аккаунта, который хотите добавить.</string>
+  <string name="scan_qr_account_message">Сканируйте QR-код аккаунта, который хотите добавить.</string>
   <string name="title_activity_qrcode">Поделиться своим контактом</string>
   <string name="error_scan_no_camera_permissions">Для считывания QR-кода требуется разрешение на использование камеры</string>
   <string name="tab_code">Мой QR-код</string>
@@ -202,12 +197,17 @@
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надёжный и запоминающийся пароль для защиты вашей учетной записи Jami.</string>
-  <string name="help_password_enter">Введите основной пароль учетной записи Jami.</string>
+  <string name="help_password_enter">Введите основной пароль учётной записи Jami.</string>
   <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN другого аккаунта Jami. Используйте функцию «экспортировать аккаунт в Jami» для получения PIN.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
+  <string name="hist_contact_invited">Контакт приглашён</string>
+  <string name="hist_contact_added">Контакт добавлен</string>
+  <string name="hist_contact_left">Контакт вышел</string>
+  <string name="hist_contact_banned">Контакт запрещён</string>
+  <string name="hist_invitation_received">Получено приглашение</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
@@ -235,7 +235,7 @@
   <string name="refuse">Отклонить</string>
   <string name="block">Заблокировать</string>
   <string name="contact_request_title">Новый запрос на добавление в контакты</string>
-  <string name="contact_request_msg">У вас %1$dзапросов на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$d запросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">Нет запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%s еще не в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
@@ -285,6 +285,7 @@
   <string name="menu_message_copy">Копировать</string>
   <string name="menu_message_delete">Удалить сообщение</string>
   <string name="menu_message_cancel">Отменить передачу сообщения</string>
+  <string name="menu_message_reply">Ответить</string>
   <string name="menu_delete">Удалить</string>
   <string name="pref_darkTheme_title">Темная тема</string>
   <string name="pref_darkTheme_summary">Всегда использовать темную тему независимо от системных параметров</string>
@@ -336,4 +337,6 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="uninstall">Удалить</string>
+  <string name="reset">Сброс</string>
 </resources>

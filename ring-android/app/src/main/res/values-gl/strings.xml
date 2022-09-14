@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Activar altofalante</string>
   <string name="ab_action_contact_add">Engadir a contactos</string>
   <string name="ab_action_contact_add_question">Engadir a contactos?</string>
-  <string name="hist_contact_invited">Contacto convidado</string>
-  <string name="hist_contact_added">Contacto engadido</string>
-  <string name="hist_contact_left">Contacto desbotado</string>
-  <string name="hist_contact_banned">Contacto vetado</string>
-  <string name="hist_invitation_received">Convite recibido</string>
   <string name="ab_action_audio_call">Chamada de audio</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
   <string name="ab_action_change_screen_orientation">Cambiar orientación da pantalla</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Seguinte</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Saltar</string>
+  <string name="hist_contact_invited">Contacto convidado</string>
+  <string name="hist_contact_added">Contacto engadido</string>
+  <string name="hist_contact_left">Contacto desbotado</string>
+  <string name="hist_contact_banned">Contacto vetado</string>
+  <string name="hist_invitation_received">Convite recibido</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_delete">Eliminar mensaxe</string>
   <string name="menu_message_cancel">Cancelar mensaxe</string>
+  <string name="menu_message_reply">Responder</string>
   <string name="menu_delete">Eliminar</string>
   <string name="pref_darkTheme_title">Decorado escuro</string>
   <string name="pref_darkTheme_summary">Activar sempre o decorado escuro no lugar de utilizar preferencias do sistema</string>

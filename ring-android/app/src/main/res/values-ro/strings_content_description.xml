@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Apel Rapid</string>
+  <string name="contact_picture_description">Poza contactului</string>
+  <string name="dial_numeric_pad">Tastatură numerică</string>
+  <string name="contact_unblock">Deblochează</string>
+  <string name="video_plugins">Extensii Video</string>
+</resources>

@@ -98,6 +98,10 @@
   <string name="start_error_title">Jamiを開始できません</string>
   <string name="start_error_mic_required">Jamiはマイク使用の権限を必要とします</string>
   <string name="action_call_accept">電話を取る</string>
+  <string name="action_call_accept_audio">音声のみで応答</string>
+  <string name="action_call_accept_video">ビデオで応答</string>
+  <string name="action_call_hold_accept">いまの通話を保持して電話に出る</string>
+  <string name="action_call_hold_accept_video">いまの通話を保持してビデオ電話に出る</string>
   <string name="action_call_end_accept">いまの通話を終了して電話に出る</string>
   <string name="action_call_decline">辞退</string>
   <string name="action_call_mic_mute">マイクをミュート</string>
@@ -105,8 +109,6 @@
   <string name="ab_action_speakerphone">スピーカーを有効にする</string>
   <string name="ab_action_contact_add">連絡先に追加</string>
   <string name="ab_action_contact_add_question">連絡先を追加しますか？</string>
-  <string name="hist_contact_added">連絡先を追加しました</string>
-  <string name="hist_invitation_received">招待を受信しました</string>
   <string name="ab_action_audio_call">音声通話</string>
   <string name="ab_action_video_call">ビデオ通話</string>
   <string name="ab_action_change_screen_orientation">画面の向きを変更</string>
@@ -152,6 +154,7 @@
   <string name="clear_history_dialog_title">履歴を消去しますか？</string>
   <string name="clear_history_dialog_message">この操作は元に戻せません。</string>
   <string name="clear_history_completed">履歴を消去しました。</string>
+  <string name="clear_history">クリア</string>
   <!--Conversation-->
   <string name="conversation_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
@@ -176,6 +179,7 @@
   <string name="conversation_contact_is_typing">相手が入力中…</string>
   <string name="conversation_info_contact_you">自分</string>
   <string name="conversation_members">要員</string>
+  <string name="conversation_syncing">ピア接続先から会話をダウンロードしています</string>
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
@@ -196,6 +200,9 @@
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
+  <string name="hist_contact_invited">招待された連絡先</string>
+  <string name="hist_contact_added">連絡先を追加しました</string>
+  <string name="hist_invitation_received">招待を受信しました</string>
   <!--Account Summary-->
   <string name="profile">プロフィール</string>
   <string name="profile_name">プロファイル名</string>
@@ -223,6 +230,7 @@
   <string name="refuse">拒否</string>
   <string name="block">ブロック</string>
   <string name="contact_request_title">新しい連絡先リクエスト</string>
+  <string name="contact_request_msg">連絡先のリクエストが%1$d件あります</string>
   <string name="contact_request_account">%1$s に</string>
   <string name="no_requests">連絡先リクエストはありません</string>
   <string name="message_contact_not_trusted_yet">%s さんはあなたの連絡先に追加されていません。
@@ -274,6 +282,7 @@
   <string name="menu_message_copy">コピー</string>
   <string name="menu_message_delete">メッセージを削除</string>
   <string name="menu_message_cancel">メッセージをキャンセル</string>
+  <string name="menu_message_reply">返信</string>
   <string name="menu_delete">削除</string>
   <string name="pref_darkTheme_title">ダークテーマ</string>
   <string name="pref_darkTheme_summary">システムの設定を使用するのではなく、常にダークテーマを有効にします</string>
@@ -315,9 +324,13 @@
   <string name="chat_plugins">チャットの追加機能</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">共有</string>
+  <string name="bottomSheet_dialpad_btn">ダイヤルパッド</string>
   <string name="bottomSheet_plugins_btn">拡張機能</string>
   <string name="bottomSheet_add_participants_btn">追加</string>
+  <string name="bottomSheet_change_camera_btn">カメラ切替</string>
   <string name="bottomSheet_camera_onoff_switch_btn">カメラ</string>
   <string name="bottomSheet_hangup_btn">通話を終了</string>
+  <string name="bottomSheet_mute_microphone_btn">マイク</string>
+  <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
 </resources>

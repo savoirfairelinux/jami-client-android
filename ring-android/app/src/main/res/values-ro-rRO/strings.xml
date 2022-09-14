@@ -16,15 +16,15 @@
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
   <string name="credits">Merite</string>
   <string name="pip_title">Conferința Jami</string>
-  <string name="call_service_description">Acest serviciu este necesar pentru a vă menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
+  <string name="call_service_description">Acest serviciu este necesar pentru a menține apelurile în prim-plan. Funcționează numai în timpul apelurilor.</string>
   <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
   <string name="developed_by">Creat de</string>
   <string name="designed_by">Proiectat de</string>
   <string name="ringtones_by">Sonerii de</string>
   <!--RingActivity-->
-  <string name="error_no_network">Nicio legătură la rețea</string>
-  <string name="error_account_offline">Contul e deconectat</string>
+  <string name="error_no_network">Nu există conectare la rețea</string>
+  <string name="error_account_offline">Contul este deconectat</string>
   <string name="error_mobile_network_available_but_disabled">Te rugăm să permiți accesul la rețeaua de telefonie în Reglări.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mesaje text</string>
@@ -42,9 +42,9 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="one">%d Conversation</item>
+    <item quantity="one">%d Conversație</item>
     <item quantity="few">%d Conversații</item>
-    <item quantity="other">%d Conversații</item>
+    <item quantity="other">%d de conversații</item>
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Caută nume sau număr de telefon...</string>
@@ -79,14 +79,14 @@
   <string name="notif_outgoing_file_transfer_title">Se trimite fișierul către %1$s</string>
   <string name="notif_incoming_picture">Fotografie de la %1$s</string>
   <string name="notif_sync_title">Se sincronizează datele...</string>
-  <string name="notif_location_title">Distribuirea poziției către %1$s</string>
+  <string name="notif_location_title">Se distribuie poziția către %1$s</string>
   <string name="location_share_contact">%1$s îți trimite poziția</string>
-  <string name="notif_location_multi_title">Distribuirea poziției către %1$d contacte</string>
+  <string name="notif_location_multi_title">Se distribuie poziția către %1$d contacte</string>
   <string name="notif_location_remaining">%1$d minute rămase</string>
   <string name="notif_location_action_stop">Oprește distribuirea poziției</string>
   <string name="location_share_action_start">Pornește distribuirea</string>
   <string name="location_share_action_stop">Oprește distribuirea</string>
-  <string name="location_share_about_title">Detalii despre Hartă</string>
+  <string name="location_share_about_title">Detalii pe hartă</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>
@@ -108,14 +108,9 @@
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
   <string name="action_load_plugin">Pornește Extensia</string>
-  <string name="ab_action_speakerphone">Activează sonorul</string>
+  <string name="ab_action_speakerphone">Activează difuzorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
-  <string name="hist_contact_invited">Contact invitat</string>
-  <string name="hist_contact_added">Contact adăugat</string>
-  <string name="hist_contact_left">Contact ignorat</string>
-  <string name="hist_contact_banned">Contact blocat</string>
-  <string name="hist_invitation_received">Invitație primită</string>
   <string name="ab_action_audio_call">Apel vocal</string>
   <string name="ab_action_video_call">Apel video</string>
   <string name="ab_action_change_screen_orientation">Rotește ecranul</string>
@@ -123,7 +118,7 @@
   <string name="write_a_message">Scrie un mesaj</string>
   <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
-  <string name="ab_action_flipcamera">Schimbă fotocamera</string>
+  <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <string name="remote_recording">%s înregistrează…</string>
   <!--Text messages-->
@@ -142,8 +137,8 @@
   <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la fotocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Eroare</string>
-  <string name="ringtone_error_format_not_supported">Acest format nu este suportat.</string>
-  <string name="ringtone_error_size_too_big">Fișierul este prea mare. Dimensiunea maximă este de %1$dkB.</string>
+  <string name="ringtone_error_format_not_supported">Acest format nu este acceptat.</string>
+  <string name="ringtone_error_size_too_big">Fișierul este prea mare. Dimensiunea maximă este de %1$dkO.</string>
   <string name="ringtone_custom_prompt">Alege o sonerie personalizată</string>
   <string name="ringtone_custom_label">Personalizată</string>
   <string name="ringtone_jami_tones">Sonerii Jami</string>
@@ -177,11 +172,11 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în notițe</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
-  <string name="conversation_action_go_to_call">Întoarce-te la apelul în curs</string>
+  <string name="conversation_action_go_to_call">Revino la apelul în curs</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
   <string name="block_contact_dialog_title">Blochezi %1$s?</string>
-  <string name="block_contact_dialog_message">%1$s nu te va putea contacta cît timp va fi blocat.</string>
+  <string name="block_contact_dialog_message">%1$s nu te va putea contacta cât timp va fi blocat.</string>
   <string name="block_contact_completed">%1$s a fost blocat.</string>
   <string name="conversation_contact_is_typing">Contactul tău scrie...</string>
   <string name="conversation_info_contact_you">Tu</string>
@@ -207,6 +202,11 @@
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
+  <string name="hist_contact_invited">Contact invitat</string>
+  <string name="hist_contact_added">Contact adăugat</string>
+  <string name="hist_contact_left">Contact ignorat</string>
+  <string name="hist_contact_banned">Contact blocat</string>
+  <string name="hist_invitation_received">Invitație primită</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Numele profilului</string>
@@ -223,8 +223,8 @@
   <string name="total_devices">Toate aparatele: </string>
   <!--Share fragment-->
   <string name="share_message">Scanează acest cod cu Jami</string>
-  <string name="share_message_no_account">Alege un cont pentru distribuire.</string>
-  <string name="share_your_account_information">Distribuie detaliile mele de contact</string>
+  <string name="share_message_no_account">Alege un cont de distribuit.</string>
+  <string name="share_your_account_information">Distribuie datele mele de contact</string>
   <string name="share_label">Distribuie</string>
   <string name="generic_error_migration">Eroare</string>
   <string name="generic_error_migration_message">A apărut o eroare în timpul transferului</string>
@@ -242,7 +242,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Trimite</string>
   <string name="send_request_title">Trimite o cerere de contact</string>
-  <string name="send_request_msg">Trebuie să trimiți o cerere de contact pentru a comunica cu acest utilizator. Atîta timp cît contactul tău nu a acceptat cererea, poți trimite mesaje, dar acesta nu va putea răspunde.</string>
+  <string name="send_request_msg">Trebuie să trimiți o cerere de contact pentru a comunica cu acest utilizator. Atâta timp cât contactul tău nu a acceptat cererea, poți trimite mesaje, dar acesta nu va putea răspunde.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Niciun contact blocat</string>
   <!--Smartlist-->
@@ -258,7 +258,7 @@
   <!--File Transfer-->
   <string name="invalid_file">Fișier greșit</string>
   <string name="not_able_to_write_file">Fișierul nu poate fi scris</string>
-  <string name="file_transfer_status_created">Inițializarea transferului</string>
+  <string name="file_transfer_status_created">se inițializează transferul</string>
   <string name="file_transfer_status_unsupported">neacceptat</string>
   <string name="file_transfer_status_wait_peer_acceptance">Se așteaptă acceptarea</string>
   <string name="file_transfer_status_wait_host_acceptance">Se așteaptă acceptarea</string>
@@ -266,7 +266,7 @@
   <string name="file_transfer_status_finished">terminat</string>
   <string name="file_transfer_status_closed_by_host">închis de aparat</string>
   <string name="file_transfer_status_closed_by_peer">închis de interlocutor</string>
-  <string name="file_transfer_status_invalid_pathname">parcurs greșit</string>
+  <string name="file_transfer_status_invalid_pathname">cale greșită</string>
   <string name="file_transfer_status_unjoinable_peer">utilizator inaccesibil</string>
   <string name="file_transfer_status_cancelled">anulat</string>
   <string name="file_transfer_status_error">nereușit din cauza unei erori</string>
@@ -284,6 +284,7 @@
   <string name="menu_message_copy">Copiază</string>
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
+  <string name="menu_message_reply">Răspunde</string>
   <string name="menu_delete">Șterge</string>
   <string name="pref_darkTheme_title">Fond negru</string>
   <string name="pref_darkTheme_summary">Activează mereu fondul negru în loc să folosești fondul sistemului</string>
@@ -320,8 +321,8 @@
   <string name="wizard_password_switch">Cifrează contul cu o parolă</string>
   <string name="wizard_password_warning">Reține că parola nu poate fi recuperată</string>
   <string name="wizard_profile_info">Profilul este distribuit doar contactelor</string>
-  <string name="wizard_profile_button">Salvează Profilul</string>
-  <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
+  <string name="wizard_profile_button">Salvează profilul</string>
+  <string name="wizard_profile_skip">Saltă și fă asta mai târziu</string>
   <string name="fab_path_choose">Alege alt fișier</string>
   <string name="chat_plugins">Extensii pentru Discuții</string>
   <!--Bottom sheet-->
@@ -330,9 +331,11 @@
   <string name="bottomSheet_plugins_btn">Extensii</string>
   <string name="bottomSheet_add_participants_btn">Adaugă</string>
   <string name="bottomSheet_change_camera_btn">Schimbă</string>
-  <string name="bottomSheet_camera_onoff_switch_btn">Fotocamera</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
   <string name="bottomSheet_hangup_btn">Închide apelul</string>
   <string name="bottomSheet_mute_microphone_btn">Microfon</string>
   <string name="bottomSheet_sound_output_btn">Sunet</string>
-  <string name="bottomSheet_raiseHand_btn">RidicăMîna</string>
+  <string name="bottomSheet_raiseHand_btn">Mâna sus</string>
+  <string name="uninstall">Dezinstalează</string>
+  <string name="reset">Restabilește</string>
 </resources>

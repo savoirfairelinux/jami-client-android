@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Poista lisäosa ?</string>
   <string name="plugin_reset_preferences">Nollaa lisäosan asetukset</string>
   <string name="plugin_reset_preferences_summary">Lisäosasi asetukset palautetaan oletukseksi</string>
-  <string name="plugin_reset_preferences_ask">Haluatko palauttaa lisäosan asetukset?</string>
   <string name="plugin_successfully_installed">Lisäosa <b>%1$s</b> asennettu onnistuneesti</string>
   <string name="plugin_install_failure">Lisäosan asennus epäonnistui: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Sinulla on uudempi versio: <b>%1$s</b></string>

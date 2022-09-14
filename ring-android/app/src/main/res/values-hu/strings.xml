@@ -13,7 +13,7 @@
   <string name="email_chooser_title">Levél küldése a következővel…</string>
   <string name="website_chooser_title">Honlap megtekintése a következővel…</string>
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a <u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
-  <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
+  <string name="description">A Jami egy ingyenes szoftver általános kommunikációs célokra, mely tiszteletben tartja a felhasználói szabadságát és magánéletét.</string>
   <string name="credits">Készítők</string>
   <string name="pip_title">Jami-konferencia</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
@@ -23,7 +23,7 @@
   <string name="designed_by">Tervezők</string>
   <string name="ringtones_by">Csengőhangok:</string>
   <!--RingActivity-->
-  <string name="error_no_network">Nincs hálózati csatlakozás</string>
+  <string name="error_no_network">Nincs hálózati kapcsolat</string>
   <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
   <string name="error_mobile_network_available_but_disabled">Engedélyezze a mobilhálózat-elérést a beállítások képernyőn.</string>
   <!--AB menus-->
@@ -47,7 +47,7 @@
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Név vagy telefonszám keresése…</string>
-  <string name="choose_number">Válasszon egy számot</string>
+  <string name="choose_number">Szám kiválasztása</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
-  <string name="hist_contact_invited">Kapcsolat meghívva</string>
-  <string name="hist_contact_added">Kapcsolat hozzáadva</string>
-  <string name="hist_contact_left">Kapcsolat kilépett</string>
-  <string name="hist_contact_banned">Kapcsolat letiltva</string>
-  <string name="hist_invitation_received">Meghívás megérkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
   <string name="ab_action_video_call">Videohívás</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának megváltoztatása</string>
@@ -189,7 +184,7 @@
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>
-  <string name="conversation_type_private">Privát rajcsoport</string>
+  <string name="conversation_type_private">Személyes rajcsoport</string>
   <string name="conversation_type_group">Rajcsoport</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
+  <string name="hist_contact_invited">Kapcsolat meghívva</string>
+  <string name="hist_contact_added">Kapcsolat hozzáadva</string>
+  <string name="hist_contact_left">Kapcsolat kilépett</string>
+  <string name="hist_contact_banned">Kapcsolat letiltva</string>
+  <string name="hist_invitation_received">Meghívás megérkezett</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnév</string>
@@ -279,10 +279,11 @@
   <string name="menu_file_download">Fájl letöltése</string>
   <string name="menu_file_save">Fájl mentése</string>
   <string name="menu_file_delete">Fájl törlése</string>
-  <string name="menu_file_share">Fájl megosztása</string>
+  <string name="menu_file_share">Fájlmegosztás</string>
   <string name="menu_message_copy">Másolás</string>
   <string name="menu_message_delete">Üzenet törlése</string>
   <string name="menu_message_cancel">Üzenet érvénytelenítése</string>
+  <string name="menu_message_reply">Válasz</string>
   <string name="menu_delete">Törlés</string>
   <string name="pref_darkTheme_title">Sötét téma</string>
   <string name="pref_darkTheme_summary">A rendszer viselkedése helyett mindig engedélyezze a sötét témát</string>
@@ -334,4 +335,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Hangok</string>
   <string name="bottomSheet_raiseHand_btn">Kéz felemelése</string>
+  <string name="uninstall">Eltávolítás</string>
+  <string name="reset">Visszaállítás</string>
 </resources>

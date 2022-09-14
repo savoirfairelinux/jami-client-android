@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Napredna podešavanja</string>
   <string name="ic_blacklist_menu">Blokirani kontakti</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Dodaj Jami nalog</string>
   <string name="add_sip_account_title">Dodaj SIP nalog</string>
   <string name="ring_account_default_name">Jami naloga %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -63,6 +62,8 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_rendezvous_summary">U režimu sastanka, dolazni pozivi će se dodavati u konferencijsku sobu.</string>
   <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Dodaci</string>
   <!--Audio Details-->
   <string name="account_audio_label">Аудио</string>
   <string name="account_preferences_media_tab">Medija</string>

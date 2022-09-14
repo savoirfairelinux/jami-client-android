@@ -47,7 +47,6 @@
   <string name="plugin_uninstall_title">Plugin deïnstalleren ?</string>
   <string name="plugin_reset_preferences">Plugin voorkeuren terugzetten</string>
   <string name="plugin_reset_preferences_summary">Uw plugin instellingen zullen worden teruggezet naar de standaard waarden</string>
-  <string name="plugin_reset_preferences_ask">Wilt u de standaard plugin instellingen terugzetten?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> succesvol geïnstalleerd</string>
   <string name="plugin_install_failure">Plugin installatie heeft gefaald: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">U heeft een recentere versie van: <b>%1$s</b></string>

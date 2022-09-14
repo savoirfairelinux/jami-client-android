@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
-  <string name="hist_contact_invited">Kontakti u ftua</string>
-  <string name="hist_contact_added">Kontakti u shtua</string>
-  <string name="hist_contact_left">Kontakti iku</string>
-  <string name="hist_contact_banned">Kontakt i dëbuar</string>
-  <string name="hist_invitation_received">Ftesa u mor</string>
   <string name="ab_action_audio_call">Thirrje audio</string>
   <string name="ab_action_video_call">Thirrje video</string>
   <string name="ab_action_change_screen_orientation">Ndryshoni drejtim ekrani</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
+  <string name="hist_contact_invited">Kontakti u ftua</string>
+  <string name="hist_contact_added">Kontakti u shtua</string>
+  <string name="hist_contact_left">Kontakti iku</string>
+  <string name="hist_contact_banned">Kontakt i dëbuar</string>
+  <string name="hist_invitation_received">Ftesa u mor</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Emër Profili</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Kopjoje</string>
   <string name="menu_message_delete">Fshije mesazhin</string>
   <string name="menu_message_cancel">Anuloje mesazhin</string>
+  <string name="menu_message_reply">Përgjigjuni</string>
   <string name="menu_delete">Fshije</string>
   <string name="pref_darkTheme_title">Temë e errët</string>
   <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>
@@ -334,4 +335,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
+  <string name="uninstall">Çinstaloje</string>
+  <string name="reset">Riktheji te parazgjedhjet</string>
 </resources>

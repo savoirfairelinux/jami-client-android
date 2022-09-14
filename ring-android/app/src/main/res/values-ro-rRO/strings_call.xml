@@ -25,8 +25,8 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_camera_no_microphone">Apel anulat. Nu a fost găsită nicio fotocameră sau microfon.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Căutare</string>
-    <string name="call_human_state_incoming">Sosește</string>
+    <string name="call_human_state_searching">Se caută</string>
+    <string name="call_human_state_incoming">Se primește</string>
     <string name="call_human_state_connecting">Se conectează</string>
     <string name="call_human_state_ringing">Sună</string>
     <string name="call_human_state_current">În convorbire</string>
@@ -39,6 +39,6 @@ along with this program; if not, write to the Free Software
     <!-- Conferences -->
     <string name="call_moderator">Moderator</string>
     <string name="call_muted">Oprit</string>
-    <string name="call_handRaised">Mînă ridicată</string>
+    <string name="call_handRaised">Mână ridicată</string>
 
 </resources>

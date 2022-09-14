@@ -96,8 +96,6 @@
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
   <string name="ab_action_contact_add_question">Afegir als contactes?</string>
-  <string name="hist_contact_added">Contacte afegit</string>
-  <string name="hist_invitation_received">S\'ha rebut una invitació</string>
   <string name="ab_action_audio_call">Trucada de veu</string>
   <string name="ab_action_video_call">Videotrucada </string>
   <string name="ab_action_change_screen_orientation">Canvia l\'orientació de la pantalla</string>
@@ -176,6 +174,8 @@
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <string name="wizard_skip">Salta</string>
+  <string name="hist_contact_added">Contacte afegit</string>
+  <string name="hist_invitation_received">S\'ha rebut una invitació</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
@@ -241,6 +241,7 @@
   <string name="menu_message_copy">Copia</string>
   <string name="menu_message_delete">Esborra missatge</string>
   <string name="menu_message_cancel">Canceŀla missatge</string>
+  <string name="menu_message_reply">Respon</string>
   <string name="menu_delete">Suprimeix</string>
   <string name="pref_darkTheme_title">Tema fosc</string>
   <string name="pref_darkTheme_summary">Activa el tema fosc sempre en comptes d\'utilitzar el predeterminat del sistema.</string>

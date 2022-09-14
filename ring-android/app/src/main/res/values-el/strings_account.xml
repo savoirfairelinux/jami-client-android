@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Προχωρημένες ρυθμίσεις</string>
   <string name="ic_blacklist_menu">Μπλοκαρισμένες επαφές</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Προσθήκη λογαριασμού Jami</string>
+  <string name="add_ring_account_title">Προσθήκη λογαριασμού</string>
   <string name="add_sip_account_title">Προσθήκη λογαριασμού SIP</string>
   <string name="ring_account_default_name">Λογαριασμός Jami %1$s</string>
   <string name="prompt_alias">Ψευδώνυμο</string>
@@ -55,6 +55,7 @@
   <string name="account_autoanswer_label">Αυτόματη απάντηση</string>
   <string name="account_upnp_label">Ενεργοποίηση UPnP</string>
   <string name="account_proxy_field">Διαμεσολαβητής</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Ήχος</string>
   <string name="account_preferences_media_tab">Μέσα</string>
@@ -73,6 +74,7 @@
   <string name="account_turn_username_label">Όνομα χρήστη TURN</string>
   <string name="account_turn_password_label">Κωδικός TURN</string>
   <string name="account_published_address_label">Δημοσιευμένη διεύθυνση</string>
+  <string name="enabled">Ενεργοποιημένο</string>
   <string name="account_sip_proxy_label">Διαμεσολαβητής</string>
   <!--Security Details-->
   <!--SRTP Details-->
@@ -82,10 +84,13 @@
   <!--TLS Details-->
   <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
   <!--restore/backup-->
+  <string name="error_password_char_count">το ελάχιστο 6 χαρακτήρες</string>
   <string name="account_export_end_network_title">Σφάλμα δικτύου</string>
   <string name="account_export_end_error_title">Σφάλμα</string>
   <string name="account_enter_password">Εισάγετε τον κωδικό πρόσβασης</string>
   <string name="ring_account_identity">Ταυτότητα</string>
+  <string name="account_cannot_be_found_title">Μη δυνατή η εύρεση λογαριασμού</string>
+  <string name="account_no_network_title">Αδύνατη η σύνδεση στο δύκτιο</string>
   <!--TV-->
   <string name="account_tv_advance_settings_header">Προχωρημένες ρυθμίσεις</string>
   <string name="account_tv_about">Σχετικά με το Jami</string>
@@ -94,6 +99,7 @@
   <string name="tv_about_credits">Συντελεστές</string>
   <string name="account_link_prompt_pin">Εισάγετε PIN</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Jami</string>
+  <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>
   <!--Name registration-->
   <string name="register_username">Καταχώρηση δημόσιου ονόματος χρήστη</string>

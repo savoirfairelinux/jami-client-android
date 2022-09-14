@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Pengaturan lanjutan</string>
   <string name="ic_blacklist_menu">Kontak yang diblokir</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Tambahkan akun Jami</string>
+  <string name="add_ring_account_title">Tambah akun</string>
   <string name="add_sip_account_title">Tambahkan akun SIP</string>
   <string name="ring_account_default_name">Akun Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -22,7 +22,9 @@
   <string name="dialog_wait_update">Memperbarui akun</string>
   <string name="dialog_wait_update_details">Mohon tunggu...</string>
   <string name="dialog_warn_ip2ip_account_title">Buat akun SIP kosong?</string>
+  <string name="dialog_warn_ip2ip_account_message">Anda akan membuat akun SIP tanpa nama host yang valid. Anda hanya akan dapat membuat dan menerima panggilan ip langsung. Anda dapat mengedit akun Anda nanti</string>
   <string name="account_type_ip2ip">Akun IP</string>
+  <string name="help_ring">Akun Jami memungkinkan Anda untuk menjangkau orang-orang dengan aman secara peer to peer melalui jaringan yang sepenuhnya terdistribusi.</string>
   <string name="help_sip_title">Tambah akun SIP anda</string>
   <string name="help_sip">Konfigurasikan akun SIP yang ada.</string>
   <string name="create_sip_account">Tambahkan akun SIP</string>
@@ -53,9 +55,14 @@
   <string name="account_username_label">Nama pengguna</string>
   <string name="account_password_label">Kata sandi</string>
   <string name="account_optionnal_category">Pengaturan Opsional</string>
+  <string name="account_useragent_label">Agen Pengguna</string>
   <string name="account_autoanswer_label">Jawab Otomatis</string>
+  <string name="account_rendezvous_label">Mode Pertemuan</string>
+  <string name="account_rendezvous_summary">Dalam mode Rendezvous, panggilan masuk akan ditambahkan ke ruang konferensi.</string>
   <string name="account_upnp_label">Aktifkan UPnP</string>
   <string name="account_proxy_field">Proksi</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Plugin</string>
   <!--Audio Details-->
   <string name="account_audio_label">Suara</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -84,8 +91,10 @@
   <string name="account_accept_files_always">Selalu terima secara otomatis</string>
   <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Gunakan TURN</string>
+  <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nama pengguna TURN</string>
   <string name="account_turn_password_label">Kata sandi TURN</string>
+  <string name="account_published_same_as_local_label">Diterbitkan sama dengan lokal</string>
   <string name="account_published_port_label">Port yang dipublikasikan</string>
   <string name="account_published_address_label">Alamat yang dipublikasikan</string>
   <string name="account_proxy_label">Proksi DHT</string>
@@ -94,6 +103,8 @@
   <string name="account_proxy_server_list_label">Daftar URL proksi DHT</string>
   <string name="account_sip_proxy_label">Proksi</string>
   <string name="account_peer_discovery_label">Temukan kawan lokal</string>
+  <string name="account_peer_discovery_enable_label">Mengaktifkan penemuan rekan lokal</string>
+  <string name="account_peer_discovery_enable_summary">Terhubung ke node DHT lain yang beriklan di jaringan lokal kita</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredensial</string>
   <string name="account_credentials_edit">Ubah kredensial</string>
@@ -102,6 +113,7 @@
   <string name="account_preferences_security_tab">Keamanan</string>
   <string name="account_srtp_switch_label">Enkripsi media stream (SRTP)</string>
   <string name="account_srtp_enable_sdes">Aktifkan SDES sebagai key exchange protokol</string>
+  <string name="account_srtp_rtp_fallback">Fallback ke RTP jika SRTP gagal</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Gunakan TLS Transport</string>
@@ -116,6 +128,7 @@
   <string name="account_tls_verify_server_label">Verifikasi Server</string>
   <string name="account_tls_verify_client_label">Verifikasi Klien</string>
   <string name="account_require_client_certificate_label">TLS membutuhkan Sertifikat Klien</string>
+  <string name="account_tls_negotiation_timeout_sec">Batas Waktu Negosiasi (detik)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Rentang Port Audio RTP</string>
@@ -127,17 +140,27 @@
   <string name="export_account_wait_message">Mengekspor informasi akun</string>
   <string name="account_export_file">Cadangkan Akun</string>
   <string name="account_export_file_summary">Cadangkan akun di perangkat anda untuk memulihkannya nanti.</string>
+  <string name="account_export_end_decryption_message">Tidak dapat membuka akun Anda menggunakan kata sandi yang diberikan.</string>
   <string name="account_export_end_network_title">Galat jaringan</string>
+  <string name="account_export_end_network_message">Tidak dapat mengekspor akun. Harap periksa jaringan internet Anda.</string>
   <string name="account_export_end_error_title">Eror</string>
+  <string name="account_export_end_error_message">Tidak dapat mengekspor akun. Terjadi kesalahan yang tidak diketahui.</string>
   <string name="account_enter_password">Masukan kata sandi</string>
+  <string name="account_share_body">Hubungi saya menggunakan \'%1$s\' pada platform komunikasi terdistribusi Jami: %2$s</string>
+  <string name="account_share_body_with_username">Hubungi saya menggunakan \'%1$s\' atau nama pengguna publik saya \'%2$s\' di platform komunikasi terdistribusi Jami: %3$s</string>
   <string name="account_contact_me">Kontak saya di Jami !</string>
   <string name="update_account">Perbarui akun</string>
+  <string name="account_migration">Akun Jami anda dapat diperbarui. \nSilakan masukkan kata sandi anda.</string>
   <string name="ring_account">Akun Jami</string>
   <string name="ring_account_identity">Identitas</string>
   <string name="account_migration_title_dialog">Migrasi akun</string>
+  <string name="account_migration_message_dialog">Akun Anda perlu diperbarui. Apakah Anda ingin membuka layar Manajemen akun untuk melakukan operasi ini?</string>
   <string name="account_update_needed">Perlu diperbarui</string>
   <string name="account_cannot_be_found_title">Akun tidak ditemukan</string>
+  <string name="account_cannot_be_found_message">Akun tidak dapat ditemukan di jaringan Jami.\nPastikan akun tersebut diekspor di Jami dari perangkat yang sudah ada, dan kredensial yang diberikan sudah benar.</string>
+  <string name="account_sip_cannot_be_registered_message">Anda bisa melanjutkan proses pembuatan akun atau mengedit informasi Anda di sini. Edisi masih dimungkinkan nanti dalam pengaturan akun.</string>
   <string name="account_no_network_title">Tidak dapat terhubung ke jaringan</string>
+  <string name="account_no_network_message">Tidak dapat menambahkan akun karena Jami tidak dapat terhubung ke jaringan terdistribusi. Periksa konektivitas perangkat Anda.</string>
   <string name="account_device_added_title">Akun perangkat ditambahkan</string>
   <string name="account_device_added_message">Setup akun anda telah selesai.</string>
   <string name="account_device_updated_title">Akun perangkat diperbarui</string>
@@ -162,9 +185,13 @@
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Buat akun Jami</string>
   <string name="account_link_export_button">Hubungkan perangkat baru</string>
+  <string name="account_link_show_button">Tampilkan %d lebih banyak perangkat yang ditautkan</string>
   <string name="account_link_hide_button">Sembunyikan perangkat yang tertaut</string>
+  <string name="account_link_export_info">Untuk menggunakan akun ini pada perangkat lain, Anda harus mengeksposnya terlebih dahulu di Jami. Ini akan menghasilkan kode PIN yang harus Anda masukkan pada perangkat baru untuk mengatur akun. PIN berlaku selama 10 menit.</string>
   <string name="account_start_export_button">Buat PIN</string>
   <string name="account_end_export_button">tutup</string>
+  <string name="account_end_export_infos">PIN Anda adalah:\n\n%%\n\nUntuk menyelesaikan prosesnya, Anda perlu membuka Jami pada perangkat baru. Buat akun baru dengan \"Tautkan perangkat ini ke akun\". PIN Anda berlaku selama 10 menit.</string>
+  <string name="account_link_export_info_light">Untuk menggunakan akun ini pada perangkat lain, Anda harus mengeksposnya terlebih dahulu di Jami. Ini akan menghasilkan kode PIN yang harus Anda masukkan pada perangkat baru untuk mengatur akun. PIN berlaku selama 10 menit.</string>
   <string name="account_export_title">Tautkan akun ke perangkat lain</string>
   <string name="account_connect_server_button">Hubungkan ke peladen manajemen</string>
   <string name="account_connect_button">Hubungkan</string>

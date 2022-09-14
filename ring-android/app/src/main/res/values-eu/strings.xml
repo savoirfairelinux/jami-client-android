@@ -104,8 +104,6 @@
   <string name="ab_action_speakerphone">Gaitu bozgorailua</string>
   <string name="ab_action_contact_add">Gehitu kontaktuetara</string>
   <string name="ab_action_contact_add_question">Gehitu kontaktuetara?</string>
-  <string name="hist_contact_added">Kontaktua gehituta</string>
-  <string name="hist_invitation_received">Gonbidapena jasota</string>
   <string name="ab_action_audio_call">Audio-deia</string>
   <string name="ab_action_video_call">Bideo-deia</string>
   <string name="ab_action_change_screen_orientation">Aldatu pantailaren orientzaioa</string>
@@ -193,6 +191,8 @@
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
+  <string name="hist_contact_added">Kontaktua gehituta</string>
+  <string name="hist_invitation_received">Gonbidapena jasota</string>
   <!--Account Summary-->
   <string name="profile">Profila</string>
   <string name="profile_name">Profilaren izena</string>
@@ -268,6 +268,7 @@
   <string name="menu_message_copy">Kopiatu</string>
   <string name="menu_message_delete">Ezabatu mezua</string>
   <string name="menu_message_cancel">Utzi mezua</string>
+  <string name="menu_message_reply">Erantzun</string>
   <string name="menu_delete">Ezabatu</string>
   <string name="pref_darkTheme_title">Gai iluna</string>
   <string name="pref_darkTheme_summary">Gaitu beti gai iluna sistemaren portaerari jarraitu ordez</string>

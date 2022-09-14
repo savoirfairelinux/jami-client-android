@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Odinstaluj Wtyczkę ?</string>
   <string name="plugin_reset_preferences">Zresertuj preferencje wtyczki</string>
   <string name="plugin_reset_preferences_summary">Twoje ustawienia wtyczki zostaną przywrócone do domyślnych</string>
-  <string name="plugin_reset_preferences_ask">Czy chcesz zresetować ustawienia wtyczki ?</string>
   <string name="plugin_successfully_installed">Wtyczka <b>%1$s</b> zainstalowana pomyślnie</string>
   <string name="plugin_install_failure">Nie udało się zainstalować wtyczki: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Masz nowszą wersję wtyczki: <b>%1$s</b></string>

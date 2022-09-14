@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Eklenti kaldırılsın mı?</string>
   <string name="plugin_reset_preferences">Eklenti tercihlerini sıfırlayın</string>
   <string name="plugin_reset_preferences_summary">Eklenti ayarlarınız öntanımlı olacaktır </string>
-  <string name="plugin_reset_preferences_ask">Eklenti ayarlarını sıfırlamak istediğinize emin misiniz?</string>
   <string name="plugin_successfully_installed"><b>%1$s</b> eklentisi başarıyla yüklendi</string>
   <string name="plugin_install_failure">Eklenti yüklenemedi: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Daha yeni bir sürümünüz var: <b>%1$s</b></string>

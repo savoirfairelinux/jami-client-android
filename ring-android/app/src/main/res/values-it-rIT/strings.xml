@@ -43,6 +43,7 @@
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversazione</item>
+    <item quantity="many">%d Conversazioni</item>
     <item quantity="other">%d Conversazioni</item>
   </plurals>
   <!--ContactList Fragment-->
@@ -110,11 +111,6 @@
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>
-  <string name="hist_contact_invited">Contatto invitato</string>
-  <string name="hist_contact_added">Contatto aggiunto</string>
-  <string name="hist_contact_left">Contatto lasciato</string>
-  <string name="hist_contact_banned">Contatto bloccato</string>
-  <string name="hist_invitation_received">Invito ricevuto</string>
   <string name="ab_action_audio_call">Chiamata vocale</string>
   <string name="ab_action_video_call">Videochiamata</string>
   <string name="ab_action_change_screen_orientation">Ruota schermo</string>
@@ -206,6 +202,11 @@
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
+  <string name="hist_contact_invited">Contatto invitato</string>
+  <string name="hist_contact_added">Contatto aggiunto</string>
+  <string name="hist_contact_left">Contatto lasciato</string>
+  <string name="hist_contact_banned">Contatto bloccato</string>
+  <string name="hist_invitation_received">Invito ricevuto</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
   <string name="profile_name">Nome del profilo</string>
@@ -236,7 +237,7 @@
   <string name="contact_request_msg">Hai %1$d richieste di contatto</string>
   <string name="contact_request_account">Per %1$s</string>
   <string name="no_requests">Non hai richieste di contatto</string>
-  <string name="message_contact_not_trusted_yet">%s non è ancora nei tuoi contatti \n Accetti o rifiuti questo richiesta di contatto?</string>
+  <string name="message_contact_not_trusted_yet">%s non è ancora nei tuoi contatti.\nAccetti o rifiuti questa richiesta di contatto?</string>
   <string name="message_contact_not_trusted">%s non è nei tuoi contatti.\nAggiugere un nuovo contatto?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Invia</string>
@@ -283,6 +284,7 @@
   <string name="menu_message_copy">Copia</string>
   <string name="menu_message_delete">Cancella messaggio</string>
   <string name="menu_message_cancel">Annulla messaggio</string>
+  <string name="menu_message_reply">Rispondi</string>
   <string name="menu_delete">Elimina</string>
   <string name="pref_darkTheme_title">Tema scuro</string>
   <string name="pref_darkTheme_summary">Attiva sempre il tema scuro al posto di quello di sistema</string>
@@ -334,4 +336,6 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Suono</string>
   <string name="bottomSheet_raiseHand_btn">Alza mano</string>
+  <string name="uninstall">Disinstalla</string>
+  <string name="reset">Ripristina</string>
 </resources>

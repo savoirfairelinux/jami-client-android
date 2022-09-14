@@ -2,6 +2,7 @@
 <resources>
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">खाता जोड़ें</string>
   <string name="prompt_alias">उपनाम</string>
   <string name="action_create">खाता बनाएं</string>
   <string name="action_register">पंजी करें</string>
@@ -10,6 +11,7 @@
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">खाते</string>
   <!--Basic Details-->
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">ऑडियो</string>
   <string name="account_ringtone_label">रिंगटोन</string>

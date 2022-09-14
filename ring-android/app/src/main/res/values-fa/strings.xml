@@ -112,12 +112,6 @@
   <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
-  <string name="hist_contact_invited">مخاطب افزوده شد
- </string>
-  <string name="hist_contact_added">مخاطب افزوده شد</string>
-  <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
-  <string name="hist_contact_banned">مخاطب مسدود شد</string>
-  <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
   <string name="ab_action_video_call">تماس تصویری</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
@@ -209,6 +203,12 @@
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">پرش</string>
+  <string name="hist_contact_invited">مخاطب افزوده شد
+ </string>
+  <string name="hist_contact_added">مخاطب افزوده شد</string>
+  <string name="hist_contact_left">مخاطب از تماس خارج شد</string>
+  <string name="hist_contact_banned">مخاطب مسدود شد</string>
+  <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
   <!--Account Summary-->
   <string name="profile">نمایه</string>
   <string name="profile_name">نام نمایه</string>
@@ -286,6 +286,7 @@
   <string name="menu_message_copy">کپی</string>
   <string name="menu_message_delete">حذف پیام</string>
   <string name="menu_message_cancel">لغو پیام</string>
+  <string name="menu_message_reply">پاسخ</string>
   <string name="menu_delete">حذف</string>
   <string name="pref_darkTheme_title">زمینه تاریک</string>
   <string name="pref_darkTheme_summary">همیشه زمینه تاریک را به جای استفاده از حالت سیستم فعال کن</string>

@@ -84,8 +84,6 @@
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
   <string name="ab_action_contact_add_question">Dodati u kontakte?</string>
-  <string name="hist_contact_added">Kontakt dodan</string>
-  <string name="hist_invitation_received">Poziv primljen</string>
   <string name="ab_action_audio_call">Audio poziv</string>
   <string name="ab_action_video_call">Video poziv</string>
   <string name="ab_action_change_screen_orientation">Promjeni orijentaciju zaslona</string>
@@ -154,6 +152,8 @@
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
+  <string name="hist_contact_added">Kontakt dodan</string>
+  <string name="hist_invitation_received">Poziv primljen</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
@@ -192,6 +192,7 @@
   <string name="menu_file_share">Dijeli datoteku</string>
   <string name="menu_message_copy">Kopiraj</string>
   <string name="menu_message_cancel">Otkaži poruku</string>
+  <string name="menu_message_reply">Odgovori</string>
   <string name="menu_delete">Izbriši</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Razgovori</string>

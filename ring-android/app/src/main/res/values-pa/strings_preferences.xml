@@ -5,6 +5,7 @@
   <string name="pref_category_video">ਵੀਡੀਓ</string>
   <string name="pref_category_system">ਸਿਸਟਮ</string>
   <string name="pref_category_privacy">ਪਰਦੇਦਾਰੀ</string>
+  <string name="pref_category_diagnostic">ਜਾਂਚ-ਪੜਤਾਲ</string>
   <string name="pref_mobileData_title">ਮੋਬਾਈਲ ਡਾਟਾ</string>
   <string name="pref_mobileData_summary">Jami ਨੂੰ ਵਾਈ-ਫਾਈ ਦੀ ਥਾਂ 3G/LTE ਨੈੱਟਵਰਕ ਵਰਤਣ ਦਿਓ</string>
   <string name="pref_pushNotifications_title">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
@@ -19,6 +20,7 @@
   <string name="pref_startOnBoot_title">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਸ਼ੁਰੂ ਕਰੋ</string>
   <string name="pref_startOnBoot_summary">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ।</string>
   <string name="pref_clearHistory_title">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
+  <string name="pref_delete_account_title">ਖਾਤਾ ਮਿਟਾਓ</string>
   <string name="pref_persistNotification_title">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ</string>
   <string name="pref_persistNotification_summary">ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਲੈਣ ਲਈ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲਣ ਦਿਓ।</string>
   <!--Notifications Visibility-->

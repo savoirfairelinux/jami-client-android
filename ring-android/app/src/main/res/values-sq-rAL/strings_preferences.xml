@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Të çinstalohet Shtojca?</string>
   <string name="plugin_reset_preferences">Rikthe te parazgjedhjet parapëlqimet për shtojca</string>
   <string name="plugin_reset_preferences_summary">Rregullimet e shtojcës tuaj do të kthehen te parazgjedhjet</string>
-  <string name="plugin_reset_preferences_ask">Doni të rikthehen te parazgjedhjet rregullimet e shtojcave?</string>
   <string name="plugin_successfully_installed">Shtojca <b>%1$s</b> u instalua me sukses</string>
   <string name="plugin_install_failure">S’u arrit të instalohej shtojcë: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Keni një version më të freskët të: <b>%1$s</b></string>

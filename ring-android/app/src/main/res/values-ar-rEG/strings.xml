@@ -102,8 +102,6 @@
   <string name="ab_action_speakerphone">تفعيل مكبر الصوت</string>
   <string name="ab_action_contact_add">إضافة إلى جهات الاتصال</string>
   <string name="ab_action_contact_add_question">إضافة إلى جهات الإتصال؟</string>
-  <string name="hist_contact_added">تم إضافة جهة إتصال</string>
-  <string name="hist_invitation_received">تم تلقي دعوة</string>
   <string name="ab_action_audio_call">مكالمة صوتية</string>
   <string name="ab_action_video_call">مكالمة فيديو</string>
   <string name="ab_action_change_screen_orientation">تغيير إتجاه الشاشة</string>
@@ -193,6 +191,8 @@
   <string name="wizard_next">التالي</string>
   <string name="wizard_back">السابق</string>
   <string name="wizard_skip">تخطي</string>
+  <string name="hist_contact_added">تم إضافة جهة إتصال</string>
+  <string name="hist_invitation_received">تم تلقي دعوة</string>
   <!--Account Summary-->
   <string name="profile">الملف الشخصى</string>
   <string name="profile_name">اسم الملف الشخصى</string>
@@ -270,6 +270,7 @@
   <string name="menu_message_copy">نسخ</string>
   <string name="menu_message_delete">حذف رسالة</string>
   <string name="menu_message_cancel">إلغاء رسالة</string>
+  <string name="menu_message_reply">رد</string>
   <string name="menu_delete">حذف</string>
   <string name="pref_darkTheme_title">وضع داكن</string>
   <string name="pref_darkTheme_summary">قم دائمًا بتمكين الوضع الداكن بدلاً من استخدام سلوك النظام</string>

@@ -44,6 +44,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
+    <item quantity="many">%d Conversas</item>
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
@@ -111,16 +112,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
-  <string name="hist_contact_invited">Contato foi convidado</string>
-  <string name="hist_contact_added">Contato adicionado</string>
-  <string name="hist_contact_left">O contato saiu</string>
-  <string name="hist_contact_banned">O contato foi banido</string>
-  <string name="hist_invitation_received">Convite recebido</string>
   <string name="ab_action_audio_call">Chamada de áudio</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
   <string name="ab_action_change_screen_orientation">Mudar orientação de tela</string>
   <string name="share_via">Compartilhar via</string>
-  <string name="write_a_message">Escrever uma mensagem</string>
+  <string name="write_a_message">Escreva uma mensagem</string>
   <string name="scan_qr">Escanear Código QR</string>
   <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
@@ -207,6 +203,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Pular</string>
+  <string name="hist_contact_invited">Contato foi convidado</string>
+  <string name="hist_contact_added">Contato adicionado</string>
+  <string name="hist_contact_left">O contato saiu</string>
+  <string name="hist_contact_banned">O contato foi banido</string>
+  <string name="hist_invitation_received">Convite recebido</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nome do perfil</string>
@@ -284,6 +285,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_delete">Apagar mensagem</string>
   <string name="menu_message_cancel">Cancelar mensagem</string>
+  <string name="menu_message_reply">Responder</string>
   <string name="menu_delete">Deletar</string>
   <string name="pref_darkTheme_title">Tema escuro</string>
   <string name="pref_darkTheme_summary">Sempre habilitar tema escuro ao invés de usar o comportamento do sistema</string>
@@ -335,4 +337,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="bottomSheet_mute_microphone_btn">Microfone</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
+  <string name="uninstall">Desinstalar</string>
+  <string name="reset">Resetar</string>
 </resources>

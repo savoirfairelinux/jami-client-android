@@ -45,6 +45,8 @@
   <string name="pref_read_summary">相手や自分がメッセージを表示したことを送受信する。</string>
   <string name="pref_block_record_title">画面撮影・録画の禁止</string>
   <string name="pref_block_record_summary">画面を撮影・録画することを禁止する。</string>
+  <string name="pref_link_preview_title">リンクプレビューの表示</string>
+  <string name="pref_link_preview_summary">プレビューの取得にはサードパーティーサーバーを経由します</string>
   <!--Notifications Visibility-->
   <string name="notification_public">公開\n（ロック画面に通知とその内容を表示する）\n</string>
   <string name="notification_private">秘密\n（ロック画面で通知する際は内容を隠す）\n</string>
@@ -56,7 +58,6 @@
   <string name="plugin_uninstall_title">追加機能を削除しますか？</string>
   <string name="plugin_reset_preferences">追加機能の設定を初期化する</string>
   <string name="plugin_reset_preferences_summary">追加機能の設定を初期化します</string>
-  <string name="plugin_reset_preferences_ask">追加機能の設定を初期化しますか？</string>
   <string name="plugin_successfully_installed">追加機能 <b>%1$s</b> が正しく導入されました</string>
   <string name="plugin_install_failure">次の追加機能を導入できませんでした: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">新しい版次が導入済みです: <b>%1$s</b></string>

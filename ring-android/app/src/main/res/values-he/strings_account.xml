@@ -3,6 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">מחק</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">הוספת חשבון</string>
   <string name="prompt_alias">כינוי</string>
   <string name="prompt_hostname">שם מארח</string>
   <string name="prompt_username">שם משתמש</string>
@@ -28,6 +29,7 @@
   <string name="account_useragent_label">סוכן משתמש</string>
   <string name="account_autoanswer_label">מענה אוטומטי</string>
   <string name="account_proxy_field">פרוקסי</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">אודיו</string>
   <string name="account_preferences_media_tab">מדיה</string>
@@ -44,6 +46,7 @@
   <string name="account_local_port_label">פורט מקומי</string>
   <string name="account_stun_enable_label">השתמש ב-</string>
   <string name="account_stun_server_label">שרת Stun</string>
+  <string name="enabled">מאופשר</string>
   <string name="account_sip_proxy_label">פרוקסי</string>
   <!--Security Details-->
   <string name="account_credentials_label">נתוני התחברות</string>

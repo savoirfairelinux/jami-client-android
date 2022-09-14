@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Plugin löschen?</string>
   <string name="plugin_reset_preferences">Plugin-Einstellungen zurücksetzen</string>
   <string name="plugin_reset_preferences_summary">Deine Plugin-Einstellungen sind standardmäßig voreingestellt</string>
-  <string name="plugin_reset_preferences_ask">Möchtest du die Plugin-Einstellungen zurücksetzen?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> wurde erfolgreich installiert.</string>
   <string name="plugin_install_failure">Plugin konnte nicht installiert werden:<b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Du hast eine neuere Version von: <b>%1$s</b></string>
