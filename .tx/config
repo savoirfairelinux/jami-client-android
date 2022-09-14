@@ -1,33 +1,34 @@
 [main]
-host = https://www.transifex.com
-lang_map = pl_PL:pl-rPL, pt_BR:pt-rBR, pt_PT:pt-rPT, zh_CN:zh-rCN, fa_IR:fa-rIR, ro_RO:ro-rRO, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL, zh_TW:zh-rTW, de_DE:de-rDE, sq_AL:sq-rAL, en_GB:en-rGB, sk_SK:sk-rSK, et_EE:et-rEE, hi_IN:hi-rIN, en_US:en-rUS, ko_KR:ko-rKR, fr_BE:fr-rBE, fr_CH:fr-rCH, es_AR:es-rAR, es_MX:es-rMX, es_CO:es-rCO, nl_BE:nl-rBE, sr_RS:sr, sr@Cyrl:b+sr+Cyrl, tr_TR:tr-rTR, ar_EG:ar-rEG, be_BY:be-rBY, be@tarask:b+be+tarask, bg_BG:bg-rBG, en_CA:en-rCA, en_IE:en-rIE, mn_MN:mn-rMN, zh_HK:zh-rHK
+host     = https://www.transifex.com
+lang_map = en_US: en-rUS, bg_BG: bg-rBG, mn_MN: mn-rMN, en_IE: en-rIE, zh_CN: zh-rCN, ru_RU: ru-rRU, es_AR: es-rAR, es_CO: es-rCO, en_CA: en-rCA, fr_FR: fr-rFR, hi_IN: hi-rIN, nl_BE: nl-rBE, pl_PL: pl-rPL, fa_IR: fa-rIR, sk_SK: sk-rSK, et_EE: et-rEE, sr@Cyrl: b+sr+Cyrl, be@tarask: b+be+tarask, pt_BR: pt-rBR, cs_CZ: cs-rCZ, nl_NL: nl-rNL, fr_CH: fr-rCH, ar_EG: ar-rEG, fr_BE: fr-rBE, sr_RS: sr, tr_TR: tr-rTR, ro_RO: ro-rRO, da_DK: da-rDK, fr_CA: fr-rCA, zh_TW: zh-rTW, ko_KR: ko-rKR, pt_PT: pt-rPT, de_DE: de-rDE, sq_AL: sq-rAL, es_MX: es-rMX, be_BY: be-rBY, it_IT: it-rIT, en_GB: en-rGB, zh_HK: zh-rHK
 
-[jami.android]
+[o:savoirfairelinux:p:jami:r:android]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml
 source_file = ring-android/app/src/main/res/values/strings.xml
 source_lang = en
-type = ANDROID
+type        = ANDROID
 
-[jami.android-account]
+[o:savoirfairelinux:p:jami:r:android-account]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings_account.xml
 source_file = ring-android/app/src/main/res/values/strings_account.xml
 source_lang = en
-type = ANDROID
+type        = ANDROID
 
-[jami.android-content-description]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_content_description.xml
-source_file = ring-android/app/src/main/res/values/strings_content_description.xml
-source_lang = en
-type = ANDROID
-
-[jami.android-preferences]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_preferences.xml
-source_file = ring-android/app/src/main/res/values/strings_preferences.xml
-source_lang = en
-type = ANDROID
-
-[jami.android-call]
+[o:savoirfairelinux:p:jami:r:android-call]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
 source_file = ring-android/app/src/main/res/values/strings_call.xml
 source_lang = en
-type = ANDROID
+type        = ANDROID
+
+[o:savoirfairelinux:p:jami:r:android-content-description]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_content_description.xml
+source_file = ring-android/app/src/main/res/values/strings_content_description.xml
+source_lang = en
+type        = ANDROID
+
+[o:savoirfairelinux:p:jami:r:android-preferences]
+file_filter = ring-android/app/src/main/res/values-<lang>/strings_preferences.xml
+source_file = ring-android/app/src/main/res/values/strings_preferences.xml
+source_lang = en
+type        = ANDROID
+
