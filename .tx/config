@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = pl_PL:pl-rPL, pt_BR:pt-rBR, pt_PT:pt-rPT, zh_CN:zh-rCN, fa_IR:fa-rIR, ro_RO:ro-rRO, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL, zh_TW:zh-rTW, de_DE:de-rDE, sq_AL:sq-rAL, en_GB:en-rGB, sk_SK:sk-rSK, et_EE:et-rEE, hi_IN:hi-rIN, en_US:en-rUS, ko_KR:ko-rKR, fr_BE:fr-rBE, fr_CH:fr-rCH, es_AR:es-rAR, es_MX:es-rMX, es_CO:es-rCO, nl_BE:nl-rBE, sr_RS:sr, sr@Cyrl:b+sr+Cyrl, tr_TR:tr-rTR, ar_EG:ar-rEG, be_BY:be-rBY, be@tarask:b+be+tarask, bg_BG:bg-rBG, en_CA:en-rCA, en_IE:en-rIE, mn_MN:mn-rMN, zh_HK:zh-rHK
+lang_map = pl_PL:pl-rPL, pt_BR:pt-rBR, hr_HR:hr-rHR, pt_PT:pt-rPT, zh_CN:zh-rCN, fa_IR:fa-rIR, ro_RO:ro-rRO, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL, zh_TW:zh-rTW, de_DE:de-rDE, sq_AL:sq-rAL, en_GB:en-rGB, sk_SK:sk-rSK, et_EE:et-rEE, hi_IN:hi-rIN, en_US:en-rUS, ko_KR:ko-rKR, fr_BE:fr-rBE, fr_CH:fr-rCH, es_AR:es-rAR, es_MX:es-rMX, es_CO:es-rCO, nl_BE:nl-rBE, sr_RS:sr, sr@Cyrl:b+sr+Cyrl, tr_TR:tr-rTR, ar_EG:ar-rEG, be_BY:be-rBY, be@tarask:b+be+tarask, bg_BG:bg-rBG, en_CA:en-rCA, en_IE:en-rIE, mn_MN:mn-rMN, zh_HK:zh-rHK
 
 [jami.android]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml
