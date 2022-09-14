@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">解除安裝外掛程式？</string>
   <string name="plugin_reset_preferences">重設外掛程式偏好設定</string>
   <string name="plugin_reset_preferences_summary">您的外掛程式設定將會變成預設值</string>
-  <string name="plugin_reset_preferences_ask">您想要重設外掛程式設定嗎？</string>
   <string name="plugin_successfully_installed">外掛程式 <b>%1$s</b> 已成功安裝</string>
   <string name="plugin_install_failure">安裝外掛程式失敗： <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">您有更新的版本可供安裝： <b>%1$s</b></string>

@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Lisäasetukset</string>
   <string name="ic_blacklist_menu">Estetyt yhteystiedot</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Lisää Jami-tili</string>
+  <string name="add_ring_account_title">Lisää tunnus</string>
   <string name="add_sip_account_title">Lisää SIP-tili</string>
   <string name="ring_account_default_name">Jami-tili %1$s</string>
   <string name="prompt_alias">Lempinimi</string>
@@ -61,6 +61,8 @@
   <string name="account_rendezvous_summary">Kohtaamistilassa saapuvat puhelut lisätään kokoushuoneeseen.</string>
   <string name="account_upnp_label">UPnP päälle</string>
   <string name="account_proxy_field">Välityspalvelin</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Lisäosat</string>
   <!--Audio Details-->
   <string name="account_audio_label">Ääni</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -95,6 +97,7 @@
   <string name="account_published_same_as_local_label">Julkaisutapa sama kuin paikallinen</string>
   <string name="account_published_port_label">Julkinen portti</string>
   <string name="account_published_address_label">Julkinen osoite</string>
+  <string name="enabled">Päällä</string>
   <string name="account_proxy_label">DHT välityspalvelin</string>
   <string name="account_proxy_enable_label">Käytä DHT välityspalvelinta</string>
   <string name="account_proxy_server_label">DHT välityspalvelimen osoite</string>

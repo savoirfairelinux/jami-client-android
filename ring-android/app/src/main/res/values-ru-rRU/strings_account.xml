@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Дополнительные настройки</string>
   <string name="ic_blacklist_menu">Заблокированные контакты</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Добавить учетную запись Jami</string>
+  <string name="add_ring_account_title">Добавить аккаунт</string>
   <string name="add_sip_account_title">Добавить SIP аккаунт</string>
   <string name="ring_account_default_name">Jami аккаунт %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
@@ -63,6 +63,8 @@
   <string name="account_rendezvous_summary">В режиме Rendezvous входящие звонки будут добавляться в конференц-зал.</string>
   <string name="account_upnp_label">Включить UPnP</string>
   <string name="account_proxy_field">Прокси</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Плагины</string>
   <!--Audio Details-->
   <string name="account_audio_label">Звук</string>
   <string name="account_preferences_media_tab">Медиа</string>
@@ -97,6 +99,7 @@
   <string name="account_published_same_as_local_label">Опубликовать локально</string>
   <string name="account_published_port_label">Публичный порт</string>
   <string name="account_published_address_label">Публичный адрес</string>
+  <string name="enabled">Включен</string>
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">адрес прокси для DHT</string>

@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">افزونه را حذف نصب می‌کنید؟</string>
   <string name="plugin_reset_preferences">تنظیم مجدد تنظیمات افزونه</string>
   <string name="plugin_reset_preferences_summary">تنظیمات افزونه شما به پیش‌فرض تغییر خواهد کرد</string>
-  <string name="plugin_reset_preferences_ask">آیا می‌خواهید تنظیمات افزونه را دوباره تنظیم کنید؟</string>
   <string name="plugin_successfully_installed">افزونه <b>%1$s</b> با موفقیت نصب شد</string>
   <string name="plugin_install_failure">نصب افزونه انجام نشد:<b>%1$s</b></string>
   <string name="plugin_recent_version_exception">شما نسخه جدید‌تری دارید از: <b>%1$s</b></string>

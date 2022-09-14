@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Désinstaller le module d\'extension</string>
   <string name="plugin_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>
   <string name="plugin_reset_preferences_summary">Les paramètres de votre module d\'extension seront réinitialisés</string>
-  <string name="plugin_reset_preferences_ask">Souhaitez-vous réinitialiser les paramètres de votre module d\'extension ?</string>
   <string name="plugin_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé</string>
   <string name="plugin_install_failure">Échec de l\'installation du module d\'extension :: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Vous avez une version plus récente de :<b>%1$s</b></string>

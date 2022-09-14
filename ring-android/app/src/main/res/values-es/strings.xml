@@ -43,6 +43,7 @@
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversacion</item>
+    <item quantity="many">Conversaciones: %d</item>
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
   <!--ContactList Fragment-->
@@ -110,11 +111,6 @@
   <string name="ab_action_speakerphone">Activar el altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
-  <string name="hist_contact_invited">Contacto invitado</string>
-  <string name="hist_contact_added">Contacto añadido</string>
-  <string name="hist_contact_left">El contacto se ha ido</string>
-  <string name="hist_contact_banned">Contacto bloqueado</string>
-  <string name="hist_invitation_received">Invitación recibida</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
@@ -206,6 +202,11 @@
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Volver</string>
   <string name="wizard_skip">Saltar</string>
+  <string name="hist_contact_invited">Contacto invitado</string>
+  <string name="hist_contact_added">Contacto añadido</string>
+  <string name="hist_contact_left">El contacto se ha ido</string>
+  <string name="hist_contact_banned">Contacto bloqueado</string>
+  <string name="hist_invitation_received">Invitación recibida</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
@@ -283,6 +284,7 @@
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_delete">Eliminar mensaje</string>
   <string name="menu_message_cancel">Cancelar mensaje</string>
+  <string name="menu_message_reply">Responder</string>
   <string name="menu_delete">Borrar</string>
   <string name="pref_darkTheme_title">Tema oscuro</string>
   <string name="pref_darkTheme_summary">Siempre activar el tema oscuro en vez de utilizar el de por defecto del sistema</string>
@@ -334,4 +336,6 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sonidos</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
+  <string name="uninstall">Desinstalar</string>
+  <string name="reset">Reiniciar</string>
 </resources>

@@ -79,8 +79,6 @@
   <string name="ab_action_speakerphone">Активиране на високоговорител</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
-  <string name="hist_contact_added">Контактът е добавен</string>
-  <string name="hist_invitation_received">Поканата е приета</string>
   <string name="ab_action_audio_call">Гласово обаждане</string>
   <string name="ab_action_video_call">Обаждане с видео</string>
   <string name="ab_action_change_screen_orientation">Промяна на ориентацията на екрана</string>
@@ -147,6 +145,8 @@
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
+  <string name="hist_contact_added">Контактът е добавен</string>
+  <string name="hist_invitation_received">Поканата е приета</string>
   <!--Account Summary-->
   <string name="profile">Профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
@@ -201,6 +201,7 @@
   <string name="menu_file_share">Споделяне на файл</string>
   <string name="menu_message_copy">Копиране</string>
   <string name="menu_message_cancel">Отмяна на съобщение</string>
+  <string name="menu_message_reply">Отговор</string>
   <string name="menu_delete">Изтриване</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Разговори</string>

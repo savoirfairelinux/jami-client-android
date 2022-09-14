@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Configurações avançadas</string>
   <string name="ic_blacklist_menu">Contactos bloqueados</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Adicionar conta Jami</string>
+  <string name="add_ring_account_title">Adicionar conta</string>
   <string name="add_sip_account_title">Adicionar conta SIP</string>
   <string name="ring_account_default_name">Conta Jami %1$s</string>
   <string name="prompt_alias">Apelido</string>
@@ -63,6 +63,8 @@
   <string name="account_rendezvous_summary">No Modo de Encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
   <string name="account_upnp_label">Ativar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Complementos</string>
   <!--Audio Details-->
   <string name="account_audio_label">Áudio</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -97,6 +99,7 @@
   <string name="account_published_same_as_local_label">Publicado tal como a local</string>
   <string name="account_published_port_label">Porta Publicada</string>
   <string name="account_published_address_label">Endereço Publicado</string>
+  <string name="enabled">Habilitado</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>

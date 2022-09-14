@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Preferències avançades</string>
   <string name="ic_blacklist_menu">Contactes bloquejats</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Afegeix compte de Jami</string>
   <string name="add_sip_account_title">Afegeix un compte SIP</string>
   <string name="ring_account_default_name">Compte de Jami %1$s</string>
   <string name="prompt_alias">Àlies</string>
@@ -61,6 +60,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_autoanswer_label">Resposta automàtica</string>
   <string name="account_upnp_label">Activa el UPnP</string>
   <string name="account_proxy_field">Intermediari</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Àudio</string>
   <string name="account_preferences_media_tab">Mitjans</string>
@@ -95,6 +95,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_published_same_as_local_label">Publica igual que la local</string>
   <string name="account_published_port_label">Port publicat</string>
   <string name="account_published_address_label">Adreça publicada</string>
+  <string name="enabled">Habilitat</string>
   <string name="account_proxy_label">Servidor intermediari DHT</string>
   <string name="account_proxy_enable_label">Utilitza servidor intermediari DHT</string>
   <string name="account_proxy_server_label">Direcció de l\'intermediari DHT</string>

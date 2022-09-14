@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Plugin Details-->
+  <!--Audio Details-->
+  <string name="account_audio_label">Аудио</string>
+  <string name="account_ringtone_label">Рингтон</string>
+  <!--Video Details-->
+  <string name="account_video_label">Видео</string>
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--TV-->
+  <!--Name registration-->
+  <!--Create account-->
+  <!--Edit profile-->
+  <!--Devices-->
+</resources>

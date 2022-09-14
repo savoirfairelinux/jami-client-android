@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Uitgebreide instellingen</string>
   <string name="ic_blacklist_menu">Geblokkeerde contacten</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami-account toevoegen</string>
+  <string name="add_ring_account_title">Account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
   <string name="ring_account_default_name">Jami account %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -62,6 +62,7 @@
   <string name="account_rendezvous_summary">In Rendezvous mode, worden inkomende oproepen aan een conferentie toegevoegd</string>
   <string name="account_upnp_label">UPnP inschakelen</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -95,6 +96,7 @@
   <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
   <string name="account_published_port_label">Gepubliceerde poort</string>
   <string name="account_published_address_label">Gepubliceerd adres</string>
+  <string name="enabled">Ingeschakeld</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
   <string name="account_proxy_server_label">DHT-proxyadres</string>

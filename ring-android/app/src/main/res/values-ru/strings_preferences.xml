@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Удалить плагин ?</string>
   <string name="plugin_reset_preferences">Сбросить настройки плагина</string>
   <string name="plugin_reset_preferences_summary">Настройки вашего плагина будут установлены по умолчанию</string>
-  <string name="plugin_reset_preferences_ask">Вы хотите сбросить настройки плагина ?</string>
   <string name="plugin_successfully_installed">Плагин <b>%1$s</b> успешно установлен</string>
   <string name="plugin_install_failure">Не удалось установить плагин: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">У вас версия более свежая: <b>%1$s</b> </string>

@@ -37,7 +37,6 @@
   <string name="plugin_uninstall_title">Odinstalovat zásuvný modul?</string>
   <string name="plugin_reset_preferences">Resetovat předvolby zásuvných modulů</string>
   <string name="plugin_reset_preferences_summary">Vaše nastavení zásuvných modulů budou obnovena na výchozí hodnoty</string>
-  <string name="plugin_reset_preferences_ask">Chcete resetovat nastavení zásuvných modulů?</string>
   <string name="plugin_successfully_installed">Zásuvný modul <b>%1$s</b> byl úspěšně nainstalován</string>
   <string name="plugin_install_failure">Instalace zásuvného modulu <b>%1$s</b> selhala</string>
   <string name="plugin_recent_version_exception">Máte novější verzi <b>%1$s</b></string>

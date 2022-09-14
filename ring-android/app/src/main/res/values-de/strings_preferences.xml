@@ -26,7 +26,7 @@
   <string name="pref_startOnBoot_title">Jami beim Hochfahren starten</string>
   <string name="pref_startOnBoot_summary">Jami im Hintergrund laufen lassen, wenn das System startet</string>
   <string name="pref_clearHistory_title">Verlauf leeren</string>
-  <string name="pref_clearHistory_summary">Kompletten Gesprächsverlauf löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
+  <string name="pref_clearHistory_summary">Kompletten Unterhaltungsverlauf löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_notification_title">Sichtbarkeit der Benachrichtigung</string>
   <string name="pref_notification_summary">Sichtbarkeit von Anwendungsbenachrichtigungen auf dem Sperrbildschirm einstellen.</string>
   <string name="pref_blackList_title">Blockierte Kontakte</string>
@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Dein Konto von diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
   <string name="pref_persistNotification_summary">Jami erlauben im Hintergrund zu laufen, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_newGroup_title">Gruppenchat aktivieren</string>
+  <string name="pref_newGroup_summary">Erstellen von Gruppen in Jami aktivieren</string>
   <string name="pref_logs_title">Diagnoseprotokolle</string>
   <string name="pref_logs_summary">Diagnoseprotokolleinstellungen öffnen</string>
   <string name="pref_logs_start">Protokollierung starten</string>
@@ -58,7 +60,8 @@
   <string name="plugin_uninstall_title">Plugin deinstallieren ?</string>
   <string name="plugin_reset_preferences">Plugin-Einstellungen zurücksetzen</string>
   <string name="plugin_reset_preferences_summary">Die Plugin-Einstellungen werden voreingestellt</string>
-  <string name="plugin_reset_preferences_ask">Wollen Sie die Einstellungen des Plugins zurücksetzen ?</string>
+  <string name="plugin_reset_preferences_ask">Möchten Sie die allgemeinen Plugin-Einstellungen zurücksetzen?</string>
+  <string name="plugin_reset_account_preferences_ask">Möchten Sie die Konto-Plugin-Einstellungen zurücksetzen?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> erfolgreich installiert</string>
   <string name="plugin_install_failure">Installation des Plugins ist fehlgeschlagen: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Sie haben eine neuere Version von: <b>%1$s</b></string>

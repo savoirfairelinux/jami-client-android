@@ -16,7 +16,7 @@
   <string name="pref_hwEncode_title">Attiva la codifica accelerata</string>
   <string name="pref_hwEncode_summary">Funzioni sperimentali</string>
   <string name="pref_videoBitrate_title">Qualità video</string>
-  <string name="pref_videoBitrate_summary">Seleziona il bitrate video in uscita predefinito (KB/s)</string>
+  <string name="pref_videoBitrate_summary">Seleziona il bitrate video in uscita predefinito (kb/s)</string>
   <string name="pref_videoResolution_title">Risoluzione video</string>
   <string name="pref_videoResolution_summary">Seleziona la risoluzione video in uscita predefinita</string>
   <string name="pref_systemContacts_title">Usa la rubrica</string>
@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Disinstallare il plugin?</string>
   <string name="plugin_reset_preferences">Ripristina le preferenze del plugin</string>
   <string name="plugin_reset_preferences_summary">Le impostazioni del tuo plugin saranno ripristinate</string>
-  <string name="plugin_reset_preferences_ask">Vuoi ripristinare le impostazioni del plugin?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installato con successo</string>
   <string name="plugin_install_failure">Impossibile installare il plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>

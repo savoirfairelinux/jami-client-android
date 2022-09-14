@@ -27,7 +27,7 @@ along with this program; if not, write to the Free Software
     <!-- SipCalls -->
     <string name="call_human_state_searching">Iskanje</string>
     <string name="call_human_state_incoming">Dohodni</string>
-    <string name="call_human_state_connecting">Povezujem</string>
+    <string name="call_human_state_connecting">Povezovanje v teku</string>
     <string name="call_human_state_ringing">Zvoni</string>
     <string name="call_human_state_current">Pogovor</string>
     <string name="call_human_state_hungup">Končan</string>

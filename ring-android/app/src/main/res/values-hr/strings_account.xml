@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Napredne postavke</string>
   <string name="ic_blacklist_menu">Blokirani kontakti</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Dodaj Jami račun</string>
+  <string name="add_ring_account_title">Dodaj račun</string>
   <string name="add_sip_account_title">Dodajte SIP račun</string>
   <string name="ring_account_default_name">Jami račun %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -50,6 +50,8 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_autoanswer_label">Automatski odgovor</string>
   <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Dodaci</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_preferences_media_tab">Medij</string>
@@ -78,6 +80,7 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_turn_server_label">TURN poslužitelj</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
   <string name="account_turn_password_label">TURN lozinka</string>
+  <string name="enabled">Uključeno</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Koristi DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>

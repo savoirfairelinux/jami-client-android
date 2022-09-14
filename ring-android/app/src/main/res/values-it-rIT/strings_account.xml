@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Impostazioni avanzate</string>
   <string name="ic_blacklist_menu">Contatti bloccati</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Aggiungi account Jami</string>
+  <string name="add_ring_account_title">Aggiungi account</string>
   <string name="add_sip_account_title">Aggiungi account SIP</string>
   <string name="ring_account_default_name">Account Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -63,6 +63,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_rendezvous_summary">In modalità Riunione, le chiamate in arrivo saranno aggiunte a una sala conferenze.</string>
   <string name="account_upnp_label">Attiva UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Plugin</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -97,6 +99,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_published_same_as_local_label">Pubblico uguale a quello locale</string>
   <string name="account_published_port_label">Porta pubblicata</string>
   <string name="account_published_address_label">Indirizzo pubblicato</string>
+  <string name="enabled">Abilitato</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
@@ -138,7 +141,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Attendere…</string>
   <string name="export_account_wait_message">Esportazione dell\'account in corso</string>
-  <string name="account_export_file">Backup dell\'account</string>
+  <string name="account_export_file">Salva l\'account</string>
   <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>

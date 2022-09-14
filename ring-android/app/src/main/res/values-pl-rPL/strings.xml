@@ -112,11 +112,6 @@
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
-  <string name="hist_contact_invited">Kontakt zaproszony</string>
-  <string name="hist_contact_added">Kontakt dodany</string>
-  <string name="hist_contact_left">Kontakt opuścił</string>
-  <string name="hist_contact_banned">Kontakt został zablokowany</string>
-  <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <string name="ab_action_audio_call">Połączenie głosowe</string>
   <string name="ab_action_video_call">Połączenie wideo</string>
   <string name="ab_action_change_screen_orientation">Obróć ekran</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
+  <string name="hist_contact_invited">Kontakt zaproszony</string>
+  <string name="hist_contact_added">Kontakt dodany</string>
+  <string name="hist_contact_left">Kontakt opuścił</string>
+  <string name="hist_contact_banned">Kontakt został zablokowany</string>
+  <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nazwa Profilu</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Kopiuj</string>
   <string name="menu_message_delete">Usuń wiadomość</string>
   <string name="menu_message_cancel">Anuluj wiadomość</string>
+  <string name="menu_message_reply">Odpowiedz</string>
   <string name="menu_delete">Usuń</string>
   <string name="pref_darkTheme_title">Ciemny motyw</string>
   <string name="pref_darkTheme_summary">Zawsze używaj ciemnego motywu bez względu na ustawienia systemu</string>
@@ -332,4 +333,6 @@
   <string name="bottomSheet_hangup_btn">Skończ rozmowę</string>
   <string name="bottomSheet_sound_output_btn">Dźwięk</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
+  <string name="uninstall">Odinstaluj</string>
+  <string name="reset">Zresetuj</string>
 </resources>

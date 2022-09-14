@@ -2,13 +2,13 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Återkoppling</string>
-  <string name="report"><u>Skicka ett e-postmeddelande till oss</u></string>
-  <string name="section_license">Licens</string>
-  <string name="sponsor_section">Jami är fri mjukvara, utvecklad och understödd av</string>
-  <string name="copyright_section">Copyright</string>
-  <string name="contribute_section">Bidra</string>
-  <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Inget e-postprogram hittades, installera ett och skicka en rapport</string>
+  <string name="report"><u>Skicka e-postmeddelande till oss</u></string>
+  <string name="section_license">Licens </string>
+  <string name="sponsor_section">Jami är en fri mjukvara, utvecklad och understödd av </string>
+  <string name="copyright_section">Copyright </string>
+  <string name="contribute_section">Bidra </string>
+  <string name="version_section">Version </string>
+  <string name="no_email_app_installed">Inget e-postprogram hittades, installera ett för att skicka en rapport </string>
   <string name="no_browser_app_installed">Ingen webbläsare hittades, installera en för att visa den här sidan</string>
   <string name="email_chooser_title">Skicka e-post med...</string>
   <string name="website_chooser_title">Visa webbsidan med...</string>
@@ -16,6 +16,8 @@
   <string name="description">Jami är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
   <string name="credits">Tack till</string>
   <string name="pip_title">Jami Konferens</string>
+  <string name="call_service_description">Denna tjänst behövs för att kunna ringa. Den körs bara under ett samtal. </string>
+  <string name="data_transfer_service_description">Denna tjänst är nödvändig för att visa notifikationer under filöverföring. Denna process körs endast under filöverföring. </string>
   <!--About dialog-->
   <string name="developed_by">Utvecklad av</string>
   <string name="designed_by">Designad av</string>
@@ -108,11 +110,6 @@
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Lägga till i kontakter?</string>
-  <string name="hist_contact_invited">Mottagaren är inbjuden</string>
-  <string name="hist_contact_added">Kontakt tillagt</string>
-  <string name="hist_contact_left">Mottagaren lämnade</string>
-  <string name="hist_contact_banned">Mottagaren är förbjuden</string>
-  <string name="hist_invitation_received">Inbjudan mottagen</string>
   <string name="ab_action_audio_call">Ljudsamtal</string>
   <string name="ab_action_video_call">Videosamtal</string>
   <string name="ab_action_change_screen_orientation">Ändra skärmorientering</string>
@@ -198,10 +195,17 @@
   <string name="prompt_new_username">Ange nytt användarnamn</string>
   <string name="prompt_hint_username">Användarnamn</string>
   <string name="help_password_choose">Välj ett starkt lösenord som du kommer ihåg, för att skydda ditt Jami-konto.</string>
+  <string name="help_password_enter">Ange ditt huvudlösenord till Jami. </string>
+  <string name="help_server_enter">Ange URL för tjänsteservern. </string>
   <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Jami-konto. Använd \"Exportera Jami-konto\", för att få din PIN-kod.</string>
   <string name="wizard_next">Nästa</string>
   <string name="wizard_back">Tillbaka</string>
   <string name="wizard_skip">Hopa över</string>
+  <string name="hist_contact_invited">Mottagaren är inbjuden</string>
+  <string name="hist_contact_added">Kontakt tillagt</string>
+  <string name="hist_contact_left">Mottagaren lämnade</string>
+  <string name="hist_contact_banned">Mottagaren är förbjuden</string>
+  <string name="hist_invitation_received">Inbjudan mottagen</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnamn</string>
@@ -279,8 +283,10 @@
   <string name="menu_message_copy">Kopiera</string>
   <string name="menu_message_delete">Ta bort meddelandet</string>
   <string name="menu_message_cancel">Avbryt meddelandet</string>
+  <string name="menu_message_reply">Svara</string>
   <string name="menu_delete">Ta bort</string>
   <string name="pref_darkTheme_title">Mörkt tema</string>
+  <string name="pref_darkTheme_summary">Använd mörkt läge istället för systemets inställningar. </string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversationer</string>
   <string name="navigation_item_contact_request">Kontaktförfrågningar</string>
@@ -308,19 +314,27 @@
   <string name="wizard_username_button">Välj användarnamn</string>
   <string name="wizard_username_skip">Hoppa över användarnamn</string>
   <string name="wizard_password_info">Kontolösenord</string>
+  <string name="wizard_password_placeholder">Välj lösenord för att kryptera kontonyckeln för denna enhet. </string>
   <string name="wizard_password_button">Välj lösenord</string>
   <string name="wizard_password_skip">Skapa konto</string>
   <string name="wizard_password_switch">Kryptera kontot med lösenord</string>
+  <string name="wizard_password_warning">Notera att lösenordet inte går att återställa. </string>
+  <string name="wizard_profile_info">Användarprofilen delas endast med dina kontakter. </string>
   <string name="wizard_profile_button">Spara profil</string>
+  <string name="wizard_profile_skip">Avbryt och fortsätt senare. </string>
   <string name="fab_path_choose">Välj en annan fil</string>
   <string name="chat_plugins">Chat Modul</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Dela</string>
+  <string name="bottomSheet_dialpad_btn">Knappsats</string>
   <string name="bottomSheet_plugins_btn">Insticksmoduler</string>
   <string name="bottomSheet_add_participants_btn">Lägg till</string>
   <string name="bottomSheet_change_camera_btn">Ändra</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Avsluta samtal</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
+  <string name="uninstall">Avinstallera</string>
+  <string name="reset">Återställ</string>
 </resources>

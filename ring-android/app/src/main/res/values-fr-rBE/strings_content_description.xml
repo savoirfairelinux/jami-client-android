@@ -5,5 +5,5 @@
   <string name="contact_picture_description">Image de Contact</string>
   <string name="dial_numeric_pad">Pavé numérique</string>
   <string name="contact_unblock">Débloquer</string>
-  <string name="video_plugins">Plugins Video</string>
+  <string name="video_plugins">Module d\'extension Video</string>
 </resources>

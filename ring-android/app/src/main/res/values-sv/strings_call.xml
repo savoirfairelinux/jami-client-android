@@ -38,4 +38,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">Över</string>
     <!-- Conferences -->
     <string name="call_moderator">Moderator</string>
-    </resources>
+    <string name="call_muted">Tyst läge</string>
+    <string name="call_handRaised">Hand upp</string>
+
+</resources>

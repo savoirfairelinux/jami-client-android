@@ -24,6 +24,7 @@
   <string name="ringtones_by">ਘੰਟੀ ਇਹਨਾਂ ਨੇ ਬਣਾਈ</string>
   <!--RingActivity-->
   <string name="error_no_network">ਕੋਈ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਹੈ</string>
+  <string name="error_account_offline">ਖਾਤਾ ਆਫ਼ਲਾਈਨ ਹੈ</string>
   <string name="error_mobile_network_available_but_disabled">ਕਿਰਪਾ ਕਰਕੇ ਸੈਟਿੰਗਾਂ ਸਕ੍ਰੀਨ ਵਿੱਚ ਸੈਲਿਊਲਰ ਨੈੱਟਵਰਕ ਤੱਕ ਪਹੁੰਚ ਦਿਓ।</string>
   <!--AB menus-->
   <string name="ab_action_chat">ਲਿਖਤ ਸੁਨੇਹੇ</string>
@@ -90,12 +91,16 @@
   <string name="action_call_hangup">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_maximize">ਵੱਡਾ ਕਰੋ</string>
   <string name="action_call_minimize">ਛੋਟਾ ਕਰੋ</string>
+  <string name="action_call_mute">ਚੁੱਪ ਹੋਵੋ</string>
+  <string name="action_call_unmute">ਬੋਲੋ</string>
   <string name="ongoing_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="hist_in_call">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
   <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
   <string name="start_error_title">Jami ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ !</string>
   <string name="start_error_mic_required">Jami ਨੂੰ ਚੱਲਣ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ।</string>
   <string name="action_call_accept">ਕਾਲ ਲਓ</string>
+  <string name="action_call_accept_audio">ਆਵਾਜ਼ੀ ਕਾਲ ਦਾ ਜਵਾਬ ਦਿਓ</string>
+  <string name="action_call_accept_video">ਵੀਡੀਓ ਕਾਲ ਦਾ ਜਵਾਬ ਦਿਓ</string>
   <string name="action_call_end_accept">ਕਾਲ ਕੱਟ ਕੇ ਦੂਜੀ ਕਾਲ ਲਓ</string>
   <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
   <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕਰੋ</string>
@@ -103,14 +108,13 @@
   <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
   <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੋ</string>
   <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਜੋੜੀਏ?</string>
-  <string name="hist_contact_added">ਸੰਪਰਕ ਜੋੜਿਆ ਗਿਆ</string>
-  <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
   <string name="ab_action_audio_call">ਅਵਾਜ਼ੀ ਕਾਲ</string>
   <string name="ab_action_video_call">ਵੀਡੀਓ ਕਾਲ</string>
   <string name="ab_action_change_screen_orientation">ਸਕ੍ਰੀਨ ਦੀ ਦਿਸ਼ਾ ਬਦਲੋ</string>
   <string name="share_via">ਇਸ ਰਾਹੀਂ ਸਾਂਝਾ ਕਰੋ</string>
   <string name="write_a_message">ਕੋਈ ਸੁਨੇਹਾ ਲਿਖੋ</string>
   <string name="scan_qr">QR ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
+  <string name="qr_code">QR ਕੋਡ</string>
   <string name="ab_action_flipcamera">ਕੈਮਰਾ ਪਲਟਾਓ</string>
   <string name="ab_action_hidepreview">ਝਲਕ ਲੁਕਾਓ</string>
   <!--Text messages-->
@@ -170,6 +174,9 @@
   <string name="block_contact_dialog_message">%1$s ਤੁਹਾਨੂੰ ਤਦ ਤੱਕ ਸੰਪਰਕ ਨਹੀਂ ਕਰ ਸਕਣਗੇ, ਜਦ ਤੱਕ ਤੁਸੀਂ ਉਹਨਾਂ ਤੋਂ ਬੰਦਸ਼ ਨਹੀਂ ਹਟਾਉਂਦੇ।</string>
   <string name="block_contact_completed">%1$s \'ਤੇ ਬੰਦਸ਼ ਲਗਾਈ ਗਈ।</string>
   <string name="conversation_contact_is_typing">ਸੰਪਰਕ ਲਿਖ ਰਹੇ ਹਨ…</string>
+  <string name="conversation_members">ਸਾਥੀ</string>
+  <string name="conversation_preference_color">ਗੱਲਬਾਤ ਦਾ ਰੰਗ</string>
+  <string name="conversation_preference_emoji">ਗੱਲਬਾਤ ਲਈ ਇਮੋਜੀ</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s ਨੂੰ ਜੋੜੀਏ?</string>
   <string name="prompt_new_password">ਨਵਾਂ ਪਾਸਵਰਡ</string>
@@ -185,6 +192,9 @@
   <string name="wizard_next">ਅੱਗੇ</string>
   <string name="wizard_back">ਪਿੱਛੇ</string>
   <string name="wizard_skip">ਛੱਡੋ</string>
+  <string name="hist_contact_invited">ਸੰਪਰਕ ਸੱਦਿਆ ਗਿਆ</string>
+  <string name="hist_contact_added">ਸੰਪਰਕ ਜੋੜਿਆ ਗਿਆ</string>
+  <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
   <!--Account Summary-->
   <string name="profile">ਪ੍ਰੋਫ਼ਾਈਲ</string>
   <string name="profile_name">ਪ੍ਰੋਫ਼ਾਈਲ ਦਾ ਨਾਂ</string>
@@ -256,6 +266,7 @@
   <string name="menu_message_copy">ਨਕਲ ਲਾਹੋ</string>
   <string name="menu_message_delete">ਸੁਨੇਹਾ ਮਿਟਾਓ</string>
   <string name="menu_message_cancel">ਸੁਨੇਹਾ ਰੱਦ ਕਰੋ</string>
+  <string name="menu_message_reply">ਜਵਾਬ ਦਿਓ</string>
   <string name="menu_delete">ਮਿਟਾਓ</string>
   <string name="pref_darkTheme_title">ਕਾਲਾ ਥੀਮ</string>
   <string name="pref_darkTheme_summary">ਸਿਸਟਮ ਦੀ ਮਰਜ਼ੀ ਦੀ ਬਜਾਏ ਹਮੇਸ਼ਾ ਕਾਲਾ ਥੀਮ ਚਾਲੂ ਕਰੋ</string>
@@ -296,5 +307,7 @@
   <string name="fab_path_choose">ਕੋਈ ਹੋਰ ਫ਼ਾਈਲ ਚੁਣੋ</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="bottomSheet_change_camera_btn">ਬਦਲੋ</string>
   <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
+  <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
 </resources>

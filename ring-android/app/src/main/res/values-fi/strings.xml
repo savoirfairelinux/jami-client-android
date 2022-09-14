@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
   <string name="ab_action_contact_add_question">Lisää yhteystietoihin?</string>
-  <string name="hist_contact_invited">Henkilö kutsuttu</string>
-  <string name="hist_contact_added">Henkilö lisätty</string>
-  <string name="hist_contact_left">Henkilö poistui</string>
-  <string name="hist_contact_banned">Henkilö estetty</string>
-  <string name="hist_invitation_received">Kutsu vastaanotettu</string>
   <string name="ab_action_audio_call">Äänipuhelu</string>
   <string name="ab_action_video_call">Videopuhelu</string>
   <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
+  <string name="hist_contact_invited">Henkilö kutsuttu</string>
+  <string name="hist_contact_added">Henkilö lisätty</string>
+  <string name="hist_contact_left">Henkilö poistui</string>
+  <string name="hist_contact_banned">Henkilö estetty</string>
+  <string name="hist_invitation_received">Kutsu vastaanotettu</string>
   <!--Account Summary-->
   <string name="profile">Profiili</string>
   <string name="profile_name">Profiilin nimi</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Kopioi</string>
   <string name="menu_message_delete">Poista viesti</string>
   <string name="menu_message_cancel">Peruuta viesti</string>
+  <string name="menu_message_reply">Vastaa</string>
   <string name="menu_delete">Poista</string>
   <string name="pref_darkTheme_title">Tumma teema</string>
   <string name="pref_darkTheme_summary">Ota aina käyttöön tumma teema järjestelmän toiminnan sijasta</string>
@@ -334,4 +335,6 @@
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
   <string name="bottomSheet_raiseHand_btn">Käsi ylös</string>
+  <string name="uninstall">Poista asennus</string>
+  <string name="reset">Nollaa</string>
 </resources>

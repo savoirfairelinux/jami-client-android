@@ -46,7 +46,6 @@
   <string name="action_call_decline">Rifuzi</string>
   <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
-  <string name="hist_contact_invited">Invitita Kontakto</string>
   <string name="ab_action_audio_call">Sona voko</string>
   <string name="ab_action_video_call">Videa voko</string>
   <string name="share_via">Kunhavi per</string>
@@ -86,6 +85,7 @@
   <string name="prompt_new_password">Nova pasvorto</string>
   <string name="prompt_hint_username">Uzantnomo</string>
   <string name="wizard_next">Sekva</string>
+  <string name="hist_contact_invited">Invitita Kontakto</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
   <string name="profile_name_hint">Entajpu vian nomon</string>
@@ -108,6 +108,7 @@
   <string name="menu_file_share">Kunhavigi dosieron</string>
   <string name="menu_message_copy">Kopii</string>
   <string name="menu_message_cancel">Nuligi mesaĝon</string>
+  <string name="menu_message_reply">Respondo</string>
   <string name="menu_delete">Forigi</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversacioj</string>

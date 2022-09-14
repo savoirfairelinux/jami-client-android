@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Desinstalar Complemento ?</string>
   <string name="plugin_reset_preferences">Redefinir preferências de complemento</string>
   <string name="plugin_reset_preferences_summary">Suas configurações de complemento serão padronizadas</string>
-  <string name="plugin_reset_preferences_ask">Você deseja redefinir as configurações dos complementos ?</string>
   <string name="plugin_successfully_installed">Complemento <b>%1$s</b> instalado com êxito</string>
   <string name="plugin_install_failure">Falha na instalação do complemento: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Você tem uma versão mais recente de: <b>%1$s</b></string>

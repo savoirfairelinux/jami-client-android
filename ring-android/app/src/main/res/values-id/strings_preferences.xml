@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Copot Plugin?</string>
   <string name="plugin_reset_preferences">Setel ulang pengaturan plugin</string>
   <string name="plugin_reset_preferences_summary">Pengaturan plugin anda akan kembali seperti semula</string>
-  <string name="plugin_reset_preferences_ask">Apakah anda ingin menyetel ulang pengaturan plugin?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b>berhasil dipasang</string>
   <string name="plugin_install_failure">Gagal memasang plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Anda memiliki versi terbaru dari: <b>%1$s</b></string>

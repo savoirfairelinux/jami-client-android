@@ -1,15 +1,32 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="pref_category_network">Ενεργοποίηση αποστολής HD βίντεο</string>
+  <string name="pref_category_network">Δίκτυο</string>
   <string name="pref_category_contacts">Επαφές</string>
   <string name="pref_category_video">Βίντεο</string>
   <string name="pref_category_system">Σύστημα</string>
   <string name="pref_category_privacy">Απόρρητο</string>
+  <string name="pref_category_diagnostic">Διαγνωστικά</string>
   <string name="pref_mobileData_title">Δεδομένα κινητού</string>
   <string name="pref_mobileData_summary">Επιτρέψτε στο Jami να χρησιμοποίει 3G/LTE σε συνδυασμό με το Wi-Fi</string>
-  <string name="pref_pushNotifications_title">Ειδοποίησης</string>
+  <string name="pref_pushNotifications_title">Ειδοποιήσεις</string>
   <string name="pref_video_advanced_title">Ρυθμίσεις βίντεο για προχωρημένους</string>
+  <string name="pref_videoResolution_title">Ανάλυση βίντεο</string>
+  <string name="pref_systemContacts_title">Χρησιμοποίησε τις επαφές συσκευής</string>
+  <string name="pref_systemContacts_summary">Χρησιμοποίησε τις επαφές συσκευής εμφάνιση των στοιχείων καλούντος.</string>
+  <string name="pref_systemDialer_title">Διενέργεια κλήσεων συστήματος με χρήση του Jami</string>
+  <string name="pref_systemDialer_summary">Χρήση του Jami για κλήσεις συστήματος όπου είναι δυνατό.</string>
+  <string name="pref_startOnBoot_title">Έναρξη του Jami κατά την εκκίνηση</string>
   <string name="pref_clearHistory_title">Διαγραφή ιστορικού</string>
+  <string name="pref_notification_title">Ορατότητα ειδοποιήσεων</string>
+  <string name="pref_blackList_title">Λίστα μπλοκαρισμένων</string>
+  <string name="pref_blackList_summary">Έλεγξε τη λίστα αποκλεισμένων</string>
+  <string name="pref_delete_account_title">Διαγραφή λογαριασμού</string>
+  <string name="pref_delete_account_summary">Διαγραφή λογαριασμού από αυτή τη συσκευή</string>
+  <string name="pref_persistNotification_title">Εκτέλεση στο παρασκήνιο</string>
+  <string name="pref_logs_title">Καταγραφέντα διαγνωστικά</string>
+  <string name="pref_logs_summary">Ανοίξτε τις ρυθμίσεις καταγραφής διαγνωστικού</string>
+  <string name="pref_logs_start">Έναρξη καταγραφής</string>
+  <string name="pref_logs_stop">Τερματισμός καταγραφής</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

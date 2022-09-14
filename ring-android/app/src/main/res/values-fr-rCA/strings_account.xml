@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Réglages avancés</string>
   <string name="ic_blacklist_menu">Contacts bloqués</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Ajouter un compte Jami</string>
+  <string name="add_ring_account_title">Ajouter le compte</string>
   <string name="add_sip_account_title">Ajouter un compte SIP</string>
   <string name="ring_account_default_name">Compte Jami%1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -63,6 +63,8 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_rendezvous_summary">Dans le mode Rendezvous, les appels entrants vont être ajoutés à une salle de conférence.</string>
   <string name="account_upnp_label">Activer UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Modules d\'extension</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -97,6 +99,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
   <string name="account_published_port_label">Port publié</string>
   <string name="account_published_address_label">Adresse publiée</string>
+  <string name="enabled">Activer</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Utiliser un serveur délégataire </string>
   <string name="account_proxy_server_label">Adresse du proxy DHT</string>
@@ -219,7 +222,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_status_offline">Hors ligne</string>
   <string name="account_status_error">Erreur</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenu sur Jami</string>
+  <string name="account_creation_home">Bienvenue sur Jami</string>
   <string name="account_creation_profile">Créer votre profil</string>
   <string name="account_creation_ring">Créer un compte Jami</string>
   <string name="account_link_title">Associer cet appareil</string>

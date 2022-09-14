@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">إعدادات متقدمة</string>
   <string name="ic_blacklist_menu">جهات إتصال محظورة</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">إضافة حساب جامي</string>
+  <string name="add_ring_account_title">أضف حساب</string>
   <string name="add_sip_account_title">إضافة حساب SIP</string>
   <string name="ring_account_default_name">حساب جامي %1$s</string>
   <string name="prompt_alias">الاسم المستعار</string>
@@ -63,6 +63,8 @@
   <string name="account_rendezvous_summary">في وضع الإجتماع، ستتم إضافة المكالمات الواردة إلى غرفة إجتماع</string>
   <string name="account_upnp_label">تفعيل بروتوكول PUnP</string>
   <string name="account_proxy_field">الوكيل</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">الإضافات</string>
   <!--Audio Details-->
   <string name="account_audio_label">صوت</string>
   <string name="account_preferences_media_tab">ميديا</string>
@@ -97,6 +99,7 @@
   <string name="account_published_same_as_local_label">منشور مثل المحلي</string>
   <string name="account_published_port_label">نقطة العبور (port) المنشورة</string>
   <string name="account_published_address_label">العنوان المنشور</string>
+  <string name="enabled">مفعل</string>
   <string name="account_proxy_label">وكيل DHT</string>
   <string name="account_proxy_enable_label">استخدام وكيل DHT</string>
   <string name="account_proxy_server_label">عنوان وكيل DHT</string>

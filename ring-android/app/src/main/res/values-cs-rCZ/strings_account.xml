@@ -5,7 +5,7 @@
   <string name="ic_advanced_menu">Pokročilá nastavení</string>
   <string name="ic_blacklist_menu">Blokované kontakty</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Přidat účet Jami</string>
+  <string name="add_ring_account_title">Přidat účet</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
   <string name="ring_account_default_name">Účet Jami %1$s</string>
   <string name="prompt_alias">Přezdívka</string>
@@ -60,6 +60,8 @@ Svůj účet můžete upravit později</string>
   <string name="account_autoanswer_label">Automatická odpověď</string>
   <string name="account_upnp_label">Povolit UPnP</string>
   <string name="account_proxy_field">Proxy</string>
+  <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Zásuvné moduly</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -94,6 +96,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_published_same_as_local_label">Zveřejněné stejně jako místní</string>
   <string name="account_published_port_label">Zveřejněný port</string>
   <string name="account_published_address_label">Zveřejněná adresa</string>
+  <string name="enabled">Zapnuto</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Použít proxy DHT</string>
   <string name="account_proxy_server_label">Adresa proxy DHT</string>

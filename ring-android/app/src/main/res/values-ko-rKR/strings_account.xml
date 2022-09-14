@@ -17,6 +17,7 @@
   <string name="account_username_label">사용자명</string>
   <string name="account_password_label">암호</string>
   <string name="account_proxy_field">프록시</string>
+  <!--Plugin Details-->
   <!--Audio Details-->
   <!--Video Details-->
   <string name="account_video_label">비디오</string>

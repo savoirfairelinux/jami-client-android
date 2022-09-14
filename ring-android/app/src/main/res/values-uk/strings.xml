@@ -93,8 +93,6 @@
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
   <string name="ab_action_contact_add_question">Додати до контактів?</string>
-  <string name="hist_contact_added">Контакт додано</string>
-  <string name="hist_invitation_received">Отримано запрошення</string>
   <string name="ab_action_audio_call">Голосовий виклик</string>
   <string name="ab_action_video_call">Відео виклик</string>
   <string name="ab_action_change_screen_orientation">Змінити орієнтацію екрану</string>
@@ -170,6 +168,8 @@
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустити</string>
+  <string name="hist_contact_added">Контакт додано</string>
+  <string name="hist_invitation_received">Отримано запрошення</string>
   <!--Account Summary-->
   <string name="profile">Профіль</string>
   <string name="profile_name">Назва профіля</string>
@@ -232,6 +232,7 @@
   <string name="menu_message_copy">Копіювати</string>
   <string name="menu_message_delete">Видалити повідомлення</string>
   <string name="menu_message_cancel">Скасувати повідомлення</string>
+  <string name="menu_message_reply">Відповісти</string>
   <string name="menu_delete">Видалити</string>
   <string name="pref_darkTheme_title">Темна тема</string>
   <string name="pref_darkTheme_summary">Завжди використовувати темну тему замість теми за замовчуванням</string>

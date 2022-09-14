@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Löschen des Benutzerkontos auf diesem Gerät</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund zulassen, um Anrufe und Nachrichten zu empfangen.</string>
+  <string name="pref_newGroup_title">Gruppenchat aktivieren</string>
+  <string name="pref_newGroup_summary">Erstellen von Gruppen in Jami aktivieren</string>
   <string name="pref_logs_title">Diagnoseprotokolle</string>
   <string name="pref_logs_summary">Einstellungen für das Diagnoseprotokoll öffnen</string>
   <string name="pref_logs_start">Start der Aufzeichnung</string>
@@ -58,7 +60,8 @@
   <string name="plugin_uninstall_title">Plugin löschen?</string>
   <string name="plugin_reset_preferences">Plugin-Einstellungen zurücksetzen</string>
   <string name="plugin_reset_preferences_summary">Deine Plugin-Einstellungen sind standardmäßig voreingestellt</string>
-  <string name="plugin_reset_preferences_ask">Möchtest du die Plugin-Einstellungen zurücksetzen?</string>
+  <string name="plugin_reset_preferences_ask">Möchten Sie die allgemeinen Plugin-Einstellungen zurücksetzen?</string>
+  <string name="plugin_reset_account_preferences_ask">Möchten Sie die Konto-Plugin-Einstellungen zurücksetzen?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> wurde erfolgreich installiert.</string>
   <string name="plugin_install_failure">Plugin konnte nicht installiert werden:<b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Du hast eine neuere Version von: <b>%1$s</b></string>

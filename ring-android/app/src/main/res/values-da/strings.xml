@@ -102,8 +102,6 @@
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakter</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
-  <string name="hist_contact_added">Kontakt tilføjet</string>
-  <string name="hist_invitation_received">Invitation modtaget</string>
   <string name="ab_action_audio_call">Lydopkald</string>
   <string name="ab_action_video_call">Videoopkald</string>
   <string name="ab_action_change_screen_orientation">Ændr skærm-orientering</string>
@@ -186,6 +184,8 @@
   <string name="wizard_next">Næste</string>
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
+  <string name="hist_contact_added">Kontakt tilføjet</string>
+  <string name="hist_invitation_received">Invitation modtaget</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Brugernavn</string>
@@ -261,6 +261,7 @@
   <string name="menu_message_copy">Kopiér</string>
   <string name="menu_message_delete">Slet besked</string>
   <string name="menu_message_cancel">Annuller besked</string>
+  <string name="menu_message_reply">Svar</string>
   <string name="menu_delete">Slet</string>
   <string name="pref_darkTheme_title">Mørk tema</string>
   <string name="pref_darkTheme_summary">Hav altid mørk tema aktiveret i stedet for at bruge system-indstilligen</string>

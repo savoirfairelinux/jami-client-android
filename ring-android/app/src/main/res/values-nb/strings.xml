@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
-  <string name="hist_contact_invited">Er invitert</string>
-  <string name="hist_contact_added">Kontakt lagt til</string>
-  <string name="hist_contact_left">Har forlatt samtalen</string>
-  <string name="hist_contact_banned">Blokkert</string>
-  <string name="hist_invitation_received">Invitasjon mottatt</string>
   <string name="ab_action_audio_call">Talesamtale</string>
   <string name="ab_action_video_call">Videosamtale</string>
   <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>
+  <string name="hist_contact_invited">Er invitert</string>
+  <string name="hist_contact_added">Kontakt lagt til</string>
+  <string name="hist_contact_left">Har forlatt samtalen</string>
+  <string name="hist_contact_banned">Blokkert</string>
+  <string name="hist_invitation_received">Invitasjon mottatt</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profilnavn</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Kopier</string>
   <string name="menu_message_delete">Slett melding</string>
   <string name="menu_message_cancel">Avbryt melding</string>
+  <string name="menu_message_reply">Svar</string>
   <string name="menu_delete">Slett</string>
   <string name="pref_darkTheme_title">Mørkt tema</string>
   <string name="pref_darkTheme_summary">Aktiver alltid mørkt tema i stedet for å bruke systematferd</string>
@@ -334,4 +335,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
+  <string name="uninstall">Avinstaller</string>
+  <string name="reset">Nullstill</string>
 </resources>

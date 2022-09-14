@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">卸载插件？</string>
   <string name="plugin_reset_preferences">重置插件设置</string>
   <string name="plugin_reset_preferences_summary">您的插件设置将被重置为默认状态</string>
-  <string name="plugin_reset_preferences_ask">您要重置插件设置吗 ？</string>
   <string name="plugin_successfully_installed">成功安装插件<b>%1$s</b></string>
   <string name="plugin_install_failure">安装插件<b>%1$s</b>失败</string>
   <string name="plugin_recent_version_exception">您的<b>%1$s</b>版本更新</string>

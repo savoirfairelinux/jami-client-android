@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
-  <string name="hist_contact_invited">Kişi davet edildi</string>
-  <string name="hist_contact_added">Kişi eklendi</string>
-  <string name="hist_contact_left">Kişi ayrıldı</string>
-  <string name="hist_contact_banned">Kişi engellendi</string>
-  <string name="hist_invitation_received">Davetiye alındı</string>
   <string name="ab_action_audio_call">Sesli arama</string>
   <string name="ab_action_video_call">Görüntülü arama</string>
   <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
@@ -206,6 +201,11 @@
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <string name="wizard_skip">Atla</string>
+  <string name="hist_contact_invited">Kişi davet edildi</string>
+  <string name="hist_contact_added">Kişi eklendi</string>
+  <string name="hist_contact_left">Kişi ayrıldı</string>
+  <string name="hist_contact_banned">Kişi engellendi</string>
+  <string name="hist_invitation_received">Davetiye alındı</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Profil Adı</string>
@@ -283,6 +283,7 @@
   <string name="menu_message_copy">Kopyala</string>
   <string name="menu_message_delete">İletiyi sil</string>
   <string name="menu_message_cancel">İletiyi iptal et</string>
+  <string name="menu_message_reply">Yanıtla</string>
   <string name="menu_delete">Sil</string>
   <string name="pref_darkTheme_title">Karanlık tema</string>
   <string name="pref_darkTheme_summary">Sistem davranışını kullanmak yerine her zaman koyu temayı etkinleştir</string>
@@ -334,4 +335,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Sesler</string>
   <string name="bottomSheet_raiseHand_btn">Elinizi kaldırın</string>
+  <string name="uninstall">Kaldır</string>
+  <string name="reset">Sıfırlama</string>
 </resources>

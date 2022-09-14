@@ -92,8 +92,6 @@
   <string name="ab_action_speakerphone">Zapnúť reproduktor</string>
   <string name="ab_action_contact_add">Pridať kontakt</string>
   <string name="ab_action_contact_add_question">Pridať do kontaktov?</string>
-  <string name="hist_contact_added">Kontakt pridaný</string>
-  <string name="hist_invitation_received">Bola prijatá pozvánka</string>
   <string name="ab_action_audio_call">Audio hovor</string>
   <string name="ab_action_video_call">Video hovor</string>
   <string name="ab_action_change_screen_orientation">Zmeniť orientáciu obrazovky</string>
@@ -174,6 +172,8 @@
   <string name="wizard_next">Ďalej</string>
   <string name="wizard_back">Späť</string>
   <string name="wizard_skip">Preskočiť</string>
+  <string name="hist_contact_added">Kontakt pridaný</string>
+  <string name="hist_invitation_received">Bola prijatá pozvánka</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
@@ -243,6 +243,7 @@
   <string name="menu_message_copy">Kopírovať</string>
   <string name="menu_message_delete">Vymazať správu</string>
   <string name="menu_message_cancel">Zrušiť správu</string>
+  <string name="menu_message_reply">Odpovedať</string>
   <string name="menu_delete">Vymazať</string>
   <string name="pref_darkTheme_title">Tmavá téma</string>
   <string name="pref_darkTheme_summary">Vždy použiť tmavú tému namiesto systémovej</string>

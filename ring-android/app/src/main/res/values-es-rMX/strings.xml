@@ -106,11 +106,6 @@
   <string name="ab_action_speakerphone">Activar altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
-  <string name="hist_contact_invited">Contacto invitado</string>
-  <string name="hist_contact_added">Contacto añadido</string>
-  <string name="hist_contact_left">El contacto se ha ido</string>
-  <string name="hist_contact_banned">Contacto bloqueado</string>
-  <string name="hist_invitation_received">Invitación recibida</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar orientación de pantalla</string>
@@ -202,6 +197,11 @@
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
   <string name="wizard_skip">Omitir</string>
+  <string name="hist_contact_invited">Contacto invitado</string>
+  <string name="hist_contact_added">Contacto añadido</string>
+  <string name="hist_contact_left">El contacto se ha ido</string>
+  <string name="hist_contact_banned">Contacto bloqueado</string>
+  <string name="hist_invitation_received">Invitación recibida</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_name">Nombre de perfil</string>
@@ -279,6 +279,7 @@
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_message_delete">Eliminar mensaje</string>
   <string name="menu_message_cancel">Cancelar mensaje</string>
+  <string name="menu_message_reply">Responder</string>
   <string name="menu_delete">Eliminar</string>
   <string name="pref_darkTheme_title">Tema oscuro</string>
   <string name="pref_darkTheme_summary">Siempre habilitar el tema oscuro en lugar de usar el comportamiento del sistema</string>
@@ -330,4 +331,6 @@
   <string name="bottomSheet_mute_microphone_btn">Micrófono</string>
   <string name="bottomSheet_sound_output_btn">Sonidos</string>
   <string name="bottomSheet_raiseHand_btn">Levanta tu mano</string>
+  <string name="uninstall">Desinstalar</string>
+  <string name="reset">Reiniciar</string>
 </resources>

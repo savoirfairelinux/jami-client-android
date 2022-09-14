@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Desinstalar plugin ?</string>
   <string name="plugin_reset_preferences">Restablecer preferencias do plugin</string>
   <string name="plugin_reset_preferences_summary">Restableceranse os axustes do plugin</string>
-  <string name="plugin_reset_preferences_ask">Desexas restablecer os axustes do plugin ?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> instalado correctamente</string>
   <string name="plugin_install_failure">Fallo ó instalar o plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tes unha versión máis recente de: <b>%1$s</b></string>

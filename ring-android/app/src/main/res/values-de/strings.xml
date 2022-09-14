@@ -110,11 +110,6 @@
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Zu Kontakten hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
-  <string name="hist_contact_invited">Kontakt eingeladen</string>
-  <string name="hist_contact_added">Kontakt hinzugefügt</string>
-  <string name="hist_contact_left">Kontakt weg</string>
-  <string name="hist_contact_banned">Kontakt gesperrt</string>
-  <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
   <string name="ab_action_change_screen_orientation">Bildschirmausrichtung ändern</string>
@@ -131,6 +126,7 @@
   <string name="message_failed">Fehlgeschlagen</string>
   <string name="time_just_now">Gerade eben</string>
   <string name="send_file">Datei senden</string>
+  <string name="select_media">Galerie öffnen</string>
   <string name="hist_file_sent">Datei gesendet</string>
   <string name="hist_file_received">Datei erhalten</string>
   <string name="conversation_send_audio">Audioaufzeichnung starten</string>
@@ -167,11 +163,11 @@
   <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="conversation_action_history_clear">Verlauf leeren</string>
-  <string name="conversation_action_history_clear_title">Gesprächsverlauf löschen?</string>
-  <string name="conversation_action_history_clear_message">Das wird den Gesprächsverlauf endgültig löschen.</string>
+  <string name="conversation_action_history_clear_title">Unterhaltungsverlauf löschen?</string>
+  <string name="conversation_action_history_clear_message">Das wird den Unterhaltungsverlauf endgültig löschen.</string>
   <string name="conversation_action_remove_this">Kontakt löschen</string>
   <string name="conversation_action_remove_this_title">Diesen Kontakt löschen?</string>
-  <string name="conversation_action_remove_this_message">Das wird den Kontakt und den Gesprächsverlauf endgültig löschen.</string>
+  <string name="conversation_action_remove_this_message">Das wird den Kontakt und den Unterhaltungsverlauf endgültig löschen.</string>
   <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
@@ -185,12 +181,16 @@
   <string name="conversation_contact_is_typing">Kontakt tippt...</string>
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>
-  <string name="conversation_syncing">Gespräch vom Teilnehmer herunterladen</string>
+  <string name="conversation_syncing">Unterhaltung des Teilnehmers herunterladen</string>
   <string name="conversation_preference_color">Farbe der Konversation</string>
   <string name="conversation_preference_emoji">Emoji der Konversation</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>
   <string name="conversation_type_private">privater Schwarm</string>
   <string name="conversation_type_group">Schwarmgruppe</string>
+  <string name="conversation_contact_invited">%1$s wurde eingeladen</string>
+  <string name="conversation_contact_added">%1$s ist beigetreten</string>
+  <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
+  <string name="conversation_contact_banned">%1$s wurde blockiert</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -206,6 +206,11 @@
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
+  <string name="hist_contact_invited">Kontakt eingeladen</string>
+  <string name="hist_contact_added">Kontakt hinzugefügt</string>
+  <string name="hist_contact_left">Kontakt weg</string>
+  <string name="hist_contact_banned">Kontakt gesperrt</string>
+  <string name="hist_invitation_received">Einladung erhalten</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Name des Profils</string>
@@ -283,6 +288,7 @@
   <string name="menu_message_copy">Kopieren</string>
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Nachricht abbrechen</string>
+  <string name="menu_message_reply">Antworten</string>
   <string name="menu_delete">Löschen</string>
   <string name="pref_darkTheme_title">Dunkles Design</string>
   <string name="pref_darkTheme_summary">Immer das dunkle Design aktivieren, anstatt das Systemverhalten zu verwenden</string>
@@ -334,4 +340,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Töne</string>
   <string name="bottomSheet_raiseHand_btn">Hand heben</string>
+  <string name="open_account_plugin_settings">Konto-Plugin-Einstellungen öffnen</string>
+  <string name="open_general_plugin_settings">allgemeinen Plugin-Einstellungen öffnen</string>
+  <string name="uninstall">Deinstallieren</string>
+  <string name="reset">Zurücksetzen</string>
 </resources>

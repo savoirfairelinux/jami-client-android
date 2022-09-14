@@ -112,11 +112,6 @@
   <string name="ab_action_speakerphone">Включить звук</string>
   <string name="ab_action_contact_add">Добавить контакт</string>
   <string name="ab_action_contact_add_question">Добавить в контакты? </string>
-  <string name="hist_contact_invited">Контакт приглашён</string>
-  <string name="hist_contact_added">Контакт добавлен</string>
-  <string name="hist_contact_left">Контакт вышел</string>
-  <string name="hist_contact_banned">Контакт заблокирован</string>
-  <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Аудиовызов</string>
   <string name="ab_action_video_call">Видеозвонок</string>
   <string name="ab_action_change_screen_orientation">Изменить ориентацию экрана</string>
@@ -208,6 +203,11 @@
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
+  <string name="hist_contact_invited">Контакт приглашён</string>
+  <string name="hist_contact_added">Контакт добавлен</string>
+  <string name="hist_contact_left">Контакт вышел</string>
+  <string name="hist_contact_banned">Контакт заблокирован</string>
+  <string name="hist_invitation_received">Получено приглашение</string>
   <!--Account Summary-->
   <string name="profile">Профиль</string>
   <string name="profile_name">Имя профиля</string>
@@ -285,6 +285,7 @@
   <string name="menu_message_copy">Копировать</string>
   <string name="menu_message_delete">Удалить сообщение</string>
   <string name="menu_message_cancel">Отменить сообщение</string>
+  <string name="menu_message_reply">Ответить</string>
   <string name="menu_delete">Удалить</string>
   <string name="pref_darkTheme_title">Тёмная тема</string>
   <string name="pref_darkTheme_summary">Всегда включать темную тему вместо использования системных параметров.</string>
@@ -336,4 +337,6 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="uninstall">Деинсталлировать</string>
+  <string name="reset">Сброс</string>
 </resources>

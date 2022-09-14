@@ -13,12 +13,12 @@
   <string name="pref_video_advanced_title">高级视频设置</string>
   <string name="pref_video_advanced_summary">更改视频比特率、分辨率以及访问实验性功能</string>
   <string name="pref_hd_summary">启用发送高清视频</string>
-  <string name="pref_hwEncode_title">启用加速编码</string>
+  <string name="pref_hwEncode_title">启用编码加速</string>
   <string name="pref_hwEncode_summary">实验性功能</string>
   <string name="pref_videoBitrate_title">视频比特率</string>
   <string name="pref_videoBitrate_summary">选择发出视频默认比特率 (KB/s)</string>
   <string name="pref_videoResolution_title">视频分辨率</string>
-  <string name="pref_videoResolution_summary">选择默认传出视频分辨率</string>
+  <string name="pref_videoResolution_summary">选择发出视频默认分辨率</string>
   <string name="pref_systemContacts_title">使用系统通讯录</string>
   <string name="pref_systemContacts_summary">使用系统通讯录显示呼叫者信息。</string>
   <string name="pref_systemDialer_title">用 Jami 代替系统拨号</string>
@@ -37,8 +37,8 @@
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
   <string name="pref_logs_title">诊断日志</string>
   <string name="pref_logs_summary">打开诊断日志设置</string>
-  <string name="pref_logs_start">开启日志</string>
-  <string name="pref_logs_stop">停止日志</string>
+  <string name="pref_logs_start">开始记录</string>
+  <string name="pref_logs_stop">停止记录</string>
   <string name="pref_typing_title">启用输入状态显示</string>
   <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
   <string name="pref_read_title">启用已读回执</string>
@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">卸载插件？</string>
   <string name="plugin_reset_preferences">重置插件设置</string>
   <string name="plugin_reset_preferences_summary">您的插件设置将被重置为默认状态</string>
-  <string name="plugin_reset_preferences_ask">您要重置插件设置吗 ？</string>
   <string name="plugin_successfully_installed">成功安装插件<b>%1$s</b></string>
   <string name="plugin_install_failure">安装插件<b>%1$s</b>失败</string>
   <string name="plugin_recent_version_exception">您的<b>%1$s</b>版本更新</string>

@@ -33,7 +33,7 @@
   <string name="menu_item_accounts">Gérer vos comptes</string>
   <string name="menu_item_account">Gérer votre compte</string>
   <string name="menu_item_settings">Paramètres</string>
-  <string name="menu_item_plugin_list">Paramètres des plugins</string>
+  <string name="menu_item_plugin_list">Paramètres des modules d\'extension</string>
   <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
@@ -102,15 +102,10 @@
   <string name="action_call_end_accept">Terminer et prendre l\'appel</string>
   <string name="action_call_decline">Décliner</string>
   <string name="action_call_mic_mute">Rendre votre microphone muet</string>
-  <string name="action_load_plugin">Charger le plugin</string>
+  <string name="action_load_plugin">Charger le module d\'extension</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
-  <string name="hist_contact_invited">Contact invité</string>
-  <string name="hist_contact_added">Contact ajouté</string>
-  <string name="hist_contact_left">Le contact a quitté</string>
-  <string name="hist_contact_banned">Contact bloqué</string>
-  <string name="hist_invitation_received">Invitation reçue</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
   <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran </string>
@@ -202,6 +197,11 @@
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passer</string>
+  <string name="hist_contact_invited">Contact invité</string>
+  <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_contact_left">Le contact a quitté</string>
+  <string name="hist_contact_banned">Contact bloqué</string>
+  <string name="hist_invitation_received">Invitation reçue</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Nom du profil</string>
@@ -279,6 +279,7 @@
   <string name="menu_message_copy">Copier</string>
   <string name="menu_message_delete">Supprimer message</string>
   <string name="menu_message_cancel">Annuler message</string>
+  <string name="menu_message_reply">Répondre</string>
   <string name="menu_delete">Supprimer</string>
   <string name="pref_darkTheme_title">Thème sombre</string>
   <string name="pref_darkTheme_summary">Toujours activer le thème sombre plutôt que d\'utiliser les paramètres du système</string>
@@ -330,4 +331,6 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Lever la main</string>
+  <string name="uninstall">Désinstaller</string>
+  <string name="reset">Réinitialiser</string>
 </resources>

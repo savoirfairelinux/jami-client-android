@@ -58,7 +58,6 @@
   <string name="plugin_uninstall_title">Avinstaller utvidelse ?</string>
   <string name="plugin_reset_preferences">Nullstill innstillinger for utvidelse</string>
   <string name="plugin_reset_preferences_summary">Innstillinger for utvidelse vil bli nullstilt</string>
-  <string name="plugin_reset_preferences_ask">Ønsker du å nullstille innstillinger for utvidelse ?</string>
   <string name="plugin_successfully_installed">Utvidelsen <b>%1$s</b> installert</string>
   <string name="plugin_install_failure">Installasjon av utvidelsen feilet: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Du har en nyere versjon av: <b>%1$s</b></string>
