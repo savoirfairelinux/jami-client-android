@@ -23,7 +23,7 @@ class PluginsAdapter(private var mList: List<PluginDetails>, private val listene
         }
 
         override fun getItemCount(): Int {
-            if (accountId!!.isNotEmpty()) {
+            if (accountId?.isNotEmpty() == true) {
                 val copy = mutableListOf<PluginDetails>()
                 for (item in mList) {
                     item.accountId = accountId

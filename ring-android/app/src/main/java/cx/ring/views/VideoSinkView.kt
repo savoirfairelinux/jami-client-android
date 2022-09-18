@@ -56,6 +56,7 @@ class VideoSinkView @JvmOverloads constructor(context: Context, attrs: Attribute
         stopSink()
         super.onDetachedFromWindow()
         surfaceTextureListener = null
+        surface = null
     }
 
     /**
