@@ -890,7 +890,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         overlayViewBinding.participants = if (participantsInfo.size == 1) participantsInfo else participantsInfo.filterNot {
             it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
-        overlayViewBinding.init()
+        overlayViewBinding.initialize()
     }
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {
