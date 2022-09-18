@@ -2,11 +2,10 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
+import android.widget.ScrollView
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -16,13 +15,26 @@ import net.jami.model.Conference.ParticipantInfo
 import kotlin.math.max
 import kotlin.math.min
 
-class ParticipantsContainerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
+class ParticipantsContainerView// adding name, mic etc..
+    (context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0) :
+    FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
+
+    constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0, 0)
 
     var participants: List<ParticipantInfo> = ArrayList()
+    private val hscroll = HorizontalScrollView(context)
+    private val vscroll = ScrollView(context)
+    private val ll = FrameLayout(context)
 
-    fun init() {
+    init {
+        hscroll.tag = "scroll"
+        ll.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        vscroll.addView(ll)
+        hscroll.addView(vscroll)
+        addView(hscroll)
+    }
+
+    fun initialize() {
         if (participants.isEmpty()) {
             removeAllViews()
             return
@@ -37,7 +49,7 @@ class ParticipantsContainerView @JvmOverloads constructor(
 
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null) toRemove.add(childView)
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")) toRemove.add(childView)
         }
         for (v in toRemove) removeView(v)
 
@@ -68,10 +80,9 @@ class ParticipantsContainerView @JvmOverloads constructor(
 
         var iActive = 0
         var iInactive = 0
-        val toAdd: MutableList<View> = ArrayList()
+        val addToMain: MutableList<View> = ArrayList()
+        val addToScroll: MutableList<View> = ArrayList()
         for (i in participants) {
-            if (!i.active && !grid && (iInactive >= maxCol || iInactive >= maxRow))
-                break
 
             val viewTag = i.sinkId ?: i.contact.contact.uri.uri
             val view: View? = findViewWithTag(viewTag)
@@ -106,6 +117,15 @@ class ParticipantsContainerView @JvmOverloads constructor(
             participantInfoOverlay.participantName.text = i.contact.displayName
             participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
 
+
+            val layoutWidth = if (portrait) LayoutParams.MATCH_PARENT else LayoutParams.WRAP_CONTENT
+            val layoutHeight =  if (portrait) LayoutParams.WRAP_CONTENT else LayoutParams.MATCH_PARENT
+            val layoutParams = LayoutParams(layoutWidth, layoutHeight)
+            hscroll.layoutParams = layoutParams
+            vscroll.layoutParams = layoutParams
+
+            val scrollable = !grid && !i.active
+
             val col = if (i.active) iActive.toFloat() else (if (grid) (iInactive % inactiveMaxCols).toFloat() else if (portrait) iInactive.toFloat() else 0f)
             val row = if (portrait) 0f else iInactive.toFloat()
             val x = if (i.active) col * activeWidth else inactiveOffsetX + col * inactiveWidth
@@ -128,14 +148,27 @@ class ParticipantsContainerView @JvmOverloads constructor(
                     topMargin = (y * mainHeight).toInt() + margin
                     width = (w * mainWidth).toInt() - 2 * margin
                     height = (h * mainHeight).toInt() - 2 * margin
+                    bottomMargin = if (scrollable) margin else 0
+                    rightMargin = if (scrollable) margin else 0
                 }
             }
 
             if (view == null) {
                 participantInfoOverlay.root.layoutParams = params
-                toAdd.add(participantInfoOverlay.root)
+                if (scrollable) {
+                    addToScroll.add(participantInfoOverlay.root)
+                } else {
+                    addToMain.add(participantInfoOverlay.root)
+                }
             } else {
                 post { participantInfoOverlay.root.layoutParams = params }
+                if (scrollable && participantInfoOverlay.root.parent != ll) {
+                    removeView(participantInfoOverlay.root)
+                    addToScroll.add(participantInfoOverlay.root)
+                } else if (!scrollable && participantInfoOverlay.root.parent == ll) {
+                    ll.removeView(participantInfoOverlay.root)
+                    addToMain.add(participantInfoOverlay.root)
+                }
             }
 
             if (i.active)
@@ -144,11 +177,12 @@ class ParticipantsContainerView @JvmOverloads constructor(
                 iInactive++
         }
 
-        for (v in toAdd) addView(v)
+        for (v in addToMain) addView(v)
+        for (v in addToScroll) ll.addView(v)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        init()
+        initialize()
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
