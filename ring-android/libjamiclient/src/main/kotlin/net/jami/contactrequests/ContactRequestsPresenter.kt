@@ -46,7 +46,7 @@ class ContactRequestsPresenter @Inject internal constructor(
         mCompositeDisposable.add(mConversationFacade.getPendingConversationList(mAccount)
             .observeOn(mUiScheduler)
             .subscribe { viewModels ->
-                this.view?.updateView(viewModels,mConversationFacade, mCompositeDisposable)
+                this.view?.updateView(viewModels, mConversationFacade, mCompositeDisposable)
             })
     }
 

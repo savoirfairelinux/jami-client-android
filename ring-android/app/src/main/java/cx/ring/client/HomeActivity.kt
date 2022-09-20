@@ -216,11 +216,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val extra = intent.extras
         val action = intent.action
         when (action) {
-            ACTION_PRESENT_TRUST_REQUEST_FRAGMENT -> {
-                presentTrustRequestFragment(
-                    extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return
-                )
-            }
+            ACTION_PRESENT_TRUST_REQUEST_FRAGMENT ->
+                presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
             Intent.ACTION_SEND,
             Intent.ACTION_SEND_MULTIPLE -> {
                 val path = ConversationPath.fromBundle(extra)
