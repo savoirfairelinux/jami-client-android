@@ -215,16 +215,12 @@ class AccountService(
     /**
      * @return true if at least one of the loaded accounts is a SIP one
      */
-    fun hasSipAccount(): Boolean {
-        return mHasSipAccount
-    }
+    fun hasSipAccount(): Boolean = mHasSipAccount
 
     /**
-     * @return true if at least one of the loaded accounts is a Ring one
+     * @return true if at least one of the loaded accounts is a Jami one
      */
-    fun hasRingAccount(): Boolean {
-        return mHasRingAccount
-    }
+    fun hasJamiAccount(): Boolean = mHasRingAccount
 
     /**
      * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
@@ -428,8 +424,8 @@ class AccountService(
         return null
     }
 
-    fun getAccountSingle(accountId: String): Single<Account> {
-        return accountsSubject
+    fun getAccountSingle(accountId: String): Single<Account> =
+        accountsSubject
             .firstOrError()
             .map { accounts: List<Account> ->
                 for (account in accounts)
@@ -437,30 +433,25 @@ class AccountService(
                         return@map account
                 throw IllegalArgumentException("getAccountSingle() can't find account $accountId")
             }
-    }
 
     val observableAccountList: Observable<List<Account>>
         get() = accountsSubject
 
-    fun getObservableAccountUpdates(accountId: String): Observable<Account> {
-        return observableAccounts.filter { acc -> acc.accountId == accountId }
-    }
+    fun getObservableAccountUpdates(accountId: String): Observable<Account> =
+        observableAccounts.filter { acc -> acc.accountId == accountId }
 
-    fun getObservableAccountProfile(accountId: String): Observable<Pair<Account, Profile>> {
-        return getObservableAccount(accountId).flatMap { a: Account ->
+    fun getObservableAccountProfile(accountId: String): Observable<Pair<Account, Profile>> =
+        getObservableAccount(accountId).flatMap { a: Account ->
             mVCardService.loadProfile(a).map { profile -> Pair(a, profile) }
         }
-    }
 
-    fun getObservableAccount(accountId: String): Observable<Account> {
-        return Observable.fromCallable<Account> { getAccount(accountId) }
+    fun getObservableAccount(accountId: String): Observable<Account> =
+        Observable.fromCallable<Account> { getAccount(accountId) }
             .concatWith(getObservableAccountUpdates(accountId))
-    }
 
-    fun getObservableAccount(account: Account): Observable<Account> {
-        return Observable.just(account)
+    fun getObservableAccount(account: Account): Observable<Account> =
+        Observable.just(account)
             .concatWith(observableAccounts.filter { acc -> acc === account })
-    }
 
     val currentProfileAccountSubject: Observable<Pair<Account, Profile>>
         get() = currentAccountSubject.flatMap { a: Account ->
@@ -1252,12 +1243,9 @@ class AccountService(
         val interaction: Interaction = when (type) {
             "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                 val invited = message["invited"]!!
-                var invitedContact = conversation.findContact(Uri.fromId(invited))
-                if (invitedContact == null) {
-                    invitedContact = account.getContactFromCache(invited)
-                }
-                Log.w(TAG, "invited $invited $invitedContact")
+                val invitedContact = conversation.findContact(Uri.fromId(invited)) ?: account.getContactFromCache(invited)
                 invitedContact.addedDate = Date(timestamp)
+                Log.w(TAG, "invited $invited $invitedContact")
                 ContactEvent(account.accountId, invitedContact).setEvent(ContactEvent.Event.INVITED)
             } else {
                 Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1421,12 +1409,7 @@ class AccountService(
 
     fun conversationRequestDeclined(accountId: String, conversationId: String) {
         Log.d(TAG, "conversation request for $conversationId is declined")
-        val account = getAccount(accountId)
-        if (account == null) {
-            Log.w(TAG, "conversationRequestDeclined: can't find account")
-            return
-        }
-        account.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
+        getAccount(accountId)?.removeRequest(Uri(Uri.SWARM_SCHEME, conversationId))
     }
 
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
@@ -1662,10 +1645,9 @@ class AccountService(
         private const val PIN_GENERATION_SUCCESS = 0
         private const val PIN_GENERATION_WRONG_PASSWORD = 1
         private const val PIN_GENERATION_NETWORK_ERROR = 2
-        private fun findAccount(accounts: List<Account>, accountId: String): Account? {
-            for (account in accounts) if (accountId == account.accountId) return account
-            return null
-        }
+
+        private inline fun findAccount(accounts: List<Account>, accountId: String): Account? =
+            accounts.find { accountId == it.accountId }
 
         private fun getDataTransferError(errorCode: Long): DataTransferError = try {
             DataTransferError.values()[errorCode.toInt()]

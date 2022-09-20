@@ -123,9 +123,7 @@ class DataTransfer : Interaction {
     val isComplete: Boolean
         get() = conversationId == null && isOutgoing || InteractionStatus.TRANSFER_FINISHED.toString() == mStatus
 
-    fun showPicture(): Boolean {
-        return isPicture && isComplete
-    }
+    fun showPicture(): Boolean = isPicture && isComplete
 
     val storagePath: String
         get() {

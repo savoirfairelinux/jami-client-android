@@ -211,9 +211,7 @@ class CallActivity : AppCompatActivity() {
 
     // Get the call Fragment
     private val callFragment: CallFragment?
-        get() {
-            return supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG) as CallFragment?
-        }
+        get() = supportFragmentManager.findFragmentByTag(CALL_FRAGMENT_TAG) as CallFragment?
 
     companion object {
         private val TAG = CallActivity::class.simpleName!!

@@ -39,12 +39,10 @@ import net.jami.model.Profile
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
-    override fun loadProfile(account: Account): Observable<Profile> {
-        return loadProfile(mContext, account)
-    }
+    override fun loadProfile(account: Account): Observable<Profile> = loadProfile(mContext, account)
 
-    override fun loadSmallVCard(accountId: String, maxSize: Int): Maybe<VCard> {
-        return VCardUtils.loadLocalProfileFromDisk(mContext.filesDir, accountId)
+    override fun loadSmallVCard(accountId: String, maxSize: Int): Maybe<VCard> =
+        VCardUtils.loadLocalProfileFromDisk(mContext.filesDir, accountId)
             .filter { vcard: VCard -> !VCardUtils.isEmpty(vcard) }
             .map { vcard: VCard ->
                 if (vcard.photos.isNotEmpty()) {
@@ -59,26 +57,22 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
                 vcard.removeProperties(RawProperty::class.java)
                 vcard
             }
-    }
 
-    override fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> {
-        return Single.fromCallable { VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)) }
+    override fun saveVCardProfile(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> =
+        Single.fromCallable { VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)) }
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
+
+    override fun loadVCardProfile(vcard: VCard): Single<Profile> = Single.fromCallable {
+        readData(vcard)
     }
 
-    override fun loadVCardProfile(vcard: VCard): Single<Profile> {
-        return Single.fromCallable { readData(vcard) }
-    }
-
-    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> {
-        return VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
+    override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> =
+        VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
             .map { vc -> readData(vc) }
-    }
 
-    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile> {
-        return VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
+    override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile> =
+        VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
             .map { vcard -> readData(vcard) }
-    }
 
     override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 
@@ -97,12 +91,9 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             }
         }
 
-        fun readData(vcard: VCard?): Profile {
-            return readData(VCardUtils.readData(vcard))
-        }
+        fun readData(vcard: VCard?): Profile = readData(VCardUtils.readData(vcard))
 
-        private fun readData(profile: Pair<String?, ByteArray?>): Profile {
-            return Profile(profile.first, BitmapUtils.bytesToBitmap(profile.second))
-        }
+        private fun readData(profile: Pair<String?, ByteArray?>): Profile =
+            Profile(profile.first, BitmapUtils.bytesToBitmap(profile.second))
     }
 }
