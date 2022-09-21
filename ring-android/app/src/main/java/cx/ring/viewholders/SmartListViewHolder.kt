@@ -118,6 +118,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 })
 
             compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
+                .onErrorComplete()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { conversationItemViewModel ->
                     binding.convParticipant.text = conversationItemViewModel.title
@@ -130,9 +131,9 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                         binding.photo.startAnimation(fadeIn())
                 })
 
-            compositeDisposable.add(conversation.getVisible().observeOn(AndroidSchedulers.mainThread()).subscribe { activated ->
-                binding.itemLayout.isActivated = activated
-            })
+            compositeDisposable.add(conversation.getVisible()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { activated -> binding.itemLayout.isActivated = activated })
         }
     }
 

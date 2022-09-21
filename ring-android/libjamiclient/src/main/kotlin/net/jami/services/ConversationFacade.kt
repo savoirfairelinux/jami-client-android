@@ -199,7 +199,7 @@ class ConversationFacade(
     }
 
     fun cancelMessage(message: Interaction) {
-        val accountId = message.account!!
+        val accountId = message.account ?: return
         mDisposableBag.add(
             mCallService.cancelMessage(accountId, message.id.toLong()).subscribeOn(Schedulers.io())
                 .andThen(startConversation(accountId, Uri.fromString(message.conversation!!.participant!!)))
@@ -252,7 +252,7 @@ class ConversationFacade(
             .flatMapObservable { conversation -> observeConversation(conversation, hasPresence) }
 
     fun observeConversation(conversation: Conversation, hasPresence: Boolean = false): Observable<ConversationItemViewModel> {
-        val account = mAccountService.getAccount(conversation.accountId) ?: return Observable.error(IllegalArgumentException())
+        val account = mAccountService.getAccount(conversation.accountId) ?: return Observable.empty()
         return observeConversation(account, conversation, hasPresence)
     }
 

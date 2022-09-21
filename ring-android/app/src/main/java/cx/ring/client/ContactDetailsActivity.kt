@@ -256,7 +256,8 @@ class ContactDetailsActivity : AppCompatActivity() {
 
         mDisposableBag.add(mConversationFacade.observeConversation(conversation)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { vm ->
+            .doOnComplete { finish() }
+            .subscribe({ vm ->
                 binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
                     .withViewModel(vm)
                     .withCircleCrop(true)
@@ -271,6 +272,9 @@ class ContactDetailsActivity : AppCompatActivity() {
                 } else {
                     binding.conversationId.text = vm.uriTitle
                 }
+            }) { e ->
+                Log.e(TAG, "e", e)
+                finish()
             })
 
         /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());

@@ -234,7 +234,8 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
     }
 
     fun profileCreated(saveProfile: Boolean) {
-        presenter.profileCreated(saveProfile)
+        val model: AccountCreationViewModel by viewModels()
+        presenter.profileCreated(model.model, saveProfile)
     }
 
     companion object {
