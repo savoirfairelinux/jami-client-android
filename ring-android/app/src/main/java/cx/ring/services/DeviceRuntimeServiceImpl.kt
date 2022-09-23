@@ -63,7 +63,7 @@ class DeviceRuntimeServiceImpl(
         mExecutor.execute {
             Log.w(TAG, "System.loadLibrary")
             try {
-                System.loadLibrary("ring")
+                System.loadLibrary("jami")
             } catch (e: Exception) {
                 Log.e(TAG, "Could not load Jami library", e)
                 Process.killProcess(Process.myPid())
