@@ -78,7 +78,7 @@ class Uri : Serializable {
     }
 
     val isSingleIp: Boolean
-        get() = (username == null || username.isEmpty()) && isIpAddress(host)
+        get() = username.isNullOrEmpty() && isIpAddress(host)
     val isHexId: Boolean
         get() = HEX_ID_PATTERN.matcher(host).find() || username != null && HEX_ID_PATTERN.matcher(username).find()
     val isSwarm: Boolean

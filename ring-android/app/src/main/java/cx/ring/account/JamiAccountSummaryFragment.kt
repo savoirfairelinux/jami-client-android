@@ -56,6 +56,7 @@ import cx.ring.account.RegisterNameDialog.RegisterNameDialogListener
 import cx.ring.account.RenameDeviceDialog.RenameDeviceListener
 import cx.ring.client.HomeActivity
 import cx.ring.contactrequests.BlockListFragment
+import cx.ring.databinding.DialogProfileBinding
 import cx.ring.databinding.FragAccSummaryBinding
 import cx.ring.fragments.*
 import cx.ring.mvp.BaseSupportFragment
@@ -103,6 +104,7 @@ class JamiAccountSummaryFragment :
     private var mDeviceAdapter: DeviceAdapter? = null
     private val mDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return FragAccSummaryBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
@@ -295,23 +297,27 @@ class JamiAccountSummaryFragment :
     override fun showPIN(pin: String) {}
     private fun profileContainerClicked(account: Account) {
         val inflater = LayoutInflater.from(activity)
-        val view = inflater.inflate(R.layout.dialog_profile, null) as ViewGroup
-        val profilePhoto = view.findViewById<ImageView>(R.id.profile_photo).apply { mProfilePhoto = this}
+        val view = DialogProfileBinding.inflate(inflater).apply {
+            camera.setOnClickListener { presenter.cameraClicked() }
+            gallery.setOnClickListener { presenter.galleryClicked() }
+        }
+        mProfilePhoto = view.profilePhoto
         mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { a -> profilePhoto.setImageDrawable(a) })
-        view.findViewById<ImageButton>(R.id.camera)?.setOnClickListener { presenter.cameraClicked() }
-        view.findViewById<ImageButton>(R.id.gallery)?.setOnClickListener { presenter.galleryClicked() }
+                .subscribe { a -> view.profilePhoto.setImageDrawable(a) })
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.profile)
-            .setView(view)
+            .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
             .setPositiveButton(android.R.string.ok) { dialog, which ->
                 mSourcePhoto?.let { source ->
                     presenter.saveVCard(mBinding!!.username.text.toString(),
                         Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
-                    mSourcePhoto = null
                 }
+            }
+            .setOnDismissListener {
+                mProfilePhoto = null
+                mSourcePhoto = null
             }
             .show()
     }
@@ -469,7 +475,7 @@ class JamiAccountSummaryFragment :
                     .build(requireContext())
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ avatar: AvatarDrawable -> mProfilePhoto!!.setImageDrawable(avatar) }) { e: Throwable ->
+            .subscribe({ avatar: AvatarDrawable -> mProfilePhoto?.setImageDrawable(avatar) }) { e: Throwable ->
                 Log.e(TAG, "Error loading image", e)
             })
     }

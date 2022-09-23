@@ -81,11 +81,11 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         toggleView(accountId, true)
         val fragmentManager = childFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG)
-        val args = Bundle()
-        args.putString(ACCOUNT_ID_KEY, accountId)
+        val args = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
         if (existingFragment == null) {
-            val fragment = JamiAccountSummaryFragment()
-            fragment.arguments = args
+            val fragment = JamiAccountSummaryFragment().apply {
+                arguments = args
+            }
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
                 .commit()

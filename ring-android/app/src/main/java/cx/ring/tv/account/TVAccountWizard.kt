@@ -197,6 +197,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
     }
 
     fun profileCreated(saveProfile: Boolean) {
-        presenter.profileCreated(saveProfile)
+        val model: AccountCreationViewModel by viewModels()
+        presenter.profileCreated(model.model, saveProfile)
     }
 }

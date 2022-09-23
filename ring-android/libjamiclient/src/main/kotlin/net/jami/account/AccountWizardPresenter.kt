@@ -46,7 +46,6 @@ class AccountWizardPresenter @Inject constructor(
     //private boolean mCreationError = false;
     private var mCreatingAccount = false
     private var mAccountType: String? = null
-    private var mAccountCreationModel: AccountCreationModel? = null
     private var newAccount: Observable<Account>? = null
 
     fun init(accountType: String) {
@@ -124,7 +123,6 @@ class AccountWizardPresenter @Inject constructor(
     }
 
     private fun createAccount(accountCreationModel: AccountCreationModel, details: Single<Map<String, String>>) {
-        mAccountCreationModel = accountCreationModel
         val newAccount = details.flatMapObservable { accountDetails -> createNewAccount(accountCreationModel, accountDetails) }
         accountCreationModel.accountObservable = newAccount
         mCompositeDisposable.add(newAccount
@@ -212,10 +210,10 @@ class AccountWizardPresenter @Inject constructor(
         return account
     }
 
-    fun profileCreated(saveProfile: Boolean) {
+    fun profileCreated(model: AccountCreationModel, saveProfile: Boolean) {
         view!!.blockOrientation()
         view!!.displayProgress(true)
-        var newAccount = mAccountCreationModel!!.accountObservable!!.filter { a: Account ->
+        var newAccount = model.accountObservable!!.filter { a: Account ->
                 val newState = a.registrationState
                 !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
             }
