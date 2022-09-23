@@ -39,12 +39,12 @@ class Account(
     credentials: List<Map<String, String>>,
     volDetails: Map<String, String>
 ) {
-    private var mVolatileDetails: AccountConfig
-    var config: AccountConfig
+    private var mVolatileDetails: AccountConfig = AccountConfig(volDetails)
+    var config: AccountConfig = AccountConfig(details)
         private set
-    var username: String? = null
+    var username: String? = config[ConfigKey.ACCOUNT_USERNAME]
         private set
-    val credentials = ArrayList<AccountCredentials>()
+    val credentials = credentials.mapTo(ArrayList()) { AccountCredentials(it) }
     var devices: Map<String, String> = HashMap()
     private val mContacts: MutableMap<String, Contact> = HashMap()
     private val mRequests: MutableMap<String, TrustRequest> = HashMap()
@@ -446,6 +446,13 @@ class Account(
         set(active) {
             config.put(ConfigKey.PROXY_ENABLED, if (active) "true" else "false")
         }
+
+    var dhtProxy: String?
+        get() = config[ConfigKey.PROXY_SERVER]
+        set(proxy) {
+            config.put(ConfigKey.PROXY_SERVER, proxy)
+        }
+
     val registrationState: String
         get() = mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]
 
@@ -889,7 +896,7 @@ class Account(
 
     val accountAlias: Single<String>
         get() = loadedProfileObservable.firstOrError()
-            .map { p -> if (p.displayName == null || p.displayName.isEmpty())
+            .map { p -> if (p.displayName.isNullOrEmpty())
                 if (isJami) jamiAlias else alias!!
             else p.displayName }
 
@@ -899,9 +906,7 @@ class Account(
     private val jamiAlias: String
         get() = registeredName.ifEmpty { alias!! }
 
-    fun getDataTransfer(id: String): DataTransfer? {
-        return mDataTransfers[id]
-    }
+    fun getDataTransfer(id: String): DataTransfer? = mDataTransfers[id]
 
     fun putDataTransfer(fileId: String, transfer: DataTransfer) {
         mDataTransfers[fileId] = transfer
@@ -921,12 +926,5 @@ class Account(
         private const val CONTACT_ID = "id"
         private const val CONTACT_CONVERSATION = "conversationId"
         private const val LOCATION_SHARING_EXPIRATION_MS = 1000 * 60 * 2
-    }
-
-    init {
-        config = AccountConfig(details)
-        username = config[ConfigKey.ACCOUNT_USERNAME]
-        mVolatileDetails = AccountConfig(volDetails)
-        setCredentials(credentials)
     }
 }
