@@ -48,16 +48,14 @@ class CallNotificationService : Service() {
                     startForeground(NotificationServiceImpl.NOTIF_CALL_ID, notification)
             }
         } else if (ACTION_STOP == intent.action) {
-            stopForeground(true)
+            stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
             mNotificationService.cancelCallNotification()
         }
         return START_NOT_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
     companion object {
         const val ACTION_START = "START"
