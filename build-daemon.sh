@@ -53,7 +53,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     echo 'Daemon not found.'
     echo 'If you cloned the daemon in a custom location override DAEMON_DIR to point to it'
     echo "You can also use our meta repo which contains both:
-          https://review.jami.net/#/admin/projects/ring-project"
+          https://review.jami.net/admin/repos/jami-project"
     exit 1
 fi
 export DAEMON_DIR
@@ -184,16 +184,16 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -largon2 \
                 -liconv"
 
-LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
-LIBRING_JNI_UNSTRIPPED_DIR=${ANDROID_APP_DIR}/unstripped/${ANDROID_ABI}
+LIBJAMI_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
+LIBJAMI_JNI_UNSTRIPPED_DIR=${ANDROID_APP_DIR}/unstripped/${ANDROID_ABI}
 #LIBCPP=$ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so
 LIBCPP=$TOOLCHAIN/sysroot/usr/lib/$TARGET/libc++_shared.so
 
-echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
-mkdir -p ${LIBRING_JNI_DIR}
+echo "Building Jami JNI library for Android to ${LIBJAMI_JNI_DIR}"
+mkdir -p ${LIBJAMI_JNI_DIR}
 
 # Use a shared libc++_shared.so (shared by jami and all other plugins)
-cp $LIBCPP $LIBRING_JNI_DIR
+cp $LIBCPP $LIBJAMI_JNI_DIR
 
 ${CXX} --shared \
        -Wall -Wextra \
@@ -202,17 +202,17 @@ ${CXX} --shared \
        -Wno-unused-parameter \
        -Wl,-Bsymbolic \
        ${JNIDIR}/jami_wrapper.cpp \
-       ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
+       ${DAEMON_BUILD_DIR}/src/.libs/libjami.a \
        -isystem ${DAEMON_DIR}/contrib/${TARGET}/include \
        -I${DAEMON_DIR}/src \
        -L${DAEMON_DIR}/contrib/${TARGET}/lib \
        ${STATIC_LIBS_ALL} \
        ${FLAGS_COMMON} -O3 --std=c++17 \
-       -o ${LIBRING_JNI_DIR}/libring.so
+       -o ${LIBJAMI_JNI_DIR}/libjami.so
 
 if [ "${RELEASE}" -eq 1 ]; then
-    mkdir -p ${LIBRING_JNI_UNSTRIPPED_DIR}
-    cp ${LIBCPP} ${LIBRING_JNI_UNSTRIPPED_DIR}
-    cp ${LIBRING_JNI_DIR}/libring.so ${LIBRING_JNI_UNSTRIPPED_DIR}
-    ${STRIP} ${LIBRING_JNI_DIR}/libring.so
+    mkdir -p ${LIBJAMI_JNI_UNSTRIPPED_DIR}
+    cp ${LIBCPP} ${LIBJAMI_JNI_UNSTRIPPED_DIR}
+    cp ${LIBJAMI_JNI_DIR}/libjami.so ${LIBJAMI_JNI_UNSTRIPPED_DIR}
+    ${STRIP} ${LIBJAMI_JNI_DIR}/libjami.so
 fi
