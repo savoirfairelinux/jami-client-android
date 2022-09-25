@@ -23,18 +23,12 @@ import net.jami.daemon.*
 import java.util.ArrayList
 
 object SwigNativeConverter {
-    fun toSwig(creds: List<Map<String, String>>): VectMap {
-        val toReturn = VectMap()
-        toReturn.reserve(creds.size.toLong())
-        for (aTodecode in creds) {
-            toReturn.add(StringMap.toSwig(aTodecode))
+    fun toSwig(creds: List<Map<String, String>>): VectMap =
+        creds.mapTo(VectMap().apply { reserve(creds.size.toLong()) }) {
+            StringMap.toSwig(it)
         }
-        return toReturn
-    }
 
-    fun toJava(vector: StringVect): ArrayList<String> {
-        return ArrayList(vector)
-    }
+    fun toJava(vector: StringVect): ArrayList<String> = ArrayList(vector)
 
     fun toJava(vector: MessageVect): ArrayList<Message> {
         val size = vector.size

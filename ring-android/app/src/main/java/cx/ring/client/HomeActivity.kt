@@ -633,7 +633,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         } else {
             val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
             startActivity(intent)
-            mBinding!!.spinnerToolbar.setSelection(mAccountService.currentAccountIndex)
+            mBinding!!.spinnerToolbar.setSelection(0)
         }
     }
 
