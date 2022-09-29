@@ -166,13 +166,11 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     override fun askCameraPermission() {}
     override fun goToGallery() {}
     override fun askGalleryPermission() {}
-    override fun updateUserView(account: Account, profile: Profile) {}
     override fun goToMedia(accountId: String) {}
     override fun goToSystem(accountId: String) {}
     override fun goToAdvanced(accountId: String) {}
     override fun goToPlugin(accountId: String) {}
     override fun goToAccount(accountId: String) {}
-    override fun setSwitchStatus(account: Account) {}
     override fun showRevokingProgressDialog() {}
     override fun deviceRevocationEnded(device: String, status: Int) {}
     override fun updateDeviceList(devices: Map<String, String>, currentDeviceId: String) {}

@@ -56,9 +56,8 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     private var mAccountId: String? = null
     private var mAccountIsJami = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragAccountSettingsBinding.inflate(inflater, container, false).apply { mBinding = this }.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccountSettingsBinding.inflate(inflater, container, false).apply { mBinding = this }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -88,7 +87,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             }
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
-                .commit()
+                .commitAllowingStateLoss()
         } else {
             if (existingFragment is JamiAccountSummaryFragment) {
                 if (!existingFragment.isStateSaved) existingFragment.arguments = args

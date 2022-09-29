@@ -30,11 +30,10 @@ class ContactViewModel(val contact: Contact, val profile: Profile, val registere
     val fullProfile: Profile
         get() = Profile(displayName, profile.avatar)
 
-    fun matches(query: String): Boolean {
-        return (profile.displayName != null && profile.displayName.lowercase().contains(query)
+    fun matches(query: String): Boolean =
+        (profile.displayName != null && profile.displayName.lowercase().contains(query)
                 || registeredName != null && registeredName.contains(query)
                 || contact.uri.toString().contains(query))
-    }
 
     companion object {
         val EMPTY_VM: Observable<ContactViewModel> =

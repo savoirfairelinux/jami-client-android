@@ -105,8 +105,8 @@ class JamiAccountSummaryFragment :
     private val mDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragAccSummaryBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragAccSummaryBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
             linkNewDevice.setOnClickListener { showWizard(mAccountId!!) }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
@@ -121,7 +121,6 @@ class JamiAccountSummaryFragment :
             }
             mBinding = this
         }.root
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -188,14 +187,6 @@ class JamiAccountSummaryFragment :
         presenter.setAccountId(accountId)
     }
 
-    override fun updateUserView(account: Account, profile: Profile) {
-        val context = context ?: return
-        mBinding?.let { binding ->
-            binding.userPhoto.setImageDrawable(AvatarDrawable.build(context, account, profile, true))
-            binding.username.setText(profile.displayName)
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         when (requestCode) {
             WRITE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
@@ -231,8 +222,12 @@ class JamiAccountSummaryFragment :
     }
 
     override fun accountChanged(account: Account, profile: Profile) {
-        updateUserView(account, profile)
+        mAccountId = account.accountId
+        mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
+        mBestName = "$mBestName.gz"
         mBinding?.let { binding ->
+            binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
+            binding.username.setText(profile.displayName)
             binding.userPhoto.setOnClickListener { profileContainerClicked(account) }
             binding.linkedDevices.setText(account.deviceName)
             setLinkedDevicesAdapter(account)
@@ -240,9 +235,6 @@ class JamiAccountSummaryFragment :
             (requireActivity() as HomeActivity).switchButton.setCheckedSilent(account.isEnabled)
             binding.accountAliasTxt.text = getString(R.string.profile)
             binding.identity.setText(account.username)
-            mAccountId = account.accountId
-            mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
-            mBestName = "$mBestName.gz"
             val username = account.registeredName
             val currentRegisteredName = account.registeringUsername
             val hasRegisteredName = !currentRegisteredName && username.isNotEmpty()
@@ -499,7 +491,7 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    override fun setSwitchStatus(account: Account) {
+    private fun setSwitchStatus(account: Account) {
         val switchButton = (requireActivity() as HomeActivity).switchButton
         var color = R.color.red_400
         val status: String
