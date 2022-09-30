@@ -463,7 +463,7 @@ class NotificationServiceImpl(
         }
         for (textMessage in texts.values) {
             val contact = textMessage.contact!!
-            val contactPerson = if (contact.isUser) userPerson else persons[contact.uri.uri]
+            val contactPerson = if (contact.isUser) null else persons[contact.uri.uri]
             history.addMessage(NotificationCompat.MessagingStyle.Message(
                 textMessage.body,
                 textMessage.timestamp,
