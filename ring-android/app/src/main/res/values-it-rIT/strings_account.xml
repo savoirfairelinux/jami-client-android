@@ -49,7 +49,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_password_summary">Gestisci la password del tuo account.</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
-  <string name="account_preferences_basic_tab">Generale</string>
+  <string name="account_preferences_basic_tab">Generali</string>
   <string name="account_basic_category">Impostazioni di base</string>
   <string name="account_alias_label">Nome account</string>
   <string name="account_hostname_label">Nome host</string>
@@ -99,6 +99,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_published_same_as_local_label">Pubblico uguale a quello locale</string>
   <string name="account_published_port_label">Porta pubblicata</string>
   <string name="account_published_address_label">Indirizzo pubblicato</string>
+  <string name="disabled">Disabilitato</string>
   <string name="enabled">Abilitato</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>

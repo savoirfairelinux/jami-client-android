@@ -30,7 +30,7 @@
   <string name="pref_notification_title">Sichtbarkeit der Benachrichtigung</string>
   <string name="pref_notification_summary">Sichtbarkeit von Anwendungsbenachrichtigungen auf dem Sperrbildschirm einstellen.</string>
   <string name="pref_blackList_title">Blockierte Kontakte</string>
-  <string name="pref_blackList_summary">Überprüfen Sie Ihre Sperrliste.</string>
+  <string name="pref_blackList_summary">Überprüfen Sie Ihre Blockliste.</string>
   <string name="pref_delete_account_title">Konto löschen</string>
   <string name="pref_delete_account_summary">Dein Konto von diesem Gerät löschen</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
@@ -46,7 +46,7 @@
   <string name="pref_read_title">Lesebestätigungen aktivieren</string>
   <string name="pref_read_summary">Senden und Empfangen von Lesebestätigungen, die das Anzeigen einer Nachricht bestätigen.</string>
   <string name="pref_block_record_title">Screenshot und Aufzeichnung blockieren</string>
-  <string name="pref_block_record_summary">Blockiere die Aufnahme von Screenshots oder Videos.</string>
+  <string name="pref_block_record_summary">Aufnahme von Screenshots oder Videos blockieren.</string>
   <string name="pref_link_preview_title">Linkvorschauen in Unterhaltungen anzeigen</string>
   <string name="pref_link_preview_summary">Vorschauen erfordern das Herunterladen von Inhalten von Drittanbieter-Servern</string>
   <!--Notifications Visibility-->

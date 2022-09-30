@@ -99,6 +99,7 @@
   <string name="account_published_same_as_local_label">公開的與本機相同</string>
   <string name="account_published_port_label">公開連接埠</string>
   <string name="account_published_address_label">公開發佈地址</string>
+  <string name="disabled">已停用</string>
   <string name="enabled">已啟用</string>
   <string name="account_proxy_label">DHT 代理</string>
   <string name="account_proxy_enable_label">使用 DHT 代理</string>

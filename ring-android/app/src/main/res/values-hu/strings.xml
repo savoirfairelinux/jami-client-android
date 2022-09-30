@@ -126,6 +126,7 @@
   <string name="message_failed">Sikertelen</string>
   <string name="time_just_now">Épp most</string>
   <string name="send_file">Fájl küldése</string>
+  <string name="select_media">Galéria megnyitása</string>
   <string name="hist_file_sent">Fájl elküldve</string>
   <string name="hist_file_received">Fájl érkezett</string>
   <string name="conversation_send_audio">Hangüzenet felvétele</string>
@@ -176,7 +177,7 @@
   <string name="clip_contact_uri">Kapcsolattartási címe</string>
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
-  <string name="block_contact_completed">%1$s tiltva lett.</string>
+  <string name="block_contact_completed">%1$s letiltva lett.</string>
   <string name="conversation_contact_is_typing">Kapcsolat éppen gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
@@ -186,6 +187,10 @@
   <string name="conversation_type_contact">Jami-kapcsolat</string>
   <string name="conversation_type_private">Személyes rajcsoport</string>
   <string name="conversation_type_group">Rajcsoport</string>
+  <string name="conversation_contact_invited">%1$s meghívva lett</string>
+  <string name="conversation_contact_added">%1$s csatlakozott</string>
+  <string name="conversation_contact_left">%1$s kilépett</string>
+  <string name="conversation_contact_banned">%1$s letiltva lett</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
@@ -335,6 +340,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Hangok</string>
   <string name="bottomSheet_raiseHand_btn">Kéz felemelése</string>
+  <string name="open_account_plugin_settings">Fiók beépülő modul beállításai megnyitása</string>
+  <string name="open_general_plugin_settings">Általános beépülő modul beállításai megnyitása</string>
   <string name="uninstall">Eltávolítás</string>
   <string name="reset">Visszaállítás</string>
 </resources>

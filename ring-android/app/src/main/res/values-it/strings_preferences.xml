@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Elimina il tuo account da questo dispositivo</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
+  <string name="pref_newGroup_title">Abilita i gruppi</string>
+  <string name="pref_newGroup_summary">Abilita la creazione di gruppi in Jami.</string>
   <string name="pref_logs_title">Registri di diagnostica</string>
   <string name="pref_logs_summary">Apri le impostazioni di diagnostica</string>
   <string name="pref_logs_start">Inizia la diagnostica</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Disinstallare il plugin?</string>
   <string name="plugin_reset_preferences">Ripristina le preferenze del plugin</string>
   <string name="plugin_reset_preferences_summary">Le impostazioni del tuo plugin saranno ripristinate</string>
+  <string name="plugin_reset_preferences_ask">Vuoi ripristinare le opzioni generali del plugin?</string>
+  <string name="plugin_reset_account_preferences_ask">Vuoi ripristinare le opzioni per account del plugin?</string>
   <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installato con successo</string>
   <string name="plugin_install_failure">Impossibile installare il plugin: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>

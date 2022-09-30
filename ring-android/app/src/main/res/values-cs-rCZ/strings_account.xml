@@ -46,6 +46,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_device_revocation_error_unknown">Neznámá chyba.</string>
   <string name="account_password_change">Změnit heslo</string>
   <string name="account_password_set">Nastavit heslo</string>
+  <string name="account_password_summary">Správa hesla k účtu.</string>
   <string name="account_password_change_wait_message">Mění se heslo účtu</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
@@ -58,6 +59,8 @@ Svůj účet můžete upravit později</string>
   <string name="account_optionnal_category">Doplňková nastavení</string>
   <string name="account_useragent_label">Identifikace klienta</string>
   <string name="account_autoanswer_label">Automatická odpověď</string>
+  <string name="account_rendezvous_label">Místo setkání</string>
+  <string name="account_rendezvous_summary">V režimu Místa setkání budou příchozí hovory přidány do konferenční místnosti.</string>
   <string name="account_upnp_label">Povolit UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Plugin Details-->
@@ -96,6 +99,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_published_same_as_local_label">Zveřejněné stejně jako místní</string>
   <string name="account_published_port_label">Zveřejněný port</string>
   <string name="account_published_address_label">Zveřejněná adresa</string>
+  <string name="disabled">zakázáno</string>
   <string name="enabled">Zapnuto</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Použít proxy DHT</string>
@@ -139,6 +143,7 @@ Svůj účet můžete upravit později</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
   <string name="export_account_wait_message">Exportují se údaje o účtu</string>
   <string name="account_export_file">Zálohovat účet</string>
+  <string name="account_export_file_summary">Zálohujte svůj účet v zařízení, abyste jej mohli později obnovit.</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>
   <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
@@ -174,9 +179,11 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_tv_settings_header">Nastavení účtu</string>
   <string name="account_tv_advance_settings_header">Pokročilá nastavení</string>
   <string name="account_tv_add_contact">Přidat kontakt</string>
+  <string name="account_tv_advanced_settings">Změna obecného nastavení</string>
   <string name="account_tv_about">O Jami</string>
   <string name="tv_about_version">Verze</string>
   <string name="tv_about_license">Povolení</string>
+  <string name="tv_about_author">Práva autora</string>
   <string name="tv_about_credits">Zásluhy</string>
   <string name="account_link_device">Připojit z jiného zařízení</string>
   <string name="account_link_button">Připojit ze sítě</string>
@@ -184,11 +191,14 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
   <string name="account_new_button">Vytvořit účet Jami</string>
   <string name="account_link_export_button">Připojit nové zařízení</string>
+  <string name="account_link_show_button">Zobrazit %d další propojené zařízení</string>
+  <string name="account_link_hide_button">Skrýt propojené zařízení</string>
   <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut.</string>
   <string name="account_start_export_button">Vytvořit PIN</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete Jami na novém zařízení. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <string name="account_link_export_info_light">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte pro nastavení účtu zadat na novém zařízení. PIN zůstává platný po 0 minut.</string>
+  <string name="account_export_title">Propojení účtu s dalšími zařízeními</string>
   <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
   <string name="prompt_server">Adresa URL správcovského serveru Jami</string>
@@ -197,6 +207,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
+  <string name="no_registered_name_for_account">Žádný registrovaný název</string>
   <string name="username_available">Uživatelské jméno je dostupné!</string>
   <string name="register_name">Zaregistrovat jméno</string>
   <string name="trying_to_register_name">Pokus o registraci jména</string>
@@ -220,6 +231,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_title">Připojit toto zařízení</string>
   <string name="account_sip_cannot_be_registered">Nelze zaregistrovat účet</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Upravit můj účet</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Pro potvrzení zadejte heslo</string>
   <string name="enter_password">Zadejte heslo</string>

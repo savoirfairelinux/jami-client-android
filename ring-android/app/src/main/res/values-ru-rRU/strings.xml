@@ -337,6 +337,7 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="open_account_plugin_settings">Открыть настройки плагина аккаунта</string>
   <string name="uninstall">Деинсталлировать</string>
   <string name="reset">Сброс</string>
 </resources>

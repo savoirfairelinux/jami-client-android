@@ -99,6 +99,7 @@
   <string name="account_published_same_as_local_label">Publikuar njësoj si vendorja</string>
   <string name="account_published_port_label">Portë Publikimi</string>
   <string name="account_published_address_label">Adresë e Publikuar</string>
+  <string name="disabled">Çaktivizuar</string>
   <string name="enabled">Aktivizuar</string>
   <string name="account_proxy_label">Ndërmjetës DHT</string>
   <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>

@@ -24,7 +24,7 @@
   <string name="ringtones_by">Мелодии звонка</string>
   <!--RingActivity-->
   <string name="error_no_network">Нет подключения к сети</string>
-  <string name="error_account_offline">Учетная запись находится в оффлайн-режиме</string>
+  <string name="error_account_offline">Аккаунт не в сети</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, предоставьте доступ к сотовой сети в настройках.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Сообщения</string>
@@ -149,7 +149,7 @@
   <string name="permission_dialog_write_call_log_message">Jami требуется разрешение «Запись в журнал звонков», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканируйте QR-код аккаунта, который хотите добавить.</string>
-  <string name="title_activity_qrcode">Поделиться своим контактом</string>
+  <string name="title_activity_qrcode">Поделиться моим аккаунтом</string>
   <string name="error_scan_no_camera_permissions">Для считывания QR-кода требуется разрешение на использование камеры</string>
   <string name="tab_code">Мой QR-код</string>
   <string name="tab_scan">Считать QR-код</string>
@@ -193,11 +193,11 @@
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
-  <string name="account_create_title">Создать учётную запись Jami</string>
+  <string name="account_create_title">Создать аккаунт Jami</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
-  <string name="help_password_choose">Выберите надёжный и запоминающийся пароль для защиты вашей учетной записи Jami.</string>
-  <string name="help_password_enter">Введите основной пароль учётной записи Jami.</string>
+  <string name="help_password_choose">Выберите надёжный пароль, который вы сможете запомнить, чтобы защитить ваш аккаунт Jami.</string>
+  <string name="help_password_enter">Введите основной пароль аккаунта Jami.</string>
   <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN другого аккаунта Jami. Используйте функцию «экспортировать аккаунт в Jami» для получения PIN.</string>
   <string name="wizard_next">Далее</string>
@@ -312,14 +312,14 @@
   <string name="wizard_status_recommended">Рекомендуется</string>
   <string name="wizard_status_optional">По желанию</string>
   <string name="wizard_status_required">Требуется</string>
-  <string name="wizard_username_info">Выберите имя пользователя для вашей учётной записи</string>
+  <string name="wizard_username_info">Выберите имя пользователя для вашего аккаунта</string>
   <string name="wizard_username_button">Выберите имя пользователя</string>
   <string name="wizard_username_skip">Пропустить выбор имени пользователя</string>
-  <string name="wizard_password_info">Пароль учётной записи</string>
-  <string name="wizard_password_placeholder">Придумайте пароль для шифрования учётной записи на этом устройстве</string>
+  <string name="wizard_password_info">Пароль аккаунта</string>
+  <string name="wizard_password_placeholder">Придумайте пароль для шифрования ключа аккаунта на этом устройстве</string>
   <string name="wizard_password_button">Придумайте пароль</string>
   <string name="wizard_password_skip">Создать аккаунт</string>
-  <string name="wizard_password_switch">Зашифровать учётную запись паролем</string>
+  <string name="wizard_password_switch">Зашифровать аккаунт паролем</string>
   <string name="wizard_password_warning">Обратите внимание, что пароль не может быть восстановлен</string>
   <string name="wizard_profile_info">Ваш профиль доступен только вашим контактам</string>
   <string name="wizard_profile_button">Сохранить профиль</string>
@@ -337,6 +337,7 @@
   <string name="bottomSheet_mute_microphone_btn">Микрофон</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
+  <string name="open_account_plugin_settings">Открыть настройки плагина аккаунта</string>
   <string name="uninstall">Удалить</string>
   <string name="reset">Сброс</string>
 </resources>

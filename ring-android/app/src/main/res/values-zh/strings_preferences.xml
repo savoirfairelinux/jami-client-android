@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">将您的账户从本设备删除</string>
   <string name="pref_persistNotification_title">后台运行</string>
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
+  <string name="pref_newGroup_title">啟用群組聊天</string>
+  <string name="pref_newGroup_summary">啟用在 Jami 中建立群組</string>
   <string name="pref_logs_title">诊断日志</string>
   <string name="pref_logs_summary">打开诊断日志设置</string>
   <string name="pref_logs_start">开启日志</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">卸载插件？</string>
   <string name="plugin_reset_preferences">重置插件设置</string>
   <string name="plugin_reset_preferences_summary">您的插件设置将被重置为默认状态</string>
+  <string name="plugin_reset_preferences_ask">您想要重設一般外掛程式設定嗎？</string>
+  <string name="plugin_reset_account_preferences_ask">您想要重設帳號外掛程式設定嗎？</string>
   <string name="plugin_successfully_installed">成功安装插件<b>%1$s</b></string>
   <string name="plugin_install_failure">安装插件<b>%1$s</b>失败</string>
   <string name="plugin_recent_version_exception">您的<b>%1$s</b>版本更新</string>

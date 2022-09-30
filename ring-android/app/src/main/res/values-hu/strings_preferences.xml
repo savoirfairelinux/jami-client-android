@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Fiók törlése erről az eszközről</string>
   <string name="pref_persistNotification_title">Háttérfolyamat engedélyezése</string>
   <string name="pref_persistNotification_summary">Háttérfolyamat engedélyezése hívások és üzenetek fogadásához.</string>
+  <string name="pref_newGroup_title">Csoportos csevegés engedélyezése</string>
+  <string name="pref_newGroup_summary">Csoportok létrehozásának engedélyezése.</string>
   <string name="pref_logs_title">Diagnosztikai naplók</string>
   <string name="pref_logs_summary">Diagnosztikai naplóbeállítások megnyitása</string>
   <string name="pref_logs_start">Naplózás indítása</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Beépülő modul eltávolítása?</string>
   <string name="plugin_reset_preferences">Beépülő modul beállításainak visszaállítása</string>
   <string name="plugin_reset_preferences_summary">Beépülő modul alapértelmezett beállításainak visszaállítása</string>
+  <string name="plugin_reset_preferences_ask">Vissza szeretné állítani az általános beépülő modul beállításait?</string>
+  <string name="plugin_reset_account_preferences_ask">Vissza szeretné állítani a fiók beépülő modul beállításait?</string>
   <string name="plugin_successfully_installed">A(z) <b>%1$s</b> beépülő modul sikeresen telepítve</string>
   <string name="plugin_install_failure">A beépülő modul telepítése nem sikerült: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">A(z) <b>%1$s</b> újabb verziója már telepítve van</string>
