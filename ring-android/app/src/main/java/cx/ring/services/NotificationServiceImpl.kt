@@ -142,6 +142,7 @@ class NotificationServiceImpl(
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentText(mContext.getText(R.string.notif_incoming_call))
                     .setContentIntent(viewIntent)
                     .setSound(null)
@@ -211,12 +212,13 @@ class NotificationServiceImpl(
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
         setContactPicture(contact, messageNotificationBuilder)
-        return messageNotificationBuilder.build()
+        return messageNotificationBuilder.build().apply {
+            if (conference.isRinging)
+                flags = flags or NotificationCompat.FLAG_INSISTENT
+        }
     }
 
-    override fun showCallNotification(notifId: Int): Any? {
-        return callNotifications.remove(notifId)
-    }
+    override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
 
     override fun showLocationNotification(first: Account, contact: Contact) {
         val path = ConversationPath.toUri(first.accountId, contact.uri)
@@ -819,7 +821,7 @@ class NotificationServiceImpl(
         private const val NOTIF_MISSED_CALL = "MISSED_CALL"
         private const val NOTIF_CHANNEL_CALL_IN_PROGRESS = "current_call"
         private const val NOTIF_CHANNEL_MISSED_CALL = "missed_calls"
-        private const val NOTIF_CHANNEL_INCOMING_CALL = "incoming_call"
+        private const val NOTIF_CHANNEL_INCOMING_CALL = "incoming_call2"
         private const val NOTIF_CHANNEL_MESSAGE = "messages"
         private const val NOTIF_CHANNEL_REQUEST = "requests"
         private const val NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer"
@@ -854,7 +856,8 @@ class NotificationServiceImpl(
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 group = NOTIF_CALL_GROUP
                 setSound(null, null)
-                enableVibration(false)
+                enableVibration(true)
+                vibrationPattern = longArrayOf(0, 1000, 1000)
             }
             notificationManager.createNotificationChannel(incomingCallChannel)
 
@@ -863,11 +866,12 @@ class NotificationServiceImpl(
                 NOTIF_CHANNEL_CALL_IN_PROGRESS,
                 context.getString(R.string.notif_channel_call_in_progress),
                 NotificationManager.IMPORTANCE_DEFAULT
-            )
-            callInProgressChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            callInProgressChannel.setSound(null, null)
-            callInProgressChannel.enableVibration(false)
-            callInProgressChannel.group = NOTIF_CALL_GROUP
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setSound(null, null)
+                enableVibration(false)
+                group = NOTIF_CALL_GROUP
+            }
             notificationManager.createNotificationChannel(callInProgressChannel)
 
             // Text messages channel

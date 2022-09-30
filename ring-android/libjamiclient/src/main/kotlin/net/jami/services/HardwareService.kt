@@ -82,8 +82,6 @@ abstract class HardwareService(
     abstract fun isSpeakerphoneOn(): Boolean
 
     abstract fun toggleSpeakerphone(checked: Boolean)
-    abstract fun startRinging()
-    abstract fun stopRinging()
     abstract fun abandonAudioFocus()
     abstract fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean)
     abstract fun decodingStopped(id: String, shmPath: String, isMixer: Boolean)

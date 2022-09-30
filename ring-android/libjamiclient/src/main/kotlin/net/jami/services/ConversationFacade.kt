@@ -552,7 +552,7 @@ class ConversationFacade(
         val account = mAccountService.getAccount(call.account!!) ?: return
         val contact = call.contact
         val conversationId = call.conversationId
-        Log.w(TAG, "CallStateChange " + call.daemonIdString + " conversationId:" + conversationId + " contact:" + contact + " " + contact?.conversationUri?.blockingFirst())
+        Log.w(TAG, "CallStateChange ${call.daemonIdString} conversationId:$conversationId contact:$contact ${contact?.conversationUri?.blockingFirst()}")
         val conversation = if (conversationId == null)
             if (contact == null)
                 null

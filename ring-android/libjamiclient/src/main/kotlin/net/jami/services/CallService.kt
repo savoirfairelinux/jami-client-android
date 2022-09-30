@@ -442,7 +442,6 @@ class CallService(
                 call = Call(callId, from.uri, accountId, conversation, contact, direction, mediaList)
                 currentCalls[callId] = call
             } else {
-                Log.w(TAG, "Call already existed ! $callId $from")
                 call.mediaList = mediaList
             }
             return call

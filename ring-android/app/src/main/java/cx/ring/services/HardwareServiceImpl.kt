@@ -41,7 +41,6 @@ import androidx.media.AudioManagerCompat
 import cx.ring.services.CameraService.CameraListener
 import cx.ring.utils.BluetoothWrapper
 import cx.ring.utils.BluetoothWrapper.BluetoothChangeListener
-import cx.ring.utils.Ringer
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -65,7 +64,6 @@ class HardwareServiceImpl(
 ) : HardwareService(executor, preferenceService, uiScheduler), OnAudioFocusChangeListener, BluetoothChangeListener {
     private val videoInputs: MutableMap<String, Shm> = HashMap()
     private val cameraService = CameraService(context)
-    private val mRinger = Ringer(context)
     private val mAudioManager: AudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private var mBluetoothWrapper: BluetoothWrapper? = null
     private var currentFocus: AudioFocusRequestCompat? = null
@@ -150,17 +148,15 @@ class HardwareServiceImpl(
             }
             when (state) {
                 CallStatus.RINGING -> {
-                    if (incomingCall) startRinging()
                     getFocus(RINGTONE_REQUEST)
                     if (incomingCall) {
                         // ringtone for incoming calls
                         mAudioManager.mode = AudioManager.MODE_RINGTONE
-                        setAudioRouting(true)
+                        setAudioRouting(isOngoingVideo && mBluetoothWrapper?.canBluetooth() != true)
                         //mShouldSpeakerphone = isOngoingVideo
                     } else setAudioRouting(isOngoingVideo)
                 }
                 CallStatus.CURRENT -> {
-                    stopRinging()
                     getFocus(CALL_REQUEST)
                     mAudioManager.mode = AudioManager.MODE_IN_COMMUNICATION
                     setAudioRouting(isSpeakerOn)
@@ -186,16 +182,7 @@ class HardwareServiceImpl(
 
     @Synchronized
     override fun closeAudioState() {
-        stopRinging()
         abandonAudioFocus()
-    }
-
-    override fun startRinging() {
-        mRinger.ring()
-    }
-
-    override fun stopRinging() {
-        mRinger.stopRing()
     }
 
     override fun onAudioFocusChange(focusChange: Int) {
@@ -281,7 +268,7 @@ class HardwareServiceImpl(
      * Returns to earpiece audio
      */
     private fun resetAudio() {
-        if (mBluetoothWrapper != null) mBluetoothWrapper!!.setBluetoothOn(false)
+        mBluetoothWrapper?.setBluetoothOn(false)
         mAudioManager.isSpeakerphoneOn = false
         audioStateSubject.onNext(STATE_INTERNAL)
     }

@@ -110,7 +110,7 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
         get() = try {
             bluetoothAdapter?.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED
         } catch (e: SecurityException) {
-            false
+            true
         }
 
     fun canBluetooth(): Boolean {
@@ -119,18 +119,7 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
             if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled || !audioManager.isBluetoothScoAvailableOffCall) {
                 return false
             }
-            //We get all bounded bluetooth devices
-            // bounded is not enough, should search for connected devices....
-            val pairedDevices = bluetoothAdapter.bondedDevices
-            for (device in pairedDevices) {
-                device.bluetoothClass?.let { bluetoothClass ->
-                    val deviceClass = bluetoothClass.deviceClass
-                    if (bluetoothClass.hasService(BluetoothClass.Service.TELEPHONY) || deviceClass == BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET || deviceClass == BluetoothClass.Device.AUDIO_VIDEO_CAR_AUDIO || deviceClass == BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE) {
-                        //And if any can be used as a audio handset
-                        return true
-                    }
-                }
-            }
+            return true
         } catch (e: SecurityException) {
             Log.w(TAG, "Can't get bluetooth status " + e.message)
         }
@@ -142,9 +131,9 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
         if (on && isBluetoothConnecting || on && isBluetoothConnected) {
             return
         }
-        /*Log.d(TAG, "setBluetoothOn: " + on);
-        Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
-        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());*/
+        /*Log.d(TAG, "setBluetoothOn: $on");
+        Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn);
+        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn);*/
         try {
             if (on) {
                 isBluetoothConnecting = true
