@@ -126,6 +126,7 @@
   <string name="message_failed">Dështoi</string>
   <string name="time_just_now">Mu tani</string>
   <string name="send_file">Dërgo kartelë</string>
+  <string name="select_media">Hap galerinë</string>
   <string name="hist_file_sent">Kartela u dërgua</string>
   <string name="hist_file_received">Kartela u mor</string>
   <string name="conversation_send_audio">Incizoni copëz zanore</string>
@@ -186,6 +187,10 @@
   <string name="conversation_type_contact">Kontakt Jami</string>
   <string name="conversation_type_private">Zgjua privat</string>
   <string name="conversation_type_group">Zgjua grupi</string>
+  <string name="conversation_contact_invited">U ftua %1$s</string>
+  <string name="conversation_contact_added">%1$s erdhi</string>
+  <string name="conversation_contact_left">%1$s iku</string>
+  <string name="conversation_contact_banned">%1$s u dëbua</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
@@ -335,6 +340,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Tinguj</string>
   <string name="bottomSheet_raiseHand_btn">Ngrini dorën</string>
+  <string name="open_account_plugin_settings">Hap Rregullime Shtojce Llogarie</string>
+  <string name="open_general_plugin_settings">Hap Rregullime Shtojce Të përgjithshme</string>
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
 </resources>

@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Izbrišite svoj račun s te naprave</string>
   <string name="pref_persistNotification_title">Zagon v ozadju</string>
   <string name="pref_persistNotification_summary">Dovoli izvajanje v ozadju za sprejemanje klicev in sporočil.</string>
+  <string name="pref_newGroup_title">Omogoči skupinski klepet</string>
+  <string name="pref_newGroup_summary">Omogočite ustvarjanje skupin v Jamiju.</string>
   <string name="pref_logs_title">Diagnostični zapisniki</string>
   <string name="pref_logs_summary">Odpri nastavitve diagnostičnih zapisnikov</string>
   <string name="pref_logs_start">Začni beležiti</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Ali želite odstraniti vtičnik?</string>
   <string name="plugin_reset_preferences">Ponastavi nastavitve vtičnika</string>
   <string name="plugin_reset_preferences_summary">Nastavitve vašega vtičnika bodo ponastavljene</string>
+  <string name="plugin_reset_preferences_ask">Ali želite ponastaviti splošne nastavitve vstavkov?</string>
+  <string name="plugin_reset_account_preferences_ask">Ali želite ponastaviti nastavitve vstavkov računa?</string>
   <string name="plugin_successfully_installed">Vtičnik <b>%1$s</b> je bil uspešno nameščen</string>
   <string name="plugin_install_failure">Namestiev vtičnika ni uspela: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Nameščeno imate novejšo različico <b>%1$s</b></string>

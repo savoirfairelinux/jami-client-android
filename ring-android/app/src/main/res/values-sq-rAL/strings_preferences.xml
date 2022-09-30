@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Fshini llogarinë tuaj prej kësaj pajisjeje</string>
   <string name="pref_persistNotification_title">Xhiro në prapaskenë</string>
   <string name="pref_persistNotification_summary">Lejoni xhirimin në prapaskenë që të merrni thirrje dhe mesazhe.</string>
+  <string name="pref_newGroup_title">Aktivizo fjalosje grupi</string>
+  <string name="pref_newGroup_summary">Aktivizo krijim grupesh në Jami.</string>
   <string name="pref_logs_title">Regjistra diagnostikimesh</string>
   <string name="pref_logs_summary">Hapni rregullime regjistrash diagnostikimi</string>
   <string name="pref_logs_start">Fillo Regjistrim</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Të çinstalohet Shtojca?</string>
   <string name="plugin_reset_preferences">Rikthe te parazgjedhjet parapëlqimet për shtojca</string>
   <string name="plugin_reset_preferences_summary">Rregullimet e shtojcës tuaj do të kthehen te parazgjedhjet</string>
+  <string name="plugin_reset_preferences_ask">Doni të kthehen te parazgjedhjet rregullimet e përgjithshme të shtojcës?</string>
+  <string name="plugin_reset_account_preferences_ask">Doni të rikthehen te parazgjedhjet rregullimet e shtojcës së llogarisë?</string>
   <string name="plugin_successfully_installed">Shtojca <b>%1$s</b> u instalua me sukses</string>
   <string name="plugin_install_failure">S’u arrit të instalohej shtojcë: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Keni një version më të freskët të: <b>%1$s</b></string>

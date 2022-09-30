@@ -5,6 +5,7 @@
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Systém</string>
   <string name="pref_category_privacy">Soukromí</string>
+  <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_mobileData_title">Mobilní data</string>
   <string name="pref_mobileData_summary">Povolit Jami na 3G/LTE sítích dodatečně k WiFi</string>
   <string name="pref_pushNotifications_title">Oznámení Push</string>
@@ -26,10 +27,32 @@
   <string name="pref_startOnBoot_summary">Spustit Jami na pozadí po spuštění systému.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
   <string name="pref_clearHistory_summary">Vymaže celou historii konverzací. Tento úkon nelze vrátit zpět.</string>
+  <string name="pref_notification_title">Viditelnost notifikací</string>
+  <string name="pref_notification_summary">Nastavení viditelnosti oznámení aplikací na zamčené obrazovce.</string>
+  <string name="pref_blackList_title">Seznak blokovaných kontaktů</string>
+  <string name="pref_blackList_summary">Zkontrolujte seznam blokovaných kontaktů.</string>
   <string name="pref_delete_account_title">Odstranit účet</string>
+  <string name="pref_delete_account_summary">Odstraněnit svůj účet z tohoto zařízení</string>
   <string name="pref_persistNotification_title">Běžet na pozadí</string>
   <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
+  <string name="pref_newGroup_title">Povolení skupinového chatu</string>
+  <string name="pref_newGroup_summary">Povolení vytváření skupin v aplikaci Jami.</string>
+  <string name="pref_logs_title">Diagnostické záznamy</string>
+  <string name="pref_logs_summary">Otevření nastavení diagnostického protokolu</string>
+  <string name="pref_logs_start">Spuštění záznamu</string>
+  <string name="pref_logs_stop">Zazstavení záznamu</string>
+  <string name="pref_typing_title">Povolení indikátorů psaní</string>
+  <string name="pref_typing_summary">Indikátory odesílání a přijímání, které ukazují, že se zpráva právě píše.</string>
+  <string name="pref_read_title">Povolení potvrzení o přečtení</string>
+  <string name="pref_read_summary">Odesílání a přijímání potvrzení o zobrazení zprávy.</string>
+  <string name="pref_block_record_title">Blokování snímku obrazovky a nahrávání</string>
+  <string name="pref_block_record_summary">Blokování pořizování snímků obrazovky nebo nahrávání videa.</string>
+  <string name="pref_link_preview_title">Zobrazení náhledů odkazů v konverzacích</string>
+  <string name="pref_link_preview_summary">Náhledy vyžadují stažení obsahu ze serverů třetích stran.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Veřejné \n (zobrazení oznámení a jejich obsahu na uzamčené obrazovce) \n</string>
+  <string name="notification_private">Soukromé \n (zobrazení oznámení, ale skrytí jejich obsahu na uzamčené obrazovce) \n</string>
+  <string name="notification_secret">Tajné \n (nezobrazují se oznámení na uzamčené obrazovce)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Zásuvné moduly</string>
   <string name="pref_plugins_summary">Povolit zásuvné moduly a nastavit jejich parametry</string>
@@ -37,6 +60,8 @@
   <string name="plugin_uninstall_title">Odinstalovat zásuvný modul?</string>
   <string name="plugin_reset_preferences">Resetovat předvolby zásuvných modulů</string>
   <string name="plugin_reset_preferences_summary">Vaše nastavení zásuvných modulů budou obnovena na výchozí hodnoty</string>
+  <string name="plugin_reset_preferences_ask">Chcete obnovit obecné nastavení pluginu ?</string>
+  <string name="plugin_reset_account_preferences_ask">Chcete obnovit nastavení pluginu účtu ?</string>
   <string name="plugin_successfully_installed">Zásuvný modul <b>%1$s</b> byl úspěšně nainstalován</string>
   <string name="plugin_install_failure">Instalace zásuvného modulu <b>%1$s</b> selhala</string>
   <string name="plugin_recent_version_exception">Máte novější verzi <b>%1$s</b></string>

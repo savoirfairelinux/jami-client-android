@@ -122,6 +122,7 @@
   <string name="message_failed">失败</string>
   <string name="time_just_now">刚才</string>
   <string name="send_file">发送文件</string>
+  <string name="select_media">開啟相簿</string>
   <string name="hist_file_sent">文件已发送</string>
   <string name="hist_file_received">文件已接收</string>
   <string name="conversation_send_audio">录制音频片段</string>
@@ -182,6 +183,10 @@
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人 swarm</string>
   <string name="conversation_type_group">群组 swarm</string>
+  <string name="conversation_contact_invited">%1$s 已被封鎖</string>
+  <string name="conversation_contact_added">%1$s 已加入</string>
+  <string name="conversation_contact_left">%1$s 已離開</string>
+  <string name="conversation_contact_banned">%1$s 已被封鎖</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密碼</string>
@@ -331,6 +336,8 @@
   <string name="bottomSheet_mute_microphone_btn">麦克风</string>
   <string name="bottomSheet_sound_output_btn">声音</string>
   <string name="bottomSheet_raiseHand_btn">举手</string>
+  <string name="open_account_plugin_settings">開啟帳號外掛程式設定</string>
+  <string name="open_general_plugin_settings">開啟一般外掛程式設定</string>
   <string name="uninstall">卸载</string>
   <string name="reset">重置</string>
 </resources>

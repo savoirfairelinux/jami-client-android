@@ -128,6 +128,7 @@
   <string name="message_failed">Neuspelo</string>
   <string name="time_just_now">Ravnokar</string>
   <string name="send_file">Pošlji datoteko</string>
+  <string name="select_media">Odpri galerijo</string>
   <string name="hist_file_sent">Datoteka je poslana</string>
   <string name="hist_file_received">Datoteka je sprejeta</string>
   <string name="conversation_send_audio">Snemaj zvočni posnetek</string>
@@ -188,6 +189,10 @@
   <string name="conversation_type_contact">Stik Jami</string>
   <string name="conversation_type_private">Zasebni roj</string>
   <string name="conversation_type_group">Skupinski roj</string>
+  <string name="conversation_contact_invited">%1$s je povabljen/a</string>
+  <string name="conversation_contact_added">%1$s se je pridružil/a</string>
+  <string name="conversation_contact_left">%1$s je odšel/a</string>
+  <string name="conversation_contact_banned">%1$s je blokiran/a</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>
@@ -337,6 +342,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvoki</string>
   <string name="bottomSheet_raiseHand_btn">Dvignite roko</string>
+  <string name="open_account_plugin_settings">Odpri nastavitve vstavkov računa</string>
+  <string name="open_general_plugin_settings">Odpri splošne nastavitve vstavkov</string>
   <string name="uninstall">Odstrani</string>
   <string name="reset">Ponastavi</string>
 </resources>

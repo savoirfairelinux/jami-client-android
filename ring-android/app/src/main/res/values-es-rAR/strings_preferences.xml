@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Eliminar la cuenta de este dispositivo</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permitir ejecutar en segundo plano para recibir llamadas y mensajes.</string>
+  <string name="pref_newGroup_title">Habilitar chat grupal</string>
+  <string name="pref_newGroup_summary">Habilitar la creación de grupos en Jami.</string>
   <string name="pref_logs_title">Registros de diagnóstico</string>
   <string name="pref_logs_summary">Abrir preferencias de registro de diagnóstico</string>
   <string name="pref_logs_start">Iniciar registro</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">¿Desinstalar complemento?</string>
   <string name="plugin_reset_preferences">Restablecer las preferencias de los complementos</string>
   <string name="plugin_reset_preferences_summary">Los ajustes de complementos se restablecerán a sus valores predeterminados</string>
+  <string name="plugin_reset_preferences_ask">¿Quiere restablecer los ajustes de complementes generales?</string>
+  <string name="plugin_reset_account_preferences_ask">¿Quiere restablecer los ajustes de complementos de la cuenta?</string>
   <string name="plugin_successfully_installed">Complemento <b>%1$s</b> instalado correctamente</string>
   <string name="plugin_install_failure">Falló al instalar el complemento: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Tenés una versión más reciente de: <b>%1$s</b></string>

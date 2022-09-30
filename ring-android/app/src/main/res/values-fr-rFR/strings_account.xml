@@ -99,6 +99,7 @@ Vous pourrez éditer votre compte plus tard.</string>
   <string name="account_published_same_as_local_label">Identique aux paramètres locaux</string>
   <string name="account_published_port_label">Port publié</string>
   <string name="account_published_address_label">Adresse publiée</string>
+  <string name="disabled">Désactivé</string>
   <string name="enabled">Activer</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Utiliser le proxy DHT</string>

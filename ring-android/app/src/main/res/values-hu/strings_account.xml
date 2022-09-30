@@ -99,6 +99,7 @@
   <string name="account_published_same_as_local_label">Helyiként közzétéve</string>
   <string name="account_published_port_label">Közzétett kikötő</string>
   <string name="account_published_address_label">Nyilvános cím</string>
+  <string name="disabled">Letiltva</string>
   <string name="enabled">Engedélyezve</string>
   <string name="account_proxy_label">DHT-meghatalmazás</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazás használata</string>

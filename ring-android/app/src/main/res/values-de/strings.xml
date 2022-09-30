@@ -171,13 +171,13 @@
   <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
-  <string name="conversation_action_block_this">Kontakt sperren</string>
+  <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
-  <string name="block_contact_dialog_title">%1$s sperren?</string>
-  <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, dich zu kontaktieren, bis du die Sperre entfernst.</string>
-  <string name="block_contact_completed">%1$s wurde gesperrt.</string>
+  <string name="block_contact_dialog_title">%1$s blockieren?</string>
+  <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung entfernen.</string>
+  <string name="block_contact_completed">%1$s wurde blockiert.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt...</string>
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>
@@ -236,7 +236,7 @@
   <!--Pending contact requests-->
   <string name="accept">Annehmen</string>
   <string name="refuse">Ablehnen</string>
-  <string name="block">Sperren</string>
+  <string name="block">Blockieren</string>
   <string name="contact_request_title">Neue Kontaktanfrage</string>
   <string name="contact_request_msg">Sie haben %1$d Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
@@ -248,7 +248,7 @@
   <string name="send_request_title">Eine Kontaktanfrage senden</string>
   <string name="send_request_msg">Sie müssen eine Kontaktanfrage senden, um mit diesem Benutzer zu kommunizieren. Solange Ihr Kontakt die Anfrage nicht akzeptiert hat, können Sie Nachrichten senden, aber er wird nicht in der Lage sein, zu antworten.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">Keine gesperrten Kontakte</string>
+  <string name="no_blocked_contact">Keine blockierten Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage gesendet</string>
   <string name="conversation_placeholder">Sie haben bisher noch keine Unterhaltungen</string>

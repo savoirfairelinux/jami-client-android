@@ -15,6 +15,7 @@
   <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence <u>GNU General Public License ve verzi 3 nebo pozdější</u></string>
   <string name="description">Jami je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
+  <string name="pip_title">Konference Jami</string>
   <string name="call_service_description">Tato služba je potřebná k tomu, aby vaše hovory mohly běžet na popředí. Je spuštěná jen během hovorů.</string>
   <string name="data_transfer_service_description">Tato služba je potřebná k zobrazení neustálých oznámení během přenosů souborů. Je spuštěná jen během přenosů souborů.</string>
   <!--About dialog-->
@@ -23,6 +24,7 @@
   <string name="ringtones_by">Vyzváněcí tóny od</string>
   <!--RingActivity-->
   <string name="error_no_network">Chybí připojení</string>
+  <string name="error_account_offline">Účet je offline</string>
   <string name="error_mobile_network_available_but_disabled">Povolte prosím v nastavení přístup k mobilním datům</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textové zprávy</string>
@@ -99,6 +101,10 @@
   <string name="start_error_title">Nelze spustit Jami!</string>
   <string name="start_error_mic_required">Aby Jami správně pracoval, vyžaduje přístup k mikrofonu.</string>
   <string name="action_call_accept">Přijmout</string>
+  <string name="action_call_accept_audio">Odpovědět hlasovou zprávou</string>
+  <string name="action_call_accept_video">Odpovědět videem</string>
+  <string name="action_call_hold_accept">Podržení a přijetí hovoru</string>
+  <string name="action_call_hold_accept_video">Podržení a přijetí hovoru</string>
   <string name="action_call_end_accept">Ukončit a přijmout hovor</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="action_call_mic_mute">Ztlumit mikrofon</string>
@@ -115,12 +121,14 @@
   <string name="qr_code">Kód QR</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <string name="ab_action_hidepreview">Skrýt náhled</string>
+  <string name="remote_recording">%s nahrávání...</string>
   <!--Text messages-->
   <string name="send_message">Odeslat zprávu</string>
   <string name="message_sending">Odesílám zprávu…</string>
   <string name="message_failed">Hovor selhal</string>
   <string name="time_just_now">Právě teď</string>
   <string name="send_file">Poslat soubor</string>
+  <string name="select_media">Otevřít galerii</string>
   <string name="hist_file_sent">Soubor odeslán</string>
   <string name="hist_file_received">Soubor přijat</string>
   <string name="conversation_send_audio">Nahrávat zvukový klip</string>
@@ -173,6 +181,18 @@
   <string name="block_contact_dialog_message">%1$s se s vámi nebude schopen spojit, dokud jej neodblokujete.</string>
   <string name="block_contact_completed">%1$s byl zablokován.</string>
   <string name="conversation_contact_is_typing">Kontakt píše…</string>
+  <string name="conversation_info_contact_you">Vy</string>
+  <string name="conversation_members">Členové</string>
+  <string name="conversation_syncing">Stahování konverzace z peeru</string>
+  <string name="conversation_preference_color">Barva konverzace</string>
+  <string name="conversation_preference_emoji">Emoji konverzace</string>
+  <string name="conversation_type_contact">Kontakt na Jami</string>
+  <string name="conversation_type_private">Soukromý swarm</string>
+  <string name="conversation_type_group">Skupinový swarm</string>
+  <string name="conversation_contact_invited">%1$sbyl pozván</string>
+  <string name="conversation_contact_added">%1$sse připojil</string>
+  <string name="conversation_contact_left">%1$sodešel</string>
+  <string name="conversation_contact_banned">%1$sbyl zakázán</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
@@ -188,7 +208,10 @@
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
   <string name="wizard_skip">Přeskočit</string>
-  <string name="hist_contact_added">Spojení přidáno</string>
+  <string name="hist_contact_invited">Kontakt pozván</string>
+  <string name="hist_contact_added">Kontakt přidán</string>
+  <string name="hist_contact_left">Kontakt odešel</string>
+  <string name="hist_contact_banned">Spojení zakázáno</string>
   <string name="hist_invitation_received">Pozvání přijato</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -198,10 +221,12 @@
   <string name="take_a_photo">Pořídit fotku</string>
   <string name="profile_name_hint">Zadejte své jméno</string>
   <string name="registered_name">Registrované jméno</string>
+  <string name="no_registered_name">Žádné registrované jméno</string>
   <string name="identity">Totožnost</string>
   <string name="account">Účet</string>
   <string name="link_new_device">Připojit nové zařízení</string>
   <string name="devices">Připojená zařízení</string>
+  <string name="total_devices">Celkově zařízení:</string>
   <!--Share fragment-->
   <string name="share_message">Skenovat tento kód s Jami</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>
@@ -215,6 +240,7 @@
   <string name="refuse">Odmítnout</string>
   <string name="block">Blokovat</string>
   <string name="contact_request_title">Nová žádost o kontakt</string>
+  <string name="contact_request_msg">Máš%1$džádostí o kontakt</string>
   <string name="contact_request_account">Pro %1$s</string>
   <string name="no_requests">Nemáte žádné žádosti o kontakt</string>
   <string name="message_contact_not_trusted_yet">%sještě není ve vašich kontaktech.\nPřijmete anebo odmítnete tuto žádost o kontakt?</string>
@@ -253,6 +279,7 @@
   <string name="file_transfer_status_timed_out">vypršel časový limit</string>
   <string name="file_saved_in">Soubor uložen do %s</string>
   <string name="file_saved_successfully">Soubor byl úspěšně uložen</string>
+  <string name="file_download">Stáhnout</string>
   <string name="no_space_left_on_device">Na zařízení nezbylo žádné místo</string>
   <string name="title_media_viewer">Prohlížeč záznamů</string>
   <string name="menu_file_open">Otevřít soubor</string>
@@ -284,6 +311,7 @@
   <string name="tv_send_text">Poslat text</string>
   <string name="tv_send_audio">Poslat zvuk</string>
   <string name="tv_send_video">Poslat média</string>
+  <string name="tv_action_more">Více</string>
   <string name="conversation_input_speech_hint">Řekněte něco…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Doporučeno</string>
@@ -302,14 +330,20 @@
   <string name="wizard_profile_button">Uložit profil</string>
   <string name="wizard_profile_skip">Odložit na později</string>
   <string name="fab_path_choose">Vybrat jiný soubor</string>
+  <string name="chat_plugins">Chatovací pluginy</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Sdílet</string>
+  <string name="bottomSheet_dialpad_btn">Číselník</string>
   <string name="bottomSheet_plugins_btn">Zásuvné moduly</string>
   <string name="bottomSheet_add_participants_btn">Přidat</string>
   <string name="bottomSheet_change_camera_btn">Změnit</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Ukončit hovor</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Zvuky</string>
   <string name="bottomSheet_raiseHand_btn">Zvednout ruku</string>
+  <string name="open_account_plugin_settings">Otevřít nastavení pluginu účtu</string>
+  <string name="open_general_plugin_settings">Otevřít základní nastavení pluginu</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
 </resources>

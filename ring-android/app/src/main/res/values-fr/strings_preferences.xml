@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Supprimer votre compte de cet appareil</string>
   <string name="pref_persistNotification_title">Fonctionne en arrière-plan</string>
   <string name="pref_persistNotification_summary">Permet de fonctionner en arrière-plan pour recevoir des appels ou des messages</string>
+  <string name="pref_newGroup_title">Activer le clavardage de groupe</string>
+  <string name="pref_newGroup_summary">Activer la création de groupe dans Jami.</string>
   <string name="pref_logs_title">Journaux de diagnostiques</string>
   <string name="pref_logs_summary">Ouvrir les paramètres  des journaux de diagnostiques</string>
   <string name="pref_logs_start">Démarrer la journalisation</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Désinstaller le module d\'extension</string>
   <string name="plugin_reset_preferences">Réinitialiser les paramètres du module d\'extension</string>
   <string name="plugin_reset_preferences_summary">Les paramètres de votre module d\'extension seront réinitialisés</string>
+  <string name="plugin_reset_preferences_ask">Voulez-vous réinitialiser les paramètres généraux du module d\'extension ?</string>
+  <string name="plugin_reset_account_preferences_ask">Voulez-vous réinitialiser les paramètres de compte du module d’extension ?</string>
   <string name="plugin_successfully_installed">Le module d\'extension <b>%1$s</b> a été correctement installé</string>
   <string name="plugin_install_failure">Échec de l\'installation du module d\'extension :: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Vous avez une version plus récente de :<b>%1$s</b></string>

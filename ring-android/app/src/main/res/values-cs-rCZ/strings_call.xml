@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Pozastavit</string>
     <string name="call_human_state_unhold">Pokračovat v hovoru</string>
     <string name="call_human_state_over">Hovor skončil</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderator</string>
+    <string name="call_muted">Ztlumené</string>
+    <string name="call_handRaised">Zvednutá ruka</string>
+
+</resources>
