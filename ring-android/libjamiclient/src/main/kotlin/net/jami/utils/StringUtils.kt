@@ -33,7 +33,8 @@ object StringUtils {
         Character.UnicodeBlock.ARROWS,
         Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT,
         Character.UnicodeBlock.TRANSPORT_AND_MAP_SYMBOLS,
-        Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
+        Character.UnicodeBlock.VARIATION_SELECTORS,
+        Character.UnicodeBlock.VARIATION_SELECTORS_SUPPLEMENT
     ))
 
     fun capitalize(s: String): String {
