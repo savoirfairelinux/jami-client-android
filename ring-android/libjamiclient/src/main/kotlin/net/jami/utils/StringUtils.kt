@@ -33,7 +33,9 @@ object StringUtils {
         Character.UnicodeBlock.ARROWS,
         Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT,
         Character.UnicodeBlock.TRANSPORT_AND_MAP_SYMBOLS,
-        Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
+        Character.UnicodeBlock.VARIATION_SELECTORS,
+        Character.UnicodeBlock.VARIATION_SELECTORS_SUPPLEMENT,
+        Character.UnicodeBlock.TAGS
     ))
 
     fun capitalize(s: String): String {
@@ -75,7 +77,7 @@ object StringUtils {
                 continue
             }
             // Common Emoji range: https://en.wikipedia.org/wiki/Unicode_block
-            if (codePoint in 0x1F000..0x1ffff) {
+            if (codePoint in 0x1F000..0x1ffff || codePoint == 0x200D) {
                 continue
             }
             val block = Character.UnicodeBlock.of(codePoint)
