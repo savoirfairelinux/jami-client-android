@@ -86,6 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
         tools:ignore="UnusedAttribute" >
         <meta-data
             android:name="com.google.android.gms.car.application"
