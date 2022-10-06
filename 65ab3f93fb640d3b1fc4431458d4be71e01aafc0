@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c19da93_2ef7fc27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-10-06T13:14:18Z",
+      "side": 1,
+      "message": "will test this afternoon I guess",
+      "revId": "65ab3f93fb640d3b1fc4431458d4be71e01aafc0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2712bdf_bad2fd3a",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-10-06T13:14:18Z",
+      "side": 1,
+      "message": "we force http there? should $server contains http nor https instead?",
+      "range": {
+        "startLine": 345,
+        "startChar": 38,
+        "endLine": 345,
+        "endChar": 46
+      },
+      "revId": "65ab3f93fb640d3b1fc4431458d4be71e01aafc0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
