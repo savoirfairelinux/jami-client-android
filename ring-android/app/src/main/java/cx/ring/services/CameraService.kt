@@ -378,12 +378,11 @@ class CameraService internal constructor(c: Context) {
             setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
             setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue)
             setInteger(MediaFormat.KEY_COLOR_FORMAT, CodecCapabilities.COLOR_FormatSurface)
-            //if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
-            //    setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
-            //setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
+            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
+                setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
+            setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
             setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1)
-            setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1);
-            setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5);
+            setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5)
             setInteger(MediaFormat.KEY_FRAME_RATE, 24)
         }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
