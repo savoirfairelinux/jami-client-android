@@ -359,6 +359,10 @@ class DaemonService(
             mAccountService.conversationProfileUpdated(accountId, conversationId, profile)
         }
 
+        override fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
+            mAccountService.conversationPreferencesUpdated(accountId, conversationId, preferences)
+        }
+
         override fun messageReceived(accountId: String, conversationId: String, message: StringMap) {
             mAccountService.messageReceived(accountId, conversationId, message.toNative())
         }
