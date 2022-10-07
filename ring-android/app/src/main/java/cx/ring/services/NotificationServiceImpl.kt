@@ -60,13 +60,18 @@ import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarFactory
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.*
+import java.io.BufferedInputStream
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.HashMap
-import kotlin.collections.LinkedHashMap
+import kotlin.collections.ArrayList
 
 class NotificationServiceImpl(
     private val mContext: Context,
@@ -82,6 +87,7 @@ class NotificationServiceImpl(
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
+    private var pendingNotificationActions = ArrayList<() -> Unit>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -290,15 +296,64 @@ class NotificationServiceImpl(
         if (notification != null) {
             val nid = random.nextInt()
             callNotifications[nid] = notification
-            try {
+            val start = {
                 ContextCompat.startForegroundService(mContext,
                     Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
                         .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid))
-            } catch (e: Exception) {
+            }
+            try {
+                start()
+            }
+            catch (e: ForegroundServiceStartNotAllowedException) {
+                pingPush(conference.accountId, start)
+            }
+            catch (e: Exception) {
                 Log.w(TAG, "Can't show call notification", e)
+                //notificationManager.notify(nid, notification)
             }
         } else {
             removeCallNotification(0)
+        }
+    }
+
+    override fun processPush() {
+        val actions: List<() -> Unit>
+        synchronized(this) {
+            actions = pendingNotificationActions
+            pendingNotificationActions = ArrayList()
+        }
+        for (action in actions)
+            try {
+                action()
+            } catch (e: Exception) {
+                Log.w(TAG, "Error running push action", e)
+            }
+    }
+
+    private fun pingPush(accountId: String, start: () -> Unit) {
+        if (mPreferencesService.isPushAllowed) {
+            val account = mAccountService.getAccount(accountId) ?: return
+            if (account.isDhtProxyEnabled) {
+                val server = account.dhtProxyUsed
+                if (server.isEmpty()) return
+                //server.mat
+                synchronized(this) {
+                    pendingNotificationActions.add(start)
+                }
+                Schedulers.io().scheduleDirect {
+                    try {
+                        val url = URL("$server/pingPush")
+                        Log.w(TAG, "pingPush $url")
+                        val urlConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                        AutoCloseable { urlConnection.disconnect() }.use {
+                            val i = InputStreamReader(BufferedInputStream(urlConnection.inputStream)).use { it.readText() }
+                            Log.w(TAG, "pingPush Got code ${urlConnection.responseCode} $i")
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Error sending push ping", e)
+                    }
+                }
+            }
         }
     }
 
