@@ -1284,6 +1284,10 @@ class AccountService(
         getAccount(accountId)?.getSwarm(conversationId)?.updateInfo(info)
     }
 
+    fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
+        getAccount(accountId)?.getSwarm(conversationId)?.updatePreferences(preferences)
+    }
+
     private enum class ConversationMemberEvent {
         Add, Join, Remove, Ban
     }

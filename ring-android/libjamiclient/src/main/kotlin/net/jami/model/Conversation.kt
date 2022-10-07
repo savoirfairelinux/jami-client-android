@@ -628,6 +628,10 @@ class Conversation : ConversationHistory {
         description = info["description"]
     }
 
+    fun updatePreferences(preferences: Map<String, String>) {
+
+    }
+
     fun getTitle() = title
     fun getDescription() = description
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
