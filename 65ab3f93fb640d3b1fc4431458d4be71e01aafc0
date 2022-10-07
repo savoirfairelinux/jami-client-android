@@ -39,6 +39,30 @@
       },
       "revId": "65ab3f93fb640d3b1fc4431458d4be71e01aafc0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2721060_3fcd8d9c",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-10-07T17:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2712bdf_bad2fd3a",
+      "range": {
+        "startLine": 345,
+        "startChar": 38,
+        "endLine": 345,
+        "endChar": 46
+      },
+      "revId": "65ab3f93fb640d3b1fc4431458d4be71e01aafc0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
