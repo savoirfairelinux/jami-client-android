@@ -57,6 +57,7 @@ class JamiApplicationFirebase : JamiApplication() {
     fun onMessageReceived(remoteMessage: RemoteMessage) {
         // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
         mAccountService.pushNotificationReceived(remoteMessage.from ?: "", remoteMessage.data)
+        mNotificationService.processPush()
     }
 
     companion object {
