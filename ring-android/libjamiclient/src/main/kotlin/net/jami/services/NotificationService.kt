@@ -44,6 +44,7 @@ interface NotificationService {
     fun onConnectionUpdate(b: Boolean)
     fun showLocationNotification(first: Account, contact: Contact)
     fun cancelLocationNotification(first: Account, contact: Contact)
+    fun processPush()
 
     companion object {
         const val TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId"
