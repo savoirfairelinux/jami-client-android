@@ -53,6 +53,9 @@ android {
         create("withFirebase") {
             dimension = "push"
         }
+        create("withUnifiedPush") {
+            dimension = "push"
+        }
     }
     signingConfigs {
         create("config") {
@@ -138,6 +141,7 @@ dependencies {
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
+    "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.1.0")
 }
 
 kapt {
