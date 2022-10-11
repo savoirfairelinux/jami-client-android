@@ -945,6 +945,11 @@ class AccountService(
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
 
+    fun setPushNotificationPlatform(pushNotificationPlatform: String) {
+        //Log.i(TAG, "setPushNotificationPlatform()");
+        mExecutor.execute { JamiService.setPushNotificationPlatform(pushNotificationPlatform) }
+    }
+
     fun volumeChanged(device: String, value: Int) {
         Log.w(TAG, "volumeChanged $device $value")
     }
