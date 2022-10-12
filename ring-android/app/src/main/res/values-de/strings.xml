@@ -119,7 +119,7 @@
   <string name="qr_code">QR-Code</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
-  <string name="remote_recording">%s aufnehmen…</string>
+  <string name="remote_recording">%s Aufnahme läuft …</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
@@ -182,8 +182,8 @@
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>
   <string name="conversation_syncing">Unterhaltung des Teilnehmers herunterladen</string>
-  <string name="conversation_preference_color">Farbe der Konversation</string>
-  <string name="conversation_preference_emoji">Emoji der Konversation</string>
+  <string name="conversation_preference_color">Farbe der Unterhaltung</string>
+  <string name="conversation_preference_emoji">Emoji der Unterhaltung</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>
   <string name="conversation_type_private">privater Schwarm</string>
   <string name="conversation_type_group">Schwarmgruppe</string>
@@ -208,7 +208,7 @@
   <string name="wizard_skip">Überspringen</string>
   <string name="hist_contact_invited">Kontakt eingeladen</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>
-  <string name="hist_contact_left">Kontakt weg</string>
+  <string name="hist_contact_left">Kontakt gegangen</string>
   <string name="hist_contact_banned">Kontakt gesperrt</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
   <!--Account Summary-->
@@ -265,7 +265,7 @@
   <string name="file_transfer_status_created">Übertragung initialisieren</string>
   <string name="file_transfer_status_unsupported">nicht unterstützt</string>
   <string name="file_transfer_status_wait_peer_acceptance">warte auf Annahme durch Teilnehmer</string>
-  <string name="file_transfer_status_wait_host_acceptance">warten auf Annahme durch den Veranstalter</string>
+  <string name="file_transfer_status_wait_host_acceptance">auf Annahme durch den Veranstalter warten</string>
   <string name="file_transfer_status_ongoing">läuft</string>
   <string name="file_transfer_status_finished">abgeschlossen</string>
   <string name="file_transfer_status_closed_by_host">vom Veranstalter geschlossen</string>

@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">En espera</string>
     <string name="call_human_state_unhold">Allibera</string>
     <string name="call_human_state_over">Per sobre</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderador</string>
+    <string name="call_muted">Silenciat</string>
+    <string name="call_handRaised">Mà aixecada</string>
+
+</resources>

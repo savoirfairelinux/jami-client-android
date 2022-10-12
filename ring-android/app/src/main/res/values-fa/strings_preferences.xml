@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">حساب خود را از روی این دستگاه حذف کنید.</string>
   <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
   <string name="pref_persistNotification_summary">اجازه اجرا در پس‌زمینه برای دریافت تماس‌ها و پیام‌ها.</string>
+  <string name="pref_newGroup_title">چت گروهی را فعال کن</string>
+  <string name="pref_newGroup_summary">ایجاد گروه در جمی را فعال کن</string>
   <string name="pref_logs_title">گزارش‌های عیب‌یابی</string>
   <string name="pref_logs_summary">نتظیمات گزارش عیب‌یابی را باز کن</string>
   <string name="pref_logs_start">شروع گزارش‌گیری</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">افزونه را حذف نصب می‌کنید؟</string>
   <string name="plugin_reset_preferences">تنظیم مجدد تنظیمات افزونه</string>
   <string name="plugin_reset_preferences_summary">تنظیمات افزونه شما به پیش‌فرض تغییر خواهد کرد</string>
+  <string name="plugin_reset_preferences_ask">آیا می‌خواهید تنظیمات افزونه عمومی را بازنشانی کنید؟</string>
+  <string name="plugin_reset_account_preferences_ask">آیا می‌خواهید تنظیمات افزونه حساب را بازنشانی کنید؟</string>
   <string name="plugin_successfully_installed">افزونه <b>%1$s</b> با موفقیت نصب شد</string>
   <string name="plugin_install_failure">نصب افزونه انجام نشد:<b>%1$s</b></string>
   <string name="plugin_recent_version_exception">شما نسخه جدید‌تری دارید از: <b>%1$s</b></string>

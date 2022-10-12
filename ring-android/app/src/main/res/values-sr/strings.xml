@@ -15,6 +15,7 @@
   <string name="license">Ovaj softver se pruža „takav kakav je“, bez bilo kakvih garancija. Za detalje pogledajte<u> GNU General Public License verzija 3 ili novija</u></string>
   <string name="description">Jami je besplatan softver za komunikaciju koja poštuje slobodu i privatnost svojih korisnika.</string>
   <string name="credits">Zasluge</string>
+  <string name="pip_title">Jami konferencija</string>
   <string name="call_service_description">Ova usluga je neophodna da bi vaši pozivi bili u prvom planu. Aktivna je samo tokom poziva.</string>
   <string name="data_transfer_service_description">Ova usluga je neophodna za prikazivanje trajnih obaveštenja tokom prenosa datoteka. Aktivna je se samo tokom prenosa datoteka.</string>
   <!--About dialog-->
@@ -40,11 +41,6 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
-  <plurals name="home_conferences_title">
-    <item quantity="one">%d konverzacija</item>
-    <item quantity="few">%d konverzacije</item>
-    <item quantity="other">%d konverzacija</item>
-  </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Preraži ime ili broj telefona...</string>
   <string name="choose_number">Izaberi broj</string>
@@ -99,6 +95,10 @@
   <string name="start_error_title">Ne može Jami da se pokrene!</string>
   <string name="start_error_mic_required">Jami zahteva pristup mikrofonu da bi radio.</string>
   <string name="action_call_accept">Prihvati poziv</string>
+  <string name="action_call_accept_audio">Odgovori zvukom</string>
+  <string name="action_call_accept_video">Odgovori videom</string>
+  <string name="action_call_hold_accept">Zaustavi i preuzmi zvučni poziv</string>
+  <string name="action_call_hold_accept_video">Zaustavi i preuzmi video poziv</string>
   <string name="action_call_end_accept">Prekini i prihvati poziv</string>
   <string name="action_call_decline">Odbij</string>
   <string name="action_call_mic_mute">Blokiraj mikrofon</string>
@@ -106,8 +106,6 @@
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj kontakt</string>
   <string name="ab_action_contact_add_question">Dotati u kontakte?</string>
-  <string name="hist_contact_added">Kontakt dodat</string>
-  <string name="hist_invitation_received">Primljen poziv</string>
   <string name="ab_action_audio_call">Audio poziv</string>
   <string name="ab_action_video_call">Video poziv</string>
   <string name="ab_action_change_screen_orientation">Promeni orijentaciju ekrana</string>
@@ -153,6 +151,7 @@
   <string name="clear_history_dialog_title">Izbriši istoriju?</string>
   <string name="clear_history_dialog_message">Akcija ne može da se povrati.</string>
   <string name="clear_history_completed">Istorija je izbrisana.</string>
+  <string name="clear_history">Jasno</string>
   <!--Conversation-->
   <string name="conversation_details">Detalji o kontaktu</string>
   <string name="conversation_action_delete_this">Izbrišite razgovor</string>
@@ -175,6 +174,14 @@
   <string name="block_contact_dialog_message">%1$sneće moći da Vas kontaktira dok ih ne odblokirate.</string>
   <string name="block_contact_completed">%1$s je blokiran</string>
   <string name="conversation_contact_is_typing">Kontakt piše...</string>
+  <string name="conversation_info_contact_you">Ti</string>
+  <string name="conversation_members">Članovi</string>
+  <string name="conversation_syncing">Preuzimanje razgovora od parnjaka</string>
+  <string name="conversation_preference_color">Boja razgovora</string>
+  <string name="conversation_preference_emoji">emoji razgovora</string>
+  <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_private">Privatni roj</string>
+  <string name="conversation_type_group">Grupni roj</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Da li želite da dodate %1$s?</string>
   <string name="prompt_new_password">Nova šifra</string>
@@ -190,6 +197,11 @@
   <string name="wizard_next">Sledeći</string>
   <string name="wizard_back">Nazad</string>
   <string name="wizard_skip">Preskoči</string>
+  <string name="hist_contact_invited">Kontakt je pozvan</string>
+  <string name="hist_contact_added">Kontakt dodat</string>
+  <string name="hist_contact_left">Kontakt napušten</string>
+  <string name="hist_contact_banned">Kontakt zabranjen</string>
+  <string name="hist_invitation_received">Primljen poziv</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_name">Ime profila</string>
@@ -217,6 +229,7 @@
   <string name="refuse">Odbij</string>
   <string name="block">Blokiraj</string>
   <string name="contact_request_title">Novi zahtev za konkat </string>
+  <string name="contact_request_msg">Imate %1$dzahteva za kontakt</string>
   <string name="contact_request_account">Za %1$s</string>
   <string name="no_requests">Nemate nove zahteve za kontakt</string>
   <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima. \nDa li prihvatate ili odbijate ovaj zahtev za kontakt?</string>
@@ -255,6 +268,7 @@
   <string name="file_transfer_status_timed_out">Isteklo je vreme</string>
   <string name="file_saved_in">Podatak je sačuvan u %s</string>
   <string name="file_saved_successfully">Uspešno je sačuvan podatak</string>
+  <string name="file_download">Preuzimanje</string>
   <string name="no_space_left_on_device">Nema dovoljlno mesta na uređaju</string>
   <string name="title_media_viewer">Pregledač medije</string>
   <string name="menu_file_open">Otvorite podatak</string>
@@ -265,6 +279,7 @@
   <string name="menu_message_copy">Kopiraj</string>
   <string name="menu_message_delete">Izbriši poruku</string>
   <string name="menu_message_cancel">Otkaži poruku</string>
+  <string name="menu_message_reply">Odgovori</string>
   <string name="menu_delete">Izbriši</string>
   <string name="pref_darkTheme_title">Tamna tema</string>
   <string name="pref_darkTheme_summary">Uvek omogućite tamnu temu umesto da koristite sistemsko ponašanje</string>
@@ -285,6 +300,7 @@
   <string name="tv_send_text">Pošaljite tekst</string>
   <string name="tv_send_audio">Pošaljite audio</string>
   <string name="tv_send_video">Pošaljite mediju</string>
+  <string name="tv_action_more">Više</string>
   <string name="conversation_input_speech_hint">Kažite nešto...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Preporučeno</string>
@@ -306,5 +322,13 @@
   <string name="chat_plugins">Dodatak za ćaskanje</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podeli</string>
+  <string name="bottomSheet_dialpad_btn">Brojčanik</string>
+  <string name="bottomSheet_plugins_btn">Dodaci</string>
+  <string name="bottomSheet_add_participants_btn">Dodaj</string>
+  <string name="bottomSheet_change_camera_btn">Promeni</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
+  <string name="bottomSheet_hangup_btn">Završi poziv</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Zvuci</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
 </resources>

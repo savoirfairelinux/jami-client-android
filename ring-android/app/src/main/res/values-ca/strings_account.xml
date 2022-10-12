@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Preferències avançades</string>
   <string name="ic_blacklist_menu">Contactes bloquejats</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Afegeix un compte</string>
   <string name="add_sip_account_title">Afegeix un compte SIP</string>
   <string name="ring_account_default_name">Compte de Jami %1$s</string>
   <string name="prompt_alias">Àlies</string>
@@ -58,9 +59,12 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_optionnal_category">Preferències opcionals</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Resposta automàtica</string>
+  <string name="account_rendezvous_label">Mode punt de trobada</string>
+  <string name="account_rendezvous_summary">En el mode punt de trobada, les trucades entrants seran afegides en una sala de conferències.</string>
   <string name="account_upnp_label">Activa el UPnP</string>
   <string name="account_proxy_field">Intermediari</string>
   <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Complements</string>
   <!--Audio Details-->
   <string name="account_audio_label">Àudio</string>
   <string name="account_preferences_media_tab">Mitjans</string>
@@ -95,6 +99,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_published_same_as_local_label">Publica igual que la local</string>
   <string name="account_published_port_label">Port publicat</string>
   <string name="account_published_address_label">Adreça publicada</string>
+  <string name="disabled">Deshabilitat</string>
   <string name="enabled">Habilitat</string>
   <string name="account_proxy_label">Servidor intermediari DHT</string>
   <string name="account_proxy_enable_label">Utilitza servidor intermediari DHT</string>
@@ -111,6 +116,8 @@ Podeu editar el vostre compte més endavant.</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguretat</string>
   <string name="account_srtp_switch_label">Xifra el flux de mitjans (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Habilita SDES com a protocol d\'intercanvi de claus</string>
+  <string name="account_srtp_rtp_fallback">Restableix a RTP si SRTP falla</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilitza transport TLS</string>
@@ -124,6 +131,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_tls_server_name_label">Nom del servidor</string>
   <string name="account_tls_verify_server_label">Verifica el servidor</string>
   <string name="account_tls_verify_client_label">Client Verifica el client</string>
+  <string name="account_require_client_certificate_label">Fer que TLS requereixi certificat de client</string>
   <string name="account_tls_negotiation_timeout_sec">Temps d\'espera de la negociació (s)</string>
   <string name="account_rtp_max_port">Màxim</string>
   <string name="account_rtp_min_port">Mínim</string>
@@ -134,6 +142,8 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
   <string name="export_account_wait_title">Si us plau espereu...</string>
   <string name="export_account_wait_message">Exportant informació del compte</string>
+  <string name="account_export_file">Copia de seguretat del compte</string>
+  <string name="account_export_file_summary">Copia de seguretat del compte al dispositiu per restablir-lo més tard.</string>
   <string name="account_export_end_decryption_message">No s\'ha pogut desbloquejar el vostre compte amb la contrasenya que heu proveït</string>
   <string name="account_export_end_network_title">Error de xarxa</string>
   <string name="account_export_end_network_message">No s\'ha pogut exportar el vostre compte per la xarxa. Comproveu la vostre connectivitat.</string>
@@ -164,20 +174,29 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_sip_success_message">Ha registrat amb èxit el seu compte Sip.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Opcions de compte</string>
   <string name="account_tv_advance_settings_header">Preferències avançades</string>
+  <string name="account_tv_add_contact">Afegeix un contacte</string>
+  <string name="account_tv_advanced_settings">Canvia les opcions generals</string>
   <string name="account_tv_about">Sobre Jami...</string>
   <string name="tv_about_version">Versió</string>
   <string name="tv_about_license">Llicència</string>
+  <string name="tv_about_author">Drets d\'autor</string>
   <string name="tv_about_credits">Crèdits</string>
+  <string name="account_link_device">Connecta des d\'un altre dispositiu</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_new_button">Crear un compte Jami</string>
+  <string name="account_link_export_button">Enllaça un nou dispositiu</string>
+  <string name="account_link_show_button">Mostra %d més dispositius enllaçats</string>
+  <string name="account_link_hide_button">Amaga el dispositiu enllaçat</string>
   <string name="account_link_export_info">Per a utilitzar aquest compte en altres dispositius, primer ha d\'exposar-lo a Jami. Això generarà un codi PIN que ha d\'inserir en el nou dispositiu per configurar el compte. El PIN té una validesa de 10 minuts.</string>
   <string name="account_start_export_button">Genera el PIN</string>
   <string name="account_end_export_button">tanca</string>
   <string name="account_end_export_infos">El seu PIN és:\n\n%%\n\nPer completar el procès, necessita obrir Jami en el nou dispositiu. Crei un nou compte amb l\'opció «Vincula aquest dispositiu amb un compte». El seu PIN té una validesa de 10 minuts.</string>
   <string name="account_link_export_info_light">Per a utilitzar aquest compte en altres dispositius, primer ha d\'exposar-lo a Jami. Això generarà un codi PIN que ha d\'inserir en el nou dispositiu per configurar el compte. El PIN té una validesa de 10 minuts.</string>
+  <string name="account_export_title">Enllaça el compte amb altres dispositius</string>
   <string name="account_connect_server_button">Connecta amb el servidor de gestió</string>
   <string name="account_connect_button">Connectar</string>
   <string name="prompt_server">URL del servidor de gestió Jami</string>
@@ -186,10 +205,13 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_connect_prompt_username">Nom d\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
+  <string name="no_registered_name_for_account">Sense connexió</string>
   <string name="username_available">Nom d\'usuari disponible !</string>
+  <string name="register_name">Registra el nom</string>
   <string name="trying_to_register_name">Provant de registrar nom d\'usuari</string>
   <string name="registered_username">Nom d\'usuari registrat</string>
   <string name="register_username">Registra nom d\'usuari públic</string>
+  <string name="register_recommended">Recomanat</string>
   <string name="username_already_taken">Nom d\'usuari ja registrat.</string>
   <string name="invalid_username">Nom d\'usuari invalid</string>
   <string name="unknown_error">Error desconegut. Si us plau, comprovi la seva connexió a la xarxa!</string>
@@ -207,6 +229,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_link_title">Vincula aquest dispositiu</string>
   <string name="account_sip_cannot_be_registered">No es pot registrar el compte</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Edita el meu compte</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduïu la contrasenya per confirmar</string>
   <string name="enter_password">Introduïu la contrasenya</string>
@@ -219,5 +242,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="rename_device_button">Canvia el nom del dispositiu</string>
   <string name="account_rename_device_hint">Esculli nou nom de dispositiu</string>
   <string name="account_device_name_empty">El nom del dispositiu no pot estar buit</string>
+  <string name="account_device_this_indicator">Aquest dispositiu</string>
   <string name="account_disabled_indicator">deshabilitat</string>
 </resources>

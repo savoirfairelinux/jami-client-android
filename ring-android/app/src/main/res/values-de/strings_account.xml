@@ -87,7 +87,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
   <string name="account_accept_files">Erlaube automatisches empfangen von Dateien</string>
-  <string name="account_conversation_settings_title">Konversationseinstellungen</string>
+  <string name="account_conversation_settings_title">Unterhaltungseinstellungen</string>
   <string name="account_accept_files_max_size">Maximale Dateigröße für den automatischen Empfang</string>
   <string name="account_accept_files_never">Niemals automatisch empfangen</string>
   <string name="account_accept_files_always">Immer automatisch empfangen</string>

@@ -334,4 +334,6 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Suara</string>
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
+  <string name="uninstall">Copot pemasangan</string>
+  <string name="reset">Reset</string>
 </resources>

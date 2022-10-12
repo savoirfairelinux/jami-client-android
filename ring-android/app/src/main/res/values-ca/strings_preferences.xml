@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vídeo</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privadesa</string>
+  <string name="pref_category_diagnostic">Diagnòstics</string>
   <string name="pref_mobileData_title">Dades mòbils</string>
   <string name="pref_mobileData_summary">Permet Jami en xarxes 3G/LTE a més de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions Push</string>
@@ -14,6 +15,10 @@
   <string name="pref_hd_summary">Habilita vídeo en HD</string>
   <string name="pref_hwEncode_title">Habilita l\'acceleració de codificació</string>
   <string name="pref_hwEncode_summary">Característica experimental</string>
+  <string name="pref_videoBitrate_title">Vídeo bitrate</string>
+  <string name="pref_videoBitrate_summary">Seleccioneu el bitrate vídeo per defecte (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolució de vídeo</string>
+  <string name="pref_videoResolution_summary">Seleccioneu la resolució de vídeo per defecte</string>
   <string name="pref_systemContacts_title">Usa contactes del sistema</string>
   <string name="pref_systemContacts_summary">Usa contactes del sistema per mostrar detalls del que truca</string>
   <string name="pref_systemDialer_title">Fer trucades del sistema amb Jami</string>
@@ -22,9 +27,45 @@
   <string name="pref_startOnBoot_summary">Executa Jami en segon pla quan el sistema s\'inicia.</string>
   <string name="pref_clearHistory_title">Neteja historial</string>
   <string name="pref_clearHistory_summary">Neteja totes les converses de l\'historial. Aquesta acció no pot es desfer.</string>
+  <string name="pref_notification_title">Notificació de visibilitat</string>
+  <string name="pref_notification_summary">Estableix la visibilitat de les notificacions de l\'aplicació a la pantalla de bloqueig.</string>
+  <string name="pref_blackList_title">Llista de bloqueig</string>
+  <string name="pref_blackList_summary">Comprova la llista de bloqueig</string>
   <string name="pref_delete_account_title">Esborrar compte</string>
+  <string name="pref_delete_account_summary">Elimina el compte del dispositiu</string>
   <string name="pref_persistNotification_title">Executa en segon pla</string>
   <string name="pref_persistNotification_summary">Permet executar en segon pla per rebre trucades i missatges.</string>
+  <string name="pref_newGroup_title">Habilita el xat de grup</string>
+  <string name="pref_newGroup_summary">Habilitar la creació de grups a Jami</string>
+  <string name="pref_logs_title">Traces de diagnostic</string>
+  <string name="pref_logs_summary">Obre les opcions de diagnòstic</string>
+  <string name="pref_logs_start">Inicia les traces</string>
+  <string name="pref_logs_stop">Atura les traces</string>
+  <string name="pref_typing_title">Habilita els indicadors de tecleig</string>
+  <string name="pref_typing_summary">Envia i rep els indicadors de tecleig indicant que un missatge s\'està escrivint</string>
+  <string name="pref_read_title">Habilita la confirmació de lectura</string>
+  <string name="pref_read_summary">Envia i rep indicadors de confirmació de que un missatge s\'ha mostrat</string>
+  <string name="pref_block_record_title">Bloqueja captures de pantalla i gravació</string>
+  <string name="pref_block_record_summary">Bloqueja captures o gravació de pantalla</string>
+  <string name="pref_link_preview_title">Mostra previsualitzacions dels enllaços en les converses</string>
+  <string name="pref_link_preview_summary">Les previsualitzacions requereixen descarregar contingut de llocs de tercers</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Públic \n(mostra notificacions i el contingut del missatge en la pantalla de bloqueig)\n</string>
+  <string name="notification_private">Privat \n(mostra notificacions però amaga el contingut del missatge en la pantalla de bloqueig)\n</string>
+  <string name="notification_secret">Secret \n(no mostra notificacions en la pantalla de bloqueig)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Complements</string>
+  <string name="pref_plugins_summary">Habilita els complements i configura paràmetres</string>
+  <string name="fab_plugins_add">Afegeix un nou complement</string>
+  <string name="plugin_uninstall_title">Desinstal·lar complement?</string>
+  <string name="plugin_reset_preferences">Reconfigura les preferències dels complements</string>
+  <string name="plugin_reset_preferences_summary">La configuració del complement es posarà per defecte</string>
+  <string name="plugin_reset_preferences_ask">¿Estàs segur que vols reiniciar la configuració general del complement? </string>
+  <string name="plugin_reset_account_preferences_ask">¿Estàs segur que vols reiniciar la configuració de compte del complement?</string>
+  <string name="plugin_successfully_installed">El complement <b>%1$s</b> s\'ha instal·lat correctament</string>
+  <string name="plugin_install_failure">Ha fallat la instal·lació del complement <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Tens una versió més recent de <b>%1$s</b> instal·lada</string>
+  <string name="plugin_same_version_exception">Tens la mateixa versió de <b>%1$s </b>instal·lada</string>
+  <string name="plugin_force_install">Força \n instalar</string>
+  <string name="plugin_path_image_add">Afegeix una nova imatge</string>
 </resources>
