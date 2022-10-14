@@ -406,8 +406,8 @@ class ConversationPresenter @Inject constructor(
         view?.showPluginListHandlers(mConversation!!.accountId, mConversationUri!!.uri)
     }
 
-    val path: Pair<String, String>
-        get() = Pair(mConversation!!.accountId, mConversationUri!!.uri)
+    val path: Pair<String, Uri>
+        get() = Pair(mConversation!!.accountId, mConversationUri!!)
 
     fun onComposingChanged(hasMessage: Boolean) {
         if (showTypingIndicator()) {
@@ -439,7 +439,7 @@ class ConversationPresenter @Inject constructor(
             val subject = BehaviorSubject.create<String>()
             searchQuerySubject = subject
             mCompositeDisposable.add(subject
-                .switchMap { accountService.searchConversation(conversation.accountId, conversation.uri.rawRingId, it) }
+                .switchMap { accountService.searchConversation(conversation.accountId, conversation.uri, it) }
                 .observeOn(uiScheduler)
                 .subscribe { view?.addSearchResults(it.results) })
         }

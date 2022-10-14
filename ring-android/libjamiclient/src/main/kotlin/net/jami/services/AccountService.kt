@@ -487,7 +487,7 @@ class AccountService(
 
     fun searchConversation(
         accountId: String,
-        conversationId: String,
+        conversationUri: Uri,
         query: String = "",
         author: String = "",
         type: String = "",
@@ -497,15 +497,14 @@ class AccountService(
         maxResult: Long = 0
     ): Observable<ConversationSearchResult> = PublishSubject.create<ConversationSearchResult>().apply {
         conversationSearches[JamiService.searchConversation(
-            accountId, conversationId, author, lastId, query, type, after, before, maxResult)] = this
+            accountId, conversationUri.rawRingId, author, lastId, query, type, after, before, maxResult)] = this
     }
 
     fun messagesFound(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
-        val subject = conversationSearches[id] ?: return
         if (conversationId.isEmpty()) {
-            conversationSearches.remove(id)
-            subject.onComplete()
+            conversationSearches.remove(id)?.onComplete()
         } else if (messages.isNotEmpty()) {
+            val subject = conversationSearches[id] ?: return
             val account = getAccount(accountId) ?: return
             val conversation = account.getSwarm(conversationId) ?: return
             subject.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
