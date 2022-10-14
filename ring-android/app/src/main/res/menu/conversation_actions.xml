@@ -21,4 +21,11 @@
         android:title="@string/conversation_details"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/conv_search"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Search this conversation"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|never" />
 </menu>
