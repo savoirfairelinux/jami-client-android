@@ -48,6 +48,7 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -93,13 +94,15 @@ import java.util.*
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
-    MediaButtonsHelperCallback, ConversationView, OnSharedPreferenceChangeListener {
+    MediaButtonsHelperCallback, ConversationView, OnSharedPreferenceChangeListener,
+    SearchView.OnQueryTextListener {
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
     private var mAudioCallBtn: MenuItem? = null
     private var mVideoCallBtn: MenuItem? = null
     private var currentBottomView: View? = null
     private var mAdapter: ConversationAdapter? = null
+    private var mSearchAdapter: ConversationAdapter? = null
     private var marginPx = 0
     private var marginPxTotal = 0
     private val animation = ValueAnimator()
@@ -267,7 +270,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding?.let { binding ->
             mPreferences?.let { preferences ->
                 val pendingMessage = preferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null)
-                if (pendingMessage != null && pendingMessage.isNotEmpty()) {
+                if (!pendingMessage.isNullOrEmpty()) {
                     binding.msgInputTxt.setText(pendingMessage)
                     binding.msgSend.visibility = View.VISIBLE
                     binding.emojiSend.visibility = View.GONE
@@ -756,6 +759,34 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         inflater.inflate(R.menu.conversation_actions, menu)
         mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall)
         mVideoCallBtn = menu.findItem(R.id.conv_action_videocall)
+        val searchMenuItem = menu.findItem(R.id.conv_search)
+        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                Log.w(TAG, "stopSearch")
+                presenter.stopSearch()
+                binding!!.histList.adapter = mAdapter
+                updateListPadding()
+                currentBottomView?.isVisible = true
+                if (animation.isStarted) animation.cancel()
+                animation.setIntValues(binding!!.histList.paddingBottom, currentBottomView!!.height + marginPxTotal)
+                animation.start()
+                return true
+            }
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                Log.w(TAG, "startSearch")
+                mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter)
+                presenter.startSearch()
+                currentBottomView?.isVisible = false
+                binding!!.histList.adapter = mSearchAdapter
+                if (animation.isStarted) animation.cancel()
+                animation.setIntValues(binding!!.histList.paddingBottom, marginPxTotal)
+                animation.start()
+                return true
+            }
+        })
+        val searchView = searchMenuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+        searchView.queryHint = "Search conversation"
     }
 
     fun openContact() {
@@ -763,21 +794,30 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            startActivity(Intent(activity, HomeActivity::class.java))
-            return true
-        } else if (itemId == R.id.conv_action_audiocall) {
-            presenter.goToCall(false)
-            return true
-        } else if (itemId == R.id.conv_action_videocall) {
-            presenter.goToCall(true)
-            return true
-        } else if (itemId == R.id.conv_contact_details) {
-            presenter.openContact()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> startActivity(Intent(activity, HomeActivity::class.java))
+            R.id.conv_action_audiocall -> presenter.goToCall(false)
+            R.id.conv_action_videocall -> presenter.goToCall(true)
+            R.id.conv_contact_details -> presenter.openContact()
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(query: String): Boolean {
+        Log.w(TAG, "onQueryTextChange $query")
+        mSearchAdapter?.clearSearchResults()
+        if (query.isNotBlank())
+            presenter.setSearchQuery(query.trim())
+        return true
+    }
+
+    override fun addSearchResults(results: List<Interaction>) {
+        mSearchAdapter?.addSearchResults(results)
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {
@@ -896,10 +936,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {
         val toolbar: Toolbar = requireActivity().findViewById(R.id.main_toolbar)
         val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
-        startActivity(Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
-                .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java),
-            ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon")
-                .toBundle())
+        val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
+            .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java)
+        if (logo != null) {
+            startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
+        } else startActivity(intent)
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
