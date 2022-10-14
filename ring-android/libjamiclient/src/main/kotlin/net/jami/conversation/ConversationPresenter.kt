@@ -57,6 +57,7 @@ class ConversationPresenter @Inject constructor(
         mCompositeDisposable.add(this)
     }
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
+    private var searchQuerySubject: Subject<String>? = null
 
     fun init(conversationUri: Uri, accountId: String) {
         if (conversationUri == mConversationUri) return
@@ -426,6 +427,29 @@ class ConversationPresenter @Inject constructor(
 
     private fun showReadIndicator(): Boolean {
         return preferencesService.settings.enableReadIndicator
+    }
+
+    fun setSearchQuery(query: String) {
+        searchQuerySubject?.onNext(query)
+    }
+
+    fun startSearch() {
+        if (searchQuerySubject == null) {
+            val conversation = mConversation ?: return
+            val subject = BehaviorSubject.create<String>()
+            searchQuerySubject = subject
+            mCompositeDisposable.add(subject
+                .switchMap { accountService.searchConversation(conversation.accountId, conversation.uri.rawRingId, it) }
+                .observeOn(uiScheduler)
+                .subscribe { view?.addSearchResults(it.results) })
+        }
+    }
+
+    fun stopSearch() {
+        searchQuerySubject?.let {
+            it.onComplete()
+            searchQuerySubject = null
+        }
     }
 
     companion object {
