@@ -37,6 +37,7 @@ import android.os.Build
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -795,6 +796,7 @@ class ConversationAdapter(
                     }) { e -> Log.e(TAG, "Can't load preview", e) })
             }
         }
+        msgTxt.movementMethod = LinkMovementMethod.getInstance()
         msgTxt.text = markwon.toMarkdown(message)
         val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
         if (textMessage.isIncoming) {
