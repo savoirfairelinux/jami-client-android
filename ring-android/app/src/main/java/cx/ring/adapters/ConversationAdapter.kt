@@ -318,7 +318,7 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         conversationViewHolder.compositeDisposable.clear()
         if (position > lastMsgPos) {
-            //lastMsgPos = position
+            lastMsgPos = position
             val animation = AnimationUtils.loadAnimation(conversationViewHolder.itemView.context, R.anim.fade_in)
             animation.startOffset = 150
             conversationViewHolder.itemView.startAnimation(animation)
@@ -327,8 +327,8 @@ class ConversationAdapter(
         conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
         conversationViewHolder.mReplyTo?.let { configureReplyIndicator(conversationViewHolder, interaction) }
 
-        //Log.w(TAG, "onBindViewHolder " + interaction.getType() + " " + interaction);
         val type = interaction.type
+        Log.w(TAG, "onBindViewHolder $type $interaction");
         if (type == Interaction.InteractionType.INVALID) {
             conversationViewHolder.itemView.visibility = View.GONE
         } else {
