@@ -42,6 +42,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
@@ -173,6 +174,19 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             else -> getString(R.string.generic_error)
         }
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
+    }
+
+    private val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                childFragmentManager.popBackStack()
+                isEnabled = false
+            }
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -797,6 +811,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             R.id.conv_action_audiocall -> presenter.goToCall(false)
             R.id.conv_action_videocall -> presenter.goToCall(true)
             R.id.conv_contact_details -> presenter.openContact()
+            R.id.conv_media -> openConversationGallery()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -815,6 +830,16 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun addSearchResults(results: List<Interaction>) {
         mSearchAdapter?.addSearchResults(results)
+    }
+
+    private fun openConversationGallery() {
+        val convPath = presenter.path
+        childFragmentManager
+            .beginTransaction()
+            .add(R.id.conversationLayout, ConversationGalleryFragment.newInstance(convPath.first, convPath.second), null)
+            .addToBackStack(null)
+            .commit()
+        onBackPressedCallback.isEnabled = true
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {
