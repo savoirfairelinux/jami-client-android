@@ -33,7 +33,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -601,6 +600,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun displayNetworkErrorPanel() {}
     override fun displayAccountOfflineErrorPanel() {}
     override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {}
+    override fun addSearchResults(results: List<Interaction>) {}
     override fun displayOnGoingCallPane(display: Boolean) {}
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}
     override fun hideNumberSpinner() {}
