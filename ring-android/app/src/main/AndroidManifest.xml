@@ -433,7 +433,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/title_media_viewer"
-            android:theme="@style/AppThemeBase.Dark" />
+            android:theme="@style/AppTheme.MediaViewer" />
 
         <service
             android:name=".service.JamiJobService"
