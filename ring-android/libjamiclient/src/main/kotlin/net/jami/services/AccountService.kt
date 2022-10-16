@@ -46,6 +46,7 @@ import java.io.UnsupportedEncodingException
 import java.net.SocketException
 import java.net.URLEncoder
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
@@ -166,6 +167,9 @@ class AccountService(
         val address: String? = null,
         val state: Int = 0
     )
+
+    data class ConversationSearchResult(val results: List<Interaction>)
+    private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
         var results: List<Contact>? = null
@@ -478,6 +482,32 @@ class AccountService(
                 for (root in roots)
                     loadConversationHistory(conversation.accountId, conversation.uri, root, n.toLong())
             return ret
+        }
+    }
+
+    fun searchConversation(
+        accountId: String,
+        conversationId: String,
+        query: String = "",
+        author: String = "",
+        type: String = "",
+        lastId: String = "",
+        after: Long = 0,
+        before: Long = 0,
+        maxResult: Long = 0
+    ): Observable<ConversationSearchResult> = PublishSubject.create<ConversationSearchResult>().apply {
+        conversationSearches[JamiService.searchConversation(
+            accountId, conversationId, author, lastId, query, type, after, before, maxResult)] = this
+    }
+
+    fun messagesFound(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+        if (conversationId.isEmpty()) {
+            conversationSearches.remove(id)?.onComplete()
+        } else if (messages.isNotEmpty()) {
+            val subject = conversationSearches[id] ?: return
+            val account = getAccount(accountId) ?: return
+            val conversation = account.getSwarm(conversationId) ?: return
+            conversationSearches[id]?.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
         }
     }
 
@@ -1150,7 +1180,7 @@ class AccountService(
         searchResultSubject.onNext(r)
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
+    private fun getInteraction(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
         /*for ((key, value) in message) {
             Log.w(TAG, "$key -> $value")
         }*/
@@ -1160,6 +1190,7 @@ class AccountService(
         val parent = message["linearizedParent"]
         val authorUri = Uri.fromId(author)
         val timestamp = message["timestamp"]!!.toLong() * 1000
+        val replyTo = message["reply-to"]
         val contact = conversation.findContact(authorUri) ?: account.getContactFromCache(authorUri)
         val interaction: Interaction = when (type) {
             "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
@@ -1212,7 +1243,6 @@ class AccountService(
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
-        val replyTo = message["reply-to"]
         interaction.replyToId = replyTo
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) { JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo) }
@@ -1221,6 +1251,11 @@ class AccountService(
             interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
+        return interaction
+    }
+
+    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
+        val interaction = getInteraction(account, conversation, message)
         if (conversation.addSwarmElement(interaction)) {
             /*if (conversation.isVisible)
                 mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
@@ -1228,7 +1263,7 @@ class AccountService(
         return interaction
     }
 
-    fun conversationLoaded(accountId: String, conversationId: String, messages: List<Map<String, String>>) {
+    fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
         try {
             // Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
