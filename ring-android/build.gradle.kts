@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version by extra { "1.7.10" }
+    val kotlin_version by extra { "1.7.20" }
     val hilt_version by extra { "2.43.2" }
 
     dependencies {
