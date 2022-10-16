@@ -58,9 +58,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.target.DrawableImageViewTarget
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
 import cx.ring.fragments.ConversationFragment
@@ -96,11 +94,7 @@ class ConversationAdapter(
     private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
     private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
     private val mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
-    private val pictureOptions = GlideOptions()
-        .transform(CenterInside())
-        .fitCenter()
-        .override(mPictureMaxSize)
-        .transform(RoundedCorners(res.getDimension(R.dimen.conversation_message_radius).toInt()))
+    private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     private var expandedItemPosition = -1
@@ -439,11 +433,13 @@ class ConversationAdapter(
 
     private fun configureImage(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
         val context = viewHolder.itemView.context
+        val image = viewHolder.mImage ?: return
+        image.clipToOutline = true
         GlideApp.with(context)
             .load(path)
-            .apply(pictureOptions)
-            .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
-        viewHolder.mImage?.setOnClickListener { v: View ->
+            .transition(withCrossFade())
+            .into(image)
+        image.setOnClickListener { v: View ->
             try {
                 val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
