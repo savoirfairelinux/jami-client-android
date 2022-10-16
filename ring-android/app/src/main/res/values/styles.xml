@@ -56,11 +56,14 @@
 
     <!-- Main dark base theme -->
     <style name="AppThemeBase.Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
+        <item name="android:colorBackground">@color/black</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/color_primary_light</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/colorPrimary</item>
+        <item name="colorOnPrimaryContainer">@color/background</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
 
@@ -93,6 +96,12 @@
 
     <!-- Call Base theme -->
     <style name="AppTheme.Call.Base" parent="AppThemeBase.Dark">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+    </style>
+
+    <style name="AppTheme.MediaViewer" parent="AppThemeBase.Dark">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:navigationBarColor">@color/transparent</item>

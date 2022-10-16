@@ -22,6 +22,7 @@ package cx.ring.utils
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -235,9 +236,9 @@ object AndroidFileUtils {
     }
 
     fun getMimeTypeFromExtension(ext: String?): String {
-        if (ext != null && ext.isNotEmpty()) {
+        if (!ext.isNullOrEmpty()) {
             val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.lowercase())
-            if (mimeType != null && mimeType.isNotEmpty()) return mimeType
+            if (!mimeType.isNullOrEmpty()) return mimeType
             if (ext == "gz") {
                 return "application/gzip"
             }
@@ -298,6 +299,15 @@ object AndroidFileUtils {
             file
         }.subscribeOn(Schedulers.io())
     }
+
+    fun copyUri(cr: ContentResolver, input: Uri, outUri: Uri): Completable = Completable.fromAction {
+        cr.openInputStream(input).use { inputStream ->
+            cr.openOutputStream(outUri).use { output ->
+                if (inputStream == null || output == null) throw FileNotFoundException()
+                FileUtils.copyFile(inputStream, output)
+            }
+        }
+    }.subscribeOn(Schedulers.io())
 
     fun moveToUri(cr: ContentResolver, input: File, outUri: Uri): Completable = Completable.fromAction {
         FileInputStream(input).use { inputStream ->
@@ -517,4 +527,52 @@ object AndroidFileUtils {
     fun isImage(s: String): Boolean = getMimeType(s).startsWith("image")
 
     fun getFileName(s: String): String = s.split('/').last()
+
+    fun shareFile(c: Context, path: File, displayName: String) {
+        val fileUri: Uri = try {
+            ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+        } catch (e: IllegalArgumentException) {
+            Log.e("File Selector", "The selected file can't be shared: " + path.name)
+            null
+        } ?: return
+        shareFile(c, fileUri, displayName)
+    }
+
+    fun shareFile(c: Context, uri: Uri, displayName: String? = null) {
+        val name = displayName ?: uri.getQueryParameter("displayName") ?: ""
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setDataAndType(uri, c.contentResolver.getType(uri.buildUpon().appendPath(name).build()))
+            putExtra(Intent.EXTRA_STREAM, uri)
+        }
+        try {
+            c.startActivity(Intent.createChooser(sendIntent, null))
+        } catch (e: Exception) {
+        }
+    }
+
+    fun openFile(c: Context, path: File, displayName: String) {
+        var fileUri: Uri? = null
+        try {
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+        } catch (e: IllegalArgumentException) {
+            Log.e(TAG, "The selected file can't be shared: " + path.name)
+        }
+        if (fileUri != null)
+            openFile(c, fileUri, displayName)
+    }
+
+    fun openFile(c: Context, uri: Uri, displayName: String) {
+        try {
+            //startActivity(Intent.createChooser(sendIntent, null));
+            c.startActivity(Intent(Intent.ACTION_VIEW).apply {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setDataAndType(uri, c.contentResolver.getType(uri.buildUpon().appendPath(displayName).build()))
+                putExtra(Intent.EXTRA_STREAM, uri)
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "File of unknown type, could not open: $displayName")
+        }
+    }
+
 }
