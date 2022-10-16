@@ -328,7 +328,11 @@ class DaemonService(
 
     internal inner class ConversationCallbackImpl : ConversationCallback() {
         override fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: VectMap) {
-            mAccountService.conversationLoaded(accountId, conversationId, messages.toNative())
+            mAccountService.conversationLoaded(id, accountId, conversationId, messages.toNative())
+        }
+
+        override fun messagesFound(id: Long, accountId: String, conversationId: String, messages: VectMap) {
+            mAccountService.messagesFound(id, accountId, conversationId, messages.toNative())
         }
 
         override fun conversationReady(accountId: String, conversationId: String) {
