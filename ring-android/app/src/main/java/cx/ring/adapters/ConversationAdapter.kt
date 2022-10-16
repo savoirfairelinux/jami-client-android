@@ -220,6 +220,17 @@ class ConversationAdapter(
         }
     }
 
+    fun addSearchResults(interactions: List<Interaction>) {
+        val oldSize = mInteractions.size
+        mInteractions.addAll(interactions)
+        notifyItemRangeInserted(oldSize, interactions.size)
+    }
+
+    fun clearSearchResults() {
+        mInteractions.clear()
+        notifyDataSetChanged()
+    }
+
     /**
      * Updates the contact photo to use for this conversation
      */
