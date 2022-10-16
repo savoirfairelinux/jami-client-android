@@ -19,7 +19,6 @@
   -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -56,21 +55,19 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="200dp">
+                android:layout_height="wrap_content">
 
-                <cx.ring.views.ConversationImageView
+                <ImageView
                     android:id="@+id/image"
+                    android:padding="0dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="180dp"
+                    android:background="@drawable/background_item_conv_image"
                     android:layout_marginEnd="24dp"
                     android:layout_alignParentEnd="true"
                     android:adjustViewBounds="true"
-                    android:maxHeight="200dp"
-                    android:minWidth="@dimen/conversation_avatar_size"
-                    android:minHeight="@dimen/conversation_avatar_size"
                     android:transitionName="picture"
-                    tools:src="@drawable/ic_jami"/>
+                    tools:src="@tools:sample/backgrounds/scenic"/>
 
                 <cx.ring.views.MessageStatusView
                     android:id="@+id/status_icon"

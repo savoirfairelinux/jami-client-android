@@ -64,14 +64,12 @@
             android:layout_toEndOf="@+id/photo"
             android:gravity="center_vertical">
 
-            <cx.ring.views.ConversationImageView
+            <ImageView
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
+                android:background="@drawable/background_item_conv_image"
                 android:adjustViewBounds="true"
-                android:maxHeight="200dp"
-                android:minWidth="@dimen/conversation_avatar_size"
-                android:scaleType="centerCrop"
                 android:transitionName="picture"
                 tools:src="@drawable/ic_jami" />
 
