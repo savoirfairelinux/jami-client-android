@@ -19,58 +19,85 @@
  */
 package cx.ring.client
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.google.android.material.bottomappbar.BottomAppBar
 import cx.ring.R
+import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.GlideApp
-import cx.ring.utils.GlideOptions
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class MediaViewerFragment : Fragment() {
     private var mUri: Uri? = null
-    private var mImage: ImageView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mUri = activity!!.intent.data
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_media_viewer, container, false) as ViewGroup
-        mImage = view.findViewById(R.id.image)
-        showImage()
+        GlideApp.with(this)
+            .load(mUri)
+            .into(view.findViewById(R.id.image))
+        view.findViewById<BottomAppBar>(R.id.bottomAppBar).setOnMenuItemClickListener { l ->
+            val uri = mUri ?: return@setOnMenuItemClickListener false
+            when (l.itemId) {
+                R.id.conv_action_share -> AndroidFileUtils.shareFile(requireContext(), uri)
+                R.id.conv_action_download -> startSaveFile(uri)
+                R.id.conv_action_open -> openFile(uri)
+            }
+            true
+        }
+        view.findViewById<Button>(R.id.shareBtn).setOnClickListener {
+            AndroidFileUtils.shareFile(requireContext(), mUri ?: return@setOnClickListener)
+        }
         return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mImage = null
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val activity = activity ?: return
-        mUri = activity.intent.data
-        showImage()
-    }
-
-    private fun showImage() {
-        mUri?.let {uri ->
-            activity?.let {a ->
-                mImage?.let {image ->
-                    GlideApp.with(a)
-                        .load(uri)
-                        .apply(PICTURE_OPTIONS)
-                        .into(image)
-                }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_SAVE_FILE) {
+            data?.data?.let { uri ->
+                AndroidFileUtils.copyUri(requireContext().contentResolver, mUri!!, uri)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
+                    { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() }
             }
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun startSaveFile(uri: Uri) {
+        try {
+            val name = uri.getQueryParameter("displayName") ?: ""
+            val downloadFileIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                type = requireContext().contentResolver.getType(uri.buildUpon().appendPath(name).build())
+                addCategory(Intent.CATEGORY_OPENABLE)
+                putExtra(Intent.EXTRA_TITLE, name)
+            }
+            startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
+        } catch (e: Exception) {
+            //Log.i(TAG, "No app detected for saving files.")
         }
     }
 
-    companion object {
-        private val PICTURE_OPTIONS = GlideOptions().transform(CenterInside())
+    private fun openFile(uri: Uri) {
+        val name = uri.getQueryParameter("displayName") ?: ""
+        AndroidFileUtils.openFile(requireContext(), uri, name)
     }
+
+    companion object {
+        private const val REQUEST_CODE_SAVE_FILE = 1003
+    }
+
 }

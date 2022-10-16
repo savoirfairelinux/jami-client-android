@@ -426,7 +426,7 @@ class ConversationAdapter(
         clipboard.setPrimaryClip(clip)
     }
 
-    private fun configureImage(viewHolder: ConversationViewHolder, path: File) {
+    private fun configureImage(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
         val context = viewHolder.itemView.context
         GlideApp.with(context)
             .load(path)
@@ -434,7 +434,7 @@ class ConversationAdapter(
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())
         viewHolder.mImage?.setOnClickListener { v: View ->
             try {
-                val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path)
+                val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
@@ -645,7 +645,7 @@ class ConversationAdapter(
             false
         }
         if (type == MessageType.TransferType.IMAGE) {
-            configureImage(viewHolder, path)
+            configureImage(viewHolder, path, file.body)
         } else if (type == MessageType.TransferType.VIDEO) {
             configureVideo(viewHolder, path)
         } else if (type == MessageType.TransferType.AUDIO) {
