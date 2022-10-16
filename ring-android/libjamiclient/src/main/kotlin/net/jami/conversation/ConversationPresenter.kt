@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.Blob
 import net.jami.services.ConversationFacade
@@ -406,8 +407,8 @@ class ConversationPresenter @Inject constructor(
         view?.showPluginListHandlers(mConversation!!.accountId, mConversationUri!!.uri)
     }
 
-    val path: Pair<String, String>
-        get() = Pair(mConversation!!.accountId, mConversationUri!!.uri)
+    val path: Pair<String, Uri>
+        get() = Pair(mConversation!!.accountId, mConversationUri!!)
 
     fun onComposingChanged(hasMessage: Boolean) {
         if (showTypingIndicator()) {
@@ -436,10 +437,9 @@ class ConversationPresenter @Inject constructor(
     fun startSearch() {
         if (searchQuerySubject == null) {
             val conversation = mConversation ?: return
-            val subject = BehaviorSubject.create<String>()
-            searchQuerySubject = subject
-            mCompositeDisposable.add(subject
-                .switchMap { accountService.searchConversation(conversation.accountId, conversation.uri.rawRingId, it) }
+            mCompositeDisposable.add(PublishSubject.create<String>()
+                .apply { searchQuerySubject = this }
+                .switchMap { accountService.searchConversation(conversation.accountId, conversation.uri, it) }
                 .observeOn(uiScheduler)
                 .subscribe { view?.addSearchResults(it.results) })
         }
