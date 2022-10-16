@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cx.ring.client.MediaViewerFragment"
-    tools:showIn="@layout/activity_media_viewer">
+    tools:showIn="@layout/activity_media_viewer"
+    tools:theme="@style/AppTheme.MediaViewer">
 
     <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/image"
@@ -13,12 +14,32 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
         android:transitionName="picture"
         app:zoomage_animateOnReset="true"
+        app:zoomage_doubleTapToZoom="true"
         app:zoomage_minScale="0.6"
         app:zoomage_restrictBounds="true"
         app:zoomage_translatable="true"
         app:zoomage_zoomable="true"
-        app:zoomage_doubleTapToZoom="true"
-        tools:src="@drawable/banner" />
-</RelativeLayout>
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        app:elevation="0dp"
+        app:backgroundTint="@color/transparent"
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.Material3.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/media_actions" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/shareBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_label"
+        app:icon="@drawable/baseline_share_24"
+        app:layout_anchor="@id/bottomAppBar" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
