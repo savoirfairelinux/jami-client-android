@@ -28,4 +28,10 @@
         android:title="Search this conversation"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|never" />
+
+    <item
+        android:id="@+id/conv_media"
+        android:icon="@drawable/baseline_photo_library_24"
+        android:title="Conversation media"
+        app:showAsAction="never" />
 </menu>
