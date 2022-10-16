@@ -54,7 +54,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
@@ -713,49 +712,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun shareFile(path: File, displayName: String) {
         val c = context ?: return
-        var fileUri: Uri? = null
-        try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
-        } catch (e: IllegalArgumentException) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.name)
-        }
-        if (fileUri != null) {
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val type =
-                c.contentResolver.getType(fileUri.buildUpon().appendPath(displayName).build())
-            sendIntent.setDataAndType(fileUri, type)
-            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-            startActivity(Intent.createChooser(sendIntent, null))
-        }
+        AndroidFileUtils.shareFile(c, path, displayName)
     }
 
     override fun openFile(path: File, displayName: String) {
         val c = context ?: return
-        var fileUri: Uri? = null
-        try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path, displayName)
-        } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "The selected file can't be shared: " + path.name)
-        }
-        if (fileUri != null) {
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_VIEW
-            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val type =
-                c.contentResolver.getType(fileUri.buildUpon().appendPath(displayName).build())
-            sendIntent.setDataAndType(fileUri, type)
-            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-            //startActivity(Intent.createChooser(sendIntent, null));
-            try {
-                startActivity(sendIntent)
-            } catch (e: ActivityNotFoundException) {
-                Snackbar.make(requireView(), R.string.conversation_open_file_error, Snackbar.LENGTH_LONG)
-                    .show()
-                Log.e("File Loader", "File of unknown type, could not open: " + path.name)
-            }
-        }
+        AndroidFileUtils.openFile(c, path, displayName)
     }
 
     fun actionSendMsgText(actionId: Int): Boolean {
