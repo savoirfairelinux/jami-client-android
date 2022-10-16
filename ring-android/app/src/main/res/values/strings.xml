@@ -254,6 +254,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
     <string name="conversation_contact_banned">%1$s was banned</string>
+    <string name="conversation_search_hint">Search conversation</string>
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s?</string>
