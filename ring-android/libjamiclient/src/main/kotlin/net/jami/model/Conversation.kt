@@ -361,7 +361,7 @@ class Conversation : ConversationHistory {
                 if (!contact.isUser)
                     setLastMessageDisplayed(contactUri.host, messageId)
             }
-        } else {
+        } else if (newStatus != Interaction.InteractionStatus.SENDING) {
             e.status = newStatus
             updatedElementSubject.onNext(Pair(e, ElementStatus.UPDATE))
         }
