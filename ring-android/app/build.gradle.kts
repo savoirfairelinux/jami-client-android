@@ -99,7 +99,7 @@ dependencies {
     implementation ("androidx.car.app:app:1.2.0-rc01")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.6.0")
-    implementation ("androidx.sharetarget:sharetarget:1.2.0-rc02")
+    implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation ("com.google.android.material:material:1.7.0-rc01")
