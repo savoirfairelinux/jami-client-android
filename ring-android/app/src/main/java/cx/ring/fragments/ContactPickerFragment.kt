@@ -117,11 +117,9 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
     }
 
-    override fun getTheme(): Int {
-        return R.style.BottomSheetDialogTheme
-    }
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     companion object {
-        val TAG = ContactPickerFragment::class.java.simpleName
+        val TAG: String = ContactPickerFragment::class.java.simpleName
     }
 }

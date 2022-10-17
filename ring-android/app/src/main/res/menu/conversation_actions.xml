@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/conv_action_audiocall"
         android:icon="@drawable/baseline_call_24"
@@ -12,20 +11,24 @@
         android:id="@+id/conv_action_videocall"
         android:icon="@drawable/baseline_videocam_24_primary"
         android:title="@string/ab_action_video_call"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/conv_contact_details"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/conversation_details"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/conv_search"
         android:icon="@drawable/baseline_search_24"
-        android:title="Search this conversation"
+        android:title="@string/conversation_search_hint"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|never" />
+
+    <item
+        android:id="@+id/conv_media"
+        android:icon="@drawable/baseline_photo_library_24"
+        android:title="Conversation media"
+        app:showAsAction="never" />
 </menu>
