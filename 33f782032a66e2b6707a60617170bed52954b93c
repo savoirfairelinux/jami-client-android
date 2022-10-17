@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82f26846_861fec9f",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-10-17T17:41:12Z",
+      "side": 1,
+      "message": "to be discussed",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 122
+      },
+      "revId": "33f782032a66e2b6707a60617170bed52954b93c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
