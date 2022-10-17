@@ -15,22 +15,24 @@
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
   <string name="description">Джамі — це вільне програмне забезпечення для будь-якого зв\'язку з повагою до свобод і приватності користувачів.</string>
   <string name="credits">Подяки</string>
+  <string name="pip_title">Конференція Jami</string>
   <!--About dialog-->
   <string name="developed_by">Розроблено</string>
   <string name="designed_by">Спроектовано</string>
   <!--RingActivity-->
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
+  <string name="error_account_offline">Обліковий запис поза мережею</string>
   <string name="error_mobile_network_available_but_disabled">Будь ласка, надайте права доступу для стільникової мережі у меню налаштувань.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстова переписка</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Запити контактів</string>
-  <string name="menu_item_accounts">Керувати аккаунтами</string>
+  <string name="menu_item_accounts">Керувати обліковими записами</string>
   <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
-  <string name="menu_item_plugin_list">Налаштування додатку</string>
+  <string name="menu_item_plugin_list">Налаштування втулки</string>
   <string name="menu_item_share">Поділитися моїм обліковим записом</string>
-  <string name="menu_item_about">Про Джамі</string>
+  <string name="menu_item_about">Про Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
@@ -83,13 +85,13 @@
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
-  <string name="start_error_title">Неможливо запустити Джамі!</string>
+  <string name="start_error_title">Неможливо запустити Jami!</string>
   <string name="start_error_mic_required">Для роботи Джамі потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
   <string name="action_call_end_accept">Завершити дзвінок та відповісти</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
-  <string name="action_load_plugin">Завантажити плагін</string>
+  <string name="action_load_plugin">Завантажити втулку</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
   <string name="ab_action_contact_add_question">Додати до контактів?</string>
@@ -107,6 +109,7 @@
   <string name="message_failed">Невдало</string>
   <string name="time_just_now">Прямо зараз</string>
   <string name="send_file">Відправити файл</string>
+  <string name="select_media">Відкрити галерею</string>
   <string name="hist_file_sent">Файл відправлено</string>
   <string name="hist_file_received">Файл отримано</string>
   <string name="conversation_send_audio">Записати аудіо</string>
@@ -135,6 +138,7 @@
   <string name="clear_history_dialog_title">Очистити історію?</string>
   <string name="clear_history_dialog_message">Наслідки цієї дії не можна буде змінити.</string>
   <string name="clear_history_completed">Історія була очищена.</string>
+  <string name="clear_history">Очистити</string>
   <!--Conversation-->
   <string name="conversation_details">Деталі контакту</string>
   <string name="conversation_action_delete_this">Видалити цю розмову</string>
@@ -155,12 +159,13 @@
   <string name="block_contact_dialog_title">Блокувати %1$s?</string>
   <string name="block_contact_dialog_message">%1$s не зможе зв\'язатися з вами, поки ви його не розблокуєте.</string>
   <string name="block_contact_completed">%1$s заблоковано.</string>
+  <string name="conversation_info_contact_you">Ви</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
   <string name="prompt_new_password">Новий пароль</string>
   <string name="prompt_new_password_optional">Новий пароль (не обов\'язково)</string>
   <string name="prompt_new_password_repeat">Новий пароль ще раз</string>
-  <string name="account_create_title">Створити обліковий запис Джамі</string>
+  <string name="account_create_title">Створити обліковий запис Jami</string>
   <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
   <string name="prompt_hint_username">Ім’я</string>
   <string name="help_password_choose">Оберіть сильний пароль, який ви запам\'ятаєте, щоб захистити ваш обліковий запис Джамі.</string>
@@ -180,12 +185,12 @@
   <string name="registered_name">Зареєстроване ім\'я</string>
   <string name="no_registered_name">Немає зареєстрованого ім\'я</string>
   <string name="identity">Особа</string>
-  <string name="account">Аккаунт</string>
+  <string name="account">Обліковий запис</string>
   <string name="link_new_device">Прив\'язати новий пристрій</string>
-  <string name="devices">Прив\'язані пристрої</string>
+  <string name="devices">Привʼязані пристрої</string>
   <string name="total_devices">Загальна кількість пристроїв:</string>
   <!--Share fragment-->
-  <string name="share_message">Зіскануйте цей код у Джамі</string>
+  <string name="share_message">Зіскануйте цей код у Jami</string>
   <string name="share_message_no_account">Будь ласка, оберіть обліковий запис, щоб поділитися.</string>
   <string name="share_your_account_information">Поділитися моїми контактними відомостями</string>
   <string name="share_label">Поділитися</string>
@@ -223,6 +228,7 @@
   <string name="file_transfer_status_unsupported">не підтримується</string>
   <string name="file_transfer_status_finished">завершено</string>
   <string name="file_transfer_status_cancelled">скасовано</string>
+  <string name="file_download">Завантажити</string>
   <string name="no_space_left_on_device">На пристрої не залишилося вільного місця </string>
   <string name="menu_file_open">Відкрити файл</string>
   <string name="menu_file_download">Завантажити файл</string>
@@ -239,7 +245,7 @@
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Групові чати</string>
   <string name="navigation_item_contact_request">Запити контактів</string>
-  <string name="navigation_item_account">Аккаунт</string>
+  <string name="navigation_item_account">Обліковий запис</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Відправити аудіо повідомлення?</string>
   <string name="tv_send_image_dialog_message">Відправити картинку?</string>
@@ -252,6 +258,7 @@
   <string name="tv_send_text">Відправити текст</string>
   <string name="tv_send_audio">Відправити аудіо</string>
   <string name="tv_send_video">Відправити медіа</string>
+  <string name="tv_action_more">Більше</string>
   <string name="conversation_input_speech_hint">Скажіть щось...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Рекомендовано</string>
@@ -268,9 +275,18 @@
   <string name="wizard_profile_button">Зберегти зміни у профілі</string>
   <string name="wizard_profile_skip">Пропустити та нагадати пізніше</string>
   <string name="fab_path_choose">Виберіть інший файл</string>
+  <string name="chat_plugins">Втулки чату</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поділитися</string>
+  <string name="bottomSheet_plugins_btn">Втулки</string>
+  <string name="bottomSheet_add_participants_btn">Додати</string>
+  <string name="bottomSheet_change_camera_btn">Змінити</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
   <string name="bottomSheet_hangup_btn">Закінчити дзвінок</string>
+  <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
+  <string name="open_account_plugin_settings">Відкрити налаштування втулки облікового запису</string>
+  <string name="open_general_plugin_settings">Відкрити загальні налаштування втулки</string>
+  <string name="uninstall">Видалити</string>
+  <string name="reset">Скинути</string>
 </resources>

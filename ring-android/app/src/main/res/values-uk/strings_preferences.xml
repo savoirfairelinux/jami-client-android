@@ -7,6 +7,7 @@
   <string name="pref_category_privacy">Приватність</string>
   <string name="pref_mobileData_title">Мобільні дані</string>
   <string name="pref_mobileData_summary">Дозволити Джамі в мережах 3G/LTE додатково до Wi-Fi</string>
+  <string name="pref_video_advanced_title">Розширені налаштування відео</string>
   <string name="pref_systemContacts_title">Використовувати контакти з адресної книги</string>
   <string name="pref_systemContacts_summary">Використовувати данні з адресної книги для показу деталей абоненту.</string>
   <string name="pref_systemDialer_title">Виконувати дзвінки на пристрої з допомогою Джамі</string>
@@ -17,4 +18,8 @@
   <string name="pref_delete_account_title">Видалити обліковий запис</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
+  <string name="pref_plugins_title">Втулки</string>
+  <string name="fab_plugins_add">Додати нову втулку</string>
+  <string name="plugin_uninstall_title">Видалити втулку ?</string>
+  <string name="plugin_successfully_installed">Втулка <b>%1$s</b> вдало встановлена</string>
 </resources>

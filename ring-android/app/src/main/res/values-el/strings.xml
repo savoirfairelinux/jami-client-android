@@ -13,7 +13,9 @@
   <string name="email_chooser_title">Αποστολή email με...</string>
   <string name="website_chooser_title">Προβολή σελίδας με...</string>
   <string name="license">Το παρόν λογισμικό παρέχεται \"ως έχει\", άνευ οποιασδήποτε εγγύησης. Για περισσότερα βλ.<u> Γενική Άδεια Δημόσιας Χρήσης GNU έκδοση 3 ή νεώτερη</u></string>
+  <string name="description">To Jami είναι ένα ελεύθερο λογισμικό για επικοινωνία με όλο τον κόσμο. Σέβεται την ελευθερία και την ιδιωτικότητα των χρηστών/στριών του.</string>
   <string name="credits">Συντελεστές</string>
+  <string name="pip_title">Συνδιάσκεψη Jami</string>
   <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
   <!--About dialog-->
   <string name="developed_by">Ανάπτυξη από</string>
@@ -164,6 +166,9 @@
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
+  <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
+  <string name="conversation_contact_added">%1$s μπήκε</string>
+  <string name="conversation_contact_left">%1$s έφυγε</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>
