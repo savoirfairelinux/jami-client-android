@@ -40,6 +40,75 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentTop="true"
             app:contentInsetStart="16dp">
 
+<!--            <cx.ring.views.SwitchButton-->
+<!--                android:id="@+id/account_switch"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="12sp"-->
+<!--                android:visibility="gone"-->
+<!--                app:showText="true"-->
+<!--                app:status="@string/account_status_offline"-->
+<!--                tools:visibility="visible" />-->
+
+            <Spinner
+                android:id="@+id/spinner_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:dropDownWidth="260dp"
+                android:paddingStart="-60dp"
+                tools:listitem="@layout/item_toolbar_selected" />
+
+            <RelativeLayout
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:id="@+id/contact_image"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:transitionName="conversationIcon"
+                    android:visibility="visible"
+                    tools:src="@drawable/baseline_person_24" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@+id/contact_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/contact_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textColor="@color/colorOnSurface"
+                        android:textSize="16sp"
+                        tools:text="@tools:sample/first_names" />
+
+                    <TextView
+                        android:id="@+id/contact_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textSize="14sp"
+                        tools:text="@tools:sample/full_names" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
             <cx.ring.views.SwitchButton
                 android:id="@+id/account_switch"
                 android:layout_width="wrap_content"
@@ -53,15 +122,6 @@ along with this program; if not, write to the Free Software
                 app:showText="true"
                 app:status="@string/account_status_offline"
                 tools:visibility="visible" />
-
-            <Spinner
-                android:id="@+id/spinner_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:dropDownWidth="260dp"
-                android:paddingStart="-60dp"
-                tools:listitem="@layout/item_toolbar_selected" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -89,19 +149,41 @@ along with this program; if not, write to the Free Software
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/main_frame"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:visibility="invisible"/>
+        android:orientation="vertical">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
+        <androidx.slidingpanelayout.widget.SlidingPaneLayout
+            android:id="@+id/panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/conversation"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:name="cx.ring.fragments.ConversationFragment"/>
+
+        </androidx.slidingpanelayout.widget.SlidingPaneLayout>
+
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
+        android:orientation="horizontal"
+        android:background="@color/background"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

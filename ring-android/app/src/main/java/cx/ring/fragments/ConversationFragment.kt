@@ -819,7 +819,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun initPresenter(presenter: ConversationPresenter) {
         val path = ConversationPath.fromBundle(arguments)
-        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
+//        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
         Log.w(TAG, "initPresenter $path")
         if (path == null) return
         val uri = path.conversationUri
