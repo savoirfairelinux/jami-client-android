@@ -117,7 +117,7 @@
   <string name="write_a_message">Üzenet írása következőknek:</string>
   <string name="scan_qr">QR-kód beolvasása</string>
   <string name="qr_code">QR-kód</string>
-  <string name="ab_action_flipcamera">Kamera megfordítása</string>
+  <string name="ab_action_flipcamera">Fényképezőgép tükrözése</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
   <string name="remote_recording">%s felvétel folyamatban…</string>
   <!--Text messages-->
@@ -194,13 +194,13 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
-  <string name="prompt_new_password_optional">Új jelszó (választható)</string>
+  <string name="prompt_new_password_optional">Új jelszó (nem kötelező)</string>
   <string name="prompt_new_password_repeat">Új jelszó még egyszer</string>
   <string name="account_create_title">Jami-fiók létrehozása</string>
   <string name="prompt_new_username">Új felhasználónév megadása</string>
   <string name="prompt_hint_username">Felhasználónév</string>
-  <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami fiókját.</string>
-  <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót.</string>
+  <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
+  <string name="help_password_enter">Adja meg a fő Jami-fiókja jelszót.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Fiók exportálása a Jami-n” működést a PIN-kod eléréséhez.</string>
   <string name="wizard_next">Tovább</string>

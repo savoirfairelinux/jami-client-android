@@ -125,6 +125,7 @@
   <string name="message_failed">Gagal</string>
   <string name="time_just_now">Baru saja</string>
   <string name="send_file">Kirim berkas</string>
+  <string name="select_media">Buka galeri</string>
   <string name="hist_file_sent">Berkas dikirim</string>
   <string name="hist_file_received">Berkas diterima</string>
   <string name="conversation_send_audio">Rekam klip audio</string>
@@ -185,6 +186,10 @@
   <string name="conversation_type_contact">Kontak jami</string>
   <string name="conversation_type_private">Kolam privat</string>
   <string name="conversation_type_group">Kolam grup</string>
+  <string name="conversation_contact_invited"> %1$sdiundang</string>
+  <string name="conversation_contact_added">%1$s bergabung</string>
+  <string name="conversation_contact_left">%1$s keluar</string>
+  <string name="conversation_contact_banned">%1$s dibanned</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>
@@ -334,6 +339,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Suara</string>
   <string name="bottomSheet_raiseHand_btn">Angkat</string>
+  <string name="open_account_plugin_settings">Buka Pengaturan Plugin Akun</string>
+  <string name="open_general_plugin_settings">Buka Pengaturan Plugin Umum</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
 </resources>
