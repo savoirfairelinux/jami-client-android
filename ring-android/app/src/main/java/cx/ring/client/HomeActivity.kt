@@ -23,15 +23,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.CompoundButton
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -60,7 +58,6 @@ import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ConversationFragment
 import cx.ring.fragments.SmartListFragment
-import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
@@ -75,7 +72,6 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
-import cx.ring.views.SwitchButton
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -94,15 +90,14 @@ import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
-    AdapterView.OnItemSelectedListener, Colorable {
-    private var fContent: Fragment? = null
+class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Colorable {
+    private var pagerContent: Fragment? = null
+    private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
-    private var mAccountAdapter: AccountSpinnerAdapter? = null
     private var mPagerAdapter: ScreenSlidePagerAdapter? = null
-    private var mAccountFragmentBackHandlerInterface: BackHandlerInterface? = null
-    private var mOutlineProvider: ViewOutlineProvider? = null
+//    private var mOutlineProvider: ViewOutlineProvider? = null
     private var mOrientation = 0
     private var mHasConversationBadge = false
     private var mHasPendingBadge = false
@@ -172,33 +167,68 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
 
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
-            setSupportActionBar(binding.mainToolbar)
             supportActionBar?.title = ""
             binding.tabLayout.addOnTabSelectedListener(this)
-            mOutlineProvider = binding.appBar.outlineProvider
-            binding.spinnerToolbar.onItemSelectedListener = this
-            binding.accountSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-                enableAccount(isChecked)
-            }
-            binding.contactImage?.setOnClickListener { fConversation?.openContact() }
+//            mOutlineProvider = binding.appBar.outlineProvider
             binding.pager.adapter = mPagerAdapter
             binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     binding.tabLayout.getTabAt(position)!!.select()
-                    fContent = mPagerAdapter!!.fragments[position] as Fragment
+                    pagerContent = mPagerAdapter!!.fragments[position] as Fragment
                 }
             })
             ViewCompat.setOnApplyWindowInsetsListener(binding.pager) { v, insets ->
                 v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
                 insets
             }
-            ViewCompat.setOnApplyWindowInsetsListener(binding.mainFrame) { v, insets ->
+            ViewCompat.setOnApplyWindowInsetsListener(binding.frame) { v, insets ->
                 v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
                 insets
             }
         }
         handleIntent(intent)
+
+        net.jami.utils.Log.d("panel", "${mBinding!!.panel.isSlideable}")
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val panel = mBinding!!.panel
+                
+                if (panel.isSlideable && panel.isOpen) {
+                    panel.closePane()
+                    return
+                }
+
+                val pager = mBinding?.pager
+                if (pager?.visibility == View.VISIBLE && pager.currentItem == TAB_INVITATIONS) {
+                    pager.currentItem = TAB_CONVERSATIONS
+                    return
+                }
+                
+                if (mBinding!!.frame.isVisible){
+                    popFragmentImmediate()
+                    mBinding!!.mainToolbar.isVisible = false
+                    mBinding!!.tabLayout.isVisible = mHasPendingBadge
+                    return
+                }
+
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        })
+
+        setSupportActionBar(mBinding!!.mainToolbar)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -218,7 +248,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             if (isShowing) dismiss()
             mMigrationDialog = null
         }
-        fContent = null
+        pagerContent = null
+        frameContent = null
         mDisposable.dispose()
         mBinding = null
     }
@@ -273,26 +304,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .show()
     }
 
-    private fun setToolbarState(@StringRes titleRes: Int) {
-        setToolbarState(getString(titleRes), null)
-    }
-
-    private fun setToolbarState(title: String?, subtitle: String?) {
-        mBinding?.mainToolbar?.let { toolbar ->
-            toolbar.logo = null
-            toolbar.title = title
-            toolbar.subtitle = subtitle
-        }
-    }
-
-    private fun showProfileInfo() {
-        mBinding?.apply {
-            spinnerToolbar.visibility = View.VISIBLE
-            mainToolbar.title = null
-            mainToolbar.subtitle = null
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         mDisposable.add(
@@ -309,28 +320,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
                         }
                     }
                 })
-        mDisposable.add(
-            mAccountService.observableAccountList
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ accounts ->
-                    mAccountAdapter?.apply {
-                        clear()
-                        addAll(accounts)
-                        notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            mBinding!!.spinnerToolbar.setSelection(0)
-                        }
-                    } ?: run {
-                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
-                            mAccountAdapter = this
-                            setNotifyOnChange(false)
-                            mBinding?.spinnerToolbar?.adapter = this
-                        }
-                    }
-                    if (fContent is SmartListFragment) {
-                        showProfileInfo()
-                    }
-                }) { e -> Log.e(TAG, "Error loading account list !", e) })
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { obj -> obj.unreadPending }
@@ -377,10 +366,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         val newOrientation = resources.configuration.orientation
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation
-            hideTabletToolbar()
             if (DeviceUtils.isTablet(this)) {
                 goToHome()
-                showTabletToolbar()
             } else {
                 // Remove ConversationFragment that might have been restored after an orientation change
                 if (fConversation != null) {
@@ -420,6 +407,10 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         mDisposable.clear()
     }
 
+    fun toggleConversationVisibility(show: Boolean) {
+        mBinding!!.conversation.isVisible = show
+    }
+
     fun startConversation(conversationId: String) {
         mDisposable.add(mAccountService.currentAccountSubject
             .firstElement()
@@ -434,31 +425,12 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
     }
 
     private fun startConversation(path: ConversationPath) {
-        Log.w(TAG, "startConversation $path")
-        if (!DeviceUtils.isTablet(this)) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    path.toUri(),
-                    this,
-                    ConversationActivity::class.java
-                )
-            )
-        } else {
-            startConversationTablet(path.toBundle())
-        }
-    }
-
-    private fun startConversationTablet(bundle: Bundle?) {
         fConversation = ConversationFragment()
-        fConversation!!.arguments = bundle
-        if (mBinding!!.pager.currentItem != TAB_INVITATIONS) {
-            goToHome()
-        }
-        showTabletToolbar()
+        fConversation!!.arguments = path.toBundle()
+        mBinding!!.panel.openPane()
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.main_frame,
+                R.id.conversation,
                 fConversation!!,
                 ConversationFragment::class.java.simpleName
             )
@@ -472,36 +444,17 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         mBinding!!.pager.currentItem = TAB_INVITATIONS
     }
 
-    override fun onBackPressed() {
-        if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface!!.onBackPressed()) {
-            return
-        }
-        val pager = mBinding?.pager
-        if (pager?.visibility == View.VISIBLE && pager.currentItem == TAB_INVITATIONS) {
-            pager.currentItem = TAB_CONVERSATIONS
-            return
-        }
-        super.onBackPressed()
-        if (!fContent!!.isVisible) {
-            goToHome()
-            showToolbarSpinner()
-            hideTabletToolbar()
-        }
-    }
-
     fun goToHome() {
         mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
-        mBinding!!.pager.isVisible = true
-        fContent = SmartListFragment()
+        pagerContent = SmartListFragment()
     }
 
     fun goToAdvancedSettings() {
-        if (fContent is SettingsFragment) {
+        if (frameContent is SettingsFragment) {
             return
         }
-        hideToolbar()
         val content = SettingsFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -509,18 +462,17 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .addToBackStack(SETTINGS_TAG).commit()
         if (!DeviceUtils.isTablet(this)) {
             mBinding!!.tabLayout.isVisible = false
-            mBinding!!.pager.isVisible = false
         }
-        mBinding!!.mainFrame.isVisible = true
+        mBinding!!.frame.isVisible = true
+        mBinding!!.tabLayout.isVisible = false
     }
 
     fun goToAbout() {
-        if (fContent is AboutFragment) {
+        if (frameContent is AboutFragment) {
             return
         }
-        hideToolbar()
         val content = AboutFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -528,17 +480,17 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .addToBackStack(ABOUT_TAG).commit()
         if (!DeviceUtils.isTablet(this)) {
             mBinding!!.tabLayout.isVisible = false
-            mBinding!!.pager.isVisible = false
         }
-        mBinding!!.mainFrame.isVisible = true
+        mBinding!!.frame.isVisible = true
+        mBinding!!.tabLayout.isVisible = false
     }
 
     fun goToVideoSettings() {
-        if (fContent is VideoSettingsFragment) {
+        if (frameContent is VideoSettingsFragment) {
             return
         }
         val content = VideoSettingsFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -546,9 +498,9 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
         if (!DeviceUtils.isTablet(this)) {
             mBinding!!.tabLayout.isVisible = false
-            mBinding!!.pager.isVisible = false
         }
-        mBinding!!.mainFrame.isVisible = true
+        mBinding!!.frame.isVisible = true
+        mBinding!!.tabLayout.isVisible = false
     }
 
     fun goToAccountSettings() {
@@ -568,143 +520,66 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         } else {
             Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
             bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
-            if (fContent !is AccountEditionFragment) {
-                hideToolbar()
+            if (frameContent !is AccountEditionFragment) {
                 val content = AccountEditionFragment()
                 content.arguments = bundle
-                fContent = content
+                frameContent = content
                 supportFragmentManager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .replace(fragmentContainerId, content, ACCOUNTS_TAG)
                     .addToBackStack(ACCOUNTS_TAG)
                     .commit()
-                showToolbarSpinner()
                 if (!DeviceUtils.isTablet(this)) {
                     mBinding!!.tabLayout.isVisible = false
-                    mBinding!!.pager.isVisible = false
                 }
-                mBinding!!.mainFrame.isVisible = true
+                mBinding!!.frame.isVisible = true
+                mBinding!!.tabLayout.isVisible = false
             }
         }
     }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val adapter = mAccountAdapter ?: return
-        val type = adapter.getItemViewType(position)
-        if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-            adapter.getItem(position)?.let { account ->
-                mAccountService.currentAccount = account
-                showAccountStatus(fContent is AccountEditionFragment && !account.isSip)
-            }
-        } else {
-            val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
-            startActivity(intent)
-            mBinding!!.spinnerToolbar.setSelection(0)
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun setBadge(menuId: Int, number: Int) {
         val tab = mBinding!!.tabLayout.getTabAt(menuId)
         if (number == 0) {
             tab!!.removeBadge()
             if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = false else mHasPendingBadge = false
-            if (fContent is ContactRequestsFragment) goToHome()
+            if (pagerContent is ContactRequestsFragment) goToHome()
         } else {
             tab!!.orCreateBadge.number = number
             mBinding!!.tabLayout.isVisible = true
             if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = true else mHasPendingBadge = true
         }
-        mBinding!!.tabLayout.isVisible = mHasConversationBadge || mHasPendingBadge
+        mBinding!!.tabLayout.isVisible = mHasPendingBadge
         mBinding!!.pager.isUserInputEnabled = mHasConversationBadge || mHasPendingBadge
     }
 
-    private fun hideToolbar() {
-        hideTabletToolbar()
-        setToolbarElevation(false)
-        hideToolbarSpinner()
-    }
-
-    private fun hideTabletToolbar() {
-        mBinding?.let { binding ->
-            binding.tabletToolbar?.let { toolbar ->
-                binding.contactTitle?.text = null
-                binding.contactSubtitle?.text = null
-                binding.contactImage?.setImageDrawable(null)
-                toolbar.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun showTabletToolbar() {
-        if (DeviceUtils.isTablet(this))
-            mBinding?.let { binding ->
-                binding.tabletToolbar?.let { toolbar ->
-                    toolbar.visibility = View.VISIBLE
-                }
-            }
-    }
-
-    fun setTabletTitle(@StringRes titleRes: Int) {
-        mBinding?.let { binding ->
-            binding.tabletToolbar?.let { toolbar ->
-                binding.contactTitle?.setText(titleRes)
-                binding.contactTitle?.textSize = 19f
-                binding.contactTitle?.setTypeface(null, Typeface.BOLD)
-                binding.contactImage?.visibility = View.GONE
-                toolbar.visibility = View.VISIBLE
-            }
-        }
-        /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
-        params.removeRule(RelativeLayout.ALIGN_TOP);
-        params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        binding.contactTitle.setLayoutParams(params);*/
-    }
-
     fun setToolbarTitle(@StringRes titleRes: Int) {
-        if (DeviceUtils.isTablet(this)) {
-            setTabletTitle(titleRes)
-        } else {
-            setToolbarState(titleRes)
-        }
-    }
-
-    fun showAccountStatus(show: Boolean) {
-        mBinding!!.accountSwitch.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    private fun showToolbarSpinner() {
-        mBinding!!.spinnerToolbar.visibility = View.VISIBLE
-    }
-
-    private fun hideToolbarSpinner() {
-        if (mBinding != null && !DeviceUtils.isTablet(this)) {
-            mBinding!!.spinnerToolbar.visibility = View.GONE
+        mBinding?.mainToolbar?.let { toolbar ->
+            toolbar.isVisible = true
+            toolbar.title = getString(titleRes)
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private val fragmentContainerId: Int
-        get() = R.id.main_frame
-
-    fun setAccountFragmentOnBackPressedListener(backPressedListener: BackHandlerInterface?) {
-        mAccountFragmentBackHandlerInterface = backPressedListener
-    }
+        get() = R.id.frame
 
     /**
      * Changes the current main fragment to a plugins list settings fragment
      */
     fun goToPluginsListSettings(accountId: String? = "") {
-        if (fContent is PluginsListSettingsFragment) {
+        if (frameContent is PluginsListSettingsFragment) {
             return
         }
         val content = PluginsListSettingsFragment.newInstance(accountId)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
             .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
+        mBinding!!.tabLayout.isVisible = false
     }
 
     /**
@@ -712,11 +587,11 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
      * @param pluginDetails
      */
     fun gotToPluginSettings(pluginDetails: PluginDetails) {
-        if (fContent is PluginSettingsFragment) {
+        if (frameContent is PluginSettingsFragment) {
             return
         }
         val content = PluginSettingsFragment.newInstance(pluginDetails)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -728,11 +603,11 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
      * Changes the current main fragment to a plugin PATH preference fragment
      */
     fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
-        if (fContent is PluginPathPreferenceFragment) {
+        if (frameContent is PluginPathPreferenceFragment) {
             return
         }
         val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -745,24 +620,24 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
+//        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
     fun setToolbarOutlineState(enabled: Boolean) {
         if (mBinding != null) {
-            if (!enabled) {
-                mBinding!!.appBar.outlineProvider = null
-            } else {
-                mBinding!!.appBar.outlineProvider = mOutlineProvider
-            }
+//            if (!enabled) {
+//                mBinding!!.appBar.outlineProvider = null
+//            } else {
+//                mBinding!!.appBar.outlineProvider = mOutlineProvider
+//            }
         }
     }
 
     fun popFragmentImmediate() {
         val fm = supportFragmentManager
         fm.popBackStackImmediate()
-        val entry = fm.getBackStackEntryAt(fm.backStackEntryCount - 1)
-        fContent = fm.findFragmentById(entry.id)
+        frameContent = fm.fragments.lastOrNull()
+        mBinding!!.frame.isVisible = false
     }
 
     private fun enableAccount(newValue: Boolean) {
@@ -774,9 +649,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
         account.isEnabled = newValue
         mAccountService.setAccountEnabled(account.accountId, newValue)
     }
-
-    val switchButton: SwitchButton
-        get() = mBinding!!.accountSwitch
 
     private fun getMaxShareShortcuts() =
         ShortcutManagerCompat.getMaxShortcutCountPerActivity(this).takeIf { it > 0 } ?: 4

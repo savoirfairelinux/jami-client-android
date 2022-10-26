@@ -6,72 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".client.ConversationActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="4dp"
-        android:elevation="4dp"
-        android:fitsSystemWindows="true">
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/toolbar_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:elevation="4dp"-->
+<!--        android:elevation="4dp"-->
+<!--        android:fitsSystemWindows="true">-->
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/main_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/main_toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize">-->
 
-            <RelativeLayout
-                android:id="@+id/tablet_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/tablet_toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical">-->
 
-                <ImageView
-                    android:id="@+id/contact_image"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:transitionName="conversationIcon"
-                    tools:src="@drawable/baseline_person_24" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/contact_image"-->
+<!--                    android:layout_width="36dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:transitionName="conversationIcon"-->
+<!--                    tools:src="@drawable/baseline_person_24" />-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/contact_image"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_toEndOf="@+id/contact_image"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:id="@+id/contact_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="middle"
-                        android:singleLine="true"
-                        android:textColor="@color/colorOnSurface"
-                        android:textSize="16sp"
-                        tools:text="@tools:sample/first_names" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/contact_title"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:ellipsize="middle"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textColor="@color/colorOnSurface"-->
+<!--                        android:textSize="16sp"-->
+<!--                        tools:text="@tools:sample/first_names" />-->
 
-                    <TextView
-                        android:id="@+id/contact_subtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="middle"
-                        android:singleLine="true"
-                        android:textSize="14sp"
-                        tools:text="@tools:sample/full_names"/>
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/contact_subtitle"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:ellipsize="middle"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:textSize="14sp"-->
+<!--                        tools:text="@tools:sample/full_names"/>-->
+<!--                </LinearLayout>-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
-        </com.google.android.material.appbar.MaterialToolbar>
+<!--        </com.google.android.material.appbar.MaterialToolbar>-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_layout"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>
