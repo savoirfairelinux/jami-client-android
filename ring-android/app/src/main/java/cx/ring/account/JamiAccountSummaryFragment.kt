@@ -75,8 +75,10 @@ import net.jami.account.JamiAccountSummaryPresenter
 import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
 import net.jami.model.Profile
+import net.jami.services.AccountService
 import net.jami.utils.StringUtils
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class JamiAccountSummaryFragment :
@@ -104,6 +106,10 @@ class JamiAccountSummaryFragment :
     private var mDeviceAdapter: DeviceAdapter? = null
     private val mDisposableBag = CompositeDisposable()
     private var mBinding: FragAccSummaryBinding? = null
+
+    @Inject
+    lateinit
+    var mAccountService: AccountService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
@@ -168,8 +174,7 @@ class JamiAccountSummaryFragment :
     override fun onResume() {
         super.onResume()
         (activity as HomeActivity?)?.let { activity ->
-            activity.showAccountStatus(true)
-            activity.switchButton.setOnCheckedChangeListener { _, isChecked: Boolean ->
+            mBinding!!.accountSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.enableAccount(isChecked)
             }
         }
@@ -177,10 +182,7 @@ class JamiAccountSummaryFragment :
 
     override fun onPause() {
         super.onPause()
-        (activity as HomeActivity?)?.let { activity ->
-            activity.showAccountStatus(false)
-            activity.switchButton.setOnCheckedChangeListener(null)
-        }
+        mBinding!!.accountSwitch.setOnCheckedChangeListener(null)
     }
 
     fun setAccount(accountId: String) {
@@ -232,7 +234,7 @@ class JamiAccountSummaryFragment :
             binding.linkedDevices.setText(account.deviceName)
             setLinkedDevicesAdapter(account)
             mAccountHasPassword = account.hasPassword()
-            (requireActivity() as HomeActivity).switchButton.setCheckedSilent(account.isEnabled)
+            mBinding!!.accountSwitch.setCheckedSilent(account.isEnabled)
             binding.accountAliasTxt.text = getString(R.string.profile)
             binding.identity.setText(account.username)
             val username = account.registeredName
@@ -492,7 +494,7 @@ class JamiAccountSummaryFragment :
     }
 
     private fun setSwitchStatus(account: Account) {
-        val switchButton = (requireActivity() as HomeActivity).switchButton
+        val switchButton = mBinding!!.accountSwitch
         var color = R.color.red_400
         val status: String
         if (account.isEnabled) {
@@ -706,6 +708,16 @@ class JamiAccountSummaryFragment :
             binding.chipMore.visibility = View.VISIBLE
             binding.chipMore.text = getString(R.string.account_link_show_button, mDeviceAdapter!!.count)
         }
+    }
+
+    private fun enableAccount(newValue: Boolean) {
+        val account = mAccountService.currentAccount
+        if (account == null) {
+            Log.w(HomeActivity.TAG, "account not found!")
+            return
+        }
+        account.isEnabled = newValue
+        mAccountService.setAccountEnabled(account.accountId, newValue)
     }
 
     companion object {
