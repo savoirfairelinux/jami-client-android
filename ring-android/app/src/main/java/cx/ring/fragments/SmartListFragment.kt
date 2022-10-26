@@ -22,17 +22,19 @@ package cx.ring.fragments
 
 import android.app.Activity
 import android.app.SearchManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -41,24 +43,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
+import cx.ring.client.AccountSpinnerAdapter
 import cx.ring.client.CallActivity
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragSmartlistBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.TextUtils
 import cx.ring.utils.ConversationPath
-import cx.ring.utils.DeviceUtils
+import cx.ring.utils.TextUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
+import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 import net.jami.smartlist.SmartListPresenter
 import net.jami.smartlist.SmartListView
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
@@ -68,6 +75,16 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     private var mSearchMenuItem: MenuItem? = null
     private var mDialpadMenuItem: MenuItem? = null
     private var binding: FragSmartlistBinding? = null
+    private var mAccountAdapter: AccountSpinnerAdapter? = null
+    private val mDisposable = CompositeDisposable()
+
+    @Inject
+    lateinit
+    var mAccountService: AccountService
+
+    @Inject
+    lateinit
+    var mConversationFacade: ConversationFacade
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
@@ -113,6 +130,29 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun onStart() {
         super.onStart()
         activity?.intent?.let { handleIntent(it) }
+
+        mDisposable.add(
+            mAccountService.observableAccountList
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ accounts ->
+                    mAccountAdapter?.apply {
+                        clear()
+                        addAll(accounts)
+                        notifyDataSetChanged()
+                        if (accounts.isNotEmpty()) {
+                            binding!!.spinnerToolbar.setSelection(0)
+                        }
+                    } ?: run {
+                        AccountSpinnerAdapter(activity!!, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
+                            mAccountAdapter = this
+                            setNotifyOnChange(false)
+                            binding?.spinnerToolbar?.adapter = this
+                        }
+                    }
+//                    if (pagerContent is SmartListFragment) {
+//                        showProfileInfo()
+//                    }
+                }) { e -> Log.e(HomeActivity.TAG, "Error loading account list !", e) })
     }
 
     fun handleIntent(intent: Intent) {
@@ -188,6 +228,25 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             qrCode.setOnClickListener { presenter.clickQRSearch() }
             newGroup.setOnClickListener{ presenter.clickNewGroup() }
             newconvFab.setOnClickListener { presenter.fabButtonClicked() }
+            (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+            spinnerToolbar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val adapter = mAccountAdapter ?: return
+                    val type = adapter.getItemViewType(position)
+                    if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
+                        adapter.getItem(position)?.let { account ->
+                            mAccountService.currentAccount = account
+//                showAccountStatus(frameContent is AccountEditionFragment && !account.isSip)
+                        }
+                    } else {
+                        val intent = Intent(activity, AccountWizardActivity::class.java)
+                        startActivity(intent)
+                        binding!!.spinnerToolbar.setSelection(0)
+                    }
+                }
+
+                override fun onNothingSelected(arg0: AdapterView<*>?) {}
+            }
             confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP)
@@ -386,4 +445,5 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         private val STATE_LOADING = "$TAG.STATE_LOADING"
         private const val SCROLL_DIRECTION_UP = -1
     }
+
 }

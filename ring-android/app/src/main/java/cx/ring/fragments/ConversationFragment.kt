@@ -45,6 +45,7 @@ import android.widget.*
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -189,28 +190,25 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
             val layout: View = binding.conversationLayout
 
-            // remove action bar height for tablet layout
-            if (isTablet(layout.context)) {
-                layout.updatePadding(top = 0)
-            }
+            (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
 
-            if (Build.VERSION.SDK_INT >= 30) {
-                ViewCompat.setWindowInsetsAnimationCallback(
-                    layout,
-                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
-                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-                            animating++
-                        }
-                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
-                            layout.updatePadding(bottom = insets.systemWindowInsetBottom)
-                            return insets
-                        }
-
-                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
-                            animating--
-                        }
-                    })
-            }
+//            if (Build.VERSION.SDK_INT >= 30) {
+//                ViewCompat.setWindowInsetsAnimationCallback(
+//                    layout,
+//                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+//                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+//                            animating++
+//                        }
+//                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
+//                            layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+//                            return insets
+//                        }
+//
+//                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
+//                            animating--
+//                        }
+//                    })
+//            }
             ViewCompat.setOnApplyWindowInsetsListener(layout) { _, insets: WindowInsetsCompat ->
                 if (animating == 0)
                     layout.updatePadding(bottom = insets.systemWindowInsetBottom)
@@ -305,8 +303,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             animator?.supportsChangeAnimations = false
             binding.histList.adapter = mAdapter
 
-            val toolbarLayout: AppBarLayout? = activity?.findViewById(R.id.toolbar_layout)
-            toolbarLayout?.isLifted = true
+//            val toolbarLayout: AppBarLayout? = activity?.findViewById(R.id.toolbar_layout)
+//            toolbarLayout?.isLifted = true
         }
     }
 
@@ -755,6 +753,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (!isVisible)
             return
+        menu.clear()
         inflater.inflate(R.menu.conversation_actions, menu)
         mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall)
         mVideoCallBtn = menu.findItem(R.id.conv_action_videocall)
@@ -819,7 +818,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun initPresenter(presenter: ConversationPresenter) {
         val path = ConversationPath.fromBundle(arguments)
-        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
+        mIsBubble = arguments?.getBoolean(NotificationServiceImpl.EXTRA_BUBBLE) == true
         Log.w(TAG, "initPresenter $path")
         if (path == null) return
         val uri = path.conversationUri
@@ -931,14 +930,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
 
     override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {
-        val toolbar: Toolbar = requireActivity().findViewById(R.id.main_toolbar)
-        val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
+        val logo = binding!!.contactImage
         val intent = Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
             .setClass(requireContext().applicationContext, ContactDetailsActivity::class.java)
-        if (logo != null) {
-            startActivity(intent,
-                ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
-        } else startActivity(intent)
+        startActivity(intent,
+            ActivityOptions.makeSceneTransitionAnimation(activity, logo, "conversationIcon").toBundle())
     }
 
     override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {
@@ -958,11 +954,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun setupActionbar(conversation: ConversationItemViewModel) {
-        val activity = activity ?: return
-        val toolbar: Toolbar = activity.findViewById(R.id.main_toolbar)
-        val title = toolbar.findViewById<TextView>(R.id.contact_title)
-        val subtitle = toolbar.findViewById<TextView>(R.id.contact_subtitle)
-        val logo = toolbar.findViewById<ImageView>(R.id.contact_image)
+        val title = binding!!.contactTitle
+        val subtitle = binding!!.contactSubtitle
+        val logo = binding!!.contactImage
         logo.setImageDrawable(mConversationAvatar)
         logo.visibility = View.VISIBLE
         title.text = conversation.title
