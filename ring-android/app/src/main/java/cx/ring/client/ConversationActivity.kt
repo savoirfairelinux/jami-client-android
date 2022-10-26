@@ -79,9 +79,7 @@ class ConversationActivity : AppCompatActivity(), Colorable {
         JamiApplication.instance?.startDaemon()
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.contactImage.setOnClickListener { mConversationFragment?.openContact() }
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
                 arguments = conversationPath.toBundle().apply {

@@ -49,7 +49,6 @@ class ContactRequestsFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragPendingContactRequestsBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
         return binding!!.root
     }
 
@@ -68,14 +67,6 @@ class ContactRequestsFragment :
     override fun onStart() {
         super.onStart()
         presenter.updateAccount(arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.clear()
     }
 
     override fun updateView(list: List<Conversation>, conversationFacade: ConversationFacade, disposable: CompositeDisposable) {
