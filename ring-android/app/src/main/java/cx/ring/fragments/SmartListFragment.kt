@@ -22,7 +22,6 @@ package cx.ring.fragments
 
 import android.app.Activity
 import android.app.SearchManager
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -33,7 +32,6 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -242,6 +240,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                         val intent = Intent(activity, AccountWizardActivity::class.java)
                         startActivity(intent)
                         binding!!.spinnerToolbar.setSelection(0)
+                        (activity as HomeActivity).toggleConversationVisibility(false)
                     }
                 }
 

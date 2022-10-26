@@ -407,6 +407,10 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         mDisposable.clear()
     }
 
+    fun toggleConversationVisibility(show: Boolean) {
+        mBinding!!.conversation.isVisible = show
+    }
+
     fun startConversation(conversationId: String) {
         mDisposable.add(mAccountService.currentAccountSubject
             .firstElement()
@@ -431,6 +435,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
                 ConversationFragment::class.java.simpleName
             )
             .commit()
+        toggleConversationVisibility(true)
     }
 
     private fun presentTrustRequestFragment(accountId: String) {
