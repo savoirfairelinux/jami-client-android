@@ -161,17 +161,16 @@ class AccountWizardPresenter @Inject constructor(
         }
     }
 
-    fun successDialogClosed() {
+    fun  successDialogClosed() {
         view?.finish(true)
     }
 
-    private fun initJamiAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> {
-        return initAccountDetails().map { accountDetails: HashMap<String, String> ->
+    private fun initJamiAccountDetails(defaultAccountName: String): Single<HashMap<String, String>> =
+        initAccountDetails().map { accountDetails: HashMap<String, String> ->
             accountDetails[ConfigKey.ACCOUNT_ALIAS.key] = mAccountService.getNewAccountName(defaultAccountName)
             accountDetails[ConfigKey.ACCOUNT_UPNP_ENABLE.key] = AccountConfig.TRUE_STR
             accountDetails
         }
-    }
 
     private fun initAccountDetails(): Single<HashMap<String, String>> {
         return if (mAccountType == null) Single.error(IllegalStateException())
@@ -190,10 +189,11 @@ class AccountWizardPresenter @Inject constructor(
         mCreatingAccount = true
         //mCreationError = false;
         val account = BehaviorSubject.create<Account>()
-        account.filter { a: Account ->
-            val newState = a.registrationState
-            !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
-        }
+        account.onErrorComplete()
+            .filter { a: Account ->
+                val newState = a.registrationState
+                !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
+            }
             .firstElement()
             .subscribe { a: Account ->
                 if (!model.isLink && a.isJami && model.username.isNotEmpty())
@@ -244,6 +244,7 @@ class AccountWizardPresenter @Inject constructor(
                 Log.e(TAG, "Error creating account", e);
                 mCreatingAccount = false
                 //mCreationError = true;
+                view?.displayProgress(false)
                 view?.displayGenericError()
             })
     }

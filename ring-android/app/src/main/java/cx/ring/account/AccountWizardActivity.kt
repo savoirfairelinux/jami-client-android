@@ -20,6 +20,7 @@
  */
 package cx.ring.account
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -227,10 +228,17 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
         if (mAlertDialog != null && mAlertDialog!!.isShowing) {
             return
         }
-        setResult(RESULT_OK, Intent())
-        //unlock the screen orientation
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-        presenter.successDialogClosed()
+        requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_PERMISSION_NOTIF)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == REQUEST_PERMISSION_NOTIF) {
+            setResult(RESULT_OK, Intent())
+            //unlock the screen orientation
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+            presenter.successDialogClosed()
+        } else
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     fun profileCreated(saveProfile: Boolean) {
@@ -240,5 +248,6 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     companion object {
         val TAG = AccountWizardActivity::class.simpleName!!
+        const val REQUEST_PERMISSION_NOTIF = 5
     }
 }
