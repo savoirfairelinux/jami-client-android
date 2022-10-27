@@ -40,7 +40,5 @@ interface SmartListView {
     fun update(position: Int)
     fun goToConversation(accountId: String, conversationUri: Uri)
     fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String)
-    fun goToQRFragment()
-    fun startNewGroup()
     fun scrollToTop()
 }

@@ -51,7 +51,7 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
+//        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
     }
 
     private static void handleResolutionIcon(Preference resolutionPref, String resolution) {

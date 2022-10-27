@@ -116,14 +116,13 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         preference.setPluginSettingsRedirect {
             if (accountId!!.isEmpty()) {
                 val act = requireActivity() as HomeActivity
-                act.selectNavigationItem(R.id.navigation_settings)
+                act.goToAccountSettings()
                 var acc = act.mAccountService.currentAccount!!.accountId
                 act.goToPluginsListSettings(acc)
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
                 val act = requireActivity() as HomeActivity
-                act.selectNavigationItem(R.id.navigation_home)
-                act.goToSettings()
+                act.goToAdvancedSettings()
                 act.goToPluginsListSettings()
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
             }

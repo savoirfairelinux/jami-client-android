@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".client.HomeActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_contact_search"
@@ -29,12 +27,20 @@
 
         <menu>
 
-            <item android:id="@+id/menu_settings"
+            <item android:id="@+id/menu_account_settings"
                 app:showAsAction="ifRoom"
-                android:title="@string/menu_item_settings" />
+                android:icon="@drawable/baseline_account_settings_24dp"
+                android:title="@string/menu_item_account_settings" />
+
+            <item android:id="@+id/menu_advanced_settings"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/baseline_advanced_settings_24dp"
+                android:title="@string/menu_item_advanced_settings" />
 
             <item android:id="@+id/menu_about"
                 app:showAsAction="ifRoom"
+                android:iconTintMode="src_in"
+                android:icon="@drawable/ic_jami_24"
                 android:title="@string/menu_item_about" />
 
         </menu>

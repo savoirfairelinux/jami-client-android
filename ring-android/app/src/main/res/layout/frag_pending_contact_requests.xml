@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:divider="@null"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         tools:listitem="@layout/item_smartlist" />
 

@@ -3,6 +3,7 @@ Copyright (C) 2004-2016 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,69 +20,40 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity">
+    tools:context=".client.HomeActivity"
+    android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="4dp"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/main_toolbar"
+    <androidx.slidingpanelayout.widget.SlidingPaneLayout
+            android:id="@+id/panel"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            app:contentInsetStart="16dp">
+            android:layout_height="match_parent">
 
-            <cx.ring.views.SwitchButton
-                android:id="@+id/account_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="end"
-                android:layout_marginEnd="12dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone"
-                app:showText="true"
-                app:status="@string/account_status_offline"
-                tools:visibility="visible" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/home_fragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:name="cx.ring.fragments.HomeFragment"/>
 
-            <Spinner
-                android:id="@+id/spinner_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:dropDownWidth="260dp"
-                android:paddingStart="-60dp"
-                tools:listitem="@layout/item_toolbar_selected" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/conversation"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:name="cx.ring.fragments.ConversationFragment"/>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/main_frame"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navigation_view"
-        android:layout_below="@id/app_bar"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:orientation="horizontal"
+        android:background="@color/background"
+        android:visibility="gone"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:elevation="8dp"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navigation_bar" />
-
-</RelativeLayout>
+</FrameLayout>

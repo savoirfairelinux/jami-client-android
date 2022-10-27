@@ -23,16 +23,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewOutlineProvider
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.CompoundButton
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -40,12 +37,17 @@ import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.elevation.ElevationOverlayProvider
-import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.tabs.TabLayout
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
@@ -55,8 +57,8 @@ import cx.ring.application.JamiApplication
 import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ConversationFragment
+import cx.ring.fragments.HomeFragment
 import cx.ring.fragments.SmartListFragment
-import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
@@ -71,7 +73,6 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
-import cx.ring.views.SwitchButton
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -90,14 +91,12 @@ import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    AdapterView.OnItemSelectedListener, Colorable {
-    private var fContent: Fragment? = null
+class HomeActivity : AppCompatActivity(), Colorable {
+    private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
-    private var mAccountAdapter: AccountSpinnerAdapter? = null
-    private var mAccountFragmentBackHandlerInterface: BackHandlerInterface? = null
-    private var mOutlineProvider: ViewOutlineProvider? = null
+    private var mHomeFragment: HomeFragment? = null
     private var mOrientation = 0
 
     @Inject
@@ -145,54 +144,52 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             return
         }
 
-        if (!DeviceUtils.isTablet(this)) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-            }
-        } else {
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val attr = window.attributes
-            attr.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        }
-
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
-            setSupportActionBar(binding.mainToolbar)
             supportActionBar?.title = ""
-            binding.navigationView.setOnItemSelectedListener(this)
-            binding.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked = true
-            mOutlineProvider = binding.appBar.outlineProvider
-            binding.spinnerToolbar.onItemSelectedListener = this
-            binding.accountSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-                enableAccount(isChecked)
-            }
-            binding.contactImage?.setOnClickListener { fConversation?.openContact() }
-            if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window.navigationBarColor =
-                    ElevationOverlayProvider(this).compositeOverlayWithThemeSurfaceColorIfNeeded(
-                        binding.navigationView.elevation
-                    )
-            }
         }
         handleIntent(intent)
+
+        Log.d("panel", "${mBinding!!.panel.isSlideable}")
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val panel = mBinding!!.panel
+                
+                if (panel.isSlideable && panel.isOpen) {
+                    panel.closePane()
+                    return
+                }
+
+                if (mHomeFragment!!.isSearchActionViewExpanded()) {
+                    mHomeFragment!!.collapseSearchActionView()
+                    return
+                }
+
+                if (mHomeFragment!!.isInvitationTabOpen()) {
+                        mHomeFragment!!.setPagerPosition(HomeFragment.TAB_CONVERSATIONS)
+                    return
+                }
+                
+                if (mBinding!!.frame.isVisible){
+                    popFragmentImmediate()
+                    return
+                }
+
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        })
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        if (!DeviceUtils.isTablet(this)) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
             }
         }
-        super.onConfigurationChanged(newConfig)
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {
@@ -201,7 +198,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             if (isShowing) dismiss()
             mMigrationDialog = null
         }
-        fContent = null
+        frameContent = null
         mDisposable.dispose()
         mBinding = null
     }
@@ -235,18 +232,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     startConversation(path)
             }
         }
-        val fragmentManager = supportFragmentManager
-        fContent = fragmentManager.findFragmentById(R.id.main_frame)
-        if (fContent == null || Intent.ACTION_SEARCH == action) {
-            if (fContent is SmartListFragment) {
-                (fContent as SmartListFragment).handleIntent(intent)
-            } else {
-                val content = SmartListFragment()
-                fContent = content
-                fragmentManager.beginTransaction()
-                    .replace(R.id.main_frame, content, HOME_TAG)
-                    .commitNow()
-            }
+        if (Intent.ACTION_SEARCH == action) {
+                mHomeFragment!!.handleIntent(intent)
         }
     }
 
@@ -259,30 +246,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             .setMessage(R.string.account_migration_message_dialog)
             .setIcon(R.drawable.baseline_warning_24)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
-                selectNavigationItem(R.id.navigation_settings)
+                goToAccountSettings()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
-    }
-
-    private fun setToolbarState(@StringRes titleRes: Int) {
-        setToolbarState(getString(titleRes), null)
-    }
-
-    private fun setToolbarState(title: String?, subtitle: String?) {
-        mBinding?.mainToolbar?.let { toolbar ->
-            toolbar.logo = null
-            toolbar.title = title
-            toolbar.subtitle = subtitle
-        }
-    }
-
-    private fun showProfileInfo() {
-        mBinding?.apply {
-            spinnerToolbar.visibility = View.VISIBLE
-            mainToolbar.title = null
-            mainToolbar.subtitle = null
-        }
     }
 
     override fun onStart() {
@@ -301,38 +268,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         }
                     }
                 })
-        mDisposable.add(
-            mAccountService.observableAccountList
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ accounts ->
-                    mAccountAdapter?.apply {
-                        clear()
-                        addAll(accounts)
-                        notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            mBinding!!.spinnerToolbar.setSelection(0)
-                        }
-                    } ?: run {
-                        AccountSpinnerAdapter(this@HomeActivity, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
-                            mAccountAdapter = this
-                            setNotifyOnChange(false)
-                            mBinding?.spinnerToolbar?.adapter = this
-                        }
-                    }
-                    if (fContent is SmartListFragment) {
-                        showProfileInfo()
-                    }
-                }) { e -> Log.e(TAG, "Error loading account list !", e) })
-        mDisposable.add(mAccountService
-            .currentAccountSubject
-            .switchMap { obj -> obj.unreadPending }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count -> setBadge(R.id.navigation_requests, count) })
-        mDisposable.add(mAccountService
-            .currentAccountSubject
-            .switchMap { obj -> obj.unreadConversations }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count -> setBadge(R.id.navigation_home, count) })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
             val maxShortcuts = getMaxShareShortcuts()
@@ -364,45 +299,19 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (fConversation == null)
             fConversation =
                 supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
+        if (mHomeFragment == null)
+            mHomeFragment =
+                    supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment
         val newOrientation = resources.configuration.orientation
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation
-            hideTabletToolbar()
-            if (DeviceUtils.isTablet(this)) {
-                selectNavigationItem(R.id.navigation_home)
-                showTabletToolbar()
-            } else {
-                // Remove ConversationFragment that might have been restored after an orientation change
-                if (fConversation != null) {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .remove(fConversation!!)
-                        .commitNow()
-                    fConversation = null
-                }
-            }
-        }
-
-        // Select first conversation in tablet mode
-        if (DeviceUtils.isTablet(this)) {
-            val intent = intent
-            val uri = intent?.data
-            if ((intent == null || uri == null) && fConversation == null) {
-                var smartlist: Observable<List<Observable<ConversationItemViewModel>>>? = null
-                if (fContent is SmartListFragment) smartlist =
-                    mConversationFacade.getSmartList(false) else if (fContent is ContactRequestsFragment) smartlist =
-                    mConversationFacade.pendingList
-                if (smartlist != null) {
-                    mDisposable.add(smartlist
-                        .filter { list -> list.isNotEmpty() }
-                        .map { list -> list[0].firstOrError() }
-                        .firstElement()
-                        .flatMapSingle { e -> e }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe { element ->
-                            startConversation(element.accountId, element.uri)
-                        })
-                }
+            // Remove ConversationFragment that might have been restored after an orientation change
+            if (fConversation != null) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .remove(fConversation!!)
+                    .commitNow()
+                fConversation = null
             }
         }
     }
@@ -410,6 +319,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onStop() {
         super.onStop()
         mDisposable.clear()
+    }
+
+    fun toggleConversationVisibility(show: Boolean) {
+        mBinding!!.conversation.isVisible = show
     }
 
     fun startConversation(conversationId: String) {
@@ -426,31 +339,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun startConversation(path: ConversationPath) {
-        Log.w(TAG, "startConversation $path")
-        if (!DeviceUtils.isTablet(this)) {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    path.toUri(),
-                    this,
-                    ConversationActivity::class.java
-                )
-            )
-        } else {
-            startConversationTablet(path.toBundle())
-        }
-    }
-
-    private fun startConversationTablet(bundle: Bundle?) {
         fConversation = ConversationFragment()
-        fConversation!!.arguments = bundle
-        if (fContent !is ContactRequestsFragment) {
-            selectNavigationItem(R.id.navigation_home)
-        }
-        showTabletToolbar()
+        fConversation!!.arguments = path.toBundle()
+        mBinding!!.panel.openPane()
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.conversation_container,
+                R.id.conversation,
                 fConversation!!,
                 ConversationFragment::class.java.simpleName
             )
@@ -459,267 +353,94 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun presentTrustRequestFragment(accountId: String) {
         mNotificationService.cancelTrustRequestNotification(accountId)
-        if (fContent is ContactRequestsFragment) {
-            (fContent as ContactRequestsFragment).presentForAccount(accountId)
+        mHomeFragment!!.presentForAccount(accountId)
+    }
+
+    fun goToAdvancedSettings() {
+        if (frameContent is SettingsFragment) {
             return
         }
-        val content = ContactRequestsFragment().apply {
-            arguments =
-                Bundle().apply { putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId) }
-        }
-        fContent = content
-        mBinding!!.navigationView.menu.getItem(NAVIGATION_CONTACT_REQUESTS).isChecked = true
-        supportFragmentManager.beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.main_frame, content, CONTACT_REQUESTS_TAG)
-            .addToBackStack(CONTACT_REQUESTS_TAG).commit()
-    }
-
-    override fun onBackPressed() {
-        if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface!!.onBackPressed()) {
-            return
-        }
-        super.onBackPressed()
-        fContent = supportFragmentManager.findFragmentById(R.id.main_frame)
-        if (fContent is SmartListFragment) {
-            mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS).isChecked =
-                true
-            //showProfileInfo();
-            showToolbarSpinner()
-            hideTabletToolbar()
-        }
-    }
-
-    private fun popCustomBackStack() {
-        val fragmentManager = supportFragmentManager
-        val entryCount = fragmentManager.backStackEntryCount
-        for (i in 0 until entryCount) {
-            fragmentManager.popBackStackImmediate()
-        }
-        //fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        hideTabletToolbar()
-        setToolbarElevation(false)
-    }
-
-    fun goToHome() {
-        val item = mBinding!!.navigationView.menu.getItem(NAVIGATION_CONVERSATIONS)
-        onNavigationItemSelected(item)
-        item.isChecked = true
-    }
-
-    fun goToSettings() {
-        if (fContent is SettingsFragment) {
-            return
-        }
-        popCustomBackStack()
-        hideToolbarSpinner()
         val content = SettingsFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, SETTINGS_TAG)
             .addToBackStack(SETTINGS_TAG).commit()
+        mBinding!!.frame.isVisible = true
     }
 
     fun goToAbout() {
-        if (fContent is AboutFragment) {
+        if (frameContent is AboutFragment) {
             return
         }
-        popCustomBackStack()
-        hideToolbarSpinner()
         val content = AboutFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, ABOUT_TAG)
             .addToBackStack(ABOUT_TAG).commit()
+        mBinding!!.frame.isVisible = true
     }
 
     fun goToVideoSettings() {
-        if (fContent is VideoSettingsFragment) {
+        if (frameContent is VideoSettingsFragment) {
             return
         }
         val content = VideoSettingsFragment()
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
+        mBinding!!.frame.isVisible = true
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val account = mAccountService.currentAccount ?: return false
+    fun goToAccountSettings() {
+        val account = mAccountService.currentAccount
         val bundle = Bundle()
-        val itemId = item.itemId
-        if (itemId == R.id.navigation_requests) {
-            if (fContent is ContactRequestsFragment) {
-                (fContent as ContactRequestsFragment).presentForAccount(null)
-                return true
-            }
-            popCustomBackStack()
-            val content = ContactRequestsFragment()
-            fContent = content
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, content, CONTACT_REQUESTS_TAG)
-                .setReorderingAllowed(true)
-                .addToBackStack(CONTACT_REQUESTS_TAG)
-                .commit()
-            //showProfileInfo();
-            showToolbarSpinner()
-        } else if (itemId == R.id.navigation_home) {
-            if (fContent is SmartListFragment) {
-                return true
-            }
-            popCustomBackStack()
-            val fcontent = supportFragmentManager.findFragmentById(R.id.main_frame)
-            if (fcontent is SmartListFragment) {
-                fContent = fcontent
-                return true
-            }
-            val content = SmartListFragment()
-            fContent = content
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, content, HOME_TAG)
-                .setReorderingAllowed(true)
-                .commit()
-            //showProfileInfo();
-            showToolbarSpinner()
-        } else if (itemId == R.id.navigation_settings) {
-            if (account.needsMigration()) {
-                Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
-                val intent = Intent()
-                    .setClass(this, AccountWizardActivity::class.java)
-                    .setData(
-                        android.net.Uri.withAppendedPath(
-                            ContentUriHandler.ACCOUNTS_CONTENT_URI,
-                            account.accountId
-                        )
+        if (account!!.needsMigration()) {
+            Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
+            val intent = Intent()
+                .setClass(this, AccountWizardActivity::class.java)
+                .setData(
+                    android.net.Uri.withAppendedPath(
+                        ContentUriHandler.ACCOUNTS_CONTENT_URI,
+                        account.accountId
                     )
-                startActivityForResult(intent, 1)
-            } else {
-                Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
-                bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
-                if (fContent is AccountEditionFragment) {
-                    return true
-                }
-                popCustomBackStack()
+                )
+            startActivityForResult(intent, 1)
+        } else {
+            Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
+            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
+            if (frameContent !is AccountEditionFragment) {
                 val content = AccountEditionFragment()
                 content.arguments = bundle
-                fContent = content
+                frameContent = content
                 supportFragmentManager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .replace(fragmentContainerId, content, ACCOUNTS_TAG)
                     .addToBackStack(ACCOUNTS_TAG)
                     .commit()
-                showToolbarSpinner()
+                mBinding!!.frame.isVisible = true
             }
-        }
-        return true
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val adapter = mAccountAdapter ?: return
-        val type = adapter.getItemViewType(position)
-        if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-            adapter.getItem(position)?.let { account ->
-                mAccountService.currentAccount = account
-                showAccountStatus(fContent is AccountEditionFragment && !account.isSip)
-            }
-        } else {
-            val intent = Intent(this@HomeActivity, AccountWizardActivity::class.java)
-            startActivity(intent)
-            mBinding!!.spinnerToolbar.setSelection(0)
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    private fun setBadge(menuId: Int, number: Int) {
-        if (number == 0) mBinding!!.navigationView.removeBadge(menuId) else mBinding!!.navigationView.getOrCreateBadge(
-            menuId
-        ).number = number
-    }
-
-    private fun hideTabletToolbar() {
-        mBinding?.let { binding ->
-            binding.tabletToolbar?.let { toolbar ->
-                binding.contactTitle?.text = null
-                binding.contactSubtitle?.text = null
-                binding.contactImage?.setImageDrawable(null)
-                toolbar.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun showTabletToolbar() {
-        if (DeviceUtils.isTablet(this))
-            mBinding?.let { binding ->
-                binding.tabletToolbar?.let { toolbar ->
-                    toolbar.visibility = View.VISIBLE
-                }
-            }
-    }
-
-    fun setTabletTitle(@StringRes titleRes: Int) {
-        mBinding?.let { binding ->
-            binding.tabletToolbar?.let { toolbar ->
-                binding.contactTitle?.setText(titleRes)
-                binding.contactTitle?.textSize = 19f
-                binding.contactTitle?.setTypeface(null, Typeface.BOLD)
-                binding.contactImage?.visibility = View.GONE
-                toolbar.visibility = View.VISIBLE
-            }
-        }
-        /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
-        params.removeRule(RelativeLayout.ALIGN_TOP);
-        params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        binding.contactTitle.setLayoutParams(params);*/
-    }
-
-    fun setToolbarTitle(@StringRes titleRes: Int) {
-        if (DeviceUtils.isTablet(this)) {
-            setTabletTitle(titleRes)
-        } else {
-            setToolbarState(titleRes)
-        }
-    }
-
-    fun showAccountStatus(show: Boolean) {
-        mBinding!!.accountSwitch.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    private fun showToolbarSpinner() {
-        mBinding!!.spinnerToolbar.visibility = View.VISIBLE
-    }
-
-    private fun hideToolbarSpinner() {
-        if (mBinding != null && !DeviceUtils.isTablet(this)) {
-            mBinding!!.spinnerToolbar.visibility = View.GONE
         }
     }
 
     private val fragmentContainerId: Int
-        get() = if (DeviceUtils.isTablet(this@HomeActivity))
-            R.id.conversation_container else R.id.main_frame
-
-    fun setAccountFragmentOnBackPressedListener(backPressedListener: BackHandlerInterface?) {
-        mAccountFragmentBackHandlerInterface = backPressedListener
-    }
+        get() = R.id.frame
 
     /**
      * Changes the current main fragment to a plugins list settings fragment
      */
     fun goToPluginsListSettings(accountId: String? = "") {
-        if (fContent is PluginsListSettingsFragment) {
+        if (frameContent is PluginsListSettingsFragment) {
             return
         }
         val content = PluginsListSettingsFragment.newInstance(accountId)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -732,11 +453,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
      * @param pluginDetails
      */
     fun gotToPluginSettings(pluginDetails: PluginDetails) {
-        if (fContent is PluginSettingsFragment) {
+        if (frameContent is PluginSettingsFragment) {
             return
         }
         val content = PluginSettingsFragment.newInstance(pluginDetails)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -748,11 +469,11 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
      * Changes the current main fragment to a plugin PATH preference fragment
      */
     fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
-        if (fContent is PluginPathPreferenceFragment) {
+        if (frameContent is PluginPathPreferenceFragment) {
             return
         }
         val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
-        fContent = content
+        frameContent = content
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -765,29 +486,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun setToolbarElevation(enable: Boolean) {
-        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
-    }
-
-    fun setToolbarOutlineState(enabled: Boolean) {
-        if (mBinding != null) {
-            if (!enabled) {
-                mBinding!!.appBar.outlineProvider = null
-            } else {
-                mBinding!!.appBar.outlineProvider = mOutlineProvider
-            }
-        }
+//        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
     fun popFragmentImmediate() {
         val fm = supportFragmentManager
         fm.popBackStackImmediate()
-        val entry = fm.getBackStackEntryAt(fm.backStackEntryCount - 1)
-        fContent = fm.findFragmentById(entry.id)
-    }
-
-    fun selectNavigationItem(id: Int) {
-        val binding = mBinding ?: return
-        binding.navigationView.selectedItemId = id
+        if (frameContent !is VideoSettingsFragment && frameContent !is PluginsListSettingsFragment) {
+            mBinding!!.frame.isVisible = false
+        }
+        frameContent = fm.fragments.lastOrNull()
     }
 
     private fun enableAccount(newValue: Boolean) {
@@ -799,9 +507,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         account.isEnabled = newValue
         mAccountService.setAccountEnabled(account.accountId, newValue)
     }
-
-    val switchButton: SwitchButton
-        get() = mBinding!!.accountSwitch
 
     private fun getMaxShareShortcuts() =
         ShortcutManagerCompat.getMaxShortcutCountPerActivity(this).takeIf { it > 0 } ?: 4
@@ -849,11 +554,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
-        private const val NAVIGATION_CONTACT_REQUESTS = 0
-        private const val NAVIGATION_CONVERSATIONS = 1
-        private const val NAVIGATION_ACCOUNT = 2
-        const val HOME_TAG = "Home"
-        const val CONTACT_REQUESTS_TAG = "Trust request"
         const val ACCOUNTS_TAG = "Accounts"
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
@@ -864,5 +564,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         const val PLUGIN_SETTINGS_TAG = "PluginSettings"
         const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
         private const val CONVERSATIONS_CATEGORY = "conversations"
+        private const val TAB_CONVERSATIONS = 0
+        private const val TAB_INVITATIONS = 1
     }
+
 }

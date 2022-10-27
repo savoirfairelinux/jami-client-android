@@ -19,49 +19,53 @@
  */
 package cx.ring.about
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.os.Bundle
-import android.view.View
-import cx.ring.R
-import android.view.Menu
-import android.view.MenuInflater
 import android.content.Intent
 import android.net.Uri
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import java.lang.Exception
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.BuildConfig
-import cx.ring.client.HomeActivity
+import cx.ring.R
 import cx.ring.databinding.FragAboutBinding
 
+
 class AboutFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        setHasOptionsMenu(true)
-        return FragAboutBinding.inflate(inflater, container, false).apply {
-            release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
-            logo.setOnClickListener { openWebsite(getString(R.string.app_website)) }
-            sflLogo.setOnClickListener { openWebsite(getString(R.string.savoirfairelinux_website)) }
-            contributeContainer.setOnClickListener { openWebsite(getString(R.string.ring_contribute_website)) }
-            licenseContainer.setOnClickListener { openWebsite(getString(R.string.gnu_license_website)) }
-            emailReportContainer.setOnClickListener { sendFeedbackEmail() }
-            credits.setOnClickListener { creditsClicked() }
+
+    private var binding: FragAboutBinding? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+         FragAboutBinding.inflate(inflater, container, false).apply {
+             release.text = getString(R.string.app_release, BuildConfig.VERSION_NAME)
+             logo.setOnClickListener { openWebsite(getString(R.string.app_website)) }
+             sflLogo.setOnClickListener { openWebsite(getString(R.string.savoirfairelinux_website)) }
+             contributeContainer.setOnClickListener { openWebsite(getString(R.string.ring_contribute_website)) }
+             licenseContainer.setOnClickListener { openWebsite(getString(R.string.gnu_license_website)) }
+             emailReportContainer.setOnClickListener { sendFeedbackEmail() }
+             credits.setOnClickListener { creditsClicked() }
+             binding = this
         }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding!!.toolbar.setTitle(R.string.menu_item_about)
+        binding!!.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        binding!!.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_about)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.clear()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> activity?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun sendFeedbackEmail() {

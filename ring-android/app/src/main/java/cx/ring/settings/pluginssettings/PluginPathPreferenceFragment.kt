@@ -83,7 +83,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
+//        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
         return FragPluginsPathPreferenceBinding.inflate(inflater, container, false).apply {
             if (pathList.isNotEmpty())
                 pathPreferences.adapter = PathListAdapter(pathList, this@PluginPathPreferenceFragment)
@@ -137,7 +137,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     override fun onResume() {
-        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
+//        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
         super.onResume()
     }
 

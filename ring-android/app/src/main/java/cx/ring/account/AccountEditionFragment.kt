@@ -22,14 +22,15 @@
  */
 package cx.ring.account
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -40,21 +41,34 @@ import cx.ring.fragments.AdvancedAccountFragment
 import cx.ring.fragments.GeneralAccountFragment
 import cx.ring.fragments.MediaPreferenceFragment
 import cx.ring.fragments.SecurityAccountFragment
-import cx.ring.interfaces.BackHandlerInterface
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
-import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
 import net.jami.account.AccountEditionView
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
-    BackHandlerInterface, AccountEditionView, OnScrollChangedListener {
+    AccountEditionView, OnScrollChangedListener {
     private var mBinding: FragAccountSettingsBinding? = null
     private var mIsVisible = false
     private var mAccountId: String? = null
     private var mAccountIsJami = false
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            mIsVisible = false
+            if (mBinding!!.fragmentContainer.visibility != View.VISIBLE) {
+                toggleView(mAccountId, mAccountIsJami)
+                return
+            }
+            val summaryFragment = childFragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG) as JamiAccountSummaryFragment?
+            if (!childFragmentManager.popBackStackImmediate()) {
+                isEnabled = false
+                requireActivity().onBackPressed()
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountSettingsBinding.inflate(inflater, container, false).apply { mBinding = this }.root
@@ -68,12 +82,20 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
-        val activity = activity as HomeActivity?
-        if (activity != null && DeviceUtils.isTablet(activity)) {
-            activity.setTabletTitle(R.string.navigation_item_account)
+        mBinding!!.toolbar.setTitle(R.string.menu_item_account_settings)
+        mBinding!!.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        mBinding!!.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
         }
         mBinding!!.fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this)
         presenter.init(mAccountId!!)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> activity?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun displaySummary(accountId: String) {
@@ -136,26 +158,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun onResume() {
         super.onResume()
         presenter.bindView(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setBackListenerEnabled(false)
-    }
-
-    override fun onBackPressed(): Boolean {
-        if (mBinding == null) return false
-        mIsVisible = false
-        if (activity is HomeActivity) (activity as HomeActivity).setToolbarOutlineState(true)
-        if (mBinding!!.fragmentContainer.visibility != View.VISIBLE) {
-            toggleView(mAccountId, mAccountIsJami)
-            return true
-        }
-        val summaryFragment = childFragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG) as JamiAccountSummaryFragment?
-        return if (summaryFragment != null && summaryFragment.onBackPressed())
-            true
-        else
-            childFragmentManager.popBackStackImmediate()
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     private fun toggleView(accountId: String?, isJami: Boolean) {
@@ -166,17 +169,10 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
             pager.visibility = if (isJami) View.GONE else View.VISIBLE
             fragmentContainer.visibility = if (isJami) View.VISIBLE else View.GONE
         }
-        setBackListenerEnabled(isJami)
     }
 
     override fun exit() {
         activity?.onBackPressed()
-    }
-
-    private fun setBackListenerEnabled(enable: Boolean) {
-        val activity: Activity? = activity
-        if (activity is HomeActivity)
-            activity.setAccountFragmentOnBackPressedListener(if (enable) this else null)
     }
 
     private class PreferencesPagerAdapter constructor(
@@ -258,12 +254,12 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         val homeActivity = activity as HomeActivity
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
             binding.slidingTabs.elevation = binding.slidingTabs.resources.getDimension(R.dimen.toolbar_elevation)
-            homeActivity.setToolbarElevation(true)
-            homeActivity.setToolbarOutlineState(false)
+//            homeActivity.setToolbarElevation(true)
+//            homeActivity.setToolbarOutlineState(false)
         } else {
             binding.slidingTabs.elevation = 0f
-            homeActivity.setToolbarElevation(false)
-            homeActivity.setToolbarOutlineState(true)
+//            homeActivity.setToolbarElevation(false)
+//            homeActivity.setToolbarOutlineState(true)
         }
     }
 
