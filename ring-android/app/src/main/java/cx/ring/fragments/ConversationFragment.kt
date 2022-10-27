@@ -175,7 +175,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
         Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show()
     }
-
+    var startBottom = 0f
+    var endBottom = 0f
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = resources
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
@@ -188,9 +189,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
-            val layout: View = binding.conversationLayout
+            val layout: View = activity!!.findViewById<ViewGroup>(android.R.id.content).getRootView()
 
             (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+            val layoutToAnimate = binding.conversationLayout
 
 //            if (Build.VERSION.SDK_INT >= 30) {
 //                ViewCompat.setWindowInsetsAnimationCallback(
@@ -198,22 +200,48 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 //                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
 //                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
 //                            animating++
+//                            startBottom = layoutToAnimate.bottom.toFloat()
+//                            Log.w(TAG, "WindowInsetsAnimationCompat onPrepare ${animation} $startBottom")
+//
 //                        }
+//                        override fun onStart(
+//                            animation: WindowInsetsAnimationCompat,
+//                            bounds: WindowInsetsAnimationCompat.BoundsCompat
+//                        ): WindowInsetsAnimationCompat.BoundsCompat {
+//                            // Record the position of the view after the IME transition.
+//                            endBottom = layoutToAnimate.bottom.toFloat()
+//                            Log.w(TAG, "WindowInsetsAnimationCompat onStart ${animation} ${bounds.toBounds()} $startBottom $endBottom")
+//                            return bounds
+//                        }
+//
 //                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
-//                            layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+//                            /*layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+//                            return insets*/
+//                            // Find an IME animation.
+//                            val imeAnimation = runningAnimations.find {
+//                                it.typeMask and WindowInsetsCompat.Type.ime() != 0
+//                            } ?: return insets
+//                            Log.w(TAG, "WindowInsetsAnimationCompat onProgress ${imeAnimation.interpolatedFraction}")
+//
+//                            // Offset the view based on the interpolated fraction of the IME animation.
+//                            layoutToAnimate.updatePadding(bottom = ((endBottom - startBottom) * (1 - imeAnimation.interpolatedFraction)).toInt())
+//
 //                            return insets
 //                        }
 //
 //                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
+//                            Log.w(TAG, "WindowInsetsAnimationCompat onEnd ${animation}")
 //                            animating--
+//                            //endBottom = view.bottom.toFloat()
+//                            //return bounds
 //                        }
 //                    })
 //            }
-            ViewCompat.setOnApplyWindowInsetsListener(layout) { _, insets: WindowInsetsCompat ->
+            /*ViewCompat.setOnApplyWindowInsetsListener(layout) { _, insets: WindowInsetsCompat ->
                 if (animating == 0)
                     layout.updatePadding(bottom = insets.systemWindowInsetBottom)
                 WindowInsetsCompat.CONSUMED
-            }
+            }*/
             binding.ongoingcallPane.visibility = View.GONE
             ViewCompat.setOnReceiveContentListener(binding.msgInputTxt, SUPPORTED_MIME_TYPES) { _, contentInfo ->
                 for (i in 0 until contentInfo.clip.itemCount) {

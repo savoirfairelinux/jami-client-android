@@ -30,6 +30,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
@@ -82,9 +83,20 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
-        (this.activity as HomeActivity?)?.setToolbarTitle(R.string.menu_item_account_settings)
+        mBinding!!.toolbar.setTitle(R.string.menu_item_account_settings)
+        mBinding!!.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        mBinding!!.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
         mBinding!!.fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this)
         presenter.init(mAccountId!!)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> activity?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun displaySummary(accountId: String) {

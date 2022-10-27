@@ -26,37 +26,36 @@ along with this program; if not, write to the Free Software
     tools:context=".client.HomeActivity"
     android:animateLayoutChanges="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="4dp"
-        android:elevation="4dp"
-        android:fitsSystemWindows="true">
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/app_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:elevation="4dp"-->
+<!--        android:elevation="4dp"-->
+<!--        android:fitsSystemWindows="true">-->
 
-        <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize">-->
 
-        <Spinner
-            android:id="@+id/spinner_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:dropDownWidth="260dp"
-            android:paddingStart="-60dp"
-            tools:listitem="@layout/item_toolbar_selected" />
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner_toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:dropDownWidth="260dp"-->
+<!--            android:paddingStart="-60dp"-->
+<!--            tools:listitem="@layout/item_toolbar_selected" />-->
 
-    </com.google.android.material.appbar.MaterialToolbar>
+<!--    </com.google.android.material.appbar.MaterialToolbar>-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
     <LinearLayout
         android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_bar"
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView

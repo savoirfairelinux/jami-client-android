@@ -67,14 +67,14 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>(),
-    SearchView.OnQueryTextListener, SmartListListeners, ConversationActionCallback, SmartListView {
+    SmartListListeners, ConversationActionCallback, SmartListView {
     private var mSmartListAdapter: SmartListAdapter? = null
     private var mSearchView: SearchView? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mDialpadMenuItem: MenuItem? = null
     private var binding: FragSmartlistBinding? = null
-    private var mAccountAdapter: AccountSpinnerAdapter? = null
-    private val mDisposable = CompositeDisposable()
+//    private var mAccountAdapter: AccountSpinnerAdapter? = null
+//    private val mDisposable = CompositeDisposable()
 
     @Inject
     lateinit
@@ -84,73 +84,73 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     lateinit
     var mConversationFacade: ConversationFacade
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.smartlist_menu, menu)
-        val searchMenuItem = menu.findItem(R.id.menu_contact_search)
-        val dialpadMenuItem = menu.findItem(R.id.menu_contact_dial)
-        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                dialpadMenuItem.isVisible = false
-                binding!!.newconvFab.show()
-                setOverflowMenuVisible(menu, true)
-                binding!!.qrCode.visibility = View.GONE
-                binding!!.newGroup.visibility = View.GONE
-                return true
-            }
-
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                dialpadMenuItem.isVisible = true
-                binding!!.newconvFab.hide()
-                setOverflowMenuVisible(menu, false)
-                binding!!.qrCode.visibility = View.VISIBLE
-                binding!!.newGroup.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
-                return true
-            }
-        })
-        val searchView = searchMenuItem.actionView as SearchView
-        searchView.setOnQueryTextListener(this)
-        searchView.queryHint = getString(R.string.searchbar_hint)
-        searchView.layoutParams = Toolbar.LayoutParams(
-            Toolbar.LayoutParams.WRAP_CONTENT,
-            Toolbar.LayoutParams.MATCH_PARENT
-        )
-        searchView.imeOptions = EditorInfo.IME_ACTION_GO
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            searchView.findViewById<EditText>(R.id.search_src_text)
-                ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
-        }
-        mSearchMenuItem = searchMenuItem
-        mDialpadMenuItem = dialpadMenuItem
-        mSearchView = searchView
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        menu.clear()
+//        inflater.inflate(R.menu.smartlist_menu, menu)
+//        val searchMenuItem = menu.findItem(R.id.menu_contact_search)
+//        val dialpadMenuItem = menu.findItem(R.id.menu_contact_dial)
+//        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+//            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+//                dialpadMenuItem.isVisible = false
+//                binding!!.newconvFab.show()
+//                setOverflowMenuVisible(menu, true)
+//                binding!!.qrCode.visibility = View.GONE
+//                binding!!.newGroup.visibility = View.GONE
+//                return true
+//            }
+//
+//            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+//                dialpadMenuItem.isVisible = true
+//                binding!!.newconvFab.hide()
+//                setOverflowMenuVisible(menu, false)
+//                binding!!.qrCode.visibility = View.VISIBLE
+//                binding!!.newGroup.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
+//                return true
+//            }
+//        })
+//        val searchView = searchMenuItem.actionView as SearchView
+//        searchView.setOnQueryTextListener(this)
+//        searchView.queryHint = getString(R.string.searchbar_hint)
+//        searchView.layoutParams = Toolbar.LayoutParams(
+//            Toolbar.LayoutParams.WRAP_CONTENT,
+//            Toolbar.LayoutParams.MATCH_PARENT
+//        )
+//        searchView.imeOptions = EditorInfo.IME_ACTION_GO
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            searchView.findViewById<EditText>(R.id.search_src_text)
+//                ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
+//        }
+//        mSearchMenuItem = searchMenuItem
+//        mDialpadMenuItem = dialpadMenuItem
+//        mSearchView = searchView
+//    }
 
     override fun onStart() {
         super.onStart()
         activity?.intent?.let { handleIntent(it) }
 
-        mDisposable.add(
-            mAccountService.observableAccountList
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ accounts ->
-                    mAccountAdapter?.apply {
-                        clear()
-                        addAll(accounts)
-                        notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            binding!!.spinnerToolbar.setSelection(0)
-                        }
-                    } ?: run {
-                        AccountSpinnerAdapter(activity!!, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
-                            mAccountAdapter = this
-                            setNotifyOnChange(false)
-                            binding?.spinnerToolbar?.adapter = this
-                        }
-                    }
-//                    if (pagerContent is SmartListFragment) {
-//                        showProfileInfo()
+//        mDisposable.add(
+//            mAccountService.observableAccountList
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ accounts ->
+//                    mAccountAdapter?.apply {
+//                        clear()
+//                        addAll(accounts)
+//                        notifyDataSetChanged()
+//                        if (accounts.isNotEmpty()) {
+//                            binding!!.spinnerToolbar.setSelection(0)
+//                        }
+//                    } ?: run {
+//                        AccountSpinnerAdapter(activity!!, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
+//                            mAccountAdapter = this
+//                            setNotifyOnChange(false)
+//                            binding?.spinnerToolbar?.adapter = this
+//                        }
 //                    }
-                }) { e -> Log.e(HomeActivity.TAG, "Error loading account list !", e) })
+////                    if (pagerContent is SmartListFragment) {
+////                        showProfileInfo()
+////                    }
+//                }) { e -> Log.e(HomeActivity.TAG, "Error loading account list !", e) })
     }
 
     fun handleIntent(intent: Intent) {
@@ -172,79 +172,79 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_contact_search -> {
-                mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
-                return false
-            }
-            R.id.menu_contact_dial -> {
-                val searchView = mSearchView ?: return false
-                if (searchView.inputType == EditorInfo.TYPE_CLASS_PHONE) {
-                    searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
-                    mDialpadMenuItem?.setIcon(R.drawable.baseline_dialpad_24)
-                } else {
-                    searchView.inputType = EditorInfo.TYPE_CLASS_PHONE
-                    mDialpadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
-                }
-                return true
-            }
-            R.id.menu_account_settings -> {
-                (requireActivity() as HomeActivity).goToAccountSettings()
-                return true
-            }
-            R.id.menu_advanced_settings -> {
-                (requireActivity() as HomeActivity).goToAdvancedSettings()
-                return true
-            }
-            R.id.menu_about -> {
-                (requireActivity() as HomeActivity).goToAbout()
-                return true
-            }
-            else -> return false
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.menu_contact_search -> {
+//                mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
+//                return false
+//            }
+//            R.id.menu_contact_dial -> {
+//                val searchView = mSearchView ?: return false
+//                if (searchView.inputType == EditorInfo.TYPE_CLASS_PHONE) {
+//                    searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
+//                    mDialpadMenuItem?.setIcon(R.drawable.baseline_dialpad_24)
+//                } else {
+//                    searchView.inputType = EditorInfo.TYPE_CLASS_PHONE
+//                    mDialpadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
+//                }
+//                return true
+//            }
+//            R.id.menu_account_settings -> {
+//                (requireActivity() as HomeActivity).goToAccountSettings()
+//                return true
+//            }
+//            R.id.menu_advanced_settings -> {
+//                (requireActivity() as HomeActivity).goToAdvancedSettings()
+//                return true
+//            }
+//            R.id.menu_about -> {
+//                (requireActivity() as HomeActivity).goToAbout()
+//                return true
+//            }
+//            else -> return false
+//        }
+//    }
 
-    override fun onQueryTextSubmit(query: String): Boolean {
-        // presenter.newContactClicked();
-        return true
-    }
+//    override fun onQueryTextSubmit(query: String): Boolean {
+//        // presenter.newContactClicked();
+//        return true
+//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         binding?.apply { outState.putBoolean(STATE_LOADING, loadingIndicator.isShown) }
         super.onSaveInstanceState(outState)
     }
 
-    override fun onQueryTextChange(query: String): Boolean {
-        presenter.queryTextChanged(query)
-        return true
-    }
+//    override fun onQueryTextChange(query: String): Boolean {
+//        presenter.queryTextChanged(query)
+//        return true
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
         return FragSmartlistBinding.inflate(inflater, container, false).apply {
             qrCode.setOnClickListener { presenter.clickQRSearch() }
             newGroup.setOnClickListener{ presenter.clickNewGroup() }
             newconvFab.setOnClickListener { presenter.fabButtonClicked() }
-            (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-            spinnerToolbar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val adapter = mAccountAdapter ?: return
-                    val type = adapter.getItemViewType(position)
-                    if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-                        adapter.getItem(position)?.let { account ->
-                            mAccountService.currentAccount = account
-//                showAccountStatus(frameContent is AccountEditionFragment && !account.isSip)
-                        }
-                    } else {
-                        val intent = Intent(activity, AccountWizardActivity::class.java)
-                        startActivity(intent)
-                        binding!!.spinnerToolbar.setSelection(0)
-                    }
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>?) {}
-            }
+//            (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+//            spinnerToolbar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    val adapter = mAccountAdapter ?: return
+//                    val type = adapter.getItemViewType(position)
+//                    if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
+//                        adapter.getItem(position)?.let { account ->
+//                            mAccountService.currentAccount = account
+////                showAccountStatus(frameContent is AccountEditionFragment && !account.isSip)
+//                        }
+//                    } else {
+//                        val intent = Intent(activity, AccountWizardActivity::class.java)
+//                        startActivity(intent)
+//                        binding!!.spinnerToolbar.setSelection(0)
+//                    }
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>?) {}
+//            }
             confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP)
