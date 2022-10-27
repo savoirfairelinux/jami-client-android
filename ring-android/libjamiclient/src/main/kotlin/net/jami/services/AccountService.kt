@@ -514,7 +514,7 @@ class AccountService(
     fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?) {
         mExecutor.execute {
             Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo")
-            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "")
+            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", 0)
         }
     }
     /**
