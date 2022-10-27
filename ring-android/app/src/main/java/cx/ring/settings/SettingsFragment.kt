@@ -130,7 +130,11 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         }
         // loading preferences
         presenter.loadSettings()
-        (activity as HomeActivity?)?.setToolbarTitle(R.string.menu_item_advanced_settings)
+        binding!!.toolbar.setTitle(R.string.menu_item_advanced_settings)
+        binding!!.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+        binding!!.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     private fun saveSettings(binding: FragSettingsBinding) {

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+                                                                    
+Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or   
+(at your option) any later version.                                 
+                                                                    
+This program is distributed in the hope that it will be useful,     
+but WITHOUT ANY WARRANTY; without even the implied warranty of      
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
+GNU General Public License for more details.                        
+                                                                    
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software         
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".client.HomeActivity"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <Spinner
+            android:id="@+id/spinner_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:dropDownWidth="260dp"
+            android:paddingStart="-60dp"
+            tools:listitem="@layout/item_toolbar_selected" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/qr_code"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/button_corner_radius"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTint="@color/colorPrimary"
+                android:text="@string/qr_code"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/new_group"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/button_corner_radius"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:drawableStartCompat="@drawable/baseline_group_add_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/colorPrimary"
+                android:text="Add group"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorSecondary"
+            app:tabSelectedTextColor="@color/colorOnSurface"
+            app:tabTextColor="@color/textColorSecondary"
+            android:background="@null"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_item_conversation"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_item_contact_request"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>

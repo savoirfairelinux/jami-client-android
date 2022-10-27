@@ -122,7 +122,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
                 val act = requireActivity() as HomeActivity
-                act.goToHome()
                 act.goToAdvancedSettings()
                 act.goToPluginsListSettings()
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))

@@ -128,18 +128,6 @@ class SmartListPresenter @Inject constructor(
         conversationFacade.banConversation(conversation.accountId, conversation.uri)
     }
 
-    fun clickQRSearch() {
-        view?.goToQRFragment()
-    }
-
-    fun clickNewGroup() {
-        view?.startNewGroup()
-    }
-
-    fun isAddGroupEnabled(): Boolean {
-        return preferencesService.settings.enableAddGroup
-    }
-
     companion object {
         private val TAG = SmartListPresenter::class.simpleName!!
     }
