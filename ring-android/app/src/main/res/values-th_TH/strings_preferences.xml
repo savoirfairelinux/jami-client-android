@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_block_record_summary">บล็อกการจับภาพหน้าจอหรือบันทึกวิดีโอ</string>
+  <string name="pref_link_preview_title">แสดงตัวอย่างลิงก์ในการสนทนา</string>
+  <string name="pref_link_preview_summary">การแสดงตัวอย่างจำเป็นต้องดาวน์โหลดเนื้อหาจากเซิร์ฟเวอร์บุคคลที่สาม</string>
+  <!--Notifications Visibility-->
+  <string name="notification_public">สาธารณะ \n(แสดงการแจ้งเตือนและเนื้อหาบนหน้าจอล็อก)\n</string>
+  <string name="notification_private">ส่วนตัว \n(แสดงการแจ้งเตือนแต่ซ่อนเนื้อหาในหน้าจอล็อก)\n</string>
+  <string name="notification_secret">ความลับ \n(ไม่แสดงการแจ้งเตือนบนหน้าจอล็อก)</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">ปลั๊กอิน</string>
+  <string name="pref_plugins_summary">เปิดใช้งานปลั๊กอินและตั้งค่าพารามิเตอร์</string>
+  <string name="fab_plugins_add">เพิ่มปลั๊กอินใหม่</string>
+  <string name="plugin_uninstall_title">ถอนการติดตั้งปลั๊กอินไหม</string>
+  <string name="plugin_reset_preferences">รีเซ็ตการตั้งค่าปลั๊กอิน</string>
+  <string name="plugin_reset_preferences_summary">การตั้งค่าปลั๊กอินของคุณจะเป็นค่าเริ่มต้น</string>
+  <string name="plugin_reset_preferences_ask">คุณต้องการรีเซ็ตการตั้งค่าปลั๊กอินทั่วไปหรือไม่</string>
+  <string name="plugin_reset_account_preferences_ask">คุณต้องการรีเซ็ตการตั้งค่าปลั๊กอินของบัญชีหรือไม่</string>
+  <string name="plugin_successfully_installed">ติดตั้งปลั๊กอิน<b>%1$s</b>สำเร็จแล้ว</string>
+</resources>

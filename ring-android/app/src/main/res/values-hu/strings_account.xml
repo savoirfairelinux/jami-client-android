@@ -224,7 +224,7 @@
   <string name="account_status_error">Hiba</string>
   <!--Create account-->
   <string name="account_creation_home">Üdvözli a Jami</string>
-  <string name="account_creation_profile">Saját profil létrehozása</string>
+  <string name="account_creation_profile">Saját névjegy létrehozása</string>
   <string name="account_creation_ring">Jami-fiók létrehozása</string>
   <string name="account_link_title">Eszköz hozzákapcsolása</string>
   <string name="account_sip_cannot_be_registered">A fiók nem regisztrálható</string>

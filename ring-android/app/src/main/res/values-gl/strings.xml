@@ -126,6 +126,7 @@
   <string name="message_failed">Fallou</string>
   <string name="time_just_now">Xusto agora</string>
   <string name="send_file">Enviar ficheiro</string>
+  <string name="select_media">Abrir galería</string>
   <string name="hist_file_sent">Ficheiro enviado</string>
   <string name="hist_file_received">Ficheiro recibido</string>
   <string name="conversation_send_audio">Gravar clip de audio</string>
@@ -186,6 +187,11 @@
   <string name="conversation_type_contact">Contacto Jami</string>
   <string name="conversation_type_private">Swarm privado</string>
   <string name="conversation_type_group">Swarm en grupo</string>
+  <string name="conversation_contact_invited">Convidouse a %1$s</string>
+  <string name="conversation_contact_added">%1$s uníuse</string>
+  <string name="conversation_contact_left">%1$s saíu</string>
+  <string name="conversation_contact_banned">Vetouse a %1$s</string>
+  <string name="conversation_search_hint">Buscar conversa</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Engadir %1$s?</string>
   <string name="prompt_new_password">Novo contrasinal</string>
@@ -335,4 +341,8 @@
   <string name="bottomSheet_mute_microphone_btn">Micro</string>
   <string name="bottomSheet_sound_output_btn">Sons</string>
   <string name="bottomSheet_raiseHand_btn">Ergue a man</string>
+  <string name="open_account_plugin_settings">Axustes do complemento Open Account</string>
+  <string name="open_general_plugin_settings">Axustes do complemento Open General</string>
+  <string name="uninstall">Desinstalar</string>
+  <string name="reset">Restablecer</string>
 </resources>

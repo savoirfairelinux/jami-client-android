@@ -192,6 +192,7 @@
   <string name="conversation_contact_added">%1$s si è unito</string>
   <string name="conversation_contact_left">%1$s è uscito</string>
   <string name="conversation_contact_banned">%1$s è stato bloccato</string>
+  <string name="conversation_search_hint">Cerca conversazione</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s?</string>
   <string name="prompt_new_password">Nuova password</string>

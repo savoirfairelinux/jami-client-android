@@ -192,6 +192,7 @@
   <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
+  <string name="conversation_search_hint">Rechercher des conversations</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>

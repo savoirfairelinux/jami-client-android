@@ -191,6 +191,7 @@
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
   <string name="conversation_contact_banned">%1$s letiltva lett</string>
+  <string name="conversation_search_hint">Beszélgetés keresése</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
@@ -212,9 +213,9 @@
   <string name="hist_contact_banned">Kapcsolat letiltva</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
   <!--Account Summary-->
-  <string name="profile">Profil</string>
-  <string name="profile_name">Profilnév</string>
-  <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
+  <string name="profile">Névjegy</string>
+  <string name="profile_name">Névjegynév</string>
+  <string name="profile_message_warning">A névjegyed csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fénykép készítése</string>
   <string name="profile_name_hint">Név megadása</string>
@@ -324,8 +325,8 @@
   <string name="wizard_password_skip">Fiók létrehozása</string>
   <string name="wizard_password_switch">Fiók titkosítása jelszóval</string>
   <string name="wizard_password_warning">Vegye figyelembe, hogy a jelszó nem lehet helyreállított</string>
-  <string name="wizard_profile_info">Profil megosztva csak a névjegyekkel</string>
-  <string name="wizard_profile_button">Profil mentése</string>
+  <string name="wizard_profile_info">Névjegy megosztva csak a névjegyekkel</string>
+  <string name="wizard_profile_button">Névjegy mentése</string>
   <string name="wizard_profile_skip">Későbbre halasztás</string>
   <string name="fab_path_choose">Más fájl kiválasztása</string>
   <string name="chat_plugins">Csevegési beépülő modulok</string>

@@ -4,7 +4,7 @@
   <string name="feedback_section">Відгук</string>
   <string name="report"><u>Відправте нам листа</u></string>
   <string name="section_license">Ліцензія</string>
-  <string name="sponsor_section">Джамі — це вільне програмне забезпечення, яке розроблене й підтримується</string>
+  <string name="sponsor_section">Jami — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
@@ -13,12 +13,15 @@
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
-  <string name="description">Джамі — це вільне програмне забезпечення для будь-якого зв\'язку з повагою до свобод і приватності користувачів.</string>
+  <string name="description">Jami — це вільне програмне забезпечення для будь-якого звʼязку з повагою до свобод і приватності користувачів.</string>
   <string name="credits">Подяки</string>
   <string name="pip_title">Конференція Jami</string>
+  <string name="call_service_description">Ця послуга необхідна для того, щоб ваші дзвінки залишалися на передньому плані. Вона працює тільки під час дзвінків.</string>
+  <string name="data_transfer_service_description">Ця послуга необхідна для відображення постійних сповіщень під час передачі файлів. Вона працює лише під час передачі файлів.</string>
   <!--About dialog-->
   <string name="developed_by">Розроблено</string>
   <string name="designed_by">Спроектовано</string>
+  <string name="ringtones_by">Рингтони від</string>
   <!--RingActivity-->
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
   <string name="error_account_offline">Обліковий запис поза мережею</string>
@@ -57,6 +60,7 @@
   <string name="notif_outgoing_call_title">Вихідний виклик до %1$s</string>
   <string name="notif_outgoing_call">Вихідний виклик</string>
   <string name="notif_current_call">Вихідний виклик</string>
+  <string name="notif_channel_call_in_progress">Дзвінок у процесі</string>
   <string name="notif_channel_calls">Дзвінки</string>
   <string name="notif_channel_missed_calls">Пропущені виклики</string>
   <string name="notif_channel_incoming_calls">Вхідні звінки</string>
@@ -67,7 +71,7 @@
   <string name="notif_channel_background_service">Фоновий сервіс</string>
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
   <string name="notif_group_calls">Дзвінки</string>
-  <string name="notif_background_service">Джамі зараз працює поза екраном</string>
+  <string name="notif_background_service">Jami зараз працює фоново</string>
   <string name="notif_mark_as_read">Позначити прочитаним</string>
   <string name="notif_dismiss">Відхилити</string>
   <string name="notif_reply">Відповісти</string>
@@ -77,6 +81,8 @@
   <string name="notif_sync_title">Синхронізація даних в процесі...</string>
   <string name="notif_location_remaining">Залишилось %1$d хвилин</string>
   <string name="notif_location_action_stop">Зупинити обмін геоданними</string>
+  <string name="location_share_action_start">Розпочати поширення</string>
+  <string name="location_share_action_stop">Зупинити поширення</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Зупинити</string>
@@ -86,7 +92,7 @@
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="start_error_title">Неможливо запустити Jami!</string>
-  <string name="start_error_mic_required">Для роботи Джамі потрібен доступ до мікрофону.</string>
+  <string name="start_error_mic_required">Для роботи Jami потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
   <string name="action_call_end_accept">Завершити дзвінок та відповісти</string>
   <string name="action_call_decline">Відхилити</string>
@@ -103,6 +109,7 @@
   <string name="scan_qr">Сканування QR коду</string>
   <string name="qr_code">QR код</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
+  <string name="ab_action_hidepreview">Сховати передогляд</string>
   <!--Text messages-->
   <string name="send_message">Відправити повідомлення</string>
   <string name="message_sending"> Повідомлення надсилається...</string>
@@ -125,9 +132,9 @@
   <string name="ringtone_custom_prompt">Встановити власний рингтон</string>
   <string name="ringtone_custom_label">Кастомізація</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Для цього Джамі потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
+  <string name="permission_dialog_read_contacts_message">Для цього Jami потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Для цього Джамі потрібні права «Читати журнал дзвінків». Будь ласка, надайте їх.</string>
+  <string name="permission_dialog_write_call_log_message">Для цього Jami потрібні права «Читати журнал дзвінків». Будь ласка, надайте їх.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Проскануйте QR-код облікового запису, який ви хочете додати.</string>
   <string name="title_activity_qrcode">Поділитися моїм обліковим записом</string>
@@ -160,6 +167,11 @@
   <string name="block_contact_dialog_message">%1$s не зможе зв\'язатися з вами, поки ви його не розблокуєте.</string>
   <string name="block_contact_completed">%1$s заблоковано.</string>
   <string name="conversation_info_contact_you">Ви</string>
+  <string name="conversation_members">Учасники</string>
+  <string name="conversation_syncing">Завантаження розмови з вузла</string>
+  <string name="conversation_preference_color">Колір розмови</string>
+  <string name="conversation_type_contact">Контакт Jami</string>
+  <string name="conversation_search_hint">Пошук розмов</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
   <string name="prompt_new_password">Новий пароль</string>
@@ -168,12 +180,15 @@
   <string name="account_create_title">Створити обліковий запис Jami</string>
   <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
   <string name="prompt_hint_username">Ім’я</string>
-  <string name="help_password_choose">Оберіть сильний пароль, який ви запам\'ятаєте, щоб захистити ваш обліковий запис Джамі.</string>
-  <string name="help_pin_enter">Введіть PIN-код з іншого налаштованого облікового запису Джамі. Скористайтеся можливістю «Вивантажити обліковий запис Джамі», щоб отримати PIN-код.</string>
+  <string name="help_password_choose">Оберіть сильний пароль, який ви запамʼятаєте, щоб захистити свій обліковий запис Jami.</string>
+  <string name="help_password_enter">Уведіть свій основний пароль для облікового запису Jami.</string>
+  <string name="help_pin_enter">Уведіть PIN-код з іншого налаштованого облікового запису Jami. Скористайтеся можливістю «Вивантажити обліковий запис Jami», щоб отримати PIN-код.</string>
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустити</string>
+  <string name="hist_contact_invited">Контакт запрошено</string>
   <string name="hist_contact_added">Контакт додано</string>
+  <string name="hist_contact_banned">Контакт забанено</string>
   <string name="hist_invitation_received">Отримано запрошення</string>
   <!--Account Summary-->
   <string name="profile">Профіль</string>
@@ -228,8 +243,13 @@
   <string name="file_transfer_status_unsupported">не підтримується</string>
   <string name="file_transfer_status_finished">завершено</string>
   <string name="file_transfer_status_cancelled">скасовано</string>
+  <string name="file_transfer_status_error">не вдалося через помилку</string>
+  <string name="file_transfer_status_timed_out">час вичерпано</string>
+  <string name="file_saved_in">Файл збережено у %s</string>
+  <string name="file_saved_successfully">Файл успішно збережено</string>
   <string name="file_download">Завантажити</string>
   <string name="no_space_left_on_device">На пристрої не залишилося вільного місця </string>
+  <string name="title_media_viewer">Медіа переглядач</string>
   <string name="menu_file_open">Відкрити файл</string>
   <string name="menu_file_download">Завантажити файл</string>
   <string name="menu_file_save">Зберегти файл</string>
@@ -246,6 +266,7 @@
   <string name="navigation_item_conversation">Групові чати</string>
   <string name="navigation_item_contact_request">Запити контактів</string>
   <string name="navigation_item_account">Обліковий запис</string>
+  <string name="search_results_public_directory">Публічний каталог</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Відправити аудіо повідомлення?</string>
   <string name="tv_send_image_dialog_message">Відправити картинку?</string>
@@ -264,6 +285,7 @@
   <string name="wizard_status_recommended">Рекомендовано</string>
   <string name="wizard_status_optional">За бажанням</string>
   <string name="wizard_status_required">Обов\'язково</string>
+  <string name="wizard_username_info">Оберіть імʼя користувача для свого облікового запису</string>
   <string name="wizard_username_button">Введіть ім\'я користувача</string>
   <string name="wizard_username_skip">Обрати ім\'я користувача пізніше</string>
   <string name="wizard_password_info">Пароль від облікового запису</string>
