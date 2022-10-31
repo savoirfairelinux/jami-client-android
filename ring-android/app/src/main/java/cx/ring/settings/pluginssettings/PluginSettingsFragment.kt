@@ -83,9 +83,9 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
 
     private fun createHeadPreference(): Preference {
         val preference = PluginPreferences(requireContext(), pluginDetails, accountId)
-        var message = run {
+        val message = run {
             var value = R.string.plugin_reset_preferences_ask
-            if (!accountId!!.isEmpty()) {
+            if (accountId!!.isNotEmpty()) {
                 value = R.string.plugin_reset_account_preferences_ask
             }
             value
@@ -96,7 +96,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
                     JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
-                    (requireActivity() as HomeActivity).popFragmentImmediate()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
                 .show()
@@ -108,7 +108,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
                     pluginDetails!!.isEnabled = false
                     JamiService.uninstallPlugin(pluginDetails!!.rootPath)
-                    (requireActivity() as HomeActivity).popFragmentImmediate()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
@@ -122,7 +122,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
                 val act = requireActivity() as HomeActivity
-                act.goToHome()
                 act.goToAdvancedSettings()
                 act.goToPluginsListSettings()
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))

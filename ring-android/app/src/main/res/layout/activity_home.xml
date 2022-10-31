@@ -3,6 +3,7 @@ Copyright (C) 2004-2016 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,78 +20,37 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false"
+    tools:context=".client.HomeActivity">
 
     <androidx.slidingpanelayout.widget.SlidingPaneLayout
-            android:id="@+id/panel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/home_fragment"
+            android:name="cx.ring.fragments.HomeFragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabIndicatorColor="@color/colorSecondary"
-                    app:tabSelectedTextColor="@color/colorOnSurface"
-                    app:tabTextColor="@color/textColorSecondary"
-                    android:background="@null"
-                    android:visibility="gone">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/conversation"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/navigation_item_conversation"/>
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/navigation_item_contact_request"/>
-
-                </com.google.android.material.tabs.TabLayout>
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </LinearLayout>
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/conversation"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:name="cx.ring.fragments.ConversationFragment"/>
-
-        </androidx.slidingpanelayout.widget.SlidingPaneLayout>
+    </androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@id/main_toolbar"
-        android:background="@color/background"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/background"
-        android:visibility="gone"/>
-
-</RelativeLayout>
+</FrameLayout>

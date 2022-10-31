@@ -27,8 +27,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import cx.ring.R
-import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPluginsPathPreferenceBinding
 import cx.ring.settings.pluginssettings.PathListAdapter.PathListItemListener
 import cx.ring.utils.AndroidFileUtils
@@ -58,20 +56,19 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
             for (preferenceAttributes in mPreferencesAttributes) {
                 if (preferenceAttributes["key"] == key) {
                     val mimeType = preferenceAttributes["mimeType"]
-                    if (mimeType != null && mimeType.isNotEmpty())
+                    if (!mimeType.isNullOrEmpty())
                         supportedMimeTypes = mimeType.split(',').toTypedArray()
                     subtitle = details.name + " - " + preferenceAttributes["title"]
                     var defaultPath = preferenceAttributes["defaultValue"]
-                    if (defaultPath != null && defaultPath.isNotEmpty()) {
+                    if (!defaultPath.isNullOrEmpty()) {
                         defaultPath = defaultPath.substring(0, defaultPath.lastIndexOf("/"))
-                        for (file in File(defaultPath).listFiles()) {
+                        for (file in File(defaultPath).listFiles()!!) {
                             if (supportedMimeTypes.equals("*/*")) {
                                 pathList.add(file.toString())
                             } else {
                                 for (mime in supportedMimeTypes) {
-                                    if (file.toString()
-                                            .endsWith(mime.replace("*/", "."))
-                                    ) pathList.add(file.toString())
+                                    if (file.toString().endsWith(mime.replace("*/", ".")))
+                                        pathList.add(file.toString())
                                 }
                             }
                         }
@@ -82,9 +79,8 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
-        return FragPluginsPathPreferenceBinding.inflate(inflater, container, false).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FragPluginsPathPreferenceBinding.inflate(inflater, container, false).apply {
             if (pathList.isNotEmpty())
                 pathPreferences.adapter = PathListAdapter(pathList, this@PluginPathPreferenceFragment)
             binding = this
@@ -98,12 +94,11 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
                 startActivityForResult(intent, PATH_REQUEST_CODE)
             }
         }.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val currentValue = mCurrentValue
         val binding = binding ?: return
-        if (currentValue != null && currentValue.isNotEmpty()) {
+        if (!currentValue.isNullOrEmpty()) {
             binding.currentPathItemIcon.visibility = View.VISIBLE
             val file = File(currentValue)
             if (file.exists()) {
@@ -137,7 +132,7 @@ class PluginPathPreferenceFragment : Fragment(), PathListItemListener {
     }
 
     override fun onResume() {
-        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
+//        (requireActivity() as HomeActivity).setToolbarTitle(R.string.menu_item_plugin_list)
         super.onResume()
     }
 

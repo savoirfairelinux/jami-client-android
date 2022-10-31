@@ -41,6 +41,7 @@ import androidx.core.app.*
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
+import androidx.core.content.LocusIdCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
@@ -394,6 +395,7 @@ class NotificationServiceImpl(
     private fun textNotification(accountId: String, texts: TreeMap<Long, TextMessage>, conversation: Conversation) {
         val cpath = ConversationPath(conversation)
         val path = cpath.toUri()
+        val key = cpath.toKey()
         val conversationProfile = getProfile(conversation) ?: return
         var notificationVisibility = mPreferencesService.settings.notificationVisibility
         notificationVisibility = when (notificationVisibility) {
@@ -415,12 +417,12 @@ class NotificationServiceImpl(
             .setSmallIcon(R.drawable.ic_ring_logo_white)
             .setContentTitle(conversationProfile.second)
             .setContentText(last?.body)
+            .setLocusId(LocusIdCompat(key))
             .setWhen(last?.timestamp ?: 0)
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
             .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, ContentUriHandler.immutable()))
             .setAutoCancel(true)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
-        val key = cpath.toKey()
         /*val conversationPerson = Person.Builder()
             .setKey(key)
             .setName(conversationProfile.second)

@@ -23,41 +23,34 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import androidx.slidingpanelayout.widget.SlidingPaneLayout.PanelSlideListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.tabs.TabLayout
 import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
 import cx.ring.account.AccountWizardActivity
 import cx.ring.application.JamiApplication
-import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ConversationFragment
-import cx.ring.fragments.SmartListFragment
+import cx.ring.fragments.HomeFragment
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
@@ -74,7 +67,6 @@ import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -90,17 +82,12 @@ import net.jami.utils.takeFirstWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Colorable {
-    private var pagerContent: Fragment? = null
+class HomeActivity : AppCompatActivity(), Colorable {
     private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
-    private var mPagerAdapter: ScreenSlidePagerAdapter? = null
-//    private var mOutlineProvider: ViewOutlineProvider? = null
+    private var mHomeFragment: HomeFragment? = null
     private var mOrientation = 0
-    private var mHasConversationBadge = false
-    private var mHasPendingBadge = false
 
     @Inject
     lateinit
@@ -132,6 +119,18 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         super.onRestoreInstanceState(savedInstanceState)
         mOrientation = savedInstanceState.getInt("orientation")
     }
+    private val conversationBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                mBinding?.panel?.closePane()
+            }
+        }
+    /*private val fragmentBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+
+            }
+        }*/
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,78 +146,47 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             return
         }
 
-        if (!DeviceUtils.isTablet(this)) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-            }
-        } else {
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val attr = window.attributes
-            attr.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        }
-
-        mPagerAdapter = ScreenSlidePagerAdapter(this)
-
         mBinding = ActivityHomeBinding.inflate(layoutInflater).also { binding ->
             setContentView(binding.root)
-            supportActionBar?.title = ""
-            binding.tabLayout.addOnTabSelectedListener(this)
-//            mOutlineProvider = binding.appBar.outlineProvider
-            binding.pager.adapter = mPagerAdapter
-            binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    binding.tabLayout.getTabAt(position)!!.select()
-                    pagerContent = mPagerAdapter!!.fragments[position] as Fragment
+            //supportActionBar?.title = ""
+            binding.panel.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
+            binding.panel.addPanelSlideListener(object : PanelSlideListener {
+                override fun onPanelSlide(panel: View, slideOffset: Float) {
+                }
+
+                override fun onPanelOpened(panel: View) {
+                    conversationBackPressedCallback.isEnabled = true
+                }
+
+                override fun onPanelClosed(panel: View) {
+                    conversationBackPressedCallback.isEnabled = false
+                    fConversation?.let { c ->
+                        supportFragmentManager.beginTransaction()
+                            .remove(c)
+                            .commit()
+                        fConversation = null
+                    }
                 }
             })
-            ViewCompat.setOnApplyWindowInsetsListener(binding.pager) { v, insets ->
-                v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
-                insets
-            }
-            ViewCompat.setOnApplyWindowInsetsListener(binding.frame) { v, insets ->
-                v.updatePadding(0,0,0,insets.systemWindowInsetBottom)
-                insets
-            }
         }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         handleIntent(intent)
 
-        net.jami.utils.Log.d("panel", "${mBinding!!.panel.isSlideable}")
+        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment
+        frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
+        supportFragmentManager.addOnBackStackChangedListener {
+            frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
+        }
+        if (frameContent != null) {
+            mBinding!!.frame.isVisible = true
+        }
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val panel = mBinding!!.panel
-                
-                if (panel.isSlideable && panel.isOpen) {
-                    panel.closePane()
-                    return
-                }
-
-                val pager = mBinding?.pager
-                if (pager?.visibility == View.VISIBLE && pager.currentItem == TAB_INVITATIONS) {
-                    pager.currentItem = TAB_CONVERSATIONS
-                    return
-                }
-                
-                if (mBinding!!.frame.isVisible){
-                    popFragmentImmediate()
-                    mBinding!!.mainToolbar.isVisible = false
-                    mBinding!!.tabLayout.isVisible = mHasPendingBadge
-                    return
-                }
-
-                isEnabled = false
-                onBackPressedDispatcher.onBackPressed()
-            }
-        })
-
-        setSupportActionBar(mBinding!!.mainToolbar)
+        fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
+        if (fConversation != null) {
+            conversationBackPressedCallback.isEnabled = true
+            mBinding!!.panel.openPane()
+        }
+        onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -231,24 +199,13 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        if (!DeviceUtils.isTablet(this)) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-            }
-        }
-        super.onConfigurationChanged(newConfig)
-    }
-
     override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
         super.onDestroy()
         mMigrationDialog?.apply {
             if (isShowing) dismiss()
             mMigrationDialog = null
         }
-        pagerContent = null
         frameContent = null
         mDisposable.dispose()
         mBinding = null
@@ -257,6 +214,21 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handleIntent(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        fConversation?.let { c ->
+            mBinding!!.panel.doOnNextLayout { it as SlidingPaneLayout
+                if (it.isSlideable && !it.isOpen) {
+                    supportFragmentManager.beginTransaction()
+                        .remove(c)
+                        .commit()
+                    fConversation = null
+                }
+            }
+        }
+        conversationBackPressedCallback.isEnabled = fConversation != null
     }
 
     private fun handleIntent(intent: Intent) {
@@ -283,9 +255,8 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
                     startConversation(path)
             }
         }
-        val fragment = mPagerAdapter!!.fragments[TAB_CONVERSATIONS]
         if (Intent.ACTION_SEARCH == action) {
-                (fragment as SmartListFragment).handleIntent(intent)
+            mHomeFragment!!.handleIntent(intent)
         }
     }
 
@@ -305,6 +276,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
     }
 
     override fun onStart() {
+        Log.d(TAG, "onStart")
         super.onStart()
         mDisposable.add(
             mAccountService.observableAccountList
@@ -320,95 +292,60 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
                         }
                     }
                 })
+        val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
+        val maxShortcuts = getMaxShareShortcuts()
         mDisposable.add(mAccountService
             .currentAccountSubject
-            .switchMap { obj -> obj.unreadPending }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { count -> setBadge(TAB_INVITATIONS, count) })
-        mDisposable.add(mAccountService
-            .currentAccountSubject
-            .switchMap { obj -> obj.unreadConversations }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                    count -> setBadge(TAB_CONVERSATIONS, count)
-            })
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val targetSize = (AvatarFactory.SIZE_NOTIF * resources.displayMetrics.density).toInt()
-            val maxShortcuts = getMaxShareShortcuts()
-            mDisposable.add(mAccountService
-                .currentAccountSubject
-                .switchMap { obj -> obj.getConversationsSubject() }
-                .debounce(10, TimeUnit.SECONDS)
-                .observeOn(Schedulers.computation())
-                .map { conversations -> conversations.takeFirstWhile(maxShortcuts)
-                    { it.mode.blockingFirst() != Conversation.Mode.Syncing }
-                }
-                .switchMapSingle { conversations ->
-                    if (conversations.isEmpty())
-                        Single.just(emptyArray<Any>())
-                    else
-                        Single.zip(conversations.mapTo(ArrayList(conversations.size))
-                        { c -> mContactService.getLoadedConversation(c)
-                            .observeOn(Schedulers.computation())
-                            .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
-                                .withViewModel(vm)
-                                .withCircleCrop(true)
-                                .build(this), targetSize))
-                            }
-                        }) { obs -> obs }
-                }
-                .subscribe(this::setShareShortcuts)
-                { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
-        }
-        if (fConversation == null)
-            fConversation =
-                supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
-        val newOrientation = resources.configuration.orientation
+            .switchMap { obj -> obj.getConversationsSubject() }
+            .debounce(10, TimeUnit.SECONDS, Schedulers.computation())
+            .map { conversations -> conversations.takeFirstWhile(maxShortcuts)
+                { it.mode.blockingFirst() != Conversation.Mode.Syncing }
+            }
+            .switchMapSingle { conversations ->
+                if (conversations.isEmpty())
+                    Single.just(emptyArray<Any>())
+                else
+                    Single.zip(conversations.mapTo(ArrayList(conversations.size))
+                    { c -> mContactService.getLoadedConversation(c)
+                        .observeOn(Schedulers.computation())
+                        .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
+                            .withViewModel(vm)
+                            .withCircleCrop(true)
+                            .build(this), targetSize))
+                        }
+                    }) { obs -> obs }
+            }
+            .subscribe(this::setShareShortcuts)
+            { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
+        /* val newOrientation = resources.configuration.orientation
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation
-            if (DeviceUtils.isTablet(this)) {
-                goToHome()
-            } else {
-                // Remove ConversationFragment that might have been restored after an orientation change
-                if (fConversation != null) {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .remove(fConversation!!)
-                        .commitNow()
-                    fConversation = null
-                }
+            // Remove ConversationFragment that might have been restored after an orientation change
+            if (fConversation != null) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .remove(fConversation!!)
+                    .commitNow()
+                fConversation = null
             }
-        }
-
-        // Select first conversation in tablet mode
-        if (DeviceUtils.isTablet(this)) {
-            val intent = intent
-            val uri = intent?.data
-            if ((intent == null || uri == null) && fConversation == null) {
-                var smartlist: Observable<List<Observable<ConversationItemViewModel>>>? = null
-                smartlist = if (mBinding?.pager!!.currentItem == TAB_CONVERSATIONS)
-                    mConversationFacade.getSmartList(false)
-                else mConversationFacade.pendingList
-                mDisposable.add(smartlist
-                    .filter { list -> list.isNotEmpty() }
-                    .map { list -> list[0].firstOrError() }
-                    .firstElement()
-                    .flatMapSingle { e -> e }
-					.observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { element ->
-                        startConversation(element.accountId, element.uri)
-                    })
-            }
-        }
+        } */
     }
 
     override fun onStop() {
+        Log.d(TAG, "onStop")
         super.onStop()
         mDisposable.clear()
     }
 
-    fun toggleConversationVisibility(show: Boolean) {
-        mBinding!!.conversation.isVisible = show
+    public fun toggleConversationVisibility(show: Boolean) {
+        //mBinding!!.conversation.isVisible = show
+        if (fConversation == null)
+            return
+        val binding = mBinding ?: return
+        if (show)
+            binding.panel.openPane()
+        else
+            binding.panel.closePane()
     }
 
     fun startConversation(conversationId: String) {
@@ -425,28 +362,27 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
     }
 
     private fun startConversation(path: ConversationPath) {
-        fConversation = ConversationFragment()
-        fConversation!!.arguments = path.toBundle()
+        val conversation = ConversationFragment().apply {
+            arguments = path.toBundle()
+        }
+        Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
+        //mBinding!!.conversation.getFragment<>()
+        if (fConversation == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
+                .commit()
+            mBinding!!.conversation.isVisible = true
+        } else
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
+                .commit()
+        fConversation = conversation
         mBinding!!.panel.openPane()
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.conversation,
-                fConversation!!,
-                ConversationFragment::class.java.simpleName
-            )
-            .commit()
     }
 
     private fun presentTrustRequestFragment(accountId: String) {
         mNotificationService.cancelTrustRequestNotification(accountId)
-        val fragment = mPagerAdapter!!.fragments[TAB_INVITATIONS]
-        (fragment as ContactRequestsFragment).presentForAccount(accountId)
-        mBinding!!.pager.currentItem = TAB_INVITATIONS
-    }
-
-    fun goToHome() {
-        mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
-        pagerContent = SmartListFragment()
+        mHomeFragment!!.presentForAccount(accountId)
     }
 
     fun goToAdvancedSettings() {
@@ -459,12 +395,9 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, SETTINGS_TAG)
-            .addToBackStack(SETTINGS_TAG).commit()
-        if (!DeviceUtils.isTablet(this)) {
-            mBinding!!.tabLayout.isVisible = false
-        }
+            .addToBackStack(SETTINGS_TAG)
+            .commit()
         mBinding!!.frame.isVisible = true
-        mBinding!!.tabLayout.isVisible = false
     }
 
     fun goToAbout() {
@@ -473,16 +406,14 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         }
         val content = AboutFragment()
         frameContent = content
+        mBinding!!.frame.isVisible = true
         supportFragmentManager
             .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            //.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(fragmentContainerId, content, ABOUT_TAG)
-            .addToBackStack(ABOUT_TAG).commit()
-        if (!DeviceUtils.isTablet(this)) {
-            mBinding!!.tabLayout.isVisible = false
-        }
-        mBinding!!.frame.isVisible = true
-        mBinding!!.tabLayout.isVisible = false
+            .addToBackStack(ABOUT_TAG)
+            .commit()
     }
 
     fun goToVideoSettings() {
@@ -491,16 +422,13 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         }
         val content = VideoSettingsFragment()
         frameContent = content
+
         supportFragmentManager
             .beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
             .addToBackStack(VIDEO_SETTINGS_TAG).commit()
-        if (!DeviceUtils.isTablet(this)) {
-            mBinding!!.tabLayout.isVisible = false
-        }
         mBinding!!.frame.isVisible = true
-        mBinding!!.tabLayout.isVisible = false
     }
 
     fun goToAccountSettings() {
@@ -511,10 +439,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             val intent = Intent()
                 .setClass(this, AccountWizardActivity::class.java)
                 .setData(
-                    android.net.Uri.withAppendedPath(
-                        ContentUriHandler.ACCOUNTS_CONTENT_URI,
-                        account.accountId
-                    )
+                    android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId)
                 )
             startActivityForResult(intent, 1)
         } else {
@@ -529,41 +454,10 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
                     .replace(fragmentContainerId, content, ACCOUNTS_TAG)
                     .addToBackStack(ACCOUNTS_TAG)
                     .commit()
-                if (!DeviceUtils.isTablet(this)) {
-                    mBinding!!.tabLayout.isVisible = false
-                }
                 mBinding!!.frame.isVisible = true
-                mBinding!!.tabLayout.isVisible = false
             }
         }
     }
-
-    private fun setBadge(menuId: Int, number: Int) {
-        val tab = mBinding!!.tabLayout.getTabAt(menuId)
-        if (number == 0) {
-            tab!!.removeBadge()
-            if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = false else mHasPendingBadge = false
-            if (pagerContent is ContactRequestsFragment) goToHome()
-        } else {
-            tab!!.orCreateBadge.number = number
-            mBinding!!.tabLayout.isVisible = true
-            if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = true else mHasPendingBadge = true
-        }
-        mBinding!!.tabLayout.isVisible = mHasPendingBadge
-        mBinding!!.pager.isUserInputEnabled = mHasConversationBadge || mHasPendingBadge
-    }
-
-    fun setToolbarTitle(@StringRes titleRes: Int) {
-        mBinding?.mainToolbar?.let { toolbar ->
-            toolbar.isVisible = true
-            toolbar.title = getString(titleRes)
-            setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private val fragmentContainerId: Int
-        get() = R.id.frame
 
     /**
      * Changes the current main fragment to a plugins list settings fragment
@@ -579,7 +473,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
             .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
-        mBinding!!.tabLayout.isVisible = false
     }
 
     /**
@@ -623,23 +516,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
 //        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
-    fun setToolbarOutlineState(enabled: Boolean) {
-        if (mBinding != null) {
-//            if (!enabled) {
-//                mBinding!!.appBar.outlineProvider = null
-//            } else {
-//                mBinding!!.appBar.outlineProvider = mOutlineProvider
-//            }
-        }
-    }
-
-    fun popFragmentImmediate() {
-        val fm = supportFragmentManager
-        fm.popBackStackImmediate()
-        frameContent = fm.fragments.lastOrNull()
-        mBinding!!.frame.isVisible = false
-    }
-
     private fun enableAccount(newValue: Boolean) {
         val account = mAccountService.currentAccount
         if (account == null) {
@@ -666,6 +542,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             val path = ConversationPath(conversation.first.accountId, conversation.first.uri)
             val key = path.toKey()
             ShortcutInfoCompat.Builder(this, key)
+                .setIsConversation()
                 .setShortLabel(title)
                 .setPerson(Person.Builder()
                     .setName(title)
@@ -684,27 +561,6 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
             ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList)
         } catch (e: Exception) {
             Log.w(TAG, "Error adding shortcuts", e)
-        }
-    }
-
-    override fun onTabSelected(tab: TabLayout.Tab?) {
-        mBinding?.pager?.setCurrentItem(tab!!.position, true)
-    }
-
-    override fun onTabUnselected(tab: TabLayout.Tab?) {
-    }
-
-    override fun onTabReselected(tab: TabLayout.Tab?) {
-    }
-
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-
-        val fragments = listOf(SmartListFragment(), ContactRequestsFragment())
-
-        override fun getItemCount(): Int = fragments.size
-
-        override fun createFragment(position: Int): Fragment {
-            return fragments[position] as Fragment
         }
     }
 
@@ -729,6 +585,7 @@ class HomeActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener, Color
         private const val CONVERSATIONS_CATEGORY = "conversations"
         private const val TAB_CONVERSATIONS = 0
         private const val TAB_INVITATIONS = 1
+        private const val fragmentContainerId: Int = R.id.frame
     }
 
 }

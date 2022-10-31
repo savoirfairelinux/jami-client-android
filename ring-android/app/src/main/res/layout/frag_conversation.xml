@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/conversationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:background="@color/background"
-        tools:context=".client.ConversationActivity">
+        tools:context=".client.ConversationActivity"
+        android:fitsSystemWindows="false">
 
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-<!--            android:id="@+id/toolbar_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:elevation="4dp"-->
-<!--            android:elevation="4dp"-->
-<!--            android:fitsSystemWindows="true">-->
+        <com.google.android.material.appbar.AppBarLayout
+            style="@style/Widget.Material3.AppBarLayout"
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="4dp"
+            android:elevation="4dp"
+            app:liftOnScroll="true"
+            app:liftOnScrollTargetViewId="@id/hist_list"
+            android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -71,14 +75,14 @@
 
             </com.google.android.material.appbar.MaterialToolbar>
 
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
+        </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
                 android:id="@+id/error_msg_pane"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="?attr/colorError"
-                android:layout_below="@id/toolbar"
+                android:layout_below="@id/toolbar_layout"
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="8dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -134,7 +138,8 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_centerInParent="true"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hist_list"
@@ -153,14 +158,15 @@
             android:transcriptMode="normal"
             app:layoutManager="LinearLayoutManager"
             app:stackFromEnd="true"
-            tools:listitem="@layout/item_conv_msg_peer" />
+            tools:listitem="@layout/item_conv_msg_peer"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mapCard"
             android:layout_width="@dimen/location_sharing_minmap_width"
             android:layout_height="@dimen/location_sharing_minmap_height"
             android:layout_below="@id/trustRequestMessageLayout"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="0dp"
             android:layout_marginVertical="16dp"
             android:animateLayoutChanges="true"
@@ -193,7 +199,7 @@
             style="@style/Widget.AppTheme.MainActionButton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="8dp"
             android:onClick="@{() -> presenter.addContact()}"
@@ -207,7 +213,7 @@
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="8dp"
             android:padding="0dp"
@@ -262,162 +268,162 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/textmsg_bg_input"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:visibility="visible">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMessageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/textmsg_bg_input"
-                android:orientation="vertical"
-                android:visibility="visible"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:minHeight="48dp"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/conversation_message_input_radius"
+                app:cardElevation="4dp"
                 tools:visibility="visible">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvMessageInput"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:minHeight="48dp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="@dimen/conversation_message_input_radius"
-                    app:cardElevation="4dp"
-                    tools:visibility="visible">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/reply_group"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:background="@color/surface"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="4dp"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
-                        <LinearLayout
-                            android:id="@+id/reply_group"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:background="@color/surface"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="4dp"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:adjustViewBounds="true"
                             android:visibility="gone"
-                            tools:visibility="visible">
+                            tools:src="@tools:sample/backgrounds/scenic" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:adjustViewBounds="true"
-                                android:visibility="gone"
-                                tools:src="@tools:sample/backgrounds/scenic" />
+                        <TextView
+                            android:id="@+id/reply_message"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/baseline_reply_24"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="@color/colorPrimaryTranslucent"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:maxLines="2"
+                            android:text="Reply" />
 
-                            <TextView
-                                android:id="@+id/reply_message"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:maxLines="2"
-                                android:text="Reply"
-                                android:ellipsize="end"
-                                android:drawableStart="@drawable/baseline_reply_24"
-                                android:drawableTint="@color/colorPrimaryTranslucent"
-                                android:drawablePadding="8dp"/>
-
-                            <ImageView
-                                android:id="@+id/reply_close_btn"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:src="@drawable/baseline_close_24" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/btn_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:paddingStart="8dp">
-
-                            <ImageButton
-                                android:id="@+id/btn_menu"
-                                android:layout_width="28dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/share_label"
-                                android:onClick="@{v -> presenter.expandMenu(v)}"
-                                android:padding="8dp"
-                                app:srcCompat="@drawable/baseline_more_vert_24"
-                                app:tint="@color/colorPrimary" />
-
-                            <ImageButton
-                                android:id="@+id/btn_take_picture"
-                                android:layout_width="34dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/take_a_photo"
-                                android:onClick="@{() -> presenter.takePicture()}"
-                                android:padding="8dp"
-                                app:srcCompat="@drawable/baseline_photo_camera_24"
-                                app:tint="@color/colorPrimary" />
-
-                            <ProgressBar
-                                android:id="@+id/pb_data_transfer"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:indeterminate="true"
-                                android:visibility="gone" />
-
-                            <Spinner
-                                android:id="@+id/number_selector"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:visibility="gone"
-                                tools:listitem="@layout/item_number_selected" />
-
-                            <EditText
-                                android:id="@+id/msg_input_txt"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:hint="@string/write_a_message"
-                                android:imeOptions="actionSend|flagNoExtractUi"
-                                android:importantForAutofill="no"
-                                android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
-                                android:maxLines="5"
-                                android:padding="8dp" />
-
-                            <TextView
-                                android:id="@+id/emoji_send"
-                                style="?attr/borderlessButtonStyle"
-                                android:layout_width="50dp"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:onClick="@{() -> presenter.sendEmoji()}"
-                                android:padding="0dp"
-                                android:text="@string/conversation_default_emoji"
-                                android:textSize="18sp" />
-
-                            <ImageButton
-                                android:id="@+id/msg_send"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:background="?selectableItemBackgroundBorderless"
-                                android:contentDescription="@string/send_message"
-                                android:onClick="@{() -> presenter.sendMessageText()}"
-                                android:padding="8dp"
-                                android:visibility="gone"
-                                app:srcCompat="@drawable/baseline_send_24"
-                                app:tint="@color/colorPrimary" />
-
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/reply_close_btn"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:src="@drawable/baseline_close_24" />
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/btn_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp">
 
-    </RelativeLayout>
+                        <ImageButton
+                            android:id="@+id/btn_menu"
+                            android:layout_width="28dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/share_label"
+                            android:onClick="@{v -> presenter.expandMenu(v)}"
+                            android:padding="8dp"
+                            app:srcCompat="@drawable/baseline_more_vert_24"
+                            app:tint="@color/colorPrimary" />
+
+                        <ImageButton
+                            android:id="@+id/btn_take_picture"
+                            android:layout_width="34dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/take_a_photo"
+                            android:onClick="@{() -> presenter.takePicture()}"
+                            android:padding="8dp"
+                            app:srcCompat="@drawable/baseline_photo_camera_24"
+                            app:tint="@color/colorPrimary" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_data_transfer"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:indeterminate="true"
+                            android:visibility="gone" />
+
+                        <Spinner
+                            android:id="@+id/number_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            tools:listitem="@layout/item_number_selected" />
+
+                        <EditText
+                            android:id="@+id/msg_input_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/write_a_message"
+                            android:imeOptions="actionSend|flagNoExtractUi"
+                            android:importantForAutofill="no"
+                            android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
+                            android:maxLines="5"
+                            android:padding="8dp" />
+
+                        <TextView
+                            android:id="@+id/emoji_send"
+                            style="?attr/borderlessButtonStyle"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:onClick="@{() -> presenter.sendEmoji()}"
+                            android:padding="0dp"
+                            android:text="@string/conversation_default_emoji"
+                            android:textSize="18sp" />
+
+                        <ImageButton
+                            android:id="@+id/msg_send"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/send_message"
+                            android:onClick="@{() -> presenter.sendMessageText()}"
+                            android:padding="8dp"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/baseline_send_24"
+                            app:tint="@color/colorPrimary" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <data>
 

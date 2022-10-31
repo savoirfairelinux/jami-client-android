@@ -28,7 +28,6 @@ import android.view.*
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -113,6 +112,14 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsLogs.setOnClickListener { v: View ->
                 startActivity(Intent(v.context, LogsActivity::class.java))
             }
+            toolbar.setNavigationOnClickListener {
+                activity?.onBackPressedDispatcher?.onBackPressed()
+            }
+            settingsDarkTheme.isChecked = presenter.darkMode
+            settingsPluginsSwitch.isChecked = JamiService.getPluginsEnabled()
+            if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
+                settingsPushNotificationsLayout.visibility = View.GONE
+            }
             binding = this
         }.root
 
@@ -123,14 +130,8 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.settingsDarkTheme.isChecked = presenter.darkMode
-        binding!!.settingsPluginsSwitch.isChecked = JamiService.getPluginsEnabled()
-        if (TextUtils.isEmpty(JamiApplication.instance?.pushToken)) {
-            binding!!.settingsPushNotificationsLayout.visibility = View.GONE
-        }
         // loading preferences
         presenter.loadSettings()
-        (activity as HomeActivity?)?.setToolbarTitle(R.string.menu_item_advanced_settings)
     }
 
     private fun saveSettings(binding: FragSettingsBinding) {
