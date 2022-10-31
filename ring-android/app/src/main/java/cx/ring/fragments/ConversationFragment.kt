@@ -23,6 +23,7 @@ import android.Manifest
 import android.animation.LayoutTransition
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
@@ -51,12 +52,11 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
@@ -70,11 +70,7 @@ import cx.ring.service.DRingService
 import cx.ring.service.LocationSharingService
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
-import cx.ring.utils.ActionHelper
-import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ConversationPath
-import cx.ring.utils.DeviceUtils.isTablet
+import cx.ring.utils.*
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
@@ -155,7 +151,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun updateListPadding() {
-        val binding = binding ?: return
+        /* val binding = binding ?: return
         val bottomView = currentBottomView ?: return
         val bottomViewHeight = bottomView.height
         if (bottomViewHeight != 0) {
@@ -163,7 +159,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             val params = binding.mapCard.layoutParams as RelativeLayout.LayoutParams
             params.bottomMargin = padding
             binding.mapCard.layoutParams = params
-        }
+        } */
     }
 
     override fun displayErrorToast(error: Error) {
@@ -180,16 +176,22 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     private val onBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                childFragmentManager.popBackStack()
-                isEnabled = false
+                val count = childFragmentManager.backStackEntryCount
+                if (count > 0) {
+                    childFragmentManager.popBackStack()
+                    if (count == 1)
+                        isEnabled = false
+                }
             }
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         activity?.onBackPressedDispatcher?.addCallback(this, onBackPressedCallback)
     }
 
+    var startBottom = 0f
+    var endBottom = 0f
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = resources
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
@@ -202,32 +204,33 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             animation.duration = 150
             animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
 
-            val layout: View = binding.conversationLayout
-
             (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
 
-//            if (Build.VERSION.SDK_INT >= 30) {
-//                ViewCompat.setWindowInsetsAnimationCallback(
-//                    layout,
-//                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
-//                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-//                            animating++
-//                        }
-//                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
-//                            layout.updatePadding(bottom = insets.systemWindowInsetBottom)
-//                            return insets
-//                        }
-//
-//                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
-//                            animating--
-//                        }
-//                    })
-//            }
-            ViewCompat.setOnApplyWindowInsetsListener(layout) { _, insets: WindowInsetsCompat ->
+            val layoutToAnimate = binding.relativeLayout
+            if (Build.VERSION.SDK_INT >= 30) {
+
+                ViewCompat.setWindowInsetsAnimationCallback(
+                    layoutToAnimate,
+                    object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+                        override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                            animating++
+                        }
+                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
+                            layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
+                            return insets
+                        }
+
+                        override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                            animating--
+                        }
+                    })
+            }
+            ViewCompat.setOnApplyWindowInsetsListener(layoutToAnimate) { _, insets: WindowInsetsCompat ->
                 if (animating == 0)
-                    layout.updatePadding(bottom = insets.systemWindowInsetBottom)
+                    layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
                 WindowInsetsCompat.CONSUMED
             }
+
             binding.ongoingcallPane.visibility = View.GONE
             ViewCompat.setOnReceiveContentListener(binding.msgInputTxt, SUPPORTED_MIME_TYPES) { _, contentInfo ->
                 for (i in 0 until contentInfo.clip.itemCount) {
@@ -273,6 +276,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 clearReply()
             }
             setHasOptionsMenu(true)
+            if (!DeviceUtils.isTablet(requireContext())) {
+                binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+                binding.toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+            }
             binding.root
         }
     }
@@ -835,8 +842,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val convPath = presenter.path
         childFragmentManager
             .beginTransaction()
-            .add(R.id.conversationLayout, ConversationGalleryFragment.newInstance(convPath.first, convPath.second), null)
-            .addToBackStack(null)
+            .add(R.id.relativeLayout, ConversationGalleryFragment.newInstance(convPath.first, convPath.second), null)
+            .addToBackStack(ConversationGalleryFragment.toString())
             .commit()
         onBackPressedCallback.isEnabled = true
     }
@@ -984,6 +991,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val logo = binding!!.contactImage
         logo.setImageDrawable(mConversationAvatar)
         logo.visibility = View.VISIBLE
+        logo.setOnClickListener { openContact() }
         title.text = conversation.title
         title.textSize = 15f
        title.setTypeface(null, Typeface.NORMAL)

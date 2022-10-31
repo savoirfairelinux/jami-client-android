@@ -55,6 +55,13 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         return binding!!.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding!!.toolbar.setNavigationOnClickListener {
+            activity?.onBackPressedDispatcher?.onBackPressed()
+        }
+    }
+
     /**
      * Implements PluginListItemListener.onPluginItemClicked which is called when we click on
      * a plugin list item

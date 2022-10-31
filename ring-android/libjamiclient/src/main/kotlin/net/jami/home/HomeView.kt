@@ -17,28 +17,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package net.jami.smartlist
+package net.jami.home
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.ConversationFacade
 
-interface SmartListView {
-    fun displayChooseNumberDialog(numbers: Array<CharSequence>)
-    fun displayNoConversationMessage()
-    fun displayConversationDialog(conversationItemViewModel: Conversation)
-    fun displayClearDialog(accountId: String, conversationUri: Uri)
-    fun displayDeleteDialog(accountId: String, conversationUri: Uri)
-    fun copyNumber(uri: Uri)
-    fun setLoading(loading: Boolean)
-    fun displayMenuItem()
-    fun hideList()
-    fun hideNoConversationMessage()
-    fun updateList(conversations: ConversationFacade.ConversationList, conversationFacade: ConversationFacade, parentDisposable: CompositeDisposable)
-    fun update(model: Conversation)
-    fun update(position: Int)
-    fun goToConversation(accountId: String, conversationUri: Uri)
-    fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String)
-    fun scrollToTop()
+interface HomeView {
+    fun goToQRFragment()
+    fun startNewGroup()
 }

@@ -60,26 +60,11 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             return
         }
 
-        if (!DeviceUtils.isTablet(this)) {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                WindowCompat.setDecorFitsSystemWindows(window, true)
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val attr = window.attributes
-            attr.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        }
-
         conversationPath = path
         val isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false)
         JamiApplication.instance?.startDaemon()
         val binding = ActivityConversationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (mConversationFragment == null) {
             mConversationFragment = ConversationFragment().apply {
                 arguments = conversationPath.toBundle().apply {

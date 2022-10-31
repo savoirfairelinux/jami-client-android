@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -34,6 +35,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val root = super.onCreateView(inflater, container, savedInstanceState)
+        root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background));
         val screen = preferenceManager.createPreferenceScreen(requireContext())
         screen.addPreference(createHeadPreference())
         for (preference in createPreferences(mPreferencesAttributes)) {
@@ -83,9 +85,9 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
 
     private fun createHeadPreference(): Preference {
         val preference = PluginPreferences(requireContext(), pluginDetails, accountId)
-        var message = run {
+        val message = run {
             var value = R.string.plugin_reset_preferences_ask
-            if (!accountId!!.isEmpty()) {
+            if (accountId!!.isNotEmpty()) {
                 value = R.string.plugin_reset_account_preferences_ask
             }
             value
@@ -96,7 +98,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
                     JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
-                    (requireActivity() as HomeActivity).popFragmentImmediate()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
                 .show()
@@ -108,7 +110,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
                     pluginDetails!!.isEnabled = false
                     JamiService.uninstallPlugin(pluginDetails!!.rootPath)
-                    (requireActivity() as HomeActivity).popFragmentImmediate()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
@@ -122,7 +124,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
                 val act = requireActivity() as HomeActivity
-                act.goToHome()
                 act.goToAdvancedSettings()
                 act.goToPluginsListSettings()
                 act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
