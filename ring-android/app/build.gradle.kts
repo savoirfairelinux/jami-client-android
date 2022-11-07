@@ -96,7 +96,7 @@ dependencies {
     implementation ("androidx.car.app:app:1.2.0-rc01")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.6.0")
-    implementation ("androidx.sharetarget:sharetarget:1.2.0-rc02")
+    implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation ("com.google.android.material:material:1.7.0-rc01")
@@ -112,7 +112,7 @@ dependencies {
 
     // Barcode scanning
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation ("com.google.zxing:core:3.5.0")
+    implementation ("com.google.zxing:core:3.5.1")
 
     // Dagger dependency injection
     implementation("com.google.dagger:hilt-android:$hilt_version")
@@ -125,8 +125,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.13.2")
-    kapt ("com.github.bumptech.glide:compiler:4.13.2")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    kapt ("com.github.bumptech.glide:compiler:4.14.2")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
@@ -135,7 +135,7 @@ dependencies {
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.0.8") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.1.0") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
