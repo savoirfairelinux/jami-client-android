@@ -268,11 +268,18 @@ class AccountService(
                 val requests: List<Map<String, String>> = JamiService.getTrustRequests(accountId).toNative()
                 Log.w(TAG, "$accountId loading ${requests.size} trust requests")
                 for (requestInfo in requests) {
-                    val request = TrustRequest(accountId, requestInfo)
-                    request.vCard?.let { vcard ->
-                        request.profile = mVCardService.loadVCardProfile(vcard)
+                    try {
+                        val uri = requestInfo["conversationId"]?.let { uriString -> if (uriString.isEmpty()) null else Uri(Uri.SWARM_SCHEME, uriString) }
+                        val request = TrustRequest(accountId, uri, requestInfo)
+                        requestInfo["payload"]?.let {
+                            Log.w(TAG, "payload: $it")
+                            if (it.isNotBlank())
+                                request.profile = mVCardService.loadVCardProfile(Ezvcard.parse(it).first())
+                        }
+                        account.addRequest(request)
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Error loading request", e)
                     }
-                    account.addRequest(request)
                 }
                 val conversations: List<String> = JamiService.getConversations(account.accountId)
                 Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
@@ -313,10 +320,9 @@ class AccountService(
                     }
                 }
                 Log.w(TAG, "$accountId loading conversation requests")
-                for (requestData in JamiService.getConversationRequests(account.accountId).toNative()) {
-                    /*for (Map.Entry<String, String> e : requestData.entrySet()) {
-                        Log.e(TAG, "Request: " + e.getKey() + " " + e.getValue());
-                    }*/
+                for (requestData in JamiService.getConversationRequests(account.accountId)) {
+                    /* for ((key, value) in requestData.entries)
+                        Log.e(TAG, "Request: $key $value") */
                     val from = Uri.fromString(requestData["from"]!!)
                     val conversationId = requestData["id"]
                     val conversationUri =
@@ -324,8 +330,7 @@ class AccountService(
                         else Uri(Uri.SWARM_SCHEME, conversationId)
                     val request = account.getRequest(conversationUri ?: from)
                     if (request == null || conversationUri != request.from) {
-                        val received = requestData["received"]!!.toLong() * 1000L
-                        account.addRequest(TrustRequest(account.accountId, from, received, null, conversationUri))
+                        account.addRequest(TrustRequest(account.accountId, conversationUri, requestData))
                     }
                 }
             }
@@ -853,14 +858,15 @@ class AccountService(
      */
     fun acceptTrustRequest(accountId: String, from: Uri) {
         Log.i(TAG, "acceptRequest() $accountId $from")
-        getAccount(accountId)?.let { account -> account.getRequest(from)?.vCard?.let{ vcard ->
-            VCardUtils.savePeerProfileToDisk(vcard, accountId, from.rawRingId + ".vcf", mDeviceRuntimeService.provideFilesDir())
-        }}
         mExecutor.execute {
             if (from.isSwarm)
                 JamiService.acceptConversationRequest(accountId, from.rawRingId)
-            else
+            else {
                 JamiService.acceptTrustRequest(accountId, from.rawRingId)
+                /*getAccount(accountId)?.let { account -> account.getRequest(from)?.vCard?.let{ vcard ->
+                    VCardUtils.savePeerProfileToDisk(vcard, accountId, from.rawRingId + ".vcf", mDeviceRuntimeService.provideFilesDir())
+                }}*/
+            }
         }
     }
 
@@ -1112,16 +1118,13 @@ class AccountService(
         if (account != null) {
             val fromUri = Uri.fromString(from)
             var request = account.getRequest(fromUri)
+            val profile = mVCardService.loadVCardProfile(Ezvcard.parse(message).first())
             if (request == null)
-                request = TrustRequest(accountId, fromUri, received * 1000L, message, if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId))
-            else request.vCard = Ezvcard.parse(message).first()
-            request.vCard?.let { vcard ->
-                val contact = account.getContactFromCache(fromUri)
-                contact.loadedProfile = mVCardService.loadVCardProfile(vcard)
-                    .subscribeOn(Schedulers.computation())
-            }
+                request = TrustRequest(accountId, fromUri, received * 1000L, if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId), profile)
+            else request.profile = profile
+            val contact = account.getContactFromCache(fromUri)
+            contact.loadedProfile = profile.subscribeOn(Schedulers.computation())
             account.addRequest(request)
-            // handleTrustRequest(account, Uri.fromString(from), request, ContactType.INVITATION_RECEIVED);
             if (account.isEnabled) lookupAddress(accountId, "", from)
             incomingRequestsSubject.onNext(request)
         }
@@ -1191,6 +1194,8 @@ class AccountService(
         val authorUri = Uri.fromId(author)
         val timestamp = message["timestamp"]!!.toLong() * 1000
         val replyTo = message["reply-to"]
+        val reactTo = message["react-to"]
+        val edit = message["edit"]
         val contact = conversation.findContact(authorUri) ?: account.getContactFromCache(authorUri)
         val interaction: Interaction = when (type) {
             "initial" -> if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
@@ -1245,7 +1250,9 @@ class AccountService(
         }
         interaction.replyToId = replyTo
         if (replyTo != null) {
-            interaction.replyTo = conversation.loadMessage(replyTo) { JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo) }
+            interaction.replyTo = conversation.loadMessage(replyTo) {
+                JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo)
+            }
         }
         if (interaction.contact == null)
             interaction.contact = contact
@@ -1282,6 +1289,10 @@ class AccountService(
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: StringMap) {
         getAccount(accountId)?.getSwarm(conversationId)?.updateInfo(info)
+    }
+
+    fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
+        getAccount(accountId)?.getSwarm(conversationId)?.updatePreferences(preferences)
     }
 
     private enum class ConversationMemberEvent {
@@ -1375,12 +1386,10 @@ class AccountService(
             Log.w(TAG, "conversationRequestReceived: can't find account")
             return
         }
-        val contactUri = Uri.fromId(metadata["from"]!!)
         val conversationUri = if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId)
-        val request = account.getRequest(contactUri)
+        val request = account.getRequest(Uri.fromId(metadata["from"]!!))
         if (request == null || conversationUri != request.conversationUri) {
-            val received = metadata["received"]!!
-            account.addRequest(TrustRequest(account.accountId, contactUri, received.toLong() * 1000L, null, conversationUri))
+            account.addRequest(TrustRequest(account.accountId, conversationUri, metadata))
         }
     }
 

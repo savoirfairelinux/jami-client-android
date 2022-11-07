@@ -33,6 +33,7 @@ import io.reactivex.rxjava3.core.Single
 import net.jami.model.Account
 import net.jami.model.ContactViewModel
 import net.jami.model.Conversation
+import net.jami.model.Profile
 import net.jami.smartlist.ConversationItemViewModel
 
 object AvatarFactory {
@@ -49,10 +50,10 @@ object AvatarFactory {
                 .build(context)
         }
 
-    fun getAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean): Single<AvatarDrawable> =
+    fun getAvatar(context: Context, conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>, presence: Boolean): Single<AvatarDrawable> =
         Single.fromCallable {
             AvatarDrawable.Builder()
-                .withConversation(conversation, contacts)
+                .withConversation(conversation, profile, contacts)
                 .withCircleCrop(true)
                 .withPresence(presence)
                 .build(context)
@@ -66,8 +67,8 @@ object AvatarFactory {
                 .build(context)
         }
 
-    fun getBitmapAvatar(context: Context, conversation: Conversation, contacts: List<ContactViewModel>, size: Int, presence: Boolean): Single<Bitmap> =
-        getAvatar(context, conversation, contacts, presence)
+    fun getBitmapAvatar(context: Context, conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>, size: Int, presence: Boolean): Single<Bitmap> =
+        getAvatar(context, conversation, profile, contacts, presence)
             .map { BitmapUtils.drawableToBitmap(it, size) }
 
     fun getBitmapAvatar(context: Context, contact: ContactViewModel, size: Int, presence: Boolean): Single<Bitmap> =
