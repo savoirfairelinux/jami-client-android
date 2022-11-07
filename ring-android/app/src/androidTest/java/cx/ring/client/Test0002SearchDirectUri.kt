@@ -71,7 +71,7 @@ class Test0002SearchDirectUri {
                 allOf(withId(R.id.conv_participant), withText("000000069ecabfecf731e1c98eafc4b592ab0000"),
                         withParent(withParent(withId(R.id.item_layout))),
                         isDisplayed()))
-        textView.check(matches(withText("000000069ecabfecf731e1c98eafc4b592ab0000")))
+        textView.check(matches(withText("000000069ecabfecf731e1c98eafc4b592ab0000")))*/
     }
 
     private fun childAtPosition(
