@@ -131,7 +131,7 @@ class ConversationPresenter @Inject constructor(
                 if (req == null) {
                     view.switchToUnknownView(c.uriTitle)
                 } else {
-                    view.switchToIncomingTrustRequestView(req.displayName)
+                    view.switchToIncomingTrustRequestView(req.profile?.blockingGet()?.displayName ?: c.uriTitle)
                 }
             }
         } else {
@@ -293,7 +293,8 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun cancelMessage(message: Interaction) {
-        conversationFacade.cancelMessage(message)
+        val conversation = mConversation ?: return
+        conversationFacade.cancelMessage(conversation, message)
     }
 
     private fun sendTrustRequest() {

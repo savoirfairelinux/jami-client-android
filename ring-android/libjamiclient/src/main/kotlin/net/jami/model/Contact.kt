@@ -131,6 +131,9 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     val isBanned: Boolean
         get() = status == Status.BANNED
 
+    fun setProfile(profile: Single<Profile>) {
+        loadedProfile = profile
+    }
     fun setProfile(profile: Profile?) {
         if (profile != null)
             loadedProfile = Single.just(profile)

@@ -658,7 +658,7 @@ class Account(
                 val conversation = if (request.conversationUri?.isSwarm == true)
                     Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
                         val contact = getContactFromCache(request.from).apply {
-                            if (!conversationUri.blockingFirst().isSwarm)
+                            if (request.mode == Conversation.Mode.OneToOne && !conversationUri.blockingFirst().isSwarm)
                                 setConversationUri(request.conversationUri)
                         }
                         addContact(contact)
@@ -666,11 +666,13 @@ class Account(
                     }
                 else
                     getByKey(key)
-
-                // Apply request profile to contact
-                request.profile?.let { p -> conversation.contact?.let { c ->
-                    p.observeOn(Schedulers.computation()).subscribe { profile -> c.setProfile(profile) }
-                } }
+                request.profile?.let { p ->
+                    // Apply request profile to contact
+                    if (request.mode == Conversation.Mode.OneToOne) {
+                        conversation.contact?.setProfile(p)
+                    }
+                    conversation.setProfile(p)
+                }
 
                 //Log.w(TAG, "pendingRequestAdded $key")
                 pending[key] = conversation

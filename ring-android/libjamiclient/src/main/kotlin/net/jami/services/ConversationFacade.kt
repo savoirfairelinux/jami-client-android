@@ -198,12 +198,12 @@ class ConversationFacade(
         }
     }
 
-    fun cancelMessage(message: Interaction) {
+    fun cancelMessage(conversation: Conversation, message: Interaction) {
         val accountId = message.account ?: return
+        if (conversation.isSwarm) return
         mDisposableBag.add(
             mCallService.cancelMessage(accountId, message.id.toLong()).subscribeOn(Schedulers.io())
-                .andThen(startConversation(accountId, Uri.fromString(message.conversation!!.participant!!)))
-                .subscribe({ c: Conversation -> c.removeInteraction(message) }
+                .subscribe({ conversation.removeInteraction(message) }
                 ) { e: Throwable -> Log.e(TAG, "Can't cancel message sending", e) })
     }
 
@@ -258,10 +258,11 @@ class ConversationFacade(
 
     fun observeConversation(account: Account, conversation: Conversation, hasPresence: Boolean): Observable<ConversationItemViewModel> =
          Observable.combineLatest(account.getConversationSubject()
-            .filter { c: Conversation -> c === conversation }
-            .startWithItem(conversation),
+             .filter { c: Conversation -> c === conversation }
+             .startWithItem(conversation)
+             .switchMap { c -> c.profile },
             mContactService.observeContact(conversation.accountId, conversation.contacts, hasPresence)
-         ) { c, contacts -> ConversationItemViewModel(c, contacts, hasPresence) }
+         ) { profile, contacts -> ConversationItemViewModel(conversation, profile, contacts, hasPresence) }
 
     fun getSmartList(currentAccount: Observable<Account>, hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> =
         currentAccount.switchMap { account: Account ->

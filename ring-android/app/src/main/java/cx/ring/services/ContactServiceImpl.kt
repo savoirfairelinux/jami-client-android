@@ -402,10 +402,9 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         return Single.zip(nameSingle, photoSingle) { name, photo -> Profile(name, photo) }
     }
 
-    fun loadConversationAvatar(context: Context, conversation: Conversation): Single<Drawable> {
-        return getLoadedContact(conversation.accountId, conversation.contacts, false)
-            .flatMap { contacts -> AvatarFactory.getAvatar(context, conversation, contacts, false) }
-    }
+    fun loadConversationAvatar(context: Context, conversation: Conversation): Single<Drawable> =
+        getLoadedConversation(conversation)
+            .flatMap { contacts -> AvatarFactory.getAvatar(context, contacts) }
 
     companion object {
         private val TAG = ContactServiceImpl::class.java.simpleName

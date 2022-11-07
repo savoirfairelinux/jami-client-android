@@ -41,7 +41,6 @@ class Conversation : ConversationHistory {
     val aggregateHistory = ArrayList<Interaction>(32)
 
     private val lastDisplayedMessages: MutableMap<String, String> = HashMap()
-
     private val updatedElementSubject: Subject<Pair<Interaction, ElementStatus>> = PublishSubject.create()
     private val clearedSubject: Subject<List<Interaction>> = PublishSubject.create()
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
@@ -59,8 +58,16 @@ class Conversation : ConversationHistory {
     var lastNotified: String? = null
         private set
     private val mMode: Subject<Mode>
-    private var title: String? = null
     private var description: String? = null
+
+    private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
+    val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
+    var loadedProfile: Single<Profile>? = null
+        set(profile) {
+            field = profile
+            if  (profile != null)
+                profileSubject.onNext(profile)
+        }
 
     // runtime flag set to true if the user is currently viewing this conversation
     private var mVisible = false
@@ -210,6 +217,15 @@ class Conversation : ConversationHistory {
             return true
         }
         return false
+    }
+
+    fun setProfile(profile: Single<Profile>) {
+        loadedProfile = profile
+    }
+
+    fun setProfile(profile: Profile?) {
+        if (profile != null)
+            loadedProfile = Single.just(profile)
     }
 
     fun setMode(mode: Mode) {
@@ -624,15 +640,22 @@ class Conversation : ConversationHistory {
     fun getSymbol(): Observable<CharSequence> = symbol
 
     fun updateInfo(info: Map<String, String>) {
-        title = info["title"]
+        //title = info["title"]
+        //avatar = info["avatar"]
+        setProfile(Profile(info["title"], info["avatar"]))
         description = info["description"]
     }
 
-    fun getTitle() = title
+    fun updatePreferences(preferences: Map<String, String>) {
+        preferences["color"]?.let { color.onNext(it.substring(1).toInt(16)) }
+        preferences["symbol"]?.let { symbol.onNext(it) }
+    }
+
+    //fun getTitle() = title
     fun getDescription() = description
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
     @Synchronized
-    fun loadMessage(id: String, load: () -> Unit): Single<Interaction>? {
+    fun loadMessage(id: String, load: () -> Unit): Single<Interaction> {
         val msg = getMessage(id)
         return if (msg != null) Single.just(msg)
         else mPendingMessages.computeIfAbsent(id) {
@@ -654,14 +677,12 @@ class Conversation : ConversationHistory {
 
     companion object {
         private val TAG = Conversation::class.simpleName!!
-        private fun getTypedInteraction(interaction: Interaction): Interaction {
-            return when (interaction.type) {
-                Interaction.InteractionType.TEXT -> TextMessage(interaction)
-                Interaction.InteractionType.CALL -> Call(interaction)
-                Interaction.InteractionType.CONTACT -> ContactEvent(interaction)
-                Interaction.InteractionType.DATA_TRANSFER -> DataTransfer(interaction)
-                else -> interaction
-            }
+        private fun getTypedInteraction(interaction: Interaction) = when (interaction.type) {
+            Interaction.InteractionType.TEXT -> TextMessage(interaction)
+            Interaction.InteractionType.CALL -> Call(interaction)
+            Interaction.InteractionType.CONTACT -> ContactEvent(interaction)
+            Interaction.InteractionType.DATA_TRANSFER -> DataTransfer(interaction)
+            else -> interaction
         }
     }
 }

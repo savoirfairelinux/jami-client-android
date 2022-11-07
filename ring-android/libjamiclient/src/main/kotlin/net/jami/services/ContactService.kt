@@ -117,8 +117,8 @@ abstract class ContactService(
         }
     }
 
-    fun observeContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> {
-        return if (contacts.isEmpty()) {
+    fun observeContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean): Observable<List<ContactViewModel>> =
+        if (contacts.isEmpty()) {
             Observable.just(emptyList())
         } else if (contacts.size == 1 && contacts.first().isUser) {
             observeContact(accountId, contacts.first(), withPresence).map(Collections::singletonList)
@@ -133,27 +133,26 @@ abstract class ContactService(
                 obs
             }
         }
-    }
 
-    fun getLoadedContact(accountId: String, contact: Contact, withPresence: Boolean = false): Single<ContactViewModel> {
-        return observeContact(accountId, contact, withPresence)
+    fun getLoadedContact(accountId: String, contact: Contact, withPresence: Boolean = false): Single<ContactViewModel> =
+        observeContact(accountId, contact, withPresence)
             .firstOrError()
-    }
 
-    fun getLoadedContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean = false): Single<List<ContactViewModel>> {
-        return if (contacts.isEmpty()) Single.just(emptyList()) else Observable.fromIterable(contacts)
+    fun getLoadedContact(accountId: String, contacts: Collection<Contact>, withPresence: Boolean = false): Single<List<ContactViewModel>> =
+        if (contacts.isEmpty()) Single.just(emptyList()) else Observable.fromIterable(contacts)
             .concatMapEager { contact: Contact -> getLoadedContact(accountId, contact, withPresence).toObservable() }
             .toList(contacts.size)
-    }
 
-    fun getLoadedConversation(conversation: Conversation): Single<ConversationItemViewModel> {
-        return getLoadedContact(conversation.accountId, conversation.contacts, false)
-            .map { contacts -> ConversationItemViewModel(conversation, contacts, false) }
-    }
+    fun getLoadedConversation(conversation: Conversation): Single<ConversationItemViewModel> =
+        Single.zip(getLoadedContact(
+            conversation.accountId, conversation.contacts, false),
+            conversation.profile.firstOrError()
+        ) { contacts, p ->
+            ConversationItemViewModel(conversation, p, contacts, false)
+        }
 
-    fun observeLoadedContact(accountId: String, contacts: List<Contact>, withPresence: Boolean = false): List<Observable<ContactViewModel>> {
-        return contacts.map { contact -> observeContact(accountId, contact, withPresence) }
-    }
+    fun observeLoadedContact(accountId: String, contacts: List<Contact>, withPresence: Boolean = false): List<Observable<ContactViewModel>> =
+        contacts.map { contact -> observeContact(accountId, contact, withPresence) }
 
     /**
      * Searches a contact in the local cache and then in the system repository
@@ -161,9 +160,8 @@ abstract class ContactService(
      *
      * @return The found/created contact
      */
-    fun findContactByNumber(account: Account, number: String): Contact? {
-        return if (number.isEmpty()) null else findContact(account, Uri.fromString(number))
-    }
+    fun findContactByNumber(account: Account, number: String): Contact? =
+        if (number.isEmpty()) null else findContact(account, Uri.fromString(number))
 
     fun findContact(account: Account, uri: Uri): Contact {
         val contact = account.getContactFromCache(uri)

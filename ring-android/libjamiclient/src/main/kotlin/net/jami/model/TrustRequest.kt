@@ -19,27 +19,33 @@
  */
 package net.jami.model
 
-import ezvcard.Ezvcard
-import ezvcard.VCard
 import io.reactivex.rxjava3.core.Single
 
 class TrustRequest(
     val accountId: String,
     val from: Uri,
     val timestamp: Long,
-    payload: String?,
-    val conversationUri: Uri?)
-{
-    var vCard: VCard? = if (payload == null) null else Ezvcard.parse(payload).first()
+    val conversationUri: Uri?,
     var profile: Single<Profile>? = null
+)
+{
     var message: String? = null
+    var mode: Conversation.Mode = Conversation.Mode.OneToOne
 
-    constructor(accountId: String, info: Map<String, String>) : this(accountId, Uri.fromId(info["from"]!!),
-        info["received"]!!.toLong() * 1000L, info["payload"], info["conversationId"]?.let { uriString -> if (uriString.isEmpty()) null else Uri(Uri.SWARM_SCHEME, uriString) })
+    constructor(accountId: String, conversationUri: Uri?, info: Map<String, String>) : this(
+        accountId,
+        Uri.fromId(info["from"]!!),
+        info["received"]!!.toLong() * 1000L,
+        conversationUri
+    ) {
+        val title = info["title"]
+        val descr = info["descr"]
+        val avatar = info["avatar"]
+        info["mode"]?.let { m -> mode = Conversation.Mode.values()[m.toInt()] }
 
-    val fullName: String?
-        get() = vCard?.formattedName?.value
-
-    val displayName: String
-        get() = fullName ?: from.toString()
+        if (!title.isNullOrBlank()) {
+            profile = Single.just(Profile(title, avatar))
+        }
+        message = descr
+    }
 }

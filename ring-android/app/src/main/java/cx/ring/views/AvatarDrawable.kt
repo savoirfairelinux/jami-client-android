@@ -28,6 +28,8 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.services.VCardServiceImpl
+import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils.isTv
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -220,13 +222,27 @@ class AvatarDrawable : Drawable {
             withName(if (profileName.isNullOrEmpty()) username else profileName)
 
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
-            withPhoto(contact.profile.avatar as Bitmap?)
+            withPhoto(if (contact.profile.avatar is Bitmap)
+                contact.profile.avatar as Bitmap
+            else
+                BitmapUtils.base64ToBitmap(contact.profile.avatar as String?)
+            )
                 .withId(contact.contact.primaryNumber)
                 .withPresence(contact.presence)
                 .withOnlineState(contact.contact.isOnline)
                 .withNameData(contact.profile.displayName, contact.registeredName)
 
-        private fun withContacts(contacts: List<ContactViewModel>): Builder {
+        private fun withContacts(profile: Profile, contacts: List<ContactViewModel>): Builder {
+            if (profile !== Profile.EMPTY_PROFILE) {
+                if (!profile.displayName.isNullOrBlank())
+                    withName(profile.displayName)
+                if (profile.avatar != null) {
+                    return withPhoto(if (profile.avatar is Bitmap)
+                        profile.avatar as Bitmap
+                    else
+                        BitmapUtils.base64ToBitmap(profile.avatar as String?))
+                }
+            }
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
             var notTheUser = 0
             for (contact in contacts) {
@@ -252,9 +268,11 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withConversation(conversation: Conversation, contacts: List<ContactViewModel>): Builder =
+        fun withConversation(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): Builder =
             if (conversation.isSwarm && conversation.mode.blockingFirst() != Conversation.Mode.OneToOne)
-                withContacts(contacts).setGroup()
+                withId(conversation.uri.rawRingId)
+                    .withContacts(profile, contacts)
+                    .setGroup()
             else
                 withContact(ConversationItemViewModel.getContact(contacts))
 
@@ -266,7 +284,9 @@ class AvatarDrawable : Drawable {
         fun withViewModel(vm: ConversationItemViewModel): Builder {
             val isSwarm = vm.uri.isSwarm && vm.mode != Conversation.Mode.OneToOne
             return if (isSwarm)
-                withContacts(vm.contacts).setGroup()
+                withId(vm.uri.rawRingId)
+                    .withContacts(vm.conversationProfile, vm.contacts)
+                    .setGroup()
             else withContact(ConversationItemViewModel.getContact(vm.contacts))
                 .withPresence(vm.showPresence())
                 .withOnlineState(vm.isOnline)

@@ -29,6 +29,7 @@ class ConversationItemViewModel {
     val uri: Uri
     val mode: Conversation.Mode
     val contacts: List<ContactViewModel>
+    val conversationProfile: Profile
     val uuid: String?
     val title: String
     private val showPresence: Boolean
@@ -45,6 +46,7 @@ class ConversationItemViewModel {
     constructor(accountId: String, contact: ContactViewModel, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
+        this.conversationProfile = contact.profile
         uri = contact.contact.uri
         mode = Conversation.Mode.Legacy
         uuid = uri.rawUriString
@@ -57,6 +59,7 @@ class ConversationItemViewModel {
     constructor(accountId: String, contact: ContactViewModel, id: String?, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
+        this.conversationProfile = contact.profile
         uri = contact.contact.uri
         mode = Conversation.Mode.Legacy
         uuid = id
@@ -66,13 +69,14 @@ class ConversationItemViewModel {
         isOnline = contact.contact.isOnline
     }
 
-    constructor(conversation: Conversation, contacts: List<ContactViewModel>, presence: Boolean) {
+    constructor(conversation: Conversation, conversationProfile: Profile, contacts: List<ContactViewModel>, presence: Boolean) {
         accountId = conversation.accountId
         this.contacts = contacts
+        this.conversationProfile = conversationProfile
         uri = conversation.uri
         mode = conversation.mode.blockingFirst()
         uuid = uri.rawUriString
-        title = getTitle(conversation, contacts)
+        title = getTitle(conversation, conversationProfile, contacts)
         val lastEvent = conversation.lastEvent
         this.lastEvent = lastEvent
         selected = conversation.getVisible()
@@ -135,8 +139,9 @@ class ConversationItemViewModel {
             return null
         }
 
-        fun getTitle(conversation: Conversation, contacts: List<ContactViewModel>): String {
-            conversation.getTitle()?.let { title -> return title }
+        fun getTitle(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): String {
+            if (!profile.displayName.isNullOrBlank())
+                return profile.displayName
             if (contacts.isEmpty()) {
                 return if (conversation.mode.blockingFirst() == Conversation.Mode.Syncing) { "(Syncing)" } else ""
             } else if (contacts.size == 1) {
