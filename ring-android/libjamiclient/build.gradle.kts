@@ -13,7 +13,7 @@ dependencies {
     // VCard parsing
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
     // QRCode encoding
-    implementation ("com.google.zxing:core:3.5.0")
+    implementation ("com.google.zxing:core:3.5.1")
     // dependency injection
     implementation( "javax.inject:javax.inject:1")
     // ORM
@@ -24,7 +24,7 @@ dependencies {
     // RxJava
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
     // gson
-    implementation ("com.google.code.gson:gson:2.9.1")
+    implementation ("com.google.code.gson:gson:2.10")
     api("com.google.dagger:dagger:$hilt_version")
     kapt("com.google.dagger:dagger-compiler:$hilt_version")
 }
