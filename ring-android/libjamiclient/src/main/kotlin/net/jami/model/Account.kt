@@ -667,11 +667,12 @@ class Account(
                 else
                     getByKey(key)
                 request.profile?.let { p ->
+                    Log.w(TAG, "Using profile from request")
+                    conversation.setProfile(p)
                     // Apply request profile to contact
                     if (request.mode == Conversation.Mode.OneToOne) {
                         conversation.contact?.setProfile(p)
                     }
-                    conversation.setProfile(p)
                 }
 
                 //Log.w(TAG, "pendingRequestAdded $key")

@@ -20,6 +20,7 @@
 package net.jami.model
 
 import io.reactivex.rxjava3.core.Single
+import net.jami.utils.Log
 
 class TrustRequest(
     val accountId: String,
@@ -42,7 +43,7 @@ class TrustRequest(
         val descr = info["descr"]
         val avatar = info["avatar"]
         info["mode"]?.let { m -> mode = Conversation.Mode.values()[m.toInt()] }
-
+        Log.w("TrustRequest", "$accountId $conversationUri title $title descr $descr avatar $avatar")
         if (!title.isNullOrBlank()) {
             profile = Single.just(Profile(title, avatar))
         }
