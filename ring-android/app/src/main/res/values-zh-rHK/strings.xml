@@ -53,7 +53,7 @@
   <string name="notif_incoming_call">来电</string>
   <string name="notif_outgoing_call_title">去电：%1$s</string>
   <string name="notif_outgoing_call">撥出電話</string>
-  <string name="notif_current_call_title">正在与%1$s通话</string>
+  <string name="notif_current_call_title">正在與%1$s通話</string>
   <string name="notif_current_call">尚在進行中的通話</string>
   <string name="notif_channel_call_in_progress">呼叫进行中</string>
   <string name="notif_channel_calls">呼叫</string>
@@ -183,10 +183,11 @@
   <string name="conversation_type_contact">Jami 联系人</string>
   <string name="conversation_type_private">私人 swarm</string>
   <string name="conversation_type_group">群组 swarm</string>
-  <string name="conversation_contact_invited">%1$s 已被封鎖</string>
+  <string name="conversation_contact_invited">已邀请 %1$s</string>
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
   <string name="conversation_contact_banned">%1$s 已被封鎖</string>
+  <string name="conversation_search_hint">在会话中搜索</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密碼</string>
@@ -316,7 +317,7 @@
   <string name="wizard_username_skip">跳过用户名设置</string>
   <string name="wizard_password_info">账户密码</string>
   <string name="wizard_password_placeholder">创建密码来加密此设备上的账户密钥</string>
-  <string name="wizard_password_button">输入密码</string>
+  <string name="wizard_password_button">输入密碼</string>
   <string name="wizard_password_skip">创建账户</string>
   <string name="wizard_password_switch">用密码加密账户</string>
   <string name="wizard_password_warning">注意密码不能恢复</string>

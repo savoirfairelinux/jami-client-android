@@ -190,6 +190,7 @@
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
   <string name="conversation_contact_banned">%1$s 已被封鎖</string>
+  <string name="conversation_search_hint">在会话中搜索</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">新增 %1$s？</string>
   <string name="prompt_new_password">新密碼</string>

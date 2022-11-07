@@ -190,6 +190,7 @@
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
   <string name="conversation_contact_banned">%1$s dibanned</string>
+  <string name="conversation_search_hint">Cari percakapan</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tambah %1$s?</string>
   <string name="prompt_new_password">Kata sandi baru</string>

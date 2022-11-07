@@ -192,6 +192,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="conversation_contact_added">%1$s ist beigetreten</string>
   <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
   <string name="conversation_contact_banned">%1$s wurde blockiert</string>
+  <string name="conversation_search_hint">Unterhaltung suchen</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>

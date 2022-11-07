@@ -36,4 +36,6 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Режим очікування</string>
     <string name="call_human_state_unhold">Зняти з утримування</string>
     <string name="call_human_state_over">Понад</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Модератор</string>
     </resources>

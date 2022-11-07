@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">โทรด่วน</string>
+  <string name="contact_picture_description">รูปภาพติดต่อ</string>
+  <string name="dial_numeric_pad">แป้นตัวเลข</string>
+  <string name="contact_unblock">เลิกบล็อก</string>
+  <string name="video_plugins">ปลั๊กอินวิดีโอ</string>
+</resources>

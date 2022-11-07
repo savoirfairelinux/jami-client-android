@@ -193,6 +193,7 @@
   <string name="conversation_contact_added">%1$s se je pridružil/a</string>
   <string name="conversation_contact_left">%1$s je odšel/a</string>
   <string name="conversation_contact_banned">%1$s je blokiran/a</string>
+  <string name="conversation_search_hint">Poišči pogovor</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s?</string>
   <string name="prompt_new_password">Novo geslo</string>
