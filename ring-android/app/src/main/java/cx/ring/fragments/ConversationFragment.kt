@@ -190,8 +190,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         activity?.onBackPressedDispatcher?.addCallback(this, onBackPressedCallback)
     }
 
-    var startBottom = 0f
-    var endBottom = 0f
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val res = resources
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
@@ -226,8 +224,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     })
             }
             ViewCompat.setOnApplyWindowInsetsListener(layoutToAnimate) { _, insets: WindowInsetsCompat ->
-                if (animating == 0)
+                if (animating == 0) {
+                    layoutToAnimate.updatePadding(top = insets.systemWindowInsetTop)
                     layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
+                }
                 WindowInsetsCompat.CONSUMED
             }
 

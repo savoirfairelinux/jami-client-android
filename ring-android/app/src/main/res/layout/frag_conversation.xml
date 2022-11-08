@@ -84,6 +84,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hist_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="false"
+                android:divider="@null"
+                android:listSelector="@color/transparent"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="60dp"
+                android:transcriptMode="normal"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:stackFromEnd="true"
+                tools:listitem="@layout/item_conv_msg_peer" />
+
             <TextView
                 android:id="@+id/error_msg_pane"
                 android:layout_width="match_parent"
@@ -148,22 +164,6 @@
                 android:indeterminate="true"
                 android:visibility="gone" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hist_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:animateLayoutChanges="false"
-                android:divider="@null"
-                android:listSelector="@color/transparent"
-                android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="60dp"
-                android:transcriptMode="normal"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:stackFromEnd="true"
-                tools:listitem="@layout/item_conv_msg_peer" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/mapCard"
                 android:layout_width="@dimen/location_sharing_minmap_width"
@@ -197,90 +197,101 @@
 
             </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/unknownContactPrompt"
-                style="@style/Widget.AppTheme.MainActionButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp"
-                android:onClick="@{() -> presenter.addContact()}"
-                android:text="@string/ab_action_contact_add"
-                android:textAlignment="center"
-                android:visibility="gone"
-                app:backgroundTint="#4CAF50" />
+                android:layout_centerHorizontal="true">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/trustRequestPrompt"
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="8dp"
-                android:padding="0dp"
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/conversation_message_input_radius">
-
-                <LinearLayout
-                    style="?android:attr/buttonBarStyle"
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/unknownContactPrompt"
+                    style="@style/Widget.AppTheme.MainActionButton"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="0dp"
-                    android:orientation="horizontal"
-                    android:padding="0dp"
-                    android:weightSum="3">
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
+                    android:onClick="@{() -> presenter.addContact()}"
+                    android:text="@string/ab_action_contact_add"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:backgroundTint="#4CAF50" />
 
-                    <Button
-                        android:id="@+id/btnBlock"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:onClick="@{() -> presenter.blockContactRequest()}"
-                        android:text="@string/block"
-                        android:textColor="@color/colorPrimary" />
-
-                    <Button
-                        android:id="@+id/btnRefuse"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:onClick="@{() -> presenter.refuseContactRequest()}"
-                        android:text="@string/refuse"
-                        android:textColor="@color/colorPrimary" />
-
-                    <Button
-                        android:id="@+id/btnAccept"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:onClick="@{() -> presenter.acceptContactRequest()}"
-                        android:text="@string/accept"
-                        android:textColor="#4CAF50" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/textmsg_bg_input"
-            android:orientation="vertical"
-            android:visibility="visible"
-            tools:visibility="visible">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/trustRequestPrompt"
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="0dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/conversation_message_input_radius">
+
+                    <LinearLayout
+                        style="?android:attr/buttonBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:weightSum="3">
+
+                        <Button
+                            android:id="@+id/btnBlock"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:onClick="@{() -> presenter.blockContactRequest()}"
+                            android:text="@string/block"
+                            android:textColor="@color/colorPrimary" />
+
+                        <Button
+                            android:id="@+id/btnRefuse"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:onClick="@{() -> presenter.refuseContactRequest()}"
+                            android:text="@string/refuse"
+                            android:textColor="@color/colorPrimary" />
+
+                        <Button
+                            android:id="@+id/btnAccept"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:gravity="center"
+                            android:onClick="@{() -> presenter.acceptContactRequest()}"
+                            android:text="@string/accept"
+                            android:textColor="#4CAF50" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/textmsg_bg_input"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMessageInput"
