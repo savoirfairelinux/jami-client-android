@@ -139,12 +139,12 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun displayNoConversationMessage() {
         binding!!.placeholder.visibility = View.VISIBLE
-        (activity as HomeActivity).toggleConversationVisibility(false)
+        //(activity as HomeActivity).toggleConversationVisibility(false)
     }
 
     override fun hideNoConversationMessage() {
         binding!!.placeholder.visibility = View.GONE
-        (activity as HomeActivity).toggleConversationVisibility(true)
+        //(activity as HomeActivity).toggleConversationVisibility(true)
     }
 
     override fun displayConversationDialog(conversationItemViewModel: Conversation) {
