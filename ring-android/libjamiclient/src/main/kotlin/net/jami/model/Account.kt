@@ -742,9 +742,11 @@ class Account(
     private fun getSortedConversations(): List<Conversation> {
         if (conversationsChanged) {
             sortedConversations.clear()
-            sortedConversations.addAll(conversations.values)
-            for (c in sortedConversations) c.sortHistory()
-            Collections.sort(sortedConversations, ConversationComparator())
+            if (conversations.isNotEmpty()) {
+                sortedConversations.addAll(conversations.values)
+                for (c in sortedConversations) c.sortHistory()
+                Collections.sort(sortedConversations, ConversationComparator())
+            }
             conversationsChanged = false
         }
         return sortedConversations
