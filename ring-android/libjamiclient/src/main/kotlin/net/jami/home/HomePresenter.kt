@@ -63,10 +63,6 @@ class HomePresenter @Inject constructor(
         view?.startNewGroup()
     }
 
-    fun isAddGroupEnabled(): Boolean {
-        return preferencesService.settings.enableAddGroup
-    }
-
     companion object {
         private val TAG = HomePresenter::class.simpleName!!
     }
