@@ -79,18 +79,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsVideoLayout.setOnClickListener {
                 (activity as HomeActivity?)?.goToVideoSettings()
             }
-            settingsClearHistory.setOnClickListener {
-                MaterialAlertDialogBuilder(inflater.context)
-                    .setTitle(getString(R.string.clear_history_dialog_title))
-                    .setMessage(getString(R.string.clear_history_dialog_message))
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        // ask the presenter to clear history
-                        presenter.clearHistory()
-                        Snackbar.make(root, getString(R.string.clear_history_completed), Snackbar.LENGTH_SHORT).show()
-                    }
-                    .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, id: Int -> }
-                    .show()
-            }
 
             val singleItems = arrayOf(
                 getString(R.string.notification_private),
