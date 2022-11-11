@@ -13,11 +13,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
-import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPluginsListSettingsBinding
 import cx.ring.plugins.PluginUtils.getInstalledPlugins
 import cx.ring.plugins.PluginUtils.loadPlugin
 import cx.ring.plugins.PluginUtils.unloadPlugin
+import cx.ring.settings.SettingsFragment
 import cx.ring.settings.pluginssettings.PluginsListAdapter.PluginListItemListener
 import cx.ring.utils.AndroidFileUtils.getCacheFile
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -38,6 +38,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         binding!!.pluginsList.setHasFixedSize(true)
+        (parentFragment as SettingsFragment).setToolbarTitle(R.string.menu_item_plugin_list)
 
         mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this, accountId)
         binding!!.pluginsList.adapter = mAdapter
@@ -55,20 +56,13 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         return binding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding!!.toolbar.setNavigationOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
-        }
-    }
-
     /**
      * Implements PluginListItemListener.onPluginItemClicked which is called when we click on
      * a plugin list item
      * @param pluginDetails instance of a plugin details that is sent to PluginSettingsFragment
      */
     override fun onPluginItemClicked(pluginDetails: PluginDetails) {
-        (requireActivity() as HomeActivity).gotToPluginSettings(pluginDetails)
+        (parentFragment as SettingsFragment).gotToPluginSettings(pluginDetails)
     }
 
     /**

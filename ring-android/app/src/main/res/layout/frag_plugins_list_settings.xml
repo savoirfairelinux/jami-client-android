@@ -8,29 +8,10 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <com.google.android.material.appbar.AppBarLayout
-        style="@style/Widget.Material3.AppBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:liftOnScroll="true"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/background"
-            app:navigationIcon="@drawable/abc_ic_ab_back_material"
-            app:title="@string/menu_item_plugin_list"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        android:layout_alignParentBottom="true" >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/plugins_list"

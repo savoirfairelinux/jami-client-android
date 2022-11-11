@@ -20,6 +20,7 @@
 package cx.ring.settings
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -28,6 +29,11 @@ import android.view.*
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -36,6 +42,10 @@ import cx.ring.client.HomeActivity
 import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.settings.pluginssettings.PluginDetails
+import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
+import cx.ring.settings.pluginssettings.PluginSettingsFragment
+import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.daemon.JamiService
 import net.jami.model.Settings
@@ -49,13 +59,26 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
     private var currentSettings: Settings? = null
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
+    private var fragment: Fragment? = null
+
+    private val backPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            popBackStack()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.let {
+            it.addCallback(this, backPressedCallback)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSettingsBinding.inflate(inflater, container, false).apply {
             settingsPluginsLayout.setOnClickListener {
-                val activity = activity as HomeActivity?
-                if (activity != null && JamiService.getPluginsEnabled()) {
-                    activity.goToPluginsListSettings()
+                if (JamiService.getPluginsEnabled()) {
+                    goToPluginsListSettings()
                 }
             }
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@SettingsFragment)
@@ -77,7 +100,7 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsBlockRecord.setOnCheckedChangeListener(save)
             settingsLinkPreview.setOnCheckedChangeListener(save)
             settingsVideoLayout.setOnClickListener {
-                (activity as HomeActivity?)?.goToVideoSettings()
+                goToVideoSettings()
             }
             settingsClearHistory.setOnClickListener {
                 MaterialAlertDialogBuilder(inflater.context)
@@ -123,6 +146,67 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             binding = this
         }.root
 
+    private fun goToVideoSettings() {
+        val content = VideoSettingsFragment()
+        fragment = content
+        childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
+            .addToBackStack(VIDEO_SETTINGS_TAG).commit()
+        binding!!.fragmentContainer.isVisible = true
+        backPressedCallback.isEnabled = true
+    }
+
+    private fun goToPluginsListSettings(accountId: String? = "") {
+        val content = PluginsListSettingsFragment.newInstance(accountId)
+        fragment = content
+        childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
+            .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
+        binding!!.fragmentContainer.isVisible = true
+        backPressedCallback.isEnabled = true
+    }
+
+    fun gotToPluginSettings(pluginDetails: PluginDetails) {
+        val content = PluginSettingsFragment.newInstance(pluginDetails)
+        val fragmentTransaction: FragmentTransaction = childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(fragmentContainerId, content, PLUGIN_SETTINGS_TAG)
+        if (fragment !is PluginSettingsFragment) {
+            fragmentTransaction.addToBackStack(PLUGIN_SETTINGS_TAG)
+        }
+        fragmentTransaction.commit()
+        fragment = content
+        binding!!.fragmentContainer.isVisible = true
+        backPressedCallback.isEnabled = true
+    }
+
+    fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
+        val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
+        fragment = content
+        childFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(fragmentContainerId, content, PLUGIN_PATH_PREFERENCE_TAG
+            )
+            .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit()
+        binding!!.fragmentContainer.isVisible = true
+        backPressedCallback.isEnabled = true
+    }
+
+    fun popBackStack() {
+        childFragmentManager.popBackStackImmediate()
+        if (childFragmentManager.backStackEntryCount == 0) {
+            backPressedCallback.isEnabled = false
+            binding!!.fragmentContainer.isVisible = false
+            fragment = null
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
@@ -147,6 +231,10 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             enableLinkPreviews = binding.settingsLinkPreview.isChecked,
             notificationVisibility = mNotificationVisibility
         ))
+    }
+
+    fun setToolbarTitle(@StringRes resId: Int) {
+        binding!!.toolbar.title = getString(resId)
     }
 
     /**
@@ -203,5 +291,10 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         const val NOTIFICATION_PRIVATE = 0
         const val NOTIFICATION_PUBLIC = 1
         const val NOTIFICATION_SECRET = 2
+        const val VIDEO_SETTINGS_TAG = "VideoPrefs"
+        const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
+        const val PLUGIN_SETTINGS_TAG = "PluginSettings"
+        const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
+        private const val fragmentContainerId: Int = R.id.fragment_container
     }
 }
