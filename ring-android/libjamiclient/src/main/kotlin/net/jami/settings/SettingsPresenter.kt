@@ -24,15 +24,12 @@ import io.reactivex.rxjava3.core.Scheduler
 import net.jami.model.Settings
 import net.jami.mvp.GenericView
 import net.jami.mvp.RootPresenter
-import net.jami.services.ConversationFacade
 import net.jami.services.PreferencesService
-import net.jami.utils.Log
 import javax.inject.Inject
 import javax.inject.Named
 
 class SettingsPresenter @Inject constructor(
     private val mPreferencesService: PreferencesService,
-    private val mConversationFacade: ConversationFacade,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<GenericView<Settings>>() {
     override fun bindView(view: GenericView<Settings>) {
@@ -48,12 +45,6 @@ class SettingsPresenter @Inject constructor(
 
     fun saveSettings(settings: Settings) {
         mPreferencesService.settings = settings
-    }
-
-    fun clearHistory() {
-        mCompositeDisposable.add(
-            mConversationFacade.clearAllHistory()
-                .subscribe({}) { e -> Log.e(TAG, "Error clearing app history", e) })
     }
 
     var darkMode: Boolean
