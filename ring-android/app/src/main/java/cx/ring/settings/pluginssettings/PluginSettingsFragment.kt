@@ -4,13 +4,13 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.preference.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.HomeActivity
 import cx.ring.plugins.PluginPreferences
 import cx.ring.plugins.PluginUtils.stringListToListString
+import cx.ring.settings.SettingsFragment
 import net.jami.daemon.JamiService
 
 class PluginSettingsFragment : PreferenceFragmentCompat() {
@@ -35,7 +35,6 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val root = super.onCreateView(inflater, container, savedInstanceState)
-        root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background));
         val screen = preferenceManager.createPreferenceScreen(requireContext())
         screen.addPreference(createHeadPreference())
         for (preference in createPreferences(mPreferencesAttributes)) {
@@ -118,15 +117,10 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
         preference.setPluginSettingsRedirect {
             if (accountId!!.isEmpty()) {
                 val act = requireActivity() as HomeActivity
-                act.goToAccountSettings()
-                var acc = act.mAccountService.currentAccount!!.accountId
-                act.goToPluginsListSettings(acc)
-                act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
+                val acc = act.mAccountService.currentAccount!!.accountId
+                (parentFragment as SettingsFragment).gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled, null, acc))
             } else {
-                val act = requireActivity() as HomeActivity
-                act.goToAdvancedSettings()
-                act.goToPluginsListSettings()
-                act.gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
+                (parentFragment as SettingsFragment).gotToPluginSettings(PluginDetails(pluginDetails!!.name, pluginDetails!!.rootPath, pluginDetails!!.isEnabled))
             }
         }
         return preference
@@ -168,7 +162,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private fun createPathPreference(preferenceModel: Map<String, String>): Preference {
         val preference = Preference(requireContext())
         preference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            (requireActivity() as HomeActivity).gotToPluginPathPreference(pluginDetails!!, preferenceModel["key"]!!)
+            (parentFragment as SettingsFragment).gotToPluginPathPreference(pluginDetails!!, preferenceModel["key"]!!)
             false
         }
         setPreferenceAttributes(preference, preferenceModel)

@@ -25,7 +25,6 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -54,11 +53,6 @@ import cx.ring.fragments.HomeFragment
 import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
-import cx.ring.settings.VideoSettingsFragment
-import cx.ring.settings.pluginssettings.PluginDetails
-import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
-import cx.ring.settings.pluginssettings.PluginSettingsFragment
-import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
@@ -405,21 +399,6 @@ class HomeActivity : AppCompatActivity(), Colorable {
             .commit()
     }
 
-    fun goToVideoSettings() {
-        if (frameContent is VideoSettingsFragment) {
-            return
-        }
-        val content = VideoSettingsFragment()
-        frameContent = content
-
-        supportFragmentManager
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, VIDEO_SETTINGS_TAG)
-            .addToBackStack(VIDEO_SETTINGS_TAG).commit()
-        mBinding!!.frame.isVisible = true
-    }
-
     fun goToAccountSettings() {
         val account = mAccountService.currentAccount
         val bundle = Bundle()
@@ -446,55 +425,6 @@ class HomeActivity : AppCompatActivity(), Colorable {
                 mBinding!!.frame.isVisible = true
             }
         }
-    }
-
-    /**
-     * Changes the current main fragment to a plugins list settings fragment
-     */
-    fun goToPluginsListSettings(accountId: String? = "") {
-        if (frameContent is PluginsListSettingsFragment) {
-            return
-        }
-        val content = PluginsListSettingsFragment.newInstance(accountId)
-        frameContent = content
-        supportFragmentManager
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGINS_LIST_SETTINGS_TAG)
-            .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit()
-    }
-
-    /**
-     * Changes the current main fragment to a plugin settings fragment
-     * @param pluginDetails
-     */
-    fun gotToPluginSettings(pluginDetails: PluginDetails) {
-        if (frameContent is PluginSettingsFragment) {
-            return
-        }
-        val content = PluginSettingsFragment.newInstance(pluginDetails)
-        frameContent = content
-        supportFragmentManager
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGIN_SETTINGS_TAG)
-            .addToBackStack(PLUGIN_SETTINGS_TAG).commit()
-    }
-
-    /**
-     * Changes the current main fragment to a plugin PATH preference fragment
-     */
-    fun gotToPluginPathPreference(pluginDetails: PluginDetails, preferenceKey: String) {
-        if (frameContent is PluginPathPreferenceFragment) {
-            return
-        }
-        val content = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey)
-        frameContent = content
-        supportFragmentManager
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(fragmentContainerId, content, PLUGIN_PATH_PREFERENCE_TAG)
-            .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit()
     }
 
     override fun setColor(color: Int) {
@@ -565,15 +495,9 @@ class HomeActivity : AppCompatActivity(), Colorable {
         const val ACCOUNTS_TAG = "Accounts"
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
-        const val VIDEO_SETTINGS_TAG = "VideoPrefs"
         const val ACTION_PRESENT_TRUST_REQUEST_FRAGMENT =
             BuildConfig.APPLICATION_ID + "presentTrustRequestFragment"
-        const val PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings"
-        const val PLUGIN_SETTINGS_TAG = "PluginSettings"
-        const val PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference"
         private const val CONVERSATIONS_CATEGORY = "conversations"
-        private const val TAB_CONVERSATIONS = 0
-        private const val TAB_INVITATIONS = 1
         private const val fragmentContainerId: Int = R.id.frame
     }
 
