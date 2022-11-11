@@ -159,7 +159,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 (mSmartListFragment as SmartListFragment).showFab(false)
                 setOverflowMenuVisible(menu, false)
                 mBinding!!.qrCode.visibility = View.VISIBLE
-                mBinding!!.newGroup.visibility = if (presenter.isAddGroupEnabled()) View.VISIBLE else View.GONE
+                mBinding!!.newGroup.visibility = View.VISIBLE
                 searchBackPressedCallback.isEnabled = true
                 return true
             }

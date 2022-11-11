@@ -71,7 +71,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsPushNotifications.setOnCheckedChangeListener(save)
             settingsStartup.setOnCheckedChangeListener(save)
             settingsPersistNotification.setOnCheckedChangeListener(save)
-            settingsNewGroup.setOnCheckedChangeListener(save)
             settingsTyping.setOnCheckedChangeListener(save)
             settingsRead.setOnCheckedChangeListener(save)
             settingsBlockRecord.setOnCheckedChangeListener(save)
@@ -140,7 +139,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             runOnStartup = binding.settingsStartup.isChecked,
             enablePushNotifications = binding.settingsPushNotifications.isChecked,
             enablePermanentService = binding.settingsPersistNotification.isChecked,
-            enableAddGroup = binding.settingsNewGroup.isChecked,
             enableTypingIndicator = binding.settingsTyping.isChecked,
             enableReadIndicator = binding.settingsRead.isChecked,
             isRecordingBlocked = binding.settingsBlockRecord.isChecked,
@@ -179,7 +177,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         binding?.apply {
             settingsPushNotifications.isChecked = viewModel.enablePushNotifications
             settingsPersistNotification.isChecked = viewModel.enablePermanentService
-            settingsNewGroup.isChecked = viewModel.enableAddGroup
             settingsStartup.isChecked = viewModel.runOnStartup
             settingsTyping.isChecked = viewModel.enableTypingIndicator
             settingsRead.isChecked = viewModel.enableReadIndicator
