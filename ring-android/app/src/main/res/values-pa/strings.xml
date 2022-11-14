@@ -232,7 +232,6 @@
   <string name="no_contact_request">ਕੋਈ ਸੰਪਰਕ ਬੇਨਤੀ ਨਹੀਂ ਭੇਜੀ ਗਈ</string>
   <string name="conversation_placeholder">ਤੁਸੀਂ ਫ਼ਿਲਹਾਲ ਕਿਸੇ ਨਾਲ ਗੱਲਬਾਤ ਨਹੀਂ ਕੀਤੀ</string>
   <string name="contact_request_sent">ਸੰਪਰਕ ਬੇਨਤੀ ਭੇਜੀ ਗਈ</string>
-  <string name="start_conversation">ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ</string>
   <string name="search_results">ਖੋਜ ਨਤੀਜੇ</string>
   <string name="tv_contact_row_header">ਸੰਪਰਕ</string>
   <string name="gallery_error_title">ਕੋਈ ਗੈਲਰੀ ਐਪ ਨਹੀਂ ਮਿਲੀ</string>
@@ -272,7 +271,7 @@
   <string name="pref_darkTheme_summary">ਸਿਸਟਮ ਦੀ ਮਰਜ਼ੀ ਦੀ ਬਜਾਏ ਹਮੇਸ਼ਾ ਕਾਲਾ ਥੀਮ ਚਾਲੂ ਕਰੋ</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">ਗੱਲਾਂਬਾਤਾਂ</string>
-  <string name="navigation_item_contact_request">ਸੰਪਰਕ ਬੇਨਤੀਆਂ</string>
+  <string name="navigation_item_contact_request">ਸੱਦੇ</string>
   <string name="navigation_item_account">ਖਾਤਾ</string>
   <string name="search_results_public_directory">ਜਨਤਕ ਨਾਮਾਵਲੀ</string>
   <!--TV-->

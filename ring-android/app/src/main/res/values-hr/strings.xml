@@ -196,6 +196,7 @@
   <string name="menu_delete">Izbriši</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Razgovori</string>
+  <string name="navigation_item_contact_request">Pozivi</string>
   <string name="navigation_item_account">Račun</string>
   <!--TV-->
   <string name="tv_audio_play">izvodi</string>

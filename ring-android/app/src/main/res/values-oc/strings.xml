@@ -82,7 +82,7 @@
   <string name="menu_delete">Suprimir</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Discutidas</string>
-  <string name="navigation_item_contact_request">Demanda de contacte</string>
+  <string name="navigation_item_contact_request">Invitacions</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
   <string name="tv_send_image_dialog_message">Enviar un imatge ?</string>

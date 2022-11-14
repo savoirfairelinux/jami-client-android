@@ -32,6 +32,7 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_account_settings">Accountinstellingen</string>
   <string name="menu_item_plugin_list">Plugins instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
   <string name="menu_item_about">Over Jami</string>
@@ -230,7 +231,6 @@
   <string name="no_contact_request">Geen contactverzoek verstuurd</string>
   <string name="conversation_placeholder">U heeft nog geen gesprekken</string>
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
-  <string name="start_conversation">Gesprek beginnen</string>
   <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
@@ -270,7 +270,7 @@
   <string name="pref_darkTheme_summary">Donker thema altijd gebruiken in plaats van systeemgedrag volgen</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Gesprekken</string>
-  <string name="navigation_item_contact_request">Contactverzoeken</string>
+  <string name="navigation_item_contact_request">Uitnodigingen</string>
   <string name="navigation_item_account">Account</string>
   <string name="search_results_public_directory">Openbare catalogus</string>
   <!--TV-->

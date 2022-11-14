@@ -1,40 +1,338 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">ข้อเสนอแนะ</string>
+  <string name="report"><u>ส่งอีเมลถึงเรา</u></string>
+  <string name="section_license">ใบอนุญาต</string>
+  <string name="sponsor_section">Jami เป็นซอฟต์แวร์ฟรีที่พัฒนาและสนับสนุนโดย</string>
+  <string name="copyright_section">ลิขสิทธิ์</string>
+  <string name="contribute_section">มีส่วนช่วย</string>
+  <string name="version_section">เวอร์ชั่น</string>
+  <string name="no_email_app_installed">ไม่พบแอปอีเมล ติดตั้งแอปเพื่อส่งรายงานถึงเรา</string>
+  <string name="no_browser_app_installed">ไม่พบแอปเว็บเบราว์เซอร์ ติดตั้งแอปเพื่อดูหน้านี้</string>
+  <string name="email_chooser_title">ส่งอีเมลโดยใช้...</string>
+  <string name="website_chooser_title">ดูเว็บไซต์โดยใช้...</string>
+  <string name="license">ซอฟต์แวร์นี้มีให้ "ตามที่เป็น" โดยไม่มีการรับประกันใดๆ สำหรับรายละเอียด โปรดดูที่&lt;u&gt; GNU General Public License เวอร์ชัน 3 หรือใหม่กว่า</string>
+  <string name="description">Jami เป็นซอฟต์แวร์ฟรีสำหรับการสื่อสารแบบสากลซึ่งเคารพเสรีภาพและความเป็นส่วนตัวของผู้ใช้</string>
+  <string name="credits">เครดิต</string>
+  <string name="pip_title">การประชุม Jami</string>
+  <string name="call_service_description">บริการนี้จำเป็นเพื่อให้การโทรของคุณทำงานอยู่เบื้องหน้า มันทำงานระหว่างการโทรเท่านั้น</string>
+  <string name="data_transfer_service_description">บริการนี้จำเป็นสำหรับการแสดงการแจ้งเตือนอย่างต่อเนื่องระหว่างการถ่ายโอนไฟล์ มันทำงานเฉพาะระหว่างการถ่ายโอนไฟล์</string>
   <!--About dialog-->
+  <string name="developed_by">พัฒนาโดย</string>
+  <string name="designed_by">ออกแบบโดย</string>
+  <string name="ringtones_by">เสียงเรียกเข้าโดย</string>
   <!--RingActivity-->
+  <string name="error_no_network">ไม่มีการเชื่อมต่อเครือข่าย</string>
+  <string name="error_account_offline">บัญชีออฟไลน์อยู่</string>
+  <string name="error_mobile_network_available_but_disabled">โปรดให้สิทธิ์การเข้าถึงเครือข่ายเซลลูลาร์ในหน้าจอการตั้งค่า</string>
   <!--AB menus-->
+  <string name="ab_action_chat">ข้อความ</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">ติดต่อสอบถาม</string>
+  <string name="menu_item_accounts">จัดการบัญชี</string>
+  <string name="menu_item_account">จัดการบัญชี</string>
+  <string name="menu_item_settings">การตั้งค่า</string>
+  <string name="menu_item_plugin_list">การตั้งค่าปลั๊กอิน</string>
+  <string name="menu_item_share">แบ่งปันบัญชีของฉัน</string>
+  <string name="menu_item_about">เกี่ยวกับ Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">หมุนหมายเลข</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%dบทสนทนา</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">ค้นหาชื่อหรือหมายเลขโทรศัพท์...</string>
+  <string name="choose_number">เลือกหมายเลข</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">สายเรียกเข้าที่ไม่ได้รับ</string>
+  <string name="notif_missed_outgoing_call">สายที่ไม่ได้รับ</string>
+  <string name="notif_incoming_call_title">สายเรียกเข้าจาก%1$s</string>
+  <string name="notif_incoming_call">สายเรียกเข้า</string>
+  <string name="notif_outgoing_call_title">โทรออกไปยัง%1$s</string>
+  <string name="notif_outgoing_call">โทรออก</string>
+  <string name="notif_current_call_title">กำลังโทรอยู่กับ%1$s</string>
+  <string name="notif_current_call">กำลังโทร</string>
+  <string name="notif_channel_call_in_progress">กำลังโทรอยู่</string>
+  <string name="notif_channel_calls">โทร</string>
+  <string name="notif_channel_missed_calls">สายที่ไม่ได้รับ</string>
+  <string name="notif_channel_incoming_calls">สายเรียกเข้า</string>
+  <string name="notif_channel_messages">ข้อความ</string>
+  <string name="notif_channel_requests">คำขอ</string>
+  <string name="notif_channel_file_transfer">การถ่ายโอนไฟล์</string>
+  <string name="notif_channel_sync">การซิงโครไนซ์ข้อมูล</string>
+  <string name="notif_channel_background_service">บริการอยู่เบื้องหลัง</string>
+  <string name="notif_channel_background_service_descr">อนุญาตให้รับสายและข้อความได้ตลอดเวลา</string>
+  <string name="notif_group_calls">โทร</string>
+  <string name="notif_background_service">Jami กำลังทำงานในเบื้องหลัง</string>
+  <string name="notif_mark_as_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
+  <string name="notif_dismiss">อนุญาตให้ออกไป</string>
+  <string name="notif_reply">ตอบกลับ</string>
+  <string name="notif_incoming_file_transfer_title">ไฟล์ขาเข้าจาก%1$s</string>
+  <string name="notif_outgoing_file_transfer_title">กำลังส่งไฟล์ไปที่%1$s</string>
+  <string name="notif_incoming_picture">ภาพจาก%1$s</string>
+  <string name="notif_sync_title">กำลังซิงค์ข้อมูล…</string>
+  <string name="notif_location_title">แชร์ตำแหน่งกับ%1$s</string>
+  <string name="location_share_contact">แชร์ตำแหน่งกับ%1$s</string>
+  <string name="notif_location_remaining">%1$dนาทีที่เหลือ</string>
+  <string name="notif_location_action_stop">หยุดแชร์ตำแหน่ง</string>
+  <string name="location_share_action_start">เริ่มแบ่งปัน</string>
+  <string name="location_share_action_stop">หยุดแบ่งปัน</string>
+  <string name="location_share_about_title">ข้อมูลแผนที่</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">คุณ:</string>
+  <string name="action_call_hangup">วางสาย</string>
+  <string name="action_call_maximize">ทำให้สูงสุด</string>
+  <string name="action_call_minimize">ลด</string>
+  <string name="action_call_mute">ปิดเสียง</string>
+  <string name="action_call_unmute">เปิดเสียง</string>
+  <string name="ongoing_call">กำลังโทร</string>
+  <string name="hist_in_call">สายเรียกเข้าของ%1$s</string>
+  <string name="hist_out_call">การโทรออกของ%1$s</string>
+  <string name="start_error_title">เริ่ม Jami ไม่ได้ !</string>
+  <string name="start_error_mic_required">Jami ต้องได้รับอนุญาตจากไมโครโฟนจึงจะใช้งานได้</string>
+  <string name="action_call_accept">รับสาย</string>
+  <string name="action_call_accept_audio">ตอบแบบเสียง</string>
+  <string name="action_call_accept_video">คำตอบในวิดีโอ</string>
+  <string name="action_call_hold_accept">พักสายและรับสายเสียง</string>
+  <string name="action_call_hold_accept_video">พักสายและรับสายวิดีโอ</string>
+  <string name="action_call_end_accept">วางสายและรับสาย</string>
+  <string name="action_call_decline">ปฏิเสธ</string>
+  <string name="action_call_mic_mute">ปิดเสียงไมโครโฟน</string>
+  <string name="action_load_plugin">โหลดปลั๊กอิน</string>
+  <string name="ab_action_speakerphone">เปิดใช้งานลำโพง</string>
+  <string name="ab_action_contact_add">เพิ่มในรายชื่อติดต่อ</string>
+  <string name="ab_action_contact_add_question">เพิ่มในรายชื่อติดต่อไหม</string>
+  <string name="ab_action_audio_call">การโทรด้วยเสียง</string>
+  <string name="ab_action_video_call">การสนทนาทางวิดีโอ</string>
+  <string name="ab_action_change_screen_orientation">เปลี่ยนการวางแนวหน้าจอ</string>
+  <string name="share_via">แบ่งปันผ่าน</string>
+  <string name="write_a_message">เขียนข้อความ</string>
+  <string name="scan_qr">สแกนคิวอาร์โค้ด</string>
+  <string name="qr_code">คิวอาร์โค้ด</string>
+  <string name="ab_action_flipcamera">พลิกกล้อง</string>
+  <string name="ab_action_hidepreview">ซ่อนตัวอย่าง</string>
+  <string name="remote_recording">กำลังบันทึก…%s</string>
   <!--Text messages-->
+  <string name="send_message">ส่งข้อความ</string>
+  <string name="message_sending">กำลังส่งข้อความ…</string>
+  <string name="message_failed">ล้มเหลว</string>
+  <string name="time_just_now">เมื่อกี้</string>
   <string name="send_file">ส่งไฟล์</string>
+  <string name="select_media">เปิดแกลเลอรี่</string>
+  <string name="hist_file_sent">ส่งไฟล์แล้ว</string>
+  <string name="hist_file_received">ไฟล์ที่ได้รับ</string>
+  <string name="conversation_send_audio">บันทึกคลิปเสียง</string>
+  <string name="conversation_send_video">บันทึกวิดีโอคลิป</string>
+  <string name="conversation_share_location">แชร์ตำแหน่ง</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">การอนุญาตกล้อง</string>
+  <string name="permission_dialog_camera_message">การสนทนาทางวิดีโอต้องได้รับอนุญาตจากกล้องจึงจะใช้งานได้ โปรดพิจารณาเปิดใช้งาน</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">ข้อผิดพลาด</string>
+  <string name="ringtone_error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
+  <string name="ringtone_error_size_too_big">ไฟล์นี้ใหญ่เกินไป ขนาดสูงสุดคือ%1$dkB.</string>
+  <string name="ringtone_custom_prompt">ตั้งเสียงเรียกเข้าแบบกำหนดเอง</string>
+  <string name="ringtone_custom_label">กำหนดเอง</string>
+  <string name="ringtone_jami_tones">Jami เสียงสูงต่ำ</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami ต้องการสิทธิ์ \"อ่านรายชื่อติดต่อ\" เพื่อเปิดใช้คุณลักษณะนี้ โปรดยินยอมให้</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami ต้องการสิทธิ์ \"เขียนบันทึกการโทร\" เพื่อเปิดใช้งานคุณสมบัตินี้ โปรดยินยอมให้</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">สแกนรหัส QR ของบัญชีที่คุณต้องการเพิ่ม</string>
+  <string name="title_activity_qrcode">แบ่งปันบัญชีของฉัน</string>
+  <string name="error_scan_no_camera_permissions">เครื่องสแกน QR ต้องได้รับอนุญาตจากกล้องในการทำงาน</string>
+  <string name="tab_code">รหัสของฉัน</string>
+  <string name="tab_scan">สแกนรหัส</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">ล้างประวัติหรือไม่</string>
+  <string name="clear_history_dialog_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
+  <string name="clear_history_completed">ประวัติถูกล้าง</string>
+  <string name="clear_history">ชัดเจน</string>
   <!--Conversation-->
+  <string name="conversation_details">รายละเอียดการติดต่อ</string>
+  <string name="conversation_action_delete_this">ลบบทสนทนานี้</string>
+  <string name="conversation_action_delete_this_title">ลบการสนทนานี้ไหม</string>
+  <string name="conversation_action_delete_this_message">การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
+  <string name="conversation_action_history_clear">ล้างประวัติ</string>
+  <string name="conversation_action_history_clear_title">ล้างประวัติการสนทนาไหม</string>
+  <string name="conversation_action_history_clear_message">สิ่งนี้จะล้างประวัติการสนทนาอย่างแน่นอน</string>
+  <string name="conversation_action_remove_this">ลบผู้ติดต่อ</string>
+  <string name="conversation_action_remove_this_title">ลบรายชื่อติดต่อนี้ไหม</string>
+  <string name="conversation_action_remove_this_message">การดำเนินการนี้จะลบผู้ติดต่อและล้างประวัติการสนทนาอย่างแน่นอน</string>
+  <string name="conversation_action_copy_peer_number">คัดลอกหมายเลข</string>
+  <string name="conversation_action_select_peer_number">เลือกหมายเลข</string>
+  <string name="conversation_action_block_this">บล็อคการติดต่อ</string>
+  <string name="conversation_action_go_to_call">กลับไปที่สายที่สนทนาอยู่</string>
+  <string name="conversation_open_file_error">ไม่มีโปรแกรมติดตั้งที่สามารถเปิดไฟล์ประเภทนี้ได้</string>
+  <string name="clip_contact_uri">ที่อยู่ติดต่อ</string>
+  <string name="block_contact_dialog_title">ปิดกั้น%1$s</string>
+  <string name="conversation_contact_is_typing">ผู้ติดต่อกำลังพิมพ์…</string>
+  <string name="conversation_info_contact_you">คุณ</string>
+  <string name="conversation_members">สมาชิก</string>
+  <string name="conversation_syncing">กำลังดาวน์โหลดการสนทนาจากเพียร์</string>
+  <string name="conversation_preference_color">สีของการสนทนา</string>
+  <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
+  <string name="conversation_type_contact">๋ติดต่อ Jami</string>
+  <string name="conversation_type_private">กลุ่มส่วนตัว</string>
+  <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
+  <string name="conversation_contact_added">%1$sเข้าร่วม</string>
+  <string name="conversation_contact_banned">%1$sถูกห้าม</string>
+  <string name="conversation_search_hint">ค้นหาบทสนทนา</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">เพิ่ม%1$s?</string>
+  <string name="prompt_new_password">รหัสผ่านใหม่</string>
+  <string name="prompt_new_password_optional">รหัสผ่านใหม่ (ไม่บังคับ)</string>
+  <string name="prompt_new_password_repeat">รหัสผ่านใหม่ซ้ำ</string>
+  <string name="account_create_title">สร้างบัญชี Jami</string>
+  <string name="prompt_new_username">ใส่ชื่อผู้ใช้ใหม่</string>
+  <string name="prompt_hint_username">ชื่อผู้ใช้</string>
+  <string name="help_password_choose">เลือกรหัสผ่านที่รัดกุมซึ่งคุณจะต้องจำไว้เพื่อปกป้องบัญชี Jami ของคุณ</string>
+  <string name="help_password_enter">ป้อนรหัสผ่านบัญชี Jami หลักของคุณ</string>
+  <string name="help_server_enter">ป้อน URL ของเซิร์ฟเวอร์การจัดการ</string>
+  <string name="help_pin_enter">ป้อน PIN จากบัญชี Jami อื่นที่กำหนดค่าไว้ ใช้คุณสมบัติ \"ส่งออกบัญชี Jami\" เพื่อรับ PIN</string>
+  <string name="wizard_next">ต่อไป</string>
+  <string name="wizard_back">กลับ</string>
+  <string name="wizard_skip">ข้าม</string>
+  <string name="hist_contact_invited">เชิญติดต่อ</string>
+  <string name="hist_contact_added">เพิ่มผู้ติดต่อ</string>
+  <string name="hist_contact_banned">ห้ามติดต่อ</string>
+  <string name="hist_invitation_received">ได้รับคำเชิญ</string>
   <!--Account Summary-->
+  <string name="profile">ประวัติโดยย่อ</string>
+  <string name="profile_name">ชื่อโปรไฟล์</string>
+  <string name="profile_message_warning">โปรไฟล์ของคุณจะถูกแชร์กับผู้ติดต่อของคุณเท่านั้น</string>
+  <string name="open_the_gallery">เปิดแกลเลอรี่</string>
+  <string name="take_a_photo">ถ่ายรูป</string>
+  <string name="profile_name_hint">ใส่ชื่อของคุณ</string>
+  <string name="registered_name">ชื่อจดทะเบียน</string>
+  <string name="no_registered_name">ไม่ระบุชื่อ</string>
+  <string name="identity">ตัวตน</string>
+  <string name="account">บัญชี</string>
+  <string name="link_new_device">เชื่อมโยงอุปกรณ์ใหม่</string>
+  <string name="devices">อุปกรณ์ที่เชื่อมโยง</string>
+  <string name="total_devices">อุปกรณ์ทั้งหมด:</string>
   <!--Share fragment-->
+  <string name="share_message">สแกนรหัสนี้ด้วย Jami</string>
+  <string name="share_message_no_account">โปรดเลือกบัญชีที่จะแบ่งปัน</string>
+  <string name="share_your_account_information">แบ่งปันข้อมูลการติดต่อของฉัน</string>
+  <string name="share_label">แบ่งปัน</string>
+  <string name="generic_error_migration">ข้อผิดพลาด</string>
+  <string name="generic_error_migration_message">เกิดข้อผิดพลาดระหว่างการย้ายข้อมูล</string>
+  <string name="title_share_with">ร่วมกับ…</string>
   <!--Pending contact requests-->
+  <string name="accept">ยอมรับ</string>
+  <string name="refuse">ปฏิเสธ</string>
+  <string name="block">ปิดกั้น</string>
+  <string name="contact_request_title">คำขอติดต่อใหม่</string>
+  <string name="contact_request_account">สำหรับ%1$s</string>
+  <string name="no_requests">คุณไม่มีคำขอติดต่อ</string>
+  <string name="message_contact_not_trusted_yet">%sยังไม่อยู่ในรายชื่อติดต่อของคุณ\nคุณยอมรับหรือปฏิเสธคำขอติดต่อนี้หรือไม่</string>
+  <string name="message_contact_not_trusted">%sไม่อยู่ในรายชื่อติดต่อของคุณ\nเพิ่มที่อยู่ติดต่อใหม่หรือไม่</string>
   <!--Send contact requests-->
+  <string name="send_request_button">ส่ง</string>
+  <string name="send_request_title">ส่งคำขอติดต่อ</string>
+  <string name="send_request_msg">คุณต้องส่งคำขอติดต่อเพื่อสื่อสารกับผู้ใช้รายนี้ ตราบใดที่ผู้ติดต่อของคุณไม่ยอมรับคำขอ คุณสามารถส่งข้อความได้ แต่เขาจะไม่สามารถตอบได้</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">ไม่มีผู้ติดต่อที่ถูกบล็อก</string>
   <!--Smartlist-->
+  <string name="no_contact_request">ไม่มีการส่งคำขอติดต่อ</string>
+  <string name="conversation_placeholder">คุณยังไม่มีการสนทนาเลย</string>
+  <string name="contact_request_sent">ส่งคำขอติดต่อแล้ว</string>
+  <string name="search_results">ผลการค้นหา</string>
+  <string name="tv_contact_row_header">ติดต่อ</string>
+  <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>
+  <string name="gallery_error_message">ไม่พบแอปพลิเคชันบนอุปกรณ์ที่จะเปิด Gallery</string>
+  <string name="generic_error">เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ</string>
   <!--File Transfer-->
+  <string name="invalid_file">ไฟล์ไม่ถูกต้อง</string>
+  <string name="not_able_to_write_file">เขียนไฟล์ไม่ได้</string>
+  <string name="file_transfer_status_created">เริ่มต้นการถ่ายโอน</string>
+  <string name="file_transfer_status_unsupported">ไม่รองรับ</string>
+  <string name="file_transfer_status_wait_peer_acceptance">รอการยอมรับจากเพื่อน</string>
+  <string name="file_transfer_status_wait_host_acceptance">รอรับเจ้าบ้าน</string>
+  <string name="file_transfer_status_ongoing">ต่อเนื่อง</string>
+  <string name="file_transfer_status_finished">เสร็จ</string>
+  <string name="file_transfer_status_closed_by_host">ปิดโดยเจ้าภาพ</string>
+  <string name="file_transfer_status_closed_by_peer">ใกล้ๆกัน</string>
+  <string name="file_transfer_status_invalid_pathname">ชื่อพาธไม่ถูกต้อง</string>
+  <string name="file_transfer_status_unjoinable_peer">เพียร์ที่ไม่เข้าร่วม</string>
   <string name="file_transfer_status_cancelled">ยกเลิกแล้ว</string>
+  <string name="file_transfer_status_error">ล้มเหลวเนื่องจากข้อผิดพลาด</string>
+  <string name="file_transfer_status_timed_out">หมดเวลา</string>
+  <string name="file_saved_in">ไฟล์ที่บันทึกไว้ใน%s</string>
+  <string name="file_saved_successfully">บันทึกไฟล์เรียบร้อยแล้ว</string>
+  <string name="file_download">ดาวน์โหลด</string>
+  <string name="no_space_left_on_device">ไม่มีพื้นที่เหลือบนอุปกรณ์</string>
+  <string name="title_media_viewer">โปรแกรมดูสื่อ</string>
+  <string name="menu_file_open">เปิดไฟล์</string>
+  <string name="menu_file_download">Download file</string>
+  <string name="menu_file_save">บันทึกไฟล์</string>
+  <string name="menu_file_delete">ลบไฟล์</string>
+  <string name="menu_file_share">แชร์ไฟล์</string>
+  <string name="menu_message_copy">สำเนา</string>
+  <string name="menu_message_delete">ลบข้อความ</string>
+  <string name="menu_message_cancel">ยกเลิกข้อความ</string>
+  <string name="menu_message_reply">ตอบกลับ</string>
+  <string name="menu_delete">ลบ</string>
+  <string name="pref_darkTheme_title">ธีมมืด</string>
+  <string name="pref_darkTheme_summary">เปิดใช้งานธีมสีเข้มเสมอแทนที่จะใช้พฤติกรรมของระบบ</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">บทสนทนา</string>
+  <string name="navigation_item_contact_request">คำเชิญ</string>
+  <string name="navigation_item_account">บัญชี</string>
+  <string name="search_results_public_directory">ไดเรกทอรีสาธารณะ</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">ส่งข้อความเสียงไหม</string>
+  <string name="tv_send_image_dialog_message">ส่งภาพไหม</string>
+  <string name="tv_send_video_dialog_message">ส่งวิดีโอไหม</string>
+  <string name="tv_media_preview">ดูตัวอย่าง</string>
+  <string name="tv_audio_play">เล่น</string>
+  <string name="tv_audio_pause">หยุด</string>
+  <string name="tv_dialog_send">ส่ง</string>
+  <string name="tv_audio_recording">กำลังบันทึก…</string>
+  <string name="tv_send_text">ส่งข้อความ</string>
+  <string name="tv_send_audio">ส่งเสียง</string>
+  <string name="tv_send_video">ส่งสื่อ</string>
+  <string name="tv_action_more">มากกว่า</string>
+  <string name="conversation_input_speech_hint">พูดอะไรสักอย่าง…</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">ข้อเสนอแนะ</string>
+  <string name="wizard_status_optional">ทางเลือก</string>
+  <string name="wizard_status_required">ที่จำเป็น</string>
+  <string name="wizard_username_info">เลือกชื่อผู้ใช้สำหรับบัญชีของคุณ</string>
+  <string name="wizard_username_button">เลือกชื่อผู้ใช้</string>
+  <string name="wizard_username_skip">ข้ามการเลือกชื่อผู้ใช้</string>
+  <string name="wizard_password_info">รหัสผ่านบัญชี</string>
+  <string name="wizard_password_placeholder">เลือกรหัสผ่านเพื่อเข้ารหัสคีย์บัญชีในอุปกรณ์นี้</string>
+  <string name="wizard_password_button">เลือกรหัสผ่าน</string>
+  <string name="wizard_password_skip">สร้างบัญชี</string>
+  <string name="wizard_password_switch">เข้ารหัสบัญชีด้วยรหัสผ่าน</string>
+  <string name="wizard_password_warning">โปรดทราบว่ารหัสผ่านไม่สามารถกู้คืนได้</string>
+  <string name="wizard_profile_info">โปรไฟล์ถูกแชร์กับผู้ติดต่อเท่านั้น</string>
+  <string name="wizard_profile_button">เก็บประวัติโดยย่อ</string>
+  <string name="wizard_profile_skip">ข้ามไปทำทีหลัง</string>
+  <string name="fab_path_choose">เลือกไฟล์อื่น</string>
+  <string name="chat_plugins">ปลั๊กอินแชท</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">แบ่งปัน</string>
+  <string name="bottomSheet_dialpad_btn">แป้นหมายเลข</string>
+  <string name="bottomSheet_plugins_btn">ปลั๊กอิน</string>
+  <string name="bottomSheet_add_participants_btn">เพิ่ม</string>
+  <string name="bottomSheet_change_camera_btn">เปลี่ยน</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">กล้อง</string>
   <string name="bottomSheet_hangup_btn">สิ้นสุดการโทร</string>
+  <string name="bottomSheet_mute_microphone_btn">ไมโคร</string>
+  <string name="bottomSheet_sound_output_btn">เสียง</string>
+  <string name="bottomSheet_raiseHand_btn">ยกมือ</string>
+  <string name="open_account_plugin_settings">เปิดการตั้งค่าปลั๊กอินบัญชี</string>
+  <string name="open_general_plugin_settings">เปิดการตั้งค่าปลั๊กอินทั่วไป</string>
+  <string name="uninstall">ถอนการติดตั้ง</string>
+  <string name="reset">รีเซ็ต</string>
 </resources>

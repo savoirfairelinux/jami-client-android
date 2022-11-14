@@ -101,7 +101,6 @@
   <string name="menu_message_cancel">संदेश रद्द करें</string>
   <string name="menu_message_reply">जवाब दे</string>
   <!--Bottom Navigation-->
-  <string name="navigation_item_contact_request">संपर्क अनुरोध</string>
   <string name="navigation_item_account">खाता</string>
   <!--TV-->
   <string name="tv_audio_play">शुरू करें</string>

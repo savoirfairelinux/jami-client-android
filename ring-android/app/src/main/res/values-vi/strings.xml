@@ -37,6 +37,7 @@
   <string name="file_transfer_status_cancelled">đã hủy bỏ</string>
   <!--Bottom Navigation-->
   <!--TV-->
+  <string name="tv_audio_play">Phát</string>
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_dialpad_btn">Bàn phím số</string>

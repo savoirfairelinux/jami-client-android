@@ -10,7 +10,10 @@
   <string name="account_username_label">Username</string>
   <!--Plugin Details-->
   <!--Audio Details-->
+  <string name="account_audio_label">Âm thanh</string>
+  <string name="account_ringtone_label">Nhạc chuông</string>
   <!--Video Details-->
+  <string name="account_video_label">Video</string>
   <!--Advanced Details-->
   <!--Security Details-->
   <!--SRTP Details-->

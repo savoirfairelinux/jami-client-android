@@ -84,6 +84,7 @@
   <string name="menu_delete">מחיקה</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">דיונים</string>
+  <string name="navigation_item_contact_request">הזמנות</string>
   <string name="navigation_item_account">חשבון</string>
   <!--TV-->
   <string name="tv_dialog_send">שליחה</string>

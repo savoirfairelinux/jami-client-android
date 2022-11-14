@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">アカウント管理</string>
   <string name="menu_item_account">アカウントの管理</string>
   <string name="menu_item_settings">設定</string>
+  <string name="menu_item_advanced_settings">詳細設定</string>
+  <string name="menu_item_account_settings">アカウント設定</string>
   <string name="menu_item_plugin_list">プラグイン設定</string>
   <string name="menu_item_share">アカウントの共有</string>
   <string name="menu_item_about">Jamiについて</string>
@@ -247,7 +249,6 @@
   <string name="no_contact_request">連絡先のリクエストは送信していません</string>
   <string name="conversation_placeholder">まだ会話がありません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
-  <string name="start_conversation">会話を開始</string>
   <string name="search_results">検索結果</string>
   <string name="tv_contact_row_header">連絡先</string>
   <string name="gallery_error_title">ギャラリーアプリがありません</string>
@@ -288,7 +289,7 @@
   <string name="pref_darkTheme_summary">システムの設定を使用するのではなく、常にダークテーマを有効にします</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会話</string>
-  <string name="navigation_item_contact_request">連絡先のリクエスト</string>
+  <string name="navigation_item_contact_request">招待</string>
   <string name="navigation_item_account">アカウント</string>
   <string name="search_results_public_directory">公開台帳</string>
   <!--TV-->

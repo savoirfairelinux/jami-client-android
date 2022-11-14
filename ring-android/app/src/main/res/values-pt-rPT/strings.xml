@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
+  <string name="menu_item_advanced_settings">Configurações avançadas</string>
+  <string name="menu_item_account_settings">Configurações da Conta</string>
   <string name="menu_item_plugin_list">Configurações dos complementos</string>
   <string name="menu_item_share">Partilhar a minha conta</string>
   <string name="menu_item_about">Sobre o Jami</string>
@@ -249,7 +251,6 @@
   <string name="no_contact_request">Nenhuma solicitação de contacto enviada</string>
   <string name="conversation_placeholder">Você ainda não tem conversas</string>
   <string name="contact_request_sent">A solicitação de contacto foi enviada</string>
-  <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Pesquisa</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">Não foi encontrada nenhuma app de Galeria</string>
@@ -290,7 +291,7 @@
   <string name="pref_darkTheme_summary">Ativar sempre o tema escuro em vez da configuração do sistema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversas</string>
-  <string name="navigation_item_contact_request">Solicitações de contactos</string>
+  <string name="navigation_item_contact_request">Convites</string>
   <string name="navigation_item_account">Conta</string>
   <string name="search_results_public_directory">Diretório público</string>
   <!--TV-->

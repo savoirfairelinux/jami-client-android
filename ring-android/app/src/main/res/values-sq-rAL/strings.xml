@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Administroni llogari</string>
   <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
+  <string name="menu_item_advanced_settings">Rregullime të Mëtejshme</string>
+  <string name="menu_item_account_settings">Rregullime Llogarie</string>
   <string name="menu_item_plugin_list">Rregullime Shtojcash</string>
   <string name="menu_item_share">Ndaje llogarinë time</string>
   <string name="menu_item_about">Mbi Jami-n</string>
@@ -191,6 +193,7 @@
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
   <string name="conversation_contact_banned">%1$s u dëbua</string>
+  <string name="conversation_search_hint">Kërkoni bisedë</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
@@ -253,7 +256,6 @@
   <string name="no_contact_request">S\’është dërguar ndonjë kërkesë kontakti</string>
   <string name="conversation_placeholder">Ende s’keni biseda</string>
   <string name="contact_request_sent">Kërkesa e kontaktit u dërgua</string>
-  <string name="start_conversation">Nisni bisedë</string>
   <string name="search_results">Përfundime Kërkimi</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
@@ -294,7 +296,7 @@
   <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Biseda</string>
-  <string name="navigation_item_contact_request">Kërkesa kontakti</string>
+  <string name="navigation_item_contact_request">Ftesa</string>
   <string name="navigation_item_account">Llogari</string>
   <string name="search_results_public_directory">Drejtori publike</string>
   <!--TV-->

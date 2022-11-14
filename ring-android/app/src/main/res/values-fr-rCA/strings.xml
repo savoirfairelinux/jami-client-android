@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
+  <string name="menu_item_advanced_settings">Paramètres avancés</string>
+  <string name="menu_item_account_settings">Paramètres du compte</string>
   <string name="menu_item_plugin_list">Paramètres des modules d\'extension</string>
   <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
@@ -192,6 +194,7 @@
   <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
+  <string name="conversation_search_hint">Rechercher des conversations</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -254,7 +257,6 @@
   <string name="no_contact_request">Aucune demande de contact n\'a été envoyée</string>
   <string name="conversation_placeholder">Vous n\'avez pas encore de conversations</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
-  <string name="start_conversation">Démarrer une conversation</string>
   <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
   <string name="gallery_error_title">Pas d\'application de Galleries trouvé</string>
@@ -295,7 +297,7 @@
   <string name="pref_darkTheme_summary">Toujours activer le thème sombre plutôt que d\'utiliser les paramètres du système</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversations</string>
-  <string name="navigation_item_contact_request">Demandes de contact</string>
+  <string name="navigation_item_contact_request">Invitations</string>
   <string name="navigation_item_account">Compte</string>
   <string name="search_results_public_directory">Répertoire public </string>
   <!--TV-->

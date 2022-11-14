@@ -34,6 +34,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_item_accounts">Gerenciar contas</string>
   <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
+  <string name="menu_item_advanced_settings">Configurações avançadas</string>
+  <string name="menu_item_account_settings">Configurações da Conta</string>
   <string name="menu_item_plugin_list">Configurações dos complementos</string>
   <string name="menu_item_share">Compartilhar minha conta</string>
   <string name="menu_item_about">Sobre Jami</string>
@@ -250,7 +252,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
   <string name="conversation_placeholder">Você ainda não tem conversas</string>
   <string name="contact_request_sent">Solicitação de contato enviada</string>
-  <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Busca</string>
   <string name="tv_contact_row_header">Contatos</string>
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
@@ -291,7 +292,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="pref_darkTheme_summary">Sempre habilitar tema escuro ao invés de usar o comportamento do sistema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversas</string>
-  <string name="navigation_item_contact_request">Solicitações de contatos</string>
+  <string name="navigation_item_contact_request">Convites</string>
   <string name="navigation_item_account">Conta</string>
   <string name="search_results_public_directory">Diretório público</string>
   <!--TV-->

@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Учетные записи</string>
   <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_advanced_settings">Расширенные настройки</string>
+  <string name="menu_item_account_settings">Настройки аккаунта</string>
   <string name="menu_item_plugin_list">Настройки плагинов</string>
   <string name="menu_item_share">Поделиться своей контактной информацией</string>
   <string name="menu_item_about">О Jami</string>
@@ -250,7 +252,6 @@
   <string name="no_contact_request">Нет запросов на добавление в контакты</string>
   <string name="conversation_placeholder">У вас еще нет бесед</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
-  <string name="start_conversation">Начать беседу</string>
   <string name="search_results">Результаты поиска</string>
   <string name="tv_contact_row_header">Контакты</string>
   <string name="gallery_error_title">Нет приложения Галереи</string>
@@ -291,7 +292,7 @@
   <string name="pref_darkTheme_summary">Всегда включать темную тему вместо использования системных параметров.</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Разговоры</string>
-  <string name="navigation_item_contact_request">Запросы в контакты</string>
+  <string name="navigation_item_contact_request">Приглашения</string>
   <string name="navigation_item_account">Учётная запись</string>
   <string name="search_results_public_directory">Публичный каталог</string>
   <!--TV-->

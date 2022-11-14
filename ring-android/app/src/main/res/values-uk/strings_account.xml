@@ -149,6 +149,7 @@
   <string name="account_sip_success_message">Ви успішно зареєстрували обліковий запис SIP</string>
   <string name="account_sip_register_anyway">Зареєструвати все одно</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Налаштування облікового запису</string>
   <string name="account_tv_advance_settings_header">Розширені налаштування</string>
   <string name="account_tv_about">Про Jami</string>
   <string name="tv_about_version">Версія</string>

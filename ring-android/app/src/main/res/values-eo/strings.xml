@@ -100,7 +100,6 @@
   <string name="send_request_button">Sendi</string>
   <!--Blacklist-->
   <!--Smartlist-->
-  <string name="start_conversation">Ekkonversaciu</string>
   <string name="tv_contact_row_header">Kontaktoj</string>
   <!--File Transfer-->
   <string name="file_transfer_status_finished">Finita</string>

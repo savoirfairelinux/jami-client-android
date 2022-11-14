@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_account">Hesabı yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
+  <string name="menu_item_advanced_settings">Gelişmiş Ayarlar</string>
+  <string name="menu_item_account_settings">Hesap Ayarları</string>
   <string name="menu_item_plugin_list">Eklenti Ayarları</string>
   <string name="menu_item_share">Hesabımı paylaş</string>
   <string name="menu_item_about">Jami Hakkında</string>
@@ -248,7 +250,6 @@
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
   <string name="conversation_placeholder">Henüz konuşmanız yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
-  <string name="start_conversation">Konuşma başlat </string>
   <string name="search_results">Arama Sonuçları</string>
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>
@@ -289,7 +290,7 @@
   <string name="pref_darkTheme_summary">Sistem davranışını kullanmak yerine her zaman koyu temayı etkinleştir</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konuşmalar</string>
-  <string name="navigation_item_contact_request">İletişim istekleri</string>
+  <string name="navigation_item_contact_request">Davetiyeler</string>
   <string name="navigation_item_account">Hesap</string>
   <string name="search_results_public_directory">Aleni dizin</string>
   <!--TV-->

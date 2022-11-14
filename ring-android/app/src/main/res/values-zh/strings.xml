@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">管理账户</string>
   <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">設定</string>
+  <string name="menu_item_advanced_settings">高级设置</string>
+  <string name="menu_item_account_settings">帳號設定</string>
   <string name="menu_item_plugin_list">插件设置</string>
   <string name="menu_item_share">分享我的帳號</string>
   <string name="menu_item_about">关于 Jami</string>
@@ -187,6 +189,7 @@
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
   <string name="conversation_contact_banned">%1$s 已被封鎖</string>
+  <string name="conversation_search_hint">在会话中搜索</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密碼</string>
@@ -249,7 +252,6 @@
   <string name="no_contact_request">未有送出的聯絡人請求</string>
   <string name="conversation_placeholder">您当前没有会话</string>
   <string name="contact_request_sent">聯絡人請求已傳送</string>
-  <string name="start_conversation">发起会话</string>
   <string name="search_results">搜索结果</string>
   <string name="tv_contact_row_header">聯絡人</string>
   <string name="gallery_error_title">未发现图库应用</string>
@@ -290,7 +292,7 @@
   <string name="pref_darkTheme_summary">总是使用黑色主题，而不是跟随系统</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">對話</string>
-  <string name="navigation_item_contact_request">联系人请求</string>
+  <string name="navigation_item_contact_request">邀請</string>
   <string name="navigation_item_account">帳號</string>
   <string name="search_results_public_directory">公共目录</string>
   <!--TV-->

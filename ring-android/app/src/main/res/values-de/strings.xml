@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_advanced_settings">Erweiterte Einstellungen</string>
   <string name="menu_item_plugin_list">Plugin-Einstellungen</string>
   <string name="menu_item_share">Mein Konto teilen</string>
   <string name="menu_item_about">Über Jami</string>
@@ -191,6 +192,7 @@
   <string name="conversation_contact_added">%1$s ist beigetreten</string>
   <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
   <string name="conversation_contact_banned">%1$s wurde blockiert</string>
+  <string name="conversation_search_hint">Unterhaltung suchen</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -253,7 +255,6 @@
   <string name="no_contact_request">Keine Kontaktanfrage gesendet</string>
   <string name="conversation_placeholder">Sie haben bisher noch keine Unterhaltungen</string>
   <string name="contact_request_sent">Kontaktanfrage gesendet</string>
-  <string name="start_conversation">Unterhaltung starten</string>
   <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">Keine Galerie-App gefunden</string>
@@ -294,7 +295,6 @@
   <string name="pref_darkTheme_summary">Immer das dunkle Design aktivieren, anstatt das Systemverhalten zu verwenden</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Unterhaltungen</string>
-  <string name="navigation_item_contact_request">Kontaktanfragen</string>
   <string name="navigation_item_account">Konto</string>
   <string name="search_results_public_directory">Öffentliches Verzeichnis</string>
   <!--TV-->
