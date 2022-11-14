@@ -13,14 +13,95 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/list">
+        app:liftOnScrollTargetViewId="@id/list"
+        android:backgroundTint="@color/colorPrimary">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:title="@tools:sample/full_names"
-            app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_chevron_left_24px"
+                android:background="@null"
+                app:tint="@color/text_color_primary_dark" />
+
+            <ImageView
+                android:id="@+id/contact_image"
+                android:layout_width="92dp"
+                android:layout_alignParentTop="true"
+                android:layout_height="92dp"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:transitionName="conversationIcon"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contact_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginBottom="22dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/ubuntu_medium"
+                android:maxLines="1"
+                android:text="title"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:textSize="13sp"
+                android:fontFamily="@font/ubuntu_regular"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:text="Add a description"/>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="#80FFFFFF"
+                android:background="@null"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/description">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Members"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Documents"/>
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </RelativeLayout>
+
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,50 +116,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/contact_image"
-                android:layout_width="92dp"
-                android:layout_height="92dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="16dp"
-                android:transitionName="conversationIcon"
-                tools:src="@tools:sample/avatars" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/info_card"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="@dimen/button_corner_radius"
-                app:cardElevation="2dp">
+                android:layout_height="200dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/info_card"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="16dp"-->
+<!--                app:cardCornerRadius="@dimen/button_corner_radius"-->
+<!--                app:cardElevation="2dp">-->
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/conversation_type"
-                        style="@style/TextAppearance.LeanbackPreference.ListItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/baseline_info_24"
-                        android:drawablePadding="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="Private swarm" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp">-->
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/conversation_id"
-                        style="@style/TextAppearance.LeanbackPreference.ListItem.Secondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="40dp"
-                        android:singleLine="true"
-                        android:ellipsize="middle"
-                        tools:text="swarm:toto" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+<!--                    <com.google.android.material.textview.MaterialTextView-->
+<!--                        android:id="@+id/conversation_type"-->
+<!--                        style="@style/TextAppearance.LeanbackPreference.ListItem"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:drawableStart="@drawable/baseline_info_24"-->
+<!--                        android:drawablePadding="16dp"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        tools:text="Private swarm" />-->
+
+<!--                    <com.google.android.material.textview.MaterialTextView-->
+<!--                        android:id="@+id/conversation_id"-->
+<!--                        style="@style/TextAppearance.LeanbackPreference.ListItem.Secondary"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingStart="40dp"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:ellipsize="middle"-->
+<!--                        tools:text="swarm:toto" />-->
+<!--                </LinearLayout>-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/contact_action_list"
@@ -97,19 +174,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
-                android:background="@color/surface"
                 android:elevation="1dp"
                 android:orientation="vertical"
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_marginTop="8dp"
-                    android:layout_marginHorizontal="16dp"
-                    style="@style/TextAppearance.LeanbackPreference.ListItem.Secondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conversation_members" />
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginHorizontal="16dp"-->
+<!--                    style="@style/TextAppearance.LeanbackPreference.ListItem.Secondary"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/conversation_members" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:clipToPadding="false"
@@ -117,7 +193,6 @@
                     android:id="@+id/contact_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="4"
                     tools:listitem="@layout/item_contact_horizontal" />
@@ -126,13 +201,13 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sendMessage"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="end"
-        app:srcCompat="@drawable/baseline_chat_24" />-->
+        android:layout_gravity="bottom|end"
+        app:srcCompat="@drawable/baseline_group_add_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

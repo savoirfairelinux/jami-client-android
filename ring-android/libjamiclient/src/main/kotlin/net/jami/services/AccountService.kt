@@ -1112,7 +1112,25 @@ class AccountService(
         mDeviceRevocationSubject.onNext(DeviceRevocationResult(accountId, device, state))
     }
 
+    fun setConversationPreferences(accountId: String, conversationId: String, info: Map<String, String>) {
+        JamiService.setConversationPreferences(accountId, conversationId, StringMap.toSwig(info))
+    }
+
+    fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>) {
+        JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
+    }
+
+    fun addConversationMember(accountId: String, conversationId: String, uri: String) {
+        // mExecutor.execute {
+        JamiService.addConversationMember(accountId, conversationId, uri)
+    }
+    fun removeConversationMember(accountId: String, conversationId: String, uri: String) {
+        // mExecutor.execute {
+        JamiService.removeConversationMember(accountId, conversationId, uri)
+    }
+
     fun incomingTrustRequest(accountId: String, conversationId: String,from: String, message: String?, received: Long) {
+
         Log.d(TAG, "incomingTrustRequest: $accountId, $conversationId, $from, $received")
         val account = getAccount(accountId)
         if (account != null) {

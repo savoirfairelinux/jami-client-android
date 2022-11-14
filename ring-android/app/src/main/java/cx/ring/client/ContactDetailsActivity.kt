@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,23 +27,31 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityContactDetailsBinding
 import cx.ring.databinding.ItemContactActionBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.fragments.CallFragment
+import cx.ring.fragments.ContactPickerFragment
+import cx.ring.fragments.ConversationActionsFragment
 import cx.ring.fragments.ConversationFragment
+import cx.ring.fragments.ConversationGalleryFragment
+import cx.ring.fragments.ConversationMembersFragment
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
@@ -53,15 +61,16 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
-import net.jami.services.ConversationFacade
 import net.jami.services.AccountService
 import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @AndroidEntryPoint
-class ContactDetailsActivity : AppCompatActivity() {
+class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     @Inject
     @Singleton lateinit
     var mConversationFacade: ConversationFacade
@@ -226,6 +235,8 @@ class ContactDetailsActivity : AppCompatActivity() {
     private var symbolAction: ContactAction? = null
     private var colorActionPosition = 0
     private var symbolActionPosition = 0
+    private var mPagerAdapter: ScreenSlidePagerAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val path = ConversationPath.fromIntent(intent)
@@ -245,7 +256,7 @@ class ContactDetailsActivity : AppCompatActivity() {
 
         val binding = ActivityContactDetailsBinding.inflate(layoutInflater).also { this.binding = it }
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
@@ -262,15 +273,15 @@ class ContactDetailsActivity : AppCompatActivity() {
                     .withViewModel(vm)
                     .withCircleCrop(true)
                     .build(this))
-                supportActionBar?.title = vm.title
-                binding.contactListLayout.visibility =
-                    if (conversation.isSwarm) View.VISIBLE else View.GONE
+                binding.title.text = vm.title
+//                binding.contactListLayout.visibility =
+//                    if (conversation.isSwarm) View.VISIBLE else View.GONE
                 if (conversation.isSwarm) {
-                    binding.conversationId.text = vm.uri.toString()
+//                    binding.conversationId.text = vm.uri.toString()
                     binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
                     { contact -> copyAndShow(contact.uri.rawUriString) }
                 } else {
-                    binding.conversationId.text = vm.uriTitle
+//                    binding.conversationId.text = vm.uriTitle
                 }
             }) { e ->
                 Log.e(TAG, "e", e)
@@ -293,11 +304,13 @@ class ContactDetailsActivity : AppCompatActivity() {
                 : R.drawable.baseline_group_24)
                 : R.drawable.baseline_person_24;*/
         //adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
-        binding.conversationType.setText(infoString)
+//        binding.conversationType.setText(infoString)
         //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
         colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
             ColorChooserBottomSheet { color ->
                 colorAction!!.iconTint = color
+                binding.appBar.backgroundTintList = ColorStateList.valueOf(color)
+                binding.addMember.backgroundTintList = ColorStateList.valueOf(color)
                 adapter.notifyItemChanged(colorActionPosition)
                 preferences.edit()
                     .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
@@ -306,6 +319,8 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
         val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
         colorAction!!.iconTint = color
+        binding.appBar.backgroundTintList = ColorStateList.valueOf(color)
+        binding.addMember.backgroundTintList = ColorStateList.valueOf(color)
         adapter.actions.add(colorAction!!)
         symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
             EmojiChooserBottomSheet{ emoji ->
@@ -356,9 +371,22 @@ class ContactDetailsActivity : AppCompatActivity() {
                     .show()
             })
         }
-        binding.conversationId.text = conversationUri
-        binding.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
+//        binding.conversationId.text = conversationUri
+//        binding.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
         binding.contactActionList.adapter = adapter
+
+        binding.tabLayout.addOnTabSelectedListener(this)
+        binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
+
+        mPagerAdapter = ScreenSlidePagerAdapter(this, conversation.accountId, conversation.uri)
+        binding.pager.adapter = mPagerAdapter
+        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tabLayout.getTabAt(position)!!.select()
+            }
+        })
     }
 
     private fun copyAndShow(toCopy: String) {
@@ -408,7 +436,29 @@ class ContactDetailsActivity : AppCompatActivity() {
         ))
     }
 
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        binding?.pager?.setCurrentItem(tab!!.position, true)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, accountId: String, conversationId: Uri) : FragmentStateAdapter(fa) {
+        val fragments: List<Fragment> = listOf(
+            ConversationActionsFragment(),
+            ConversationMembersFragment(),
+            ConversationGalleryFragment.newInstance(accountId, conversationId))
+
+            override fun getItemCount(): Int = fragments.size
+
+        override fun createFragment(position: Int): Fragment = fragments[position]
+    }
+
     companion object {
         private val TAG = ContactDetailsActivity::class.simpleName!!
+        const val TAB_ABOUT = 0
+        const val TAB_MEMBER = 1
+        const val TAB_DOCUMENT = 2
     }
 }
