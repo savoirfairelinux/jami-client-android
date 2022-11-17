@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_account">Spravovat účet</string>
   <string name="menu_item_settings">Nastavení</string>
+  <string name="menu_item_advanced_settings">Pokročilá nastavení</string>
+  <string name="menu_item_account_settings">Nastavení účtu</string>
   <string name="menu_item_plugin_list">Nastavení zásuvných modulů</string>
   <string name="menu_item_share">Sdílet můj účet</string>
   <string name="menu_item_about">O Jami</string>
@@ -295,6 +297,7 @@
   <string name="pref_darkTheme_summary">Vždy povolit tmavý motiv namísto použití systémového nastavení</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konverzace</string>
+  <string name="navigation_item_contact_request">Pozvání</string>
   <string name="navigation_item_account">Účet</string>
   <string name="search_results_public_directory">Veřejný adresář</string>
   <!--TV-->

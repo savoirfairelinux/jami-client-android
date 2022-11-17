@@ -266,6 +266,7 @@
   <string name="pref_darkTheme_summary">Hav altid mørk tema aktiveret i stedet for at bruge system-indstilligen</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Samtaler</string>
+  <string name="navigation_item_contact_request">Invitationer</string>
   <string name="navigation_item_account">Konto</string>
   <string name="search_results_public_directory">Offentlig mappe</string>
   <!--TV-->

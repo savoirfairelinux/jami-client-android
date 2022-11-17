@@ -205,6 +205,7 @@
   <string name="menu_delete">Изтриване</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Разговори</string>
+  <string name="navigation_item_contact_request">Покани</string>
   <string name="navigation_item_account">Профил</string>
   <!--TV-->
   <string name="tv_audio_play">Пускане</string>
