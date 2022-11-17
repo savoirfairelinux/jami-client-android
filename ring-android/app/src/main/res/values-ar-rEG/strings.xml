@@ -275,6 +275,7 @@
   <string name="pref_darkTheme_summary">قم دائمًا بتمكين الوضع الداكن بدلاً من استخدام سلوك النظام</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">محادثات</string>
+  <string name="navigation_item_contact_request">الدعوات</string>
   <string name="navigation_item_account">الحساب</string>
   <string name="search_results_public_directory">الدليل عام</string>
   <!--TV-->

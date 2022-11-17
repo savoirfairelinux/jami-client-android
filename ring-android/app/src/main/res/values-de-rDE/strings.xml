@@ -35,6 +35,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_advanced_settings">Erweiterte Einstellungen</string>
+  <string name="menu_item_account_settings">Konto-Einstellungen</string>
   <string name="menu_item_plugin_list">Plugin-Einstellungen</string>
   <string name="menu_item_share">Meinen Konto teilen</string>
   <string name="menu_item_about">Über Jami</string>
@@ -256,6 +257,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="no_contact_request">Keine Kontaktanfrage verschickt</string>
   <string name="conversation_placeholder">Noch keine Gesprächsverläufe</string>
   <string name="contact_request_sent">Kontaktanfrage verschickt</string>
+  <string name="start_conversation">Eine neue Unterhaltung starten</string>
   <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">Keine Gallerie-App gefunden</string>
@@ -296,6 +298,7 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="pref_darkTheme_summary">Immer dunkles Design aktivieren, statt den Systemstandard zu verwenden</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Gespräche</string>
+  <string name="navigation_item_contact_request">Einladungen</string>
   <string name="navigation_item_account">Konto</string>
   <string name="search_results_public_directory">Öffentlich einsehbares Verzeichnis</string>
   <!--TV-->

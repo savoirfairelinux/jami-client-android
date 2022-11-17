@@ -293,6 +293,7 @@
   <string name="pref_darkTheme_summary">Activa el tema fosc sempre en comptes d\'utilitzar el predeterminat del sistema.</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Converses</string>
+  <string name="navigation_item_contact_request">Invitacions</string>
   <string name="navigation_item_account">Compte</string>
   <string name="search_results_public_directory">Directori públic</string>
   <!--TV-->

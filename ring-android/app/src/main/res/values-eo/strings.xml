@@ -111,6 +111,7 @@
   <string name="menu_delete">Forigi</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversacioj</string>
+  <string name="navigation_item_contact_request">Invitoj</string>
   <string name="navigation_item_account">Konto</string>
   <!--TV-->
   <string name="tv_audio_play">Ludi</string>

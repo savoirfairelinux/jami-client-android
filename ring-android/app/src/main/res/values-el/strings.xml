@@ -268,6 +268,7 @@
   <string name="pref_darkTheme_summary">Κράτησε πάντα ενεργοποιημένο το σκούρο θέμα αντί αυτό του συστήματος</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Συνομιλίες</string>
+  <string name="navigation_item_contact_request">Προσκλήσεις</string>
   <string name="navigation_item_account">Λογαριασμός</string>
   <string name="search_results_public_directory">Δημόσιος κατάλογος</string>
   <!--TV-->
