@@ -152,7 +152,7 @@ class HardwareServiceImpl(
                     if (incomingCall) {
                         // ringtone for incoming calls
                         mAudioManager.mode = AudioManager.MODE_RINGTONE
-                        setAudioRouting(isOngoingVideo && mBluetoothWrapper?.canBluetooth() != true)
+                        setAudioRouting(isOngoingVideo && !(mBluetoothWrapper?.canBluetooth() == true && mBluetoothWrapper?.isBTHeadsetConnected == true))
                         //mShouldSpeakerphone = isOngoingVideo
                     } else setAudioRouting(isOngoingVideo)
                 }

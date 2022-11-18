@@ -107,11 +107,7 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
         }
     }
     val isBTHeadsetConnected: Boolean
-        get() = try {
-            bluetoothAdapter?.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED
-        } catch (e: SecurityException) {
-            true
-        }
+        get() = connectedDevices?.isEmpty() ?: false
 
     fun canBluetooth(): Boolean {
         // Detect if any bluetooth a device is available for call
