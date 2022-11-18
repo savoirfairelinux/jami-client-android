@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,49 +19,51 @@
  */
 package cx.ring.client
 
-import android.content.*
+import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import cx.ring.R
+import cx.ring.account.RenameSwarmDialog
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityContactDetailsBinding
-import cx.ring.databinding.ItemContactActionBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.fragments.CallFragment
+import cx.ring.fragments.ContactPickerFragment
+import cx.ring.fragments.ConversationActionsFragment
 import cx.ring.fragments.ConversationFragment
+import cx.ring.fragments.ConversationGalleryFragment
+import cx.ring.fragments.ConversationMembersFragment
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
-import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.*
-import net.jami.services.ConversationFacade
+import net.jami.model.Call
+import net.jami.model.Contact
+import net.jami.model.Conversation
+import net.jami.model.Uri
 import net.jami.services.AccountService
 import net.jami.services.ContactService
+import net.jami.services.ConversationFacade
 import net.jami.services.NotificationService
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @AndroidEntryPoint
-class ContactDetailsActivity : AppCompatActivity() {
+class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
+    ContactPickerFragment.OnContactedPicked, RenameSwarmDialog.RenameSwarmListener {
     @Inject
     @Singleton lateinit
     var mConversationFacade: ConversationFacade
@@ -74,101 +76,7 @@ class ContactDetailsActivity : AppCompatActivity() {
     var mAccountService: AccountService
 
     private var binding: ActivityContactDetailsBinding? = null
-
-    internal class ContactAction {
-        @DrawableRes
-        val icon: Int
-        val drawable: Single<Drawable>?
-        val title: CharSequence
-        val callback: () -> Unit
-        var iconTint: Int
-        var iconSymbol: CharSequence? = null
-
-        constructor(@DrawableRes i: Int, tint: Int, t: CharSequence, cb: () -> Unit) {
-            icon = i
-            iconTint = tint
-            title = t
-            callback = cb
-            drawable = null
-        }
-
-        constructor(@DrawableRes i: Int, t: CharSequence, cb: () -> Unit) {
-            icon = i
-            iconTint = Color.BLACK
-            title = t
-            callback = cb
-            drawable = null
-        }
-
-        constructor(d: Single<Drawable>?, t: CharSequence, cb: () -> Unit) {
-            drawable = d
-            icon = 0
-            iconTint = Color.BLACK
-            title = t
-            callback = cb
-        }
-
-        fun setSymbol(t: CharSequence?) {
-            iconSymbol = t
-        }
-    }
-
-    internal class ContactActionView(
-        val binding: ItemContactActionBinding,
-        parentDisposable: CompositeDisposable
-    ) : RecyclerView.ViewHolder(binding.root) {
-        var callback: (() -> Unit)? = null
-        val disposable = CompositeDisposable()
-
-        init {
-            parentDisposable.add(disposable)
-            itemView.setOnClickListener {
-                try {
-                    callback?.invoke()
-                } catch (e: Exception) {
-                    Log.w(TAG, "Error performing action", e)
-                }
-            }
-        }
-    }
-
-    private class ContactActionAdapter(private val disposable: CompositeDisposable) :
-        RecyclerView.Adapter<ContactActionView>() {
-        val actions = ArrayList<ContactAction>()
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactActionView {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val itemBinding = ItemContactActionBinding.inflate(layoutInflater, parent, false)
-            return ContactActionView(itemBinding, disposable)
-        }
-
-        override fun onBindViewHolder(holder: ContactActionView, position: Int) {
-            val action = actions[position]
-            holder.disposable.clear()
-            if (action.drawable != null) {
-                holder.disposable.add(action.drawable.subscribe { background: Drawable ->
-                    holder.binding.actionIcon.background = background
-                })
-            } else {
-                holder.binding.actionIcon.setBackgroundResource(action.icon)
-                holder.binding.actionIcon.text = action.iconSymbol
-                if (action.iconTint != Color.BLACK) ViewCompat.setBackgroundTintList(
-                    holder.binding.actionIcon,
-                    ColorStateList.valueOf(action.iconTint)
-                )
-            }
-            holder.binding.actionTitle.text = action.title
-            holder.callback = action.callback
-        }
-
-        override fun onViewRecycled(holder: ContactActionView) {
-            holder.disposable.clear()
-            holder.binding.actionIcon.background = null
-        }
-
-        override fun getItemCount(): Int {
-            return actions.size
-        }
-    }
+    private var path: ConversationPath? = null
 
     internal class ContactView(val binding: ItemContactHorizontalBinding, parentDisposable: CompositeDisposable)
         : RecyclerView.ViewHolder(binding.root) {
@@ -187,48 +95,12 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private class ContactViewAdapter(
-        private val disposable: CompositeDisposable,
-        private val contacts: List<ContactViewModel>,
-        private val callback: (Contact) -> Unit
-    ) : RecyclerView.Adapter<ContactView>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactView {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val itemBinding = ItemContactHorizontalBinding.inflate(layoutInflater, parent, false)
-            return ContactView(itemBinding, disposable)
-        }
-
-        override fun onBindViewHolder(holder: ContactView, position: Int) {
-            val contact = contacts[position]
-            holder.disposable.clear()
-            holder.disposable.add(AvatarFactory.getAvatar(holder.itemView.context, contact, false)
-                .subscribe { drawable: Drawable ->
-                    holder.binding.photo.setImageDrawable(drawable)
-                })
-            holder.binding.displayName.text =
-                if (contact.contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
-            holder.itemView.setOnClickListener { callback.invoke(contact.contact) }
-        }
-
-        override fun onViewRecycled(holder: ContactView) {
-            holder.disposable.clear()
-            holder.binding.photo.setImageDrawable(null)
-        }
-
-        override fun getItemCount(): Int {
-            return contacts.size
-        }
-    }
-
     private val mDisposableBag = CompositeDisposable()
-    private val adapter = ContactActionAdapter(mDisposableBag)
-    private var colorAction: ContactAction? = null
-    private var symbolAction: ContactAction? = null
-    private var colorActionPosition = 0
-    private var symbolActionPosition = 0
+    private var mPagerAdapter: ScreenSlidePagerAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val path = ConversationPath.fromIntent(intent)
+        path = ConversationPath.fromIntent(intent)
         if (path == null) {
             finish()
             return
@@ -236,7 +108,7 @@ class ContactDetailsActivity : AppCompatActivity() {
         JamiApplication.instance?.startDaemon()
         val conversation = try {
             mConversationFacade
-                .startConversation(path.accountId, path.conversationUri)
+                .startConversation(path!!.accountId, path!!.conversationUri)
                 .blockingGet()
         } catch (e: Throwable) {
             finish()
@@ -245,14 +117,11 @@ class ContactDetailsActivity : AppCompatActivity() {
 
         val binding = ActivityContactDetailsBinding.inflate(layoutInflater).also { this.binding = it }
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
         val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
-        colorActionPosition = 0
-        symbolActionPosition = 1
 
         mDisposableBag.add(mConversationFacade.observeConversation(conversation)
             .observeOn(AndroidSchedulers.mainThread())
@@ -262,109 +131,60 @@ class ContactDetailsActivity : AppCompatActivity() {
                     .withViewModel(vm)
                     .withCircleCrop(true)
                     .build(this))
-                supportActionBar?.title = vm.title
-                binding.contactListLayout.visibility =
-                    if (conversation.isSwarm) View.VISIBLE else View.GONE
-                if (conversation.isSwarm) {
-                    binding.conversationId.text = vm.uri.toString()
-                    binding.contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
-                    { contact -> copyAndShow(contact.uri.rawUriString) }
-                } else {
-                    binding.conversationId.text = vm.uriTitle
-                }
+                binding.title.text = vm.title
+                if (conversation.getDescription() != null) binding.description.text = conversation.getDescription()
             }) { e ->
                 Log.e(TAG, "e", e)
                 finish()
             })
 
-        /*Map<String, String> details = Ringservice.getCertificateDetails(conversation.getContact().getUri().getRawRingId());
-        for (Map.Entry<String, String> e : details.entrySet()) {
-            Log.w(TAG, e.getKey() + " -> " + e.getValue());
-        }*/
-        @StringRes val infoString = if (conversation.isSwarm)
-            if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
-                R.string.conversation_type_private
-            else
-                R.string.conversation_type_group
-        else R.string.conversation_type_contact
-        /*@DrawableRes int infoIcon = conversation.isSwarm()
-                ? (conversation.getMode() == Conversation.Mode.OneToOne
-                ? R.drawable.baseline_person_24
-                : R.drawable.baseline_group_24)
-                : R.drawable.baseline_person_24;*/
-        //adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
-        binding.conversationType.setText(infoString)
-        //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
-        colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
-            ColorChooserBottomSheet { color ->
-                colorAction!!.iconTint = color
-                adapter.notifyItemChanged(colorActionPosition)
-                preferences.edit()
-                    .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
-                    .apply()
-            }.show(supportFragmentManager, "colorChooser")
-        }
         val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
-        colorAction!!.iconTint = color
-        adapter.actions.add(colorAction!!)
-        symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-            EmojiChooserBottomSheet{ emoji ->
-                symbolAction?.setSymbol(emoji)
-                adapter.notifyItemChanged(symbolActionPosition)
-                preferences.edit()
-                    .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
-                    .apply()
-            }.show(supportFragmentManager, "colorChooser")
-        }.apply {
-            setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
-            adapter.actions.add(this)
-        }
-        val conversationUri = conversation.uri.toString()//if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
-        if (conversation.contacts.size <= 2 && conversation.contacts.isNotEmpty()) {
-            val contact = conversation.contact!!
-            adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
-                goToCallActivity(conversation, contact.uri, true)
-            })
-            adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
-                goToCallActivity(conversation, contact.uri, false)
-            })
-            if (!conversation.isSwarm) {
-                adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
-                    MaterialAlertDialogBuilder(this@ContactDetailsActivity)
-                        .setTitle(R.string.clear_history_dialog_title)
-                        .setMessage(R.string.clear_history_dialog_message)
-                        .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
-                            mConversationFacade.clearHistory(conversation.accountId, contact.uri).subscribe()
-                            Snackbar.make(binding.root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
-                        }
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .create()
-                        .show()
-                })
+        updateColor(color)
+        binding.tabLayout.addOnTabSelectedListener(this)
+        binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
+        if (conversation.isGroup()) {
+            binding.addMember.isVisible = true
+            binding.description.isVisible = true
+            binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
+            binding.title.setOnClickListener {
+                val title = getString(R.string.dialogtitle_title)
+                val description = getString(R.string.dialog_text_title)
+                RenameSwarmDialog().apply {
+                    arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE) }
+                    setTitle(title)
+                    setDescription(description)
+                    setText(binding.title.text.toString())
+                    setListener(this@ContactDetailsActivity)
+                }.show(supportFragmentManager, TAG)
             }
-            adapter.actions.add(ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
-                MaterialAlertDialogBuilder(this@ContactDetailsActivity)
-                    .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
-                    .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
-                    .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
-                        mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
-                        Toast.makeText(applicationContext, getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
-                        finish()
-                    }
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .create()
-                    .show()
-            })
+            binding.description.setOnClickListener {
+                val title = getString(R.string.dialogtitle_description)
+                val description = getString(R.string.dialog_text_description)
+                RenameSwarmDialog().apply {
+                    arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION) }
+                    setTitle(title)
+                    setDescription(description)
+                    setText(conversation.getDescription())
+                    setListener(this@ContactDetailsActivity)
+                }.show(supportFragmentManager, TAG)
+            }
         }
-        binding.conversationId.text = conversationUri
-        binding.infoCard.setOnClickListener { copyAndShow(path.conversationId) }
-        binding.contactActionList.adapter = adapter
+
+
+        mPagerAdapter = ScreenSlidePagerAdapter(this, conversation.accountId, conversation.uri)
+        binding.pager.adapter = mPagerAdapter
+        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tabLayout.getTabAt(position)!!.select()
+            }
+        })
     }
 
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    public fun updateColor(color: Int) {
+        binding!!.appBar.backgroundTintList = ColorStateList.valueOf(color)
+        binding!!.addMember.backgroundTintList = ColorStateList.valueOf(color)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -375,14 +195,12 @@ class ContactDetailsActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        adapter.actions.clear()
         mDisposableBag.dispose()
         super.onDestroy()
-        colorAction = null
         binding = null
     }
 
-    private fun goToCallActivity(conversation: Conversation, contactUri: Uri, hasVideo: Boolean) {
+    fun goToCallActivity(conversation: Conversation, contactUri: Uri, hasVideo: Boolean) {
         val conf = conversation.currentCall
         if (conf != null && conf.participants.isNotEmpty()
             && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
@@ -408,7 +226,45 @@ class ContactDetailsActivity : AppCompatActivity() {
         ))
     }
 
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        binding?.pager?.setCurrentItem(tab!!.position, true)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+
+
+    override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
+        mAccountService.addConversationMembers(accountId, path!!.conversationUri.host, contacts.map { contact-> contact.uri.toString() })
+    }
+
+    override fun onSwarmRename(key:String, newName: String) {
+        val map: MutableMap<String, String> = HashMap()
+        if (key == RenameSwarmDialog.KEY_TITLE) {
+            map["title"] = newName
+        } else if (key == RenameSwarmDialog.KEY_DESCRIPTION) {
+            map["description"] = newName
+        }
+        mAccountService.updateConversationInfo(path!!.accountId, path!!.conversationUri.host, map)
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, accountId: String, conversationId: Uri) : FragmentStateAdapter(fa) {
+        val fragments: List<Fragment> = listOf(
+            ConversationActionsFragment.newInstance(accountId, conversationId),
+            ConversationMembersFragment.newInstance(accountId, conversationId),
+            ConversationGalleryFragment.newInstance(accountId, conversationId))
+
+            override fun getItemCount(): Int = fragments.size
+
+        override fun createFragment(position: Int): Fragment = fragments[position]
+    }
+
     companion object {
         private val TAG = ContactDetailsActivity::class.simpleName!!
+        const val TAB_ABOUT = 0
+        const val TAB_MEMBER = 1
+        const val TAB_DOCUMENT = 2
     }
 }

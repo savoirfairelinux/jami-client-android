@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import cx.ring.adapters.ConversationMediaGalleryAdapter
 import cx.ring.databinding.FragConversationGalleryBinding
@@ -44,7 +45,10 @@ class ConversationGalleryFragment : Fragment() {
         )
             .map { results -> results.results.mapNotNull { i -> if (i is DataTransfer /*&& i.isComplete*/) i else null } }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { adapter?.addSearchResults(it) })
+            .subscribe {
+                adapter?.addSearchResults(it)
+                binding!!.placeholder.isVisible = false
+            })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

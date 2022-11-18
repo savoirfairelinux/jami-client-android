@@ -46,7 +46,8 @@ along with this program; if not, write to the Free Software
             android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:padding="4dp"
-            app:srcCompat="@drawable/baseline_person_24" />
+            app:srcCompat="@drawable/baseline_person_24"
+            tools:src="@tools:sample/avatars"/>
 
         <TextView
             android:id="@+id/contact_event_txt"
@@ -59,7 +60,9 @@ along with this program; if not, write to the Free Software
             android:textColor="@color/colorOnSurface"
             android:textSize="14sp"
             android:layout_marginHorizontal="8dp"
-            tools:text="@string/hist_contact_added" />
+            android:ellipsize="middle"
+            android:maxLines="1"
+            tools:text="ring:4a7d62c3f3332f1307a9cfd363c3b49832670c44 was invited" />
 
         <TextView
             android:layout_marginHorizontal="8dp"

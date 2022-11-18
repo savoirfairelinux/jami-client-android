@@ -19,20 +19,24 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="72dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
-    android:padding="8dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
     tools:context=".client.ContactDetailsActivity">
 
     <ImageView
         android:id="@+id/photo"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_centerHorizontal="true"
         android:contentDescription="@string/contact_picture_description"
         android:scaleType="fitCenter"
         tools:src="@tools:sample/avatars" />
@@ -41,17 +45,15 @@ along with this program; if not, write to the Free Software
         android:id="@+id/display_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/photo"
-        android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
+        android:layout_marginStart="6dp"
         android:maxLines="1"
         android:singleLine="true"
+        android:fontFamily="@font/ubuntu_regular"
         android:textAlignment="center"
         android:textColor="@color/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="14sp"
         tools:text="@tools:sample/full_names" />
 
-</RelativeLayout>
+</LinearLayout>

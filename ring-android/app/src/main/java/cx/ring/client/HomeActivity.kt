@@ -48,6 +48,7 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.account.AccountWizardActivity
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
+import cx.ring.fragments.ContactPickerFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.fragments.HomeFragment
 import cx.ring.interfaces.Colorable
@@ -65,6 +66,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
+import net.jami.model.Contact
 import net.jami.model.Conversation
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -77,7 +79,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), Colorable {
+class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnContactedPicked {
     private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var mHomeFragment: HomeFragment? = null
@@ -481,6 +483,14 @@ class HomeActivity : AppCompatActivity(), Colorable {
         } catch (e: Exception) {
             Log.w(TAG, "Error adding shortcuts", e)
         }
+    }
+
+    override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
+        mDisposable.add(mConversationFacade.createConversation(accountId, contacts)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { conversation: Conversation ->
+                startConversation(conversation.accountId, conversation.uri)
+            })
     }
 
     companion object {

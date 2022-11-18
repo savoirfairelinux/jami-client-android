@@ -817,7 +817,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             R.id.conv_action_audiocall -> presenter.goToCall(false)
             R.id.conv_action_videocall -> presenter.goToCall(true)
             R.id.conv_contact_details -> presenter.openContact()
-            R.id.conv_media -> openConversationGallery()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -836,16 +835,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun addSearchResults(results: List<Interaction>) {
         mSearchAdapter?.addSearchResults(results)
-    }
-
-    private fun openConversationGallery() {
-        val convPath = presenter.path
-        childFragmentManager
-            .beginTransaction()
-            .add(R.id.relativeLayout, ConversationGalleryFragment.newInstance(convPath.first, convPath.second), null)
-            .addToBackStack(ConversationGalleryFragment.toString())
-            .commit()
-        onBackPressedCallback.isEnabled = true
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {

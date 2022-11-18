@@ -22,7 +22,7 @@
             style="@style/Widget.Material3.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Create a swarm"
+            app:title="@string/picker_title"
             app:navigationIcon="@drawable/baseline_group_add_24" />
 
         <com.google.android.material.chip.ChipGroup
@@ -59,7 +59,7 @@
         android:layout_margin="24dp"
         android:layout_marginStart="381dp"
         android:layout_marginEnd="16dp"
-        android:text="Create swarm"
+        android:text="@string/picker_btn"
         app:icon="@drawable/baseline_group_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

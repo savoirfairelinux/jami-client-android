@@ -1,6 +1,7 @@
 package cx.ring.fragments
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.ContactPickerAdapter
-import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragContactPickerBinding
 import cx.ring.viewholders.ContactPickerViewHolder.ContactPickerListeners
 import cx.ring.views.AvatarDrawable
@@ -32,6 +32,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     private val mDisposableBag = CompositeDisposable()
     private var mAccountId: String? = null
     private val mCurrentSelection: MutableSet<Contact> = HashSet()
+    lateinit var dataPasser: OnContactedPicked
 
     @Inject
     lateinit var mConversationFacade: ConversationFacade
@@ -98,16 +99,16 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
             override fun onItemLongClick(item: ConversationItemViewModel) {}
         })
         binding!!.createGroupBtn.setOnClickListener { v: View? ->
-            mDisposableBag.add(mConversationFacade.createConversation(mAccountId!!, mCurrentSelection)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { conversation: Conversation ->
-                    (requireActivity() as HomeActivity).startConversation(conversation.accountId, conversation.uri)
-                    val dialog = dialog
-                    dialog?.cancel()
-                })
+            passData(mAccountId!!, mCurrentSelection)
+            val dialog = dialog
+            dialog?.cancel()
         }
         binding!!.contactList.adapter = adapter
         return binding!!.root
+    }
+
+    private fun passData(accountId: String, contacts: MutableSet<Contact>){
+        dataPasser.onContactPicked(accountId, contacts)
     }
 
     override fun onDestroyView() {
@@ -117,9 +118,18 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataPasser = context as OnContactedPicked
+    }
+
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     companion object {
         val TAG: String = ContactPickerFragment::class.java.simpleName
+    }
+
+    interface OnContactedPicked {
+        fun onContactPicked(accountId: String, contacts: Set<Contact>)
     }
 }
