@@ -50,7 +50,7 @@ class Test0002SearchDirectUri {
      * (valid because it's a valid uri)
      */
     fun searchDirectUri() {
-        val actionMenuItemView = onView(
+        /*val actionMenuItemView = onView(
                 allOf(withId(R.id.menu_contact_search), withContentDescription("Search name or phone number…"),
                         childAtPosition(
                                 childAtPosition(
