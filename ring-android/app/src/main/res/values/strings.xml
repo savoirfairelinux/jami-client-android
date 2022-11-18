@@ -250,8 +250,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_preference_color">Conversation color</string>
     <string name="conversation_preference_emoji">Conversation emoji</string>
     <string name="conversation_type_contact">Jami contact</string>
-    <string name="conversation_type_private">Private swarm</string>
-    <string name="conversation_type_group">Group swarm</string>
+    <string name="conversation_type_private">Private Swarm</string>
+    <string name="conversation_type_group">Group Swarm</string>
     <string name="conversation_contact_invited">%1$s was invited</string>
     <string name="conversation_contact_added">%1$s joined</string>
     <string name="conversation_contact_left">%1$s left</string>
@@ -432,10 +432,10 @@ along with this program; if not, write to the Free Software
     <string name="tab_about">About</string>
     <string name="tab_members">Members</string>
     <string name="tab_documetn">Documents</string>
-    <string name="dialogtitle_title">Set Title</string>
-    <string name="dialogtitle_description">Set Description</string>
-    <string name="dialog_text_title">Choose a title for the swarm group</string>
-    <string name="dialog_text_description">Choose a description for the swarm group</string>
+    <string name="dialogtitle_title">Edit Swarm title</string>
+    <string name="dialogtitle_description">Edit Swarm description</string>
+    <string name="dialog_hint_title">Title</string>
+    <string name="dialog_hint_description">Description</string>
     <string name="picker_title">Select contacts</string>
     <string name="picker_btn">Select contacts</string>
 

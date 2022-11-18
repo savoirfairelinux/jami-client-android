@@ -29,22 +29,22 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
-import cx.ring.databinding.DialogDeviceRenameBinding
+import cx.ring.databinding.DialogSwarmTitleBinding
 
 class RenameSwarmDialog : DialogFragment() {
     private var mTitle: String? = null
-    private var mDescription: String? = null
     private var mText: String? = null
+    private var mHint: String? = null
     private var mListener: RenameSwarmListener? = null
-    private var binding: DialogDeviceRenameBinding? = null
+    private var binding: DialogSwarmTitleBinding? = null
     private var key: String? = null
 
     fun setTitle(title: String?) {
         mTitle = title
     }
 
-    fun setDescription(description: String?) {
-        mDescription = description
+    fun setHint(hint: String?) {
+        mHint = hint
     }
 
     fun setText(text: String?) {
@@ -56,10 +56,11 @@ class RenameSwarmDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogDeviceRenameBinding.inflate(layoutInflater)
+        binding = DialogSwarmTitleBinding.inflate(layoutInflater)
         key = requireArguments().getString(KEY)
-        binding!!.ringDeviceNameTxt.setText(mText)
-        binding!!.ringDeviceNameTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        binding!!.titleTxt.setText(mText)
+        binding!!.titleTxtBox.hint = mHint
+        binding!!.titleTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val validationResult = validate()
                 if (validationResult) {
@@ -72,7 +73,6 @@ class RenameSwarmDialog : DialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
             .setTitle(mTitle)
-            .setMessage(mDescription)
             .setPositiveButton(R.string.rename_btn, null)
             .setNegativeButton(android.R.string.cancel, null)
             .create()
@@ -97,21 +97,21 @@ class RenameSwarmDialog : DialogFragment() {
     private fun checkInput(input: String): Boolean {
         if (input.isEmpty()) {
             binding?.apply {
-                ringDeviceNameTxtBox.isErrorEnabled = true
-                ringDeviceNameTxtBox.error = getString(R.string.rename_error)
+                titleTxtBox.isErrorEnabled = true
+                titleTxtBox.error = getString(R.string.rename_error)
             }
             return false
         } else {
             binding?.apply {
-                ringDeviceNameTxtBox.isErrorEnabled = false
-                ringDeviceNameTxtBox.error = null
+                titleTxtBox.isErrorEnabled = false
+                titleTxtBox.error = null
             }
         }
         return true
     }
 
     private fun validate(): Boolean {
-        val input = binding!!.ringDeviceNameTxt.text.toString().trim { it <= ' ' }
+        val input = binding!!.titleTxt.text.toString().trim { it <= ' ' }
         if (checkInput(input) && mListener != null) {
             mListener!!.onSwarmRename(key!!, input)
             return true

@@ -148,23 +148,19 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             binding.description.isVisible = true
             binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
             binding.title.setOnClickListener {
-                val title = getString(R.string.dialogtitle_title)
-                val description = getString(R.string.dialog_text_title)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE) }
-                    setTitle(title)
-                    setDescription(description)
+                    setTitle(getString(R.string.dialogtitle_title))
+                    setHint(getString(R.string.dialog_hint_title))
                     setText(binding.title.text.toString())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
             }
             binding.description.setOnClickListener {
-                val title = getString(R.string.dialogtitle_description)
-                val description = getString(R.string.dialog_text_description)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION) }
-                    setTitle(title)
-                    setDescription(description)
+                    setTitle(getString(R.string.dialogtitle_description))
+                    setHint(getString(R.string.dialog_hint_description))
                     setText(conversation.getDescription())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
