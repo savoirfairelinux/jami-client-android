@@ -432,10 +432,12 @@ along with this program; if not, write to the Free Software
     <string name="tab_about">About</string>
     <string name="tab_members">Members</string>
     <string name="tab_documetn">Documents</string>
-    <string name="dialogtitle_title">Set Title</string>
-    <string name="dialogtitle_description">Set Description</string>
+    <string name="dialogtitle_title">Set title for swarm</string>
+    <string name="dialogtitle_description">Set description for swarm</string>
     <string name="dialog_text_title">Choose a title for the swarm group</string>
     <string name="dialog_text_description">Choose a description for the swarm group</string>
+    <string name="dialog_hint_title">Title</string>
+    <string name="dialog_hint_description">Description</string>
     <string name="picker_title">Select contacts</string>
     <string name="picker_btn">Select contacts</string>
 

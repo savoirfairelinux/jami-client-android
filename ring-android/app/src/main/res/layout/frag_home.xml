@@ -95,7 +95,7 @@ along with this program; if not, write to the Free Software
                 app:drawableStartCompat="@drawable/baseline_group_add_24"
                 android:drawablePadding="8dp"
                 android:drawableTint="@color/colorPrimary"
-                android:text="Add group"
+                android:text="Start Swarm"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 

@@ -149,22 +149,22 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
             binding.title.setOnClickListener {
                 val title = getString(R.string.dialogtitle_title)
-                val description = getString(R.string.dialog_text_title)
+                val hint = getString(R.string.dialog_hint_title)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE) }
                     setTitle(title)
-                    setDescription(description)
+                    setHint(hint)
                     setText(binding.title.text.toString())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
             }
             binding.description.setOnClickListener {
                 val title = getString(R.string.dialogtitle_description)
-                val description = getString(R.string.dialog_text_description)
+                val hint = getString(R.string.dialog_hint_description)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION) }
                     setTitle(title)
-                    setDescription(description)
+                    setHint(hint)
                     setText(conversation.getDescription())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
