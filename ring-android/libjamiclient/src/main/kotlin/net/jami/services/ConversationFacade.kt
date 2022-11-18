@@ -147,22 +147,8 @@ class ConversationFacade(
             val destPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversation.uri.rawRingId, file.name)
             moveFile(file, destPath)
             mAccountService.sendFile(conversation, destPath)
-            return Completable.complete()
         }
-        return Single.fromCallable {
-            val transfer = DataTransfer(conversation, to.rawRingId, conversation.accountId, file.name, true, file.length(), 0, null)
-            mHistoryService.insertInteraction(conversation.accountId, conversation, transfer).blockingAwait()
-            transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.uri.rawRingId)
-            transfer
-        }
-            .flatMap { t: DataTransfer -> mAccountService.sendFile(file, t) }
-            .flatMapCompletable { transfer: DataTransfer -> Completable.fromAction {
-                val destination = File(transfer.destination, transfer.storagePath)
-                if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
-                    Log.e(TAG, "sendFile: can't move file to $destination")
-                }
-            } }
-            .subscribeOn(Schedulers.io())
+        return Completable.complete()
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {

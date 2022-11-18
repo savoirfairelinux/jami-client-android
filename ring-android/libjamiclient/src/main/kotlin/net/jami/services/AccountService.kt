@@ -36,12 +36,10 @@ import io.reactivex.rxjava3.subjects.Subject
 import net.jami.daemon.*
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
-import net.jami.utils.FileUtils
 import net.jami.utils.Log
 import net.jami.utils.SwigNativeConverter
 import net.jami.utils.VCardUtils
 import java.io.File
-import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.net.SocketException
 import java.net.URLEncoder
@@ -1432,29 +1430,6 @@ class AccountService(
         }}
     }
 
-    fun sendFile(file: File, dataTransfer: DataTransfer): Single<DataTransfer> = Single.fromCallable {
-        mStartingTransfer = dataTransfer
-        val dataTransferInfo = DataTransferInfo()
-        dataTransferInfo.accountId = dataTransfer.account
-        val conversationId = dataTransfer.conversationId
-        if (!conversationId.isNullOrEmpty())
-            dataTransferInfo.conversationId = conversationId
-        else
-            dataTransferInfo.peer = dataTransfer.conversation?.participant
-        dataTransferInfo.path = file.absolutePath
-        dataTransferInfo.displayName = dataTransfer.displayName
-        Log.i(TAG, "sendFile() id=" + dataTransfer.id + " accountId=" + dataTransferInfo.accountId + ", peer=" + dataTransferInfo.peer + ", filePath=" + dataTransferInfo.path)
-        val id = LongArray(1)
-        val err = getDataTransferError(JamiService.sendFileLegacy(dataTransferInfo, id))
-        if (err != DataTransferError.SUCCESS) {
-            throw IOException(err.name)
-        } else {
-            Log.e(TAG, "sendFile: got ID " + id[0])
-            dataTransfer.daemonId = id[0]
-        }
-        dataTransfer
-    }.subscribeOn(Schedulers.from(mExecutor))
-
     fun sendFile(conversation: Conversation, file: File) {
         mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
     }
@@ -1475,10 +1450,6 @@ class AccountService(
             val newPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversationId, transfer.displayName)
             Log.i(TAG, "downloadFile() id=" + conversation.accountId + ", path=" + conversationId + " " + fileId + " to -> " + newPath.absolutePath)
             JamiService.downloadFile(conversation.accountId, conversationId, transfer.messageId, fileId, newPath.absolutePath)
-        } else {
-            val path = mDeviceRuntimeService.getTemporaryPath(conversation.uri.rawRingId, transfer.storagePath)
-            Log.i(TAG, "acceptFileTransfer() id=" + fileId + ", path=" + path.absolutePath)
-            JamiService.acceptFileTransfer(conversation.accountId, fileId, path.absolutePath)
         }
     }
 
@@ -1488,18 +1459,21 @@ class AccountService(
     }
 
     private inner class DataTransferRefreshTask constructor(
-        private val mAccount: Account,
-        private val mConversation: Conversation?,
-        private val mToUpdate: DataTransfer
+        private val account: Account,
+        private val conversation: Conversation,
+        private val toUpdate: DataTransfer
     ) : Runnable {
-        var scheduledTask: ScheduledFuture<*>? = null
+        val scheduledTask: ScheduledFuture<*> = mExecutor.scheduleAtFixedRate(
+            this,
+            DATA_TRANSFER_REFRESH_PERIOD,
+            DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS
+        )
         override fun run() {
-            synchronized(mToUpdate) {
-                if (mToUpdate.status == InteractionStatus.TRANSFER_ONGOING) {
-                    dataTransferEvent(mAccount, mConversation, mToUpdate.messageId, mToUpdate.fileId!!, 5)
+            synchronized(toUpdate) {
+                if (toUpdate.status == InteractionStatus.TRANSFER_ONGOING) {
+                    dataTransferEvent(account, conversation, toUpdate.messageId, toUpdate.fileId!!, 5)
                 } else {
-                    scheduledTask!!.cancel(false)
-                    scheduledTask = null
+                    scheduledTask.cancel(false)
                 }
             }
         }
@@ -1508,103 +1482,38 @@ class AccountService(
     fun dataTransferEvent(accountId: String, conversationId: String, interactionId: String, fileId: String, eventCode: Int) {
         val account = getAccount(accountId)
         if (account != null) {
-            val conversation = if (conversationId.isEmpty()) null else account.getSwarm(conversationId)
+            val conversation = account.getSwarm(conversationId) ?: return
             dataTransferEvent(account, conversation, interactionId, fileId, eventCode)
         }
     }
 
-    fun dataTransferEvent(account: Account, conversation: Conversation?, interactionId: String?, fileId: String, eventCode: Int) {
-        var conversation = conversation
+    fun dataTransferEvent(account: Account, conversation: Conversation, interactionId: String?, fileId: String, eventCode: Int) {
         val transferStatus = InteractionStatus.fromIntFile(eventCode)
         Log.d(TAG, "Data Transfer $interactionId $fileId $transferStatus")
-        val from: String
-        val total: Long
-        val progress: Long
-        val displayName: String
-        var transfer = account.getDataTransfer(fileId)
-        var outgoing = false
-        if (conversation == null) {
-            val info = DataTransferInfo()
-            val err =
-                getDataTransferError(JamiService.dataTransferInfo(account.accountId, fileId, info))
-            if (err != DataTransferError.SUCCESS) {
-                Log.d(TAG, "Data Transfer error getting details $err")
-                return
-            }
-            from = info.peer
-            total = info.totalSize
-            progress = info.bytesProgress
-            conversation = account.getByUri(from)
-            outgoing = info.flags == 0L
-            displayName = info.displayName
-        } else {
-            val paths = arrayOfNulls<String>(1)
-            val progressA = LongArray(1)
-            val totalA = LongArray(1)
-            JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
-            progress = progressA[0]
-            total = totalA[0]
-            if (transfer == null && interactionId != null && interactionId.isNotEmpty()) {
-                transfer = conversation.getMessage(interactionId) as DataTransfer?
-            }
-            if (transfer == null) return
+        val transfer = account.getDataTransfer(fileId) ?: conversation.getMessage(interactionId!!) as DataTransfer? ?: return
+        val paths = arrayOfNulls<String>(1)
+        val progressA = LongArray(1)
+        val totalA = LongArray(1)
+        JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
+        val progress = progressA[0]
+        val total = totalA[0]
+        synchronized(transfer) {
             transfer.conversation = conversation
             transfer.daemonPath = File(paths[0]!!)
-            from = transfer.author!!
-            displayName = transfer.displayName
-        }
-        if (transfer == null) {
-            val startingTransfer = mStartingTransfer
-            if (outgoing && startingTransfer != null) {
-                Log.d(TAG, "Data Transfer mStartingTransfer")
-                transfer = startingTransfer
-                mStartingTransfer = null
-            } else {
-                transfer = DataTransfer(conversation, from, account.accountId, displayName,
-                    outgoing, total,
-                    progress, fileId
-                )
-                if (conversation!!.isSwarm) {
-                    transfer.setSwarmInfo(conversation.uri.rawRingId, interactionId!!, null)
-                } else {
-                    mHistoryService.insertInteraction(account.accountId, conversation, transfer)
-                        .blockingAwait()
-                }
-            }
-            account.putDataTransfer(fileId, transfer)
-        } else synchronized(transfer) {
+            transfer.status = transferStatus
+            transfer.bytesProgress = progress
             val oldState = transfer.status
             if (oldState != transferStatus) {
                 if (transferStatus == InteractionStatus.TRANSFER_ONGOING) {
-                    val task = DataTransferRefreshTask(account, conversation, transfer)
-                    task.scheduledTask = mExecutor.scheduleAtFixedRate(
-                        task,
-                        DATA_TRANSFER_REFRESH_PERIOD,
-                        DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS
-                    )
+                    DataTransferRefreshTask(account, conversation, transfer)
                 } else if (transferStatus.isError) {
                     if (!transfer.isOutgoing) {
                         val tmpPath = mDeviceRuntimeService.getTemporaryPath(
-                            conversation!!.uri.rawRingId, transfer.storagePath
+                            conversation.uri.rawRingId, transfer.storagePath
                         )
                         tmpPath.delete()
                     }
-                } else if (transferStatus == InteractionStatus.TRANSFER_FINISHED) {
-                    if (!conversation!!.isSwarm && !transfer.isOutgoing) {
-                        val tmpPath = mDeviceRuntimeService.getTemporaryPath(
-                            conversation.uri.rawRingId, transfer.storagePath
-                        )
-                        val path = mDeviceRuntimeService.getConversationPath(
-                            conversation.uri.rawRingId, transfer.storagePath
-                        )
-                        FileUtils.moveFile(tmpPath, path)
-                    }
                 }
-            }
-            transfer.status = transferStatus
-            transfer.bytesProgress = progress
-            if (!conversation!!.isSwarm) {
-                mHistoryService.updateInteraction(transfer, account.accountId).subscribe()
             }
         }
         Log.d(TAG, "Data Transfer dataTransferSubject.onNext")
