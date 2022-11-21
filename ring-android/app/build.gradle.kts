@@ -85,7 +85,7 @@ dependencies {
     implementation (project(":libjamiclient"))
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation ("androidx.core:core-ktx:1.9.0")
-    implementation ("androidx.appcompat:appcompat:1.6.0-rc01")
+    implementation ("androidx.appcompat:appcompat:1.7.0-alpha01")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.legacy:legacy-support-core-utils:1.0.0")
     implementation ("androidx.cardview:cardview:1.0.0")
@@ -93,18 +93,18 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("androidx.leanback:leanback:1.2.0-alpha02")
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha02")
-    implementation ("androidx.car.app:app:1.2.0-rc01")
+    implementation ("androidx.car.app:app:1.3.0-beta01")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation ("com.google.android.material:material:1.7.0-rc01")
+    implementation ("com.google.android.material:material:1.8.0-alpha02")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
-	implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
+    implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
 
 
     // ORM
@@ -119,17 +119,17 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // Espresso Unit Tests
-    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test:rules:1.4.0")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.4")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.4")
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     kapt ("com.github.bumptech.glide:compiler:4.14.2")
 
     // RxAndroid
-    implementation ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
