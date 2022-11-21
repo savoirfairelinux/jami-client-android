@@ -59,6 +59,7 @@ class Conversation : ConversationHistory {
         private set
     private val mMode: Subject<Mode>
     private var description: String? = null
+    private var title: String? = null
 
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
     val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
@@ -640,7 +641,7 @@ class Conversation : ConversationHistory {
     fun getSymbol(): Observable<CharSequence> = symbol
 
     fun updateInfo(info: Map<String, String>) {
-        //title = info["title"]
+        title = info["title"]
         //avatar = info["avatar"]
         setProfile(Profile(info["title"], info["avatar"]))
         description = info["description"]
@@ -651,7 +652,7 @@ class Conversation : ConversationHistory {
         preferences["symbol"]?.let { symbol.onNext(it) }
     }
 
-    //fun getTitle() = title
+    fun getTitle() = title
     fun getDescription() = description
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
     @Synchronized
