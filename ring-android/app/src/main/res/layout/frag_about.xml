@@ -39,6 +39,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:title="@string/menu_item_about" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -305,6 +311,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
