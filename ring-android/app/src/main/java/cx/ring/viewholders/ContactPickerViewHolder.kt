@@ -21,15 +21,16 @@ package cx.ring.viewholders
 
 import android.view.animation.AlphaAnimation
 import android.view.animation.DecelerateInterpolator
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import cx.ring.databinding.ItemSmartlistBinding
+import cx.ring.databinding.ItemContactBinding
 import cx.ring.views.AvatarDrawable
 import net.jami.model.*
 import net.jami.smartlist.ConversationItemViewModel
 
-class ContactPickerViewHolder(b: ItemSmartlistBinding) :
+class ContactPickerViewHolder(b: ItemContactBinding) :
     RecyclerView.ViewHolder(b.root) {
-    private val binding: ItemSmartlistBinding = b
+    private val binding: ItemContactBinding = b
     private var currentUri: Uri? = null
 
     private fun fadeIn() = AlphaAnimation(0f, 1f).apply {
@@ -40,9 +41,7 @@ class ContactPickerViewHolder(b: ItemSmartlistBinding) :
     fun bind(clickListener: ContactPickerListeners, conversation: ConversationItemViewModel) {
         if (conversation.uri != currentUri) {
             currentUri = conversation.uri
-            binding.convLastItem.text = ""
-            binding.convLastTime.text = ""
-            binding.convParticipant.text = ""
+            binding.quickCall.isVisible = false
             binding.photo.setImageDrawable(null)
         }
 
@@ -52,7 +51,7 @@ class ContactPickerViewHolder(b: ItemSmartlistBinding) :
             true
         }
 
-        binding.convParticipant.text = conversation.title
+        binding.displayName.text = conversation.title
         val fade = binding.photo.drawable !is AvatarDrawable
         binding.photo.setImageDrawable(AvatarDrawable.Builder()
             .withViewModel(conversation)

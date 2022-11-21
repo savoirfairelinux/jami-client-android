@@ -41,6 +41,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -779,5 +785,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:background="@color/background"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
