@@ -493,7 +493,7 @@ class AccountService(
             val subject = conversationSearches[id] ?: return
             val account = getAccount(accountId) ?: return
             val conversation = account.getSwarm(conversationId) ?: return
-            conversationSearches[id]?.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
+            subject.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
         }
     }
 
