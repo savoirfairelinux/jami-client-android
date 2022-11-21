@@ -109,6 +109,7 @@
   <string name="share_via">Μοίρασμα μέσω</string>
   <string name="write_a_message">Γράψε μήνυμα</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
+  <string name="qr_code">QR κώδικας</string>
   <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
   <string name="ab_action_hidepreview">Απόκρυψη προεπισκόπησης</string>
   <string name="remote_recording">%s καταγράφει...</string>
@@ -311,4 +312,5 @@
   <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
+  <!--Swarm Detail-->
 </resources>

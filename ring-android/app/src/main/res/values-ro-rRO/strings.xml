@@ -188,8 +188,6 @@
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
-  <string name="conversation_type_private">Grup privat</string>
-  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s a fost invitat</string>
   <string name="conversation_contact_added">%1$s s-a alăturat</string>
   <string name="conversation_contact_left">%1$s a ieșit</string>
@@ -348,4 +346,5 @@
   <string name="open_general_plugin_settings">Arată opțiunile generale</string>
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
+  <!--Swarm Detail-->
 </resources>

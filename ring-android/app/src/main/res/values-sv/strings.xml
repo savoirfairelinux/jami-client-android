@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Konversationsfärg</string>
   <string name="conversation_preference_emoji">Konversations emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
-  <string name="conversation_type_private">Privat \"swarm\"</string>
-  <string name="conversation_type_group">Grupp \"swarm\"</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
@@ -338,4 +336,5 @@
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
+  <!--Swarm Detail-->
 </resources>

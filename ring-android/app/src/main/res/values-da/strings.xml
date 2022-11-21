@@ -303,4 +303,5 @@
   <string name="bottomSheet_share_btn">Del</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Afslut opkald</string>
+  <!--Swarm Detail-->
 </resources>

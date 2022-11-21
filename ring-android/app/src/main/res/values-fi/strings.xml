@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
   <string name="conversation_type_contact">Jami yhteystieto</string>
-  <string name="conversation_type_private">Yksityinen parvi</string>
-  <string name="conversation_type_group">Ryhmän parvi</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
@@ -338,4 +336,5 @@
   <string name="bottomSheet_raiseHand_btn">Käsi ylös</string>
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
+  <!--Swarm Detail-->
 </resources>

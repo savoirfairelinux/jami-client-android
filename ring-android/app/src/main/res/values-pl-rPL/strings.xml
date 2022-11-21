@@ -336,4 +336,5 @@
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
+  <!--Swarm Detail-->
 </resources>

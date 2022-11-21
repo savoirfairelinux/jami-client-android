@@ -43,4 +43,5 @@
   <string name="bottomSheet_hangup_btn">Zəngi bitir</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Səslər</string>
+  <!--Swarm Detail-->
 </resources>

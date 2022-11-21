@@ -308,4 +308,5 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
   <string name="bottomSheet_hangup_btn">Oproep beëindigen</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
+  <!--Swarm Detail-->
 </resources>

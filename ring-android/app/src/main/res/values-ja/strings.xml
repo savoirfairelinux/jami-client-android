@@ -185,8 +185,6 @@
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
-  <string name="conversation_type_private">非公開の会合</string>
-  <string name="conversation_type_group">大規模な集団</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>
   <string name="prompt_new_password">新しいパスワード</string>
@@ -334,4 +332,5 @@
   <string name="bottomSheet_mute_microphone_btn">マイク</string>
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
+  <!--Swarm Detail-->
 </resources>

@@ -189,8 +189,6 @@
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>
-  <string name="conversation_type_private">Swarm خصوصی</string>
-  <string name="conversation_type_group">Swarm گروهی</string>
   <string name="conversation_contact_invited">%1$s دعوت شده است.</string>
   <string name="conversation_contact_added">%1$sپیوست</string>
   <string name="conversation_contact_left">%1$s ترک کرد</string>
@@ -348,4 +346,5 @@
   <string name="open_general_plugin_settings">تنظیمات پلاگین عمومی را باز کن</string>
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی </string>
+  <!--Swarm Detail-->
 </resources>

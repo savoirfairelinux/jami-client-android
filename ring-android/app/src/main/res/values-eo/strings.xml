@@ -123,4 +123,5 @@
   <string name="bottomSheet_add_participants_btn">Aldoni</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
   <string name="bottomSheet_hangup_btn">Finigi vokon</string>
+  <!--Swarm Detail-->
 </resources>

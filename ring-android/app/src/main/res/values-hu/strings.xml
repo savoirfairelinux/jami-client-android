@@ -29,7 +29,7 @@
   <!--AB menus-->
   <string name="ab_action_chat">Szöveges üzenetek</string>
   <!--Sections-->
-  <string name="menu_item_contact_request">Kapcsolatkérelmek</string>
+  <string name="menu_item_contact_request">Kapcsolatfelvételi kérelemek</string>
   <string name="menu_item_accounts">Fiókok kezelése</string>
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
@@ -187,8 +187,6 @@
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>
-  <string name="conversation_type_private">Személyes rajcsoport</string>
-  <string name="conversation_type_group">Rajcsoport</string>
   <string name="conversation_contact_invited">%1$s meghívva lett</string>
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
@@ -240,22 +238,23 @@
   <string name="accept">Elfogadás</string>
   <string name="refuse">Elutasítás</string>
   <string name="block">Letiltás</string>
-  <string name="contact_request_title">Új kapcsolatkérelem</string>
-  <string name="contact_request_msg">%1$d kapcsolatkérelme van</string>
+  <string name="contact_request_title">Új kapcsolatfelvételi kérelem</string>
+  <string name="contact_request_msg">%1$d kapcsolatfelvételi kérelme van</string>
   <string name="contact_request_account">Ehhez: %1$s</string>
-  <string name="no_requests">Nincs kapcsolatfelvételi kérelem</string>
-  <string name="message_contact_not_trusted_yet">%s még nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
+  <string name="no_requests">Nincs kapcsolatfelvételi kérelme</string>
+  <string name="message_contact_not_trusted_yet">%s még nincs a kapcsolatban Önnel.\nElfogadja vagy elutasítja ezt a kapcsolatfelvételi kérelmet?</string>
   <string name="message_contact_not_trusted">%s nincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Küldés</string>
-  <string name="send_request_title">Kapcsolatkérelem küldése</string>
-  <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő kapcsolat nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
+  <string name="send_request_title">Kapcsolatfelvételi kérelem küldése</string>
+  <string name="send_request_msg">Küldenie kell egy kapcsolatfelvételi kérelmet, hogy komunikáljon ezzel a felhasználóval. Mindaddig, amíg a leendő kapcsolat nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Nincsenek letiltott kapcsolatok</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Nincs elküldött kapcsolatkérelem</string>
+  <string name="no_contact_request">Nincs elküldött kapcsolatfelvételi kérelme</string>
   <string name="conversation_placeholder">Még nincs beszélgetése</string>
-  <string name="contact_request_sent">Kapcsolatkérelem elküldve</string>
+  <string name="contact_request_sent">Kapcsolatfelvételi kérelem elküldve</string>
+  <string name="start_conversation">Új beszélgetés indítása</string>
   <string name="search_results">Keresési eredmények</string>
   <string name="tv_contact_row_header">Kapcsolatok</string>
   <string name="gallery_error_title">Nem található Galéria alkalmazás</string>
@@ -346,4 +345,5 @@
   <string name="open_general_plugin_settings">Általános beépülő modul beállításai megnyitása</string>
   <string name="uninstall">Eltávolítás</string>
   <string name="reset">Visszaállítás</string>
+  <!--Swarm Detail-->
 </resources>

@@ -44,4 +44,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
+  <!--Swarm Detail-->
 </resources>

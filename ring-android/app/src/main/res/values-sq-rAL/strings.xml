@@ -187,8 +187,6 @@
   <string name="conversation_preference_color">Ngjyrë bisede</string>
   <string name="conversation_preference_emoji">Emoji bisede</string>
   <string name="conversation_type_contact">Kontakt Jami</string>
-  <string name="conversation_type_private">Zgjua privat</string>
-  <string name="conversation_type_group">Zgjua grupi</string>
   <string name="conversation_contact_invited">U ftua %1$s</string>
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
@@ -256,6 +254,7 @@
   <string name="no_contact_request">S\’është dërguar ndonjë kërkesë kontakti</string>
   <string name="conversation_placeholder">Ende s’keni biseda</string>
   <string name="contact_request_sent">Kërkesa e kontaktit u dërgua</string>
+  <string name="start_conversation">Nisni bisedë të re</string>
   <string name="search_results">Përfundime Kërkimi</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
@@ -346,4 +345,5 @@
   <string name="open_general_plugin_settings">Hap Rregullime Shtojce Të përgjithshme</string>
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
+  <!--Swarm Detail-->
 </resources>

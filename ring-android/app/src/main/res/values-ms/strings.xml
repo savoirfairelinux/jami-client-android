@@ -110,4 +110,5 @@
   <string name="wizard_password_skip">Cipta akaun</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">Tamatkan panggilan</string>
+  <!--Swarm Detail-->
 </resources>

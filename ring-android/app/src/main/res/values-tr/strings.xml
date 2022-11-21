@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Konuşma rengi</string>
   <string name="conversation_preference_emoji">Konuşma emojisi</string>
   <string name="conversation_type_contact">Jami kişisi</string>
-  <string name="conversation_type_private">Özel küme</string>
-  <string name="conversation_type_group">Grup kümesi</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>
@@ -338,4 +336,5 @@
   <string name="bottomSheet_raiseHand_btn">Elinizi kaldırın</string>
   <string name="uninstall">Kaldır</string>
   <string name="reset">Sıfırlama</string>
+  <!--Swarm Detail-->
 </resources>

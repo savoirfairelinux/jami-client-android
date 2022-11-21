@@ -174,8 +174,6 @@
   <string name="conversation_preference_color">لون المحادثة</string>
   <string name="conversation_preference_emoji">إيموجي المحادثة</string>
   <string name="conversation_type_contact">جهة اتصال جامي</string>
-  <string name="conversation_type_private">سرب خاص</string>
-  <string name="conversation_type_group">سرب مجموعة</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
   <string name="prompt_new_password">كلمة مرور جديدة</string>
@@ -318,4 +316,5 @@
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
+  <!--Swarm Detail-->
 </resources>

@@ -113,4 +113,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">बाटें </string>
   <string name="bottomSheet_hangup_btn">कॉल समाप्त करें</string>
+  <!--Swarm Detail-->
 </resources>

@@ -272,4 +272,5 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Ukončiť hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
+  <!--Swarm Detail-->
 </resources>

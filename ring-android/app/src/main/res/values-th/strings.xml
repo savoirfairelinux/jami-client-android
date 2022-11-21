@@ -180,7 +180,6 @@
   <string name="conversation_preference_color">สีของการสนทนา</string>
   <string name="conversation_preference_emoji">อิโมจิการสนทนา</string>
   <string name="conversation_type_contact">๋ติดต่อ Jami</string>
-  <string name="conversation_type_private">กลุ่มส่วนตัว</string>
   <string name="conversation_contact_invited">%1$sได้รับเชิญ</string>
   <string name="conversation_contact_added">%1$sเข้าร่วม</string>
   <string name="conversation_contact_banned">%1$sถูกห้าม</string>
@@ -335,4 +334,5 @@
   <string name="open_general_plugin_settings">เปิดการตั้งค่าปลั๊กอินทั่วไป</string>
   <string name="uninstall">ถอนการติดตั้ง</string>
   <string name="reset">รีเซ็ต</string>
+  <!--Swarm Detail-->
 </resources>

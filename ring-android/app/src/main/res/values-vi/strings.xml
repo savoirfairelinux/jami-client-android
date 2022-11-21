@@ -44,4 +44,5 @@
   <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
   <string name="bottomSheet_mute_microphone_btn">Micrô</string>
   <string name="bottomSheet_raiseHand_btn">Giơ tay</string>
+  <!--Swarm Detail-->
 </resources>

@@ -96,4 +96,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_plugins_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Ajustar</string>
+  <!--Swarm Detail-->
 </resources>

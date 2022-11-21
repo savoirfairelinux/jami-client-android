@@ -189,8 +189,6 @@
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
-  <string name="conversation_type_private">Zasebni roj</string>
-  <string name="conversation_type_group">Skupinski roj</string>
   <string name="conversation_contact_invited">%1$s je povabljen/a</string>
   <string name="conversation_contact_added">%1$s se je pridružil/a</string>
   <string name="conversation_contact_left">%1$s je odšel/a</string>
@@ -349,4 +347,5 @@
   <string name="open_general_plugin_settings">Odpri splošne nastavitve vstavkov</string>
   <string name="uninstall">Odstrani</string>
   <string name="reset">Ponastavi</string>
+  <!--Swarm Detail-->
 </resources>

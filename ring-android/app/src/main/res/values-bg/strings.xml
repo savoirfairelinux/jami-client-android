@@ -218,4 +218,5 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
   <string name="bottomSheet_hangup_btn">Край на разговора</string>
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
+  <!--Swarm Detail-->
 </resources>

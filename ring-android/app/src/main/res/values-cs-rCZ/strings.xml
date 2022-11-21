@@ -189,8 +189,6 @@
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
   <string name="conversation_type_contact">Kontakt na Jami</string>
-  <string name="conversation_type_private">Soukromý swarm</string>
-  <string name="conversation_type_group">Skupinový swarm</string>
   <string name="conversation_contact_invited">%1$sbyl pozván</string>
   <string name="conversation_contact_added">%1$sse připojil</string>
   <string name="conversation_contact_left">%1$sodešel</string>
@@ -347,4 +345,5 @@
   <string name="open_general_plugin_settings">Otevřít základní nastavení pluginu</string>
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
+  <!--Swarm Detail-->
 </resources>

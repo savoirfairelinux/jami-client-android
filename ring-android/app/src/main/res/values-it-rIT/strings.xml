@@ -188,8 +188,6 @@
   <string name="conversation_preference_color">Colore della conversazione</string>
   <string name="conversation_preference_emoji">Emoji conversazione</string>
   <string name="conversation_type_contact">Contatto Jami</string>
-  <string name="conversation_type_private">Gruppo privato</string>
-  <string name="conversation_type_group">Gruppo</string>
   <string name="conversation_contact_invited">%1$s è stato invitato</string>
   <string name="conversation_contact_added">%1$s si è unito</string>
   <string name="conversation_contact_left">%1$s è uscito</string>
@@ -348,4 +346,5 @@
   <string name="open_general_plugin_settings">Mostra le opzioni generali</string>
   <string name="uninstall">Disinstalla</string>
   <string name="reset">Ripristina</string>
+  <!--Swarm Detail-->
 </resources>

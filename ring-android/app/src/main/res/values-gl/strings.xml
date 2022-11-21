@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Cor da conversa</string>
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
-  <string name="conversation_type_private">Swarm privado</string>
-  <string name="conversation_type_group">Swarm en grupo</string>
   <string name="conversation_contact_invited">Convidouse a %1$s</string>
   <string name="conversation_contact_added">%1$s uníuse</string>
   <string name="conversation_contact_left">%1$s saíu</string>
@@ -345,4 +343,5 @@
   <string name="open_general_plugin_settings">Axustes do complemento Open General</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
+  <!--Swarm Detail-->
 </resources>

@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Samtalefarge</string>
   <string name="conversation_preference_emoji">Samtale-emoji</string>
   <string name="conversation_type_contact">Jami-kontakt</string>
-  <string name="conversation_type_private">Privat sverm</string>
-  <string name="conversation_type_group">Gruppesverm</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
@@ -338,4 +336,5 @@
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
+  <!--Swarm Detail-->
 </resources>

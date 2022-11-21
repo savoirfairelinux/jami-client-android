@@ -212,4 +212,5 @@
   <string name="bottomSheet_hangup_btn">Završi poziv</string>
   <string name="bottomSheet_sound_output_btn">Zvukovi</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
+  <!--Swarm Detail-->
 </resources>

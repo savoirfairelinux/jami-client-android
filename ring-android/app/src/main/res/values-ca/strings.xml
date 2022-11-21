@@ -185,8 +185,6 @@
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
-  <string name="conversation_type_private">Swarm privat</string>
-  <string name="conversation_type_group">Swarm de grup</string>
   <string name="conversation_contact_invited">%1$s ha estat convidat</string>
   <string name="conversation_contact_added">%1$s s\'ha unit</string>
   <string name="conversation_contact_left">%1$s ha sortit</string>
@@ -343,4 +341,5 @@
   <string name="open_general_plugin_settings">Obre les Opcions Generals dels Complements</string>
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
+  <!--Swarm Detail-->
 </resources>

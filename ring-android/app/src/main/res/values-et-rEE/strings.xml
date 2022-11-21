@@ -49,4 +49,5 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Helid</string>
   <string name="bottomSheet_raiseHand_btn">Tõsta käsi</string>
+  <!--Swarm Detail-->
 </resources>

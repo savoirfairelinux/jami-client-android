@@ -188,8 +188,6 @@
   <string name="conversation_preference_color">Цвет беседы</string>
   <string name="conversation_preference_emoji">Эмоджи беседы</string>
   <string name="conversation_type_contact">Контакт Jami</string>
-  <string name="conversation_type_private">Частный рой</string>
-  <string name="conversation_type_group">Групповой рой</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -341,4 +339,5 @@
   <string name="open_account_plugin_settings">Открыть настройки плагина аккаунта</string>
   <string name="uninstall">Деинсталлировать</string>
   <string name="reset">Сброс</string>
+  <!--Swarm Detail-->
 </resources>

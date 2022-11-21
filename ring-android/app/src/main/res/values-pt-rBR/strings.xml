@@ -188,8 +188,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
-  <string name="conversation_type_private">swarm privado</string>
-  <string name="conversation_type_group">swarm em grupo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
@@ -340,4 +338,5 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="bottomSheet_raiseHand_btn">Levantar a mão</string>
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Resetar</string>
+  <!--Swarm Detail-->
 </resources>

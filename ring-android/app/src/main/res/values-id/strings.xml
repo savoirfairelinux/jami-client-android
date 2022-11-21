@@ -186,8 +186,6 @@
   <string name="conversation_preference_color">Warna percakapan</string>
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
-  <string name="conversation_type_private">Kolam privat</string>
-  <string name="conversation_type_group">Kolam grup</string>
   <string name="conversation_contact_invited"> %1$sdiundang</string>
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
@@ -345,4 +343,5 @@
   <string name="open_general_plugin_settings">Buka Pengaturan Plugin Umum</string>
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
+  <!--Swarm Detail-->
 </resources>

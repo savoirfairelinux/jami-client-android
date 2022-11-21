@@ -291,4 +291,5 @@
   <string name="bottomSheet_add_participants_btn">Gehitu</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Amaitu deia</string>
+  <!--Swarm Detail-->
 </resources>

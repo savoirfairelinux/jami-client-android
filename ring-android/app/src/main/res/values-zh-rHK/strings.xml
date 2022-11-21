@@ -183,8 +183,6 @@
   <string name="conversation_preference_color">会话颜色</string>
   <string name="conversation_preference_emoji">会画表情</string>
   <string name="conversation_type_contact">Jami 联系人</string>
-  <string name="conversation_type_private">私人 swarm</string>
-  <string name="conversation_type_group">群组 swarm</string>
   <string name="conversation_contact_invited">已邀请 %1$s</string>
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
@@ -342,4 +340,5 @@
   <string name="open_general_plugin_settings">開啟一般外掛程式設定</string>
   <string name="uninstall">卸载</string>
   <string name="reset">重置</string>
+  <!--Swarm Detail-->
 </resources>
