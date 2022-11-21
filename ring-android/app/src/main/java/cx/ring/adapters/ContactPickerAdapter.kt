@@ -23,7 +23,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import cx.ring.databinding.ItemSmartlistBinding
+import cx.ring.databinding.ItemContactBinding
 import cx.ring.viewholders.ContactPickerViewHolder
 import cx.ring.viewholders.ContactPickerViewHolder.ContactPickerListeners
 import net.jami.smartlist.ConversationItemViewModel
@@ -36,7 +36,7 @@ class ContactPickerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactPickerViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ContactPickerViewHolder(ItemSmartlistBinding.inflate(layoutInflater, parent, false))
+        return ContactPickerViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onViewRecycled(holder: ContactPickerViewHolder) {

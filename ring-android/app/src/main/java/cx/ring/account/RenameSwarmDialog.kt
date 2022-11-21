@@ -94,25 +94,9 @@ class RenameSwarmDialog : DialogFragment() {
         super.onDestroy()
     }
 
-    private fun checkInput(input: String): Boolean {
-        if (input.isEmpty()) {
-            binding?.apply {
-                titleTxtBox.isErrorEnabled = true
-                titleTxtBox.error = getString(R.string.rename_error)
-            }
-            return false
-        } else {
-            binding?.apply {
-                titleTxtBox.isErrorEnabled = false
-                titleTxtBox.error = null
-            }
-        }
-        return true
-    }
-
     private fun validate(): Boolean {
         val input = binding!!.titleTxt.text.toString().trim { it <= ' ' }
-        if (checkInput(input) && mListener != null) {
+        if (mListener != null) {
             mListener!!.onSwarmRename(key!!, input)
             return true
         }

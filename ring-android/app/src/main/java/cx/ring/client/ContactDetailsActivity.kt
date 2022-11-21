@@ -132,7 +132,10 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     .withCircleCrop(true)
                     .build(this))
                 binding.title.text = vm.title
-                if (conversation.getDescription() != null) binding.description.text = conversation.getDescription()
+                if (conversation.getDescription().isNullOrBlank())
+                    binding.description.text = getString(R.string.swarm_description)
+                else
+                    binding.description.text = conversation.getDescription()
             }) { e ->
                 Log.e(TAG, "e", e)
                 finish()
@@ -148,27 +151,32 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             binding.description.isVisible = true
             binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
             binding.title.setOnClickListener {
+                val title = getString(R.string.dialogtitle_title)
+                val hint = getString(R.string.dialog_hint_title)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE) }
-                    setTitle(getString(R.string.dialogtitle_title))
-                    setHint(getString(R.string.dialog_hint_title))
-                    setText(binding.title.text.toString())
+                    setTitle(title)
+                    setHint(hint)
+                    setText(conversation.getTitle())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
             }
             binding.description.setOnClickListener {
+                val title = getString(R.string.dialogtitle_description)
+                val hint = getString(R.string.dialog_hint_description)
                 RenameSwarmDialog().apply {
                     arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION) }
-                    setTitle(getString(R.string.dialogtitle_description))
-                    setHint(getString(R.string.dialog_hint_description))
+                    setTitle(title)
+                    setHint(hint)
                     setText(conversation.getDescription())
                     setListener(this@ContactDetailsActivity)
                 }.show(supportFragmentManager, TAG)
             }
+        } else {
+            binding.tabLayout.removeTabAt(TAB_MEMBER)
         }
 
-
-        mPagerAdapter = ScreenSlidePagerAdapter(this, conversation.accountId, conversation.uri)
+        mPagerAdapter = ScreenSlidePagerAdapter(this, conversation)
         binding.pager.adapter = mPagerAdapter
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -246,13 +254,21 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         mAccountService.updateConversationInfo(path!!.accountId, path!!.conversationUri.host, map)
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, accountId: String, conversationId: Uri) : FragmentStateAdapter(fa) {
-        val fragments: List<Fragment> = listOf(
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, conversation: Conversation) : FragmentStateAdapter(fa) {
+
+        val accountId = conversation.accountId
+        val conversationId = conversation.uri
+        val isGroup = conversation.isGroup()
+
+        val fragments: List<Fragment> = if (isGroup) listOf(
             ConversationActionsFragment.newInstance(accountId, conversationId),
             ConversationMembersFragment.newInstance(accountId, conversationId),
             ConversationGalleryFragment.newInstance(accountId, conversationId))
+        else listOf(
+            ConversationActionsFragment.newInstance(accountId, conversationId),
+            ConversationGalleryFragment.newInstance(accountId, conversationId))
 
-            override fun getItemCount(): Int = fragments.size
+        override fun getItemCount(): Int = fragments.size
 
         override fun createFragment(position: Int): Fragment = fragments[position]
     }
