@@ -179,10 +179,6 @@ class DaemonService(
         }
 
         override fun incomingTrustRequest(accountId: String, conversationId: String, from: String, message: Blob, received: Long) {
-            val jmessage = message.toJavaString()
-            mExecutor.submit {
-                mAccountService.incomingTrustRequest(accountId, conversationId, from, jmessage, received)
-            }
         }
 
         override fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {

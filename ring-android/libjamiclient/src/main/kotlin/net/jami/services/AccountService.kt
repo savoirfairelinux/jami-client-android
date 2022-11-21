@@ -262,23 +262,6 @@ class AccountService(
                 account.devices = JamiService.getKnownRingDevices(accountId).toNative()
                 Log.w(TAG, "$accountId loading contacts")
                 account.setContacts(JamiService.getContacts(accountId).toNative())
-
-                val requests: List<Map<String, String>> = JamiService.getTrustRequests(accountId).toNative()
-                Log.w(TAG, "$accountId loading ${requests.size} trust requests")
-                for (requestInfo in requests) {
-                    try {
-                        val uri = requestInfo["conversationId"]?.let { uriString -> if (uriString.isEmpty()) null else Uri(Uri.SWARM_SCHEME, uriString) }
-                        val request = TrustRequest(accountId, uri, requestInfo)
-                        requestInfo["payload"]?.let {
-                            Log.w(TAG, "payload: $it")
-                            if (it.isNotBlank())
-                                request.profile = mVCardService.loadVCardProfile(Ezvcard.parse(it).first())
-                        }
-                        account.addRequest(request)
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Error loading request", e)
-                    }
-                }
                 val conversations: List<String> = JamiService.getConversations(account.accountId)
                 Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
                 for (conversationId in conversations) {
@@ -1131,25 +1114,6 @@ class AccountService(
     fun removeConversationMember(accountId: String, conversationId: String, uri: String) {
         // mExecutor.execute {
         JamiService.removeConversationMember(accountId, conversationId, uri)
-    }
-
-    fun incomingTrustRequest(accountId: String, conversationId: String,from: String, message: String?, received: Long) {
-
-        Log.d(TAG, "incomingTrustRequest: $accountId, $conversationId, $from, $received")
-        val account = getAccount(accountId)
-        if (account != null) {
-            val fromUri = Uri.fromString(from)
-            var request = account.getRequest(fromUri)
-            val profile = mVCardService.loadVCardProfile(Ezvcard.parse(message).first())
-            if (request == null)
-                request = TrustRequest(accountId, fromUri, received * 1000L, if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId), profile)
-            else request.profile = profile
-            val contact = account.getContactFromCache(fromUri)
-            contact.loadedProfile = profile.subscribeOn(Schedulers.computation())
-            account.addRequest(request)
-            if (account.isEnabled) lookupAddress(accountId, "", from)
-            incomingRequestsSubject.onNext(request)
-        }
     }
 
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
