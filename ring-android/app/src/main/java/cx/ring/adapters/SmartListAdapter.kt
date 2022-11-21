@@ -90,7 +90,7 @@ class SmartListAdapter(
     }
 
     fun update(viewModels: List<Conversation>) {
-        update(ConversationFacade.ConversationList(viewModels.toList()))
+        update(ConversationFacade.ConversationList(ArrayList(viewModels)))
     }
 
     fun update(viewModels: ConversationFacade.ConversationList) {
