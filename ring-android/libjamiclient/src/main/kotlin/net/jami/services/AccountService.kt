@@ -272,7 +272,7 @@ class AccountService(
                         }*/
                         val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                         val conversation = account.newSwarm(conversationId, mode)
-                        conversation.updateInfo(info)
+                        conversation.setProfile(mVCardService.loadConversationProfile(info))
                         conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
                         for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                             /*for (Map.Entry<String, String> i : member.entrySet()) {
@@ -503,13 +503,7 @@ class AccountService(
             JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", 0)
         }
     }
-    /**
-     * @return Account Ids list from Daemon
-     */
-    /*public Single<List<String>> getAccountList() {
-        return Single.fromCallable(() -> (List<String>)new ArrayList<>(JamiService.getAccountList()))
-                .subscribeOn(Schedulers.from(mExecutor));
-    }*/
+
     /**
      * Sets the order of the accounts in the Daemon
      *
@@ -1274,7 +1268,7 @@ class AccountService(
     }
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: StringMap) {
-        getAccount(accountId)?.getSwarm(conversationId)?.updateInfo(info)
+        getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
     }
 
     fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
@@ -1331,7 +1325,7 @@ class AccountService(
         }
         val conversation = c
         synchronized(conversation) {
-            conversation.updateInfo(info)
+            conversation.setProfile(mVCardService.loadConversationProfile(info))
             // Making sure to add contacts before changing the mode
             for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                 val memberUri = Uri.fromId(member["uri"]!!)

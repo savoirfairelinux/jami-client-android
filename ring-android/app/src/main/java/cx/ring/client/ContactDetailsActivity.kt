@@ -132,10 +132,41 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     .withCircleCrop(true)
                     .build(this))
                 binding.title.text = vm.title
-                if (conversation.getDescription().isNullOrBlank())
+                if (vm.conversationProfile.description.isNullOrBlank())
                     binding.description.text = getString(R.string.swarm_description)
                 else
-                    binding.description.text = conversation.getDescription()
+                    binding.description.text = vm.conversationProfile.description
+                if (vm.mode == Conversation.Mode.OneToOne) {
+                    binding.title.setOnClickListener(null)
+                    binding.description.setOnClickListener(null)
+                } else {
+                    binding.title.setOnClickListener {
+                        val title = getString(R.string.dialogtitle_title)
+                        val hint = getString(R.string.dialog_hint_title)
+                        RenameSwarmDialog().apply {
+                            arguments = Bundle().apply {
+                                putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE)
+                            }
+                            setTitle(title)
+                            setHint(hint)
+                            setText(vm.conversationProfile.displayName)
+                            setListener(this@ContactDetailsActivity)
+                        }.show(supportFragmentManager, TAG)
+                    }
+                    binding.description.setOnClickListener {
+                        val title = getString(R.string.dialogtitle_description)
+                        val hint = getString(R.string.dialog_hint_description)
+                        RenameSwarmDialog().apply {
+                            arguments = Bundle().apply {
+                                putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION)
+                            }
+                            setTitle(title)
+                            setHint(hint)
+                            setText(vm.conversationProfile.description)
+                            setListener(this@ContactDetailsActivity)
+                        }.show(supportFragmentManager, TAG)
+                    }
+                }
             }) { e ->
                 Log.e(TAG, "e", e)
                 finish()
@@ -150,28 +181,6 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             binding.addMember.isVisible = true
             binding.description.isVisible = true
             binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
-            binding.title.setOnClickListener {
-                val title = getString(R.string.dialogtitle_title)
-                val hint = getString(R.string.dialog_hint_title)
-                RenameSwarmDialog().apply {
-                    arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_TITLE) }
-                    setTitle(title)
-                    setHint(hint)
-                    setText(conversation.getTitle())
-                    setListener(this@ContactDetailsActivity)
-                }.show(supportFragmentManager, TAG)
-            }
-            binding.description.setOnClickListener {
-                val title = getString(R.string.dialogtitle_description)
-                val hint = getString(R.string.dialog_hint_description)
-                RenameSwarmDialog().apply {
-                    arguments = Bundle().apply { putString(RenameSwarmDialog.KEY, RenameSwarmDialog.KEY_DESCRIPTION) }
-                    setTitle(title)
-                    setHint(hint)
-                    setText(conversation.getDescription())
-                    setListener(this@ContactDetailsActivity)
-                }.show(supportFragmentManager, TAG)
-            }
         } else {
             binding.tabLayout.removeTabAt(TAB_MEMBER)
         }

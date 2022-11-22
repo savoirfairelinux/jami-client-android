@@ -21,7 +21,7 @@ package net.jami.model
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-open class Profile(val displayName: String?, val avatar: Any?) {
+open class Profile(val displayName: String?, val avatar: Any?, val description: String? = null) {
     companion object {
         val EMPTY_PROFILE = Profile(null, null)
         val EMPTY_PROFILE_SINGLE: Single<Profile> = Single.just(EMPTY_PROFILE)

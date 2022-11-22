@@ -74,6 +74,11 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
         VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
             .map { vcard -> readData(vcard) }
 
+    override fun loadConversationProfile(info: Map<String, String>): Single<Profile> =
+        Single.fromCallable { Profile(info["title"], BitmapUtils.base64ToBitmap(info["avatar"]), info["description"]) }
+            .cache()
+            .subscribeOn(Schedulers.computation())
+
     override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 
     companion object {

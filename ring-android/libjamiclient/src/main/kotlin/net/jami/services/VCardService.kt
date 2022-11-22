@@ -39,6 +39,7 @@ abstract class VCardService {
 
     abstract fun loadVCardProfile(vcard: VCard): Single<Profile>
     abstract fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile>
+    abstract fun loadConversationProfile(info: Map<String, String>): Single<Profile>
     abstract fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile>
     abstract fun base64ToBitmap(base64: String?): Any?
 
