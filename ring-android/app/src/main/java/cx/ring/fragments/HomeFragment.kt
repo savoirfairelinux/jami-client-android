@@ -35,6 +35,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -52,7 +53,16 @@ import net.jami.home.HomePresenter
 import net.jami.home.HomeView
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
+
+fun ViewPager2.findCurrentFragment(fragmentManager: FragmentManager): Fragment? =
+    fragmentManager.findFragmentByTag("f$currentItem")
+
+fun ViewPager2.findFragmentAtPosition(
+    fragmentManager: FragmentManager,
+    position: Int
+): Fragment? = fragmentManager.findFragmentByTag("f$position")
 
 @AndroidEntryPoint
 class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
@@ -68,7 +78,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     private var mSearchView: SearchView? = null
     private var mSearchMenuItem: MenuItem? = null
     private var mDialPadMenuItem: MenuItem? = null
-    private var mSmartListFragment: Fragment? = null
+    // private var mSmartListFragment: Fragment? = null
 
     @Inject
     lateinit
@@ -111,7 +121,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     binding.tabLayout.getTabAt(position)!!.select()
-                    pagerContent = mPagerAdapter!!.fragments[position]
+                    //binding.pager.
+                    //pagerContent = mPagerAdapter!!.fragments[position]
+                    pagerContent = binding.pager.findFragmentAtPosition(requireActivity().supportFragmentManager, position)
                     conversationBackPressedCallback.isEnabled = position != TAB_CONVERSATIONS
                 }
             })
@@ -139,14 +151,15 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mSmartListFragment = mPagerAdapter!!.fragments[TAB_CONVERSATIONS] as SmartListFragment
+        // mSmartListFragment = mPagerAdapter!!.fragments[TAB_CONVERSATIONS] as SmartListFragment
         val menu = mBinding!!.toolbar.menu
         val searchMenuItem = menu.findItem(R.id.menu_contact_search)
         val dialpadMenuItem = menu.findItem(R.id.menu_contact_dial)
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 dialpadMenuItem.isVisible = false
-                (mSmartListFragment as SmartListFragment?)?.showFab(true)
+                (pagerContent as? SmartListFragment?)?.showFab(true)
+                // (mSmartListFragment as SmartListFragment?)?.showFab(true)
                 setOverflowMenuVisible(menu, true)
                 mBinding!!.qrCode.visibility = View.GONE
                 mBinding!!.newGroup.visibility = View.GONE
@@ -156,7 +169,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 dialpadMenuItem.isVisible = true
-                (mSmartListFragment as SmartListFragment).showFab(false)
+                (pagerContent as? SmartListFragment?)?.showFab(false)
                 setOverflowMenuVisible(menu, false)
                 mBinding!!.qrCode.visibility = View.VISIBLE
                 mBinding!!.newGroup.visibility = View.VISIBLE
@@ -240,7 +253,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                             mBinding!!.spinnerToolbar.setSelection(0)
                         }
                     } ?: run {
-                        AccountSpinnerAdapter(activity!!, ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
+                        AccountSpinnerAdapter(requireActivity(), ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
                             mAccountAdapter = this
                             setNotifyOnChange(false)
                             mBinding?.spinnerToolbar?.adapter = this
@@ -288,13 +301,13 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     fun presentForAccount(accountId: String) {
-        val fragment = mPagerAdapter!!.fragments[TAB_INVITATIONS]
-        (fragment as ContactRequestsFragment).presentForAccount(accountId)
+        //val fragment = mPagerAdapter!!.fragments[TAB_INVITATIONS]
+        //(fragment as ContactRequestsFragment).presentForAccount(accountId)
     }
 
     fun goToHome() {
         mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
-        pagerContent = mPagerAdapter!!.fragments[TAB_CONVERSATIONS]
+        pagerContent = mBinding!!.pager.findCurrentFragment(requireActivity().supportFragmentManager)
     }
 
     private fun setBadge(menuId: Int, number: Int) {
@@ -305,11 +318,12 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             if (!mHasPendingBadge && pagerContent is ContactRequestsFragment) goToHome()
         } else {
             tab!!.orCreateBadge.number = number
-            mBinding!!.tabLayout.isVisible = true
             if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = true else mHasPendingBadge = true
         }
+        Log.w(TAG, "setBadge $menuId $number $mHasPendingBadge $mHasPendingBadge")
         mBinding!!.tabLayout.isVisible = mHasPendingBadge
-        mBinding!!.pager.isUserInputEnabled = mHasConversationBadge || mHasPendingBadge
+        mPagerAdapter!!.enableRequests(mHasPendingBadge)
+        mBinding!!.pager.isUserInputEnabled = mHasPendingBadge
     }
 
     fun handleIntent(intent: Intent) {
@@ -344,7 +358,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        (mSmartListFragment as SmartListFragment).searchQueryTextChanged(newText)
+        (pagerContent as? SmartListFragment?)?.searchQueryTextChanged(newText)
         return true
     }
 
@@ -368,11 +382,23 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        val fragments: List<Fragment> = listOf(SmartListFragment(), ContactRequestsFragment())
+        var hasRequests = false
+        override fun getItemCount(): Int = if (hasRequests) 2 else 1
 
-        override fun getItemCount(): Int = fragments.size
+        override fun createFragment(position: Int): Fragment = when(position) {
+            TAB_CONVERSATIONS -> SmartListFragment()
+            TAB_INVITATIONS -> ContactRequestsFragment()
+            else -> throw IllegalArgumentException()
+        }
 
-        override fun createFragment(position: Int): Fragment = fragments[position]
+        fun enableRequests(enable: Boolean) {
+            if (enable == hasRequests) return
+            hasRequests = enable
+            if (enable)
+                notifyItemInserted(TAB_INVITATIONS)
+            else
+                notifyItemRemoved(TAB_INVITATIONS)
+        }
     }
 
     companion object {

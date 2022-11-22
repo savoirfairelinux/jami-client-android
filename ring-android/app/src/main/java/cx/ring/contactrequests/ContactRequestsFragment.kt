@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
-import cx.ring.account.AccountEditionFragment
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragPendingContactRequestsBinding
@@ -56,17 +55,6 @@ class ContactRequestsFragment :
         super.onDestroyView()
         mAdapter = null
         binding = null
-    }
-
-    fun presentForAccount(accountId: String?) {
-        if (accountId != null)
-            arguments?.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId)
-        presenter.updateAccount(accountId)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.updateAccount(arguments?.getString(AccountEditionFragment.ACCOUNT_ID_KEY))
     }
 
     override fun updateView(list: List<Conversation>, conversationFacade: ConversationFacade, disposable: CompositeDisposable) {
