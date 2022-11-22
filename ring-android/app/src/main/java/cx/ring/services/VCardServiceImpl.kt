@@ -25,6 +25,7 @@ import ezvcard.VCard
 import net.jami.utils.VCardUtils
 import android.graphics.Bitmap
 import android.util.Base64
+import com.google.android.gms.common.util.Base64Utils
 import cx.ring.utils.BitmapUtils
 import ezvcard.parameter.ImageType
 import ezvcard.property.Photo
@@ -36,6 +37,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Account
 import net.jami.model.Profile
+import net.jami.utils.Log
 import java.io.File
 
 class VCardServiceImpl(private val mContext: Context) : VCardService() {
@@ -73,6 +75,11 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
     override fun accountProfileReceived(accountId: String, vcardFile: File): Single<Profile> =
         VCardUtils.accountProfileReceived(mContext.filesDir, accountId, vcardFile)
             .map { vcard -> readData(vcard) }
+
+    override fun loadConversationProfile(info: Map<String, String>): Single<Profile> =
+        Single.fromCallable { Profile(info["title"], BitmapUtils.base64ToBitmap(info["avatar"]), info["description"]) }
+            .cache()
+            .subscribeOn(Schedulers.computation())
 
     override fun base64ToBitmap(base64: String?): Any? = BitmapUtils.base64ToBitmap(base64)
 
