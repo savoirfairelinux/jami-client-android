@@ -367,7 +367,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
 
     private fun presentTrustRequestFragment(accountId: String) {
         mNotificationService.cancelTrustRequestNotification(accountId)
-        mHomeFragment!!.presentForAccount(accountId)
     }
 
     fun goToAdvancedSettings() {

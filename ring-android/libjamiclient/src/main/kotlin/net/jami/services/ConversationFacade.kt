@@ -292,6 +292,9 @@ class ConversationFacade(
     fun getPendingConversationList(currentAccount: Observable<Account>): Observable<List<Conversation>> =
         currentAccount.switchMap { account: Account ->
             account.getPendingSubject()}
+    fun getPendingConversationList(): Observable<List<Conversation>> =
+        currentAccountSubject.switchMap { account: Account ->
+            account.getPendingSubject()}
 
     fun getSmartList(hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> =
         getSmartList(mAccountService.currentAccountSubject, hasPresence)
