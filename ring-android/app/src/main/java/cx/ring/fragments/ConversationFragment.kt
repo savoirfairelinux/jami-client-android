@@ -56,7 +56,6 @@ import androidx.core.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.adapters.ConversationAdapter
 import cx.ring.client.CallActivity
@@ -942,6 +941,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     override fun goToHome() {
         if (activity is ConversationActivity) {
             requireActivity().finish()
+        } else {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
