@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38571d21_75cded8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-11-25T21:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e88d7b_973f4b4e",
+      "revId": "603f9abea6f585a81d24fd1f8e19f1b0b5c6e559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6de0140_6db3a496",
@@ -87,6 +105,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac37f1d_50761e6c",
+        "filename": "ring-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-11-25T21:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7169a99_98b8b74a",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "603f9abea6f585a81d24fd1f8e19f1b0b5c6e559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ee036de_b01ddd55",
@@ -100,6 +142,30 @@
       "writtenOn": "2022-10-17T16:05:55Z",
       "side": 1,
       "message": "Seems to work, with ntfy.sh it automatically detect it and subscribe to a topic!\n\nHowever, in opendht, for now, https://github.com/savoirfairelinux/opendht/commit/b9ccc968b28707adb5bcbf2af992f664c21ee921 detects if platform \u003d\u003d \"unifiedpush\"\n\nFor now, on android, we always pass \"android\" (causing firebase to be chosen).\n\nI\u0027m wondering the best way to inform the daemon + proxy client that we need to use unifiedpush. For iOS, there is a notificationTopic_ used, that we may use if a unified push is shown?",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "603f9abea6f585a81d24fd1f8e19f1b0b5c6e559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4d49ecd_88c7bbb8",
+        "filename": "ring-android/app/src/withUnifiedPush/java/cx/ring/application/JamiApplicationUnifiedPush.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-11-25T21:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee036de_b01ddd55",
       "range": {
         "startLine": 41,
         "startChar": 24,
@@ -133,6 +199,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bce184f6_2a0869c1",
+        "filename": "ring-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushReceiver.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-11-25T21:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9505f238_67e50382",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "603f9abea6f585a81d24fd1f8e19f1b0b5c6e559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e92c4203_7fe05f73",
@@ -146,6 +236,30 @@
       "writtenOn": "2022-10-17T16:05:55Z",
       "side": 1,
       "message": "Crash with\n\n2022-10-17 12:04:03.635  8998-8998  JamiPushReceiver        cx.ring                              W  onMessage [B@37d4b98 default\n2022-10-17 12:04:03.636  8998-9031  libjami                 cx.ring                              D  [1666022643.636|9031|pupnp.cpp               :161 ] PUPnP: Initialized on 192.168.0.137:0\n2022-10-17 12:04:03.636  8998-9031  libjami                 cx.ring                              D  [1666022643.636|9031|pupnp.cpp               :188 ] PUPnP: Successfully registered client\n2022-10-17 12:04:03.636  8998-9031  libjami                 cx.ring                              D  [1666022643.636|9031|pupnp.cpp               :272 ] PUPnP: Send IGD search request\n2022-10-17 12:04:03.636  8998-8998  AndroidRuntime          cx.ring                              D  Shutting down VM\n2022-10-17 12:04:03.637  8998-9038  libjami                 cx.ring                              D  [1666022643.637|9038|fileutils.cpp           :487 ] Loading cache file \u0027/data/user/0/cx.ring/cache/96f89cf443ce26c1/dhtproxy\u0027\n2022-10-17 12:04:03.637  8998-9032  libjami                 cx.ring                              D  [1666022643.637|9032|fileutils.cpp           :487 ] Loading cache file \u0027/data/user/0/cx.ring/cache/e1b8fae62dd9ba1a/dhtproxy\u0027\n2022-10-17 12:04:03.640  8998-8998  AndroidRuntime          cx.ring                              E  FATAL EXCEPTION: main\n                                                                                                    Process: cx.ring, PID: 8998\n                                                                                                    java.lang.RuntimeException: Unable to start receiver cx.ring.services.JamiPushReceiver: org.json.JSONException: Unterminated array at character 10 of [B@37d4b98\n                                                                                                    \tat android.app.ActivityThread.handleReceiver(ActivityThread.java:4157)\n                                                                                                    \tat android.app.ActivityThread.access$1600(ActivityThread.java:252)\n                                                                                                    \tat android.app.ActivityThread$H.handleMessage(ActivityThread.java:2010)\n                                                                                                    \tat android.os.Handler.dispatchMessage(Handler.java:106)\n                                                                                                    \tat android.os.Looper.loop(Looper.java:250)\n                                                                                                    \tat android.app.ActivityThread.main(ActivityThread.java:7877)\n                                                                                                    \tat java.lang.reflect.Method.invoke(Native Method)\n                                                                                                    \tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)\n                                                                                                    \tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:958)\n                                                                                                    Caused by: org.json.JSONException: Unterminated array at character 10 of [B@37d4b98\n                                                                                                    \tat org.json.JSONTokener.syntaxError(JSONTokener.java:460)\n                                                                                                    \tat org.json.JSONTokener.readArray(JSONTokener.java:450)\n                                                                                                    \tat org.json.JSONTokener.nextValue(JSONTokener.java:107)\n                                                                                                    \tat org.json.JSONObject.\u003cinit\u003e(JSONObject.java:165)\n                                                                                                    \tat org.json.JSONObject.\u003cinit\u003e(JSONObject.java:182)\n                                                                                                    \tat cx.ring.services.JamiPushReceiver.onMessage(JamPushReceiver.kt:31)\n                                                                                                    \tat org.unifiedpush.android.connector.MessagingReceiver.onReceive(MessagingReceiver.kt:48)\n                                                                                                    \tat android.app.ActivityThread.handleReceiver(ActivityThread.java:4148)\n                                                                                                    \tat android.app.ActivityThread.access$1600(ActivityThread.java:252) \n                                                                                                    \tat android.app.ActivityThread$H.handleMessage(ActivityThread.java:2010) \n                                                                                                    \tat android.os.Handler.dispatchMessage(Handler.java:106) \n                                                                                                    \tat android.os.Looper.loop(Looper.java:250) \n                                                                                                    \tat android.app.ActivityThread.main(ActivityThread.java:7877) \n                                                                                                    \tat java.lang.reflect.Method.invoke(Native Method) \n                                                                                                    \tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592) \n                                                                                                    \tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:958)",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "603f9abea6f585a81d24fd1f8e19f1b0b5c6e559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d82fed0_039f6935",
+        "filename": "ring-android/app/src/withUnifiedPush/java/cx/ring/services/JamPushReceiver.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-11-25T21:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e92c4203_7fe05f73",
       "range": {
         "startLine": 29,
         "startChar": 17,
