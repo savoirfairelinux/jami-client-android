@@ -247,7 +247,7 @@ class ConversationFacade(
              .filter { c: Conversation -> c === conversation }
              .startWithItem(conversation)
              .switchMap { c -> c.profile },
-            mContactService.observeContact(conversation.accountId, conversation.contacts, hasPresence)
+             conversation.contactUpdates.switchMap { c -> mContactService.observeContact(conversation.accountId, c, hasPresence) }
          ) { profile, contacts -> ConversationItemViewModel(conversation, profile, contacts, hasPresence) }
 
     fun getSmartList(currentAccount: Observable<Account>, hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> =
