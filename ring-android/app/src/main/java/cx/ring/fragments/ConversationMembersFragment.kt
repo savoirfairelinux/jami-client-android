@@ -18,30 +18,24 @@
  */
 package cx.ring.fragments
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.databinding.FragConversationMembersBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.utils.ConversationPath
-import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
-import net.jami.model.Conversation
 import net.jami.model.Uri
+import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,32 +47,43 @@ class ConversationMembersFragment : Fragment() {
     @Singleton
     lateinit
     var mConversationFacade: ConversationFacade
+    @Inject
+    @Singleton
+    lateinit
+    var contactService: ContactService
 
     private var binding: FragConversationMembersBinding? = null
     private val mDisposableBag = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragConversationMembersBinding.inflate(inflater, container, false).apply {
-
-            val path = ConversationPath.fromBundle(arguments)!!
-
-            val conversation = mConversationFacade
-                .startConversation(path.accountId, path.conversationUri)
-                .blockingGet()
-
-            mDisposableBag.add(mConversationFacade.observeConversation(conversation)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { requireActivity().finish() }
-                .subscribe({ vm ->
-                    contactList.adapter = ContactViewAdapter(mDisposableBag, vm.contacts)
-                    { contact -> copyAndShow(contact.uri.rawUriString) }
-                }) { e ->
-                    Log.e(TAG, "e", e)
-                    requireActivity().finish()
-                })
-
             binding = this
         }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val path = ConversationPath.fromBundle(arguments)!!
+        mDisposableBag.add(mConversationFacade
+            .startConversation(path.accountId, path.conversationUri)
+            .flatMapObservable { conversation -> conversation.contactUpdates }
+            .flatMap { contacts -> contactService.observeContact(path.accountId, contacts, false) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                val adapter = binding!!.contactList.adapter
+                if (adapter == null) {
+                    binding!!.contactList.adapter = ContactViewAdapter(mDisposableBag, it)
+                    { contact ->
+                        val actionBottomSheet = MembersBottomSheetFragment.newInstance(
+                            path.accountId,
+                            contact.uri,
+                            path.conversationUri
+                        )
+                        actionBottomSheet.show(parentFragmentManager, MembersBottomSheetFragment.TAG)
+                    }
+                } else {
+                    (adapter as ContactViewAdapter).update(it)
+                }
+            })
+    }
 
     override fun onDestroy() {
         mDisposableBag.dispose()
@@ -86,15 +91,9 @@ class ConversationMembersFragment : Fragment() {
         binding = null
     }
 
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
-    }
-
     private class ContactViewAdapter(
         private val disposable: CompositeDisposable,
-        private val contacts: List<ContactViewModel>,
+        private var contacts: List<ContactViewModel>,
         private val callback: (Contact) -> Unit
     ) : RecyclerView.Adapter<ContactDetailsActivity.ContactView>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactDetailsActivity.ContactView {
@@ -114,6 +113,11 @@ class ConversationMembersFragment : Fragment() {
             holder.binding.displayName.text =
                 if (contact.contact.isUser) holder.itemView.context.getText(R.string.conversation_info_contact_you) else contact.displayName
             holder.itemView.setOnClickListener { callback.invoke(contact.contact) }
+        }
+
+        fun update(contacts: List<ContactViewModel>) {
+            this.contacts = contacts
+            notifyDataSetChanged()
         }
 
         override fun onViewRecycled(holder: ContactDetailsActivity.ContactView) {

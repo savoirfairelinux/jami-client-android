@@ -323,7 +323,7 @@ class Account(
         }
         if (conversation == cache[key]) {
             if (isJami && !conversation.isSwarm
-                && conversation.contacts.size == 1
+                //&& conversation.contacts.size == 1
                 && !conversation.contact!!.conversationUri.blockingFirst().equals(conversation.uri)) {
                 return
             }

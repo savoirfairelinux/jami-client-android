@@ -483,7 +483,7 @@ class AccountService(
         maxResult: Long = 0
     ): Observable<ConversationSearchResult> = PublishSubject.create<ConversationSearchResult>().apply {
         conversationSearches[JamiService.searchConversation(
-            accountId, conversationUri.rawRingId, author, lastId, query, type, after, before, maxResult, 0)] = this
+            accountId, conversationUri.rawRingId, author, lastId, query, type, after, before, maxResult)] = this
     }
 
     fun messagesFound(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {

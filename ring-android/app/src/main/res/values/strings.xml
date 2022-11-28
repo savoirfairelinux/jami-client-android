@@ -438,5 +438,8 @@ along with this program; if not, write to the Free Software
     <string name="dialog_hint_description">Description</string>
     <string name="picker_title">Select contacts</string>
     <string name="picker_btn">Select contacts</string>
+    <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
+    <string name="bottomsheet_remove">Remove from the swarm</string>
+
 
 </resources>

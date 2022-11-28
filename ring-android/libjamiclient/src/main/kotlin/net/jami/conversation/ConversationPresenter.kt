@@ -419,8 +419,8 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun getNumberOfParticipants() : Int {
-        return mConversation?.contacts?.size ?: 0
+    fun isGroup() : Boolean {
+        return mConversation?.isGroup() ?: false
     }
 
     private fun showTypingIndicator(): Boolean {

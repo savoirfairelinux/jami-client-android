@@ -144,12 +144,12 @@ abstract class ContactService(
             .toList(contacts.size)
 
     fun getLoadedConversation(conversation: Conversation): Single<ConversationItemViewModel> =
-        Single.zip(getLoadedContact(
-            conversation.accountId, conversation.contacts, false),
+        conversation.contactUpdates.firstOrError().flatMap { contacts -> Single.zip(getLoadedContact(
+            conversation.accountId, contacts, false),
             conversation.profile.firstOrError()
-        ) { contacts, p ->
-            ConversationItemViewModel(conversation, p, contacts, false)
-        }
+        ){ c, p ->
+            ConversationItemViewModel(conversation, p, c, false)
+        } }
 
     fun observeLoadedContact(accountId: String, contacts: List<Contact>, withPresence: Boolean = false): List<Observable<ContactViewModel>> =
         contacts.map { contact -> observeContact(accountId, contact, withPresence) }
