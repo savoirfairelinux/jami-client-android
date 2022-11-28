@@ -379,7 +379,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         }
     }
 
-    private fun goToConversationActivity(accountId: String, conversationUri: Uri) {
+    fun goToConversationActivity(accountId: String, conversationUri: Uri) {
         startActivity(Intent(Intent.ACTION_VIEW,
             ConversationPath.toUri(accountId, conversationUri),
             applicationContext,

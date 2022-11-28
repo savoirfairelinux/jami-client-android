@@ -388,11 +388,16 @@ class NotificationServiceImpl(
         }
         Log.w(TAG, "showTextNotification " + accountId + " " + conversation.uri)
         mContactService.getLoadedContact(accountId, conversation.contacts, false)
-            .subscribe({ textNotification(accountId, texts, conversation) })
+            .subscribe({contacts -> textNotification(accountId, texts, conversation, contacts) })
             { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
-    private fun textNotification(accountId: String, texts: TreeMap<Long, TextMessage>, conversation: Conversation) {
+    private fun textNotification(
+        accountId: String,
+        texts: TreeMap<Long, TextMessage>,
+        conversation: Conversation,
+        contacts: List<ContactViewModel>
+    ) {
         val cpath = ConversationPath(conversation)
         val path = cpath.toUri()
         val key = cpath.toKey()
@@ -451,17 +456,16 @@ class NotificationServiceImpl(
         history.isGroupConversation = conversation.isGroup()
         history.conversationTitle = conversationProfile.second
         val persons = HashMap<String, Person>()
-        for (contact in conversation.contacts) {
-            if (contact.isUser) continue
-            val profile = getProfile(accountId, contact)
-            val contactPicture = getContactPicture(profile)
+        for (contact in contacts) {
+            if (contact.contact.isUser) continue
+            val contactPicture = getContactPicture(contact)
             val contactPerson = Person.Builder()
-                .setKey(ConversationPath.toKey(cpath.accountId, contact.uri.uri))
-                .setName(profile.displayName)
+                .setKey(ConversationPath.toKey(cpath.accountId, contact.contact.uri.uri))
+                .setName(contact.profile.displayName)
                 .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
             messageNotificationBuilder.addPerson(contactPerson)
-            persons[contact.uri.uri] = contactPerson
+            persons[contact.contact.uri.uri] = contactPerson
         }
         for (textMessage in texts.values) {
             val contact = textMessage.contact!!

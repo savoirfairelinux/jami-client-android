@@ -71,7 +71,6 @@ class ConversationActionsFragment : Fragment() {
     private val adapter = ContactActionAdapter(mDisposableBag)
     private var colorAction: ContactAction? = null
     private var symbolAction: ContactAction? = null
-    private var conversation: Conversation? = null
     private var colorActionPosition = 0
     private var symbolActionPosition = 0
 
@@ -79,11 +78,9 @@ class ConversationActionsFragment : Fragment() {
         FragConversationActionsBinding.inflate(inflater, container, false).apply {
 
             val path = ConversationPath.fromBundle(arguments)!!
-
-            conversation = mConversationFacade
+            val conversation = mConversationFacade
                     .startConversation(path.accountId, path.conversationUri)
                     .blockingGet()
-
 
             val preferences = SharedPreferencesServiceImpl.getConversationPreferences(
                 requireActivity(),
@@ -120,33 +117,33 @@ class ConversationActionsFragment : Fragment() {
                 adapter.actions.add(this)
             }
 
-            @StringRes val infoString = if (conversation!!.isSwarm)
-                if (conversation!!.mode.blockingFirst() == Conversation.Mode.OneToOne)
+            @StringRes val infoString = if (conversation.isSwarm)
+                if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
                     R.string.conversation_type_private
                 else
                     R.string.conversation_type_group
             else R.string.conversation_type_contact
 
             conversationType.setText(infoString)
-            val conversationUri = conversation?.uri.toString()//if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
+            val conversationUri = conversation.uri.toString()//if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
             conversationId.text = conversationUri
             infoCard.setOnClickListener { copyAndShow(path.conversationId) }
 
-            if (conversation?.contacts!!.size <= 2 && conversation?.contacts!!.isNotEmpty()) {
-                val contact = conversation?.contact!!
+            if (!conversation.isGroup()) {
+                val contact = conversation.contact!!
                 adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation!!, contact.uri, true)
+                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, true)
                 })
                 adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation!!, contact.uri, false)
+                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, false)
                 })
-                if (!conversation?.isSwarm!!) {
+                if (!conversation.isSwarm) {
                     adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle(R.string.clear_history_dialog_title)
                             .setMessage(R.string.clear_history_dialog_message)
                             .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
-                                mConversationFacade.clearHistory(conversation?.accountId!!, contact.uri).subscribe()
+                                mConversationFacade.clearHistory(conversation.accountId, contact.uri).subscribe()
                                 Snackbar.make(root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
                             }
                             .setNegativeButton(android.R.string.cancel, null)
@@ -160,7 +157,7 @@ class ConversationActionsFragment : Fragment() {
                         .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
                         .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
                         .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
-                            mAccountService.removeContact(conversation?.accountId!!, contact.uri.rawRingId,true)
+                            mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
                             Toast.makeText(requireContext(), getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
                             requireActivity().finish()
                         }
