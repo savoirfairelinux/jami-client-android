@@ -292,4 +292,7 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Amaitu deia</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Honi buruz</string>
+  <string name="tab_members">Kideak</string>
+  <string name="dialog_hint_title">Izenburua</string>
 </resources>

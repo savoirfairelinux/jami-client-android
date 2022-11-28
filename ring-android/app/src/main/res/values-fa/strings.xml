@@ -347,4 +347,8 @@
   <string name="uninstall">حذف نصب</string>
   <string name="reset">بازنشانی </string>
   <!--Swarm Detail-->
+  <string name="rename_btn">تایید</string>
+  <string name="tab_about">درباره</string>
+  <string name="tab_members">اعضا</string>
+  <string name="dialog_hint_title">عنوان</string>
 </resources>

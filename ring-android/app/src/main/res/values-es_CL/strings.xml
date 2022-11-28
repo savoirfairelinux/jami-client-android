@@ -5,6 +5,8 @@
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_advanced_settings">Ajustes Avanzados</string>
+  <string name="menu_item_account_settings">Configuración de la cuenta</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -14,10 +16,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_call_end_accept">Kết thúc cuộc gọi và trả lời</string>
-  <string name="action_call_mic_mute">Tắt tiếng micrô</string>
   <!--Text messages-->
-  <string name="send_file">Gửi tập tin</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -26,7 +25,6 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <string name="prompt_hint_username">Username</string>
   <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
@@ -34,16 +32,16 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">đã hủy bỏ</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_contact_request">Invitaciones</string>
   <!--TV-->
-  <string name="tv_audio_play">Phát</string>
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_dialpad_btn">Bàn phím số</string>
-  <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
-  <string name="bottomSheet_mute_microphone_btn">Micrô</string>
-  <string name="bottomSheet_raiseHand_btn">Giơ tay</string>
   <!--Swarm Detail-->
-  <string name="tab_about">Thông tin phần mềm</string>
+  <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Añadir descripción</string>
+  <string name="tab_about">Acerca de</string>
+  <string name="tab_members">Miembros</string>
+  <string name="tab_documetn">Documentos</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

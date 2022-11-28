@@ -313,4 +313,7 @@
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Περί</string>
+  <string name="tab_members">Μέλη</string>
+  <string name="dialog_hint_title">Τίτλος</string>
 </resources>

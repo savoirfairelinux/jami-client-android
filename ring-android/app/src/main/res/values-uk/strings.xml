@@ -312,4 +312,9 @@
   <string name="uninstall">Видалити</string>
   <string name="reset">Скинути</string>
   <!--Swarm Detail-->
+  <string name="swarm_description">Додати опис</string>
+  <string name="tab_about">Про программу</string>
+  <string name="tab_members">Учасники</string>
+  <string name="tab_documetn">Документи</string>
+  <string name="dialog_hint_title">Заголовок</string>
 </resources>

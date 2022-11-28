@@ -304,4 +304,6 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Afslut opkald</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Om</string>
+  <string name="dialog_hint_title">Titel</string>
 </resources>

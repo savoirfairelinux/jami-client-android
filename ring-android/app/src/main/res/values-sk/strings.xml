@@ -273,4 +273,7 @@
   <string name="bottomSheet_hangup_btn">Ukončiť hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potvrdiť</string>
+  <string name="tab_about">O programe</string>
+  <string name="dialog_hint_title">Nadpis</string>
 </resources>

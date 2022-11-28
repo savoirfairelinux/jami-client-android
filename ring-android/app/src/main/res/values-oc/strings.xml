@@ -97,4 +97,5 @@
   <string name="bottomSheet_plugins_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Ajustar</string>
   <!--Swarm Detail-->
+  <string name="tab_about">A prepaus</string>
 </resources>

@@ -345,4 +345,10 @@
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reiniciar</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Añadir descripción</string>
+  <string name="tab_about">Acerca de</string>
+  <string name="tab_members">Miembros</string>
+  <string name="tab_documetn">Documentos</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

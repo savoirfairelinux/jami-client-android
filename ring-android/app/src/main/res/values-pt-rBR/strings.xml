@@ -339,4 +339,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Resetar</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="tab_about">Sobre</string>
+  <string name="tab_members">Membros</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

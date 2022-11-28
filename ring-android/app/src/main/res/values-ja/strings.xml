@@ -333,4 +333,8 @@
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">確認</string>
+  <string name="tab_about">アプリについて</string>
+  <string name="tab_members">要員</string>
+  <string name="dialog_hint_title">タイトル</string>
 </resources>

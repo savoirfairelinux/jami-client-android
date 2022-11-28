@@ -310,4 +310,6 @@
   <string name="bottomSheet_hangup_btn">ਕਾਲ ਸਮਾਪਤ ਕਰੋ</string>
   <string name="bottomSheet_sound_output_btn">ਸਪੀਕਰ</string>
   <!--Swarm Detail-->
+  <string name="tab_members">ਸਾਥੀ</string>
+  <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
 </resources>

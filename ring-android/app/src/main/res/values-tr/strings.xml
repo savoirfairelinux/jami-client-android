@@ -337,4 +337,8 @@
   <string name="uninstall">Kaldır</string>
   <string name="reset">Sıfırlama</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Onayla</string>
+  <string name="tab_about">Hakkında</string>
+  <string name="tab_members">Üyeler</string>
+  <string name="dialog_hint_title">Başlık</string>
 </resources>

@@ -342,4 +342,7 @@
   <string name="uninstall">Desinstala</string>
   <string name="reset">Reconfigura</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirma</string>
+  <string name="tab_about">Quant a</string>
+  <string name="tab_members">Membres</string>
 </resources>
