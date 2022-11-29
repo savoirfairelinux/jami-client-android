@@ -503,8 +503,8 @@ class AccountService(
         }
     }
 
-    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
-        sendConversationMessage(accountId, conversationUri, txt, replyTo, 1)
+    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, messageId: String) {
+        sendConversationMessage(accountId, conversationUri, txt, messageId, 1)
     }
     fun sendConversationReaction(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
         sendConversationMessage(accountId, conversationUri, txt, replyTo, 2)
@@ -1235,6 +1235,8 @@ class AccountService(
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.replyToId = replyTo
+        interaction.reactTo = reactTo
+        interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
                 JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo)
@@ -1244,7 +1246,15 @@ class AccountService(
             interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
-        if (reactTo != null) {
+        /*if (edit != null) {
+            conversation.addEdit(interaction, edit)
+            val emptyinfo = Interaction(conversation, Interaction.InteractionType.INVALID)
+            if (emptyinfo.contact == null)
+                emptyinfo.contact = contact
+            emptyinfo.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
+            emptyinfo.conversation = conversation
+            return emptyinfo
+        } else if (reactTo != null) {
             conversation.addReaction(interaction, reactTo)
             val emptyinfo = Interaction(conversation, Interaction.InteractionType.INVALID)
             if (emptyinfo.contact == null)
@@ -1252,7 +1262,7 @@ class AccountService(
             emptyinfo.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
             emptyinfo.conversation = conversation
             return emptyinfo
-        }
+        }*/
         return interaction
     }
 

@@ -35,10 +35,25 @@ open class Interaction {
     var contact: Contact? = null
     var replyToId: String? = null
     var replyTo: Single<Interaction>? = null
-    private val reactions: MutableList<Interaction> = ArrayList()
+    var edit: String? = null
+    var reactTo: String? = null
+    val reactions: MutableList<Interaction> = ArrayList()
     private val reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
+
+    private val history: MutableList<Interaction> = ArrayList()
+    private val historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
+
     val reactionObservable: Observable<List<Interaction>>
-        get() = reactionSubject
+        get() = reactionSubject.switchMap { i ->
+            if (i.isEmpty())
+                Observable.just(emptyList())
+            else
+                Observable.combineLatest(i.map { it.lastElement }) { a -> a.map { it as Interaction } }
+        }
+
+    val historyObservable: Observable<List<Interaction>>
+        get() = historySubject
+    val lastElement: Observable<Interaction> = historyObservable.map { it.lastOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -178,6 +193,15 @@ open class Interaction {
     fun addReactions(interactions: List<Interaction>) {
         reactions.addAll(interactions)
         reactionSubject.onNext(ArrayList(reactions))
+    }
+
+    fun addEdit(interaction: Interaction) {
+        history.add(interaction)
+        historySubject.onNext(ArrayList(history))
+    }
+    fun addEdits(interactions: List<Interaction>) {
+        history.addAll(interactions)
+        historySubject.onNext(ArrayList(history))
     }
 
     var preview: Any? = null
