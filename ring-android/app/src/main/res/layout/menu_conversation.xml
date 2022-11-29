@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/static_rounded_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/conv_action_emoji1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/default_emoji_1"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/conv_action_emoji2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/default_emoji_2"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/conv_action_emoji3"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/default_emoji_3"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/conv_action_emoji4"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/default_emoji_5"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/conv_action_more"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/tv_action_more"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/baseline_add_24" />
+
+        <ImageView
+            android:id="@+id/conv_action_reply"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/menu_message_reply"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/baseline_reply_24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/conv_action_copy_text"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="@string/menu_message_copy"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/outline_file_copy_16"
+            app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/conv_action_share"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="@string/share_label"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/baseline_share_twoton_16dp"
+            app:drawableTint="@color/colorPrimary" />
+    </LinearLayout>
+
+</LinearLayout>

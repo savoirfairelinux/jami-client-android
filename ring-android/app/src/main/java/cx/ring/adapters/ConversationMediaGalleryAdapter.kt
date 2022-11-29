@@ -27,6 +27,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.FileProvider.getUriForFile
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
 import cx.ring.databinding.ItemMediaFileBinding
@@ -89,7 +90,7 @@ class ConversationMediaGalleryAdapter(
         holder.compositeDisposable.clear()
     }
     private fun configureImage(binding: ItemMediaImageBinding, path: File, displayName: String) {
-        GlideApp.with(fragment)
+        Glide.with(fragment)
             .load(path)
             .into(binding.image)
         binding.image.setOnClickListener { v: View ->

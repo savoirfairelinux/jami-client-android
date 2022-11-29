@@ -601,6 +601,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun displayAccountOfflineErrorPanel() {}
     override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {}
     override fun addSearchResults(results: List<Interaction>) {}
+    override fun shareText(body: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun displayOnGoingCallPane(display: Boolean) {}
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}
     override fun hideNumberSpinner() {}

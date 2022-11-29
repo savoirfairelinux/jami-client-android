@@ -446,7 +446,7 @@ class AccountService(
         JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
     }
 
-    fun loadMore(conversation: Conversation, n: Int = 16): Single<Conversation> {
+    fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
             if (conversation.isLoaded()) {
                 Log.w(TAG, "loadMore: conversation already fully loaded")
@@ -490,18 +490,24 @@ class AccountService(
         if (conversationId.isEmpty()) {
             conversationSearches.remove(id)?.onComplete()
         } else if (messages.isNotEmpty()) {
-            val subject = conversationSearches[id] ?: return
             val account = getAccount(accountId) ?: return
             val conversation = account.getSwarm(conversationId) ?: return
-            subject.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
+            conversationSearches[id]?.onNext(ConversationSearchResult(messages.map { getInteraction(account, conversation, it) }))
         }
     }
 
-    fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?) {
+    fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?, flag: Int = 0) {
         mExecutor.execute {
-            Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo")
-            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", 0)
+            Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo $flag")
+            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", flag)
         }
+    }
+
+    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
+        sendConversationMessage(accountId, conversationUri, txt, replyTo, 1)
+    }
+    fun sendConversationReaction(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
+        sendConversationMessage(accountId, conversationUri, txt, replyTo, 2)
     }
 
     /**
@@ -1238,6 +1244,15 @@ class AccountService(
             interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
+        if (reactTo != null) {
+            conversation.addReaction(interaction, reactTo)
+            val emptyinfo = Interaction(conversation, Interaction.InteractionType.INVALID)
+            if (emptyinfo.contact == null)
+                emptyinfo.contact = contact
+            emptyinfo.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
+            emptyinfo.conversation = conversation
+            return emptyinfo
+        }
         return interaction
     }
 

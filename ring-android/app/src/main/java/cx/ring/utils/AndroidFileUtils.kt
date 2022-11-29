@@ -29,7 +29,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.os.StatFs
 import android.provider.DocumentsContract
@@ -504,25 +503,15 @@ object AndroidFileUtils {
         }
     }
 
-    private fun getExifOrientation(resolver: ContentResolver, photoUri: Uri): Int {
-        if (Build.VERSION.SDK_INT > 23) {
-            try {
-                resolver.openInputStream(photoUri)!!.use { input ->
-                    return ExifInterface(input)
-                            .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-                }
-            } catch (e: Exception) {
-                return 0
-            }
-        } else {
-            return try {
-                ExifInterface(photoUri.path!!)
-                        .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            } catch (e: Exception) {
-                0
-            }
-        }
-    }
+    private fun getExifOrientation(resolver: ContentResolver, photoUri: Uri): Int =
+        try {
+           resolver.openInputStream(photoUri)!!.use { input ->
+               ExifInterface(input)
+                       .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+           }
+       } catch (e: Exception) {
+           0
+       }
 
     fun isImage(s: String): Boolean = getMimeType(s).startsWith("image")
 
@@ -540,13 +529,12 @@ object AndroidFileUtils {
 
     fun shareFile(c: Context, uri: Uri, displayName: String? = null) {
         val name = displayName ?: uri.getQueryParameter("displayName") ?: ""
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setDataAndType(uri, c.contentResolver.getType(uri.buildUpon().appendPath(name).build()))
-            putExtra(Intent.EXTRA_STREAM, uri)
-        }
         try {
-            c.startActivity(Intent.createChooser(sendIntent, null))
+            c.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setDataAndType(uri, c.contentResolver.getType(uri.buildUpon().appendPath(name).build()))
+                putExtra(Intent.EXTRA_STREAM, uri)
+            }, null))
         } catch (e: Exception) {
         }
     }

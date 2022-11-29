@@ -31,6 +31,7 @@ import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
 import android.widget.ImageView
+import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
 import cx.ring.views.MessageStatusView
@@ -70,6 +71,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     val mReplyTo: TextView? = v.findViewById(R.id.msg_reply)
+    val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
         MessageType.INCOMING_FILE,

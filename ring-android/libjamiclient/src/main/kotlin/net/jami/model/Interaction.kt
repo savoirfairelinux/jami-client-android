@@ -23,8 +23,10 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
-import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 open class Interaction {
@@ -33,6 +35,10 @@ open class Interaction {
     var contact: Contact? = null
     var replyToId: String? = null
     var replyTo: Single<Interaction>? = null
+    private val reactions: MutableList<Interaction> = ArrayList()
+    private val reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
+    val reactionObservable: Observable<List<Interaction>>
+        get() = reactionSubject
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -162,6 +168,16 @@ open class Interaction {
         this.conversationId = conversationId
         this.messageId = messageId
         parentId = parent
+    }
+
+    fun addReaction(interaction: Interaction) {
+        reactions.add(interaction)
+        reactionSubject.onNext(ArrayList(reactions))
+    }
+
+    fun addReactions(interactions: List<Interaction>) {
+        reactions.addAll(interactions)
+        reactionSubject.onNext(ArrayList(reactions))
     }
 
     var preview: Any? = null

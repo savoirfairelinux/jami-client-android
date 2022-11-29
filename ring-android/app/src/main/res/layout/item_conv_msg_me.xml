@@ -112,6 +112,21 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/reaction_chip"
+            style="@style/Widget.Material3.Chip.Suggestion"
+            android:focusable="false"
+            android:checkable="false"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msg_txt"
+            android:layout_alignStart="@id/msg_txt"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-24dp"
+            android:elevation="4dp"
+            android:text="👍😍 3" />
+
     </RelativeLayout>
 
 </LinearLayout>

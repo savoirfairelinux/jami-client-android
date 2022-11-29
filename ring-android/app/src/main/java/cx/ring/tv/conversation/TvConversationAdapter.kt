@@ -41,8 +41,10 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -74,7 +76,7 @@ class TvConversationAdapter(
     private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
     private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
     private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-    private val pictureOptions = GlideOptions()
+    private val pictureOptions = RequestOptions()
         .transform(CenterInside())
         .fitCenter()
         .override(mPictureMaxSize)
@@ -277,7 +279,7 @@ class TvConversationAdapter(
 
     private fun configureImage(viewHolder: ConversationViewHolder, path: File) {
         val context = viewHolder.itemView.context
-        GlideApp.with(context)
+        Glide.with(context)
             .load(path)
             .apply(pictureOptions)
             .into(DrawableImageViewTarget(viewHolder.mImage).waitForLayout())

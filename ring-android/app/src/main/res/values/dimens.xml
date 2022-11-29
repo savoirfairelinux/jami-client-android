@@ -113,6 +113,7 @@ along with this program; if not, write to the Free Software
     <dimen name="bottom_sheet_radius">16dp</dimen>
     <dimen name="edit_text_radius">12dp</dimen>
     <dimen name="dialog_radius">@dimen/bottom_sheet_radius</dimen>
+    <dimen name="menu_icon_size">16dp</dimen>
 
 
 </resources>

@@ -66,4 +66,5 @@ interface ConversationView {
     fun displayAccountOfflineErrorPanel()
     fun setSettings(readIndicator: Boolean, linkPreviews: Boolean)
     fun addSearchResults(results: List<Interaction>)
+    fun shareText(body: String)
 }

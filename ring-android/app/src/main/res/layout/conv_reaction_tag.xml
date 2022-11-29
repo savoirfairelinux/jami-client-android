@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.ChipGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.google.android.material.chip.Chip
+        android:text="@string/default_emoji_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.chip.Chip
+        android:text="👍😍 3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</com.google.android.material.chip.ChipGroup>
