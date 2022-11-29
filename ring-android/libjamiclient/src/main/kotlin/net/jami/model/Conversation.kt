@@ -53,6 +53,7 @@ class Conversation : ConversationHistory {
     private val mRoots: MutableSet<String> = HashSet(2)
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     private val mPendingMessages: MutableMap<String, SingleSubject<Interaction>> = HashMap(8)
+    private val mPendingReactions: MutableMap<String, MutableList<Interaction>> = HashMap(8)
     var lastRead: String? = null
         private set
     var lastNotified: String? = null
@@ -539,6 +540,7 @@ class Conversation : ConversationHistory {
         val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
         mRoots.remove(id)
+        mPendingReactions.remove(id)?.let { reactions -> interaction.addReactions(reactions) }
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
@@ -652,6 +654,14 @@ class Conversation : ConversationHistory {
             load()
             SingleSubject.create()
         }
+    }
+
+    fun addReaction(interaction: Interaction, reactTo: String) {
+        val msg = getMessage(reactTo)
+        if (msg != null)
+            msg.addReaction(interaction)
+        else
+            mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(interaction)
     }
 
     enum class Mode {

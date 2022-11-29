@@ -28,10 +28,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomappbar.BottomAppBar
 import cx.ring.R
 import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.GlideApp
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 /**
@@ -42,12 +42,12 @@ class MediaViewerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mUri = activity!!.intent.data
+        mUri = requireActivity().intent.data
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_media_viewer, container, false) as ViewGroup
-        GlideApp.with(this)
+        Glide.with(this)
             .load(mUri)
             .into(view.findViewById(R.id.image))
         view.findViewById<BottomAppBar>(R.id.bottomAppBar).setOnMenuItemClickListener { l ->

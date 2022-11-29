@@ -62,7 +62,7 @@
             android:layout_marginEnd="20dp"
             android:minHeight="@dimen/conversation_avatar_size"
             android:layout_toEndOf="@+id/photo"
-            android:gravity="center_vertical">
+            android:gravity="bottom">
 
             <ImageView
                 android:id="@+id/image"
@@ -85,6 +85,20 @@
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/conversation_timestamp_textsize"
             tools:text="@string/time_just_now" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/reaction_chip"
+            style="@style/Widget.Material3.Chip.Suggestion"
+            android:focusable="false"
+            android:checkable="false"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgLayout"
+            android:layout_alignEnd="@id/imgLayout"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="-16dp"
+            android:text="👍😍 3" />
 
     </RelativeLayout>
 

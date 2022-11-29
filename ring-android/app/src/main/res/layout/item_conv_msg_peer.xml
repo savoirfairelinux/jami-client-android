@@ -18,36 +18,35 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_entry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="2dp"
     android:background="@android:color/transparent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:paddingBottom="8dp"
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
-        android:paddingBottom="8dp"
+        android:visibility="gone"
         tools:text="@string/time_just_now" />
 
     <TextView
         android:id="@+id/msg_details_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/conversation_timestamp_textsize"
         android:paddingTop="4dp"
         android:paddingBottom="2dp"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/conversation_timestamp_textsize"
+        android:visibility="gone"
         tools:text="@string/time_just_now" />
 
     <RelativeLayout
@@ -63,41 +62,41 @@ along with this program; if not, write to the Free Software
             android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:visibility="visible"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:gravity="center_vertical"
             android:drawableStart="@drawable/baseline_reply_24"
             android:drawableTint="@color/colorSecondary"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/conversation_timestamp_textsize"
+            android:visibility="visible"
             tools:text="Replying to Bob" />
 
         <ImageView
             android:id="@+id/photo"
             android:layout_width="@dimen/conversation_avatar_size"
             android:layout_height="@dimen/conversation_avatar_size"
-            android:background="@null"
             android:layout_alignBottom="@id/msg_txt"
-            android:scaleType="centerCrop"/>
+            android:background="@null"
+            android:scaleType="centerCrop" />
 
         <include
+            layout="@layout/msg_link_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/msg_reply"
             android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/photo"
-            android:layout_below="@id/msg_reply"
-            layout="@layout/msg_link_preview" />
+            android:layout_toEndOf="@+id/photo" />
 
         <TextView
             android:id="@+id/msg_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/link_preview"
             android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginEnd="20dp"
             android:layout_toEndOf="@+id/photo"
-            android:layout_below="@id/link_preview"
             android:background="@drawable/textmsg_bg_in"
             android:focusable="true"
             android:minWidth="@dimen/conversation_avatar_size"
@@ -108,6 +107,20 @@ along with this program; if not, write to the Free Software
             android:textSize="16sp"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/reaction_chip"
+            style="@style/Widget.Material3.Chip.Suggestion"
+            android:focusable="false"
+            android:checkable="false"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msg_txt"
+            android:layout_alignEnd="@id/msg_txt"
+            android:layout_marginTop="-24dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="4dp"
+            android:text="👍😍 3" />
     </RelativeLayout>
 
 </LinearLayout>

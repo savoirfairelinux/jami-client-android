@@ -94,4 +94,15 @@
     <string name="plugin_same_version_exception">You have the same version of <b>%1$s</b> installed</string>
     <string name="plugin_force_install">force \n install</string>
     <string name="plugin_path_image_add">Add a new image</string>
+
+    <string name="default_emoji_1" translatable="false">👍</string>
+    <string name="default_emoji_2" translatable="false">❤️</string>
+    <string name="default_emoji_3" translatable="false">😂</string>
+    <string name="default_emoji_4" translatable="false">💩</string>
+    <string name="default_emoji_5" translatable="false">👻</string>
+    <string name="default_emoji_6" translatable="false">😃</string>
+    <string name="default_emoji_7" translatable="false">✨</string>
+    <string name="default_emoji_8" translatable="false">😍</string>
+    <string name="default_emoji_9" translatable="false">🙏</string>
+
 </resources>

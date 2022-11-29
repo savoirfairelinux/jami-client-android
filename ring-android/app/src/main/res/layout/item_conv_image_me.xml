@@ -67,6 +67,7 @@
                     android:layout_alignParentEnd="true"
                     android:adjustViewBounds="true"
                     android:transitionName="picture"
+                    tools:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic"/>
 
                 <cx.ring.views.MessageStatusView
@@ -89,6 +90,20 @@
                     android:textSize="@dimen/conversation_timestamp_textsize"
                     android:singleLine="true"
                     tools:text="Tue" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/reaction_chip"
+                    style="@style/Widget.Material3.Chip.Suggestion"
+                    android:focusable="false"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/image"
+                    android:layout_alignStart="@id/image"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="-16dp"
+                    android:text="👍😍 3" />
 
             </RelativeLayout>
 

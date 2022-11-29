@@ -33,7 +33,6 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
@@ -48,6 +47,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -55,12 +57,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.bold
 import androidx.core.view.isVisible
+import androidx.core.widget.PopupWindowCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.GlideContext
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestOptions
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
+import cx.ring.databinding.MenuConversationBinding
 import cx.ring.fragments.ConversationFragment
 import cx.ring.linkpreview.LinkPreview
 import cx.ring.linkpreview.PreviewData
@@ -79,10 +87,12 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.StringUtils
 import java.io.File
+import java.lang.ref.WeakReference
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
+
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
@@ -285,6 +295,26 @@ class ConversationAdapter(
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
             })
     }
+    private fun configureReactions(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+        conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { reactions ->
+                if (reactions.isEmpty())
+                    conversationViewHolder.reactionChip!!.isVisible = false
+                else {
+                    conversationViewHolder.reactionChip!!.text =
+                        reactions.filterIsInstance<TextMessage>()
+                            .groupingBy(keySelector = { it.body!! })
+                            .eachCount()
+                            .map { e -> e }
+                            .sortedByDescending { it.value }
+                            .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
+                    conversationViewHolder.reactionChip!!.isVisible = true
+                    conversationViewHolder.reactionChip!!.isClickable = false
+                    conversationViewHolder.reactionChip!!.isFocusable = false
+                }
+            })
+    }
 
     private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
         val conversation = interaction.conversation
@@ -331,6 +361,7 @@ class ConversationAdapter(
 
         conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
         conversationViewHolder.mReplyTo?.let { configureReplyIndicator(conversationViewHolder, interaction) }
+        conversationViewHolder.reactionChip?.let { configureReactions(conversationViewHolder, interaction) }
 
         val type = interaction.type
         //Log.w(TAG, "onBindViewHolder $type $interaction");
@@ -413,7 +444,7 @@ class ConversationAdapter(
         if (interaction.type == Interaction.InteractionType.CONTACT) return false
         when (item.itemId) {
             R.id.conv_action_download -> presenter.saveFile(interaction)
-            R.id.conv_action_share -> presenter.shareFile(interaction)
+            R.id.conv_action_share -> presenter.shareFile(interaction as DataTransfer)
             R.id.conv_action_open -> presenter.openFile(interaction)
             R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
             R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
@@ -424,18 +455,17 @@ class ConversationAdapter(
     }
 
     private fun addToClipboard(text: String?) {
-        if (text == null || text.isEmpty()) return
+        if (text.isNullOrEmpty()) return
         val clipboard = conversationFragment.requireActivity()
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Copied Message", text)
-        clipboard.setPrimaryClip(clip)
+        clipboard.setPrimaryClip(ClipData.newPlainText("Copied Message", text))
     }
 
     private fun configureImage(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
         val context = viewHolder.itemView.context
         val image = viewHolder.mImage ?: return
         image.clipToOutline = true
-        GlideApp.with(context)
+        Glide.with(context)
             .load(path)
             .transition(withCrossFade())
             .into(image)
@@ -583,6 +613,48 @@ class ConversationAdapter(
         player.seekTo(1)
     }
 
+    private fun openItemMenu(v: View, interaction: Interaction) {
+        MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
+            root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            val popupWindow = WeakReference(PopupWindow(
+                root,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                root.measuredHeight,
+                true
+            ).apply {
+                elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
+                showAsDropDown(v)
+            })
+            val emojiCallback = View.OnClickListener { view ->
+                presenter.sendReaction(interaction, (view as TextView).text)
+                popupWindow.get()?.dismiss()
+            }
+            convActionEmoji1.setOnClickListener(emojiCallback)
+            convActionEmoji2.setOnClickListener(emojiCallback)
+            convActionEmoji3.setOnClickListener(emojiCallback)
+            convActionEmoji4.setOnClickListener(emojiCallback)
+            convActionReply.setOnClickListener {
+                presenter.startReplyTo(interaction)
+                popupWindow.get()?.dismiss()
+            }
+            convActionMore.setOnClickListener {
+                menuActions.isVisible = !menuActions.isVisible
+            }
+            convActionCopyText.setOnClickListener {
+                addToClipboard(interaction.body)
+                popupWindow.get()?.dismiss()
+            }
+            convActionShare.setOnClickListener {
+                if (interaction is DataTransfer)
+                    presenter.shareFile(interaction)
+                else if (interaction is TextMessage)
+                    presenter.shareText(interaction)
+                popupWindow.get()?.dismiss()
+            }
+        }
+    }
+
+    @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
@@ -627,29 +699,14 @@ class ConversationAdapter(
         if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
             longPressView.background.setTintList(null)
         }
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-            menu.setHeaderTitle(file.displayName)
-            MenuInflater(v.context).inflate(R.menu.conversation_item_actions_file, menu)
-            if (file.status == InteractionStatus.TRANSFER_ONGOING) {
-                menu.findItem(R.id.conv_action_delete).setTitle(android.R.string.cancel)
-                menu.removeItem(R.id.conv_action_download)
-                menu.removeItem(R.id.conv_action_share)
-                menu.removeItem(R.id.conv_action_open)
-            } else {
-                if (!file.isComplete) {
-                    menu.removeItem(R.id.conv_action_download)
-                    menu.removeItem(R.id.conv_action_share)
-                }
-            }
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-        }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-                conversationFragment.updatePosition(viewHolder.adapterPosition)
+                conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
                 longPressView.background.setTint(res.getColor(R.color.grey_500))
             }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.adapterPosition, v.id.toLong())
-            false
+            openItemMenu(v, file)
+            mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
+            true
         }
         if (type == MessageType.TransferType.IMAGE) {
             configureImage(viewHolder, path, file.body)
@@ -674,11 +731,7 @@ class ConversationAdapter(
                 viewHolder.mAnswerLayout?.visibility = View.GONE
                 if (status == InteractionStatus.TRANSFER_ONGOING) {
                     viewHolder.progress?.max = (file.totalSize / 1024).toInt()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
-                    } else {
-                        viewHolder.progress?.progress = (file.bytesProgress / 1024).toInt()
-                    }
+                    viewHolder.progress?.setProgress((file.bytesProgress / 1024).toInt(), true)
                     viewHolder.progress?.show()
                 } else {
                     viewHolder.progress?.hide()
@@ -714,11 +767,12 @@ class ConversationAdapter(
         val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
         val longPressView = convViewHolder.mMsgTxt!!
         longPressView.background.setTintList(null)
-        longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View?, menuInfo: ContextMenuInfo? ->
+
+        /*longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
+            //conversationFragment.onCreateContextMenu(menu, v, menuInfo)
             val date = Date(interaction.timestamp)
             val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
             menu.setHeaderTitle(dateFormat.format(date))
-            conversationFragment.onCreateContextMenu(menu, v!!, menuInfo)
             val inflater = conversationFragment.requireActivity().menuInflater
             inflater.inflate(R.menu.conversation_item_actions_messages, menu)
 
@@ -733,8 +787,10 @@ class ConversationAdapter(
                     menu.removeItem(R.id.conv_action_cancel_message)
                 }
             }
-        }
+        }*/
+        //longPressView.setOnClickListener { v: View ->
         longPressView.setOnLongClickListener { v: View ->
+            openItemMenu(v, interaction)
             if (expandedItemPosition == position) {
                 expandedItemPosition = -1
             }
@@ -745,7 +801,7 @@ class ConversationAdapter(
                 longPressView.background.setTint(res.getColor(R.color.blue_900))
             }
             mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
-            false
+            true
         }
         val isTimeShown = hasPermanentTimeString(textMessage, position)
         val msgSequenceType = getMsgSequencing(position, isTimeShown)
@@ -777,9 +833,10 @@ class ConversationAdapter(
                         Log.w(TAG, "got preview $data")
                         val image = convViewHolder.mImage ?: return@subscribe
                         if (data.imageUrl.isNotEmpty()) {
-                            GlideApp.with(context)
+                            Glide.with(context)
                                 .load(data.imageUrl)
-                                .apply(GlideOptions().override(mPreviewMaxSize))
+                                //.override(mPreviewMaxSize)
+                                //.apply(RequestOptions().override(mPreviewMaxSize))
                                 .centerCrop()
                                 .into(image)
                             //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))

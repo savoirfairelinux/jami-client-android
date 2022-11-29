@@ -65,15 +65,15 @@ along with this program; if not, write to the Free Software
     </string-array>
 
     <string-array name="conversation_emojis">
-        <item>👍</item>
-        <item>❤️</item>
-        <item>😂</item>
-        <item>💩</item>
-        <item>👻</item>
-        <item>😃</item>
-        <item>✨</item>
-        <item>😍</item>
-        <item>🙏</item>
+        <item>@string/default_emoji_1</item>
+        <item>@string/default_emoji_2</item>
+        <item>@string/default_emoji_3</item>
+        <item>@string/default_emoji_4</item>
+        <item>@string/default_emoji_5</item>
+        <item>@string/default_emoji_6</item>
+        <item>@string/default_emoji_7</item>
+        <item>@string/default_emoji_8</item>
+        <item>@string/default_emoji_9</item>
     </string-array>
 
     <string translatable="false" name="video_resolution_default">480</string>

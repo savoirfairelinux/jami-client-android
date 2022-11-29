@@ -23,7 +23,6 @@ import android.Manifest
 import android.animation.LayoutTransition
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
@@ -205,7 +204,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
             val layoutToAnimate = binding.relativeLayout
             if (Build.VERSION.SDK_INT >= 30) {
-
                 ViewCompat.setWindowInsetsAnimationCallback(
                     layoutToAnimate,
                     object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
@@ -224,8 +222,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             ViewCompat.setOnApplyWindowInsetsListener(layoutToAnimate) { _, insets: WindowInsetsCompat ->
                 if (animating == 0) {
-                    layoutToAnimate.updatePadding(top = insets.systemWindowInsetTop)
-                    layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
+                    layoutToAnimate.updatePadding(
+                        top = insets.systemWindowInsetTop,
+                        bottom = insets.systemWindowInsetBottom
+                    )
                 }
                 WindowInsetsCompat.CONSUMED
             }
@@ -834,6 +834,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun addSearchResults(results: List<Interaction>) {
         mSearchAdapter?.addSearchResults(results)
+    }
+
+    override fun shareText(body: String) {
+        startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, body)
+            type = "text/plain"
+        }, null))
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {

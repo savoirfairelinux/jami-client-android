@@ -235,7 +235,7 @@ class ConversationPresenter @Inject constructor(
 
     fun sendTextMessage(message: String?, replyTo: Interaction? = null) {
         val conversation = mConversation
-        if (message == null || message.isEmpty() || conversation == null) {
+        if (message.isNullOrEmpty() || conversation == null) {
             return
         }
         val conference = conversation.currentCall
@@ -264,8 +264,7 @@ class ConversationPresenter @Inject constructor(
         view?.startSaveFile(transfer, fileAbsolutePath)
     }
 
-    fun shareFile(interaction: Interaction) {
-        val file = interaction as DataTransfer
+    fun shareFile(file: DataTransfer) {
         val path = deviceRuntimeService.getConversationPath(file)
         view?.shareFile(path, file.displayName)
     }
@@ -451,6 +450,15 @@ class ConversationPresenter @Inject constructor(
             it.onComplete()
             searchQuerySubject = null
         }
+    }
+
+    fun sendReaction(interaction: Interaction, text: CharSequence) {
+        val conversation = mConversation ?: return
+        accountService.sendConversationReaction(conversation.accountId, conversation.uri, text.toString(), interaction.messageId ?: return)
+    }
+
+    fun shareText(interaction: TextMessage) {
+        view!!.shareText(interaction.body ?: return)
     }
 
     companion object {
