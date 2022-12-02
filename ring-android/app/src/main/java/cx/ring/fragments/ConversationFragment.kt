@@ -643,6 +643,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (resultCode == Activity.RESULT_OK && uri != null) {
                 writeToFile(uri)
             }
+        } else if (requestCode == REQUEST_CODE_EDIT_MESSAGE) {
+            val uri = resultData?.data ?: return
+            if (resultCode == Activity.RESULT_OK) {
+                val path = InteractionPath.fromUri(uri) ?: return
+                val message = resultData.getStringExtra(Intent.EXTRA_TEXT) ?: return
+                presenter.editMessage(path.conversation.accountId, path.conversation.conversationUri, path.messageId, message)
+            }
         }
     }
 
@@ -656,39 +663,32 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        var i = 0
-        val n = permissions.size
-        while (i < n) {
+        for (i in permissions.indices) {
             val granted = grantResults[i] == PackageManager.PERMISSION_GRANTED
             when (permissions[i]) {
                 Manifest.permission.CAMERA -> {
                     presenter.cameraPermissionChanged(granted)
                     if (granted) {
-                        if (requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+                        if (requestCode == REQUEST_CODE_CAPTURE_VIDEO)
                             sendVideoMessage()
-                        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
+                        else if (requestCode == REQUEST_CODE_TAKE_PICTURE)
                             takePicture()
-                        }
                     }
                     return
                 }
                 Manifest.permission.RECORD_AUDIO -> {
-                    if (granted) {
-                        if (requestCode == REQUEST_CODE_CAPTURE_AUDIO) {
-                            sendAudioMessage()
-                        }
-                    }
+                    if (granted && requestCode == REQUEST_CODE_CAPTURE_AUDIO)
+                        sendAudioMessage()
                     return
                 }
-                else -> {
-                }
+                else -> {}
             }
-            i++
         }
     }
 
     override fun addElement(element: Interaction) {
-        if (mAdapter!!.add(element)) scrollToEnd()
+        if (mAdapter!!.add(element) && element.type != Interaction.InteractionType.INVALID)
+            scrollToEnd()
         loading = false
     }
 
@@ -741,14 +741,12 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         AndroidFileUtils.openFile(c, path, displayName)
     }
 
-    fun actionSendMsgText(actionId: Int): Boolean {
-        when (actionId) {
-            EditorInfo.IME_ACTION_SEND -> {
-                sendMessageText()
-                return true
-            }
+    private fun actionSendMsgText(actionId: Int): Boolean = when (actionId) {
+        EditorInfo.IME_ACTION_SEND -> {
+            sendMessageText()
+            true
         }
-        return false
+        else -> false
     }
 
     fun onClick() {
@@ -1226,6 +1224,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         private const val REQUEST_CODE_SAVE_FILE = 1003
         private const val REQUEST_CODE_CAPTURE_AUDIO = 1004
         private const val REQUEST_CODE_CAPTURE_VIDEO = 1005
+        const val REQUEST_CODE_EDIT_MESSAGE = 1006
         private fun getIndex(spinner: Spinner, myString: net.jami.model.Uri): Int {
             var i = 0
             val n = spinner.count

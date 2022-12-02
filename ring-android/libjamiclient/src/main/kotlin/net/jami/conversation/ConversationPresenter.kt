@@ -59,6 +59,7 @@ class ConversationPresenter @Inject constructor(
     }
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
     private var searchQuerySubject: Subject<String>? = null
+    private var myId: String? = null
 
     fun init(conversationUri: Uri, accountId: String) {
         if (conversationUri == mConversationUri) return
@@ -68,6 +69,7 @@ class ConversationPresenter @Inject constructor(
         mConversationUri = conversationUri
         mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
             .flatMap { a: Account ->
+                myId = a.username
                 conversationFacade.loadConversationHistory(a, conversationUri)
                     .observeOn(uiScheduler)
                     .doOnSuccess { c: Conversation -> setConversation(a, c) }
@@ -459,6 +461,17 @@ class ConversationPresenter @Inject constructor(
 
     fun shareText(interaction: TextMessage) {
         view!!.shareText(interaction.body ?: return)
+    }
+
+    fun removeReaction(interaction: Interaction) {
+        val conversation = mConversation ?: return
+        interaction.reactions.filter { it.author == myId }.forEach {
+            accountService.editConversationMessage(conversation.accountId, conversation.uri, "", it.messageId!!)
+        }
+    }
+
+    fun editMessage(accountId: String, conversationUri: Uri, messageId: String, message: String) {
+        accountService.editConversationMessage(accountId, conversationUri, message, messageId)
     }
 
     companion object {

@@ -503,8 +503,8 @@ class AccountService(
         }
     }
 
-    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
-        sendConversationMessage(accountId, conversationUri, txt, replyTo, 1)
+    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, messageId: String) {
+        sendConversationMessage(accountId, conversationUri, txt, messageId, 1)
     }
     fun sendConversationReaction(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
         sendConversationMessage(accountId, conversationUri, txt, replyTo, 2)
@@ -1170,9 +1170,9 @@ class AccountService(
     }
 
     private fun getInteraction(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
-        /*for ((key, value) in message) {
+        for ((key, value) in message) {
             Log.w(TAG, "$key -> $value")
-        }*/
+        }
         val id = message["id"]!!
         val type = message["type"]!!
         val author = message["author"]!!
@@ -1201,6 +1201,7 @@ class AccountService(
                 member.addedDate = Date(timestamp)
                 ContactEvent(account.accountId, member).setEvent(ContactEvent.Event.fromConversationAction(action))
             }
+            "application/edited-message",
             "text/plain" -> TextMessage(author, account.accountId, timestamp, conversation, message["body"]!!, !contact.isUser)
             "application/data-transfer+json" -> {
                 try {
@@ -1235,6 +1236,8 @@ class AccountService(
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
         }
         interaction.replyToId = replyTo
+        interaction.reactToId = reactTo
+        interaction.edit = edit
         if (replyTo != null) {
             interaction.replyTo = conversation.loadMessage(replyTo) {
                 JamiService.loadConversationUntil(account.accountId, conversation.uri.rawRingId, id, replyTo)
@@ -1244,21 +1247,12 @@ class AccountService(
             interaction.contact = contact
         interaction.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
         interaction.conversation = conversation
-        if (reactTo != null) {
-            conversation.addReaction(interaction, reactTo)
-            val emptyinfo = Interaction(conversation, Interaction.InteractionType.INVALID)
-            if (emptyinfo.contact == null)
-                emptyinfo.contact = contact
-            emptyinfo.setSwarmInfo(conversation.uri.rawRingId, id, if (parent.isNullOrEmpty()) null else parent)
-            emptyinfo.conversation = conversation
-            return emptyinfo
-        }
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
+    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, newMessage: Boolean): Interaction {
         val interaction = getInteraction(account, conversation, message)
-        if (conversation.addSwarmElement(interaction)) {
+        if (conversation.addSwarmElement(interaction, newMessage)) {
             /*if (conversation.isVisible)
                 mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
         }
@@ -1271,7 +1265,7 @@ class AccountService(
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 synchronized(conversation) {
                     for (message in messages) {
-                        addMessage(account, conversation, message)
+                        addMessage(account, conversation, message, false)
                     }
                     conversation.stopLoading()
                 }
@@ -1392,7 +1386,7 @@ class AccountService(
         Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
             synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message)
+                val interaction = addMessage(account, conversation, message, true)
                 account.conversationUpdated(conversation)
                 val isIncoming = !interaction.contact!!.isUser
                 if (isIncoming)
