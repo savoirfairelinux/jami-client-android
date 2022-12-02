@@ -129,7 +129,7 @@ class ConversationActionsFragment : Fragment() {
             conversationId.text = conversationUri
             infoCard.setOnClickListener { copyAndShow(path.conversationId) }
 
-            if (!conversation.isGroup()) {
+            if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                 val contact = conversation.contact!!
                 adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
                     (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, true)

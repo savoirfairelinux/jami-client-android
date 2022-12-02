@@ -23,7 +23,7 @@
         android:textSize="16sp"
         android:paddingRight="17dp"
         android:paddingLeft="17dp"
-        android:fontFamily="@font/ubuntu_medium"
+        android:fontFamily="@font/ubuntu_regular"
         tools:text="Start Audio Call" />
 
 </RelativeLayout>

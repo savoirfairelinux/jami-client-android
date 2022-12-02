@@ -188,7 +188,10 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     binding.title.setOnClickListener(null)
                     binding.description.setOnClickListener(null)
                     binding.contactImage.setOnClickListener(null)
+                    binding.tabLayout.removeTabAt(TAB_MEMBER)
                 } else {
+                    binding.addMember.isVisible = true
+                    binding.description.isVisible = true
                     binding.contactImage.setOnClickListener { profileImageClicked() }
                     binding.title.setOnClickListener {
                         val title = getString(R.string.dialogtitle_title)
@@ -226,14 +229,8 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         updateColor(color)
         binding.tabLayout.addOnTabSelectedListener(this)
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
 
-        if (conversation.isGroup()) {
-            binding.addMember.isVisible = true
-            binding.description.isVisible = true
-            binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
-        } else {
-            binding.tabLayout.removeTabAt(TAB_MEMBER)
-        }
 
         mPagerAdapter = ScreenSlidePagerAdapter(this, conversation)
         binding.pager.adapter = mPagerAdapter
@@ -415,9 +412,8 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
         val accountId = conversation.accountId
         val conversationId = conversation.uri
-        val isGroup = conversation.isGroup()
 
-        val fragments: List<Fragment> = if (isGroup) listOf(
+        val fragments: List<Fragment> = if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) listOf(
             ConversationActionsFragment.newInstance(accountId, conversationId),
             ConversationMembersFragment.newInstance(accountId, conversationId),
             ConversationGalleryFragment.newInstance(accountId, conversationId))
