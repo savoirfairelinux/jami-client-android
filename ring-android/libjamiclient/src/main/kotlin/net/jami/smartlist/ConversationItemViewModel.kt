@@ -43,7 +43,7 @@ class ConversationItemViewModel {
         None, Conversations, PublicDirectory
     }
 
-    constructor(accountId: String, contact: ContactViewModel, lastEvent: Interaction?) {
+    /*constructor(accountId: String, contact: ContactViewModel, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
         this.conversationProfile = contact.profile
@@ -54,9 +54,9 @@ class ConversationItemViewModel {
         this.lastEvent = lastEvent
         showPresence = true
         isOnline = contact.contact.isOnline
-    }
+    }*/
 
-    constructor(accountId: String, contact: ContactViewModel, id: String?, lastEvent: Interaction?) {
+    /*constructor(accountId: String, contact: ContactViewModel, id: String?, lastEvent: Interaction?) {
         this.accountId = accountId
         contacts = listOf(contact)
         this.conversationProfile = contact.profile
@@ -67,7 +67,7 @@ class ConversationItemViewModel {
         this.lastEvent = lastEvent
         showPresence = true
         isOnline = contact.contact.isOnline
-    }
+    }*/
 
     constructor(conversation: Conversation, conversationProfile: Profile, contacts: List<ContactViewModel>, presence: Boolean) {
         accountId = conversation.accountId
