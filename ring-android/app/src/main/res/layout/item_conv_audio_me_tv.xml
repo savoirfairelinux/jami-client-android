@@ -50,15 +50,14 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <ImageView
+        <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_alignBottom="@id/audioInfoLayout"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:tint="@color/grey_500"
-            android:src="@drawable/round_check_circle_24" />
+            android:tint="@color/grey_500"/>
 
         <TextView
             android:id="@+id/file_details_txt"
