@@ -309,4 +309,7 @@
   <string name="bottomSheet_hangup_btn">Oproep beëindigen</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bevestigen</string>
+  <string name="tab_about">Over</string>
+  <string name="dialog_hint_title">Titel</string>
 </resources>

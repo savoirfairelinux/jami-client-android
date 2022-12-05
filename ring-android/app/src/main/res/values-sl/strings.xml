@@ -189,6 +189,8 @@
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>
+  <string name="conversation_type_private">Zasebni roj</string>
+  <string name="conversation_type_group">Skupinski roj</string>
   <string name="conversation_contact_invited">%1$s je povabljen/a</string>
   <string name="conversation_contact_added">%1$s se je pridružil/a</string>
   <string name="conversation_contact_left">%1$s je odšel/a</string>
@@ -348,4 +350,16 @@
   <string name="uninstall">Odstrani</string>
   <string name="reset">Ponastavi</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potrdi</string>
+  <string name="rename_error">ne sme biti prazno</string>
+  <string name="swarm_description">Dodajte opis</string>
+  <string name="tab_about">O programu</string>
+  <string name="tab_members">Člani</string>
+  <string name="tab_documetn">Dokumenti</string>
+  <string name="dialogtitle_title">Uredi naslov roja</string>
+  <string name="dialogtitle_description">Uredite opis roja</string>
+  <string name="dialog_hint_title">Naslov</string>
+  <string name="dialog_hint_description">Opis</string>
+  <string name="picker_title">Izberite stike</string>
+  <string name="picker_btn">Izberite stike</string>
 </resources>

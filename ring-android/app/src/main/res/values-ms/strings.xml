@@ -111,4 +111,5 @@
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">Tamatkan panggilan</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Tentang</string>
 </resources>

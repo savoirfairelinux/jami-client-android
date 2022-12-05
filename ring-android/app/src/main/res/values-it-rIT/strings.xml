@@ -188,6 +188,8 @@
   <string name="conversation_preference_color">Colore della conversazione</string>
   <string name="conversation_preference_emoji">Emoji conversazione</string>
   <string name="conversation_type_contact">Contatto Jami</string>
+  <string name="conversation_type_private">Gruppo privato</string>
+  <string name="conversation_type_group">Gruppo</string>
   <string name="conversation_contact_invited">%1$s è stato invitato</string>
   <string name="conversation_contact_added">%1$s si è unito</string>
   <string name="conversation_contact_left">%1$s è uscito</string>
@@ -347,4 +349,16 @@
   <string name="uninstall">Disinstalla</string>
   <string name="reset">Ripristina</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Conferma</string>
+  <string name="rename_error">non può essere vuoto</string>
+  <string name="swarm_description">Aggiungi una descrizione</string>
+  <string name="tab_about">Info</string>
+  <string name="tab_members">Membri</string>
+  <string name="tab_documetn">Documenti</string>
+  <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
+  <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
+  <string name="dialog_hint_title">Titolo</string>
+  <string name="dialog_hint_description">Descrizione</string>
+  <string name="picker_title">Seleziona contatti</string>
+  <string name="picker_btn">Seleziona contatti</string>
 </resources>

@@ -237,4 +237,7 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Patvirtinti</string>
+  <string name="tab_about">Apie</string>
+  <string name="dialog_hint_title">Antraštė</string>
 </resources>

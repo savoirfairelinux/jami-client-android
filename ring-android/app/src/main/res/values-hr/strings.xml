@@ -213,4 +213,7 @@
   <string name="bottomSheet_sound_output_btn">Zvukovi</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
   <!--Swarm Detail-->
+  <string name="tab_about">O programu</string>
+  <string name="tab_members">Članovi</string>
+  <string name="dialog_hint_title">Naslov</string>
 </resources>

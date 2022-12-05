@@ -187,6 +187,8 @@
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>
+  <string name="conversation_type_private">Személyes rajcsoport</string>
+  <string name="conversation_type_group">Rajcsoport</string>
   <string name="conversation_contact_invited">%1$s meghívva lett</string>
   <string name="conversation_contact_added">%1$s csatlakozott</string>
   <string name="conversation_contact_left">%1$s kilépett</string>
@@ -346,4 +348,16 @@
   <string name="uninstall">Eltávolítás</string>
   <string name="reset">Visszaállítás</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Megerősítés</string>
+  <string name="rename_error">nem lehet üres</string>
+  <string name="swarm_description">Leírás hozzáadása</string>
+  <string name="tab_about">Névjegy</string>
+  <string name="tab_members">Tagok</string>
+  <string name="tab_documetn">Dokumentumok</string>
+  <string name="dialogtitle_title">Rajcsoport címének szerkesztése</string>
+  <string name="dialogtitle_description">Rajcsoport leírásának szerkesztése</string>
+  <string name="dialog_hint_title">Cím</string>
+  <string name="dialog_hint_description">Leírás</string>
+  <string name="picker_title">Kapcsolatok kijelölése</string>
+  <string name="picker_btn">Kapcsolatok kijelölése</string>
 </resources>

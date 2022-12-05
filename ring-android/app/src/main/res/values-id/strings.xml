@@ -186,6 +186,8 @@
   <string name="conversation_preference_color">Warna percakapan</string>
   <string name="conversation_preference_emoji">Emoji percakapan</string>
   <string name="conversation_type_contact">Kontak jami</string>
+  <string name="conversation_type_private">Swarm Privat</string>
+  <string name="conversation_type_group">Grup Swarm</string>
   <string name="conversation_contact_invited"> %1$sdiundang</string>
   <string name="conversation_contact_added">%1$s bergabung</string>
   <string name="conversation_contact_left">%1$s keluar</string>
@@ -253,6 +255,7 @@
   <string name="no_contact_request">Tidak ada permintaan kontak yang dikirim</string>
   <string name="conversation_placeholder">Belum ada obrolan</string>
   <string name="contact_request_sent">Permintaan kontak terkirim</string>
+  <string name="start_conversation">Mulai obrolan</string>
   <string name="search_results">Hasil Pencarian</string>
   <string name="tv_contact_row_header">Kontak</string>
   <string name="gallery_error_title">Aplikasi galeri tidak ditemukan</string>
@@ -344,4 +347,16 @@
   <string name="uninstall">Copot pemasangan</string>
   <string name="reset">Reset</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Konfirmasi</string>
+  <string name="rename_error">tidak boleh kosong</string>
+  <string name="swarm_description">Tambah deskripsi</string>
+  <string name="tab_about">Tentang</string>
+  <string name="tab_members">Anggota</string>
+  <string name="tab_documetn">Dokumen</string>
+  <string name="dialogtitle_title">Ubah judul Swarm</string>
+  <string name="dialogtitle_description">Ubah deskripsi Swarm</string>
+  <string name="dialog_hint_title">Judul</string>
+  <string name="dialog_hint_description">Deskripsi</string>
+  <string name="picker_title">Pilih kontak</string>
+  <string name="picker_btn">Pilih kontak</string>
 </resources>

@@ -215,4 +215,6 @@
   <string name="bottomSheet_hangup_btn">Край на разговора</string>
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Относно</string>
+  <string name="dialog_hint_title">Заглавие</string>
 </resources>

@@ -187,6 +187,8 @@
   <string name="conversation_preference_color">Ngjyrë bisede</string>
   <string name="conversation_preference_emoji">Emoji bisede</string>
   <string name="conversation_type_contact">Kontakt Jami</string>
+  <string name="conversation_type_private">Zgjua Privat</string>
+  <string name="conversation_type_group">Zgjua Grup</string>
   <string name="conversation_contact_invited">U ftua %1$s</string>
   <string name="conversation_contact_added">%1$s erdhi</string>
   <string name="conversation_contact_left">%1$s iku</string>
@@ -346,4 +348,16 @@
   <string name="uninstall">Çinstaloje</string>
   <string name="reset">Riktheji te parazgjedhjet</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Ripohoje</string>
+  <string name="rename_error">S’mund të jetë e zbrazët</string>
+  <string name="swarm_description">Shtoni një përshkrim</string>
+  <string name="tab_about">Mbi</string>
+  <string name="tab_members">Anëtarë</string>
+  <string name="tab_documetn">Dokumente</string>
+  <string name="dialogtitle_title">Përpunoni titull Zgjoi</string>
+  <string name="dialogtitle_description">Përpunoni përshkrim Zgjoi</string>
+  <string name="dialog_hint_title">Titull</string>
+  <string name="dialog_hint_description">Përshkrim</string>
+  <string name="picker_title">Përzgjidhni Kontakte</string>
+  <string name="picker_btn">Përzgjidhni kontake</string>
 </resources>
