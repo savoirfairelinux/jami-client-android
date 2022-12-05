@@ -54,6 +54,7 @@ class Conversation : ConversationHistory {
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     private val mPendingMessages: MutableMap<String, SingleSubject<Interaction>> = HashMap(8)
     private val mPendingReactions: MutableMap<String, MutableList<Interaction>> = HashMap(8)
+    private val mPendingEdits: MutableMap<String, MutableList<Interaction>> = HashMap(8)
     var lastRead: String? = null
         private set
     var lastNotified: String? = null
@@ -535,12 +536,29 @@ class Conversation : ConversationHistory {
     }
 
     @Synchronized
-    fun addSwarmElement(interaction: Interaction): Boolean {
+    fun addSwarmElement(interaction: Interaction, newMessage: Boolean): Boolean {
+        if (interaction.edit != null) {
+            addEdit(interaction, newMessage)
+            val i = Interaction(this, Interaction.InteractionType.INVALID)
+            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+            i.conversation = this
+            i.contact = interaction.contact
+            return addSwarmElement(i, newMessage)
+        } else if (interaction.reactToId != null) {
+            addReaction(interaction, interaction.reactToId!!)
+            val i = Interaction(this, Interaction.InteractionType.INVALID)
+            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+            i.conversation = this
+            i.contact = interaction.contact
+            i.reactTo = interaction
+            return addSwarmElement(i, newMessage)
+        }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
         mRoots.remove(id)
         mPendingReactions.remove(id)?.let { reactions -> interaction.addReactions(reactions) }
+        mPendingEdits.remove(id)?.let { edits -> interaction.addEdits(edits) }
         if (interaction.parentId != null && !mMessages.containsKey(interaction.parentId)) {
             mRoots.add(interaction.parentId!!)
             // Log.w(TAG, "@@@ Found new root for " + getUri() + " " + parent + " -> " + mRoots);
@@ -656,7 +674,25 @@ class Conversation : ConversationHistory {
         }
     }
 
-    fun addReaction(interaction: Interaction, reactTo: String) {
+    private fun addEdit(interaction: Interaction, newMessage: Boolean) {
+        Log.w(TAG, "addEdit $interaction ${interaction.type} ${(interaction as? TextMessage)?.body}")
+        val msg = getMessage(interaction.edit!!).let {
+            it?.reactTo ?: it
+        }
+
+        if (msg != null)
+            msg.addEdit(interaction, newMessage)
+        else
+            mPendingEdits.computeIfAbsent(interaction.edit!!) { ArrayList() }.let {
+                it.remove(interaction)
+                if (newMessage)
+                    it.add(interaction)
+                else
+                    it.add(0, interaction)
+            }
+    }
+
+    private fun addReaction(interaction: Interaction, reactTo: String) {
         val msg = getMessage(reactTo)
         if (msg != null)
             msg.addReaction(interaction)

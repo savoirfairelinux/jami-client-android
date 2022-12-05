@@ -54,19 +54,12 @@ class ConversationFacade(
     val currentAccountSubject: Observable<Account> = mAccountService
         .currentAccountSubject
         .switchMapSingle { account: Account -> loadSmartlist(account) }
-    private val conversationSubject: Subject<Conversation> = PublishSubject.create()
-    val updatedConversation: Observable<Conversation>
-        get() = conversationSubject
 
     fun startConversation(accountId: String, contactId: Uri): Single<Conversation> = getAccountSubject(accountId)
         .map { account: Account -> account.getByUri(contactId) }
 
     fun getAccountSubject(accountId: String): Single<Account> = mAccountService.getAccountSingle(accountId)
         .flatMap { account: Account -> loadSmartlist(account) }
-
-    val conversationsSubject: Observable<List<Conversation>>
-        get() = currentAccountSubject
-            .switchMap { obj: Account -> obj.getConversationsSubject() }
 
     fun messageNotified(accountId: String, conversationUri: Uri, messageId: String) {
         val conversation  = mAccountService.getAccount(accountId)?.getByUri(conversationUri) ?: return
@@ -78,7 +71,7 @@ class ConversationFacade(
 
     fun readMessages(accountId: String, contact: Uri): String? {
         val account = mAccountService.getAccount(accountId) ?: return null
-        val conversation  = account.getByUri(contact) ?: return null
+        val conversation = account.getByUri(contact) ?: return null
         return readMessages(account, conversation, true)
     }
 
@@ -265,13 +258,13 @@ class ConversationFacade(
 
     fun getConversationSmartlist(): Observable<List<Conversation>> = getConversationSmartlist(mAccountService.currentAccountSubject)
 
-    fun getContactList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> = currentAccount
+    /*fun getContactList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> = currentAccount
         .switchMap { account: Account ->
             account.getConversationsSubject()
                 .map { conversations -> conversations.filter { c -> !c.isSwarm }
                     .map { conversation -> mContactService.getLoadedConversation(conversation) }}
                 .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
-        }
+        }*/
 
     fun getConversationList(): Observable<MutableList<ConversationItemViewModel>> = getConversationList(mAccountService.currentAccountSubject)
 
@@ -282,12 +275,12 @@ class ConversationFacade(
                 .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
         }
 
-    fun getPendingList(currentAccount: Observable<Account>): Observable<List<Observable<ConversationItemViewModel>>> =
+    /*fun getPendingList(currentAccount: Observable<Account>): Observable<List<Observable<ConversationItemViewModel>>> =
         currentAccount.switchMap { account: Account ->
             account.getPendingSubject()
                 .switchMapSingle { conversations -> Observable.fromIterable(conversations)
                     .map { conversation: Conversation -> observeConversation(account, conversation, false) }
-                    .toList() } }
+                    .toList() } }*/
 
     fun getPendingConversationList(currentAccount: Observable<Account>): Observable<List<Conversation>> =
         currentAccount.switchMap { account: Account ->
@@ -296,7 +289,7 @@ class ConversationFacade(
         currentAccountSubject.switchMap { account: Account ->
             account.getPendingSubject()}
 
-    fun getSmartList(hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> =
+    /*fun getSmartList(hasPresence: Boolean): Observable<List<Observable<ConversationItemViewModel>>> =
         getSmartList(mAccountService.currentAccountSubject, hasPresence)
 
     val pendingList: Observable<List<Observable<ConversationItemViewModel>>>
@@ -330,7 +323,7 @@ class ConversationFacade(
                         emptyList()
                 }
         }
-    }
+    }*/
 
     private fun getConversationSearchResults(account: Account, query: String): Single<List<Conversation>> {
         val uri = Uri.fromString(query)
@@ -387,7 +380,7 @@ class ConversationFacade(
         }
     }
 
-    fun getFilteredConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<List<Conversation>> =
+    /*fun getFilteredConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<List<Conversation>> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(account.getConversationsSubject(), query) { conversations, q -> ConversationList(conversations, emptyList(), q) }
                 .flatMapSingle { list ->
@@ -398,7 +391,7 @@ class ConversationFacade(
                         }).toList()
                     } else Single.just(list.conversations)
                 }
-        }
+        }*/
 
     fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<ConversationList> =
         currentAccount.switchMap { account ->
