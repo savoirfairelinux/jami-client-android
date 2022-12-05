@@ -33,8 +33,8 @@ import cx.ring.account.AccountEditionFragment
 import cx.ring.account.JamiAccountSummaryFragment
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragAccountBinding
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.services.AccountService
@@ -66,7 +66,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
         setHasOptionsMenu(true)
         val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
         mDisposable.add(mAccountService.getAccountSingle(accountId)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ account: Account ->
                 mBinding?.let { binding ->
                     binding.settingsChangePassword.visibility = if (account.hasManager()) View.GONE else View.VISIBLE

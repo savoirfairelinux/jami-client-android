@@ -33,6 +33,8 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
@@ -76,9 +78,10 @@ import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
 import io.noties.markwon.Markwon
 import io.noties.markwon.linkify.LinkifyPlugin
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
@@ -107,7 +110,7 @@ class ConversationAdapter(
     @ColorInt private var convColor = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
-    private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+    private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
         .startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
@@ -287,7 +290,7 @@ class ConversationAdapter(
         }
         conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
             .getLoadedContact(interaction.account!!, conversation, interaction.displayedContacts)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { contacts ->
                 conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
@@ -302,7 +305,7 @@ class ConversationAdapter(
             presenter.removeReaction(interaction)
         }
         conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { reactions ->
                 Log.w(TAG, "reaction $reactions")
                 val chip = conversationViewHolder.reactionChip ?: return@subscribe
@@ -335,7 +338,7 @@ class ConversationAdapter(
                     .flatMapObservable { reply -> presenter.contactService
                         .observeContact(interaction.account!!, reply.contact!!, false)
                         .map { contact -> Pair(reply, contact) }}
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
                         replyView.text = SpannableStringBuilder()
                             .bold {
@@ -518,7 +521,7 @@ class ConversationAdapter(
                     acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
                 }
                 viewHolder.compositeDisposable.add(
-                    Observable.interval(1L, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                    Observable.interval(1L, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
                         .startWithItem(0L)
                         .subscribe {
                             val pS = player.currentPosition / 1000
@@ -797,7 +800,7 @@ class ConversationAdapter(
     private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val context = convViewHolder.itemView.context
         convViewHolder.compositeDisposable.add(interaction.lastElement
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { lastElement ->
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
@@ -849,7 +852,7 @@ class ConversationAdapter(
                                 .apply { interaction.preview = this }
 
                         convViewHolder.compositeDisposable.add(cachedPreview
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(DeviceUtils.uiScheduler)
                             .subscribe({ data ->
                                 Log.w(TAG, "got preview $data")
                                 val image = convViewHolder.mImage ?: return@subscribe
@@ -941,6 +944,7 @@ class ConversationAdapter(
             })
     }
 
+
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
         Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
@@ -949,7 +953,7 @@ class ConversationAdapter(
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
-                .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { vm ->
                     viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
                         .withContact(vm)

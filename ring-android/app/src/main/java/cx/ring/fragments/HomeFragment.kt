@@ -46,8 +46,8 @@ import cx.ring.client.HomeActivity
 import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.home.HomePresenter
 import net.jami.home.HomeView
@@ -229,16 +229,16 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { obj -> obj.unreadPending }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { count -> setBadge(TAB_INVITATIONS, count) })
         mDisposable.add(mAccountService
             .currentAccountSubject
             .switchMap { obj -> obj.unreadConversations }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { count -> setBadge(TAB_CONVERSATIONS, count) })
         mDisposable.add(
             mAccountService.observableAccountList
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe({ accounts ->
                     mAccountAdapter?.apply {
                         clear()

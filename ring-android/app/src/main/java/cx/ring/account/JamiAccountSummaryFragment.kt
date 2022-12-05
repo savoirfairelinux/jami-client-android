@@ -65,9 +65,9 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
+import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -195,7 +195,7 @@ class JamiAccountSummaryFragment :
                 resultData?.data?.let { uri ->
                     mCacheArchive?.let { cacheArchive ->
                         AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(DeviceUtils.uiScheduler)
                             .subscribe({}) { e: Throwable ->
                                 val v = view
                                 if (v != null)
@@ -297,7 +297,7 @@ class JamiAccountSummaryFragment :
         }
         mProfilePhoto = view.profilePhoto
         mDisposableBag.add(AvatarDrawable.load(inflater.context, account)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { a -> view.profilePhoto.setImageDrawable(a) })
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.profile)
@@ -468,7 +468,7 @@ class JamiAccountSummaryFragment :
                     .withCircleCrop(true)
                     .build(requireContext())
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ avatar: AvatarDrawable -> mProfilePhoto?.setImageDrawable(avatar) }) { e: Throwable ->
                 Log.e(TAG, "Error loading image", e)
             })

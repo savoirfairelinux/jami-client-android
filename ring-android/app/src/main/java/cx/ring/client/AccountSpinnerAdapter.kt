@@ -31,8 +31,8 @@ import com.google.android.material.badge.BadgeUtils
 import cx.ring.R
 import cx.ring.databinding.ItemToolbarSelectedBinding
 import cx.ring.databinding.ItemToolbarSpinnerBinding
+import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Account
 import net.jami.model.Profile
@@ -70,7 +70,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
             holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe({ profile ->
                     holder.binding.logo.setImageDrawable(AvatarDrawable.build(holder.binding.root.context, profile.first, profile.second, true, profile.first.isRegistered))
                     holder.binding.title.text = getTitle(profile.first, profile.second)
@@ -107,7 +107,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
             logoParam.height = logoSize
             holder.binding.logo.layoutParams = logoParam
             holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe({ profile ->
                     val subtitle = getUri(account, ip2ipString)
                     holder.binding.logo.setImageDrawable(AvatarDrawable.build(holder.binding.root.context, profile.first, profile.second, true, profile.first.isRegistered))
@@ -121,7 +121,7 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
             holder.loader.add(mConversationFacade.getAccountSubject(account.accountId)
                 .flatMapObservable { acc -> acc.unreadConversations }
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { count ->
                     if (count == 0) {
                         BadgeUtils.detachBadgeDrawable(badgeDrawable, holder.binding.badgeAnchor)

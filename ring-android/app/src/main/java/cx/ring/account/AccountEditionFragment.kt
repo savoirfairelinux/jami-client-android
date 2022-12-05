@@ -148,31 +148,26 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     ) : FragmentStatePagerAdapter(fm) {
         override fun getCount(): Int = if (isJamiAccount) 3 else 4
 
-        override fun getItem(position: Int): Fragment {
-            return if (isJamiAccount) getJamiPanel(position) else getSIPPanel(position)
-        }
+        override fun getItem(position: Int): Fragment =
+            if (isJamiAccount) getJamiPanel(position) else getSIPPanel(position)
 
         override fun getPageTitle(position: Int): CharSequence = mContext.getString(if (isJamiAccount) getRingPanelTitle(position) else getSIPPanelTitle(position))
 
-        private fun getJamiPanel(position: Int): Fragment {
-            return when (position) {
-                0 -> fragmentWithBundle(GeneralAccountFragment())
-                1 -> fragmentWithBundle(MediaPreferenceFragment())
-                2 -> fragmentWithBundle(AdvancedAccountFragment())
-                3 -> fragmentWithBundle(PluginsListSettingsFragment())
-                else -> throw IllegalArgumentException()
-            }
+        private fun getJamiPanel(position: Int): Fragment = when (position) {
+            0 -> fragmentWithBundle(GeneralAccountFragment())
+            1 -> fragmentWithBundle(MediaPreferenceFragment())
+            2 -> fragmentWithBundle(AdvancedAccountFragment())
+            3 -> fragmentWithBundle(PluginsListSettingsFragment())
+            else -> throw IllegalArgumentException()
         }
 
-        private fun getSIPPanel(position: Int): Fragment {
-            return when (position) {
-                0 -> GeneralAccountFragment.newInstance(accountId)
-                1 -> MediaPreferenceFragment.newInstance(accountId)
-                2 -> fragmentWithBundle(AdvancedAccountFragment())
-                3 -> fragmentWithBundle(SecurityAccountFragment())
-                4 -> fragmentWithBundle(PluginsListSettingsFragment())
-                else -> throw IllegalArgumentException()
-            }
+        private fun getSIPPanel(position: Int): Fragment = when (position) {
+            0 -> GeneralAccountFragment.newInstance(accountId)
+            1 -> MediaPreferenceFragment.newInstance(accountId)
+            2 -> fragmentWithBundle(AdvancedAccountFragment())
+            3 -> fragmentWithBundle(SecurityAccountFragment())
+            4 -> fragmentWithBundle(PluginsListSettingsFragment())
+            else -> throw IllegalArgumentException()
         }
 
         private fun fragmentWithBundle(result: Fragment): Fragment = result.apply {
@@ -181,26 +176,22 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
 
         companion object {
             @StringRes
-            private fun getRingPanelTitle(position: Int): Int {
-                return when (position) {
-                    0 -> R.string.account_preferences_basic_tab
-                    1 -> R.string.account_preferences_media_tab
-                    2 -> R.string.account_preferences_advanced_tab
-                    3 -> R.string.account_preference_plugin_tab
-                    else -> -1
-                }
+            private fun getRingPanelTitle(position: Int): Int = when (position) {
+                0 -> R.string.account_preferences_basic_tab
+                1 -> R.string.account_preferences_media_tab
+                2 -> R.string.account_preferences_advanced_tab
+                3 -> R.string.account_preference_plugin_tab
+                else -> -1
             }
 
             @StringRes
-            private fun getSIPPanelTitle(position: Int): Int {
-                return when (position) {
-                    0 -> R.string.account_preferences_basic_tab
-                    1 -> R.string.account_preferences_media_tab
-                    2 -> R.string.account_preferences_advanced_tab
-                    3 -> R.string.account_preferences_security_tab
-                    4 -> R.string.account_preference_plugin_tab
-                    else -> -1
-                }
+            private fun getSIPPanelTitle(position: Int): Int = when (position) {
+                0 -> R.string.account_preferences_basic_tab
+                1 -> R.string.account_preferences_media_tab
+                2 -> R.string.account_preferences_advanced_tab
+                3 -> R.string.account_preferences_security_tab
+                4 -> R.string.account_preference_plugin_tab
+                else -> -1
             }
         }
     }

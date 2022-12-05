@@ -28,9 +28,9 @@ import cx.ring.client.ContactDetailsActivity
 import cx.ring.databinding.FragConversationMembersBinding
 import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
@@ -66,7 +66,7 @@ class ConversationMembersFragment : Fragment() {
             .startConversation(path.accountId, path.conversationUri)
             .flatMapObservable { conversation -> conversation.contactUpdates }
             .flatMap { contacts -> contactService.observeContact(path.accountId, contacts, false) }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
                 val adapter = binding!!.contactList.adapter
                 if (adapter == null) {

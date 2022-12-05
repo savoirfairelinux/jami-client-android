@@ -56,13 +56,9 @@ import cx.ring.fragments.ConversationFragment
 import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.fragments.ConversationMembersFragment
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
-import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.BitmapUtils
-import cx.ring.utils.ContentUriHandler
-import cx.ring.utils.ConversationPath
+import cx.ring.utils.*
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -172,7 +168,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
 
         mDisposableBag.add(mConversationFacade.observeConversation(conversation)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .doOnComplete { finish() }
             .subscribe({ vm ->
                 binding.contactImage.setImageDrawable(AvatarDrawable.Builder()
@@ -332,7 +328,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                     .withCircleCrop(true)
                     .build(this)
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ avatar: AvatarDrawable ->
                 mProfilePhoto?.setImageDrawable(avatar)
             }) { e: Throwable ->

@@ -89,17 +89,11 @@ internal class CodecPreference @JvmOverloads constructor(context: Context, attrs
 
     private class CodecAdapter constructor(private val mContext: Context) : BaseAdapter() {
         private val items = ArrayList<Codec>()
-        override fun getCount(): Int {
-            return items.size
-        }
+        override fun getCount(): Int = items.size
 
-        override fun getItem(position: Int): Codec {
-            return items[position]
-        }
+        override fun getItem(position: Int): Codec = items[position]
 
-        override fun getItemId(position: Int): Long {
-            return 0
-        }
+        override fun getItemId(position: Int): Long = getItem(position).payload
 
         override fun getView(pos: Int, convertView: View?, parent: ViewGroup): View {
             val entryView: CodecView

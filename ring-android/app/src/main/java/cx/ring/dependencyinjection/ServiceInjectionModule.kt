@@ -21,12 +21,12 @@ package cx.ring.dependencyinjection
 
 import android.content.Context
 import cx.ring.services.*
+import cx.ring.utils.DeviceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import net.jami.services.ConversationFacade
 import net.jami.services.*
@@ -164,6 +164,6 @@ object ServiceInjectionModule {
     @Named("UiScheduler")
     @Singleton
     fun provideUiScheduler(): Scheduler {
-        return AndroidSchedulers.mainThread()
+        return DeviceUtils.uiScheduler
     }
 }

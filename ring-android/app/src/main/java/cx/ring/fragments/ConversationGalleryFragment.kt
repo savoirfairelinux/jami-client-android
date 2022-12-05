@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import cx.ring.adapters.ConversationMediaGalleryAdapter
 import cx.ring.databinding.FragConversationGalleryBinding
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.DataTransfer
 import net.jami.model.Uri
@@ -44,7 +44,7 @@ class ConversationGalleryFragment : Fragment() {
             type = "application/data-transfer+json"
         )
             .map { results -> results.results.mapNotNull { i -> if (i is DataTransfer /*&& i.isComplete*/) i else null } }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe {
                 adapter?.addSearchResults(it)
                 binding!!.placeholder.isVisible = false

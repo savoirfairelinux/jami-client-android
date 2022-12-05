@@ -61,7 +61,6 @@ import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -265,7 +264,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         super.onStart()
         mDisposable.add(
             mAccountService.observableAccountList
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { accounts: List<Account> ->
                     if (accounts.isEmpty()) {
                         startActivity(Intent(this, AccountWizardActivity::class.java))
@@ -336,7 +335,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
     fun startConversation(conversationId: String) {
         mDisposable.add(mAccountService.currentAccountSubject
             .firstElement()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { account ->
                 startConversation(account.accountId, Uri.fromString(conversationId))
             })
@@ -486,7 +485,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
 
     override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
         mDisposable.add(mConversationFacade.createConversation(accountId, contacts)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe { conversation: Conversation ->
                 startConversation(conversation.accountId, conversation.uri)
             })

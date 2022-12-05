@@ -42,8 +42,8 @@ import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.adapters.RingtoneAdapter
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import net.jami.model.Account
 import net.jami.model.ConfigKey
@@ -314,7 +314,7 @@ class RingtoneActivity : AppCompatActivity() {
                         or Intent.FLAG_GRANT_WRITE_URI_PERMISSION))
                 cr.takePersistableUriPermission(uri, takeFlags)
                 AndroidFileUtils.getCacheFile(this, uri)
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ ringtone: File -> onFileFound(ringtone) }) {
                         Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show()
                     }

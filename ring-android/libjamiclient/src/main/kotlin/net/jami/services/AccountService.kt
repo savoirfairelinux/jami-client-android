@@ -705,7 +705,7 @@ class AccountService(
         val activePayloads = JamiService.getActiveCodecList(accountId)
         JamiService.getCodecList()
             .map { Codec(it, JamiService.getCodecDetails(accountId, it), activePayloads.contains(it)) }
-    }.subscribeOn(Schedulers.from(mExecutor))
+    }
 
     fun validateCertificatePath(
         accountID: String,

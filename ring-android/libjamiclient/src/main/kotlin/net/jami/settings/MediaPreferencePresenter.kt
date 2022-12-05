@@ -33,18 +33,17 @@ import javax.inject.Named
 
 class MediaPreferencePresenter @Inject constructor(
     private var mAccountService: AccountService,
-    private var mDeviceRuntimeService: DeviceRuntimeService,
     @Named("UiScheduler")
     private var mUiScheduler: Scheduler
 ) : RootPresenter<MediaPreferenceView>() {
     private var mAccount: Account? = null
 
     fun init(accountId: String) {
-        mAccount = mAccountService.getAccount(accountId)
         mCompositeDisposable.clear()
         mCompositeDisposable.add(mAccountService
             .getObservableAccount(accountId)
             .switchMapSingle { account: Account ->
+                mAccount = account
                 mAccountService.getCodecList(accountId)
                     .observeOn(mUiScheduler)
                     .doOnSuccess { codecList: List<Codec> ->

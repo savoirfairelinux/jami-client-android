@@ -32,11 +32,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomappbar.BottomAppBar
 import cx.ring.R
 import cx.ring.utils.AndroidFileUtils
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import cx.ring.utils.DeviceUtils
 
-/**
- * A placeholder fragment containing a simple view.
- */
 class MediaViewerFragment : Fragment() {
     private var mUri: Uri? = null
 
@@ -69,7 +66,7 @@ class MediaViewerFragment : Fragment() {
         if (requestCode == REQUEST_CODE_SAVE_FILE) {
             data?.data?.let { uri ->
                 AndroidFileUtils.copyUri(requireContext().contentResolver, mUri!!, uri)
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
                     { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() }
             }

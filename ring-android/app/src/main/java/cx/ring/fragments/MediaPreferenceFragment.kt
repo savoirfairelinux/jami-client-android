@@ -24,6 +24,8 @@ package cx.ring.fragments
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.ViewGroup
 import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,6 +52,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
     private var videoCodecsPref: CodecPreference? = null
 
     private val changeCodecListener = Preference.OnPreferenceChangeListener { _, _ ->
+        Log.w(TAG, "changeCodecListener")
         val audio = audioCodecsPref!!.activeCodecList
         val video = videoCodecsPref!!.activeCodecList
         val newOrder = ArrayList<Long>(audio.size + video.size)
@@ -60,11 +63,16 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        Log.w(TAG, "onCreatePreferences")
         super.onCreatePreferences(savedInstanceState, rootKey)
         val accountId = requireArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY)!!
         addPreferencesFromResource(R.xml.account_media_prefs)
+        Log.w(TAG, "onCreatePreferences2")
+        // (view as ViewGroup).layoutTransition = null;
         audioCodecsPref = findPreference("Account.audioCodecs")
         videoCodecsPref = findPreference("Account.videoCodecs")
+        audioCodecsPref!!.onPreferenceChangeListener = changeCodecListener
+        videoCodecsPref!!.onPreferenceChangeListener = changeCodecListener
         findPreference<Preference>("ringtone")?.apply {
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val i = Intent(requireActivity(), RingtoneActivity::class.java)
@@ -73,16 +81,15 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
                 true
             }
         }
+        findPreference<Preference>(ConfigKey.VIDEO_ENABLED.key)?.onPreferenceChangeListener = changeVideoPreferenceListener
         presenter.init(accountId)
     }
 
     override fun accountChanged(account: Account, audioCodec: ArrayList<Codec>, videoCodec: ArrayList<Codec>) {
+        Log.w(TAG, "accountChanged ${audioCodec.size} ${videoCodec.size}")
         setPreferenceDetails(account.config)
         audioCodecsPref!!.setCodecs(audioCodec)
         videoCodecsPref!!.setCodecs(videoCodec)
-        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener)
-        audioCodecsPref!!.onPreferenceChangeListener = changeCodecListener
-        videoCodecsPref!!.onPreferenceChangeListener = changeCodecListener
     }
 
     override fun displayWrongFileFormatDialog() {
@@ -110,6 +117,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
     }
 
     override fun refresh(account: Account) {
+        Log.w(TAG, "refresh")
         setPreferenceDetails(account.config)
         if (null != listView && null != listView.adapter) {
             listView.adapter!!.notifyDataSetChanged()
@@ -123,6 +131,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
     }
 
     private fun setPreferenceDetails(details: AccountConfig) {
+        Log.w(TAG, "setPreferenceDetails")
         for (confKey in details.keys) {
             val pref = findPreference<Preference>(confKey.key)
             if (pref != null) {
@@ -136,14 +145,6 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
                 }
             }
         }
-    }
-
-    private fun addPreferenceListener(details: AccountConfig, listener: Preference.OnPreferenceChangeListener) {
-        for (confKey in details.keys) addPreferenceListener(confKey, listener)
-    }
-
-    private fun addPreferenceListener(key: ConfigKey, listener: Preference.OnPreferenceChangeListener) {
-        findPreference<Preference>(key.key)?.onPreferenceChangeListener = listener
     }
 
     companion object {

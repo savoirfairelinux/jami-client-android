@@ -12,9 +12,9 @@ import android.view.TextureView
 import androidx.core.view.isVisible
 import cx.ring.R
 import cx.ring.application.JamiApplication
+import cx.ring.utils.DeviceUtils
 import cx.ring.utils.ScalableType
 import cx.ring.utils.ScaleManager
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.daemon.JamiServiceJNI
 import net.jami.services.HardwareService
@@ -106,11 +106,11 @@ class VideoSinkView @JvmOverloads constructor(context: Context, attrs: Attribute
         val nw = nativeWindow
         if (nw != -1L) {
             disposableBag.add(hardwareService!!.connectSink(id, nw)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { size -> setAspectRatio(size.first, size.second) })
         } else {
             disposableBag.add(hardwareService!!.getSinkSize(id)
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { c -> setAspectRatio(c.first, c.second) })
         }
     }

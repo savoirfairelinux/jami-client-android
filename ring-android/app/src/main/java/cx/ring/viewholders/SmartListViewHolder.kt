@@ -30,9 +30,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
 import cx.ring.databinding.ItemSmartlistBinding
 import cx.ring.databinding.ItemSmartlistHeaderBinding
+import cx.ring.utils.DeviceUtils
 import cx.ring.utils.TextUtils
 import cx.ring.views.AvatarDrawable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.*
 import net.jami.services.ConversationFacade
@@ -87,7 +87,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             }
 
             compositeDisposable.add(conversation.currentStateSubject
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { state ->
                     val fade = !binding.convLastItem.isVisible || binding.convLastItem.text.isBlank()
                     val lastEvent = state.first
@@ -119,7 +119,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
 
             compositeDisposable.add(conversationFacade.observeConversation(conversation, true)
                 .onErrorComplete()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { conversationItemViewModel ->
                     binding.convParticipant.text = conversationItemViewModel.title
                     val fade = binding.photo.drawable !is AvatarDrawable
@@ -132,7 +132,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 })
 
             compositeDisposable.add(conversation.getVisible()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { activated -> binding.itemLayout.isActivated = activated })
         }
     }

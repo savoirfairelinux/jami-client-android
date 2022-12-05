@@ -73,7 +73,6 @@ import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -121,7 +120,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(8)) { uris ->
             for (uri in uris) {
                 startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(DeviceUtils.uiScheduler)
                     .flatMapCompletable { file: File -> sendFile(file) })
             }
         }
@@ -590,7 +589,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     private fun startFileSend(op: Completable): Disposable {
         setLoading(true)
-        return op.observeOn(AndroidSchedulers.mainThread())
+        return op.observeOn(DeviceUtils.uiScheduler)
             .doFinally { setLoading(false) }
             .subscribe({}) { e ->
                 Log.e(TAG, "startFileSend: not able to create cache file", e)
@@ -607,13 +606,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     for (i in 0 until clipData.itemCount) {
                         val uri = clipData.getItemAt(i).uri
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(DeviceUtils.uiScheduler)
                             .flatMapCompletable { file: File -> sendFile(file) })
                     }
                 } else {
                     resultData.data?.let { uri ->
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(DeviceUtils.uiScheduler)
                             .flatMapCompletable { file: File -> sendFile(file) })
                     }
                 }
@@ -657,7 +656,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val path = mCurrentFileAbsolutePath ?: return
         val cr = context?.contentResolver ?: return
         mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(cr, File(path), data)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(DeviceUtils.uiScheduler)
             .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
             { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() })
     }
