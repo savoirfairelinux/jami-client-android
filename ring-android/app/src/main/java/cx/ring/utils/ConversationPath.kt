@@ -100,7 +100,7 @@ data class ConversationPath(
             if (ContentUriHandler.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
                 val pathSegments = uri.pathSegments
                 if (pathSegments.size > 2) {
-                    return ConversationPath(pathSegments[pathSegments.size - 2], pathSegments[pathSegments.size - 1])
+                    return ConversationPath(pathSegments[1], pathSegments[2])
                 }
             }
             return null
@@ -123,5 +123,30 @@ data class ConversationPath(
         fun fromIntent(intent: Intent?): ConversationPath? = if (intent != null) {
             fromUri(intent.data) ?: fromBundle(intent.extras)
         } else null
+    }
+}
+
+data class InteractionPath(val conversation: ConversationPath, val messageId: String) {
+    fun toUri(): android.net.Uri =
+        toUri(conversation.accountId, conversation.conversationUri, messageId)
+
+    companion object {
+        fun fromUri(uri: android.net.Uri?): InteractionPath? {
+            if (uri == null) return null
+            if (ContentUriHandler.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
+                val pathSegments = uri.pathSegments
+                if (pathSegments.size > 3) {
+                    return InteractionPath(ConversationPath(pathSegments[1], pathSegments[2]), pathSegments[3])
+                }
+            }
+            return null
+        }
+
+        fun toUri(accountId: String, conversationUri: Uri, messageId: String): android.net.Uri =
+            ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+                .appendEncodedPath(accountId)
+                .appendEncodedPath(conversationUri.uri)
+                .appendEncodedPath(messageId)
+                .build()
     }
 }

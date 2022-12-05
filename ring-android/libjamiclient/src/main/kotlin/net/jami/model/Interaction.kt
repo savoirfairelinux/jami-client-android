@@ -35,10 +35,31 @@ open class Interaction {
     var contact: Contact? = null
     var replyToId: String? = null
     var replyTo: Single<Interaction>? = null
-    private val reactions: MutableList<Interaction> = ArrayList()
+    var edit: String? = null
+    var reactToId: String? = null
+    var reactTo: Interaction? = null
+    val reactions: MutableList<Interaction> = ArrayList()
     private val reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
+
+    private val history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
+    private val historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
+
     val reactionObservable: Observable<List<Interaction>>
-        get() = reactionSubject
+        get() = reactionSubject.switchMap { i ->
+            if (i.isEmpty())
+                Observable.just(emptyList())
+            else {
+                Observable.combineLatest(i.map { it.lastElement }) { a -> a.mapNotNull {
+                    it as Interaction
+                    return@mapNotNull if (it.body.isNullOrEmpty()) null else it
+                } }
+            }
+        }
+
+    val historyObservable: Observable<List<Interaction>>
+        get() = historySubject
+    val lastElement: Observable<Interaction> = historyObservable
+        .map { it.lastOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     var id = 0
@@ -178,6 +199,19 @@ open class Interaction {
     fun addReactions(interactions: List<Interaction>) {
         reactions.addAll(interactions)
         reactionSubject.onNext(ArrayList(reactions))
+    }
+
+    fun addEdit(interaction: Interaction, newMessage: Boolean) {
+        history.remove(interaction)
+        if (newMessage)
+            history.add(interaction)
+        else
+            history.add(0, interaction)
+        historySubject.onNext(ArrayList(history))
+    }
+    fun addEdits(interactions: List<Interaction>) {
+        history.addAll(interactions)
+        historySubject.onNext(ArrayList(history))
     }
 
     var preview: Any? = null

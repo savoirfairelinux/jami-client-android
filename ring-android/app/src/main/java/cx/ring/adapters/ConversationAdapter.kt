@@ -57,17 +57,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.bold
 import androidx.core.view.isVisible
-import androidx.core.widget.PopupWindowCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideBuilder
-import com.bumptech.glide.GlideContext
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
+import cx.ring.client.MessageEditActivity
 import cx.ring.databinding.MenuConversationBinding
 import cx.ring.fragments.ConversationFragment
 import cx.ring.linkpreview.LinkPreview
@@ -162,7 +160,7 @@ class ConversationAdapter(
                     mInteractions.add(i, e)
                     notifyItemInserted(i)
                     return i == n - 1
-                } else if (e.parentId == mInteractions[i].messageId ) {
+                } else if (e.parentId == mInteractions[i].messageId) {
                     mInteractions.add(i + 1, e)
                     notifyItemInserted(i + 1)
                     return true
@@ -295,23 +293,31 @@ class ConversationAdapter(
                 conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
             })
     }
-    private fun configureReactions(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+
+    private fun configureReactions(
+        conversationViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
+        conversationViewHolder.reactionChip?.setOnClickListener {
+            presenter.removeReaction(interaction)
+        }
         conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { reactions ->
+                Log.w(TAG, "reaction $reactions")
+                val chip = conversationViewHolder.reactionChip ?: return@subscribe
                 if (reactions.isEmpty())
-                    conversationViewHolder.reactionChip!!.isVisible = false
+                    chip.isVisible = false
                 else {
-                    conversationViewHolder.reactionChip!!.text =
-                        reactions.filterIsInstance<TextMessage>()
-                            .groupingBy(keySelector = { it.body!! })
-                            .eachCount()
-                            .map { e -> e }
-                            .sortedByDescending { it.value }
-                            .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
-                    conversationViewHolder.reactionChip!!.isVisible = true
-                    conversationViewHolder.reactionChip!!.isClickable = false
-                    conversationViewHolder.reactionChip!!.isFocusable = false
+                    chip.text = reactions.filterIsInstance<TextMessage>()
+                        .groupingBy { it.body!! }
+                        .eachCount()
+                        .map { it }
+                        .sortedByDescending { it.value }
+                        .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
+                    chip.isVisible = true
+                    chip.isClickable = true
+                    chip.isFocusable = true
                 }
             })
     }
@@ -551,7 +557,7 @@ class ConversationAdapter(
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
-            if (maxDim != 0)  {
+            if (maxDim != 0) {
                 p.width = width * mPictureMaxSize / maxDim
                 p.height = height * mPictureMaxSize / maxDim
             } else {
@@ -613,7 +619,7 @@ class ConversationAdapter(
         player.seekTo(1)
     }
 
-    private fun openItemMenu(v: View, interaction: Interaction) {
+    private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             val popupWindow = WeakReference(PopupWindow(
@@ -644,11 +650,40 @@ class ConversationAdapter(
                 addToClipboard(interaction.body)
                 popupWindow.get()?.dismiss()
             }
+            convActionEdit.setOnClickListener {
+                popupWindow.get()?.dismiss()
+                try {
+                    val i = Intent(it.context, MessageEditActivity::class.java)
+                        .setData(Uri.withAppendedPath(ConversationPath.toUri(interaction.account!!, interaction.conversationId!!), interaction.messageId))
+                        .setAction(Intent.ACTION_EDIT)
+                        .putExtra(Intent.EXTRA_TEXT, cvh.mMsgTxt!!.text.toString())
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), cvh.mMsgTxt!!, "messageEdit")
+                    conversationFragment.startActivityForResult(i, ConversationFragment.REQUEST_CODE_EDIT_MESSAGE, options.toBundle())
+                } catch (e: Exception) {
+                    Log.w(TAG, "Can't open picture", e)
+                }
+            }
             convActionShare.setOnClickListener {
                 if (interaction is DataTransfer)
                     presenter.shareFile(interaction)
                 else if (interaction is TextMessage)
                     presenter.shareText(interaction)
+                popupWindow.get()?.dismiss()
+            }
+            convActionHistory.setOnClickListener {
+                Log.w(TAG, "Message history")
+                cvh.compositeDisposable.add(interaction.historyObservable.firstOrError().subscribe { c ->
+                    Log.w(TAG, "Message history ${c.size}")
+                    c.forEach {
+                        Log.w(TAG, "Message ${it.type} ${it.body} $it")
+                    }
+                    MaterialAlertDialogBuilder(it.context)
+                        .setTitle("Message history")
+                        .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }.toTypedArray())
+                        { dialog, which -> dialog.dismiss() }
+                        .create()
+                        .show()
+                })
                 popupWindow.get()?.dismiss()
             }
         }
@@ -704,7 +739,7 @@ class ConversationAdapter(
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
                 longPressView.background.setTint(res.getColor(R.color.grey_500))
             }
-            openItemMenu(v, file)
+            openItemMenu(viewHolder,v, file)
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
@@ -761,158 +796,149 @@ class ConversationAdapter(
      */
     private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val context = convViewHolder.itemView.context
-        val textMessage = interaction as TextMessage
-        val contact = textMessage.contact  ?: return
-        // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
-        val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
-        val longPressView = convViewHolder.mMsgTxt!!
-        longPressView.background.setTintList(null)
-
-        /*longPressView.setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
-            //conversationFragment.onCreateContextMenu(menu, v, menuInfo)
-            val date = Date(interaction.timestamp)
-            val dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-            menu.setHeaderTitle(dateFormat.format(date))
-            val inflater = conversationFragment.requireActivity().menuInflater
-            inflater.inflate(R.menu.conversation_item_actions_messages, menu)
-
-            if (interaction.status == InteractionStatus.SENDING) {
-                menu.removeItem(R.id.conv_action_delete)
-            } else {
-                if (interaction.isSwarm) {
-                    menu.removeItem(R.id.conv_action_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
-                } else {
-                    menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete)
-                    menu.removeItem(R.id.conv_action_cancel_message)
+        convViewHolder.compositeDisposable.add(interaction.lastElement
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { lastElement ->
+                val textMessage = lastElement as TextMessage
+                val contact = textMessage.contact ?: return@subscribe
+                // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
+                val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
+                val longPressView = convViewHolder.mMsgTxt!!
+                longPressView.background.setTintList(null)
+                longPressView.setOnLongClickListener { v: View ->
+                    openItemMenu(convViewHolder, v, interaction)
+                    if (expandedItemPosition == position) {
+                        expandedItemPosition = -1
+                    }
+                    conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
+                    if (textMessage.isIncoming) {
+                        longPressView.background.setTint(res.getColor(R.color.grey_500))
+                    } else {
+                        longPressView.background.setTint(res.getColor(R.color.blue_900))
+                    }
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(
+                        convViewHolder.bindingAdapterPosition,
+                        v.id.toLong()
+                    )
+                    true
                 }
-            }
-        }*/
-        //longPressView.setOnClickListener { v: View ->
-        longPressView.setOnLongClickListener { v: View ->
-            openItemMenu(v, interaction)
-            if (expandedItemPosition == position) {
-                expandedItemPosition = -1
-            }
-            conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
-            if (textMessage.isIncoming) {
-                longPressView.background.setTint(res.getColor(R.color.grey_500))
-            } else {
-                longPressView.background.setTint(res.getColor(R.color.blue_900))
-            }
-            mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
-            true
-        }
-        val isTimeShown = hasPermanentTimeString(textMessage, position)
-        val msgSequenceType = getMsgSequencing(position, isTimeShown)
-        convViewHolder.mAnswerLayout?.visibility = View.GONE
-        val msgTxt = convViewHolder.mMsgTxt ?: return
-        if (StringUtils.isOnlyEmoji(message)) {
-            msgTxt.background.alpha = 0
-            msgTxt.textSize = 32.0f
-            msgTxt.setPadding(0, 0, 0, 0)
-        } else {
-            val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
-            msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
-            if (convColor != 0 && !textMessage.isIncoming) {
-                msgTxt.background.setTint(convColor)
-            }
-            msgTxt.background.alpha = 255
-            msgTxt.textSize = 16f
-            msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                val isTimeShown = hasPermanentTimeString(textMessage, position)
+                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                convViewHolder.mAnswerLayout?.visibility = View.GONE
+                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
+                if (StringUtils.isOnlyEmoji(message)) {
+                    msgTxt.background.alpha = 0
+                    msgTxt.textSize = 32.0f
+                    msgTxt.setPadding(0, 0, 0, 0)
+                } else {
+                    val resIndex =
+                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        msgTxt.background.setTint(convColor)
+                    }
+                    msgTxt.background.alpha = 255
+                    msgTxt.textSize = 16f
+                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
 
-            if (showLinkPreviews) {
-                val cachedPreview = interaction.preview as Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
-                    .flatMap { url -> LinkPreview.load(url) }
-                    .cache()
-                    .apply { interaction.preview = this }
+                    if (showLinkPreviews) {
+                        val cachedPreview =
+                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
+                                .flatMap { url -> LinkPreview.load(url) }
+                                .cache()
+                                .apply { interaction.preview = this }
 
-                convViewHolder.compositeDisposable.add(cachedPreview
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ data ->
-                        Log.w(TAG, "got preview $data")
-                        val image = convViewHolder.mImage ?: return@subscribe
-                        if (data.imageUrl.isNotEmpty()) {
-                            Glide.with(context)
-                                .load(data.imageUrl)
-                                //.override(mPreviewMaxSize)
-                                //.apply(RequestOptions().override(mPreviewMaxSize))
-                                .centerCrop()
-                                .into(image)
-                            //convViewHolder.mImage.setImageURI(Uri.parse(data.imageUrl))
-                            image.visibility = View.VISIBLE
+                        convViewHolder.compositeDisposable.add(cachedPreview
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({ data ->
+                                Log.w(TAG, "got preview $data")
+                                val image = convViewHolder.mImage ?: return@subscribe
+                                if (data.imageUrl.isNotEmpty()) {
+                                    Glide.with(context)
+                                        .load(data.imageUrl)
+                                        .centerCrop()
+                                        .into(image)
+                                    image.visibility = View.VISIBLE
+                                } else {
+                                    image.visibility = View.GONE
+                                }
+                                convViewHolder.mHistTxt?.text = data.title
+                                if (data.description.isNotEmpty()) {
+                                    convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
+                                    convViewHolder.mHistDetailTxt?.text = data.description
+                                } else {
+                                    convViewHolder.mHistDetailTxt?.visibility = View.GONE
+                                }
+                                convViewHolder.mAnswerLayout?.visibility = View.VISIBLE
+                                val url = Uri.parse(data.baseUrl)
+                                convViewHolder.mPreviewDomain?.text = url.host
+                                convViewHolder.mAnswerLayout?.setOnClickListener {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                                }
+                            }) { e -> Log.e(TAG, "Can't load preview", e) })
+                    }
+                }
+                msgTxt.movementMethod = LinkMovementMethod.getInstance()
+                msgTxt.text = markwon.toMarkdown(message)
+                val endOfSeq =
+                    msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+                if (textMessage.isIncoming) {
+                    val avatar = convViewHolder.mAvatar ?: return@subscribe
+                    if (endOfSeq) {
+                        avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                        avatar.visibility = View.VISIBLE
+                    } else {
+                        if (position == lastMsgPos - 1) {
+                            avatar.startAnimation(
+                                AnimationUtils.loadAnimation(
+                                    avatar.context,
+                                    R.anim.fade_out
+                                ).apply {
+                                    setAnimationListener(object : Animation.AnimationListener {
+                                        override fun onAnimationStart(arg0: Animation) {}
+                                        override fun onAnimationRepeat(arg0: Animation) {}
+                                        override fun onAnimationEnd(arg0: Animation) {
+                                            avatar.setImageBitmap(null)
+                                            avatar.visibility = View.INVISIBLE
+                                        }
+                                    })
+                                })
                         } else {
-                            image.visibility = View.GONE
+                            avatar.setImageBitmap(null)
+                            avatar.visibility = View.INVISIBLE
                         }
-                        convViewHolder.mHistTxt?.text = data.title
-                        if (data.description.isNotEmpty()) {
-                            convViewHolder.mHistDetailTxt?.visibility = View.VISIBLE
-                            convViewHolder.mHistDetailTxt?.text = data.description
-                        } else {
-                            convViewHolder.mHistDetailTxt?.visibility = View.GONE
-                        }
-                        convViewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                        val url = Uri.parse(data.baseUrl)
-                        convViewHolder.mPreviewDomain?.text = url.host
-                        convViewHolder.mAnswerLayout?.setOnClickListener {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, url))
-                        }
-                    }) { e -> Log.e(TAG, "Can't load preview", e) })
-            }
-        }
-        msgTxt.movementMethod = LinkMovementMethod.getInstance()
-        msgTxt.text = markwon.toMarkdown(message)
-        val endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
-        if (textMessage.isIncoming) {
-            val avatar = convViewHolder.mAvatar ?: return
-            if (endOfSeq) {
-                avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
-                avatar.visibility = View.VISIBLE
-            } else {
-                if (position == lastMsgPos - 1) {
-                    avatar.startAnimation(AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
-                        setAnimationListener(object : Animation.AnimationListener {
-                            override fun onAnimationStart(arg0: Animation) {}
-                            override fun onAnimationRepeat(arg0: Animation) {}
-                            override fun onAnimationEnd(arg0: Animation) {
-                                avatar.setImageBitmap(null)
-                                avatar.visibility = View.INVISIBLE
-                            }
-                        })
+                    }
+                }
+                setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+                if (isTimeShown) {
+                    convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                        convViewHolder.mMsgDetailTxtPerm?.text =
+                            TextUtils.timestampToDetailString(context, textMessage.timestamp)
                     })
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
                 } else {
-                    avatar.setImageBitmap(null)
-                    avatar.visibility = View.INVISIBLE
+                    convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
+                    val isExpanded = position == expandedItemPosition
+                    if (isExpanded) {
+                        convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
+                            convViewHolder.mMsgDetailTxt?.text =
+                                TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                        })
+                    }
+                    setItemViewExpansionState(convViewHolder, isExpanded)
+                    convViewHolder.mItem?.setOnClickListener {
+                        if (convViewHolder.animator?.isRunning == true) {
+                            return@setOnClickListener
+                        }
+                        if (expandedItemPosition >= 0) {
+                            val prev = expandedItemPosition
+                            notifyItemChanged(prev)
+                        }
+                        expandedItemPosition = if (isExpanded) -1 else position
+                        notifyItemChanged(expandedItemPosition)
+                    }
                 }
-            }
-        }
-        setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
-        if (isTimeShown) {
-            convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                convViewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(context, textMessage.timestamp)
             })
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
-        } else {
-            convViewHolder.mMsgDetailTxtPerm?.visibility = View.GONE
-            val isExpanded = position == expandedItemPosition
-            if (isExpanded) {
-                convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                    convViewHolder.mMsgDetailTxt?.text = TextUtils.timestampToDetailString(context, textMessage.timestamp)
-                })
-            }
-            setItemViewExpansionState(convViewHolder, isExpanded)
-            convViewHolder.mItem?.setOnClickListener {
-                if (convViewHolder.animator?.isRunning == true) {
-                    return@setOnClickListener
-                }
-                if (expandedItemPosition >= 0) {
-                    val prev = expandedItemPosition
-                    notifyItemChanged(prev)
-                }
-                expandedItemPosition = if (isExpanded) -1 else position
-                notifyItemChanged(expandedItemPosition)
-            }
-        }
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {

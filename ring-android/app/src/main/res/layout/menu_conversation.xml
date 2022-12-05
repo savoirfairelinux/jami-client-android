@@ -123,6 +123,40 @@
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_share_twoton_16dp"
             app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/conv_action_edit"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="Edit"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/baseline_edit_16"
+            app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/conv_action_history"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="Message history"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/outline_history_16"
+            app:drawableTint="@color/colorPrimary" />
     </LinearLayout>
 
 </LinearLayout>

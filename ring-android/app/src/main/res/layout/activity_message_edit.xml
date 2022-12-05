@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_gravity="center"
+        android:id="@+id/cvMessageInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:minHeight="48dp"
+        android:transitionName="messageEdit"
+        app:cardCornerRadius="@dimen/conversation_message_input_radius"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/reply_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/surface"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="true"
+                    android:visibility="gone"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <TextView
+                    android:id="@+id/reply_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/baseline_reply_24"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/colorPrimaryTranslucent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="Reply" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="8dp">
+
+                <Spinner
+                    android:id="@+id/number_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    tools:listitem="@layout/item_number_selected" />
+
+                <EditText
+                    android:id="@+id/msg_input_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/write_a_message"
+                    android:imeOptions="actionSend|flagNoExtractUi"
+                    android:importantForAutofill="no"
+                    android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
+                    android:maxLines="5"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/msg_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/send_message"
+                    android:onClick="@{() -> presenter.sendMessageText()}"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/baseline_send_24"
+                    app:tint="@color/colorPrimary" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView></FrameLayout>

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <supports-screens
         android:anyDensity="true"
@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.providers.tv.permission.WRITE_EPG_DATA" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -82,13 +82,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <application
         android:appCategory="social"
         android:banner="@drawable/jami_banner"
+        android:enableOnBackInvokedCallback="true"
         android:hasFragileUserData="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="true"
-        android:enableOnBackInvokedCallback="true"
-        tools:ignore="UnusedAttribute" >
+        tools:ignore="UnusedAttribute">
         <meta-data
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
@@ -111,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:icon="@mipmap/ic_launcher"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Navigation"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -152,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:icon="@mipmap/ic_launcher"
             android:label="@string/title_share_with"
             android:parentActivityName=".client.HomeActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -183,7 +183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <receiver
             android:name=".service.OutgoingCallHandler"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
 
@@ -192,7 +192,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </receiver>
         <receiver
             android:name=".service.BootReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
@@ -230,7 +230,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/AppTheme.Call"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.CALL" />
 
@@ -302,7 +302,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <service
             android:name=".service.DRingService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>
@@ -312,7 +312,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Jami.Leanback.Main" >
+            android:theme="@style/Theme.Jami.Leanback.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -334,7 +334,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <receiver
             android:name=".tv.main.ChannelActionHandler"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -373,7 +373,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:resizeableActivity="true"
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
 
@@ -385,7 +385,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
 
@@ -397,7 +397,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Leanback.Details" >
+            android:theme="@style/Theme.Leanback.Details">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -423,7 +423,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name="androidx.core.content.FileProvider"
             android:authorities="cx.ring.file_provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -458,6 +458,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="Choose a contact or conversation"
             android:theme="@style/Theme.Material3.DayNight.Dialog.Alert"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".client.MessageEditActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:theme="@style/AppTheme.Dialog"
+            android:windowSoftInputMode="adjustResize"/>
+
     </application>
 
 </manifest>
