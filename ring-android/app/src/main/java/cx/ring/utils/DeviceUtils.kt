@@ -22,7 +22,11 @@ package cx.ring.utils
 import android.app.UiModeManager
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Handler
+import android.os.Looper
 import cx.ring.R
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 object DeviceUtils {
     fun isTv(context: Context): Boolean {
@@ -33,4 +37,21 @@ object DeviceUtils {
     fun isTablet(context: Context): Boolean {
         return context.resources.getBoolean(R.bool.isTablet)
     }
+
+     /*   fun getScheduler(activity: Activity): Boolean {
+        return context.resources.getBoolean(R.bool.isTablet)
+    }*/
+
+    val uiScheduler: Scheduler = Schedulers.from {
+        //conversationFragment.requireActivity().runOnUiThread(it)
+        val looper = Looper.getMainLooper()
+        if (Thread.currentThread().equals(looper.thread)) {
+            it.run()
+        } else {
+            Handler(looper).post(it)
+        }
+    }
+
+
+
 }
