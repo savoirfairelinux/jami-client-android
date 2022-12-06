@@ -379,7 +379,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         val id = contact.primaryNumber
         return Single.fromCallable<VCard> { VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId) }
             .map { vcard: VCard -> VCardServiceImpl.readData(vcard) }
-            .subscribeOn(Schedulers.computation())
+            .subscribeOn(Schedulers.io())
     }
 
     private fun loadSystemContactData(contact: Contact): Single<Profile> {
