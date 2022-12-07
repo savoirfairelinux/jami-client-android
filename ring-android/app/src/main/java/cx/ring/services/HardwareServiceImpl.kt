@@ -300,33 +300,37 @@ class HardwareServiceImpl(
         bluetoothEvents.onNext(event)
     }
 
-    @Synchronized override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
+    override fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean) {
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height)
         val shm = Shm(id, width, height)
-        videoInputs[id] = shm
-        videoEvents.onNext(VideoEvent(id, start = true, w = shm.w, h = shm.h))
-        videoSurfaces[id]?.get()?.let { holder ->
-            shm.window = startVideo(id, holder.surface, width, height)
-            if (shm.window == 0L) {
-                Log.w(TAG, "decodingStarted() no window !")
-            } else {
-                videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
+        synchronized(videoInputs) {
+            videoInputs[id] = shm
+            videoEvents.onNext(VideoEvent(id, start = true, w = shm.w, h = shm.h))
+            videoSurfaces[id]?.get()?.let { holder ->
+                shm.window = startVideo(id, holder.surface, width, height)
+                if (shm.window == 0L) {
+                    Log.w(TAG, "decodingStarted() no window !")
+                } else {
+                    videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
+                }
             }
         }
     }
 
-    @Synchronized override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
+    override fun decodingStopped(id: String, shmPath: String, isMixer: Boolean) {
         Log.i(TAG, "decodingStopped() $id")
-        videoEvents.onNext(VideoEvent(id, started = true))
-        val shm = videoInputs.remove(id) ?: return
-        if (shm.window != 0L) {
-            try {
-                stopVideo(shm.id, shm.window)
-            } catch (e: Exception) {
-                Log.e(TAG, "decodingStopped error$e")
+        synchronized(videoInputs) {
+            videoEvents.onNext(VideoEvent(id, started = true))
+            val shm = videoInputs.remove(id) ?: return
+            if (shm.window != 0L) {
+                try {
+                    stopVideo(shm.id, shm.window)
+                } catch (e: Exception) {
+                    Log.e(TAG, "decodingStopped error$e")
+                }
+                shm.window = 0
+                videoEvents.onNext(VideoEvent(id, started = false))
             }
-            shm.window = 0
-            videoEvents.onNext(VideoEvent(id, started = false))
         }
     }
 
@@ -349,10 +353,12 @@ class HardwareServiceImpl(
         return if (input != null) ret.startWithItem(Pair(input.w, input.h)) else ret
     }
 
-    @Synchronized override fun getSinkSize(id: String): Single<Pair<Int, Int>> {
-        val p = videoInputs[id]?.let { input -> Pair(input.w, input.h) }
-        return if (p != null) Single.just(p)
-        else videoEvents.filter { it.sinkId == id }.firstOrError().map { e -> Pair(e.w, e.h) }
+    override fun getSinkSize(id: String): Single<Pair<Int, Int>> {
+        synchronized(videoInputs) {
+            val p = videoInputs[id]?.let { input -> Pair(input.w, input.h) }
+            return if (p != null) Single.just(p)
+            else videoEvents.filter { it.sinkId == id }.firstOrError().map { e -> Pair(e.w, e.h) }
+        }
     }
 
     override fun hasInput(id: String): Boolean = videoInputs[id] !== null
@@ -473,50 +479,56 @@ class HardwareServiceImpl(
         cameraService.setBitrate(camId, bitrate)
     }
 
-    @Synchronized override fun addVideoSurface(id: String, holder: Any) {
+    override fun addVideoSurface(id: String, holder: Any) {
         Log.w(TAG, " addVideoSurface $id $holder")
         if (holder !is SurfaceHolder) return
-        val shm = videoInputs[id]
-        val surfaceHolder = WeakReference(holder)
-        videoSurfaces[id] = surfaceHolder
-        if (shm != null && shm.window == 0L) {
-            shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
-        }
-        if (shm == null || shm.window == 0L) {
-            Log.i(TAG, "JamiService.addVideoSurface() no window !")
-            //videoEvents.onNext(VideoEvent(id, start = true))
-        } else {
-            videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
-        }
-    }
-
-    @Synchronized override fun updateVideoSurfaceId(currentId: String, newId: String) {
-        Log.w(TAG, "updateVideoSurfaceId $currentId $newId")
-        val surfaceHolder = videoSurfaces[currentId] ?: return
-        val surface = surfaceHolder.get()
-        val shm = videoInputs[currentId]
-        if (shm != null && shm.window != 0L) {
-            try {
-                stopVideo(shm.id, shm.window)
-            } catch (e: Exception) {
-                Log.e(TAG, "removeVideoSurface error$e")
+        synchronized(videoInputs) {
+            val shm = videoInputs[id]
+            val surfaceHolder = WeakReference(holder)
+            videoSurfaces[id] = surfaceHolder
+            if (shm != null && shm.window == 0L) {
+                shm.window = startVideo(shm.id, holder.surface, shm.w, shm.h)
             }
-            shm.window = 0
+            if (shm == null || shm.window == 0L) {
+                Log.i(TAG, "JamiService.addVideoSurface() no window !")
+                //videoEvents.onNext(VideoEvent(id, start = true))
+            } else {
+                videoEvents.onNext(VideoEvent(shm.id, start = true, started = true, w = shm.w, h = shm.h))
+            }
         }
-        videoSurfaces.remove(currentId)
-        surface?.let { addVideoSurface(newId, it) }
     }
 
-    @Synchronized override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
-        Log.w(TAG, "addPreviewVideoSurface > holder:$holder")
-        if (holder !is TextureView) return
-        if (mCameraPreviewSurface.get() === holder) return
-        mCameraPreviewSurface = WeakReference(holder)
-        mCameraPreviewCall = WeakReference(conference)
-        for (c in shouldCapture) startCapture(c)
+    override fun updateVideoSurfaceId(currentId: String, newId: String) {
+        Log.w(TAG, "updateVideoSurfaceId $currentId $newId")
+        synchronized(videoInputs) {
+            val surfaceHolder = videoSurfaces[currentId] ?: return
+            val surface = surfaceHolder.get()
+            val shm = videoInputs[currentId]
+            if (shm != null && shm.window != 0L) {
+                try {
+                    stopVideo(shm.id, shm.window)
+                } catch (e: Exception) {
+                    Log.e(TAG, "removeVideoSurface error$e")
+                }
+                shm.window = 0
+            }
+            videoSurfaces.remove(currentId)
+            surface?.let { addVideoSurface(newId, it) }
+        }
     }
 
-    @Synchronized override fun updatePreviewVideoSurface(conference: Conference) {
+    override fun addPreviewVideoSurface(holder: Any, conference: Conference?) {
+        synchronized(videoInputs) {
+            Log.w(TAG, "addPreviewVideoSurface > holder:$holder")
+            if (holder !is TextureView) return
+            if (mCameraPreviewSurface.get() === holder) return
+            mCameraPreviewSurface = WeakReference(holder)
+            mCameraPreviewCall = WeakReference(conference)
+            for (c in shouldCapture) startCapture(c)
+        }
+    }
+
+    override fun updatePreviewVideoSurface(conference: Conference) {
         val old = mCameraPreviewCall.get()
         mCameraPreviewCall = WeakReference(conference)
         if (old !== conference) {
@@ -527,18 +539,20 @@ class HardwareServiceImpl(
         }
     }
 
-    @Synchronized override fun removeVideoSurface(id: String) {
-        videoSurfaces.remove(id)
-        val shm = videoInputs[id] ?: return
-        if (shm.window != 0L) {
-            try {
-                stopVideo(shm.id, shm.window)
-            } catch (e: Exception) {
-                Log.e(TAG, "removeVideoSurface error$e")
+    override fun removeVideoSurface(id: String) {
+        synchronized(videoInputs) {
+            videoSurfaces.remove(id)
+            val shm = videoInputs[id] ?: return
+            if (shm.window != 0L) {
+                try {
+                    stopVideo(shm.id, shm.window)
+                } catch (e: Exception) {
+                    Log.e(TAG, "removeVideoSurface error$e")
+                }
+                shm.window = 0
             }
-            shm.window = 0
+            //videoEvents.onNext(VideoEvent(shm.id, started = false))
         }
-        //videoEvents.onNext(VideoEvent(shm.id, started = false))
     }
 
     override fun removePreviewVideoSurface() {
