@@ -624,6 +624,8 @@ class ConversationAdapter(
 
     private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
+            convActionOpenText.isVisible = interaction is DataTransfer && interaction.status == InteractionStatus.TRANSFER_FINISHED
+            convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionEdit.isVisible = !interaction.isIncoming
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             val popupWindow = WeakReference(PopupWindow(root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true).apply {
@@ -644,6 +646,12 @@ class ConversationAdapter(
             }
             convActionMore.setOnClickListener {
                 menuActions.isVisible = !menuActions.isVisible
+            }
+            convActionOpenText.setOnClickListener {
+                presenter.openFile(interaction)
+            }
+            convActionDownloadText.setOnClickListener {
+                presenter.saveFile(interaction)
             }
             convActionCopyText.setOnClickListener {
                 addToClipboard(interaction.body)
