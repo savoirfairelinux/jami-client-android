@@ -555,7 +555,7 @@ class CallService(
     }
 
     fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
-        currentCalls[callId]?.let { call ->
+        getCurrentCallForId(callId)?.let { call ->
             if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
                 for (e in mediaList)
                     if (e[Media.MEDIA_TYPE_KEY]!! == MEDIA_TYPE_VIDEO)
@@ -565,13 +565,14 @@ class CallService(
         }
     }
 
-    fun mediaNegotiationStatus(callId: String, event: String, mediaList: VectMap) {
-        synchronized(currentCalls) {
-            currentCalls[callId]?.let { call ->
-                call.mediaList = mediaList.mapTo(ArrayList(mediaList.size)) { media -> Media(media) }
-                callSubject.onNext(call)
+    fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) {
+        val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
+        val call = synchronized(currentCalls) {
+            getCurrentCallForId(callId)?.apply {
+                mediaList = media
             }
         }
+        callSubject.onNext(call ?: return)
     }
 
     fun requestVideoMedia(conf: Conference, enable: Boolean) {
