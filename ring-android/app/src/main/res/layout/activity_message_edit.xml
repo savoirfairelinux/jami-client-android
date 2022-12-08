@@ -88,7 +88,6 @@
                     android:layout_height="match_parent"
                     android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="@string/send_message"
-                    android:onClick="@{() -> presenter.sendMessageText()}"
                     android:padding="8dp"
                     app:srcCompat="@drawable/baseline_send_24"
                     app:tint="@color/colorPrimary" />
