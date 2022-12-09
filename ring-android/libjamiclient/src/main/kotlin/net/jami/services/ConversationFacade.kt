@@ -626,14 +626,14 @@ class ConversationFacade(
                 .subscribe { conversation: Conversation ->
                     try {
                         val contact = conversation.contact
-                        mAccountService.removeContact(accountId, contact!!.uri.rawUriString, true)
+                        mAccountService.removeContact(accountId, contact!!.uri.rawRingId, true)
                     } catch (e: Exception) {
                         mAccountService.removeConversation(accountId, conversationUri)
                     }
                 }
             //return mAccountService.removeConversation(accountId, conversationUri);
         } else {
-            mAccountService.removeContact(accountId, conversationUri.rawUriString, true)
+            mAccountService.removeContact(accountId, conversationUri.rawRingId, true)
         }
     }
 
