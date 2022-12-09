@@ -235,6 +235,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_copied_peer_number_clipboard">%1$s copied to clipboard</string>
     <string name="conversation_action_select_peer_number">Select a number</string>
     <string name="conversation_action_block_this">Block contact</string>
+    <string name="conversation_action_unblock_this">Unblock contact</string>
     <string name="conversation_action_go_to_call">Return to ongoing call</string>
     <string name="conversation_default_emoji" translatable="false">👍</string>
     <string name="conversation_open_file_error">There is no installed application capable of opening this file type.</string>
@@ -242,6 +243,9 @@ along with this program; if not, write to the Free Software
     <string name="block_contact_dialog_title">Block %1$s?</string>
     <string name="block_contact_dialog_message">%1$s won\'t be able to contact you until you unblock it.</string>
     <string name="block_contact_completed">%1$s was blocked.</string>
+    <string name="unblock_contact_dialog_title">Unblock %1$s?</string>
+    <string name="unblock_contact_dialog_message">%1$s will be able to contact you again.</string>
+    <string name="unblock_contact_completed">%1$s was unblocked.</string>
     <string name="conversation_contact_is_typing">Contact is typing…</string>
     <string name="conversation_info_contact_you">You</string>
     <string name="conversation_members">Members</string>
