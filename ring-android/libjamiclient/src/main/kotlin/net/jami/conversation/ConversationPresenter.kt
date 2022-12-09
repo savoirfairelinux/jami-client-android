@@ -347,7 +347,7 @@ class ConversationPresenter @Inject constructor(
     fun onBlockIncomingContactRequest() {
         mConversation?.let { conversation ->
             conversationFacade.discardRequest(conversation.accountId, conversation.uri)
-            accountService.removeContact(conversation.accountId, conversation.uri.host, true)
+            conversationFacade.banConversation(conversation.accountId, conversation.uri)
         }
         view?.goToHome()
     }
