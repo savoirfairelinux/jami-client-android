@@ -152,19 +152,35 @@ class ConversationActionsFragment : Fragment() {
                     })
                 }
 
-                adapter.actions.add(ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
-                        .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
-                        .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
-                            mAccountService.removeContact(conversation.accountId, contact.uri.rawRingId,true)
-                            Toast.makeText(requireContext(), getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
-                            requireActivity().finish()
-                        }
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .create()
-                        .show()
-                })
+                if (!contact.isBanned) {
+                    adapter.actions.add(ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
+                            .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
+                            .setPositiveButton(R.string.conversation_action_block_this) { _: DialogInterface?, _: Int ->
+                                mConversationFacade.banConversation(conversation.accountId, conversation.uri)
+                                Toast.makeText(requireContext(), getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create()
+                            .show()
+                    })
+                } else {
+                    adapter.actions.add(ContactAction(R.drawable.baseline_person_add_24, getText(R.string.conversation_action_unblock_this)) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(getString(R.string.unblock_contact_dialog_title, conversationUri))
+                            .setMessage(getString(R.string.unblock_contact_dialog_message, conversationUri))
+                            .setPositiveButton(R.string.conversation_action_unblock_this) { _: DialogInterface?, _: Int ->
+                                mAccountService.addContact(conversation.accountId, contact.uri.rawRingId)
+                                Toast.makeText(requireContext(), getString(R.string.unblock_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create()
+                            .show()
+                    })
+                }
             }
 
 
