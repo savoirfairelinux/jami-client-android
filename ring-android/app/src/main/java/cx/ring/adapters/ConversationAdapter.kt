@@ -624,7 +624,7 @@ class ConversationAdapter(
 
     private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
-            convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
+            convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionEdit.isVisible = !interaction.isIncoming
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
