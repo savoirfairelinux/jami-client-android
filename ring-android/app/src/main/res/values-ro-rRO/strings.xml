@@ -188,6 +188,8 @@
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Grup privat</string>
+  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s a fost invitat</string>
   <string name="conversation_contact_added">%1$s s-a alăturat</string>
   <string name="conversation_contact_left">%1$s a ieșit</string>
@@ -347,4 +349,18 @@
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmă</string>
+  <string name="rename_error">nu poate fi gol</string>
+  <string name="swarm_description">Adaugă o descriere</string>
+  <string name="tab_about">Despre</string>
+  <string name="tab_members">Membri</string>
+  <string name="tab_documetn">Documente</string>
+  <string name="dialogtitle_title">Modifică titlul grupului</string>
+  <string name="dialogtitle_description">Modifică descrierea grupului</string>
+  <string name="dialog_hint_title">Titlu</string>
+  <string name="dialog_hint_description">Descriere</string>
+  <string name="picker_title">Alege contacte</string>
+  <string name="picker_btn">Alege contacte</string>
+  <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Scoate din grup</string>
 </resources>

@@ -337,4 +337,7 @@
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bekreft</string>
+  <string name="tab_about">Om</string>
+  <string name="tab_members">Medlemmer</string>
 </resources>

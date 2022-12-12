@@ -346,4 +346,10 @@
   <string name="uninstall">Odinstalovat</string>
   <string name="reset">Resetovat</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potvrdit</string>
+  <string name="swarm_description">Přidejte popis</string>
+  <string name="tab_about">O aplikaci</string>
+  <string name="tab_members">Členové</string>
+  <string name="tab_documetn">Dokumenty</string>
+  <string name="dialog_hint_title">Název</string>
 </resources>

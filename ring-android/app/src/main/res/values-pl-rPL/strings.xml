@@ -337,4 +337,8 @@
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potwierdź</string>
+  <string name="tab_about">O programie</string>
+  <string name="tab_members">Użytkownicy</string>
+  <string name="dialog_hint_title">Tytuł</string>
 </resources>

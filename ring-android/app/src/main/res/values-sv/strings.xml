@@ -337,4 +337,8 @@
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bekräfta</string>
+  <string name="tab_about">Om</string>
+  <string name="tab_members">Medlemmar</string>
+  <string name="dialog_hint_title">Titel</string>
 </resources>

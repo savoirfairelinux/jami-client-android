@@ -325,4 +325,7 @@
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
   <!--Swarm Detail-->
+  <string name="tab_about">عن RING</string>
+  <string name="tab_members">الأعضاء</string>
+  <string name="dialog_hint_title">العنوان</string>
 </resources>

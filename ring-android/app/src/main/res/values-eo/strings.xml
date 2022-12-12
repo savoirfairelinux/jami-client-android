@@ -124,4 +124,7 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
   <string name="bottomSheet_hangup_btn">Finigi vokon</string>
   <!--Swarm Detail-->
+  <string name="tab_about">Pri</string>
+  <string name="tab_members">Anoj</string>
+  <string name="dialog_hint_title">Titolo</string>
 </resources>

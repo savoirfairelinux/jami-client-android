@@ -59,8 +59,8 @@
   <string name="account_optionnal_category">İsteğe Bağlı Ayarlar</string>
   <string name="account_useragent_label">Kullanıcı Aracısı</string>
   <string name="account_autoanswer_label">Kendiliğinden Yanıtla</string>
-  <string name="account_rendezvous_label">Buluşma Modu</string>
-  <string name="account_rendezvous_summary">Buluşma modunda, gelen aramalar bir konferans odasına eklenecek.</string>
+  <string name="account_rendezvous_label">Buluşma Kipi</string>
+  <string name="account_rendezvous_summary">Buluşma kipinde, gelen aramalar bir konferans odasına eklenecek.</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
   <!--Plugin Details-->
@@ -103,7 +103,7 @@
   <string name="account_proxy_label">DHT vekil</string>
   <string name="account_proxy_enable_label">DHT vekil sunucu kullan</string>
   <string name="account_proxy_server_label">DHT vekil adresi</string>
-  <string name="account_proxy_server_list_label">DHT proxy listesi URL</string>
+  <string name="account_proxy_server_list_label">DHT vekil listesi URL\'si</string>
   <string name="account_sip_proxy_label">Vekil</string>
   <string name="account_peer_discovery_label">Yerel bağlantı bulma</string>
   <string name="account_peer_discovery_enable_label">Yerel bağlantı bulmayı etkinleştir</string>

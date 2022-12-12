@@ -337,4 +337,8 @@
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Vahvista</string>
+  <string name="tab_about">Tietoa</string>
+  <string name="tab_members">Jäsenet</string>
+  <string name="dialog_hint_title">Otsikko</string>
 </resources>

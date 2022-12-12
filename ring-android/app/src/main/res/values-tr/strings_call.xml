@@ -21,8 +21,8 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- Call error -->
-    <string name="call_error_no_microphone">Çağrı iptal edildi. Mikrofon algılanmadı.</string>
-    <string name="call_error_no_camera_no_microphone">Çağrı iptal edildi. Kamera veya mikrofon algılanmadı.</string>
+    <string name="call_error_no_microphone">Arama iptal edildi. Mikrofon algılanmadı.</string>
+    <string name="call_error_no_camera_no_microphone">Arama iptal edildi. Kamera veya mikrofon algılanmadı.</string>
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Arama yapılıyor</string>
