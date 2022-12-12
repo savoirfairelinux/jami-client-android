@@ -91,7 +91,7 @@
   <string name="account_accept_files_max_size">Mărimea maximă a fișierului acceptat automat</string>
   <string name="account_accept_files_never">Nu accepta niciodată automat</string>
   <string name="account_accept_files_always">Acceptă mereu automat</string>
-  <string name="size_mb">%1$d MB</string>
+  <string name="size_mb">%1$d Mo</string>
   <string name="account_turn_enable_label">Folosește TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nume de utilizator TURN</string>

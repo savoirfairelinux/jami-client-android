@@ -340,4 +340,8 @@
   <string name="uninstall">Удалить</string>
   <string name="reset">Сброс</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Подтвердить</string>
+  <string name="tab_about">О программе</string>
+  <string name="tab_members">Члены</string>
+  <string name="dialog_hint_title">Заголовок</string>
 </resources>

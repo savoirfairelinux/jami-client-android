@@ -188,6 +188,8 @@
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Swarm privé</string>
+  <string name="conversation_type_group">Swarm</string>
   <string name="conversation_contact_invited">%1$sa été invité</string>
   <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
@@ -347,4 +349,18 @@
   <string name="uninstall">Désinstaller</string>
   <string name="reset">Réinitialiser</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmer</string>
+  <string name="rename_error">ne peut être vide</string>
+  <string name="swarm_description">Ajouter une description</string>
+  <string name="tab_about">À Propos</string>
+  <string name="tab_members">Membres</string>
+  <string name="tab_documetn">Documents</string>
+  <string name="dialogtitle_title">Modifier le titre du Swarm</string>
+  <string name="dialogtitle_description">Modifier la description du Swarm</string>
+  <string name="dialog_hint_title">Titre</string>
+  <string name="dialog_hint_description">Description</string>
+  <string name="picker_title">Choisissez vos contacts</string>
+  <string name="picker_btn">Choisissez vos contacts</string>
+  <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Retirer du Swarm</string>
 </resources>
