@@ -26,26 +26,6 @@ class TrustRequest(
     val from: Uri,
     val timestamp: Long,
     val conversationUri: Uri?,
-    var profile: Single<Profile>? = null
+    val profile: Single<Profile>? = null,
+    val mode: Conversation.Mode
 )
-{
-    var message: String? = null
-    var mode: Conversation.Mode = Conversation.Mode.OneToOne
-
-    constructor(accountId: String, conversationUri: Uri?, info: Map<String, String>) : this(
-        accountId,
-        Uri.fromId(info["from"]!!),
-        info["received"]!!.toLong() * 1000L,
-        conversationUri
-    ) {
-        val title = info["title"]
-        val descr = info["descr"]
-        val avatar = info["avatar"]
-        info["mode"]?.let { m -> mode = Conversation.Mode.values()[m.toInt()] }
-
-        if (!title.isNullOrBlank()) {
-            profile = Single.just(Profile(title, avatar))
-        }
-        message = descr
-    }
-}

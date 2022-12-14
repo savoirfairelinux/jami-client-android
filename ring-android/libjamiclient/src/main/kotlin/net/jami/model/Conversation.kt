@@ -62,13 +62,7 @@ class Conversation : ConversationHistory {
     private val mMode: Subject<Mode>
 
     private val profileSubject: Subject<Single<Profile>> = BehaviorSubject.createDefault(Profile.EMPTY_PROFILE_SINGLE)
-    val profile: Observable<Profile> = profileSubject.switchMapSingle { single -> single }
-    var loadedProfile: Single<Profile>? = null
-        set(profile) {
-            field = profile
-            if  (profile != null)
-                profileSubject.onNext(profile)
-        }
+    val profile: Observable<Profile> = profileSubject.switchMapSingle { it }
 
     // runtime flag set to true if the user is currently viewing this conversation
     private var mVisible = false
@@ -221,12 +215,7 @@ class Conversation : ConversationHistory {
     }
 
     fun setProfile(profile: Single<Profile>) {
-        loadedProfile = profile
-    }
-
-    fun setProfile(profile: Profile?) {
-        if (profile != null)
-            loadedProfile = Single.just(profile)
+        profileSubject.onNext(profile)
     }
 
     fun setMode(mode: Mode) {

@@ -62,9 +62,7 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
         Single.fromCallable { VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)) }
             .flatMap { vcard: VCard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.filesDir) }
 
-    override fun loadVCardProfile(vcard: VCard): Single<Profile> = Single.fromCallable {
-        readData(vcard)
-    }
+    override fun loadVCardProfile(vcard: VCard): Single<Profile> = Companion.loadVCardProfile(vcard)
 
     override fun peerProfileReceived(accountId: String, peerId: String, vcard: File): Single<Profile> =
         VCardUtils.peerProfileReceived(mContext.filesDir, accountId, peerId, vcard)
@@ -94,6 +92,10 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
                 }
                 return account.loadedProfileObservable
             }
+        }
+
+        fun loadVCardProfile(vcard: VCard): Single<Profile> = Single.fromCallable {
+            readData(vcard)
         }
 
         fun readData(vcard: VCard?): Profile = readData(VCardUtils.readData(vcard))

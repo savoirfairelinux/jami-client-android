@@ -222,11 +222,7 @@ class AvatarDrawable : Drawable {
             withName(if (profileName.isNullOrEmpty()) username else profileName)
 
         fun withContact(contact: ContactViewModel?) = if (contact == null) this else
-            withPhoto(if (contact.profile.avatar is Bitmap)
-                contact.profile.avatar as Bitmap
-            else
-                BitmapUtils.base64ToBitmap(contact.profile.avatar as String?)
-            )
+            withPhoto(contact.profile.avatar as? Bitmap?)
                 .withId(contact.contact.primaryNumber)
                 .withPresence(contact.presence)
                 .withOnlineState(contact.contact.isOnline)
@@ -237,10 +233,7 @@ class AvatarDrawable : Drawable {
                 if (!profile.displayName.isNullOrBlank())
                     withName(profile.displayName)
                 if (profile.avatar != null) {
-                    return withPhoto(if (profile.avatar is Bitmap)
-                        profile.avatar as Bitmap
-                    else
-                        BitmapUtils.base64ToBitmap(profile.avatar as String?))
+                    return withPhoto(profile.avatar as? Bitmap?)
                 }
             }
             val bitmaps: MutableList<Bitmap> = ArrayList(contacts.size)
@@ -248,10 +241,7 @@ class AvatarDrawable : Drawable {
             for (contact in contacts) {
                 if (contact.contact.isUser) continue
                 notTheUser++
-                val bitmap = if (profile.avatar is Bitmap)
-                    profile.avatar as Bitmap
-                else
-                    BitmapUtils.base64ToBitmap(profile.avatar as String?)
+                val bitmap = profile.avatar as? Bitmap?
                 if (bitmap != null) {
                     bitmaps.add(bitmap)
                 }

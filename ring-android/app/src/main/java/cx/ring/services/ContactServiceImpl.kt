@@ -356,24 +356,23 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         val profile: Single<Profile> =
             if (contact.isFromSystem) loadSystemContactData(contact)
             else loadVCardContactData(contact, accountId)
-        return profile.onErrorReturn { Profile(null, null) }
+        return profile.onErrorReturn { Profile.EMPTY_PROFILE }
     }
 
     override fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard) {
-        contact.setProfile(VCardServiceImpl.readData(vcard))
+        contact.setProfile(VCardServiceImpl.loadVCardProfile(vcard))
         val filename = contact.primaryNumber + ".vcf"
         VCardUtils.savePeerProfileToDisk(vcard, accountId, filename, mContext.filesDir)
         AvatarFactory.clearCache()
     }
 
-    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> {
-        return Single.fromCallable {
+    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> =
+        Single.fromCallable {
             val vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT))
             val filename = "$uri.vcf"
             VCardUtils.savePeerProfileToDisk(vcard, accountId, filename, mContext.filesDir)
             vcard
         }
-    }
 
     private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> {
         val id = contact.primaryNumber

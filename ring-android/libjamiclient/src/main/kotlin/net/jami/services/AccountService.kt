@@ -302,16 +302,26 @@ class AccountService(
                 }
                 Log.w(TAG, "$accountId loading conversation requests")
                 for (requestData in JamiService.getConversationRequests(account.accountId)) {
-                    /* for ((key, value) in requestData.entries)
+                    try {
+                        /* for ((key, value) in requestData.entries)
                         Log.e(TAG, "Request: $key $value") */
-                    val from = Uri.fromString(requestData["from"]!!)
-                    val conversationId = requestData["id"]
-                    val conversationUri =
-                        if (conversationId.isNullOrEmpty()) null
-                        else Uri(Uri.SWARM_SCHEME, conversationId)
-                    val request = account.getRequest(conversationUri ?: from)
-                    if (request == null || conversationUri != request.from) {
-                        account.addRequest(TrustRequest(account.accountId, conversationUri, requestData))
+                        val from = Uri.fromString(requestData["from"]!!)
+                        val conversationId = requestData["id"]
+                        val conversationUri =
+                            if (conversationId.isNullOrEmpty()) null
+                            else Uri(Uri.SWARM_SCHEME, conversationId)
+                        val request = account.getRequest(conversationUri ?: from)
+                        if (request == null || conversationUri != request.from) {
+                            account.addRequest(TrustRequest(
+                                account.accountId,
+                                from,
+                                requestData["received"]!!.toLong() * 1000L,
+                                conversationUri,
+                                mVCardService.loadConversationProfile(requestData),
+                                requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Error loading request", e)
                     }
                 }
             }
@@ -1016,6 +1026,7 @@ class AccountService(
             mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath))
                 .subscribe({ profile -> contact.setProfile(profile) })
                     { e -> Log.e(TAG, "Error saving contact profile", e) }
+            //contact.setProfile(mVCardService.peerProfileReceived(accountId, peerId, File(vcardPath)))
         }
     }
 
@@ -1154,15 +1165,18 @@ class AccountService(
         val r = UserSearchResult(accountId, query, state)
         r.results = results.map { m ->
             val uri = m["id"]!!
-            val firstName = m["firstName"]
-            val lastName = m["lastName"]
             account.getContactFromCache(uri).apply {
                 synchronized(this) {
                     m["username"]?.let { name ->
                         if (this.username == null)
                             this.username = Single.just(name)
                     }
-                    setProfile(Profile("$firstName $lastName", mVCardService.base64ToBitmap(m["profilePicture"])))
+                    setProfile(Single.fromCallable {
+                        val firstName = m["firstName"]
+                        val lastName = m["lastName"]
+                        val profilePicture = m["profilePicture"]
+                        Profile("$firstName $lastName", mVCardService.base64ToBitmap(profilePicture))
+                    }.cache())
                 }
             }
         }
@@ -1170,9 +1184,9 @@ class AccountService(
     }
 
     private fun getInteraction(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
-        for ((key, value) in message) {
+        /* for ((key, value) in message) {
             Log.w(TAG, "$key -> $value")
-        }
+        } */
         val id = message["id"]!!
         val type = message["type"]!!
         val author = message["author"]!!
@@ -1376,9 +1390,16 @@ class AccountService(
             return
         }
         val conversationUri = if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId)
-        val request = account.getRequest(Uri.fromId(metadata["from"]!!))
+        val from = Uri.fromId(metadata["from"]!!)
+        val request = account.getRequest(from)
         if (request == null || conversationUri != request.conversationUri) {
-            account.addRequest(TrustRequest(account.accountId, conversationUri, metadata))
+            account.addRequest(TrustRequest(
+                account.accountId,
+                from,
+                metadata["received"]!!.toLong() * 1000L,
+                conversationUri,
+                mVCardService.loadConversationProfile(metadata),
+                metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
         }
     }
 
