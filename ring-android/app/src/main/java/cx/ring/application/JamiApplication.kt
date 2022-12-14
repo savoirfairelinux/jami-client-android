@@ -93,7 +93,7 @@ abstract class JamiApplication : Application() {
         }
     }
     abstract val pushToken: String?
-    
+
     private var mBound = false
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, s: IBinder) {
@@ -163,15 +163,14 @@ abstract class JamiApplication : Application() {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun scheduleRefreshJob() {
-        val scheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-        val jobBuilder = JobInfo.Builder(JamiJobService.JOB_ID, ComponentName(this, JamiJobService::class.java))
+        Log.w(TAG, "JobScheduler: scheduling job")
+        getSystemService(JobScheduler::class.java)
+            .schedule(JobInfo.Builder(JamiJobService.JOB_ID, ComponentName(this, JamiJobService::class.java))
                 .setPersisted(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) jobBuilder.setPeriodic(JamiJobService.JOB_INTERVAL, JamiJobService.JOB_FLEX) else jobBuilder.setPeriodic(JamiJobService.JOB_INTERVAL)
-        Log.w(TAG, "JobScheduler: scheduling job")
-        scheduler.schedule(jobBuilder.build())
+                .setPeriodic(JamiJobService.JOB_INTERVAL, JamiJobService.JOB_FLEX)
+                .build())
     }
 
     private fun terminateDaemon() {
@@ -197,7 +196,12 @@ abstract class JamiApplication : Application() {
 
         //DynamicColors.applyToActivitiesIfAvailable(this);
 
-        //RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
+        if (!BuildConfig.DEBUG) {
+            // Set a default exception handler for RxJava.
+            // Most of these errors bubble up here because the original Rx flow was normally disposed, and can be
+            // safely ignored. In some cases this might hide real bugs so we only do that in production.
+            RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
+        }
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()
@@ -217,8 +221,8 @@ abstract class JamiApplication : Application() {
                 AndroidFileUtils.linkOrCopy(defaultRingtone.absolutePath, defaultLink.absolutePath)
             }
         }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
+            .subscribeOn(Schedulers.io())
+            .subscribe()
         setupActivityListener()
     }
 
