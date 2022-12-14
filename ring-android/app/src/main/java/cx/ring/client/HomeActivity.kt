@@ -160,7 +160,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment
+        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
         frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
         supportFragmentManager.addOnBackStackChangedListener {
             frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
@@ -169,7 +169,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
             mBinding!!.frame.isVisible = true
         }
 
-        fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as ConversationFragment?
+        fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as? ConversationFragment?
         if (fConversation != null) {
             Log.w(TAG, "Restore conversation fragment $fConversation")
             conversationBackPressedCallback.isEnabled = true
@@ -180,7 +180,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
-
     }
 
     override fun onDestroy() {

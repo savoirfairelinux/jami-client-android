@@ -777,22 +777,24 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val searchMenuItem = menu.findItem(R.id.conv_search)
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                val binding = binding ?: return false
                 presenter.stopSearch()
-                binding!!.histList.adapter = mAdapter
+                binding.histList.adapter = mAdapter
                 updateListPadding()
                 currentBottomView?.isVisible = true
                 if (animation.isStarted) animation.cancel()
-                animation.setIntValues(binding!!.histList.paddingBottom, currentBottomView!!.height + marginPxTotal)
+                animation.setIntValues(binding.histList.paddingBottom, currentBottomView!!.height + marginPxTotal)
                 animation.start()
                 return true
             }
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                val binding = binding ?: return false
                 mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter)
                 presenter.startSearch()
                 currentBottomView?.isVisible = false
-                binding!!.histList.adapter = mSearchAdapter
+                binding.histList.adapter = mSearchAdapter
                 if (animation.isStarted) animation.cancel()
-                animation.setIntValues(binding!!.histList.paddingBottom, marginPxTotal)
+                animation.setIntValues(binding.histList.paddingBottom, marginPxTotal)
                 animation.start()
                 return true
             }
