@@ -21,11 +21,9 @@ package cx.ring.service
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.Intent
-import android.os.Build
 import android.os.Handler
 import android.text.format.DateUtils
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import cx.ring.application.JamiApplication
 
@@ -36,7 +34,7 @@ class JamiJobService : JobService() {
         try {
             try {
                 ContextCompat.startForegroundService(this, Intent(SyncService.ACTION_START)
-                        .setClass(this, SyncService::class.java))
+                    .setClass(this, SyncService::class.java))
             } catch (e: IllegalStateException) {
                 Log.e(TAG, "Error starting service", e)
             }
@@ -58,11 +56,9 @@ class JamiJobService : JobService() {
     override fun onStopJob(params: JobParameters): Boolean {
         Log.w(TAG, "onStopJob() $params")
         try {
-            //synchronized(this) { notify() }
-            try {
-                startService(Intent(SyncService.ACTION_STOP).setClass(this, SyncService::class.java))
-            } catch (ignored: IllegalStateException) {
-            }
+            startService(Intent(SyncService.ACTION_STOP)
+                .setClass(this, SyncService::class.java))
+        } catch (ignored: IllegalStateException) {
         } catch (e: Exception) {
             Log.e(TAG, "onStopJob failed", e)
         }
@@ -71,8 +67,8 @@ class JamiJobService : JobService() {
 
     companion object {
         private val TAG = JamiJobService::class.java.name
-        const val JOB_INTERVAL = 6 * DateUtils.HOUR_IN_MILLIS
-        const val JOB_FLEX = 30 * DateUtils.MINUTE_IN_MILLIS
+        const val JOB_INTERVAL = 12 * DateUtils.HOUR_IN_MILLIS
+        const val JOB_FLEX = 60 * DateUtils.MINUTE_IN_MILLIS
         const val JOB_DURATION = 10 * DateUtils.SECOND_IN_MILLIS
         const val JOB_ID = 3905
     }
