@@ -134,7 +134,7 @@ class CallPresenter @Inject constructor(
         incomingIsFullIntent = actionViewOnly
         val callObservable = mCallService.getConfUpdates(confId)
             .observeOn(mUiScheduler)
-            .share()
+            .replay(1).refCount()
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
         if (!actionViewOnly) {
@@ -181,9 +181,9 @@ class CallPresenter @Inject constructor(
      */
     private fun showConference(conference: Observable<Conference>){
         val conference = conference.distinctUntilChanged()
-
         mCompositeDisposable.add(conference
-            .switchMap { obj: Conference -> Observable.combineLatest(obj.participantInfo, mPendingSubject,
+            .switchMap { obj: Conference ->
+                Observable.combineLatest(obj.participantInfo, mPendingSubject,
                 if (obj.isConference)
                     ContactViewModel.EMPTY_VM
                 else
