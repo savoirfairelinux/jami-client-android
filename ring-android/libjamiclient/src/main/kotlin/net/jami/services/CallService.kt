@@ -158,9 +158,7 @@ class CallService(
 
     private class ConferenceEntity internal constructor(var conference: Conference)
 
-    fun getConfUpdates(call: Call): Observable<Conference> {
-        return getConfUpdates(getConference(call))
-    }
+    fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
 
     private fun getConfUpdates(conference: Conference): Observable<Conference> {
         Log.w(TAG, "getConfUpdates " + conference.id)
