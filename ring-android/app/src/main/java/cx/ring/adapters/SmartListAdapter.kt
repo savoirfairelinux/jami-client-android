@@ -45,11 +45,11 @@ class SmartListAdapter(
     private var convHeaderIndex: Int = -1
     private var conversations = setItems(conversations ?: ConversationFacade.ConversationList())
 
-    fun setItems(list: ConversationFacade.ConversationList): ConversationFacade.ConversationList {
+    private fun setItems(list: ConversationFacade.ConversationList): ConversationFacade.ConversationList {
         itemCount = list.getCombinedSize()
-        if (list.publicDirectory.isNotEmpty()) {
+        if (list.searchResult.result.isNotEmpty()) {
             searchHeaderIndex = 0
-            convHeaderIndex = if (list.conversations.isEmpty()) -1 else list.publicDirectory.size + 1
+            convHeaderIndex = if (list.conversations.isEmpty()) -1 else list.searchResult.result.size + 1
         } else {
             searchHeaderIndex = -1
             convHeaderIndex = -1

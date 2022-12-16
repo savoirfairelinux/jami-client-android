@@ -26,8 +26,6 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.PublishSubject
-import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.*
 import net.jami.model.Account.ContactLocationEntry
 import net.jami.model.Call.CallStatus
@@ -325,57 +323,63 @@ class ConversationFacade(
         }
     }*/
 
-    private fun getConversationSearchResults(account: Account, query: String): Single<List<Conversation>> {
+    data class SearchResult(val query: String, val result: List<Conversation>) {
+        companion object {
+            val EMPTY_RESULT = SearchResult("", emptyList())
+        }
+    }
+
+    private fun getConversationSearchResults(account: Account, query: String): Single<SearchResult> {
         val uri = Uri.fromString(query)
         return if (uri.isEmpty) {
-            Single.just(emptyList())
+            Single.just(SearchResult.EMPTY_RESULT)
         } else if (account.isSip || uri.isHexId) {
-            Single.just(listOf(account.getByUri(uri)!!))
+            Single.just(SearchResult(query, listOf(account.getByUri(uri)!!)))
         } else if (account.canSearch() && !query.contains("@")) {
             mAccountService.searchUser(account.accountId, query)
-                .map { results -> results.results!!.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! } }
+                .map { results -> SearchResult(query, results.results!!.map { contact -> account.getByUri(contact.conversationUri.blockingFirst())!! }) }
         } else {
             mAccountService.findRegistrationByName(account.accountId, "", query)
                 .map { result: RegisteredName ->
                     if (result.state == 0)
-                        listOf(account.getByKey(result.address!!).apply {
+                        SearchResult(query, listOf(account.getByKey(result.address!!).apply {
                             contact?.let { c -> synchronized(c) {
                                 if (c.username == null)
                                     c.username = Single.just(result.name)
                             }}
-                        })
+                        }))
                     else
-                        emptyList()
+                        SearchResult.EMPTY_RESULT
                 }
         }
     }
 
-    fun getConversationSearchResults(account: Account, query: Observable<String>): Observable<List<Conversation>> =
+    fun getConversationSearchResults(account: Account, query: Observable<String>): Observable<SearchResult> =
         query.switchMapSingle { q: String ->
             if (q.isEmpty())
-                Single.just(emptyList())
+                Single.just(SearchResult.EMPTY_RESULT)
             else getConversationSearchResults(account, q)
         }
 
-    data class ConversationList(val conversations: List<Conversation> = emptyList(), val publicDirectory: List<Conversation> = emptyList(), val query: String = "") {
-        fun isEmpty(): Boolean = conversations.isEmpty() && publicDirectory.isEmpty()
+    data class ConversationList(val conversations: List<Conversation> = emptyList(), val searchResult: SearchResult = SearchResult.EMPTY_RESULT, val latestQuery: String = "") {
+        fun isEmpty(): Boolean = conversations.isEmpty() && searchResult.result.isEmpty()
 
         fun getCombinedSize(): Int {
-            if (publicDirectory.isEmpty()) return conversations.size
-            if (conversations.isEmpty()) return publicDirectory.size + 1
-            return conversations.size + publicDirectory.size + 2
+            if (searchResult.result.isEmpty()) return conversations.size
+            if (conversations.isEmpty()) return searchResult.result.size + 1
+            return conversations.size + searchResult.result.size + 2
         }
 
         operator fun get(index: Int): Conversation? {
-            return if (publicDirectory.isEmpty()) conversations.getOrNull(index)
-            else if (conversations.isEmpty() || index < publicDirectory.size + 1) publicDirectory.getOrNull(index - 1)
-            else conversations.getOrNull(index - publicDirectory.size - 2)
+            return if (searchResult.result.isEmpty()) conversations.getOrNull(index)
+            else if (conversations.isEmpty() || index < searchResult.result.size + 1) searchResult.result.getOrNull(index - 1)
+            else conversations.getOrNull(index - searchResult.result.size - 2)
         }
 
         fun getHeader(index: Int): ConversationItemViewModel.Title {
-            return if (publicDirectory.isEmpty()) ConversationItemViewModel.Title.None
+            return if (searchResult.result.isEmpty()) ConversationItemViewModel.Title.None
             else if (index == 0) ConversationItemViewModel.Title.PublicDirectory
-            else if (conversations.isNotEmpty() && index == publicDirectory.size + 1) ConversationItemViewModel.Title.Conversations
+            else if (conversations.isNotEmpty() && index == searchResult.result.size + 1) ConversationItemViewModel.Title.Conversations
             else ConversationItemViewModel.Title.None
         }
     }
@@ -400,13 +404,13 @@ class ConversationFacade(
                 getConversationSearchResults(account, query),
                 query
             ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }
-        }.flatMapSingle { list ->
-            if (list.query.isNotEmpty() && list.conversations.isNotEmpty()) {
-                val lq = list.query.lowercase()
+        }.switchMapSingle { list ->
+            if (list.latestQuery.isNotBlank() && list.conversations.isNotEmpty()) {
+                val lq = list.latestQuery.lowercase()
                 Maybe.concatEager(list.conversations.map { c -> mContactService.getLoadedConversation(c)
                     .filter { it.matches(lq) }.map { c }
-                }).toList().map { newList -> ConversationList(newList, list.publicDirectory, list.query) }
-            } else Single.just(list)
+                }).toList().map { newList -> ConversationList(newList, list.searchResult, lq) }
+            } else Single.just(ConversationList(list.conversations))
         }
 
     /**

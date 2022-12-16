@@ -57,7 +57,7 @@ class SmartListPresenter @Inject constructor(
             .subscribe { list ->
                 val v = this.view ?: return@subscribe
                 v.setLoading(false)
-                if (list.isEmpty()) {
+                if (list.conversations.isEmpty()) {
                     v.hideList()
                     v.displayNoConversationMessage()
                 } else {

@@ -101,7 +101,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         super.onStart()
         if (mHomeFragment == null)
             mHomeFragment =
-                    activity!!.supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment?
+                    requireActivity().supportFragmentManager.findFragmentById(R.id.home_fragment) as HomeFragment?
     }
 
     override fun setLoading(loading: Boolean) {

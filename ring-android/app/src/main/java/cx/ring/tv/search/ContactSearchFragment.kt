@@ -91,7 +91,7 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
 
     override fun displayResults(contacts: ConversationFacade.ConversationList, conversationFacade: ConversationFacade) {
         var scrollToTop = false
-        if (contacts.publicDirectory.isEmpty()) {
+        if (contacts.searchResult.result.isEmpty()) {
             if (directoryRow != null) {
                 mRowsAdapter.remove(directoryRow)
                 directoryRow = null
@@ -99,12 +99,12 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         } else {
             if (directoryRow == null) {
                 val adapter = ArrayObjectAdapter(CardPresenterSelector(requireContext(), conversationFacade))
-                adapter.addAll(0, contacts.publicDirectory.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) })
+                adapter.addAll(0, contacts.searchResult.result.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) })
                 directoryRow = ListRow(HeaderItem(getString(R.string.search_results)), adapter)
                 mRowsAdapter.add(0, directoryRow)
             } else {
                 (directoryRow!!.adapter as ArrayObjectAdapter).setItems(
-                    contacts.publicDirectory.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) }, diff)
+                    contacts.searchResult.result.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) }, diff)
             }
             scrollToTop = true
         }
