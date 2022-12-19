@@ -175,6 +175,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выберите номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
+  <string name="conversation_action_unblock_this">Разблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
   <string name="conversation_open_file_error">Нет приложение. которое способно открыть файл с таким типом. </string>
   <string name="clip_contact_uri">Контактный адрес</string>
@@ -340,4 +341,8 @@
   <string name="uninstall">Деинсталлировать</string>
   <string name="reset">Сброс</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Подтвердить</string>
+  <string name="tab_about">О продукте</string>
+  <string name="tab_members">Участники</string>
+  <string name="dialog_hint_title">Заголовок</string>
 </resources>

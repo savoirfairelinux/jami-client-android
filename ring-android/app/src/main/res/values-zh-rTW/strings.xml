@@ -173,6 +173,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s 複製到剪貼簿</string>
   <string name="conversation_action_select_peer_number">選擇號碼</string>
   <string name="conversation_action_block_this">阻擋連絡人</string>
+  <string name="conversation_action_unblock_this">取消封鎖聯絡人</string>
   <string name="conversation_action_go_to_call">回到進行中的通話</string>
   <string name="conversation_open_file_error">沒有已安裝的應用程式可以開啟這個檔案類型。</string>
   <string name="clip_contact_uri">聯絡人地址</string>
@@ -186,6 +187,8 @@
   <string name="conversation_preference_color">對話色彩</string>
   <string name="conversation_preference_emoji">對話表情符號</string>
   <string name="conversation_type_contact">Jami 聯絡人</string>
+  <string name="conversation_type_private">私人群组</string>
+  <string name="conversation_type_group">团队 Swarm</string>
   <string name="conversation_contact_invited">%1$s 已被封鎖</string>
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
@@ -253,6 +256,7 @@
   <string name="no_contact_request">未有送出的聯絡人請求</string>
   <string name="conversation_placeholder">您尚未有對話</string>
   <string name="contact_request_sent">聯絡人請求已傳送</string>
+  <string name="start_conversation">开始新对话</string>
   <string name="search_results">搜尋結果</string>
   <string name="tv_contact_row_header">聯絡人</string>
   <string name="gallery_error_title">找不到相簿應用程式</string>
@@ -344,4 +348,16 @@
   <string name="uninstall">解除安裝</string>
   <string name="reset">重設</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">確認</string>
+  <string name="rename_error">不能为空</string>
+  <string name="swarm_description">添加描述</string>
+  <string name="tab_about">關於</string>
+  <string name="tab_members">成員</string>
+  <string name="tab_documetn">文档</string>
+  <string name="dialogtitle_title">编辑 Swarm 标题</string>
+  <string name="dialogtitle_description">编辑 Swarm 描述</string>
+  <string name="dialog_hint_title">標題</string>
+  <string name="dialog_hint_description">描述</string>
+  <string name="picker_title">选择联系人</string>
+  <string name="picker_btn">选择联系人</string>
 </resources>

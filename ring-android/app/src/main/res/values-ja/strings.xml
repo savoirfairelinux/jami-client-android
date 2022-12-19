@@ -172,6 +172,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">連絡先をブロック</string>
+  <string name="conversation_action_unblock_this">連絡先の拒否を解除</string>
   <string name="conversation_action_go_to_call">通話に戻る</string>
   <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
   <string name="clip_contact_uri">連絡先</string>
@@ -333,4 +334,8 @@
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">確認</string>
+  <string name="tab_about">アプリについて</string>
+  <string name="tab_members">要員</string>
+  <string name="dialog_hint_title">タイトル</string>
 </resources>

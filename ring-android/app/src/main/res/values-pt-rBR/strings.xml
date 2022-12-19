@@ -175,6 +175,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para área de transferência</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contato</string>
+  <string name="conversation_action_unblock_this">Desbloquear o contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
   <string name="conversation_open_file_error">Não há aplicativo instalado capaz de abrir este tipo de arquivo.</string>
   <string name="clip_contact_uri">Endereço do contato</string>
@@ -339,4 +340,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Resetar</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="tab_about">Sobre</string>
+  <string name="tab_members">Membros</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

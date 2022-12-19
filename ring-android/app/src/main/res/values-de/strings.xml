@@ -174,6 +174,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
+  <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
@@ -187,6 +188,8 @@
   <string name="conversation_preference_color">Farbe der Unterhaltung</string>
   <string name="conversation_preference_emoji">Emoji der Unterhaltung</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>
+  <string name="conversation_type_private">Privater Schwarm</string>
+  <string name="conversation_type_group">Schwarmgruppe</string>
   <string name="conversation_contact_invited">%1$s wurde eingeladen</string>
   <string name="conversation_contact_added">%1$s ist beigetreten</string>
   <string name="conversation_contact_left">%1$s hat die Unterhaltung verlassen</string>
@@ -346,4 +349,18 @@
   <string name="uninstall">Deinstallieren</string>
   <string name="reset">Zurücksetzen</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bestätigen</string>
+  <string name="rename_error">kann nicht leer sein</string>
+  <string name="swarm_description">Eine Beschreibung hinzufügen</string>
+  <string name="tab_about">Über</string>
+  <string name="tab_members">Mitglieder</string>
+  <string name="tab_documetn">Dokumente</string>
+  <string name="dialogtitle_title">Schwarmtitel bearbeiten</string>
+  <string name="dialogtitle_description">Schwarmbeschreibung bearbeiten</string>
+  <string name="dialog_hint_title">Titel</string>
+  <string name="dialog_hint_description">Beschreibung</string>
+  <string name="picker_title">Kontakte auswählen</string>
+  <string name="picker_btn">Kontakte auswählen</string>
+  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Aus dem Schwarm entfernen</string>
 </resources>

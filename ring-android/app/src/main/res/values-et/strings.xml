@@ -27,6 +27,7 @@
   <!--Conversation-->
   <string name="conversation_action_history_clear">Kustuta ajalugu</string>
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
+  <string name="conversation_action_unblock_this">Eemalda kontakti blokeering</string>
   <!--Contacts-->
   <string name="wizard_back">Tagasi</string>
   <!--Account Summary-->

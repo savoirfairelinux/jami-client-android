@@ -173,6 +173,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopioitu leikepöydälle</string>
   <string name="conversation_action_select_peer_number">Valitse numero</string>
   <string name="conversation_action_block_this">Estä henkilö</string>
+  <string name="conversation_action_unblock_this">Poista kontaktin esto</string>
   <string name="conversation_action_go_to_call">Palaa jatkuvaan puheluun</string>
   <string name="conversation_open_file_error">Laitteessa ei ole sovellusta, joka pystyisi avaamaan tämän tiedoston.</string>
   <string name="clip_contact_uri">Yhteystieto</string>
@@ -337,4 +338,8 @@
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Vahvista</string>
+  <string name="tab_about">Tietoa</string>
+  <string name="tab_members">Jäsenet</string>
+  <string name="dialog_hint_title">Otsikko</string>
 </resources>

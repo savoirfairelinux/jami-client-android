@@ -175,6 +175,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
+  <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
   <string name="conversation_open_file_error">Nie ma zainstalowanej aplikacji zdolnej otworzyć ten plik.</string>
   <string name="clip_contact_uri">Kontakty</string>
@@ -337,4 +338,8 @@
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potwierdź</string>
+  <string name="tab_about">O programie</string>
+  <string name="tab_members">Użytkownicy</string>
+  <string name="dialog_hint_title">Tytuł</string>
 </resources>

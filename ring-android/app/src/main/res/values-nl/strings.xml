@@ -166,6 +166,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
+  <string name="conversation_action_unblock_this">Contact deblokkeren</string>
   <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
   <string name="conversation_open_file_error">Er is geen toepassing geïnstalleerd om dit bestandstype te openen.</string>
   <string name="clip_contact_uri">Contactadres</string>
@@ -309,4 +310,7 @@
   <string name="bottomSheet_hangup_btn">Oproep beëindigen</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bevestigen</string>
+  <string name="tab_about">Over</string>
+  <string name="dialog_hint_title">Titel</string>
 </resources>

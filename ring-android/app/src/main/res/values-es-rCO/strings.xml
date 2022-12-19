@@ -170,6 +170,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado al portapapeles</string>
   <string name="conversation_action_select_peer_number">Seleccioná un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
+  <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Volver a la llamada en curso</string>
   <string name="conversation_open_file_error">No hay ninguna aplicación que pueda abrir este tipo de archivo.</string>
   <string name="clip_contact_uri">Dirección de contacto</string>
@@ -340,4 +341,10 @@
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Reiniciar</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Añadir descripción</string>
+  <string name="tab_about">Acerca de</string>
+  <string name="tab_members">Miembros</string>
+  <string name="tab_documetn">Documentos</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

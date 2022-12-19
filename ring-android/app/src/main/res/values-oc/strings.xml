@@ -53,6 +53,7 @@
   <!--Conversation-->
   <string name="conversation_action_history_clear">Escafar l’istoric</string>
   <string name="conversation_action_block_this">Blocar contacte</string>
+  <string name="conversation_action_unblock_this">Desblocar contacte</string>
   <!--Contacts-->
   <string name="prompt_new_password">Senhal novèl</string>
   <string name="account_create_title">Crear un compte Jami</string>
@@ -97,4 +98,5 @@
   <string name="bottomSheet_plugins_btn">Extensions</string>
   <string name="bottomSheet_add_participants_btn">Ajustar</string>
   <!--Swarm Detail-->
+  <string name="tab_about">A prepaus</string>
 </resources>

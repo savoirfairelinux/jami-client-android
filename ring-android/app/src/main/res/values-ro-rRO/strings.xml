@@ -175,6 +175,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat în notițe</string>
   <string name="conversation_action_select_peer_number">Alege un număr</string>
   <string name="conversation_action_block_this">Blochează contactul</string>
+  <string name="conversation_action_unblock_this">Deblochează contactul</string>
   <string name="conversation_action_go_to_call">Revino la apelul în curs</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
@@ -188,6 +189,8 @@
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Grup privat</string>
+  <string name="conversation_type_group">Grup</string>
   <string name="conversation_contact_invited">%1$s a fost invitat</string>
   <string name="conversation_contact_added">%1$s s-a alăturat</string>
   <string name="conversation_contact_left">%1$s a ieșit</string>
@@ -347,4 +350,18 @@
   <string name="uninstall">Dezinstalează</string>
   <string name="reset">Restabilește</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmă</string>
+  <string name="rename_error">nu poate fi gol</string>
+  <string name="swarm_description">Adaugă o descriere</string>
+  <string name="tab_about">Despre</string>
+  <string name="tab_members">Membri</string>
+  <string name="tab_documetn">Documente</string>
+  <string name="dialogtitle_title">Modifică titlul grupului</string>
+  <string name="dialogtitle_description">Modifică descrierea grupului</string>
+  <string name="dialog_hint_title">Titlu</string>
+  <string name="dialog_hint_description">Descriere</string>
+  <string name="picker_title">Alege contacte</string>
+  <string name="picker_btn">Alege contacte</string>
+  <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Scoate din grup</string>
 </resources>

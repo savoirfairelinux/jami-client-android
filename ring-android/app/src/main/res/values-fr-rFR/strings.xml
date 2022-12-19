@@ -175,6 +175,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s a été copié dans le presse-papier</string>
   <string name="conversation_action_select_peer_number">Choisir un numéro </string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
+  <string name="conversation_action_unblock_this">Débloquer un contact</string>
   <string name="conversation_action_go_to_call">Revenir à l\'appel en cours</string>
   <string name="conversation_open_file_error">Aucun application capable d\'ouvrir ce type de fichier n\'a été trouvée.</string>
   <string name="clip_contact_uri">Adresse de contact</string>
@@ -188,6 +189,8 @@
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
+  <string name="conversation_type_private">Swarm privé</string>
+  <string name="conversation_type_group">Swarm</string>
   <string name="conversation_contact_invited">%1$sa été invité</string>
   <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
@@ -347,4 +350,18 @@
   <string name="uninstall">Désinstaller</string>
   <string name="reset">Réinitialiser</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmer</string>
+  <string name="rename_error">ne peut être vide</string>
+  <string name="swarm_description">Ajouter une description</string>
+  <string name="tab_about">A propos </string>
+  <string name="tab_members">Membres</string>
+  <string name="tab_documetn">Documents</string>
+  <string name="dialogtitle_title">Modifier le titre du Swarm</string>
+  <string name="dialogtitle_description">Modifier la description du Swarm</string>
+  <string name="dialog_hint_title">Titre</string>
+  <string name="dialog_hint_description">Description</string>
+  <string name="picker_title">Choisissez vos contacts</string>
+  <string name="picker_btn">Choisissez vos contacts</string>
+  <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Retirer du Swarm</string>
 </resources>

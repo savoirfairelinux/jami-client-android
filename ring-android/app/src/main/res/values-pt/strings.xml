@@ -174,6 +174,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
+  <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
   <string name="conversation_open_file_error">Não existe nenhuma aplicação instalada capaz de abrir este tipo de ficheiro.</string>
   <string name="clip_contact_uri">Endereço do contacto</string>
@@ -338,4 +339,8 @@
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Resetar</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="tab_about">Sobre</string>
+  <string name="tab_members">Membros</string>
+  <string name="dialog_hint_title">Título</string>
 </resources>

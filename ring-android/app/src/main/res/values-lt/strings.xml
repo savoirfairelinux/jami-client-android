@@ -129,6 +129,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
+  <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
@@ -237,4 +238,7 @@
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Patvirtinti</string>
+  <string name="tab_about">Apie</string>
+  <string name="dialog_hint_title">Antraštė</string>
 </resources>

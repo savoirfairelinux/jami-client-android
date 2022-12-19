@@ -175,6 +175,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiato negli appunti</string>
   <string name="conversation_action_select_peer_number">Scegli un numero</string>
   <string name="conversation_action_block_this">Blocca contatto</string>
+  <string name="conversation_action_unblock_this">Sblocca il contatto</string>
   <string name="conversation_action_go_to_call">Torna alla chiamata in corso</string>
   <string name="conversation_open_file_error">Non c\'è nessuna applicazione installata in grado di aprire questo tipo di file.</string>
   <string name="clip_contact_uri">Indirizzo contatto</string>
@@ -188,6 +189,8 @@
   <string name="conversation_preference_color">Colore della conversazione</string>
   <string name="conversation_preference_emoji">Emoji conversazione</string>
   <string name="conversation_type_contact">Contatto Jami</string>
+  <string name="conversation_type_private">Gruppo privato</string>
+  <string name="conversation_type_group">Gruppo</string>
   <string name="conversation_contact_invited">%1$s è stato invitato</string>
   <string name="conversation_contact_added">%1$s si è unito</string>
   <string name="conversation_contact_left">%1$s è uscito</string>
@@ -347,4 +350,18 @@
   <string name="uninstall">Disinstalla</string>
   <string name="reset">Ripristina</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Conferma</string>
+  <string name="rename_error">non può essere vuoto</string>
+  <string name="swarm_description">Aggiungi una descrizione</string>
+  <string name="tab_about">Info</string>
+  <string name="tab_members">Membri</string>
+  <string name="tab_documetn">Documenti</string>
+  <string name="dialogtitle_title">Modifica il titolo del gruppo</string>
+  <string name="dialogtitle_description">Modifica la descrizione del gruppo</string>
+  <string name="dialog_hint_title">Titolo</string>
+  <string name="dialog_hint_description">Descrizione</string>
+  <string name="picker_title">Seleziona contatti</string>
+  <string name="picker_btn">Seleziona contatti</string>
+  <string name="bottomsheet_contact">Contatta Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Rimuovi dal gruppo</string>
 </resources>

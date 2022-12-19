@@ -152,6 +152,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s skopírované do schránky</string>
   <string name="conversation_action_select_peer_number">Zvoliť číslo</string>
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
+  <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
   <string name="conversation_action_go_to_call">Vrátiť sa k prebiehajúcemu hovoru</string>
   <string name="conversation_open_file_error">Nie je nainštalovaná žiadna aplikácia schopná otvoriť tento typ súboru.</string>
   <string name="clip_contact_uri">Adresa kontaktu</string>
@@ -273,4 +274,7 @@
   <string name="bottomSheet_hangup_btn">Ukončiť hovor</string>
   <string name="bottomSheet_raiseHand_btn">Zdvihnite ruku</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Potvrdiť</string>
+  <string name="tab_about">O programe</string>
+  <string name="dialog_hint_title">Nadpis</string>
 </resources>

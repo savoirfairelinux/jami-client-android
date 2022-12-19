@@ -173,6 +173,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopierat till urklipp</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
+  <string name="conversation_action_unblock_this">Avblockera kontakt</string>
   <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
   <string name="conversation_open_file_error">Det finns inget installerat program som kan öppna den här filtypen.</string>
   <string name="clip_contact_uri">Kontaktadress</string>
@@ -337,4 +338,8 @@
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bekräfta</string>
+  <string name="tab_about">Om</string>
+  <string name="tab_members">Medlemmar</string>
+  <string name="dialog_hint_title">Titel</string>
 </resources>

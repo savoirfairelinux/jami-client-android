@@ -328,4 +328,5 @@
   <string name="bottomSheet_sound_output_btn">Zvuci</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
   <!--Swarm Detail-->
+  <string name="tab_members">Članovi</string>
 </resources>

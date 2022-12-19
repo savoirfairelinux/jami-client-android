@@ -33,6 +33,7 @@
   <string name="menu_item_accounts">Xestionar contas</string>
   <string name="menu_item_account">Xestionar conta</string>
   <string name="menu_item_settings">Axustes</string>
+  <string name="menu_item_advanced_settings">Axustes Avanzados</string>
   <string name="menu_item_account_settings">Axustes da Conta</string>
   <string name="menu_item_plugin_list">Axustes dos plugins</string>
   <string name="menu_item_share">Compartir a miña conta</string>
@@ -173,6 +174,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado ao portapapeis</string>
   <string name="conversation_action_select_peer_number">Escolle un número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
+  <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar a chamada en curso</string>
   <string name="conversation_open_file_error">Non hai aplicacións instaladas que poidan abrir este tipo de ficheiro.</string>
   <string name="clip_contact_uri">Enderezo do contacto</string>
@@ -186,6 +188,8 @@
   <string name="conversation_preference_color">Cor da conversa</string>
   <string name="conversation_preference_emoji">Emojis da conversa</string>
   <string name="conversation_type_contact">Contacto Jami</string>
+  <string name="conversation_type_private">Swarm privado</string>
+  <string name="conversation_type_group">Swarm en grupo</string>
   <string name="conversation_contact_invited">Convidouse a %1$s</string>
   <string name="conversation_contact_added">%1$s uníuse</string>
   <string name="conversation_contact_left">%1$s saíu</string>
@@ -253,6 +257,7 @@
   <string name="no_contact_request">Non se enviaron solicitudes de contacto</string>
   <string name="conversation_placeholder">Aínda non tes conversas</string>
   <string name="contact_request_sent">Solicitude de contacto enviada</string>
+  <string name="start_conversation">Iniciar unha conversa</string>
   <string name="search_results">Resultados da busca</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">Non se atopa app Galería</string>
@@ -344,4 +349,16 @@
   <string name="uninstall">Desinstalar</string>
   <string name="reset">Restablecer</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Confirmar</string>
+  <string name="rename_error">non pode estar baleiro</string>
+  <string name="swarm_description">Engadir descrición</string>
+  <string name="tab_about">Acerca de</string>
+  <string name="tab_members">Membresía</string>
+  <string name="tab_documetn">Documentos</string>
+  <string name="dialogtitle_title">Editar título do Swarm</string>
+  <string name="dialogtitle_description">Editar descrición do Swarm</string>
+  <string name="dialog_hint_title">Título</string>
+  <string name="dialog_hint_description">Descrición</string>
+  <string name="picker_title">Elexir contactos</string>
+  <string name="picker_btn">Elexir conctactos</string>
 </resources>
