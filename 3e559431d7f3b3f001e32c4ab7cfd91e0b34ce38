@@ -22,6 +22,30 @@
       },
       "revId": "3e559431d7f3b3f001e32c4ab7cfd91e0b34ce38",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c20b12_fa44858a",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/BluetoothWrapper.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2022-12-20T22:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32778f8e_dc3b3c7e",
+      "range": {
+        "startLine": 140,
+        "startChar": 38,
+        "endLine": 140,
+        "endChar": 50
+      },
+      "revId": "3e559431d7f3b3f001e32c4ab7cfd91e0b34ce38",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
