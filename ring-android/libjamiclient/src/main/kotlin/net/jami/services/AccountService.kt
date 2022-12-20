@@ -947,7 +947,7 @@ class AccountService(
      * Reverse looks up the address in the blockchain to find the name
      */
     fun lookupAddress(account: String, nameserver: String, address: String) {
-        Log.w(TAG, "lookupAddress $address")
+        //Log.w(TAG, "lookupAddress $address")
         mExecutor.execute { JamiService.lookupAddress(account, nameserver, address) }
     }
 
