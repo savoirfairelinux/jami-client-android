@@ -19,10 +19,12 @@
  */
 package cx.ring.client
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -46,6 +48,7 @@ import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
 import cx.ring.account.AccountWizardActivity
+import cx.ring.account.ProfileCreationFragment
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ContactPickerFragment
@@ -300,18 +303,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
             }
             .subscribe(this::setShareShortcuts)
             { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
-        /* val newOrientation = resources.configuration.orientation
-        if (mOrientation != newOrientation) {
-            mOrientation = newOrientation
-            // Remove ConversationFragment that might have been restored after an orientation change
-            if (fConversation != null) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .remove(fConversation!!)
-                    .commitNow()
-                fConversation = null
-            }
-        } */
     }
 
     override fun onStop() {
@@ -320,7 +311,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         mDisposable.clear()
     }
 
-    public fun toggleConversationVisibility(show: Boolean) {
+    fun toggleConversationVisibility(show: Boolean) {
         //mBinding!!.conversation.isVisible = show
         if (fConversation == null)
             return

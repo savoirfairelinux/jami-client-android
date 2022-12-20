@@ -26,23 +26,18 @@ import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.bluetooth.BluetoothProfile
-import android.bluetooth.BluetoothClass
+import android.bluetooth.BluetoothManager
 import android.content.IntentFilter
 import android.bluetooth.BluetoothProfile.ServiceListener
 import android.content.Context
 import android.util.Log
 import java.lang.Exception
-import java.lang.RuntimeException
 import kotlin.jvm.Synchronized
 
 class BluetoothWrapper(private val mContext: Context, private val btChangesListener: BluetoothChangeListener) {
-    private val audioManager: AudioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    private val bluetoothAdapter: BluetoothAdapter? = try {
-        BluetoothAdapter.getDefaultAdapter()
-    } catch (e: RuntimeException) {
-        Log.w(TAG, "Cant get default bluetooth adapter ", e)
-        null
-    }
+    private val audioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val btManager = mContext.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?
+    private val bluetoothAdapter: BluetoothAdapter? = btManager?.adapter
     private var isBluetoothConnecting = false
     private var isBluetoothConnected = false
     private var headsetAdapter: BluetoothHeadset? = null
@@ -51,6 +46,7 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
 
     private val mHeadsetProfileReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
+            Log.w(TAG, "BluetoothHeadset.onReceive $intent")
             val action = intent.action
             try {
                 if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED == action) {
@@ -93,13 +89,10 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
                     btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_CONNECTED)
                 } else if (status == AudioManager.SCO_AUDIO_STATE_DISCONNECTED) {
                     Log.d(TAG, "BT SCO state changed : DISCONNECTED")
-                    val wasConnected = isBluetoothConnected
                     audioManager.isBluetoothScoOn = false
                     isBluetoothConnecting = false
                     isBluetoothConnected = false
-                    if (wasConnected) {
-                        btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
-                    }
+                    btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
                 } else {
                     Log.d(TAG, "BT SCO state changed : $status")
                 }
@@ -107,14 +100,16 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
         }
     }
     val isBTHeadsetConnected: Boolean
-        get() = connectedDevices?.isEmpty() ?: false
+        get() = canBluetooth()//connectedDevices?.isEmpty() ?: false
 
     fun canBluetooth(): Boolean {
         // Detect if any bluetooth a device is available for call
         try {
             if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled || !audioManager.isBluetoothScoAvailableOffCall) {
+                Log.w(TAG, "canBluetooth: false")
                 return false
             }
+            Log.w(TAG, "canBluetooth: true")
             return true
         } catch (e: SecurityException) {
             Log.w(TAG, "Can't get bluetooth status " + e.message)
@@ -124,12 +119,12 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
 
     fun setBluetoothOn(on: Boolean) {
         targetBt = on
-        if (on && isBluetoothConnecting || on && isBluetoothConnected) {
+        if (on && (isBluetoothConnecting || isBluetoothConnected)) {
             return
         }
-        /*Log.d(TAG, "setBluetoothOn: $on");
-        Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn);
-        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn);*/
+        Log.d(TAG, "setBluetoothOn: $on")
+        Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn)
+        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn)
         try {
             if (on) {
                 isBluetoothConnecting = true
@@ -141,6 +136,8 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
             Log.d(TAG, "Error switching bluetooth " + e.message)
         }
     }
+
+    fun isBluetoothOn() = targetBt && audioManager.isBluetoothScoOn
 
     private fun registerUpdates() {
         Log.d(TAG, "registerScoUpdate: Register BT receivers")

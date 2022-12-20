@@ -152,8 +152,7 @@ class HardwareServiceImpl(
                     if (incomingCall) {
                         // ringtone for incoming calls
                         mAudioManager.mode = AudioManager.MODE_RINGTONE
-                        setAudioRouting(isOngoingVideo && !(mBluetoothWrapper?.canBluetooth() == true && mBluetoothWrapper?.isBTHeadsetConnected == true))
-                        //mShouldSpeakerphone = isOngoingVideo
+                        setAudioRouting(true)
                     } else setAudioRouting(isOngoingVideo)
                 }
                 CallStatus.CURRENT -> {
@@ -209,6 +208,7 @@ class HardwareServiceImpl(
     private fun setAudioRouting(requestSpeakerOn: Boolean) {
         // prioritize bluetooth by checking for bluetooth device first
         val bt = mBluetoothWrapper
+        Log.w(TAG, "setAudioRouting requestSpeakerOn:$requestSpeakerOn isBTHeadsetConnected:${bt?.isBTHeadsetConnected} isWiredHeadsetOn:${mAudioManager.isWiredHeadsetOn}")
         if (bt != null && bt.canBluetooth() && bt.isBTHeadsetConnected) {
             routeToBTHeadset()
         } else if (!mAudioManager.isWiredHeadsetOn && mHasSpeakerPhone && requestSpeakerOn) {
@@ -219,21 +219,18 @@ class HardwareServiceImpl(
     }
 
     private fun hasSpeakerphone(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Check FEATURE_AUDIO_OUTPUT to guard against false positives.
-            val packageManager = context.packageManager
-            if (!packageManager.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
-                return false
-            }
-            val devices = mAudioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
-            for (device in devices) {
-                if (device.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
-                    return true
-                }
-            }
+        // Check FEATURE_AUDIO_OUTPUT to guard against false positives.
+        val packageManager = context.packageManager
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
             return false
         }
-        return true
+        val devices = mAudioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
+        for (device in devices) {
+            if (device.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -280,7 +277,7 @@ class HardwareServiceImpl(
 
         if (mHasSpeakerPhone && checked) {
             routeToSpeaker()
-        } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth() && mBluetoothWrapper!!.isBTHeadsetConnected) {
+        } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()/* && mBluetoothWrapper!!.isBTHeadsetConnected*/) {
             routeToBTHeadset()
         } else {
             resetAudio()
@@ -289,13 +286,18 @@ class HardwareServiceImpl(
 
     @Synchronized
     override fun onBluetoothStateChanged(status: Int) {
-        Log.d(TAG, "bluetoothStateChanged to: $status")
+        Log.w(TAG, "bluetoothStateChanged to: $status")
         val event = BluetoothEvent(status == BluetoothHeadset.STATE_AUDIO_CONNECTED)
         if (status == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
-            Log.d(TAG, "BluetoothHeadset Connected")
+            Log.w(TAG, "BluetoothHeadset Connected")
+            if (mBluetoothWrapper?.isBluetoothOn() == true)
+                routeToBTHeadset()
         } else if (status == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
-            Log.d(TAG, "BluetoothHeadset Disconnected")
-            if (mShouldSpeakerphone) routeToSpeaker()
+            Log.w(TAG, "BluetoothHeadset Disconnected")
+            if (mAudioManager.mode == AudioManager.MODE_RINGTONE)
+                routeToSpeaker()
+            else
+                resetAudio()
         }
         bluetoothEvents.onNext(event)
     }
@@ -365,8 +367,7 @@ class HardwareServiceImpl(
 
     override fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
-        val useLargerSize =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() || mPreferenceService.isHardwareAccelerationEnabled)
+        val useLargerSize = Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() || mPreferenceService.isHardwareAccelerationEnabled
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
         val minVideoSize: Size = if (useLargerSize) parseResolution(mPreferenceService.resolution) else VIDEO_SIZE_LOW
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, context)
