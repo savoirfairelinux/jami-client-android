@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32778f8e_dc3b3c7e",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/BluetoothWrapper.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-12-20T21:56:22Z",
+      "side": 1,
+      "message": "seems good, only speaker regression (I guess it should be off if bluetooth/earphones but on without)",
+      "range": {
+        "startLine": 140,
+        "startChar": 38,
+        "endLine": 140,
+        "endChar": 50
+      },
+      "revId": "3e559431d7f3b3f001e32c4ab7cfd91e0b34ce38",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
