@@ -39,8 +39,7 @@ object DeviceUtils {
     }
 
     private val uiThread = Looper.getMainLooper().thread
-    private val uiHandler = Handler(Looper.getMainLooper())
-
+    val uiHandler = Handler(Looper.getMainLooper())
     val uiScheduler: Scheduler = Schedulers.from {
         if (Thread.currentThread() == uiThread) {
             it.run()
