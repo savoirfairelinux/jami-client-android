@@ -19,10 +19,12 @@
  */
 package cx.ring.client
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -46,6 +48,7 @@ import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
 import cx.ring.account.AccountWizardActivity
+import cx.ring.account.ProfileCreationFragment
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ContactPickerFragment
@@ -312,7 +315,14 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
                 fConversation = null
             }
         } */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), REQUEST_PERMISSION_BT)
+        }
     }
+
+    /*override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }*/
 
     override fun onStop() {
         Log.d(TAG, "onStop")
@@ -499,6 +509,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114
+        const val REQUEST_PERMISSION_BT = 115
         const val ACCOUNTS_TAG = "Accounts"
         const val ABOUT_TAG = "About"
         const val SETTINGS_TAG = "Prefs"
