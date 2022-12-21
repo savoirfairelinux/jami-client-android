@@ -354,13 +354,6 @@ class ConversationFacade(
         }
     }
 
-    fun getConversationSearchResults(account: Account, query: Observable<String>): Observable<SearchResult> =
-        query.switchMapSingle { q: String ->
-            if (q.isEmpty())
-                Single.just(SearchResult.EMPTY_RESULT)
-            else getConversationSearchResults(account, q)
-        }
-
     data class ConversationList(val conversations: List<Conversation> = emptyList(), val searchResult: SearchResult = SearchResult.EMPTY_RESULT, val latestQuery: String = "") {
         fun isEmpty(): Boolean = conversations.isEmpty() && searchResult.result.isEmpty()
 
@@ -401,7 +394,7 @@ class ConversationFacade(
         currentAccount.switchMap { account ->
             Observable.combineLatest(
                 account.getConversationsSubject(),
-                getConversationSearchResults(account, query),
+                query.switchMapSingle { getConversationSearchResults(account, it) },
                 query
             ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }
         }.switchMapSingle { list ->
@@ -409,8 +402,8 @@ class ConversationFacade(
                 val lq = list.latestQuery.lowercase()
                 Maybe.concatEager(list.conversations.map { c -> mContactService.getLoadedConversation(c)
                     .filter { it.matches(lq) }.map { c }
-                }).toList().map { newList -> ConversationList(newList, list.searchResult, lq) }
-            } else Single.just(ConversationList(list.conversations))
+                }).toList().map { newList -> ConversationList(newList, list.searchResult, list.latestQuery) }
+            } else Single.just(list)
         }
 
     /**
