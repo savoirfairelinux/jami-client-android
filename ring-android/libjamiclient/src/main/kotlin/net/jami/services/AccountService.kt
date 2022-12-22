@@ -266,7 +266,7 @@ class AccountService(
                 Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
                 for (conversationId in conversations) {
                     try {
-                        val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId)
+                        val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8()
                         /*for (Map.Entry<String, String> i : info.entrySet()) {
                             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                         }*/
@@ -301,7 +301,7 @@ class AccountService(
                     }
                 }
                 Log.w(TAG, "$accountId loading conversation requests")
-                for (requestData in JamiService.getConversationRequests(account.accountId)) {
+                for (requestData in JamiService.getConversationRequests(account.accountId).map { it.toNativeFromUtf8() }) {
                     try {
                         /* for ((key, value) in requestData.entries)
                         Log.e(TAG, "Request: $key $value") */
@@ -1291,7 +1291,7 @@ class AccountService(
     }
 
     fun conversationProfileUpdated(accountId: String, conversationId: String, info: StringMap) {
-        getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info))
+        getAccount(accountId)?.getSwarm(conversationId)?.setProfile(mVCardService.loadConversationProfile(info.toNativeFromUtf8()))
     }
 
     fun conversationPreferencesUpdated(accountId: String, conversationId: String, preferences: StringMap) {
@@ -1329,7 +1329,7 @@ class AccountService(
             Log.w(TAG, "conversationReady: can't find account")
             return
         }
-        val info = JamiService.conversationInfos(accountId, conversationId)
+        val info = JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8()
         /*for (Map.Entry<String, String> i : info.entrySet()) {
             Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
         }*/

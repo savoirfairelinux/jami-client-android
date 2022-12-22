@@ -340,7 +340,7 @@ class DaemonService(
         }
 
         override fun conversationRequestReceived(accountId: String, conversationId: String, metadata: StringMap) {
-            mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNative())
+            mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNativeFromUtf8())
         }
 
         override fun conversationRequestDeclined(accountId: String, conversationId: String) {
