@@ -108,7 +108,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragHomeBinding.inflate(inflater, container, false).let { binding ->
-            mPagerAdapter = ScreenSlidePagerAdapter(requireActivity())
+            mPagerAdapter = ScreenSlidePagerAdapter(this)
             binding.qrCode.setOnClickListener {
                 presenter.clickQRSearch()
             }
@@ -372,7 +372,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         mSearchMenuItem!!.collapseActionView()
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+    private inner class ScreenSlidePagerAdapter(f: Fragment) : FragmentStateAdapter(f) {
         var hasRequests = false
         override fun getItemCount(): Int = if (hasRequests) 2 else 1
 
