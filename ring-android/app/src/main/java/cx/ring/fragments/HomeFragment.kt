@@ -120,7 +120,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     binding.tabLayout.getTabAt(position)!!.select()
-                    pagerContent = binding.pager.findFragmentAtPosition(requireActivity().supportFragmentManager, position)
+                    pagerContent = binding.pager.findFragmentAtPosition(childFragmentManager, position)
                     conversationBackPressedCallback.isEnabled = position != TAB_CONVERSATIONS
                 }
             })
@@ -298,7 +298,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     fun goToHome() {
         mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
-        pagerContent = mBinding!!.pager.findCurrentFragment(requireActivity().supportFragmentManager)
+        pagerContent = mBinding!!.pager.findCurrentFragment(childFragmentManager)
     }
 
     private fun setBadge(menuId: Int, number: Int) {
