@@ -281,7 +281,7 @@ class AvatarDrawable : Drawable {
                     .withContacts(vm.conversationProfile, vm.contacts)
                     .setGroup()
             else withContact(ConversationItemViewModel.getContact(vm.contacts))
-                .withPresence(vm.showPresence())
+                .withPresence(vm.showPresence)
                 .withOnlineState(vm.isOnline)
                 .withCheck(vm.isChecked)
         }

@@ -653,6 +653,7 @@ class Conversation : ConversationHistory {
     }
 
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
+
     @Synchronized
     fun loadMessage(id: String, load: () -> Unit): Single<Interaction> {
         val msg = getMessage(id)

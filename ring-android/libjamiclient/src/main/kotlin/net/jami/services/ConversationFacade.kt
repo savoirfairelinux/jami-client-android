@@ -466,10 +466,10 @@ class ConversationFacade(
                 }
         }
 
-    fun updateTextNotifications(accountId: String, conversations: List<Conversation>) {
-        Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size)
+    private fun updateTextNotifications(conversations: List<Conversation>) {
+        Log.d(TAG, "updateTextNotifications() " + conversations.size)
         for (conversation in conversations) {
-            mNotificationService.showTextNotification(accountId, conversation)
+            mNotificationService.showTextNotification(conversation)
         }
     }
 
@@ -491,7 +491,7 @@ class ConversationFacade(
             .flatMapObservable { account: Account -> account.getConversationsSubject() }
             .firstOrError()
             .subscribeOn(Schedulers.io())
-            .subscribe({ c: List<Conversation> -> updateTextNotifications(txt.account!!, c) })
+            .subscribe({ c: List<Conversation> -> updateTextNotifications(c) })
             { e: Throwable -> Log.e(TAG, e.message!!) }
     }
 

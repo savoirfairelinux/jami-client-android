@@ -347,7 +347,7 @@ class DRingService : Service() {
                         mConversationFacade.startConversation(path.accountId, uri)
                             .flatMapCompletable { c: Conversation ->
                                 mConversationFacade.sendTextMessage(c, uri, message)
-                                    .doOnComplete { mNotificationService.showTextNotification(path.accountId, c)}
+                                    .doOnComplete { mNotificationService.showTextNotification(c)}
                             }
                             .subscribe()
                     }

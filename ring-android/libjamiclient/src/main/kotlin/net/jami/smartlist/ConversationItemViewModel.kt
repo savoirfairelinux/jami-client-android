@@ -24,72 +24,25 @@ import io.reactivex.rxjava3.core.Observable
 import net.jami.model.*
 import kotlin.math.min
 
-class ConversationItemViewModel {
-    val accountId: String
-    val uri: Uri
-    val mode: Conversation.Mode
-    val contacts: List<ContactViewModel>
-    val conversationProfile: Profile
-    val uuid: String?
-    val title: String
-    private val showPresence: Boolean
-    val isOnline: Boolean
+class ConversationItemViewModel(
+    conversation: Conversation,
+    val conversationProfile: Profile,
+    val contacts: List<ContactViewModel>,
+    val showPresence: Boolean
+) {
+    val accountId: String = conversation.accountId
+    val uri: Uri = conversation.uri
+    val mode: Conversation.Mode = conversation.mode.blockingFirst()
+    val uuid: String = uri.rawUriString
+    val title: String = getTitle(conversation, conversationProfile, contacts)
+    val isOnline: Boolean = showPresence && contacts.firstOrNull { !it.contact.isUser && it.contact.isOnline } != null
     var isChecked = false
-    var selected: Observable<Boolean>? = null
+    var selected: Observable<Boolean>? = conversation.getVisible()
         private set
-    val lastEvent: Interaction?
+    val lastEvent: Interaction? = conversation.lastEvent
 
     enum class Title {
         None, Conversations, PublicDirectory
-    }
-
-    /*constructor(accountId: String, contact: ContactViewModel, lastEvent: Interaction?) {
-        this.accountId = accountId
-        contacts = listOf(contact)
-        this.conversationProfile = contact.profile
-        uri = contact.contact.uri
-        mode = Conversation.Mode.Legacy
-        uuid = uri.rawUriString
-        title = contact.displayName
-        this.lastEvent = lastEvent
-        showPresence = true
-        isOnline = contact.contact.isOnline
-    }*/
-
-    /*constructor(accountId: String, contact: ContactViewModel, id: String?, lastEvent: Interaction?) {
-        this.accountId = accountId
-        contacts = listOf(contact)
-        this.conversationProfile = contact.profile
-        uri = contact.contact.uri
-        mode = Conversation.Mode.Legacy
-        uuid = id
-        title = contact.displayName
-        this.lastEvent = lastEvent
-        showPresence = true
-        isOnline = contact.contact.isOnline
-    }*/
-
-    constructor(conversation: Conversation, conversationProfile: Profile, contacts: List<ContactViewModel>, presence: Boolean) {
-        accountId = conversation.accountId
-        this.contacts = contacts
-        this.conversationProfile = conversationProfile
-        uri = conversation.uri
-        mode = conversation.mode.blockingFirst()
-        uuid = uri.rawUriString
-        title = getTitle(conversation, conversationProfile, contacts)
-        val lastEvent = conversation.lastEvent
-        this.lastEvent = lastEvent
-        selected = conversation.getVisible()
-        var online = false
-        for (c in contacts) {
-            if (c.contact.isUser) continue
-            if (c.contact.isOnline) {
-                online = true
-                break
-            }
-        }
-        isOnline = online
-        showPresence = presence
     }
 
     val uriTitle: String
@@ -117,9 +70,7 @@ class ConversationItemViewModel {
         return if (contacts.isNotEmpty()) contacts[0] else null
     }
 
-    fun showPresence(): Boolean {
-        return showPresence
-    }
+    fun isGroup(): Boolean = isSwarm && contacts.size > 2
 
     override fun equals(other: Any?): Boolean {
         if (other !is ConversationItemViewModel) return false
@@ -132,12 +83,8 @@ class ConversationItemViewModel {
     companion object {
         private const val MAX_NAMES = 3
 
-        fun getContact(contacts: List<ContactViewModel>) : ContactViewModel? {
-            for (contact in contacts)
-                if (!contact.contact.isUser)
-                    return contact
-            return null
-        }
+        fun getContact(contacts: List<ContactViewModel>) : ContactViewModel? =
+            contacts.firstOrNull { !it.contact.isUser }
 
         fun getTitle(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): String {
             if (!profile.displayName.isNullOrBlank())

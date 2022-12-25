@@ -60,10 +60,12 @@ import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
+import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.*
+import net.jami.smartlist.ConversationItemViewModel
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
@@ -373,12 +375,8 @@ class NotificationServiceImpl(
         return dataTransferNotifications[notificationId]
     }
 
-    override fun showTextNotification(accountId: String, conversation: Conversation) {
+    override fun showTextNotification(conversation: Conversation) {
         val texts = conversation.unreadTextMessages
-
-        //Log.w(TAG, "showTextNotification start " + accountId + " " + conversation.getUri() + " " + texts.size());
-
-        //TODO handle groups
         if (texts.isEmpty() || conversation.isVisible) {
             cancelTextNotification(conversation.accountId, conversation.uri)
             return
@@ -386,22 +384,20 @@ class NotificationServiceImpl(
         if (texts.lastEntry().value.isNotified) {
             return
         }
-        Log.w(TAG, "showTextNotification " + accountId + " " + conversation.uri)
-        mContactService.getLoadedContact(accountId, conversation.contacts, false)
-            .subscribe({contacts -> textNotification(accountId, texts, conversation, contacts) })
-            { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
+        Log.w(TAG, "showTextNotification " + conversation.accountId + " " + conversation.uri)
+        mContactService.getLoadedConversation(conversation)
+            .subscribe({ cvm -> textNotification(texts, cvm) })
+        { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
     private fun textNotification(
-        accountId: String,
         texts: TreeMap<Long, TextMessage>,
-        conversation: Conversation,
-        contacts: List<ContactViewModel>
+        cvm: ConversationItemViewModel
     ) {
-        val cpath = ConversationPath(conversation)
+        val cpath = ConversationPath(cvm.accountId, cvm.uri)
         val path = cpath.toUri()
         val key = cpath.toKey()
-        val conversationProfile = getProfile(conversation) ?: return
+        val conversationProfile = getProfile(cvm)
         var notificationVisibility = mPreferencesService.settings.notificationVisibility
         notificationVisibility = when (notificationVisibility) {
             SettingsFragment.NOTIFICATION_PUBLIC -> Notification.VISIBILITY_PUBLIC
@@ -444,24 +440,24 @@ class NotificationServiceImpl(
                 .build())
             //.addPerson(conversationPerson)
             .setShortcutId(key)
-        val account = mAccountService.getAccount(accountId)
+        val account = mAccountService.getAccount(cpath.accountId)
         val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
         val myPic = account?.let { getContactPicture(it) }
         val userPerson = Person.Builder()
-            .setKey(accountId)
+            .setKey(cpath.accountId)
             .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
             .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
             .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
-        history.isGroupConversation = conversation.isGroup()
+        history.isGroupConversation = cvm.isGroup()
         history.conversationTitle = conversationProfile.second
         val persons = HashMap<String, Person>()
-        for (contact in contacts) {
+        for (contact in cvm.contacts) {
             if (contact.contact.isUser) continue
             val contactPicture = getContactPicture(contact)
             val contactPerson = Person.Builder()
                 .setKey(ConversationPath.toKey(cpath.accountId, contact.contact.uri.uri))
-                .setName(contact.profile.displayName)
+                .setName(contact.displayName)
                 .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
             messageNotificationBuilder.addPerson(contactPerson)
@@ -477,7 +473,7 @@ class NotificationServiceImpl(
             ))
         }
         messageNotificationBuilder.setStyle(history)
-        val notificationId = getTextNotificationId(conversation.accountId, conversation.uri)
+        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
         val replyId = notificationId + 1
         val markAsReadId = notificationId + 2
         val replyLabel = mContext.getText(R.string.notif_reply)
@@ -800,15 +796,19 @@ class NotificationServiceImpl(
 
     private fun getProfile(conversation: Conversation): Pair<Bitmap, String>? {
         return try {
-            mContactService.getLoadedConversation(conversation).map { vm ->
-                Pair(AvatarFactory.getAvatar(mContext, vm)
-                    .map { d -> BitmapUtils.drawableToBitmap(d, avatarSize) }
-                    .blockingGet(), vm.title)
-            }.blockingGet()
+            mContactService.getLoadedConversation(conversation)
+                .map { getProfile(it) }
+                .blockingGet()
         } catch (e: Exception) {
             null
         }
     }
+
+    private fun getProfile(vm: ConversationItemViewModel): Pair<Bitmap, String> =
+        Pair(BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
+            .withViewModel(vm)
+            .withCircleCrop(true)
+            .build(mContext), avatarSize), vm.title)
 
     private fun getProfile(accountId:String, contact: Contact): ContactViewModel {
         return mContactService.getLoadedContact(accountId, contact).blockingGet()

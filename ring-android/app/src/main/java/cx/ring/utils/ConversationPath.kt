@@ -25,6 +25,7 @@ import cx.ring.BuildConfig
 import net.jami.model.Conversation
 import net.jami.model.Interaction
 import net.jami.model.Uri
+import net.jami.smartlist.ConversationItemViewModel
 
 data class ConversationPath(
     val accountId: String,
@@ -35,6 +36,8 @@ data class ConversationPath(
     constructor(account: String, conversationUri: Uri) : this(account, conversationUri.uri)
 
     constructor(conversation: Conversation) : this(conversation.accountId, conversation.uri.uri)
+
+    constructor(conversation: ConversationItemViewModel) : this(conversation.accountId, conversation.uri.uri)
 
     inline fun toBundle(bundle: Bundle) {
         bundle.putString(KEY_CONVERSATION_URI, conversationId)
