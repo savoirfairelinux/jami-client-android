@@ -127,6 +127,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s е копиран</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
   <string name="conversation_action_block_this">Блокиране на контакт</string>
+  <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
   <string name="conversation_action_go_to_call">Обратно към текущо обаждане</string>
   <string name="clip_contact_uri">Адрес за контакт</string>
   <string name="block_contact_dialog_title">Блокиране на %1$s?</string>

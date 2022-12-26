@@ -182,6 +182,9 @@
   <string name="block_contact_dialog_title">Bloccare %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non sarà in grado di contattarti finché non lo sblocchi.</string>
   <string name="block_contact_completed">%1$s è stato bloccato.</string>
+  <string name="unblock_contact_dialog_title">Sbloccare %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s potrà ricontattarti.</string>
+  <string name="unblock_contact_completed">%1$s è stato sbloccato.</string>
   <string name="conversation_contact_is_typing">Il contatto sta scrivendo…</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>

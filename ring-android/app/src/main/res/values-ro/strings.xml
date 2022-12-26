@@ -182,6 +182,9 @@
   <string name="block_contact_dialog_title">Blochezi %1$s?</string>
   <string name="block_contact_dialog_message">%1$s nu te va putea contacta cît timp va fi blocat.</string>
   <string name="block_contact_completed">%1$s a fost blocat.</string>
+  <string name="unblock_contact_dialog_title">Deblochezi %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s va putea să te contacteze din nou.</string>
+  <string name="unblock_contact_completed">%1$s a fost deblocat.</string>
   <string name="conversation_contact_is_typing">Contactul scrie...</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>

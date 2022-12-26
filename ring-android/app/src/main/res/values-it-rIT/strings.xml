@@ -179,9 +179,12 @@
   <string name="conversation_action_go_to_call">Torna alla chiamata in corso</string>
   <string name="conversation_open_file_error">Non esiste un\'applicazione installata in grado di aprire questo tipo di file.</string>
   <string name="clip_contact_uri">Indirizzo di contatto</string>
-  <string name="block_contact_dialog_title">Blocca %1$s?</string>
+  <string name="block_contact_dialog_title">Bloccare %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non sara\' in grado di contattare l\'utente fino a sbloccarlo.</string>
   <string name="block_contact_completed">%1$s è stato bloccato.</string>
+  <string name="unblock_contact_dialog_title">Sbloccare %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s potrà ricontattarti.</string>
+  <string name="unblock_contact_completed">%1$s è stato sbloccato.</string>
   <string name="conversation_contact_is_typing">Il contatto sta scrivendo…</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>

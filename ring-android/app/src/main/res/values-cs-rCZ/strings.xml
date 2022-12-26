@@ -176,6 +176,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <string name="conversation_action_block_this">Blokovat spojení</string>
+  <string name="conversation_action_unblock_this">Odblokovat kontakt</string>
   <string name="conversation_action_go_to_call">Vrátit se k probíhajícímu hovoru</string>
   <string name="conversation_open_file_error">Nebyla nalezena žádná aplikace schopná otevřít tento typ souboru</string>
   <string name="clip_contact_uri">Adresa spojení</string>

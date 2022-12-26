@@ -181,6 +181,9 @@
   <string name="block_contact_dialog_title">%1$s blockieren?</string>
   <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung entfernen.</string>
   <string name="block_contact_completed">%1$s wurde blockiert.</string>
+  <string name="unblock_contact_dialog_title">Blockierung von %1$s aufheben?</string>
+  <string name="unblock_contact_dialog_message">%1$s kann Sie wieder kontaktieren.</string>
+  <string name="unblock_contact_completed">Blockierung von %1$s aufgehoben.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt...</string>
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>

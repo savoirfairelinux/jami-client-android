@@ -177,6 +177,9 @@
   <string name="block_contact_dialog_title">Bloquer %1$s ?</string>
   <string name="block_contact_dialog_message">%1$s ne sera plus en mesure de vous contacter tant que vous ne l\'aurez pas débloqué.</string>
   <string name="block_contact_completed">%1$s a été bloqué.</string>
+  <string name="unblock_contact_dialog_title">Débloquer %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s pourra encore vous recontacter.</string>
+  <string name="unblock_contact_completed">%1$s a été débloqué.</string>
   <string name="conversation_contact_is_typing">Votre interlocuteur est en train d\'écrire...</string>
   <string name="conversation_info_contact_you">Vous</string>
   <string name="conversation_members">Membres</string>
