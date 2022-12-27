@@ -33,8 +33,6 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
@@ -81,8 +79,6 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
@@ -259,7 +255,11 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.CALL -> if ((interaction as Call).isGroupCall) {
+                MessageType.ONGOING_GROUP_CALL.ordinal
+            } else {
+                MessageType.CALL_INFORMATION.ordinal
+            }
             Interaction.InteractionType.TEXT -> if (interaction.isIncoming) {
                 MessageType.INCOMING_TEXT_MESSAGE.ordinal
             } else {
@@ -369,6 +369,16 @@ class ConversationAdapter(
             return
         }
         val interaction = mInteractions[position]
+        /*if (interaction is Call && interaction.confId != null && position > 0) {
+            val confId = interaction.confId
+            for (i in position - 1 downTo 0) {
+                val previousInteraction = mInteractions[i]
+                if (previousInteraction is Call && previousInteraction.isGroupCall && previousInteraction.confId == confId) {
+                    presenter.deleteConversationItem(previousInteraction)
+                    break
+                }
+            }
+        }*/
         conversationViewHolder.compositeDisposable.clear()
         /*if (position > lastMsgPos) {
             lastMsgPos = position
@@ -1054,9 +1064,19 @@ class ConversationAdapter(
                 }
             }
         }
+        val call = interaction as Call
+        if (call.isGroupCall) {
+            convViewHolder.mAcceptCallLayout?.apply {
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(false) }
+                }
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(true) }
+                }
+            }
+        }
         val pictureResID: Int
         val historyTxt: String
-        val call = interaction as Call
         if (call.isMissed) {
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
