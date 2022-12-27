@@ -170,7 +170,11 @@ class TvConversationAdapter(
         val interaction = mInteractions[position]
         when (interaction.type) {
             Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.CALL -> return if ((interaction as Call).isRinging) {
+                MessageType.CALL_GROUP_SWARM.ordinal
+            } else {
+                MessageType.CALL_INFORMATION.ordinal
+            }
             Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
                 MessageType.INCOMING_TEXT_MESSAGE.ordinal
             } else {
