@@ -717,5 +717,8 @@ class ConversationFacade(
         mDisposableBag.add(mAccountService.dataTransfers
                 .subscribe({ transfer: DataTransfer -> handleDataTransferEvent(transfer) },
                      { e: Throwable -> Log.e(TAG, "Error adding data transfer", e) }))
+        mDisposableBag.add(mAccountService.incomingGroupCall
+            .subscribe({ c -> mNotificationService.showGroupCallNotification(c) },
+                { e: Throwable -> Log.e(TAG, "Error showing group call notification", e) }))
     }
 }
