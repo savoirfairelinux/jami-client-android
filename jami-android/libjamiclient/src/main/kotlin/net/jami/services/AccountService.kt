@@ -119,6 +119,7 @@ class AccountService(
 
     private val incomingMessageSubject: Subject<Message> = PublishSubject.create()
     private val incomingSwarmMessageSubject: Subject<Interaction> = PublishSubject.create()
+    private val incomingGroupCallSubject: Subject<Conversation> = PublishSubject.create()
     val incomingMessages: Observable<TextMessage> = incomingMessageSubject
         .flatMapMaybe { msg: Message ->
             val message = msg.messages[CallService.MIME_TEXT_PLAIN]
@@ -206,6 +207,8 @@ class AccountService(
         get() = messageSubject
     val incomingRequests: Observable<TrustRequest>
         get() = incomingRequestsSubject
+    val incomingGroupCall: Observable<Conversation>
+        get() = incomingGroupCallSubject
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1214,10 +1217,17 @@ class AccountService(
         searchResultSubject.onNext(r)
     }
 
-    private fun getInteraction(account: Account, conversation: Conversation, message: Map<String, String>): Interaction {
-        /* for ((key, value) in message) {
-            Log.w(TAG, "$key -> $value")
-        } */
+    /**
+     * Retrieves the Interaction object from the given account, conversation, and message data.
+     *
+     * @param account      The account associated with the interaction.
+     * @param conversation The conversation in which the interaction occurred.
+     * @param message      The message data containing information about the interaction.
+     * @return The Interaction object representing the interaction.
+     */
+    private fun getInteraction(
+        account: Account, conversation: Conversation, message: Map<String, String>
+    ): Interaction {
         val id = message["id"]!!
         val type = message["type"]!!
         val author = message["author"]!!
@@ -1270,10 +1280,15 @@ class AccountService(
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
             }
-            "application/call-history+json" ->
-                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
-                    message["duration"]?.let { d -> duration = d.toLong() }
-                }
+            "application/call-history+json" -> {
+                val callDirection =
+                    if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING
+                Call(null, account.accountId, authorUri.rawUriString, callDirection, timestamp)
+                    .apply {
+                        message["duration"]?.let { d -> duration = d.toLong() }
+                        message["confId"]?.let { c -> confId = c }
+                    }
+            }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1443,6 +1458,8 @@ class AccountService(
                     incomingSwarmMessageSubject.onNext(interaction)
                 if (interaction is DataTransfer)
                     dataTransfers.onNext(interaction)
+                if (interaction is Call && interaction.isGroupCall && isIncoming)
+                    incomingGroupCallSubject.onNext(conversation)
             }
         }}
     }

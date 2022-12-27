@@ -286,6 +286,10 @@ class ConversationPresenter @Inject constructor(
         view?.acceptFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
 
+    fun goToGroupCall(media: Boolean) {
+        view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
+    }
+
     fun refuseFile(transfer: DataTransfer) {
         view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
@@ -322,11 +326,25 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
+    /**
+     * Navigates to the call activity with the specified camera option.
+     *
+     * @param withCamera Indicates whether the call should include camera functionality.
+     */
     fun goToCall(withCamera: Boolean) {
+        // Check if the device has a camera or microphone
         if (!withCamera && !hardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
             return
         }
+
+        // Check if it's a group call
+        if (isGroup()) {
+            goToGroupCall(withCamera)
+            return
+        }
+
+        // Get the conversation and navigate to the call activity
         mCompositeDisposable.add(mConversationSubject
             .firstElement()
             .subscribe { conversation: Conversation ->
@@ -336,9 +354,14 @@ class ConversationPresenter @Inject constructor(
                     if (conf != null && conf.participants.isNotEmpty()
                         && conf.participants[0].callStatus !== Call.CallStatus.INACTIVE
                         && conf.participants[0].callStatus !== Call.CallStatus.FAILURE) {
+                        // Navigate to the call activity with the existing call
                         view.goToCallActivity(conf.id, conf.hasActiveVideo())
                     } else {
-                        view.goToCallActivityWithResult(conversation.accountId, conversation.uri, conversation.contact!!.uri, withCamera)
+                        // Navigate to the call activity with the conversation details
+                        view.goToCallActivityWithResult(
+                            conversation.accountId, conversation.uri,
+                            conversation.contact!!.uri, withCamera
+                        )
                     }
                 }
             })
