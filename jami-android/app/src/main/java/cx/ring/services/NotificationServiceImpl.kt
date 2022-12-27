@@ -709,6 +709,10 @@ class NotificationServiceImpl(
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
     }
 
+    override fun showGroupCallNotification() {
+        Log.e(TAG, "received group call")
+    }
+
     override val serviceNotification: Any
         get() {
             val intentHome = Intent(Intent.ACTION_VIEW)

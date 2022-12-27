@@ -167,9 +167,9 @@ class ConversationFacade(
                 }
             }
         } else {
-            // handling is the same for calls and texts
             if (conversation.isSwarm) {
-                mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
+                // Nothing to do
+                Log.w(TAG, "Trying to remove element from swarm conversation (unsupported)")
             } else {
                 mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
                     .subscribeOn(Schedulers.io())
