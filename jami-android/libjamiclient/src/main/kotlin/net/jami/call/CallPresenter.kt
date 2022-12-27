@@ -267,16 +267,20 @@ class CallPresenter @Inject constructor(
     }
 
     fun hangupCall() {
+        // Hang up the conference call if it exists.
         mConference?.let { conference ->
-            if (conference.isConference)
+            if (!conference.isSimpleCall)
                 mCallService.hangUpConference(conference.accountId, conference.id)
             else
                 mCallService.hangUp(conference.accountId, conference.id)
         }
+
+        // Hang up pending calls.
         for (participant in mPendingCalls) {
             val call = participant.call ?: continue
             mCallService.hangUp(call.account!!, call.daemonIdString!!)
         }
+
         finish()
     }
 
