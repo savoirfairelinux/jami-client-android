@@ -281,6 +281,10 @@ class ConversationPresenter @Inject constructor(
         view?.acceptFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
 
+    fun goToGroupCall(media: Boolean) {
+        view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
+    }
+
     fun refuseFile(transfer: DataTransfer) {
         view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }

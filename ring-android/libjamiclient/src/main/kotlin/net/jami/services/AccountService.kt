@@ -1242,7 +1242,7 @@ class AccountService(
                 }
             }
             "application/call-history+json" ->
-                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
+                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp, message["confId"]).apply {
                     message["duration"]?.let { d -> duration = d.toLong() }
                 }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
