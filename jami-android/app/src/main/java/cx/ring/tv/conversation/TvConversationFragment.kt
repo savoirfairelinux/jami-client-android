@@ -659,6 +659,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             .putExtra(DRingService.KEY_TRANSFER_ID, transfer.fileId))
     }
 
+    override fun goToGroupCall(conversation: Conversation, contactUri: net.jami.model.Uri, hasVideo: Boolean) {
+        TODO("Not yet implemented")
+    }
+
     override fun refuseFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
         requireActivity().startService(Intent(DRingService.ACTION_FILE_CANCEL)
             .setClass(requireContext(), DRingService::class.java)

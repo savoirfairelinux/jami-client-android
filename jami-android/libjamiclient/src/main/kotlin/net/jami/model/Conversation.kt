@@ -541,6 +541,16 @@ class Conversation : ConversationHistory {
             i.contact = interaction.contact
             i.reactTo = interaction
             return addSwarmElement(i, newMessage)
+        } else if (interaction is Call && interaction.confId != null) {
+            if (interaction.duration != null) {
+                addConfEnded(interaction)
+                val i = Interaction(this, Interaction.InteractionType.INVALID)
+                i.conversation = this
+                i.contact = interaction.contact
+                return addSwarmElement(i, newMessage)
+            } else {
+                conferenceEnded.remove(interaction.confId)?.let { interaction.setEnded(it) }
+            }
         }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
@@ -688,6 +698,19 @@ class Conversation : ConversationHistory {
             msg.addReaction(interaction)
         else
             mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(interaction)
+    }
+
+    val conferenceStarted: MutableMap<String, Call> = HashMap()
+    val conferenceEnded: MutableMap<String, Call> = HashMap()
+
+    private fun addConfEnded(interaction: Call) {
+        val confId = interaction.confId ?: return
+        val msg = conferenceStarted.remove(confId)
+        if (msg != null) {
+            msg.setEnded(interaction)
+            updateInteraction(msg)
+        } else
+            conferenceEnded[confId] = interaction
     }
 
     enum class Mode {

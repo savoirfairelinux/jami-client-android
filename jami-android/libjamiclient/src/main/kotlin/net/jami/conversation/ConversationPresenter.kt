@@ -291,6 +291,10 @@ class ConversationPresenter @Inject constructor(
         view?.acceptFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
 
+    fun goToGroupCall(media: Boolean) {
+        view?.goToGroupCall(mConversation!!, mConversation!!.uri, media)
+    }
+
     fun refuseFile(transfer: DataTransfer) {
         view?.refuseFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
@@ -330,6 +334,10 @@ class ConversationPresenter @Inject constructor(
     fun goToCall(withCamera: Boolean) {
         if (!withCamera && !hardwareService.hasMicrophone()) {
             view!!.displayErrorToast(Error.NO_MICROPHONE)
+            return
+        }
+        if (isGroup()) {
+            goToGroupCall(withCamera)
             return
         }
         mCompositeDisposable.add(mConversationSubject
@@ -482,6 +490,11 @@ class ConversationPresenter @Inject constructor(
 
     fun editMessage(accountId: String, conversationUri: Uri, messageId: String, message: String) {
         accountService.editConversationMessage(accountId, conversationUri, message, messageId)
+    }
+
+    fun updateInteraction(e: Interaction) {
+        val conversation = mConversation ?: return
+        conversation.updateInteraction(e)
     }
 
     companion object {
