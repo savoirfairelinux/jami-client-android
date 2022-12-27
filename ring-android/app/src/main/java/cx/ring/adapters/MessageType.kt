@@ -14,6 +14,7 @@ enum class MessageType(@LayoutRes val layout: Int, @LayoutRes val tvLayout: Int 
     OUTGOING_VIDEO(R.layout.item_conv_video_me, R.layout.item_conv_video_me_tv),
     CONTACT_EVENT(R.layout.item_conv_contact, R.layout.item_conv_contact_tv),
     CALL_INFORMATION(R.layout.item_conv_call, R.layout.item_conv_call_tv),
+    CALL_GROUP_SWARM(R.layout.item_conv_call_accept, R.layout.item_conv_call_accept_tv),
     INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer, R.layout.item_conv_msg_peer_tv),
     OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me, R.layout.item_conv_msg_me_tv),
     COMPOSING_INDICATION(R.layout.item_conv_composing),

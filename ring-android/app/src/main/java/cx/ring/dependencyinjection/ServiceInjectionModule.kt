@@ -101,8 +101,9 @@ object ServiceInjectionModule {
     fun provideAccountService(@Named("DaemonExecutor") executor : ScheduledExecutorService,
                               historyService : HistoryService,
                               deviceRuntimeService : DeviceRuntimeService,
-                              vCardService : VCardService): AccountService {
-        return AccountService(executor, historyService, deviceRuntimeService, vCardService)
+                              vCardService : VCardService,
+                              notificationService : NotificationService): AccountService {
+        return AccountService(executor, historyService, deviceRuntimeService, vCardService, notificationService)
     }
 
     @Provides

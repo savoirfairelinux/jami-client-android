@@ -157,6 +157,9 @@ class Call : Interaction {
     val isConferenceParticipant: Boolean
         get() = confId != null
 
+    val isGroupCall: Boolean
+        get() = isConferenceParticipant && duration == 0L
+
     val durationString: String
         get() {
             val mDuration = duration!! / 1000
