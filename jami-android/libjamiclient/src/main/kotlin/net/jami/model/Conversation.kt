@@ -521,8 +521,15 @@ class Conversation : ConversationHistory {
         }
     }
 
+    /**
+     * Adds a swarm interaction to the conversation.
+     *
+     * @param interaction The interaction to add.
+     * @param newMessage  Indicates whether it is a new message.
+     */
     @Synchronized
     fun addSwarmElement(interaction: Interaction, newMessage: Boolean): Boolean {
+        // Handle edit interaction
         if (interaction.edit != null) {
             addEdit(interaction, newMessage)
             val i = Interaction(this, Interaction.InteractionType.INVALID)
@@ -530,7 +537,9 @@ class Conversation : ConversationHistory {
             i.conversation = this
             i.contact = interaction.contact
             return addSwarmElement(i, newMessage)
-        } else if (interaction.reactToId != null) {
+        }
+        // Handle reaction interaction
+        else if (interaction.reactToId != null) {
             addReaction(interaction, interaction.reactToId!!)
             val i = Interaction(this, Interaction.InteractionType.INVALID)
             i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
@@ -538,6 +547,34 @@ class Conversation : ConversationHistory {
             i.contact = interaction.contact
             i.reactTo = interaction
             return addSwarmElement(i, newMessage)
+        }
+        // Handle call interaction
+        else if (interaction is Call && interaction.confId != null) {
+            // interaction.duration is changed when the call is ended.
+            // It means duration=0 when the call is started and duration>0 when the call is ended.
+            if (interaction.duration != 0L) {
+                val startedCall = conferenceStarted.remove(interaction.confId)
+                if (startedCall != null) {
+                    startedCall.setEnded(interaction)
+                    updateInteraction(startedCall)
+                }
+                else conferenceEnded[interaction.confId!!] = interaction
+
+                val invalidInteraction = // Replacement element
+                    Interaction(this, Interaction.InteractionType.INVALID).apply {
+                        setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
+                        conversation = this@Conversation
+                        contact = interaction.contact
+                    }
+                return addSwarmElement(invalidInteraction, newMessage)
+            } else { // Call started but not ended
+                val endedCall = conferenceEnded.remove(interaction.confId)
+                if (endedCall != null) {
+                    interaction.setEnded(endedCall)
+                    updateInteraction(endedCall)
+                }
+                else conferenceStarted[interaction.confId!!] = interaction
+            }
         }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
@@ -704,6 +741,9 @@ class Conversation : ConversationHistory {
         } else
             mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(reactionInteraction)
     }
+
+    private val conferenceStarted: MutableMap<String, Call> = HashMap()
+    private val conferenceEnded: MutableMap<String, Call> = HashMap()
 
     enum class Mode {
         OneToOne, AdminInvitesOnly, InvitesOnly,  // Non-daemon modes

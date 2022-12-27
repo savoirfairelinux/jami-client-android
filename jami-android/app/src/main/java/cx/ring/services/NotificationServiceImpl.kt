@@ -482,6 +482,65 @@ class NotificationServiceImpl(
         { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
+    /**
+     * Function to show a group call notification.
+     */
+    override fun showGroupCallNotification(conversation: Conversation) {
+        // Call the showGroupCallNotification function with the loaded conversation.
+        mContactService.getLoadedConversation(conversation)
+            .subscribe({ cvm -> showGroupCallNotification(cvm) })
+            { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
+    }
+
+    /**
+     * Function to show a group call notification.
+     */
+    private fun showGroupCallNotification(cvm: ConversationItemViewModel) {
+        // Obtain the conversation path and key
+        val cpath = ConversationPath(cvm.accountId, cvm.uri)
+        val path = cpath.toUri()
+        val key = cpath.toKey()
+
+        // Get the conversation profile
+        val conversationProfile = getProfile(cvm)
+
+        // Determine the notification visibility based on the user's preference
+        var notificationVisibility = mPreferencesService.settings.notificationVisibility
+        notificationVisibility = when (notificationVisibility) {
+            SettingsFragment.NOTIFICATION_PUBLIC -> Notification.VISIBILITY_PUBLIC
+            SettingsFragment.NOTIFICATION_SECRET -> Notification.VISIBILITY_SECRET
+            SettingsFragment.NOTIFICATION_PRIVATE -> Notification.VISIBILITY_PRIVATE
+            else -> Notification.VISIBILITY_PRIVATE
+        }
+
+        // Create an intent to open the conversation in the app
+        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        // Build the notification
+        val text = mContext.getString(R.string.notif_inprogress_group_call)
+        val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setPriority(Notification.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setVisibility(notificationVisibility)
+            .setSmallIcon(R.drawable.ic_ring_logo_white)
+            .setContentTitle(conversationProfile.second)
+            .setContentText(text)
+            .setLocusId(LocusIdCompat(key))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
+            .setAutoCancel(true)
+            .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
+        messageNotificationBuilder.setLargeIcon(conversationProfile.first)
+
+        // Generate a unique notification ID
+        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
+        // Notify the notification
+        CarNotificationManager.from(mContext).notify(notificationId, messageNotificationBuilder)
+        // Save the notification builder for future reference
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder)
+    }
+
     private fun textNotification(
         texts: TreeMap<Long, TextMessage>,
         cvm: ConversationItemViewModel

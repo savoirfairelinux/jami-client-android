@@ -28,6 +28,7 @@ interface NotificationService {
     fun removeCallNotification(notifId: Int)
     fun handleCallNotification(conference: Conference, remove: Boolean)
     fun showMissedCallNotification(call: Call)
+    fun showGroupCallNotification(conversation: Conversation)
     fun showTextNotification(conversation: Conversation)
     fun cancelTextNotification(accountId: String, contact: Uri)
     fun cancelAll()

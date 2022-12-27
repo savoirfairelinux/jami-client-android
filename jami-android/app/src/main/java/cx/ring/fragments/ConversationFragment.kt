@@ -1015,6 +1015,36 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             .putExtra(CallFragment.KEY_HAS_VIDEO, withCamera))
     }
 
+    /**
+     * Go to the group call activity
+     */
+    override fun goToGroupCall(
+        conversation: Conversation, contactUri: net.jami.model.Uri, hasVideo: Boolean
+    ) {
+        // Try to find an existing call
+        val conf = conversation.currentCall
+
+        // If there is an existing call, go to it
+        if (conf != null
+            && conf.participants.isNotEmpty()
+            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
+            && conf.participants[0].callStatus != Call.CallStatus.FAILURE
+        ) {
+            startActivity(
+                Intent(Intent.ACTION_VIEW)
+                    .setClass(requireContext(), CallActivity::class.java)
+                    .putExtra(NotificationService.KEY_CALL_ID, conf.id)
+            )
+        } else { // Otherwise, start a new call
+            val intent = Intent(Intent.ACTION_CALL)
+                .setClass(requireContext(), CallActivity::class.java)
+                .putExtras(ConversationPath.toBundle(conversation))
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo)
+            startActivityForResult(intent, ContactDetailsActivity.REQUEST_CODE_CALL)
+        }
+    }
+
     private fun setupActionbar(conversation: ConversationItemViewModel) {
         val title = binding!!.contactTitle
         val subtitle = binding!!.contactSubtitle
@@ -1052,7 +1082,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        val visible = binding!!.cvMessageInput.visibility == View.VISIBLE && !presenter.isGroup()
+        val visible = binding!!.cvMessageInput.visibility == View.VISIBLE
         mAudioCallBtn?.isVisible = visible
         mVideoCallBtn?.isVisible = visible
     }
