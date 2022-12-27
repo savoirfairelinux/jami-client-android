@@ -28,6 +28,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -92,6 +93,7 @@ class AccountService(
     private var mHasRingAccount = false
     private var mStartingTransfer: DataTransfer? = null
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
+    private var mConversationDisposable: CompositeDisposable? = null
     val observableAccounts: Subject<Account> = PublishSubject.create()
     val currentAccountSubject: Observable<Account> = accountsSubject
         .filter { l -> l.isNotEmpty() }
@@ -169,6 +171,7 @@ class AccountService(
     data class ConversationSearchResult(val results: List<Interaction>)
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
     private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
+    private val callInteractions: MutableMap<String, Interaction> = ConcurrentHashMap()
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
         var results: List<Contact>? = null
@@ -1261,10 +1264,25 @@ class AccountService(
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
             }
-            "application/call-history+json" ->
-                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
-                    message["duration"]?.let { d -> duration = d.toLong() }
-                }
+            "application/call-history+json" -> {
+                val confId = message["confId"]
+                val duration = message["duration"]
+                /*if (confId != null && duration != null) {
+                    callInteractions[confId]?.let {
+                        it
+                        conversation.updateInteraction()
+                    }
+                    Interaction(conversation, Interaction.InteractionType.INVALID)
+                } else {*/
+                    Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING, timestamp).apply {
+                        this.duration = duration?.toLong()
+                        this.confId = confId
+                        /*if (confId != null) {
+                            callInteractions[confId] = this
+                        }*/
+                    }
+                //}
+            }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
