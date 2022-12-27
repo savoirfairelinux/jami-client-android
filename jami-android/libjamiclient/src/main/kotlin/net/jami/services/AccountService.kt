@@ -1261,10 +1261,12 @@ class AccountService(
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
             }
-            "application/call-history+json" ->
-                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
-                    message["duration"]?.let { d -> duration = d.toLong() }
-                }
+            "application/call-history+json" -> {
+                    Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING, timestamp).apply {
+                        message["duration"]?.let { d -> duration = d.toLong() }
+                        message["confId"]?.let { c -> confId = c }
+                    }
+            }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
