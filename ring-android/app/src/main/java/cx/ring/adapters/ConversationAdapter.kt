@@ -33,7 +33,6 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
 import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
@@ -253,7 +252,11 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.CALL -> if ((interaction as Call).isConferenceParticipant) {
+                MessageType.CALL_GROUP_SWARM.ordinal
+            } else {
+                MessageType.CALL_INFORMATION.ordinal
+            }
             Interaction.InteractionType.TEXT -> if (interaction.isIncoming) {
                 MessageType.INCOMING_TEXT_MESSAGE.ordinal
             } else {
@@ -1034,9 +1037,19 @@ class ConversationAdapter(
                 }
             }
         }
+        val call = interaction as Call
+        if (call.isConferenceParticipant) {
+            convViewHolder.mAcceptCallLayout?.apply {
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(it, false) }
+                }
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(it, true) }
+                }
+            }
+        }
         val pictureResID: Int
         val historyTxt: String
-        val call = interaction as Call
         if (call.isMissed) {
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24

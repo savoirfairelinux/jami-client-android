@@ -332,10 +332,25 @@ class ConversationPresenter @Inject constructor(
                         && conf.participants[0].callStatus !== Call.CallStatus.INACTIVE
                         && conf.participants[0].callStatus !== Call.CallStatus.FAILURE) {
                         view.goToCallActivity(conf.id, conf.hasActiveVideo())
+                    } else if (isGroup()) {
+                        view.goToCallActivityWithResult(conversation.accountId, conversation.uri, conversation.uri, withCamera)
                     } else {
                         view.goToCallActivityWithResult(conversation.accountId, conversation.uri, conversation.contact!!.uri, withCamera)
                     }
                 }
+            })
+    }
+
+    fun goToGroupCall(confId: String, withCamera: Boolean) {
+        if (!withCamera && !hardwareService.hasMicrophone()) {
+            view!!.displayErrorToast(Error.NO_MICROPHONE)
+            return
+        }
+        mCompositeDisposable.add(mConversationSubject
+            .firstElement()
+            .subscribe { conversation: Conversation ->
+                val view = view
+                view?.goToCallActivity(confId, withCamera)
             })
     }
 

@@ -120,7 +120,7 @@ class Call : Interaction {
         contact = interaction.contact
     }
 
-    constructor(daemonId: String?, account: String?, contactNumber: String?, direction: Direction, timestamp: Long) {
+    constructor(daemonId: String?, account: String?, contactNumber: String?, direction: Direction, timestamp: Long, confId: String?) {
         daemonIdString = daemonId
         try {
             this.daemonId = daemonId?.toLong()
@@ -134,6 +134,7 @@ class Call : Interaction {
         this.timestamp = timestamp
         mType = InteractionType.CALL.toString()
         mIsRead = 1
+        this.confId = confId
     }
 
     constructor(daemonId: String?, call_details: Map<String, String>) : this(
@@ -141,7 +142,8 @@ class Call : Interaction {
         call_details[KEY_ACCOUNT_ID],
         call_details[KEY_PEER_NUMBER],
         Direction.fromInt(call_details[KEY_CALL_TYPE]!!.toInt()),
-        System.currentTimeMillis())
+        System.currentTimeMillis(),
+    null)
     {
         setCallState(CallStatus.fromString(call_details[KEY_CALL_STATE]!!))
         setDetails(call_details)
