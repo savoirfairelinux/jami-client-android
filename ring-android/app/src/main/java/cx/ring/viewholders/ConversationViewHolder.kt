@@ -30,6 +30,7 @@ import android.animation.ValueAnimator
 import android.media.MediaPlayer
 import android.view.Surface
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import com.google.android.material.chip.Chip
 import cx.ring.R
@@ -84,6 +85,8 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mPreviewDomain: TextView? = null
     var mLayout: View? = null
     var mAnswerLayout: ViewGroup? = null
+    var mAcceptCallVideoButton: ImageButton? = null
+    var mAcceptCallAudioButton: ImageButton? = null
     var btnAccept: View? = null
     var btnRefuse: View? = null
     var progress: ContentLoadingProgressBar? = null
@@ -93,6 +96,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mCallInfoLayout: LinearLayout? = null
+    var mAcceptCallLayout: LinearLayout? = null
     var mFileInfoLayout: LinearLayout? = null
     var mAudioInfoLayout: LinearLayout? = null
 
@@ -111,6 +115,11 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
+            }
+            MessageType.CALL_GROUP_SWARM -> {
+                mAcceptCallLayout = v.findViewById(R.id.callAcceptLayout)
+                mAcceptCallAudioButton = v.findViewById(R.id.acceptCallAudioButton)
+                mAcceptCallVideoButton = v.findViewById(R.id.acceptCallVideoButton)
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {
