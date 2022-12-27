@@ -274,7 +274,7 @@ class CallPresenter @Inject constructor(
 
     fun hangupCall() {
         mConference?.let { conference ->
-            if (conference.isConference)
+            if (!conference.isSimpleCall)
                 mCallService.hangUpConference(conference.accountId, conference.id)
             else
                 mCallService.hangUp(conference.accountId, conference.id)

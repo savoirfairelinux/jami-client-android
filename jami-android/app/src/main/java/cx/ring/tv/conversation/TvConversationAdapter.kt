@@ -170,7 +170,11 @@ class TvConversationAdapter(
         val interaction = mInteractions[position]
         when (interaction.type) {
             Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.CALL -> if ((interaction as Call).isGroupCall) {
+                MessageType.ONGOING_GROUP_CALL.ordinal
+            } else {
+                MessageType.CALL_INFORMATION.ordinal
+            }
             Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
                 MessageType.INCOMING_TEXT_MESSAGE.ordinal
             } else {
@@ -702,6 +706,16 @@ class TvConversationAdapter(
         val longPressView: View = convViewHolder.mCallInfoLayout!!
         longPressView.background.setTintList(null)
         val call = interaction as Call
+        if (call.isGroupCall) {
+            convViewHolder.mAcceptCallLayout?.apply {
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(false) }
+                }
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(true) }
+                }
+            }
+        }
         if (call.isMissed) {
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24

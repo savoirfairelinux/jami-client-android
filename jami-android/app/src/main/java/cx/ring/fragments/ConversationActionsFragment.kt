@@ -129,30 +129,10 @@ class ConversationActionsFragment : Fragment() {
             conversationId.text = conversationUri
             infoCard.setOnClickListener { copyAndShow(path.conversationId) }
 
+            val callUri: Uri?
             if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
-                val contact = conversation.contact!!
-                adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, false)
-                })
-                adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, true)
-                })
-                if (!conversation.isSwarm) {
-                    adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.clear_history_dialog_title)
-                            .setMessage(R.string.clear_history_dialog_message)
-                            .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
-                                mConversationFacade.clearHistory(conversation.accountId, contact.uri).subscribe()
-                                Snackbar.make(root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
-                            }
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create()
-                            .show()
-                    })
-                }
-
-                if (!contact.isBanned) {
+                callUri = conversation.contact!!.uri
+                if (!conversation.contact!!.isBanned) {
                     adapter.actions.add(ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this)) {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
@@ -172,7 +152,7 @@ class ConversationActionsFragment : Fragment() {
                             .setTitle(getString(R.string.unblock_contact_dialog_title, conversationUri))
                             .setMessage(getString(R.string.unblock_contact_dialog_message, conversationUri))
                             .setPositiveButton(R.string.conversation_action_unblock_this) { _: DialogInterface?, _: Int ->
-                                mAccountService.addContact(conversation.accountId, contact.uri.rawRingId)
+                                mAccountService.addContact(conversation.accountId, callUri.rawRingId)
                                 Toast.makeText(requireContext(), getString(R.string.unblock_contact_completed, conversationUri), Toast.LENGTH_LONG).show()
                                 requireActivity().finish()
                             }
@@ -181,8 +161,30 @@ class ConversationActionsFragment : Fragment() {
                             .show()
                     })
                 }
+                if (!conversation.isSwarm) {
+                    adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.clear_history_dialog_title)
+                            .setMessage(R.string.clear_history_dialog_message)
+                            .setPositiveButton(R.string.conversation_action_history_clear) { _: DialogInterface?, _: Int ->
+                                mConversationFacade.clearHistory(conversation.accountId, callUri).subscribe()
+                                Snackbar.make(root, R.string.clear_history_completed, Snackbar.LENGTH_LONG).show()
+                            }
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create()
+                            .show()
+                    })
+                }
+            } else {
+                callUri = conversation.uri
             }
 
+            adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
+                (activity as ContactDetailsActivity).goToCallActivity(conversation, callUri, false)
+            })
+            adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
+                (activity as ContactDetailsActivity).goToCallActivity(conversation, callUri, true)
+            })
 
             contactActionList.adapter = adapter
             binding = this
