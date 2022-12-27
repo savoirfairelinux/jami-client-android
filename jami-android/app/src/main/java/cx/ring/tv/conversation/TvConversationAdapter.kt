@@ -167,32 +167,36 @@ class TvConversationAdapter(
         if (position == mInteractions.size) {
             return MessageType.HEADER.ordinal
         }
-        val interaction = mInteractions[position]
-        when (interaction.type) {
+
+        val interaction = mInteractions[position] // Get the interaction
+        return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> return MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> return MessageType.CALL_INFORMATION.ordinal
-            Interaction.InteractionType.TEXT -> return if (interaction.isIncoming) {
-                MessageType.INCOMING_TEXT_MESSAGE.ordinal
-            } else {
-                MessageType.OUTGOING_TEXT_MESSAGE.ordinal
-            }
+            Interaction.InteractionType.CALL ->
+                if ((interaction as Call).isGroupCall) {
+                    MessageType.ONGOING_GROUP_CALL.ordinal
+                } else {
+                    MessageType.CALL_INFORMATION.ordinal
+                }
+            Interaction.InteractionType.TEXT ->
+                if (interaction.isIncoming) {
+                    MessageType.INCOMING_TEXT_MESSAGE.ordinal
+                } else {
+                    MessageType.OUTGOING_TEXT_MESSAGE.ordinal
+                }
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
                 if (file.isComplete) {
-                    if (file.isPicture) {
-                        return MessageType.INCOMING_IMAGE.ordinal + out
-                    } else if (file.isAudio) {
-                        return MessageType.INCOMING_AUDIO.ordinal + out
-                    } else if (file.isVideo) {
-                        return MessageType.INCOMING_VIDEO.ordinal + out
+                    when {
+                        file.isPicture -> return MessageType.INCOMING_IMAGE.ordinal + out
+                        file.isAudio -> return MessageType.INCOMING_AUDIO.ordinal + out
+                        file.isVideo -> return MessageType.INCOMING_VIDEO.ordinal + out
                     }
                 }
-                return out
+                out
             }
-            else -> {}
+            else -> MessageType.INVALID.ordinal
         }
-        return MessageType.CALL_INFORMATION.ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
@@ -694,30 +698,60 @@ class TvConversationAdapter(
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      */
-    private fun configureForCallInfoTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureForCallInfoTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
+        val context = convViewHolder.itemView.context
+
+        // Reset the scale of the icon
+        convViewHolder.mIcon?.scaleY = 1f
+
+        convViewHolder.mCallInfoLayout!!.background.setTintList(null) // Remove the tint
+
+        val call = interaction as Call
+        if (call.isGroupCall) {
+            // When a call is occurring (between members) but you are not in it, a message is
+            // displayed in conversation to inform the user about the call and invite him to join.
+            convViewHolder.mAcceptCallLayout?.apply {
+                // Accept with audio only
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(false) }
+                }
+                // Accept call with video
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(true) }
+                }
+            }
+        }
+
         val pictureResID: Int
         val historyTxt: String
-        convViewHolder.mIcon?.scaleY = 1f
-        val context = convViewHolder.itemView.context
-        val longPressView: View = convViewHolder.mCallInfoLayout!!
-        longPressView.background.setTintList(null)
-        val call = interaction as Call
-        if (call.isMissed) {
+        // After call, a message is displayed in conversation to inform the user about the call.
+        if (call.isMissed) { // When call is missed
+            // Personalize the text and the icon depending if call is incoming or outgoing
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
+                historyTxt = context.getString(R.string.notif_missed_incoming_call)
             } else {
                 pictureResID = R.drawable.baseline_call_missed_outgoing_24
+                historyTxt = context.getString(R.string.notif_missed_outgoing_call)
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mIcon?.scaleY = -1f
             }
-            historyTxt = if (call.isIncoming) context.getString(R.string.notif_missed_incoming_call) else context.getString(R.string.notif_missed_outgoing_call)
         } else {
-            pictureResID = if (call.isIncoming) R.drawable.baseline_call_received_24 else R.drawable.baseline_call_made_24
-            historyTxt = if (call.isIncoming) context.getString(R.string.notif_incoming_call) else context.getString(R.string.notif_outgoing_call)
+            pictureResID =
+                if (call.isIncoming) R.drawable.baseline_call_received_24
+                else R.drawable.baseline_call_made_24
+            historyTxt =
+                if (call.isIncoming) context.getString(R.string.notif_incoming_call)
+                else context.getString(R.string.notif_outgoing_call)
         }
+        // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
         convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance().format(call.timestamp) // start date
+        convViewHolder.mHistDetailTxt?.text =
+            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
     /**

@@ -557,7 +557,7 @@ class ConversationFacade(
         if (incomingCall) {
             mNotificationService.handleCallNotification(conference!!, false)
             mHardwareService.setPreviewSettings()
-        } else if (newState === CallStatus.CURRENT && call.isIncoming
+        } else if (newState === CallStatus.CURRENT
             || newState === CallStatus.RINGING && !call.isIncoming) {
             mNotificationService.handleCallNotification(conference!!, false)
         } else if (newState.isOver) {
@@ -717,5 +717,8 @@ class ConversationFacade(
         mDisposableBag.add(mAccountService.dataTransfers
                 .subscribe({ transfer: DataTransfer -> handleDataTransferEvent(transfer) },
                      { e: Throwable -> Log.e(TAG, "Error adding data transfer", e) }))
+        mDisposableBag.add(mAccountService.incomingGroupCall
+            .subscribe({ c -> mNotificationService.showGroupCallNotification(c) },
+                { e: Throwable -> Log.e(TAG, "Error showing group call notification", e) }))
     }
 }

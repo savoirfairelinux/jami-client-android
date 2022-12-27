@@ -157,6 +157,9 @@ class Call : Interaction {
     val isConferenceParticipant: Boolean
         get() = confId != null
 
+    val isGroupCall: Boolean
+        get() = isConferenceParticipant && duration == 0L
+
     val durationString: String
         get() {
             val mDuration = duration!! / 1000
@@ -247,6 +250,10 @@ class Call : Interaction {
                 return true
         }
         return false
+    }
+
+    fun setEnded(end: Call) {
+        duration = end.duration
     }
 
     enum class CallStatus {
