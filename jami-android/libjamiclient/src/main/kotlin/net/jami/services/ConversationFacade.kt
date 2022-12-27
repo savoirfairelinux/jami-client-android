@@ -167,9 +167,9 @@ class ConversationFacade(
                 }
             }
         } else {
-            // handling is the same for calls and texts
             if (conversation.isSwarm) {
-                mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
+                // Nothing to do
+                Log.w(TAG, "Trying to remove element from swarm conversation (unsupported)")
             } else {
                 mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
                     .subscribeOn(Schedulers.io())
@@ -666,6 +666,14 @@ class ConversationFacade(
             .switchMap { a: Account -> a.getPendingSubject()
                     .doOnNext { mNotificationService.showIncomingTrustRequestNotification(a) } }
             .subscribe())
+        mDisposableBag.add(currentAccountSubject
+            .switchMap { a: Account -> a.getConversationSubject()
+                .doOnNext { c: Conversation -> c.currentStateSubject }
+                }
+            .subscribe({
+
+
+            }))
         mDisposableBag.add(mAccountService.incomingRequests
             .concatMapSingle { r: TrustRequest -> getAccountSubject(r.accountId) }
             .subscribe({ account: Account -> mNotificationService.showIncomingTrustRequestNotification(account) })
