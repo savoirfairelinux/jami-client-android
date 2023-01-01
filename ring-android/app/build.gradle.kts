@@ -1,7 +1,6 @@
 val kotlin_version: String by rootProject.extra
 val hilt_version: String by rootProject.extra
 val dokka_version: String by rootProject.extra
-val archs: CharSequence by project
 val buildFirebase = project.hasProperty("buildFirebase") || gradle.startParameter.taskRequests.toString().contains("Firebase")
 
 plugins {
@@ -21,20 +20,27 @@ android {
         versionCode = 356
         versionName = "20221225-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDir( "src/main/libs")
+        externalNativeBuild {
+            cmake {
+                cppFlags += ""
+                arguments += listOf(
+                    "-DANDROID_STL=c++_shared",
+                    "-DJAMI_JNI=ON",
+                    "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
+                    "-DJAMI_DATADIR=/data/data/cx.ring/files",
+                    "-DJAMI_NATPNP=Off"
+                )
+            }
+            ndk {
+                debugSymbolLevel = "FULL"
+                abiFilters += listOf(/*"x86_64", "armeabi-v7a",*/ "arm64-v8a")
+            }
         }
     }
-
     buildTypes {
         debug {
             isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            packagingOptions {
-                jniLibs.keepDebugSymbols += "**/*.so"
-            }
         }
         release {
             isMinifyEnabled = true
@@ -60,15 +66,7 @@ android {
             storeFile = file("../keystore.bin")
         }
     }
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            val sp = archs.split(",")
-            include("armeabi-v7a, arm64-v8a, x86_64")
-            isUniversalApk = true
-        }
-    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -77,6 +75,12 @@ android {
         jvmTarget = "1.8"
     }
     namespace = "cx.ring"
+    externalNativeBuild {
+        cmake {
+            path = file("../../../daemon/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
 }
 
 val markwon_version = "4.6.2"
