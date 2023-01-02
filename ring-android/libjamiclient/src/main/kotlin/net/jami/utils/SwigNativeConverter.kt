@@ -30,10 +30,6 @@ object SwigNativeConverter {
 
     fun toJava(vector: StringVect): ArrayList<String> = ArrayList(vector)
 
-    fun toJava(vector: MessageVect): ArrayList<Message> {
-        val size = vector.size
-        val toReturn = ArrayList<Message>(size)
-        for (i in 0 until size) toReturn.add(vector[i])
-        return toReturn
-    }
+    fun toJava(vector: MessageVect): ArrayList<Message> =
+        vector.mapTo(ArrayList<Message>(vector.size)) { it }
 }
