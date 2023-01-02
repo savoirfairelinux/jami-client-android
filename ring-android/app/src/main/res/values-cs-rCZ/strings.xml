@@ -183,6 +183,9 @@
   <string name="block_contact_dialog_title">Blokovat %1$s?</string>
   <string name="block_contact_dialog_message">%1$s se s vámi nebude schopen spojit, dokud jej neodblokujete.</string>
   <string name="block_contact_completed">%1$s byl zablokován.</string>
+  <string name="unblock_contact_dialog_title">Odblokovat %1$s ?</string>
+  <string name="unblock_contact_dialog_message">1%1$s vás bude moci znovu kontaktovat.</string>
+  <string name="unblock_contact_completed">%1$s  byl odblokován.</string>
   <string name="conversation_contact_is_typing">Kontakt píše…</string>
   <string name="conversation_info_contact_you">Vy</string>
   <string name="conversation_members">Členové</string>
@@ -190,10 +193,13 @@
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
   <string name="conversation_type_contact">Kontakt na Jami</string>
+  <string name="conversation_type_private">Soukromý swarm</string>
+  <string name="conversation_type_group">Skupinový swarm</string>
   <string name="conversation_contact_invited">%1$sbyl pozván</string>
   <string name="conversation_contact_added">%1$sse připojil</string>
   <string name="conversation_contact_left">%1$sodešel</string>
   <string name="conversation_contact_banned">%1$sbyl zakázán</string>
+  <string name="conversation_search_hint">Najít konverzaci</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
@@ -256,6 +262,7 @@
   <string name="no_contact_request">Neposlána žádná žádost o kontakt</string>
   <string name="conversation_placeholder">Zatím nemáte žádné konverzace</string>
   <string name="contact_request_sent">Poslána žádost o kontakt</string>
+  <string name="start_conversation">Začít novou konverzaci</string>
   <string name="search_results">Výsledky hledání</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nenalezena žádná aplikace pro galerii</string>
@@ -348,9 +355,17 @@
   <string name="reset">Resetovat</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Potvrdit</string>
+  <string name="rename_error">nemůže být prázdné</string>
   <string name="swarm_description">Přidejte popis</string>
   <string name="tab_about">O aplikaci</string>
   <string name="tab_members">Členové</string>
   <string name="tab_documetn">Dokumenty</string>
+  <string name="dialogtitle_title">Upravit název swarmu</string>
+  <string name="dialogtitle_description">Upravit popis swarm</string>
   <string name="dialog_hint_title">Název</string>
+  <string name="dialog_hint_description">Popis</string>
+  <string name="picker_title">Vybrat kontakt</string>
+  <string name="picker_btn">Vybrat kontakt</string>
+  <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
+  <string name="bottomsheet_remove">Odstranit ze swarmu</string>
 </resources>

@@ -183,6 +183,9 @@
   <string name="block_contact_dialog_title">Ali želite blokirati %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vas ne bo mogel kontaktirati, dokler ga ne odblokirate.</string>
   <string name="block_contact_completed">%1$s je blokiran(a).</string>
+  <string name="unblock_contact_dialog_title">Ali želite odblokirati %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s vas bo lahko znova kontaktiral(a).</string>
+  <string name="unblock_contact_completed">%1$s je odblokiran(a).</string>
   <string name="conversation_contact_is_typing">Stik piše ...</string>
   <string name="conversation_info_contact_you">Vi</string>
   <string name="conversation_members">Člani</string>
