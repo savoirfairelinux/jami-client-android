@@ -69,16 +69,14 @@ object VCardUtils {
         return Pair(contactName, photo)
     }
 
-    fun writeData(uri: String?, displayName: String?, picture: ByteArray?): VCard {
-        val vcard = VCard()
-        vcard.formattedName = FormattedName(displayName)
-        vcard.uid = Uid(uri)
-        if (picture != null) {
-            vcard.addPhoto(Photo(picture, ImageType.JPEG))
+    fun writeData(uri: String?, displayName: String?, picture: ByteArray?): VCard =
+        VCard().apply {
+            formattedName = FormattedName(displayName)
+            uid = Uid(uri)
+            if (picture != null)
+                addPhoto(Photo(picture, ImageType.JPEG))
+            removeProperties(RawProperty::class.java)
         }
-        vcard.removeProperties(RawProperty::class.java)
-        return vcard
-    }
 
     /**
      * Parse the "elements" of the mime attributes to build a proper hashtable
@@ -105,12 +103,11 @@ object VCardUtils {
         saveToDisk(vcard, filename, peerProfilePath(filesDir, accountId))
     }
 
-    fun saveLocalProfileToDisk(vcard: VCard, accountId: String, filesDir: File): Single<VCard> {
-        return Single.fromCallable {
+    fun saveLocalProfileToDisk(vcard: VCard, accountId: String, filesDir: File): Single<VCard> =
+        Single.fromCallable {
             saveToDisk(vcard, LOCAL_USER_VCARD_NAME, localProfilePath(filesDir, accountId))
             vcard
         }
-    }
 
     /**
      * Saves a vcard string to an internal new vcf file.
@@ -143,17 +140,15 @@ object VCardUtils {
         return loadFromDisk(File(profileFolder, filename))
     }
 
-    fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> {
-        return Single.fromCallable {
+    fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> =
+        Single.fromCallable {
             val path = localProfilePath(filesDir, accountId).absolutePath
             loadFromDisk(File(path, LOCAL_USER_VCARD_NAME))
         }
-    }
 
-    fun loadLocalProfileFromDiskWithDefault(filesDir: File, accountId: String): Single<VCard> {
-        return loadLocalProfileFromDisk(filesDir, accountId)
-            .onErrorReturn { e: Throwable? -> setupDefaultProfile(filesDir, accountId) }
-    }
+    fun loadLocalProfileFromDiskWithDefault(filesDir: File, accountId: String): Single<VCard> =
+        loadLocalProfileFromDisk(filesDir, accountId)
+            .onErrorReturn { setupDefaultProfile(filesDir, accountId) }
 
     /**
      * Loads the vcard file from the disk
@@ -198,14 +193,11 @@ object VCardUtils {
 
     private fun peerProfilePath(filesDir: File, accountId: String): File {
         val accountDir = File(filesDir, accountId)
-        val profileDir = File(accountDir, "profiles")
-        profileDir.mkdirs()
-        return profileDir
+        return File(accountDir, "profiles").apply { mkdirs() }
     }
 
-    private fun localProfilePath(filesDir: File, accountId: String): File {
-        return File(filesDir, accountId).apply { mkdir() }
-    }
+    private fun localProfilePath(filesDir: File, accountId: String): File =
+        File(filesDir, accountId).apply { mkdir() }
 
     private fun setupDefaultProfile(filesDir: File, accountId: String): VCard {
         val vcard = VCard()
