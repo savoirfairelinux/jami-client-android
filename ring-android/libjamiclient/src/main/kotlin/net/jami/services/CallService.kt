@@ -402,8 +402,7 @@ class CallService(
     fun sendTextMessage(accountId: String, callId: String, msg: String) {
         mExecutor.execute {
             Log.i(TAG, "sendTextMessage() thread running...")
-            val messages = StringMap()
-            messages.setRaw("text/plain", Blob.fromString(msg))
+            val messages = StringMap().apply { setUnicode("text/plain", msg) }
             JamiService.sendTextMessage(accountId, callId, messages, "", false)
         }
     }
@@ -411,9 +410,9 @@ class CallService(
     fun sendAccountTextMessage(accountId: String, to: String, msg: String): Single<Long> {
         return Single.fromCallable {
             Log.i(TAG, "sendAccountTextMessage() running... $accountId $to $msg")
-            val msgs = StringMap()
-            msgs.setRaw("text/plain", Blob.fromString(msg))
-            JamiService.sendAccountTextMessage(accountId, to, msgs)
+            JamiService.sendAccountTextMessage(accountId, to, StringMap().apply {
+                setUnicode("text/plain", msg)
+            })
         }.subscribeOn(Schedulers.from(mExecutor))
     }
 
