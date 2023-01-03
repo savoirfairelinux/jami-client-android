@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb2b4c7_b5b5b5ab",
+        "filename": "ring-android/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-01-03T16:45:41Z",
+      "side": 1,
+      "message": "seems not supported by the current android studio on stable channel (dolphin)",
+      "range": {
+        "startLine": 12,
+        "startChar": 50,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "7ec535dc532a4bad71bd406cae84334f41ece2fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
