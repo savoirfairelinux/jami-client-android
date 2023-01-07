@@ -629,6 +629,16 @@ class ConversationAdapter(
             convActionEdit.isVisible = !interaction.isIncoming
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             val popupWindow = WeakReference(PopupWindow(root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true).apply {
+                setOnDismissListener {
+                    if (convColor != 0
+                        && interaction.type == Interaction.InteractionType.TEXT
+                        && !interaction.isIncoming
+                    ) {
+                        v.background.setTint(convColor)
+                    } else {
+                        v.background.setTintList(null)
+                    }
+                }
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
                 showAsDropDown(v)
             })
