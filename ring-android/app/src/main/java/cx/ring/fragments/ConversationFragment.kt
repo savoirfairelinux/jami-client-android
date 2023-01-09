@@ -273,6 +273,9 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding.replyCloseBtn.setOnClickListener {
                 clearReply()
             }
+            binding.fabLatest.setOnClickListener {
+                scrollToEnd()
+            }
             setHasOptionsMenu(true)
             if (!DeviceUtils.isTablet(requireContext())) {
                 binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
@@ -308,13 +311,21 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding.histList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 // The minimum amount of items to have below current scroll position
                 // before loading more.
-                val visibleThreshold = 3
+                val visibleLoadThreshold = 3
+                // The amount of items to have below the current scroll position to display
+                // the scroll to bottom button.
+                val visibleScrollThreshold = 8
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager?
-                    if (!loading && layoutManager!!.findFirstVisibleItemPosition() < visibleThreshold) {
+                    if (!loading && layoutManager!!.findFirstVisibleItemPosition() < visibleLoadThreshold) {
                         loading = true
                         presenter.loadMore()
+                    }
+                    if (layoutManager!!.itemCount - layoutManager.findLastVisibleItemPosition() > visibleScrollThreshold) {
+                        binding.fabLatest.show()
+                    } else {
+                        binding.fabLatest.hide()
                     }
                 }
             })
