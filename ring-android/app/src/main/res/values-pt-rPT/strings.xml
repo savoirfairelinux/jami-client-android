@@ -340,7 +340,10 @@
   <string name="reset">Resetar</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmar</string>
+  <string name="swarm_description">Adicionar uma descrição</string>
   <string name="tab_about">Sobre</string>
   <string name="tab_members">Membros</string>
+  <string name="tab_documetn">Documentos</string>
   <string name="dialog_hint_title">Título</string>
+  <string name="dialog_hint_description">Descrição</string>
 </resources>
