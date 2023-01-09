@@ -80,7 +80,7 @@ android {
     namespace = "cx.ring"
     externalNativeBuild {
         cmake {
-            path = file("../../../daemon/CMakeLists.txt")
+            path = file("../../daemon/CMakeLists.txt")
             version = "3.22.1"
         }
     }
