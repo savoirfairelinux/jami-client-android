@@ -45,18 +45,6 @@ export ANDROID_API=android-$API
 export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/$platform-$arch
 export TARGET
 
-if [ -z "$DAEMON_DIR" ]; then
-    DAEMON_DIR="$(pwd)/../daemon"
-    echo "DAEMON_DIR not provided trying to find it in $DAEMON_DIR"
-fi
-if [ ! -d "$DAEMON_DIR" ]; then
-    echo 'Daemon not found.'
-    echo 'If you cloned the daemon in a custom location override DAEMON_DIR to point to it'
-    echo "You can also use our meta repo which contains both:
-          https://review.jami.net/admin/repos/jami-project"
-    exit 1
-fi
-export DAEMON_DIR
 
 if [ "${RELEASE}" -eq 1 ]; then
     echo "Daemon in release mode."
@@ -82,11 +70,6 @@ echo "Building tools"
 make $MAKEFLAGS
 make .pkg-config
 make .gas
-
-# Generate JNI interface
-JNIDIR=$DAEMON_DIR/bin/jni
-cd $JNIDIR
-PACKAGEDIR=$ANDROID_APP_DIR/libjamiclient/src/main/java/net/jami/daemon $JNIDIR/make-swig.sh
 
 # Setup cross-compilation build environemnt
 export AR=$TOOLCHAIN/bin/llvm-ar
@@ -201,7 +184,7 @@ ${CXX} --shared \
        -Wno-unused-function \
        -Wno-unused-parameter \
        -Wl,-Bsymbolic \
-       ${JNIDIR}/jami_wrapper.cpp \
+       ${DAEMON_DIR}/bin/jni/jami_wrapper.cpp \
        ${DAEMON_BUILD_DIR}/src/.libs/libjami.a \
        -isystem ${DAEMON_DIR}/contrib/${TARGET}/include \
        -I${DAEMON_DIR}/src \

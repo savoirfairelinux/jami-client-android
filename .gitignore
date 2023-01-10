@@ -8,3 +8,5 @@ android-toolchain-*/
 **/.settings
 config.mak
 ring-android/captures/
+.cxx
+build/
