@@ -22,6 +22,30 @@
       },
       "revId": "7ec535dc532a4bad71bd406cae84334f41ece2fe",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acdf6ad1_4c031b93",
+        "filename": "ring-android/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-01-11T19:04:10Z",
+      "side": 1,
+      "message": "Just to add a note, Dolphin seems from 29 September 2022, with 3.1 I don\u0027t see any error and I think if non  stable is necessary to build, it should be at least documented",
+      "parentUuid": "0bb2b4c7_b5b5b5ab",
+      "range": {
+        "startLine": 12,
+        "startChar": 50,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "7ec535dc532a4bad71bd406cae84334f41ece2fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
