@@ -73,7 +73,10 @@ class VCardServiceImpl(private val mContext: Context) : VCardService() {
             .map { vcard -> readData(vcard) }
 
     override fun loadConversationProfile(info: Map<String, String>): Single<Profile> =
-        Single.fromCallable { Profile(info["title"], BitmapUtils.base64ToBitmap(info["avatar"]), info["description"]) }
+        Single.fromCallable {
+            val title = info["title"]
+            Profile(if (title.isNullOrBlank()) null else title, BitmapUtils.base64ToBitmap(info["avatar"]), info["description"])
+        }
             .cache()
             .subscribeOn(Schedulers.computation())
 
