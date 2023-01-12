@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e1a7ad0_280cf1ac",
+        "filename": "ring-android/app/build.gradle.kts",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-01-12T19:09:12Z",
+      "side": 1,
+      "message": "uncomment?",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "1d88072637c318b2b807fd732fab9d02b537679a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
