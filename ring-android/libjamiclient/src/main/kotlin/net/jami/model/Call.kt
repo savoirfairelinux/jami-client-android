@@ -82,7 +82,7 @@ class Call : Interaction {
         conversation: ConversationHistory?,
         contact: Contact?,
         direction: Direction,
-        mediaList: List<Media>,
+        //mediaList: List<Media>,
     ) {
         daemonIdString = daemonId
         try {
@@ -98,8 +98,7 @@ class Call : Interaction {
         mType = InteractionType.CALL.toString()
         this.contact = contact
         mIsRead = 1
-        this.mediaList = mediaList
-
+        //this.mediaList = mediaList
     }
 
     constructor(interaction: Interaction) {

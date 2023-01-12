@@ -34,7 +34,6 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
-import android.text.TextUtils
 import android.util.Log
 import android.util.Rational
 import android.view.*
@@ -43,23 +42,16 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
-import android.widget.RelativeLayout
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import cx.ring.R
 import cx.ring.adapters.ConfParticipantAdapter
-import cx.ring.adapters.ConfParticipantAdapter.ConfParticipantSelected
-import cx.ring.client.CallActivity
 import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.ConversationSelectionActivity
-import cx.ring.databinding.ItemParticipantHandContainerBinding
-import cx.ring.databinding.ItemParticipantLabelBinding
 import cx.ring.databinding.TvFragCallBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.service.DRingService
 import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUriHandler
@@ -118,7 +110,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         args.getString(CallFragment.KEY_ACTION)?.let { action ->
             if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
                 prepareCall(false)
-            else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT)
+            else if (action == Intent.ACTION_VIEW || action == DRingService.ACTION_CALL_ACCEPT)
                 presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
         }
     }

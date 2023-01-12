@@ -36,16 +36,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.fragments.CallFragment
+import cx.ring.service.DRingService
 import cx.ring.utils.ConversationPath.Companion.fromIntent
 import cx.ring.utils.KeyboardVisibilityManager
 import cx.ring.utils.MediaButtonsHelper
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.call.CallPresenter
 import net.jami.services.NotificationService
-import net.jami.utils.Log
 
 @AndroidEntryPoint
 class CallActivity : AppCompatActivity() {
@@ -84,7 +84,7 @@ class CallActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val presenter = callFragment?.presenter
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && presenter?.mOnGoingCall == true && presenter.isVideoActive()) {
+        if (presenter?.mOnGoingCall == true && presenter.isVideoActive()) {
             presenter.requestPipMode()
         } else {
             super.onBackPressed()
@@ -112,21 +112,23 @@ class CallActivity : AppCompatActivity() {
         val action = intent.action
         val wantVideo = intent.getBooleanExtra(CallFragment.KEY_HAS_VIDEO, false)
         val confId = intent.getStringExtra(NotificationService.KEY_CALL_ID)
+        val acceptOption = intent.getStringExtra(CallPresenter.KEY_ACCEPT_OPTION)
         when (action) {
             Intent.ACTION_CALL -> {
                 val contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-                val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo)
+                val callFragment = CallFragment.newInstance(action, fromIntent(intent), contactId, wantVideo, acceptOption)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
             }
-            Intent.ACTION_VIEW, ACTION_CALL_ACCEPT -> {
+            Intent.ACTION_VIEW,
+            DRingService.ACTION_CALL_ACCEPT -> {
                 val currentId = callFragment?.arguments?.getString(NotificationService.KEY_CALL_ID)
                 if (currentId != confId) {
-                    val callFragment = CallFragment.newInstance(action, confId, wantVideo)
+                    val callFragment = CallFragment.newInstance(action, confId, wantVideo, acceptOption)
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
-                } else if (action == ACTION_CALL_ACCEPT) {
-                    callFragment?.handleIntent(action, confId, wantVideo)
+                } else if (action != Intent.ACTION_VIEW) {
+                    callFragment?.handleAcceptIntent(acceptOption, confId, wantVideo)
                 }
             }
         }
@@ -215,7 +217,6 @@ class CallActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = CallActivity::class.simpleName!!
-        const val ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT"
         private const val CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG"
 
         /* result code sent in case of call failure */
