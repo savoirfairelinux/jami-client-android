@@ -604,6 +604,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun shareText(body: String) {
         TODO("Not yet implemented")
     }
+    override fun scrollToMessage(messageId: String) {}
 
     override fun displayOnGoingCallPane(display: Boolean) {}
     override fun displayNumberSpinner(conversation: Conversation, number: net.jami.model.Uri) {}

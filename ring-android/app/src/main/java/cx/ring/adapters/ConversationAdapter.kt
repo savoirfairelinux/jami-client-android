@@ -1184,6 +1184,13 @@ class ConversationAdapter(
         return i
     }
 
+    fun messagePosition(messageId: String): Int {
+        for ((i, interaction) in mInteractions.withIndex())
+            if (interaction.messageId == messageId)
+                return i
+        return -1
+    }
+
     private enum class SequenceType { FIRST, MIDDLE, LAST, SINGLE }
 
     companion object {

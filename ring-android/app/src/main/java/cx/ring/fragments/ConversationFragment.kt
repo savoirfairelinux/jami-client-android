@@ -805,6 +805,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    override fun scrollToMessage(messageId: String) {
+        val list = binding?.histList ?: return
+        val position = mAdapter!!.messagePosition(messageId)
+        if (position != -1)
+            list.smoothScrollToPosition(position)
+    }
+
     fun openContact() {
         presenter.openContact()
     }
@@ -843,13 +850,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {
-        val path = ConversationPath.fromBundle(arguments)
-        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
+        val args = requireArguments()
+        val path = ConversationPath.fromBundle(args) ?: return
+        val selection = args.getString(EXTRA_SELECTION)
+        mIsBubble = args.getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
         Log.w(TAG, "initPresenter $path")
-        if (path == null) return
         val uri = path.conversationUri
         mAdapter = ConversationAdapter(this, presenter)
-        presenter.init(uri, path.accountId)
+        //mAdapter.selection = selection
+        presenter.init(uri, path.accountId, selection=selection)
         try {
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
                 preferences.registerOnSharedPreferenceChangeListener(this)
@@ -1219,6 +1228,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
         const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
         const val EXTRA_SHOW_MAP = "showMap"
+        const val EXTRA_SELECTION = "messageId"
         private const val REQUEST_CODE_FILE_PICKER = 1000
         private const val REQUEST_PERMISSION_CAMERA = 1001
         private const val REQUEST_CODE_TAKE_PICTURE = 1002

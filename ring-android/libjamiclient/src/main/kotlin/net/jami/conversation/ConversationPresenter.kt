@@ -60,8 +60,10 @@ class ConversationPresenter @Inject constructor(
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
     private var searchQuerySubject: Subject<String>? = null
     private var myId: String? = null
+    private var currentSelectionId: String? = null
 
-    fun init(conversationUri: Uri, accountId: String) {
+    fun init(conversationUri: Uri, accountId: String, selection: String? = null) {
+        currentSelectionId = selection
         if (conversationUri == mConversationUri) return
         Log.w(TAG, "init $conversationUri $accountId")
         val settings = preferencesService.settings
@@ -150,81 +152,93 @@ class ConversationPresenter @Inject constructor(
         }
 
         view.hideNumberSpinner()
-        disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode ->
+        disposable.addAll(
+            c.mode.switchMap { mode: Conversation.Mode ->
                 conversationFacade.observeConversation(account, c, true)
                     .observeOn(uiScheduler)
-                    .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
-            }
-            .subscribe())
-        disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode ->
+                    .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) } }
+                .subscribe(),
+
+            c.mode.switchMap { mode: Conversation.Mode ->
                 if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri else Observable.empty() }
-            .observeOn(uiScheduler)
-            .subscribe { uri: Uri -> init(uri, account.accountId) })
-        disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
-            { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
-            .observeOn(uiScheduler)
-            .subscribe { isOk: Boolean ->
-                this.view?.let { v ->
-                    if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
-                        v.displayAccountOfflineErrorPanel()
-                    } else {
-                        v.hideErrorPanel()
+                .observeOn(uiScheduler)
+                .subscribe { uri: Uri -> init(uri, account.accountId, currentSelectionId) },
+
+            Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
+                { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
+                .observeOn(uiScheduler)
+                .subscribe { isOk: Boolean ->
+                    this.view?.let { v ->
+                        if (!isOk) v.displayNetworkErrorPanel() else if (!account.isEnabled) {
+                            v.displayAccountOfflineErrorPanel()
+                        } else {
+                            v.hideErrorPanel()
+                        }
                     }
-                }
-            })
-        disposable.add(c.sortedHistory
-            .observeOn(uiScheduler)
-            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
-                Log.e(TAG, "Can't update element", e)
-            })
-        disposable.add(c.cleared
-            .observeOn(uiScheduler)
-            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
-                Log.e(TAG, "Can't update elements", e)
-            })
-        disposable.add(c.contactUpdates
-            .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
-            .observeOn(uiScheduler)
-            .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) })
-        disposable.add(c.updatedElements
-            .observeOn(uiScheduler)
-            .subscribe({ elementTuple ->
-                val v = this.view ?: return@subscribe
-                when (elementTuple.second) {
-                    ElementStatus.ADD -> v.addElement(elementTuple.first)
-                    ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
-                    ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
-                }
-            }, { e: Throwable -> Log.e(TAG, "Can't update element", e) }))
+                },
+
+            c.sortedHistory
+                .observeOn(uiScheduler)
+                .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
+                    Log.e(TAG, "Can't update element", e)
+                },
+            c.cleared
+                .observeOn(uiScheduler)
+                .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
+                    Log.e(TAG, "Can't update elements", e)
+                },
+            c.contactUpdates
+                .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
+                .observeOn(uiScheduler)
+                .subscribe { contact: ContactViewModel -> this.view?.updateContact(contact) },
+
+            c.updatedElements
+                .observeOn(uiScheduler)
+                .subscribe({ elementTuple ->
+                    val v = this.view ?: return@subscribe
+                    when (elementTuple.second) {
+                        ElementStatus.ADD -> v.addElement(elementTuple.first)
+                        ElementStatus.UPDATE -> v.updateElement(elementTuple.first)
+                        ElementStatus.REMOVE -> v.removeElement(elementTuple.first)
+                    }
+                }, { e: Throwable -> Log.e(TAG, "Can't update element", e) }),
+
+            c.calls
+                .observeOn(uiScheduler)
+                .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
+                    Log.e(TAG, "Can't update call view", e) },
+
+            c.getColor()
+                .observeOn(uiScheduler)
+                .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
+                    Log.e(TAG, "Can't update conversation color", e) },
+
+            c.getSymbol()
+                .observeOn(uiScheduler)
+                .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
+                    Log.e(TAG, "Can't update conversation color", e) },
+
+            account.getLocationUpdates(c.uri)
+                .observeOn(uiScheduler)
+                .subscribe {
+                    Log.e(TAG, "getLocationUpdates: update")
+                    this.view?.showMap(c.accountId, c.uri.uri, false)
+                })
+
         if (showTypingIndicator()) {
             disposable.add(c.composingStatus
                 .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
-        disposable.add(c.calls
-            .observeOn(uiScheduler)
-            .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
-                Log.e(TAG, "Can't update call view", e)
-            })
-        disposable.add(c.getColor()
-            .observeOn(uiScheduler)
-            .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
-                Log.e(TAG, "Can't update conversation color", e)
-            })
-        disposable.add(c.getSymbol()
-            .observeOn(uiScheduler)
-            .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
-                Log.e(TAG, "Can't update conversation color", e)
-            })
-        disposable.add(account
-            .getLocationUpdates(c.uri)
-            .observeOn(uiScheduler)
-            .subscribe {
-                Log.e(TAG, "getLocationUpdates: update")
-                this.view?.showMap(c.accountId, c.uri.uri, false)
-            })
+        currentSelectionId?.let { selection ->
+            if (c.getMessage(selection) != null) {
+
+            } else {
+                disposable.add(accountService.loadUntil(c, until = selection)
+                    .observeOn(uiScheduler)
+                    .subscribe { l -> this.view?.scrollToMessage(selection) })
+            }
+        }
     }
 
     fun loadMore() {
