@@ -168,6 +168,7 @@ class AccountService(
 
     data class ConversationSearchResult(val results: List<Interaction>)
     private val conversationSearches: MutableMap<Long, Subject<ConversationSearchResult>> = ConcurrentHashMap()
+    private val loadingTasks: MutableMap<Long, SingleSubject<List<Interaction>>> = ConcurrentHashMap()
 
     class UserSearchResult(val accountId: String, val query: String, var state: Int = 0) {
         var results: List<Contact>? = null
@@ -452,9 +453,8 @@ class AccountService(
         Completable.fromAction { JamiService.removeConversation(accountId, conversationUri.rawRingId) }
             .subscribeOn(Schedulers.from(mExecutor))
 
-    private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) {
+    private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
         JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
-    }
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
@@ -478,6 +478,17 @@ class AccountService(
                 for (root in roots)
                     loadConversationHistory(conversation.accountId, conversation.uri, root, n.toLong())
             return ret
+        }
+    }
+
+    fun loadUntil(conversation: Conversation, from: String = "", until: String = ""): Single<List<Interaction>> {
+        val mode = conversation.mode.blockingFirst()
+        if (mode == Conversation.Mode.Syncing || mode == Conversation.Mode.Request) {
+            Log.w(TAG, "loadUntil: conversation is syncing")
+            return Single.just(emptyList())
+        }
+        return SingleSubject.create<List<Interaction>>().apply {
+            loadingTasks[JamiService.loadConversationUntil(conversation.accountId, conversation.uri.rawRingId, from, until)] = this
         }
     }
 
@@ -616,8 +627,8 @@ class AccountService(
     /**
      * Exports the account on the DHT (used for multi-devices feature)
      */
-    fun exportOnRing(accountId: String, password: String): Single<String> {
-        return mExportSubject
+    fun exportOnRing(accountId: String, password: String): Single<String> =
+        mExportSubject
             .filter { r: ExportOnRingResult -> r.accountId == accountId }
             .firstOrError()
             .map { result: ExportOnRingResult ->
@@ -633,7 +644,6 @@ class AccountService(
                 mExecutor.execute { JamiService.exportOnRing(accountId, password) }
             }
             .subscribeOn(Schedulers.io())
-    }
 
     /**
      * @return the list of the account's devices from the Daemon
@@ -1221,8 +1231,6 @@ class AccountService(
                 try {
                     val fileName = message["displayName"]!!
                     val fileId = message["fileId"]
-                    //interaction = account.getDataTransfer(fileId);
-                    //if (interaction == null) {
                     val paths = arrayOfNulls<String>(1)
                     val progressA = LongArray(1)
                     val totalA = LongArray(1)
@@ -1232,7 +1240,7 @@ class AccountService(
                     }
                     val path = File(paths[0]!!)
                     val isComplete = path.exists() && progressA[0] == totalA[0]
-                    Log.w(TAG, "add DataTransfer at " + paths[0] + " with progress " + progressA[0] + "/" + totalA[0])
+                    Log.w(TAG, "add $isComplete DataTransfer at ${paths[0]} with progress ${progressA[0]}/${totalA[0]}")
                     DataTransfer(fileId, account.accountId, author, fileName, contact.isUser, timestamp, totalA[0], progressA[0]).apply {
                         daemonPath = path
                         status = if (isComplete) InteractionStatus.TRANSFER_FINISHED else InteractionStatus.FILE_AVAILABLE
@@ -1275,14 +1283,15 @@ class AccountService(
 
     fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
         try {
+            val task = loadingTasks.remove(id)
             // Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
+                val interactions: List<Interaction>
                 synchronized(conversation) {
-                    for (message in messages) {
-                        addMessage(account, conversation, message, false)
-                    }
+                    interactions = messages.map { addMessage(account, conversation, it, false) }
                     conversation.stopLoading()
                 }
+                task?.onSuccess(interactions)
                 account.conversationChanged()
             }}
         } catch (e: Exception) {
