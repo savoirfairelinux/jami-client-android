@@ -121,7 +121,7 @@ class DeviceRuntimeServiceImpl(
         get() {
             mContext.contentResolver.query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    return cursor.getString(cursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
+                    return cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Profile.DISPLAY_NAME_PRIMARY))
                 }
             }
             return null

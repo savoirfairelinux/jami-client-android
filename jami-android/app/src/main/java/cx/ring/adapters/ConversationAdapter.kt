@@ -313,20 +313,20 @@ class ConversationAdapter(
         conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { reactions ->
-                Log.w(TAG, "reaction $reactions")
-                val chip = conversationViewHolder.reactionChip ?: return@subscribe
-                if (reactions.isEmpty())
-                    chip.isVisible = false
-                else {
-                    chip.text = reactions.filterIsInstance<TextMessage>()
-                        .groupingBy { it.body!! }
-                        .eachCount()
-                        .map { it }
-                        .sortedByDescending { it.value }
-                        .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
-                    chip.isVisible = true
-                    chip.isClickable = true
-                    chip.isFocusable = true
+                conversationViewHolder.reactionChip?.let { chip ->
+                    if (reactions.isEmpty())
+                        chip.isVisible = false
+                    else {
+                        chip.text = reactions.filterIsInstance<TextMessage>()
+                            .groupingBy { it.body!! }
+                            .eachCount()
+                            .map { it }
+                            .sortedByDescending { it.value }
+                            .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
+                        chip.isVisible = true
+                        chip.isClickable = true
+                        chip.isFocusable = true
+                    }
                 }
             })
     }
