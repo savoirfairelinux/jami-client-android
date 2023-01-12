@@ -248,6 +248,10 @@ class ConversationAdapter(
     override fun getItemId(position: Int): Long =
         if (isComposing && position == mInteractions.size) Long.MAX_VALUE else mInteractions[position].id.toLong()
 
+    fun getMessagePosition(messageId: String): Int {
+        return mInteractions.indexOfFirst { it.messageId == messageId }
+    }
+
     override fun getItemViewType(position: Int): Int {
         if (isComposing && position == mInteractions.size) return MessageType.COMPOSING_INDICATION.ordinal
         val interaction = mInteractions[position]
@@ -346,6 +350,22 @@ class ConversationAdapter(
                                 append(": ")
                             }
                             .append(i.first.body)
+                        replyView.setOnClickListener {
+                            Log.d(TAG,
+                                "daemonid: ${interaction.daemonId} " +
+                                    "id: ${interaction.id} " +
+                                    "replytoid: ${interaction.replyToId} " +
+                                    "daemonidstring: ${interaction.daemonIdString} " +
+                                    "messageid: ${interaction.messageId}" +
+                                    "- reply - " +
+                                    "daemonid: ${i.first.daemonId} " +
+                                    "id: ${i.first.id} " +
+                                    "replytoid: ${i.first.replyToId} " +
+                                    "daemonidstring: ${i.first.daemonIdString}" +
+                                    "messageid: ${i.first.messageId}"
+                            )
+                            i.first.messageId?.let { presenter.scrollToMessage(it) }
+                        }
                         replyView.isVisible = true
                     }) { replyView.isVisible = false })
             } else {

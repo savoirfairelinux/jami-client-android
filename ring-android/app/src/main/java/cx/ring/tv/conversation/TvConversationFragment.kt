@@ -580,6 +580,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun scrollToEnd() {}
+
+    override fun scrollToMessage(messageId: String) {}
+
     override fun updateContact(contact: ContactViewModel) {
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
             .observeOn(AndroidSchedulers.mainThread())

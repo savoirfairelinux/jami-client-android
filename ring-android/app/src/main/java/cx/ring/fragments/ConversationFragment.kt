@@ -147,6 +147,15 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    override fun scrollToMessage(messageId: String) {
+        mAdapter?.let { adapter ->
+            val position = adapter.getMessagePosition(messageId)
+            if(position != -1) {
+                binding!!.histList.scrollToPosition(position) // Fix smooth scroll lag?
+            }
+        }
+    }
+
     private fun updateListPadding() {
         /* val binding = binding ?: return
         val bottomView = currentBottomView ?: return
