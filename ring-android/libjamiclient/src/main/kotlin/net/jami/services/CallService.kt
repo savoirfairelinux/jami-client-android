@@ -1,9 +1,6 @@
 /*
  *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
  *
- *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 3 of the License, or
@@ -25,7 +22,6 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.daemon.VectMap
@@ -44,19 +40,24 @@ class CallService(
     private val mContactService: ContactService,
     private val mAccountService: AccountService
 ) {
-    private val currentCalls: MutableMap<String, Call> = HashMap()
-    private val currentConferences: MutableMap<String, Conference> = HashMap()
+    private val calls: MutableMap<String, Call> = HashMap()
+    private val conferences: MutableMap<String, Conference> = HashMap()
     private val callSubject = PublishSubject.create<Call>()
     private val conferenceSubject = PublishSubject.create<Conference>()
 
-    // private final Set<String> currentConnections = new HashSet<>();
-    // private final BehaviorSubject<Integer> connectionSubject = BehaviorSubject.createDefault(0);
     val confsUpdates: Observable<Conference>
         get() = conferenceSubject
 
-    private fun getConfCallUpdates(conf: Conference): Observable<Conference> {
-        Log.w(TAG, "getConfCallUpdates " + conf.id)
-        return conferenceSubject
+    val callsUpdates: Observable<Call>
+        get() = callSubject
+
+    fun currentConferences(): List<Conference> =
+        synchronized(calls) {
+            conferences.values.filter { it.state == CallStatus.CURRENT }
+        }
+
+    private fun getConfCallUpdates(conf: Conference): Observable<Conference> =
+        conferenceSubject
             .filter { c -> c == conf }
             .startWithItem(conf)
             .map(Conference::participants)
@@ -64,15 +65,10 @@ class CallService(
                     .flatMap { call: Call -> callSubject.filter { c -> c == call } } }
             .map { conf }
             .startWithItem(conf)
-    }
 
-    fun getConfUpdates(confId: String): Observable<Conference> {
-        return getCurrentCallForId(confId)?.let { getConfUpdates(it) }
+    fun getConfUpdates(confId: String): Observable<Conference> =
+        calls[confId]?.let { getConfUpdates(it) }
             ?: Observable.error(IllegalArgumentException())
-        /*Conference call = currentConferences.get(confId);
-        return call == null ? Observable.error(new IllegalArgumentException()) : conferenceSubject
-                .filter(c -> c.getId().equals(confId));//getConfUpdates(call);*/
-    }
 
     /*public Observable<Boolean> getConnectionUpdates() {
         return connectionSubject
@@ -142,7 +138,7 @@ class CallService(
         var conference = getConference(callId)
         val call: Call?
         if (conference == null) {
-            call = getCurrentCallForId(callId)
+            call = calls[callId]
             if (call != null) {
                 conference = getConference(call)
             }
@@ -156,7 +152,7 @@ class CallService(
         }
     }
 
-    private class ConferenceEntity internal constructor(var conference: Conference)
+    private class ConferenceEntity constructor(var conference: Conference)
 
     fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
 
@@ -185,26 +181,18 @@ class CallService(
             .switchMap { conf: Conference -> getConfCallUpdates(conf) }
     }
 
-    val callsUpdates: Observable<Call>
-        get() = callSubject
-
-    private fun getCallUpdates(call: Call): Observable<Call> {
-        return callSubject.filter { c: Call -> c == call }
+    private fun getCallUpdates(call: Call): Observable<Call> =
+        callSubject.filter { c: Call -> c == call }
             .startWithItem(call)
             .takeWhile { c: Call -> c.callStatus !== CallStatus.OVER }
-    }
 
-    /*public Observable<SipCall> getCallUpdates(final String callId) {
-        SipCall call = getCurrentCallForId(callId);
-        return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
-    }*/
     fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> {
         return placeCall(accountId, conversationUri, number, hasVideo)
             .flatMapObservable { call: Call -> getCallUpdates(call) }
     }
 
-    fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> {
-        return Single.fromCallable<Call> {
+    fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
+        Single.fromCallable<Call> {
             Log.i(TAG, "placeCall() thread running... $number hasVideo: $hasVideo")
             val media = VectMap()
             media.reserve(if (hasVideo) 2L else 1L)
@@ -218,7 +206,6 @@ class CallService(
             updateConnectionCount()
             call
         }.subscribeOn(Schedulers.from(mExecutor))
-    }
 
     fun refuse(accountId:String, callId: String) {
         mExecutor.execute {
@@ -228,18 +215,10 @@ class CallService(
         }
     }
 
-/*    fun accept(callId: String) {
-        mExecutor.execute {
-            Log.i(TAG, "accept() running... $callId")
-            JamiService.muteCapture(false)
-            JamiService.accept(callId)
-        }
-    }*/
-
     fun accept(accountId:String, callId: String, hasVideo: Boolean = false) {
         mExecutor.execute {
             Log.i(TAG, "accept() running... $callId")
-            val call = currentCalls[callId] ?: return@execute
+            val call = calls[callId] ?: return@execute
             val mediaList = call.mediaList ?: return@execute
             val vectMapMedia = mediaList.mapTo(VectMap().apply { reserve(mediaList.size.toLong()) }) { media ->
                 if (!hasVideo && media.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO)
@@ -407,50 +386,38 @@ class CallService(
         }
     }
 
-    fun sendAccountTextMessage(accountId: String, to: String, msg: String): Single<Long> {
-        return Single.fromCallable {
+    fun sendAccountTextMessage(accountId: String, to: String, msg: String): Single<Long> =
+        Single.fromCallable {
             Log.i(TAG, "sendAccountTextMessage() running... $accountId $to $msg")
             JamiService.sendAccountTextMessage(accountId, to, StringMap().apply {
                 setUnicode("text/plain", msg)
             })
         }.subscribeOn(Schedulers.from(mExecutor))
-    }
 
-    fun cancelMessage(accountId: String, messageID: Long): Completable {
-        return Completable.fromAction {
+    fun cancelMessage(accountId: String, messageID: Long): Completable =
+        Completable.fromAction {
             Log.i(TAG, "CancelMessage() running...   Account ID:  $accountId Message ID  $messageID")
             JamiService.cancelMessage(accountId, messageID)
         }.subscribeOn(Schedulers.from(mExecutor))
-    }
 
-    private fun getCurrentCallForId(callId: String): Call? {
-        return currentCalls[callId]
-    }
-
-    private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, mediaList: List<Media>): Call {
-        synchronized(currentCalls) {
-            var call = currentCalls[callId]
-            if (call == null) {
+    private fun addCall(accountId: String, callId: String, from: Uri, direction: Call.Direction, media: List<Media>): Call =
+        synchronized(calls) {
+            calls.getOrPut(callId) {
                 val account = mAccountService.getAccount(accountId)!!
                 val contact = mContactService.findContact(account, from)
                 val conversationUri = contact.conversationUri.blockingFirst()
                 val conversation =
                     if (conversationUri.equals(from)) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
-                call = Call(callId, from.uri, accountId, conversation, contact, direction, mediaList)
-                currentCalls[callId] = call
-            } else {
-                call.mediaList = mediaList
-            }
-            return call
+                Call(callId, from.uri, accountId, conversation, contact, direction)
+            }.apply { mediaList = media }
         }
-    }
 
     private fun addConference(call: Call): Conference {
         val confId = call.confId ?: call.daemonIdString!!
-        var conference = currentConferences[confId]
+        var conference = conferences[confId]
         if (conference == null) {
             conference = Conference(call)
-            currentConferences[confId] = conference
+            conferences[confId] = conference
             conferenceSubject.onNext(conference)
         }
         return conference
@@ -458,7 +425,7 @@ class CallService(
 
     private fun parseCallState(accountId: String, callId: String, newState: String, callDetails: Map<String, String>): Call? {
         val callState = CallStatus.fromString(newState)
-        var call = currentCalls[callId]
+        var call = calls[callId]
         if (call != null) {
             call.setCallState(callState)
             call.setDetails(callDetails)
@@ -479,7 +446,7 @@ class CallService(
             call.contact = contact
             call.conversation = conversation
             Log.w(TAG, "parseCallState " + contact + " " + contact.conversationUri.blockingFirst() + " " + conversation + " " + conversation?.participant)
-            currentCalls[callId] = call
+            calls[callId] = call
             updateConnectionCount()
         }
         return call
@@ -503,12 +470,12 @@ class CallService(
         val callDetails = JamiService.getCallDetails(accountId, callId)
         Log.d(TAG, "call state changed: $callId, $newState, $detailCode")
         try {
-            synchronized(currentCalls) {
+            synchronized(calls) {
                 parseCallState(accountId, callId, newState, callDetails)?.let { call ->
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
-                        currentCalls.remove(call.daemonIdString)
-                        currentConferences.remove(call.daemonIdString)
+                        calls.remove(call.daemonIdString)
+                        conferences.remove(call.daemonIdString)
                         updateConnectionCount()
                     }
                 }
@@ -519,12 +486,12 @@ class CallService(
     }
 
     fun audioMuted(callId: String, muted: Boolean) {
-        val call = currentCalls[callId]
+        val call = calls[callId]
         if (call != null) {
             call.isAudioMuted = muted
             callSubject.onNext(call)
         } else {
-            currentConferences[callId]?.let { conf ->
+            conferences[callId]?.let { conf ->
                 conf.isAudioMuted = muted
                 conferenceSubject.onNext(conf)
             }
@@ -532,11 +499,11 @@ class CallService(
     }
 
     fun videoMuted(callId: String, muted: Boolean) {
-        currentCalls[callId]?.let { call ->
+        calls[callId]?.let { call ->
             call.isVideoMuted = muted
             callSubject.onNext(call)
         }
-        currentConferences[callId]?.let { conf ->
+        conferences[callId]?.let { conf ->
             conf.isVideoMuted = muted
             conferenceSubject.onNext(conf)
         }
@@ -552,7 +519,7 @@ class CallService(
     }
 
     fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
-        getCurrentCallForId(callId)?.let { call ->
+        calls[callId]?.let { call ->
             if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
                 for (e in mediaList)
                     if (e[Media.MEDIA_TYPE_KEY]!! == MEDIA_TYPE_VIDEO)
@@ -564,8 +531,8 @@ class CallService(
 
     fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) {
         val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
-        val call = synchronized(currentCalls) {
-            getCurrentCallForId(callId)?.apply {
+        val call = synchronized(calls) {
+            calls[callId]?.apply {
                 mediaList = media
             }
         }
@@ -586,7 +553,7 @@ class CallService(
     }
 
     fun incomingMessage(accountId: String, callId: String, from: String, messages: Map<String, String>) {
-        val call = currentCalls[callId]
+        val call = calls[callId]
         if (call == null) {
             Log.w(TAG, "incomingMessage: unknown call or no message: $callId $from")
             return
@@ -641,40 +608,30 @@ class CallService(
         mExecutor.execute { JamiService.unholdConference(accountId, confId) }
     }
 
-    fun getConference(call: Call): Conference {
-        return addConference(call)
-    }
+    private fun getConference(call: Call): Conference = addConference(call)
 
-    fun getConference(id: String): Conference? {
-        return currentConferences[id]
-    }
+    fun getConference(id: String): Conference? = conferences[id]
 
     fun conferenceCreated(accountId: String, confId: String) {
         Log.d(TAG, "conference created: $confId")
-        var conf = currentConferences[confId]
-        if (conf == null) {
-            conf = Conference(accountId, confId)
-            currentConferences[confId] = conf
-        }
+        val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
         val participants = JamiService.getParticipantList(accountId, confId)
         val map = JamiService.getConferenceDetails(accountId, confId)
         conf.setState(map["STATE"]!!)
         for (callId in participants) {
-            val call = getCurrentCallForId(callId)
-            if (call != null) {
-                Log.d(TAG, "conference created: adding participant " + callId + " " + call.contact)
+            calls[callId]?.let { call ->
+                Log.d(TAG, "conferenceCreated: adding participant $callId ${call.contact}")
                 call.confId = confId
                 conf.addParticipant(call)
             }
-            val rconf = currentConferences.remove(callId)
-            Log.d(TAG, "conference created: removing conference " + callId + " " + rconf + " now " + currentConferences.size)
+            conferences.remove(callId)
         }
         conferenceSubject.onNext(conf)
     }
 
     fun conferenceRemoved(accountId: String, confId: String) {
         Log.d(TAG, "conference removed: $confId")
-        currentConferences.remove(confId)?.let { conf ->
+        conferences.remove(confId)?.let { conf ->
             for (call in conf.participants) {
                 call.confId = null
             }
@@ -686,23 +643,19 @@ class CallService(
     fun conferenceChanged(accountId: String, confId: String, state: String) {
         Log.d(TAG, "conference changed: $confId, $state")
         try {
-            var conf = currentConferences[confId]
-            if (conf == null) {
-                conf = Conference(accountId, confId)
-                currentConferences[confId] = conf
-            }
-            conf.setState(state)
             val participants: Set<String> = JamiService.getParticipantList(accountId, confId).toHashSet()
+
+            val conf = conferences.getOrPut(confId) { Conference(accountId, confId) }
+            conf.setState(state)
             // Add new participants
             for (callId in participants) {
                 if (!conf.contains(callId)) {
-                    val call = getCurrentCallForId(callId)
-                    if (call != null) {
+                    calls[callId]?.let { call ->
                         Log.d(TAG, "conference changed: adding participant " + callId + " " + call.contact)
                         call.confId = confId
                         conf.addParticipant(call)
                     }
-                    currentConferences.remove(callId)
+                    conferences.remove(callId)
                 }
             }
 

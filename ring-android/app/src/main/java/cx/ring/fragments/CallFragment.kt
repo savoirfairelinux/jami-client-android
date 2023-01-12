@@ -147,20 +147,20 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         args.getString(KEY_ACTION)?.let { action ->
             if (action == Intent.ACTION_CALL) {
                 prepareCall(false)
-            } else if (action == Intent.ACTION_VIEW || action == CallActivity.ACTION_CALL_ACCEPT) {
+            } else if (action == Intent.ACTION_VIEW || action == DRingService.ACTION_CALL_ACCEPT) {
+                val option = if (action == DRingService.ACTION_CALL_ACCEPT) args.getString(CallPresenter.KEY_ACCEPT_OPTION) else null
+                presenter.handleOption(option)
                 presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
             }
-
         }
     }
 
-    fun handleIntent(action: String, callId: String?, wantVideo: Boolean) {
-        if (action == CallActivity.ACTION_CALL_ACCEPT) {
-            if (wantVideo)
-                acceptClicked()
-            else
-                acceptAudioClicked()
-        }
+    fun handleAcceptIntent(option: String?, callId: String?, wantVideo: Boolean) {
+        presenter.handleOption(option)
+        if (wantVideo)
+            acceptClicked()
+        else
+            acceptAudioClicked()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -1172,29 +1172,20 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * @see .initializeCall
      */
     override fun prepareCall(acceptIncomingCall: Boolean) {
-        val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val hasVideo = presenter.wantVideo
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
-
-        if (hasVideo) {
-            val videoGranted = mDeviceRuntimeService.hasVideoPermission()
-            if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val perms = ArrayList<String>()
-                if (!videoGranted)
-                    perms.add(Manifest.permission.CAMERA)
-                if (!audioGranted)
-                    perms.add(Manifest.permission.RECORD_AUDIO)
-                requestPermissions(perms.toTypedArray(), permissionType)
-            } else if (audioGranted && videoGranted) {
-                initializeCall(acceptIncomingCall, hasVideo)
-            }
+        val audioGranted = mDeviceRuntimeService.hasAudioPermission()
+        val videoGranted = !hasVideo || mDeviceRuntimeService.hasVideoPermission()
+        if (!audioGranted || !videoGranted) {
+            val perms = ArrayList<String>()
+            if (!videoGranted)
+                perms.add(Manifest.permission.CAMERA)
+            if (!audioGranted)
+                perms.add(Manifest.permission.RECORD_AUDIO)
+            requestPermissions(perms.toTypedArray(), permissionType)
         } else {
-            if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
-            } else if (audioGranted) {
-                initializeCall(acceptIncomingCall, hasVideo)
-            }
+            initializeCall(acceptIncomingCall, hasVideo)
         }
     }
 
@@ -1361,42 +1352,40 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         private const val REQUEST_PERMISSION_OUTGOING = 1004
         private const val REQUEST_CODE_SCREEN_SHARE = 7
 
-        fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean): CallFragment {
-            return CallFragment().apply {
+        fun newInstance(action: String, path: ConversationPath?, contactId: String?, hasVideo: Boolean, option: String? = null): CallFragment =
+            CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
+                    putString(CallPresenter.KEY_ACCEPT_OPTION, option)
                     path?.toBundle(this)
                     putString(Intent.EXTRA_PHONE_NUMBER, contactId)
                     putBoolean(KEY_HAS_VIDEO, hasVideo)
                 }
             }
-        }
 
-        fun newInstance(action: String, confId: String?, hasVideo: Boolean): CallFragment {
-            return CallFragment().apply {
+        fun newInstance(action: String, confId: String?, hasVideo: Boolean, option: String? = null): CallFragment =
+            CallFragment().apply {
                 arguments = Bundle().apply {
                     putString(KEY_ACTION, action)
+                    putString(CallPresenter.KEY_ACCEPT_OPTION, option)
                     putString(NotificationService.KEY_CALL_ID, confId)
                     putBoolean(KEY_HAS_VIDEO, hasVideo)
                 }
             }
-        }
 
-        fun callStateToHumanState(state: CallStatus): Int {
-            return when (state) {
-                CallStatus.SEARCHING -> R.string.call_human_state_searching
-                CallStatus.CONNECTING -> R.string.call_human_state_connecting
-                CallStatus.RINGING -> R.string.call_human_state_ringing
-                CallStatus.CURRENT -> R.string.call_human_state_current
-                CallStatus.HUNGUP -> R.string.call_human_state_hungup
-                CallStatus.BUSY -> R.string.call_human_state_busy
-                CallStatus.FAILURE -> R.string.call_human_state_failure
-                CallStatus.HOLD -> R.string.call_human_state_hold
-                CallStatus.UNHOLD -> R.string.call_human_state_unhold
-                CallStatus.OVER -> R.string.call_human_state_over
-                CallStatus.NONE -> R.string.call_human_state_none
-                else -> R.string.call_human_state_none
-            }
+        fun callStateToHumanState(state: CallStatus): Int = when (state) {
+            CallStatus.SEARCHING -> R.string.call_human_state_searching
+            CallStatus.CONNECTING -> R.string.call_human_state_connecting
+            CallStatus.RINGING -> R.string.call_human_state_ringing
+            CallStatus.CURRENT -> R.string.call_human_state_current
+            CallStatus.HUNGUP -> R.string.call_human_state_hungup
+            CallStatus.BUSY -> R.string.call_human_state_busy
+            CallStatus.FAILURE -> R.string.call_human_state_failure
+            CallStatus.HOLD -> R.string.call_human_state_hold
+            CallStatus.UNHOLD -> R.string.call_human_state_unhold
+            CallStatus.OVER -> R.string.call_human_state_over
+            CallStatus.NONE -> R.string.call_human_state_none
+            else -> R.string.call_human_state_none
         }
 
         /**

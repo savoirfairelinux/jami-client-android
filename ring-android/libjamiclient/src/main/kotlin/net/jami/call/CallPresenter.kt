@@ -665,7 +665,39 @@ class CallPresenter @Inject constructor(
         return mAccountService.getAccount(conference.accountId)?.deviceId
     }
 
+    fun hangupCurrentCall() {
+        mCallService.currentConferences().filter { it != mConference }.forEach { conf ->
+            if (conf.isSimpleCall)
+                mCallService.hangUp(conf.accountId, conf.id)
+            else
+                mCallService.hangUpConference(conf.accountId, conf.id)
+        }
+    }
+
+    fun holdCurrentCall() {
+        mCallService.currentConferences().filter { it != mConference }.forEach { conf ->
+            if (conf.isSimpleCall)
+                mCallService.hold(conf.accountId, conf.id)
+            else
+                mCallService.holdConference(conf.accountId, conf.id)
+        }
+    }
+
+    fun handleOption(option: String?) {
+        if (option == ACCEPT_END) {
+            hangupCurrentCall()
+        } else if (option == ACCEPT_HOLD) {
+            holdCurrentCall()
+        }
+    }
+
     companion object {
         val TAG = CallPresenter::class.simpleName!!
+        /** Describes what to do if there is another active call when accepting this call  */
+        const val KEY_ACCEPT_OPTION = "acceptOpt"
+        /** Hold the other call when accepting */
+        const val ACCEPT_HOLD = "hold"
+        /** End the other call when accepting */
+        const val ACCEPT_END = "end"
     }
 }

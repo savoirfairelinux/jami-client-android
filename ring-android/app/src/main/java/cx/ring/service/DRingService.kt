@@ -235,7 +235,7 @@ class DRingService : Service() {
         when (action) {
             ACTION_TRUST_REQUEST_ACCEPT, ACTION_TRUST_REQUEST_REFUSE, ACTION_TRUST_REQUEST_BLOCK ->
                 handleTrustRequestAction(intent.data, action)
-            ACTION_CALL_ACCEPT, ACTION_CALL_HOLD_ACCEPT, ACTION_CALL_END_ACCEPT, ACTION_CALL_REFUSE, ACTION_CALL_END, ACTION_CALL_VIEW -> extras?.let {
+            ACTION_CALL_ACCEPT, ACTION_CALL_REFUSE, ACTION_CALL_END -> extras?.let {
                 handleCallAction(action, it)
             }
             ACTION_CONV_READ, ACTION_CONV_ACCEPT, ACTION_CONV_DISMISS, ACTION_CONV_REPLY_INLINE ->
@@ -280,29 +280,7 @@ class DRingService : Service() {
             return
         }
         when (action) {
-            ACTION_CALL_ACCEPT_AUDIO -> {
-                startActivity(Intent(ACTION_CALL_ACCEPT)
-                    .putExtras(extras)
-                    .setClass(applicationContext, CallActivity::class.java)
-                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
-            }
             ACTION_CALL_ACCEPT -> {
-                startActivity(Intent(ACTION_CALL_ACCEPT)
-                        .putExtras(extras)
-                        .setClass(applicationContext, CallActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
-            }
-            ACTION_CALL_HOLD_ACCEPT -> {
-                val holdId = extras.getString(NotificationService.KEY_HOLD_ID)!!
-                mCallService.hold(accountId, holdId)
-                startActivity(Intent(ACTION_CALL_ACCEPT)
-                        .putExtras(extras)
-                        .setClass(applicationContext, CallActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
-            }
-            ACTION_CALL_END_ACCEPT -> {
-                val endId = extras.getString(NotificationService.KEY_END_ID)!!
-                mCallService.hangUp(accountId, endId)
                 startActivity(Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(applicationContext, CallActivity::class.java)
@@ -315,12 +293,6 @@ class DRingService : Service() {
             ACTION_CALL_END -> {
                 mCallService.hangUp(accountId, callId)
                 mHardwareService.closeAudioState()
-            }
-            ACTION_CALL_VIEW -> {
-                startActivity(Intent(Intent.ACTION_VIEW)
-                    .putExtras(extras)
-                    .setClass(applicationContext, if (DeviceUtils.isTv(this)) TVCallActivity::class.java else CallActivity::class.java)
-                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
             }
         }
     }
@@ -383,13 +355,9 @@ class DRingService : Service() {
         const val ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT"
         const val ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE"
         const val ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK"
-        const val ACTION_CALL_ACCEPT_AUDIO = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT_AUDIO"
         const val ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT"
-        const val ACTION_CALL_HOLD_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_HOLD_ACCEPT"
-        const val ACTION_CALL_END_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_END_ACCEPT"
         const val ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE"
         const val ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END"
-        const val ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW"
         const val ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ"
         const val ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS"
         const val ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT"
