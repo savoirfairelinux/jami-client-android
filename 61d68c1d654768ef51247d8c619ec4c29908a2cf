@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f4b1efd_939fc39a",
+        "filename": "ring-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-13T17:00:06Z",
+      "side": 1,
+      "message": "loadUntil",
+      "range": {
+        "startLine": 487,
+        "startChar": 24,
+        "endLine": 487,
+        "endChar": 33
+      },
+      "revId": "61d68c1d654768ef51247d8c619ec4c29908a2cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
