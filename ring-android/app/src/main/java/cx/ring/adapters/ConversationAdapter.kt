@@ -108,6 +108,7 @@ class ConversationAdapter(
     private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
+    @ColorInt private var convColorTint = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
@@ -420,6 +421,11 @@ class ConversationAdapter(
 
     fun setPrimaryColor(@ColorInt color: Int) {
         convColor = color
+        notifyDataSetChanged()
+    }
+
+    fun setPrimaryColorTint(@ColorInt colorTint: Int) {
+        convColorTint = colorTint
         notifyDataSetChanged()
     }
 
@@ -835,7 +841,7 @@ class ConversationAdapter(
                     if (textMessage.isIncoming) {
                         longPressView.background.setTint(res.getColor(R.color.grey_500))
                     } else {
-                        longPressView.background.setTint(res.getColor(R.color.blue_900))
+                        longPressView.background.setTint(convColorTint)
                     }
                     mCurrentLongItem = RecyclerViewContextMenuInfo(
                         convViewHolder.bindingAdapterPosition,

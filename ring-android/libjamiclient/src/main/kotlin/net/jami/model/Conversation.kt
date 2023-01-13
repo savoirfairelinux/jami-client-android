@@ -46,6 +46,7 @@ class Conversation : ConversationHistory {
     private val callsSubject: Subject<List<Conference>> = BehaviorSubject.createDefault(emptyList())
     private val composingStatusSubject: Subject<Account.ComposingStatus> = BehaviorSubject.createDefault(Account.ComposingStatus.Idle)
     private val color: Subject<Int> = BehaviorSubject.create()
+    private val colorTint: Subject<Int> = BehaviorSubject.create()
     private val symbol: Subject<CharSequence> = BehaviorSubject.create()
     private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
     var loaded: Single<Conversation>? = null
@@ -639,11 +640,17 @@ class Conversation : ConversationHistory {
         color.onNext(c)
     }
 
+    fun setColorTint(c: Int) {
+        colorTint.onNext(c)
+    }
+
     fun setSymbol(s: CharSequence) {
         symbol.onNext(s)
     }
 
     fun getColor(): Observable<Int> = color
+
+    fun getColorTint(): Observable<Int> = colorTint
 
     fun getSymbol(): Observable<CharSequence> = symbol
 

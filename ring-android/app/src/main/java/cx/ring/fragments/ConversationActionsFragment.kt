@@ -93,11 +93,30 @@ class ConversationActionsFragment : Fragment() {
 
             colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
                 ColorChooserBottomSheet { color ->
+                    val colorTint = when (color) {
+                        resources.getColor(R.color.pink_500) -> resources.getColor(R.color.pink_900)
+                        resources.getColor(R.color.purple_500) -> resources.getColor(R.color.purple_900)
+                        resources.getColor(R.color.deep_purple_500) -> resources.getColor(R.color.deep_purple_900)
+                        resources.getColor(R.color.indigo_500) -> resources.getColor(R.color.indigo_900)
+                        resources.getColor(R.color.blue_500) -> resources.getColor(R.color.blue_900)
+                        resources.getColor(R.color.cyan_500) -> resources.getColor(R.color.cyan_900)
+                        resources.getColor(R.color.teal_500) -> resources.getColor(R.color.teal_900)
+                        resources.getColor(R.color.green_500) -> resources.getColor(R.color.green_900)
+                        resources.getColor(R.color.light_green_500) -> resources.getColor(R.color.light_green_900)
+                        resources.getColor(R.color.grey_500) -> resources.getColor(R.color.grey_800)
+                        resources.getColor(R.color.lime_500) -> resources.getColor(R.color.lime_900)
+                        resources.getColor(R.color.amber_500) -> resources.getColor(R.color.amber_900)
+                        resources.getColor(R.color.deep_orange_500) -> resources.getColor(R.color.deep_orange_900)
+                        resources.getColor(R.color.brown_500) -> resources.getColor(R.color.brown_900)
+                        resources.getColor(R.color.blue_grey_500) -> resources.getColor(R.color.blue_grey_900)
+                        else -> resources.getColor(R.color.blue_900)
+                    }
                     colorAction!!.iconTint = color
                     (activity as ContactDetailsActivity).updateColor(color)
                     adapter.notifyItemChanged(colorActionPosition)
                     preferences.edit()
                         .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
+                        .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR_TINT, colorTint)
                         .apply()
                 }.show(parentFragmentManager, "colorChooser")
             }

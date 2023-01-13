@@ -213,6 +213,11 @@ class ConversationPresenter @Inject constructor(
             .subscribe({ integer: Int -> this.view?.setConversationColor(integer) }) { e: Throwable ->
                 Log.e(TAG, "Can't update conversation color", e)
             })
+        disposable.add(c.getColorTint()
+            .observeOn(uiScheduler)
+            .subscribe({ integer: Int -> this.view?.setConversationColorTint(integer) }) { e: Throwable ->
+                Log.e(TAG, "Can't update conversation color tint", e)
+            })
         disposable.add(c.getSymbol()
             .observeOn(uiScheduler)
             .subscribe({ symbol: CharSequence -> this.view?.setConversationSymbol(symbol) }) { e: Throwable ->
@@ -385,6 +390,12 @@ class ConversationPresenter @Inject constructor(
         mCompositeDisposable.add(mConversationSubject
             .firstElement()
             .subscribe { conversation: Conversation -> conversation.setColor(color) })
+    }
+
+    fun setConversationColorTint(colorTint: Int) {
+        mCompositeDisposable.add(mConversationSubject
+            .firstElement()
+            .subscribe { conversation: Conversation -> conversation.setColorTint(colorTint) })
     }
 
     fun setConversationSymbol(symbol: CharSequence) {

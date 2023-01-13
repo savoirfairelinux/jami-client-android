@@ -54,6 +54,7 @@ interface ConversationView {
     fun removeElement(element: Interaction)
     fun setComposingStatus(composingStatus: ComposingStatus)
     fun setConversationColor(color: Int)
+    fun setConversationColorTint(colorTint: Int)
     fun setConversationSymbol(symbol: CharSequence)
     fun startSaveFile(file: DataTransfer, fileAbsolutePath: String)
     fun startReplyTo(interaction: Interaction)

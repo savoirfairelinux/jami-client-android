@@ -333,6 +333,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter?.setPrimaryColor(color)
     }
 
+    override fun setConversationColorTint(@ColorInt colorTint: Int) {
+        mAdapter?.setPrimaryColorTint(colorTint)
+    }
+
     override fun setConversationSymbol(symbol: CharSequence) {
         binding?.emojiSend?.text = symbol
     }
@@ -854,6 +858,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
                 preferences.registerOnSharedPreferenceChangeListener(this)
                 presenter.setConversationColor(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
+                presenter.setConversationColorTint(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR_TINT, resources.getColor(R.color.blue_900)))
                 presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
                 preferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
             }
@@ -893,6 +898,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         when (key) {
             KEY_PREFERENCE_CONVERSATION_COLOR -> presenter.setConversationColor(
                 prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
+            KEY_PREFERENCE_CONVERSATION_COLOR_TINT -> presenter.setConversationColorTint(
+                prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR_TINT, resources.getColor(R.color.blue_900)))
             KEY_PREFERENCE_CONVERSATION_SYMBOL -> presenter.setConversationSymbol(
                 prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
         }
@@ -1215,6 +1222,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         const val REQ_ADD_CONTACT = 42
         const val KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage"
         const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
+        const val KEY_PREFERENCE_CONVERSATION_COLOR_TINT = "colorTint"
         @Deprecated("Use daemon feature")
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
         const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
