@@ -26,10 +26,12 @@ android {
                 cppFlags += ""
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
+                    "-DBUILD_CONTRIB=ON",
+                    "-DBUILD_EXTRA_TOOLS=ON",
                     "-DJAMI_JNI=ON",
                     "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
                     "-DJAMI_DATADIR=/data/data/cx.ring/files",
-                    "-DJAMI_NATPNP=Off"
+                    "-DJAMI_NATPMP=Off"
                 )
             }
             ndk {

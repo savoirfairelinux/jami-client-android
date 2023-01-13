@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	bc \
 	bison \
 	build-essential \
+	ninja-build \
 	bzip2 \
 	doxygen \
 	git \
