@@ -142,13 +142,14 @@ class LogsActivity : AppCompatActivity() {
 
     private fun startLogging() {
         binding.logView.text = ""
-        disposable = mHardwareService.startLogs()
+        //disposable =
+        compositeDisposable.add(mHardwareService.startLogs()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ message: String ->
                 binding.logView.text = message
                 binding.scroll.post { binding.scroll.fullScroll(View.FOCUS_DOWN) }
             }) { e -> Log.w(TAG, "Error in logger", e) }
-        compositeDisposable.add(disposable)
+            .apply { disposable = this })
         setButtonState(true)
     }
 
