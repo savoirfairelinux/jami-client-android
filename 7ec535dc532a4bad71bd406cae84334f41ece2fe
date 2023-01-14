@@ -46,6 +46,30 @@
       },
       "revId": "7ec535dc532a4bad71bd406cae84334f41ece2fe",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11a1d94b_fb05528c",
+        "filename": "ring-android/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-14T22:06:29Z",
+      "side": 1,
+      "message": "New stable versions released, patch updated",
+      "parentUuid": "acdf6ad1_4c031b93",
+      "range": {
+        "startLine": 12,
+        "startChar": 50,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "7ec535dc532a4bad71bd406cae84334f41ece2fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
