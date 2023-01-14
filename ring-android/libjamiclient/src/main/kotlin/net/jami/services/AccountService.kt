@@ -385,7 +385,7 @@ class AccountService(
         }
 
     fun getObservableAccount(accountId: String): Observable<Account> =
-        Observable.fromCallable<Account> { getAccount(accountId) }
+        Observable.fromCallable<Account> { getAccount(accountId)!! }
             .concatWith(getObservableAccountUpdates(accountId))
 
     fun getObservableAccount(account: Account): Observable<Account> =

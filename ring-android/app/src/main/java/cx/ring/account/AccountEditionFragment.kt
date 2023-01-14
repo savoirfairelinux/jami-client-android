@@ -28,13 +28,10 @@ import android.view.*
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
 import cx.ring.R
-import cx.ring.client.HomeActivity
 import cx.ring.contactrequests.BlockListFragment
 import cx.ring.databinding.FragAccountSettingsBinding
 import cx.ring.fragments.AdvancedAccountFragment
