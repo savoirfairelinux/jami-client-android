@@ -9,7 +9,6 @@ plugins {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     // VCard parsing
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
     // QRCode encoding
