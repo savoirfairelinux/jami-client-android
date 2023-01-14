@@ -32,7 +32,6 @@ import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named

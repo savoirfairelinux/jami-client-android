@@ -483,7 +483,7 @@ object AndroidFileUtils {
             srcBitmap = Bitmap.createBitmap(srcBitmap!!, 0, 0, srcBitmap!!.width,
                     srcBitmap!!.height, matrix, true)
         }
-        srcBitmap
+        srcBitmap!!
     }.subscribeOn(Schedulers.io())
 
     private fun getOrientation(context: Context, photoUri: Uri): Int {

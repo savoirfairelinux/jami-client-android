@@ -143,7 +143,7 @@ object VCardUtils {
     fun loadLocalProfileFromDisk(filesDir: File, accountId: String): Single<VCard> =
         Single.fromCallable {
             val path = localProfilePath(filesDir, accountId).absolutePath
-            loadFromDisk(File(path, LOCAL_USER_VCARD_NAME))
+            loadFromDisk(File(path, LOCAL_USER_VCARD_NAME))!!
         }
 
     fun loadLocalProfileFromDiskWithDefault(filesDir: File, accountId: String): Single<VCard> =
@@ -223,7 +223,7 @@ object VCardUtils {
             val peerProfilePath = peerProfilePath(filesDir, accountId)
             val file = File(peerProfilePath, filename)
             moveFile(vcard, file)
-            loadFromDisk(file)
+            loadFromDisk(file)!!
         }.subscribeOn(Schedulers.io())
 
 }

@@ -54,7 +54,7 @@ class ConversationFacade(
         .switchMapSingle { account: Account -> loadSmartlist(account) }
 
     fun startConversation(accountId: String, contactId: Uri): Single<Conversation> = getAccountSubject(accountId)
-        .map { account: Account -> account.getByUri(contactId) }
+        .map { account: Account -> account.getByUri(contactId)!! }
 
     fun getAccountSubject(accountId: String): Single<Account> = mAccountService.getAccountSingle(accountId)
         .flatMap { account: Account -> loadSmartlist(account) }

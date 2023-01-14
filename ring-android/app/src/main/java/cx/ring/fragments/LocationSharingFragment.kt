@@ -502,14 +502,12 @@ class LocationSharingFragment : Fragment() {
                 binding.btnShareLocation.setText(R.string.location_share_action_stop)
                 binding.btnShareLocation.setOnClickListener { v: View? -> stopSharing() }
                 binding.locationShareTimeGroup.visibility = View.GONE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mService?.let { service ->
-                        binding.locationShareTimeRemaining.visibility = View.VISIBLE
-                        if (mCountdownDisposable == null || mCountdownDisposable!!.isDisposed) {
-                            mCountdownDisposable = service.getContactSharingExpiration(mPath)
-                                .subscribe { l -> binding.locationShareTimeRemaining.text = formatDuration(l, FormatWidth.SHORT) }
-                            mServiceDisposableBag.add(mCountdownDisposable)
-                        }
+                mService?.let { service ->
+                    binding.locationShareTimeRemaining.visibility = View.VISIBLE
+                    if (mCountdownDisposable == null || mCountdownDisposable!!.isDisposed) {
+                        mServiceDisposableBag.add(service.getContactSharingExpiration(mPath)
+                            .subscribe { l -> binding.locationShareTimeRemaining.text = formatDuration(l, FormatWidth.SHORT) }
+                            .apply { mCountdownDisposable = this })
                     }
                 }
                 binding.locationShareStop.visibility = View.VISIBLE

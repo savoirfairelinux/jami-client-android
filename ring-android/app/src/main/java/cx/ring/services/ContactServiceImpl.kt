@@ -376,22 +376,21 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
 
     private fun loadVCardContactData(contact: Contact, accountId: String): Single<Profile> {
         val id = contact.primaryNumber
-        return Single.fromCallable<VCard> { VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId) }
-            .map { vcard: VCard -> VCardServiceImpl.readData(vcard) }
+        return Single.fromCallable { VCardServiceImpl.readData(VCardUtils.loadPeerProfileFromDisk(mContext.filesDir, "$id.vcf", accountId)) }
             .subscribeOn(Schedulers.io())
     }
 
     private fun loadSystemContactData(contact: Contact): Single<Profile> {
         val contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.id)
 
-        val nameSingle = Single.fromCallable<String> {
+        val nameSingle = Single.fromCallable {
             mContext.contentResolver.query(contactUri, arrayOf(ContactsContract.Contacts.DISPLAY_NAME), null, null, null)
                 ?.use { cursor ->
                     if (cursor.moveToFirst()) {
                         val idx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
                         cursor.getString(idx);
                     } else null
-                } }
+                }!! }
             .onErrorReturn { "" }
             .subscribeOn(Schedulers.io())
 
