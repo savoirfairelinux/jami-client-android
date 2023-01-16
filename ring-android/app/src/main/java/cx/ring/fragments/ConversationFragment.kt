@@ -161,7 +161,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             binding!!.histList.addOnLayoutChangeListener(object : OnLayoutChangeListener {
                 override fun onLayoutChange(p0: View?, p1: Int, p2: Int, p3: Int, p4: Int, p5: Int, p6: Int, p7: Int, p8: Int) {
                     val flashCount = 2
-                    binding!!.histList.layoutManager?.findViewByPosition(position)?.animate()
+                    binding!!.histList.layoutManager?.findViewByPosition(position)?.animate() // TODO fix animation on link follow + load
                         ?.setInterpolator { sin(flashCount * 2 * it * Math.PI).toFloat() }
                         ?.alphaBy(1f)?.setDuration(flashCount * 750L)?.start()
                     binding!!.histList.removeOnLayoutChangeListener(this)
@@ -866,13 +866,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {
-        val path = ConversationPath.fromBundle(arguments)
-        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
+        val args = requireArguments()
+        val path = ConversationPath.fromBundle(args) ?: return
+        val selection = args.getString(EXTRA_SELECTION) ?: "ae356a99760e677e082bb94d813b68d7298eeaf4" // TODO remove test id
+        mIsBubble = args.getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
         Log.w(TAG, "initPresenter $path")
-        if (path == null) return
         val uri = path.conversationUri
         mAdapter = ConversationAdapter(this, presenter)
-        presenter.init(uri, path.accountId)
+        presenter.init(uri, path.accountId, selection = selection)
         try {
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
                 preferences.registerOnSharedPreferenceChangeListener(this)
@@ -1242,6 +1243,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         const val KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead"
         const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
         const val EXTRA_SHOW_MAP = "showMap"
+        const val EXTRA_SELECTION = "messageId"
         private const val REQUEST_CODE_FILE_PICKER = 1000
         private const val REQUEST_PERMISSION_CAMERA = 1001
         private const val REQUEST_CODE_TAKE_PICTURE = 1002
