@@ -353,6 +353,9 @@ class ConversationAdapter(
                             }
                             .append(i.first.body)
                         replyView.isVisible = true
+                        replyView.setOnClickListener {
+                            i.first.messageId?.let { presenter.scrollToMessage(it) }
+                        }
                     }) { replyView.isVisible = false })
             } else {
                 replyView.isVisible = false
