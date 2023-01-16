@@ -28,8 +28,6 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import cx.ring.R
 import cx.ring.services.VCardServiceImpl
-import cx.ring.utils.AndroidFileUtils
-import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils.isTv
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -421,6 +419,14 @@ class AvatarDrawable : Drawable {
         checkedPaint = other.checkedPaint
     }
 
+    class AvatarConstantState(private val avatarDrawable: AvatarDrawable) : ConstantState() {
+        override fun newDrawable(): AvatarDrawable = AvatarDrawable(avatarDrawable)
+
+        override fun getChangingConfigurations(): Int = 0
+    }
+
+    override fun getConstantState(): ConstantState = AvatarConstantState(this)
+
     override fun draw(finalCanvas: Canvas) {
         val firstWorkspace = workspace[0] ?: return
         if (update) {
@@ -434,8 +440,8 @@ class AvatarDrawable : Drawable {
         if (cropCircle) {
             finalCanvas.save()
             finalCanvas.translate(
-                (bounds.width() - firstWorkspace.width) / 2f,
-                (bounds.height() - firstWorkspace.height) / 2f
+                bounds.left + (bounds.width() - firstWorkspace.width) / 2f,
+                bounds.top + (bounds.height() - firstWorkspace.height) / 2f
             )
             var r = (min(firstWorkspace.width, firstWorkspace.height) / 2).toFloat()
             val cx = firstWorkspace.width / 2 //getBounds().centerX();
