@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "615a7e55_e8a7403d",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-16T14:47:57Z",
+      "side": 1,
+      "message": "The ndk and cmake version requirements are now in build.gradle.\n\nAndroid Studio is supposed to automatically suggest installing the appropriate ndk and cmake versions, and use them for the build.\n\nThe daemon CMake script sets the contrib build environment from the cmake environment, so whatever ndk toolchain is used to build the daemon will be forwarded to contrib (the user shouldn\u0027t need to manually set ANDROID_NDK).",
+      "parentUuid": "993d752b_9f5af4e4",
+      "range": {
+        "startLine": 11,
+        "startChar": 60,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "9164d07e377ff2f20df935fb89ec3cd4c9147a80",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "876735be_45fdfaca",
         "filename": "README.md",
         "patchSetId": 2
