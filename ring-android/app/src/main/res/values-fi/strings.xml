@@ -249,6 +249,7 @@
   <string name="no_contact_request">Pyyntöä ei lähetetty</string>
   <string name="conversation_placeholder">Sinulla ei ole vielä keskusteluja.</string>
   <string name="contact_request_sent">Pyyntö lähetetty</string>
+  <string name="start_conversation">Aloita keskustelu</string>
   <string name="search_results">Hakutulokset</string>
   <string name="tv_contact_row_header">Yhteystiedot</string>
   <string name="gallery_error_title">Valokuvat sovellusta ei löytynyt</string>

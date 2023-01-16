@@ -32,6 +32,7 @@
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="start_conversation">Comenzar una conversación</string>
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <string name="navigation_item_contact_request">Invitaciones</string>

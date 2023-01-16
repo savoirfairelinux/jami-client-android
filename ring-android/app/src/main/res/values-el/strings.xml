@@ -229,6 +229,7 @@
   <string name="no_contact_request">Δεν έχουν αποσταλλέι αιτήματα επαφής</string>
   <string name="conversation_placeholder">Δεν έχεις συνομιλίες ακόμη</string>
   <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
+  <string name="start_conversation">Έναρξη συνομιλίας</string>
   <string name="search_results">Αποτελέσματα αναζήτησης</string>
   <string name="tv_contact_row_header">Επαφές</string>
   <string name="gallery_error_title">Δεν βρέθηκε εφαρμογή συλλογής</string>

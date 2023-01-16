@@ -251,6 +251,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
   <string name="conversation_placeholder">Você ainda não tem conversas</string>
   <string name="contact_request_sent">Solicitação de contato enviada</string>
+  <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Busca</string>
   <string name="tv_contact_row_header">Contatos</string>
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>

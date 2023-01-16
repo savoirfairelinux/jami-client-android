@@ -244,6 +244,7 @@
   <string name="no_contact_request">ไม่มีการส่งคำขอติดต่อ</string>
   <string name="conversation_placeholder">คุณยังไม่มีการสนทนาเลย</string>
   <string name="contact_request_sent">ส่งคำขอติดต่อแล้ว</string>
+  <string name="start_conversation">เริ่มการสนทนา</string>
   <string name="search_results">ผลการค้นหา</string>
   <string name="tv_contact_row_header">ติดต่อ</string>
   <string name="gallery_error_title">ไม่พบแอปแกลเลอรี</string>

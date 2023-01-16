@@ -255,7 +255,7 @@
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
   <string name="conversation_placeholder">Henüz konuşmanız yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
-  <string name="start_conversation">Yeni konuşma başlat</string>
+  <string name="start_conversation">Konuşma başlat </string>
   <string name="search_results">Arama Sonuçları</string>
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>

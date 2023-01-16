@@ -242,6 +242,7 @@
   <string name="no_contact_request">Nemate poslatih zahteva za kontakt</string>
   <string name="conversation_placeholder">Nemate još razgovor</string>
   <string name="contact_request_sent">Zahtev za kontakt je poslat</string>
+  <string name="start_conversation">Započnite razgovor</string>
   <string name="search_results">Rezultat pretrage</string>
   <string name="tv_contact_row_header">Kontakti</string>
   <string name="gallery_error_title">Nije pronađena aplikacija za galeriju</string>

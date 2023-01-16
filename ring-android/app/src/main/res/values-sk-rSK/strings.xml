@@ -216,6 +216,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Žiadna poslaná žiadosť o kontakt</string>
   <string name="contact_request_sent">Žiadosť o kontakt poslaná</string>
+  <string name="start_conversation">Začať konverzáciu</string>
   <string name="search_results">Výsledky vyhľadávania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Aplikácia Galéria nebola nájdená</string>

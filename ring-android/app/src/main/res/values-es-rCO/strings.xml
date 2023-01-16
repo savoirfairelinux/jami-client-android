@@ -250,6 +250,7 @@
   <string name="no_contact_request">No se enviaron solicitudes de contacto</string>
   <string name="conversation_placeholder">Aún no tenés conversaciones</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
+  <string name="start_conversation">Comenzar una conversación</string>
   <string name="search_results">Resultados de la búsqueda</string>
   <string name="tv_contact_row_header">Contactos</string>
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
