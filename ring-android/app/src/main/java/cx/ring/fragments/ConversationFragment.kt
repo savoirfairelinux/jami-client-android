@@ -85,6 +85,7 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
+import kotlin.math.sin
 import java.util.*
 
 @AndroidEntryPoint
@@ -144,6 +145,24 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         mAdapter?.let { adapter ->
             if (adapter.itemCount > 0)
                 binding!!.histList.scrollToPosition(adapter.itemCount - 1)
+        }
+    }
+
+    override fun scrollToMessage(messageId: String, flash: Boolean) {
+        mAdapter?.let { adapter ->
+            val position = adapter.getMessagePosition(messageId)
+            if(position == -1)
+                return
+            binding!!.histList.scrollToPosition(position)
+
+            if(!flash)
+                return
+            binding!!.histList.doOnNextLayout {
+                val flashCount = 2
+                binding!!.histList.layoutManager?.findViewByPosition(position)?.animate()
+                    ?.setInterpolator { sin(flashCount * 2 * it * Math.PI).toFloat() }
+                    ?.alphaBy(1f)?.setDuration(flashCount * 750L)?.start()
+            }
         }
     }
 
