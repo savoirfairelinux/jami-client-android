@@ -231,6 +231,16 @@ class ConversationPresenter @Inject constructor(
         mConversationDisposable?.add(accountService.loadMore(mConversation!!).subscribe({}) {})
     }
 
+    fun scrollToMessage(messageId: String) {
+        if(mConversation!!.getMessage(messageId) != null) {
+            view?.scrollToMessage(messageId)
+        } else {
+            mConversationDisposable?.add(accountService.loadUntil(mConversation!!, until = messageId)
+                .observeOn(uiScheduler)
+                .subscribe { _ -> this.view?.scrollToMessage(messageId)})
+        }
+    }
+
     fun openContact() {
         mConversation?.let { conversation -> view?.goToContactActivity(conversation.accountId, conversation.uri) }
     }
