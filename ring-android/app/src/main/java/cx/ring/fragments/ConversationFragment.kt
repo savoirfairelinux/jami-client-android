@@ -808,7 +808,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 val binding = binding ?: return false
-                mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter)
+                mSearchAdapter = ConversationAdapter(this@ConversationFragment, presenter, true)
                 presenter.startSearch()
                 currentBottomView?.isVisible = false
                 binding.histList.adapter = mSearchAdapter
@@ -1227,6 +1227,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
 
     override fun hideErrorPanel() {
         binding?.errorMsgPane?.visibility = View.GONE
+    }
+
+    override fun goToSearchMessage(messageId: String) {
+        binding?.toolbar?.menu?.findItem(R.id.conv_search)?.collapseActionView()
+        binding?.histList?.doOnNextLayout {
+            presenter.scrollToMessage(messageId)
+        }
     }
 
     companion object {
