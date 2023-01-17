@@ -147,6 +147,23 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
+    override fun scrollToMessage(messageId: String, highlight: Boolean) {
+        val histList = binding?.histList ?: return
+        mAdapter?.let { adapter ->
+            val position = adapter.getMessagePosition(messageId)
+            if(position == -1)
+                return
+            binding!!.histList.scrollToPosition(position)
+
+            if(highlight) {
+                histList.doOnNextLayout {
+                    histList.layoutManager?.findViewByPosition(position)
+                        ?.setBackgroundColor(resources.getColor(R.color.surface))
+                }
+            }
+        }
+    }
+
     private fun updateListPadding() {
         /* val binding = binding ?: return
         val bottomView = currentBottomView ?: return
