@@ -101,16 +101,20 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var animator: ValueAnimator? = null
     val compositeDisposable = CompositeDisposable()
 
+    var primaryClickableView: View? = null
+
     init {
         when (type) {
             MessageType.CONTACT_EVENT -> {
                 mMsgTxt = v.findViewById(R.id.contact_event_txt)
                 mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt)
+                primaryClickableView = v.findViewById(R.id.contactDetailsGroup)
             }
             MessageType.CALL_INFORMATION -> {
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
                 mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
+                primaryClickableView = mCallInfoLayout
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {
@@ -121,6 +125,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
                 mPreviewDomain = v.findViewById(R.id.link_preview_domain)
+                primaryClickableView = mMsgTxt
             }
             MessageType.INCOMING_FILE,
             MessageType.OUTGOING_FILE -> {
@@ -133,12 +138,14 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 btnAccept = v.findViewById(R.id.btnAccept)
                 btnRefuse = v.findViewById(R.id.btnRefuse)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                primaryClickableView = mFileInfoLayout
             }
             MessageType.INCOMING_IMAGE,
             MessageType.OUTGOING_IMAGE -> {
                 mAnswerLayout = v.findViewById(R.id.imageLayout)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
+                primaryClickableView = mImage
             }
             MessageType.INCOMING_AUDIO,
             MessageType.OUTGOING_AUDIO -> {
@@ -148,6 +155,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout)
                 mMsgDetailTxt = v.findViewById(R.id.file_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                primaryClickableView = mAudioInfoLayout
             }
             MessageType.INCOMING_VIDEO,
             MessageType.OUTGOING_VIDEO -> {
@@ -155,6 +163,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mAnswerLayout = v.findViewById(R.id.imageLayout)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                primaryClickableView = video
             }
             else ->  {}
         }
