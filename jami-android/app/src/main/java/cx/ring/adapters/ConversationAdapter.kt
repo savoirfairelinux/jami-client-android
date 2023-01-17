@@ -250,6 +250,10 @@ class ConversationAdapter(
     override fun getItemId(position: Int): Long =
         if (isComposing && position == mInteractions.size) Long.MAX_VALUE else mInteractions[position].id.toLong()
 
+    fun getMessagePosition(messageId: String): Int {
+        return mInteractions.indexOfFirst { it.messageId == messageId }
+    }
+
     override fun getItemViewType(position: Int): Int {
         if (isComposing && position == mInteractions.size) return MessageType.COMPOSING_INDICATION.ordinal
         val interaction = mInteractions[position]

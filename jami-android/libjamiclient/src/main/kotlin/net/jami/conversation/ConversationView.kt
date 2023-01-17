@@ -27,6 +27,7 @@ import java.io.File
 interface ConversationView {
     fun refreshView(conversation: List<Interaction>)
     fun scrollToEnd()
+    fun scrollToMessage(messageId: String, highlight: Boolean = true)
     fun updateContact(contact: ContactViewModel)
     fun displayContact(conversation: ConversationItemViewModel)
     fun displayOnGoingCallPane(display: Boolean)
