@@ -58,6 +58,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.bold
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
@@ -98,7 +99,8 @@ import kotlin.math.max
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
-    private val presenter: ConversationPresenter
+    private val presenter: ConversationPresenter,
+    private val isSearch: Boolean = false
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
@@ -395,6 +397,8 @@ class ConversationAdapter(
                 else -> {}
             }
         }
+        if(isSearch)
+            configureSearchResult(conversationViewHolder, interaction)
     }
 
     override fun onViewRecycled(holder: ConversationViewHolder) {
@@ -1077,6 +1081,24 @@ class ConversationAdapter(
         convViewHolder.mHistTxt?.text = historyTxt
         convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance()
             .format(call.timestamp) // start date
+    }
+
+    private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
+        disableClicking(convViewHolder.itemView)
+        val messageId = interaction.messageId ?: return
+        val clickView = convViewHolder.primaryClickableView ?: convViewHolder.itemView
+        clickView.setOnClickListener { conversationFragment.goToSearchMessage(messageId) }
+    }
+
+    private fun disableClicking(v: View) {
+        v.isClickable = false
+        v.isLongClickable = false
+        v.isFocusable = false
+        if (v is ViewGroup) {
+            v.children.forEach {
+                disableClicking(it)
+            }
+        }
     }
 
     /**
