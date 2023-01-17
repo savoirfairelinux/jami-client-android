@@ -604,6 +604,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun displayAccountOfflineErrorPanel() {}
     override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {}
     override fun addSearchResults(results: List<Interaction>) {}
+    override fun goToSearchMessage(messageId: String) {}
     override fun shareText(body: String) {
         TODO("Not yet implemented")
     }

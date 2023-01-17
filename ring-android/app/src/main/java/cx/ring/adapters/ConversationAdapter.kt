@@ -58,6 +58,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.bold
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
@@ -97,7 +98,8 @@ import kotlin.math.max
 
 class ConversationAdapter(
     private val conversationFragment: ConversationFragment,
-    private val presenter: ConversationPresenter
+    private val presenter: ConversationPresenter,
+    private val isSearch: Boolean = false
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
@@ -390,6 +392,8 @@ class ConversationAdapter(
                 else -> {}
             }
         }
+        if(isSearch)
+            configureSearchResult(conversationViewHolder, interaction)
     }
 
     override fun onViewRecycled(holder: ConversationViewHolder) {
@@ -1071,6 +1075,31 @@ class ConversationAdapter(
         convViewHolder.mHistTxt?.text = historyTxt
         convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance()
             .format(call.timestamp) // start date
+    }
+
+    private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
+        (convViewHolder.itemView as ViewGroup).children.forEach { disableClicking(it) }
+        val messageId = interaction.messageId ?: return
+        if(interaction.type == Interaction.InteractionType.TEXT) {
+            convViewHolder.mMsgTxt!!.setOnClickListener {
+                conversationFragment.goToSearchMessage(messageId)
+            }
+        } else {
+            convViewHolder.itemView.setOnClickListener {
+                conversationFragment.goToSearchMessage(messageId)
+            }
+        }
+    }
+
+    private fun disableClicking(itemView: View) {
+        itemView.isClickable = false
+        itemView.isLongClickable = false
+        itemView.isFocusable = false
+        if (itemView is ViewGroup) {
+            itemView.children.forEach {
+                disableClicking(it)
+            }
+        }
     }
 
     /**
