@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441890d5_c55ecc58",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-01-18T22:25:50Z",
+      "side": 1,
+      "message": "Thanks a lot for the patch :)\nIt works but adds a lot of boilerplate for each color.\nWhat would you think about using something like\nhttps://developer.android.com/reference/com/google/android/material/color/HarmonizedColors\nor\nhttps://developer.android.com/reference/com/google/android/material/color/MaterialColors\nto generate new colors automatically based on the selection?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "1ef728b06b90ff2ed55e9a56a05b831472aca4a1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
