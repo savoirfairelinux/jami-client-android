@@ -60,8 +60,10 @@ class ConversationPresenter @Inject constructor(
     private val mConversationSubject: Subject<Conversation> = BehaviorSubject.create()
     private var searchQuerySubject: Subject<String>? = null
     private var myId: String? = null
+    private var targetMessageId: String? = null
 
-    fun init(conversationUri: Uri, accountId: String) {
+    fun init(conversationUri: Uri, accountId: String, messageId: String? = null) {
+        targetMessageId = messageId
         if (conversationUri == mConversationUri) return
         Log.w(TAG, "init $conversationUri $accountId")
         val settings = preferencesService.settings
@@ -161,7 +163,7 @@ class ConversationPresenter @Inject constructor(
             .switchMap { mode: Conversation.Mode ->
                 if (mode === Conversation.Mode.Legacy) c.contact!!.conversationUri else Observable.empty() }
             .observeOn(uiScheduler)
-            .subscribe { uri: Uri -> init(uri, account.accountId) })
+            .subscribe { uri: Uri -> init(uri, account.accountId, targetMessageId) })
         disposable.add(Observable.combineLatest(hardwareService.connectivityState, accountService.getObservableAccount(account))
             { isConnected: Boolean, a: Account -> isConnected || a.isRegistered }
             .observeOn(uiScheduler)
@@ -225,6 +227,7 @@ class ConversationPresenter @Inject constructor(
                 Log.e(TAG, "getLocationUpdates: update")
                 this.view?.showMap(c.accountId, c.uri.uri, false)
             })
+        targetMessageId?.let { scrollToMessage(it) }
     }
 
     fun loadMore() {

@@ -862,13 +862,14 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun initPresenter(presenter: ConversationPresenter) {
-        val path = ConversationPath.fromBundle(arguments)
-        mIsBubble = requireArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
-        Log.w(TAG, "initPresenter $path")
-        if (path == null) return
+        val args = requireArguments()
+        val path = ConversationPath.fromBundle(args) ?: return
+        val messageId = args.getString(InteractionPath.KEY_MESSAGE_ID)
+        mIsBubble = args.getBoolean(NotificationServiceImpl.EXTRA_BUBBLE)
+        Log.w(TAG, "initPresenter $path $messageId")
         val uri = path.conversationUri
         mAdapter = ConversationAdapter(this, presenter)
-        presenter.init(uri, path.accountId)
+        presenter.init(uri, path.accountId, messageId)
         try {
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
                 preferences.registerOnSharedPreferenceChangeListener(this)

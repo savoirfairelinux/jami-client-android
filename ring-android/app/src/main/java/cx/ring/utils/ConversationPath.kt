@@ -134,6 +134,8 @@ data class InteractionPath(val conversation: ConversationPath, val messageId: St
         toUri(conversation.accountId, conversation.conversationUri, messageId)
 
     companion object {
+        const val KEY_MESSAGE_ID = "${BuildConfig.APPLICATION_ID}.messageId"
+
         fun fromUri(uri: android.net.Uri?): InteractionPath? {
             if (uri == null) return null
             if (ContentUriHandler.SCHEME_TV == uri.scheme || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
