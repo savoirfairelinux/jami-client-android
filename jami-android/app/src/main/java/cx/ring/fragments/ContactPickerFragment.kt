@@ -49,7 +49,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mDisposableBag.add(mConversationFacade.getConversationList()
+        mDisposableBag.add(mConversationFacade.getConversationViewModelList()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ conversations ->
                 val contacts = conversations.filter { it.mode == Conversation.Mode.Legacy || it.mode == Conversation.Mode.OneToOne }

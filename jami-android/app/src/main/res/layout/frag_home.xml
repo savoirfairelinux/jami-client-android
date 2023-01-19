@@ -17,118 +17,138 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    tools:context=".client.HomeActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <com.google.android.material.search.SearchBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content"
+        android:hint="@string/searchbar_hint"
+        android:textAppearance="@style/TextAppearance.Material3.SearchBar"
+        app:autoShowKeyboard="true"
+        app:navigationIcon="@android:color/transparent" />
 
-        <Spinner
-            android:id="@+id/spinner_toolbar"
+    <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/searchbar_hint"
+        app:layout_anchor="@id/toolbar">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:dropDownWidth="260dp"
-            android:paddingStart="-60dp"
-            tools:listitem="@layout/item_toolbar_selected" />
+            android:orientation="vertical">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/buttons"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/qr_code"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="@dimen/button_corner_radius"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableTint="@color/colorPrimary"
+                        android:text="@string/qr_code"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/new_group"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="@dimen/button_corner_radius"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:text="Start Swarm"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/baseline_group_add_24" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:paddingBottom="8dp"
+                tools:listitem="@layout/item_smartlist"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="end of the line" />
+
+        </LinearLayout>
+    </com.google.android.material.search.SearchView>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@null"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:tabIndicatorColor="@color/colorSecondary"
+        app:tabSelectedTextColor="@color/colorOnSurface"
+        app:tabTextColor="@color/textColorSecondary"
+        tools:visibility="visible">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/qr_code"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/button_corner_radius"
-            tools:visibility="visible">
+            android:text="@string/navigation_item_conversation" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableTint="@color/colorPrimary"
-                android:text="@string/qr_code"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/new_group"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/button_corner_radius"
-            tools:visibility="visible">
+            android:text="@string/navigation_item_contact_request" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:drawableStartCompat="@drawable/baseline_group_add_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/colorPrimary"
-                android:text="Start Swarm"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+    </com.google.android.material.tabs.TabLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorSecondary"
-            app:tabSelectedTextColor="@color/colorOnSurface"
-            app:tabTextColor="@color/textColorSecondary"
-            android:background="@null"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/navigation_item_conversation"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/navigation_item_contact_request"/>
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

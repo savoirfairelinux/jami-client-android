@@ -26,8 +26,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
 import cx.ring.R
 import cx.ring.databinding.ItemToolbarSelectedBinding
 import cx.ring.databinding.ItemToolbarSpinnerBinding
@@ -40,11 +38,11 @@ import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
 
 
-class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable,
-                            var mAccountService: AccountService, var mConversationFacade: ConversationFacade) :
+class AccountAdapter(context: Context, accounts: List<Account>, val disposable: CompositeDisposable,
+                     var mAccountService: AccountService, var mConversationFacade: ConversationFacade) :
     ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val logoSize: Int = context.resources.getDimensionPixelSize(R.dimen.list_medium_icon_size)
+    private val ip2ipString = context.getString(R.string.account_type_ip2ip)
 
     private fun getTitle(account: Account, profile: Profile): String =
         profile.displayName.orEmpty().ifEmpty {
@@ -58,57 +56,20 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         val type = getItemViewType(position)
-        val holder: ViewHolderHeader
+        val holder: ViewHolder
         if (view == null) {
-            holder = ViewHolderHeader(ItemToolbarSelectedBinding.inflate(mInflater, parent, false), disposable)
+            holder = ViewHolder(ItemToolbarSpinnerBinding.inflate(mInflater, parent, false), disposable)
             view = holder.binding.root
             view.setTag(holder)
         } else {
-            holder = view.tag as ViewHolderHeader
+            holder = view.tag as ViewHolder
             holder.loader.clear()
+            holder.binding.logo.setImageDrawable(null)
+            holder.binding.title.text = null
+            holder.binding.subtitle.text = null
         }
         if (type == TYPE_ACCOUNT) {
             val account = getItem(position)!!
-            holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe({ profile ->
-                    holder.binding.logo.setImageDrawable(AvatarDrawable.build(holder.binding.root.context, profile.first, profile.second, true, profile.first.isRegistered))
-                    holder.binding.title.text = getTitle(profile.first, profile.second)
-                }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
-        } else {
-            holder.binding.title.setText(
-                if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title else R.string.add_sip_account_title)
-            holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
-            //logoParam.width = ViewGroup.LayoutParams.WRAP_CONTENT
-            //logoParam.height = ViewGroup.LayoutParams.WRAP_CONTENT
-            //holder.binding.logo.layoutParams = logoParam
-           // val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
-           // params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
-           // holder.binding.title.layoutParams = params
-        }
-        return view
-    }
-
-    @SuppressLint("UnsafeOptInUsageError")
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val type = getItemViewType(position)
-        val holder: ViewHolder
-        var rowView = convertView
-        if (rowView == null) {
-            holder = ViewHolder(ItemToolbarSpinnerBinding.inflate(mInflater, parent, false), disposable)
-            rowView = holder.binding.root
-            rowView.setTag(holder)
-        } else {
-            holder = rowView.tag as ViewHolder
-            holder.loader.clear()
-        }
-        holder.binding.logo.visibility = View.VISIBLE
-        val badgeDrawable = BadgeDrawable.create(context).apply {
-            badgeGravity = BadgeDrawable.BOTTOM_START
-        }
-        if (type == TYPE_ACCOUNT) {
-            val account = getItem(position)!!
-            val ip2ipString = rowView.context.getString(R.string.account_type_ip2ip)
             val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
             params.removeRule(RelativeLayout.CENTER_VERTICAL)
             holder.binding.title.layoutParams = params
@@ -125,29 +86,16 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
                         holder.binding.subtitle.text = subtitle
                     }
                 }){ e: Throwable -> Log.e(TAG, "Error loading avatar", e) })
-            holder.loader.add(mConversationFacade.getAccountSubject(account.accountId)
-                .flatMapObservable { acc -> acc.unreadConversations }
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { count ->
-                    if (count == 0) {
-                        BadgeUtils.detachBadgeDrawable(badgeDrawable, holder.binding.badgeAnchor)
-                        holder.binding.badgeAnchor.visibility = View.GONE
-                    } else {
-                        badgeDrawable.number = count
-                        holder.binding.badgeAnchor.visibility = View.VISIBLE
-                        BadgeUtils.attachBadgeDrawable(badgeDrawable, holder.binding.badgeAnchor)
-                    }
-                })
         } else {
+            holder.binding.title.setText(
+                if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title else R.string.add_sip_account_title)
             holder.binding.logo.setImageResource(R.drawable.baseline_add_24)
-            holder.binding.subtitle.visibility = View.GONE
-            holder.binding.title.setText(if (type == TYPE_CREATE_ACCOUNT) R.string.add_ring_account_title else R.string.add_sip_account_title)
             val params = holder.binding.title.layoutParams as RelativeLayout.LayoutParams
             params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
             holder.binding.title.layoutParams = params
-            holder.binding.badgeAnchor.visibility = View.GONE
+            holder.binding.subtitle.visibility = View.GONE
         }
-        return rowView
+        return view
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -163,15 +111,11 @@ class AccountSpinnerAdapter(context: Context, accounts: List<Account>, val dispo
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 
-    private class ViewHolderHeader(val binding: ItemToolbarSelectedBinding, parentDisposable: CompositeDisposable) {
-        val loader = CompositeDisposable().apply { parentDisposable.add(this) }
-    }
-
     private fun getUri(account: Account, defaultNameSip: CharSequence): String =
         if (account.isIP2IP) defaultNameSip.toString() else account.displayUri!!
 
     companion object {
-        private val TAG = AccountSpinnerAdapter::class.simpleName!!
+        private val TAG = AccountAdapter::class.simpleName!!
         const val TYPE_ACCOUNT = 0
         const val TYPE_CREATE_ACCOUNT = 1
     }
