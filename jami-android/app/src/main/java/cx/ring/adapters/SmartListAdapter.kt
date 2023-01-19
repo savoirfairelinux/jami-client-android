@@ -85,6 +85,7 @@ class SmartListAdapter(
     override fun getItemCount(): Int = itemCount
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        Log.w("SmartlistAdapter", "onAttachedToRecyclerView ${recyclerView}")
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
     }
@@ -94,6 +95,7 @@ class SmartListAdapter(
     }
 
     fun update(viewModels: ConversationFacade.ConversationList) {
+        Log.w("SmartlistAdapter", "update ${viewModels.getCombinedSize()}")
         val old: ConversationFacade.ConversationList = conversations
         conversations = setItems(viewModels)
         if (!viewModels.isEmpty()) {

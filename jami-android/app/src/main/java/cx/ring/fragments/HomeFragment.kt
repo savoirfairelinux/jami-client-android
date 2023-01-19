@@ -20,41 +20,51 @@ package cx.ring.fragments
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.tabs.TabLayout
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
+import cx.ring.adapters.SmartListAdapter
+import cx.ring.client.AccountAdapter
 import cx.ring.client.AccountSpinnerAdapter
 import cx.ring.client.HomeActivity
 import cx.ring.contactrequests.ContactRequestsFragment
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils
+import cx.ring.viewholders.SmartListViewHolder
+import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.home.HomePresenter
 import net.jami.home.HomeView
+import net.jami.model.Conversation
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-import java.lang.IllegalArgumentException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
 
 fun ViewPager2.findCurrentFragment(fragmentManager: FragmentManager): Fragment? =
     fragmentManager.findFragmentByTag("f$currentItem")
@@ -76,8 +86,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     private var mAccountAdapter: AccountSpinnerAdapter? = null
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
-    private var mSearchMenuItem: MenuItem? = null
     private var mDialPadMenuItem: MenuItem? = null
+
+    private val searchDisposable = CompositeDisposable()
+    private var searchAdapter: SmartListAdapter? = null
+    private val querySubject = BehaviorSubject.createDefault("")
+    private val debouncedQuery = querySubject.debounce{ item ->
+        if (item.isEmpty()) Observable.empty() else Observable.timer(350, TimeUnit.MILLISECONDS)
+    }.distinctUntilChanged()
 
     @Inject
     lateinit
@@ -125,23 +141,64 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 }
             })
             binding.tabLayout.addOnTabSelectedListener(this)
-            binding.spinnerToolbar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val adapter = mAccountAdapter ?: return
-                    val type = adapter.getItemViewType(position)
-                    if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-                        adapter.getItem(position)?.let { account ->
-                            mAccountService.currentAccount = account
-                        }
-                    } else {
-                        val intent = Intent(activity, AccountWizardActivity::class.java)
-                        startActivity(intent)
-                        mBinding!!.spinnerToolbar.setSelection(0)
+            binding.toolbar.setNavigationOnClickListener {
+                val accounts = mAccountService.observableAccountList.blockingFirst()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Select Account")
+                    .setAdapter(
+                        AccountAdapter(requireContext(),
+                        accounts,
+                        mDisposable, mAccountService, mConversationFacade)
+                    ) { _, index ->
+                        if (index >= accounts.size)
+                            startActivity(Intent(activity, AccountWizardActivity::class.java))
+                        else
+                            mAccountService.currentAccount = accounts[index]
                     }
-                }
-                override fun onNothingSelected(arg0: AdapterView<*>?) {}
+                    .show()
             }
             binding.toolbar.inflateMenu(R.menu.smartlist_menu)
+            binding.searchView.addTransitionListener { _, previousState, newState ->
+                if (newState === TransitionState.SHOWN) {
+                    searchBackPressedCallback.isEnabled = true
+                } else if(previousState === TransitionState.SHOWN) {
+                    searchBackPressedCallback.isEnabled = false
+                }
+                if (newState === TransitionState.HIDDEN) {
+                    (pagerContent as? SmartListFragment?)?.showFab(true)
+                    searchDisposable.clear()
+                } else if (previousState === TransitionState.HIDDEN) {
+                    (pagerContent as? SmartListFragment?)?.showFab(false)
+                    searchDisposable.add(mConversationFacade.getSearchResults(mConversationFacade.currentAccountSubject, debouncedQuery)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe { searchAdapter!!.update(it) })
+                }
+            }
+            binding.searchResult.adapter = SmartListAdapter(null, object : SmartListViewHolder.SmartListListeners {
+                override fun onItemClick(item: Conversation) {
+                    collapseSearchActionView()
+                    (requireActivity() as HomeActivity).startConversation(item.accountId, item.uri)
+                }
+                override fun onItemLongClick(item: Conversation) {
+                }
+            }, mConversationFacade, mDisposable).apply {
+                searchAdapter = this
+            }
+            binding.searchResult.setHasFixedSize(true)
+            binding.searchResult.layoutManager = LinearLayoutManager(requireContext()).apply {
+                orientation = RecyclerView.VERTICAL
+            }
+            binding.searchView.editText.addTextChangedListener {
+                querySubject.onNext(it.toString())
+            }
+            /*binding.searchView.editText.setOnEditorActionListener { textView, i, keyEvent ->
+                if (i == EditorInfo.IME_ACTION_GO) {
+
+                    //(requireActivity() as HomeActivity).startConversation(item.accountId, item.uri)
+                    true
+                } else false
+            }*/
+            binding.searchView.editText.imeOptions = EditorInfo.IME_ACTION_GO
             mBinding = binding
             binding.root
         }
@@ -149,8 +206,8 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val menu = mBinding!!.toolbar.menu
-        val searchMenuItem = menu.findItem(R.id.menu_contact_search)
         val dialpadMenuItem = menu.findItem(R.id.menu_contact_dial)
+/*
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 dialpadMenuItem.isVisible = false
@@ -179,17 +236,15 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             Toolbar.LayoutParams.WRAP_CONTENT,
             Toolbar.LayoutParams.MATCH_PARENT
         )
-        searchView.imeOptions = EditorInfo.IME_ACTION_GO
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        searchView.imeOptions = EditorInfo.IME_ACTION_GO*/
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             searchView.findViewById<EditText>(R.id.search_src_text)
                 ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
-        }
-        mSearchMenuItem = searchMenuItem
+        }*/
         mDialPadMenuItem = dialpadMenuItem
-        mSearchView = searchView
         mBinding!!.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menu_contact_search -> {
+                /*R.id.menu_contact_search -> {
                     mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
                 }
                 R.id.menu_contact_dial -> {
@@ -201,7 +256,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                         searchView?.inputType = EditorInfo.TYPE_CLASS_PHONE
                         mDialPadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
                     }
-                }
+                }*/
                 R.id.menu_account_settings -> {
                     (requireActivity() as HomeActivity).goToAccountSettings()
                 }
@@ -225,6 +280,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onStart() {
         super.onStart()
+        mDisposable.add(searchDisposable)
         activity?.intent?.let { handleIntent(it) }
         mDisposable.add(mAccountService
             .currentAccountSubject
@@ -236,26 +292,19 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             .switchMap { obj -> obj.unreadConversations }
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { count -> setBadge(TAB_CONVERSATIONS, count) })
-        mDisposable.add(
-            mAccountService.observableAccountList
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe({ accounts ->
-                    mAccountAdapter?.apply {
-                        clear()
-                        addAll(accounts)
-                        notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            mBinding!!.spinnerToolbar.setSelection(0)
-                        }
-                    } ?: run {
-                        AccountSpinnerAdapter(requireActivity(), ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
-                            mAccountAdapter = this
-                            setNotifyOnChange(false)
-                            mBinding?.spinnerToolbar?.adapter = this
-                        }
-                    }
-                }) { e -> Log.e(HomeActivity.TAG, "Error loading account list !", e) })
 
+        mDisposable.add(
+            mAccountService.currentAccountSubject
+                .switchMap { mAccountService.getObservableAccountProfile(it.accountId) }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { profile ->
+                    mAccountService
+                    mBinding!!.toolbar.navigationIcon =
+                        BitmapUtils.withPadding(
+                            AvatarDrawable.build(mBinding!!.root.context, profile.first, profile.second, true, profile.first.isRegistered),
+                            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, resources.displayMetrics).toInt()
+                    )
+                })
         // Select first conversation in tablet mode
         /*if (DeviceUtils.isTablet(requireActivity())) {
             val intent = activity?.intent
@@ -321,15 +370,15 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         val searchView = mSearchView ?: return
         when (intent.action) {
             Intent.ACTION_CALL -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.dataString, true)
             }
             Intent.ACTION_DIAL -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.dataString, false)
             }
             Intent.ACTION_SEARCH -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
             }
             else -> {}
@@ -345,32 +394,35 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onTabReselected(tab: TabLayout.Tab?) {}
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+
         return true
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        (pagerContent as? SmartListFragment?)?.searchQueryTextChanged(newText)
+        //(pagerContent as? SmartListFragment?)?.searchQueryTextChanged(newText)
+        querySubject.onNext(newText)
         return true
     }
 
     override fun goToQRFragment() {
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
-        mSearchMenuItem!!.collapseActionView()
+        collapseSearchActionView()
     }
 
     override fun startNewGroup() {
         ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
-        mSearchMenuItem!!.collapseActionView()
+        collapseSearchActionView()
     }
 
     fun expandSearchActionView(): Boolean {
-        return mSearchMenuItem!!.expandActionView()
+        mBinding!!.searchView.show()
+        return true
     }
 
     fun collapseSearchActionView() {
-        mSearchMenuItem!!.collapseActionView()
-    }
+        mBinding!!.searchView.hide()
+     }
 
     private inner class ScreenSlidePagerAdapter(f: Fragment) : FragmentStateAdapter(f) {
         var hasRequests = false

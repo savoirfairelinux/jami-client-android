@@ -52,7 +52,7 @@ class SmartListPresenter @Inject constructor(
     override fun bindView(view: SmartListView) {
         super.bindView(view)
         view.setLoading(true)
-        mCompositeDisposable.add(conversationFacade.getFullConversationList(accountSubject, debouncedQuery)
+        mCompositeDisposable.add(conversationFacade.getConversationList(accountSubject)
             .observeOn(uiScheduler)
             .subscribe { list ->
                 val v = this.view ?: return@subscribe

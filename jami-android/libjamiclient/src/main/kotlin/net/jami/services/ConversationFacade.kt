@@ -264,9 +264,9 @@ class ConversationFacade(
                 .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
         }*/
 
-    fun getConversationList(): Observable<MutableList<ConversationItemViewModel>> = getConversationList(mAccountService.currentAccountSubject)
+    fun getConversationViewModelList(): Observable<MutableList<ConversationItemViewModel>> = getConversationViewModelList(mAccountService.currentAccountSubject)
 
-    fun getConversationList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> =
+    fun getConversationViewModelList(currentAccount: Observable<Account>): Observable<MutableList<ConversationItemViewModel>> =
         currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
                 .map { conversations -> conversations.map { conversation -> mContactService.getLoadedConversation(conversation) }}
@@ -390,6 +390,22 @@ class ConversationFacade(
                 }
         }*/
 
+    fun getSearchResults(currentAccount: Observable<Account>, query: Observable<String>): Observable<ConversationList> =
+        currentAccount.switchMap { account ->
+            Observable.combineLatest(
+                account.getConversationsSubject(),
+                query.switchMapSingle { getConversationSearchResults(account, it) },
+                query
+            ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }
+        }.switchMapSingle { list ->
+            if (list.latestQuery.isNotBlank() && list.conversations.isNotEmpty()) {
+                val lq = list.latestQuery.lowercase()
+                Maybe.concatEager(list.conversations.map { c -> mContactService.getLoadedConversation(c)
+                    .filter { it.matches(lq) }.map { c }
+                }).toList().map { newList -> ConversationList(newList, list.searchResult, list.latestQuery) }
+            } else Single.just(ConversationList(emptyList(), list.searchResult, list.latestQuery))
+        }
+
     fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<ConversationList> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(
@@ -405,6 +421,10 @@ class ConversationFacade(
                 }).toList().map { newList -> ConversationList(newList, list.searchResult, list.latestQuery) }
             } else Single.just(list)
         }
+
+    fun getConversationList(currentAccount: Observable<Account>): Observable<ConversationList> =
+        currentAccount.switchMap { account -> account.getConversationsSubject() }
+            .map { conversations -> ConversationList(conversations) }
 
     /**
      * Loads the smartlist from the database and updates the view
