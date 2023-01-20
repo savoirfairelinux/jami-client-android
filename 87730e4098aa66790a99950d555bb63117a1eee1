@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b4b248_7775eb4f",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/ParticipantsContainerView.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-20T22:28:15Z",
+      "side": 1,
+      "message": "Should maybe reformat this and also stick to LayoutParams from one of ViewGroup or FrameLayout, they\u0027re both the same",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 97
+      },
+      "revId": "87730e4098aa66790a99950d555bb63117a1eee1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
