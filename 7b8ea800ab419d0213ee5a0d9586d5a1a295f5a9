@@ -22,6 +22,30 @@
       },
       "revId": "7b8ea800ab419d0213ee5a0d9586d5a1a295f5a9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc5b3b03_5386b6b6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-20T19:16:54Z",
+      "side": 1,
+      "message": "Just to help with code readability if anyone ever decides to change how many times a message flashes. Could remove it.",
+      "parentUuid": "7fd6027b_09c75415",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "7b8ea800ab419d0213ee5a0d9586d5a1a295f5a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
