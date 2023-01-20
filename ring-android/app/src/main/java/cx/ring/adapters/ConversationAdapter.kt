@@ -64,6 +64,7 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.client.MediaViewerActivity
@@ -108,6 +109,7 @@ class ConversationAdapter(
     private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
+    @ColorInt private var convColorTint = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
     private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
@@ -420,6 +422,7 @@ class ConversationAdapter(
 
     fun setPrimaryColor(@ColorInt color: Int) {
         convColor = color
+        convColorTint = MaterialColors.compositeARGBWithAlpha(color, (MaterialColors.ALPHA_LOW * 255).toInt())
         notifyDataSetChanged()
     }
 
@@ -835,7 +838,7 @@ class ConversationAdapter(
                     if (textMessage.isIncoming) {
                         longPressView.background.setTint(res.getColor(R.color.grey_500))
                     } else {
-                        longPressView.background.setTint(res.getColor(R.color.blue_900))
+                        longPressView.background.setTint(convColorTint)
                     }
                     mCurrentLongItem = RecyclerViewContextMenuInfo(
                         convViewHolder.bindingAdapterPosition,
