@@ -181,6 +181,9 @@
   <string name="block_contact_dialog_title">Të bllokohet %1$s?</string>
   <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
   <string name="block_contact_completed">%1$s u bllokua.</string>
+  <string name="unblock_contact_dialog_title">Të zhbllokohet %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s do të jetë në gjendje t’ju kontaktojë sërish.</string>
+  <string name="unblock_contact_completed">%1$s u zhbllokua.</string>
   <string name="conversation_contact_is_typing">Kontakti po shtyp…</string>
   <string name="conversation_info_contact_you">Ju</string>
   <string name="conversation_members">Anëtarë</string>

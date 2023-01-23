@@ -181,6 +181,9 @@
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s letiltva lett.</string>
+  <string name="unblock_contact_dialog_title">%1$s letiltásának feloldása?</string>
+  <string name="unblock_contact_dialog_message">%1$s ismét kapcsolatba léphet Önnel.</string>
+  <string name="unblock_contact_completed">%1$s letiltása feloldva.</string>
   <string name="conversation_contact_is_typing">Kapcsolat éppen gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
