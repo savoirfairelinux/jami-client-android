@@ -50,8 +50,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--version-name')
     parser.add_argument('--version-code', type=int)
-    parser.add_argument('--path', default='ring-android/app/build.gradle.kts')
-    parser.add_argument('--commit', action='store_true')
+    parser.add_argument('-p', '--path', default='jami-android/app/build.gradle.kts')
+    parser.add_argument('-c', '--commit', action='store_true')
     args = parser.parse_args()
 
     new_code, new_name = update_version(args.path, args.version_code, args.version_name)
