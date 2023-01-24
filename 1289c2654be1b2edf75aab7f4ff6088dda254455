@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e5db550_1aedff39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-24T21:57:47Z",
+      "side": 1,
+      "message": "+2. Just don\u0027t have the permissions to do so.",
+      "revId": "1289c2654be1b2edf75aab7f4ff6088dda254455",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
