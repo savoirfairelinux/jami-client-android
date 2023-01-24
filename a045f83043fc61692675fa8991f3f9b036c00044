@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14d2d7d_3395a319",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-24T20:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d8845f_a3f4a403",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "a045f83043fc61692675fa8991f3f9b036c00044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de2c43e_6b5fc68b",
@@ -41,6 +65,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfeb5a2a_d3e22590",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-24T20:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de2c43e_6b5fc68b",
+      "revId": "a045f83043fc61692675fa8991f3f9b036c00044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d92900f_f31e9035",
@@ -54,6 +96,30 @@
       "writtenOn": "2023-01-24T19:52:19Z",
       "side": 1,
       "message": "or simply\n\n  if (highlight)\n    histList.doOnNextLayout {\n      histList.layoutManager?.findViewByPosition(position)\n        ?.setBackgroundColor(resources.getColor(R.color.surface))\n    }",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "a045f83043fc61692675fa8991f3f9b036c00044",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3ed04b4_e2c38b64",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-01-24T20:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d92900f_f31e9035",
       "range": {
         "startLine": 158,
         "startChar": 12,
