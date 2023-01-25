@@ -7,5 +7,5 @@ android-toolchain-*/
 .gradle
 **/.settings
 config.mak
-ring-android/captures/
+jami-android/captures/
 .cxx
