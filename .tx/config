@@ -3,32 +3,32 @@ host     = https://www.transifex.com
 lang_map = ro_RO: ro-rRO, cs_CZ: cs-rCZ, fr_FR: fr-rFR, sk_SK: sk-rSK, fr_BE: fr-rBE, fr_CH: fr-rCH, nl_BE: nl-rBE, be@tarask: b+be+tarask, hr_HR: hr-rHR, en_IE: en-rIE, da_DK: da-rDK, es_AR: es-rAR, es_MX: es-rMX, ru_RU: ru-rRU, es_CO: es-rCO, es_419: b+es+419, sr_RS: sr, be_BY: be-rBY, zh_CN: zh-rCN, fr_CA: fr-rCA, sq_AL: sq-rAL, hi_IN: hi-rIN, en_US: en-rUS, ar_EG: ar-rEG, mn_MN: mn-rMN, zh_HK: zh-rHK, pt_BR: pt-rBR, et_EE: et-rEE, sr@Cyrl: b+sr+Cyrl, en_CA: en-rCA, zh_TW: zh-rTW, it_IT: it-rIT, de_DE: de-rDE, en_GB: en-rGB, ko_KR: ko-rKR, bg_BG: bg-rBG, pt_PT: pt-rPT, fa_IR: fa-rIR, nl_NL: nl-rNL, tr_TR: tr-rTR, pl_PL: pl-rPL
 
 [o:savoirfairelinux:p:jami:r:android]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml
-source_file = ring-android/app/src/main/res/values/strings.xml
+file_filter = jami-android/app/src/main/res/values-<lang>/strings.xml
+source_file = jami-android/app/src/main/res/values/strings.xml
 source_lang = en
 type        = ANDROID
 
 [o:savoirfairelinux:p:jami:r:android-account]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_account.xml
-source_file = ring-android/app/src/main/res/values/strings_account.xml
+file_filter = jami-android/app/src/main/res/values-<lang>/strings_account.xml
+source_file = jami-android/app/src/main/res/values/strings_account.xml
 source_lang = en
 type        = ANDROID
 
 [o:savoirfairelinux:p:jami:r:android-call]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
-source_file = ring-android/app/src/main/res/values/strings_call.xml
+file_filter = jami-android/app/src/main/res/values-<lang>/strings_call.xml
+source_file = jami-android/app/src/main/res/values/strings_call.xml
 source_lang = en
 type        = ANDROID
 
 [o:savoirfairelinux:p:jami:r:android-content-description]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_content_description.xml
-source_file = ring-android/app/src/main/res/values/strings_content_description.xml
+file_filter = jami-android/app/src/main/res/values-<lang>/strings_content_description.xml
+source_file = jami-android/app/src/main/res/values/strings_content_description.xml
 source_lang = en
 type        = ANDROID
 
 [o:savoirfairelinux:p:jami:r:android-preferences]
-file_filter = ring-android/app/src/main/res/values-<lang>/strings_preferences.xml
-source_file = ring-android/app/src/main/res/values/strings_preferences.xml
+file_filter = jami-android/app/src/main/res/values-<lang>/strings_preferences.xml
+source_file = jami-android/app/src/main/res/values/strings_preferences.xml
 source_lang = en
 type        = ANDROID
 

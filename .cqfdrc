@@ -1,0 +1,17 @@
+[project]
+org='savoirfairelinux'
+name='jami'
+
+[build]
+; default behaviour
+command='./compile.sh'
+flavors='ci release daemon'
+
+[ci]
+command='./compile.sh'
+
+[daemon]
+command='./compile.sh --daemon'
+
+[release]
+command='./compile.sh --daemon --release'

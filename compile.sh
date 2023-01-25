@@ -1,7 +1,5 @@
 #! /bin/bash
 # Build Jami daemon and client APK for Android
-TOP=$(pwd)/ring-android
-
 # Flags:
 
   # --release: build in release mode
@@ -24,7 +22,7 @@ done
 export RELEASE
 
 if [ -z "$DAEMON_DIR" ]; then
-    DAEMON_DIR="$(pwd)/../daemon"
+    DAEMON_DIR="$(pwd)/daemon"
     echo "DAEMON_DIR not provided trying to find it in $DAEMON_DIR"
 fi
 if [ ! -d "$DAEMON_DIR" ]; then
@@ -38,7 +36,7 @@ export DAEMON_DIR
 
 JNIDIR=$DAEMON_DIR/bin/jni
 ANDROID_TOPLEVEL_DIR="`pwd`"
-ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
+ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/jami-android"
 
 # Generate JNI interface
 cd $JNIDIR
@@ -52,8 +50,11 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
+        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleRelease
     else
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
+        cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug
     fi
+else
+    echo "Building daemon only"
+    cd $ANDROID_APP_DIR && ./gradlew $GRADLE_PROPERTIES buildCMakeDebug
 fi

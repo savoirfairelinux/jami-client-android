@@ -52,7 +52,7 @@ echo "  - versionName: ${versionName}
     versionCode: ${versionCode}
     commit: ${commit}
     timeout: 10800
-    subdir: client-android/ring-android/app
+    subdir: client-android/jami-android/app
     submodules: true
     sudo:
       - apt-get update || apt-get update
@@ -74,7 +74,7 @@ echo "  - versionName: ${versionName}
       - lrc
       - packaging
       - scripts
-    prebuild: \$ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-30' 'build-tools;30.0.3'
+    prebuild: \$ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-33' 'build-tools;30.0.3'
     build:
       - cd ../..
       - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
