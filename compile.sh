@@ -1,7 +1,5 @@
 #! /bin/bash
 # Build Jami daemon and client APK for Android
-TOP=$(pwd)/ring-android
-
 # Flags:
 
   # --release: build in release mode
@@ -38,7 +36,7 @@ export DAEMON_DIR
 
 JNIDIR=$DAEMON_DIR/bin/jni
 ANDROID_TOPLEVEL_DIR="`pwd`"
-ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
+ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/jami-android"
 
 # Generate JNI interface
 cd $JNIDIR
@@ -52,8 +50,8 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
+        cd $ANDROID_TOPLEVEL_DIR && ./gradlew $GRADLE_PROPERTIES assembleRelease
     else
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
+        cd $ANDROID_TOPLEVEL_DIR && ./gradlew $GRADLE_PROPERTIES assembleDebug
     fi
 fi

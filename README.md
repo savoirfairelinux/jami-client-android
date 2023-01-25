@@ -13,12 +13,12 @@ Install autotools, autopoint, swig-4 or later and python-3.7 or later on your sy
 ## Build instructions
 
 With Android Studio:
-* Add 'ring-project' in Android Studio
+* Add 'jami-android' in Android Studio
 * Click on build
 * Enjoy!
 
 With the command line:
-* cd client-android/ring-project
+* cd client-android/jami-android
 * ./gradlew assembleDebug
 
 ## Update translations
