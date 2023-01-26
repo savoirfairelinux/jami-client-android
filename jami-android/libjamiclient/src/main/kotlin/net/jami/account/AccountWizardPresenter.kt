@@ -131,10 +131,7 @@ class AccountWizardPresenter @Inject constructor(
         if (accountCreationModel.isLink) {
             view!!.displayProgress(true)
             mCompositeDisposable.add(newAccount
-                .filter { a: Account ->
-                    val newState = a.registrationState
-                    !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
-                }
+                .filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING }
                 .firstOrError()
                 .observeOn(mUiScheduler)
                 .subscribe({ acc: Account ->
@@ -143,7 +140,7 @@ class AccountWizardPresenter @Inject constructor(
                     if (view != null) {
                         view.displayProgress(false)
                         val newState = acc.registrationState
-                        if (newState.contentEquals(AccountConfig.STATE_ERROR_GENERIC)) {
+                        if (newState == AccountConfig.RegistrationState.ERROR_GENERIC) {
                             mCreatingAccount = false
                             if (accountCreationModel.archive == null) view.displayCannotBeFoundError() else view.displayGenericError()
                         } else {
@@ -189,10 +186,7 @@ class AccountWizardPresenter @Inject constructor(
         //mCreationError = false;
         val account = BehaviorSubject.create<Account>()
         account.onErrorComplete()
-            .filter { a: Account ->
-                val newState = a.registrationState
-                !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
-            }
+            .filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING }
             .firstElement()
             .subscribe { a: Account ->
                 if (!model.isLink && a.isJami && model.username.isNotEmpty())
@@ -212,10 +206,8 @@ class AccountWizardPresenter @Inject constructor(
     fun profileCreated(model: AccountCreationModel, saveProfile: Boolean) {
         view!!.blockOrientation()
         view!!.displayProgress(true)
-        var newAccount = model.accountObservable!!.filter { a: Account ->
-                val newState = a.registrationState
-                !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))
-            }
+        var newAccount = model.accountObservable!!.filter { a: Account -> a.registrationState != AccountConfig.RegistrationState.INITIALIZING
+        }
             .firstOrError()
         if (saveProfile) {
             newAccount = newAccount.flatMap { a: Account ->
@@ -229,12 +221,10 @@ class AccountWizardPresenter @Inject constructor(
                 val view = view
                 if (view != null) {
                     view.displayProgress(false)
-                    val newState = account.registrationState
-                    Log.w(TAG, "newState $newState")
-                    when (newState) {
-                        AccountConfig.STATE_ERROR_GENERIC -> view.displayGenericError()
-                        AccountConfig.STATE_UNREGISTERED -> { }
-                        AccountConfig.STATE_ERROR_NETWORK -> view.displayNetworkError()
+                    when (account.registrationState) {
+                        AccountConfig.RegistrationState.ERROR_GENERIC -> view.displayGenericError()
+                        AccountConfig.RegistrationState.UNREGISTERED -> { }
+                        AccountConfig.RegistrationState.ERROR_NETWORK -> view.displayNetworkError()
                         else -> {}
                     }
                     view.displaySuccessDialog()
