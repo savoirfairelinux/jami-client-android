@@ -997,25 +997,26 @@ class AccountService(
     }
 
     fun registrationStateChanged(accountId: String, newState: String, code: Int, detailString: String?) {
-        //Log.d(TAG, "registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
+        Log.d(TAG, "registrationStateChanged: $accountId, $newState, $code, $detailString")
         val account = getAccount(accountId) ?: return
+        val state = AccountConfig.RegistrationState.valueOf(newState)
         val oldState = account.registrationState
-        if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) && !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+        if (oldState == AccountConfig.RegistrationState.INITIALIZING && state != AccountConfig.RegistrationState.INITIALIZING) {
             account.setDetails(JamiService.getAccountDetails(account.accountId).toNative())
             account.setCredentials(JamiService.getCredentials(account.accountId).toNative())
             account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
-            account.setRegistrationState(newState, code)
+            account.setRegistrationState(state, code)
         }
-        if (oldState != newState) {
+        if (oldState != state) {
             observableAccounts.onNext(account)
         }
     }
 
     fun accountDetailsChanged(accountId: String, details: Map<String, String>) {
         val account = getAccount(accountId) ?: return
-        Log.d(TAG, "accountDetailsChanged: " + accountId + " " + details.size)
+        Log.d(TAG, "accountDetailsChanged: $accountId ${details.size}")
         account.setDetails(details)
         observableAccounts.onNext(account)
     }
