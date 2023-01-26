@@ -55,23 +55,22 @@ class AccountConfig(details: Map<String, String>) {
         const val FALSE_STR = "false"
         const val ACCOUNT_TYPE_JAMI = "RING"
         const val ACCOUNT_TYPE_SIP = "SIP"
-        const val STATE_REGISTERED = "REGISTERED"
-        const val STATE_READY = "READY"
-        const val STATE_UNREGISTERED = "UNREGISTERED"
-        const val STATE_TRYING = "TRYING"
-        const val STATE_ERROR = "ERROR"
-        const val STATE_ERROR_GENERIC = "ERROR_GENERIC"
-        const val STATE_ERROR_AUTH = "ERROR_AUTH"
-        const val STATE_ERROR_NETWORK = "ERROR_NETWORK"
-        const val STATE_ERROR_HOST = "ERROR_HOST"
-        const val STATE_ERROR_CONF_STUN = "ERROR_CONF_STUN"
-        const val STATE_ERROR_EXIST_STUN = "ERROR_EXIST_STUN"
-        const val STATE_ERROR_SERVICE_UNAVAILABLE = "ERROR_SERVICE_UNAVAILABLE"
-        const val STATE_ERROR_NOT_ACCEPTABLE = "ERROR_NOT_ACCEPTABLE"
         const val STATE_REQUEST_TIMEOUT = "Request Timeout"
-        const val STATE_INITIALIZING = "INITIALIZING"
-        const val STATE_NEED_MIGRATION = "ERROR_NEED_MIGRATION"
         const val STATE_SUCCESS = "SUCCESS"
         const val STATE_INVALID = "INVALID"
+    }
+
+    enum class RegistrationState {
+        UNLOADED,
+        UNREGISTERED,
+        TRYING,
+        REGISTERED,
+        ERROR_GENERIC,
+        ERROR_AUTH,
+        ERROR_NETWORK,
+        ERROR_HOST,
+        ERROR_SERVICE_UNAVAILABLE,
+        ERROR_NEED_MIGRATION,
+        INITIALIZING
     }
 }

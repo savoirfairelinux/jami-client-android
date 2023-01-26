@@ -22,14 +22,12 @@ package net.jami.model
 
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.AccountService
 import net.jami.utils.Log
-import java.lang.IllegalStateException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -71,6 +69,7 @@ class Account(
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
+    private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.UNLOADED)
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
@@ -116,7 +115,7 @@ class Account(
                 val removed = cache.remove(key)
                 conversations.remove(key)
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
-                Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
+                // Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
                 /*if (contactConversation != null) {
                     conversations.remove(contactConversation.getUri().getUri());
                 }*/
@@ -453,12 +452,15 @@ class Account(
             config.put(ConfigKey.PROXY_SERVER, proxy)
         }
 
-    val registrationState: String
-        get() = mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]
+    val registrationState: AccountConfig.RegistrationState
+        get() = registrationStateSubject.blockingFirst()
+    val registrationStateObservable: Observable<AccountConfig.RegistrationState>
+        get() = registrationStateSubject
 
-    fun setRegistrationState(registeredState: String, code: Int) {
-        mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState)
-        mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, code.toString())
+    fun setRegistrationState(registeredState: AccountConfig.RegistrationState, code: Int) {
+        //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState)
+        registrationStateSubject.onNext(registeredState)
+        //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, code.toString())
     }
 
     fun setVolatileDetails(volatileDetails: Map<String, String>) {
@@ -504,24 +506,17 @@ class Account(
     val details: HashMap<String, String>
         get() = config.all
     val isTrying: Boolean
-        get() = registrationState.contentEquals(AccountConfig.STATE_TRYING)
+        get() = registrationState == AccountConfig.RegistrationState.TRYING
     val isRegistered: Boolean
-        get() = registrationState.contentEquals(AccountConfig.STATE_READY) || registrationState.contentEquals(
-            AccountConfig.STATE_REGISTERED
-        )
+        get() = registrationState == AccountConfig.RegistrationState.REGISTERED
     val isInError: Boolean
         get() {
             val state = registrationState
-            return (state.contentEquals(AccountConfig.STATE_ERROR)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_AUTH)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_CONF_STUN)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_EXIST_STUN)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_GENERIC)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_HOST)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_NETWORK)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_NOT_ACCEPTABLE)
-                    || state.contentEquals(AccountConfig.STATE_ERROR_SERVICE_UNAVAILABLE)
-                    || state.contentEquals(AccountConfig.STATE_REQUEST_TIMEOUT))
+            return (state == AccountConfig.RegistrationState.ERROR_AUTH
+                    || state == AccountConfig.RegistrationState.ERROR_GENERIC
+                    || state == AccountConfig.RegistrationState.ERROR_HOST
+                    || state == AccountConfig.RegistrationState.ERROR_NETWORK
+                    || state == AccountConfig.RegistrationState.ERROR_SERVICE_UNAVAILABLE)
         }
     val isIP2IP: Boolean
         get() {
@@ -562,9 +557,7 @@ class Account(
         return if (isIP2IP) defaultNameSip.toString() else displayUri!!
     }
 
-    fun needsMigration(): Boolean {
-        return AccountConfig.STATE_NEED_MIGRATION == registrationState
-    }
+    fun needsMigration(): Boolean = AccountConfig.RegistrationState.ERROR_NEED_MIGRATION == registrationState
 
     val deviceId: String
         get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)!!
