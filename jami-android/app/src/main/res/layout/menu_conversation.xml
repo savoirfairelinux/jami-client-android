@@ -134,7 +134,7 @@
             android:focusable="true"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="@string/menu_message_copy"
+            android:text="@android:string/copy"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/outline_file_copy_16"
             app:drawableTint="@color/colorPrimary" />
@@ -144,7 +144,6 @@
             style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:minHeight="48dp"
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:drawablePadding="16dp"
@@ -161,16 +160,31 @@
             style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:minHeight="48dp"
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:drawablePadding="16dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="Edit"
+            android:text="@string/menu_message_edit"
             android:textColor="@color/text_color"
             app:drawableStartCompat="@drawable/baseline_edit_16"
+            app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/conv_action_delete"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="@string/menu_message_delete"
+            android:textColor="@color/text_color"
+            app:drawableStartCompat="@drawable/baseline_delete_24"
             app:drawableTint="@color/colorPrimary" />
 
         <TextView
@@ -178,7 +192,6 @@
             style="@style/TextAppearance.Material3.LabelMedium"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:minHeight="48dp"
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:drawablePadding="16dp"

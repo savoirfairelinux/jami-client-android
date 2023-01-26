@@ -33,8 +33,6 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
@@ -81,8 +79,6 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
@@ -634,9 +630,16 @@ class ConversationAdapter(
 
     private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
+            val history = interaction.historyObservable.blockingFirst()
+            val lastElement = history.last()
+            val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
+            Log.w(TAG, "isDeleted $isDeleted ${history.size}")
             convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
-            convActionEdit.isVisible = !interaction.isIncoming
+            convActionCopyText.isVisible = !isDeleted
+            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming
+            convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
+            convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             val popupWindow = WeakReference(PopupWindow(root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true).apply {
                 setOnDismissListener {
@@ -674,7 +677,7 @@ class ConversationAdapter(
                 presenter.saveFile(interaction)
             }
             convActionCopyText.setOnClickListener {
-                addToClipboard(interaction.body)
+                addToClipboard(lastElement.body)
                 popupWindow.get()?.dismiss()
             }
             if (!interaction.isIncoming) {
@@ -691,8 +694,12 @@ class ConversationAdapter(
                         Log.w(TAG, "Can't open picture", e)
                     }
                 }
+                convActionDelete.setOnClickListener {
+                    presenter.deleteConversationItem(interaction)
+                }
             } else {
                 convActionEdit.setOnClickListener(null)
+                convActionDelete.setOnClickListener(null)
             }
             convActionShare.setOnClickListener {
                 if (interaction is DataTransfer)
@@ -701,22 +708,24 @@ class ConversationAdapter(
                     presenter.shareText(interaction)
                 popupWindow.get()?.dismiss()
             }
-            convActionHistory.setOnClickListener {
-                Log.w(TAG, "Message history")
-                cvh.compositeDisposable.add(interaction.historyObservable.firstOrError().subscribe { c ->
-                    Log.w(TAG, "Message history ${c.size}")
-                    c.forEach {
-                        Log.w(TAG, "Message ${it.type} ${it.body} $it")
-                    }
-                    MaterialAlertDialogBuilder(it.context)
-                        .setTitle("Message history")
-                        .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }.toTypedArray())
-                        { dialog, which -> dialog.dismiss() }
-                        .create()
-                        .show()
-                })
-                popupWindow.get()?.dismiss()
-            }
+            if (convActionHistory.isVisible)
+                convActionHistory.setOnClickListener {
+                    cvh.compositeDisposable.add(
+                        interaction.historyObservable.firstOrError().subscribe { c ->
+                            Log.w(TAG, "Message history ${c.size}")
+                            c.forEach {
+                                Log.w(TAG, "Message ${it.type} ${it.body} $it")
+                            }
+                            MaterialAlertDialogBuilder(it.context)
+                                .setTitle("Message history")
+                                .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }
+                                    .toTypedArray())
+                                { dialog, which -> dialog.dismiss() }
+                                .create()
+                                .show()
+                        })
+                    popupWindow.get()?.dismiss()
+                }
         }
     }
 
@@ -832,10 +841,37 @@ class ConversationAdapter(
             .subscribe { lastElement ->
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
-                // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
-                val message = textMessage.body?.trim() ?: ""//.trim { it <= ' ' }
+                val isDeleted = textMessage.body.isNullOrEmpty()
+                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val longPressView = convViewHolder.mMsgTxt!!
                 longPressView.background.setTintList(null)
+                val isTimeShown = hasPermanentTimeString(textMessage, position)
+                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                if (isDeleted) {
+                    msgTxt.text = "(Message deleted)"
+                    //msgTxt.background.setTint(context.getColor(R.color.grey_200))
+                    //msgTxt.setTextColor(context.getColor(R.color.grey_800))
+                    val resIndex =
+                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    if (convColor != 0 && !textMessage.isIncoming) {
+                        msgTxt.background.setTint(convColor)
+                    }
+                    msgTxt.background.alpha = 255
+                    msgTxt.textSize = 16f
+                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                    longPressView.setOnLongClickListener(null)
+                    return@subscribe
+                } /*else {
+                    if (textMessage.isIncoming) {
+                        msgTxt.setTextColor(context.getColor(R.color.colorOnSurface))
+                    } else {
+                        msgTxt.setTextColor(context.getColor(R.color.text_color_primary_dark))
+                    }
+                }*/
+                // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
+
+
                 longPressView.setOnLongClickListener { v: View ->
                     openItemMenu(convViewHolder, v, interaction)
                     if (expandedItemPosition == position) {
@@ -847,16 +883,12 @@ class ConversationAdapter(
                     } else {
                         longPressView.background.setTint(convColorTint)
                     }
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(
-                        convViewHolder.bindingAdapterPosition,
-                        v.id.toLong()
-                    )
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
                     true
                 }
-                val isTimeShown = hasPermanentTimeString(textMessage, position)
-                val msgSequenceType = getMsgSequencing(position, isTimeShown)
+
+                val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
-                val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 if (StringUtils.isOnlyEmoji(message)) {
                     msgTxt.background.alpha = 0
                     msgTxt.textSize = 32.0f
@@ -921,10 +953,7 @@ class ConversationAdapter(
                     } else {
                         if (position == lastMsgPos - 1) {
                             avatar.startAnimation(
-                                AnimationUtils.loadAnimation(
-                                    avatar.context,
-                                    R.anim.fade_out
-                                ).apply {
+                                AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
                                     setAnimationListener(object : Animation.AnimationListener {
                                         override fun onAnimationStart(arg0: Animation) {}
                                         override fun onAnimationRepeat(arg0: Animation) {}
