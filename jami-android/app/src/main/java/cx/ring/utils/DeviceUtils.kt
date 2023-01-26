@@ -29,19 +29,17 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 object DeviceUtils {
-    fun isTv(context: Context): Boolean {
-        val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
-        return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
-    }
+    fun isTv(context: Context): Boolean =
+        context.getSystemService(UiModeManager::class.java)
+            .currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
 
-    fun isTablet(context: Context): Boolean {
-        return context.resources.getBoolean(R.bool.isTablet)
-    }
+    fun isTablet(context: Context): Boolean =
+        context.resources.getBoolean(R.bool.isTablet)
 
     private val uiThread = Looper.getMainLooper().thread
     val uiHandler = Handler(Looper.getMainLooper())
     val uiScheduler: Scheduler = Schedulers.from {
-        if (Thread.currentThread() == uiThread) {
+        if (Thread.currentThread() === uiThread) {
             it.run()
         } else {
             uiHandler.post(it)
