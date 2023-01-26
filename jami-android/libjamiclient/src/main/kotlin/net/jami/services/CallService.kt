@@ -539,17 +539,35 @@ class CallService(
         callSubject.onNext(call ?: return)
     }
 
-    fun requestVideoMedia(conf: Conference, enable: Boolean) {
-        if (conf.isConference || conf.hasVideo()) {
-            JamiService.muteLocalMedia(conf.accountId, conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
-        } else if (enable) {
-            val call = conf.firstCall ?: return
-            val mediaList = call.mediaList ?: return
-            JamiService.requestMediaChange(call.account, call.daemonIdString, mediaList.mapTo(VectMap()
-                    .apply { reserve(mediaList.size.toLong() + 1L) }
-            ) { media -> media.toMap() }
-                .apply { add(Media.DEFAULT_VIDEO.toMap()) })
+    fun requestVideoMediaChange(conf: Conference, uri: String?) {
+        Log.d(TAG, "ASDF videoMuted:${conf.isVideoMuted} isConf:${conf.isConference} uri:$uri")
+        val call = conf.firstCall ?: return
+        val mediaList = call.mediaList ?: return
+        val mute = uri == null
+
+        val proposedMediaList = mutableListOf<Media>()
+        var videoExists = false
+        mediaList.forEach {
+            Log.d(TAG, "ASDF ${it.label}")
+            val newMedia =
+                if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
+                    videoExists = true
+                    it.copy(source = uri, isMuted = mute)
+                }
+                else
+                    it
+            proposedMediaList.add(newMedia)
         }
+        if(!videoExists)
+            proposedMediaList.add(Media.DEFAULT_VIDEO.copy(source = uri))
+
+        JamiService.requestMediaChange(
+            call.account,
+            call.daemonIdString,
+            proposedMediaList.mapTo(VectMap().apply {
+                reserve(proposedMediaList.size.toLong())
+            }) { it.toMap() }
+        )
     }
 
     fun incomingMessage(accountId: String, callId: String, from: String, messages: Map<String, String>) {
