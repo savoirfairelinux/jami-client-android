@@ -107,16 +107,16 @@ class SIPCreationPresenter @Inject constructor(
                     override fun onNext(account: Account) {
                         mAccount = account
                         when (account.registrationState) {
-                            AccountConfig.STATE_REGISTERED, AccountConfig.STATE_SUCCESS, AccountConfig.STATE_READY -> {
+                            AccountConfig.RegistrationState.REGISTERED -> {
                                 saveProfile(account.accountId)
                                 view?.showRegistrationSuccess()
                                 dispose()
                             }
-                            AccountConfig.STATE_ERROR_NETWORK -> {
+                            AccountConfig.RegistrationState.ERROR_NETWORK -> {
                                 view?.showRegistrationNetworkError()
                                 dispose()
                             }
-                            AccountConfig.STATE_TRYING, AccountConfig.STATE_UNREGISTERED -> return
+                            AccountConfig.RegistrationState.TRYING, AccountConfig.RegistrationState.UNREGISTERED -> return
                             else -> {
                                 view?.showRegistrationError()
                                 dispose()
