@@ -22,6 +22,30 @@
       },
       "revId": "87730e4098aa66790a99950d555bb63117a1eee1",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4116ca6_04607a43",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/ParticipantsContainerView.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2023-01-31T18:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b4b248_7775eb4f",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 97
+      },
+      "revId": "87730e4098aa66790a99950d555bb63117a1eee1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
