@@ -409,11 +409,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val binding = binding ?: return
             if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
-            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
+            val participant = binding.participantOverlayContainer.children.first()
+            val l = IntArray(2).apply { participant.getLocationInWindow(this) }
             val x = l[0]
             val y = l[1]
-            val w = binding.participantOverlayContainer.width
-            val h = binding.participantOverlayContainer.height
+            val w = participant.width
+            val h = participant.height
+//                if(w > h)
+//                    Rect(x + (w - h)/2, y, x + h + (w - h)/2, y + h)
+//                else
+//                    Rect(x, y + (h - w)/2, x + w, y + w + (h - w)/2)
+          // Log.d(TAG, "ASDF $x $y $w $h ${rect.flattenToString()}")
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(w, h))
