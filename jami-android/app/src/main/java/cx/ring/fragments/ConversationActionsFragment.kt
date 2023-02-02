@@ -132,10 +132,10 @@ class ConversationActionsFragment : Fragment() {
             if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                 val contact = conversation.contact!!
                 adapter.actions.add(ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, true)
+                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, false)
                 })
                 adapter.actions.add(ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call)) {
-                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, false)
+                    (activity as ContactDetailsActivity).goToCallActivity(conversation, contact.uri, true)
                 })
                 if (!conversation.isSwarm) {
                     adapter.actions.add(ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear)) {
