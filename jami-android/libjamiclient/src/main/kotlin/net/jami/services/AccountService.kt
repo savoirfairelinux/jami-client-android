@@ -524,6 +524,9 @@ class AccountService(
         }
     }
 
+    fun deleteConversationMessage(accountId: String, conversationUri: Uri, messageId: String) {
+        sendConversationMessage(accountId, conversationUri, "", messageId, 1)
+    }
     fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, messageId: String) {
         sendConversationMessage(accountId, conversationUri, txt, messageId, 1)
     }

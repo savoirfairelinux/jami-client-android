@@ -480,8 +480,10 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun editMessage(accountId: String, conversationUri: Uri, messageId: String, message: String) {
-        accountService.editConversationMessage(accountId, conversationUri, message, messageId)
+    fun editMessage(accountId: String, conversationUri: Uri, messageId: String, newMessage: String) {
+        val message = mConversation?.getMessage(messageId)
+        if (message?.body != newMessage)
+            accountService.editConversationMessage(accountId, conversationUri, newMessage, messageId)
     }
 
     companion object {

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/textmsg_bg_ripple"
-    android:visibility="visible"
+    android:visibility="gone"
+    tools:visibility="visible"
     tools:showIn="@layout/item_conv_msg_me">
 
     <ImageView

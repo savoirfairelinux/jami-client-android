@@ -168,10 +168,14 @@ class ConversationFacade(
             }
         } else {
             // handling is the same for calls and texts
-            mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
-                .subscribeOn(Schedulers.io())
-                .subscribe({ conversation.removeInteraction(element) })
+            if (conversation.isSwarm) {
+                mAccountService.deleteConversationMessage(conversation.accountId, conversation.uri, element.messageId!!)
+            } else {
+                mDisposableBag.add(mHistoryService.deleteInteraction(element.id, element.account!!)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({ conversation.removeInteraction(element) })
                     { e: Throwable -> Log.e(TAG, "Can't delete message", e) })
+            }
         }
     }
 
