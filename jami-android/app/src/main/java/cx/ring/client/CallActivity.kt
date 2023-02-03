@@ -57,7 +57,7 @@ class CallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true)
             setShowWhenLocked(true)

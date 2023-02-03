@@ -52,7 +52,7 @@ class TVCallActivity : FragmentActivity() {
         }
         setContentView(R.layout.tv_activity_call)
         volumeControlStream = AudioManager.STREAM_VOICE_CALL
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         val path = ConversationPath.fromIntent(intent)
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

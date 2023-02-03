@@ -152,7 +152,7 @@ class LocationSharingService : Service(), LocationListener {
                         else
                             startForeground(NOTIF_SYNC_SERVICE_ID, notification)
                         mHandler.postAtTime({ refreshNotificationTimer() }, now + 30 * 1000)
-                        JamiApplication.instance?.startDaemon()
+                        JamiApplication.instance?.startDaemon(this)
                     })
                 mDisposableBag.add(mMyLocationSubject
                     .throttleLatest(10, TimeUnit.SECONDS)

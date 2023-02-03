@@ -37,7 +37,7 @@ class ShareActivity : AppCompatActivity() {
             finish()
             return
         }
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.activity_share)
     }
 }

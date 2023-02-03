@@ -123,7 +123,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
 
         // Switch to TV if appropriate (could happen with buggy launcher)
         if (DeviceUtils.isTv(this)) {
