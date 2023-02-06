@@ -845,7 +845,7 @@ class ConversationAdapter(
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val longPressView = convViewHolder.mMsgTxt!!
-                longPressView.background.setTintList(null)
+                longPressView.background?.setTintList(null)
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 if (isDeleted) {
