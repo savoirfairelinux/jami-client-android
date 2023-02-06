@@ -74,7 +74,7 @@ class SyncService : Service() {
             else
                 startForeground(NOTIF_SYNC_SERVICE_ID, notification)
             if (serviceUsers == 0) {
-                JamiApplication.instance?.startDaemon()
+                JamiApplication.instance?.startDaemon(this)
             }
             serviceUsers++
             val timeout = intent.getLongExtra(EXTRA_TIMEOUT, -1)

@@ -62,7 +62,7 @@ class LogsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         binding = ActivityLogsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)

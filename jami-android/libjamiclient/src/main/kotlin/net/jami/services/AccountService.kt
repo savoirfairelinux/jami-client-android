@@ -973,6 +973,15 @@ class AccountService(
         //Log.i(TAG, "setPushNotificationToken()");
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
+    fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {
+        //Log.i(TAG, "setPushNotificationConfig()");
+        val config = StringMap().apply {
+            put("token", token)
+            put("topic", topic)
+            put("platform", platform)
+        }
+        mExecutor.execute { JamiService.setPushNotificationConfig(config) }
+    }
 
     fun volumeChanged(device: String, value: Int) {
         Log.w(TAG, "volumeChanged $device $value")

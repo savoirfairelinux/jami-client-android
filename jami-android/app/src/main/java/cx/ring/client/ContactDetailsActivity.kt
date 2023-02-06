@@ -149,7 +149,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             finish()
             return
         }
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         val conversation = try {
             mConversationFacade
                 .startConversation(path!!.accountId, path!!.conversationUri)

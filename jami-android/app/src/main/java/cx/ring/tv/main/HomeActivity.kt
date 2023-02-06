@@ -131,7 +131,7 @@ class HomeActivity : FragmentActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.tv_activity_home)
         mBackgroundManager = BackgroundManager.getInstance(this).apply { attach(window) }
         mPreviewView = findViewById(R.id.previewView)
