@@ -93,6 +93,7 @@ abstract class JamiApplication : Application() {
         }
     }
     abstract val pushToken: String?
+    open fun activityInit(activityContext: Context) {}
 
     private var mBound = false
     private val mConnection: ServiceConnection = object : ServiceConnection {
@@ -226,7 +227,7 @@ abstract class JamiApplication : Application() {
         setupActivityListener()
     }
 
-    fun startDaemon() {
+    fun startDaemon(activityContext: Context) {
         if (!DRingService.isRunning) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
@@ -240,6 +241,7 @@ abstract class JamiApplication : Application() {
             }
         }
         bindDaemon()
+        activityInit(activityContext)
     }
 
     fun bindDaemon() {

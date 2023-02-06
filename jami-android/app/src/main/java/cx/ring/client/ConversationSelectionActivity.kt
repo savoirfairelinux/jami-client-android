@@ -69,7 +69,7 @@ class ConversationSelectionActivity : AppCompatActivity() {
             override fun onItemLongClick(item: Conversation) {}
         }, mConversationFacade, mDisposable)
             .apply { adapter = this }
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
     }
 
     public override fun onStart() {

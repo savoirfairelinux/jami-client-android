@@ -49,7 +49,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         val model: AccountCreationViewModel by viewModels()
         val intent = intent
         if (intent != null) {

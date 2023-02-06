@@ -56,7 +56,7 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        JamiApplication.instance?.startDaemon()
+        JamiApplication.instance?.startDaemon(this)
         val model: AccountCreationViewModel by viewModels()
         setContentView(R.layout.activity_wizard)
         var accountToMigrate: String? = null

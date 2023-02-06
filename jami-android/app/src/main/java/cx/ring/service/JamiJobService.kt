@@ -46,7 +46,7 @@ class JamiJobService : JobService() {
                 }
                 jobFinished(params, false)
             }, JOB_DURATION)
-            JamiApplication.instance?.startDaemon()
+            JamiApplication.instance?.startDaemon(this)
         } catch (e: Exception) {
             Log.e(TAG, "onStartJob failed", e)
         }
