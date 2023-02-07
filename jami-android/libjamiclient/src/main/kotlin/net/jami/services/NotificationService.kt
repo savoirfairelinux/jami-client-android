@@ -42,7 +42,7 @@ interface NotificationService {
     //void updateNotification(Object notification, int notificationId);
     val serviceNotification: Any
     fun onConnectionUpdate(b: Boolean)
-    fun showLocationNotification(first: Account, contact: Contact)
+    fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation)
     fun cancelLocationNotification(first: Account, contact: Contact)
 
     companion object {

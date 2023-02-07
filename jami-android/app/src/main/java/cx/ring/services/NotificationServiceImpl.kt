@@ -220,9 +220,9 @@ class NotificationServiceImpl(
 
     override fun showCallNotification(notifId: Int): Any? = callNotifications.remove(notifId)
 
-    override fun showLocationNotification(first: Account, contact: Contact) {
-        val path = ConversationPath.toUri(first.accountId, contact.uri)
-        val profile = getProfile(first.accountId, contact)
+    override fun showLocationNotification(first: Account, contact: Contact, conversation: Conversation) {
+        val profile = getProfile(conversation)
+        val path = ConversationPath.toUri(conversation)
 
         val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -233,8 +233,8 @@ class NotificationServiceImpl(
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.drawable.ic_ring_logo_white)
-            .setLargeIcon(getContactPicture(profile))
-            .setContentText(mContext.getString(R.string.location_share_contact, profile.displayName))
+            .setLargeIcon(profile?.first)
+            .setContentText(mContext.getString(R.string.location_share_contact, profile?.second))
             .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
             .setAutoCancel(false)
             .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
