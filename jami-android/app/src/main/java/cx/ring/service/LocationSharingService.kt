@@ -174,7 +174,7 @@ class LocationSharingService : Service(), LocationListener {
                         val msgs = StringMap()
                         msgs.setUnicode(CallService.MIME_GEOLOCATION, location.toString())
                         for (p in contactLocationShare.keys)
-                            JamiService.sendAccountTextMessage(p.accountId, p.conversationId, msgs)
+                            JamiService.sendAccountTextMessage(p.accountId, p.conversationId, msgs, 1)
                     })
             } else {
                 mDisposableBag.add(getNotification(now)
@@ -193,7 +193,7 @@ class LocationSharingService : Service(), LocationListener {
                 Log.w(TAG, "location send " + jsonObject + " to " + contactLocationShare.size)
                 JamiService.sendAccountTextMessage(path.accountId, path.conversationId, StringMap().apply {
                     setUnicode(CallService.MIME_GEOLOCATION, jsonObject.toString())
-                })
+                }, 1)
             }
             mContactSharingSubject.onNext(contactLocationShare.keys)
             if (contactLocationShare.isEmpty()) {
