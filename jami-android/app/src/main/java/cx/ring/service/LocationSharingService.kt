@@ -51,7 +51,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.daemon.Blob
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
 import net.jami.services.AccountService
@@ -123,7 +122,7 @@ class LocationSharingService : Service(), LocationListener {
                 try {
                     val c = Criteria()
                     c.accuracy = Criteria.ACCURACY_FINE
-                    locationManager.requestLocationUpdates(0, 0f, c, this, null)
+                    locationManager.requestLocationUpdates(2500, 0.5f, c, this, null)
                 } catch (e: Exception) {
                     Log.e(TAG, "Can't start location tracking", e)
                 }
@@ -136,13 +135,14 @@ class LocationSharingService : Service(), LocationListener {
         val action = intent.action
         val path = ConversationPath.fromIntent(intent)
         val now = SystemClock.elapsedRealtime()
+        val uptime = SystemClock.uptimeMillis()
         if (ACTION_START == action) {
             val duration = intent.getIntExtra(EXTRA_SHARING_DURATION, SHARE_DURATION_SEC)
             val expiration = now + duration * 1000L
             if (contactLocationShare.put(path!!, Date(expiration)) == null) {
                 mContactSharingSubject.onNext(contactLocationShare.keys)
             }
-            mHandler.postAtTime({ refreshSharing() }, expiration)
+            mHandler.postAtTime({ refreshSharing() }, uptime + duration * 1000L)
             if (!started) {
                 started = true
                 mDisposableBag.add(getNotification(now)
@@ -151,7 +151,7 @@ class LocationSharingService : Service(), LocationListener {
                             startForeground(NOTIF_SYNC_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
                         else
                             startForeground(NOTIF_SYNC_SERVICE_ID, notification)
-                        mHandler.postAtTime({ refreshNotificationTimer() }, now + 30 * 1000)
+                        mHandler.postAtTime({ refreshNotificationTimer() }, uptime + 30 * 1000)
                         JamiApplication.instance?.startDaemon(this)
                     })
                 mDisposableBag.add(mMyLocationSubject
@@ -190,7 +190,7 @@ class LocationSharingService : Service(), LocationListener {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-                Log.w(TAG, "location send " + jsonObject + " to " + contactLocationShare.size)
+                Log.w(TAG, "location send $jsonObject to ${contactLocationShare.size}")
                 JamiService.sendAccountTextMessage(path.accountId, path.conversationId, StringMap().apply {
                     setUnicode(CallService.MIME_GEOLOCATION, jsonObject.toString())
                 })
@@ -218,13 +218,9 @@ class LocationSharingService : Service(), LocationListener {
         mDisposableBag.dispose()
     }
 
-    override fun onBind(intent: Intent): IBinder {
-        return binder
-    }
+    override fun onBind(intent: Intent): IBinder = binder
 
-    override fun onUnbind(intent: Intent): Boolean {
-        return true
-    }
+    override fun onUnbind(intent: Intent): Boolean = true
 
     override fun onLocationChanged(location: Location) {
         // Log.w(TAG, "onLocationChanged " + location.toString());
@@ -247,10 +243,10 @@ class LocationSharingService : Service(), LocationListener {
             largest = d
         val largestDate = largest?.time ?: now
         // Log.w(TAG, "getNotification " + firsPath.getContactId());
-        return mConversationFacade.getAccountSubject(firsPath.accountId)
-            .map { account -> account.getContactFromCache(firsPath.conversationUri) }
-            .flatMap { contact -> contactService.getLoadedContact(firsPath.accountId, contact) }
-            .map { contact ->
+
+        return mConversationFacade.observeConversation(firsPath.accountId, firsPath.conversationUri, false)
+            .firstOrError()
+            .map { conversation ->
                 val title: String
                 val stopIntent = Intent(ACTION_STOP).setClass(applicationContext, LocationSharingService::class.java)
                 val contentIntent = Intent(
@@ -263,7 +259,7 @@ class LocationSharingService : Service(), LocationListener {
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 if (contactCount == 1) {
                     stopIntent.data = firsPath.toUri()
-                    title = getString(R.string.notif_location_title, contact.displayName)
+                    title = getString(R.string.notif_location_title, conversation.title)
                 } else {
                     title = getString(R.string.notif_location_multi_title, contactCount)
                 }
@@ -309,12 +305,12 @@ class LocationSharingService : Service(), LocationListener {
     private fun refreshSharing() {
         if (!started) return
         var changed = false
-        val now = Date(SystemClock.uptimeMillis())
-        val it: MutableIterator<Map.Entry<ConversationPath?, Date?>> =
+        val now = Date(SystemClock.elapsedRealtime())
+        val it: MutableIterator<Map.Entry<ConversationPath, Date>> =
             contactLocationShare.entries.iterator()
         while (it.hasNext()) {
             val e = it.next()
-            if (e.value!!.before(now)) {
+            if (e.value.before(now)) {
                 changed = true
                 it.remove()
             }
@@ -334,14 +330,12 @@ class LocationSharingService : Service(), LocationListener {
     private fun refreshNotificationTimer() {
         if (!started) return
         val now = SystemClock.uptimeMillis()
-        mDisposableBag.add(getNotification(now)
+        mDisposableBag.add(getNotification(SystemClock.elapsedRealtime())
             .subscribe { notification -> mNotificationManager.notify(NOTIF_SYNC_SERVICE_ID, notification) })
         mHandler.postAtTime({ refreshNotificationTimer() }, now + 30 * 1000)
     }
 
-    fun isSharing(path: ConversationPath?): Boolean {
-        return contactLocationShare[path] != null
-    }
+    fun isSharing(path: ConversationPath?): Boolean = contactLocationShare[path] != null
 
     inner class LocalBinder : Binder() {
         val service: LocationSharingService
