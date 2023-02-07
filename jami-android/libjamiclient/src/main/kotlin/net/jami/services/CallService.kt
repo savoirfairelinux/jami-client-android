@@ -386,12 +386,12 @@ class CallService(
         }
     }
 
-    fun sendAccountTextMessage(accountId: String, to: String, msg: String): Single<Long> =
+    fun sendAccountTextMessage(accountId: String, to: String, msg: String, flags: Int = 0): Single<Long> =
         Single.fromCallable {
             Log.i(TAG, "sendAccountTextMessage() running... $accountId $to $msg")
             JamiService.sendAccountTextMessage(accountId, to, StringMap().apply {
                 setUnicode("text/plain", msg)
-            })
+            }, flags)
         }.subscribeOn(Schedulers.from(mExecutor))
 
     fun cancelMessage(accountId: String, messageID: Long): Completable =

@@ -48,8 +48,7 @@ object ContentUriHandler {
     val ACCOUNTS_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "accounts")
     val CONTACT_CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "contact")
 
-    fun immutable(flags: Int = 0): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            PendingIntent.FLAG_IMMUTABLE or flags else flags
+    fun immutable(flags: Int = 0): Int = PendingIntent.FLAG_IMMUTABLE or flags
     fun mutable(flags: Int = 0): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
             PendingIntent.FLAG_MUTABLE or flags else flags
 
