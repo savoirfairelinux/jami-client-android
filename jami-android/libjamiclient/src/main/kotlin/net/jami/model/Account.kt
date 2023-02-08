@@ -90,9 +90,7 @@ class Account(
         //trustRequestsSubject.onComplete();
     }
 
-    fun canSearch(): Boolean {
-        return !getDetail(ConfigKey.MANAGER_URI).isNullOrEmpty()
-    }
+    fun canSearch(): Boolean = !getDetail(ConfigKey.MANAGER_URI).isNullOrEmpty()
 
     fun isContact(conversation: Conversation): Boolean {
         val contact = conversation.contact
@@ -713,7 +711,8 @@ class Account(
 
     fun getByUri(uri: Uri?): Conversation? =
         if (uri == null || uri.isEmpty) null
-        else if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
+        else if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri]
+        else getByKey(uri.uri)
 
     fun getByUri(uri: String?): Conversation? =
         if (uri != null) getByUri(Uri.fromString(uri)) else null

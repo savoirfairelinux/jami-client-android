@@ -141,7 +141,7 @@ class AccountService(
                 val loc = msg.messages[CallService.MIME_GEOLOCATION] ?: return@flatMapMaybe Maybe.empty<Location>()
                 val obj = JsonParser.parseString(loc).asJsonObject
                 if (obj.size() < 2) return@flatMapMaybe Maybe.empty<Location>()
-                return@flatMapMaybe Maybe.just(Location(msg.accountId, msg.callId, Uri.fromId(msg.author), obj["time"].asLong).apply {
+                Maybe.just(Location(msg.accountId, msg.callId, Uri.fromId(msg.author), obj["time"].asLong).apply {
                     val t = obj["type"]
                     if (t == null || t.asString.lowercase() == Location.Type.Position.toString().lowercase()) {
                         type = Location.Type.Position
@@ -153,7 +153,7 @@ class AccountService(
                 })
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to receive geolocation", e)
-                return@flatMapMaybe Maybe.empty<Location>()
+                Maybe.empty<Location>()
             }
         }
         .share()
