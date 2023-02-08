@@ -285,12 +285,13 @@ class LocationSharingFragment : Fragment() {
         mDisposableBag.add(mConversationFacade
             .getAccountSubject(mPath.accountId)
             .flatMapObservable { account: Account ->
+                val conversation = account.getByUri(contactUri)!!
                 account.locationsUpdates
                     .switchMapSingle { locations -> contactService.getLoadedContact(mPath.accountId, locations.keys).map { contacts ->
                         val r: MutableList<Observable<LocationViewModel>> = ArrayList(locations.size)
                         var isContactSharing = false
                         for (c in contacts) {
-                            if (c.contact === account.getContactFromCache(contactUri)) {
+                            if (c.contact === conversation.findContact(c.contact.uri)) {
                                 isContactSharing = true
                                 mContact = c
                             }

@@ -161,7 +161,7 @@ class Account(
         }
     }
 
-    class ContactLocation (
+    data class ContactLocation (
         val latitude: Double,
         val longitude: Double,
         val timestamp: Long,
@@ -170,6 +170,7 @@ class Account(
 
     class ContactLocationEntry (
         val contact: Contact,
+        val conversation: Conversation,
         val location: Observable<ContactLocation>
     )
 
@@ -703,18 +704,15 @@ class Account(
         return false
     }*/
 
-    fun getByUri(uri: Uri?): Conversation? {
-        if (uri == null || uri.isEmpty) return null
-        return if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
-    }
+    fun getByUri(uri: Uri?): Conversation? =
+        if (uri == null || uri.isEmpty) null
+        else if (uri.isSwarm) getSwarm(uri.rawRingId) ?: pending[uri.uri] else getByKey(uri.uri)
 
-    fun getByUri(uri: String?): Conversation? {
-        return if (uri != null) getByUri(Uri.fromString(uri)) else null
-    }
+    fun getByUri(uri: String?): Conversation? =
+        if (uri != null) getByUri(Uri.fromString(uri)) else null
 
-    fun getByKey(key: String): Conversation {
-        return cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
-    }
+    fun getByKey(key: String): Conversation =
+        cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
 
     fun setHistoryLoaded(conversations: List<Conversation>) {
         synchronized(this.conversations) {
@@ -825,8 +823,8 @@ class Account(
 
     @Synchronized
     fun onLocationUpdate(location: AccountService.Location): Long {
-        Log.w(TAG, "onLocationUpdate " + location.peer + " " + location.latitude + ",  " + location.longitude)
         val contact = getContactFromCache(location.peer)
+        val conversation = getByUri(contact.conversationUri.blockingFirst()) ?: return 0L
         when (location.type) {
             AccountService.Location.Type.Position -> {
                 val cl = ContactLocation(location.latitude, location.longitude, location.date, Date())
@@ -835,7 +833,7 @@ class Account(
                     ls = BehaviorSubject.createDefault(cl)
                     contactLocations[contact] = ls
                     mLocationSubject.onNext(contactLocations)
-                    mLocationStartedSubject.onNext(ContactLocationEntry(contact, ls))
+                    mLocationStartedSubject.onNext(ContactLocationEntry(contact, conversation, ls))
                 } else if (ls.blockingFirst().timestamp < cl.timestamp) {
                     (ls as Subject<ContactLocation>).onNext(cl)
                 }
@@ -858,7 +856,7 @@ class Account(
 
     @Synchronized
     fun maintainLocation() {
-        Log.w(TAG, "maintainLocation " + contactLocations.size)
+        Log.w(TAG, "maintainLocation ${contactLocations.size}")
         if (contactLocations.isEmpty()) return
         var changed = false
         val expiration = Date(System.currentTimeMillis() - LOCATION_SHARING_EXPIRATION_MS)
@@ -881,8 +879,11 @@ class Account(
     val locationsUpdates: Observable<Map<Contact, Observable<ContactLocation>>>
         get() = mLocationSubject
 
-    fun getLocationUpdates(contactId: Uri): Observable<Observable<ContactLocation>> {
-        val contact = getContactFromCache(contactId)
+    fun getLocationUpdates(conversationUri: Uri): Observable<Observable<ContactLocation>> {
+        val conversation = getByUri(conversationUri) ?: return Observable.empty()
+        if (conversation.isGroup())
+            return Observable.empty()
+        val contact = conversation.contact ?: return Observable.empty()
         return if (contact.isUser) Observable.empty() else mLocationSubject
             .flatMapMaybe{ locations: Map<Contact, Observable<ContactLocation>> ->
                 val r = locations[contact]
