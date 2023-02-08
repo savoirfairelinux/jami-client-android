@@ -118,6 +118,8 @@ class AccountService(
         lateinit var type: Type
         var latitude = 0.0
         var longitude = 0.0
+
+        override fun toString(): String = "Location{$type $latitude $longitude $date account:$account callId:$callId peer:$peer}"
     }
 
     private val incomingMessageSubject: Subject<Message> = PublishSubject.create()

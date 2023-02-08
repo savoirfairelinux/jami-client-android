@@ -692,15 +692,11 @@ class ConversationFacade(
                     } }
             .subscribe())
         mDisposableBag.add(mAccountService.observableAccountList
-            .switchMap { accounts: List<Account> ->
-                val r: MutableList<Observable<Pair<Account, ContactLocationEntry>>> = ArrayList(accounts.size)
-                for (a in accounts) r.add(a.locationUpdates.map { s: ContactLocationEntry -> Pair(a, s) })
-                Observable.merge(r)
-            }
+            .switchMap { accounts -> Observable.merge(accounts.map { a -> a.locationUpdates.map { Pair(a, it) } }) }
             .distinctUntilChanged()
             .subscribe { t: Pair<Account, ContactLocationEntry> ->
-                Log.e(TAG, "Location reception started for " + t.second.contact)
-                mNotificationService.showLocationNotification(t.first, t.second.contact)
+                Log.e(TAG, "Location reception started for ${t.second.contact}")
+                mNotificationService.showLocationNotification(t.first, t.second.contact, t.second.conversation)
                 mDisposableBag.add(t.second.location.doOnComplete {
                     mNotificationService.cancelLocationNotification(t.first, t.second.contact)
                 }.subscribe()) })
@@ -708,7 +704,7 @@ class ConversationFacade(
             .messageStateChanges
             .concatMapMaybe { e: Interaction ->
                 getAccountSubject(e.account!!)
-                    .flatMapMaybe<Conversation> { a: Account -> Maybe.fromCallable {
+                    .flatMapMaybe { a: Account -> Maybe.fromCallable {
                             if (e.conversation == null)
                                 a.getByUri(Uri(Uri.SWARM_SCHEME, e.conversationId!!))
                             else
