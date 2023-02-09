@@ -23,19 +23,24 @@ import android.content.Context
 import android.net.NetworkInfo
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 
 object NetworkUtils {
     /**
      * Get the network info
      */
     fun getNetworkInfo(context: Context): NetworkInfo? {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        for (n in cm.allNetworks) {
-            val caps = cm.getNetworkCapabilities(n)
-            if (caps != null && !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) continue
-            val nInfo = cm.getNetworkInfo(n)
-            if (nInfo != null && nInfo.isConnected)
-                return nInfo
+        try {
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            for (n in cm.allNetworks) {
+                val caps = cm.getNetworkCapabilities(n)
+                if (caps != null && !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) continue
+                val nInfo = cm.getNetworkInfo(n)
+                if (nInfo != null && nInfo.isConnected)
+                    return nInfo
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Error getting network info")
         }
         return null
     }
@@ -50,4 +55,6 @@ object NetworkUtils {
         val info = getNetworkInfo(context)
         return info != null && info.type != ConnectivityManager.TYPE_MOBILE
     }
+
+    const val TAG = "NetworkUtils"
 }

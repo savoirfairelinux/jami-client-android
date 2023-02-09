@@ -97,9 +97,7 @@ class SyncService : Service() {
         return START_NOT_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
     companion object {
         const val NOTIF_SYNC_SERVICE_ID = 1004
