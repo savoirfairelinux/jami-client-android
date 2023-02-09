@@ -92,10 +92,8 @@ class Account(
 
     fun canSearch(): Boolean = !getDetail(ConfigKey.MANAGER_URI).isNullOrEmpty()
 
-    fun isContact(conversation: Conversation): Boolean {
-        val contact = conversation.contact
-        return contact != null && isContact(contact.uri)
-    }
+    fun isContact(conversation: Conversation): Boolean =
+        conversation.contact?.let { isContact(it.uri) } ?: false
 
     fun isContact(uri: Uri): Boolean = getContact(uri) != null
 
