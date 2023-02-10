@@ -90,6 +90,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">वार्तालाप के अंत तक स्क्रॉल करें</string>
   <!--Contacts-->
   <!--Account Summary-->
   <string name="account">खाता</string>

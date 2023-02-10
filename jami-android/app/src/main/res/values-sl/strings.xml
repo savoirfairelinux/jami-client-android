@@ -178,6 +178,7 @@
   <string name="conversation_action_block_this">Blokiraj stik</string>
   <string name="conversation_action_unblock_this">Odblokiraj stik</string>
   <string name="conversation_action_go_to_call">Vrnitev na aktivni klic</string>
+  <string name="conversation_action_latest">Premaknite se na konec pogovora</string>
   <string name="conversation_open_file_error">Ni nameščene aplikacije za odpiranje te vrste datotek.</string>
   <string name="clip_contact_uri">Naslov stika</string>
   <string name="block_contact_dialog_title">Ali želite blokirati %1$s?</string>
@@ -295,6 +296,7 @@
   <string name="menu_file_delete">Izbriši datoteko</string>
   <string name="menu_file_share">Deli datoteko</string>
   <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_message_edit">Uredi sporočilo</string>
   <string name="menu_message_delete">Izbriši sporočilo</string>
   <string name="menu_message_cancel">Prekini sporočilo</string>
   <string name="menu_message_reply">Odgovori</string>

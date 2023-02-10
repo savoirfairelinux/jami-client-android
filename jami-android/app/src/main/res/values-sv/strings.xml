@@ -175,6 +175,7 @@
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_unblock_this">Avblockera kontakt</string>
   <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
+  <string name="conversation_action_latest">Rulla till slutet av konversationen</string>
   <string name="conversation_open_file_error">Det finns inget installerat program som kan öppna den här filtypen.</string>
   <string name="clip_contact_uri">Kontaktadress</string>
   <string name="block_contact_dialog_title">Blockera %1$s?</string>

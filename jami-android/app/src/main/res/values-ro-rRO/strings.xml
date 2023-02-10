@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Blochează contactul</string>
   <string name="conversation_action_unblock_this">Deblochează contactul</string>
   <string name="conversation_action_go_to_call">Revino la apelul în curs</string>
+  <string name="conversation_action_latest">Saltă la ultimul</string>
   <string name="conversation_open_file_error">Nu există o aplicație instalată capabilă să deschidă acest tip de fișier.</string>
   <string name="clip_contact_uri">Adresă de contact</string>
   <string name="block_contact_dialog_title">Blochezi %1$s?</string>
@@ -189,6 +190,9 @@
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membri</string>
   <string name="conversation_syncing">Se descarcă conversația de la utilizator</string>
+  <string name="conversation_blocked">Acest contact este blocat.</string>
+  <string name="conversation_ended">Conversație terminată.</string>
+  <string name="conversation_message_deleted">(Mesaj șters)</string>
   <string name="conversation_preference_color">Culoarea conversației</string>
   <string name="conversation_preference_emoji">Emoji de conversație</string>
   <string name="conversation_type_contact">Contact Jami</string>
@@ -294,6 +298,7 @@
   <string name="menu_file_delete">Șterge fișierul</string>
   <string name="menu_file_share">Trimite fișierul</string>
   <string name="menu_message_copy">Copiază</string>
+  <string name="menu_message_edit">Modifică mesajul</string>
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_message_reply">Răspunde</string>

@@ -168,6 +168,7 @@
   <string name="conversation_action_select_peer_number">ਕੋਈ ਨੰਬਰ ਚੁਣੋ</string>
   <string name="conversation_action_block_this">ਸੰਪਰਕ \'ਤੇ ਬੰਦਸ਼ ਲਗਾਓ</string>
   <string name="conversation_action_go_to_call">ਜਾਂਦੀ ਕਾਲ \'ਤੇ ਵਾਪਸ ਜਾਓ</string>
+  <string name="conversation_action_latest">ਵਾਰਤਾਲਾਪ ਦੇ ਅੰਤ ਤੱਕ ਸਕ੍ਰੌਲ ਕਰੋ</string>
   <string name="conversation_open_file_error">ਇਸ ਫ਼ਾਈਲ ਕਿਸਮ ਨੂੰ ਖੋਲ੍ਹਣ ਵਾਲੀ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਸਥਾਪਤ ਨਹੀਂ ਹੈ।</string>
   <string name="clip_contact_uri">ਸੰਪਰਕ ਦਾ ਪਤਾ</string>
   <string name="block_contact_dialog_title">%1$s \'ਤੇ ਬੰਦਸ਼ ਲਗਾਈਏ?</string>

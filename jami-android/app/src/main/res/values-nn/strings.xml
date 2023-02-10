@@ -28,6 +28,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">Bla til slutten av samtalen</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

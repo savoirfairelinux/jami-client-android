@@ -22,6 +22,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_unblock_this">Débloquer un contact</string>
   <string name="conversation_action_go_to_call">Revenir à l\'appel en cours</string>
+  <string name="conversation_action_latest">Faire défiler jusqu\'à la fin de la conversation</string>
   <string name="conversation_open_file_error">Il n\'y a aucune application installée capable d\'ouvrir ce type de fichier.</string>
   <string name="clip_contact_uri">Adresse du contact</string>
   <string name="block_contact_dialog_title">Bloquer %1$s ?</string>
@@ -189,6 +190,9 @@
   <string name="conversation_info_contact_you">Vous</string>
   <string name="conversation_members">Membres</string>
   <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
+  <string name="conversation_blocked">Le contact  est bloqué</string>
+  <string name="conversation_ended">La conversation est terminée</string>
+  <string name="conversation_message_deleted">(Message supprimé)</string>
   <string name="conversation_preference_color">Couleur de la conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
@@ -294,6 +298,7 @@
   <string name="menu_file_delete">Supprimer le fichier</string>
   <string name="menu_file_share">Partager le fichier</string>
   <string name="menu_message_copy">Copier</string>
+  <string name="menu_message_edit">Modifier le message</string>
   <string name="menu_message_delete">Supprimer le message</string>
   <string name="menu_message_cancel">Annuler le message</string>
   <string name="menu_message_reply">Répondre</string>

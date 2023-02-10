@@ -23,6 +23,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">વાતચીતના અંત સુધી સ્ક્રોલ કરો</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

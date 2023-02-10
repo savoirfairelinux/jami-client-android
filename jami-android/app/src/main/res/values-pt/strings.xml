@@ -176,6 +176,7 @@
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
+  <string name="conversation_action_latest">Ir para o fim da conversa</string>
   <string name="conversation_open_file_error">Não existe nenhuma aplicação instalada capaz de abrir este tipo de ficheiro.</string>
   <string name="clip_contact_uri">Endereço do contacto</string>
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>

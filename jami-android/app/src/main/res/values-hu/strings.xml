@@ -128,7 +128,7 @@
   <string name="message_failed">Sikertelen</string>
   <string name="time_just_now">Épp most</string>
   <string name="send_file">Fájl küldése</string>
-  <string name="select_media">Galéria megnyitása</string>
+  <string name="select_media">Gyűjtemény megnyitása</string>
   <string name="hist_file_sent">Fájl elküldve</string>
   <string name="hist_file_received">Fájl érkezett</string>
   <string name="conversation_send_audio">Hangüzenet felvétele</string>
@@ -176,15 +176,22 @@
   <string name="conversation_action_block_this">Kapcsolat letiltása</string>
   <string name="conversation_action_unblock_this">Kapcsolat letiltás feloldása</string>
   <string name="conversation_action_go_to_call">Visszatérés a folyamatban lévő híváshoz</string>
+  <string name="conversation_action_latest">Görgetés a beszélgetés végére</string>
   <string name="conversation_open_file_error">Nem található alkalmazás ehhez a fájltípushoz.</string>
   <string name="clip_contact_uri">Kapcsolattartási címe</string>
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s letiltva lett.</string>
+  <string name="unblock_contact_dialog_title">%1$s letiltásának feloldása?</string>
+  <string name="unblock_contact_dialog_message">%1$s ismét kapcsolatba léphet Önnel.</string>
+  <string name="unblock_contact_completed">%1$s letiltása feloldva.</string>
   <string name="conversation_contact_is_typing">Kapcsolat éppen gépel…</string>
   <string name="conversation_info_contact_you">Ön</string>
   <string name="conversation_members">Tagok</string>
   <string name="conversation_syncing">Beszélgetés letöltése a társaktól</string>
+  <string name="conversation_blocked">Ez a kapcsolat le van tiltva.</string>
+  <string name="conversation_ended">Véget ért a beszélgetés.</string>
+  <string name="conversation_message_deleted">(Üzenet törölve)</string>
   <string name="conversation_preference_color">Beszélgetés színe</string>
   <string name="conversation_preference_emoji">Beszélgetés hangulatjel</string>
   <string name="conversation_type_contact">Jami-kapcsolat</string>
@@ -219,7 +226,7 @@
   <string name="profile">Névjegy</string>
   <string name="profile_name">Névjegynév</string>
   <string name="profile_message_warning">A névjegyed csak a kapcsolataival kerül megosztásra</string>
-  <string name="open_the_gallery">Galéria megnyitása</string>
+  <string name="open_the_gallery">Gyűjtemény megnyitása</string>
   <string name="take_a_photo">Fénykép készítése</string>
   <string name="profile_name_hint">Név megadása</string>
   <string name="registered_name">Bejegyzett név</string>
@@ -260,8 +267,8 @@
   <string name="start_conversation">Beszélgetés indítása</string>
   <string name="search_results">Keresési eredmények</string>
   <string name="tv_contact_row_header">Kapcsolatok</string>
-  <string name="gallery_error_title">Nem található Galéria alkalmazás</string>
-  <string name="gallery_error_message">Nem található alkalmazás a készüléken a Galéria megnyitásához</string>
+  <string name="gallery_error_title">Nem található Gyűjtemény alkalmazás</string>
+  <string name="gallery_error_message">Nem található alkalmazás a készüléken a Gyűjtemény megnyitásához</string>
   <string name="generic_error">Ismeretlen hiba történt</string>
   <!--File Transfer-->
   <string name="invalid_file">Érvénytelen fájl</string>
@@ -290,6 +297,7 @@
   <string name="menu_file_delete">Fájl törlése</string>
   <string name="menu_file_share">Fájlmegosztás</string>
   <string name="menu_message_copy">Másolás</string>
+  <string name="menu_message_edit">Üzenet szerkesztése</string>
   <string name="menu_message_delete">Üzenet törlése</string>
   <string name="menu_message_cancel">Üzenet érvénytelenítése</string>
   <string name="menu_message_reply">Válasz</string>

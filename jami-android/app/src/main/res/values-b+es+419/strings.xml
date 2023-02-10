@@ -25,6 +25,7 @@
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
+  <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

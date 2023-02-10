@@ -80,7 +80,7 @@ Potrai modificare il tuo account successivamente</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzate</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
-  <string name="account_dht_public_in_calls_label">Consenti chiamate in arrivo da utenti sconosciuti</string>
+  <string name="account_dht_public_in_calls_label">Ricevi chiamate sconosciute</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>
   <string name="account_local_interface_label">Interfaccia locale</string>
   <string name="account_local_port_label">Porta locale</string>

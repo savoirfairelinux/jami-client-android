@@ -25,6 +25,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">Cuộn đến cuối cuộc hội thoại</string>
   <!--Contacts-->
   <string name="prompt_hint_username">Username</string>
   <!--Account Summary-->

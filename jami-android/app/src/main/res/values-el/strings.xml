@@ -157,6 +157,7 @@
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <string name="conversation_action_go_to_call">Επιστροφή στην κλήση σε εξέλιξη</string>
+  <string name="conversation_action_latest">Κύλιση στο τέλος της συνομιλίας</string>
   <string name="conversation_open_file_error">Δεν υπάρχει εγκατεστημένη εφαρμογή για το άνοιγμα αυτού του τύπου αρχείου</string>
   <string name="clip_contact_uri">Διεύθυνση επαφής</string>
   <string name="block_contact_dialog_title">Μπλοκάρισμα %1$s;</string>

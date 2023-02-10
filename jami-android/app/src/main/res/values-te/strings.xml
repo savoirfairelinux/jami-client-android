@@ -23,6 +23,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">సంభాషణ ముగింపులోకి స్క్రోల్ చేయండి</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
@@ -37,4 +38,5 @@
   <!--Wizard-->
   <!--Bottom sheet-->
   <string name="bottomSheet_hangup_btn">కాల్‌ను ముగించు</string>
+  <!--Swarm Detail-->
 </resources>
