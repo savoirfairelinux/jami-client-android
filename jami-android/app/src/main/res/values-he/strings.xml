@@ -51,6 +51,7 @@
   <string name="clear_history">ניקוי</string>
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">העתקת מספר</string>
+  <string name="conversation_action_latest">גלול לקצה השיחה</string>
   <!--Contacts-->
   <string name="account_create_title">יצירת חשבון Jami</string>
   <string name="prompt_hint_username">שם משתמש</string>

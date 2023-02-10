@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_unblock_this">Разблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
+  <string name="conversation_action_latest">Прокрутить до конца беседы</string>
   <string name="conversation_open_file_error">Отсутствует приложение для открытия данного типа файлов.</string>
   <string name="clip_contact_uri">Контактный адрес</string>
   <string name="block_contact_dialog_title">Заблокировать %1$s?</string>

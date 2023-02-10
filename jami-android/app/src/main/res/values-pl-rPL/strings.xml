@@ -177,6 +177,7 @@
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_unblock_this">Odblokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
+  <string name="conversation_action_latest">Przewiń do końca konwersacji</string>
   <string name="conversation_open_file_error">Brak aplikacji umożliwiającej otwarcie tego pliku.</string>
   <string name="clip_contact_uri">Kontakty</string>
   <string name="block_contact_dialog_title">Czy zablokować %1$s?</string>

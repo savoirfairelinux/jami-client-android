@@ -163,6 +163,7 @@
   <string name="conversation_action_select_peer_number">إختيار رقم</string>
   <string name="conversation_action_block_this">حظر جهة إتصال</string>
   <string name="conversation_action_go_to_call">العودة إلى المكالمة الجارية</string>
+  <string name="conversation_action_latest">التمرير إلى نهاية المحادثة</string>
   <string name="conversation_open_file_error">ﻻ يوجد برنامج مثبت يمكنه فتح هذا النوع من الملفات.</string>
   <string name="clip_contact_uri">عنوان جهة إتصال</string>
   <string name="block_contact_dialog_title">حظر %1$s؟</string>
@@ -233,6 +234,7 @@
   <string name="no_contact_request">لم يتم إرسال طلب جهة إتصال</string>
   <string name="conversation_placeholder">لا يوجد محادثات لك بعد</string>
   <string name="contact_request_sent">تم إرسال طلب جهة إتصال</string>
+  <string name="start_conversation">بدء محادثة</string>
   <string name="search_results">نتائج البحث</string>
   <string name="tv_contact_row_header">جهات الاتصال</string>
   <string name="gallery_error_title">لا يوجد برنامج المعرض</string>

@@ -34,6 +34,11 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_busy">Užimta</string>
     <string name="call_human_state_failure">Nepavyko</string>
     <string name="call_human_state_hold">Užlaikyta</string>
-    <string name="call_human_state_unhold">Nesulaikyta</string>
+    <string name="call_human_state_unhold">Neužlaikyta</string>
     <string name="call_human_state_over">Baigta</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderatorius</string>
+    <string name="call_muted">Nutildyta</string>
+    <string name="call_handRaised">Pakelta ranka</string>
+
+</resources>

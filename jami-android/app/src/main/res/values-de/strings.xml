@@ -176,6 +176,7 @@
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_unblock_this">Blockierung des Kontakts aufheben</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
+  <string name="conversation_action_latest">Zum Ende der Unterhaltung scrollen</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
   <string name="block_contact_dialog_title">%1$s blockieren?</string>
@@ -188,6 +189,9 @@
   <string name="conversation_info_contact_you">Sie</string>
   <string name="conversation_members">Mitglieder</string>
   <string name="conversation_syncing">Unterhaltung des Teilnehmers herunterladen</string>
+  <string name="conversation_blocked">Dieser Kontakt ist blockiert.</string>
+  <string name="conversation_ended">Unterhaltung beendet.</string>
+  <string name="conversation_message_deleted">(Nachricht gelöscht)</string>
   <string name="conversation_preference_color">Farbe der Unterhaltung</string>
   <string name="conversation_preference_emoji">Emoji der Unterhaltung</string>
   <string name="conversation_type_contact">Jami-Kontakt</string>
@@ -216,7 +220,7 @@
   <string name="hist_contact_invited">Kontakt eingeladen</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>
   <string name="hist_contact_left">Kontakt gegangen</string>
-  <string name="hist_contact_banned">Kontakt gesperrt</string>
+  <string name="hist_contact_banned">Kontakt blockiert</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
@@ -293,6 +297,7 @@
   <string name="menu_file_delete">Datei löschen</string>
   <string name="menu_file_share">Datei teilen</string>
   <string name="menu_message_copy">Kopieren</string>
+  <string name="menu_message_edit">Nachricht bearbeiten</string>
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Nachricht abbrechen</string>
   <string name="menu_message_reply">Antworten</string>

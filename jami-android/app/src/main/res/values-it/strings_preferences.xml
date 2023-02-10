@@ -45,8 +45,8 @@
   <string name="pref_typing_summary">Invia e ricevi indicatori di scrittura quando si sta scrivendo un messagio.</string>
   <string name="pref_read_title">Mostra conferma di lettura</string>
   <string name="pref_read_summary">Invia e ricevi conferme indicanti che un messaggio è stato visualizzato.</string>
-  <string name="pref_block_record_title">Blocca screenshot e registrazione</string>
-  <string name="pref_block_record_summary">Blocca l\'acquisizione di screenshot o registrazione video.</string>
+  <string name="pref_block_record_title">Blocca schermata e registrazione</string>
+  <string name="pref_block_record_summary">Blocca l\'acquisizione di schermate o registrazione video.</string>
   <string name="pref_link_preview_title">Mostra le anteprime dei link</string>
   <string name="pref_link_preview_summary">Le anteprime richiedono di scaricare contenuti da server di terze parti.</string>
   <!--Notifications Visibility-->

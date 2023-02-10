@@ -25,6 +25,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">대화의 끝으로 스크롤</string>
   <!--Contacts-->
   <string name="prompt_hint_username">사용자명</string>
   <string name="wizard_next">다음</string>

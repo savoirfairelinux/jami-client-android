@@ -175,6 +175,7 @@
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_unblock_this">取消封鎖聯絡人</string>
   <string name="conversation_action_go_to_call">回到進行中的通話</string>
+  <string name="conversation_action_latest">跳到最新</string>
   <string name="conversation_open_file_error">沒有已安裝的應用程式可以開啟這個檔案類型。</string>
   <string name="clip_contact_uri">聯絡人地址</string>
   <string name="block_contact_dialog_title">封鎖 %1$s？</string>

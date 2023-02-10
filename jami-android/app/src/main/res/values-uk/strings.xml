@@ -164,6 +164,7 @@
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
   <string name="conversation_action_go_to_call">Повернутися до поточного дзвінка</string>
+  <string name="conversation_action_latest">Прокрутити до кінця розмови</string>
   <string name="clip_contact_uri">Адреса контакту</string>
   <string name="block_contact_dialog_title">Блокувати %1$s?</string>
   <string name="block_contact_dialog_message">%1$s не зможе зв\'язатися з вами, поки ви його не розблокуєте.</string>

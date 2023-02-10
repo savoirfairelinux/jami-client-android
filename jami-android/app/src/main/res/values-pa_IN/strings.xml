@@ -15,7 +15,6 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
-  <string name="send_file">ಫೈಲ್ ಕಳುಹಿಸು</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -23,7 +22,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
-  <string name="conversation_action_latest">ಸಂಭಾಷಣೆಯ ಕೊನೆಯ ಭಾಗಕ್ಕೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ</string>
+  <string name="conversation_action_latest">ਵਾਰਤਾਲਾਪ ਦੇ ਅੰਤ ਤੱਕ ਸਕ੍ਰੌਲ ਕਰੋ</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
@@ -31,13 +30,14 @@
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="start_conversation">ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ</string>
   <!--File Transfer-->
-  <string name="file_transfer_status_cancelled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
-  <string name="menu_message_cancel">ಸಂದೇಶವನ್ನು ರದ್ದುಮಾಡಿ</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_contact_request">ਸੱਦੇ</string>
   <!--TV-->
   <!--Wizard-->
   <!--Bottom sheet-->
-  <string name="bottomSheet_hangup_btn">ಕರೆ ಅಂತ್ಯಗೊಳಿಸು</string>
   <!--Swarm Detail-->
+  <string name="tab_members">ਸਾਥੀ</string>
+  <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
 </resources>

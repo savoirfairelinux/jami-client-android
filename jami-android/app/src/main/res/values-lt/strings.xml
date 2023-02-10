@@ -15,6 +15,7 @@
   <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
   <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
+  <string name="pip_title">Jami konferencija</string>
   <!--About dialog-->
   <string name="developed_by">Sukūrė</string>
   <string name="designed_by">Apipavidalino</string>
@@ -28,6 +29,7 @@
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
+  <string name="menu_item_advanced_settings">Išplėstiniai nustatymai</string>
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
   <string name="menu_item_about">Apie Jami</string>
   <!--Dialing Fragment-->
@@ -42,6 +44,7 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Ieškoti vardo ar telefono numerio…</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -63,6 +66,7 @@
   <string name="notif_group_calls">Skambučiai</string>
   <string name="notif_background_service">Šiuo metu Jami veikia fone</string>
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
+  <string name="notif_dismiss">Atmesti</string>
   <string name="notif_reply">Atsakyti</string>
   <string name="notif_incoming_file_transfer_title">Gaunamas failas nuo %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Siunčiamas failas naudotojui %1$s</string>
@@ -77,6 +81,8 @@
   <string name="start_error_title">Nepavyksta paleisti Jami!</string>
   <string name="start_error_mic_required">Jami darbui, reikalingas leidimas naudoti mikrofoną.</string>
   <string name="action_call_accept">Atsiliepti</string>
+  <string name="action_call_accept_audio">Atsiliepti su garsu</string>
+  <string name="action_call_accept_video">Atsiliepti su vaizdu</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
@@ -90,12 +96,14 @@
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
   <string name="ab_action_flipcamera">Apversti kamerą</string>
+  <string name="ab_action_hidepreview">Slėpti peržiūrą</string>
   <!--Text messages-->
   <string name="send_message">Siųsti žinutę</string>
   <string name="message_sending">Siunčiama žinutė...</string>
   <string name="message_failed">Nepavyko</string>
   <string name="time_just_now">Ką tik</string>
   <string name="send_file">Siųsti failą</string>
+  <string name="select_media">Atverti galeriją</string>
   <string name="hist_file_sent">Failas išsiųstas</string>
   <string name="hist_file_received">Failas gautas</string>
   <!--MediaPreferenceFragment-->
@@ -116,6 +124,7 @@
   <string name="clear_history_completed">Istorija išvalyta.</string>
   <string name="clear_history">Išvalyti</string>
   <!--Conversation-->
+  <string name="conversation_details">Išsamiau apie adresatą</string>
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
   <string name="conversation_action_delete_this_title">Ištrinti šį pokalbį ?</string>
   <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>
@@ -130,12 +139,19 @@
   <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_action_unblock_this">Atblokuoti adresatą</string>
+  <string name="conversation_action_latest">Slinkite į pokalbio pabaigą</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>
   <string name="block_contact_completed">Adresatas %1$s buvo užblokuotas.</string>
+  <string name="unblock_contact_dialog_title">Atblokuoti %1$s?</string>
   <string name="conversation_contact_is_typing">Adresatas rašo…</string>
+  <string name="conversation_info_contact_you">Jūs</string>
+  <string name="conversation_preference_color">Pokalbio spalva</string>
+  <string name="conversation_type_contact">Jami adresatas</string>
+  <string name="conversation_contact_added">%1$s prisijungė</string>
+  <string name="conversation_contact_left">%1$s išėjo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
@@ -153,14 +169,17 @@
   <string name="hist_invitation_received">Gautas pakvietimas</string>
   <!--Account Summary-->
   <string name="profile">Profilis</string>
+  <string name="profile_name">Profilio pavadinimas</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
+  <string name="profile_name_hint">Įveskite savo vardą</string>
   <string name="registered_name">Registruotas vardas</string>
   <string name="identity">Tapatybė</string>
   <string name="account">Paskyra</string>
   <string name="link_new_device">Susieti naują įrenginį</string>
   <string name="devices">Susieti įrenginiai</string>
+  <string name="total_devices">Iš viso įrenginių: </string>
   <!--Share fragment-->
   <string name="share_message">Nuskenuokite šį kodą, naudodami Jami</string>
   <string name="share_message_no_account">Pasirinkite norimą bendrinti paskyrą.</string>
@@ -203,6 +222,7 @@
   <string name="file_transfer_status_error">nepavyko dėl klaidos</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
   <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
+  <string name="file_download">Atsisiųsti</string>
   <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>
@@ -221,25 +241,37 @@
   <string name="navigation_item_conversation">Pokalbiai</string>
   <string name="navigation_item_contact_request">Pakvietimai</string>
   <string name="navigation_item_account">Paskyra</string>
+  <string name="search_results_public_directory">Viešasis katalogas</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Siųsti garso žinutę?</string>
   <string name="tv_send_image_dialog_message">Siųsti paveikslėlį?</string>
+  <string name="tv_send_video_dialog_message">Siųsti vaizdo įrašą?</string>
   <string name="tv_media_preview">Peržiūra</string>
   <string name="tv_audio_play">Groti</string>
   <string name="tv_audio_pause">Pristabdyti</string>
   <string name="tv_dialog_send">Siųsti</string>
   <string name="tv_send_text">Siųsti tekstą</string>
   <string name="tv_send_audio">Siųsti garsą</string>
+  <string name="tv_action_more">Daugiau</string>
   <!--Wizard-->
-  <string name="wizard_status_recommended">Rekomenduojamas</string>
+  <string name="wizard_status_recommended">Rekomenduojama</string>
+  <string name="wizard_password_info">Paskyros slaptažodis</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
+  <string name="wizard_password_switch">Šifruoti paskyrą slaptažodžiu</string>
+  <string name="wizard_profile_button">Įrašyti profilį</string>
+  <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
+  <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
+  <string name="reset">Atstatyti</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Patvirtinti</string>
+  <string name="swarm_description">Pridėti aprašą</string>
   <string name="tab_about">Apie</string>
+  <string name="tab_documetn">Dokumentai</string>
   <string name="dialog_hint_title">Antraštė</string>
+  <string name="dialog_hint_description">Aprašas</string>
 </resources>

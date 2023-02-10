@@ -45,6 +45,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
   <string name="account_password_change">Pakeisti slaptažodį</string>
+  <string name="account_password_set">Nustatyti slaptažodį</string>
   <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
@@ -161,17 +162,22 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Paskyros nustatymai</string>
   <string name="account_tv_advance_settings_header">Išplėstiniai nustatymai</string>
+  <string name="account_tv_add_contact">Pridėti adresatą</string>
+  <string name="account_tv_advanced_settings">Keisti bendrus nustatymus</string>
   <string name="account_tv_about">Apie Jami</string>
   <string name="tv_about_version">Versija</string>
   <string name="tv_about_license">Licencija</string>
+  <string name="tv_about_author">Autorių teisės</string>
   <string name="tv_about_credits">Padėkos</string>
-  <string name="account_link_device">Prisijungta iš kito įrenginio</string>
+  <string name="account_link_device">Prisijungti iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
+  <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
   <string name="account_link_export_info">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
   <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
@@ -189,7 +195,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
-  <string name="register_recommended">Rekomenduojamas</string>
+  <string name="register_recommended">Rekomenduojama</string>
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
   <string name="unknown_error">Nežinoma klaida. Patikrinkite savo tinklo ryšį!</string>
@@ -207,6 +213,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_title">Susiekite šį įrenginį</string>
   <string name="account_sip_cannot_be_registered">Nepavyksta užregistruoti paskyros</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Taisyti savo paskyrą</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>

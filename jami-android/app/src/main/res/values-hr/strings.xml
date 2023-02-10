@@ -135,6 +135,7 @@
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
   <string name="conversation_action_block_this">Blokiraj kontakt</string>
   <string name="conversation_action_go_to_call">Vrati se na poziv u tijeku</string>
+  <string name="conversation_action_latest">Pomicanje na kraj razgovora</string>
   <string name="clip_contact_uri">Adresa kontakta</string>
   <string name="block_contact_dialog_title">Blokirati %1$s?</string>
   <string name="block_contact_completed">%1$s je bio blokiran.</string>

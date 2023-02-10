@@ -160,6 +160,7 @@
   <string name="conversation_action_block_this">Zablokovať kontakt</string>
   <string name="conversation_action_unblock_this">Odblokovať kontakt</string>
   <string name="conversation_action_go_to_call">Vrátiť sa k prebiehajúcemu hovoru</string>
+  <string name="conversation_action_latest">Prejsť na koniec konverzácie</string>
   <string name="conversation_open_file_error">Nie je nainštalovaná žiadna aplikácia schopná otvoriť tento typ súboru.</string>
   <string name="clip_contact_uri">Adresa kontaktu</string>
   <string name="block_contact_dialog_title">Zablokovať %1$s?</string>

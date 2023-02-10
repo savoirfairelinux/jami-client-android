@@ -28,6 +28,7 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_latest">உரையாடலின் முடிவுக்கு ஸ்க்ரோல் செய்யவும்</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->
