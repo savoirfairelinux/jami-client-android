@@ -17,8 +17,8 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 33
-        versionCode = 359
-        versionName = "20230203-01"
+        versionCode = 360
+        versionName = "20230210-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
