@@ -28,6 +28,8 @@ android {
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
                     "-DBUILD_EXTRA_TOOLS=ON",
+                    "-DJAMI_TESTS=OFF",
+                    "-DBUILD_TESTING=OFF",
                     "-DJAMI_JNI=ON",
                     "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
                     "-DJAMI_DATADIR=/data/data/cx.ring/files",
