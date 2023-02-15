@@ -972,11 +972,11 @@ class AccountService(
     }
 
     fun setPushNotificationToken(pushNotificationToken: String) {
-        //Log.i(TAG, "setPushNotificationToken()");
+        Log.i(TAG, "setPushNotificationToken()");
         mExecutor.execute { JamiService.setPushNotificationToken(pushNotificationToken) }
     }
     fun setPushNotificationConfig(token: String = "", topic: String = "", platform: String = "") {
-        //Log.i(TAG, "setPushNotificationConfig()");
+        Log.i(TAG, "setPushNotificationConfig() $token $topic $platform");
         val config = StringMap().apply {
             put("token", token)
             put("topic", topic)
