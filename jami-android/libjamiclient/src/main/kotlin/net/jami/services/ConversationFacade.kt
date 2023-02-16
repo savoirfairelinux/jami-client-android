@@ -394,10 +394,10 @@ class ConversationFacade(
                 }
         }*/
 
-    fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>): Observable<ConversationList> =
+    fun getFullConversationList(currentAccount: Observable<Account>, query: Observable<String>, withBanned: Boolean = false): Observable<ConversationList> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(
-                account.getConversationsSubject(),
+                account.getConversationsSubject(withBanned),
                 query.switchMapSingle { getConversationSearchResults(account, it) },
                 query
             ) { conversations, searchResults, q -> ConversationList(conversations, searchResults, q) }

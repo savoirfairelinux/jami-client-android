@@ -1102,13 +1102,23 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         updateListPadding()
     }
 
+    override fun switchToBannedView() {
+        binding?.apply {
+            cvMessageInput.visibility = View.GONE
+            unknownContactPrompt.visibility = View.GONE
+            trustRequestPrompt.visibility = View.GONE
+            trustRequestMessageLayout.visibility = View.VISIBLE
+            tvTrustRequestMessage.text = getText(R.string.conversation_blocked)
+        }
+    }
+
     override fun switchToEndedView() {
         binding?.apply {
             cvMessageInput.visibility = View.GONE
             unknownContactPrompt.visibility = View.GONE
             trustRequestPrompt.visibility = View.GONE
             trustRequestMessageLayout.visibility = View.VISIBLE
-            tvTrustRequestMessage.text = "Conversation ended"
+            tvTrustRequestMessage.text = getText(R.string.conversation_ended)
         }
         currentBottomView = null
         requireActivity().invalidateOptionsMenu()

@@ -43,6 +43,8 @@ interface ConversationView {
     fun switchToUnknownView(name: String)
     fun switchToIncomingTrustRequestView(name: String)
     fun switchToConversationView()
+    fun switchToBannedView()
+
     fun switchToSyncingView()
     fun switchToEndedView()
     fun openFilePicker()

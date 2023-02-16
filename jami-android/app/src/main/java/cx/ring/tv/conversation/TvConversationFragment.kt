@@ -637,6 +637,10 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         // todo
     }
 
+    override fun switchToBannedView() {
+        // todo
+    }
+
     override fun switchToSyncingView() {
         // todo
     }

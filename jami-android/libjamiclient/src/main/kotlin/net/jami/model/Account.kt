@@ -99,7 +99,7 @@ class Account(
         return contact != null && isContact(contact.uri)
     }
 
-    fun isContact(uri: Uri): Boolean = getContact(uri.rawRingId) != null
+    fun isContact(uri: Uri): Boolean = getContact(uri) != null
 
     fun conversationStarted(conversation: Conversation) {
         //Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
@@ -184,7 +184,9 @@ class Account(
         }
     }
 
-    fun getConversationsSubject(): Observable<List<Conversation>> = conversationsSubject
+    fun getConversationsSubject(withBanned: Boolean = false): Observable<List<Conversation>> =
+        if (withBanned) conversationsSubject
+        else conversationsSubject.map { list -> list.filter { it.isGroup() || it.contact?.isBanned != true } }
 
     /*fun getConversationsViewModels(withPresence: Boolean): Observable<MutableList<SmartListViewModel>> {
         return conversationsSubject
@@ -577,9 +579,9 @@ class Account(
             return banned
         }
 
-    fun getContact(ringId: String?): Contact? {
-        return mContacts[ringId]
-    }
+
+    fun getContact(uri: Uri): Contact? = getContact(uri.rawRingId)
+    fun getContact(ringId: String?): Contact? = mContacts[ringId]
 
     fun addContact(id: String, confirmed: Boolean) {
         val contact = mContacts.getOrPut(id) { getContactFromCache(Uri.fromId(id)) }
@@ -591,6 +593,7 @@ class Account(
     }
 
     fun removeContact(id: String, banned: Boolean) {
+        Log.w(TAG, "removeContact $id $banned")
         var contact = mContacts[id]
         if (banned) {
             if (contact == null) {
@@ -606,7 +609,7 @@ class Account(
             mRequests.remove(id)
         }
         if (contact != null) {
-            contactRemoved(contact.uri)
+            contactRemoved(contact.uri, contact.conversationUri.blockingFirst())
         }
         contactListSubject.onNext(mContacts.values)
     }
@@ -630,6 +633,7 @@ class Account(
         }
         mContacts[contactId] = callContact
         contactAdded(callContact)
+        contactListSubject.onNext(mContacts.values)
         return callContact
     }
 
@@ -780,11 +784,13 @@ class Account(
         }
     }
 
-    private fun contactRemoved(uri: Uri) {
+    private fun contactRemoved(uri: Uri, conversationUri: Uri) {
+        Log.w(TAG, "contactRemoved $uri")
         val key = uri.uri
         synchronized(conversations) {
             synchronized(pending) { if (pending.remove(key) != null) pendingChanged() }
             conversations.remove(key)
+            //swarmConversations.remove(conversationUri.uri)
             conversationChanged()
         }
     }
