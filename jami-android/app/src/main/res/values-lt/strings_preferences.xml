@@ -5,6 +5,7 @@
   <string name="pref_category_video">Vaizdas</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privatumas</string>
+  <string name="pref_category_diagnostic">Diagnostika</string>
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
   <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
@@ -25,6 +26,8 @@
   <string name="pref_delete_account_title">Ištrinti paskyrą</string>
   <string name="pref_persistNotification_title">Paleisti fone</string>
   <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
+  <string name="pref_logs_summary">Atverti diagnostikos žurnalo nustatymus</string>
   <!--Notifications Visibility-->
   <!--Plugin-->
+  <string name="pref_plugins_title">Įskiepiai</string>
 </resources>

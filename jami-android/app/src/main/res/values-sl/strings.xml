@@ -191,6 +191,9 @@
   <string name="conversation_info_contact_you">Vi</string>
   <string name="conversation_members">Člani</string>
   <string name="conversation_syncing">Prenašanje pogovora od soležnika</string>
+  <string name="conversation_blocked">Ta stik je blokiran.</string>
+  <string name="conversation_ended">Pogovor končan.</string>
+  <string name="conversation_message_deleted">(izbrisano sporočilo)</string>
   <string name="conversation_preference_color">Barva pogovora</string>
   <string name="conversation_preference_emoji">Emoji pogovora</string>
   <string name="conversation_type_contact">Stik Jami</string>

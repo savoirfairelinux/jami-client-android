@@ -61,6 +61,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Įskiepiai</string>
   <!--Audio Details-->
   <string name="account_audio_label">Garsas</string>
   <string name="account_preferences_media_tab">Medija</string>
@@ -76,12 +77,14 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
   <string name="account_call_settings_title">Skambučio nustatymai</string>
+  <string name="account_dht_public_in_calls_label">Leisti gaunamuosius skambučius nuo nežinomų adresatų</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti Stun</string>
   <string name="account_stun_server_label">Stun serveris</string>
   <string name="account_accept_files">Automatiškai priimti gaunamuosius failus</string>
+  <string name="account_conversation_settings_title">Pokalbio nustatymai</string>
   <string name="account_accept_files_max_size">Didžiausias failo, kurį automatiškai priimti, dydis</string>
   <string name="account_accept_files_never">Niekada nepriimti automatiškai</string>
   <string name="account_accept_files_always">Visada priimti automatiškai</string>
@@ -93,6 +96,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_published_same_as_local_label">Paskelbtas toks pats kaip vietinis</string>
   <string name="account_published_port_label">Paskelbtas prievadas</string>
   <string name="account_published_address_label">Paskelbtas adresas</string>
+  <string name="disabled">Išjungta</string>
   <string name="enabled">Įjungta</string>
   <string name="account_proxy_label">DHT įgaliotasis serveris</string>
   <string name="account_proxy_enable_label">Naudoti DHT įgaliotąjį serverį</string>

@@ -31,6 +31,7 @@
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_advanced_settings">Išplėstiniai nustatymai</string>
   <string name="menu_item_account_settings">Paskyros nustatymai</string>
+  <string name="menu_item_share">Bendrinti mano paskyrą</string>
   <string name="menu_item_about">Apie Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>
@@ -72,6 +73,7 @@
   <string name="notif_outgoing_file_transfer_title">Siunčiamas failas naudotojui %1$s</string>
   <string name="notif_incoming_picture">Paveikslas nuo %1$s</string>
   <string name="notif_sync_title">Sinchronizuojami duomenys…</string>
+  <string name="location_share_about_title">Informacija apie žemėlapį</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Padėti ragelį</string>
@@ -91,7 +93,7 @@
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
-  <string name="share_via">Dalintis per</string>
+  <string name="share_via">Bendrinti per</string>
   <string name="write_a_message">Rašykite žinutę</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
   <string name="qr_code">QR kodas</string>
@@ -116,6 +118,7 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
+  <string name="title_activity_qrcode">Bendrinti mano paskyrą</string>
   <string name="tab_code">Mano kodas</string>
   <string name="tab_scan">Skenuoti kodą</string>
   <!--Settings-->
@@ -231,6 +234,7 @@
   <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>
   <string name="menu_message_copy">Kopijuoti</string>
+  <string name="menu_message_edit">Taisyti žinutę</string>
   <string name="menu_message_delete">Ištrinti žinutę</string>
   <string name="menu_message_cancel">Atsisakyti žinutės</string>
   <string name="menu_message_reply">Atsakyti</string>
@@ -255,14 +259,18 @@
   <string name="tv_action_more">Daugiau</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojama</string>
+  <string name="wizard_status_optional">Nebūtina</string>
   <string name="wizard_password_info">Paskyros slaptažodis</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
   <string name="wizard_password_switch">Šifruoti paskyrą slaptažodžiu</string>
+  <string name="wizard_profile_info">Profilis yra bendrinamas tik su adresatais</string>
   <string name="wizard_profile_button">Įrašyti profilį</string>
   <string name="wizard_profile_skip">Praleisti ir atlikti tai vėliau</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Bendrinti</string>
+  <string name="bottomSheet_plugins_btn">Įskiepiai</string>
   <string name="bottomSheet_add_participants_btn">Pridėti</string>
+  <string name="bottomSheet_change_camera_btn">Keisti</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Baigti skambutį</string>
   <string name="bottomSheet_raiseHand_btn">Pakelti ranką</string>
