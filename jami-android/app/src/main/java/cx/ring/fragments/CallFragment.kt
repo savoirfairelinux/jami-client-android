@@ -409,11 +409,12 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val binding = binding ?: return
             if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
-            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
+            val pipFocus = binding.participantOverlayContainer.getPipFocus()
+            val l = IntArray(2).apply { pipFocus.getLocationInWindow(this) }
             val x = l[0]
             val y = l[1]
-            val w = binding.participantOverlayContainer.width
-            val h = binding.participantOverlayContainer.height
+            val w = pipFocus.width
+            val h = pipFocus.height
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
                     .setAspectRatio(Rational(w, h))
@@ -443,6 +444,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
         isInPIP = isInPictureInPictureMode
         val binding = binding ?: return
+        binding.participantOverlayContainer.togglePipMode(isInPictureInPictureMode)
 
         if (isInPictureInPictureMode) {
             binding.callCoordinatorOptionContainer.isVisible = false

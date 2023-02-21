@@ -2,6 +2,7 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +22,10 @@ class ParticipantsContainerView @JvmOverloads constructor(
     : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     var participants: List<ParticipantInfo> = ArrayList()
+    private var pipMode = false
 
     fun init() {
+        Log.d("ASDF", "init")
         if (participants.isEmpty()) {
             removeAllViews()
             return
@@ -36,8 +39,11 @@ class ParticipantsContainerView @JvmOverloads constructor(
         val toRemove: MutableList<View> = ArrayList()
 
         for (childView in children) {
-            val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null) toRemove.add(childView)
+            val tag = childView.tag as String?
+            if (tag.isNullOrEmpty()
+                    || participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null
+                    || (pipMode && getPipFocus() != childView))
+                toRemove.add(childView)
         }
         for (v in toRemove) removeView(v)
 
@@ -69,7 +75,19 @@ class ParticipantsContainerView @JvmOverloads constructor(
         var iActive = 0
         var iInactive = 0
         val toAdd: MutableList<View> = ArrayList()
-        for (i in participants) {
+
+        // If in PiP mode without child views, make sure exactly one participant added
+        val parts =
+            if(pipMode) {
+                if(children.count() == 0)
+                    listOf(participants.first())
+                else
+                    return
+            } else
+                participants
+
+        for (i in parts) {
+            Log.d("ASDF", i.contact.displayName)
             if (!i.active && !grid && (iInactive >= maxCol || iInactive >= maxRow))
                 break
 
@@ -146,6 +164,14 @@ class ParticipantsContainerView @JvmOverloads constructor(
 
         for (v in toAdd) addView(v)
     }
+
+    fun togglePipMode(isInPip: Boolean) {
+        Log.d("ASDF", "togglePipMode")
+        pipMode = isInPip
+        //init()
+    }
+
+    fun getPipFocus() = children.first()
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         init()
