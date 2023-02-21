@@ -104,9 +104,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         saveRequests(accountId, requests)
     }
 
-    override fun hasNetworkConnected(): Boolean {
-        return NetworkUtils.isConnectivityAllowed(context)
-    }
+    override fun hasNetworkConnected(): Boolean = NetworkUtils.isConnectivityAllowed(context)
 
     override val isPushAllowed: Boolean
         get() {
