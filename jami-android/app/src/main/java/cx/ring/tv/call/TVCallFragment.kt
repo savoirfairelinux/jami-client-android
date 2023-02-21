@@ -564,10 +564,10 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         presenter.requestPipMode()
     }
 
-    override fun enterPipMode(callId: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+    override fun enterPipMode(callId: String, accountId: String) {
+        val context = requireContext()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val paramBuilder = PictureInPictureParams.Builder()
             if (binding!!.participantOverlayContainer.visibility == View.VISIBLE) {
