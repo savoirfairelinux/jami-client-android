@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a883c8e6_77286f98",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2023-02-22T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ece34c_6df974f1",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 23
+      },
+      "revId": "0e384fcd1c899e5fa45445c83b3ffb905dcb8a0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b4a70a3_288ee8c1",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-02-07T22:42:26Z",
       "side": 1,
       "message": "Should this read `2023`?",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 23
+      },
+      "revId": "0e384fcd1c899e5fa45445c83b3ffb905dcb8a0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51f6cc21_e831e1ac",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call_tv.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2023-02-22T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4a70a3_288ee8c1",
       "range": {
         "startLine": 2,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5823b50_3aebdd46",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2023-02-22T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e5885e_7ed4bc72",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "0e384fcd1c899e5fa45445c83b3ffb905dcb8a0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2106283_a2aaf56c",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-02-07T22:42:26Z",
       "side": 1,
       "message": "Please ignore this comment if it is deemed as noise.\n\nShould the string be:\n`Join group call call in progress`\n`Join conference call call in progress`\n`Join group in progress`\n\nhttps://www.microsoft.com/en-us/language/Search?\u0026searchTerm\u003dJoin%20group%20in%20progress\u0026langID\u003d382\u0026Source\u003dtrue\u0026productid\u003dundefined\n\n\nOther options:\n`Callback in Progress`\n`Group call in progress`\n`Active call in progress`\n`Call Already In Progress`\n`Another call in progress.`\n`Call is Still in Progress`\n`Conference call in progress`\n`Voice call in progress.\\r\\n`\nhttps://www.microsoft.com/en-us/language/Search?\u0026searchTerm\u003din%20progress\u0026langID\u003d382\u0026Source\u003dtrue\u0026productid\u003dundefined",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 44
+      },
+      "revId": "0e384fcd1c899e5fa45445c83b3ffb905dcb8a0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "403b01a6_a766130f",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2023-02-22T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2106283_a2aaf56c",
       "range": {
         "startLine": 190,
         "startChar": 35,
