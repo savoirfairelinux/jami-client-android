@@ -32,6 +32,7 @@ import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
 import android.text.format.Formatter
+import android.util.JsonWriter
 import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.RequiresApi
@@ -47,6 +48,7 @@ import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
+import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
@@ -62,15 +64,19 @@ import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
+import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.call.CallPresenter
 import net.jami.model.*
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.services.*
 import net.jami.smartlist.ConversationItemViewModel
+import java.io.BufferedInputStream
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.HashMap
-import kotlin.collections.LinkedHashMap
 
 class NotificationServiceImpl(
     private val mContext: Context,
@@ -86,6 +92,7 @@ class NotificationServiceImpl(
     private val currentCalls = LinkedHashMap<String, Conference>()
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
+    private var pendingNotificationActions = ArrayList<() -> Unit>()
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -290,15 +297,78 @@ class NotificationServiceImpl(
         if (notification != null) {
             val nid = random.nextInt()
             callNotifications[nid] = notification
-            try {
+            val start = {
                 ContextCompat.startForegroundService(mContext,
                     Intent(CallNotificationService.ACTION_START, null, mContext, CallNotificationService::class.java)
                         .putExtra(NotificationService.KEY_NOTIFICATION_ID, nid))
-            } catch (e: Exception) {
+            }
+            try {
+                start()
+            }
+            catch (e: ForegroundServiceStartNotAllowedException) {
+                pingPush(conference.accountId, start)
+            }
+            catch (e: Exception) {
                 Log.w(TAG, "Can't show call notification", e)
+                //notificationManager.notify(nid, notification)
             }
         } else {
             removeCallNotification(0)
+        }
+    }
+
+    override fun processPush() {
+        val actions: List<() -> Unit>
+        synchronized(this) {
+            actions = pendingNotificationActions
+            pendingNotificationActions = ArrayList()
+        }
+        for (action in actions)
+            try {
+                action()
+            } catch (e: Exception) {
+                Log.w(TAG, "Error running push action", e)
+            }
+    }
+
+    private fun pingPush(accountId: String, start: () -> Unit) {
+        if (mPreferencesService.isPushAllowed) {
+            val account = mAccountService.getAccount(accountId) ?: return
+            if (account.isDhtProxyEnabled) {
+                val server = account.dhtProxyUsed
+                if (server.isEmpty()) return
+                //server.mat
+                synchronized(this) {
+                    pendingNotificationActions.add(start)
+                }
+                Schedulers.io().scheduleDirect {
+                    try {
+                        val url = URL("$server/node/pingPush")
+                        Log.w(TAG, "pingPush $url")
+                        val urlConnection: HttpURLConnection = (url.openConnection() as HttpURLConnection).apply {
+                            doOutput = true
+                            instanceFollowRedirects = false
+                            requestMethod = "POST"
+                            setRequestProperty("Content-Type", "application/json")
+                            setRequestProperty("charset", "utf-8")
+                        }
+                        AutoCloseable { urlConnection.disconnect() }.use {
+                            JsonWriter(OutputStreamWriter(urlConnection.outputStream, "UTF-8")).apply {
+                                beginObject()
+                                name("key").value(JamiApplication.instance!!.pushToken)
+                                name("client_id").value(accountId)
+                                name("platform").value("android")
+                                endObject()
+                                flush()
+                            }
+                            val i = InputStreamReader(BufferedInputStream(urlConnection.inputStream)).use { it.readText() }
+                            Log.w(TAG, "pingPush Got code ${urlConnection.responseCode} $i")
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Error sending push ping", e)
+                    }
+                }
+            }
         }
     }
 

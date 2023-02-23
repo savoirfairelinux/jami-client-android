@@ -70,6 +70,9 @@ abstract class JamiApplication : Application() {
     var mAccountService: AccountService
 
     @Inject lateinit
+    var mNotificationService: NotificationService
+
+    @Inject lateinit
     var mCallService: CallService
 
     @Inject lateinit

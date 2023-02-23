@@ -967,7 +967,7 @@ class AccountService(
     }
 
     fun pushNotificationReceived(from: String, data: Map<String, String>) {
-        // Log.i(TAG, "pushNotificationReceived()");
+        // Log.i(TAG, "pushNotificationReceived() $data");
         mExecutor.execute { JamiService.pushNotificationReceived(from, StringMap.toSwig(data)) }
     }
 

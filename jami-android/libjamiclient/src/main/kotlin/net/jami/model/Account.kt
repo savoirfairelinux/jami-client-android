@@ -438,10 +438,10 @@ class Account(
         set(host) {
             config.put(ConfigKey.ACCOUNT_HOSTNAME, host!!)
         }
-    var proxy: String?
+    var proxy: String
         get() = config[ConfigKey.ACCOUNT_ROUTESET]
         set(proxy) {
-            config.put(ConfigKey.ACCOUNT_ROUTESET, proxy!!)
+            config.put(ConfigKey.ACCOUNT_ROUTESET, proxy)
         }
     var isDhtProxyEnabled: Boolean
         get() = config.getBool(ConfigKey.PROXY_ENABLED)
@@ -449,7 +449,7 @@ class Account(
             config.put(ConfigKey.PROXY_ENABLED, if (active) "true" else "false")
         }
 
-    var dhtProxy: String?
+    var dhtProxy: String
         get() = config[ConfigKey.PROXY_SERVER]
         set(proxy) {
             config.put(ConfigKey.PROXY_SERVER, proxy)
@@ -459,6 +459,9 @@ class Account(
         get() = registrationStateSubject.blockingFirst()
     val registrationStateObservable: Observable<AccountConfig.RegistrationState>
         get() = registrationStateSubject
+
+    val dhtProxyUsed: String
+        get() = mVolatileDetails[ConfigKey.PROXY_SERVER]
 
     fun setRegistrationState(registeredState: AccountConfig.RegistrationState, code: Int) {
         //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState)
