@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b6f77e4_59d2f5a4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-02-23T09:01:51Z",
+      "side": 1,
+      "message": "Should the trailing `s` be removed from the variable name?",
+      "range": {
+        "startLine": 123,
+        "startChar": 45,
+        "endLine": 123,
+        "endChar": 46
+      },
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d165e59c_82c64085",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-02-23T09:01:51Z",
+      "side": 1,
+      "message": "Does this refer to a group call that is currently in progress?\n\nIf so, should the variable name and value be updated to something like `inprogress_group_call` and `Group call in progress`, respectively?\n\n\u003e ### When I should use `Ongoing` and when I should use `in progress`?\n\u003e So assuming you mean just \u0027ongoing\u0027, in progress is better.\n\u003e `The meeting is still in progress.`\nhttps://english.stackexchange.com/questions/477937/when-i-should-use-ongoing-and-when-i-should-use-in-progress\n\nThank you",
+      "range": {
+        "startLine": 190,
+        "startChar": 18,
+        "endLine": 190,
+        "endChar": 50
+      },
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
