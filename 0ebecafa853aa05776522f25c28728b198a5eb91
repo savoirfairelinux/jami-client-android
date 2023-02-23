@@ -22,6 +22,30 @@
       },
       "revId": "0ebecafa853aa05776522f25c28728b198a5eb91",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9ea3801_1d3de805",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-02-23T19:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1ce2826_6c5d07ae",
+      "range": {
+        "startLine": 340,
+        "startChar": 18,
+        "endLine": 340,
+        "endChar": 28
+      },
+      "revId": "0ebecafa853aa05776522f25c28728b198a5eb91",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
