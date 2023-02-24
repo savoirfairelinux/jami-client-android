@@ -305,12 +305,16 @@ class NotificationServiceImpl(
             try {
                 start()
             }
-            catch (e: ForegroundServiceStartNotAllowedException) {
-                pingPush(conference.accountId, start)
-            }
             catch (e: Exception) {
-                Log.w(TAG, "Can't show call notification", e)
-                //notificationManager.notify(nid, notification)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (e is ForegroundServiceStartNotAllowedException) {
+                        pingPush(conference.accountId, start)
+                    } else {
+                        Log.w(TAG, "Can't show call notification", e)
+                    }
+                } else {
+                    Log.w(TAG, "Can't show call notification", e)
+                }
             }
         } else {
             removeCallNotification(0)
