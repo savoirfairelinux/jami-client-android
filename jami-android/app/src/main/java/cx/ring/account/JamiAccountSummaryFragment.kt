@@ -40,6 +40,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
@@ -438,18 +440,14 @@ class JamiAccountSummaryFragment :
         ), HomeActivity.REQUEST_PERMISSION_CAMERA)
     }
 
-    override fun goToGallery() {
-        try {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY)
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), R.string.gallery_error_message, Toast.LENGTH_SHORT)
-                .show()
+    private val pickProfilePicture =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null)
+                updatePhoto(uri)
         }
-    }
 
-    override fun askGalleryPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), HomeActivity.REQUEST_PERMISSION_READ_STORAGE)
+    override fun goToGallery() {
+        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun updatePhoto(uriImage: Uri) {

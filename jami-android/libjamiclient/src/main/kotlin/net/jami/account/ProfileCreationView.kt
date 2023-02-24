@@ -25,7 +25,6 @@ interface ProfileCreationView {
     fun displayProfileName(profileName: String)
     fun goToGallery()
     fun goToPhotoCapture()
-    fun askStoragePermission()
     fun askPhotoPermission()
     fun goToNext(saveProfile: Boolean)
     fun setProfile()

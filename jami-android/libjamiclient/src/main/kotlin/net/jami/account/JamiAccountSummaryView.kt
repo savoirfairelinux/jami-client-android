@@ -35,7 +35,6 @@ interface JamiAccountSummaryView {
     fun gotToImageCapture()
     fun askCameraPermission()
     fun goToGallery()
-    fun askGalleryPermission()
     fun goToMedia(accountId: String)
     fun goToSystem(accountId: String)
     fun goToAdvanced(accountId: String)

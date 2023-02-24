@@ -165,10 +165,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
     }
 
     fun galleryClicked() {
-        if (mDeviceRuntimeService.hasGalleryPermission())
-            view?.goToGallery()
-        else
-            view?.askGalleryPermission()
+        view?.goToGallery()
     }
 
     fun goToAccount() {

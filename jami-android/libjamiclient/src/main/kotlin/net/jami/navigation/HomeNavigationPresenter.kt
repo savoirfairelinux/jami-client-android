@@ -136,10 +136,7 @@ class HomeNavigationPresenter @Inject constructor(
     }
 
     fun galleryClicked() {
-        if (mDeviceRuntimeService.hasGalleryPermission())
-            view?.goToGallery()
-        else
-            view?.askGalleryPermission()
+        view?.goToGallery()
     }
 
     fun cameraPermissionChanged(isGranted: Boolean) {

@@ -30,6 +30,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.leanback.widget.GuidanceStylist.Guidance
@@ -48,6 +50,11 @@ import net.jami.account.ProfileCreationView
 @AndroidEntryPoint
 class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresenter, ProfileCreationView>(), ProfileCreationView {
     private val model: AccountCreationViewModel by activityViewModels()
+    private val pickProfilePicture =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null)
+                presenter.photoUpdated(loadBitmap(requireContext(), uri).map { it })
+        }
 
     private var iconSize = -1
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -63,9 +70,6 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
                     e.printStackTrace()
                 }
             }
-            ProfileCreationFragment.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && intent != null) {
-                presenter.photoUpdated(loadBitmap(requireContext(), intent.data!!).map { b -> b })
-            }
             else -> super.onActivityResult(requestCode, resultCode, intent)
         }
     }
@@ -75,9 +79,6 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
             ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 presenter.cameraPermissionChanged(true)
                 presenter.cameraClick()
-            }
-            ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter.galleryClick()
             }
         }
     }
@@ -126,16 +127,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun goToGallery() {
-        try {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_GALLERY)
-        } catch (e: ActivityNotFoundException) {
-            AlertDialog.Builder(requireActivity())
-                .setPositiveButton(android.R.string.ok, null)
-                .setTitle(R.string.gallery_error_title)
-                .setMessage(R.string.gallery_error_message)
-                .show()
-        }
+        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     override fun goToPhotoCapture() {
@@ -149,13 +141,6 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
                 .setMessage(R.string.gallery_error_message)
                 .show()
         }
-    }
-
-    override fun askStoragePermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-            ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE
-        )
     }
 
     override fun askPhotoPermission() {

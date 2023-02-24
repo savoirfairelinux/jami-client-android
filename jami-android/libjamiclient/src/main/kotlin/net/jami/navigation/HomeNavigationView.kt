@@ -26,6 +26,4 @@ interface HomeNavigationView {
     fun gotToImageCapture()
     fun askCameraPermission()
     fun goToGallery()
-    fun askGalleryPermission()
-    //fun setPhoto(account: Account)
 }

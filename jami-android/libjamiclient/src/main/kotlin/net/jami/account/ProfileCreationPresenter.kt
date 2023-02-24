@@ -63,12 +63,7 @@ class ProfileCreationPresenter @Inject constructor(
     }
 
     fun galleryClick() {
-        val hasPermission = mDeviceRuntimeService.hasGalleryPermission()
-        if (hasPermission) {
-            view?.goToGallery()
-        } else {
-            view?.askStoragePermission()
-        }
+        view?.goToGallery()
     }
 
     fun cameraClick() {

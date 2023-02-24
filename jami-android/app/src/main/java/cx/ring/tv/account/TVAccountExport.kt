@@ -165,7 +165,6 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     override fun gotToImageCapture() {}
     override fun askCameraPermission() {}
     override fun goToGallery() {}
-    override fun askGalleryPermission() {}
     override fun goToMedia(accountId: String) {}
     override fun goToSystem(accountId: String) {}
     override fun goToAdvanced(accountId: String) {}
@@ -178,11 +177,10 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     companion object {
         private const val PASSWORD = 1L
         private const val ACTION = 2L
-        fun createInstance(idAccount: String, hasPassword: Boolean): TVAccountExport {
-            val fragment = TVAccountExport()
-            fragment.mIdAccount = idAccount
-            fragment.mHasPassword = hasPassword
-            return fragment
-        }
+        fun createInstance(idAccount: String, hasPassword: Boolean): TVAccountExport =
+            TVAccountExport().apply {
+                mIdAccount = idAccount
+                mHasPassword = hasPassword
+            }
     }
 }

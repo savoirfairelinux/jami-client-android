@@ -36,6 +36,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import cx.ring.R
 import cx.ring.databinding.FragAccProfileCreateBinding
@@ -56,6 +58,13 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     private val model: AccountCreationViewModel by activityViewModels()
     private var tmpProfilePhotoUri: Uri? = null
     private var binding: FragAccProfileCreateBinding? = null
+
+    private val pickProfilePicture =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null)
+                presenter.photoUpdated(loadBitmap(requireContext(), uri).map { it })
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccProfileCreateBinding.inflate(inflater, container, false).apply {
             gallery.setOnClickListener { presenter.galleryClick() }
@@ -103,9 +112,6 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
                     presenter.photoUpdated(loadBitmap(requireContext(), tmpProfilePhotoUri!!).map { b: Bitmap -> b })
                 }
             }
-            REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && intent != null) {
-                presenter.photoUpdated(loadBitmap(requireContext(), intent.data!!).map { b -> b })
-            }
             else -> super.onActivityResult(requestCode, resultCode, intent)
         }
     }
@@ -116,9 +122,6 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
                 presenter.cameraPermissionChanged(true)
                 presenter.cameraClick()
             }
-            REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter.galleryClick()
-            }
         }
     }
 
@@ -127,13 +130,7 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     }
 
     override fun goToGallery() {
-        try {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, REQUEST_CODE_GALLERY)
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), R.string.gallery_error_message, Toast.LENGTH_SHORT)
-                .show()
-        }
+        pickProfilePicture.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     override fun goToPhotoCapture() {
@@ -154,13 +151,6 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Could not start activity")
         }
-    }
-
-    override fun askStoragePermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-            REQUEST_PERMISSION_READ_STORAGE
-        )
     }
 
     override fun askPhotoPermission() {
@@ -186,8 +176,6 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
     companion object {
         val TAG = ProfileCreationFragment::class.simpleName!!
         const val REQUEST_CODE_PHOTO = 1
-        const val REQUEST_CODE_GALLERY = 2
         const val REQUEST_PERMISSION_CAMERA = 3
-        const val REQUEST_PERMISSION_READ_STORAGE = 4
     }
 }
