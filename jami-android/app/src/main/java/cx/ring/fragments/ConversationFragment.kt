@@ -811,7 +811,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 updateListPadding()
                 currentBottomView?.isVisible = true
                 if (animation.isStarted) animation.cancel()
-                animation.setIntValues(binding.histList.paddingBottom, currentBottomView!!.height + marginPxTotal)
+                animation.setIntValues(binding.histList.paddingBottom, (currentBottomView?.height ?: 0) + marginPxTotal)
                 animation.start()
                 return true
             }

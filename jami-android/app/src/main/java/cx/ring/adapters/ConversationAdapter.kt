@@ -651,9 +651,9 @@ class ConversationAdapter(
                         && interaction.type == Interaction.InteractionType.TEXT
                         && !interaction.isIncoming
                     ) {
-                        v.background.setTint(convColor)
+                        v.background?.setTint(convColor)
                     } else {
-                        v.background.setTintList(null)
+                        v.background?.setTintList(null)
                     }
                 }
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
@@ -777,7 +777,7 @@ class ConversationAdapter(
             else -> viewHolder.mFileInfoLayout
         } ?: return
         if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
-            longPressView.background.setTintList(null)
+            longPressView.background?.setTintList(null)
         }
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
@@ -1057,7 +1057,7 @@ class ConversationAdapter(
         val context = convViewHolder.itemView.context
         if (!interaction.isSwarm) {
             convViewHolder.mCallInfoLayout?.apply {
-                background.setTintList(null)
+                background?.setTintList(null)
                 setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
                     conversationFragment.onCreateContextMenu(menu, v, menuInfo)
                     val inflater = conversationFragment.requireActivity().menuInflater
