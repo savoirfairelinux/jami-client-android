@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5057b306_399ee1be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-02-24T15:45:48Z",
+      "side": 1,
+      "message": "can\u0027t test today (I don\u0027t have android 12), but code seems ok to me!",
+      "revId": "db3eaf24edef5c0f21e690c3f90936113d8bf70c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
