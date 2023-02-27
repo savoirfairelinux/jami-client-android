@@ -15,6 +15,7 @@
   <string name="license">यह सॉफ़्टवेयर किसी भी प्रकार की वारंटी के बिना प्रदान किया जाता है। विवरण के लिए, <u>जीएनयू जनरल पब्लिक लाइसेंस संस्करण 3 या बाद के संस्करण देखे</u></string>
   <string name="description">जामी सर्व-जन संचार के लिए मुफ्त सॉफ्टवेयर है जो अपने उपयोगकर्ताओं की स्वतंत्रता और गोपनीयता का सम्मान करता है।</string>
   <string name="credits">आभार</string>
+  <string name="pip_title">जामी सम्मेलन</string>
   <string name="call_service_description">यह सेवा आपके कॉल को अग्रभूमि में चलाने के लिए आवश्यक है। यह केवल कॉल के दौरान चलता है।</string>
   <string name="data_transfer_service_description">फ़ाइल स्थानान्तरण के दौरान लगातार अधिसूचनाओं को प्रदर्शित करने के लिए यह सेवा आवश्यक है। यह केवल फ़ाइल स्थानान्तरण के दौरान चलता है।</string>
   <!--About dialog-->
@@ -32,7 +33,10 @@
   <string name="menu_item_accounts">खातों का संचालन करे</string>
   <string name="menu_item_account">खाते का संचालन करे</string>
   <string name="menu_item_settings">सेटिंग्स</string>
+  <string name="menu_item_advanced_settings">उन्नत सेटिंग</string>
+  <string name="menu_item_account_settings">खाता सेटिंग</string>
   <string name="menu_item_plugin_list">प्लग-इन सेटिंग्स</string>
+  <string name="menu_item_share">मेरा खाता साझा करें</string>
   <string name="menu_item_about">जामी के बारे में</string>
   <!--Dialing Fragment-->
   <string name="dial_number">एक नम्बर डायल करें</string>
@@ -73,7 +77,19 @@
   <string name="notif_incoming_picture">%1$s की फोटो</string>
   <string name="notif_sync_title">डेटा सिंक हो रहा है...</string>
   <string name="notif_location_title">%1$sसे स्थिति साझा हो रही है  </string>
+  <string name="location_share_contact">%1$s आपके साथ स्थान साझा कर रहा/रही है</string>
+  <string name="notif_location_multi_title">%1$dसंपर्कों से स्थिति साझा हो रही है </string>
+  <string name="notif_location_remaining">%1$dमिनट रह गये</string>
+  <string name="notif_location_action_stop">स्थान साझा करना बंद करें</string>
+  <string name="location_share_action_start">साझा करना प्रारंभ करें</string>
+  <string name="location_share_action_stop">साझा करना बंद</string>
+  <string name="location_share_about_title">मानचित्र की जानकारी</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">आप:</string>
+  <string name="action_call_hangup">फोन रख दे</string>
+  <string name="action_call_maximize">बड़ा करें</string>
+  <string name="action_call_minimize">कम करना</string>
+  <string name="action_call_mute">आवाज़ बंद करना</string>
   <string name="ongoing_call">चल रही कॉल </string>
   <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <!--Text messages-->
@@ -84,6 +100,7 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">मेरा खाता साझा करें</string>
   <!--Settings-->
   <!--Conversation-->
   <string name="conversation_action_latest">वार्तालाप के अंत तक स्क्रॉल करें</string>
