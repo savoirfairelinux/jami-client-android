@@ -27,6 +27,7 @@ platform :android do
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
+      project_dir: 'jami-android',
       properties: {
         "android.injected.signing.store.file" => options[:keystore_path],
         "android.injected.signing.store.password" => options[:storepass],
@@ -49,6 +50,7 @@ platform :android do
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
+      project_dir: 'jami-android',
       properties: {
         "android.injected.signing.store.file" => options[:keystore_path],
         "android.injected.signing.store.password" => options[:storepass],
@@ -71,6 +73,7 @@ platform :android do
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
+      project_dir: 'jami-android',
       properties: {
         "android.injected.signing.store.file" => options[:keystore_path],
         "android.injected.signing.store.password" => options[:storepass],
@@ -93,6 +96,7 @@ platform :android do
       flavor: "noPush",
       build_type: "Release",
       print_command: false,
+      project_dir: 'jami-android',
       properties: {
         "android.injected.signing.store.file" => options[:keystore_path],
         "android.injected.signing.store.password" => options[:storepass],
