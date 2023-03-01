@@ -30,18 +30,16 @@ import ezvcard.property.RawProperty
 import io.reactivex.rxjava3.core.Single
 
 class AccountCreationModelImpl : AccountCreationModel() {
-    override fun toVCard(): Single<VCard> {
-        return Single.fromCallable {
-            val vcard = VCard()
-            vcard.formattedName = FormattedName(fullName)
-            vcard.uid = Uid(username)
-            val bmp = photo as Bitmap?
-            if (bmp != null) {
-                vcard.removeProperties(Photo::class.java)
-                vcard.addPhoto(BitmapUtils.bitmapToPhoto(bmp))
-            }
-            vcard.removeProperties(RawProperty::class.java)
-            vcard
+    override fun toVCard(): Single<VCard> = Single.fromCallable {
+        val vcard = VCard()
+        vcard.formattedName = FormattedName(fullName)
+        vcard.uid = Uid(username)
+        val bmp = photo as Bitmap?
+        if (bmp != null) {
+            vcard.removeProperties(Photo::class.java)
+            vcard.addPhoto(BitmapUtils.bitmapToPhoto(bmp))
         }
+        vcard.removeProperties(RawProperty::class.java)
+        vcard
     }
 }

@@ -19,16 +19,12 @@ package cx.ring.tv.account
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
@@ -58,6 +54,13 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
                     .map { BitmapUtils.bitmapToPhoto(it) })
         }
 
+    private val requestCameraPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            presenter.cameraPermissionChanged(granted)
+            if (granted)
+                presenter.cameraClicked()
+        }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             ProfileCreationFragment.REQUEST_CODE_PHOTO -> if (resultCode == Activity.RESULT_OK && data != null) {
@@ -79,31 +82,19 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter.cameraPermissionChanged(true)
-                presenter.cameraClicked()
-            }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iconSize = resources.getDimension(R.dimen.tv_avatar_size).toInt()
     }
 
-    override fun onCreateGuidance(savedInstanceState: Bundle?): Guidance {
-        val title = getString(R.string.profile)
-        val breadcrumb = ""
-        val description = getString(R.string.profile_message_warning)
-        val icon = requireContext().getDrawable(R.drawable.ic_contact_picture_fallback)
-        return Guidance(title, description, breadcrumb, icon)
-    }
+    override fun onCreateGuidance(savedInstanceState: Bundle?) = Guidance(
+        getString(R.string.profile),
+        getString(R.string.profile_message_warning),
+        "",
+        requireContext().getDrawable(R.drawable.ic_contact_picture_fallback)
+    )
 
-    override fun onProvideTheme(): Int {
-        return R.style.Theme_Ring_Leanback_GuidedStep_First
-    }
+    override fun onProvideTheme(): Int = R.style.Theme_Ring_Leanback_GuidedStep_First
 
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
         val context = requireContext()
@@ -131,7 +122,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
     override fun showViewModel(viewModel: HomeNavigationViewModel) {
         val action = actions?.let { if (it.isEmpty()) null else it[0] }
         if (action != null && action.id == USER_NAME) {
-            if (TextUtils.isEmpty(viewModel.profile.displayName)) {
+            if (viewModel.profile.displayName.isNullOrEmpty()) {
                 action.editTitle = ""
                 action.title = getString(R.string.account_edit_profile)
             } else {
@@ -140,23 +131,22 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
             }
             notifyActionChanged(0)
         }
-        if (TextUtils.isEmpty(viewModel.profile.displayName))
+        if (viewModel.profile.displayName.isNullOrEmpty())
             guidanceStylist.titleView.setText(R.string.profile)
         else guidanceStylist.titleView.text = viewModel.profile.displayName
         guidanceStylist.iconView.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
             .apply { setInSize(iconSize) })
     }
 
+    @Suppress("DEPRECATION")
     override fun gotToImageCapture() {
-        val intent = Intent(activity, CustomCameraActivity::class.java)
-        startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO)
+        startActivityForResult(Intent(activity, CustomCameraActivity::class.java), ProfileCreationFragment.REQUEST_CODE_PHOTO)
     }
 
+
+
     override fun askCameraPermission() {
-        requestPermissions(
-            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            ProfileCreationFragment.REQUEST_PERMISSION_CAMERA
-        )
+        requestCameraPermission.launch(Manifest.permission.CAMERA)
     }
 
     override fun goToGallery() {

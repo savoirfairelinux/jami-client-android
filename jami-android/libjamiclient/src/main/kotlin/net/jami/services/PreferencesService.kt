@@ -35,11 +35,9 @@ abstract class PreferencesService(
     private val mSettingsSubject: Subject<Settings> = BehaviorSubject.create()
     private var userSettings: Settings? = null
     var settings: Settings
-        get() {
-            return userSettings ?: loadSettings().also { settings ->
-                userSettings = settings
-                mSettingsSubject.onNext(settings)
-            }
+        get() = userSettings ?: loadSettings().also { settings ->
+            userSettings = settings
+            mSettingsSubject.onNext(settings)
         }
         set(settings) {
             saveSettings(settings)

@@ -122,11 +122,8 @@ class HomeNavigationPresenter @Inject constructor(
             .subscribe({}) { e: Throwable -> Log.e(TAG, "Error saving vCard !", e) })
     }
 
-    fun getUri(account: Account, defaultNameSip: CharSequence): String? {
-        return if (account.isIP2IP) {
-            defaultNameSip.toString()
-        } else account.displayUri
-    }
+    fun getUri(account: Account, defaultNameSip: CharSequence): String? =
+        if (account.isIP2IP) defaultNameSip.toString() else account.displayUri
 
     fun cameraClicked() {
         if (mDeviceRuntimeService.hasVideoPermission())
