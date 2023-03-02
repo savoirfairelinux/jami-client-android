@@ -6,7 +6,7 @@
     android:paddingTop="16dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ring_username_txt_box"
+        android:id="@+id/input_username_txt_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -14,7 +14,7 @@
         android:layout_marginRight="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ring_username"
+            android:id="@+id/input_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_new_username"

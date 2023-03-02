@@ -61,10 +61,10 @@ class RegisterNameDialog : DialogFragment() {
 
     private fun onLookupResult(name: String, address: String?, state: Int) {
         binding?.let { binding ->
-            val actualName = binding.ringUsername.text?.toString() ?: ""
+            val actualName = binding.inputUsername.text?.toString() ?: ""
             if (actualName.isEmpty()) {
-                binding.ringUsernameTxtBox.isErrorEnabled = false
-                binding.ringUsernameTxtBox.error = null
+                binding.inputUsernameTxtBox.isErrorEnabled = false
+                binding.inputUsernameTxtBox.error = null
                 return
             }
             if (name != actualName)
@@ -72,18 +72,18 @@ class RegisterNameDialog : DialogFragment() {
             when (state) {
                 0 -> {
                     // on found
-                    binding.ringUsernameTxtBox.isErrorEnabled = true
-                    binding.ringUsernameTxtBox.error = getText(R.string.username_already_taken)
+                    binding.inputUsernameTxtBox.isErrorEnabled = true
+                    binding.inputUsernameTxtBox.error = getText(R.string.username_already_taken)
                 }
                 1 -> {
                     // invalid name
-                    binding.ringUsernameTxtBox.isErrorEnabled = true
-                    binding.ringUsernameTxtBox.error = getText(R.string.invalid_username)
+                    binding.inputUsernameTxtBox.isErrorEnabled = true
+                    binding.inputUsernameTxtBox.error = getText(R.string.invalid_username)
                 }
                 else -> {
                     // on error
-                    binding.ringUsernameTxtBox.isErrorEnabled = false
-                    binding.ringUsernameTxtBox.error = null
+                    binding.inputUsernameTxtBox.isErrorEnabled = false
+                    binding.inputUsernameTxtBox.error = null
                 }
             }
         }
@@ -98,28 +98,28 @@ class RegisterNameDialog : DialogFragment() {
             hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true)
         }
 
-        binding.ringUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
-        binding.ringUsername.addTextChangedListener(object: TextWatcher {
+        binding.inputUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
+        binding.inputUsername.addTextChangedListener(object: TextWatcher {
             val mLookingForAvailability = getString(R.string.looking_for_username_availability)
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                binding.ringUsername.apply { error = null }
+                binding.inputUsername.apply { error = null }
             }
 
             override fun afterTextChanged(txt: Editable) {
                 val name = txt.toString()
                 if (name.isBlank()) {
-                    binding.ringUsernameTxtBox.isErrorEnabled = false
-                    binding.ringUsernameTxtBox.error = null
+                    binding.inputUsernameTxtBox.isErrorEnabled = false
+                    binding.inputUsernameTxtBox.error = null
                 } else {
-                    binding.ringUsernameTxtBox.isErrorEnabled = true
-                    binding.ringUsernameTxtBox.error = mLookingForAvailability
+                    binding.inputUsernameTxtBox.isErrorEnabled = true
+                    binding.inputUsernameTxtBox.error = mLookingForAvailability
                     contactQuery.onNext(name.trim())
                 }
             }
         })
-        // binding.ringUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
+        // binding.inputUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
         binding.passwordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
         binding.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             onEditorAction(v, actionId)
@@ -164,21 +164,21 @@ class RegisterNameDialog : DialogFragment() {
     }
 
     private val isValidUsername: Boolean
-        get() = binding!!.ringUsernameTxtBox.error == null
+        get() = binding!!.inputUsernameTxtBox.error == null
 
     private fun checkInput(): Boolean {
         binding?.let { binding ->
-            if (binding.ringUsername.text == null || binding.ringUsername.text!!.isEmpty()) {
-                binding.ringUsernameTxtBox.isErrorEnabled = true
-                binding.ringUsernameTxtBox.error = getText(R.string.prompt_new_username)
+            if (binding.inputUsername.text == null || binding.inputUsername.text!!.isEmpty()) {
+                binding.inputUsernameTxtBox.isErrorEnabled = true
+                binding.inputUsernameTxtBox.error = getText(R.string.prompt_new_username)
                 return false
             }
             if (!isValidUsername) {
-                binding.ringUsername.requestFocus()
+                binding.inputUsername.requestFocus()
                 return false
             }
-            binding.ringUsernameTxtBox.isErrorEnabled = false
-            binding.ringUsernameTxtBox.error = null
+            binding.inputUsernameTxtBox.isErrorEnabled = false
+            binding.inputUsernameTxtBox.error = null
             if (binding.passwordTxtBox.visibility == View.VISIBLE) {
                 if (binding.passwordTxt.text == null || binding.passwordTxt.text!!.isEmpty()) {
                     binding.passwordTxtBox.isErrorEnabled = true
@@ -195,7 +195,7 @@ class RegisterNameDialog : DialogFragment() {
 
     private fun validate(): Boolean {
         if (checkInput() && mListener != null) {
-            val username = binding!!.ringUsername.text!!.toString()
+            val username = binding!!.inputUsername.text!!.toString()
             val password = binding!!.passwordTxt.text!!.toString()
             mListener!!.onRegisterName(username, password)
             return true
