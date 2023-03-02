@@ -50,20 +50,20 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiUsernameBinding.inflate(inflater, container, false).apply {
-            ringUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
+            inputUsername.filters = arrayOf<InputFilter>(RegisteredNameFilter())
             createAccount.setOnClickListener { presenter.createAccount() }
             skip.setOnClickListener {
                 presenter.registerUsernameChanged(false)
                 presenter.createAccount()
             }
-            ringUsername.addTextChangedListener(object : TextWatcher {
+            inputUsername.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     presenter.userNameChanged(s.toString())
                 }
             })
-            ringUsername.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            inputUsername.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
                     val inputMethodManager =
                         requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -83,9 +83,9 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.ringUsername.requestFocus()
+        binding!!.inputUsername.requestFocus()
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding!!.ringUsername, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(binding!!.inputUsername, InputMethodManager.SHOW_IMPLICIT)
         presenter.init(model.model)
         presenter.setPush(true)
     }
@@ -95,38 +95,38 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
         binding.ringUsernameAvailabilitySpinner.visibility = View.GONE
         when (status) {
             UsernameAvailabilityStatus.ERROR -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = true
-                binding.ringUsernameTxtBox.error = getString(R.string.unknown_error)
-                binding.ringUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.inputUsernameTxtBox.isErrorEnabled = true
+                binding.inputUsernameTxtBox.error = getString(R.string.unknown_error)
+                binding.inputUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
                 enableNextButton(false)
             }
             UsernameAvailabilityStatus.ERROR_USERNAME_INVALID -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = true
-                binding.ringUsernameTxtBox.error = getString(R.string.invalid_username)
-                binding.ringUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.inputUsernameTxtBox.isErrorEnabled = true
+                binding.inputUsernameTxtBox.error = getString(R.string.invalid_username)
+                binding.inputUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
                 enableNextButton(false)
             }
             UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = true
-                binding.ringUsernameTxtBox.error = getString(R.string.username_already_taken)
-                binding.ringUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.inputUsernameTxtBox.isErrorEnabled = true
+                binding.inputUsernameTxtBox.error = getString(R.string.username_already_taken)
+                binding.inputUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
                 enableNextButton(false)
             }
             UsernameAvailabilityStatus.LOADING -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = false
-                binding.ringUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.inputUsernameTxtBox.isErrorEnabled = false
+                binding.inputUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_NONE
                 binding.ringUsernameAvailabilitySpinner.visibility = View.VISIBLE
                 enableNextButton(false)
             }
             UsernameAvailabilityStatus.AVAILABLE -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = false
-                binding.ringUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_CUSTOM
-                binding.ringUsernameTxtBox.setEndIconDrawable(R.drawable.ic_good_green)
+                binding.inputUsernameTxtBox.isErrorEnabled = false
+                binding.inputUsernameTxtBox.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                binding.inputUsernameTxtBox.setEndIconDrawable(R.drawable.ic_good_green)
                 enableNextButton(true)
             }
             UsernameAvailabilityStatus.RESET -> {
-                binding.ringUsernameTxtBox.isErrorEnabled = false
-                binding.ringUsername.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                binding.inputUsernameTxtBox.isErrorEnabled = false
+                binding.inputUsername.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 enableNextButton(false)
             }
         }
@@ -143,7 +143,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
         if (parent != null) {
             parent.scrollPagerFragment()
             val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding!!.ringUsername.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding!!.inputUsername.windowToken, 0)
         }
     }
 

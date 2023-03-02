@@ -57,7 +57,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ring_username_txt_box"
+                android:id="@+id/input_username_txt_box"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -69,7 +69,7 @@
                 app:startIconDrawable="@drawable/baseline_account_crop_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ring_username"
+                    android:id="@+id/input_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username"
@@ -86,9 +86,9 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:visibility="invisible"
-                app:layout_constraintRight_toRightOf="@id/ring_username_txt_box"
-                app:layout_constraintTop_toTopOf="@id/ring_username_txt_box"
-                app:layout_constraintBottom_toBottomOf="@id/ring_username_txt_box"
+                app:layout_constraintRight_toRightOf="@id/input_username_txt_box"
+                app:layout_constraintTop_toTopOf="@id/input_username_txt_box"
+                app:layout_constraintBottom_toBottomOf="@id/input_username_txt_box"
                 android:layout_marginRight="12dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
