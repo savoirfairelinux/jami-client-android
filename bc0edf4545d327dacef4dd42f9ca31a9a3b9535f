@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3167679e_a90735f9",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-03T21:37:28Z",
+      "side": 1,
+      "message": "When someone joins a ongoing group call, the call starter receives an incoming call notification from that person. Interacting with the notification can then have undesired effects on the group call.",
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f39af7f4_fc5e66ee",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-03T21:37:28Z",
+      "side": 1,
+      "message": "After starting a group call, hanging up from the notification only kicks others from the call, but keeps the call running.",
+      "range": {
+        "startLine": 135,
+        "startChar": 24,
+        "endLine": 138,
+        "endChar": 85
+      },
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b6f77e4_59d2f5a4",
         "filename": "jami-android/app/src/main/res/values/strings.xml",
         "patchSetId": 14
@@ -43,6 +83,23 @@
         "endLine": 190,
         "endChar": 50
       },
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2330edd9_05ed5500",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Call.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-03T21:37:28Z",
+      "side": 1,
+      "message": "Hanging up in a group call before anyone else has answered does not end the call.",
       "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
