@@ -33,6 +33,24 @@
       "message": "unrelated: this should be in another commit",
       "revId": "229b6024278a532f359772b052ec4b77e16bf4a2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28638fe7_cdfa079b",
+        "filename": "jami-android/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-03-06T22:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5839b5ff_93d73375",
+      "revId": "229b6024278a532f359772b052ec4b77e16bf4a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
