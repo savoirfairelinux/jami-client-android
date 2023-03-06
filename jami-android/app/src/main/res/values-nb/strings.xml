@@ -128,6 +128,7 @@
   <string name="message_failed">Mislyktes</string>
   <string name="time_just_now">Akkurat nå</string>
   <string name="send_file">Send fil</string>
+  <string name="select_media">Åpne galleriet</string>
   <string name="hist_file_sent">Sent fil</string>
   <string name="hist_file_received">Mottatt fil</string>
   <string name="conversation_send_audio">Spill inn lydklipp</string>
@@ -181,10 +182,16 @@
   <string name="block_contact_dialog_title">Blokker %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vil ikke være i stand til å kontakte deg inntil du fjerner blokkeringen.</string>
   <string name="block_contact_completed">%1$s ble blokkert.</string>
+  <string name="unblock_contact_dialog_title">Oppheve blokkering for %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s vil kunne kontakte deg igjen.</string>
+  <string name="unblock_contact_completed">Opphevet blokkering for %1$s </string>
   <string name="conversation_contact_is_typing">Kontakten skriver...</string>
   <string name="conversation_info_contact_you">Deg</string>
   <string name="conversation_members">Medlemmer</string>
   <string name="conversation_syncing">Laster ned samtale fra meddeler</string>
+  <string name="conversation_blocked">Denne kontakten er blokkert.</string>
+  <string name="conversation_ended">Samtale avsluttet</string>
+  <string name="conversation_message_deleted">(Meldingen er slettet)</string>
   <string name="conversation_preference_color">Samtalefarge</string>
   <string name="conversation_preference_emoji">Samtale-emoji</string>
   <string name="conversation_type_contact">Jami-kontakt</string>
