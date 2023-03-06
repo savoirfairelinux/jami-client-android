@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00becd9b_acee52c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-06T21:47:57Z",
+      "side": 1,
+      "message": "ça ne va pas",
+      "revId": "229b6024278a532f359772b052ec4b77e16bf4a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5839b5ff_93d73375",
+        "filename": "jami-android/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-06T21:47:57Z",
+      "side": 1,
+      "message": "unrelated: this should be in another commit",
+      "revId": "229b6024278a532f359772b052ec4b77e16bf4a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
