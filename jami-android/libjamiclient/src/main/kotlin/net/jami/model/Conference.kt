@@ -48,6 +48,8 @@ class Conference(val accountId: String, val id: String) {
 
         val isEmpty: Boolean
             get() = x == 0 && y == 0 && w == 0 && h == 0
+
+        fun getTag() = sinkId ?: contact.contact.uri.uri
     }
 
     private val mParticipantInfo: Subject<List<ParticipantInfo>> = BehaviorSubject.createDefault(emptyList())
