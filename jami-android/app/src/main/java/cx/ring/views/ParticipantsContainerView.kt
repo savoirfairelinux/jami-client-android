@@ -2,6 +2,7 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -25,6 +26,7 @@ class ParticipantsContainerView// adding name, mic etc..
     private val hscroll = HorizontalScrollView(context)
     private val vscroll = ScrollView(context)
     private val ll = FrameLayout(context)
+    private var pipMode = false
 
     init {
         hscroll.tag = "scroll"
@@ -35,6 +37,7 @@ class ParticipantsContainerView// adding name, mic etc..
     }
 
     fun initialize() {
+Log.d("ASDF", "INIT pipmode:$pipMode")
         if (participants.isEmpty()) {
             removeAllViews()
             return
@@ -47,9 +50,21 @@ class ParticipantsContainerView// adding name, mic etc..
 
         val toRemove: MutableList<View> = ArrayList()
 
+        val pipFocusParticipant = getPipFocusParticipant()
+
+Log.d("ASDF", "INIT focus name:${pipFocusParticipant?.contact?.displayName} id:${pipFocusParticipant?.sinkId ?: pipFocusParticipant?.contact?.contact?.uri?.uri}")
+
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")) toRemove.add(childView)
+Log.d("ASDF",
+    "INIT view tag:$tag isNullOrEmpty:${tag.isNullOrEmpty()} " +
+         "isGone:${(participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")} " +
+         "pipFocus:${getPipFocusView() == childView}"
+)
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll"))
+                toRemove.add(childView)
+            else
+                childView.isVisible = !(pipMode && pipFocusParticipant?.getTag() != tag)
         }
         for (v in toRemove) removeView(v)
 
@@ -83,13 +98,16 @@ class ParticipantsContainerView// adding name, mic etc..
         val addToMain: MutableList<View> = ArrayList()
         val addToScroll: MutableList<View> = ArrayList()
         for (i in participants) {
-
+Log.d("ASDF", "INIT part active:${i.active} vidMute:${i.videoMuted} name:${i.contact.displayName} id:${i.sinkId ?: i.contact.contact.uri.uri}")
             val viewTag = i.sinkId ?: i.contact.contact.uri.uri
             val view: View? = findViewWithTag(viewTag)
             // adding name, mic etc..
             val participantInfoOverlay = if (view != null) ItemParticipantLabelBinding.bind(view) else ItemParticipantLabelBinding.inflate(inflater).apply {
                 root.tag = viewTag
             }
+
+            val isPipFocus = pipFocusParticipant?.getTag() == i.getTag()
+            participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
 
             participantInfoOverlay.root.radius = cornerRadius
             participantInfoOverlay.sink.setFitToContent(i.active)
@@ -133,23 +151,30 @@ class ParticipantsContainerView// adding name, mic etc..
             val w = if (i.active) activeWidth else inactiveWidth
             val h = if (i.active) 1f-activeSeparation else inactiveHeight
 
-            val params = LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                if (i.active) {
-                    leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
-                    rightMargin = if (portrait) leftMargin else leftMargin / 2
-                    topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
-                    bottomMargin = if (portrait) topMargin / 2 else topMargin
-                    gravity = Gravity.CENTER
-                } else {
-                    leftMargin = (x * mainWidth).toInt() + margin
-                    topMargin = (y * mainHeight).toInt() + margin
-                    width = (w * mainWidth).toInt() - 2 * margin
-                    height = (h * mainHeight).toInt() - 2 * margin
-                    bottomMargin = if (scrollable) margin else 0
-                    rightMargin = if (scrollable) margin else 0
+            val params = if(pipMode && isPipFocus) {
+                LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT // todo fix up styling more
+                )
+            } else {
+                LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    if (i.active) {
+                        leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
+                        rightMargin = if (portrait) leftMargin else leftMargin / 2
+                        topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
+                        bottomMargin = if (portrait) topMargin / 2 else topMargin
+                        gravity = Gravity.CENTER
+                    } else {
+                        leftMargin = (x * mainWidth).toInt() + margin
+                        topMargin = (y * mainHeight).toInt() + margin
+                        width = (w * mainWidth).toInt() - 2 * margin
+                        height = (h * mainHeight).toInt() - 2 * margin
+                        bottomMargin = if (scrollable) margin else 0
+                        rightMargin = if (scrollable) margin else 0
+                    }
                 }
             }
 
@@ -179,6 +204,16 @@ class ParticipantsContainerView// adding name, mic etc..
 
         for (v in addToMain) addView(v)
         for (v in addToScroll) ll.addView(v)
+    }
+
+    fun togglePipMode(isInPip: Boolean) {
+        pipMode = isInPip
+    }
+
+    fun getPipFocusParticipant() = participants.firstOrNull { it.getTag() != "host_video_0" }
+    fun getPipFocusView() : View? {
+        val part = getPipFocusParticipant() ?: return null
+        return findViewWithTag(part.getTag())
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
