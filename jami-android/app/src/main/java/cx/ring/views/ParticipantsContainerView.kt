@@ -2,6 +2,7 @@ package cx.ring.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -25,6 +26,7 @@ class ParticipantsContainerView// adding name, mic etc..
     private val hscroll = HorizontalScrollView(context)
     private val vscroll = ScrollView(context)
     private val ll = FrameLayout(context)
+    private var pipMode = false
 
     init {
         hscroll.tag = "scroll"
@@ -47,9 +49,19 @@ class ParticipantsContainerView// adding name, mic etc..
 
         val toRemove: MutableList<View> = ArrayList()
 
+        val pipFocusParticipant = getPipFocusParticipant()
+Log.d("ASDF", "INIT pipfocus:${pipFocusParticipant?.tag}")
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")) toRemove.add(childView)
+Log.d("ASDF",
+    "INIT view tag:$tag isNullOrEmpty:${tag.isNullOrEmpty()} " +
+         "isGone:${(participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")} " +
+         "pipFocus:${getPipFocusView() == childView}"
+)
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
+                toRemove.add(childView)
+            else
+                childView.isVisible = !(pipMode && pipFocusParticipant?.tag != tag)
         }
         for (v in toRemove) removeView(v)
 
@@ -83,7 +95,7 @@ class ParticipantsContainerView// adding name, mic etc..
         val addToMain: MutableList<View> = ArrayList()
         val addToScroll: MutableList<View> = ArrayList()
         for (i in participants) {
-
+Log.d("ASDF", "INIT part active:${i.active} vidMute:${i.videoMuted} name:${i.contact.displayName} tag:${i.tag}")
             val viewTag = i.sinkId ?: i.contact.contact.uri.uri
             val view: View? = findViewWithTag(viewTag)
             // adding name, mic etc..
@@ -91,8 +103,11 @@ class ParticipantsContainerView// adding name, mic etc..
                 root.tag = viewTag
             }
 
-            participantInfoOverlay.root.radius = cornerRadius
-            participantInfoOverlay.sink.setFitToContent(i.active)
+            val isPipFocus = pipFocusParticipant?.tag == i.tag
+            participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
+            participantInfoOverlay.sink.setFitToContent(i.active && !pipMode)
+            participantInfoOverlay.root.radius = if(pipMode) 0f else cornerRadius
+
             participantInfoOverlay.sink.videoListener = { hasVideo ->
                 participantInfoOverlay.avatar.isVisible = !hasVideo
                 if (!hasVideo) {
@@ -137,7 +152,15 @@ class ParticipantsContainerView// adding name, mic etc..
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                if (i.active) {
+                if(pipMode && isPipFocus) {
+                    leftMargin = 0
+                    rightMargin =  0
+                    topMargin = 0
+                    bottomMargin = 0
+                    width = mainWidth.toInt()
+                    height = mainHeight.toInt()
+                }
+                else if (i.active) {
                     leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
                     rightMargin = if (portrait) leftMargin else leftMargin / 2
                     topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
@@ -186,4 +209,16 @@ class ParticipantsContainerView// adding name, mic etc..
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
+    fun togglePipMode(isInPip: Boolean) {
+        pipMode = isInPip
+    }
+
+    private fun getPipFocusParticipant() = participants
+        .filter { !it.contact.contact.isUser } // todo don't filter at all, just sort? BREAKS if active is local user
+        .maxByOrNull { it.active }
+
+    private fun getPipFocusView() : View? {
+        val part = getPipFocusParticipant() ?: return null
+        return findViewWithTag(part.tag)
+    }
 }

@@ -406,18 +406,10 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val binding = binding ?: return
-            if (binding.participantOverlayContainer.visibility != View.VISIBLE)
-                return
-            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
-            val x = l[0]
-            val y = l[1]
-            val w = binding.participantOverlayContainer.width
-            val h = binding.participantOverlayContainer.height
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(w, h))
-                    .setSourceRectHint(Rect(x, y, x + w, y + h))
+                    .setAspectRatio(Rational(1, 1))
+                    //.setSourceRectHint(Rect(x, y, x + w, y + h))
                     .setActions(listOf(RemoteAction(
                         Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                         getString(R.string.action_call_hangup),
@@ -444,31 +436,17 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         isInPIP = isInPictureInPictureMode
         val binding = binding ?: return
 
+        binding.participantOverlayContainer.togglePipMode(isInPictureInPictureMode)
         if (isInPictureInPictureMode) {
+            mBackstackLost = true
+            binding.callRelativeLayoutSurfaces.isVisible = false
+            binding.callRelativeLayoutButtons.isVisible = false
             binding.callCoordinatorOptionContainer.isVisible = false
-            val callActivity = activity as CallActivity?
-            callActivity?.hideSystemUI()
-            binding.pluginPreviewContainer.isVisible = false
-            binding.pluginPreviewSurface.isVisible = false
-            binding.previewContainer.isVisible = false
-            binding.previewSurface.isVisible = false
-
         } else {
-            if(binding.callSharescreenBtn.isChecked){
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
-                binding.pluginPreviewContainer.isVisible = false
-                binding.pluginPreviewSurface.isVisible = false
-                binding.previewContainer.isVisible = false
-                binding.previewSurface.isVisible = false
-            } else {
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.isVisible = true
-                binding.pluginPreviewContainer.isVisible = true
-                binding.pluginPreviewSurface.isVisible = true
-                binding.previewContainer.isVisible = true
-                binding.previewSurface.isVisible = true
-            }
+            mBackstackLost = true
+            binding.callRelativeLayoutSurfaces.isVisible = true
+            binding.callRelativeLayoutButtons.isVisible = true
+            binding.callCoordinatorOptionContainer.isVisible = true
         }
     }
 
