@@ -9,6 +9,7 @@ import android.util.Size
 import android.view.Surface
 import kotlin.jvm.JvmOverloads
 import android.view.TextureView
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -86,7 +87,10 @@ class VideoSinkView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setFitToContent(fit: Boolean) {
         if (fitToContent != fit) {
             fitToContent = fit
-            requestLayout()
+            if(!isInLayout)
+                requestLayout()
+            else
+                doOnPreDraw { requestLayout() }
             if (nativeWindow != -1L)
                 configureTransform(ratioWidth, ratioHeight)
         }

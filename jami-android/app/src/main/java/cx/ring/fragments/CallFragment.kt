@@ -409,15 +409,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val binding = binding ?: return
             if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
-            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
-            val x = l[0]
-            val y = l[1]
-            val w = binding.participantOverlayContainer.width
-            val h = binding.participantOverlayContainer.height
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(w, h))
-                    .setSourceRectHint(Rect(x, y, x + w, y + h))
+                    .setAspectRatio(Rational(1, 1))
                     .setActions(listOf(RemoteAction(
                         Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                         getString(R.string.action_call_hangup),
@@ -444,31 +438,19 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         isInPIP = isInPictureInPictureMode
         val binding = binding ?: return
 
+        binding.participantOverlayContainer.togglePipMode(isInPictureInPictureMode)
         if (isInPictureInPictureMode) {
-            binding.callCoordinatorOptionContainer.isVisible = false
             val callActivity = activity as CallActivity?
             callActivity?.hideSystemUI()
-            binding.pluginPreviewContainer.isVisible = false
-            binding.pluginPreviewSurface.isVisible = false
-            binding.previewContainer.isVisible = false
-            binding.previewSurface.isVisible = false
-
+            mBackstackLost = true
+            binding.callRelativeLayoutSurfaces.isVisible = false
+            binding.callRelativeLayoutButtons.isVisible = false
+            binding.callCoordinatorOptionContainer.isVisible = false
         } else {
-            if(binding.callSharescreenBtn.isChecked){
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
-                binding.pluginPreviewContainer.isVisible = false
-                binding.pluginPreviewSurface.isVisible = false
-                binding.previewContainer.isVisible = false
-                binding.previewSurface.isVisible = false
-            } else {
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.isVisible = true
-                binding.pluginPreviewContainer.isVisible = true
-                binding.pluginPreviewSurface.isVisible = true
-                binding.previewContainer.isVisible = true
-                binding.previewSurface.isVisible = true
-            }
+            mBackstackLost = true
+            binding.callRelativeLayoutSurfaces.isVisible = true
+            binding.callRelativeLayoutButtons.isVisible = true
+            binding.callCoordinatorOptionContainer.isVisible = true
         }
     }
 
@@ -991,6 +973,44 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             peekHeight = desiredPeekHeight.toInt()
             saveFlags = BottomSheetBehavior.SAVE_PEEK_HEIGHT
         }
+Log.d("ASDF", "GRID " +
+        "visible:${binding.callParametersGrid.isVisible} " +
+        "height:${binding.callParametersGrid.height} " +
+        "width:${binding.callParametersGrid.width} " +
+        "paddingBottom:${binding.callParametersGrid.paddingBottom} " +
+        "paddingLeft:${binding.callParametersGrid.paddingLeft} " +
+        "paddingRight:${binding.callParametersGrid.paddingRight} " +
+        "paddingTop:${binding.callParametersGrid.paddingTop} " +
+        "paddingStart:${binding.callParametersGrid.paddingStart} " +
+        "paddingEnd:${binding.callParametersGrid.paddingEnd} " +
+        "marginBottom:${binding.callParametersGrid.marginBottom} " +
+        "marginLeft:${binding.callParametersGrid.marginLeft} " +
+        "marginRight:${binding.callParametersGrid.marginRight} " +
+        "marginTop:${binding.callParametersGrid.marginTop} " +
+        "marginStart:${binding.callParametersGrid.marginStart} " +
+        "marginEnd:${binding.callParametersGrid.marginEnd} " +
+        "background:${binding.callParametersGrid.background} " +
+        "baseline:${binding.callParametersGrid.baseline} " +
+        "")
+Log.d("ASDF", "ENDCTN " +
+        "visible:${binding.hngUpBtnContainer.isVisible} " +
+        "height:${binding.hngUpBtnContainer.height} " +
+        "width:${binding.hngUpBtnContainer.width} " +
+        "paddingBottom:${binding.hngUpBtnContainer.paddingBottom} " +
+        "paddingLeft:${binding.hngUpBtnContainer.paddingLeft} " +
+        "paddingRight:${binding.hngUpBtnContainer.paddingRight} " +
+        "paddingTop:${binding.hngUpBtnContainer.paddingTop} " +
+        "paddingStart:${binding.hngUpBtnContainer.paddingStart} " +
+        "paddingEnd:${binding.hngUpBtnContainer.paddingEnd} " +
+        "marginBottom:${binding.hngUpBtnContainer.marginBottom} " +
+        "marginLeft:${binding.hngUpBtnContainer.marginLeft} " +
+        "marginRight:${binding.hngUpBtnContainer.marginRight} " +
+        "marginTop:${binding.hngUpBtnContainer.marginTop} " +
+        "marginStart:${binding.hngUpBtnContainer.marginStart} " +
+        "marginEnd:${binding.hngUpBtnContainer.marginEnd} " +
+        "background:${binding.hngUpBtnContainer.background} " +
+        "baseline:${binding.hngUpBtnContainer.baseline} " +
+        "")
     }
 
     private fun displayBottomSheet(display: Boolean) {
