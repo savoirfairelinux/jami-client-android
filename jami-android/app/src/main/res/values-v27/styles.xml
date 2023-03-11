@@ -10,13 +10,12 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-
     <style name="AppTheme.Navigation" parent="AppThemeBase">
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
-    <!-- Light themes -->
 
+    <!-- Light themes -->
     <style name="AppTheme" parent="AppThemeBase">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>

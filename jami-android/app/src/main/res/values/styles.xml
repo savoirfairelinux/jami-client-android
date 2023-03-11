@@ -79,6 +79,8 @@
     <!-- Light themes for older APIs -->
     <style name="AppTheme" parent="AppThemeBase">
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
     <!-- Dark toolbar base theme -->
@@ -100,6 +102,8 @@
     <!-- HomeScreen style -->
     <style name="AppTheme.Navigation" parent="AppThemeBase">
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
     <!-- Call Base theme -->
@@ -123,10 +127,13 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <!-- Fullscreen style -->
-    <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen" />
+    <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>/
 
     <!-- Transparent toolbar theme -->
     <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
