@@ -146,7 +146,7 @@ dependencies {
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.0")
 
-    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.1.1") {
+    "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.1.2") {
         exclude(group= "com.google.firebase", module= "firebase-core")
         exclude(group= "com.google.firebase", module= "firebase-analytics")
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
