@@ -25,13 +25,14 @@ import org.unifiedpush.android.connector.UnifiedPush
 
 @HiltAndroidApp
 class JamiApplicationUnifiedPush : JamiApplication() {
+    override val pushPlatform: String = PUSH_PLATFORM
 
-    override var pushToken: String? = null
+    override var pushToken: String = ""
         set(token) {
             Log.d(TAG, "setPushToken: $token");
             field = token
             if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token ?: "", "", "unifiedpush")
+                mAccountService.setPushNotificationConfig(token, "", PUSH_PLATFORM)
             } else {
                 mAccountService.setPushNotificationToken("")
             }
@@ -53,6 +54,7 @@ class JamiApplicationUnifiedPush : JamiApplication() {
     }
 
     companion object {
+        private const val PUSH_PLATFORM = "unifiedpush"
         private val TAG = JamiApplicationUnifiedPush::class.simpleName
     }
 }

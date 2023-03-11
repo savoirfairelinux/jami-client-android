@@ -16,15 +16,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package cx.ring.application;
-import dagger.hilt.android.HiltAndroidApp;
+package cx.ring.application
+
+import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-public class JamiApplicationNoPush extends JamiApplication {
-
-    @Override
-    public String getPushToken() {
-        return "";
-    }
-
+class JamiApplicationNoPush : JamiApplication() {
+    override val pushToken: String = ""
+    override val pushPlatform: String = ""
 }

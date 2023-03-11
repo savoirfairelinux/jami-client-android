@@ -91,8 +91,10 @@ class DeviceRuntimeServiceImpl(
     override val cacheDir: File
         get() = mContext.cacheDir
 
-    override val pushToken: String?
-        get() = JamiApplication.instance?.pushToken
+    override val pushToken: String
+        get() = JamiApplication.instance?.pushToken ?: ""
+    override val pushPlatform: String
+        get() = JamiApplication.instance?.pushPlatform ?: ""
 
     private fun isNetworkConnectedForType(connectivityManagerType: Int): Boolean {
         val info = NetworkUtils.getNetworkInfo(mContext)

@@ -26,13 +26,14 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class JamiApplicationFirebase : JamiApplication() {
+    override val pushPlatform: String = PUSH_PLATFORM
 
-    override var pushToken: String? = null
+    override var pushToken: String = ""
         set(token) {
             //Log.d(TAG, "setPushToken: $token");
             field = token
             if (mPreferencesService.settings.enablePushNotifications) {
-                mAccountService.setPushNotificationConfig(token ?: "", "", "android")
+                mAccountService.setPushNotificationConfig(token, "", PUSH_PLATFORM)
             } else {
                 mAccountService.setPushNotificationToken("")
             }
@@ -46,7 +47,7 @@ class JamiApplicationFirebase : JamiApplication() {
             FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String? ->
                 Log.w(TAG, "Found push token")
                 try {
-                    pushToken = token
+                    pushToken = token ?: ""
                 } catch (e: Exception) {
                     Log.e(TAG, "Can't set push token", e)
                 }
@@ -63,6 +64,7 @@ class JamiApplicationFirebase : JamiApplication() {
     }
 
     companion object {
+        private const val PUSH_PLATFORM = "android"
         private val TAG = JamiApplicationFirebase::class.simpleName
     }
 }

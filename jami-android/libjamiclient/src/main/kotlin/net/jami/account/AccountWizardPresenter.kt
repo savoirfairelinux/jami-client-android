@@ -60,8 +60,10 @@ class AccountWizardPresenter @Inject constructor(
         if (accountCreationModel.isPush) {
             details[ConfigKey.PROXY_ENABLED.key] = AccountConfig.TRUE_STR
             val pushToken = mDeviceService.pushToken
-            if (pushToken != null && pushToken.isNotEmpty())
+            if (pushToken.isNotEmpty()) {
                 details[ConfigKey.PROXY_PUSH_TOKEN.key] = pushToken
+                details[ConfigKey.PROXY_PUSH_PLATFORM.key] = mDeviceService.pushPlatform
+            }
         }
     }
 

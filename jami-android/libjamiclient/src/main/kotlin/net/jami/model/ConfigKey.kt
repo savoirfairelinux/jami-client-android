@@ -100,21 +100,13 @@ enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     PROXY_SERVER("Account.proxyServer"),
     PROXY_SERVER_LIST("Account.dhtProxyListUrl"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
+    PROXY_PUSH_PLATFORM("proxyPushPlatform"),
+    PROXY_PUSH_TOPIC("proxyPushTopic"),
     MANAGER_URI("Account.managerUri"),
     MANAGER_USERNAME("Account.managerUsername");
 
-    fun equals(other: ConfigKey?): Boolean {
-        return other != null && key == other.key
-    }
-
     companion object {
-        fun fromString(stringKey: String): ConfigKey? {
-            for (confKey in values()) {
-                if (stringKey.contentEquals(confKey.key) || stringKey == confKey.key) {
-                    return confKey
-                }
-            }
-            return null
-        }
+        private val keyMap = values().associateByTo(HashMap(values().size)) { it.key }
+        fun fromString(stringKey: String): ConfigKey? = keyMap[stringKey]
     }
 }

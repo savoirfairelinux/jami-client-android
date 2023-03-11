@@ -95,7 +95,9 @@ abstract class JamiApplication : Application() {
             ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL))
         }
     }
-    abstract val pushToken: String?
+    abstract val pushToken: String
+    abstract val pushPlatform: String
+
     open fun activityInit(activityContext: Context) {}
 
     private var mBound = false

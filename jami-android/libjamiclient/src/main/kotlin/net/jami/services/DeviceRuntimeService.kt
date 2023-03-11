@@ -48,7 +48,9 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
 
     abstract fun getTemporaryPath(conversationId: String, name: String): File
     abstract fun getConversationDir(conversationId: String): File?
-    abstract val pushToken: String?
+    abstract val pushToken: String
+    abstract val pushPlatform: String
+
     abstract val isConnectedMobile: Boolean
     abstract val isConnectedEthernet: Boolean
     abstract val isConnectedWifi: Boolean
