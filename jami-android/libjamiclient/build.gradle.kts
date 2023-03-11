@@ -10,7 +10,7 @@ plugins {
 
 dependencies {
     // VCard parsing
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.0")
     // QRCode encoding
     implementation ("com.google.zxing:core:3.5.1")
     // dependency injection

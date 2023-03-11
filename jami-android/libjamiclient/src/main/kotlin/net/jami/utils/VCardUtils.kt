@@ -19,24 +19,22 @@
  */
 package net.jami.utils
 
-import net.jami.utils.FileUtils.moveFile
-import ezvcard.VCard
-import ezvcard.property.FormattedName
-import ezvcard.property.Uid
-import ezvcard.property.RawProperty
-import ezvcard.io.text.VCardWriter
-import ezvcard.VCardVersion
-import kotlin.Throws
 import ezvcard.Ezvcard
+import ezvcard.VCard
+import ezvcard.VCardVersion
+import ezvcard.io.text.VCardWriter
 import ezvcard.parameter.ImageType
+import ezvcard.property.FormattedName
 import ezvcard.property.Photo
+import ezvcard.property.RawProperty
+import ezvcard.property.Uid
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.utils.FileUtils.moveFile
 import java.io.File
 import java.io.IOException
 import java.io.StringWriter
-import java.lang.Exception
-import java.util.HashMap
+import kotlin.io.path.Path
 
 object VCardUtils {
     val TAG = VCardUtils::class.simpleName!!
@@ -125,7 +123,7 @@ object VCardUtils {
         }
         val file = File(path, filename)
         try {
-            VCardWriter(file, VCardVersion.V2_1).use { writer ->
+            VCardWriter(Path(file.absolutePath), VCardVersion.V2_1).use { writer ->
                 writer.vObjectWriter.foldedLineWriter.lineLength = null
                 writer.write(vcard)
             }
@@ -166,7 +164,7 @@ object VCardUtils {
             Log.w(TAG, "vcardPath too big: " + path.length() / 1024 + " kB")
             return null
         }
-        return Ezvcard.parse(path).first()
+        return Ezvcard.parse(Path(path.absolutePath)).first()
     }
 
     fun vcardToString(vcard: VCard?): String? {
