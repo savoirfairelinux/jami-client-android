@@ -69,7 +69,7 @@ class Account(
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
     private val mLocationStartedSubject: Subject<ContactLocationEntry> = PublishSubject.create()
-    private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.UNLOADED)
+    private val registrationStateSubject = BehaviorSubject.createDefault(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
 
     var historyLoader: Single<Account>? = null
     var loadedProfile: Single<Profile>? = null
@@ -90,7 +90,7 @@ class Account(
         //trustRequestsSubject.onComplete();
     }
 
-    fun canSearch(): Boolean = !getDetail(ConfigKey.MANAGER_URI).isNullOrEmpty()
+    fun canSearch(): Boolean = !getDetail(ConfigKey.MANAGER_URI).isEmpty()
 
     fun isContact(conversation: Conversation): Boolean =
         conversation.contact?.let { isContact(it.uri) } ?: false
@@ -459,7 +459,7 @@ class Account(
     val dhtProxyUsed: String
         get() = mVolatileDetails[ConfigKey.PROXY_SERVER]
 
-    fun setRegistrationState(registeredState: AccountConfig.RegistrationState, code: Int) {
+    fun setRegistrationState(registeredState: AccountConfig.RegistrationState, code: Int=0) {
         //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState)
         registrationStateSubject.onNext(registeredState)
         //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, code.toString())
@@ -467,6 +467,7 @@ class Account(
 
     fun setVolatileDetails(volatileDetails: Map<String, String>) {
         mVolatileDetails = AccountConfig(volatileDetails)
+        setRegistrationState(AccountConfig.RegistrationState.valueOf(mVolatileDetails[ConfigKey.ACCOUNT_REGISTRATION_STATUS]))
     }
 
     val registeredName: String
@@ -481,9 +482,7 @@ class Account(
     val isJami: Boolean
         get() = config[ConfigKey.ACCOUNT_TYPE] == AccountConfig.ACCOUNT_TYPE_JAMI
 
-    private fun getDetail(key: ConfigKey): String? {
-        return config[key]
-    }
+    private fun getDetail(key: ConfigKey): String = config[key]
 
     fun getDetailBoolean(key: ConfigKey): Boolean {
         return config.getBool(key)
@@ -562,9 +561,9 @@ class Account(
     fun needsMigration(): Boolean = AccountConfig.RegistrationState.ERROR_NEED_MIGRATION == registrationState
 
     val deviceId: String
-        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)!!
+        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_ID)
     val deviceName: String
-        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)!!
+        get() = getDetail(ConfigKey.ACCOUNT_DEVICE_NAME)
     val contacts: Map<String, Contact>
         get() = mContacts
     val bannedContacts: List<Contact>
