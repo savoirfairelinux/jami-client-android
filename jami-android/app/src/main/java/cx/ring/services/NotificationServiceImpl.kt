@@ -460,6 +460,39 @@ class NotificationServiceImpl(
         { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
+    private fun showGroupCallNotification(cvm: ConversationItemViewModel) {
+        val cpath = ConversationPath(cvm.accountId, cvm.uri)
+        val path = cpath.toUri()
+        val key = cpath.toKey()
+        val conversationProfile = getProfile(cvm)
+        var notificationVisibility = mPreferencesService.settings.notificationVisibility
+        notificationVisibility = when (notificationVisibility) {
+            SettingsFragment.NOTIFICATION_PUBLIC -> Notification.VISIBILITY_PUBLIC
+            SettingsFragment.NOTIFICATION_SECRET -> Notification.VISIBILITY_SECRET
+            SettingsFragment.NOTIFICATION_PRIVATE -> Notification.VISIBILITY_PRIVATE
+            else -> Notification.VISIBILITY_PRIVATE
+        }
+        val text = mContext.getString(R.string.notif_inprogress_group_calls)
+        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setPriority(Notification.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setVisibility(notificationVisibility)
+            .setSmallIcon(R.drawable.ic_ring_logo_white)
+            .setContentTitle(conversationProfile.second)
+            .setContentText(text)
+            .setLocusId(LocusIdCompat(key))
+            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
+            .setAutoCancel(true)
+            .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
+        messageNotificationBuilder.setLargeIcon(conversationProfile.first)
+        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
+        CarNotificationManager.from(mContext).notify(notificationId, messageNotificationBuilder)
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder)
+    }
+
     private fun textNotification(
         texts: TreeMap<Long, TextMessage>,
         cvm: ConversationItemViewModel
@@ -780,6 +813,12 @@ class NotificationServiceImpl(
             .color = ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
         setContactPicture(contact, messageNotificationBuilder)
         notificationManager.notify(notificationId, messageNotificationBuilder.build())
+    }
+
+    override fun showGroupCallNotification(conversation: Conversation) {
+        mContactService.getLoadedConversation(conversation)
+            .subscribe({ cvm -> showGroupCallNotification(cvm) })
+            { e: Throwable -> Log.w(TAG, "Can't load contact", e) }
     }
 
     override val serviceNotification: Any

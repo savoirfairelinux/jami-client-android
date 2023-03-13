@@ -124,6 +124,7 @@ class AccountService(
 
     private val incomingMessageSubject: Subject<Message> = PublishSubject.create()
     private val incomingSwarmMessageSubject: Subject<Interaction> = PublishSubject.create()
+    private val incomingGroupCallSubject: Subject<Conversation> = PublishSubject.create()
     val incomingMessages: Observable<TextMessage> = incomingMessageSubject
         .flatMapMaybe { msg: Message ->
             val message = msg.messages[CallService.MIME_TEXT_PLAIN]
@@ -211,6 +212,8 @@ class AccountService(
         get() = messageSubject
     val incomingRequests: Observable<TrustRequest>
         get() = incomingRequestsSubject
+    val incomingGroupCall: Observable<Conversation>
+        get() = incomingGroupCallSubject
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1263,10 +1266,12 @@ class AccountService(
                     Interaction(conversation, Interaction.InteractionType.INVALID)
                 }
             }
-            "application/call-history+json" ->
-                Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING,timestamp).apply {
-                    message["duration"]?.let { d -> duration = d.toLong() }
-                }
+            "application/call-history+json" -> {
+                    Call(null, account.accountId, authorUri.rawUriString, if (contact.isUser) Call.Direction.OUTGOING else Call.Direction.INCOMING, timestamp).apply {
+                        message["duration"]?.let { d -> duration = d.toLong() }
+                        message["confId"]?.let { c -> confId = c }
+                    }
+            }
             "application/update-profile" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             "merge" -> Interaction(conversation, Interaction.InteractionType.INVALID)
             else -> Interaction(conversation, Interaction.InteractionType.INVALID)
@@ -1437,6 +1442,8 @@ class AccountService(
                     incomingSwarmMessageSubject.onNext(interaction)
                 if (interaction is DataTransfer)
                     dataTransfers.onNext(interaction)
+                if (interaction is Call && interaction.isGroupCall && isIncoming)
+                    incomingGroupCallSubject.onNext(conversation)
             }
         }}
     }
