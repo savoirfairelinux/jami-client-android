@@ -18,6 +18,7 @@
   <!--Video Details-->
   <string name="account_video_label">वीडियो </string>
   <!--Advanced Details-->
+  <string name="account_dht_public_in_calls_label">अज्ञात संपर्कों से इनकमिंग कॉल की अनुमति दें</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
@@ -33,6 +34,7 @@
   <!--Name registration-->
   <string name="register_username">सार्वजनिक उपयोगकर्ता नाम पंजी करें</string>
   <!--Create account-->
+  <string name="account_creation_home">जामी में आपका स्वागत है</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">पासवर्ड दर्ज करें</string>
