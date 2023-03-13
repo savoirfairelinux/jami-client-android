@@ -334,7 +334,7 @@
   <string name="wizard_password_placeholder">Zgjidhni një fjalëkalim për fshehtëzimin e kyçit të llogarisë në këtë pajisje</string>
   <string name="wizard_password_button">Zgjidhni fjalëkalim</string>
   <string name="wizard_password_skip">Krijoni llogari</string>
-  <string name="wizard_password_switch">Fshehtëzoje llogarinë me fjalëkalim</string>
+  <string name="wizard_password_switch">Fshehtëzojeni llogarinë me fjalëkalim</string>
   <string name="wizard_password_warning">Mbani parasysh se fjalëkalimi s’mund të rimerret</string>
   <string name="wizard_profile_info">Profili ndahet vetëm me kontaktet</string>
   <string name="wizard_profile_button">Ruaje Profilin</string>
