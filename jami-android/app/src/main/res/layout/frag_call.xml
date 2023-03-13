@@ -695,6 +695,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Raise Hand button -->
                         <LinearLayout
                             android:id="@+id/raiseHand_btn_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:orientation="vertical"
@@ -716,7 +718,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="2dp"
-                                android:ellipsize="middle"
+                                android:ellipsize="end"
                                 android:scrollHorizontally="false"
                                 android:singleLine="true"
                                 android:text="@string/bottomSheet_raiseHand_btn"
@@ -733,8 +735,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:orientation="vertical"
-                            android:padding="5dp"
-                            tools:visibility="visible">
+                            android:padding="5dp">
 
                             <cx.ring.views.CheckableImageButton
                                 android:id="@+id/call_plugins_btn"
