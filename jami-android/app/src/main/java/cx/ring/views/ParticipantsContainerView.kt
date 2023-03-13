@@ -25,6 +25,7 @@ class ParticipantsContainerView// adding name, mic etc..
     private val hscroll = HorizontalScrollView(context)
     private val vscroll = ScrollView(context)
     private val ll = FrameLayout(context)
+    private var pipMode = false
 
     init {
         hscroll.tag = "scroll"
@@ -47,9 +48,14 @@ class ParticipantsContainerView// adding name, mic etc..
 
         val toRemove: MutableList<View> = ArrayList()
 
+        val pipFocusParticipant = getPipFocusParticipant()
+
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")) toRemove.add(childView)
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
+                toRemove.add(childView)
+            else
+                childView.isVisible = !(pipMode && pipFocusParticipant?.tag != tag)
         }
         for (v in toRemove) removeView(v)
 
@@ -91,8 +97,11 @@ class ParticipantsContainerView// adding name, mic etc..
                 root.tag = viewTag
             }
 
-            participantInfoOverlay.root.radius = cornerRadius
-            participantInfoOverlay.sink.setFitToContent(i.active)
+            val isPipFocus = pipFocusParticipant?.tag == i.tag
+            participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
+            participantInfoOverlay.sink.setFitToContent(i.active && !pipMode)
+            participantInfoOverlay.root.radius = if(pipMode) 0f else cornerRadius
+
             participantInfoOverlay.sink.videoListener = { hasVideo ->
                 participantInfoOverlay.avatar.isVisible = !hasVideo
                 if (!hasVideo) {
@@ -137,7 +146,15 @@ class ParticipantsContainerView// adding name, mic etc..
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                if (i.active) {
+                if(pipMode && isPipFocus) {
+                    leftMargin = 0
+                    rightMargin =  0
+                    topMargin = 0
+                    bottomMargin = 0
+                    width = mainWidth.toInt()
+                    height = mainHeight.toInt()
+                }
+                else if (i.active) {
                     leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
                     rightMargin = if (portrait) leftMargin else leftMargin / 2
                     topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
@@ -186,4 +203,11 @@ class ParticipantsContainerView// adding name, mic etc..
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
+    fun togglePipMode(isInPip: Boolean) {
+        pipMode = isInPip
+    }
+
+    private fun getPipFocusParticipant() = participants
+        .sortedWith(compareBy({!it.active},{it.contact.contact.isUser}))
+        .firstOrNull()
 }
