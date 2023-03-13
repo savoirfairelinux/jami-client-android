@@ -257,7 +257,11 @@ class ConversationAdapter(
         val interaction = mInteractions[position]
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> MessageType.CALL_INFORMATION.ordinal
+            Interaction.InteractionType.CALL -> if ((interaction as Call).isGroupCall) {
+                MessageType.ONGOING_GROUP_CALL.ordinal
+            } else {
+                MessageType.CALL_INFORMATION.ordinal
+            }
             Interaction.InteractionType.TEXT -> if (interaction.isIncoming) {
                 MessageType.INCOMING_TEXT_MESSAGE.ordinal
             } else {
@@ -1074,9 +1078,19 @@ class ConversationAdapter(
                 }
             }
         }
+        val call = interaction as Call
+        if (call.isGroupCall) {
+            convViewHolder.mAcceptCallLayout?.apply {
+                convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(false) }
+                }
+                convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
+                    call.confId?.let { presenter.goToGroupCall(true) }
+                }
+            }
+        }
         val pictureResID: Int
         val historyTxt: String
-        val call = interaction as Call
         if (call.isMissed) {
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
