@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abb28988_bd247254",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T16:46:13Z",
+      "side": 1,
+      "message": "A bit too verbose for this simple function.\n\n    \"Tells if a sequence break is needed between first and second interactions. Second must follow first.\"\n\nWould be enough.",
+      "range": {
+        "startLine": 1280,
+        "startChar": 11,
+        "endLine": 1286,
+        "endChar": 75
+      },
+      "revId": "e73eb06a6fd86c8af4ce18fb52b08e7df3721900",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef15dd31_43b216e5",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-14T16:46:13Z",
+      "side": 1,
+      "message": "This can be read directly from the code just bellow. Comments shouldn\u0027t paraphrase the code.",
+      "range": {
+        "startLine": 1289,
+        "startChar": 0,
+        "endLine": 1292,
+        "endChar": 54
+      },
+      "revId": "e73eb06a6fd86c8af4ce18fb52b08e7df3721900",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
