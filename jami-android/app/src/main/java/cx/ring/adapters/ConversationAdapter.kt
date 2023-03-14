@@ -1138,42 +1138,65 @@ class ConversationAdapter(
             mInteractions[position + 1]
         else null
 
+    /**
+     * Returns a SequenceType object which tell what type is the Interaction.
+     *
+     * @param i             index of the interaction to analyse from interactions array.
+     * @param isTimeShown   meta data of the interaction telling if the time is shown.
+     * @return              the SequenceType of the analyzed interaction.
+     */
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
         val msg = mInteractions[i]
+
+        // Manage specific interaction which are always single (ex : emoji).
         if (isAlwaysSingleMsg(msg)) {
             return SequenceType.SINGLE
         }
+
+        // If there is only one interaction in the conversation
+        // OR if this is the first interaction.
         if (mInteractions.size == 1 || i == 0) {
+            // If this interaction is the last.
             if (mInteractions.size == i + 1) {
                 return SequenceType.SINGLE
             }
+
+            // Get the next interaction and if exists check if sequence break needed.
             val nextMsg = getNextMessageFromPosition(i)
             if (nextMsg != null) {
-                return if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
+                return if (isSeqBreak(msg, nextMsg)
+                    || hasPermanentTimeString(nextMsg, i + 1)
+                ) {
                     SequenceType.SINGLE
                 } else {
                     SequenceType.FIRST
                 }
             }
-        } else if (mInteractions.size == i + 1) {
+        } else if (mInteractions.size == i + 1) { // If this is the last interaction.
+            // Get the previous interaction and if exists check if sequence break needed.
             val prevMsg = getPreviousMessageFromPosition(i)
             if (prevMsg != null) {
-                return if (isSeqBreak(msg, prevMsg) || isTimeShown) {
+                return if (isSeqBreak(prevMsg, msg) || isTimeShown) {
                     SequenceType.SINGLE
                 } else {
                     SequenceType.LAST
                 }
             }
         }
+
+        // If not the first, nor the last and if there is not only one interaction.
+        // Get the next and previous interactions and if exists check if sequence break needed.
         val prevMsg = getPreviousMessageFromPosition(i)
         val nextMsg = getNextMessageFromPosition(i)
         if (prevMsg != null && nextMsg != null) {
             val nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1)
-            return if ((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)) {
-                 SequenceType.FIRST
-            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
+            return if ((isSeqBreak(prevMsg, msg) || isTimeShown)
+                && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime)
+            ) {
+                SequenceType.FIRST
+            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 SequenceType.LAST
-            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
+            } else if (!isSeqBreak(prevMsg, msg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
                 if (nextMsgHasTime) SequenceType.LAST else SequenceType.MIDDLE
             } else {
                 SequenceType.SINGLE
@@ -1253,8 +1276,26 @@ class ConversationAdapter(
             params.bottomMargin = targetSize
         }
 
-        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
-            StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body) || first.isIncoming != second.isIncoming || first.type !== Interaction.InteractionType.TEXT || second.type !== Interaction.InteractionType.TEXT
+        /**
+         * Returns a boolean telling if a break should be added in the sequence between
+         * first and second interactions. Please note that it's important to keep the order,
+         * which means for the first interaction to be before the second interaction.
+         *
+         * @param first     first interaction
+         * @param second    second interaction
+         * @return          True if a sequence break is needed. Else false.
+         */
+        private fun isSeqBreak(first: Interaction, second: Interaction): Boolean {
+            // If only one of the interaction is emoji only.
+            // If one of the interaction is coming and the other one is incoming.
+            // If one of the interaction type is not a InteractionType.TEXT.
+            // If the second interaction is an answer.
+            return StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
+                    || first.isIncoming != second.isIncoming
+                    || first.type !== Interaction.InteractionType.TEXT
+                    || second.type !== Interaction.InteractionType.TEXT
+                    || second.replyTo != null
+        }
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
