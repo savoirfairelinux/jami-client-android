@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fa99540_95f3a181",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 15
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-14T20:02:20Z",
+      "side": 1,
+      "message": "Done to resolve unanswered swarm calls not hanging up properly. May want to look further at isConference and if it should just be replaced by isSimpleCall everywhere.",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 41
+      },
+      "revId": "e523f72a660c32826426ff2d33e8ea429bd8913a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
