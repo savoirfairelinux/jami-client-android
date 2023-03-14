@@ -45,7 +45,7 @@ interface CallView {
     fun startAddParticipant(conferenceId: String)
     fun finish()
     fun onUserLeave()
-    fun enterPipMode(callId: String, accountId: String)
+    fun enterPipMode(callId: String, accountId: String, confId: String?)
     fun prepareCall(acceptIncomingCall: Boolean)
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)

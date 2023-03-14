@@ -142,7 +142,8 @@ class NotificationServiceImpl(
                         Intent(DRingService.ACTION_CALL_END)
                             .setClass(mContext, DRingService::class.java)
                             .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
+                            .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                            .putExtra(NotificationService.KEY_CONF_ID, call.confId),
 
             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
         } else if (conference.isRinging) {
@@ -209,7 +210,8 @@ class NotificationServiceImpl(
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(mContext, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, call.daemonIdString)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account),
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                                .putExtra(NotificationService.KEY_CONF_ID, call.confId),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
             }
         } else {
