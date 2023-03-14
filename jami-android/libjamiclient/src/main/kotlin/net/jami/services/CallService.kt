@@ -521,9 +521,14 @@ class CallService(
     fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
         calls[callId]?.let { call ->
             if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
-                for (e in mediaList)
-                    if (e[Media.MEDIA_TYPE_KEY]!! == MEDIA_TYPE_VIDEO)
+                for (e in mediaList) {
+                    if (e[Media.MEDIA_TYPE_KEY] == MEDIA_TYPE_VIDEO)
                         e[Media.MUTED_KEY] = true.toString()
+                }
+            }
+            for (e in mediaList) {
+                if (e[Media.MEDIA_TYPE_KEY] == MEDIA_TYPE_AUDIO)
+                    e[Media.MUTED_KEY] = call.isAudioMuted.toString()
             }
             JamiService.answerMediaChangeRequest(accountId, callId, mediaList)
         }
