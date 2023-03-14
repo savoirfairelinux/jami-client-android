@@ -33,7 +33,6 @@ import android.graphics.SurfaceTexture
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
@@ -55,7 +54,6 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.text.bold
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -329,14 +327,27 @@ class ConversationAdapter(
             })
     }
 
-    private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+    /**
+     * Configure a reply Interaction.
+     *
+     * @param conversationViewHolder    the view layout.
+     * @param interaction               the interaction (contains the message data).
+     */
+    private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder,
+                                        interaction: Interaction) {
+
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
-            conversationViewHolder.mReplyTo?.isVisible = false
+            conversationViewHolder.mReplyName?.isVisible = false
+            conversationViewHolder.mReplyTxt?.isVisible = false
+            conversationViewHolder.mInReplyTo?.isVisible = false
             return
         }
-        conversationViewHolder.mReplyTo?.let { replyView ->
+
+        conversationViewHolder.mReplyName?.let { replyView ->
             val replyTo = interaction.replyTo
+
+            // If currently replying to another message :
             if (replyTo != null)  {
                 conversationViewHolder.compositeDisposable.add(replyTo
                     .flatMapObservable { reply -> presenter.contactService
@@ -344,19 +355,33 @@ class ConversationAdapter(
                         .map { contact -> Pair(reply, contact) }}
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
-                        replyView.text = SpannableStringBuilder()
-                            .bold {
-                                append(i.second.displayName)
-                                append(": ")
-                            }
-                            .append(i.first.body)
+                        conversationViewHolder.mReplyTxt!!.text = i.first.body
+                        conversationViewHolder.mReplyName!!.text = i.second.displayName
+
+                        // Load avatar drawable from contact.
+                        val smallAvatarDrawable = AvatarDrawable.Builder()
+                            .withContact(i.second)
+                            .withCircleCrop(true)
+                            .build(conversationViewHolder.itemView.context)
+                            .setInSize(conversationViewHolder.itemView.context.resources.getDimensionPixelSize(R.dimen.conversation_avatar_size_small))
+                        // Update the view.
+                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
+
                         replyView.isVisible = true
+                        conversationViewHolder.mReplyTxt!!.isVisible = true
+                        conversationViewHolder.mInReplyTo!!.isVisible = true
                         replyView.setOnClickListener {
                             i.first.messageId?.let { presenter.scrollToMessage(it) }
                         }
-                    }) { replyView.isVisible = false })
-            } else {
+                    }) {
+                        replyView.isVisible = false
+                        conversationViewHolder.mReplyTxt!!.isVisible = false
+                        conversationViewHolder.mInReplyTo!!.isVisible = false
+                    })
+            } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
+                conversationViewHolder.mReplyTxt?.isVisible = false
+                conversationViewHolder.mInReplyTo?.isVisible = false
             }
         }
     }
@@ -376,7 +401,7 @@ class ConversationAdapter(
         }*/
 
         conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
-        conversationViewHolder.mReplyTo?.let { configureReplyIndicator(conversationViewHolder, interaction) }
+        conversationViewHolder.mReplyName?.let { configureReplyIndicator(conversationViewHolder, interaction) }
         conversationViewHolder.reactionChip?.let { configureReactions(conversationViewHolder, interaction) }
 
         val type = interaction.type
@@ -852,6 +877,8 @@ class ConversationAdapter(
                 longPressView.background?.setTintList(null)
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
+
+                // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
                     msgTxt.background.alpha = 255
@@ -863,6 +890,8 @@ class ConversationAdapter(
                     longPressView.setOnLongClickListener(null)
                     return@subscribe
                 }
+
+                // Manage long press.
                 longPressView.setOnLongClickListener { v: View ->
                     openItemMenu(convViewHolder, v, interaction)
                     if (expandedItemPosition == position) {
@@ -880,7 +909,9 @@ class ConversationAdapter(
 
                 val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
+
                 if (StringUtils.isOnlyEmoji(message)) {
+                    // Manage layout if message is emoji.
                     msgTxt.background.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
@@ -893,8 +924,9 @@ class ConversationAdapter(
                     }
                     msgTxt.background.alpha = 255
                     msgTxt.textSize = 16f
-                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
+                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding) // Space between text and case border.
 
+                    // Manage layout for message with a link inside.
                     if (showLinkPreviews) {
                         val cachedPreview =
                             textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
@@ -936,6 +968,8 @@ class ConversationAdapter(
                 msgTxt.text = markwon.toMarkdown(message)
                 val endOfSeq =
                     msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
+
+                // Manage animation for avatar doing ???.
                 if (textMessage.isIncoming) {
                     val avatar = convViewHolder.mAvatar ?: return@subscribe
                     if (endOfSeq) {
@@ -961,6 +995,8 @@ class ConversationAdapter(
                     }
                 }
                 setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+
+                // Manage the update of the timestamp and the fact than we can expend/hide it.
                 if (isTimeShown) {
                     convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                         convViewHolder.mMsgDetailTxtPerm?.text =
