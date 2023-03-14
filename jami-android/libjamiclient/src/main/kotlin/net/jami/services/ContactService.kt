@@ -104,16 +104,23 @@ abstract class ContactService(
                     .cache()
                     .apply { contact.username = this }
             }
-            if (contact.loadedProfile == null) {
-                contact.loadedProfile = loadContactData(contact, accountId).cache()
-            }
 
-            return if (observePresence)
-                Observable.combineLatest(contact.profile, username.toObservable(), presenceUpdates)
-                { profile, name, presence -> ContactViewModel(contact, profile, name.ifEmpty { null }, presence) }
-            else
-                Observable.combineLatest(contact.profile, username.toObservable())
-                { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
+            return if (contact.isUser) {
+                val account = mAccountService.getAccount(accountId)!!
+                Observable.combineLatest(account.loadedProfileObservable, username.toObservable())
+                    { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
+            } else {
+                if (contact.loadedProfile == null) {
+                    contact.loadedProfile = loadContactData(contact, accountId).cache()
+                }
+
+                if (observePresence)
+                    Observable.combineLatest(contact.profile, username.toObservable(), presenceUpdates)
+                    { profile, name, presence -> ContactViewModel(contact, profile, name.ifEmpty { null }, presence) }
+                else
+                    Observable.combineLatest(contact.profile, username.toObservable())
+                    { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
+            }
         }
     }
 
