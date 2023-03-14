@@ -276,6 +276,7 @@ class DRingService : Service() {
     private fun handleCallAction(action: String, extras: Bundle) {
         val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        val confId = extras.getString(NotificationService.KEY_CONF_ID)
         if (callId.isEmpty() || accountId.isEmpty()) {
             return
         }
@@ -291,7 +292,10 @@ class DRingService : Service() {
                 mHardwareService.closeAudioState()
             }
             ACTION_CALL_END -> {
-                mCallService.hangUp(accountId, callId)
+                if(confId != null)
+                    mCallService.hangUpConference(accountId, confId)
+                else
+                    mCallService.hangUp(accountId, callId)
                 mHardwareService.closeAudioState()
             }
         }

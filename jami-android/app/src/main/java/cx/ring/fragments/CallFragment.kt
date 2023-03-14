@@ -401,7 +401,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
 
     //todo: enable pip when only our video is displayed
-    override fun enterPipMode(callId: String, accountId: String) {
+    override fun enterPipMode(callId: String, accountId: String, confId: String?) {
         val context = requireContext()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
@@ -428,7 +428,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                             Intent(DRingService.ACTION_CALL_END)
                                 .setClass(context, DRingService::class.java)
                                 .putExtra(NotificationService.KEY_CALL_ID, callId)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                                .putExtra(NotificationService.KEY_CONF_ID, confId),
                             ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
                         )
                     ))).build())

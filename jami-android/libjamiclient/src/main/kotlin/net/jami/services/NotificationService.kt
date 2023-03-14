@@ -50,6 +50,7 @@ interface NotificationService {
         const val TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId"
         const val TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom"
         const val KEY_CALL_ID = "callId"
+        const val KEY_CONF_ID = "confId" // todo make isConf flag instead
         const val KEY_HOLD_ID = "holdId"
         const val KEY_END_ID = "endId"
         const val KEY_NOTIFICATION_ID = "notificationId"
