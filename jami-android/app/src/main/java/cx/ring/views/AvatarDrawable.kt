@@ -614,8 +614,9 @@ class AvatarDrawable : Drawable {
 
     override fun getMinimumHeight(): Int = minSize
 
-    fun setInSize(s: Int) {
+    fun setInSize(s: Int): AvatarDrawable {
         inSize = s
+        return this
     }
 
     override fun getIntrinsicWidth(): Int = inSize
