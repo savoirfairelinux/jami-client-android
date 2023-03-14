@@ -916,8 +916,17 @@ class ConversationAdapter(
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
                 } else {
+                    // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
-                        msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                        if (interaction.replyTo != null) {
+                            // Reply message incoming, first or single.
+                            if (textMessage.isIncoming) if (msgSequenceType == SequenceType.FIRST) 11 else 10
+                            // Reply message outgoing, first or single
+                            else if (msgSequenceType == SequenceType.FIRST) 9 else 8
+                        }
+                        // Standard message, incoming or outgoing and first, single or last.
+                        else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+
                     msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxt.background.setTint(convColor)
@@ -1303,7 +1312,11 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_in_first,
             R.drawable.textmsg_bg_in_middle,
             R.drawable.textmsg_bg_in_last,
-            R.drawable.textmsg_bg_in
+            R.drawable.textmsg_bg_in,
+            R.drawable.textmsg_bg_out_reply,
+            R.drawable.textmsg_bg_out_reply_first,
+            R.drawable.textmsg_bg_in_reply,
+            R.drawable.textmsg_bg_in_reply_first
         )
 
         private fun setBottomMargin(view: View, value: Int) {
