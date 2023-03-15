@@ -597,6 +597,7 @@ class CallService(
     }
 
     fun hangUpConference(accountId: String, confId: String) {
+        Log.i(TAG, "hangUpConference() running... $confId")
         mExecutor.execute { JamiService.hangUpConference(accountId, confId) }
     }
 
@@ -680,6 +681,16 @@ class CallService(
             }
         } catch (e: Exception) {
             Log.w(TAG, "exception in conferenceChanged", e)
+        }
+    }
+
+    fun hangUpAny(accountId: String, callId: String) {
+        calls.filterValues { it.daemonIdString == callId }.firstNotNullOf {
+            val confId = it.value.confId
+            if(confId != null)
+                hangUpConference(accountId, confId)
+            else
+                hangUp(accountId, callId)
         }
     }
 

@@ -291,7 +291,7 @@ class DRingService : Service() {
                 mHardwareService.closeAudioState()
             }
             ACTION_CALL_END -> {
-                mCallService.hangUp(accountId, callId)
+                mCallService.hangUpAny(accountId, callId)
                 mHardwareService.closeAudioState()
             }
         }
