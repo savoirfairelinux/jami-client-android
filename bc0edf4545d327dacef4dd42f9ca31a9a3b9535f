@@ -36,6 +36,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e59a83c_a0bdcdda",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-15T18:06:46Z",
+      "side": 1,
+      "message": "First point seems to be existing behavior from daemon. Second point resolved.",
+      "parentUuid": "42904caf_2971cea9",
+      "revId": "bc0edf4545d327dacef4dd42f9ca31a9a3b9535f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f39af7f4_fc5e66ee",
