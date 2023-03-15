@@ -401,7 +401,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
 
     //todo: enable pip when only our video is displayed
-    override fun enterPipMode(callId: String, accountId: String) {
+    override fun enterPipMode(accountId: String, callId: String?) {
         val context = requireContext()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
             return
