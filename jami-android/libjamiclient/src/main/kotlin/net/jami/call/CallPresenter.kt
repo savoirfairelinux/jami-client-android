@@ -521,7 +521,7 @@ class CallPresenter @Inject constructor(
     fun requestPipMode() {
         val conference = mConference ?: return
         if (conference.isOnGoing && conference.hasVideo()) {
-            view?.enterPipMode(conference.id, conference.accountId)
+            view?.enterPipMode(conference.accountId, conference.firstCall?.daemonIdString)
         }
     }
 
