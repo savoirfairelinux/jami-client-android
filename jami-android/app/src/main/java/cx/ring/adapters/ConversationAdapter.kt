@@ -358,6 +358,23 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
                         conversationViewHolder.mReplyName!!.text = i.second.displayName
 
+                        // Apply correct color depending if message is incoming or not.
+                        conversationViewHolder.mReplyTxt?.background?.setTint(
+                            if (i.first.isIncoming)
+                                conversationViewHolder.itemView.context.getColor(
+                                    R.color.conversation_secondary_background
+                                )
+                            else convColor
+                        )
+                        if (i.first.isIncoming) {
+                            conversationViewHolder.mReplyTxt.setTextColor(
+                                conversationViewHolder.itemView.context.getColor(
+                                    R.color.colorOnSurface
+                                )
+                            )
+                        }
+
+
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(i.second)
