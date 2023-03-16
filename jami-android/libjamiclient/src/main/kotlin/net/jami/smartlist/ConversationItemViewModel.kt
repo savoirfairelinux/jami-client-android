@@ -84,7 +84,8 @@ class ConversationItemViewModel(
         private const val MAX_NAMES = 3
 
         fun getContact(contacts: List<ContactViewModel>) : ContactViewModel? =
-            contacts.firstOrNull { !it.contact.isUser }
+            // Get user contact only if self-conversation.
+            contacts.firstOrNull { !it.contact.isUser } ?: contacts.firstOrNull()
 
         fun getTitle(conversation: Conversation, profile: Profile, contacts: List<ContactViewModel>): String {
             if (!profile.displayName.isNullOrBlank())
