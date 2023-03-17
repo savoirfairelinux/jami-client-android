@@ -256,8 +256,11 @@ class CallPresenter @Inject constructor(
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
+        if(videoIsMuted)
+            mCallService.requestVideoMediaChange(conference, "camera://1")
+        else
+            mCallService.requestVideoMediaChange(conference, null)
         videoIsMuted = !videoIsMuted
-        mCallService.requestVideoMedia(conference, !videoIsMuted)
     }
 
     fun configurationChanged(rotation: Int) {
@@ -637,13 +640,16 @@ class CallPresenter @Inject constructor(
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
         val conference = mConference ?: return false
-        mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        val projection = mediaProjection ?: return false
+        mHardwareService.setScreenShareProjection(projection)
+        mCallService.requestVideoMediaChange(conference, "camera://desktop")
         return true
     }
 
     fun stopScreenShare() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id, true)
+        mHardwareService.setScreenShareProjection(null)
+        mCallService.requestVideoMediaChange(conference, null)
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
