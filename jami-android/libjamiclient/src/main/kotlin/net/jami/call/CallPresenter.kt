@@ -248,13 +248,13 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id)
+        mHardwareService.switchInput(conference.accountId, conference.id) // todo
     }
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
+        mCallService.requestVideoMediaChange(conference, "camera://1", !videoIsMuted) // todo fix for all cams
         videoIsMuted = !videoIsMuted
-        mCallService.requestVideoMedia(conference, !videoIsMuted)
     }
 
     fun configurationChanged(rotation: Int) {
@@ -390,7 +390,7 @@ class CallPresenter @Inject constructor(
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
         val hasActiveScreenShare = call.hasActiveScreenSharing()
-        videoIsMuted = !hasActiveVideo
+        videoIsMuted = !hasActiveVideo // todo fix? make this only work on cams, not shares?
         val view = view ?: return
         if (call.isOnGoing) {
             mOnGoingCall = true
@@ -403,7 +403,7 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 view.displayLocalVideo(hasActiveVideo && !hasActiveScreenShare && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
+                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged) //todo
                     permissionChanged = false
                 }
             }
@@ -634,13 +634,16 @@ class CallPresenter @Inject constructor(
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
         val conference = mConference ?: return false
-        mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        val projection = mediaProjection ?: return false
+        mHardwareService.setScreenShareProjection(projection)
+        mCallService.requestVideoMediaChange(conference, "camera://desktop", false)
         return true
     }
 
     fun stopScreenShare() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id, true)
+        mHardwareService.setScreenShareProjection(null)
+        mCallService.requestVideoMediaChange(conference, "camera://desktop", true)
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
@@ -649,12 +652,12 @@ class CallPresenter @Inject constructor(
 
     fun startPlugin(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) } //todo
     }
 
     fun stopPlugin() {
         mHardwareService.stopMediaHandler()
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) } // todo
     }
 
     fun getDeviceId(): String? {
