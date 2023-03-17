@@ -379,8 +379,15 @@ class ConversationAdapter(
                         replyView.isVisible = true
                         conversationViewHolder.mReplyTxt!!.isVisible = true
                         conversationViewHolder.mInReplyTo!!.isVisible = true
-                        replyView.setOnClickListener {
-                            i.first.messageId?.let { presenter.scrollToMessage(it) }
+
+                        // User can click on mReplyTxt (replied message),
+                        // mInReplyTo or mReplyName (text above the message) to go to it.
+                        listOf(conversationViewHolder.mReplyTxt,
+                            conversationViewHolder.mInReplyTo,
+                            replyView).forEach{
+                            it.setOnClickListener{
+                                i.first.messageId?.let { presenter.scrollToMessage(it) }
+                            }
                         }
                     }) {
                         replyView.isVisible = false
