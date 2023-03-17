@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "997f5940_6a1d058d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-03-17T14:13:58Z",
+      "side": 1,
+      "message": "Bug was not consistently reproduceable but was caused by the width value for button containers becoming larger than the screen region. Setting the widths to 0dp seems to have fixed the problem.",
+      "revId": "544b3b9871f10415aa35c635f7cdebfca7bf82a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
