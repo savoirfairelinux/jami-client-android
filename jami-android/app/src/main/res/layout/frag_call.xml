@@ -404,7 +404,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Sound button -->
                         <LinearLayout
                             android:id="@+id/sound_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -441,7 +441,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Mic button -->
                         <LinearLayout
                             android:id="@+id/microphone_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -478,7 +478,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Hangup button -->
                         <LinearLayout
                             android:id="@+id/hng_up_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -514,7 +514,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Camera switch button -->
                         <LinearLayout
                             android:id="@+id/videocam_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -550,7 +550,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Camera switch button -->
                         <LinearLayout
                             android:id="@+id/Flip_cam_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -585,7 +585,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Add participant button -->
                         <LinearLayout
                             android:id="@+id/add_participant_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -621,7 +621,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Screen Share button -->
                         <LinearLayout
                             android:id="@+id/sharescreen_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -657,7 +657,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Dialpad button -->
                         <LinearLayout
                             android:id="@+id/dialpad_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
@@ -695,6 +695,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Raise Hand button -->
                         <LinearLayout
                             android:id="@+id/raiseHand_btn_container"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:orientation="vertical"
@@ -728,7 +730,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- Plugins list button -->
                         <LinearLayout
                             android:id="@+id/plugins_btn_container"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
