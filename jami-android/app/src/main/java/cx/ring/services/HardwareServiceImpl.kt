@@ -639,6 +639,10 @@ class HardwareServiceImpl(
             switchInput(accountId, callId, "camera://$camId")
     }
 
+    override fun setScreenShareProjection(screenCaptureSession: Any?) {
+        pendingScreenSharingSession = screenCaptureSession as MediaProjection?
+    }
+
     override fun setPreviewSettings() {
         setPreviewSettings(cameraService.previewSettings)
     }
