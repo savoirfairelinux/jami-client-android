@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "402bb1c2_58c7c143",
+        "filename": "jami-android/app/build.gradle.kts",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-03-20T15:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bad3c307_e32559e1",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "5e6988431eb1bef63ec7bb97bc32755b3fc1a144",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b43cf00b_9b10c46d",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-15T21:53:33Z",
       "side": 1,
       "message": "looks like magic numbers",
+      "range": {
+        "startLine": 921,
+        "startChar": 93,
+        "endLine": 922,
+        "endChar": 79
+      },
+      "revId": "5e6988431eb1bef63ec7bb97bc32755b3fc1a144",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fca89c7_49237d25",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-03-20T15:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43cf00b_9b10c46d",
       "range": {
         "startLine": 921,
         "startChar": 93,
