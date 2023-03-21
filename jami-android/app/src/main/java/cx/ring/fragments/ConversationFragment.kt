@@ -251,7 +251,13 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 for (i in 0 until contentInfo.clip.itemCount) {
                     val item: ClipData.Item = contentInfo.clip.getItemAt(i)
                     if (item.uri == null && item.text != null) {
-                        binding.msgInputTxt.setText(item.text)
+                        // Manage text collage (via copy/paste).
+                        val currentCursor = binding.msgInputTxt.selectionStart
+                        val currentText = binding.msgInputTxt.text
+                        binding.msgInputTxt.setText(currentText.substring(0, currentCursor)
+                                + item.text + binding.msgInputTxt.text.substring(currentCursor))
+                        // Move cursor to the end of the pasted text.
+                        binding.msgInputTxt.setSelection(currentCursor + item.text.length)
                     } else {
                         startFileSend(AndroidFileUtils.getCacheFile(requireContext(), item.uri)
                             .flatMapCompletable { sendFile(it) })
