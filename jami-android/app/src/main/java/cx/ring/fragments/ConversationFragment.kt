@@ -247,18 +247,31 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             }
 
             binding.ongoingcallPane.visibility = View.GONE
-            ViewCompat.setOnReceiveContentListener(binding.msgInputTxt, SUPPORTED_MIME_TYPES) { _, contentInfo ->
-                for (i in 0 until contentInfo.clip.itemCount) {
-                    val item: ClipData.Item = contentInfo.clip.getItemAt(i)
-                    if (item.uri == null && item.text != null) {
-                        binding.msgInputTxt.setText(item.text)
-                    } else {
-                        startFileSend(AndroidFileUtils.getCacheFile(requireContext(), item.uri)
+
+            // Content may be both text and non-text (HTML, images, videos, audio files, etc).
+            ViewCompat.setOnReceiveContentListener(
+                binding.msgInputTxt,
+                SUPPORTED_MIME_TYPES
+            ) { _, payload ->
+                // Split the incoming content into two groups: content URIs and everything else.
+                // This way we can implement custom handling for URIs and delegate the rest.
+                val split = payload.partition { item -> item.uri != null }
+                val uriContent = split.first
+                val remaining = split.second
+
+                // Handles content URIs.
+                if (uriContent != null) {
+                    val clip = uriContent.clip
+                    for (i in 0 until clip.itemCount) {
+                        val uri = clip.getItemAt(i).uri
+                        startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                             .flatMapCompletable { sendFile(it) })
                     }
                 }
-                null
+                // Delegates the processing for text and everything else to the platform.
+                remaining
             }
+
             binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
             binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
                 if (hasFocus) {
