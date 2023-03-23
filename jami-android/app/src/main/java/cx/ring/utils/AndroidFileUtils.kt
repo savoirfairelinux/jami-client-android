@@ -196,10 +196,17 @@ object AndroidFileUtils {
     private fun getFilename(cr: ContentResolver, uri: Uri): String {
         var result: String? = null
         if (ContentResolver.SCHEME_CONTENT == uri.scheme) {
-            cr.query(uri, null, null, null, null).use { cursor ->
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
-                }
+            cr.query(uri, null, null, null, null)
+                .use { cursor ->
+                    if (cursor != null && cursor.moveToFirst()) {
+                        // Specific case where an image is paste from the clipboard.
+                        result = if (cr.getType(uri) == MediaStore.Images.Media.CONTENT_TYPE) {
+                            val path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))
+                            path.substring(path.lastIndexOf("/") + 1)
+                        } else {
+                            cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+                        }
+                    }
             }
         }
         if (result == null) {
