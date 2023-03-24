@@ -223,7 +223,7 @@ class AvatarDrawable : Drawable {
             withPhoto(contact.profile.avatar as? Bitmap?)
                 .withId(contact.contact.primaryNumber)
                 .withPresence(contact.presence)
-                .withOnlineState(contact.contact.isOnline)
+                .withOnlineState(contact.presence)
                 .withNameData(contact.profile.displayName, contact.registeredName)
 
         private fun withContacts(profile: Profile, contacts: List<ContactViewModel>): Builder {
@@ -299,7 +299,7 @@ class AvatarDrawable : Drawable {
         contact.profile.avatar?.let { photo ->
             bitmaps?.set(0, photo as Bitmap)
         }
-        isOnline = contact.contact.isOnline
+        isOnline = contact.presence
         update = true
     }
 
