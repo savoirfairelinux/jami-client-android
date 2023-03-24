@@ -90,7 +90,7 @@ class Account(
         //trustRequestsSubject.onComplete();
     }
 
-    fun canSearch(): Boolean = !getDetail(ConfigKey.MANAGER_URI).isEmpty()
+    fun canSearch(): Boolean = getDetail(ConfigKey.MANAGER_URI).isNotEmpty()
 
     fun isContact(conversation: Conversation): Boolean =
         conversation.contact?.let { isContact(it.uri) } ?: false
@@ -807,8 +807,7 @@ class Account(
     fun presenceUpdate(contactUri: String, isOnline: Boolean) {
         //Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
         val contact = getContactFromCache(contactUri)
-        if (contact.isOnline == isOnline) return
-        contact.isOnline = isOnline
+        contact.setPresence(isOnline)
         synchronized(conversations) {
             conversations[contactUri]?.let { conversationRefreshed(it) }
         }

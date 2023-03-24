@@ -52,7 +52,6 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
     var isFromSystem = false
     var status = Status.NO_REQUEST
     var addedDate: Date? = null
-    private var mOnline = false
     var id: Long = 0
     private var mLookupKey: String? = null
     private val mConversationUri: BehaviorSubject<Uri> = BehaviorSubject.createDefault(uri)
@@ -76,12 +75,9 @@ class Contact constructor(val uri: Uri, val isUser: Boolean = false) {
         mContactPresenceEmitter = emitter
     }
 
-    var isOnline: Boolean
-        get() = mOnline
-        set(present) {
-            mOnline = present
-            mContactPresenceEmitter?.onNext(present)
-        }
+    fun setPresence(present: Boolean) {
+        mContactPresenceEmitter?.onNext(present)
+    }
 
     fun setSystemId(id: Long) {
         this.id = id

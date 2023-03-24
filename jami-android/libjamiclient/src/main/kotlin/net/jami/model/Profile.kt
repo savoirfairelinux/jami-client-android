@@ -39,6 +39,8 @@ class ContactViewModel(val contact: Contact, val profile: Profile, val registere
                 || registeredName != null && registeredName.contains(query)
                 || contact.uri.toString().contains(query)
 
+    override fun toString(): String = displayUri
+
     companion object {
         val EMPTY_VM: Observable<ContactViewModel> =
             Observable.just(ContactViewModel(Contact(Uri.fromId("")), Profile.EMPTY_PROFILE))
