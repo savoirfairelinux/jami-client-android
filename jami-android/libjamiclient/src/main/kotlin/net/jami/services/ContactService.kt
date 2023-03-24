@@ -73,7 +73,6 @@ abstract class ContactService(
 
     fun observeContact(accountId: String, contact: Contact, withPresence: Boolean): Observable<ContactViewModel> {
         // Log.w(TAG, "observeContact $accountId ${contact.uri} ${contact.isUser}")
-        val observePresence = if (contact.isUser) false else withPresence
         val uriString = contact.uri.rawRingId
         synchronized(contact) {
             val presenceUpdates = contact.presenceUpdates ?: run {
@@ -106,15 +105,14 @@ abstract class ContactService(
             }
 
             return if (contact.isUser) {
-                val account = mAccountService.getAccount(accountId)!!
-                Observable.combineLatest(account.loadedProfileObservable, username.toObservable())
-                    { profile, name -> ContactViewModel(contact, profile, name.ifEmpty { null }, false) }
+                mAccountService.getObservableAccountProfile(accountId).map { profile ->
+                    ContactViewModel(contact, profile.second, profile.first.registeredName.ifEmpty { null }, withPresence && profile.first.isRegistered) }
             } else {
                 if (contact.loadedProfile == null) {
                     contact.loadedProfile = loadContactData(contact, accountId).cache()
                 }
 
-                if (observePresence)
+                if (withPresence)
                     Observable.combineLatest(contact.profile, username.toObservable(), presenceUpdates)
                     { profile, name, presence -> ContactViewModel(contact, profile, name.ifEmpty { null }, presence) }
                 else

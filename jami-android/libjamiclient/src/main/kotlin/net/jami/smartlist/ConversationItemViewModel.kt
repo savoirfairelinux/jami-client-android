@@ -35,7 +35,7 @@ class ConversationItemViewModel(
     val mode: Conversation.Mode = conversation.mode.blockingFirst()
     val uuid: String = uri.rawUriString
     val title: String = getTitle(conversation, conversationProfile, contacts)
-    val isOnline: Boolean = showPresence && contacts.firstOrNull { !it.contact.isUser && it.contact.isOnline } != null
+    val isOnline: Boolean = showPresence && contacts.firstOrNull { it.presence } != null
     var isChecked = false
     var selected: Observable<Boolean>? = conversation.getVisible()
         private set
