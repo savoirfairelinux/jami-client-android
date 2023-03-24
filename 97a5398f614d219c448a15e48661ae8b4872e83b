@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd1eff35_3860033c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-24T01:53:56Z",
+      "side": 1,
+      "message": "Our own account might not be online ! For instance if disconnected from the Internet or if the account is disabled.",
+      "revId": "97a5398f614d219c448a15e48661ae8b4872e83b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
