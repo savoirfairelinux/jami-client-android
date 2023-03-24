@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da7733dc_04a5235d",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-03-24T01:40:08Z",
+      "side": 1,
+      "message": "Catch exceptions in this code (and let the logic continue), so that it would properly fallback to the remaining logic of the function if an exception occurs.\nCheck if that would simply fix the problem.\nIf not, make sure to handle other supported mime types, ideally in a generic way.",
+      "range": {
+        "startLine": 201,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 21
+      },
+      "revId": "2b86e5980620c792fc8e6c5dbe1e1a0bcd393881",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
