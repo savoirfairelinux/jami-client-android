@@ -64,6 +64,7 @@ class AccountConfig(details: Map<String, String>) {
         UNLOADED,
         UNREGISTERED,
         TRYING,
+        READY,
         REGISTERED,
         ERROR_GENERIC,
         ERROR_AUTH,
