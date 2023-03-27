@@ -22,6 +22,30 @@
       },
       "revId": "2b86e5980620c792fc8e6c5dbe1e1a0bcd393881",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e4a1e0_a450a93c",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-03-27T15:40:39Z",
+      "side": 1,
+      "message": "It\u0027s not a fallback bug when exception occurs.\nIt is due by the code just handling standard types and not those specific from providers.",
+      "parentUuid": "da7733dc_04a5235d",
+      "range": {
+        "startLine": 201,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 21
+      },
+      "revId": "2b86e5980620c792fc8e6c5dbe1e1a0bcd393881",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
