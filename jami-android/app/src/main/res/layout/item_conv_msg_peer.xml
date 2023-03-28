@@ -118,7 +118,7 @@ along with this program; if not, write to the Free Software
             android:layout_below="@id/msg_txt"
             android:layout_alignStart="@id/msg_txt"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="-24dp"
+            android:layout_marginTop="-16dp"
             android:elevation="4dp"
             android:focusable="false"
             android:text="👍😍 3" />

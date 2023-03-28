@@ -1089,7 +1089,9 @@ class ConversationAdapter(
                         }
                     }
                 }
-                setBottomMargin(msgTxt, if (endOfSeq) 8 else 0)
+
+                // Apply a bottom margin to the global layout if end of sequence needed.
+                convViewHolder.mItem?.let { setBottomMargin(it, if (endOfSeq) 8 else 0) }
 
                 // Manage the update of the timestamp and the fact than we can expend/hide it.
                 if (isTimeShown) {
@@ -1405,8 +1407,13 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_in_reply_first
         )
 
-        private fun setBottomMargin(view: View, value: Int) {
-            val targetSize = (value * view.context.resources.displayMetrics.density).toInt()
+        /**
+         * Add bottom margin to a view.
+         * @param view              the view to modify
+         * @param margin_in_dp      the margin to set
+         */
+        private fun setBottomMargin(view: View, margin_in_dp: Int) {
+            val targetSize = (margin_in_dp * view.context.resources.displayMetrics.density).toInt()
             val params = view.layoutParams as MarginLayoutParams
             params.bottomMargin = targetSize
         }
