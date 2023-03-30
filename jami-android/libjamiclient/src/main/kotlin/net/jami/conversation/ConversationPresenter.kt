@@ -146,7 +146,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun initView(account: Account, c: Conversation, view: ConversationView) {
-        Log.w(TAG, "initView " + c.uri)
+        Log.w(TAG, "initView ${c.uri}")
         val disposable = mConversationDisposable?.apply { clear() } ?: CompositeDisposable().apply {
             mConversationDisposable = this
             mCompositeDisposable.add(this)
