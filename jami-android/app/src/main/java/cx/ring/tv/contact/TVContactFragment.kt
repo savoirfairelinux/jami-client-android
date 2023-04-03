@@ -57,9 +57,8 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         else
             ConversationPath.fromIntent(requireActivity().intent)!!
         iconSize = resources.getDimensionPixelSize(R.dimen.tv_avatar_size)
-        presenter.setContact(mConversationPath)
-
         setupAdapter()
+        presenter.setContact(mConversationPath)
     }
 
     private fun setupAdapter() {

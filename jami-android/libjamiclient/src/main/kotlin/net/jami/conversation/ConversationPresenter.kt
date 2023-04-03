@@ -92,7 +92,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun setConversation(account: Account, conversation: Conversation) {
-        Log.w(TAG, "setConversation " + conversation.aggregateHistory.size)
+        Log.w(TAG, "setConversation ${conversation.aggregateHistory.size}")
         if (mConversation == conversation) return
         mConversation = conversation
         mConversationSubject.onNext(conversation)
@@ -116,12 +116,9 @@ class ConversationPresenter @Inject constructor(
             }) { e -> Log.e(TAG, "Error loading conversation", e) })
     }
 
-    private fun initContact(account: Account,
-                            c: ConversationItemViewModel,
-                            view: ConversationView
-    ) {
+    private fun initContact(account: Account, c: ConversationItemViewModel, view: ConversationView) {
         if (account.isJami) {
-            Log.w(TAG, "initContact " + c.uri + " mode: " + c.mode)
+            Log.w(TAG, "initContact ${c.uri} mode: ${c.mode}")
             if (c.mode === Conversation.Mode.Syncing) {
                 view.switchToSyncingView()
             } else if (c.mode == Conversation.Mode.Request) {
@@ -146,7 +143,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     private fun initView(account: Account, c: Conversation, view: ConversationView) {
-        Log.w(TAG, "initView " + c.uri)
+        Log.w(TAG, "initView ${c.uri}")
         val disposable = mConversationDisposable?.apply { clear() } ?: CompositeDisposable().apply {
             mConversationDisposable = this
             mCompositeDisposable.add(this)
@@ -179,14 +176,12 @@ class ConversationPresenter @Inject constructor(
             })
         disposable.add(c.sortedHistory
             .observeOn(uiScheduler)
-            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
-                Log.e(TAG, "Can't update element", e)
-            })
+            .subscribe({ conversation -> this.view?.refreshView(conversation) })
+                { e -> Log.e(TAG, "Can't update element $i", e) })
         disposable.add(c.cleared
             .observeOn(uiScheduler)
-            .subscribe({ conversation: List<Interaction> -> this.view?.refreshView(conversation) }) { e: Throwable ->
-                Log.e(TAG, "Can't update elements", e)
-            })
+            .subscribe({ conversation -> this.view?.refreshView(conversation) })
+                { e -> Log.e(TAG, "Can't update elements", e) })
         disposable.add(c.contactUpdates
             .switchMap { contacts -> Observable.merge(contactService.observeLoadedContact(c.accountId, contacts, true)) }
             .observeOn(uiScheduler)

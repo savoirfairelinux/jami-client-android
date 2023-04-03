@@ -63,7 +63,20 @@
                 app:cardCornerRadius="32dp"
                 app:cardElevation="4dp">
 
+                <TextView
+                    android:id="@+id/conversation_action_message"
+                    tools:text="@string/contact_request_msg"
+                    tools:visibility="visible"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:gravity="center" />
+
                 <LinearLayout
+                    android:id="@+id/conversation_action_group"
+                    tools:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:baselineAligned="false"
