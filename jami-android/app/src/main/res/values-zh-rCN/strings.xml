@@ -133,6 +133,7 @@
   <string name="conversation_send_audio">录制音频片段</string>
   <string name="conversation_send_video">录制视频片段</string>
   <string name="conversation_share_location">分享位置</string>
+  <string name="in_reply_to">在回复中</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>

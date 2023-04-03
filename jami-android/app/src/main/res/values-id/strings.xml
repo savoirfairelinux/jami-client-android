@@ -133,6 +133,7 @@
   <string name="conversation_send_audio">Rekam klip audio</string>
   <string name="conversation_send_video">Rekam klip video</string>
   <string name="conversation_share_location">Berbagi lokasi</string>
+  <string name="in_reply_to">Sebagai balasan</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Izin kamera</string>
   <string name="permission_dialog_camera_message">Percakapan video memerlukan izin kamera agar dapat bekerja.</string>

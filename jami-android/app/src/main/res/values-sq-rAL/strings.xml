@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Incizoni copëz zanore</string>
   <string name="conversation_send_video">Regjistroni copës video</string>
   <string name="conversation_share_location">Ndani vendndodhje</string>
+  <string name="in_reply_to">Në përgjigje të</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>

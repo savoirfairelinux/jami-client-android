@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Hangüzenet felvétele</string>
   <string name="conversation_send_video">Videóüzenet felvétele</string>
   <string name="conversation_share_location">Tartózkodási hely megosztása</string>
+  <string name="in_reply_to">Válaszul erre:</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videóhívások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>

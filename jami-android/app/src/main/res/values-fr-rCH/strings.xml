@@ -130,6 +130,7 @@
   <string name="conversation_send_audio">Enregistrer un message audio</string>
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager votre position</string>
+  <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversations vidéos requièrent les droits d\'accès à la caméra pour fonctionner. S.v.p. envisager d\'octroyer ces droits.</string>

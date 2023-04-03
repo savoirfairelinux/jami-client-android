@@ -135,6 +135,7 @@
   <string name="conversation_send_audio">Trimite mesaj vocal</string>
   <string name="conversation_send_video">Trimite mesaj video</string>
   <string name="conversation_share_location">Trimite poziția</string>
+  <string name="in_reply_to">Ca răspuns la</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Acces la fotocameră</string>
   <string name="permission_dialog_camera_message">Conversațiile video au nevoie de acces la fotocameră pentru a funcționa. Dacă vrei, activeaz-o.</string>

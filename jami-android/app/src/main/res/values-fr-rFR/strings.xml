@@ -135,6 +135,7 @@
   <string name="conversation_send_audio">Enregistrer un message audio</string>
   <string name="conversation_send_video">Enregistrer un message vidéo</string>
   <string name="conversation_share_location">Partager la géolocalisation</string>
+  <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Autoriser la caméra</string>
   <string name="permission_dialog_camera_message">Les conversations en mode vidéo demandent à ce que les permissions soient accordées. Merci d\'activer les permissions.</string>

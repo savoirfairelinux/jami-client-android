@@ -136,6 +136,7 @@
   <string name="conversation_send_audio">Snemaj zvočni posnetek</string>
   <string name="conversation_send_video">Snemaj video posnetek</string>
   <string name="conversation_share_location">Deli lokacijo</string>
+  <string name="in_reply_to">Kot odgovor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenja za kamero</string>
   <string name="permission_dialog_camera_message">Video pogovori zahtevajo dovoljenja za rabo kamere. Potrdite jih.</string>

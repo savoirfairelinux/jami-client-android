@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Poista tilisi tästä laitteesta</string>
   <string name="pref_persistNotification_title">Suorita taustalla</string>
   <string name="pref_persistNotification_summary">Salli tausta-ajo vastaanottamaan puheluita ja viestejä.</string>
+  <string name="pref_newGroup_title">Käytä ryhmäkeskustelua</string>
+  <string name="pref_newGroup_summary">Käytä Jamin ryhmien luomista.</string>
   <string name="pref_logs_title">Diagnostiikan loki</string>
   <string name="pref_logs_summary">Avaa diagnostiikan lokin asetukset</string>
   <string name="pref_logs_start">Aloita kirjaaminen</string>
@@ -58,6 +60,8 @@
   <string name="plugin_uninstall_title">Poista lisäosa ?</string>
   <string name="plugin_reset_preferences">Nollaa lisäosan asetukset</string>
   <string name="plugin_reset_preferences_summary">Lisäosasi asetukset palautetaan oletukseksi</string>
+  <string name="plugin_reset_preferences_ask">Haluatko nollata laajennuksen asetukset?</string>
+  <string name="plugin_reset_account_preferences_ask">Haluatko nollata tilin laajennuksen asetukset?</string>
   <string name="plugin_successfully_installed">Lisäosa <b>%1$s</b> asennettu onnistuneesti</string>
   <string name="plugin_install_failure">Lisäosan asennus epäonnistui: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Sinulla on uudempi versio: <b>%1$s</b></string>

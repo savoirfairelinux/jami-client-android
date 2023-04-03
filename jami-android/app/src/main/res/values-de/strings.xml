@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Audioaufzeichnung starten</string>
   <string name="conversation_send_video">Videoaufzeichnung starten</string>
   <string name="conversation_share_location">Standort teilen</string>
+  <string name="in_reply_to">Als Antwort auf</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte aktivieren Sie diese Berechtigung.</string>

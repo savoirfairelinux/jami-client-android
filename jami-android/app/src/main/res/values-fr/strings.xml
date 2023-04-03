@@ -135,6 +135,7 @@
   <string name="conversation_send_audio">Envoyer un message vocal</string>
   <string name="conversation_send_video">Envoyer un message vidéo</string>
   <string name="conversation_share_location">Partager votre position</string>
+  <string name="in_reply_to">En réponse à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>

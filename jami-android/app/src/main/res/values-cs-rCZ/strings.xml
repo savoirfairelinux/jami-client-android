@@ -136,6 +136,7 @@
   <string name="conversation_send_audio">Nahrávat zvukový klip</string>
   <string name="conversation_send_video">Nahrávat video klip</string>
   <string name="conversation_share_location">Sdílet polohu</string>
+  <string name="in_reply_to">V odpovědi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>

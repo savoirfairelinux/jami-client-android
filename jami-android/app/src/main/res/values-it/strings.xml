@@ -135,6 +135,7 @@
   <string name="conversation_send_audio">Registra messaggio vocale</string>
   <string name="conversation_send_video">Registra videomessaggio</string>
   <string name="conversation_share_location">Condividi posizione</string>
+  <string name="in_reply_to">In risposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso fotocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate richiedono il permesso di usare la fotocamera per funzionare.</string>

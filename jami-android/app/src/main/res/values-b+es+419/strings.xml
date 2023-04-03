@@ -17,6 +17,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="in_reply_to">En respuesta a</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->

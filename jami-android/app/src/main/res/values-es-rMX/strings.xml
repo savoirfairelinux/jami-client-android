@@ -130,6 +130,7 @@
   <string name="conversation_send_audio">Grabar clip de audio</string>
   <string name="conversation_send_video">Grabar clip de video</string>
   <string name="conversation_share_location">Compartir ubicación</string>
+  <string name="in_reply_to">En respuesta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las videollamadas requieren el permiso de cámara para funcionar. Considerá activarlo.</string>
