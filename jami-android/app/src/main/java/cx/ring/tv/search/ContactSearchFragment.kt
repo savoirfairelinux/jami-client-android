@@ -1,7 +1,5 @@
 /*
- *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
- *
- *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
+ *  Copyright (C) 2004-2023 Savoir-faire Linux Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,16 +56,10 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mTextEditor = view.findViewById(R.id.lb_search_text_editor)
-    }
-
-    override fun onResume() {
-        super.onResume()
         mTextEditor?.requestFocus()
     }
 
-    override fun getResultsAdapter(): ObjectAdapter {
-        return mRowsAdapter
-    }
+    override fun getResultsAdapter(): ObjectAdapter = mRowsAdapter
 
     override fun onQueryTextChange(newQuery: String): Boolean {
         presenter.queryTextChanged(newQuery)
@@ -124,12 +116,6 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
                 (conversationsRow!!.adapter as ArrayObjectAdapter).setItems(
                     contacts.conversations.map { item -> ContactCard(item, Card.Type.CONTACT_ONLINE) }, diff)
             }
-        }
-        if (scrollToTop) {
-            rowsSupportFragment.view?.postDelayed({
-                rowsSupportFragment.verticalGridView.smoothScrollToPosition(0)
-                mTextEditor?.requestFocus()
-            }, 300)
         }
     }
 
