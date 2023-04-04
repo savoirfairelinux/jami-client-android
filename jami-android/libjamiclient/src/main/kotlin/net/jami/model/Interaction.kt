@@ -191,26 +191,43 @@ open class Interaction {
         parentId = parent
     }
 
-    fun addReaction(interaction: Interaction) {
-        reactions.add(interaction)
+    /**
+     * Add reaction (emoji)
+     * @param reactionToAdd
+     */
+    fun addReaction(reactionToAdd: Interaction) {
+        reactions.add(reactionToAdd)
         reactionSubject.onNext(ArrayList(reactions))
     }
 
-    fun addReactions(interactions: List<Interaction>) {
-        reactions.addAll(interactions)
+    /** Add several reactions (emoji) at one time
+     * @param reactionListToAdd
+     */
+    fun addReactions(reactionListToAdd: List<Interaction>) {
+        reactions.addAll(reactionListToAdd)
         reactionSubject.onNext(ArrayList(reactions))
     }
 
-    fun addEdit(interaction: Interaction, newMessage: Boolean) {
-        history.remove(interaction)
-        if (newMessage)
-            history.add(interaction)
+    /**
+     * Edit an interaction.
+     * @param editInteraction
+     * @param isNewMessage
+     */
+    fun addEdit(editInteraction: Interaction, isNewMessage: Boolean) {
+        history.remove(editInteraction)
+        if (isNewMessage)
+            history.add(editInteraction)
         else
-            history.add(0, interaction)
+            history.add(0, editInteraction)
         historySubject.onNext(ArrayList(history))
     }
-    fun addEdits(interactions: List<Interaction>) {
-        history.addAll(interactions)
+
+    /**
+     * Edit interactions.
+     * @param editInteractionList List of edit interaction
+     */
+    fun addEdits(editInteractionList: List<Interaction>) {
+        history.addAll(editInteractionList)
         historySubject.onNext(ArrayList(history))
     }
 
