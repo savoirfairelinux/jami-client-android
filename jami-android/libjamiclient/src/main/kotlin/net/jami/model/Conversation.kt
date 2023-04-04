@@ -524,23 +524,39 @@ class Conversation : ConversationHistory {
         }
     }
 
+    /**
+     * Add a message to the Swarm conversation model.
+     * @param interaction Swarm element to add
+     * @param isNewMessage Shall be true if we know that the message should be appended at the end
+     * of the conversation
+     */
     @Synchronized
-    fun addSwarmElement(interaction: Interaction, newMessage: Boolean): Boolean {
+    fun addSwarmElement(interaction: Interaction, isNewMessage: Boolean): Boolean {
         if (interaction.edit != null) {
-            addEdit(interaction, newMessage)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            return addSwarmElement(i, newMessage)
+            // The message is an edition of another message or reaction. Add it to the edited
+            // message history, and insert an invisible replacement element in the model
+            addEdit(interaction, isNewMessage)
+            val invisibleReplacementElement =
+                Interaction(this, Interaction.InteractionType.INVALID)
+            invisibleReplacementElement.setSwarmInfo(
+                uri.rawRingId, interaction.messageId!!, interaction.parentId
+            )
+            invisibleReplacementElement.conversation = this
+            invisibleReplacementElement.contact = interaction.contact
+            return addSwarmElement(invisibleReplacementElement, isNewMessage)
         } else if (interaction.reactToId != null) {
+            // The message is an reaction to another message. Add it to the message reactions,
+            // and insert an invisible replacement element in the model
             addReaction(interaction, interaction.reactToId!!)
-            val i = Interaction(this, Interaction.InteractionType.INVALID)
-            i.setSwarmInfo(uri.rawRingId, interaction.messageId!!, interaction.parentId)
-            i.conversation = this
-            i.contact = interaction.contact
-            i.reactTo = interaction
-            return addSwarmElement(i, newMessage)
+            val invisibleReplacementElement =
+                Interaction(this, Interaction.InteractionType.INVALID)
+            invisibleReplacementElement.setSwarmInfo(
+                uri.rawRingId, interaction.messageId!!, interaction.parentId
+            )
+            invisibleReplacementElement.conversation = this
+            invisibleReplacementElement.contact = interaction.contact
+            invisibleReplacementElement.reactTo = interaction
+            return addSwarmElement(invisibleReplacementElement, isNewMessage)
         }
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
@@ -664,21 +680,29 @@ class Conversation : ConversationHistory {
         }
     }
 
-    private fun addEdit(interaction: Interaction, newMessage: Boolean) {
-        Log.w(TAG, "addEdit $interaction ${interaction.type} ${(interaction as? TextMessage)?.body}")
-        val msg = getMessage(interaction.edit!!).let {
+    /**
+     * Add edit to conversation model.
+     * @param editInteraction
+     * @param isNewMessage
+     */
+    private fun addEdit(editInteraction: Interaction, isNewMessage: Boolean) {
+        Log.w(
+            TAG, "addEdit ${editInteraction.messageId} ${editInteraction.type} " +
+                    "${(editInteraction as? TextMessage)?.body}"
+        )
+
+        val editedInteraction = getMessage(editInteraction.edit!!).let {
             it?.reactTo ?: it
         }
-
-        if (msg != null)
-            msg.addEdit(interaction, newMessage)
+        if (editedInteraction != null)
+            editedInteraction.addEdit(editInteraction, isNewMessage)
         else
-            mPendingEdits.computeIfAbsent(interaction.edit!!) { ArrayList() }.let {
-                it.remove(interaction)
-                if (newMessage)
-                    it.add(interaction)
+            mPendingEdits.computeIfAbsent(editInteraction.edit!!) { ArrayList() }.let {
+                it.remove(editInteraction)
+                if (isNewMessage)
+                    it.add(editInteraction)
                 else
-                    it.add(0, interaction)
+                    it.add(0, editInteraction)
             }
     }
 
