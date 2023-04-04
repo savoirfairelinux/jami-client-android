@@ -44,7 +44,11 @@ import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -760,14 +764,18 @@ class ConversationAdapter(
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
                 showAsDropDown(v)
             })
+
+            // Set reaction (emoji) on click listener.
+            // For the moment, there is few emoji presented by default.
             val emojiCallback = View.OnClickListener { view ->
                 presenter.sendReaction(interaction, (view as TextView).text)
-                popupWindow.get()?.dismiss()
+                popupWindow.get()?.dismiss() // Close popup.
             }
             convActionEmoji1.setOnClickListener(emojiCallback)
             convActionEmoji2.setOnClickListener(emojiCallback)
             convActionEmoji3.setOnClickListener(emojiCallback)
             convActionEmoji4.setOnClickListener(emojiCallback)
+
             convActionReply.setOnClickListener {
                 presenter.startReplyTo(interaction)
                 popupWindow.get()?.dismiss()
