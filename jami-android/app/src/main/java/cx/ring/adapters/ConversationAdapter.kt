@@ -301,32 +301,46 @@ class ConversationAdapter(
             })
     }
 
+    /**
+     * Configure a reaction chip and logic about it.
+     *
+     * @param conversationViewHolder the view layout.
+     * @param reaction the interaction (contains the reaction data).
+     */
     private fun configureReactions(
         conversationViewHolder: ConversationViewHolder,
-        interaction: Interaction
+        reaction: Interaction
     ) {
+        // If reaction chip is clicked it means user wants to remove his reactions
         conversationViewHolder.reactionChip?.setOnClickListener {
-            presenter.removeReaction(interaction)
+            presenter.removeReaction(reaction)
         }
-        conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { reactions ->
-                conversationViewHolder.reactionChip?.let { chip ->
-                    if (reactions.isEmpty())
-                        chip.isVisible = false
-                    else {
-                        chip.text = reactions.filterIsInstance<TextMessage>()
-                            .groupingBy { it.body!! }
-                            .eachCount()
-                            .map { it }
-                            .sortedByDescending { it.value }
-                            .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
-                        chip.isVisible = true
-                        chip.isClickable = true
-                        chip.isFocusable = true
+
+        // Manage the display of the chip (ui element showing the emojis)
+        conversationViewHolder.compositeDisposable.add(
+            reaction.reactionObservable
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { reactions ->
+                    conversationViewHolder.reactionChip?.let { chip ->
+                        // No reaction, hide the chip.
+                        if (reactions.isEmpty())
+                            chip.isVisible = false
+                        else {
+                            chip.text = reactions.filterIsInstance<TextMessage>()
+                                .groupingBy { it.body!! }
+                                .eachCount()
+                                .map { it }
+                                .sortedByDescending { it.value }
+                                .joinToString("") {
+                                    if (it.value > 1) it.key + it.value else it.key
+                                }
+                            chip.isVisible = true
+                            chip.isClickable = true
+                            chip.isFocusable = true
+                        }
                     }
                 }
-            })
+        )
     }
 
     private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
@@ -659,14 +673,18 @@ class ConversationAdapter(
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
                 showAsDropDown(v)
             })
+
+            // Set reaction (emoji) on click listener.
+            // For the moment, there is few emoji presented by default.
             val emojiCallback = View.OnClickListener { view ->
                 presenter.sendReaction(interaction, (view as TextView).text)
-                popupWindow.get()?.dismiss()
+                popupWindow.get()?.dismiss() // Close popup.
             }
             convActionEmoji1.setOnClickListener(emojiCallback)
             convActionEmoji2.setOnClickListener(emojiCallback)
             convActionEmoji3.setOnClickListener(emojiCallback)
             convActionEmoji4.setOnClickListener(emojiCallback)
+
             convActionReply.setOnClickListener {
                 presenter.startReplyTo(interaction)
                 popupWindow.get()?.dismiss()
