@@ -868,11 +868,30 @@ class ConversationAdapter(
                 convActionEdit.setOnClickListener {
                     try {
                         val i = Intent(it.context, MessageEditActivity::class.java)
-                            .setData(Uri.withAppendedPath(ConversationPath.toUri(interaction.account!!, interaction.conversationId!!), interaction.messageId))
+                            .setData(
+                                Uri.withAppendedPath(
+                                    ConversationPath.toUri(
+                                        interaction.account!!,
+                                        interaction.conversationId!!
+                                    ),
+                                    interaction.messageId
+                                )
+                            )
                             .setAction(Intent.ACTION_EDIT)
-                            .putExtra(Intent.EXTRA_TEXT, conversationViewHolder.mMsgTxt!!.text.toString())
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), conversationViewHolder.mMsgTxt!!, "messageEdit")
-                        conversationFragment.startActivityForResult(i, ConversationFragment.REQUEST_CODE_EDIT_MESSAGE, options.toBundle())
+                            .putExtra(
+                                Intent.EXTRA_TEXT,
+                                conversationViewHolder.mMsgTxt!!.text.toString()
+                            )
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            conversationFragment.requireActivity(),
+                            conversationViewHolder.mMsgTxt!!,
+                            "messageEdit"
+                        )
+                        conversationFragment.startActivityForResult(
+                            i,
+                            ConversationFragment.REQUEST_CODE_EDIT_MESSAGE,
+                            options.toBundle()
+                        )
                     } catch (e: Exception) {
                         Log.w(TAG, "Can't open picture", e)
                     }
