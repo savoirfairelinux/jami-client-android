@@ -770,14 +770,18 @@ class ConversationAdapter(
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
                 showAsDropDown(v)
             })
+
+            // Set reaction (emoji) on click listener.
+            // For the moment, there is few emoji presented by default.
             val emojiCallback = View.OnClickListener { view ->
                 presenter.sendReaction(interaction, (view as TextView).text)
-                popupWindow.get()?.dismiss()
+                popupWindow.get()?.dismiss() // Close popup.
             }
             convActionEmoji1.setOnClickListener(emojiCallback)
             convActionEmoji2.setOnClickListener(emojiCallback)
             convActionEmoji3.setOnClickListener(emojiCallback)
             convActionEmoji4.setOnClickListener(emojiCallback)
+
             convActionReply.setOnClickListener {
                 presenter.startReplyTo(interaction)
                 popupWindow.get()?.dismiss()
