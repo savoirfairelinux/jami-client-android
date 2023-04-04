@@ -84,7 +84,6 @@ import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.StringUtils
 import java.io.File
-import java.lang.ref.WeakReference
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -743,12 +742,24 @@ class ConversationAdapter(
         player.seekTo(1)
     }
 
-    private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
-        MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
+    /**
+     * Display and manage the popup that allows user to react/reply/share/edit/delete message ...
+     *
+     * @param conversationViewHolder the view layout.
+     * @param view
+     * @param interaction
+     */
+    private fun openItemMenu(
+        conversationViewHolder: ConversationViewHolder, view: View, interaction: Interaction
+    ) {
+
+        // Inflate design from XML.
+        MenuConversationBinding.inflate(LayoutInflater.from(view.context)).apply {
             val history = interaction.historyObservable.blockingFirst()
             val lastElement = history.last()
             val isDeleted = lastElement is TextMessage && lastElement.body.isNullOrEmpty()
-            Log.w(TAG, "isDeleted $isDeleted ${history.size}")
+
+            // Configure what should be displayed
             convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionCopyText.isVisible = !isDeleted
@@ -756,77 +767,121 @@ class ConversationAdapter(
             convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            val popupWindow = WeakReference(PopupWindow(root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true).apply {
-                setOnDismissListener {
-                    if (convColor != 0
-                        && interaction.type == Interaction.InteractionType.TEXT
-                        && !interaction.isIncoming
-                    ) {
-                        v.background?.setTint(convColor)
-                    } else {
-                        v.background?.setTintList(null)
+
+            // The popup that display all the buttons
+            val popupWindow = PopupWindow(
+                root, LinearLayout.LayoutParams.WRAP_CONTENT, root.measuredHeight, true
+            )
+                .apply {
+                    elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
+                    showAsDropDown(view)
+
                     }
-                }
-                elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
-                showAsDropDown(v)
-            })
+
+            popupWindow.setOnDismissListener {
+                if (convColor != 0
+                    && interaction.type == Interaction.InteractionType.TEXT
+                    && !interaction.isIncoming
+                ) view.background?.setTint(convColor)
+                else view.background?.setTintList(null)
+            }
+
+            // Set reaction (emoji) on click listener.
+            // For the moment, there is few emoji presented by default.
             val emojiCallback = View.OnClickListener { view ->
                 presenter.sendReaction(interaction, (view as TextView).text)
-                popupWindow.get()?.dismiss()
+                popupWindow.dismiss() // Close popup.
             }
             convActionEmoji1.setOnClickListener(emojiCallback)
             convActionEmoji2.setOnClickListener(emojiCallback)
             convActionEmoji3.setOnClickListener(emojiCallback)
             convActionEmoji4.setOnClickListener(emojiCallback)
+
+            // Configure reply
             convActionReply.setOnClickListener {
                 presenter.startReplyTo(interaction)
-                popupWindow.get()?.dismiss()
+                popupWindow.dismiss()
             }
+
             convActionMore.setOnClickListener {
                 menuActions.isVisible = !menuActions.isVisible
             }
+
+            // Open file
             convActionOpenText.setOnClickListener {
                 presenter.openFile(interaction)
             }
+
+            // Save file
             convActionDownloadText.setOnClickListener {
                 presenter.saveFile(interaction)
             }
+
+            // Manage copy
             convActionCopyText.setOnClickListener {
                 addToClipboard(lastElement.body)
-                popupWindow.get()?.dismiss()
+                popupWindow.dismiss()
             }
+
+            // Manage Edit and Delete actions
             if (!interaction.isIncoming) {
+                // Edit
                 convActionEdit.setOnClickListener {
                     try {
                         val i = Intent(it.context, MessageEditActivity::class.java)
-                            .setData(Uri.withAppendedPath(ConversationPath.toUri(interaction.account!!, interaction.conversationId!!), interaction.messageId))
+                            .setData(
+                                Uri.withAppendedPath(
+                                    ConversationPath.toUri(
+                                        interaction.account!!,
+                                        interaction.conversationId!!
+                                    ),
+                                    interaction.messageId
+                                )
+                            )
                             .setAction(Intent.ACTION_EDIT)
-                            .putExtra(Intent.EXTRA_TEXT, cvh.mMsgTxt!!.text.toString())
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), cvh.mMsgTxt!!, "messageEdit")
-                        conversationFragment.startActivityForResult(i, ConversationFragment.REQUEST_CODE_EDIT_MESSAGE, options.toBundle())
+                            .putExtra(
+                                Intent.EXTRA_TEXT,
+                                conversationViewHolder.mMsgTxt!!.text.toString()
+                            )
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            conversationFragment.requireActivity(),
+                            conversationViewHolder.mMsgTxt!!,
+                            "messageEdit"
+                        )
+                        conversationFragment.startActivityForResult(
+                            i,
+                            ConversationFragment.REQUEST_CODE_EDIT_MESSAGE,
+                            options.toBundle()
+                        )
                     } catch (e: Exception) {
                         Log.w(TAG, "Can't open picture", e)
                     }
-                    popupWindow.get()?.dismiss()
+                    popupWindow.dismiss()
                 }
+
+                // Delete
                 convActionDelete.setOnClickListener {
                     presenter.deleteConversationItem(interaction)
-                    popupWindow.get()?.dismiss()
+                    popupWindow.dismiss()
                 }
             } else {
                 convActionEdit.setOnClickListener(null)
                 convActionDelete.setOnClickListener(null)
             }
+
+            // Share
             convActionShare.setOnClickListener {
                 if (interaction is DataTransfer)
                     presenter.shareFile(interaction)
                 else if (interaction is TextMessage)
                     presenter.shareText(interaction)
-                popupWindow.get()?.dismiss()
+                popupWindow.dismiss()
             }
+
+            // Message history
             if (convActionHistory.isVisible)
                 convActionHistory.setOnClickListener {
-                    cvh.compositeDisposable.add(
+                    conversationViewHolder.compositeDisposable.add(
                         interaction.historyObservable.firstOrError().subscribe { c ->
                             Log.w(TAG, "Message history ${c.size}")
                             c.forEach {
@@ -839,8 +894,9 @@ class ConversationAdapter(
                                 { dialog, which -> dialog.dismiss() }
                                 .create()
                                 .show()
-                        })
-                    popupWindow.get()?.dismiss()
+                        }
+                    )
+                    popupWindow.dismiss()
                 }
         }
     }
