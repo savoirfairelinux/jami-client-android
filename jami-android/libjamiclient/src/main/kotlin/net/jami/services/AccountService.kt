@@ -519,19 +519,41 @@ class AccountService(
         }
     }
 
-    fun sendConversationMessage(accountId: String, conversationUri: Uri, txt: String, replyTo: String?, flag: Int = 0) {
+    /**
+     * Ask the demon to send a conversation message.
+     * @param accountId Emitter of the message
+     * @param conversationUri Conversation uri where the message have to be sent
+     * @param text Text message to send
+     * @param replyTo Message replying to
+     * @param flag Demon specific (0 for reply, 1 for edition, 2 for reaction)
+     */
+    fun sendConversationMessage(
+        accountId: String, conversationUri: Uri, text: String, replyTo: String?, flag: Int = 0
+    ) {
         mExecutor.execute {
-            Log.w(TAG, "sendConversationMessage ${conversationUri.rawRingId} $txt $replyTo $flag")
-            JamiService.sendMessage(accountId, conversationUri.rawRingId, txt, replyTo ?: "", flag)
+            JamiService.sendMessage(
+                accountId, conversationUri.rawRingId, text, replyTo ?: "", flag
+            )
         }
     }
 
     fun deleteConversationMessage(accountId: String, conversationUri: Uri, messageId: String) {
         sendConversationMessage(accountId, conversationUri, "", messageId, 1)
     }
-    fun editConversationMessage(accountId: String, conversationUri: Uri, txt: String, messageId: String) {
-        sendConversationMessage(accountId, conversationUri, txt, messageId, 1)
+
+    /**
+     * Edits a conversation message or reaction.
+     * @param accountId Modifier account id
+     * @param conversationUri Conversation uri where the edition occurs
+     * @param newText New text message
+     * @param messageId Id of the message that need to be edited
+     */
+    fun editConversationMessage(
+        accountId: String, conversationUri: Uri, newText: String, messageId: String
+    ) {
+        sendConversationMessage(accountId, conversationUri, newText, messageId, 1)
     }
+
     fun sendConversationReaction(accountId: String, conversationUri: Uri, txt: String, replyTo: String) {
         sendConversationMessage(accountId, conversationUri, txt, replyTo, 2)
     }
@@ -1286,12 +1308,19 @@ class AccountService(
         return interaction
     }
 
-    private fun addMessage(account: Account, conversation: Conversation, message: Map<String, String>, newMessage: Boolean): Interaction {
+    /**
+     * Add a message.
+     * @param account Emitter of the message account
+     * @param conversation Conversation where the message have been sent
+     * @param message TODO What is the format of the message
+     * @param isNewMessage
+     */
+    private fun addMessage(
+        account: Account, conversation: Conversation, message: Map<String, String>,
+        isNewMessage: Boolean
+    ): Interaction {
         val interaction = getInteraction(account, conversation, message)
-        if (conversation.addSwarmElement(interaction, newMessage)) {
-            /*if (conversation.isVisible)
-                mHistoryService.setMessageRead(account.accountID, conversation.uri, interaction.messageId!!)*/
-        }
+        conversation.addSwarmElement(interaction, isNewMessage)
         return interaction
     }
 
@@ -1426,19 +1455,30 @@ class AccountService(
         }
     }
 
+    /**
+     * On message received (from demon).
+     * @param accountId Emitter of the received message
+     * @param conversationId Conversation where the message is received.
+     * @param message TODO Explain what form the message have
+     */
     fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
-        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
-        getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
-            synchronized(conversation) {
-                val interaction = addMessage(account, conversation, message, true)
-                account.conversationUpdated(conversation)
-                val isIncoming = !interaction.contact!!.isUser
-                if (isIncoming)
-                    incomingSwarmMessageSubject.onNext(interaction)
-                if (interaction is DataTransfer)
-                    dataTransfers.onNext(interaction)
+        // Get account and conversation from id.
+        getAccount(accountId)?.let { account ->
+            account.getSwarm(conversationId)?.let { conversation ->
+                synchronized(conversation) {
+                    // Add the new message
+                    val interaction = addMessage(account, conversation, message, true)
+                    account.conversationUpdated(conversation)
+                    // Manage notification
+                    val isIncoming = !interaction.contact!!.isUser
+                    if (isIncoming)
+                        incomingSwarmMessageSubject.onNext(interaction)
+                    // Manage data if data transfer interaction.
+                    if (interaction is DataTransfer)
+                        dataTransfers.onNext(interaction)
+                }
             }
-        }}
+        }
     }
 
     fun sendFile(conversation: Conversation, file: File) {
