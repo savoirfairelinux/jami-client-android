@@ -88,34 +88,28 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mTitleView = view.findViewById(R.id.browse_title_group)
-        super.onViewCreated(view, savedInstanceState)
-        setupUIElements(requireContext(), presenter.conversationFacade)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mDisposable.clear()
-    }
-
-    private fun setupUIElements(context: Context, conversationFacade: ConversationFacade) {
-        selector = CardPresenterSelector(context, conversationFacade)
+        mTitleView = view.findViewById<CustomTitleView>(R.id.browse_title_group).apply {
+            settingsButton.setOnClickListener { presenter.onSettingsClicked() }
+        }
+        onItemViewClickedListener = ItemViewClickedListener()
+        setOnSearchClickedListener { startActivity(Intent(context, SearchActivity::class.java)) }
+        selector = CardPresenterSelector(requireContext(), presenter.conversationFacade)
         cardRowAdapter = ArrayObjectAdapter(selector)
-
-        /* Contact Presenter */
         val contactRow = CardRow(false, getString(R.string.tv_contact_row_header), ArrayList())
         val cardPresenterHeader = HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header))
         val contactListRow = CardListRow(cardPresenterHeader, cardRowAdapter, contactRow)
-        accountSettingsRow = createAccountSettingsRow(context)
+        accountSettingsRow = createAccountSettingsRow(requireContext())
         adapter = ArrayObjectAdapter(ShadowRowPresenterSelector()).apply {
             add(contactListRow)
             add(accountSettingsRow)
         }
 
-        // listeners
-        setOnSearchClickedListener { startActivity(Intent(context, SearchActivity::class.java)) }
-        onItemViewClickedListener = ItemViewClickedListener()
-        mTitleView!!.settingsButton.setOnClickListener { presenter.onSettingsClicked() }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mDisposable.clear()
     }
 
     private fun createRow(titleSection: String, cards: List<Card>, shadow: Boolean): ListRow {

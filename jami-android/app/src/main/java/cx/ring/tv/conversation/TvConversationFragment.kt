@@ -43,6 +43,7 @@ import android.view.animation.Animation
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -102,7 +103,37 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        FragConversationTvBinding.inflate(inflater, container, false).apply { binding = this }.root
+        FragConversationTvBinding.inflate(inflater, container, false).apply {
+            buttonText.setOnClickListener { displaySpeechRecognizer() }
+            buttonVideo.setOnClickListener {
+                if (checkAudioPermission(REQUEST_AUDIO_PERMISSION_FOR_VIDEO))
+                    openVideoRecorder()
+            }
+            buttonAudio.setOnClickListener {
+                onRecord(mStartRecording)
+                mStartRecording = !mStartRecording
+            }
+            buttonText.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus: Boolean ->
+                    TransitionManager.beginDelayedTransition(textContainer)
+                    textText.visibility = if (hasFocus) View.VISIBLE else View.GONE
+                }
+            buttonAudio.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus: Boolean ->
+                    TransitionManager.beginDelayedTransition(audioContainer)
+                    textAudio.visibility = if (hasFocus) View.VISIBLE else View.GONE
+                }
+            buttonVideo.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus: Boolean ->
+                    TransitionManager.beginDelayedTransition(videoContainer)
+                    textVideo.visibility = if (hasFocus) View.VISIBLE else View.GONE
+                }
+            recyclerView.layoutManager = LinearLayoutManager(root.context).apply {
+                reverseLayout = true
+                stackFromEnd = true
+            }
+            binding = this
+        }.root
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -135,43 +166,9 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //ConversationPath path = ConversationPath.fromIntent(requireActivity().getIntent());
-        presenter.init(mConversationPath!!.conversationUri, mConversationPath!!.accountId)
         mAdapter = TvConversationAdapter(this, presenter)
-
-        binding!!.let { binding ->
-            binding.buttonText.setOnClickListener { displaySpeechRecognizer() }
-            binding.buttonVideo.setOnClickListener {
-                if (checkAudioPermission(REQUEST_AUDIO_PERMISSION_FOR_VIDEO))
-                    openVideoRecorder()
-            }
-
-            binding.buttonAudio.setOnClickListener {
-                onRecord(mStartRecording)
-                mStartRecording = !mStartRecording
-            }
-            binding.buttonText.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus: Boolean ->
-                    TransitionManager.beginDelayedTransition(binding.textContainer)
-                    binding.textText.visibility = if (hasFocus) View.VISIBLE else View.GONE
-                }
-            binding.buttonAudio.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus: Boolean ->
-                    TransitionManager.beginDelayedTransition(binding.audioContainer)
-                    binding.textAudio.visibility = if (hasFocus) View.VISIBLE else View.GONE
-                }
-            binding.buttonVideo.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus: Boolean ->
-                    TransitionManager.beginDelayedTransition(binding.videoContainer)
-                    binding.textVideo.visibility = if (hasFocus) View.VISIBLE else View.GONE
-                }
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.reverseLayout = true
-            linearLayoutManager.stackFromEnd = true
-            binding.recyclerView.layoutManager = linearLayoutManager
-            binding.recyclerView.adapter = mAdapter
-        }
+        presenter.init(mConversationPath!!.conversationUri, mConversationPath!!.accountId)
+        binding!!.recyclerView.adapter = mAdapter
     }
 
     private fun checkAudioPermission(code: Int): Boolean {
@@ -626,27 +623,50 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun goToContactActivity(accountId: String, uri: net.jami.model.Uri) {}
     override fun switchToUnknownView(name: String) {
-        // todo
+        binding?.apply {
+            conversationActionGroup.isVisible = false
+            conversationActionMessage.text = getString(R.string.message_contact_not_trusted, name)
+            conversationActionMessage.isVisible = true
+        }
     }
 
-    override fun switchToIncomingTrustRequestView(message: String) {
-        // todo
+    override fun switchToIncomingTrustRequestView(name: String) {
+        binding?.apply {
+            conversationActionGroup.isVisible = false
+            conversationActionMessage.text = name
+            conversationActionMessage.isVisible = true
+        }
     }
 
     override fun switchToConversationView() {
-        // todo
+        binding?.apply {
+            conversationActionGroup.isVisible = true
+            conversationActionMessage.isVisible = false
+        }
     }
 
     override fun switchToBannedView() {
-        // todo
+        binding?.apply {
+            conversationActionGroup.isVisible = false
+            conversationActionMessage.text = getString(R.string.conversation_contact_banned, "")
+            conversationActionMessage.isVisible = true
+        }
     }
 
     override fun switchToSyncingView() {
-        // todo
+        binding?.apply {
+            conversationActionGroup.isVisible = false
+            conversationActionMessage.text = getString(R.string.conversation_contact_banned, "")
+            conversationActionMessage.isVisible = true
+        }
     }
 
     override fun switchToEndedView() {
-        // todo
+        binding?.apply {
+            conversationActionGroup.isVisible = false
+            conversationActionMessage.text = getText(R.string.conversation_ended)
+            conversationActionMessage.isVisible = true
+        }
     }
 
     override fun openFilePicker() {}
