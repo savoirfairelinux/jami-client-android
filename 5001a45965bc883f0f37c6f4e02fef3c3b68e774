@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "872e419e_a5f01263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T17:34:07Z",
+      "side": 1,
+      "message": "Hard to understand with no comments and no bug explanation.",
+      "revId": "5001a45965bc883f0f37c6f4e02fef3c3b68e774",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
