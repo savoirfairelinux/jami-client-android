@@ -682,6 +682,20 @@ class ConversationAdapter(
         player.seekTo(1)
     }
 
+    /**
+     * Tell if messageReacted already has the messageReaction.
+     * @param messageReacted Message getting potential new reaction
+     * @param messageReaction Text of the reaction
+     * @return True if messageReacted already has the messageReaction else false.
+     */
+    private fun isReactionAlreadyUsed(
+        messageReacted: Interaction,
+        messageReaction: String
+    ): Boolean {
+        // Look into reactions list of messageReacted if the messageReaction is already set.
+        return messageReacted.reactions.any { it.body == messageReaction }
+    }
+
     private fun openItemMenu(cvh: ConversationViewHolder, v: View, interaction: Interaction) {
         MenuConversationBinding.inflate(LayoutInflater.from(v.context)).apply {
             val history = interaction.historyObservable.blockingFirst()
@@ -710,7 +724,8 @@ class ConversationAdapter(
                 showAsDropDown(v)
             })
             val emojiCallback = View.OnClickListener { view ->
-                presenter.sendReaction(interaction, (view as TextView).text)
+                if (!isReactionAlreadyUsed(interaction, (view as TextView).text.toString()))
+                    presenter.sendReaction(interaction, view.text)
                 popupWindow.get()?.dismiss()
             }
             convActionEmoji1.setOnClickListener(emojiCallback)
