@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c58fbccb_5859b05c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Adrien, can you help me documenting these points ? :)",
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa0a4c43_a7f1d8b9",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 528,
+        "startChar": 19,
+        "endLine": 528,
+        "endChar": 44
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82824baf_81fe3d23",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 1315,
+        "startChar": 22,
+        "endLine": 1315,
+        "endChar": 60
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc25594e_c564d931",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 1324,
+        "startChar": 8,
+        "endLine": 1324,
+        "endChar": 58
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2336f9_c7072276",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 1463,
+        "startChar": 22,
+        "endLine": 1463,
+        "endChar": 61
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03398bb8_53465e12",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 1473,
+        "startChar": 43,
+        "endLine": 1473,
+        "endChar": 72
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f20394ab_50b3c835",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-05T15:13:08Z",
+      "side": 1,
+      "message": "Todo",
+      "range": {
+        "startLine": 1477,
+        "startChar": 65,
+        "endLine": 1477,
+        "endChar": 94
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
