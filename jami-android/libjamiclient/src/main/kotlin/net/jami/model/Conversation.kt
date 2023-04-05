@@ -682,12 +682,20 @@ class Conversation : ConversationHistory {
             }
     }
 
-    private fun addReaction(interaction: Interaction, reactTo: String) {
-        val msg = getMessage(reactTo)
-        if (msg != null)
-            msg.addReaction(interaction)
-        else
-            mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(interaction)
+    /**
+     * Add a reaction in the model.
+     * @param reactionInteraction Reaction to add
+     * @param reactTo Interaction we are reacting to
+     */
+    private fun addReaction(reactionInteraction: Interaction, reactTo: String) {
+        // Connect interaction edit when pending
+        mPendingEdits.remove(reactionInteraction.messageId)
+            ?.let { edits -> reactionInteraction.addEdits(edits) }
+        val reactedInteraction = getMessage(reactTo)
+        if (reactedInteraction != null) {
+            reactedInteraction.addReaction(reactionInteraction)
+        } else
+            mPendingReactions.computeIfAbsent(reactTo) { ArrayList() }.add(reactionInteraction)
     }
 
     enum class Mode {
