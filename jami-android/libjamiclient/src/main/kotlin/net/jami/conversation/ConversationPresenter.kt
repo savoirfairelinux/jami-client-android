@@ -467,13 +467,22 @@ class ConversationPresenter @Inject constructor(
         }
     }
 
-    fun sendReaction(interaction: Interaction, text: CharSequence) {
-        val conversation = mConversation ?: return
-        accountService.sendConversationReaction(conversation.accountId, conversation.uri, text.toString(), interaction.messageId ?: return)
-    }
-
     fun shareText(interaction: TextMessage) {
         view!!.shareText(interaction.body ?: return)
+    }
+
+    /**
+     * Send reaction (emoji)
+     * Application may have already check that the same reaction is not sent multiple times.
+     * @param reactedMessage
+     * @param reactionText emoji to send
+     */
+    fun sendReaction(reactedMessage: Interaction, reactionText: CharSequence) {
+        val conversation = mConversation ?: return
+        accountService.sendConversationReaction(
+            conversation.accountId, conversation.uri,
+            reactionText.toString(), reactedMessage.messageId ?: return
+        )
     }
 
     fun removeReaction(interaction: Interaction) {
