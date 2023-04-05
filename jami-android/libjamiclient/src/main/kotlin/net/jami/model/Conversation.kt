@@ -712,6 +712,9 @@ class Conversation : ConversationHistory {
      * @param reactTo Interaction we are reacting to
      */
     private fun addReaction(reactionInteraction: Interaction, reactTo: String) {
+        // Connect interaction edit when pending
+        mPendingEdits.remove(reactionInteraction.messageId)
+            ?.let { edits -> reactionInteraction.addEdits(edits) }
         val reactedInteraction = getMessage(reactTo)
         if (reactedInteraction != null) {
             reactedInteraction.addReaction(reactionInteraction)
