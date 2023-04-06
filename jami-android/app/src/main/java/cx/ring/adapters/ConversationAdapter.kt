@@ -322,6 +322,7 @@ class ConversationAdapter(
                         chip.isVisible = true
                         chip.isClickable = true
                         chip.isFocusable = true
+                        chip.isChecked = false
                     }
                 }
             })
