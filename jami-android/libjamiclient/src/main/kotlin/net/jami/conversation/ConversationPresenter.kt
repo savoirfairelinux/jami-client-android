@@ -471,11 +471,24 @@ class ConversationPresenter @Inject constructor(
         view!!.shareText(interaction.body ?: return)
     }
 
+    /**
+     * Remove reaction (emoji)
+     * Remove a reaction with git system consists in creating an "edit" interaction with empty body.
+     * @param interaction to clean from reaction
+     */
     fun removeReaction(interaction: Interaction) {
         val conversation = mConversation ?: return
-        interaction.reactions.filter { it.author == myId }.forEach {
-            accountService.editConversationMessage(conversation.accountId, conversation.uri, "", it.messageId!!)
-        }
+        // User can only remove his reactions.
+        mCompositeDisposable.add(interaction.reactionObservable
+            .firstOrError()
+            .subscribe { interactionList ->
+                interactionList.filter { it.author == myId }.forEach { interaction ->
+                    accountService.editConversationMessage(
+                        conversation.accountId, conversation.uri, "", interaction.messageId!!
+                    )
+                }
+            }
+        )
     }
 
     fun editMessage(accountId: String, conversationUri: Uri, messageId: String, newMessage: String) {
