@@ -484,11 +484,16 @@ class ConversationPresenter @Inject constructor(
     fun removeReaction(interaction: Interaction) {
         val conversation = mConversation ?: return
         // User can only remove his reactions.
-        interaction.reactions.filter { it.author == myId }.forEach {
-            accountService.editConversationMessage(
-                conversation.accountId, conversation.uri, "", it.messageId!!
-            )
-        }
+        mCompositeDisposable.add(interaction.reactionObservable
+            .firstOrError()
+            .subscribe { interactionList ->
+                interactionList.filter { it.author == myId }.forEach { interaction ->
+                    accountService.editConversationMessage(
+                        conversation.accountId, conversation.uri, "", interaction.messageId!!
+                    )
+                }
+            }
+        )
     }
 
     fun editMessage(accountId: String, conversationUri: Uri, messageId: String, newMessage: String) {
