@@ -34,7 +34,7 @@
   <string name="menu_item_account">Gestion du compte</string>
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_advanced_settings">Paramètres avancés</string>
-  <string name="menu_item_account_settings">Paramètres Compte Jami</string>
+  <string name="menu_item_account_settings">Paramètres Compte</string>
   <string name="menu_item_plugin_list">Paramètres des modules d\'extension</string>
   <string name="menu_item_share">Partager mon compte</string>
   <string name="menu_item_about">À propos de Jami</string>
@@ -94,8 +94,8 @@
   <string name="action_call_hangup">Raccrochez</string>
   <string name="action_call_maximize">Maximiser</string>
   <string name="action_call_minimize">Réduire</string>
-  <string name="action_call_mute">Couper le micro</string>
-  <string name="action_call_unmute">Ouvrir le micro</string>
+  <string name="action_call_mute">Désactiver le micro</string>
+  <string name="action_call_unmute">Activer le micro</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -191,17 +191,17 @@
   <string name="conversation_info_contact_you">Vous</string>
   <string name="conversation_members">Membres</string>
   <string name="conversation_syncing">Téléchargement de la conversation depuis le pair.</string>
-  <string name="conversation_blocked">Le contact  est bloqué</string>
+  <string name="conversation_blocked">Le contact est bloqué</string>
   <string name="conversation_ended">La conversation est terminée</string>
   <string name="conversation_message_deleted">(Message supprimé)</string>
-  <string name="conversation_preference_color">Couleur de la conversation</string>
+  <string name="conversation_preference_color">Couleur de conversation</string>
   <string name="conversation_preference_emoji">Émoji de conversation</string>
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Swarm privé</string>
   <string name="conversation_type_group">Swarm</string>
   <string name="conversation_contact_invited">%1$sa été invité</string>
   <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
-  <string name="conversation_contact_left">%1$s restant</string>
+  <string name="conversation_contact_left">%1$s restant(s)</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
   <!--Contacts-->

@@ -30,6 +30,7 @@
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Кантакты</string>
   <!--File Transfer-->
   <string name="file_transfer_status_cancelled">скасавана</string>
   <string name="menu_message_cancel">Скасаваць паведамленне</string>

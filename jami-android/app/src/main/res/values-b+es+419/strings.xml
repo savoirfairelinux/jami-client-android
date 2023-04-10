@@ -27,6 +27,8 @@
   <!--Conversation-->
   <string name="conversation_action_unblock_this">Desbloquear contacto</string>
   <string name="conversation_action_latest">Desplazar hasta el final de la conversación</string>
+  <string name="conversation_type_private">Enjambre privado</string>
+  <string name="conversation_type_group">Enjambre grupal</string>
   <!--Contacts-->
   <!--Account Summary-->
   <!--Share fragment-->

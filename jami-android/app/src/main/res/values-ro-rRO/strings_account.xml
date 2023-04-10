@@ -194,7 +194,7 @@
   <string name="account_link_export_info">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_start_export_button">Generează PIN</string>
   <string name="account_end_export_button">închide</string>
-  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat unui cont”. Codul tău PIN este valabil 10 minute.</string>
+  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu „Asociază acest aparat cu un cont”. Codul tău PIN este valabil 10 minute.</string>
   <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întâi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_export_title">Asociază contul cu alte aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
