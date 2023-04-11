@@ -1,0 +1,92 @@
+/*
+ *  Copyright (C) 2004-2022 Savoir-faire Linux Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+package cx.ring.service
+
+import android.os.Build
+import android.telecom.Connection
+import android.telecom.ConnectionRequest
+import android.telecom.ConnectionService
+import android.telecom.PhoneAccountHandle
+import androidx.annotation.RequiresApi
+import cx.ring.application.JamiApplication
+import cx.ring.services.NotificationServiceImpl
+import cx.ring.utils.ConversationPath
+import dagger.hilt.android.AndroidEntryPoint
+import net.jami.services.AccountService
+import net.jami.services.CallService
+import net.jami.services.NotificationService
+import javax.inject.Inject
+
+@AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
+class ConnectionService : ConnectionService() {
+    @Inject
+    lateinit var accountService: AccountService
+    @Inject
+    lateinit var callService: CallService
+    @Inject
+    lateinit var notificationService: NotificationService
+
+    private fun buildConnection(request: ConnectionRequest): Connection? {
+        //val conversation = ConversationPath.fromBundle(request.extras)
+        val callId = request.extras.getString(NotificationService.KEY_CALL_ID) ?: return null
+        val conference = callService.getConference(callId) ?: return null
+        val connection = CallConnection(this, conference).apply {
+            connectionCapabilities = getCapabilities()
+            connectionProperties = getProperties()
+        }
+        (notificationService as NotificationServiceImpl).addConnection(connection)
+        return connection
+    }
+
+    override fun onCreateOutgoingConnection(account: PhoneAccountHandle, request: ConnectionRequest): Connection? =
+        buildConnection(request)
+
+    override fun onCreateOutgoingConnectionFailed(account: PhoneAccountHandle, request: ConnectionRequest) {
+    }
+
+    override fun onCreateIncomingConnection(account: PhoneAccountHandle, request: ConnectionRequest): Connection? =
+        buildConnection(request)
+
+    override fun onCreateIncomingConnectionFailed(account: PhoneAccountHandle?, request: ConnectionRequest?) {
+        if (account == JamiApplication.instance!!.androidPhoneAccountHandle && request != null) {
+            val accountId = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+            val callId = request.extras.getString(NotificationService.KEY_CALL_ID) ?: return
+            callService.hangUp(accountId, callId)
+        }
+    }
+
+    companion object {
+        const val HANDLE_ID = "jami"
+
+        private const val CAPABILITIES = Connection.CAPABILITY_CAN_SEND_RESPONSE_VIA_CONNECTION or
+                Connection.CAPABILITY_CANNOT_DOWNGRADE_VIDEO_TO_AUDIO or
+                Connection.CAPABILITY_CAN_PAUSE_VIDEO or
+                Connection.CAPABILITY_SUPPORT_HOLD or
+                Connection.CAPABILITY_MUTE
+        private const val PROPERTIES = Connection.PROPERTY_SELF_MANAGED
+
+        fun getCapabilities() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            CAPABILITIES or Connection.CAPABILITY_ADD_PARTICIPANT
+        } else CAPABILITIES
+
+        fun getProperties() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            PROPERTIES or Connection.PROPERTY_HIGH_DEF_AUDIO
+        } else PROPERTIES
+    }
+}

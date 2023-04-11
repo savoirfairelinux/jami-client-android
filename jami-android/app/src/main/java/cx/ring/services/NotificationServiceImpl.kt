@@ -30,6 +30,10 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
+import android.telecom.DisconnectCause
+import android.telecom.TelecomManager
+import android.telecom.VideoProfile
 import android.text.TextUtils
 import android.text.format.Formatter
 import android.util.JsonWriter
@@ -43,6 +47,7 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
 import androidx.core.content.LocusIdCompat
+import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.bumptech.glide.Glide
@@ -54,6 +59,7 @@ import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
 import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ConversationFragment
+import cx.ring.service.CallConnection
 import cx.ring.service.CallNotificationService
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
@@ -90,6 +96,8 @@ class NotificationServiceImpl(
     private val random = Random()
     private val avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
     private val currentCalls = LinkedHashMap<String, Conference>()
+    private val callConnections = LinkedHashMap<String, CallConnection>()
+
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
@@ -264,8 +272,13 @@ class NotificationServiceImpl(
      * @param notificationId the notification's id
      */
     private fun updateNotification(notification: Notification, notificationId: Int) {
-        notificationManager.notify(notificationId, notification)
+        try {
+            notificationManager.notify(notificationId, notification)
+        } catch (e: SecurityException) {
+        }
     }
+
+
 
     /**
      * Handles the creation and destruction of services associated with calls as well as displaying notifications.
@@ -274,6 +287,36 @@ class NotificationServiceImpl(
      * @param remove     true if it should be removed from current calls
      */
     override fun handleCallNotification(conference: Conference, remove: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+                if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
+                    val extras = Bundle()
+                    if (conference.hasVideo())
+                        extras.putInt(
+                            TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                            VideoProfile.STATE_BIDIRECTIONAL
+                        )
+                    telecomService.addNewIncomingCall(
+                        JamiApplication.instance!!.androidPhoneAccountHandle,
+                        extras
+                    )
+                    return
+                }
+                if (remove) {
+                    callConnections.remove(conference.id)?.let {
+                        it.setDisconnected(
+                            DisconnectCause(if (conference.state == Call.CallStatus.FAILURE)
+                                DisconnectCause.ERROR
+                            else DisconnectCause.LOCAL)
+                        )
+                        it.destroy()
+                    }
+                }
+            }
+        }
+        manageCallNotification(conference, remove)
+    }
+    fun manageCallNotification(conference: Conference, remove: Boolean) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
             return
@@ -886,6 +929,11 @@ class NotificationServiceImpl(
 
     private fun setContactPicture(contact: ContactViewModel, messageNotificationBuilder: NotificationCompat.Builder) {
         getContactPicture(contact)?.let { pic -> messageNotificationBuilder.setLargeIcon(pic) }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addConnection(connection: CallConnection) {
+        callConnections[connection.callId!!] = connection
     }
 
     companion object {
