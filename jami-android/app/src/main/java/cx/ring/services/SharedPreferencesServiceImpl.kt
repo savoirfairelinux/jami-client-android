@@ -118,6 +118,10 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
     override val bitrate: Int
         get() = videoPreferences.getString(PREF_BITRATE, context.getString(R.string.video_bitrate_default))!!.toInt()
 
+    override var isLogActive: Boolean
+        get() = preferences.getBoolean(PREF_LOG_IS_ACTIVE, false)
+        set(enabled) = preferences.edit().putBoolean(PREF_LOG_IS_ACTIVE, enabled).apply()
+
     override val isHardwareAccelerationEnabled: Boolean
         get() = videoPreferences.getBoolean(PREF_HW_ENCODING, true)
 
@@ -170,6 +174,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         const val PREF_DARK_MODE = "darkMode"
         private const val PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize"
         const val PREF_PLUGINS = "plugins"
+        private const val PREF_LOG_IS_ACTIVE = "preference_log_is_active"
 
         fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences {
             return context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
