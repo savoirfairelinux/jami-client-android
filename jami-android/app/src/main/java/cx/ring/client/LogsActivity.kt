@@ -18,6 +18,7 @@
  */
 package cx.ring.client
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -141,6 +142,9 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun startLogging() {
+        // Allows to start logging at application startup.
+        mHardwareService.mPreferenceService.isLogActive = true
+
         binding.logView.text = ""
         //disposable =
         compositeDisposable.add(mHardwareService.startLogs()
@@ -154,6 +158,8 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun stopLogging() {
+        mHardwareService.mPreferenceService.isLogActive = false
+
         disposable?.let {
             it.dispose()
             disposable = null
