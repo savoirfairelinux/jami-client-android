@@ -161,7 +161,7 @@ abstract class HardwareService(
 
     @Synchronized
     fun startLogs(): Observable<String> {
-        return logs ?: Observable.create(ObservableOnSubscribe { emitter: ObservableEmitter<String> ->
+        return logs ?: Observable.create { emitter: ObservableEmitter<String> ->
             logEmitter = emitter
             JamiService.monitor(true)
             emitter.setCancellable {
@@ -171,7 +171,7 @@ abstract class HardwareService(
                     logs = null
                 }
             }
-        } as ObservableOnSubscribe<String>)
+        }
             .observeOn(Schedulers.io())
             .scan(StringBuffer(1024)) { sb: StringBuffer, message: String -> sb.append(message).append('\n') }
             .throttleLatest(500, TimeUnit.MILLISECONDS)

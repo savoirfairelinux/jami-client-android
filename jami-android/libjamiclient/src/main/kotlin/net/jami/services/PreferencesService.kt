@@ -62,6 +62,7 @@ abstract class PreferencesService(
     abstract val bitrate: Int
     abstract val isHardwareAccelerationEnabled: Boolean
     abstract var darkMode: Boolean
+    abstract var isLogActive: Boolean
     abstract fun loadDarkMode()
     abstract fun getMaxFileAutoAccept(accountId: String): Int
 }
