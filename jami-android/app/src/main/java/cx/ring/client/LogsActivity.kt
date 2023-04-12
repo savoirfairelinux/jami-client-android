@@ -18,6 +18,7 @@
  */
 package cx.ring.client
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -141,6 +142,11 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun startLogging() {
+        with( // Load shared preferences and set new value.
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                .edit()
+        ) { putBoolean("preference_log_is_active", true).apply() }
+
         binding.logView.text = ""
         //disposable =
         compositeDisposable.add(mHardwareService.startLogs()
@@ -154,6 +160,11 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun stopLogging() {
+        with( // Load shared preferences and set new value.
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                .edit()
+        ) { putBoolean("preference_log_is_active", false).apply() }
+
         disposable?.let {
             it.dispose()
             disposable = null

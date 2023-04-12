@@ -200,7 +200,10 @@ abstract class JamiApplication : Application() {
         super.onCreate()
         instance = this
 
-        //DynamicColors.applyToActivitiesIfAvailable(this);
+        // Launch logging if previously set up by user (info is stored in shared preferences).
+        getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+            ?.getBoolean(getString(R.string.preference_log_is_active), false)
+            ?.let { if (it) hardwareService.startLogs() }
 
         if (!BuildConfig.DEBUG) {
             // Set a default exception handler for RxJava.
