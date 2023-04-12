@@ -200,7 +200,10 @@ abstract class JamiApplication : Application() {
         super.onCreate()
         instance = this
 
-        //DynamicColors.applyToActivitiesIfAvailable(this);
+        // Launch logging if previously set up by user (info is stored in shared preferences).
+        // Subscribe on it (first element) to initialize pipe construction.
+        if (hardwareService.mPreferenceService.isLogActive)
+            hardwareService.startLogs().firstElement().subscribe()
 
         if (!BuildConfig.DEBUG) {
             // Set a default exception handler for RxJava.
