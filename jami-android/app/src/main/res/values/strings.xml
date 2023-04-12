@@ -51,6 +51,9 @@ along with this program; if not, write to the Free Software
     <string name="call_service_description">This service is necessary to keep your calls running in the foreground. It only runs during calls.</string>
     <string name="data_transfer_service_description">This service is necessary to display persistent notifications during file transfers. It only runs during file transfers.</string>
 
+    <!-- Preferences -->
+    <string name="preference_file_key">cx.ring.PREFERENCE_FILE_KEY</string>
+    <string name="preference_log_is_active">preference_log_is_active</string>
 
     <!-- About dialog -->
     <string name="developed_by">Developed by</string>
