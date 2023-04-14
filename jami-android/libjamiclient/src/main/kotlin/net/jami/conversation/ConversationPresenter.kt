@@ -248,6 +248,7 @@ class ConversationPresenter @Inject constructor(
         mConversation?.let { conversation -> view?.goToContactActivity(conversation.accountId, conversation.uri) }
     }
 
+
     fun sendTextMessage(message: String?, replyTo: Interaction? = null) {
         val conversation = mConversation
         if (message.isNullOrEmpty() || conversation == null) {
@@ -476,6 +477,16 @@ class ConversationPresenter @Inject constructor(
         view!!.shareText(interaction.body ?: return)
     }
 
+
+    fun removeSpecificReaction(interaction:Interaction){
+        net.jami.utils.Log.w("DEVDEBUG", "working well ! ${interaction.reactToId}")
+//        removeReaction(interaction.reactTo!!)
+        val conversation = mConversation ?: return
+        accountService.editConversationMessage(
+            conversation.accountId, conversation.uri, "", interaction.messageId!!
+        )
+    }
+
     /**
      * Remove reaction (emoji)
      * Remove a reaction with git system consists in creating an "edit" interaction with empty body.
@@ -495,6 +506,7 @@ class ConversationPresenter @Inject constructor(
             }
         )
     }
+
 
     fun editMessage(accountId: String, conversationUri: Uri, messageId: String, newMessage: String) {
         val message = mConversation?.getMessage(messageId)

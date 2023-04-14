@@ -44,11 +44,7 @@ import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -299,6 +295,12 @@ class ConversationAdapter(
             })
     }
 
+    fun removeSpecificReaction(interaction:Interaction){
+        presenter.removeSpecificReaction(interaction)
+        net.jami.utils.Log.w("DEVDEBUG", "working $interaction")
+    }
+
+
     /**
      * Configure a reaction chip and logic about it.
      *
@@ -307,16 +309,74 @@ class ConversationAdapter(
      */
     private fun configureReactions(
         conversationViewHolder: ConversationViewHolder,
-        reaction: Interaction
+        interaction: Interaction
     ) {
         // If reaction chip is clicked it means user wants to remove his reactions
         conversationViewHolder.reactionChip?.setOnClickListener {
-            presenter.removeReaction(reaction)
+            val adapter = ReactionAdapter(conversationViewHolder.itemView.context, ::removeSpecificReaction)
+
+            //adapter.
+
+            MaterialAlertDialogBuilder(conversationViewHolder.itemView.context)
+//                .setTitle("Bonjour")
+                //.setMessage("Comment ça va ?")
+                //.setPositiveButton("Bien !") { _, _ -> }
+                .setAdapter(adapter) { _, _ -> }
+                .show()
+
+//            MaterialAlertDialogBuilder(conversationViewHolder.itemView.context)
+
+
+            //// Manage the display of the chip (ui element showing the emojis)
+            conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
+                .map { it.groupBy { i -> i.contact!! } }
+                .switchMap {
+
+                    // On itère sur chaque entrée du dictionnaire
+                    val entry = it.entries.map { e ->
+                        // On lance un observe contact et on transforme le resultat en une pair de contact view model, list dinteractions
+                        presenter.contactService.observeContact(interaction.account!!, e.key, false)
+                            .map { ae -> Pair(ae, e.value) }
+                    }
+                    // on s'abonne au flux et on on cast le resultat
+                    Observable.combineLatest(entry)
+                    { a -> a.map { ae -> ae as Pair<ContactViewModel, List<Interaction>> } }
+                }
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { reactions ->
+                    // Peut etre une meilleur facon de faire ?
+                    // Replace l'utilisateur en tête de liste
+                    val mutableList = reactions.toMutableList()
+                    val indexOfUserItem = mutableList.indexOfFirst { it.first.contact.isUser }
+                    Log.w("DEVDEBUG", "Heyy ${mutableList.joinToString("")}")
+                    if (indexOfUserItem!=-1){
+                        mutableList.add(0, mutableList.removeAt(indexOfUserItem));
+                    }
+                    Log.w("DEVDEBUG", "Heyy ${mutableList.joinToString("")}")
+                    adapter.setValues(mutableList)
+                })
+
+
+//            conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
+//                .map { it.groupBy { i -> i.contact!! } }
+//                .switchMap {
+//                    Observable.combineLatest(
+//                        it.entries.map { e ->
+//                            presenter.contactService.observeContact(interaction.account!!,e.key,false)
+//                                .map { ae -> Pair(ae, e) }
+//                        }
+//                    )
+//                    { a -> a.map { ae -> ae as Pair<ContactViewModel, List<Interaction>> } }
+//                }
+//                .observeOn(DeviceUtils.uiScheduler)
+//                .subscribe { reactions ->
+//                    adapter.setValues(reactions)
+//                })
         }
 
         // Manage the display of the chip (ui element showing the emojis)
         conversationViewHolder.compositeDisposable.add(
-            reaction.reactionObservable
+            interaction.reactionObservable
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { reactions ->
                     conversationViewHolder.reactionChip?.let { chip ->
