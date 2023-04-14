@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip"
+        style="@style/Widget.Material3.Chip.Filter.Elevated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:elevation="0dp"
+        android:textSize="30sp"
+        app:checkedIconEnabled="false"
+        app:chipEndPadding="0dp"
+        app:chipMinTouchTargetSize="0dp"
+        app:chipStartPadding="0dp"
+        app:textStartPadding="6dp"
+        tools:checked="true"
+        tools:text="🥰" />
+
+</LinearLayout>
