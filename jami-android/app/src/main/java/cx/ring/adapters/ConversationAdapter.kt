@@ -709,6 +709,10 @@ class ConversationAdapter(
                 elevation = v.context.resources.getDimension(R.dimen.call_preview_elevation)
                 showAsDropDown(v)
             })
+            emojiPicker.setOnEmojiPickedListener {
+                presenter.sendReaction(interaction, it.emoji)
+                popupWindow.get()?.dismiss()
+            }
             val emojiCallback = View.OnClickListener { view ->
                 presenter.sendReaction(interaction, (view as TextView).text)
                 popupWindow.get()?.dismiss()
@@ -722,7 +726,15 @@ class ConversationAdapter(
                 popupWindow.get()?.dismiss()
             }
             convActionMore.setOnClickListener {
-                menuActions.isVisible = !menuActions.isVisible
+                val newState = menuActions.isVisible
+                menuActions.isVisible = !newState
+                emojiPicker.isVisible = newState
+                popupWindow.get()?.let {
+                    root.measure(root.width, View.MeasureSpec.UNSPECIFIED)
+                    it.height = root.measuredHeight
+                    it.dismiss()
+                    it.showAsDropDown(v)
+                }
             }
             convActionOpenText.setOnClickListener {
                 presenter.openFile(interaction)

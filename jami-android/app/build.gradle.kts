@@ -110,13 +110,15 @@ dependencies {
     implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.emoji2:emoji2:1.3.0-rc01")
+    implementation ("androidx.emoji2:emoji2-emojipicker:1.0.0-alpha03")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")
+    implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation ("com.google.android.material:material:1.8.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
-	implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
