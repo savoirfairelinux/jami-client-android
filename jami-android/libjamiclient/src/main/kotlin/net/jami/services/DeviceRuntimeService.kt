@@ -19,8 +19,11 @@
  */
 package net.jami.services
 
+import io.reactivex.rxjava3.core.Single
+import net.jami.model.Conference
 import net.jami.services.DaemonService.SystemInfoCallbacks
 import net.jami.model.DataTransfer
+import net.jami.model.Uri
 import java.io.File
 
 abstract class DeviceRuntimeService : SystemInfoCallbacks {
@@ -62,4 +65,20 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     abstract fun hasGalleryPermission(): Boolean
     abstract val profileName: String?
     abstract fun hardLinkOrCopy(source: File, dest: File): Boolean
+
+    /** Use a system API, if available, to request to start a call. */
+    open class SystemOutgoingCall(val allowed: Boolean) {
+        open fun setConference(conference: Conference) {}
+    }
+    open fun requestPlaceCall(
+        accountId: String,
+        conversationUri: Uri?,
+        contactUri: String?,
+        hasVideo: Boolean
+    ): Single<SystemOutgoingCall> = CALL_ALLOWED
+
+    companion object {
+        val CALL_ALLOWED = Single.just(SystemOutgoingCall(true))
+        val CALL_DISALLOWED = Single.just(SystemOutgoingCall(false))
+    }
 }

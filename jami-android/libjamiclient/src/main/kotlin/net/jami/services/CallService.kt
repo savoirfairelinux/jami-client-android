@@ -38,7 +38,8 @@ import java.util.concurrent.ScheduledExecutorService
 class CallService(
     private val mExecutor: ScheduledExecutorService,
     private val mContactService: ContactService,
-    private val mAccountService: AccountService
+    private val mAccountService: AccountService,
+    private val mDeviceRuntimeService: DeviceRuntimeService
 ) {
     private val calls: MutableMap<String, Call> = HashMap()
     private val conferences: MutableMap<String, Conference> = HashMap()
@@ -190,6 +191,16 @@ class CallService(
         return placeCall(accountId, conversationUri, number, hasVideo)
             .flatMapObservable { call: Call -> getCallUpdates(call) }
     }
+
+    fun placeCallIfAllowed(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
+        mDeviceRuntimeService.requestPlaceCall(account, conversationUri, number.rawUriString, hasVideo)
+            .flatMap { result ->
+                if (!result.allowed)
+                    Single.error(SecurityException())
+                else
+                    placeCall(account, conversationUri, number, hasVideo)
+                        .doOnSuccess { result.setConference(getConference(it)) }
+            }
 
     fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
         Single.fromCallable<Call> {
@@ -407,7 +418,7 @@ class CallService(
                 val contact = mContactService.findContact(account, from)
                 val conversationUri = contact.conversationUri.blockingFirst()
                 val conversation =
-                    if (conversationUri.equals(from)) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
+                    if (conversationUri == from) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
                 Call(callId, from.uri, accountId, conversation, contact, direction)
             }.apply { mediaList = media }
         }
