@@ -8,6 +8,14 @@ The Jami client for Android
 
 ## Environment
 
+Download the project including the daemon submodule with:
+git clone --recursive https://review.jami.net/jami-client-android
+
+Or to download the daemon submodule from the existing project directory:
+git submodule update --init --recursive
+
+
+
 Install autotools, autopoint, swig-4 or later and python-3.7 or later on your system
 
 ## Build instructions
