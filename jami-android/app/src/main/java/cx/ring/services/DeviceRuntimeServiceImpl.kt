@@ -25,23 +25,37 @@ import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Process
 import android.provider.ContactsContract
 import android.system.ErrnoException
 import android.system.Os
+import android.telecom.Connection
+import android.telecom.DisconnectCause
+import android.telecom.TelecomManager
+import android.telecom.VideoProfile
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import cx.ring.application.JamiApplication
+import cx.ring.service.CallConnection
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.ConversationPath
 import cx.ring.utils.NetworkUtils
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.SingleSubject
 import net.jami.daemon.IntVect
 import net.jami.daemon.StringVect
+import net.jami.model.Call
+import net.jami.model.Conference
+import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.LogService
 import net.jami.utils.FileUtils
 import net.jami.utils.StringUtils
 import java.io.File
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ScheduledExecutorService
 import kotlin.system.exitProcess
 
@@ -137,6 +151,80 @@ class DeviceRuntimeServiceImpl(
             Log.w(TAG, "Can't create hardlink, copying instead: " + e.message)
             FileUtils.copyFile(source, dest)
         }
+
+    private val pendingCallRequests = ConcurrentHashMap<String, SingleSubject<SystemOutgoingCall>>()
+    private val callConnections = ConcurrentHashMap<String, CallConnection>()
+
+    class AndroidOutgoingCall(val call: CallConnection?): SystemOutgoingCall(call != null) {
+        override fun setConference(conference: Conference) {
+            call?.call = conference
+        }
+    }
+    override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean): Single<SystemOutgoingCall> {
+        // Use the Android Telecom API to implement requestPlaceCall if available
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
+
+                // Dismiss the call immediately if disallowed
+                if (!telecomService.isOutgoingCallPermitted(accountHandle))
+                    return CALL_DISALLOWED
+
+                // Build call parameters
+                val params = Bundle().apply {
+                    putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, accountHandle)
+                    putBundle(TelecomManager.EXTRA_OUTGOING_CALL_EXTRAS, Bundle().apply {
+                        putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                        if (conversationUri != null)
+                            putString(ConversationPath.KEY_CONVERSATION_URI, conversationUri.uri)
+                    })
+                    putInt(TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
+                        if (hasVideo) VideoProfile.STATE_BIDIRECTIONAL
+                        else VideoProfile.STATE_AUDIO_ONLY)
+                }
+
+                // Build contact' Android URI
+                val contact = contactUri ?: conversationUri?.rawUriString ?: return CALL_DISALLOWED
+                val callUri = android.net.Uri.parse(contact)
+                val key = "$accountId/$callUri"
+                val subject = SingleSubject.create<SystemOutgoingCall>()
+
+                // Place call request
+                pendingCallRequests[key] = subject
+                try {
+                    telecomService.placeCall(callUri, params)
+                    return subject
+                } catch (e: SecurityException) {
+                    pendingCallRequests.remove(key)
+                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                }
+            }
+        }
+        // Fallback to allowing the call
+        return CALL_ALLOWED
+    }
+
+    fun onPlaceCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
+        val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        pendingCallRequests.remove("$accountId/$uri")?.onSuccess(AndroidOutgoingCall(result))
+    }
+
+    fun addConnection(connection: CallConnection) {
+        val accountId = connection.request.extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        val uri = connection.request.address
+        callConnections["$accountId/$uri"] = connection
+    }
+
+    fun removeConnection(conference: Conference) {
+        callConnections.remove(conference.id)?.let {
+            it.setDisconnected(
+                DisconnectCause(if (conference.state == Call.CallStatus.FAILURE)
+                    DisconnectCause.ERROR
+                else DisconnectCause.LOCAL)
+            )
+            it.destroy()
+        }
+    }
 
     private fun checkPermission(permission: String): Boolean =
         ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED
