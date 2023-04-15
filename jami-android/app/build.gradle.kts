@@ -136,8 +136,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.14.2")
-    kapt ("com.github.bumptech.glide:compiler:4.14.2")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    kapt ("com.github.bumptech.glide:compiler:4.15.1")
 
     // RxAndroid
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
