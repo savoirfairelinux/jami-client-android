@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "036ea4a4_7305b1ec",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-16T23:38:07Z",
+      "side": 1,
+      "message": "* startLogs returns an observable so this would do nothing.\n* we need so start/stop the logs as soon as the user changes the setting",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 57
+      },
+      "revId": "72573951e644d02e9fe551b35f0f0278f8813ef0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26046e86_e3aa1f05",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-16T23:38:07Z",
+      "side": 1,
+      "message": "add as a key in SharePreferenceServiceImpl, following other SharedPreferences",
+      "range": {
+        "startLine": 146,
+        "startChar": 33,
+        "endLine": 146,
+        "endChar": 72
+      },
+      "revId": "72573951e644d02e9fe551b35f0f0278f8813ef0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a009c31_84d9054a",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-16T23:38:07Z",
+      "side": 1,
+      "message": "add as a key in SharePreferenceServiceImpl",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 49
+      },
+      "revId": "72573951e644d02e9fe551b35f0f0278f8813ef0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5721a7b9_99e4c178",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-16T23:38:07Z",
+      "side": 1,
+      "message": "move logic to SharePreferenceServiceImpl (like video_resolution etc)",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 66
+      },
+      "revId": "72573951e644d02e9fe551b35f0f0278f8813ef0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418a84e7_6b6d326d",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-16T23:38:07Z",
+      "side": 1,
+      "message": "add as a key in SharePreferenceServiceImpl",
+      "range": {
+        "startLine": 166,
+        "startChar": 23,
+        "endLine": 166,
+        "endChar": 49
+      },
+      "revId": "72573951e644d02e9fe551b35f0f0278f8813ef0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
