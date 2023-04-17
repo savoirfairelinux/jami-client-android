@@ -96,20 +96,16 @@ class CallPresenter @Inject constructor(
             .subscribe { state: AudioState -> this.view?.updateAudioState(state) })
     }
 
-    fun initOutGoing(accountId: String?, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean) {
+    fun initOutGoing(accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean) {
         Log.e(TAG, "initOutGoing")
-        var pHasVideo = hasVideo
-        if (accountId == null || contactUri == null) {
+        if (accountId.isEmpty() || contactUri == null) {
             Log.e(TAG, "initOutGoing: null account or contact")
             hangupCall()
             return
         }
-        if (!mHardwareService.hasCamera()) {
-            pHasVideo = false
-        }
-        //getView().blockScreenRotation();
+        val pHasVideo = hasVideo && mHardwareService.hasCamera()
         val callObservable = mCallService
-            .placeCall(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
+            .placeCallIfAllowed(accountId, conversationUri, fromString(toNumber(contactUri)!!), pHasVideo)
             .flatMapObservable { call: Call -> mCallService.getConfUpdates(call) }
             .share()
         mCompositeDisposable.add(callObservable
@@ -676,10 +672,7 @@ class CallPresenter @Inject constructor(
 
     fun holdCurrentCall() {
         mCallService.currentConferences().filter { it != mConference }.forEach { conf ->
-            if (conf.isSimpleCall)
-                mCallService.hold(conf.accountId, conf.id)
-            else
-                mCallService.holdConference(conf.accountId, conf.id)
+            mCallService.holdCallOrConference(conf)
         }
     }
 

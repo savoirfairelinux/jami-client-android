@@ -29,12 +29,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.system.Os
+import android.telecom.PhoneAccount
+import android.telecom.PhoneAccountHandle
+import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
-import com.google.android.material.color.DynamicColors
 import cx.ring.BuildConfig
+import cx.ring.service.ConnectionService
 import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
@@ -49,6 +53,7 @@ import java.io.File
 import java.util.concurrent.ScheduledExecutorService
 import javax.inject.Inject
 import javax.inject.Named
+
 
 abstract class JamiApplication : Application() {
     companion object {
@@ -97,6 +102,8 @@ abstract class JamiApplication : Application() {
     }
     abstract val pushToken: String
     abstract val pushPlatform: String
+
+    lateinit var androidPhoneAccountHandle: PhoneAccountHandle
 
     open fun activityInit(activityContext: Context) {}
 
@@ -207,6 +214,20 @@ abstract class JamiApplication : Application() {
             // Most of these errors bubble up here because the original Rx flow was normally disposed, and can be
             // safely ignored. In some cases this might hide real bugs so we only do that in production.
             RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getSystemService<TelecomManager>()?.let { telecomService ->
+                val componentName = ComponentName(this, ConnectionService::class.java)
+                val handle = PhoneAccountHandle(componentName, ConnectionService.HANDLE_ID)
+                androidPhoneAccountHandle = handle
+                telecomService.registerPhoneAccount(PhoneAccount.Builder(handle, getString(R.string.app_name))
+                    .setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED)
+                    .addSupportedUriScheme("jami")
+                    .addSupportedUriScheme("swarm")
+                    .addSupportedUriScheme(PhoneAccount.SCHEME_SIP)
+                    .build())
+            }
         }
 
         bootstrapDaemon()
