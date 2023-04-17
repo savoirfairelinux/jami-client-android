@@ -36,7 +36,7 @@ Si potra modificare questo account più tardi.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Account</string>
-  <string name="normal_devices_titles">Dispositivi collegati</string>
+  <string name="normal_devices_titles">Dispositivi associati</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_success">Il dispositivo è ora revocato!</string>
@@ -189,8 +189,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_link_prompt_pin">Inserire il PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
   <string name="account_link_export_button">Collega un nuovo dispositivo</string>
-  <string name="account_link_show_button">Mostra %d altri dispositivi collegati</string>
-  <string name="account_link_hide_button">Nascondi i dispositivi collegati</string>
+  <string name="account_link_show_button">Mostra %d altri dispositivi associati</string>
+  <string name="account_link_hide_button">Nascondi i dispositivi associati</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo genererà un codice PIN che devi inserire sul nuovo dispositivo per configurare l\'account. Il PIN è valido per 10 minuti.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>

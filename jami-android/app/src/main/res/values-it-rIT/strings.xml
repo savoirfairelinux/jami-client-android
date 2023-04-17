@@ -304,8 +304,8 @@
   <string name="menu_message_cancel">Annulla messaggio</string>
   <string name="menu_message_reply">Rispondi</string>
   <string name="menu_delete">Elimina</string>
-  <string name="pref_darkTheme_title">Tema scuro</string>
-  <string name="pref_darkTheme_summary">Attiva sempre il tema scuro al posto di quello di sistema</string>
+  <string name="pref_darkTheme_title">Sfondo scuro</string>
+  <string name="pref_darkTheme_summary">Attiva sempre lo sfondo scuro invece di quello del sistema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversazioni</string>
   <string name="navigation_item_contact_request">Inviti</string>

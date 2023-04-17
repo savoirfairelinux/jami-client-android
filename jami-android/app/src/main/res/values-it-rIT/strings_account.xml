@@ -36,7 +36,7 @@ Potrai modificare il tuo account successivamente</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Account</string>
-  <string name="normal_devices_titles">Dispositivi collegati</string>
+  <string name="normal_devices_titles">Dispositivi associati</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_success">Il dispositivo è ora revocato!</string>
