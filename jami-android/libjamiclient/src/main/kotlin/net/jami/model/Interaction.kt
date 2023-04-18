@@ -38,11 +38,11 @@ open class Interaction {
     var edit: String? = null
     var reactToId: String? = null
     var reactTo: Interaction? = null
-    val reactions: MutableList<Interaction> = ArrayList()
-    private val reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
+    var reactions: MutableList<Interaction> = ArrayList()
+    private var reactionSubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(reactions)
 
-    private val history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
-    private val historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
+    var history: MutableList<Interaction> = ArrayList<Interaction>(1).apply { add(this@Interaction) }
+    private var historySubject: Subject<List<Interaction>> = BehaviorSubject.createDefault(history)
 
     val reactionObservable: Observable<List<Interaction>>
         get() = reactionSubject.switchMap { i ->
@@ -58,7 +58,7 @@ open class Interaction {
 
     val historyObservable: Observable<List<Interaction>>
         get() = historySubject
-    val lastElement: Observable<Interaction> = historyObservable
+    var lastElement: Observable<Interaction> = historyObservable
         .map { it.lastOrNull() ?: this }
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
@@ -212,6 +212,15 @@ open class Interaction {
     fun addEdits(interactions: List<Interaction>) {
         history.addAll(interactions)
         historySubject.onNext(ArrayList(history))
+    }
+
+    fun updateFrom(previous: Interaction) {
+        history = previous.history
+        historySubject = previous.historySubject
+        lastElement = previous.lastElement
+        reactions = previous.reactions
+        reactionSubject = previous.reactionSubject
+        //reactionObservable = previous.reactionObservable
     }
 
     var preview: Any? = null

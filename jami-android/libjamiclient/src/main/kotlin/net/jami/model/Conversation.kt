@@ -545,6 +545,11 @@ class Conversation : ConversationHistory {
         val id = interaction.messageId!!
         val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
+        if (previous != null && interaction.type != Interaction.InteractionType.INVALID) {
+            // We update a reaction, but the views might be subscribed to the old model
+            // Migrate the observables to the new model
+            interaction.updateFrom(previous)
+        }
         mRoots.remove(id)
         mPendingReactions.remove(id)?.let { reactions -> interaction.addReactions(reactions) }
         mPendingEdits.remove(id)?.let { edits -> interaction.addEdits(edits) }
