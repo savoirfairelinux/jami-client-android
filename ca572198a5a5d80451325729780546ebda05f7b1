@@ -65,6 +65,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31dd8e84_50504b4a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:46:43Z",
+      "side": 1,
+      "message": "deamon specific (depends on message type)",
+      "parentUuid": "fa0a4c43_a7f1d8b9",
+      "range": {
+        "startLine": 528,
+        "startChar": 19,
+        "endLine": 528,
+        "endChar": 44
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82824baf_81fe3d23",
@@ -135,6 +159,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fd04017_23550850",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:46:43Z",
+      "side": 1,
+      "message": "answer is yes",
+      "parentUuid": "dc25594e_c564d931",
+      "range": {
+        "startLine": 1324,
+        "startChar": 8,
+        "endLine": 1324,
+        "endChar": 58
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da2336f9_c7072276",
@@ -181,6 +229,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2650486b_700515e6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:46:43Z",
+      "side": 1,
+      "message": "answer is yes",
+      "parentUuid": "03398bb8_53465e12",
+      "range": {
+        "startLine": 1473,
+        "startChar": 43,
+        "endLine": 1473,
+        "endChar": 72
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f20394ab_50b3c835",
@@ -194,6 +266,30 @@
       "writtenOn": "2023-04-05T15:13:08Z",
       "side": 1,
       "message": "Todo",
+      "range": {
+        "startLine": 1477,
+        "startChar": 65,
+        "endLine": 1477,
+        "endChar": 94
+      },
+      "revId": "ca572198a5a5d80451325729780546ebda05f7b1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4adde487_7a616906",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:46:43Z",
+      "side": 1,
+      "message": "answer is yes",
+      "parentUuid": "f20394ab_50b3c835",
       "range": {
         "startLine": 1477,
         "startChar": 65,
