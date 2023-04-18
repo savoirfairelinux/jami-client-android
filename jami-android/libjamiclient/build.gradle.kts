@@ -10,7 +10,11 @@ plugins {
 
 dependencies {
     // VCard parsing
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.0")
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3"){
+        exclude(group= "org.jsoup", module= "jsoup")
+        exclude(group= "org.freemarker", module= "freemarker")
+        exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
+    }
     // QRCode encoding
     implementation ("com.google.zxing:core:3.5.1")
     // dependency injection

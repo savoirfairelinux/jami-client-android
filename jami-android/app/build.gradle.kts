@@ -144,7 +144,7 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.6")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.12.0")
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3")
 
     "withFirebaseImplementation"("com.google.firebase:firebase-messaging:23.1.2") {
         exclude(group= "com.google.firebase", module= "firebase-core")
