@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6491257_14d7fd64",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:51:08Z",
+      "side": 1,
+      "message": "name variable by content and purpose rather than type. For instance, \u0027contactReactions\u0027 or \u0027reactions\u0027",
+      "range": {
+        "startLine": 320,
+        "startChar": 29,
+        "endLine": 320,
+        "endChar": 39
+      },
+      "revId": "c88a9f36c903400b722d92b2c9bb203dfdef1231",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "073814ff_554a4084",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:51:08Z",
+      "side": 1,
+      "message": "idem, also, not a dictionary",
+      "range": {
+        "startLine": 331,
+        "startChar": 54,
+        "endLine": 331,
+        "endChar": 70
+      },
+      "revId": "c88a9f36c903400b722d92b2c9bb203dfdef1231",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f28e45d6_19363bdf",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:51:08Z",
+      "side": 1,
+      "message": "for this case, \u0027it\u0027 is fine and allows for better readability",
+      "range": {
+        "startLine": 332,
+        "startChar": 47,
+        "endLine": 333,
+        "endChar": 33
+      },
+      "revId": "c88a9f36c903400b722d92b2c9bb203dfdef1231",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ee117c3_509f210e",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:51:08Z",
+      "side": 1,
+      "message": "The rx subscription is leaked when the dialog is dismissed (at this line, or if the user taps out of the dialog): future reaction updates would be provided to the (unused and leaked) adapter.\nFor instance, it could be solved by dispose()\u0027ing the subscription in setOnDismissListener().",
+      "range": {
+        "startLine": 341,
+        "startChar": 24,
+        "endLine": 341,
+        "endChar": 40
+      },
+      "revId": "c88a9f36c903400b722d92b2c9bb203dfdef1231",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
