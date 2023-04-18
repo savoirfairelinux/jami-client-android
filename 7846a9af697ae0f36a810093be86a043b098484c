@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e22cd44b_9a8dd293",
+        "filename": "jami-android/app/src/main/res/layout/item_reaction_visualizer.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:22:09Z",
+      "side": 1,
+      "message": "On smaller screens, the emojis overlap over the name and the avatar, causing a visual glitch and preventing to identify the user who reacted.\n\nOn small screens we should support showing at least the avatar, name and 3 emojis per column.\n\nPossible solutions:\n* reduce spanCount to 3 or 4\n* ???\nNote that names and reactions should be aligned in columns when multiple participants have reactions (the layout should not depend on the length of the name or the amount of reactions).",
+      "revId": "7846a9af697ae0f36a810093be86a043b098484c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb3b77f_03610519",
+        "filename": "jami-android/app/src/main/res/layout/item_reaction_visualizer.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-04-18T22:22:09Z",
+      "side": 1,
+      "message": "Merge ImageView inside TextView",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "7846a9af697ae0f36a810093be86a043b098484c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
