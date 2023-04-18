@@ -53,6 +53,7 @@ class SmartListPresenter @Inject constructor(
         super.bindView(view)
         view.setLoading(true)
         mCompositeDisposable.add(conversationFacade.getFullConversationList(accountSubject, debouncedQuery)
+             .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
             .observeOn(uiScheduler)
             .subscribe { list ->
                 val v = this.view ?: return@subscribe
