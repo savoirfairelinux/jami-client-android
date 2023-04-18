@@ -44,11 +44,7 @@ import android.view.TextureView.SurfaceTextureListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
@@ -299,32 +295,91 @@ class ConversationAdapter(
             })
     }
 
+    /**
+     * Configure a reaction chip and logic about it.
+     *
+     * @param conversationViewHolder the view layout.
+     * @param interaction which have reactions
+     */
     private fun configureReactions(
         conversationViewHolder: ConversationViewHolder,
         interaction: Interaction
     ) {
+        // If reaction chip is clicked we wants to display the reaction visualiser.
         conversationViewHolder.reactionChip?.setOnClickListener {
-            presenter.removeReaction(interaction)
-        }
-        conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { reactions ->
-                conversationViewHolder.reactionChip?.let { chip ->
-                    if (reactions.isEmpty())
-                        chip.isVisible = false
-                    else {
-                        chip.text = reactions.filterIsInstance<TextMessage>()
-                            .groupingBy { it.body!! }
-                            .eachCount()
-                            .map { it }
-                            .sortedByDescending { it.value }
-                            .joinToString("") { if (it.value > 1) it.key + it.value else it.key }
-                        chip.isVisible = true
-                        chip.isClickable = true
-                        chip.isFocusable = true
+            val adapter = ReactionVisualizerAdapter(
+                conversationViewHolder.itemView.context,
+                presenter::removeReaction
+            )
+            val dialog = MaterialAlertDialogBuilder(conversationViewHolder.itemView.context)
+                .setAdapter(adapter) { _, _ -> }
+                .show()
+
+            val observable = interaction.reactionObservable
+                .map { reactions -> reactions.groupBy { reaction -> reaction.contact!! } }
+                .switchMap { contactReactions ->
+                    if (contactReactions.isEmpty())
+                        return@switchMap Observable.just(emptyList())
+                    // Iterate on entries.
+                    val entry = contactReactions.entries.map { contactReactionsEntry ->
+                        // Launch observeContact and transform the result
+                        presenter.contactService.observeContact(
+                            interaction.account!!, contactReactionsEntry.key, false
+                        ).map { contact -> Pair(contact, contactReactionsEntry.value) }
+                    }
+                    // Subscribe on result.
+                    Observable.combineLatest(entry) { resultDictionary ->
+                        resultDictionary.map { it ->
+                            it as Pair<ContactViewModel, List<Interaction>>
+                        }
                     }
                 }
-            })
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { reactions ->
+                    // Close dialog if no reactions anymore.
+                    if (reactions.isEmpty()) {
+                        dialog.dismiss()
+                        return@subscribe
+                    }
+                    // Put the account at head of the list.
+                    val mutableList = reactions.toMutableList()
+                    val indexOfUserItem = mutableList.indexOfFirst { it.first.contact.isUser }
+                    if (indexOfUserItem != -1) {
+                        mutableList.add(0, mutableList.removeAt(indexOfUserItem));
+                    }
+                    adapter.setValues(mutableList)
+                }
+            conversationViewHolder.compositeDisposable.add(observable)
+
+            dialog.setOnDismissListener{
+                conversationViewHolder.compositeDisposable.remove(observable)}
+        }
+
+        // Manage the display of the chip (ui element showing the emojis)
+        conversationViewHolder.compositeDisposable.add(
+            interaction.reactionObservable
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { reactions ->
+                    conversationViewHolder.reactionChip?.let { chip ->
+                        // No reaction, hide the chip.
+                        if (reactions.isEmpty())
+                            chip.isVisible = false
+                        else {
+                            chip.text = reactions.filterIsInstance<TextMessage>()
+                                .groupingBy { it.body!! }
+                                .eachCount()
+                                .map { it }
+                                .sortedByDescending { it.value }
+                                .joinToString("") {
+                                    if (it.value > 1) it.key + it.value else it.key
+                                }
+                            chip.isVisible = true
+                            chip.isClickable = true
+                            chip.isFocusable = true
+                        }
+                    }
+                }
+        )
     }
 
     /**
