@@ -194,6 +194,9 @@
         <item name="android:typeface">normal</item>
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>
+    <style name="EmojiReactionDetail">
+        <item name="android:textSize">30sp</item>
+    </style>
 
     <!-- Buttons styles -->
     <style name="ButtonColoredInverse" parent="Widget.Material3.Button">
