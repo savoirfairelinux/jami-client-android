@@ -47,6 +47,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a812f73d_8035d3cf",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Interaction.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0579663c_d38b05c0",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 26
+      },
+      "revId": "9f9a68e6ac5b0c22f620b73ab329f9113445281b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54e37897_3203dcac",
@@ -70,6 +94,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "700ff102_be36f6d7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Interaction.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e37897_3203dcac",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 25
+      },
+      "revId": "9f9a68e6ac5b0c22f620b73ab329f9113445281b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b4145f8_d2959d88",
@@ -83,6 +131,30 @@
       "writtenOn": "2023-04-16T23:42:33Z",
       "side": 1,
       "message": "no need to repeat the type in the name. Use plural form to name sets or lists, like \u0027editInteractions\u0027.",
+      "range": {
+        "startLine": 229,
+        "startChar": 32,
+        "endLine": 229,
+        "endChar": 36
+      },
+      "revId": "9f9a68e6ac5b0c22f620b73ab329f9113445281b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c6a90f1_f7583593",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Interaction.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-18T20:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4145f8_d2959d88",
       "range": {
         "startLine": 229,
         "startChar": 32,
