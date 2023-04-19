@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e51801af_3c6ae835",
+        "filename": "jami-android/app/src/main/res/layout/item_reaction_visualizer.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-19T19:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22cd44b_9a8dd293",
+      "revId": "7846a9af697ae0f36a810093be86a043b098484c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3eb3b77f_03610519",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-04-18T22:22:09Z",
       "side": 1,
       "message": "Merge ImageView inside TextView",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "7846a9af697ae0f36a810093be86a043b098484c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2778b28b_6145d178",
+        "filename": "jami-android/app/src/main/res/layout/item_reaction_visualizer.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-19T19:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb3b77f_03610519",
       "range": {
         "startLine": 13,
         "startChar": 4,
