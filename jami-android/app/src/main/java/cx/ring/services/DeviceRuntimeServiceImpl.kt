@@ -25,23 +25,35 @@ import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Process
 import android.provider.ContactsContract
 import android.system.ErrnoException
 import android.system.Os
+import android.telecom.TelecomManager
+import android.telecom.VideoProfile
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import cx.ring.application.JamiApplication
+import cx.ring.service.CallConnection
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.ConversationPath
 import cx.ring.utils.NetworkUtils
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.SingleSubject
 import net.jami.daemon.IntVect
 import net.jami.daemon.StringVect
+import net.jami.model.Conference
+import net.jami.model.Uri
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.LogService
+import net.jami.services.NotificationService
 import net.jami.utils.FileUtils
 import net.jami.utils.StringUtils
 import java.io.File
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ScheduledExecutorService
 import kotlin.system.exitProcess
 
@@ -137,6 +149,107 @@ class DeviceRuntimeServiceImpl(
             Log.w(TAG, "Can't create hardlink, copying instead: " + e.message)
             FileUtils.copyFile(source, dest)
         }
+
+    private val pendingCallRequests = ConcurrentHashMap<String, SingleSubject<SystemCall>>()
+    private val incomingCallRequests = ConcurrentHashMap<String, Pair<Conference, SingleSubject<SystemCall>>>()
+
+    class AndroidCall(val call: CallConnection?): SystemCall(call != null) {
+        override fun setConference(conference: Conference) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                call?.call = conference
+            }
+        }
+    }
+    override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String?, hasVideo: Boolean): Single<SystemCall> {
+        // Use the Android Telecom API to implement requestPlaceCall if available
+        mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+            val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
+
+            // Dismiss the call immediately if disallowed
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (!telecomService.isOutgoingCallPermitted(accountHandle))
+                    return CALL_DISALLOWED
+            }
+
+            // Build call parameters
+            val params = Bundle().apply {
+                putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, accountHandle)
+                putBundle(TelecomManager.EXTRA_OUTGOING_CALL_EXTRAS, Bundle().apply {
+                    putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                    if (conversationUri != null)
+                        putString(ConversationPath.KEY_CONVERSATION_URI, conversationUri.uri)
+                })
+                putInt(TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
+                    if (hasVideo) VideoProfile.STATE_BIDIRECTIONAL
+                    else VideoProfile.STATE_AUDIO_ONLY)
+            }
+
+            // Build contact' Android URI
+            val contact = contactUri ?: conversationUri?.rawUriString ?: return CALL_DISALLOWED
+            val callUri = android.net.Uri.parse(contact)
+            val key = "$accountId/$callUri"
+            val subject = SingleSubject.create<SystemCall>()
+
+            // Place call request
+            pendingCallRequests[key] = subject
+            try {
+                Log.w(TAG, "Telecom API: new outgoing call request for $callUri")
+                telecomService.placeCall(callUri, params)
+                return subject
+            } catch (e: SecurityException) {
+                pendingCallRequests.remove(key)
+                Log.e(TAG, "Can't use the Telecom API to place call", e)
+            }
+        }
+        // Fallback to allowing the call
+        return CALL_ALLOWED
+    }
+
+    fun onPlaceCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
+        val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        Log.w(TAG, "Telecom API: outgoing call request for $uri has result $result")
+        pendingCallRequests.remove("$accountId/$uri")?.onSuccess(AndroidCall(result))
+    }
+
+    override fun requestIncomingCall(call: Conference): Single<SystemCall> {
+        // Use the Android Telecom API if available
+        mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+            val extras = Bundle()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (call.hasVideo())
+                    extras.putInt(
+                        TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                        VideoProfile.STATE_BIDIRECTIONAL
+                    )
+            }
+            extras.putString(ConversationPath.KEY_ACCOUNT_ID, call.accountId)
+            extras.putString(NotificationService.KEY_CALL_ID, call.id)
+
+            val key = call.id
+            val subject = SingleSubject.create<SystemCall>()
+
+            // Place call request
+            incomingCallRequests[key] = Pair(call, subject)
+            try {
+                Log.w(TAG, "Telecom API: new incoming call request")
+                telecomService.addNewIncomingCall(JamiApplication.instance!!.androidPhoneAccountHandle, extras)
+                return subject
+            } catch (e: SecurityException) {
+                incomingCallRequests.remove(key)
+                Log.e(TAG, "Can't use the Telecom API to place call", e)
+            }
+        }
+        // Fallback to allowing the call
+        return CALL_ALLOWED
+    }
+    fun onIncomingCallResult(extras: Bundle, result: CallConnection?) {
+        //val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
+        val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
+        Log.w(TAG, "Telecom API: incoming call request for $callId has result $result")
+        incomingCallRequests.remove(callId)?.let {
+            it.second.onSuccess(if (result != null) AndroidCall(result).apply { setConference(it.first) } else SystemCall(false))
+        }
+    }
 
     private fun checkPermission(permission: String): Boolean =
         ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED
