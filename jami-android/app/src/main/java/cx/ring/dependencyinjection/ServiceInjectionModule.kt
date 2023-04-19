@@ -92,8 +92,9 @@ object ServiceInjectionModule {
     @Singleton
     fun provideCallService(@Named("DaemonExecutor") executor : ScheduledExecutorService,
                            contactService: ContactService,
-                           accountService: AccountService): CallService {
-        return CallService(executor, contactService, accountService)
+                           accountService: AccountService,
+                           deviceRuntimeService: DeviceRuntimeService): CallService {
+        return CallService(executor, contactService, accountService, deviceRuntimeService)
     }
 
     @Provides
@@ -110,7 +111,7 @@ object ServiceInjectionModule {
     fun provideHardwareService(@ApplicationContext appContext: Context,
                                @Named("DaemonExecutor") executor : ScheduledExecutorService,
                                preferenceService: PreferencesService,
-                               @Named("UiScheduler") uiScheduler: Scheduler): HardwareService {
+                               @Named("UiScheduler") uiScheduler: Scheduler):  HardwareService {
         return HardwareServiceImpl(appContext, executor, preferenceService, uiScheduler)
     }
 

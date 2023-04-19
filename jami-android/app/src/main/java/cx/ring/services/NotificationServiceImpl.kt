@@ -90,6 +90,7 @@ class NotificationServiceImpl(
     private val random = Random()
     private val avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
     private val currentCalls = LinkedHashMap<String, Conference>()
+
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
@@ -264,7 +265,10 @@ class NotificationServiceImpl(
      * @param notificationId the notification's id
      */
     private fun updateNotification(notification: Notification, notificationId: Int) {
-        notificationManager.notify(notificationId, notification)
+        try {
+            notificationManager.notify(notificationId, notification)
+        } catch (e: SecurityException) {
+        }
     }
 
     /**
@@ -274,6 +278,20 @@ class NotificationServiceImpl(
      * @param remove     true if it should be removed from current calls
      */
     override fun handleCallNotification(conference: Conference, remove: Boolean) {
+        if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
+            // Filter case where state is ringing but we haven't receive the media list yet
+            if (conference.call?.mediaList == null)
+                return
+            mDeviceRuntimeService.requestIncomingCall(conference).subscribe { result ->
+                if (result.allowed) {
+                    manageCallNotification(conference, remove)
+                }
+            }
+        } else {
+            manageCallNotification(conference, remove)
+        }
+    }
+    private fun manageCallNotification(conference: Conference, remove: Boolean) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
             return
