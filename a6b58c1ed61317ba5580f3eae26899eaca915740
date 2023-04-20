@@ -16,6 +16,23 @@
       "message": "Should be linked to a gitlab ticket (make modifications understandable for everyone)",
       "revId": "a6b58c1ed61317ba5580f3eae26899eaca915740",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deecfc15_accb8c70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-20T13:23:54Z",
+      "side": 1,
+      "message": "Could be nice to document your code (with comments)",
+      "revId": "a6b58c1ed61317ba5580f3eae26899eaca915740",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
