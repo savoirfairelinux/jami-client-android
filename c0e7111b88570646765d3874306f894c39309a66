@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a07bd6c_35d4d84e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-20T14:45:54Z",
+      "side": 1,
+      "message": "Yep nice feature ! \nHowever I can partialy hide it with the keyboard. \nIdk what we can do about this, other apps make picker sliding from the bottom of the screen.\nAlso, can we add a search bar (would it be a nice feature to have)?\n-Should be linked to a gitlab ticket (make modifications understandable for everyone)\n-Could be nice to document your code (with comments)",
+      "revId": "c0e7111b88570646765d3874306f894c39309a66",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
