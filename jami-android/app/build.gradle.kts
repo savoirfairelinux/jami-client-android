@@ -11,6 +11,7 @@ plugins {
 }
 
 android {
+    namespace = "cx.ring"
     compileSdk = 33
     buildToolsVersion = "33.0.2"
     ndkVersion = "25.2.9519653"
@@ -83,7 +84,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "cx.ring"
     externalNativeBuild {
         cmake {
             path = file("../../daemon/CMakeLists.txt")
