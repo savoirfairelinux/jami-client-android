@@ -38,7 +38,8 @@ android {
             }
             ndk {
                 debugSymbolLevel = "FULL"
-                abiFilters += listOf("arm64-v8a", "x86_64", "armeabi-v7a")
+                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
+                println ("Building for ABIs $abiFilters")
             }
         }
     }
