@@ -33,7 +33,7 @@ android {
                     "-DBUILD_TESTING=OFF",
                     "-DJAMI_JNI=ON",
                     "-DJAMI_JNI_PACKAGEDIR="+rootProject.projectDir.resolve("libjamiclient/src/main/java"),
-                    "-DJAMI_DATADIR=/data/data/cx.ring/files",
+                    "-DJAMI_DATADIR=/data/data/$namespace/files",
                     "-DJAMI_NATPMP=Off"
                 )
             }
