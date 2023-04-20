@@ -9,14 +9,23 @@ The Jami client for Android
 ## Environment
 
 Download the project including the daemon submodule with:
-git clone --recursive https://review.jami.net/jami-client-android
+> git clone --recursive https://review.jami.net/jami-client-android
 
 Or to download the daemon submodule from the existing project directory:
-git submodule update --init --recursive
+> git submodule update --init --recursive
 
+Make sure to have autotools, autopoint, swig, yasm, autotools and cmake available on your system:
+on Debian/Ubuntu:
+> apt install cmake build-essential swig yasm
 
+On macOS:
+> brew install cmake automake autotools libtool pkg-config yasm swig
 
-Install autotools, autopoint, swig-4 or later and python-3.7 or later on your system
+When using brew on macOS, the 'libtoolize' binary might be available as 'glibtoolize'.
+In that case, the following command makes it avaialble to the build system:
+> ln -s /opt/homebrew/bin/glibtoolize /opt/homebrew/bin/libtoolize
+
+Make sure to have the Android SDK and NDK available.
 
 ## Build instructions
 
@@ -26,18 +35,20 @@ With Android Studio:
 * Enjoy!
 
 With the command line:
-* cd client-android/jami-android
-* ./gradlew assembleDebug
+```sh
+cd client-android/jami-android
+./gradlew assembleDebug
+```
 
 ## Update translations
 
 Update translations using the Transifex client (tx) :
-    ./update-translations.sh
+> ./update-translations.sh
 
 # Generate new release commit
 
 Generate a new release commit updating the version code and version string:
-    ./update_version.py --commit
+> ./update_version.py --commit
 
 # Report issues
 
