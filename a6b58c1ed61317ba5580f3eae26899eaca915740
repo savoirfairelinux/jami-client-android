@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e42e177_5b0c3b0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-20T13:19:29Z",
+      "side": 1,
+      "message": "Should be linked to a gitlab ticket (make modifications understandable for everyone)",
+      "revId": "a6b58c1ed61317ba5580f3eae26899eaca915740",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
