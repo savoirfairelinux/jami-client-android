@@ -775,8 +775,31 @@ class ConversationAdapter(
                 .apply {
                     elevation = view.context.resources.getDimension(R.dimen.call_preview_elevation)
                     showAsDropDown(view)
+                }
 
+            val textViews = listOf(
+                convActionEmoji1.chip, convActionEmoji2.chip,
+                convActionEmoji3.chip, convActionEmoji4.chip
+            )
+
+            convActionEmoji1.chip.text = view.context.getString(R.string.default_emoji_1)
+            convActionEmoji2.chip.text = view.context.getString(R.string.default_emoji_2)
+            convActionEmoji3.chip.text = view.context.getString(R.string.default_emoji_3)
+            convActionEmoji4.chip.text = view.context.getString(R.string.default_emoji_4)
+
+            // Subscribe on reactions to allows user to see which reaction he already selected.
+            val disposable = interaction.reactionObservable
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { reactions ->
+                    textViews.forEach { textView ->
+                        // Set checked reactions already sent.
+                        textView.isChecked = reactions.any {
+                            (textView.text == it.body) && (it.contact?.isUser == true)
+                        }
                     }
+                    popupWindow.update()
+                }
+            conversationViewHolder.compositeDisposable.add(disposable)
 
             popupWindow.setOnDismissListener {
                 if (convColor != 0
@@ -784,18 +807,34 @@ class ConversationAdapter(
                     && !interaction.isIncoming
                 ) view.background?.setTint(convColor)
                 else view.background?.setTintList(null)
+                // Remove disposable.
+                conversationViewHolder.compositeDisposable.remove(disposable)
             }
 
-            // Set reaction (emoji) on click listener.
-            // For the moment, there is few emoji presented by default.
+            // Callback executed when emoji is clicked.
+            // We want to know if the reaction is already set.
+            // If set we want to remove, else we want to append.
             val emojiCallback = View.OnClickListener { view ->
-                presenter.sendReaction(interaction, (view as TextView).text)
-                popupWindow.dismiss() // Close popup.
+                // Subscribe to know which are the current reactions.
+                conversationViewHolder.compositeDisposable.add(interaction.reactionObservable
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .firstOrError()
+                    .subscribe { reactions ->
+                        // Try to find a reaction having corresponding to the one clicked.
+                        val reaction = reactions.firstOrNull {
+                            (it.body == (view as TextView).text) && (it.contact?.isUser == true)
+                        }
+                        if (reaction != null)
+                        // Previously, it was not forbidden to send multiple times the same
+                        // reaction. Hence, we only remove the first one.
+                            presenter.removeReaction(reaction)
+                        else // If null, it means we didn't find anything. So let's send it.
+                            presenter.sendReaction(interaction, (view as TextView).text)
+                        popupWindow.dismiss()
+                    }
+                )
             }
-            convActionEmoji1.setOnClickListener(emojiCallback)
-            convActionEmoji2.setOnClickListener(emojiCallback)
-            convActionEmoji3.setOnClickListener(emojiCallback)
-            convActionEmoji4.setOnClickListener(emojiCallback)
+            textViews.forEach { it.setOnClickListener(emojiCallback) } // Set callback
 
             // Configure reply
             convActionReply.setOnClickListener {

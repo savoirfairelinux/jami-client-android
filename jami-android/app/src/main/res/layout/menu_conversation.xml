@@ -15,49 +15,17 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/conv_action_emoji1"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/default_emoji_1"
-            android:textSize="18dp" />
+        <include layout="@layout/item_reaction_chip_18"
+            android:id="@+id/conv_action_emoji1"/>
 
-        <TextView
-            android:id="@+id/conv_action_emoji2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/default_emoji_2"
-            android:textSize="18dp" />
+        <include layout="@layout/item_reaction_chip_18"
+            android:id="@+id/conv_action_emoji2"/>
 
-        <TextView
-            android:id="@+id/conv_action_emoji3"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/default_emoji_3"
-            android:textSize="18dp" />
+        <include layout="@layout/item_reaction_chip_18"
+            android:id="@+id/conv_action_emoji3"/>
 
-        <TextView
-            android:id="@+id/conv_action_emoji4"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/default_emoji_5"
-            android:textSize="18dp" />
+        <include layout="@layout/item_reaction_chip_18"
+            android:id="@+id/conv_action_emoji4"/>
 
         <ImageView
             android:visibility="gone"
