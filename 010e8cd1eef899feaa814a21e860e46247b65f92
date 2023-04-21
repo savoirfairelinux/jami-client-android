@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a10e501f_35ae4682",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-04-21T19:35:30Z",
+      "side": 1,
+      "message": "\"The project is using an incompatible version (AGP 8.0.0-rc01) of the Android Gradle plugin. Latest supported version is AGP 7.4.2\"",
+      "revId": "010e8cd1eef899feaa814a21e860e46247b65f92",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
