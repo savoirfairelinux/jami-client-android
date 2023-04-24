@@ -35,6 +35,8 @@
   <string name="pref_delete_account_summary">Удалить ваш аккаунт с этого устройства</string>
   <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
+  <string name="pref_newGroup_title">Включить групповые чаты</string>
+  <string name="pref_newGroup_summary">Включить создание групп в Jami.</string>
   <string name="pref_logs_title">Диагностические логи</string>
   <string name="pref_logs_summary">Открыть настройки диагностических логов</string>
   <string name="pref_logs_start">Начать логирование</string>
@@ -58,6 +60,7 @@
   <string name="plugin_uninstall_title">Удалить плагин ?</string>
   <string name="plugin_reset_preferences">Сбросить настройки плагина</string>
   <string name="plugin_reset_preferences_summary">Настройки вашего плагина будут установлены по умолчанию</string>
+  <string name="plugin_reset_preferences_ask">Вы хотите сбросить основные настройки плагина?</string>
   <string name="plugin_reset_account_preferences_ask">Вы хотите сбросить настройки плагина аккаунта?</string>
   <string name="plugin_successfully_installed">Плагин <b>%1$s</b> успешно установлен</string>
   <string name="plugin_install_failure">Не удалось установить плагин: <b>%1$s</b></string>

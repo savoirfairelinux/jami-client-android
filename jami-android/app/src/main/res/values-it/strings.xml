@@ -235,8 +235,8 @@
   <string name="no_registered_name">Nessun nome registrato</string>
   <string name="identity">Identità</string>
   <string name="account">Account</string>
-  <string name="link_new_device">Collega un nuovo dispositivo</string>
-  <string name="devices">Dispositivi collegati</string>
+  <string name="link_new_device">Associa un altro dispositivo</string>
+  <string name="devices">Dispositivi associati</string>
   <string name="total_devices">Tutti i dispositivi: </string>
   <!--Share fragment-->
   <string name="share_message">Scansiona questo codice con Jami</string>
@@ -304,8 +304,8 @@
   <string name="menu_message_cancel">Annulla messaggio</string>
   <string name="menu_message_reply">Rispondi</string>
   <string name="menu_delete">Elimina</string>
-  <string name="pref_darkTheme_title">Tema scuro</string>
-  <string name="pref_darkTheme_summary">Attiva sempre il tema scuro al posto di quello di sistema</string>
+  <string name="pref_darkTheme_title">Sfondo scuro</string>
+  <string name="pref_darkTheme_summary">Attiva sempre lo sfondo scuro invece di quello del sistema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversazioni</string>
   <string name="navigation_item_contact_request">Inviti</string>
