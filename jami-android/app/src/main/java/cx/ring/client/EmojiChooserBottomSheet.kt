@@ -19,6 +19,7 @@
  */
 package cx.ring.client
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 
@@ -58,4 +61,13 @@ class EmojiChooserBottomSheet(val onEmojiSelected: ((String?) -> Unit)? = null) 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         (inflater.inflate(R.layout.frag_color_chooser, container) as RecyclerView)
             .apply { adapter = ColorAdapter(R.array.conversation_emojis) }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        (dialog as BottomSheetDialog).behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+        }
+        return dialog
+    }
 }
