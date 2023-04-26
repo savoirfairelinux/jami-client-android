@@ -18,6 +18,7 @@
  */
 package cx.ring.fragments
 
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
@@ -25,6 +26,8 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -92,6 +95,15 @@ class MembersBottomSheetFragment : BottomSheetDialogFragment() {
         })
 
         binding!!.actions.adapter = adapter
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        (dialog as BottomSheetDialog).behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+        }
+        return dialog
     }
 
     override fun onDestroy() {
