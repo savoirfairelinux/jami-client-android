@@ -31,12 +31,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cx.ring.R
 import cx.ring.databinding.FragQrcodeBinding
 import cx.ring.share.ScanFragment
 import cx.ring.share.ShareFragment
-import cx.ring.utils.DeviceUtils.isTablet
 
 class QRCodeFragment : BottomSheetDialogFragment() {
     private var mBinding: FragQrcodeBinding? = null
@@ -67,10 +67,9 @@ class QRCodeFragment : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setOnShowListener {
-            if (isTablet(requireContext())) {
-                dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            }
+        (dialog as BottomSheetDialog).behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
         }
         return dialog
     }
