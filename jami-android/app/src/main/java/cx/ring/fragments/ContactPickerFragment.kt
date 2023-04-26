@@ -123,8 +123,6 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
         dataPasser = context as OnContactedPicked
     }
 
-    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-
     companion object {
         val TAG: String = ContactPickerFragment::class.java.simpleName
     }
