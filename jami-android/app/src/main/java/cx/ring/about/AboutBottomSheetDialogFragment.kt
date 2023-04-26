@@ -20,31 +20,28 @@
 package cx.ring.about
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.app.Dialog
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import cx.ring.R
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class AboutBottomSheetDialogFragment : BottomSheetDialogFragment() {
-    private val mCallback: BottomSheetCallback = object : BottomSheetCallback() {
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss()
-            }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = View.inflate(context, R.layout.dialog_about, null)
 
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-    }
-
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        val contentView = View.inflate(context, R.layout.dialog_about, null)
-        dialog.setContentView(contentView)
-        val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior
-        if (behavior is BottomSheetBehavior<*>) {
-            behavior.addBottomSheetCallback(mCallback)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        (dialog as BottomSheetDialog).behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
         }
+        return dialog
     }
 }
