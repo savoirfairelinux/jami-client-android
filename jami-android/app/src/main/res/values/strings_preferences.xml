@@ -11,7 +11,9 @@
     <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
 
     <string name="pref_pushNotifications_title">Push notifications</string>
+    <string name="pref_pushNotif_summary" translatable="false" />
     <string name="pref_pushNotifications_summary">Use Google servers to allow receiving calls/messages in the background</string>
+    <string name="pref_unifiedPush_summary">Use a UnifiedPush service to allow receiving calls/messages in the background</string>
 
     <string name="pref_video_advanced_title">Advanced video settings</string>
     <string name="pref_video_advanced_summary">Change the video bitrate, resolution, as well as access experimental features</string>
