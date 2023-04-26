@@ -38,14 +38,12 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
     lateinit var mConversationFacade: ConversationFacade
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bdialog = super.onCreateDialog(savedInstanceState)
-        if (bdialog is BottomSheetDialog) {
-            val behavior = bdialog.behavior
-            behavior.isFitToContents = false
-            behavior.skipCollapsed = true
-            behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        val dialog = super.onCreateDialog(savedInstanceState)
+        (dialog as BottomSheetDialog).behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
         }
-        return bdialog
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
