@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pref_pushNotif_summary" translatable="false">@string/pref_unifiedPush_summary</string>
+
+</resources>

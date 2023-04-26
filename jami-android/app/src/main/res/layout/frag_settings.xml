@@ -560,7 +560,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_pushNotifications_summary" />
+                        android:text="@string/pref_pushNotif_summary" />
 
                 </LinearLayout>
 
