@@ -14,9 +14,9 @@ Download the project including the daemon submodule with:
 Or to download the daemon submodule from the existing project directory:
 > git submodule update --init --recursive
 
-Make sure to have autotools, autopoint, swig, yasm, autotools and cmake available on your system:
+Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake available on your system:
 on Debian/Ubuntu:
-> apt install cmake build-essential swig yasm
+> apt install cmake build-essential swig yasm ninja-build m4
 
 On macOS:
 > brew install cmake automake autotools libtool pkg-config yasm swig
@@ -36,7 +36,7 @@ With Android Studio:
 
 With the command line:
 ```sh
-cd client-android/jami-android
+cd jami-client-android/jami-android
 ./gradlew assembleDebug
 ```
 
