@@ -35,7 +35,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -43,7 +42,6 @@ import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseBottomSheetFragment
-import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
@@ -55,9 +53,13 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     private var mBinding: FragLinkDeviceBinding? = null
     private var mAccountHasPassword = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View =
+        // Inflate from XML layout (using bindings).
         FragLinkDeviceBinding.inflate(inflater, container, false).apply {
             btnStartExport.setOnClickListener { onClickStart() }
+            // Password of the account.
             password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
                 onPasswordEditorAction(pwd, actionId, event)
             }
@@ -66,22 +68,16 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         arguments?.let { arguments ->
             arguments.getString(AccountEditionFragment.ACCOUNT_ID_KEY)?.let { accountId ->
                 presenter.setAccountId(accountId)
             }
         }
+        // Display password editor only if account has a password protection.
         mBinding?.apply {
             passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
         }
-    }
-
-    /**
-     * Create dialog.
-     */
-    override fun onDestroyView() {
-        mBinding = null
-        super.onDestroyView()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -93,22 +89,14 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         return dialog
     }
 
-    override fun onResume() {
-        super.onResume()
-        view?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                bottomSheetBehaviour?.peekHeight = v.measuredHeight
-                v.removeOnLayoutChangeListener(this)
-            }
-        })
+    override fun onDestroyView() {
+        mBinding = null
+        super.onDestroyView()
     }
 
-    private val bottomSheetBehaviour: BottomSheetBehavior<*>?
-        get() {
-            val layoutParams = (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
-            return layoutParams.behavior as BottomSheetBehavior<*>?
-        }
-
+    /**
+     * Show progress bar (make user think that app proceeds to the exportation of his account).
+     */
     override fun showExportingProgress() {
         mBinding?.apply {
             progressBar.visibility = View.VISIBLE
@@ -118,6 +106,9 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         }
     }
 
+    /**
+     * Hide progress bar.
+     */
     override fun dismissExportingProgress() {
         mBinding?.apply {
             progressBar.visibility = View.GONE
@@ -152,24 +143,40 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             .show()
     }
 
+    /**
+     * Display generated PIN.
+     * Using this PIN, user will be able to link his account to other devices.
+     */
     override fun showPIN(pin: String) {
         dismissExportingProgress()
-        val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
+        val messagePIN = getString(R.string.account_end_export_infos).replace("%%", pin)
         mBinding?.let { binding ->
             binding.password.setText("")
             binding.passwordLayout.visibility = View.GONE
             binding.btnStartExport.visibility = View.GONE
-            binding.accountLinkInfo.text = SpannableString(pined).apply {
-                val pos = pined.lastIndexOf(pin)
-                setSpan(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setSpan(StyleSpan(Typeface.BOLD), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setSpan(RelativeSizeSpan(2.8f), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.accountLinkInfo.text = SpannableString(messagePIN).apply {
+                val pos = messagePIN.lastIndexOf(pin)
+                setSpan(
+                    AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos,
+                    pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
+                    StyleSpan(Typeface.BOLD), pos, pos + pin.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
+                    RelativeSizeSpan(2.8f), pos, pos + pin.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
             binding.accountLinkInfo.requestFocus()
         }
         hideKeyboard(activity)
     }
 
+    /**
+     * Called when user click on button to generate the PIN code.
+     */
     private fun onClickStart() {
         mBinding?.let { binding ->
             binding.passwordLayout.error = null
@@ -177,8 +184,12 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         }
     }
 
+    /**
+     * Called when password is edited.
+     */
     private fun onPasswordEditorAction(pwd: TextView, actionId: Int, event: KeyEvent?): Boolean {
         Log.i(TAG, "onEditorAction " + actionId + " " + event?.toString())
+        // Check password if is not empty.
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (pwd.text.isEmpty()) {
                 pwd.error = getString(R.string.account_enter_password)

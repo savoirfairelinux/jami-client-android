@@ -22,16 +22,13 @@ package cx.ring.mvp;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import javax.inject.Inject;
 
-import cx.ring.R;
 import net.jami.mvp.RootPresenter;
 
 public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends BottomSheetDialogFragment {
@@ -58,23 +55,5 @@ public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends B
     }
 
     protected void initPresenter(T presenter) {
-    }
-
-    protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {
-        getParentFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right,
-                        R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(content, fragment, TAG)
-                .addToBackStack(TAG)
-                .commit();
-    }
-
-    protected void replaceFragment(Fragment fragment, @IdRes int content) {
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(content, fragment, TAG)
-                .addToBackStack(TAG)
-                .commit();
     }
 }

@@ -18,22 +18,15 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/actions"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".client.ContactDetailsActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/actions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingVertical="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_contact_horizontal" />
-
-</LinearLayout>
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingVertical="8dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:itemCount="4"
+    tools:listitem="@layout/item_contact_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" />

@@ -29,8 +29,7 @@ import javax.inject.Named
 
 class LinkDevicePresenter @Inject constructor(
     private val accountService: AccountService,
-    @Named("UiScheduler")
-    private val uiScheduler: Scheduler
+    @Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<LinkDeviceView>() {
     private var mAccountID: String? = null
 
@@ -48,7 +47,8 @@ class LinkDevicePresenter @Inject constructor(
                     is SocketException -> view?.showNetworkError()
                     else -> view?.showGenericError()
                 }
-            })
+            }
+        )
     }
 
     fun setAccountId(accountID: String) {
