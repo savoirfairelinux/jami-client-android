@@ -347,24 +347,33 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 val visibleLatestThreshold = 8
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager?
-                    if (!loading && layoutManager!!.findFirstVisibleItemPosition() < visibleLoadThreshold) {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager? ?: return
+                    if (!loading
+                        && layoutManager.findFirstVisibleItemPosition() < visibleLoadThreshold
+                    ) {
                         loading = true
                         presenter.loadMore()
                     }
-                    if (layoutManager!!.itemCount - layoutManager.findLastVisibleItemPosition() > visibleLatestThreshold) {
+
+                    // Recyclerview is composed of items which are sometimes invisible. These items
+                    // are use in the data model to keep an history and keep interactions correctly
+                    // chained together such as as reactions, edit interactions, ...
+                    // Because of bug #1251, I decided to use findLastCompletelyVisibleItemPosition
+                    // properly returning invisible items (instead of findLastVisibleItemPosition
+                    // where they get ignored).
+                    // I don't understand why I had to do this, maybe last invisible items
+                    // are on boundaries driving to this limitation.
+                    val lastVisibleItemPosition =
+                        layoutManager.findLastCompletelyVisibleItemPosition()
+                    if (layoutManager.itemCount - lastVisibleItemPosition > visibleLatestThreshold)
                         binding.fabLatest.show()
-                    } else {
-                        binding.fabLatest.hide()
-                    }
+                    else binding.fabLatest.hide()
+
                 }
             })
             val animator = binding.histList.itemAnimator as DefaultItemAnimator?
             animator?.supportsChangeAnimations = false
             binding.histList.adapter = mAdapter
-
-//            val toolbarLayout: AppBarLayout? = activity?.findViewById(R.id.toolbar_layout)
-//            toolbarLayout?.isLifted = true
         }
     }
 
