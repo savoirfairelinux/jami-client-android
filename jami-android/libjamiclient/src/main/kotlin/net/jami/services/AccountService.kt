@@ -761,11 +761,11 @@ class AccountService(
         return null
     }
 
-    fun getCertificateDetailsPath(certificatePath: String): Map<String, String>? {
+    fun getCertificateDetailsPath(accountId: String, certificatePath: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "getCertificateDetailsPath() running...")
-                JamiService.getCertificateDetails(certificatePath).toNative()
+                JamiService.getCertificateDetails(accountId, certificatePath).toNative()
             }.get()
         } catch (e: Exception) {
             Log.e(TAG, "Error running getCertificateDetailsPath()", e)
@@ -773,11 +773,11 @@ class AccountService(
         return null
     }
 
-    fun getCertificateDetails(certificateRaw: String): Map<String, String>? {
+    fun getCertificateDetails(accountId: String, certificateRaw: String): Map<String, String>? {
         try {
             return mExecutor.submit<HashMap<String, String>> {
                 Log.i(TAG, "getCertificateDetails() running...")
-                JamiService.getCertificateDetails(certificateRaw).toNative()
+                JamiService.getCertificateDetails(accountId, certificateRaw).toNative()
             }.get()
         } catch (e: Exception) {
             Log.e(TAG, "Error running getCertificateDetails()", e)
