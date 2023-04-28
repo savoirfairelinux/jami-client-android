@@ -841,9 +841,20 @@ class ConversationAdapter(
                 presenter.startReplyTo(interaction)
                 popupWindow.dismiss()
             }
-
+            emojiPicker.setOnEmojiPickedListener {
+                presenter.sendReaction(interaction, it.emoji)
+                popupWindow.dismiss()
+            }
             convActionMore.setOnClickListener {
-                menuActions.isVisible = !menuActions.isVisible
+                val newState = menuActions.isVisible
+                menuActions.isVisible = !newState
+                emojiPicker.isVisible = newState
+                popupWindow.let {
+                    root.measure(root.width, View.MeasureSpec.UNSPECIFIED)
+                    it.height = root.measuredHeight
+                    it.dismiss()
+                    it.showAsDropDown(view)
+                }
             }
 
             // Open file
