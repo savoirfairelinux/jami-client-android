@@ -89,8 +89,7 @@ class ConversationTest {
                 "1",
                 conversation,
                 conversation!!.contact,
-                Call.Direction.INCOMING,
-                emptyList()
+                Call.Direction.INCOMING
             )
         )
         val newSize = conversation!!.aggregateHistory.size
