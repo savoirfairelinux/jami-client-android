@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">ข้อมูลมือถือ</string>
   <string name="pref_mobileData_summary">อนุญาต Jami บนเครือข่าย 3G/LTE เพิ่มเติมกับ Wi-Fi</string>
   <string name="pref_pushNotifications_title">การแจ้งเตือนแบบพุช</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">ใช้เซิร์ฟเวอร์ของ Google เพื่ออนุญาตให้รับสาย/ข้อความในพื้นหลัง</string>
   <string name="pref_video_advanced_title">การตั้งค่าวิดีโอขั้นสูง</string>
   <string name="pref_video_advanced_summary">เปลี่ยนบิตเรตของวิดีโอ ความละเอียด ตลอดจนเข้าถึงฟีเจอร์ทดลอง</string>

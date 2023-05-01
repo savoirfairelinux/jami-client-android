@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Adathasználat</string>
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Push-értesítések</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
   <string name="pref_video_advanced_title">Haladó videóbeállítások</string>
   <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás megváltoztatása. Kísérleti jellemzők elérése.</string>

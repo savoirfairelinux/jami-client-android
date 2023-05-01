@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">داده همراه</string>
   <string name="pref_mobileData_summary">اجازه فعالیت جمی روی شبکه‌های 3G و LTE، علاوه بر وای‌فای</string>
   <string name="pref_pushNotifications_title">اعلان‌های پرتابی</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">استفاده از سرورهای گوگل برای دریافت تماس‌ها/پیام‌ها در پس‌زمینه</string>
   <string name="pref_video_advanced_title">تنظیمات پیشرفته ویدیو</string>
   <string name="pref_video_advanced_summary">تغییر نرخ بیت ویدیو، تفکیک‌پذیری تصویر و همچنین دسترسی به ویژگی‌های آزمایشی</string>

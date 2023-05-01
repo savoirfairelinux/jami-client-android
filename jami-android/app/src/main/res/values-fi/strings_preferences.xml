@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Mobiilidata</string>
   <string name="pref_mobileData_summary">Salli Jamin käyttää 3G/LTE-verkkoa wifi-yhteyden lisäksi</string>
   <string name="pref_pushNotifications_title">Ilmoitukset</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Käytä Google-palvelimia puhelujen/viestien ilmoittamiseen taustalla</string>
   <string name="pref_video_advanced_title">Videon lisäasetukset</string>
   <string name="pref_video_advanced_summary">Muuta videon bittinopeutta, tarkkuutta sekä kokeellisia ominaisuuksia</string>

@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Jami die Nutzung von 3G/LTE zusätzlich zum WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google-Server verwenden, um Anrufe/Nachrichten im Hintergrund empfangen zu können.</string>
   <string name="pref_video_advanced_title">Erweiterte Videoeinstellungen</string>
   <string name="pref_video_advanced_summary">Ändern Sie die Videobitrate, die Auflösung und den Zugriff auf experimentelle Funktionen</string>

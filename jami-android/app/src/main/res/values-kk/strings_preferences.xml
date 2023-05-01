@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_system">жүйе</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>

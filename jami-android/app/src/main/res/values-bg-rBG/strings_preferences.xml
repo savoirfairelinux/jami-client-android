@@ -8,6 +8,7 @@
   <string name="pref_mobileData_title">Мобилни данни</string>
   <string name="pref_mobileData_summary">Позволете Jami на 3G/LTE мрежи допълнително към Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push известия</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Използвайте Google сървъри, за да получавате повиквания/съобщения във фонов режим</string>
   <string name="pref_hd_summary">Активиране на изпращане на HD видео</string>
   <string name="pref_hwEncode_title">Активиране на ускорено кодиране</string>

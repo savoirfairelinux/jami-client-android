@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
   <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Naudoti Google serverius, kad būtų leista fone gauti skambučius/žinutes</string>
   <string name="pref_video_advanced_title">Išplėstiniai vaizdo nustatymai</string>
   <string name="pref_video_advanced_summary">Keisti vaizdo pralaidumą, raišką, o taip pat eksperimentines ypatybes</string>

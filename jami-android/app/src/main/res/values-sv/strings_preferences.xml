@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillåt Jami på 3G/LTE-nätverk, som tillägg till WiFi</string>
   <string name="pref_pushNotifications_title">Använd aviseringar</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Använd Google-servrar för att ta emot samtal/meddelanden i bakgrunden</string>
   <string name="pref_video_advanced_title">Avancerade video inställningar</string>
   <string name="pref_video_advanced_summary">Ändra videons bithastighet, upplösning och få tillgång till experimentella funktioner</string>

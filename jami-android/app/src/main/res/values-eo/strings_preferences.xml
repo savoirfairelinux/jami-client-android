@@ -6,6 +6,7 @@
   <string name="pref_category_system">Sistemo</string>
   <string name="pref_category_privacy">Privateco</string>
   <string name="pref_mobileData_title">Porteblaj datumoj</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_systemContacts_title">Uzi sistemajn kontaktojn</string>
   <string name="pref_systemContacts_summary">Uzi sistemajn kontaktojn por montri detalojn de la vokanto.</string>
   <string name="pref_clearHistory_title">Vakigi historion</string>

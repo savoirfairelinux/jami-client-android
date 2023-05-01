@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Δεδομένα κινητού</string>
   <string name="pref_mobileData_summary">Επιτρέψτε στο Jami να χρησιμοποίει 3G/LTE σε συνδυασμό με το Wi-Fi</string>
   <string name="pref_pushNotifications_title">Ειδοποιήσεις</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_video_advanced_title">Ρυθμίσεις βίντεο για προχωρημένους</string>
   <string name="pref_videoResolution_title">Ανάλυση βίντεο</string>
   <string name="pref_systemContacts_title">Χρησιμοποίησε τις επαφές συσκευής</string>
