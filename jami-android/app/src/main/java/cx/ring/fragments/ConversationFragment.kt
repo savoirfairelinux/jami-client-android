@@ -989,7 +989,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         if (activity is ConversationActivity) {
             requireActivity().finish()
         } else {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            // Post because we might be currently executing a fragment transaction
+            view?.post { activity?.onBackPressedDispatcher?.onBackPressed() }
         }
     }
 
