@@ -20,6 +20,7 @@
 package net.jami.call
 
 import net.jami.model.Call.CallStatus
+import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel

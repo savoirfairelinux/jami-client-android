@@ -31,6 +31,7 @@ import net.jami.daemon.IntVect
 import net.jami.daemon.UintVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.StringMap
+import net.jami.model.Call
 import net.jami.model.Conference
 import net.jami.utils.Log
 import java.util.concurrent.ScheduledExecutorService
@@ -53,11 +54,12 @@ abstract class HardwareService(
 
     data class BluetoothEvent(val connected: Boolean)
 
-    enum class AudioOutput {
-        INTERNAL, SPEAKERS, BLUETOOTH
+    enum class AudioOutputType {
+        INTERNAL, WIRED, SPEAKERS, BLUETOOTH
     }
+    data class AudioOutput(val type: AudioOutputType, val outputName: String? = null, val outputId: String? = null)
 
-    data class AudioState(val outputType: AudioOutput, val outputName: String? = null)
+    data class AudioState(val output: AudioOutput, val availableOutputs: List<AudioOutput> = emptyList())
 
     protected val videoEvents: Subject<VideoEvent> = PublishSubject.create()
     protected val cameraEvents: Subject<VideoEvent> = PublishSubject.create()
@@ -70,6 +72,7 @@ abstract class HardwareService(
 
     fun getBluetoothEvents(): Observable<BluetoothEvent> = bluetoothEvents
 
+    abstract fun getAudioState(call: Conference): Observable<AudioState>
     val audioState: Observable<AudioState>
         get() = audioStateSubject
     val connectivityState: Observable<Boolean>
@@ -77,11 +80,11 @@ abstract class HardwareService(
 
     abstract fun initVideo(): Completable
     abstract val isVideoAvailable: Boolean
-    abstract fun updateAudioState(state: CallStatus, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean)
+    abstract fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean)
     abstract fun closeAudioState()
     abstract fun isSpeakerphoneOn(): Boolean
 
-    abstract fun toggleSpeakerphone(checked: Boolean)
+    abstract fun toggleSpeakerphone(call: Conference, checked: Boolean)
     abstract fun abandonAudioFocus()
     abstract fun decodingStarted(id: String, shmPath: String, width: Int, height: Int, isMixer: Boolean)
     abstract fun decodingStopped(id: String, shmPath: String, isMixer: Boolean)
@@ -199,7 +202,10 @@ abstract class HardwareService(
 
     companion object {
         private val TAG = HardwareService::class.simpleName!!
-        val STATE_SPEAKERS = AudioState(AudioOutput.SPEAKERS)
-        val STATE_INTERNAL = AudioState(AudioOutput.INTERNAL)
+        val OUTPUT_SPEAKERS = AudioOutput(AudioOutputType.SPEAKERS)
+        val OUTPUT_INTERNAL = AudioOutput(AudioOutputType.INTERNAL)
+        val OUTPUT_WIRED = AudioOutput(AudioOutputType.WIRED)
+        val OUTPUT_BLUETOOTH = AudioOutput(AudioOutputType.BLUETOOTH)
+        val STATE_INTERNAL = AudioState(OUTPUT_INTERNAL)
     }
 }

@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit
  * - Provide query tools to search contacts by id, number, ...
  */
 abstract class ContactService(
-    val mPreferencesService: PreferencesService,
-    val mDeviceRuntimeService: DeviceRuntimeService,
-    val mAccountService: AccountService
+    protected val mPreferencesService: PreferencesService,
+    protected val mDeviceRuntimeService: DeviceRuntimeService,
+    protected val mAccountService: AccountService
 ) {
     abstract fun loadContactsFromSystem(loadRingContacts: Boolean, loadSipContacts: Boolean): Map<Long, Contact>
     protected abstract fun findContactByIdFromSystem(contactId: Long, contactKey: String): Contact?

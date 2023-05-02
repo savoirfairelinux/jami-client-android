@@ -546,7 +546,7 @@ class Conversation : ConversationHistory {
         val previous = mMessages.put(id, interaction)
         val action = if (previous == null) ElementStatus.ADD else ElementStatus.UPDATE
         if (previous != null && interaction.type != Interaction.InteractionType.INVALID) {
-            // We update a reaction, but the views might be subscribed to the old model
+            // We update an interaction, but the views might be subscribed to the old model
             // Migrate the observables to the new model
             interaction.updateFrom(previous)
         }
