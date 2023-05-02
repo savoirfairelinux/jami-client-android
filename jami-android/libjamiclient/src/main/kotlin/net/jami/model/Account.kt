@@ -685,6 +685,17 @@ class Account(
         synchronized(pending) {
             val uri = conversationUri.uri
             val request = mRequests.remove(uri)
+
+            // When receiving a request, we point the contact to its conversation.
+            // When we refuse it, we should reset this link (to the contact uri).
+            request?.from?.let {
+                val contact = getContactFromCache(it)
+                // Make sure the contact conversation uri was pointing to request uri before
+                // deleting the link.
+                if (contact.conversationUri.blockingFirst() == request.conversationUri)
+                    contact.setConversationUri(contact.uri)
+            }
+
             if (pending.remove(uri) != null) {
                 pendingChanged()
             }
