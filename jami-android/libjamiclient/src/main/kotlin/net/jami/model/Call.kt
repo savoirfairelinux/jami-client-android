@@ -21,11 +21,13 @@ package net.jami.model
 
 import ezvcard.Ezvcard
 import ezvcard.VCard
-import net.jami.call.CallPresenter
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.SingleSubject
+import net.jami.services.DeviceRuntimeService
 import net.jami.utils.Log
 import net.jami.utils.ProfileChunk
-import net.jami.utils.StringUtils
 import net.jami.utils.VCardUtils
+import java.lang.UnsupportedOperationException
 import java.util.*
 
 class Call : Interaction {
@@ -74,6 +76,18 @@ class Call : Interaction {
     var mediaList: List<Media>? = null
 
     private var mProfileChunk: ProfileChunk? = null
+
+    private val systemConnectionSubject: SingleSubject<DeviceRuntimeService.SystemCall> = SingleSubject.create()
+    fun setSystemConnection(value: DeviceRuntimeService.SystemCall?) {
+        Log.w(TAG, "Telecom API: setSystemConnection $value")
+        if (value != null)
+            systemConnectionSubject.onSuccess(value);
+        else
+            systemConnectionSubject.onError(UnsupportedOperationException())
+    }
+    val systemConnection: Single<DeviceRuntimeService.SystemCall>
+        get() = systemConnectionSubject
+
 
     constructor(
         daemonId: String?,

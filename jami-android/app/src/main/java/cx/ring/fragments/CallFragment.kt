@@ -42,6 +42,7 @@ import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
+import android.telecom.CallAudioState
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -68,21 +69,26 @@ import cx.ring.client.*
 import cx.ring.databinding.FragCallBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.plugins.PluginUtils
+import cx.ring.service.CallConnection
 import cx.ring.service.DRingService
+import cx.ring.services.DeviceRuntimeServiceImpl
 import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.utils.ActionHelper
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.DeviceUtils.isTv
+import cx.ring.utils.DeviceUtils.uiScheduler
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
 import net.jami.model.Call.CallStatus
+import net.jami.model.Conference
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
 import net.jami.model.ContactViewModel
@@ -763,7 +769,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun updateAudioState(state: AudioState) {
-        binding!!.callSpeakerBtn.isChecked = state.outputType == HardwareService.AudioOutput.SPEAKERS
+        binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
     }
 
     override fun updateTime(duration: Long) {
@@ -946,7 +952,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
             }
             callMicBtn.isChecked = isMicrophoneMuted
-            callSpeakerBtn.isChecked = isSpeakerOn
+            //callSpeakerBtn.isChecked = isSpeakerOn
         }
     }
 
