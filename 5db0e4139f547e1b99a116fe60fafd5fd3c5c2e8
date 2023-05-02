@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33ec2e80_35860804",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-02T20:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d3ac09_0c0d8582",
+      "range": {
+        "startLine": 358,
+        "startChar": 86,
+        "endLine": 360,
+        "endChar": 84
+      },
+      "revId": "5db0e4139f547e1b99a116fe60fafd5fd3c5c2e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad11109f_00e6e0d1",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-01T13:37:46Z",
       "side": 1,
       "message": "Avoid first person or to refer to a specific bug when possible, like simply:\n\n We use findLastCompletelyVisibleItemPosition because findLastVisibleItemPosition ignores invisible items.",
+      "range": {
+        "startLine": 361,
+        "startChar": 23,
+        "endLine": 365,
+        "endChar": 68
+      },
+      "revId": "5db0e4139f547e1b99a116fe60fafd5fd3c5c2e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2624ec8c_01e908af",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-02T20:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad11109f_00e6e0d1",
       "range": {
         "startLine": 361,
         "startChar": 23,
