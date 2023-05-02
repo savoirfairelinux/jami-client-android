@@ -6,6 +6,7 @@
     <color name="colorPrimary">@color/color_primary_dark</color>
     <color name="colorPrimaryTranslucent">@color/color_primary_dark_translucent</color>
     <color name="colorOnPrimary">@color/white</color>
+    <color name="colorPrimaryDark">#00223C</color>
 
     <color name="colorSecondary">@color/color_primary_light</color>
     <color name="colorSecondaryContainer">@color/color_primary_light_container</color>

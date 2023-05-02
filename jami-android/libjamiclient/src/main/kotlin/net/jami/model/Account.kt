@@ -61,10 +61,14 @@ class Account(
     private val conversationSubject: Subject<Conversation> = PublishSubject.create()
     private val conversationsSubject: Subject<List<Conversation>> = BehaviorSubject.create()
     private val pendingSubject: Subject<List<Conversation>> = BehaviorSubject.create()
-    private val unreadConversationsSubject: Subject<Int> = BehaviorSubject.create()
-    private val unreadPendingSubject: Subject<Int> = BehaviorSubject.create()
-    val unreadConversations: Observable<Int> = unreadConversationsSubject.distinctUntilChanged()
-    val unreadPending: Observable<Int> = unreadPendingSubject.distinctUntilChanged()
+    val unreadConversations: Observable<List<Conversation>> = conversationsSubject
+        .map { c -> c.filter { it.lastEvent?.isRead == false } }
+    val unreadConversationCount: Observable<Int> = conversationsSubject
+        .switchMap { conversations -> Observable.combineLatest(conversations.map { it.lastEventObservable }) { lastEvents ->
+            lastEvents.count { e -> !(e as Interaction).isRead }
+        } }
+        .distinctUntilChanged()
+    val unreadPending: Observable<Int> = pendingSubject.map { it.size }.distinctUntilChanged()
     private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
@@ -193,13 +197,9 @@ class Account(
             }
     }*/
 
-    fun getConversationSubject(): Observable<Conversation> {
-        return conversationSubject
-    }
+    fun getConversationSubject(): Observable<Conversation> = conversationSubject
 
-    fun getPendingSubject(): Observable<List<Conversation>> {
-        return pendingSubject
-    }
+    fun getPendingSubject(): Observable<List<Conversation>> = pendingSubject
 
     fun getConversations(): Collection<Conversation> {
         return conversations.values
@@ -212,7 +212,6 @@ class Account(
     private fun pendingRefreshed() {
         if (historyLoaded) {
             pendingSubject.onNext(getSortedPending())
-            updateUnreadPending()
         }
     }
 
@@ -235,7 +234,7 @@ class Account(
     private fun conversationRefreshed(conversation: Conversation) {
         if (historyLoaded) {
             conversationSubject.onNext(conversation)
-            updateUnreadConversations()
+            //updateUnreadConversations()
         }
     }
 
@@ -244,7 +243,7 @@ class Account(
             conversationsChanged = true
             if (historyLoaded) {
                 conversationsSubject.onNext(ArrayList(getSortedConversations()))
-                updateUnreadConversations()
+                //updateUnreadConversations()
             }
         }
     }
@@ -262,11 +261,11 @@ class Account(
             // TODO: remove next line when profile is updated through dedicated signal
             conversationSubject.onNext(conversation)
             conversationsSubject.onNext(ArrayList(sortedConversations))
-            updateUnreadConversations()
+            //updateUnreadConversations()
         }
     }
 
-    private fun updateUnreadConversations() {
+    /*private fun updateUnreadConversations() {
         var unread = 0
         for (model in sortedConversations) {
             val last = model.lastEvent
@@ -274,11 +273,7 @@ class Account(
         }
         // Log.w(TAG, "updateUnreadConversations " + unread);
         unreadConversationsSubject.onNext(unread)
-    }
-
-    private fun updateUnreadPending() {
-        unreadPendingSubject.onNext(sortedPending.size)
-    }
+    }*/
 
     /**
      * Clears a conversation
