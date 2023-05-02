@@ -120,7 +120,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         TextUtils.copyToClipboard(requireContext(), contactNumber)
         val snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
             TextUtils.getShortenedNumber(contactNumber))
-        Snackbar.make(binding!!.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show()
+        //Snackbar.make(binding!!.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
     override fun displayChooseNumberDialog(numbers: Array<CharSequence>) {

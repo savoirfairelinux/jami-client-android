@@ -18,19 +18,13 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/list_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
-    android:animateLayoutChanges="true">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/list_coordinator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
         <LinearLayout
             android:id="@+id/placeholder"
@@ -66,10 +60,11 @@ along with this program; if not, write to the Free Software
             tools:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:paddingTop="160dp"
             android:id="@+id/confs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/qr_code"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:layout_marginStart="0dp"
             android:clipToPadding="false"
             android:divider="@null"
@@ -97,4 +92,3 @@ along with this program; if not, write to the Free Software
             android:backgroundTint="@color/fab_background"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</RelativeLayout>

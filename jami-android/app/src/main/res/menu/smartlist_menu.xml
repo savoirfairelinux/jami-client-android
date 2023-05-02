@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
+    <!--<item
         android:id="@+id/menu_contact_search"
         android:hint="@string/searchbar_hint"
         android:icon="@drawable/baseline_search_24"
         android:title="@string/searchbar_hint"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always" />
+        app:showAsAction="always" />-->
 
     <item
         android:id="@+id/menu_contact_dial"
