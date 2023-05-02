@@ -57,7 +57,7 @@ along with this program; if not, write to the Free Software
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:textColor="@color/colorOnSurface"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Person Name" />
@@ -84,7 +84,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_below="@+id/conv_participant"
             android:fontFamily="@font/ubuntu_medium"
-            android:textColor="@color/colorOnSurface"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="14sp"
             android:textStyle="bold"
             tools:text="2 days ago" />
