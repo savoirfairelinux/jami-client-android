@@ -108,8 +108,10 @@ class Conversation : ConversationHistory {
         sortHistory()
         aggregateHistory
     }
-    val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
-    val currentStateSubject: Observable<Pair<Interaction, Boolean>> = Observable.combineLatest(lastEventSubject, callsSubject.map { calls ->
+    private val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
+    val lastEventObservable: Observable<Interaction>
+        get() = lastEventSubject
+    val currentStateSubject: Observable<Pair<Interaction, Boolean>> = Observable.combineLatest(lastEventObservable, callsSubject.map { calls ->
         for (call in calls)
             if (call.isOnGoing)
                 return@map true
