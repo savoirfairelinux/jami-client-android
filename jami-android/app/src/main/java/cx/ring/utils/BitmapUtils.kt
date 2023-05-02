@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.util.Base64
 import android.util.Log
 import ezvcard.parameter.ImageType
@@ -144,4 +145,9 @@ object BitmapUtils {
         }
         return inSampleSize
     }
+
+    fun withPadding(drawable: Drawable, padding: Int): Drawable =
+        LayerDrawable(arrayOf(drawable)).apply {
+            setLayerInset(0, padding, padding, padding, padding)
+        }
 }
