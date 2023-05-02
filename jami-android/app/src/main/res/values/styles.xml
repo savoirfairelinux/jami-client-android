@@ -14,6 +14,7 @@
 
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <!--<item name="colorTertiary">@color/colorTertiary</item>-->
 
         <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
         <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
@@ -87,6 +88,20 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="NightCardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:theme">@style/NightCardViewThemeOverlay</item>
+    </style>
+
+    <style name="NightCardViewThemeOverlay" parent="@style/Theme.Material3.Dark">
+        <item name="colorPrimary">@color/color_secondary</item>
+        <item name="colorSecondary">#0097F5</item>
+        <item name="colorSurface">@color/color_primary_dark</item>
+        <item name="colorContainer">@color/color_secondary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnContainer">@color/white</item>
+    </style>
+
     <!-- Dialog -->
     <style name="AppTheme.Dialog" parent="AppThemeBase">
         <item name="android:windowBackground">#88000000</item>
@@ -101,8 +116,6 @@
     <!-- HomeScreen style -->
     <style name="AppTheme.Navigation" parent="AppThemeBase">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
-        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
     <!-- Call Base theme -->
