@@ -46,7 +46,7 @@ import net.jami.settings.GeneralAccountView
 
 @AndroidEntryPoint
 class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>(), GeneralAccountView {
-    private val changeAccountStatusListener = Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+    private val changeAccountStatusListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
         presenter.setEnabled(newValue as Boolean)
         false
     }
@@ -207,7 +207,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
         val alertDialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.account_delete_dialog_message)
             .setTitle(R.string.account_delete_dialog_title)
-            .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int -> presenter.removeAccount() }
+            .setPositiveButton(R.string.menu_delete) { _, _ -> presenter.removeAccount() }
             .setNegativeButton(android.R.string.cancel, null)
             .create()
         val activity: Activity? = activity

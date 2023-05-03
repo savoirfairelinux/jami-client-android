@@ -34,7 +34,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -193,12 +192,13 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                     mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
                 }
                 R.id.menu_contact_dial -> {
-                    val searchView = mSearchView
-                    if (searchView?.inputType == EditorInfo.TYPE_CLASS_PHONE) {
-                        searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
+
+                    val searchView1 = mSearchView
+                    if (searchView1?.inputType == EditorInfo.TYPE_CLASS_PHONE) {
+                        searchView1.inputType = EditorInfo.TYPE_CLASS_TEXT
                         mDialPadMenuItem?.setIcon(R.drawable.baseline_dialpad_24)
                     } else {
-                        searchView?.inputType = EditorInfo.TYPE_CLASS_PHONE
+                        searchView1?.inputType = EditorInfo.TYPE_CLASS_PHONE
                         mDialPadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
                     }
                 }
