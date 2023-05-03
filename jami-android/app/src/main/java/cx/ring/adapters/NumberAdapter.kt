@@ -44,12 +44,12 @@ class NumberAdapter(private val mContext: Context, c: Contact?, fullCellForGetVi
     override fun getItemId(position: Int): Long = 0L
 
     override fun getView(position: Int, convertView: View, parent: ViewGroup): View =
-        getViewWithLongNumber(mUseFullCellForGetView, position, convertView, parent)
+        getViewWithLongNumber(mUseFullCellForGetView, position, convertView)
 
     override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View =
-        getViewWithLongNumber(true, position, convertView, parent)
+        getViewWithLongNumber(true, position, convertView)
 
-    private fun getViewWithLongNumber(longView: Boolean, position: Int, convertView: View, parent: ViewGroup): View {
+    private fun getViewWithLongNumber(longView: Boolean, position: Int, convertView: View): View {
         val (number1, category, label) = mNumbers[position]
         val numberIcon = convertView.findViewById<ImageView>(R.id.number_icon)
         numberIcon.setImageResource(if (number1.isHexId) R.drawable.ic_jami_24 else R.drawable.baseline_dialer_sip_24)

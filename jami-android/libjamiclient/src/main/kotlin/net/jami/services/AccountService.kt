@@ -1008,7 +1008,7 @@ class AccountService(
             account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
-            account.setRegistrationState(state, code)
+            account.setRegistrationState(state)
         }
         if (oldState != state) {
             observableAccounts.onNext(account)
@@ -1151,7 +1151,7 @@ class AccountService(
         JamiService.removeConversationMember(accountId, conversationId, uri)
     }
 
-    fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
+    fun contactAdded(accountId: String, uri: String) {
         getAccount(accountId)?.let { account ->
             val details: Map<String, String> = JamiService.getContactDetails(accountId, uri)
             val contact = account.addContact(details)
@@ -1464,7 +1464,7 @@ class AccountService(
         }
     }
 
-    fun cancelDataTransfer(accountId: String, conversationId: String, messageId: String?, fileId: String) {
+    fun cancelDataTransfer(accountId: String, conversationId: String, fileId: String) {
         Log.i(TAG, "cancelDataTransfer() id=$fileId")
         mExecutor.execute { JamiService.cancelDataTransfer(accountId, conversationId, fileId) }
     }
@@ -1507,7 +1507,6 @@ class AccountService(
         val totalA = LongArray(1)
         JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
         val progress = progressA[0]
-        val total = totalA[0]
         synchronized(transfer) {
             transfer.conversation = conversation
             transfer.daemonPath = File(paths[0]!!)

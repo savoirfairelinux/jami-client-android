@@ -418,10 +418,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         //mToolbar.setBackground(new ColorDrawable(color));
     }
 
-    fun setToolbarElevation(enable: Boolean) {
-//        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
-    }
-
     private fun enableAccount(newValue: Boolean) {
         val account = mAccountService.currentAccount
         if (account == null) {

@@ -370,7 +370,7 @@ class HardwareServiceImpl(
         val useLargerSize = Build.SUPPORTED_64_BIT_ABIS.isNotEmpty() || mPreferenceService.isHardwareAccelerationEnabled
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
         val minVideoSize: Size = if (useLargerSize) parseResolution(mPreferenceService.resolution) else VIDEO_SIZE_LOW
-        cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize, context)
+        cameraService.getCameraInfo(camId, sizes, rates, minVideoSize, context)
     }
 
     override fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int) {
@@ -425,7 +425,7 @@ class HardwareServiceImpl(
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             val projection = pendingScreenSharingSession ?: return
             pendingScreenSharingSession = null
-            if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
+            if (!cameraService.startScreenSharing(videoParams, projection, context.resources.displayMetrics)) {
                 projection.stop()
             }
             return

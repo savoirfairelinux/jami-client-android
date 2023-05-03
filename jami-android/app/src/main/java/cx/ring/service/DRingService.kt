@@ -255,7 +255,7 @@ class DRingService : Service() {
             mNotificationService.removeTransferNotification(path.accountId, path.conversationUri, id)
             mAccountService.acceptFileTransfer(path.accountId, path.conversationUri, messageId, id)
         } else if (action == ACTION_FILE_CANCEL) {
-            mConversationFacade.cancelFileTransfer(path.accountId, path.conversationUri, messageId, id)
+            mConversationFacade.cancelFileTransfer(path.accountId, path.conversationUri, id)
         }
     }
 
@@ -339,7 +339,6 @@ class DRingService : Service() {
         mContactService.loadContacts(
             mAccountService.hasJamiAccount(),
             mAccountService.hasSipAccount(),
-            mAccountService.currentAccount
         )
     }
 

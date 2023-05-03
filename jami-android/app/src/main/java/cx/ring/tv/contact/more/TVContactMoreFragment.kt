@@ -64,12 +64,12 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
                 createDialog(
                     getString(R.string.conversation_action_history_clear_title),
                     getString(R.string.clear_history)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter.clearHistory() }
+                ) { _, _ -> presenter.clearHistory() }
             } else if (preference.key == "Contact.delete") {
                 createDialog(
                     getString(R.string.conversation_action_remove_this_title),
                     getString(R.string.menu_delete)
-                ) { dialog: DialogInterface?, whichButton: Int -> presenter.removeContact() }
+                ) { _, _ -> presenter.removeContact() }
             }
             return super.onPreferenceTreeClick(preference)
         }

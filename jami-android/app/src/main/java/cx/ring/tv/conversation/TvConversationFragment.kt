@@ -226,14 +226,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(spokenText)
                 .setMessage("")
-                .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
+                .setPositiveButton(R.string.tv_dialog_send) { _, _ ->
                     presenter.sendTextMessage(spokenText)
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .create()
         alertDialog.window!!.setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(requireActivity())
-        alertDialog.setOnShowListener { dialog: DialogInterface? ->
+        alertDialog.setOnShowListener {
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positive.isFocusable = true
             positive.isFocusableInTouchMode = true
@@ -252,7 +252,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             MaterialAlertDialogBuilder(activity, R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(if (type == CustomCameraActivity.TYPE_IMAGE) R.string.tv_send_image_dialog_message else R.string.tv_send_video_dialog_message)
                 .setMessage("")
-                .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
+                .setPositiveButton(R.string.tv_dialog_send) { _, _ ->
                     startFileSend(file.flatMapCompletable { file -> sendFile(file) })
                 }
                 .setNegativeButton(android.R.string.cancel, null)
@@ -261,7 +261,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         alertDialog.window!!
             .setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(activity)
-        alertDialog.setOnShowListener { dialog: DialogInterface? ->
+        alertDialog.setOnShowListener {
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positive.isFocusable = true
             positive.isFocusableInTouchMode = true
@@ -300,7 +300,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         alertDialog.window!!
             .setLayout(DIALOG_WIDTH, DIALOG_HEIGHT)
         alertDialog.setOwnerActivity(requireActivity())
-        alertDialog.setOnShowListener { dialog: DialogInterface? ->
+        alertDialog.setOnShowListener {
             val positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positive.isFocusable = true
             positive.isFocusableInTouchMode = true
@@ -578,7 +578,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     override fun scrollToEnd() {}
 
-    override fun scrollToMessage(messageId: String, flash: Boolean) {}
+    override fun scrollToMessage(messageId: String, highlight: Boolean) {}
 
     override fun updateContact(contact: ContactViewModel) {
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
@@ -590,7 +590,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     }
 
     override fun setComposingStatus(composingStatus: ComposingStatus) {}
-    override fun setConversationColor(integer: Int) {}
+    override fun setConversationColor(color: Int) {}
     override fun setConversationSymbol(symbol: CharSequence) {}
     override fun startShareLocation(accountId: String, conversationId: String) {}
     override fun showMap(accountId: String, contactId: String, open: Boolean) {}
@@ -612,12 +612,12 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun clearMsgEdit() {}
     override fun goToHome() {}
     override fun goToAddContact(contact: Contact) {}
-    override fun goToCallActivity(conferenceId: String, hasVideo: Boolean) {}
+    override fun goToCallActivity(conferenceId: String, withCamera: Boolean) {}
     override fun goToCallActivityWithResult(
         accountId: String,
         conversationUri: net.jami.model.Uri,
         contactUri: net.jami.model.Uri,
-        audioOnly: Boolean
+        withCamera: Boolean
     ) {
     }
 
