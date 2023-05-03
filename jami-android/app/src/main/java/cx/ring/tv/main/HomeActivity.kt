@@ -84,7 +84,7 @@ class HomeActivity : FragmentActivity() {
     private var out: Allocation? = null
     private var mBlurOut: Allocation? = null
 
-    private val mErrorCallback = ErrorCallback { error, camera ->
+    private val mErrorCallback = ErrorCallback { _, _ ->
         mBlurImage.visibility = View.INVISIBLE
         mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
     }

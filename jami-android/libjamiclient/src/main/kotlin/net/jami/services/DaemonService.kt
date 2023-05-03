@@ -225,7 +225,6 @@ class DaemonService(
         }
 
         override fun connectionUpdate(id: String, state: Int) {
-            mCallService.connectionUpdate(id, state)
         }
 
         override fun remoteRecordingChanged(call_id: String, peer_number: String, state: Boolean) {

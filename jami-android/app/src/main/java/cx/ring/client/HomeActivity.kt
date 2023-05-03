@@ -417,11 +417,7 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
     override fun setColor(color: Int) {
         //mToolbar.setBackground(new ColorDrawable(color));
     }
-
-    fun setToolbarElevation(enable: Boolean) {
-//        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
-    }
-
+    
     private fun getMaxShareShortcuts() =
         ShortcutManagerCompat.getMaxShortcutCountPerActivity(this).takeIf { it > 0 } ?: 4
 

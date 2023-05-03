@@ -44,7 +44,7 @@ abstract class PreferencesService(
             val allowPush = settings.enablePushNotifications
             val previousSettings = userSettings
             if (previousSettings == null || previousSettings.enablePushNotifications != allowPush) {
-                mAccountService.setPushNotificationToken(if (allowPush) mDeviceService.pushToken ?: "" else "")
+                mAccountService.setPushNotificationToken(if (allowPush) mDeviceService.pushToken else "")
                 mAccountService.setProxyEnabled(allowPush)
             }
             userSettings = settings

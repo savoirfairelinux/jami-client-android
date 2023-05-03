@@ -37,7 +37,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
@@ -78,7 +77,6 @@ import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
-import net.jami.utils.StringUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -86,7 +84,7 @@ import javax.inject.Inject
 class JamiAccountSummaryFragment :
     BaseSupportFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView>(),
     RegisterNameDialogListener, JamiAccountSummaryView, PasswordChangedListener,
-    UnlockAccountListener, OnScrollChangedListener, RenameDeviceListener, DeviceRevocationListener,
+    UnlockAccountListener, RenameDeviceListener, DeviceRevocationListener,
     ConfirmRevocationListener {
     private val mOnBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -115,7 +113,6 @@ class JamiAccountSummaryFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
             linkNewDevice.setOnClickListener { showWizard(mAccountId!!) }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
@@ -175,7 +172,7 @@ class JamiAccountSummaryFragment :
 
     override fun onResume() {
         super.onResume()
-        (activity as HomeActivity?)?.let { activity ->
+        (activity as HomeActivity?)?.let {
             mBinding!!.accountSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.enableAccount(isChecked)
             }
@@ -227,7 +224,7 @@ class JamiAccountSummaryFragment :
 
     override fun accountChanged(account: Account, profile: Profile) {
         mAccountId = account.accountId
-        mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
+        mBestName = account.registeredName
         mBestName = "$mBestName.gz"
         mBinding?.let { binding ->
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
@@ -305,7 +302,7 @@ class JamiAccountSummaryFragment :
             .setTitle(R.string.profile)
             .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
-            .setPositiveButton(android.R.string.ok) { dialog, which ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 mSourcePhoto?.let { source ->
                     presenter.saveVCard(mBinding!!.username.text.toString(),
                         Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
@@ -484,13 +481,6 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    override fun onScrollChanged() {
-        if (mBinding != null) {
-            val activity = activity
-            if (activity is HomeActivity) activity.setToolbarElevation(mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
-    }
-
     private fun setSwitchStatus(account: Account) {
         val switchButton = mBinding!!.accountSwitch
         var color = R.color.red_400
@@ -555,7 +545,7 @@ class JamiAccountSummaryFragment :
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, which: Int ->
+            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
                 dialog.dismiss()
                 if (status == 1) {
                     onDeviceRevocationAsked(device)

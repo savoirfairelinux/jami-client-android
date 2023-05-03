@@ -39,7 +39,6 @@ import cx.ring.R
 import cx.ring.tv.account.TVAccountExport
 import cx.ring.tv.account.TVProfileEditingFragment
 import cx.ring.tv.account.TVShareActivity
-import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.cards.*
 import cx.ring.tv.cards.contacts.ContactCard
 import cx.ring.tv.cards.iconcards.IconCard
@@ -63,7 +62,6 @@ import net.jami.model.Account
 import net.jami.model.Conversation
 import net.jami.model.Profile
 import net.jami.navigation.HomeNavigationViewModel
-import net.jami.services.ConversationFacade
 import net.jami.smartlist.ConversationItemViewModel
 import net.jami.utils.QRCodeUtils
 import java.io.BufferedOutputStream
@@ -206,33 +204,19 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
             ) { e: Throwable -> Log.w(TAG, "Error updating home channel", e) })
     }
 
-    override fun showContactRequests(contacts: List<Conversation>) {
+    override fun showContactRequests(contactRequests: List<Conversation>) {
         val adapter = adapter as ArrayObjectAdapter
         val row = adapter[TRUST_REQUEST_ROW_POSITION] as CardListRow?
         val isRowDisplayed = row === requestsRow
-        val cards = contacts.map { contact -> ContactCard(contact, Card.Type.CONTACT_WITH_USERNAME) }
+        val cards = contactRequests.map { contact -> ContactCard(contact, Card.Type.CONTACT_WITH_USERNAME) }
         if (isRowDisplayed && cards.isEmpty()) {
             adapter.removeItems(TRUST_REQUEST_ROW_POSITION, 1)
-        } else if (contacts.isNotEmpty()) {
+        } else if (contactRequests.isNotEmpty()) {
             if (requestsRow == null)
                 requestsRow = createContactRequestRow()
             contactRequestRowAdapter!!.setItems(cards, diff)
             if (!isRowDisplayed)
                 adapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
-        }
-    }
-
-    override fun callContact(accountID: String, number: String) {
-        try {
-            val intent = Intent(
-                Intent.ACTION_CALL,
-                ConversationPath.toUri(accountID, number),
-                activity,
-                TVCallActivity::class.java
-            )
-            startActivity(intent)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error starting activity", e)
         }
     }
 

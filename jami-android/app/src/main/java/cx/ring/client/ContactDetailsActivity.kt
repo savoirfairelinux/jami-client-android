@@ -259,7 +259,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             .setTitle(R.string.profile)
             .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
-            .setPositiveButton(android.R.string.ok) { dialog, which ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 mSourcePhoto?.let { source ->
                     val os = ByteArrayOutputStream()
                     BitmapUtils.createScaledBitmap(source, 512)
