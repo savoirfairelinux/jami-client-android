@@ -20,6 +20,7 @@
  */
 package cx.ring.services
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.pm.PackageManager
@@ -29,15 +30,18 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
+import android.telecom.CallAudioState
 import android.util.Log
 import android.util.Size
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.TextureView
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import cx.ring.service.CallConnection
 import cx.ring.services.CameraService.CameraListener
 import cx.ring.utils.BluetoothWrapper
 import cx.ring.utils.BluetoothWrapper.BluetoothChangeListener
@@ -45,9 +49,11 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.daemon.IntVect
 import net.jami.daemon.JamiService
 import net.jami.daemon.UintVect
+import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference
 import net.jami.services.HardwareService
@@ -112,13 +118,13 @@ class HardwareServiceImpl(
 
     private val RINGTONE_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
         .setAudioAttributes(AudioAttributesCompat.Builder()
-            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_SONIFICATION)
             .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
             .setLegacyStreamType(AudioManager.STREAM_RING)
             .build())
         .setOnAudioFocusChangeListener(this)
         .build()
-    private val CALL_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT)
+    private val CALL_REQUEST = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
         .setAudioAttributes(AudioAttributesCompat.Builder()
             .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
             .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
@@ -138,35 +144,81 @@ class HardwareServiceImpl(
         }
     }
 
+    @SuppressLint("NewApi")
+    override fun getAudioState(conf: Conference): Observable<AudioState> =
+        conf.call!!.systemConnection
+            .flatMapObservable { a -> (a as DeviceRuntimeServiceImpl.AndroidCall).call!!.audioState }
+            .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
+            .onErrorResumeWith { audioState }
+
+    private fun routeToType(a: Int): AudioOutput = when(a) {
+        CallAudioState.ROUTE_EARPIECE -> OUTPUT_INTERNAL
+        CallAudioState.ROUTE_WIRED_HEADSET -> OUTPUT_WIRED
+        CallAudioState.ROUTE_SPEAKER -> OUTPUT_SPEAKERS
+        CallAudioState.ROUTE_BLUETOOTH -> OUTPUT_BLUETOOTH
+        else -> OUTPUT_INTERNAL
+    }
+
+    private fun maskToList(routeMask: Int): List<AudioOutput> = ArrayList<AudioOutput>().apply {
+        if ((routeMask and CallAudioState.ROUTE_EARPIECE) != 0)
+            add(OUTPUT_INTERNAL)
+        if ((routeMask and CallAudioState.ROUTE_WIRED_HEADSET) != 0)
+            add(OUTPUT_WIRED)
+        if ((routeMask and CallAudioState.ROUTE_SPEAKER) != 0)
+            add(OUTPUT_SPEAKERS)
+        if ((routeMask and CallAudioState.ROUTE_BLUETOOTH) != 0)
+            add(OUTPUT_BLUETOOTH)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setAudioState(call: CallConnection, wantSpeaker: Boolean) {
+        Log.w(TAG, "setAudioState Telecom API $wantSpeaker ${call.callAudioState}")
+        call.setWantedAudioState(if (wantSpeaker) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT else CallConnection.ROUTE_LIST_DEFAULT)
+    }
+
+    val disposables = CompositeDisposable()
+
+    @SuppressLint("NewApi")
     @Synchronized
-    override fun updateAudioState(state: CallStatus, incomingCall: Boolean, isOngoingVideo: Boolean, isSpeakerOn: Boolean) {
-        Log.d(TAG, "updateAudioState: Call state updated to $state Call is incoming: $incomingCall Call is video: $isOngoingVideo")
-        val callEnded = state == CallStatus.HUNGUP || state == CallStatus.FAILURE || state == CallStatus.OVER
-        try {
-            if (mBluetoothWrapper == null && !callEnded) {
-                mBluetoothWrapper = BluetoothWrapper(context, this)
+    override fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean) {
+        Log.d(TAG, "updateAudioState $conf: Call state updated to ${call.callStatus} Call is incoming: $incomingCall Call is video: $isOngoingVideo")
+        disposables.add(call.systemConnection.map {
+                (it as DeviceRuntimeServiceImpl.AndroidCall).call!!
             }
-            when (state) {
-                CallStatus.RINGING -> {
-                    getFocus(RINGTONE_REQUEST)
-                    if (incomingCall) {
-                        // ringtone for incoming calls
-                        mAudioManager.mode = AudioManager.MODE_RINGTONE
-                        setAudioRouting(true)
-                    } else setAudioRouting(isOngoingVideo)
+            .subscribe({ systemCall ->
+                // Try using the Telecom API if available
+                setAudioState(systemCall, incomingCall || isOngoingVideo)
+            }) { e ->
+                Log.w(TAG, "updateAudioState fallback", e)
+                // Fallback on the AudioManager API
+                try {
+                    val state = call.callStatus
+                    val callEnded = state == CallStatus.HUNGUP || state == CallStatus.FAILURE || state == CallStatus.OVER
+                    if (mBluetoothWrapper == null && !callEnded) {
+                        mBluetoothWrapper = BluetoothWrapper(context, this)
+                    }
+                    when (state) {
+                        CallStatus.RINGING -> {
+                            getFocus(RINGTONE_REQUEST)
+                            if (incomingCall) {
+                                // ringtone for incoming calls
+                                mAudioManager.mode = AudioManager.MODE_RINGTONE
+                                setAudioRouting(true)
+                            } else setAudioRouting(isOngoingVideo)
+                        }
+                        CallStatus.CURRENT -> {
+                            getFocus(CALL_REQUEST)
+                            mAudioManager.mode = AudioManager.MODE_IN_COMMUNICATION
+                            mShouldSpeakerphone = isOngoingVideo || isSpeakerphoneOn()
+                            setAudioRouting(mShouldSpeakerphone)
+                        }
+                        CallStatus.HOLD, CallStatus.UNHOLD, CallStatus.INACTIVE -> {}
+                        else -> if (callEnded) closeAudioState()
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error updating audio state", e)
                 }
-                CallStatus.CURRENT -> {
-                    getFocus(CALL_REQUEST)
-                    mAudioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-                    mShouldSpeakerphone = isOngoingVideo || isSpeakerOn
-                    setAudioRouting(mShouldSpeakerphone)
-                }
-                CallStatus.HOLD, CallStatus.UNHOLD, CallStatus.INACTIVE -> {}
-                else -> if (callEnded) closeAudioState()
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating audio state", e)
-        }
+            })
     }
 
     /*
@@ -243,7 +295,7 @@ class HardwareServiceImpl(
         mAudioManager.isSpeakerphoneOn = false
         mBluetoothWrapper!!.setBluetoothOn(true)
         mAudioManager.mode = oldMode
-        audioStateSubject.onNext(AudioState(AudioOutput.BLUETOOTH))
+        audioStateSubject.onNext(AudioState(OUTPUT_BLUETOOTH))
     }
 
     /**
@@ -258,7 +310,7 @@ class HardwareServiceImpl(
             mAudioManager.mode = oldMode
         }
         mAudioManager.isSpeakerphoneOn = true
-        audioStateSubject.onNext(STATE_SPEAKERS)
+        audioStateSubject.onNext(AudioState(OUTPUT_SPEAKERS))
     }
 
     /**
@@ -270,18 +322,33 @@ class HardwareServiceImpl(
         audioStateSubject.onNext(STATE_INTERNAL)
     }
 
+    @SuppressLint("NewApi")
     @Synchronized
-    override fun toggleSpeakerphone(checked: Boolean) {
-        JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
-        mShouldSpeakerphone = checked
-
-        if (mHasSpeakerPhone && checked) {
-            routeToSpeaker()
-        } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()) {
-            routeToBTHeadset()
-        } else {
-            resetAudio()
-        }
+    override fun toggleSpeakerphone(conf: Conference, checked: Boolean) {
+        Log.w(TAG, "toggleSpeakerphone $conf $checked")
+        val hasVideo = conf.hasActiveVideo()
+        disposables.add(conf.call!!.systemConnection
+            .map {
+                // Map before subscribe to fallback to the error path if no Telecom API
+                (it as DeviceRuntimeServiceImpl.AndroidCall).call!!
+            }
+            .subscribe({
+                // Using the Telecom API
+                it.setWantedAudioState(if (checked) CallConnection.ROUTE_LIST_SPEAKER_EXPLICIT
+                else if (hasVideo) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT
+                else CallConnection.ROUTE_LIST_DEFAULT)
+            }) {
+                // Fallback to the AudioManager API
+                JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin())
+                mShouldSpeakerphone = checked
+                if (mHasSpeakerPhone && checked) {
+                    routeToSpeaker()
+                } else if (mBluetoothWrapper != null && mBluetoothWrapper!!.canBluetooth()) {
+                    routeToBTHeadset()
+                } else {
+                    resetAudio()
+                }
+            })
     }
 
     @Synchronized

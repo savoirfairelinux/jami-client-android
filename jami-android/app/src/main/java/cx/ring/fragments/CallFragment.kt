@@ -763,7 +763,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun updateAudioState(state: AudioState) {
-        binding!!.callSpeakerBtn.isChecked = state.outputType == HardwareService.AudioOutput.SPEAKERS
+        binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
     }
 
     override fun updateTime(duration: Long) {
@@ -946,7 +946,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
             }
             callMicBtn.isChecked = isMicrophoneMuted
-            callSpeakerBtn.isChecked = isSpeakerOn
         }
     }
 

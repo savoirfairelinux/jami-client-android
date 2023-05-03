@@ -92,8 +92,9 @@ object ServiceInjectionModule {
     @Singleton
     fun provideCallService(@Named("DaemonExecutor") executor : ScheduledExecutorService,
                            contactService: ContactService,
-                           accountService: AccountService): CallService {
-        return CallService(executor, contactService, accountService)
+                           accountService: AccountService,
+                           deviceRuntimeService: DeviceRuntimeService): CallService {
+        return CallService(executor, contactService, accountService, deviceRuntimeService)
     }
 
     @Provides

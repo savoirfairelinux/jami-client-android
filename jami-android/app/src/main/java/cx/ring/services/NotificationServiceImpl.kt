@@ -90,6 +90,7 @@ class NotificationServiceImpl(
     private val random = Random()
     private val avatarSize = (mContext.resources.displayMetrics.density * AvatarFactory.SIZE_NOTIF).toInt()
     private val currentCalls = LinkedHashMap<String, Conference>()
+
     private val callNotifications = ConcurrentHashMap<Int, Notification>()
     private val dataTransferNotifications = ConcurrentHashMap<Int, Notification>()
     private var pendingNotificationActions = ArrayList<() -> Unit>()
@@ -109,7 +110,7 @@ class NotificationServiceImpl(
         mContext.startActivity(Intent(Intent.ACTION_VIEW)
                 .putExtra(NotificationService.KEY_CALL_ID, callId)
                 .setClass(mContext.applicationContext, TVCallActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK))
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION))
     }
 
     private fun buildCallNotification(conference: Conference): Notification? {
@@ -149,7 +150,7 @@ class NotificationServiceImpl(
             if (conference.isIncoming) {
                 messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL)
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.displayName))
-                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setContentText(mContext.getText(R.string.notif_incoming_call))
                     .setContentIntent(viewIntent)
@@ -264,7 +265,10 @@ class NotificationServiceImpl(
      * @param notificationId the notification's id
      */
     private fun updateNotification(notification: Notification, notificationId: Int) {
-        notificationManager.notify(notificationId, notification)
+        try {
+            notificationManager.notify(notificationId, notification)
+        } catch (e: SecurityException) {
+        }
     }
 
     /**
@@ -274,6 +278,23 @@ class NotificationServiceImpl(
      * @param remove     true if it should be removed from current calls
      */
     override fun handleCallNotification(conference: Conference, remove: Boolean) {
+        if (!remove && conference.isIncoming && conference.state == Call.CallStatus.RINGING) {
+            // Filter case where state is ringing but we haven't receive the media list yet
+            val call = conference.call ?: return
+            if (call.mediaList == null)
+                return
+            mDeviceRuntimeService.requestIncomingCall(call).subscribe { result ->
+                Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
+                if (result.allowed) {
+                    manageCallNotification(conference, remove)
+                }
+            }
+        } else {
+            manageCallNotification(conference, remove)
+        }
+        //manageCallNotification(conference, remove)
+    }
+    private fun manageCallNotification(conference: Conference, remove: Boolean) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove) startCallActivity(conference.id)
             return
@@ -294,6 +315,7 @@ class NotificationServiceImpl(
         }
 
         // Send notification to the  Service
+        Log.w(TAG, "showCallNotification $notification")
         if (notification != null) {
             val nid = random.nextInt()
             callNotifications[nid] = notification
