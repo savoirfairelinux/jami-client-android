@@ -326,7 +326,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     binding.emojiSend.visibility = View.GONE
                 }
             }
-            binding.msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, oldLeft, oldTop, oldRight, oldBottom ->
+            binding.msgInputTxt.addOnLayoutChangeListener { _, _, _, _, _, _, oldTop, _, oldBottom ->
                 if (oldBottom == 0 && oldTop == 0) {
                     updateListPadding()
                 } else {

@@ -41,7 +41,7 @@ class RenameDeviceDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogDeviceRenameBinding.inflate(layoutInflater)
         binding!!.ringDeviceNameTxt.setText(requireArguments().getString(DEVICENAME_KEY))
-        binding!!.ringDeviceNameTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        binding!!.ringDeviceNameTxt.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val validationResult = validate()
                 if (validationResult) {

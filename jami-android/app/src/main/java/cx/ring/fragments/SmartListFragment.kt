@@ -85,7 +85,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                     } else if ((dy < 0 || !canScrollUp) && !isExtended) {
                         newconvFab.extend()
                     }
-                    (activity as HomeActivity?)?.setToolbarElevation(canScrollUp)
                 }
             })
             (confsList.itemAnimator as DefaultItemAnimator?)?.supportsChangeAnimations = false
@@ -150,7 +149,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     override fun displayConversationDialog(conversationItemViewModel: Conversation) {
         if (conversationItemViewModel.isSwarm) {
             MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.swarm_actions) { dialog, which ->
+                .setItems(R.array.swarm_actions) { _, which ->
                     when (which) {
                         0 -> presenter.copyNumber(conversationItemViewModel)
                         1 -> presenter.removeConversation(conversationItemViewModel)
@@ -160,7 +159,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
                 .show()
         } else {
             MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.conversation_actions) { dialog, which ->
+                .setItems(R.array.conversation_actions) { _, which ->
                     when (which) {
                         ActionHelper.ACTION_COPY -> presenter.copyNumber(conversationItemViewModel)
                         ActionHelper.ACTION_CLEAR -> presenter.clearConversation(conversationItemViewModel)

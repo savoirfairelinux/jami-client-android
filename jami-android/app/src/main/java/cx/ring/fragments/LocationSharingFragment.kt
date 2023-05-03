@@ -501,7 +501,7 @@ class LocationSharingFragment : Fragment() {
             if (sharing) {
                 binding.btnShareLocation.setBackgroundColor(ContextCompat.getColor(binding.btnShareLocation.context, R.color.design_default_color_error))
                 binding.btnShareLocation.setText(R.string.location_share_action_stop)
-                binding.btnShareLocation.setOnClickListener { v: View? -> stopSharing() }
+                binding.btnShareLocation.setOnClickListener { stopSharing() }
                 binding.locationShareTimeGroup.visibility = View.GONE
                 mService?.let { service ->
                     binding.locationShareTimeRemaining.visibility = View.VISIBLE

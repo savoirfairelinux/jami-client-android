@@ -60,13 +60,13 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.password.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        binding!!.password.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding!!.createSipButton.callOnClick()
             }
             false
         }
-        binding!!.createSipButton.setOnClickListener { v: View? -> createSIPAccount(false) }
+        binding!!.createSipButton.setOnClickListener { createSIPAccount(false) }
     }
 
     /**
@@ -113,7 +113,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.dialog_warn_ip2ip_account_message),
             getString(android.R.string.ok),
             getString(android.R.string.cancel),
-            { dialog: DialogInterface, which: Int ->
+            { dialog: DialogInterface, _ ->
                 dialog.dismiss()
                 createSIPAccount(true)
             },
@@ -126,8 +126,8 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.account_sip_cannot_be_registered_message),
             getString(android.R.string.ok),
             getString(R.string.account_sip_register_anyway),
-            { dialog: DialogInterface?, which: Int -> presenter.removeAccount() }
-        ) { dialog: DialogInterface?, id: Int ->
+            { _, _ -> presenter.removeAccount() }
+        ) { _, _ ->
             val activity: Activity = requireActivity()
             activity.setResult(Activity.RESULT_OK, Intent())
             activity.finish()
@@ -139,8 +139,8 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.account_no_network_message),
             getString(android.R.string.ok),
             getString(R.string.account_sip_register_anyway),
-            { dialog: DialogInterface?, which: Int -> presenter.removeAccount() }
-        ) { dialog: DialogInterface?, id: Int ->
+            { _, _ -> presenter.removeAccount() }
+        ) { _, _ ->
             val activity: Activity = requireActivity()
             activity.setResult(Activity.RESULT_OK, Intent())
             activity.finish()
@@ -153,7 +153,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             getString(R.string.account_sip_success_message),
             getString(android.R.string.ok),
             null,
-            { dialog: DialogInterface?, which: Int ->
+            { _, _ ->
                 val activity: Activity = requireActivity()
                 activity.setResult(Activity.RESULT_OK, Intent())
                 activity.finish()
@@ -180,7 +180,7 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
             .setPositiveButton(positive, listenerPositive)
             .setNegativeButton(negative, listenerNegative)
             .setTitle(title).setMessage(message)
-            .setOnDismissListener { dialog: DialogInterface? ->
+            .setOnDismissListener {
                 //unlock the screen orientation
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
             }

@@ -46,15 +46,15 @@ import java.util.*
 class SecurityAccountFragment : BasePreferenceFragment<SecurityAccountPresenter>(), SecurityAccountView {
     private var credentialsCategory: PreferenceCategory? = null
     private var tlsCategory: PreferenceCategory? = null
-    private val editCredentialListener = Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+    private val editCredentialListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
         // We need the old and new value to correctly edit the list of credentials
         val result = newValue as Pair<AccountCredentials, AccountCredentials>
         presenter.credentialEdited(result.first, result.second)
         false
     }
-    private val addCredentialListener = Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+    private val addCredentialListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
         val result = newValue as Pair<AccountCredentials, AccountCredentials>
-        presenter.credentialAdded(result.first, result.second)
+        presenter.credentialAdded(result.second)
         false
     }
     private val filePickerListener = Preference.OnPreferenceClickListener { preference: Preference ->
@@ -70,20 +70,20 @@ class SecurityAccountFragment : BasePreferenceFragment<SecurityAccountPresenter>
         true
     }
     private val tlsListener = Preference.OnPreferenceChangeListener { preference: Preference, newValue: Any ->
-        var newValue = newValue
+        var newValue1 = newValue
         val key = ConfigKey.fromString(preference.key)
         if (key == ConfigKey.TLS_ENABLE) {
-            if (newValue as Boolean) {
+            if (newValue1 as Boolean) {
                 presenter.tlsChanged(ConfigKey.STUN_ENABLE, false)
             }
         }
         if (key == ConfigKey.SRTP_KEY_EXCHANGE) {
-            newValue = if (newValue as Boolean) "sdes" else ""
+            newValue1 = if (newValue1 as Boolean) "sdes" else ""
         }
         if (preference !is TwoStatePreference) {
-            preference.summary = newValue as String
+            preference.summary = newValue1 as String
         }
-        presenter.tlsChanged(key, newValue)
+        presenter.tlsChanged(key, newValue1)
         true
     }
 

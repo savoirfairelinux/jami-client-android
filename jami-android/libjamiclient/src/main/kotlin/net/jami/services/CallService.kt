@@ -423,7 +423,7 @@ class CallService(
         return conference
     }
 
-    private fun parseCallState(accountId: String, callId: String, newState: String, callDetails: Map<String, String>): Call? {
+    private fun parseCallState(callId: String, newState: String, callDetails: Map<String, String>): Call? {
         val callState = CallStatus.fromString(newState)
         var call = calls[callId]
         if (call != null) {
@@ -452,26 +452,12 @@ class CallService(
         return call
     }
 
-    fun connectionUpdate(id: String?, state: Int) {
-        // Log.d(TAG, "connectionUpdate: " + id + " " + state);
-        /*switch(state) {
-            case 0:
-                currentConnections.add(id);
-                break;
-            case 1:
-            case 2:
-                currentConnections.remove(id);
-                break;
-        }
-        updateConnectionCount();*/
-    }
-
     fun callStateChanged(accountId: String, callId: String, newState: String, detailCode: Int) {
         val callDetails = JamiService.getCallDetails(accountId, callId)
         Log.d(TAG, "call state changed: $callId, $newState, $detailCode")
         try {
             synchronized(calls) {
-                parseCallState(accountId, callId, newState, callDetails)?.let { call ->
+                parseCallState(callId, newState, callDetails)?.let { call ->
                     callSubject.onNext(call)
                     if (call.callStatus === CallStatus.OVER) {
                         calls.remove(call.daemonIdString)
@@ -534,7 +520,7 @@ class CallService(
         }
     }
 
-    fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) {
+    fun mediaNegotiationStatus(callId: String, ml: VectMap) {
         val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
         val call = synchronized(calls) {
             calls[callId]?.apply {
@@ -557,7 +543,7 @@ class CallService(
         }
     }
 
-    fun incomingMessage(accountId: String, callId: String, from: String, messages: Map<String, String>) {
+    fun incomingMessage(callId: String, from: String, messages: Map<String, String>) {
         val call = calls[callId]
         if (call == null) {
             Log.w(TAG, "incomingMessage: unknown call or no message: $callId $from")
@@ -635,7 +621,7 @@ class CallService(
         conferenceSubject.onNext(conf)
     }
 
-    fun conferenceRemoved(accountId: String, confId: String) {
+    fun conferenceRemoved(confId: String) {
         Log.d(TAG, "conference removed: $confId")
         conferences.remove(confId)?.let { conf ->
             for (call in conf.participants) {

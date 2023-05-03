@@ -171,7 +171,7 @@ abstract class HardwareService(
                     logs = null
                 }
             }
-        } as ObservableOnSubscribe<String>)
+        })
             .observeOn(Schedulers.io())
             .scan(StringBuffer(1024)) { sb: StringBuffer, message: String -> sb.append(message).append('\n') }
             .throttleLatest(500, TimeUnit.MILLISECONDS)

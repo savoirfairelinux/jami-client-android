@@ -69,7 +69,7 @@ class JamiAccountCreationFragment : Fragment() {
             indicator.setupWithViewPager(pager, true)
             val tabStrip = indicator.getChildAt(0) as LinearLayout
             for (i in 0 until tabStrip.childCount) {
-                tabStrip.getChildAt(i).setOnTouchListener { v, event -> true }
+                tabStrip.getChildAt(i).setOnTouchListener { _, _ -> true }
             }
             binding = this
         }.root

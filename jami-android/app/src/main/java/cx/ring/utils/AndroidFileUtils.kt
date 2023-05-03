@@ -290,22 +290,6 @@ object AndroidFileUtils {
         }.subscribeOn(Schedulers.io())
     }
 
-    fun getFileToSend(context: Context, conversation: Conversation, uri: Uri): Single<File> {
-        val contentResolver = context.contentResolver
-        val cacheDir = context.cacheDir
-        return Single.fromCallable {
-            val file = File(cacheDir, getFilename(contentResolver, uri))
-            contentResolver.openInputStream(uri).use { inputStream ->
-                FileOutputStream(file).use { output ->
-                    if (inputStream == null) throw FileNotFoundException()
-                    FileUtils.copyFile(inputStream, output)
-                    output.flush()
-                }
-            }
-            file
-        }.subscribeOn(Schedulers.io())
-    }
-
     fun copyUri(cr: ContentResolver, input: Uri, outUri: Uri): Completable = Completable.fromAction {
         cr.openInputStream(input).use { inputStream ->
             cr.openOutputStream(outUri).use { output ->

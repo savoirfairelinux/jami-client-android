@@ -63,7 +63,7 @@ class JamiAccountUsernameFragment : BaseSupportFragment<JamiAccountCreationPrese
                     presenter.userNameChanged(s.toString())
                 }
             })
-            inputUsername.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            inputUsername.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
                     val inputMethodManager =
                         requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

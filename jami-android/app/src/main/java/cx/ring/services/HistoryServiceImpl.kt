@@ -67,13 +67,13 @@ class HistoryServiceImpl(private val mContext: Context) : HistoryService() {
     /**
      * Retrieve helper for our DB. Creates a new instance if it does not exist through the initHelper method.
      *
-     * @param accountId represents the file where the database is stored
+     * @param dbName represents the file where the database is stored
      * @return the database helper
      * @see .initHelper
      */
-    override fun getHelper(accountId: String): DatabaseHelper {
-        val helper = databaseHelpers[accountId]
-        return helper ?: initHelper(accountId)
+    override fun getHelper(dbName: String): DatabaseHelper {
+        val helper = databaseHelpers[dbName]
+        return helper ?: initHelper(dbName)
     }
 
     /**

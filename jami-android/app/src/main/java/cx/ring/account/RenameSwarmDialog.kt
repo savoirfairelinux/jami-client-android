@@ -60,7 +60,7 @@ class RenameSwarmDialog : DialogFragment() {
         key = requireArguments().getString(KEY)
         binding!!.titleTxt.setText(mText)
         binding!!.titleTxtBox.hint = mHint
-        binding!!.titleTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        binding!!.titleTxt.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val validationResult = validate()
                 if (validationResult) {

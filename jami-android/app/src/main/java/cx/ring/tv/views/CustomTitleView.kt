@@ -42,7 +42,7 @@ class CustomTitleView @JvmOverloads constructor(context: Context?, attrs: Attrib
     private val mTitleView: TextView = root.findViewById(R.id.title_text)
     val logoView: ImageView = root.findViewById(R.id.title_photo_contact)
     private val mSearchOrbView: View = root.findViewById<SearchOrbView>(R.id.title_orb).apply {
-        setOnKeyListener(OnKeyListener { v, keyCode, event ->
+        setOnKeyListener(OnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                 settingsButton.requestFocus()
                 return@OnKeyListener true

@@ -22,7 +22,6 @@ package cx.ring.services
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.ContactsContract
@@ -32,7 +31,6 @@ import android.util.LongSparseArray
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import ezvcard.VCard
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
@@ -157,17 +155,17 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         return systemContacts
     }
 
-    override fun findContactByIdFromSystem(id: Long, key: String): Contact? {
+    override fun findContactByIdFromSystem(contactId: Long, contactKey: String): Contact? {
         var contact: Contact? = null
         val contentResolver = mContext.contentResolver
         try {
-            val contentUri: Uri? = if (key != null) {
+            val contentUri: Uri? = if (contactKey != null) {
                 ContactsContract.Contacts.lookupContact(
                     contentResolver,
-                    ContactsContract.Contacts.getLookupUri(id, key)
+                    ContactsContract.Contacts.getLookupUri(contactId, contactKey)
                 )
             } else {
-                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)
+                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId)
             }
             var result: Cursor? = null
             if (contentUri != null) {
@@ -198,10 +196,10 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             }
             result.close()
         } catch (e: Exception) {
-            Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=$id", e)
+            Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=$contactId", e)
         }
         if (contact == null) {
-            Log.d(TAG, "findContactByIdFromSystem: findById $id can't find contact.")
+            Log.d(TAG, "findContactByIdFromSystem: findById $contactId can't find contact.")
         }
         return contact
     }
@@ -366,9 +364,9 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         AvatarFactory.clearCache()
     }
 
-    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, picture: String?): Single<VCard> =
+    override fun saveVCardContact(accountId: String, uri: String?, displayName: String?, pictureB64: String?): Single<VCard> =
         Single.fromCallable {
-            val vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT))
+            val vcard = VCardUtils.writeData(uri, displayName, Base64.decode(pictureB64, Base64.DEFAULT))
             val filename = "$uri.vcf"
             VCardUtils.savePeerProfileToDisk(vcard, accountId, filename, mContext.filesDir)
             vcard

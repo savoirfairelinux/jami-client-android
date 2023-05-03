@@ -105,7 +105,7 @@ class MediaPreferenceFragment : BasePreferenceFragment<MediaPreferencePresenter>
             .setTitle(R.string.permission_dialog_camera_title)
             .setMessage(R.string.permission_dialog_camera_message)
             .setCancelable(false)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
+            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ -> dialog.dismiss() }
             .show()
     }
 

@@ -45,7 +45,7 @@ class BackupAccountDialog : DialogFragment() {
         arguments?.let { args ->
             mAccountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY)
         }
-        binding!!.passwordTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        binding!!.passwordTxt.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val validationResult = validate()
                 if (validationResult) {
@@ -60,7 +60,7 @@ class BackupAccountDialog : DialogFragment() {
             .setMessage(R.string.account_new_device_password)
             .setView(binding!!.root)
             .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
-            .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()
         result.setOnShowListener { dialog: DialogInterface ->
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)

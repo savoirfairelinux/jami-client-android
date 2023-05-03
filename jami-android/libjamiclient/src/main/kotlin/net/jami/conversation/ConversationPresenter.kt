@@ -151,7 +151,7 @@ class ConversationPresenter @Inject constructor(
 
         view.hideNumberSpinner()
         disposable.add(c.mode
-            .switchMap { mode: Conversation.Mode ->
+            .switchMap {
                 conversationFacade.observeConversation(account, c, true)
                     .observeOn(uiScheduler)
                     .doOnNext { convViewModel -> initContact(account, convViewModel, this.view!!) }
@@ -258,7 +258,7 @@ class ConversationPresenter @Inject constructor(
 
     fun sendFile(file: File) {
         mCompositeDisposable.add(mConversationSubject.firstElement().subscribe({ conversation ->
-            conversationFacade.sendFile(conversation, conversation.uri, file).subscribe()
+            conversationFacade.sendFile(conversation, file).subscribe()
         }) {e -> Log.e(TAG, "Can't send file", e)})
     }
 

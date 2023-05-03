@@ -96,7 +96,7 @@ class ContactPickerFragment : BottomSheetDialogFragment() {
 
             override fun onItemLongClick(item: ConversationItemViewModel) {}
         })
-        binding!!.createGroupBtn.setOnClickListener { v: View? ->
+        binding!!.createGroupBtn.setOnClickListener {
             passData(mAccountId!!, mCurrentSelection)
             val dialog = dialog
             dialog?.cancel()

@@ -332,7 +332,7 @@ class ConversationAdapter(
                     }
                     // Subscribe on result.
                     Observable.combineLatest(entry) { resultDictionary ->
-                        resultDictionary.map { it ->
+                        resultDictionary.map {
                             it as Pair<ContactViewModel, List<Interaction>>
                         }
                     }
@@ -676,7 +676,7 @@ class ConversationAdapter(
             cardLayout.foreground = playBtn
         }
 
-        player.setOnVideoSizeChangedListener { mp: MediaPlayer, width: Int, height: Int ->
+        player.setOnVideoSizeChangedListener { _, width: Int, height: Int ->
             Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height)
             val p = video.layoutParams as FrameLayout.LayoutParams
             val maxDim = max(width, height)
@@ -911,7 +911,7 @@ class ConversationAdapter(
                                 .setTitle("Message history")
                                 .setItems(c.filterIsInstance<TextMessage>().map { it.body!! }
                                     .toTypedArray())
-                                { dialog, which -> dialog.dismiss() }
+                                { dialog, _ -> dialog.dismiss() }
                                 .create()
                                 .show()
                         }

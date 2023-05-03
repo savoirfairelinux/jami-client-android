@@ -75,7 +75,7 @@ class JamiAccountSummaryPresenter @Inject constructor(
         mAccountID = accountId
         mCompositeDisposable.add(mAccountService.getObservableAccountProfile(accountId)
             .observeOn(mUiScheduler)
-            .subscribe({ a -> view?.accountChanged(a.first, a.second) }) { e -> Log.e(TAG, "Can't load account") })
+            .subscribe({ a -> view?.accountChanged(a.first, a.second) }) { Log.e(TAG, "Can't load account") })
     }
 
     fun enableAccount(newValue: Boolean) {

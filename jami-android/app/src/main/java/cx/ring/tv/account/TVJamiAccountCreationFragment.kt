@@ -17,7 +17,6 @@
  */
 package cx.ring.tv.account
 
-import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -210,11 +209,11 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         if (mPassword.isNullOrEmpty() && mPasswordConfirm.isNullOrEmpty()) {
             mIsPasswordCorrect = true
         }
-        val enabled = mIsPasswordCorrect && enabled
-        Log.d(TAG, "enableNextButton: $enabled")
+        val isEnabled = mIsPasswordCorrect && enabled
+        Log.d(TAG, "enableNextButton: $isEnabled")
         val actionContinue = findActionById(CONTINUE)
-        if (enabled) actionContinue.icon = null
-        actionContinue.isEnabled = enabled
+        if (isEnabled) actionContinue.icon = null
+        actionContinue.isEnabled = isEnabled
         notifyActionChanged(findActionPositionById(CONTINUE))
     }
 

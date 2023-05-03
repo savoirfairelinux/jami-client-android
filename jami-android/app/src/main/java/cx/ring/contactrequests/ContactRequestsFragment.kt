@@ -71,7 +71,7 @@ class ContactRequestsFragment :
         }
         binding.requestsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                (activity as HomeActivity?)?.setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP))
+                if (activity is HomeActivity) recyclerView.canScrollVertically(SCROLL_DIRECTION_UP)
             }
         })
     }
@@ -100,7 +100,7 @@ class ContactRequestsFragment :
 
     override fun onItemLongClick(item: Conversation) {
         MaterialAlertDialogBuilder(requireContext())
-            .setItems(R.array.swarm_actions) { dialog, which ->
+            .setItems(R.array.swarm_actions) { _, which ->
                 when (which) {
                     0 -> presenter.copyNumber(item)
                     1 -> presenter.removeConversation(item)

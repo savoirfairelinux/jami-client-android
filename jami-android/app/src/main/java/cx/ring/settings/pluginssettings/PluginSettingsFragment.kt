@@ -95,18 +95,18 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(preference.title)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     JamiService.resetPluginPreferencesValues(pluginDetails!!.rootPath, pluginDetails!!.accountId)
                     requireActivity().supportFragmentManager.popBackStack()
                 }
-                .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .show()
         }
         preference.setInstallClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.plugin_uninstall_title)
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     pluginDetails!!.isEnabled = false
                     JamiService.uninstallPlugin(pluginDetails!!.rootPath)
                     requireActivity().supportFragmentManager.popBackStack()
@@ -129,7 +129,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private fun createCheckBoxPreference(preferenceModel: Map<String, String>): CheckBoxPreference {
         val preference = CheckBoxPreference(requireContext())
         setPreferenceAttributes(preference, preferenceModel)
-        setTwoStatePreferenceAttributes(preference, preferenceModel)
+        setTwoStatePreferenceAttributes(preference)
         ppds!!.addToPreferenceTypes(preferenceModel)
         return preference
     }
@@ -180,7 +180,7 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
     private fun createSwitchPreference(preferenceModel: Map<String, String>): SwitchPreference {
         val preference = SwitchPreference(requireContext())
         setPreferenceAttributes(preference, preferenceModel)
-        setTwoStatePreferenceAttributes(preference, preferenceModel)
+        setTwoStatePreferenceAttributes(preference)
         return preference
     }
 
@@ -310,9 +310,8 @@ class PluginSettingsFragment : PreferenceFragmentCompat() {
      * Sets specific attributes for twoStatePreference like Switch and CheckBox
      *
      * @param preference      the two state preference
-     * @param preferenceModel the map of attributes
      */
-    private fun setTwoStatePreferenceAttributes(preference: TwoStatePreference, preferenceModel: Map<String, String>) {
+    private fun setTwoStatePreferenceAttributes(preference: TwoStatePreference) {
         preference.isChecked = ppds!!.getString("always", "1") == "1"
     }
 

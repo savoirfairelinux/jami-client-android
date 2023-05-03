@@ -199,7 +199,6 @@ class CameraService internal constructor(c: Context) {
 
     fun getCameraInfo(
         camId: String,
-        formats: IntVect?,
         sizes: UintVect,
         rates: UintVect,
         minVideoSize: Size,
@@ -520,7 +519,6 @@ class CameraService internal constructor(c: Context) {
     private fun createVirtualDisplay(
         params: VideoParams,
         projection: MediaProjection,
-        surface: TextureView,
         metrics: DisplayMetrics
     ): Pair<MediaCodec?, VirtualDisplay>? {
         val screenDensity = metrics.densityDpi
@@ -585,10 +583,9 @@ class CameraService internal constructor(c: Context) {
     fun startScreenSharing(
         params: VideoParams,
         mediaProjection: MediaProjection,
-        surface: TextureView,
         metrics: DisplayMetrics
     ): Boolean {
-        val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
+        val r = createVirtualDisplay(params, mediaProjection, metrics)
         if (r != null) {
             mediaProjection.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {

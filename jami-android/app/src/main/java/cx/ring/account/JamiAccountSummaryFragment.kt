@@ -175,7 +175,7 @@ class JamiAccountSummaryFragment :
 
     override fun onResume() {
         super.onResume()
-        (activity as HomeActivity?)?.let { activity ->
+        (activity as HomeActivity?)?.let {
             mBinding!!.accountSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.enableAccount(isChecked)
             }
@@ -227,7 +227,7 @@ class JamiAccountSummaryFragment :
 
     override fun accountChanged(account: Account, profile: Profile) {
         mAccountId = account.accountId
-        mBestName = account.registeredName ?: account.displayUsername ?: account.username!!
+        mBestName = account.registeredName
         mBestName = "$mBestName.gz"
         mBinding?.let { binding ->
             binding.userPhoto.setImageDrawable(AvatarDrawable.build(binding.root.context, account, profile, true))
@@ -305,7 +305,7 @@ class JamiAccountSummaryFragment :
             .setTitle(R.string.profile)
             .setView(view.root)
             .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
-            .setPositiveButton(android.R.string.ok) { dialog, which ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 mSourcePhoto?.let { source ->
                     presenter.saveVCard(mBinding!!.username.text.toString(),
                         Single.just(source).map { obj -> BitmapUtils.bitmapToPhoto(obj) })
@@ -487,7 +487,7 @@ class JamiAccountSummaryFragment :
     override fun onScrollChanged() {
         if (mBinding != null) {
             val activity = activity
-            if (activity is HomeActivity) activity.setToolbarElevation(mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
+            if (activity is HomeActivity) mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP)
         }
     }
 
@@ -555,7 +555,7 @@ class JamiAccountSummaryFragment :
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, which: Int ->
+            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface, _ ->
                 dialog.dismiss()
                 if (status == 1) {
                     onDeviceRevocationAsked(device)

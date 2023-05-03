@@ -128,7 +128,7 @@ class CallActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit()
                 } else if (action != Intent.ACTION_VIEW) {
-                    callFragment?.handleAcceptIntent(acceptOption, confId, wantVideo)
+                    callFragment?.handleAcceptIntent(acceptOption, wantVideo)
                 }
             }
         }

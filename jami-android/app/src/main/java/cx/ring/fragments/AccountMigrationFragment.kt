@@ -62,7 +62,7 @@ class AccountMigrationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountMigrationBinding.inflate(inflater, parent, false).apply {
-            password.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+            password.setOnEditorActionListener { v: TextView, actionId: Int, _ ->
                 actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v)
             }
             password.onFocusChangeListener = View.OnFocusChangeListener { v: View, hasFocus: Boolean ->
@@ -88,7 +88,7 @@ class AccountMigrationFragment : Fragment() {
             .setTitle(R.string.account_delete_dialog_title)
             .setMessage(R.string.account_delete_dialog_message)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.menu_delete) { d: DialogInterface?, w: Int -> deleteAccount() }
+            .setPositiveButton(R.string.menu_delete) { _, _ -> deleteAccount() }
             .create()
             .show()
     }
@@ -144,7 +144,7 @@ class AccountMigrationFragment : Fragment() {
             return
         }
         val dialogBuilder: AlertDialog.Builder = MaterialAlertDialogBuilder(requireContext())
-        dialogBuilder.setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int -> }
+        dialogBuilder.setPositiveButton(android.R.string.ok) { _, _ -> }
         var success = false
         if (AccountConfig.STATE_INVALID == newState) {
             dialogBuilder.setTitle(R.string.account_cannot_be_found_title)

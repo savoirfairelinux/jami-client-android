@@ -37,15 +37,12 @@ abstract class JamiGuidedStepFragment<T : RootPresenter<in V>, in V> : GuidedSte
 
         //Be sure to do the injection in onCreateView method
         presenter.bindView(this as V)
-        initPresenter(presenter)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.unbindView()
     }
-
-    protected fun initPresenter(presenter: T) {}
 
     companion object {
         fun addAction(context: Context, actions: MutableList<GuidedAction>, id: Long, @StringRes title: Int) {

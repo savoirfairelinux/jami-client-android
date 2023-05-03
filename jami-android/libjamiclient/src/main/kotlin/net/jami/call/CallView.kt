@@ -33,7 +33,7 @@ interface CallView {
     fun displayDialPadKeyboard()
     fun updateAudioState(state: AudioState)
     fun updateTime(duration: Long)
-    fun updateCallStatus(callState: CallStatus)
+    fun updateCallStatus(callStatus: CallStatus)
     fun updateBottomSheetButtonStatus(isConference: Boolean, isSpeakerOn: Boolean, isMicrophoneMuted: Boolean, hasMultipleCamera: Boolean, canDial: Boolean, showPluginBtn: Boolean, onGoingCall: Boolean, hasActiveVideo: Boolean)
     fun resetBottomSheetState()
     fun initNormalStateDisplay()
@@ -46,11 +46,11 @@ interface CallView {
     fun finish()
     fun onUserLeave()
     fun enterPipMode(accountId: String, callId: String?)
-    fun prepareCall(acceptIncomingCall: Boolean)
+    fun prepareCall(isIncoming: Boolean)
     fun handleCallWakelock(isAudioOnly: Boolean)
     fun goToContact(accountId: String, contact: Contact)
     fun displayPluginsButton(): Boolean
-    fun updateConfInfo(info: List<ParticipantInfo>)
+    fun updateConfInfo(participantInfo: List<ParticipantInfo>)
     fun updateParticipantRecording(contacts: List<ContactViewModel>)
     fun toggleCallMediaHandler(id: String, callId: String, toggle: Boolean)
 }

@@ -41,12 +41,7 @@ abstract class AbstractCardPresenter<T : BaseCardView>(val context: Context) : P
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
-        onUnbindViewHolder(viewHolder.view as T)
         (viewHolder as CardViewHolder<T>).disposable.clear()
-    }
-
-    fun onUnbindViewHolder(cardView: T) {
-        // Nothing to clean up. Override if necessary.
     }
 
     /**

@@ -83,13 +83,13 @@ class JamiAccountPasswordFragment : BaseSupportFragment<JamiAccountCreationPrese
 
                 override fun afterTextChanged(s: Editable) {}
             })
-            ringPasswordRepeat.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+            ringPasswordRepeat.setOnEditorActionListener { _, actionId: Int, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     presenter.createAccount()
                 }
                 false
             }
-            ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+            ringPasswordRepeat.setOnEditorActionListener { v: TextView, actionId: Int, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE && binding!!.createAccount.isEnabled) {
                     val inputMethodManager = v.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
                     inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
