@@ -130,7 +130,7 @@ class ConversationFacade(
         mCallService.setIsComposing(accountId, conversationUri.uri, isComposing)
     }
 
-    fun sendFile(conversation: Conversation, to: Uri, file: File): Completable {
+    fun sendFile(conversation: Conversation, file: File): Completable {
         if (!file.exists() || !file.canRead()) {
             return Completable.error(IllegalArgumentException("file not found or not readable"))
         }
@@ -146,7 +146,7 @@ class ConversationFacade(
         if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
             val transfer = element as DataTransfer
             if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
-                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
+                mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.fileId!!)
             } else {
                 val file = mDeviceRuntimeService.getConversationPath(conversation.uri.rawRingId, transfer.storagePath)
                 if (conversation.isSwarm) {
@@ -274,7 +274,11 @@ class ConversationFacade(
         currentAccount.switchMap { account: Account ->
             account.getConversationsSubject()
                 .map { conversations -> conversations.map { conversation -> mContactService.getLoadedConversation(conversation) }}
-                .switchMapSingle { conversations -> Single.zip(conversations) { it.toMutableList() as MutableList<ConversationItemViewModel> } }
+                .switchMapSingle { conversations ->
+                    Single.zip(conversations) {
+                        it.filterIsInstance<ConversationItemViewModel>().toMutableList()
+                    }
+                }
         }
 
     /*fun getPendingList(currentAccount: Observable<Account>): Observable<List<Observable<ConversationItemViewModel>>> =
@@ -524,7 +528,7 @@ class ConversationFacade(
         mNotificationService.handleDataTransferNotification(transfer, conversation, conversation.isVisible)
     }
 
-    private fun onConfStateChange(conference: Conference) {
+    private fun onConfStateChange() {
         Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().id)
     }
 
@@ -589,8 +593,8 @@ class ConversationFacade(
         }
     }
 
-    fun cancelFileTransfer(accountId: String, conversationId: Uri, messageId: String?, fileId: String?) {
-        mAccountService.cancelDataTransfer(accountId, if (conversationId.isSwarm) conversationId.rawRingId else "", messageId, fileId!!)
+    fun cancelFileTransfer(accountId: String, conversationId: Uri, fileId: String?) {
+        mAccountService.cancelDataTransfer(accountId, if (conversationId.isSwarm) conversationId.rawRingId else "", fileId!!)
         mNotificationService.removeTransferNotification(accountId, conversationId, fileId)
         if (!conversationId.isSwarm)
             mAccountService.getAccount(accountId)?.getDataTransfer(fileId)?.let { transfer ->
@@ -661,7 +665,7 @@ class ConversationFacade(
                     .subscribe(mNotificationService::onConnectionUpdate));*/
         mDisposableBag.add(mCallService.confsUpdates
             .observeOn(Schedulers.io())
-            .subscribe { conference: Conference -> onConfStateChange(conference) })
+            .subscribe { onConfStateChange() })
         mDisposableBag.add(currentAccountSubject
             .switchMap { a: Account -> a.getPendingSubject()
                     .doOnNext { mNotificationService.showIncomingTrustRequestNotification(a) } }

@@ -26,8 +26,8 @@ import cx.ring.databinding.ItemSettingBinding
 
 class SettingsAdapter(context: Context, resource: Int, objects: List<SettingItem>) :
     ArrayAdapter<SettingItem>(context, resource, objects) {
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        var view = view
+    override fun getView(position: Int, oldView: View?, parent: ViewGroup): View {
+        var view = oldView // Since we cannot directly modify it.
         val binding: ItemSettingBinding
         if (view == null) {
             binding = ItemSettingBinding.inflate((context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater))

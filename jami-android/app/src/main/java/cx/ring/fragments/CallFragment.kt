@@ -155,7 +155,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    fun handleAcceptIntent(option: String?, callId: String?, wantVideo: Boolean) {
+    fun handleAcceptIntent(option: String?, wantVideo: Boolean) {
         presenter.handleOption(option)
         if (wantVideo)
             acceptClicked()
@@ -858,7 +858,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             }
         binding.root.post { setBottomSheet() }
 
-        if(callMediaHandlers == null) callMediaHandlers = PluginUtils.getInstalledPlugins(binding.pluginslistContainer.context)
+        if(callMediaHandlers == null) callMediaHandlers = PluginUtils.getInstalledPlugins()
         pluginsAdapter = PluginsAdapter(
             callMediaHandlers!!,
             object : PluginsAdapter.PluginListItemListener {
@@ -916,8 +916,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun updateCallStatus(callState: CallStatus) {
-        binding!!.callStatusTxt.setText(callStateToHumanState(callState))
+    override fun updateCallStatus(callStatus: CallStatus) {
+        binding!!.callStatusTxt.setText(callStateToHumanState(callStatus))
     }
 
     /** Receive data from the presenter in order to display valid button to the user */
@@ -1170,13 +1170,13 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
      * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
      * Initializes the call if permissions are accepted.
      *
-     * @param acceptIncomingCall true if call is incoming, false for outgoing
+     * @param isIncoming true if call is incoming, false for outgoing
      * @see .initializeCall
      */
-    override fun prepareCall(acceptIncomingCall: Boolean) {
+    override fun prepareCall(isIncoming: Boolean) {
         val hasVideo = presenter.wantVideo
         val permissionType =
-            if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
+            if (isIncoming) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val videoGranted = !hasVideo || mDeviceRuntimeService.hasVideoPermission()
         if (!audioGranted || !videoGranted) {
@@ -1187,7 +1187,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 perms.add(Manifest.permission.RECORD_AUDIO)
             requestPermissions(perms.toTypedArray(), permissionType)
         } else {
-            initializeCall(acceptIncomingCall, hasVideo)
+            initializeCall(isIncoming, hasVideo)
         }
     }
 

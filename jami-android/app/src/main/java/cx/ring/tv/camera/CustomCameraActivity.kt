@@ -64,7 +64,7 @@ class CustomCameraActivity : Activity() {
     private var mCamera: Camera? = null
     private var mCameraPreview: CameraPreview? = null
 
-    private val mPicture = PictureCallback { input: ByteArray, camera ->
+    private val mPicture = PictureCallback { input: ByteArray, _ ->
         mDisposableBag.add(
             Single.fromCallable {
                 if (mCameraPreview != null) mCameraPreview!!.stop()
@@ -177,7 +177,7 @@ class CustomCameraActivity : Activity() {
                         anim.start()
                     }
                 }
-            }) { e: Throwable ->
+            }) {
                 Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show()
                 finish()
             })

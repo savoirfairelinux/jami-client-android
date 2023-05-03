@@ -21,12 +21,10 @@ package cx.ring.settings
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -35,10 +33,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.application.JamiApplication
-import cx.ring.client.HomeActivity
 import cx.ring.client.LogsActivity
 import cx.ring.databinding.FragSettingsBinding
 import cx.ring.mvp.BaseSupportFragment
@@ -53,8 +49,7 @@ import net.jami.mvp.GenericView
 import net.jami.settings.SettingsPresenter
 
 @AndroidEntryPoint
-class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Settings>>(), GenericView<Settings>,
-    OnScrollChangedListener {
+class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Settings>>(), GenericView<Settings>{
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
     private var mIsRefreshingViewFromPresenter = true
@@ -81,14 +76,13 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
                     goToPluginsListSettings()
                 }
             }
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@SettingsFragment)
             settingsDarkTheme.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 presenter.darkMode = isChecked
             }
             settingsPluginsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 JamiService.setPluginsEnabled(isChecked)
             }
-            val save = CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+            val save = CompoundButton.OnCheckedChangeListener { _, _ ->
                 if (!mIsRefreshingViewFromPresenter) saveSettings(this)
             }
             settingsPushNotifications.setOnCheckedChangeListener(save)
@@ -112,11 +106,11 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
                 MaterialAlertDialogBuilder(v.context)
                     .setTitle(getString(R.string.pref_notification_title))
                     .setSingleChoiceItems(singleItems, mNotificationVisibility) { _, i: Int -> checkedItem[0] = i }
-                    .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         mNotificationVisibility = checkedItem[0]
                         saveSettings(this)
                     }
-                    .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, id: Int -> }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
             }
             settingsLogs.setOnClickListener { v: View ->
@@ -261,14 +255,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         }
         mIsRefreshingViewFromPresenter = false
         mNotificationVisibility = viewModel.notificationVisibility
-    }
-
-    override fun onScrollChanged() {
-        binding?.let { binding ->
-            val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
     }
 
     companion object {
