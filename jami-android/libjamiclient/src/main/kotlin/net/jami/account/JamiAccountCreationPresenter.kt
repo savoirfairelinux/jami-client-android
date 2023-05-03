@@ -49,7 +49,7 @@ class JamiAccountCreationPresenter @Inject constructor(
             .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
             .switchMapSingle { q: String -> accountService.findRegistrationByName("", "", q) }
             .observeOn(uiScheduler)
-            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) })
+            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.state) })
     }
 
     fun init(model: AccountCreationModel?) {
@@ -148,7 +148,7 @@ class JamiAccountCreationPresenter @Inject constructor(
             view?.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.AVAILABLE)
     }
 
-    private fun onLookupResult(name: String, address: String?, state: Int) {
+    private fun onLookupResult(name: String, state: Int) {
         val view = view
         //Once we get the result, we can show the loading animation again when the user types
         showLoadingAnimation = true

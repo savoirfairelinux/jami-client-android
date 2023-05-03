@@ -47,7 +47,7 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
             linkButton.setOnClickListener { presenter.linkClicked() }
-            ringAddPin.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+            ringAddPin.setOnEditorActionListener { _, actionId: Int, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     presenter.linkClicked()
                 }

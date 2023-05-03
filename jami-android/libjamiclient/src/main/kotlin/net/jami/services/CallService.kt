@@ -423,6 +423,7 @@ class CallService(
         return conference
     }
 
+    @Suppress("UNUSED_PARAMETER")  // accountId may be used in the future
     private fun parseCallState(accountId: String, callId: String, newState: String, callDetails: Map<String, String>): Call? {
         val callState = CallStatus.fromString(newState)
         var call = calls[callId]
@@ -450,20 +451,6 @@ class CallService(
             updateConnectionCount()
         }
         return call
-    }
-
-    fun connectionUpdate(id: String?, state: Int) {
-        // Log.d(TAG, "connectionUpdate: " + id + " " + state);
-        /*switch(state) {
-            case 0:
-                currentConnections.add(id);
-                break;
-            case 1:
-            case 2:
-                currentConnections.remove(id);
-                break;
-        }
-        updateConnectionCount();*/
     }
 
     fun callStateChanged(accountId: String, callId: String, newState: String, detailCode: Int) {
@@ -534,6 +521,7 @@ class CallService(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER") // event may be used in the future
     fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) {
         val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
         val call = synchronized(calls) {
@@ -557,6 +545,7 @@ class CallService(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER") // account may be used in the future
     fun incomingMessage(accountId: String, callId: String, from: String, messages: Map<String, String>) {
         val call = calls[callId]
         if (call == null) {
@@ -635,6 +624,7 @@ class CallService(
         conferenceSubject.onNext(conf)
     }
 
+    @Suppress("UNUSED_PARAMETER") // accountId may be used in the future
     fun conferenceRemoved(accountId: String, confId: String) {
         Log.d(TAG, "conference removed: $confId")
         conferences.remove(confId)?.let { conf ->

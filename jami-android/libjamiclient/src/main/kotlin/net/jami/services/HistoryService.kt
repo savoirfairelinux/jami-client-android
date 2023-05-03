@@ -133,7 +133,7 @@ abstract class HistoryService {
     WHERE conversations.id = final.conversation
     GROUP BY final.conversation
     
-    """.trimIndent(), { columnNames: Array<String>, resultColumns: Array<String> ->
+    """.trimIndent(), { _: Array<String>, resultColumns: Array<String> ->
                 Interaction(
                     resultColumns[0],
                     resultColumns[1],

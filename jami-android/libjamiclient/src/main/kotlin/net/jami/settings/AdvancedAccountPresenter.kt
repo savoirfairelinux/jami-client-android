@@ -52,11 +52,11 @@ class AdvancedAccountPresenter @Inject constructor(
     }
 
     fun preferenceChanged(configKey: ConfigKey, newValue: Any) {
-        var newValue = newValue
+        var value = newValue
         if (configKey === ConfigKey.AUDIO_PORT_MAX || configKey === ConfigKey.AUDIO_PORT_MIN) {
-            newValue = adjustRtpRange(Integer.valueOf(newValue as String))
+            value = adjustRtpRange(Integer.valueOf(value as String))
         }
-        mAccount!!.setDetail(configKey, newValue.toString())
+        mAccount!!.setDetail(configKey, value.toString())
         updateAccount()
     }
 

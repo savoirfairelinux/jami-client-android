@@ -1151,6 +1151,7 @@ class AccountService(
         JamiService.removeConversationMember(accountId, conversationId, uri)
     }
 
+    @Suppress("UNUSED_PARAMETER") // confirmed may be used in the future
     fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
         getAccount(accountId)?.let { account ->
             val details: Map<String, String> = JamiService.getContactDetails(accountId, uri)
@@ -1163,7 +1164,6 @@ class AccountService(
                     conversation.addContact(contact)
                 }
             }
-            //account.addContact(uri, confirmed);
             if (account.isEnabled) lookupAddress(accountId, "", uri)
         }
     }
@@ -1463,7 +1463,7 @@ class AccountService(
             JamiService.downloadFile(conversation.accountId, conversationId, transfer.messageId, fileId, newPath.absolutePath)
         }
     }
-
+    @Suppress("UNUSED_PARAMETER") // messageId may be used in the future
     fun cancelDataTransfer(accountId: String, conversationId: String, messageId: String?, fileId: String) {
         Log.i(TAG, "cancelDataTransfer() id=$fileId")
         mExecutor.execute { JamiService.cancelDataTransfer(accountId, conversationId, fileId) }
@@ -1507,7 +1507,6 @@ class AccountService(
         val totalA = LongArray(1)
         JamiService.fileTransferInfo(account.accountId, conversation.uri.rawRingId, fileId, paths, totalA, progressA)
         val progress = progressA[0]
-        val total = totalA[0]
         synchronized(transfer) {
             transfer.conversation = conversation
             transfer.daemonPath = File(paths[0]!!)

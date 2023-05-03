@@ -18,13 +18,10 @@
  */
 package cx.ring.settings
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -41,7 +38,7 @@ import net.jami.services.AccountService
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(), OnScrollChangedListener {
+class AccountFragment : Fragment() {
     private var mBinding: FragAccountBinding? = null
     private val mDisposable = CompositeDisposable()
 
@@ -50,7 +47,6 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountBinding.inflate(inflater, container, false).apply {
-            scrollview.viewTreeObserver.addOnScrollChangedListener(this@AccountFragment)
             settingsChangePassword.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onPasswordChangeAsked() }
             settingsExport.setOnClickListener { (parentFragment as JamiAccountSummaryFragment).onClickExport() }
             mBinding = this
@@ -84,19 +80,11 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
             })
     }
 
-    override fun onScrollChanged() {
-        mBinding?.let { binding ->
-            val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
-    }
-
     private fun createDeleteDialog(accountId: String): AlertDialog {
         val alertDialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.account_delete_dialog_message)
             .setTitle(R.string.account_delete_dialog_title)
-            .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int ->
+            .setPositiveButton(R.string.menu_delete) { _, _ ->
                 mAccountService.removeAccount(accountId)
                 (activity as HomeActivity?)?.onBackPressed()
             }
