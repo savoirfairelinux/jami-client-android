@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db606837_fcbd54ad",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-03T14:06:45Z",
+      "side": 1,
+      "message": "Desired comment ?",
+      "range": {
+        "startLine": 955,
+        "startChar": 0,
+        "endLine": 955,
+        "endChar": 7
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "308b60e7_55710ef1",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/ConnectionService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-03T14:06:45Z",
+      "side": 1,
+      "message": "Desired comment ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e88a8736_f08f9dd7",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-03T14:06:45Z",
+      "side": 1,
+      "message": "Desired comment ?",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 15
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e7a7db5_5c3539aa",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-03T14:06:45Z",
+      "side": 1,
+      "message": "Desired comment ?",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 1
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84685a46_3a8b8b9c",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-03T14:06:45Z",
+      "side": 1,
+      "message": "Desired comment ?",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 8
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
