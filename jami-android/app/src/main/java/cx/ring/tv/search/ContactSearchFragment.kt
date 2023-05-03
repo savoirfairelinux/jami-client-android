@@ -82,7 +82,6 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     }
 
     override fun displayResults(contacts: ConversationFacade.ConversationList, conversationFacade: ConversationFacade) {
-        var scrollToTop = false
         if (contacts.searchResult.result.isEmpty()) {
             if (directoryRow != null) {
                 mRowsAdapter.remove(directoryRow)
@@ -98,7 +97,6 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
                 (directoryRow!!.adapter as ArrayObjectAdapter).setItems(
                     contacts.searchResult.result.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) }, diff)
             }
-            scrollToTop = true
         }
 
         if (contacts.conversations.isEmpty()) {

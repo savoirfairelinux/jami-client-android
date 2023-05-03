@@ -484,12 +484,7 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    override fun onScrollChanged() {
-        if (mBinding != null) {
-            val activity = activity
-            if (activity is HomeActivity) activity.setToolbarElevation(mBinding!!.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
-        }
-    }
+    override fun onScrollChanged() {}
 
     private fun setSwitchStatus(account: Account) {
         val switchButton = mBinding!!.accountSwitch

@@ -60,6 +60,8 @@ class ChangePasswordDialog : DialogFragment() {
             .setPositiveButton(passwordMessage, null) //Set to null. We override the onclick
             .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }
             .create()
+        binding!!.layout.requestFocus() // Request focus on the layout to show the keyboard.
+
         result.setOnShowListener { dialog: DialogInterface ->
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
