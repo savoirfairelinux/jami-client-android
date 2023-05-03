@@ -21,11 +21,14 @@
 package net.jami.model
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.call.CallPresenter
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
+import net.jami.services.DeviceRuntimeService
+import java.lang.UnsupportedOperationException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.min

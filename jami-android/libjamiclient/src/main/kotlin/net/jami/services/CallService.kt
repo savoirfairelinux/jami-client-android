@@ -38,7 +38,8 @@ import java.util.concurrent.ScheduledExecutorService
 class CallService(
     private val mExecutor: ScheduledExecutorService,
     private val mContactService: ContactService,
-    private val mAccountService: AccountService
+    private val mAccountService: AccountService,
+    private val mDeviceRuntimeService: DeviceRuntimeService
 ) {
     private val calls: MutableMap<String, Call> = HashMap()
     private val conferences: MutableMap<String, Conference> = HashMap()
@@ -152,7 +153,7 @@ class CallService(
         }
     }
 
-    private class ConferenceEntity constructor(var conference: Conference)
+    private class ConferenceEntity(var conference: Conference)
 
     fun getConfUpdates(call: Call): Observable<Conference> = getConfUpdates(getConference(call))
 
@@ -186,12 +187,21 @@ class CallService(
             .startWithItem(call)
             .takeWhile { c: Call -> c.callStatus !== CallStatus.OVER }
 
-    fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> {
-        return placeCall(accountId, conversationUri, number, hasVideo)
+    fun placeCallObservable(accountId: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Observable<Call> =
+        placeCall(accountId, conversationUri, number, hasVideo)
             .flatMapObservable { call: Call -> getCallUpdates(call) }
-    }
 
-    fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
+    fun placeCallIfAllowed(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
+        mDeviceRuntimeService.requestPlaceCall(account, conversationUri, number.rawUriString, hasVideo)
+            .flatMap { result ->
+                if (!result.allowed)
+                    Single.error(SecurityException())
+                else
+                    placeCall(account, conversationUri, number, hasVideo)
+                        .doOnSuccess { result.setCall(it) }
+            }
+
+    private fun placeCall(account: String, conversationUri: Uri?, number: Uri, hasVideo: Boolean): Single<Call> =
         Single.fromCallable<Call> {
             Log.i(TAG, "placeCall() thread running... $number hasVideo: $hasVideo")
             val media = VectMap()
@@ -257,6 +267,19 @@ class CallService(
             Log.i(TAG, "participant $peerId raise hand... ")
             JamiService.raiseParticipantHand(accountId, confId, peerId, state)
         }
+    }
+
+    fun holdCallOrConference(conf: Conference) {
+        if (conf.isSimpleCall)
+            hold(conf.accountId, conf.id)
+        else
+            holdConference(conf.accountId, conf.id)
+    }
+    fun unholdCallOrConference(conf: Conference) {
+        if (conf.isSimpleCall)
+            unhold(conf.accountId, conf.id)
+        else
+            unholdConference(conf.accountId, conf.id)
     }
 
     fun hold(accountId:String, callId: String) {
@@ -407,7 +430,7 @@ class CallService(
                 val contact = mContactService.findContact(account, from)
                 val conversationUri = contact.conversationUri.blockingFirst()
                 val conversation =
-                    if (conversationUri.equals(from)) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
+                    if (conversationUri == from) account.getByUri(from) else account.getSwarm(conversationUri.rawRingId)
                 Call(callId, from.uri, accountId, conversation, contact, direction)
             }.apply { mediaList = media }
         }

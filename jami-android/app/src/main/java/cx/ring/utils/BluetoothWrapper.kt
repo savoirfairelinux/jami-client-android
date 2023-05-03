@@ -80,20 +80,24 @@ class BluetoothWrapper(private val mContext: Context, private val btChangesListe
             if (AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED == action) {
                 val status = intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, AudioManager.SCO_AUDIO_STATE_ERROR)
                 Log.d(TAG, "BT SCO state changed : $status target is $targetBt")
-                if (status == AudioManager.SCO_AUDIO_STATE_CONNECTED) {
-                    Log.d(TAG, "BT SCO state changed : CONNECTED")
-                    audioManager.isBluetoothScoOn = true
-                    isBluetoothConnecting = false
-                    isBluetoothConnected = true
-                    btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_CONNECTED)
-                } else if (status == AudioManager.SCO_AUDIO_STATE_DISCONNECTED) {
-                    Log.d(TAG, "BT SCO state changed : DISCONNECTED")
-                    audioManager.isBluetoothScoOn = false
-                    isBluetoothConnecting = false
-                    isBluetoothConnected = false
-                    btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
-                } else {
-                    Log.d(TAG, "BT SCO state changed : $status")
+                when (status) {
+                    AudioManager.SCO_AUDIO_STATE_CONNECTED -> {
+                        Log.d(TAG, "BT SCO state changed : CONNECTED")
+                        audioManager.isBluetoothScoOn = true
+                        isBluetoothConnecting = false
+                        isBluetoothConnected = true
+                        btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_CONNECTED)
+                    }
+                    AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> {
+                        Log.d(TAG, "BT SCO state changed : DISCONNECTED")
+                        audioManager.isBluetoothScoOn = false
+                        isBluetoothConnecting = false
+                        isBluetoothConnected = false
+                        btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_DISCONNECTED)
+                    }
+                    else -> {
+                        Log.d(TAG, "BT SCO state changed : $status")
+                    }
                 }
             }
         }
