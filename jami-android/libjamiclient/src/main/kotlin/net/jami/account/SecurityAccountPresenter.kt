@@ -56,7 +56,7 @@ class SecurityAccountPresenter @Inject constructor(private val mAccountService: 
         view!!.addAllCredentials(mAccount!!.credentials)
     }
 
-    fun credentialAdded(old: AccountCredentials?, newCreds: AccountCredentials?) {
+    fun credentialAdded(newCreds: AccountCredentials?) {
         mAccount!!.addCredential(newCreds!!)
         mAccountService.setCredentials(mAccount!!.accountId, mAccount!!.credentialsHashMapList)
         mAccountService.setAccountDetails(mAccount!!.accountId, mAccount!!.details)

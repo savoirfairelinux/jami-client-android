@@ -24,7 +24,7 @@ object FileUtils {
     private val TAG = FileUtils::class.simpleName!!
 
     // Buffer size based on https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
-    inline fun copyFile(input: InputStream, out: OutputStream) = input.copyTo(out, bufferSize = 64 * 1024)
+    fun copyFile(input: InputStream, out: OutputStream) = input.copyTo(out, bufferSize = 64 * 1024)
 
     fun copyFile(src: File, dest: File): Boolean {
         try {

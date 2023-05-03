@@ -38,5 +38,5 @@ object HashUtils {
         null
     }
 
-    private inline fun hash(s: String, algo: String) = hashRaw(s.toByteArray(), algo)
+    private fun hash(s: String, algo: String) = hashRaw(s.toByteArray(), algo)
 }

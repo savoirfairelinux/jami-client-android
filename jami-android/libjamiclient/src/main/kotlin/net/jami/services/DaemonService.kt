@@ -182,7 +182,7 @@ class DaemonService(
         }
 
         override fun contactAdded(accountId: String, uri: String, confirmed: Boolean) {
-            mExecutor.submit { mAccountService.contactAdded(accountId, uri, confirmed) }
+            mExecutor.submit { mAccountService.contactAdded(accountId, uri) }
         }
 
         override fun contactRemoved(accountId: String, uri: String, banned: Boolean) {
@@ -221,11 +221,10 @@ class DaemonService(
         }
 
         override fun mediaNegotiationStatus(callId: String, event: String, mediaList: VectMap) {
-            mCallService.mediaNegotiationStatus(callId, event, mediaList)
+            mCallService.mediaNegotiationStatus(callId, mediaList)
         }
 
         override fun connectionUpdate(id: String, state: Int) {
-            mCallService.connectionUpdate(id, state)
         }
 
         override fun remoteRecordingChanged(call_id: String, peer_number: String, state: Boolean) {
@@ -239,7 +238,7 @@ class DaemonService(
         override fun incomingMessage(accountId: String, callId: String, from: String, messages: StringMap) {
             if (messages.isEmpty()) return
             val jmessages: Map<String, String> = messages.toNativeFromUtf8()
-            mExecutor.submit { mCallService.incomingMessage(accountId, callId, from, jmessages) }
+            mExecutor.submit { mCallService.incomingMessage(callId, from, jmessages) }
         }
 
         override fun conferenceCreated(accountId: String, confId: String) {
@@ -247,7 +246,7 @@ class DaemonService(
         }
 
         override fun conferenceRemoved(accountId: String, confId: String) {
-            mCallService.conferenceRemoved(accountId, confId)
+            mCallService.conferenceRemoved(confId)
         }
 
         override fun conferenceChanged(accountId: String, confId: String, state: String) {

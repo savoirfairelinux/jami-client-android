@@ -40,7 +40,7 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
         binding!!.pluginsList.setHasFixedSize(true)
         (parentFragment as SettingsFragment).setToolbarTitle(R.string.menu_item_plugin_list)
 
-        mAdapter = PluginsListAdapter(getInstalledPlugins(binding!!.pluginsList.context), this, accountId)
+        mAdapter = PluginsListAdapter(getInstalledPlugins(), this, accountId)
         binding!!.pluginsList.adapter = mAdapter
 
         //Fab
@@ -133,21 +133,21 @@ class PluginsListSettingsFragment : Fragment(), PluginListItemListener {
                 .map { file: File -> installPluginFile(file, force) }
                 .subscribe({ filename: String ->
                     val plugin = filename.split(".jpl".toRegex()).toTypedArray()
-                    val availablePlugins = getInstalledPlugins(requireContext())
+                    val availablePlugins = getInstalledPlugins()
                     for (availablePlugin in availablePlugins) {
                         if (availablePlugin.name == plugin[0]) {
                             availablePlugin.isEnabled = true
                             onPluginEnabled(availablePlugin)
                         }
                     }
-                    mAdapter!!.updatePluginsList(getInstalledPlugins(requireContext()))
+                    mAdapter!!.updatePluginsList(getInstalledPlugins())
                     Toast.makeText(requireContext(), "Plugin: $filename successfully installed", Toast.LENGTH_LONG)
                         .show()
                     mCompositeDisposable.dispose()
                 }) { e: Throwable ->
                     if (binding != null) {
                         val sb = Snackbar.make(binding!!.listLayout, "" + e.message, Snackbar.LENGTH_LONG)
-                        sb.setAction(R.string.plugin_force_install) { v: View? -> installPluginFromUri(uri, true) }
+                        sb.setAction(R.string.plugin_force_install) { installPluginFromUri(uri, true) }
                         sb.show()
                     }
                 })

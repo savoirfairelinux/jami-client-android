@@ -55,7 +55,7 @@ abstract class ContactService(
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> {
+    fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean): Single<Map<Long, Contact>> {
         return Single.fromCallable {
             val settings = mPreferencesService.settings
             if (settings.useSystemContacts && mDeviceRuntimeService.hasContactPermission()) {
@@ -173,7 +173,7 @@ abstract class ContactService(
         // TODO load system contact info into SIP contact
         if (account.isSip) {
             loadContactData(contact, account.accountId).subscribe({})
-            { e: Throwable -> Log.e(TAG, "Can't load contact data") }
+            { Log.e(TAG, "Can't load contact data") }
         }
         return contact
     }

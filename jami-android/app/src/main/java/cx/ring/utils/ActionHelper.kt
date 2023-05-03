@@ -40,10 +40,10 @@ object ActionHelper {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_history_clear_title)
             .setMessage(R.string.conversation_action_history_clear_message)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 callback.clearConversation(accountId, uri)
             }
-            .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
     }
 
@@ -51,10 +51,10 @@ object ActionHelper {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_remove_this_title)
             .setMessage(R.string.conversation_action_remove_this_message)
-            .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, whichButton: Int ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 callback.removeConversation(accountId, uri)
             }
-            .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
     }
 
