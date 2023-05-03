@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f31e3970_8e078f89",
+        "filename": "jami-android/app/src/main/java/cx/ring/dependencyinjection/ServiceInjectionModule.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e67dc83_006d7d16",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "265851ca_f4dd163c",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 7
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02fbcb49_93b327fe",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "265851ca_f4dd163c",
       "range": {
         "startLine": 45,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d3570b_7a92f25e",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d811997d_2efd24c4",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "154e5431_05561145",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6926d1e7_1b84ccd8",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "154e5431_05561145",
       "range": {
         "startLine": 74,
         "startChar": 24,
@@ -116,6 +212,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02e90f12_e4f4f302",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea8b3a3_a4173d70",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9e0c93b_1644491e",
@@ -129,6 +249,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 85,
+        "startChar": 33,
+        "endLine": 85,
+        "endChar": 39
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b4ee905_25b17960",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e0c93b_1644491e",
       "range": {
         "startLine": 85,
         "startChar": 33,
@@ -162,6 +306,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad21163d_d4041753",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84899f24_087f2565",
+      "range": {
+        "startLine": 91,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 32
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db606837_fcbd54ad",
@@ -185,6 +353,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2268ffe0_60117483",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db606837_fcbd54ad",
+      "range": {
+        "startLine": 955,
+        "startChar": 0,
+        "endLine": 955,
+        "endChar": 7
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8549cb95_f084755e",
@@ -198,6 +390,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "196b4422_3a23b6d7",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/ConnectionService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8549cb95_f084755e",
       "range": {
         "startLine": 27,
         "startChar": 27,
@@ -277,6 +493,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f50ca076_c93105f4",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbcfc871_66d2b25b",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac7a9479_7d363383",
@@ -290,6 +530,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "IDE warning: The corresponding parameter in the supertype \u0027SystemCall\u0027 is named \u0027call\u0027. This may cause problems when calling this function with named arguments.",
+      "range": {
+        "startLine": 159,
+        "startChar": 29,
+        "endLine": 159,
+        "endChar": 36
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceba2df0_d856db4e",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7a9479_7d363383",
       "range": {
         "startLine": 159,
         "startChar": 29,
@@ -348,6 +612,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02f27dc3_f924afe7",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "unrelated, also the IDE is wrong",
+      "parentUuid": "e1b399c4_1700055a",
+      "range": {
+        "startLine": 127,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f9e8a67_715d74e5",
         "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
         "patchSetId": 9
@@ -359,6 +647,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "IDE warning: The corresponding parameter in the supertype \u0027HardwareService\u0027 is named \u0027call\u0027. This may cause problems when calling this function with named arguments.",
+      "range": {
+        "startLine": 148,
+        "startChar": 31,
+        "endLine": 148,
+        "endChar": 47
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d841969_4f569257",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f9e8a67_715d74e5",
       "range": {
         "startLine": 148,
         "startChar": 31,
@@ -392,6 +704,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "081024da_21ab0b57",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d12d127_58103e24",
+      "range": {
+        "startLine": 338,
+        "startChar": 36,
+        "endLine": 338,
+        "endChar": 52
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e7a7db5_5c3539aa",
@@ -405,6 +741,30 @@
       "writtenOn": "2023-05-03T14:06:45Z",
       "side": 1,
       "message": "Desired comment ?",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 1
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bba0046_12962770",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7a7db5_5c3539aa",
       "range": {
         "startLine": 346,
         "startChar": 0,
@@ -507,6 +867,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c5ff51_9b776721",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed84508_20f2d2f5",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8e2e6c5_15cdd957",
@@ -553,6 +937,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bee677ca_27e11154",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conference.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82b8608_666ab168",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e08152ee_e00b9d1b",
@@ -566,6 +974,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 26,
+        "startChar": 37,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7de4e6b2_16d045fb",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conference.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08152ee_e00b9d1b",
       "range": {
         "startLine": 26,
         "startChar": 37,
@@ -599,6 +1031,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e794685_b6459eb5",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conference.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1acdb7d_f3b6fe82",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bd2bba9_d3af83a2",
@@ -612,6 +1068,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88046ddc_ecfda8a4",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conference.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bd2bba9_d3af83a2",
       "range": {
         "startLine": 31,
         "startChar": 17,
@@ -658,6 +1138,30 @@
       "writtenOn": "2023-05-03T14:46:00Z",
       "side": 1,
       "message": "Not used",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c22babe_16e87896",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DeviceRuntimeService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-03T15:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d93be9a_1f3c43d4",
       "range": {
         "startLine": 24,
         "startChar": 22,
