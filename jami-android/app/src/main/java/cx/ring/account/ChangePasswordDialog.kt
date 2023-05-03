@@ -40,11 +40,19 @@ class ChangePasswordDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Inflate binding.
         binding = DialogSetPasswordBinding.inflate(requireActivity().layoutInflater)
-        val hasPassword = arguments?.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true) ?: true
-        val passwordMessage = if (hasPassword) R.string.account_password_change else R.string.account_password_set
+
+        // Manage the message and fields depending on if user has a password or not.
+        val hasPassword = arguments?.getBoolean(
+            AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true
+        ) ?: true
+        val passwordMessage =
+            if (hasPassword) R.string.account_password_change else R.string.account_password_set
         binding!!.oldPasswordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
-        binding!!.newPasswordRepeatTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+
+        binding!!.newPasswordRepeatTxt.setOnEditorActionListener { _, actionId: Int, _ ->
+            // If user click on done, check and validate the new password.
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (validate()) {
                     dialog!!.dismiss()
@@ -53,14 +61,19 @@ class ChangePasswordDialog : DialogFragment() {
             }
             false
         }
+
+        // Put the binding into a dialog.
         val result = MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
             .setMessage(R.string.help_password_choose)
             .setTitle(passwordMessage)
-            .setPositiveButton(passwordMessage, null) //Set to null. We override the onclick
-            .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, whichButton: Int -> dismiss() }
+            // Set to null. We override the onclick.
+            .setPositiveButton(passwordMessage, null)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()
+
         result.setOnShowListener { dialog: DialogInterface ->
+            // If user click on positive button, check and validate the new password.
             val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
                 if (validate()) {
@@ -68,11 +81,12 @@ class ChangePasswordDialog : DialogFragment() {
                 }
             }
         }
-        result.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         return result
     }
 
     private fun checkInput(): Boolean {
+        // Check the new password is properly repeated.
         if (!binding!!.newPasswordTxt.text.toString().contentEquals(binding!!.newPasswordRepeatTxt.text)) {
             binding!!.newPasswordTxtBox.isErrorEnabled = true
             binding!!.newPasswordTxtBox.error = getText(R.string.error_passwords_not_equals)

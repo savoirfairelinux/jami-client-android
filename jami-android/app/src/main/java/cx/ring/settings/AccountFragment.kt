@@ -87,8 +87,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
     override fun onScrollChanged() {
         mBinding?.let { binding ->
             val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
+            if (activity is HomeActivity) binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP)
         }
     }
 
@@ -96,7 +95,7 @@ class AccountFragment : Fragment(), OnScrollChangedListener {
         val alertDialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.account_delete_dialog_message)
             .setTitle(R.string.account_delete_dialog_title)
-            .setPositiveButton(R.string.menu_delete) { dialog: DialogInterface?, whichButton: Int ->
+            .setPositiveButton(R.string.menu_delete) { _, _ ->
                 mAccountService.removeAccount(accountId)
                 (activity as HomeActivity?)?.onBackPressed()
             }

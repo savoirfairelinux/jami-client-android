@@ -108,7 +108,7 @@ class Account(
             if (conversation.isSwarm && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
                 val contact = conversation.contact!!
                 val key = contact.uri.uri
-                val removed = cache.remove(key)
+                cache.remove(key)
                 conversations.remove(key)
                 //Conversation contactConversation = getByUri(contact.getPrimaryUri());
                 // Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
@@ -459,7 +459,7 @@ class Account(
     val dhtProxyUsed: String
         get() = mVolatileDetails[ConfigKey.PROXY_SERVER]
 
-    fun setRegistrationState(registeredState: AccountConfig.RegistrationState, code: Int=0) {
+    fun setRegistrationState(registeredState: AccountConfig.RegistrationState) {
         //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState)
         registrationStateSubject.onNext(registeredState)
         //mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, code.toString())
@@ -607,7 +607,7 @@ class Account(
             mRequests.remove(id)
         }
         if (contact != null) {
-            contactRemoved(contact.uri, contact.conversationUri.blockingFirst())
+            contactRemoved(contact.uri)
         }
         contactListSubject.onNext(mContacts.values)
     }
@@ -794,7 +794,7 @@ class Account(
         }
     }
 
-    private fun contactRemoved(uri: Uri, conversationUri: Uri) {
+    private fun contactRemoved(uri: Uri) {
         Log.w(TAG, "contactRemoved $uri")
         val key = uri.uri
         synchronized(conversations) {
@@ -831,7 +831,7 @@ class Account(
         if (conversation != null) {
             val contact = if (isSwarm) conversation.findContact(contactUri) else getContactFromCache(contactUri)
             if (contact != null) {
-                conversation.composingStatusChanged(contact, status)
+                conversation.composingStatusChanged(status)
             }
         }
     }

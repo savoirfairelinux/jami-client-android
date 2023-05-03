@@ -88,7 +88,7 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsPluginsSwitch.setOnCheckedChangeListener { _, isChecked: Boolean ->
                 JamiService.setPluginsEnabled(isChecked)
             }
-            val save = CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+            val save = CompoundButton.OnCheckedChangeListener { _, _ ->
                 if (!mIsRefreshingViewFromPresenter) saveSettings(this)
             }
             settingsPushNotifications.setOnCheckedChangeListener(save)
@@ -112,11 +112,11 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
                 MaterialAlertDialogBuilder(v.context)
                     .setTitle(getString(R.string.pref_notification_title))
                     .setSingleChoiceItems(singleItems, mNotificationVisibility) { _, i: Int -> checkedItem[0] = i }
-                    .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, id: Int ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         mNotificationVisibility = checkedItem[0]
                         saveSettings(this)
                     }
-                    .setNegativeButton(android.R.string.cancel) { dialog: DialogInterface?, id: Int -> }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
                     .show()
             }
             settingsLogs.setOnClickListener { v: View ->
@@ -266,8 +266,7 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
     override fun onScrollChanged() {
         binding?.let { binding ->
             val activity: Activity? = activity
-            if (activity is HomeActivity)
-                activity.setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP))
+            if (activity is HomeActivity) binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP)
         }
     }
 
