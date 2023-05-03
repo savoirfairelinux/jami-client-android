@@ -65,7 +65,7 @@ class JamiAccountConnectFragment : BaseSupportFragment<JamiAccountConnectPresent
                     presenter.serverChanged(s.toString())
                 }
             })
-            passwordTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+            passwordTxt.setOnEditorActionListener { _, actionId: Int, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     presenter.connectClicked()
                 }

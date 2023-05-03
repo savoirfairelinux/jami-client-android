@@ -143,12 +143,10 @@ class Conversation : ConversationHistory {
         return null
     }
 
+    @Suppress("UNUSED_PARAMETER") // contact may be used in the future
     fun composingStatusChanged(contact: Contact, composing: Account.ComposingStatus) {
         composingStatusSubject.onNext(composing)
     }
-
-    /*val displayName: String?
-        get() = contacts[0].displayName*/
 
     fun addContact(contact: Contact) {
         contacts.add(contact)
@@ -328,16 +326,16 @@ class Conversation : ConversationHistory {
     }
 
     private fun isAfter(previous: Interaction, query: Interaction?): Boolean {
-        var query = query
+        var interaction = query
         return if (isSwarm) {
-            while (query?.parentId != null) {
-                if (query.parentId == previous.messageId)
+            while (interaction?.parentId != null) {
+                if (interaction.parentId == previous.messageId)
                     return true
-                query = mMessages[query.parentId]
+                interaction = mMessages[interaction.parentId]
             }
             false
         } else {
-            previous.timestamp < query!!.timestamp
+            previous.timestamp < interaction!!.timestamp
         }
     }
 

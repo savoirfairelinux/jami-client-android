@@ -27,7 +27,7 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
         return FragPluginHandlersListBinding.inflate(inflater, container, false).also { b ->
             b.handlerList.setHasFixedSize(true)
             b.handlerList.adapter = PluginsListAdapter(
-                PluginUtils.getChatHandlersDetails(b.handlerList.context, mPath.accountId, mPath.conversationId.removePrefix("swarm:")), this, "")
+                PluginUtils.getChatHandlersDetails(mPath.accountId, mPath.conversationId.removePrefix("swarm:")), this, "")
             binding = b
         }.root
     }
@@ -40,7 +40,7 @@ class PluginHandlersListFragment : Fragment(), PluginListItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding!!.chatPluginsToolbar.visibility = View.VISIBLE
-        binding!!.chatPluginsToolbar.setOnClickListener { v: View? ->
+        binding!!.chatPluginsToolbar.setOnClickListener {
             val fragment = parentFragment
             if (fragment is ConversationFragment) {
                 fragment.hidePluginListHandlers()

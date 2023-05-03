@@ -339,7 +339,6 @@ class DRingService : Service() {
         mContactService.loadContacts(
             mAccountService.hasJamiAccount(),
             mAccountService.hasSipAccount(),
-            mAccountService.currentAccount
         )
     }
 

@@ -59,7 +59,7 @@ class RegisterNameDialog : DialogFragment() {
         mListener = l
     }
 
-    private fun onLookupResult(name: String, address: String?, state: Int) {
+    private fun onLookupResult(name: String, state: Int) {
         binding?.let { binding ->
             val actualName = binding.inputUsername.text?.toString() ?: ""
             if (actualName.isEmpty()) {
@@ -121,7 +121,7 @@ class RegisterNameDialog : DialogFragment() {
         })
         // binding.inputUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
         binding.passwordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
-        binding.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+        binding.passwordTxt.setOnEditorActionListener { v: TextView, actionId: Int, _ ->
             onEditorAction(v, actionId)
         }
         val dialog = dialog as AlertDialog?
@@ -134,7 +134,7 @@ class RegisterNameDialog : DialogFragment() {
             .setMessage(R.string.register_username)
             .setTitle(R.string.register_name)
             .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
-            .setNegativeButton(android.R.string.cancel) { d: DialogInterface?, b: Int -> dismiss() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
             .create()
         result.setOnShowListener { d: DialogInterface ->
             val positiveButton = (d as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
@@ -153,7 +153,7 @@ class RegisterNameDialog : DialogFragment() {
             .debounce(JamiAccountCreationPresenter.TYPING_DELAY, TimeUnit.MILLISECONDS)
             .switchMapSingle { q: String -> mAccountService.findRegistrationByName(accountId, "", q) }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.address, q.state) }
+            .subscribe { q: RegisteredName -> onLookupResult(q.name, q.state) }
         super.onStart()
     }
 
