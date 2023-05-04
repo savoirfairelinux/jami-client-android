@@ -22,7 +22,6 @@
  */
 package cx.ring.account
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.ViewTreeObserver.OnScrollChangedListener
@@ -31,6 +30,8 @@ import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.contactrequests.BlockListFragment
 import cx.ring.databinding.FragAccountSettingsBinding
@@ -65,9 +66,18 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onViewCreated(view, savedInstanceState)
+
         mAccountId = requireArguments().getString(ACCOUNT_ID_KEY)
         mBinding!!.fragmentContainer.viewTreeObserver.addOnScrollChangedListener(this)
         presenter.init(mAccountId!!)
+
+        mBinding?.apply {
+            TabLayoutMediator(slidingTabs, pager){ tab, position ->
+                tab.text = context?.getString(
+                        if (mAccountIsJami) getJamiPanelTitle(position)
+                        else getSIPPanelTitle(position))
+            }.attach()
+        }
     }
 
     override fun displaySummary(accountId: String) {
@@ -97,8 +107,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun initViewPager(accountId: String, isJami: Boolean) {
         mBinding?.apply {
             pager.offscreenPageLimit = 4
-            pager.adapter = PreferencesPagerAdapter(childFragmentManager, requireContext(), accountId, isJami)
-            slidingTabs.setupWithViewPager(pager)
+            pager.adapter = PreferencesPagerAdapter(this@AccountEditionFragment, accountId, isJami)
         }
         val existingFragment = childFragmentManager.findFragmentByTag(BlockListFragment.TAG) as BlockListFragment?
         if (existingFragment != null) {
@@ -137,18 +146,15 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         activity?.onBackPressed()
     }
 
-    private class PreferencesPagerAdapter constructor(
-        fm: FragmentManager,
-        private val mContext: Context,
+    private class PreferencesPagerAdapter(
+        f: Fragment,
         private val accountId: String,
         private val isJamiAccount: Boolean
-    ) : FragmentStatePagerAdapter(fm) {
-        override fun getCount(): Int = if (isJamiAccount) 3 else 4
+    ) : FragmentStateAdapter(f) {
+        override fun getItemCount(): Int = if (isJamiAccount) 3 else 4
 
-        override fun getItem(position: Int): Fragment =
+        override fun createFragment(position: Int): Fragment =
             if (isJamiAccount) getJamiPanel(position) else getSIPPanel(position)
-
-        override fun getPageTitle(position: Int): CharSequence = mContext.getString(if (isJamiAccount) getRingPanelTitle(position) else getSIPPanelTitle(position))
 
         private fun getJamiPanel(position: Int): Fragment = when (position) {
             0 -> fragmentWithBundle(GeneralAccountFragment())
@@ -169,27 +175,6 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
 
         private fun fragmentWithBundle(result: Fragment): Fragment = result.apply {
             arguments = Bundle().apply { putString(ACCOUNT_ID_KEY, accountId) }
-        }
-
-        companion object {
-            @StringRes
-            private fun getRingPanelTitle(position: Int): Int = when (position) {
-                0 -> R.string.account_preferences_basic_tab
-                1 -> R.string.account_preferences_media_tab
-                2 -> R.string.account_preferences_advanced_tab
-                3 -> R.string.account_preference_plugin_tab
-                else -> -1
-            }
-
-            @StringRes
-            private fun getSIPPanelTitle(position: Int): Int = when (position) {
-                0 -> R.string.account_preferences_basic_tab
-                1 -> R.string.account_preferences_media_tab
-                2 -> R.string.account_preferences_advanced_tab
-                3 -> R.string.account_preferences_security_tab
-                4 -> R.string.account_preference_plugin_tab
-                else -> -1
-            }
         }
     }
 
@@ -213,5 +198,24 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
         val ACCOUNT_ID_KEY = AccountEditionFragment::class.qualifiedName + "accountId"
         val ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment::class.qualifiedName + "hasPassword"
         private const val SCROLL_DIRECTION_UP = -1
+
+        @StringRes
+        private fun getJamiPanelTitle(position: Int): Int = when (position) {
+            0 -> R.string.account_preferences_basic_tab
+            1 -> R.string.account_preferences_media_tab
+            2 -> R.string.account_preferences_advanced_tab
+            3 -> R.string.account_preference_plugin_tab
+            else -> -1
+        }
+
+        @StringRes
+        private fun getSIPPanelTitle(position: Int): Int = when (position) {
+            0 -> R.string.account_preferences_basic_tab
+            1 -> R.string.account_preferences_media_tab
+            2 -> R.string.account_preferences_advanced_tab
+            3 -> R.string.account_preferences_security_tab
+            4 -> R.string.account_preference_plugin_tab
+            else -> -1
+        }
     }
 }
