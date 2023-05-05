@@ -26,6 +26,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -122,19 +123,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         Snackbar.make(binding!!.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun displayChooseNumberDialog(numbers: Array<CharSequence>) {
-        val context = requireContext()
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.choose_number)
-            .setItems(numbers) { _: DialogInterface?, which: Int ->
-                val selected = numbers[which]
-                val intent = Intent(Intent.ACTION_CALL)
-                    .setClass(context, CallActivity::class.java)
-                    .setData(android.net.Uri.parse(selected.toString()))
-                startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
-            }
-            .show()
-    }
+    override fun displayChooseNumberDialog(numbers: Array<CharSequence>) {}
 
     override fun displayNoConversationMessage() {
         binding!!.placeholder.visibility = View.VISIBLE
@@ -215,18 +204,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         mSmartListAdapter?.notifyItemChanged(position)
     }
 
-    override fun update(model: Conversation) {
-        //mSmartListAdapter?.update(model)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
-            data.getStringExtra(ConversationPath.KEY_CONVERSATION_URI)?.let { contactId ->
-                presenter.startConversation(Uri.fromString(contactId))
-            }
-        }
-    }
+    override fun update(model: Conversation) {}
 
     override fun goToConversation(accountId: String, conversationUri: Uri) {
         Log.w(TAG, "goToConversation $accountId $conversationUri")
@@ -234,14 +212,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         (requireActivity() as HomeActivity).startConversation(accountId, conversationUri)
     }
 
-    override fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String) {
-        val intent = Intent(Intent.ACTION_CALL)
-            .setClass(requireContext(), CallActivity::class.java)
-            .putExtras(ConversationPath.toBundle(accountId, conversationUri))
-            .putExtra(CallFragment.KEY_HAS_VIDEO, true)
-            .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId)
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
-    }
+    override fun goToCallActivity(accountId: String, conversationUri: Uri, contactId: String) {}
 
     fun showFab(show: Boolean) {
         val binding = binding ?: return

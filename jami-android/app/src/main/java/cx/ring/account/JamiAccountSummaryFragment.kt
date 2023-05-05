@@ -42,6 +42,7 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
@@ -188,40 +189,6 @@ class JamiAccountSummaryFragment :
 
     fun setAccount(accountId: String) {
         presenter.setAccountId(accountId)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        when (requestCode) {
-            WRITE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
-                resultData?.data?.let { uri ->
-                    mCacheArchive?.let { cacheArchive ->
-                        AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe({}) { e: Throwable ->
-                                val v = view
-                                if (v != null)
-                                    Snackbar.make(v, "Can't export archive: " + e.message, Snackbar.LENGTH_LONG).show()
-                            }
-                    }
-                }
-            }
-            HomeActivity.REQUEST_CODE_PHOTO -> {
-                tmpProfilePhotoUri.let { photoUri ->
-                    if (resultCode == Activity.RESULT_OK) {
-                        if (photoUri == null) {
-                            if (resultData != null)
-                                updatePhoto(Single.just(resultData.extras!!["data"] as Bitmap))
-                        } else {
-                            updatePhoto(photoUri)
-                        }
-                    }
-                    tmpProfilePhotoUri = null
-                }
-            }
-            HomeActivity.REQUEST_CODE_GALLERY -> if (resultCode == Activity.RESULT_OK && resultData != null) {
-                updatePhoto(resultData.data!!)
-            }
-        }
     }
 
     override fun accountChanged(account: Account, profile: Profile) {
@@ -391,8 +358,26 @@ class JamiAccountSummaryFragment :
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = mimeType
         intent.putExtra(Intent.EXTRA_TITLE, fileName)
-        startActivityForResult(intent, WRITE_REQUEST_CODE)
+        writeLauncher.launch(intent)
     }
+
+    private var writeLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.data?.let { uri ->
+                    mCacheArchive?.let { cacheArchive ->
+                        AndroidFileUtils.moveToUri(requireContext().contentResolver, cacheArchive, uri)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe({}) { e: Throwable ->
+                                val v = view
+                                if (v != null)
+                                    Snackbar.make(v, "Can't export archive: " + e.message, Snackbar.LENGTH_LONG).show()
+                            }
+                    }
+                }
+            }
+        }
 
     override fun displayCompleteArchive(dest: File) {
         val type = AndroidFileUtils.getMimeType(dest.absolutePath)
@@ -446,12 +431,28 @@ class JamiAccountSummaryFragment :
                 .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                 .putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
             tmpProfilePhotoUri = uri
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO)
+            photoLauncher.launch(intent)
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Error starting camera: " + e.localizedMessage, Toast.LENGTH_SHORT).show()
             Log.e(TAG, "Can't create temp file", e)
         }
     }
+
+    private var photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                tmpProfilePhotoUri.let { photoUri ->
+                    if (photoUri == null) {
+                        if (data != null)
+                            updatePhoto(Single.just(data.extras!!["data"] as Bitmap))
+                    } else {
+                        updatePhoto(photoUri)
+                    }
+                }
+                tmpProfilePhotoUri = null
+            }
+        }
 
     override fun askCameraPermission() {
         requestPermissions(arrayOf(
@@ -752,7 +753,6 @@ class JamiAccountSummaryFragment :
         private val FRAGMENT_DIALOG_RENAME = "$TAG.dialog.deviceRename"
         private val FRAGMENT_DIALOG_PASSWORD = "$TAG.dialog.changePassword"
         private val FRAGMENT_DIALOG_BACKUP = "$TAG.dialog.backup"
-        private const val WRITE_REQUEST_CODE = 43
         private const val SCROLL_DIRECTION_UP = -1
 
         private fun slideAnimator(start: Int, end: Int, summary: View) = ValueAnimator.ofInt(start, end).apply {

@@ -19,6 +19,7 @@
  */
 package cx.ring.client
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -62,18 +64,6 @@ class MediaViewerFragment : Fragment() {
         return view
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_SAVE_FILE) {
-            data?.data?.let { uri ->
-                AndroidFileUtils.copyUri(requireContext().contentResolver, mUri!!, uri)
-                    .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
-                    { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() }
-            }
-        } else
-            super.onActivityResult(requestCode, resultCode, data)
-    }
-
     private fun startSaveFile(uri: Uri) {
         try {
             val name = uri.getQueryParameter("displayName") ?: ""
@@ -82,19 +72,28 @@ class MediaViewerFragment : Fragment() {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 putExtra(Intent.EXTRA_TITLE, name)
             }
-            startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
+            saveFileLauncher.launch(downloadFileIntent)
         } catch (e: Exception) {
             //Log.i(TAG, "No app detected for saving files.")
         }
     }
 
+    private var saveFileLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.data?.let { uri ->
+                    AndroidFileUtils.copyUri(requireContext().contentResolver, mUri!!, uri)
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe({ Toast.makeText(context, R.string.file_saved_successfully, Toast.LENGTH_SHORT).show() })
+                        { Toast.makeText(context, R.string.generic_error, Toast.LENGTH_SHORT).show() }
+                }
+            }
+        }
+
     private fun openFile(uri: Uri) {
         val name = uri.getQueryParameter("displayName") ?: ""
         AndroidFileUtils.openFile(requireContext(), uri, name)
-    }
-
-    companion object {
-        private const val REQUEST_CODE_SAVE_FILE = 1003
     }
 
 }
