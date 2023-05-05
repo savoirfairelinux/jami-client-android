@@ -20,7 +20,6 @@
 package cx.ring.fragments
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -31,9 +30,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.FragAccSipCreateBinding
+import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.SIPCreationView
@@ -42,7 +43,7 @@ import net.jami.account.SIPCreationPresenter
 @AndroidEntryPoint
 class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIPCreationView>(),
     SIPCreationView {
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var binding: FragAccSipCreateBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,12 +91,12 @@ class SIPAccountCreationFragment : BaseSupportFragment<SIPCreationPresenter, SIP
     }
 
     override fun showLoading() {
-        mProgress = ProgressDialog(activity)
-        mProgress!!.setTitle(R.string.dialog_wait_create)
-        mProgress!!.setMessage(getString(R.string.dialog_wait_create_details))
-        mProgress!!.setCancelable(false)
-        mProgress!!.setCanceledOnTouchOutside(false)
-        mProgress!!.show()
+        mProgress = MaterialAlertDialogBuilder(requireContext())
+            .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+            .setTitle(R.string.dialog_wait_create)
+            .setMessage(R.string.dialog_wait_create_details)
+            .setCancelable(false)
+            .show()
     }
 
     override fun resetErrors() {

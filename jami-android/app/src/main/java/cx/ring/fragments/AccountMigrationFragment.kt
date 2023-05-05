@@ -20,7 +20,6 @@
 package cx.ring.fragments
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -38,6 +37,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragAccountMigrationBinding
+import cx.ring.databinding.ItemProgressDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -51,7 +51,7 @@ class AccountMigrationFragment : Fragment() {
     lateinit var mAccountService: AccountService
     private var binding: FragAccountMigrationBinding? = null
     private var mAccountId: String? = null
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var migratingAccount = false
     private val mDisposableBag = CompositeDisposable()
 
@@ -107,13 +107,14 @@ class AccountMigrationFragment : Fragment() {
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        mProgress = ProgressDialog(requireContext()).apply {
-            setTitle(R.string.dialog_wait_update)
-            setMessage(getString(R.string.dialog_wait_update_details))
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-            show()
-        }
+
+        mProgress = MaterialAlertDialogBuilder(requireContext())
+            .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+            .setTitle(R.string.dialog_wait_update)
+            .setMessage(R.string.dialog_wait_update_details)
+            .setCancelable(false)
+            .show()
+
         mDisposableBag.add(mAccountService.migrateAccount(accountId, password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { newState: String -> handleMigrationState(newState) })

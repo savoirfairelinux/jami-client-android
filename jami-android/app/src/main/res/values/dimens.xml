@@ -104,6 +104,9 @@ along with this program; if not, write to the Free Software
     <!--  Account Summary  -->
     <dimen name="title_margin">12dp</dimen>
 
+    <!--  ProgressDialog  -->
+    <dimen name="progress_dialog_padding">32dp</dimen>
+
     <!--  Switch Button  -->
     <dimen name="thumb_ripple_size">42dp</dimen>
     <dimen name="thumb_solid_inset">11dp</dimen>
