@@ -20,17 +20,15 @@
 package cx.ring.fragments
 
 import android.app.Activity
-import android.app.ProgressDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -51,7 +49,7 @@ class AccountMigrationFragment : Fragment() {
     lateinit var mAccountService: AccountService
     private var binding: FragAccountMigrationBinding? = null
     private var mAccountId: String? = null
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var migratingAccount = false
     private val mDisposableBag = CompositeDisposable()
 
@@ -107,13 +105,21 @@ class AccountMigrationFragment : Fragment() {
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        mProgress = ProgressDialog(requireContext()).apply {
-            setTitle(R.string.dialog_wait_update)
-            setMessage(getString(R.string.dialog_wait_update_details))
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-            show()
-        }
+
+        val progressBar = // Add padding to look good.
+            ProgressBar(context, null, android.R.attr.progressBarStyleLarge).apply {
+                setPadding(
+                    0, 0, 0,
+                    50 * this.resources.displayMetrics.density.toInt()
+                )
+            }
+        mProgress = MaterialAlertDialogBuilder(requireContext())
+            .setView(progressBar)
+            .setTitle(R.string.dialog_wait_update)
+            .setMessage(R.string.dialog_wait_update_details)
+            .setCancelable(false)
+            .show()
+
         mDisposableBag.add(mAccountService.migrateAccount(accountId, password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { newState: String -> handleMigrationState(newState) })

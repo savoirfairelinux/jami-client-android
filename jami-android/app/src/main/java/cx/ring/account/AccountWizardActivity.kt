@@ -21,11 +21,11 @@
 package cx.ring.account
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -48,9 +48,10 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.utils.VCardUtils
 
+
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
 
@@ -156,13 +157,19 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun displayProgress(display: Boolean) {
         if (display) {
-            mProgress = ProgressDialog(this@AccountWizardActivity).apply {
-                setTitle(R.string.dialog_wait_create)
-                setMessage(getString(R.string.dialog_wait_create_details))
-                setCancelable(false)
-                setCanceledOnTouchOutside(false)
-                show()
-            }
+            val progressBar = // Add padding to look good.
+                ProgressBar(this, null, android.R.attr.progressBarStyleLarge).apply {
+                    setPadding(
+                        0, 0, 0,
+                        50 * this.resources.displayMetrics.density.toInt()
+                    )
+                }
+            mProgress = MaterialAlertDialogBuilder(this@AccountWizardActivity)
+                .setView(progressBar)
+                .setTitle(R.string.dialog_wait_create)
+                .setMessage(getString(R.string.dialog_wait_create_details))
+                .setCancelable(false)
+                .show()
         } else {
             mProgress?.apply {
                 if (isShowing) dismiss()

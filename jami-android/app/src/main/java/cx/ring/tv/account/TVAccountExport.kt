@@ -20,7 +20,6 @@ package cx.ring.tv.account
 
 import android.app.AlertDialog
 import android.app.DownloadManager
-import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
@@ -31,8 +30,10 @@ import android.text.style.AlignmentSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.view.View
+import android.widget.ProgressBar
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.utils.AndroidFileUtils.getMimeType
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +45,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView>(), JamiAccountSummaryView {
-    private var mWaitDialog: ProgressDialog? = null
+    private var mWaitDialog: androidx.appcompat.app.AlertDialog? = null
     private lateinit var mIdAccount: String
     private var mHasPassword = false
 
@@ -84,10 +85,19 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     }
 
     override fun showExportingProgressDialog() {
-        mWaitDialog = ProgressDialog.show(activity,
-            getString(R.string.export_account_wait_title),
-            getString(R.string.export_account_wait_message)
-        )
+        val progressBar = // Add padding to look good.
+            ProgressBar(context, null, android.R.attr.progressBarStyleLarge).apply {
+                setPadding(
+                    0, 0, 0,
+                    50 * this.resources.displayMetrics.density.toInt()
+                )
+            }
+        mWaitDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(progressBar)
+            .setTitle(R.string.export_account_wait_title)
+            .setMessage(R.string.export_account_wait_message)
+            .setCancelable(false)
+            .show()
     }
 
     override fun showPasswordProgressDialog() {}
