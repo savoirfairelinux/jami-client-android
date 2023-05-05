@@ -24,7 +24,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.app.ProgressDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -78,7 +78,6 @@ import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
-import net.jami.utils.StringUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -97,7 +96,7 @@ class JamiAccountSummaryFragment :
             }
         }
     }
-    private var mWaitDialog: ProgressDialog? = null
+    private var mWaitDialog: AlertDialog? = null
     private var mAccountHasPassword = true
     private var mBestName = ""
     private var mAccountId: String? = ""
@@ -341,11 +340,32 @@ class JamiAccountSummaryFragment :
     }
 
     override fun showExportingProgressDialog() {
-        mWaitDialog = ProgressDialog.show(activity, getString(R.string.export_account_wait_title), getString(R.string.export_account_wait_message))
-    }
+        val progressBar = // Add padding to look good.
+            ProgressBar(context, null, android.R.attr.progressBarStyleLarge).apply {
+                setPadding(
+                    0, 0, 0,
+                    50 * this.resources.displayMetrics.density.toInt()
+                )
+            }
+        mWaitDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(progressBar)
+            .setTitle(R.string.export_account_wait_title)
+            .setMessage(R.string.export_account_wait_message)
+            .show()    }
 
     override fun showPasswordProgressDialog() {
-        mWaitDialog = ProgressDialog.show(activity, getString(R.string.export_account_wait_title), getString(R.string.account_password_change_wait_message))
+        val progressBar = // Add padding to look good.
+            ProgressBar(context, null, android.R.attr.progressBarStyleLarge).apply {
+                setPadding(
+                    0, 0, 0,
+                    50 * this.resources.displayMetrics.density.toInt()
+                )
+            }
+        mWaitDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(progressBar)
+            .setTitle(R.string.export_account_wait_title)
+            .setMessage(R.string.account_password_change_wait_message)
+            .show()
     }
 
     private fun dismissWaitDialog() {
@@ -533,10 +553,18 @@ class JamiAccountSummaryFragment :
     }
 
     override fun showRevokingProgressDialog() {
-        mWaitDialog = ProgressDialog.show(activity,
-            getString(R.string.revoke_device_wait_title),
-            getString(R.string.revoke_device_wait_message)
-        )
+        val progressBar = // Add padding to look good.
+            ProgressBar(context, null, android.R.attr.progressBarStyleLarge).apply {
+                setPadding(
+                    0, 0, 0,
+                    50 * this.resources.displayMetrics.density.toInt()
+                )
+            }
+        mWaitDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(progressBar)
+            .setTitle(R.string.revoke_device_wait_title)
+            .setMessage(R.string.revoke_device_wait_message)
+            .show()
     }
 
     override fun deviceRevocationEnded(device: String, status: Int) {
