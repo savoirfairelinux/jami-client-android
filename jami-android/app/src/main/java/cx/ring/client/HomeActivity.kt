@@ -478,8 +478,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
         val TAG: String = HomeActivity::class.simpleName!!
         const val REQUEST_CODE_CALL = 3
         const val REQUEST_CODE_CONVERSATION = 4
-        const val REQUEST_CODE_PHOTO = 5
-        const val REQUEST_CODE_GALLERY = 6
         const val REQUEST_CODE_QR_CONVERSATION = 7
         const val REQUEST_PERMISSION_CAMERA = 113
         const val REQUEST_PERMISSION_READ_STORAGE = 114

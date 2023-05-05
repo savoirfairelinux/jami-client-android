@@ -20,6 +20,7 @@
 package cx.ring.client
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.media.MediaPlayer
@@ -29,6 +30,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -270,9 +272,34 @@ class RingtoneActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "audio/*"
-        startActivityForResult(intent, SELECT_RINGTONE_PATH)
+        ringtoneSelectorLauncher.launch(intent)
     }
 
+    private var ringtoneSelectorLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent = result.data ?: return@registerForActivityResult
+                val uri = data.data ?: return@registerForActivityResult
+
+                val cr = contentResolver
+                    try {
+                        val path = AndroidFileUtils.getRealPathFromURI(this, uri) ?: throw IllegalArgumentException()
+                        onFileFound(File(path))
+                    } catch (e: Exception) {
+                        val takeFlags = (data.flags
+                                and (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                or Intent.FLAG_GRANT_WRITE_URI_PERMISSION))
+                        cr.takePersistableUriPermission(uri, takeFlags)
+                        AndroidFileUtils.getCacheFile(this, uri)
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe({ ringtone: File -> onFileFound(ringtone) }) {
+                                Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+
+
+            }
+        }
     /**
      * Displays a dialog if the selected ringtone is too large
      */
@@ -295,36 +322,8 @@ class RingtoneActivity : AppCompatActivity() {
             .setItems(item) { _: DialogInterface?, _: Int -> setDefaultRingtone() }.show()
     }
 
-    @SuppressLint("WrongConstant")
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data == null) return
-        val uri = data.data
-        if (resultCode == RESULT_CANCELED || uri == null) {
-            return
-        }
-        val cr = contentResolver
-        if (requestCode == SELECT_RINGTONE_PATH) {
-            try {
-                val path = AndroidFileUtils.getRealPathFromURI(this, uri) ?: throw IllegalArgumentException()
-                onFileFound(File(path))
-            } catch (e: Exception) {
-                val takeFlags = (data.flags
-                        and (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        or Intent.FLAG_GRANT_WRITE_URI_PERMISSION))
-                cr.takePersistableUriPermission(uri, takeFlags)
-                AndroidFileUtils.getCacheFile(this, uri)
-                    .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe({ ringtone: File -> onFileFound(ringtone) }) {
-                        Toast.makeText(this, "Can't load ringtone !", Toast.LENGTH_SHORT).show()
-                    }
-            }
-        }
-    }
-
     companion object {
         const val MAX_SIZE_RINGTONE = 64 * 1024
-        private const val SELECT_RINGTONE_PATH = 40
 
         /**
          * Gets the name of a file without its extension
