@@ -57,22 +57,6 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
         }
 
     private var iconSize = -1
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        when (requestCode) {
-            ProfileCreationFragment.REQUEST_CODE_PHOTO -> if (resultCode == Activity.RESULT_OK && intent != null && intent.extras != null) {
-                val uri = intent.extras!![MediaStore.EXTRA_OUTPUT] as Uri?
-                try {
-                    requireContext().contentResolver.openInputStream(uri!!).use { iStream ->
-                        val image = BitmapFactory.decodeStream(iStream)
-                        presenter.photoUpdated(Single.just(intent).map { image })
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-            else -> super.onActivityResult(requestCode, resultCode, intent)
-        }
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
@@ -132,8 +116,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
 
     override fun goToPhotoCapture() {
         try {
-            startActivityForResult(Intent(activity, CustomCameraActivity::class.java),
-                ProfileCreationFragment.REQUEST_CODE_PHOTO)
+            photoLauncher.launch(Intent(activity, CustomCameraActivity::class.java))
         } catch (e: Exception) {
             AlertDialog.Builder(requireActivity())
                 .setPositiveButton(android.R.string.ok, null)
@@ -142,6 +125,24 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
                 .show()
         }
     }
+
+    private var photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent = result.data ?: return@registerForActivityResult
+                val extras = data.extras ?: return@registerForActivityResult
+
+                val uri = extras[MediaStore.EXTRA_OUTPUT] as Uri?
+                try {
+                    requireContext().contentResolver.openInputStream(uri!!).use { iStream ->
+                        val image = BitmapFactory.decodeStream(iStream)
+                        presenter.photoUpdated(Single.just(data).map { image })
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
     override fun askPhotoPermission() {
         requestPermissions(arrayOf(Manifest.permission.CAMERA), ProfileCreationFragment.REQUEST_PERMISSION_CAMERA)

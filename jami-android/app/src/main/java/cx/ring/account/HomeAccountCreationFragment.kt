@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
@@ -82,44 +83,56 @@ class HomeAccountCreationFragment :
     override fun goToSIPAccountCreation() {
         val intent = Intent(activity, AccountWizardActivity::class.java)
         intent.action = AccountConfig.ACCOUNT_TYPE_SIP
-        startActivityForResult(intent, ADD_SIP_ACCOUNT)
+        addSIPAccountLauncher.launch(intent)
     }
+
+    private var addSIPAccountLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                (activity as AccountWizardActivity?)?.displaySuccessDialog()
+            }
+        }
 
     private fun performFileSearch() {
         try {
-            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("*/*"), ARCHIVE_REQUEST_CODE)
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
+            archiveLauncher.launch(intent)
         } catch (e: Exception) {
             view?.let { v ->
                 Snackbar.make(v, "No file browser available on this device", Snackbar.LENGTH_SHORT).show() }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        if (requestCode == ARCHIVE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            resultData?.data?.let { uri ->
-                getCacheFile(requireContext(), uri)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ file: File ->
-                        model.model = AccountCreationModelImpl().apply {
-                            isLink = true
-                            archive = file
+    private var archiveLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.data?.let { uri ->
+                    getCacheFile(requireContext(), uri)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ file: File ->
+                            model.model = AccountCreationModelImpl().apply {
+                                isLink = true
+                                archive = file
+                            }
+                            replaceFragmentWithSlide(
+                                JamiLinkAccountFragment(),
+                                R.id.wizard_container
+                            )
+                        }) { e: Throwable ->
+                            view?.let { v ->
+                                Snackbar.make(
+                                    v,
+                                    "Can't import archive: " + e.message,
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
-                    }) { e: Throwable ->
-                        view?.let { v ->
-                            Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
-                    }
+                }
             }
-        } else if (requestCode == ADD_SIP_ACCOUNT && resultCode == Activity.RESULT_OK) {
-            (activity as AccountWizardActivity?)?.displaySuccessDialog()
         }
-    }
 
     companion object {
-        private const val ARCHIVE_REQUEST_CODE = 42
-        private const val ADD_SIP_ACCOUNT = 101
         val TAG = HomeAccountCreationFragment::class.simpleName!!
     }
 }

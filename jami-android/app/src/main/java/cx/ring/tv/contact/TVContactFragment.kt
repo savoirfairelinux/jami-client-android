@@ -24,6 +24,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.*
 import cx.ring.R
@@ -85,8 +86,12 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
                 ACTION_ACCEPT -> presenter.acceptTrustRequest()
                 ACTION_REFUSE -> presenter.refuseTrustRequest()
                 ACTION_BLOCK -> presenter.blockTrustRequest()
-                ACTION_MORE -> startActivityForResult(Intent(getActivity(), TVContactMoreActivity::class.java)
-                        .setDataAndType(mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI), REQUEST_CODE)
+                ACTION_MORE -> requestLauncher.launch(
+                    Intent(getActivity(), TVContactMoreActivity::class.java)
+                        .setDataAndType(
+                            mConversationPath.toUri(), TVContactMoreActivity.CONTACT_REQUEST_URI
+                        )
+                )
             }
         }
         mAdapter?.clear()
@@ -97,12 +102,10 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         adapter = mAdapter
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == TVContactMoreFragment.DELETE) finishView()
+    private var requestLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == TVContactMoreFragment.DELETE) finishView()
         }
-    }
 
     override fun showContact(account: Account, model: ConversationItemViewModel) {
         val context = requireContext()
@@ -171,6 +174,5 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
         private const val ACTION_BLOCK = 3L
         private const val ACTION_ADD_CONTACT = 4L
         private const val ACTION_MORE = 5L
-        private const val REQUEST_CODE = 100
     }
 }
