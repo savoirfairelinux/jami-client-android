@@ -38,7 +38,7 @@
             android:tint="@color/white"
             android:src="@drawable/baseline_devices_24"/>
 
-        <cx.ring.views.WizardViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
             android:layout_width="@dimen/wizard_card_width"
             android:layout_height="@dimen/wizard_card_height"
