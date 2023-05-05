@@ -18,16 +18,17 @@
  */
 package cx.ring.tv.account
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.leanback.app.GuidedStepSupportFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountCreationViewModel
 import cx.ring.application.JamiApplication
+import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.mvp.BaseActivity
 import cx.ring.services.VCardServiceImpl
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,7 @@ import net.jami.utils.VCardUtils
 
 @AndroidEntryPoint
 class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var mLinkAccount = false
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
@@ -106,13 +107,12 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
 
     override fun displayProgress(display: Boolean) {
         if (display) {
-            mProgress = ProgressDialog(this).apply {
-                setTitle(R.string.dialog_wait_create)
-                setMessage(getString(R.string.dialog_wait_create_details))
-                setCancelable(false)
-                setCanceledOnTouchOutside(false)
-                show()
-            }
+            mProgress = MaterialAlertDialogBuilder(applicationContext)
+                .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+                .setTitle(R.string.dialog_wait_create)
+                .setMessage(R.string.dialog_wait_create_details)
+                .setCancelable(false)
+                .show()
         } else {
             mProgress?.let { progress ->
                 if (progress.isShowing)
