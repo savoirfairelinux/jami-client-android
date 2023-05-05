@@ -21,7 +21,6 @@
 package cx.ring.account
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -34,6 +33,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.client.HomeActivity
+import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.fragments.AccountMigrationFragment
 import cx.ring.fragments.SIPAccountCreationFragment
 import cx.ring.mvp.BaseActivity
@@ -48,9 +48,10 @@ import net.jami.model.Account
 import net.jami.model.AccountConfig
 import net.jami.utils.VCardUtils
 
+
 @AndroidEntryPoint
 class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWizardView {
-    private var mProgress: ProgressDialog? = null
+    private var mProgress: AlertDialog? = null
     private var mAccountType: String? = null
     private var mAlertDialog: AlertDialog? = null
 
@@ -156,13 +157,12 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun displayProgress(display: Boolean) {
         if (display) {
-            mProgress = ProgressDialog(this@AccountWizardActivity).apply {
-                setTitle(R.string.dialog_wait_create)
-                setMessage(getString(R.string.dialog_wait_create_details))
-                setCancelable(false)
-                setCanceledOnTouchOutside(false)
-                show()
-            }
+            mProgress = MaterialAlertDialogBuilder(this@AccountWizardActivity)
+                .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+                .setTitle(R.string.dialog_wait_create)
+                .setMessage(getString(R.string.dialog_wait_create_details))
+                .setCancelable(false)
+                .show()
         } else {
             mProgress?.apply {
                 if (isShowing) dismiss()
