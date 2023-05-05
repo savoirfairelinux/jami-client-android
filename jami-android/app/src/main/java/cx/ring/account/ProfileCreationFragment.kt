@@ -35,11 +35,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import cx.ring.R
 import cx.ring.databinding.FragAccProfileCreateBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.AndroidFileUtils.createImageFile
@@ -97,25 +95,6 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
         presenter.initPresenter(model.model)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        when (requestCode) {
-            REQUEST_CODE_PHOTO -> if (resultCode == Activity.RESULT_OK) {
-                if (tmpProfilePhotoUri == null) {
-                    if (intent != null) {
-                        val bundle = intent.extras
-                        val b = if (bundle == null) null else bundle["data"] as Bitmap?
-                        if (b != null) {
-                            presenter.photoUpdated(Single.just(b))
-                        }
-                    }
-                } else {
-                    presenter.photoUpdated(loadBitmap(requireContext(), tmpProfilePhotoUri!!).map { b: Bitmap -> b })
-                }
-            }
-            else -> super.onActivityResult(requestCode, resultCode, intent)
-        }
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -145,13 +124,31 @@ class ProfileCreationFragment : BaseSupportFragment<ProfileCreationPresenter, Pr
                 .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                 .putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
             tmpProfilePhotoUri = uri
-            startActivityForResult(intent, REQUEST_CODE_PHOTO)
+            photoLauncher.launch(intent)
         } catch (e: IOException) {
             Log.e(TAG, "Can't create temp file", e)
         } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Could not start activity")
         }
     }
+
+    private var photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (tmpProfilePhotoUri == null) {
+                    if (data != null) {
+                        val bundle = data.extras
+                        val b = if (bundle == null) null else bundle["data"] as Bitmap?
+                        if (b != null) {
+                            presenter.photoUpdated(Single.just(b))
+                        }
+                    }
+                } else {
+                    presenter.photoUpdated(loadBitmap(requireContext(), tmpProfilePhotoUri!!).map { b: Bitmap -> b })
+                }
+            }
+        }
 
     override fun askPhotoPermission() {
         requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_PERMISSION_CAMERA)

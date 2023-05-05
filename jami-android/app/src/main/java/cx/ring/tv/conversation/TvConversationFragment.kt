@@ -21,7 +21,6 @@ package cx.ring.tv.conversation
 
 import android.Manifest
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
@@ -41,6 +40,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -145,13 +145,27 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun displaySpeechRecognizer() {
         if (!checkAudioPermission(REQUEST_RECORD_AUDIO_PERMISSION)) return
         try {
-            startActivityForResult(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint)), REQUEST_SPEECH_CODE)
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint))
+            speechLauncher.launch(intent)
         } catch (e: Exception) {
             Snackbar.make(requireView(), "Can't get voice input", Snackbar.LENGTH_SHORT).show()
         }
     }
+
+    private var speechLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent = result.data ?: return@registerForActivityResult
+
+                val results: List<String>? =
+                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                val spokenText = results!![0]
+                createTextDialog(spokenText)
+            }
+        }
 
     override fun displayErrorToast(error: Error) {
         val errorString: String = when (error) {
@@ -183,29 +197,6 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return if (mAdapter!!.onContextItemSelected(item)) true
         else super.onContextItemSelected(item)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            REQUEST_CODE_PHOTO -> if (resultCode == Activity.RESULT_OK && data != null) {
-                val media = data.extras!![MediaStore.EXTRA_OUTPUT] as Uri?
-                val type = data.type
-                createMediaDialog(media, type)
-            }
-            REQUEST_SPEECH_CODE -> if (resultCode == Activity.RESULT_OK && data != null) {
-                val results: List<String>? =
-                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                val spokenText = results!![0]
-                createTextDialog(spokenText)
-            }
-            REQUEST_CODE_SAVE_FILE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    data?.data?.let { writeToFile(it) }
-                }
-                super.onActivityResult(requestCode, resultCode, data)
-            }
-            else -> super.onActivityResult(requestCode, resultCode, data)
-        }
     }
 
     private fun writeToFile(data: Uri) {
@@ -382,7 +373,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             downloadFileIntent.type = AndroidFileUtils.getMimeTypeFromExtension(file.extension)
             downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
             downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.displayName)
-            startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE)
+            saveFileLauncher.launch(downloadFileIntent)
         } catch (e: Exception) {
             Log.i(TAG, "No app detected for saving files.")
             val directory =
@@ -393,6 +384,14 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             writeToFile(Uri.fromFile(File(directory, file.displayName)))
         }
     }
+
+    private var saveFileLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.data?.let { writeToFile(it) }
+            }
+        }
 
     override fun startReplyTo(interaction: Interaction) {
         TODO("Not yet implemented")
@@ -695,16 +694,23 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
     private fun openVideoRecorder() {
         val intent = Intent(activity, CustomCameraActivity::class.java)
             .setAction(MediaStore.ACTION_VIDEO_CAPTURE)
-        startActivityForResult(intent, REQUEST_CODE_PHOTO)
+        photoLauncher.launch(intent)
     }
+
+    private var photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent = result.data ?: return@registerForActivityResult
+                val media = data.extras!![MediaStore.EXTRA_OUTPUT] as Uri?
+                val type = data.type
+                createMediaDialog(media, type)
+            }
+        }
 
     companion object {
         private val TAG = TvConversationFragment::class.java.simpleName
         private const val ARG_MODEL = "model"
         private const val KEY_AUDIOFILE = "audiofile"
-        private const val REQUEST_CODE_PHOTO = 101
-        private const val REQUEST_SPEECH_CODE = 102
-        private const val REQUEST_CODE_SAVE_FILE = 103
         private const val DIALOG_WIDTH = 900
         private const val DIALOG_HEIGHT = 400
         private val permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
