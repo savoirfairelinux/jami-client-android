@@ -54,14 +54,12 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.tv.main.HomeActivity
 import cx.ring.utils.ActionHelper
-import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
 import net.jami.daemon.JamiService
-import net.jami.model.Call
 import net.jami.model.Call.CallStatus
 import net.jami.model.Conference.ParticipantInfo
 import net.jami.model.Contact
@@ -108,7 +106,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     override fun initPresenter(presenter: CallPresenter) {
         val args = requireArguments()
         args.getString(CallFragment.KEY_ACTION)?.let { action ->
-            if (action == CallFragment.ACTION_PLACE_CALL || action == Intent.ACTION_CALL)
+            if (action == Intent.ACTION_CALL)
                 prepareCall(false)
             else if (action == Intent.ACTION_VIEW || action == DRingService.ACTION_CALL_ACCEPT)
                 presenter.initIncomingCall(args.getString(NotificationService.KEY_CALL_ID)!!, action == Intent.ACTION_VIEW)
@@ -391,7 +389,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         }
         if (!hasVideo) {
             val videoGranted = mDeviceRuntimeService.hasVideoPermission()
-            if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!audioGranted || !videoGranted) {
                 val perms = ArrayList<String>()
                 if (!videoGranted) {
                     perms.add(Manifest.permission.CAMERA)
@@ -400,13 +398,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
                     perms.add(Manifest.permission.RECORD_AUDIO)
                 }
                 requestPermissions(perms.toTypedArray(), permissionType)
-            } else if (audioGranted && videoGranted) {
+            } else {
                 initializeCall(isIncoming)
             }
         } else {
-            if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!audioGranted) {
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), permissionType)
-            } else if (audioGranted) {
+            } else {
                 initializeCall(isIncoming)
             }
         }

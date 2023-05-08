@@ -19,20 +19,24 @@
  */
 package cx.ring.services
 
+import android.content.ContentProviderOperation
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
+import android.content.OperationApplicationException
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.RemoteException
 import android.provider.ContactsContract
 import android.util.Base64
 import android.util.Log
 import android.util.LongSparseArray
+import androidx.core.util.getOrElse
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.views.AvatarFactory
 import ezvcard.VCard
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.model.Contact
@@ -41,14 +45,13 @@ import net.jami.model.Phone
 import net.jami.model.Profile
 import net.jami.services.AccountService
 import net.jami.services.ContactService
-import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
 import net.jami.utils.VCardUtils
+import java.io.ByteArrayOutputStream
 
 class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesService,
-                         deviceRuntimeService : DeviceRuntimeService,
                          accountService: AccountService
-) : ContactService(preferenceService, deviceRuntimeService, accountService) {
+) : ContactService(preferenceService, accountService) {
     override fun loadContactsFromSystem(
         loadRingContacts: Boolean,
         loadSipContacts: Boolean
@@ -57,7 +60,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         val contentResolver = mContext.contentResolver
         val contactsIds = StringBuilder()
         val cache: LongSparseArray<Contact>
-        var contactCursor = contentResolver.query(
+        val contactCursor = contentResolver.query(
             ContactsContract.Data.CONTENT_URI,
             CONTACTS_DATA_PROJECTION,
             ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + "=?",
@@ -86,13 +89,13 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                 val contactType = contactCursor.getInt(indexType)
                 val contactLabel = contactCursor.getString(indexLabel)
                 val uri = net.jami.model.Uri.fromString(contactNumber)
-                var contact = cache[contactId]
                 var isNewContact = false
-                if (contact == null) {
-                    contact = Contact(uri)
-                    contact.setSystemId(contactId)
+                val contact = cache.getOrElse(contactId) {
                     isNewContact = true
-                    contact.isFromSystem = true
+                    Contact(uri).apply {
+                        setSystemId(contactId)
+                        isFromSystem = true
+                    }
                 }
                 if (uri.isSingleIp || uri.isHexId && loadRingContacts || loadSipContacts) {
                     when (contactCursor.getString(indexMime)) {
@@ -118,7 +121,6 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                     }
                 }
                 if (isNewContact && contact.phones.isNotEmpty()) {
-                    cache.put(contactId, contact)
                     if (contactsIds.isNotEmpty()) {
                         contactsIds.append(",")
                     }
@@ -129,45 +131,43 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         } else {
             cache = LongSparseArray()
         }
-        contactCursor = contentResolver.query(
+        contentResolver.query(
             ContactsContract.Contacts.CONTENT_URI, CONTACTS_SUMMARY_PROJECTION,
             ContactsContract.Contacts._ID + " in (" + contactsIds.toString() + ")", null,
             ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
-        )
-        if (contactCursor != null) {
-            val indexId = contactCursor.getColumnIndex(ContactsContract.Contacts._ID)
-            val indexKey = contactCursor.getColumnIndex(ContactsContract.Data.LOOKUP_KEY)
-            val indexName = contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
-            val indexPhoto = contactCursor.getColumnIndex(ContactsContract.Contacts.PHOTO_ID)
-            while (contactCursor.moveToNext()) {
-                val contactId = contactCursor.getLong(indexId)
+        )?.use {
+            val indexId = it.getColumnIndex(ContactsContract.Contacts._ID)
+            val indexKey = it.getColumnIndex(ContactsContract.Data.LOOKUP_KEY)
+            val indexName = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+            val indexPhoto = it.getColumnIndex(ContactsContract.Contacts.PHOTO_ID)
+            while (it.moveToNext()) {
+                val contactId = it.getLong(indexId)
                 val contact = cache[contactId]
                 if (contact == null) Log.w(TAG, "Can't find contact with ID $contactId") else {
                     contact.setSystemContactInfo(
                         contactId,
-                        contactCursor.getString(indexKey),
-                        contactCursor.getString(indexName),
-                        contactCursor.getLong(indexPhoto)
+                        it.getString(indexKey),
+                        it.getString(indexName),
+                        it.getLong(indexPhoto)
                     )
                     systemContacts[contactId] = contact
                 }
             }
-            contactCursor.close()
         }
         return systemContacts
     }
 
-    override fun findContactByIdFromSystem(id: Long, key: String): Contact? {
+    override fun findContactByIdFromSystem(contactId: Long, contactKey: String?): Contact? {
         var contact: Contact? = null
         val contentResolver = mContext.contentResolver
         try {
-            val contentUri: Uri? = if (key != null) {
+            val contentUri: Uri? = if (contactKey != null) {
                 ContactsContract.Contacts.lookupContact(
                     contentResolver,
-                    ContactsContract.Contacts.getLookupUri(id, key)
+                    ContactsContract.Contacts.getLookupUri(contactId, contactKey)
                 )
             } else {
-                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)
+                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId)
             }
             var result: Cursor? = null
             if (contentUri != null) {
@@ -198,10 +198,10 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
             }
             result.close()
         } catch (e: Exception) {
-            Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=$id", e)
+            Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=$contactId", e)
         }
         if (contact == null) {
-            Log.d(TAG, "findContactByIdFromSystem: findById $id can't find contact.")
+            Log.d(TAG, "findContactByIdFromSystem: findById $contactId can't find contact.")
         }
         return contact
     }
@@ -224,7 +224,7 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
                         cursorPhones.getString(indexLabel),
                         Phone.NumberType.TEL
                     )
-                    Log.d(TAG, "Phone:" + cursorPhones.getString(cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
+                    Log.d(TAG, "Phone:" + cursorPhones.getString(cursorPhones.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER)))
                 }
                 cursorPhones.close()
             }
@@ -350,6 +350,83 @@ class ContactServiceImpl(val mContext: Context, preferenceService: PreferencesSe
         }
         if (contact != null) contact.isFromSystem = true
         return contact
+    }
+
+    override fun saveContact(uri: String, profile: Profile) {
+        addOrUpdateContact(mContext.contentResolver, uri, profile.displayName ?: "", profile.avatar as Bitmap?)
+    }
+
+    override fun deleteContact(uri: String) {
+        deleteContact(mContext.contentResolver, uri)
+    }
+
+    private fun addOrUpdateContact(contentResolver: ContentResolver, phoneNumber: String, displayName: String, photo: Bitmap?) {
+        val operations = ArrayList<ContentProviderOperation>()
+
+        // Insert or update the RawContact
+        operations.add(
+            ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+            .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+            .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+            .build())
+
+        // Insert or update the display name
+        operations.add(
+            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+            .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+            .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, displayName)
+            .build())
+
+        // Insert or update the phone number
+        operations.add(
+            ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+            .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+            .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+            .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phoneNumber)
+            .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+            .build())
+
+        // Insert or update the photo
+        photo?.let {
+            val stream = ByteArrayOutputStream()
+            it.compress(Bitmap.CompressFormat.JPEG, 87, stream)
+            val photoByteArray = stream.toByteArray()
+
+            operations.add(
+                ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, photoByteArray)
+                .build())
+        }
+
+        // Apply the batch of operations
+        try {
+            contentResolver.applyBatch(ContactsContract.AUTHORITY, operations)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        } catch (e: OperationApplicationException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun deleteContact(contentResolver: ContentResolver, phoneNumber: String) {
+        val uri = ContactsContract.RawContacts.CONTENT_URI.buildUpon().build()
+        val selection = "${ContactsContract.CommonDataKinds.Phone.NUMBER} = ?"
+        val selectionArgs = arrayOf(phoneNumber)
+        contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            arrayOf(ContactsContract.CommonDataKinds.Phone.CONTACT_ID),
+            selection,
+            selectionArgs,
+            null
+        )?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val contactId = cursor.getLong(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.CONTACT_ID))
+                contentResolver.delete(uri, "${ContactsContract.RawContacts.CONTACT_ID}=?", arrayOf(contactId.toString()))
+            }
+        }
     }
 
     override fun loadContactData(contact: Contact, accountId: String): Single<Profile> {
