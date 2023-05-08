@@ -84,7 +84,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     override fun onGuidedActionFocused(action: GuidedAction) {
         val view = getActionItemView(findActionPositionById(USERNAME)) as ViewGroup?
         if (view != null) {
-            val text = view.findViewById<EditText>(R.id.guidedactions_item_title)
+            val text = view.findViewById<EditText>(androidx.leanback.R.id.guidedactions_item_title)
             text.removeTextChangedListener(mUsernameWatcher)
             if (action.id == USERNAME) {
                 text.addTextChangedListener(mUsernameWatcher)
@@ -113,7 +113,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         val username = action.editTitle.toString()
         val view = getActionItemView(findActionPositionById(USERNAME)) as ViewGroup?
         if (view != null) {
-            val text = view.findViewById<EditText>(R.id.guidedactions_item_title)
+            val text = view.findViewById<EditText>(androidx.leanback.R.id.guidedactions_item_title)
             text.removeTextChangedListener(mUsernameWatcher)
         }
         action.title = username.ifEmpty { getString(R.string.register_username) }
