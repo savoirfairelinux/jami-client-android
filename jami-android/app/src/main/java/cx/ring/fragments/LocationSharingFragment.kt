@@ -499,7 +499,7 @@ class LocationSharingFragment : Fragment() {
     private fun setIsSharing(sharing: Boolean) {
         binding?.let { binding ->
             if (sharing) {
-                binding.btnShareLocation.setBackgroundColor(ContextCompat.getColor(binding.btnShareLocation.context, R.color.design_default_color_error))
+                binding.btnShareLocation.setBackgroundColor(ContextCompat.getColor(binding.btnShareLocation.context, com.google.android.material.R.color.design_default_color_error))
                 binding.btnShareLocation.setText(R.string.location_share_action_stop)
                 binding.btnShareLocation.setOnClickListener { v: View? -> stopSharing() }
                 binding.locationShareTimeGroup.visibility = View.GONE

@@ -55,7 +55,7 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mTextEditor = view.findViewById(R.id.lb_search_text_editor)
+        mTextEditor = view.findViewById(androidx.leanback.R.id.lb_search_text_editor)
         mTextEditor?.requestFocus()
     }
 

@@ -79,7 +79,7 @@ class TVContactMoreFragment : LeanbackSettingsFragmentCompat() {
             buttonText: String,
             onClickListener: DialogInterface.OnClickListener
         ) {
-            val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
+            val alertDialog = MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(title)
                 .setMessage("")
                 .setPositiveButton(buttonText, onClickListener)

@@ -116,7 +116,7 @@ class CustomCameraActivity : Activity() {
         } else {
             if (mCamera != null) {
                 initRecorder()
-                binding!!.buttonVideo.setImageResource(R.drawable.lb_ic_stop)
+                binding!!.buttonVideo.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
                 binding!!.buttonPicture.visibility = View.GONE
             }
         }

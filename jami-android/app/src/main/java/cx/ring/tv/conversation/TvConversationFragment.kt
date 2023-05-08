@@ -223,7 +223,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             return
         }
         val alertDialog =
-            MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
+            MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(spokenText)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
@@ -249,7 +249,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         val activity = activity ?: return
         val file = AndroidFileUtils.getCacheFile(activity, media)
         val alertDialog =
-            MaterialAlertDialogBuilder(activity, R.style.Theme_MaterialComponents_Dialog)
+            MaterialAlertDialogBuilder(activity, com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(if (type == CustomCameraActivity.TYPE_IMAGE) R.string.tv_send_image_dialog_message else R.string.tv_send_video_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { dialog: DialogInterface?, whichButton: Int ->
@@ -290,7 +290,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
 
     private fun createAudioDialog() {
         val alertDialog =
-            MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
+            MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(R.string.tv_send_audio_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send) { _, _ -> sendAudio() }
@@ -485,7 +485,7 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
             }
             return
         }
-        binding!!.buttonAudio.setImageResource(R.drawable.lb_ic_stop)
+        binding!!.buttonAudio.setImageResource(androidx.leanback.R.drawable.lb_ic_stop)
         binding!!.textAudio.setText(R.string.tv_audio_recording)
         val anim: Animation = AlphaAnimation(0.0f, 1.0f).apply {
             duration = 500
