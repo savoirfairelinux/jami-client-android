@@ -24,7 +24,6 @@ android {
         externalNativeBuild {
             cmake {
                 version = "3.22.1"
-                cppFlags += "-g"
                 arguments += listOf(
                     "-DANDROID_STL=c++_shared",
                     "-DBUILD_CONTRIB=ON",
@@ -76,7 +75,6 @@ android {
             storeFile = file("../keystore.bin")
         }
     }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -100,7 +98,6 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.10.0")
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation ("androidx.legacy:legacy-support-core-utils:1.0.0")
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("androidx.preference:preference-ktx:1.2.0")
     implementation ("androidx.recyclerview:recyclerview:1.3.0")
@@ -115,7 +112,7 @@ dependencies {
     implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0-beta03")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
-    implementation ("com.google.android.material:material:1.8.0")
+    implementation ("com.google.android.material:material:1.9.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("io.noties.markwon:core:$markwon_version")
@@ -147,7 +144,7 @@ dependencies {
     implementation ("io.reactivex.rxjava3:rxjava:3.1.6")
 
     implementation ("com.jsibbold:zoomage:1.3.1")
-    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3"){
+    implementation ("com.googlecode.ez-vcard:ez-vcard:0.11.3") {
         exclude(group= "org.freemarker", module= "freemarker")
         exclude(group= "com.fasterxml.jackson.core", module= "jackson-core")
     }
