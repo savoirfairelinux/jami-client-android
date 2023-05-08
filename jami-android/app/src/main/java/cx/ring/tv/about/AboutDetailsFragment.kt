@@ -51,9 +51,9 @@ class AboutDetailsFragment : DetailsSupportFragment() {
             override fun createRowViewHolder(parent: ViewGroup): RowPresenter.ViewHolder {
                 // Customize Actionbar and Content by using custom colors.
                 val viewHolder = super.createRowViewHolder(parent)
-                val actionsView = viewHolder.view.findViewById<View>(R.id.details_overview_actions_background)
+                val actionsView = viewHolder.view.findViewById<View>(androidx.leanback.R.id.details_overview_actions_background)
                 actionsView.setBackgroundColor(resources.getColor(R.color.color_primary_dark))
-                val detailsView = viewHolder.view.findViewById<View>(R.id.details_frame)
+                val detailsView = viewHolder.view.findViewById<View>(androidx.leanback.R.id.details_frame)
                 detailsView.setBackgroundColor(resources.getColor(R.color.color_primary_dark))
                 return viewHolder
             }

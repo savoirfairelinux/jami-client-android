@@ -181,7 +181,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         )
         searchView.imeOptions = EditorInfo.IME_ACTION_GO
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            searchView.findViewById<EditText>(R.id.search_src_text)
+            searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
                 ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
         }
         mSearchMenuItem = searchMenuItem

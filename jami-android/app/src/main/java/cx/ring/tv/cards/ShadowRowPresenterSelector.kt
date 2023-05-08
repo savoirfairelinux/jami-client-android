@@ -48,7 +48,7 @@ class ShadowRowPresenterSelector : PresenterSelector() {
     private class CustomRowHeaderPresenter : RowHeaderPresenter() {
         override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
             super.onBindViewHolder(viewHolder, item)
-            val titleView: RowHeaderView = viewHolder.view.findViewById(R.id.row_header)
+            val titleView: RowHeaderView = viewHolder.view.findViewById(androidx.leanback.R.id.row_header)
             titleView.typeface = ResourcesCompat.getFont(titleView.context, R.font.ubuntu_medium)
             titleView.textSize = 16f
             viewHolder.view.alpha = 1f
