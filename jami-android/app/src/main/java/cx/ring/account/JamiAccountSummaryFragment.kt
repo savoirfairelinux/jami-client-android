@@ -708,16 +708,6 @@ class JamiAccountSummaryFragment :
         }
     }
 
-    private fun enableAccount(newValue: Boolean) {
-        val account = mAccountService.currentAccount
-        if (account == null) {
-            Log.w(HomeActivity.TAG, "account not found!")
-            return
-        }
-        account.isEnabled = newValue
-        mAccountService.setAccountEnabled(account.accountId, newValue)
-    }
-
     companion object {
         val TAG = JamiAccountSummaryFragment::class.simpleName!!
         private val FRAGMENT_DIALOG_REVOCATION = "$TAG.dialog.deviceRevocation"

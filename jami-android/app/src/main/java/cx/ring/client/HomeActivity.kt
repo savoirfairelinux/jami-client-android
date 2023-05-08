@@ -422,16 +422,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
 //        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
     }
 
-    private fun enableAccount(newValue: Boolean) {
-        val account = mAccountService.currentAccount
-        if (account == null) {
-            Log.w(TAG, "account not found!")
-            return
-        }
-        account.isEnabled = newValue
-        mAccountService.setAccountEnabled(account.accountId, newValue)
-    }
-
     private fun getMaxShareShortcuts() =
         ShortcutManagerCompat.getMaxShortcutCountPerActivity(this).takeIf { it > 0 } ?: 4
 
