@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">إدارة الحسابات</string>
   <string name="menu_item_account">إدارة الحساب</string>
   <string name="menu_item_settings">الإعدادات</string>
+  <string name="menu_item_advanced_settings">إعدادات متقدمة</string>
+  <string name="menu_item_account_settings">إعدادت الحساب</string>
   <string name="menu_item_plugin_list">إعدادت الإضافات</string>
   <string name="menu_item_share">مشاركة حسابي</string>
   <string name="menu_item_about">حول جامي</string>
@@ -95,6 +97,8 @@
   <string name="start_error_title">ﻻ يمكن تشغيل جامي !</string>
   <string name="start_error_mic_required">جامي يستوجب الحصول على صلاحيات المايكروفون للعمل.</string>
   <string name="action_call_accept">قبول مكالمة</string>
+  <string name="action_call_accept_audio">الرد بالصوت</string>
+  <string name="action_call_accept_video">الرد بالفيديو</string>
   <string name="action_call_end_accept">إنهاء وإجراء مكالمة</string>
   <string name="action_call_decline">رفض</string>
   <string name="action_call_mic_mute">كتم ميكروفون</string>
@@ -123,6 +127,7 @@
   <string name="conversation_send_audio">تسجيل مقطع صوتي</string>
   <string name="conversation_send_video">تسجيل مقطع فيديو</string>
   <string name="conversation_share_location">مشاركة الموقع</string>
+  <string name="in_reply_to">في جواب</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">صلاحيات الكاميرا</string>
   <string name="permission_dialog_camera_message">محادثات الفيديو تستوجب صلاحيات الكاميرا للعمل. الرجاء النظر في تفعيلها.</string>
@@ -147,6 +152,7 @@
   <string name="clear_history_dialog_title">حذف المحفوظات؟</string>
   <string name="clear_history_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <string name="clear_history_completed">تم حذف المحفوظات.</string>
+  <string name="clear_history">واضح</string>
   <!--Conversation-->
   <string name="conversation_details">تفاصيل جهة الأتصال</string>
   <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
@@ -267,6 +273,7 @@
   <string name="menu_file_delete">إزالة ملف</string>
   <string name="menu_file_share">مشاركة ملف</string>
   <string name="menu_message_copy">نسخ</string>
+  <string name="menu_message_edit">إصلاح الرسالة</string>
   <string name="menu_message_delete">حذف رسالة</string>
   <string name="menu_message_cancel">إلغاء رسالة</string>
   <string name="menu_message_reply">رد</string>
@@ -313,13 +320,20 @@
   <string name="bottomSheet_share_btn">مشاركة</string>
   <string name="bottomSheet_dialpad_btn">لوحة الطلب</string>
   <string name="bottomSheet_plugins_btn">الإضافات</string>
+  <string name="bottomSheet_add_participants_btn">إضافة</string>
+  <string name="bottomSheet_change_camera_btn">التغيير</string>
   <string name="bottomSheet_camera_onoff_switch_btn">كاميرا</string>
   <string name="bottomSheet_hangup_btn">إنهاء المكالمة</string>
   <string name="bottomSheet_mute_microphone_btn">الميكرفون</string>
   <string name="bottomSheet_sound_output_btn">الأصوات</string>
   <string name="bottomSheet_raiseHand_btn">رفع اليد</string>
+  <string name="uninstall">إزالة التثبيت</string>
+  <string name="reset">إعادة تعيين</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">تأكيد</string>
+  <string name="swarm_description">إضافة وصف</string>
   <string name="tab_about">عن RING</string>
   <string name="tab_members">الأعضاء</string>
+  <string name="tab_documetn">الوثائق</string>
   <string name="dialog_hint_title">العنوان</string>
 </resources>

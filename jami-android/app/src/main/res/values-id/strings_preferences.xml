@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Data ponsel</string>
   <string name="pref_mobileData_summary">Izinkan Jami pada jaringan 3G/LTE tambahan ke Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifikasi push</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Gunakan server Google untuk menerima panggilan/pesan di latar belakang</string>
   <string name="pref_video_advanced_title">Pengaturan video lanjutan</string>
   <string name="pref_video_advanced_summary">Ubah bitrate video, resolusi, serta akses fitur eksperimental</string>

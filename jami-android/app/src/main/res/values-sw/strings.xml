@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="section_license">Leseni</string>
+  <string name="version_section">Toleo</string>
+  <string name="credits">Mikopo</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="error_no_network">Hakuna uhusiano wa mtandao</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Kutuma ujumbe wa maandishi</string>
+  <!--Sections-->
+  <string name="menu_item_account">Kusimamia akaunti</string>
+  <string name="menu_item_settings">Mipangilio</string>
+  <string name="menu_item_account_settings">Mipangilio ya Akaunti</string>
+  <string name="menu_item_about">Kuhusu Jami</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Kupoteza simu ya ndani</string>
+  <string name="notif_missed_outgoing_call">Kupoteza wito wa nje</string>
+  <string name="notif_incoming_call">Kuwasiliana</string>
+  <string name="notif_outgoing_call">Kuondoka simu</string>
+  <string name="notif_channel_calls">Mawasiliano</string>
+  <string name="notif_channel_messages">Ujumbe</string>
+  <string name="notif_channel_file_transfer">Uhamisho wa faili</string>
+  <string name="notif_group_calls">Mawasiliano</string>
+  <string name="notif_dismiss">Kukataa</string>
+  <string name="notif_reply">Jibu</string>
+  <string name="location_share_action_stop">Acha kushiriki</string>
+  <!--Call Fragment-->
+  <string name="action_call_maximize">Kufanya yote uwezayo</string>
+  <string name="action_call_minimize">Kupunguza</string>
+  <string name="action_call_mute">Kiziwi</string>
+  <string name="action_call_unmute">Bila Kuzungumza</string>
+  <string name="action_call_decline">Kupungua</string>
+  <string name="action_call_mic_mute">Kipaza sauti</string>
+  <string name="ab_action_contact_add">Ongeza kwa mawasiliano</string>
+  <!--Text messages-->
+  <string name="message_failed">Kushindwa</string>
+  <string name="send_file">Tuma faili</string>
+  <string name="conversation_share_location">Kushiriki eneo</string>
+  <string name="in_reply_to">Kwa kujibu</string>
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Kosa</string>
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <string name="clear_history">Safi</string>
+  <!--Conversation-->
+  <string name="conversation_details">Maelezo ya mawasiliano</string>
+  <string name="conversation_action_delete_this_message">Hatua hii haiwezi kuondolewa.</string>
+  <string name="conversation_action_history_clear">Historia ya wazi</string>
+  <string name="conversation_action_block_this">Kuzuia mawasiliano</string>
+  <!--Contacts-->
+  <string name="account_create_title">Unda akaunti ya Jami</string>
+  <string name="prompt_hint_username">Jina la mtumiaji</string>
+  <string name="wizard_next">Yafuatayo</string>
+  <string name="wizard_back">Kurudi</string>
+  <string name="wizard_skip">Kwenda</string>
+  <string name="hist_contact_added">Kuongezewa mawasiliano</string>
+  <string name="hist_invitation_received">Mwaliko uliopokelewa</string>
+  <!--Account Summary-->
+  <string name="profile">Profaili</string>
+  <string name="profile_message_warning">Profaili yako inashirikiwa tu na wawasiliani wako</string>
+  <string name="profile_name_hint">Ingiza jina lako</string>
+  <string name="identity">Utambulisho</string>
+  <string name="account">Akaunti</string>
+  <string name="link_new_device">Unganisha kifaa kipya</string>
+  <string name="devices">Vifaa vilivyounganishwa</string>
+  <!--Share fragment-->
+  <string name="share_label">Kushiriki</string>
+  <string name="generic_error_migration">Kosa</string>
+  <!--Pending contact requests-->
+  <string name="accept">Kubali</string>
+  <string name="refuse">Kukataa</string>
+  <string name="block">Block</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Tuma</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <string name="search_results">Matokeo ya Utafutaji</string>
+  <string name="tv_contact_row_header">Mawasiliano</string>
+  <!--File Transfer-->
+  <string name="file_transfer_status_cancelled">imeghairiwa</string>
+  <string name="menu_file_open">Open faili</string>
+  <string name="menu_file_save">Hifadhi faili</string>
+  <string name="menu_file_share">Kushiriki faili</string>
+  <string name="menu_message_copy">Nakala</string>
+  <string name="menu_message_edit">Hariri ujumbe</string>
+  <string name="menu_message_delete">Ondoa ujumbe</string>
+  <string name="menu_message_reply">Jibu</string>
+  <string name="menu_delete">Futa</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Mazungumzo</string>
+  <string name="navigation_item_contact_request">Maombi</string>
+  <string name="navigation_item_account">Akaunti</string>
+  <!--TV-->
+  <string name="tv_dialog_send">Tuma</string>
+  <!--Wizard-->
+  <string name="wizard_status_recommended">Iliyopendekezwa</string>
+  <string name="wizard_status_optional">Kibali</string>
+  <string name="wizard_status_required">Lazima</string>
+  <string name="wizard_password_skip">Unda akaunti</string>
+  <string name="wizard_password_switch">Encrypt akaunti na password</string>
+  <string name="wizard_profile_info">Profile ni kushiriki tu na wawasiliani</string>
+  <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Kushiriki</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Ongeza</string>
+  <string name="bottomSheet_change_camera_btn">Mabadiliko</string>
+  <string name="bottomSheet_hangup_btn">Maliza simu hii</string>
+  <string name="bottomSheet_raiseHand_btn">Kuinua mkono</string>
+  <string name="uninstall">Kuondoa kufunga</string>
+  <string name="reset">Kuanzisha upya</string>
+  <!--Swarm Detail-->
+  <string name="rename_btn">Tumia</string>
+  <string name="swarm_description">Ongeza maelezo</string>
+  <string name="tab_about">Kuhusu</string>
+  <string name="tab_documetn">Hati</string>
+  <string name="dialog_hint_title">Kichwa</string>
+  <string name="dialog_hint_description">Maelezo</string>
+</resources>

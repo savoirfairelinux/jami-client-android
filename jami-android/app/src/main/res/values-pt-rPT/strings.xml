@@ -129,11 +129,13 @@
   <string name="message_failed">Falhou</string>
   <string name="time_just_now">Ainda agora</string>
   <string name="send_file">Enviar ficheiro</string>
+  <string name="select_media">Abrir galeria</string>
   <string name="hist_file_sent">Ficheiro enviado</string>
   <string name="hist_file_received">Ficheiro recebido</string>
   <string name="conversation_send_audio">Gravar mensagem de áudio</string>
   <string name="conversation_send_video">Gravar mensagem de vídeo</string>
   <string name="conversation_share_location">Partilhar a localização</string>
+  <string name="in_reply_to">Em resposta à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmara</string>
   <string name="permission_dialog_camera_message">As conversas de vídeo necessitam de permissão para aceder à câmara. Considere fornecer a permissão.</string>
@@ -182,13 +184,20 @@
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>
   <string name="block_contact_dialog_message">%1$s não poderá contactá-lo até que o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
+  <string name="unblock_contact_dialog_title">Desbloquear %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s poderá lhe contactar novamente.</string>
+  <string name="unblock_contact_completed">%1$sfoi desbloqueado.</string>
   <string name="conversation_contact_is_typing">O contacto está a escrever...</string>
   <string name="conversation_info_contact_you">Você</string>
   <string name="conversation_members">Membros</string>
   <string name="conversation_syncing">Baixando a conversação a partir do par</string>
+  <string name="conversation_blocked">Este contato está bloqueado.</string>
+  <string name="conversation_ended">Conversa finalizada.</string>
+  <string name="conversation_message_deleted">(Mensagem apagada)</string>
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
+  <string name="conversation_type_private">Swarm privado</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova palavra-chave</string>

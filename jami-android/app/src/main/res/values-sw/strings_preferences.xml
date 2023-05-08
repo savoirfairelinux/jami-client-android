@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Mtandao</string>
+  <string name="pref_category_contacts">Mawasiliano</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Mfumo</string>
+  <string name="pref_category_privacy">Faragha</string>
+  <string name="pref_category_diagnostic">Utambuzi</string>
+  <string name="pref_mobileData_title">Data za simu</string>
+  <string name="pref_mobileData_summary">Ruhusu Jami kwenye mitandao ya 3G / LTE pamoja na Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Kutuma taarifa</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Tumia seva za Google kuruhusu kupokea simu/ ujumbe katika background</string>
+  <string name="pref_unifiedPush_summary">Tumia huduma ya UnifiedPush kuruhusu kupokea simu/ ujumbe katika background</string>
+  <string name="pref_video_advanced_title">Mipangilio ya video ya juu</string>
+  <string name="pref_video_advanced_summary">Kubadilisha video bitrate, azimio, pamoja na huduma za upatikanaji wa majaribio</string>
+  <string name="pref_hd_summary">Kuwezesha kutuma HD video</string>
+  <string name="pref_hwEncode_title">Kuwezesha encoding kasi</string>
+  <string name="pref_hwEncode_summary">Kipengele cha majaribio</string>
+  <string name="pref_videoBitrate_title">Video bitrate</string>
+  <string name="pref_videoBitrate_summary">Chagua default kutoka video bitrate (KB / s)</string>
+  <string name="pref_videoResolution_title">Azimio la video</string>
+  <string name="pref_videoResolution_summary">Chagua azimio la video ya kuondoka</string>
+  <string name="pref_systemContacts_title">Tumia mawasiliano ya mfumo</string>
+  <string name="pref_systemContacts_summary">Tumia mawasiliano ya mfumo kuonyesha maelezo ya simu.</string>
+  <string name="pref_systemDialer_title">Fanya simu za mfumo kwa kutumia Jami</string>
+  <string name="pref_systemDialer_summary">Tumia Jami kufanya simu za mfumo ikiwezekana.</string>
+  <string name="pref_startOnBoot_title">Kuanza Jami katika kuanza</string>
+  <string name="pref_startOnBoot_summary">Kuendesha Jami katika background wakati mfumo kuanza.</string>
+  <string name="pref_clearHistory_title">Historia ya wazi</string>
+  <string name="pref_clearHistory_summary">Futa historia yote ya mazungumzo.</string>
+  <string name="pref_notification_title">Kuonekana kwa taarifa</string>
+  <string name="pref_notification_summary">Weka maonyesho ya maombi ya maonyesho kwenye screen lock.</string>
+  <string name="pref_blackList_title">Orodha ya vikwazo</string>
+  <string name="pref_blackList_summary">Angalia orodha yako ya kuzuia.</string>
+  <string name="pref_delete_account_title">Futa akaunti</string>
+  <string name="pref_delete_account_summary">Futa akaunti yako kutoka kifaa hiki</string>
+  <string name="pref_persistNotification_title">Kuendesha katika background</string>
+  <string name="pref_persistNotification_summary">Acha kukimbia katika background kupokea simu na ujumbe.</string>
+  <string name="pref_newGroup_title">Kuwezesha gumzo la kikundi</string>
+  <string name="pref_newGroup_summary">Kuwezesha kuunda makundi katika Jami.</string>
+  <string name="pref_logs_title">Rekodi za utambuzi</string>
+  <string name="pref_logs_summary">Mipangilio ya wazi ya rekodi ya uchunguzi</string>
+  <string name="pref_logs_start">Kuanza Kuweka</string>
+  <string name="pref_logs_stop">Acha kuondoa</string>
+  <string name="pref_typing_title">Kuwezesha alama za kuandika</string>
+  <string name="pref_typing_summary">Tuma na kupokea viashiria vya kuandika vinavyoonyesha kwamba ujumbe unapiga.</string>
+  <string name="pref_read_title">Kuwezesha risiti kusoma</string>
+  <string name="pref_read_summary">Tuma na kupokea risiti zinazoonyesha kwamba ujumbe umeonyeshwa.</string>
+  <string name="pref_block_record_title">Kuzuia screenshot na kurekodi</string>
+  <string name="pref_block_record_summary">Acha kupiga picha za skrini au kurekodi video.</string>
+  <string name="pref_link_preview_title">Onyesha viungo vya kutafakari katika mazungumzo</string>
+  <string name="pref_link_preview_summary">Kuangalia awali inahitaji kupakua maudhui kutoka kwa seva za mtu wa tatu.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Public \n(show notices na maudhui yao kwenye screen lock) \n</string>
+  <string name="notification_private">Private \n(onyesha matangazo lakini kuficha maudhui yao kwenye screen kufuli) \n</string>
+  <string name="notification_secret">Siri \n(si kuonyesha taarifa kwenye screen kufuli)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Plugins</string>
+  <string name="pref_plugins_summary">Kuwezesha Plugins na kuweka vigezo yao</string>
+  <string name="fab_plugins_add">Ongeza Plugin mpya</string>
+  <string name="plugin_uninstall_title">Uninstall Plugin?</string>
+  <string name="plugin_reset_preferences">Reset Plugin mapendekezo</string>
+  <string name="plugin_reset_preferences_summary">Mipangilio yako ya programu-jalizi itakuwa default</string>
+  <string name="plugin_reset_preferences_ask">Je, unataka kuweka upya mipangilio ya jumla ya programu-jalizi?</string>
+  <string name="plugin_reset_account_preferences_ask">Je, unataka kuweka upya mipangilio ya Plugin akaunti?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> imewekwa kwa mafanikio</string>
+  <string name="plugin_install_failure">Kushindwa kufunga programu-jalizi: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Una toleo la hivi karibuni la: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Una toleo sawa la <b>%1$s</b> imewekwa</string>
+  <string name="plugin_force_install">nguvu \ n kufunga</string>
+  <string name="plugin_path_image_add">Ongeza picha mpya</string>
 </resources>

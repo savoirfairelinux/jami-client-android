@@ -8,6 +8,7 @@
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillad Jami at bruge mobilnetværket i tillæg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-notifikationer</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Brug Google-servere for at tillade modtagelse af opkald/beskeder i baggrunden</string>
   <string name="pref_hd_summary">Aktivér afsendelse af HD-video</string>
   <string name="pref_hwEncode_title">Tillad accelereret indkodning</string>

@@ -5,11 +5,13 @@
   <string name="pref_category_video">Vidéo</string>
   <string name="pref_category_system">Système</string>
   <string name="pref_category_privacy">Vie privée</string>
-  <string name="pref_category_diagnostic">Diagnostiques</string>
+  <string name="pref_category_diagnostic">Diagnostics</string>
   <string name="pref_mobileData_title">Données mobiles</string>
-  <string name="pref_mobileData_summary">Autorisé Jami sur les réseaux 3G/4G en plus du Wi-Fi</string>
+  <string name="pref_mobileData_summary">Autoriser Jami sur les réseaux 3G/4G en plus du Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifications poussées</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utiliser les serveurs de Google pour permettre la réception d\'appels/messages en tâche de fond</string>
+  <string name="pref_unifiedPush_summary">Utiliser un service UnifiedPush pour permettre la réception d\'appels/messages en arrière-plan</string>
   <string name="pref_video_advanced_title">Paramètres vidéos avancés</string>
   <string name="pref_video_advanced_summary">Modifier le débit vidéo, la résolution et d\'autres fonctionnalités expérimentales</string>
   <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
@@ -34,11 +36,11 @@
   <string name="pref_delete_account_title">Supprimer le compte</string>
   <string name="pref_delete_account_summary">Supprimer votre compte de cet appareil</string>
   <string name="pref_persistNotification_title">Exécuter en tâche de fond</string>
-  <string name="pref_persistNotification_summary">Autorisé l\'exécution en tâche de fond pour recevoir les appels et les messages.</string>
+  <string name="pref_persistNotification_summary">Autoriser l\'exécution en tâche de fond pour recevoir les appels et les messages.</string>
   <string name="pref_newGroup_title">Activer le clavardage de groupe</string>
   <string name="pref_newGroup_summary">Activer la création de groupe dans Jami.</string>
-  <string name="pref_logs_title">Journaux de diagnostiques</string>
-  <string name="pref_logs_summary">Ouvrir les paramètres  des journaux de diagnostiques</string>
+  <string name="pref_logs_title">Journaux de diagnostics</string>
+  <string name="pref_logs_summary">Ouvrir les paramètres des journaux de diagnostics</string>
   <string name="pref_logs_start">Démarrer la journalisation</string>
   <string name="pref_logs_stop">Arrêter la journalisation</string>
   <string name="pref_typing_title">Activer les indicateurs de frappe</string>

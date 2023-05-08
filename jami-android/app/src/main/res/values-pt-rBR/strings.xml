@@ -130,11 +130,13 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="message_failed">Falhou</string>
   <string name="time_just_now">Agora há pouco</string>
   <string name="send_file">Enviar arquivo</string>
+  <string name="select_media">Abrir galeria</string>
   <string name="hist_file_sent">Arquivo enviado</string>
   <string name="hist_file_received">Arquivo recebido</string>
   <string name="conversation_send_audio">Gravar áudio</string>
   <string name="conversation_send_video">Gravar vídeo</string>
   <string name="conversation_share_location">Compartilhar localização</string>
+  <string name="in_reply_to">Em resposta à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>
@@ -183,13 +185,20 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>
   <string name="block_contact_dialog_message">%1$snão conseguirá te contactar até que você o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
+  <string name="unblock_contact_dialog_title">Desbloquear %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s poderá lhe contactar novamente.</string>
+  <string name="unblock_contact_completed">%1$sfoi desbloqueado.</string>
   <string name="conversation_contact_is_typing">Contato está digitando...</string>
   <string name="conversation_info_contact_you">Você</string>
   <string name="conversation_members">Membros</string>
   <string name="conversation_syncing">Baixando a conversação a partir do par</string>
+  <string name="conversation_blocked">Este contato está bloqueado.</string>
+  <string name="conversation_ended">Conversa finalizada.</string>
+  <string name="conversation_message_deleted">(Mensagem apagada)</string>
   <string name="conversation_preference_color">Cor da conversação</string>
   <string name="conversation_preference_emoji">emoji da conversação</string>
   <string name="conversation_type_contact">Contato Jami</string>
+  <string name="conversation_type_private">Swarm privado</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>

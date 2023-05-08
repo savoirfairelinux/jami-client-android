@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">モバイル通信</string>
   <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をJamiに許可する</string>
   <string name="pref_pushNotifications_title">プッシュ通知</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google のサーバーを使って通話とメッセージを受信します</string>
   <string name="pref_video_advanced_title">ビデオの高度な設定</string>
   <string name="pref_video_advanced_summary">動画のビットレートと解像度の変更、実験的な機能を試す</string>

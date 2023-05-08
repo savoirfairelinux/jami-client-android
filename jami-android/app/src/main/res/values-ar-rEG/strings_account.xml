@@ -99,6 +99,7 @@
   <string name="account_published_same_as_local_label">منشور مثل المحلي</string>
   <string name="account_published_port_label">نقطة العبور (port) المنشورة</string>
   <string name="account_published_address_label">عنوان النشر</string>
+  <string name="disabled">عاجز</string>
   <string name="enabled">مفعل</string>
   <string name="account_proxy_label">وكيل DHT</string>
   <string name="account_proxy_enable_label">استخدام وكيل DHT</string>
@@ -173,11 +174,14 @@
   <string name="account_sip_success_message">لقد نجحت في تسجيل حساب Sip الخاص بك.</string>
   <string name="account_sip_register_anyway">تسجيل على أى حال</string>
   <!--TV-->
+  <string name="account_tv_settings_header">إعدادت الحساب</string>
   <string name="account_tv_advance_settings_header">إعدادات متقدمة</string>
   <string name="account_tv_add_contact">إضافة جهة اتصال</string>
+  <string name="account_tv_advanced_settings">تغيير الإعدادات العامة</string>
   <string name="account_tv_about">حول جامي</string>
   <string name="tv_about_version">الإصدار</string>
   <string name="tv_about_license">الرخصة</string>
+  <string name="tv_about_author">حقوق المؤلف</string>
   <string name="tv_about_credits">الأطراف الداعمة</string>
   <string name="account_link_device">اتصل من جهاز آخر</string>
   <string name="account_link_button">الاتصال من الشبكة</string>
@@ -192,6 +196,7 @@
   <string name="account_end_export_button">إغلاق</string>
   <string name="account_end_export_infos">رقم PIN الخاص بك هو:\n\n%%\n/nلإكمال العملية، يجب فتح جامى على الجهاز الجديد. أنشئ حسابًا جديدًا باستخدام \"ربط هذا الجهاز بحساب\". رقم PIN صالح لمدة 10 دقائق.</string>
   <string name="account_link_export_info_light">لاستخدام هذا الحساب على أجهزة أخرى، يجب أولاً تعريضه على جامى. سيؤدي ذلك إلى إنشاء رمز PIN يجب إدخاله على الجهاز الجديد لإعداد الحساب. رمز PIN صالح لمدة 10 دقائق.</string>
+  <string name="account_export_title">رابط حساب للأجهزة الأخرى</string>
   <string name="account_connect_server_button">الاتصال بخادم الإدارة</string>
   <string name="account_connect_button">إتصال</string>
   <string name="prompt_server">عنوان URL خادم ادارة جامى</string>
@@ -224,6 +229,7 @@
   <string name="account_link_title">ربط هذا الجهاز</string>
   <string name="account_sip_cannot_be_registered">يتعذر تسجيل الحساب</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">تحرير حسابي</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">أدخل كلمة المرور للتأكيد</string>
   <string name="enter_password">أدخِل كلمة المرور</string>

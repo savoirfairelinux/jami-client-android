@@ -25,16 +25,16 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_camera_no_microphone">Appel impossible. Aucune caméra ou microphone trouvé.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Recherche</string>
+    <string name="call_human_state_searching">Recherche en cours</string>
     <string name="call_human_state_incoming">Appel entrant</string>
     <string name="call_human_state_connecting">En cours de connexion</string>
     <string name="call_human_state_ringing">Ça sonne</string>
-    <string name="call_human_state_current">En cours</string>
+    <string name="call_human_state_current">En communication</string>
     <string name="call_human_state_hungup">Terminé</string>
     <string name="call_human_state_busy">Occupé</string>
     <string name="call_human_state_failure">Échec</string>
-    <string name="call_human_state_hold">Mettre en attente</string>
-    <string name="call_human_state_unhold">Reprendre</string>
+    <string name="call_human_state_hold">Communication en attente</string>
+    <string name="call_human_state_unhold">Communication rétablie</string>
     <string name="call_human_state_over">Terminé</string>
     <!-- Conferences -->
     <string name="call_moderator">Modérateur</string>

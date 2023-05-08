@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Dane mobilne</string>
   <string name="pref_mobileData_summary">Pozwól Jami na korzystanie z sieci 3G/LTE dodatkowo oprócz Wi-Fi</string>
   <string name="pref_pushNotifications_title">Powiadomienia Push</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Używaj serwerów Google, by umożliwić odbieranie wiadomości i rozmów w tle</string>
   <string name="pref_video_advanced_title">Zaawansowane ustawienia wideo</string>
   <string name="pref_video_advanced_summary">Zmień bitrate, rozdzielczość wideo, a także uzyskaj dostęp do eksperymentalnych funkcji</string>

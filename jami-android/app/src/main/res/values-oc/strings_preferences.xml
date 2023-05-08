@@ -4,6 +4,7 @@
   <string name="pref_category_contacts">Contactes</string>
   <string name="pref_category_video">Vidèo</string>
   <string name="pref_category_system">Sistèma</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_clearHistory_title">Escafar l’istoric</string>
   <string name="pref_delete_account_title">Suprimir lo compte</string>
   <!--Notifications Visibility-->

@@ -8,6 +8,7 @@
   <string name="pref_mobileData_title">بيانات هاتف</string>
   <string name="pref_mobileData_summary">السماح لـ جامي باستخدام شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
   <string name="pref_pushNotifications_title">الإشعارات المنبثقة</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">استخدام خدمات غوغل للسماح باستقبال المكالمات والرسائل في الخلفية</string>
   <string name="pref_video_advanced_title">إعدادات فيديو متقدمة</string>
   <string name="pref_video_advanced_summary">تغيير معدل البت والدقة للفيديو والوصول إلى الميزات التجريبية</string>

@@ -92,6 +92,7 @@
   <string name="account_cannot_be_found_title">Μη δυνατή η εύρεση λογαριασμού</string>
   <string name="account_no_network_title">Αδύνατη η σύνδεση στο δύκτιο</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Ρυθμίσεις λογαριασμού</string>
   <string name="account_tv_advance_settings_header">Προχωρημένες ρυθμίσεις</string>
   <string name="account_tv_about">Σχετικά με το Jami</string>
   <string name="tv_about_version">Έκδοση</string>
@@ -100,6 +101,7 @@
   <string name="account_link_prompt_pin">Εισάγετε PIN</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Jami</string>
   <string name="account_link_export_button">Σύνδεση νέας συσκευής</string>
+  <string name="account_connect_button">Σύνδεση</string>
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>
   <!--Name registration-->
   <string name="register_username">Καταχώρηση δημόσιου ονόματος χρήστη</string>
@@ -111,6 +113,7 @@
   <string name="account_status_unknown">Άγνωστοι</string>
   <string name="account_status_error">Σφάλμα</string>
   <!--Create account-->
+  <string name="account_creation_home">Καλώς ήλθατε στο  Jami</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">Εισάγετε τον κωδικό πρόσβασης</string>

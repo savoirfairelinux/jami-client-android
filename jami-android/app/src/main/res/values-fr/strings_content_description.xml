@@ -2,8 +2,8 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Appel rapide</string>
-  <string name="contact_picture_description">Image de Contact</string>
+  <string name="contact_picture_description">Photo du contact</string>
   <string name="dial_numeric_pad">Pavé numérique</string>
   <string name="contact_unblock">Débloquer</string>
-  <string name="video_plugins">Modules d\'extension vidéos</string>
+  <string name="video_plugins">Modules d\'extension vidéo</string>
 </resources>

@@ -179,10 +179,16 @@
   <string name="block_contact_dialog_title">¿Bloquear a %1$s?</string>
   <string name="block_contact_dialog_message">%1$s no podrá contactarte a menos que lo desbloquees.</string>
   <string name="block_contact_completed">%1$s ha sido bloqueado.</string>
+  <string name="unblock_contact_dialog_title">¿Desbloquear a %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s te va a poder contactar de nuevo.</string>
+  <string name="unblock_contact_completed">%1$s fue desbloqueado.</string>
   <string name="conversation_contact_is_typing">Escribiendo...</string>
   <string name="conversation_info_contact_you">Tú</string>
   <string name="conversation_members">Miembros</string>
   <string name="conversation_syncing">Descargando conversación del par</string>
+  <string name="conversation_blocked">Éste contacto está bloqueado.</string>
+  <string name="conversation_ended">Conversación terminada.</string>
+  <string name="conversation_message_deleted">(Mensaje borrado)</string>
   <string name="conversation_preference_color">Color de la conversación</string>
   <string name="conversation_preference_emoji">Emoji de la conversación</string>
   <string name="conversation_type_contact">Contacto de Jami</string>
@@ -192,6 +198,7 @@
   <string name="conversation_contact_added">%1$s se unió</string>
   <string name="conversation_contact_left">%1$sse salió</string>
   <string name="conversation_contact_banned">%1$s fue prohibido</string>
+  <string name="conversation_search_hint">Buscar conversación</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir a %1$s?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
@@ -287,6 +294,7 @@
   <string name="menu_file_delete">Borrar el archivo</string>
   <string name="menu_file_share">Compartir el archivo</string>
   <string name="menu_message_copy">Copiar</string>
+  <string name="menu_message_edit">Editar mensaje</string>
   <string name="menu_message_delete">Eliminar mensaje</string>
   <string name="menu_message_cancel">Cancelar mensaje</string>
   <string name="menu_message_reply">Responder</string>
@@ -347,9 +355,13 @@
   <string name="reset">Reiniciar</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirmar</string>
+  <string name="rename_error">no puede estar vacío</string>
   <string name="swarm_description">Añadir descripción</string>
   <string name="tab_about">Acerca de</string>
   <string name="tab_members">Miembros</string>
   <string name="tab_documetn">Documentos</string>
   <string name="dialog_hint_title">Título</string>
+  <string name="dialog_hint_description">Descripción</string>
+  <string name="picker_title">Elegir contactos</string>
+  <string name="picker_btn">Elegir contactos</string>
 </resources>

@@ -6,6 +6,7 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privasi</string>
   <string name="pref_mobileData_title">Jaringan data</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_systemContacts_title">Gunakan buku kenalan sistem</string>
   <string name="pref_systemContacts_summary">Gunakan buku kenalan sistem untuk memaparkan maklumat pemanggil</string>
   <string name="pref_clearHistory_title">Padamkan sejarah</string>

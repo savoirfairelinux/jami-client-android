@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Dati mobili</string>
   <string name="pref_mobileData_summary">Attiva Jami sulle reti 3G/LTE in aggiunta al Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notifiche</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Usa i server Google per ricevere chiamate/messaggi in background</string>
+  <string name="pref_unifiedPush_summary">Usa un servizio UnifiedPush per ricevere chiamate/messaggi in background</string>
   <string name="pref_video_advanced_title">Impostazioni video avanzate</string>
   <string name="pref_video_advanced_summary">Cambia il bitrate del video, la risoluzione e accedi alle funzioni sperimentali</string>
   <string name="pref_hd_summary">Attiva invio video HD</string>

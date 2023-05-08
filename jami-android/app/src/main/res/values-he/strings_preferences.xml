@@ -3,6 +3,7 @@
   <string name="pref_category_contacts">אנשי קשר</string>
   <string name="pref_category_video">וידאו</string>
   <string name="pref_category_system">מערכת</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <!--Notifications Visibility-->
   <!--Plugin-->
 </resources>
