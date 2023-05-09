@@ -22,26 +22,22 @@ package cx.ring.client
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
-import android.view.WindowManager
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityConversationBinding
 import cx.ring.fragments.ConversationFragment
-import cx.ring.interfaces.Colorable
 import cx.ring.services.NotificationServiceImpl
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ConversationActivity : AppCompatActivity(), Colorable {
+class ConversationActivity : AppCompatActivity() {
     private var mConversationFragment: ConversationFragment? = null
     private lateinit var conversationPath: ConversationPath
     private var mPendingIntent: Intent? = null
@@ -127,11 +123,5 @@ class ConversationActivity : AppCompatActivity(), Colorable {
             }
         }
         return super.dispatchKeyEvent(event)
-    }
-
-    override fun setColor(@ColorInt color: Int) {
-        //colouriseToolbar(binding.mainToolbar, color);
-        //mToolbar.setBackground(new ColorDrawable(color));
-        //getWindow().setStatusBarColor(color);
     }
 }
