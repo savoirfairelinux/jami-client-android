@@ -276,6 +276,11 @@ class AccountService(
                         val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
                         val conversation = account.newSwarm(conversationId, mode)
                         conversation.setProfile(mVCardService.loadConversationProfile(info))
+
+                        val preferences = // Load conversation preferences (color, symbol, etc.)
+                            JamiService.getConversationPreferences(accountId, conversationId)
+                        conversation.updatePreferences(preferences)
+
                         conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
                         for (member in JamiService.getConversationMembers(accountId, conversationId)) {
                             /*for (Map.Entry<String, String> i : member.entrySet()) {

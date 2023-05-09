@@ -26,7 +26,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.net.Uri
@@ -62,7 +61,6 @@ import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.ConversationActivity
 import cx.ring.client.HomeActivity
 import cx.ring.databinding.FragConversationBinding
-import cx.ring.interfaces.Colorable
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.service.LocationSharingService
@@ -89,7 +87,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
-    MediaButtonsHelperCallback, ConversationView, OnSharedPreferenceChangeListener,
+    MediaButtonsHelperCallback, ConversationView,
     SearchView.OnQueryTextListener {
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
@@ -374,8 +372,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun setConversationColor(@ColorInt color: Int) {
-        val activity = activity as Colorable?
-        activity?.setColor(color)
         mAdapter?.setPrimaryColor(color)
     }
 
@@ -384,7 +380,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onDestroyView() {
-        mPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
@@ -896,16 +891,17 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val uri = path.conversationUri
         mAdapter = ConversationAdapter(this, presenter)
         presenter.init(uri, path.accountId)
+
+        // Load shared preferences. Usually useful for non-swarm conversations.
         try {
-            mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
-                preferences.registerOnSharedPreferenceChangeListener(this)
-                presenter.setConversationColor(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
-                presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
-                preferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
+            mPreferences = getConversationPreferences(requireContext(), path.accountId, uri)
+                .also { sharedPreferences ->
+                    sharedPreferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Can't load conversation preferences")
         }
+
         var connection = locationServiceConnection
         if (connection == null) {
             connection = object : ServiceConnection {
@@ -932,15 +928,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             locationServiceConnection = connection
             Log.w(TAG, "bindService")
             requireContext().bindService(Intent(requireContext(), LocationSharingService::class.java), connection, 0)
-        }
-    }
-
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String) {
-        when (key) {
-            KEY_PREFERENCE_CONVERSATION_COLOR -> presenter.setConversationColor(
-                prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
-            KEY_PREFERENCE_CONVERSATION_SYMBOL -> presenter.setConversationSymbol(
-                prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
         }
     }
 
