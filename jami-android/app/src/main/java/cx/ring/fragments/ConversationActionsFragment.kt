@@ -91,29 +91,70 @@ class ConversationActionsFragment : Fragment() {
             colorActionPosition = 0
             symbolActionPosition = 1
 
-            colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
-                ColorChooserBottomSheet { color ->
+            // Setup an action to allow the user to select a color for the conversation.
+            colorAction = ContactAction(
+                R.drawable.item_color_background, 0,
+                getText(R.string.conversation_preference_color)
+            ) {
+                ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
+                    // Update color of the activity (action icon, tab and add button)
                     colorAction!!.iconTint = color
                     (activity as ContactDetailsActivity).updateColor(color)
                     adapter.notifyItemChanged(colorActionPosition)
+                    // Send signal to the conversation fragment (via shared preferences) to update
+                    // the color of the conversation.
                     preferences.edit()
                         .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
                         .apply()
+                    // Send preferences through demon to update the color also to other devices.
+                    mAccountService.setConversationPreferences(
+                        path.accountId,
+                        // Hack to remove the "swarm:" prefix from the conversationId.
+                        // TODO: Remove this hack.
+                        path.conversationId.removePrefix("swarm:"),
+                        // Convert color to hex string.
+                        mapOf("color" to String.format("#%06X", 0xFFFFFF and color))
+                    )
                 }.show(parentFragmentManager, "colorChooser")
             }
-            val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
+            // Set the color of the icon to the one chosen by the user.
+            val color = preferences.getInt(
+                ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR,
+                resources.getColor(R.color.color_primary_light)
+            )
             colorAction!!.iconTint = color
+            // Add the action to the list of actions.
             adapter.actions.add(colorAction!!)
+
+            // Setup an action to allow the user to select an Emoji for the conversation.
             symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-                EmojiChooserBottomSheet{ emoji ->
-                    symbolAction?.setSymbol(emoji)
+                EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
+                    if (emoji == null) return@EmojiChooserBottomSheet
+                    symbolAction?.setSymbol(emoji) // Update emoji action icon
                     adapter.notifyItemChanged(symbolActionPosition)
+                    // Send signal to the conversation fragment (via shared preferences) to update
+                    // the emoji of the conversation.
                     preferences.edit()
                         .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
                         .apply()
+                    // Send preferences through demon to update the color also to other devices.
+                    mAccountService.setConversationPreferences(
+                        path.accountId,
+                        // Hack to remove the "swarm:" prefix from the conversationId.
+                        // TODO: Remove this hack.
+                        path.conversationId.removePrefix("swarm:"),
+                        mapOf("symbol" to emoji)
+                    )
                 }.show(parentFragmentManager, "colorChooser")
             }.apply {
-                setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
+                // Set the emoji of the icon to the one chosen by the user.
+                setSymbol(
+                    preferences.getString(
+                        ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL,
+                        resources.getString(R.string.conversation_default_emoji)
+                    )
+                )
+                // Add the action to the list of actions.
                 adapter.actions.add(this)
             }
 
