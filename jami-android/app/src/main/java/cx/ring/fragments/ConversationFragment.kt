@@ -26,7 +26,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.*
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.net.Uri
@@ -89,7 +88,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class ConversationFragment : BaseSupportFragment<ConversationPresenter, ConversationView>(),
-    MediaButtonsHelperCallback, ConversationView, OnSharedPreferenceChangeListener,
+    MediaButtonsHelperCallback, ConversationView,
     SearchView.OnQueryTextListener {
     private var locationServiceConnection: ServiceConnection? = null
     private var binding: FragConversationBinding? = null
@@ -384,7 +383,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun onDestroyView() {
-        mPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         animation.removeAllUpdateListeners()
         binding?.histList?.adapter = null
         mCompositeDisposable.clear()
@@ -898,7 +896,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         presenter.init(uri, path.accountId)
         try {
             mPreferences = getConversationPreferences(requireContext(), path.accountId, uri).also { preferences ->
-                preferences.registerOnSharedPreferenceChangeListener(this)
                 presenter.setConversationColor(preferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
                 presenter.setConversationSymbol(preferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
                 preferences.edit().remove(KEY_PREFERENCE_CONVERSATION_LAST_READ).apply()
@@ -932,15 +929,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             locationServiceConnection = connection
             Log.w(TAG, "bindService")
             requireContext().bindService(Intent(requireContext(), LocationSharingService::class.java), connection, 0)
-        }
-    }
-
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String) {
-        when (key) {
-            KEY_PREFERENCE_CONVERSATION_COLOR -> presenter.setConversationColor(
-                prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light)))
-            KEY_PREFERENCE_CONVERSATION_SYMBOL -> presenter.setConversationSymbol(
-                prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getText(R.string.conversation_default_emoji).toString())!!)
         }
     }
 

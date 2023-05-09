@@ -26,11 +26,8 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.SingleSubject
 import io.reactivex.rxjava3.subjects.Subject
-import kotlin.jvm.Synchronized
 import net.jami.utils.Log
-import java.lang.IllegalStateException
 import java.util.*
-import kotlin.collections.HashMap
 
 class Conversation : ConversationHistory {
     val accountId: String
@@ -653,7 +650,12 @@ class Conversation : ConversationHistory {
     fun getSymbol(): Observable<CharSequence> = symbol
 
     fun updatePreferences(preferences: Map<String, String>) {
-        preferences["color"]?.let { color.onNext(it.substring(1).toInt(16)) }
+        preferences["color"]?.let {
+            // First, we remove the string first character (the #).
+            // The color format is RRGGBB but we want AARRGGBB.
+            // So we add FF in front of the color (full opacity).
+            color.onNext(it.substring(1).toInt(16) or 0xFF000000.toInt())
+        }
         preferences["symbol"]?.let { symbol.onNext(it) }
     }
 
