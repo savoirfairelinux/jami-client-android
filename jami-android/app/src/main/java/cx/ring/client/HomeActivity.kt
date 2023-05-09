@@ -51,7 +51,6 @@ import cx.ring.databinding.ActivityHomeBinding
 import cx.ring.fragments.ContactPickerFragment
 import cx.ring.fragments.ConversationFragment
 import cx.ring.fragments.HomeFragment
-import cx.ring.interfaces.Colorable
 import cx.ring.service.DRingService
 import cx.ring.settings.SettingsFragment
 import cx.ring.utils.BitmapUtils
@@ -78,7 +77,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnContactedPicked {
+class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
     private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var mHomeFragment: HomeFragment? = null
@@ -412,10 +411,6 @@ class HomeActivity : AppCompatActivity(), Colorable, ContactPickerFragment.OnCon
                 mBinding!!.frame.isVisible = true
             }
         }
-    }
-
-    override fun setColor(color: Int) {
-        //mToolbar.setBackground(new ColorDrawable(color));
     }
 
     fun setToolbarElevation(enable: Boolean) {

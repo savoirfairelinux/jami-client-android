@@ -25,6 +25,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -36,6 +37,7 @@ import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.PreferencesService
 import java.util.*
+import kotlin.collections.HashMap
 
 class SharedPreferencesServiceImpl(private val context: Context, accountService: AccountService, deviceService: DeviceRuntimeService)
     : PreferencesService(accountService, deviceService) {
@@ -101,6 +103,28 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         val requests = loadRequestsPreferences(accountId)
         requests.remove(contactId)
         saveRequests(accountId, requests)
+    }
+
+    /**
+     * Load conversation preferences from the shared preferences.
+     */
+    override fun getConversationPreferences(
+        accountId: String,
+        conversationUri: Uri,
+    ): Map<String, String> =
+        getConversationPreferences(context, accountId, conversationUri)
+            .all.mapValuesTo(HashMap()) { (_, v) -> v.toString() }
+
+    /**
+     * Save conversation preferences to the shared preferences.
+     */
+    override fun setConversationPreferences(
+        accountId: String,
+        conversationUri: Uri,
+        preferences: Map<String, String>,
+    ) {
+        getConversationPreferences(context, accountId, conversationUri)
+            .edit { preferences.forEach { (k, v) -> putString(k, v) } }
     }
 
     override fun hasNetworkConnected(): Boolean = NetworkUtils.isConnectivityAllowed(context)
@@ -175,8 +199,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         const val PREF_PLUGINS = "plugins"
         private const val PREF_LOG_IS_ACTIVE = "log_is_active"
 
-        fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences {
-            return context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
-        }
+        fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences =
+            context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
     }
 }

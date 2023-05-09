@@ -52,10 +52,9 @@ import cx.ring.databinding.ItemContactHorizontalBinding
 import cx.ring.fragments.CallFragment
 import cx.ring.fragments.ContactPickerFragment
 import cx.ring.fragments.ConversationActionsFragment
-import cx.ring.fragments.ConversationFragment
 import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.fragments.ConversationMembersFragment
-import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
+import cx.ring.interfaces.Colorable
 import cx.ring.utils.*
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,10 +74,9 @@ import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @AndroidEntryPoint
 class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener,
-    ContactPickerFragment.OnContactedPicked, RenameSwarmDialog.RenameSwarmListener {
+    ContactPickerFragment.OnContactedPicked, RenameSwarmDialog.RenameSwarmListener, Colorable {
     @Inject
     @Singleton lateinit
     var mConversationFacade: ConversationFacade
@@ -165,7 +163,6 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
-        val preferences = getConversationPreferences(this, conversation.accountId, conversation.uri)
 
         mDisposableBag.add(mConversationFacade.observeConversation(conversation)
             .observeOn(DeviceUtils.uiScheduler)
@@ -221,21 +218,35 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
                 finish()
             })
 
-        val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
-        updateColor(color)
         binding.tabLayout.addOnTabSelectedListener(this)
         binding.back.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.addMember.setOnClickListener { ContactPickerFragment().show(supportFragmentManager, ContactPickerFragment.TAG) }
 
-
         mPagerAdapter = ScreenSlidePagerAdapter(this, conversation)
         binding.pager.adapter = mPagerAdapter
+
+        // Update color on RX color signal.
+        mDisposableBag.add(
+            conversation
+                .getColor()
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { setColor(it) }
+        )
+
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.tabLayout.getTabAt(position)!!.select()
             }
         })
+    }
+
+    /**
+     * Set the color of the activity (appBar and addMember button).
+     */
+    override fun setColor(color: Int) {
+        binding?.appBar?.backgroundTintList = ColorStateList.valueOf(color)
+        binding?.addMember?.backgroundTintList = ColorStateList.valueOf(color)
     }
 
     private fun profileImageClicked() {
@@ -336,11 +347,6 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             })
     }
 
-    public fun updateColor(color: Int) {
-        binding!!.appBar.backgroundTintList = ColorStateList.valueOf(color)
-        binding!!.addMember.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finishAfterTransition()
@@ -388,8 +394,6 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
 
     override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-
-
     override fun onContactPicked(accountId: String, contacts: Set<Contact>) {
         mAccountService.addConversationMembers(accountId, path!!.conversationUri.host, contacts.map { contact-> contact.uri.toString() })
     }
@@ -409,13 +413,15 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
         val accountId = conversation.accountId
         val conversationId = conversation.uri
 
-        val fragments: List<Fragment> = if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) listOf(
+        val fragments = if (conversation.mode.blockingFirst() != Conversation.Mode.OneToOne) listOf(
             ConversationActionsFragment.newInstance(accountId, conversationId),
             ConversationMembersFragment.newInstance(accountId, conversationId),
-            ConversationGalleryFragment.newInstance(accountId, conversationId))
+            ConversationGalleryFragment.newInstance(accountId, conversationId)
+            )
         else listOf(
             ConversationActionsFragment.newInstance(accountId, conversationId),
-            ConversationGalleryFragment.newInstance(accountId, conversationId))
+            ConversationGalleryFragment.newInstance(accountId, conversationId)
+            )
 
         override fun getItemCount(): Int = fragments.size
 

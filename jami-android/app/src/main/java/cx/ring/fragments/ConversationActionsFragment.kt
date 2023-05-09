@@ -42,8 +42,9 @@ import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.EmojiChooserBottomSheet
 import cx.ring.databinding.FragConversationActionsBinding
 import cx.ring.databinding.ItemContactActionBinding
-import cx.ring.services.SharedPreferencesServiceImpl
+import cx.ring.interfaces.Colorable
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -55,7 +56,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @AndroidEntryPoint
-class ConversationActionsFragment : Fragment() {
+class ConversationActionsFragment : Fragment(), Colorable {
 
     @Inject
     @Singleton
@@ -82,40 +83,61 @@ class ConversationActionsFragment : Fragment() {
                     .startConversation(path.accountId, path.conversationUri)
                     .blockingGet()
 
-            val preferences = SharedPreferencesServiceImpl.getConversationPreferences(
-                requireActivity(),
-                path.accountId,
-                path.conversationUri
-            )
-
             colorActionPosition = 0
             symbolActionPosition = 1
 
-            colorAction = ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color)) {
-                ColorChooserBottomSheet { color ->
-                    colorAction!!.iconTint = color
-                    (activity as ContactDetailsActivity).updateColor(color)
-                    adapter.notifyItemChanged(colorActionPosition)
-                    preferences.edit()
-                        .putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color)
-                        .apply()
+            // Setup an action to allow the user to select a color for the conversation.
+            colorAction = ContactAction(
+                R.drawable.item_color_background, 0,
+                getText(R.string.conversation_preference_color)
+            ) {
+                ColorChooserBottomSheet { color -> // Color chosen by the user (onclick method).
+                    setConversationPreferences(
+                        path.accountId,
+                        path.conversationUri,
+                        color = color
+                    )
+                    // Need to manually update the color of the conversation as will not get the
+                    // update signal from daemon.
+                    if (!path.conversationUri.isSwarm) conversation.setColor(color)
                 }.show(parentFragmentManager, "colorChooser")
             }
-            val color = preferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, resources.getColor(R.color.color_primary_light))
-            colorAction!!.iconTint = color
+            // Add the action to the list of actions.
             adapter.actions.add(colorAction!!)
+
+            // Setup an action to allow the user to select an Emoji for the conversation.
             symbolAction = ContactAction(0, getText(R.string.conversation_preference_emoji)) {
-                EmojiChooserBottomSheet{ emoji ->
-                    symbolAction?.setSymbol(emoji)
-                    adapter.notifyItemChanged(symbolActionPosition)
-                    preferences.edit()
-                        .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, emoji)
-                        .apply()
+                EmojiChooserBottomSheet { emoji -> // Emoji chosen by the user (onclick method).
+                    if (emoji == null) return@EmojiChooserBottomSheet
+                    setConversationPreferences(
+                        path.accountId,
+                        path.conversationUri,
+                        emoji = emoji
+                    )
+                    // Need to manually update the symbol of the conversation as will not get the
+                    // update signal from daemon.
+                    if(!path.conversationUri.isSwarm) conversation.setSymbol(emoji.toString())
                 }.show(parentFragmentManager, "colorChooser")
-            }.apply {
-                setSymbol(preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, resources.getString(R.string.conversation_default_emoji)))
-                adapter.actions.add(this)
             }
+            adapter.actions.add(symbolAction!!)
+
+            // Update color on RX color signal.
+            mDisposableBag.add(
+                conversation
+                    .getColor()
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe {
+                        setColor(it) }
+            )
+
+            // Update symbol on RX color signal.
+            mDisposableBag.add(
+                conversation
+                    .getSymbol()
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe {
+                        setSymbol(it.toString()) }
+            )
 
             @StringRes val infoString = if (conversation.isSwarm)
                 if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
@@ -194,6 +216,42 @@ class ConversationActionsFragment : Fragment() {
         super.onDestroy()
         colorAction = null
         binding = null
+    }
+
+    /**
+     * Set the color of the color action button.
+     */
+    override fun setColor(color: Int) {
+        colorAction?.iconTint = color
+        adapter.notifyItemChanged(colorActionPosition)
+    }
+
+    /**
+     * Set the symbol of the symbol action button.
+     */
+    private fun setSymbol(symbol: String) {
+        symbolAction?.setSymbol(symbol) // Update emoji action icon
+        adapter.notifyItemChanged(symbolActionPosition)
+    }
+
+    /**
+     * Set the conversation preferences.
+     * Always resend the color and emoji, even if they are not changed (to not reset).
+     */
+    fun setConversationPreferences(
+        accountId: String,
+        conversationUri: Uri,
+        color: Int? = colorAction?.iconTint,
+        emoji: String = symbolAction?.iconSymbol.toString(),
+    ) {
+        mConversationFacade.setConversationPreferences(
+            accountId,
+            conversationUri,
+            mapOf(
+                "symbol" to emoji,
+                "color" to if (color != null) String.format("#%06X", 0xFFFFFF and color) else ""
+            )
+        )
     }
 
     private fun copyAndShow(toCopy: String) {

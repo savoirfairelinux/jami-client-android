@@ -53,6 +53,26 @@ class ConversationFacade(
         .currentAccountSubject
         .switchMapSingle { account: Account -> loadSmartlist(account) }
 
+    /**
+     * Two cases: Swarm conversation or non-swarm conversation.
+     * If swarm conversation, we need to send the preferences to daemon (in order
+     * to update preferences also on other devices).
+     * Else, we just save preferences to preferences service.
+     */
+    fun setConversationPreferences(
+        accountId: String,
+        conversationUri: Uri,
+        preferences: Map<String, String>,
+    ) {
+        if (conversationUri.isSwarm) {
+            mAccountService.setConversationPreferences(
+                accountId, conversationUri.rawRingId, preferences
+            )
+        } else {
+            mPreferencesService.setConversationPreferences(accountId, conversationUri, preferences)
+        }
+    }
+
     fun startConversation(accountId: String, contactId: Uri): Single<Conversation> = getAccountSubject(accountId)
         .map { account: Account -> account.getByUri(contactId)!! }
 
@@ -429,6 +449,13 @@ class ConversationFacade(
                         conversation.id = e.conversation!!.id
                         conversation.addElement(e)
                         conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
+                        // Update the conversation preferences.
+                        conversation.updatePreferences(
+                            mPreferencesService.getConversationPreferences(
+                                account.accountId,
+                                conversation.uri
+                            )
+                        )
                         conversations.add(conversation)
                     }
                     account.setHistoryLoaded(conversations)
