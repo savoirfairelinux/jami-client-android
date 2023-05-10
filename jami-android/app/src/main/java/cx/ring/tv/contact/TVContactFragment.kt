@@ -155,7 +155,7 @@ class TVContactFragment : BaseDetailFragment<TVContactPresenter>(), TVContactVie
     }
 
     override fun finishView() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     override fun onDestroy() {
