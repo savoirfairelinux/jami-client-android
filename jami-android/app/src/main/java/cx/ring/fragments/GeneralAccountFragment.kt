@@ -104,7 +104,7 @@ class GeneralAccountFragment : BasePreferenceFragment<GeneralAccountPresenter>()
     }
 
     override fun finish() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     override fun updateResolutions(maxResolution: Pair<Int, Int>?, currentResolution: Int) {}

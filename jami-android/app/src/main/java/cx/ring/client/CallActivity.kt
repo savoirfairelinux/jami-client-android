@@ -87,7 +87,7 @@ class CallActivity : AppCompatActivity() {
         if (presenter?.mOnGoingCall == true && presenter.isVideoActive()) {
             presenter.requestPipMode()
         } else {
-            super.onBackPressed()
+            super.getOnBackPressedDispatcher().onBackPressed()
         }
     }
 
