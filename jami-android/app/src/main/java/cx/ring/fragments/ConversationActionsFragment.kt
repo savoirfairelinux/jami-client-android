@@ -18,9 +18,8 @@
  */
 package cx.ring.fragments
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -30,7 +29,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -127,7 +125,7 @@ class ConversationActionsFragment : Fragment() {
             conversationType.setText(infoString)
             val conversationUri = conversation.uri.toString()//if (conversation.isSwarm) conversation.uri.toString() else conversation.uriTitle
             conversationId.text = conversationUri
-            infoCard.setOnClickListener { copyAndShow(path.conversationId) }
+            infoCard.setOnClickListener { shareContact(path.conversationUri.rawUriString) }
 
             if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
                 val contact = conversation.contact!!
@@ -196,10 +194,24 @@ class ConversationActionsFragment : Fragment() {
         binding = null
     }
 
-    private fun copyAndShow(toCopy: String) {
-        val clipboard = requireActivity().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy))
-        Snackbar.make(binding!!.root, getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show()
+    /**
+     * Share the contact id with other apps (via intent).
+     * @param rawUri the contact id to share.
+     */
+    private fun shareContact(rawUri: String) {
+        if (rawUri.isEmpty()) return
+
+        // Create intent
+        val sharingIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, getText(R.string.contact_share_title))
+            putExtra(
+                Intent.EXTRA_TEXT,
+                getString(R.string.contact_share_body, rawUri, getText(R.string.app_website))
+            )
+        }
+        // Start intent
+        startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)))
     }
 
     internal class ContactAction {
