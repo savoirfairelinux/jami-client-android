@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd2c3c8_e14bc3d5",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-10T15:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182a2e37_10e64ba6",
+      "range": {
+        "startLine": 176,
+        "startChar": 49,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "dfa05ef57eae5b02ba58cf058dd1a09b28c331c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1978b5e5_e3159c57",
@@ -95,6 +119,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84f346e7_39d08951",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-10T15:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f41fa44_2b600f52",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "dfa05ef57eae5b02ba58cf058dd1a09b28c331c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de21fd4_fab08601",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "done",
       "parentUuid": "5de21fd4_fab08601",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "dfa05ef57eae5b02ba58cf058dd1a09b28c331c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9655f56d_d2a7ed59",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-10T15:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69f6e84_e7cad7c4",
       "range": {
         "startLine": 56,
         "startChar": 0,
