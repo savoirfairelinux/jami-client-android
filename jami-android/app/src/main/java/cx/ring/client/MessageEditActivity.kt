@@ -19,7 +19,7 @@ class MessageEditActivity : AppCompatActivity() {
             setResult(RESULT_OK, Intent(Intent.ACTION_EDIT)
                 .setData(intent.data)
                 .putExtra(Intent.EXTRA_TEXT, editText.text.toString()))
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 }

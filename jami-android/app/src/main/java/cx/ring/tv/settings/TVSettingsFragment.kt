@@ -80,7 +80,7 @@ class TVSettingsFragment : LeanbackSettingsFragmentCompat() {
         }
 
         override fun finish() {
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         override fun updateResolutions(maxResolution: Pair<Int, Int>?, currentResolution: Int) {
