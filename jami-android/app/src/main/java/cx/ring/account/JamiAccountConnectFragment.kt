@@ -92,6 +92,6 @@ class JamiAccountConnectFragment : BaseSupportFragment<JamiAccountConnectPresent
     }
 
     override fun cancel() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 }

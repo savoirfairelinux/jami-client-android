@@ -143,7 +143,7 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     }
 
     override fun exit() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     private class PreferencesPagerAdapter(

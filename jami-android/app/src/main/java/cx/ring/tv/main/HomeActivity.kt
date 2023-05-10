@@ -144,7 +144,7 @@ class HomeActivity : FragmentActivity() {
 //            mIsContactFragmentVisible = false;
             supportFragmentManager.popBackStack()
         } else {
-            super.onBackPressed()
+            super.getOnBackPressedDispatcher().onBackPressed()
         }
     }
 

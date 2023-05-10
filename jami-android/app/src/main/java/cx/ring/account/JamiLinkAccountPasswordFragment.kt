@@ -97,7 +97,7 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
     }
 
     override fun cancel() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     companion object {

@@ -102,7 +102,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
     }
 
     override fun cancel() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     companion object {
