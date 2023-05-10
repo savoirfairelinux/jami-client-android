@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "267865c7_9fdbbe86",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T19:44:09Z",
+      "side": 1,
+      "message": "no",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 74
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c881b33_29f8b96a",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T19:44:09Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 347,
+        "startChar": 20,
+        "endLine": 347,
+        "endChar": 70
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1852abc4_84934002",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T19:44:09Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 361,
+        "endChar": 70
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37152aae_ce842867",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T19:44:09Z",
+      "side": 1,
+      "message": "could be factorized ? Maybe we should have our own ProgressDialog",
+      "range": {
+        "startLine": 556,
+        "startChar": 9,
+        "endLine": 567,
+        "endChar": 19
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "869125fb_6d7a8971",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-10T19:44:09Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 74
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
