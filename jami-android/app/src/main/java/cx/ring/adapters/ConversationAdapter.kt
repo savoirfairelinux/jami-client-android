@@ -250,20 +250,27 @@ class ConversationAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (isComposing && position == mInteractions.size) return MessageType.COMPOSING_INDICATION.ordinal
-        val interaction = mInteractions[position]
+        // This function will be called for each item in the list, to know which layout to use.
+
+        // Composing indicator
+        if (isComposing && position == mInteractions.size)
+            return MessageType.COMPOSING_INDICATION.ordinal
+
+        val interaction = mInteractions[position] // Get the interaction
         return when (interaction.type) {
             Interaction.InteractionType.CONTACT -> MessageType.CONTACT_EVENT.ordinal
-            Interaction.InteractionType.CALL -> if ((interaction as Call).isGroupCall) {
-                MessageType.ONGOING_GROUP_CALL.ordinal
-            } else {
-                MessageType.CALL_INFORMATION.ordinal
-            }
-            Interaction.InteractionType.TEXT -> if (interaction.isIncoming) {
-                MessageType.INCOMING_TEXT_MESSAGE.ordinal
-            } else {
-                MessageType.OUTGOING_TEXT_MESSAGE.ordinal
-            }
+            Interaction.InteractionType.CALL ->
+                if ((interaction as Call).isGroupCall) {
+                    MessageType.ONGOING_GROUP_CALL.ordinal
+                } else {
+                    MessageType.CALL_INFORMATION.ordinal
+                }
+            Interaction.InteractionType.TEXT ->
+                if (interaction.isIncoming) {
+                    MessageType.INCOMING_TEXT_MESSAGE.ordinal
+                } else {
+                    MessageType.OUTGOING_TEXT_MESSAGE.ordinal
+                }
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
@@ -1265,61 +1272,82 @@ class ConversationAdapter(
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      */
-    private fun configureForCallInfo(convViewHolder: ConversationViewHolder, interaction: Interaction) {
-        convViewHolder.mIcon?.scaleY = 1f
+    private fun configureForCallInfo(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         val context = convViewHolder.itemView.context
+
+        // In the case were it is not a swarm (legacy call or SIP?)
         if (!interaction.isSwarm) {
             convViewHolder.mCallInfoLayout?.apply {
-                background?.setTintList(null)
-                setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo: ContextMenuInfo? ->
+                background?.setTintList(null) // Remove the tint
+                // Define Context Menu, call when long pressed (see definition below)
+                setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo:
+                                                 ContextMenuInfo? ->
                     conversationFragment.onCreateContextMenu(menu, v, menuInfo)
+                    // Inflate the view and set it up
                     val inflater = conversationFragment.requireActivity().menuInflater
                     inflater.inflate(R.menu.conversation_item_actions_messages, menu)
                     menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_delete)
                     menu.removeItem(R.id.conv_action_cancel_message)
                     menu.removeItem(R.id.conv_action_copy_text)
                 }
+                // When long clicked...
                 setOnLongClickListener { v: View ->
                     background.setTint(res.getColor(R.color.grey_500))
+                    // Open Context Menu
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
+                    mCurrentLongItem =
+                        RecyclerViewContextMenuInfo(convViewHolder.adapterPosition, v.id.toLong())
                     false
                 }
             }
         }
+
         val call = interaction as Call
         if (call.isGroupCall) {
+            // When a call is occurring (between members) but you are not in it, a message is
+            // displayed in conversation to inform the user about the call and invite him to join.
             convViewHolder.mAcceptCallLayout?.apply {
+                // Accept with audio only
                 convViewHolder.mAcceptCallAudioButton?.setOnClickListener {
                     call.confId?.let { presenter.goToGroupCall(false) }
                 }
+                // Accept call with video
                 convViewHolder.mAcceptCallVideoButton?.setOnClickListener {
                     call.confId?.let { presenter.goToGroupCall(true) }
                 }
             }
         }
+
         val pictureResID: Int
         val historyTxt: String
-        if (call.isMissed) {
+        // After call, a message is displayed in conversation to inform the user about the call.
+        if (call.isMissed) { // When call is missed
+            // Personalize the text and the icon depending if call is incoming or outgoing
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
+                historyTxt = context.getString(R.string.notif_missed_incoming_call)
             } else {
                 pictureResID = R.drawable.baseline_call_missed_outgoing_24
+                historyTxt = context.getString(R.string.notif_missed_outgoing_call)
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mIcon?.scaleY = -1f
             }
-            historyTxt = if (call.isIncoming)
-                context.getString(R.string.notif_missed_incoming_call)
-            else
-                context.getString(R.string.notif_missed_outgoing_call)
-        } else {
-            pictureResID = if (call.isIncoming) R.drawable.baseline_call_received_24 else R.drawable.baseline_call_made_24
-            historyTxt = if (call.isIncoming) context.getString(R.string.notif_incoming_call) else context.getString(R.string.notif_outgoing_call)
+        } else { // Call is not missed
+            pictureResID =
+                if (call.isIncoming) R.drawable.baseline_call_received_24
+                else R.drawable.baseline_call_made_24
+            historyTxt =
+                if (call.isIncoming) context.getString(R.string.notif_incoming_call)
+                else context.getString(R.string.notif_outgoing_call)
         }
+        // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
         convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text = DateFormat.getDateTimeInstance()
-            .format(call.timestamp) // start date
+        convViewHolder.mHistDetailTxt?.text =
+            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
