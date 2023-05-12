@@ -21,6 +21,7 @@
 package net.jami.services
 
 import ezvcard.VCard
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.core.Single
@@ -37,15 +38,19 @@ import java.util.concurrent.TimeUnit
  * - Provide query tools to search contacts by id, number, ...
  */
 abstract class ContactService(
-    val mPreferencesService: PreferencesService,
-    val mDeviceRuntimeService: DeviceRuntimeService,
-    val mAccountService: AccountService
+    protected val mPreferencesService: PreferencesService,
+    protected val mAccountService: AccountService
 ) {
     abstract fun loadContactsFromSystem(loadRingContacts: Boolean, loadSipContacts: Boolean): Map<Long, Contact>
-    protected abstract fun findContactByIdFromSystem(contactId: Long, contactKey: String): Contact?
+    protected abstract fun findContactByIdFromSystem(contactId: Long, contactKey: String?): Contact?
     protected abstract fun findContactBySipNumberFromSystem(number: String): Contact?
     protected abstract fun findContactByNumberFromSystem(number: String): Contact?
     abstract fun loadContactData(contact: Contact, accountId: String): Single<Profile>
+
+    abstract fun saveContact(uri: String, profile: Profile)
+    abstract fun deleteContact(uri: String)
+
+
     abstract fun saveVCardContactData(contact: Contact, accountId: String, vcard: VCard)
     abstract fun saveVCardContact(accountId: String, uri: String?, displayName: String?, pictureB64: String?): Single<VCard>
 
@@ -55,15 +60,13 @@ abstract class ContactService(
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> {
-        return Single.fromCallable {
+    fun loadContacts(loadRingContacts: Boolean, loadSipContacts: Boolean, account: Account?): Single<Map<Long, Contact>> =
+        Single.fromCallable {
             val settings = mPreferencesService.settings
-            if (settings.useSystemContacts && mDeviceRuntimeService.hasContactPermission()) {
-                return@fromCallable loadContactsFromSystem(loadRingContacts, loadSipContacts)
-            }
-            HashMap()
+            if (settings.useSystemContacts) {
+                loadContactsFromSystem(loadRingContacts, loadSipContacts)
+            } else HashMap()
         }
-    }
 
     fun observeContact(accountId: String, contactUri: Uri, withPresence: Boolean): Observable<ContactViewModel> {
         val account = mAccountService.getAccount(accountId) ?: return Observable.error(IllegalArgumentException())
@@ -139,6 +142,10 @@ abstract class ContactService(
             }
         }
 
+    fun getLoadedContact(accountId: String, contactId: String, withPresence: Boolean = false): Single<ContactViewModel> =
+        mAccountService.getAccountSingle(accountId)
+            .flatMap { getLoadedContact(accountId, it.getContactFromCache(contactId), withPresence) }
+
     fun getLoadedContact(accountId: String, contact: Contact, withPresence: Boolean = false): Single<ContactViewModel> =
         observeContact(accountId, contact, withPresence)
             .firstOrError()
@@ -147,6 +154,10 @@ abstract class ContactService(
         if (contacts.isEmpty()) Single.just(emptyList()) else Observable.fromIterable(contacts)
             .concatMapEager { contact: Contact -> getLoadedContact(accountId, contact, withPresence).toObservable() }
             .toList(contacts.size)
+
+    fun getLoadedConversation(accountId: String, conversationUri: Uri): Single<ConversationItemViewModel> =
+        mAccountService.getAccountSingle(accountId)
+            .flatMap { getLoadedConversation(it.getByUri(conversationUri)!!) }
 
     fun getLoadedConversation(conversation: Conversation): Single<ConversationItemViewModel> =
         conversation.contactUpdates.firstOrError().flatMap { contacts -> Single.zip(getLoadedContact(
