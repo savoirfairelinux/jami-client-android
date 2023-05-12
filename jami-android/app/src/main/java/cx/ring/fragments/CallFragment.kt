@@ -57,6 +57,7 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -763,7 +764,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun updateAudioState(state: AudioState) {
-        binding!!.callSpeakerBtn.isChecked = state.outputType == HardwareService.AudioOutput.SPEAKERS
+        binding!!.callSpeakerBtn.isChecked = state.output.type == HardwareService.AudioOutputType.SPEAKERS
     }
 
     override fun updateTime(duration: Long) {
@@ -946,7 +947,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
             }
             callMicBtn.isChecked = isMicrophoneMuted
-            callSpeakerBtn.isChecked = isSpeakerOn
         }
     }
 
@@ -1177,10 +1177,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val hasVideo = presenter.wantVideo
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
+        val contact = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED
         val audioGranted = mDeviceRuntimeService.hasAudioPermission()
         val videoGranted = !hasVideo || mDeviceRuntimeService.hasVideoPermission()
-        if (!audioGranted || !videoGranted) {
+        if (!audioGranted || !videoGranted || !contact) {
             val perms = ArrayList<String>()
+            perms.add(Manifest.permission.WRITE_CONTACTS)
+            if (!contact)
+                perms.add(Manifest.permission.WRITE_CONTACTS)
             if (!videoGranted)
                 perms.add(Manifest.permission.CAMERA)
             if (!audioGranted)
@@ -1346,7 +1350,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     companion object {
         val TAG = CallFragment::class.simpleName!!
-        const val ACTION_PLACE_CALL = "PLACE_CALL"
         const val KEY_ACTION = "action"
         const val KEY_HAS_VIDEO = "HAS_VIDEO"
         private const val REQUEST_CODE_ADD_PARTICIPANT = 6
