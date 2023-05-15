@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Süsteem</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_clearHistory_title">Kustuta ajalugu</string>
   <!--Notifications Visibility-->
   <!--Plugin-->

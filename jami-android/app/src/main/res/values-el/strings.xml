@@ -32,6 +32,7 @@
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_account">Διαχείριση Λογαριασμού</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
+  <string name="menu_item_account_settings">Ρυθμίσεις λογαριασμού</string>
   <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
@@ -314,8 +315,11 @@
   <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
+  <string name="uninstall">Απεγκατάσταση</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Επιβεβαίωση</string>
   <string name="tab_about">Περί</string>
   <string name="tab_members">Μέλη</string>
+  <string name="tab_documetn">Έγγραφα</string>
   <string name="dialog_hint_title">Τίτλος</string>
 </resources>

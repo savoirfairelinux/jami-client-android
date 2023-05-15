@@ -60,7 +60,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_useragent_label">User-agent</string>
   <string name="account_autoanswer_label">Décrochage automatique</string>
   <string name="account_rendezvous_label">Mode rendez-vous</string>
-  <string name="account_rendezvous_summary">Avec le point de rendez-vous, les appels entrants sont rajoutés à un salon de conférence</string>
+  <string name="account_rendezvous_summary">En mode Rendez-vous, les appels entrants seront ajoutés à une salle de conférence.</string>
   <string name="account_upnp_label">Activer UPnP</string>
   <string name="account_proxy_field">Serveur mandataire</string>
   <!--Plugin Details-->
@@ -79,7 +79,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancé</string>
-  <string name="account_call_settings_title">Paramètres d\'appel</string>
+  <string name="account_call_settings_title">Paramètres d\\'appel</string>
   <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
   <string name="account_registration_exp_label">Expiration d\'enregistrement</string>
   <string name="account_local_interface_label">Interface locale</string>
@@ -105,8 +105,8 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="enabled">Activé</string>
   <string name="account_proxy_label">DHT mandataire</string>
   <string name="account_proxy_enable_label">Utiliser un serveur délégataire </string>
-  <string name="account_proxy_server_label">Adresse du DHT mandataire</string>
-  <string name="account_proxy_server_list_label">URL de la liste des DHT proxy</string>
+  <string name="account_proxy_server_label">Adresse du serveur mandataire DHT</string>
+  <string name="account_proxy_server_list_label">URL de la liste des serveurs mandataires DHT</string>
   <string name="account_sip_proxy_label">Serveur mandataire</string>
   <string name="account_peer_discovery_label">Découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_label">Activer la découverte des utilisateurs locaux</string>
@@ -145,39 +145,39 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="export_account_wait_title">Veuillez patienter...</string>
   <string name="export_account_wait_message">Exporter les informations du compte</string>
   <string name="account_export_file">Sauvegarder votre compte</string>
-  <string name="account_export_file_summary">Sauvegarder votre compte pour pouvoir le restaurer plus tard</string>
+  <string name="account_export_file_summary">Sauvegarder le compte de votre appareil pour pouvoir le restaurer plus tard</string>
   <string name="account_export_end_decryption_message">Impossible de déverrouiller votre compte en utilisant le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">Impossible d\'exporter le compte sur le réseau. Veuillez vérifier votre connexion. </string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_export_end_error_message">Impossible d\'exporter le compte. Une erreur inconnue s\'est produite.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
-  <string name="account_share_body">Contactez-moi en utilisant  \'%1$s\' sur la plateforme de communication distribuée %2$s</string>
-  <string name="account_share_body_with_username">Contactez-moi en utilisant  \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée %3$s</string>
+  <string name="account_share_body">Contactez-moi en utilisant l\'identifiant \'%1$s\' sur la plateforme de communication distribuée %2$s</string>
+  <string name="account_share_body_with_username">Contactez-moi en utilisant l\'identifiant \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée %3$s</string>
   <string name="account_contact_me">Contactez-moi sur Jami !</string>
   <string name="update_account">Mise à jour du compte </string>
-  <string name="account_migration">Votre compte Jami va être mis à jour.\nVeuillez entrer votre mot de passe.</string>
+  <string name="account_migration">Votre compte Jami va être mis à jour.\nVeuillez saisir votre mot de passe.</string>
   <string name="ring_account">Compte Jami</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_migration_message_dialog">Vos comptes ont besoin d\'être mis à jour. Souhaitez-vous aller au panneau des comptes pour effectuer cet opération ?</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Compte introuvable</string>
-  <string name="account_cannot_be_found_message">Le compte ne peut être trouvé sur le réseau Jami. Vérifiez qu\'il a bien été exporté par un autre appareil et que les identifiants fournis sont corrects.</string>
+  <string name="account_cannot_be_found_message">Le compte ne peut être trouvé sur le réseau Jami.\nVérifiez qu\'il a bien été exporté par un autre appareil et que les identifiants fournis sont corrects.</string>
   <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer le processus de création du compte ou mettre à jour vos informations ici. Vous pouvez également mettre à jour vos informations plus tard dans les paramètres de compte.</string>
   <string name="account_no_network_title">Impossible de se connecter au réseau</string>
-  <string name="account_no_network_message">Impossible de rajouter le compte parce que Jami ne peut se connecter sur le réseau. Vérifiez la connectivité de votre appareil.</string>
+  <string name="account_no_network_message">Impossible d\'ajouter le compte parce que Jami ne peut se connecter sur le réseau. Vérifiez la connectivité de votre appareil.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
   <string name="account_device_added_message">Le compte Jami a été correctement configuré sur cet appareil.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
   <string name="account_device_updated_message">Mise à jour de votre compte Jami effectuée avec succès. </string>
-  <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé à ce compte a échouée. S.v.p. vérifier votre mot de passe.</string>
+  <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé au compte a échoué. Vérifiez votre mot de passe.</string>
   <string name="account_sip_success_title">Compte SIP enregistré</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>
   <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
   <!--TV-->
   <string name="account_tv_settings_header">Paramètres du compte</string>
-  <string name="account_tv_advance_settings_header">Réglages avancés</string>
+  <string name="account_tv_advance_settings_header">Paramètres avancés</string>
   <string name="account_tv_add_contact">Ajouter le contact</string>
   <string name="account_tv_advanced_settings">Modifier les paramètres généraux</string>
   <string name="account_tv_about">À propos de Jami</string>
@@ -191,7 +191,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_link_prompt_pin">Entrer votre NIP</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
-  <string name="account_link_show_button">Montrer %d appareils liés suppléementaires</string>
+  <string name="account_link_show_button">Montrer %d appareils liés supplémentaires</string>
   <string name="account_link_hide_button">Cacher les appareils liés</string>
   <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'afficher sur Jami. Ceci générera un code PIN que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le PIN sera valable pendant 10 minutes. </string>
   <string name="account_start_export_button">Générer un NIP</string>
@@ -199,11 +199,11 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer le processus, vous devez ouvrir Ring sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
   <string name="account_link_export_info_light">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Jami. Ceci générera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes. </string>
   <string name="account_export_title">Associer le compte à d\'autres appareils</string>
-  <string name="account_connect_server_button">Se connecter à partir d\'un serveur d\'entreprise</string>
+  <string name="account_connect_server_button">Se connecter à un serveur de gestion de comptes</string>
   <string name="account_connect_button">Se connecter</string>
-  <string name="prompt_server">Adresse du serveur de gestion de parc Jami</string>
-  <string name="help_credentials_enter">Entrer votre nom d\'utilisateur d\'entreprise</string>
-  <string name="help_connect_password_enter">Entrer le mot de passe</string>
+  <string name="prompt_server">Adresse du serveur de gestion de comptes Jami</string>
+  <string name="help_credentials_enter">Entrer le nom d\'utilisateur pour le serveur de gestion de comptes</string>
+  <string name="help_connect_password_enter">Entrer le mot de passe pour le serveur de gestion de comptes</string>
   <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>

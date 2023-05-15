@@ -24,6 +24,9 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Η κλήση ακυρώθηκε. Δεν εντοπίστηκε μικρόφωνο.</string>
     <string name="call_error_no_camera_no_microphone">Η κλήση ακυρώθηκε. Δεν εντοπίστηκε κάμερα ή μικρόφωνο.</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Αναζήτηση</string>
+    <string name="call_human_state_incoming">Εισερχόμενη</string>
     <string name="call_human_state_connecting">Συνδέεται</string>
     <string name="call_human_state_ringing">Κουδουνίζει</string>
     <string name="call_human_state_current">Μιλά</string>

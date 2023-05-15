@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Dados do Celular</string>
   <string name="pref_mobileData_summary">Permitir o Jami em redes 3G/LTE além do Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificações via push</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Use os servidores do Google para permitir o recebimento de chamadas/mensagens em segundo plano</string>
   <string name="pref_video_advanced_title">Configurações avançadas de vídeo</string>
   <string name="pref_video_advanced_summary">Altere a taxa de bits do vídeo, a resolução e acesse os recursos experimentais</string>

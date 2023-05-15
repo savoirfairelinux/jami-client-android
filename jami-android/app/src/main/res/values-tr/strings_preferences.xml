@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Hücresel veri</string>
   <string name="pref_mobileData_summary">Jami\'ye Wi-Fi\'ye ek olarak 3G/LTE ağlarında izin ver</string>
   <string name="pref_pushNotifications_title">Anlık bildirimler</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Arka planda arama/ileti almaya izin vermek için Google sunucularını kullan.</string>
   <string name="pref_video_advanced_title">Gelişmiş görüntü ayarları</string>
   <string name="pref_video_advanced_summary">Görüntü bit oranını ve çözünürlüğünü değiştir, ayrıca deneysel özelliklere eriş</string>

@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">ضبط بُریده صوتی</string>
   <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
   <string name="conversation_share_location">اشتراک مکان</string>
+  <string name="in_reply_to">در پاسخ به</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">مجوز دوربین</string>
   <string name="permission_dialog_camera_message">گفتگوی ویدیویی برای کار نیاز به مجوز دوربین دارد. لطفا آن را فعال کنید.</string>
@@ -189,6 +190,9 @@
   <string name="conversation_info_contact_you">شما</string>
   <string name="conversation_members">اعضا</string>
   <string name="conversation_syncing">بارگیری مکالمه از طرف دیگر</string>
+  <string name="conversation_blocked">اين تماس مسدود شده</string>
+  <string name="conversation_ended">گفتگوي تموم شد</string>
+  <string name="conversation_message_deleted">(رساله حذف شده)</string>
   <string name="conversation_preference_color">رنگ گفتگو</string>
   <string name="conversation_preference_emoji">شکلَک گفتگو</string>
   <string name="conversation_type_contact">مخاطب جامی</string>
@@ -295,6 +299,7 @@
   <string name="menu_file_delete">حذف فایل</string>
   <string name="menu_file_share">هم‌رسانی فایل</string>
   <string name="menu_message_copy">کپی</string>
+  <string name="menu_message_edit">پیام را ویرایش کنید</string>
   <string name="menu_message_delete">حذف پیام</string>
   <string name="menu_message_cancel">لغو پیام</string>
   <string name="menu_message_reply">پاسخ</string>
@@ -366,5 +371,6 @@
   <string name="dialog_hint_description">توضیحات</string>
   <string name="picker_title">انتخاب مخاطب</string>
   <string name="picker_btn">انتخاب مخاطب</string>
+  <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
   <string name="bottomsheet_remove">اخراج از گروه</string>
 </resources>
