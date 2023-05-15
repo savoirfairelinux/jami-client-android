@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77015e8b_ce53a737",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationFragment.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-15T19:59:59Z",
+      "side": 1,
+      "message": "TODO or not to do ?",
+      "range": {
+        "startLine": 687,
+        "startChar": 3,
+        "endLine": 693,
+        "endChar": 5
+      },
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2605e87e_d767cdc2",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-15T19:59:59Z",
+      "side": 1,
+      "message": "Not respecting design.",
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a98a86e_87794d0f",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-15T19:59:59Z",
+      "side": 1,
+      "message": "Why to use relative layout",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6365bed8_491d69e3",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-15T19:59:59Z",
+      "side": 1,
+      "message": "How to explain ?",
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
