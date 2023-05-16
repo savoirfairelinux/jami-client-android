@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "568b80d9_4dccd324",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T15:55:45Z",
+      "side": 0,
+      "message": "Can you verify ? I checked on the code for other use-case, and found out the corresponding model variable was always used after initialization.\nIn this case, I don\u0027t see why the viewmodel have to be init if not used.",
+      "parentUuid": "4bc58f63_7248716c",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "046f91d0343a2fc5db1f45a85978b3dc6449c62c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "192486a6_177470b4",
         "filename": "jami-android/app/src/main/java/cx/ring/account/ChangePasswordDialog.kt",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-10T19:50:38Z",
       "side": 0,
       "message": "make sure the text field is selected by default instead",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 148
+      },
+      "revId": "046f91d0343a2fc5db1f45a85978b3dc6449c62c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83f7e186_1db81c8c",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/ChangePasswordDialog.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T15:55:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "192486a6_177470b4",
       "range": {
         "startLine": 71,
         "startChar": 8,
