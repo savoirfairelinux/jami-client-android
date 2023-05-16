@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3aad7b_c5efe903",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T12:54:18Z",
+      "side": 1,
+      "message": "IDE \"No usages found in All Places\"",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "ba9aa4585aed147ee9f1517d63ec8d32713d52f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

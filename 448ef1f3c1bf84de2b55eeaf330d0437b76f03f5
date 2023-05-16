@@ -22,6 +22,30 @@
       },
       "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95071695_f7595bd0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T12:54:18Z",
+      "side": 0,
+      "message": "IDE \"No usages found in All Places\"",
+      "parentUuid": "090b7c0e_c5745511",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 70
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
