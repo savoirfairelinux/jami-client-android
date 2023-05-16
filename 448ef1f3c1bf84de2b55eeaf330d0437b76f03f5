@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44dd72b9_019a357e",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T18:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "267865c7_9fdbbe86",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 74
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c881b33_29f8b96a",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-10T19:44:09Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 347,
+        "startChar": 20,
+        "endLine": 347,
+        "endChar": 70
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3d2a348_13ea15bf",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T18:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c881b33_29f8b96a",
       "range": {
         "startLine": 347,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92636b88_de6271e7",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T18:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1852abc4_84934002",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 361,
+        "endChar": 70
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37152aae_ce842867",
@@ -93,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "658eb2ae_ac3a770f",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/JamiAccountSummaryFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T18:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37152aae_ce842867",
+      "range": {
+        "startLine": 556,
+        "startChar": 9,
+        "endLine": 567,
+        "endChar": 19
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "869125fb_6d7a8971",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-05-10T19:44:09Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 74
+      },
+      "revId": "448ef1f3c1bf84de2b55eeaf330d0437b76f03f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37406fb4_ea9b6131",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T18:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "869125fb_6d7a8971",
       "range": {
         "startLine": 113,
         "startChar": 24,
