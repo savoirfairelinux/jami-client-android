@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ef6f3fd_381daa0d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T19:11:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5848d736_f517d9f0",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "81e92787b9a885b908f84208774ed8e60d96182b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bbe6288_d11aec55",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-10T19:30:48Z",
       "side": 1,
       "message": "it.substring(1).toInt(16) and 0xFF000000",
+      "range": {
+        "startLine": 654,
+        "startChar": 0,
+        "endLine": 660,
+        "endChar": 69
+      },
+      "revId": "81e92787b9a885b908f84208774ed8e60d96182b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ca13c0c_6bc6113a",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-16T19:11:18Z",
+      "side": 1,
+      "message": "you meant bitwise OR. done",
+      "parentUuid": "1bbe6288_d11aec55",
       "range": {
         "startLine": 654,
         "startChar": 0,
