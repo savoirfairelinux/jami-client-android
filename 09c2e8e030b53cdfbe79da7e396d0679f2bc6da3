@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a359d99_25066af0",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/main/MainFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-17T14:32:55Z",
+      "side": 1,
+      "message": "ringID is the old, outdated name",
+      "range": {
+        "startLine": 224,
+        "startChar": 48,
+        "endLine": 224,
+        "endChar": 54
+      },
+      "revId": "09c2e8e030b53cdfbe79da7e396d0679f2bc6da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
