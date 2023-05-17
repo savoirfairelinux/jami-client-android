@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98697ee5_58885b02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-05-17T19:53:31Z",
+      "side": 1,
+      "message": "probably missing some \"GitLab: #\" tickets. Else, the feature seems to work for the use-case I tested",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02dd28e1_3bc708d9",
         "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
         "patchSetId": 14
