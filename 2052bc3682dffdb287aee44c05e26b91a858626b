@@ -447,6 +447,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeafe2d5_36d864bb",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/ConnectionService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-05-17T19:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8c7c00_0fa43d38",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "308b60e7_55710ef1",
@@ -460,6 +484,30 @@
       "writtenOn": "2023-05-03T14:06:45Z",
       "side": 1,
       "message": "Desired comment ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96b1dd99_9a20b7e5",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/ConnectionService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-05-17T19:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308b60e7_55710ef1",
       "range": {
         "startLine": 52,
         "startChar": 11,
@@ -1210,6 +1258,30 @@
       "side": 1,
       "message": "nop",
       "parentUuid": "9c22babe_16e87896",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d43a3a8b_83e52272",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DeviceRuntimeService.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-05-17T19:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d2fc8c1_f9eb5cf6",
       "range": {
         "startLine": 24,
         "startChar": 22,
