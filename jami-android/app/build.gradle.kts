@@ -114,7 +114,7 @@ dependencies {
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("org.osmdroid:osmdroid-android:6.1.14")
+    implementation ("org.osmdroid:osmdroid-android:6.1.16")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
 
