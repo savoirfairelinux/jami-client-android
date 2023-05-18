@@ -70,6 +70,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f7b904_99047a38",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T18:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02dd28e1_3bc708d9",
+      "range": {
+        "startLine": 230,
+        "startChar": 34,
+        "endLine": 232,
+        "endChar": 35
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f529d354_f8e77242",
@@ -116,6 +140,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9fab962_8199ad98",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T18:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39a22b11_deee304b",
+      "range": {
+        "startLine": 1187,
+        "startChar": 46,
+        "endLine": 1187,
+        "endChar": 60
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ef631ef_e6401489",
@@ -152,6 +200,30 @@
       "writtenOn": "2023-05-17T19:37:56Z",
       "side": 1,
       "message": "I guess this logic of adding/removing contacts should be explained somewhere.",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27e6ad8_5e906933",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/CallServiceImpl.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T18:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f207e8a_39d5e024",
       "range": {
         "startLine": 61,
         "startChar": 19,
