@@ -894,6 +894,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea1c42e0_ce94d7b7",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T19:05:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92419039_6f6e7375",
+      "range": {
+        "startLine": 270,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 9
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ebb0ba0_1c567f86",
@@ -930,6 +954,30 @@
       "writtenOn": "2023-05-03T14:06:45Z",
       "side": 1,
       "message": "Desired comment ?",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 8
+      },
+      "revId": "2052bc3682dffdb287aee44c05e26b91a858626b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cea217d_c257d1dc",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T19:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84685a46_3a8b8b9c",
       "range": {
         "startLine": 295,
         "startChar": 0,

@@ -71,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a7a6cd5_c4728cb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T19:05:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98697ee5_58885b02",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02dd28e1_3bc708d9",
@@ -141,6 +165,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "260fa17f_d7870818",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T19:05:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f529d354_f8e77242",
+      "range": {
+        "startLine": 234,
+        "startChar": 44,
+        "endLine": 234,
+        "endChar": 48
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39a22b11_deee304b",
@@ -201,6 +249,30 @@
       "writtenOn": "2023-05-17T19:37:56Z",
       "side": 1,
       "message": "2023",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "542c0bbc28d3f1c491db94a175dece447f940d33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f9104f5_8408fcf0",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/CallConnection.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-18T19:05:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ef631ef_e6401489",
       "range": {
         "startLine": 2,
         "startChar": 17,
