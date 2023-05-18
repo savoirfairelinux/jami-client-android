@@ -64,8 +64,9 @@ object ServiceInjectionModule {
     fun provideNotificationService(@ApplicationContext appContext: Context, accountService: AccountService,
                                    contactService: ContactService,
                                    preferencesService: PreferencesService,
-                                   deviceRuntimeService: DeviceRuntimeService): NotificationService {
-        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService)
+                                   deviceRuntimeService: DeviceRuntimeService,
+                                   callService: CallService): NotificationService {
+        return NotificationServiceImpl(appContext, accountService, contactService, preferencesService, deviceRuntimeService, callService)
     }
 
     @Provides
@@ -90,10 +91,12 @@ object ServiceInjectionModule {
 
     @Provides
     @Singleton
-    fun provideCallService(@Named("DaemonExecutor") executor : ScheduledExecutorService,
+    fun provideCallService(@ApplicationContext appContext: Context,
+                           @Named("DaemonExecutor") executor : ScheduledExecutorService,
                            contactService: ContactService,
-                           accountService: AccountService): CallService {
-        return CallService(executor, contactService, accountService)
+                           accountService: AccountService,
+                           deviceRuntimeService: DeviceRuntimeService): CallService {
+        return CallServiceImpl(appContext, executor, contactService, accountService, deviceRuntimeService)
     }
 
     @Provides
@@ -118,9 +121,8 @@ object ServiceInjectionModule {
     @Singleton
     fun provideContactService(@ApplicationContext appContext: Context,
                               preferenceService: PreferencesService,
-                              deviceRuntimeService : DeviceRuntimeService,
                               accountService: AccountService): ContactService {
-        return ContactServiceImpl(appContext, preferenceService, deviceRuntimeService, accountService)
+        return ContactServiceImpl(appContext, preferenceService, accountService)
     }
 
     @Provides
