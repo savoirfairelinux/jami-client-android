@@ -41,9 +41,7 @@ import cx.ring.BuildConfig
 import cx.ring.application.JamiApplication
 import cx.ring.client.CallActivity
 import cx.ring.client.ConversationActivity
-import cx.ring.tv.call.TVCallActivity
 import cx.ring.utils.ConversationPath
-import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.model.Conversation
@@ -158,10 +156,9 @@ class DRingService : Service() {
         if (mDeviceRuntimeService.hasContactPermission()) {
             contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver)
         }
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
+        val intentFilter = IntentFilter().apply {
+            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+            addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
         }
         registerReceiver(receiver, intentFilter)
         updateConnectivityState()
