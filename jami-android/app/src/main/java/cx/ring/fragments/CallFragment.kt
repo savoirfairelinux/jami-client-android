@@ -403,28 +403,34 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     //todo: enable pip when only our video is displayed
     override fun enterPipMode(accountId: String, callId: String?) {
         val context = requireContext()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE))
-            return
+
+        // Quit if PIP isn't supported by the current device.
+        if (!context.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+        ) return
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val binding = binding ?: return
+
             if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
+
             try {
-                requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(1, 1))
-                    .setActions(listOf(RemoteAction(
-                        Icon.createWithResource(context, R.drawable.baseline_call_end_24),
-                        getString(R.string.action_call_hangup),
-                        getString(R.string.action_call_hangup),
-                        PendingIntent.getService(
-                            context,
-                            Random().nextInt(),
-                            Intent(DRingService.ACTION_CALL_END)
-                                .setClass(context, DRingService::class.java)
-                                .putExtra(NotificationService.KEY_CALL_ID, callId)
-                                .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
-                            ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
-                        )
+                requireActivity().enterPictureInPictureMode(
+                    PictureInPictureParams.Builder()
+                        .setAspectRatio(Rational(1, 1))
+                        .setActions(listOf(RemoteAction(
+                            Icon.createWithResource(context, R.drawable.baseline_call_end_24),
+                            getString(R.string.action_call_hangup),
+                            getString(R.string.action_call_hangup),
+                            PendingIntent.getService(
+                                context,
+                                Random().nextInt(),
+                                Intent(DRingService.ACTION_CALL_END)
+                                    .setClass(context, DRingService::class.java)
+                                    .putExtra(NotificationService.KEY_CALL_ID, callId)
+                                    .putExtra(ConversationPath.KEY_ACCOUNT_ID, accountId),
+                                ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)
+                            )
                     ))).build())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't enter  PIP mode", e)

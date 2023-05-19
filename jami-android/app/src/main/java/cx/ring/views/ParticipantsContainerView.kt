@@ -36,34 +36,41 @@ class ParticipantsContainerView// adding name, mic etc..
     }
 
     fun initialize() {
+        // If there is no participants, we can remove all the views.
         if (participants.isEmpty()) {
             removeAllViews()
             return
         }
 
         // Used to know which participant to display in PiP mode.
-        val inflater = LayoutInflater.from(context)
-
-        val mainWidth = width.toFloat()
-        val mainHeight = height.toFloat()
-
-        val toRemove: MutableList<View> = ArrayList()
-
         val pipFocusParticipant = getPipFocusParticipant()
 
+        val toRemove: MutableList<View> = ArrayList()
         for (childView in children) {
-            val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
+            val tag = childView.tag as String?
+            if (tag.isNullOrEmpty() // Remove all the views that are not participants.
+                || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
                 toRemove.add(childView)
             else // Hide the view if it is not the focused participant in PiP mode.
                 childView.isVisible = !(pipMode && pipFocusParticipant?.tag != tag)
         }
-        for (v in toRemove) removeView(v)
+        toRemove.forEach { removeView(it) }
 
+        // Active participants are participants on which the interest is focused.
+        // It generally means that they are the ones talking. So they are usually full screen.
         val activeParticipants = participants.count { it.active }
         val inactiveParticipants = participants.size - activeParticipants
-        val grid = activeParticipants == 0
 
+        // There is some display modes:
+        // - If there is no active participants, we display all the participants in a grid.
+        // - If there is active participants, we display them either :
+        //     - Full screen
+        //     - Semi full screen, with top panel where we display the other participants
+
+        // Manage display modes
+        val grid = activeParticipants == 0
+        val mainWidth = width.toFloat()
+        val mainHeight = height.toFloat()
         val portrait = mainWidth < mainHeight
         val maxCol = if (grid) (if (portrait) 1 else 3) else 3
         val maxRow = if (grid) (if (portrait) 3 else 1) else 3
@@ -74,47 +81,64 @@ class ParticipantsContainerView// adding name, mic etc..
         val inactiveCount = if (portrait) inactiveMaxCols else inactiveMaxRows
         val centerMaxInactive = 2
         val inactiveSize = 1f / max(inactiveCount, centerMaxInactive)
-        val inactiveOffset = if (!grid && inactiveCount < centerMaxInactive) ((1f - inactiveSize * inactiveCount)/2f) else 0f
+        val inactiveOffset =
+            if (!grid && inactiveCount < centerMaxInactive)
+                (1f - inactiveSize * inactiveCount) / 2f
+            else 0f
         val inactiveOffsetX = if (portrait) inactiveOffset else 0f
         val inactiveOffsetY = if (portrait) 0f else inactiveOffset
-        val inactiveWidth = if (grid) 1f/inactiveMaxCols else if (portrait) inactiveSize else activeSeparation
-        val gridRows = if (grid) inactiveParticipants / inactiveMaxCols else 0
-        val inactiveHeight = if (grid) (1f / gridRows) else if (portrait) activeSeparation else inactiveSize
-        val margin = if (participants.size < 2) 0 else context.resources.getDimensionPixelSize(
-            R.dimen.call_participant_margin)
-        val cornerRadius = if (participants.size < 2) 0f else context.resources.getDimension(
-            R.dimen.call_participant_corner_radius)
+        val inactiveWidth =
+            if (grid) 1f/inactiveMaxCols else if (portrait) inactiveSize else activeSeparation
+        val gridRows =
+            if (grid) inactiveParticipants / inactiveMaxCols else 0
+        val inactiveHeight =
+            if (grid) (1f / gridRows) else if (portrait) activeSeparation else inactiveSize
+        val margin =
+            if (participants.size < 2) 0
+            else context.resources.getDimensionPixelSize(R.dimen.call_participant_margin)
+        val cornerRadius =
+            if (participants.size < 2) 0f
+            else context.resources.getDimension(R.dimen.call_participant_corner_radius)
 
         var iActive = 0
         var iInactive = 0
         val addToMain: MutableList<View> = ArrayList()
         val addToScroll: MutableList<View> = ArrayList()
-        for (i in participants) {
-
-            val viewTag = i.sinkId ?: i.contact.contact.uri.uri
+        for (participantInfo in participants) {
+            val viewTag = participantInfo.sinkId ?: participantInfo.contact.contact.uri.uri
             val view: View? = findViewWithTag(viewTag)
-            // adding name, mic etc..
-            val participantInfoOverlay = if (view != null) ItemParticipantLabelBinding.bind(view) else ItemParticipantLabelBinding.inflate(inflater).apply {
-                root.tag = viewTag
-            }
 
-            val isPipFocus = pipFocusParticipant?.tag == i.tag
+            // Create or recycle the view for each participants
+            val participantInfoOverlay =
+                if (view != null) // Recycle the view
+                    ItemParticipantLabelBinding.bind(view)
+                else // Create a new one
+                    ItemParticipantLabelBinding.inflate(LayoutInflater.from(context))
+                        .apply {
+                            root.tag = viewTag
+                        }
+
+            val isPipFocus = pipFocusParticipant?.tag == participantInfo.tag
             participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
-            participantInfoOverlay.sink.setFitToContent(i.active && !pipMode)
+            participantInfoOverlay.sink.setFitToContent(participantInfo.active && !pipMode)
             participantInfoOverlay.root.radius = if(pipMode) 0f else cornerRadius
 
+            // If there is no video available, we display the avatar
             participantInfoOverlay.sink.videoListener = { hasVideo ->
                 participantInfoOverlay.avatar.isVisible = !hasVideo
                 if (!hasVideo) {
                     participantInfoOverlay.avatar.setImageDrawable(AvatarDrawable.Builder()
-                        .withContact(i.contact)
+                        .withContact(participantInfo.contact)
                         .withCircleCrop(true)
                         .build(context))
                 }
             }
+
+            // Adjust avatar layout params
             participantInfoOverlay.avatar.updateLayoutParams {
-                if (i.active) {
-                    val size = context.resources.getDimensionPixelSize(R.dimen.call_participant_avatar_size)
+                if (participantInfo.active) {
+                    val size = context.resources
+                        .getDimensionPixelSize(R.dimen.call_participant_avatar_size)
                     width = size
                     height = size
                 } else {
@@ -122,26 +146,41 @@ class ParticipantsContainerView// adding name, mic etc..
                     height = ViewGroup.LayoutParams.MATCH_PARENT
                 }
             }
-            participantInfoOverlay.sink.setSinkId(i.sinkId)
 
-            participantInfoOverlay.participantName.text = i.contact.displayName
-            participantInfoOverlay.mute.isVisible = i.audioModeratorMuted || i.audioLocalMuted
+            participantInfoOverlay.sink.setSinkId(participantInfo.sinkId)
 
+            // Set up name and mute icon
+            participantInfoOverlay.participantName.text = participantInfo.contact.displayName
+            participantInfoOverlay.mute.isVisible =
+                participantInfo.audioModeratorMuted || participantInfo.audioLocalMuted
 
-            val layoutWidth = if (portrait) LayoutParams.MATCH_PARENT else LayoutParams.WRAP_CONTENT
-            val layoutHeight =  if (portrait) LayoutParams.WRAP_CONTENT else LayoutParams.MATCH_PARENT
+            val layoutWidth =
+                if (portrait) LayoutParams.MATCH_PARENT else LayoutParams.WRAP_CONTENT
+            val layoutHeight =
+                if (portrait) LayoutParams.WRAP_CONTENT else LayoutParams.MATCH_PARENT
             val layoutParams = LayoutParams(layoutWidth, layoutHeight)
             hscroll.layoutParams = layoutParams
             vscroll.layoutParams = layoutParams
 
-            val scrollable = !grid && !i.active
+            val scrollable = !grid && !participantInfo.active
+            val col =
+                if (participantInfo.active) iActive.toFloat()
+                else
+                    if (grid) (iInactive % inactiveMaxCols).toFloat()
+                    else if (portrait) iInactive.toFloat()
+                    else 0f
 
-            val col = if (i.active) iActive.toFloat() else (if (grid) (iInactive % inactiveMaxCols).toFloat() else if (portrait) iInactive.toFloat() else 0f)
             val row = if (portrait) 0f else iInactive.toFloat()
-            val x = if (i.active) col * activeWidth else inactiveOffsetX + col * inactiveWidth
-            val y = if (i.active) activeSeparation else (if (grid) ((iInactive / inactiveMaxCols).toFloat()/gridRows) else inactiveOffsetY + row * inactiveHeight)
-            val w = if (i.active) activeWidth else inactiveWidth
-            val h = if (i.active) 1f-activeSeparation else inactiveHeight
+            val x =
+                if (participantInfo.active) col * activeWidth
+                else inactiveOffsetX + col * inactiveWidth
+            val y =
+                if (participantInfo.active) activeSeparation
+                else
+                    if (grid) ((iInactive / inactiveMaxCols).toFloat() / gridRows)
+                    else inactiveOffsetY + row * inactiveHeight
+            val w = if (participantInfo.active) activeWidth else inactiveWidth
+            val h = if (participantInfo.active) 1f-activeSeparation else inactiveHeight
 
             val params = LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -155,7 +194,7 @@ class ParticipantsContainerView// adding name, mic etc..
                     width = mainWidth.toInt()
                     height = mainHeight.toInt()
                 }
-                else if (i.active) {
+                else if (participantInfo.active) {
                     leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
                     rightMargin = if (portrait) leftMargin else leftMargin / 2
                     topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
@@ -189,7 +228,7 @@ class ParticipantsContainerView// adding name, mic etc..
                 }
             }
 
-            if (i.active)
+            if (participantInfo.active)
                 iActive++
             else
                 iInactive++
