@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebfd94b5_ec07c3a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "Works pretty well with my airbuds ! Very cool feature :)",
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a6f7ac1_de07c7ff",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "Remove unused line",
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95d772fe_bfe4ce1f",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 226,
+        "startChar": 51,
+        "endLine": 227,
+        "endChar": 64
+      },
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f1992dc_368924fd",
+        "filename": "jami-android/app/src/main/java/cx/ring/application/JamiApplication.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 229,
+        "startChar": 75,
+        "endLine": 230,
+        "endChar": 87
+      },
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358a4ddb_22f31b1a",
+        "filename": "jami-android/app/src/main/java/cx/ring/service/ConnectionService.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 113,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f014cb2d_04b21752",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/DeviceRuntimeService.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-19T15:16:05Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 64,
+        "startChar": 67,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "e63614367082f5423e13e8a105e9dde6b27f287b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
