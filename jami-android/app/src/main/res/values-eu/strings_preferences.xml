@@ -8,6 +8,7 @@
   <string name="pref_mobileData_title">Datu mugikorrak</string>
   <string name="pref_mobileData_summary">Baimendu Jami  3G/LTE sareetan, wifi sareetan gain</string>
   <string name="pref_pushNotifications_title">Push jakinarazpenak</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Erabili Google zerbitzariak deiak eta mezuak bigarren planoan jasotzea ahalbidetzeko</string>
   <string name="pref_video_advanced_title">Bideo ezarpen aurreratuak</string>
   <string name="pref_hd_summary">Gaitu HD bideoa bidaltzea</string>

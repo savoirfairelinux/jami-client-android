@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillåt Jami på 3G/LTE-nätverk, som tillägg till WiFi</string>
   <string name="pref_pushNotifications_title">Använd aviseringar</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Använd Google-servrar för att ta emot samtal/meddelanden i bakgrunden</string>
+  <string name="pref_unifiedPush_summary">Använd en UnifiedPush-tjänst för att tillåta att ta emot samtal/meddelanden i bakgrunden</string>
   <string name="pref_video_advanced_title">Avancerade video inställningar</string>
   <string name="pref_video_advanced_summary">Ändra videons bithastighet, upplösning och få tillgång till experimentella funktioner</string>
   <string name="pref_hd_summary">Aktivera att skicka HD-video</string>
@@ -35,6 +37,8 @@
   <string name="pref_delete_account_summary">Ta bort ditt konto från denna enhet</string>
   <string name="pref_persistNotification_title">Kör i bakgrunden</string>
   <string name="pref_persistNotification_summary">Tillåt bakgrundskörning för inkommande samtal och meddelanden.</string>
+  <string name="pref_newGroup_title">Aktivera gruppchat</string>
+  <string name="pref_newGroup_summary">Skapar grupper i Jami.</string>
   <string name="pref_logs_title">Diagnostiklogg</string>
   <string name="pref_logs_summary">Öppna inställningar för diagnostiklogg</string>
   <string name="pref_logs_start">Starta loggning</string>
@@ -58,6 +62,8 @@
   <string name="plugin_uninstall_title">Avinstallera tillägg?</string>
   <string name="plugin_reset_preferences">Återställ tillägg</string>
   <string name="plugin_reset_preferences_summary">Dina inställningar för tillägg återställs</string>
+  <string name="plugin_reset_preferences_ask">Vill du återställa de allmänna plugin inställningarna?</string>
+  <string name="plugin_reset_account_preferences_ask">Vill du återställa inställningarna för kontoplugin?</string>
   <string name="plugin_successfully_installed">Tillägg <b>%1$s</b> installerades </string>
   <string name="plugin_install_failure">Misslyckades med att installera tillägg: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Det finns en senare version av<b>%1$s </b> </string>

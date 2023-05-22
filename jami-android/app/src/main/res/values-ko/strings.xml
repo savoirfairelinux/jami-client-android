@@ -1,12 +1,45 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">피드백</string>
+  <string name="report"><u>우리에게 이메일을 보내</u></string>
+  <string name="section_license">면허</string>
+  <string name="sponsor_section">자미는 자미에서 개발하고 지원하는 자유 소프트웨어입니다.</string>
+  <string name="copyright_section">저작권</string>
+  <string name="contribute_section">기여</string>
+  <string name="version_section">버전</string>
+  <string name="no_email_app_installed">이메일 앱은 발견되지 않았습니다. 보고서를 보내기 위해 하나를 설치하세요.</string>
+  <string name="no_browser_app_installed">웹 브라우저 앱은 발견되지 않았습니다. 이 페이지를 보기 위해 하나를 설치하십시오.</string>
+  <string name="email_chooser_title">메일을 보내...</string>
+  <string name="website_chooser_title">웹 사이트를 사용해서 볼 수 있습니다.</string>
+  <string name="license">이 소프트웨어는 어떠한 보증도 없이 \"그대로\" 제공된다. 자세한 내용은 GNU 일반 공중 라이선스 버전 3 또는 후기를 참조하십시오.</string>
+  <string name="description">자미는 이용자의 자유와 사생활을 존중하는 보편적 통신을 위한 자유 소프트웨어입니다.</string>
+  <string name="credits">신용</string>
+  <string name="pip_title">자미 회의</string>
+  <string name="call_service_description">이 서비스는 전화가 앞면에 계속 실행되도록 필요합니다. 전화 중에만 실행됩니다.</string>
+  <string name="data_transfer_service_description">이 서비스는 파일 전송 중에 지속적인 알림을 표시하는 데 필요합니다. 이 서비스는 파일 전송 중에만 실행됩니다.</string>
   <!--About dialog-->
+  <string name="developed_by">개발자:</string>
+  <string name="designed_by">디자인:</string>
+  <string name="ringtones_by">핑거스</string>
   <!--RingActivity-->
+  <string name="error_no_network">네트워크 연결이 없습니다</string>
+  <string name="error_account_offline">계정은 오프라인입니다</string>
+  <string name="error_mobile_network_available_but_disabled">설정 화면에서 셀룰러 네트워크에 액세스 할 수 있도록 허용하십시오.</string>
   <!--AB menus-->
+  <string name="ab_action_chat">문자 메시지</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">연락 요청</string>
+  <string name="menu_item_accounts">계정을 관리</string>
+  <string name="menu_item_account">계정을 관리</string>
   <string name="menu_item_settings">설정</string>
+  <string name="menu_item_advanced_settings">고급 설정</string>
+  <string name="menu_item_account_settings">계정 설정</string>
+  <string name="menu_item_plugin_list">플러그인 설정</string>
+  <string name="menu_item_share">내 계정을 공유</string>
+  <string name="menu_item_about">자미 에 관한 것</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">번호를 호출</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -14,44 +47,120 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">수신 전화가 빠진 것</string>
+  <string name="notif_missed_outgoing_call">출력 전화가 빠진 것</string>
+  <string name="notif_incoming_call">수신 전화</string>
+  <string name="notif_outgoing_call">출력 전화</string>
+  <string name="notif_channel_calls">전화</string>
+  <string name="notif_channel_messages">메시지</string>
+  <string name="notif_channel_file_transfer">파일 전송</string>
+  <string name="notif_group_calls">전화</string>
+  <string name="notif_dismiss">해고</string>
+  <string name="notif_reply">답변</string>
+  <string name="location_share_action_stop">공유를 그만 두세요</string>
+  <string name="location_share_about_title">지도 정보</string>
   <!--Call Fragment-->
+  <string name="action_call_maximize">최대한 활용</string>
+  <string name="action_call_minimize">줄여주기</string>
+  <string name="action_call_mute">무음</string>
+  <string name="action_call_unmute">무명</string>
+  <string name="action_call_decline">감소</string>
+  <string name="action_call_mic_mute">무음 마이크</string>
   <string name="ab_action_contact_add">연락처에 추가하기</string>
   <!--Text messages-->
+  <string name="message_failed">실패</string>
   <string name="send_file">파일 보내기</string>
+  <string name="conversation_share_location">공유 위치</string>
+  <string name="in_reply_to">이에 대한 답변</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">오류</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">내 계정을 공유</string>
   <!--Settings-->
+  <string name="clear_history">명확한 것</string>
   <!--Conversation-->
+  <string name="conversation_details">연락처</string>
+  <string name="conversation_action_delete_this_message">이 행동은 되돌릴 수 없습니다.</string>
+  <string name="conversation_action_history_clear">명확한 역사</string>
+  <string name="conversation_action_block_this">차단 접촉</string>
   <string name="conversation_action_latest">대화의 끝으로 스크롤</string>
+  <string name="conversation_members">의원</string>
   <!--Contacts-->
+  <string name="account_create_title">Jami 계정을 생성</string>
   <string name="prompt_hint_username">사용자명</string>
   <string name="wizard_next">다음</string>
+  <string name="wizard_back">돌아와</string>
+  <string name="wizard_skip">스피프</string>
+  <string name="hist_contact_added">연락처 추가</string>
+  <string name="hist_invitation_received">초대 받은 것</string>
   <!--Account Summary-->
   <string name="profile">프로필</string>
+  <string name="profile_message_warning">귀하의 프로필은 귀하의 연락처와만 공유됩니다</string>
+  <string name="profile_name_hint">네 이름을 입력해</string>
+  <string name="identity">신분</string>
   <string name="account">계정</string>
+  <string name="link_new_device">새로운 장치를 연결</string>
+  <string name="devices">연결된 장치</string>
   <!--Share fragment-->
+  <string name="share_label">공유</string>
+  <string name="generic_error_migration">오류</string>
   <!--Pending contact requests-->
   <string name="accept">수락</string>
+  <string name="refuse">거절</string>
+  <string name="block">블록</string>
   <!--Send contact requests-->
+  <string name="send_request_button">보내</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">차단된 연락처가 없습니다</string>
   <!--Smartlist-->
+  <string name="search_results">검색 결과</string>
+  <string name="tv_contact_row_header">연락처</string>
   <!--File Transfer-->
   <string name="file_transfer_status_cancelled">취소됨</string>
+  <string name="menu_file_open">열 파일</string>
+  <string name="menu_file_save">파일 저장</string>
   <string name="menu_file_share">파일 공유하기</string>
   <string name="menu_message_copy">복사하기</string>
+  <string name="menu_message_edit">메시지 편집</string>
+  <string name="menu_message_delete">메시지 삭제</string>
   <string name="menu_message_cancel">메시지 취소</string>
+  <string name="menu_message_reply">답변</string>
+  <string name="menu_delete">삭제</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">대화</string>
+  <string name="navigation_item_contact_request">초대</string>
   <string name="navigation_item_account">계정</string>
   <!--TV-->
+  <string name="tv_media_preview">미리보기</string>
   <string name="tv_audio_play">재생</string>
   <string name="tv_audio_pause">멈춤</string>
+  <string name="tv_dialog_send">보내</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">추천</string>
+  <string name="wizard_status_optional">선택 사항</string>
+  <string name="wizard_status_required">요구 사항</string>
+  <string name="wizard_username_info">계정 사용자 이름을 선택</string>
+  <string name="wizard_password_skip">계정을 생성</string>
+  <string name="wizard_password_switch">비밀번호로 계정을 암호화</string>
+  <string name="wizard_profile_info">프로파일은 연락처만 공유합니다</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">공유</string>
+  <string name="bottomSheet_plugins_btn">플러그인</string>
+  <string name="bottomSheet_add_participants_btn">추가</string>
+  <string name="bottomSheet_change_camera_btn">변화</string>
   <string name="bottomSheet_hangup_btn">통화 종료</string>
   <string name="bottomSheet_raiseHand_btn">손 들기</string>
+  <string name="uninstall">설치 해제</string>
+  <string name="reset">다시 설정</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">확인</string>
+  <string name="swarm_description">설명을 추가</string>
+  <string name="tab_about">에 관한 것</string>
+  <string name="tab_members">의원</string>
+  <string name="tab_documetn">문서</string>
+  <string name="dialog_hint_title">제목</string>
+  <string name="dialog_hint_description">설명</string>
 </resources>

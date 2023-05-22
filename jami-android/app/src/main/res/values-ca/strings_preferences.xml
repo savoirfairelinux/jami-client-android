@@ -9,6 +9,7 @@
   <string name="pref_mobileData_title">Dades mòbils</string>
   <string name="pref_mobileData_summary">Permet Jami en xarxes 3G/LTE a més de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions Push</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utilitza els servidors de Google per permetre rebre trucades/missatges en rerefons.</string>
   <string name="pref_video_advanced_title">Preferències de vídeo avançades</string>
   <string name="pref_video_advanced_summary">Canvia el bitrate de vídeo, resolució així com l\'accés a característiques experimentals</string>

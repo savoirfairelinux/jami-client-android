@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Ses klibi kaydet </string>
   <string name="conversation_send_video">Görüntü klibi kaydet</string>
   <string name="conversation_share_location">Konum paylaş</string>
+  <string name="in_reply_to">Cevap olarak</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
   <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
@@ -182,13 +183,21 @@
   <string name="block_contact_dialog_title">%1$s Engellensin mi?</string>
   <string name="block_contact_dialog_message">Sen engelini kaldırana dek %1$s sana ulaşamaz.</string>
   <string name="block_contact_completed">%1$s engellendi.</string>
+  <string name="unblock_contact_dialog_title">%1$s\'i bloklamayı açıyor musun?</string>
+  <string name="unblock_contact_dialog_message">%1$s tekrar sizinle iletişime geçebilir.</string>
+  <string name="unblock_contact_completed">%1$s engellenmedi.</string>
   <string name="conversation_contact_is_typing">Kişi yazıyor…</string>
   <string name="conversation_info_contact_you">Siz</string>
   <string name="conversation_members">Üyeler</string>
   <string name="conversation_syncing">Konuşma karşı taraftan indiriliyor</string>
+  <string name="conversation_blocked">Bu bağlantı engellenmiş.</string>
+  <string name="conversation_ended">Konuşmamız bitti.</string>
+  <string name="conversation_message_deleted">(Müjde silinmiştir)</string>
   <string name="conversation_preference_color">Konuşma rengi</string>
   <string name="conversation_preference_emoji">Konuşma emojisi</string>
   <string name="conversation_type_contact">Jami kişisi</string>
+  <string name="conversation_type_private">Özel Swarm</string>
+  <string name="conversation_type_group">Gruplar</string>
   <string name="conversation_contact_invited">%1$s davet edildi</string>
   <string name="conversation_contact_added">%1$s katıldı</string>
   <string name="conversation_contact_left">%1$s ayrıldı</string>
@@ -289,6 +298,7 @@
   <string name="menu_file_delete">Dosyayı sil</string>
   <string name="menu_file_share">Dosya paylaş</string>
   <string name="menu_message_copy">Kopyala</string>
+  <string name="menu_message_edit">İleti düzenle</string>
   <string name="menu_message_delete">İletiyi sil</string>
   <string name="menu_message_cancel">İletiyi iptal et</string>
   <string name="menu_message_reply">Yanıtla</string>
@@ -343,6 +353,8 @@
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Sesler</string>
   <string name="bottomSheet_raiseHand_btn">Elinizi kaldırın</string>
+  <string name="open_account_plugin_settings">Hesap Eklentisi Ayarları Aç</string>
+  <string name="open_general_plugin_settings">Genel Eklentinin Ayarlarını Aç</string>
   <string name="uninstall">Kaldır</string>
   <string name="reset">Sıfırlama</string>
   <!--Swarm Detail-->
@@ -352,9 +364,12 @@
   <string name="tab_about">Hakkında</string>
   <string name="tab_members">Üyeler</string>
   <string name="tab_documetn">Belgeler</string>
+  <string name="dialogtitle_title">Swarm başlığı düzenle</string>
+  <string name="dialogtitle_description">Swarm açıklamasını düzenle</string>
   <string name="dialog_hint_title">Başlık</string>
   <string name="dialog_hint_description">Açıklama</string>
   <string name="picker_title">Kişi seç</string>
   <string name="picker_btn">Kişi seç</string>
   <string name="bottomsheet_contact">Jami\'ye Ulaş\n%1$s</string>
+  <string name="bottomsheet_remove">Sığırdan uzaklaştır</string>
 </resources>
