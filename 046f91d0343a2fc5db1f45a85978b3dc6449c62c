@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2bb88eb_eb1b16ad",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/AccountWizardActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "568b80d9_4dccd324",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "046f91d0343a2fc5db1f45a85978b3dc6449c62c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "192486a6_177470b4",

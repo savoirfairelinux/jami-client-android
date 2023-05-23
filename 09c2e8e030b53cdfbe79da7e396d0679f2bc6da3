@@ -22,6 +22,30 @@
       },
       "revId": "09c2e8e030b53cdfbe79da7e396d0679f2bc6da3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52fbe85d_82503ab3",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/main/MainFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 1,
+      "message": "In fact, this method is never called at all, so removed.",
+      "parentUuid": "7a359d99_25066af0",
+      "range": {
+        "startLine": 224,
+        "startChar": 48,
+        "endLine": 224,
+        "endChar": 54
+      },
+      "revId": "09c2e8e030b53cdfbe79da7e396d0679f2bc6da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

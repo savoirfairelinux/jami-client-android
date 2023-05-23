@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca928078_1b917fb6",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/JamiGuidedStepFragment.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "does it mean the function should be open ?\ndoing this, warning is removed :)\n\nFrom android.com: You are only allowed to inherit from abstract classes or classes that are marked with the open keyword.",
+      "parentUuid": "ca47ab32_97fd7760",
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1657df38_22d92a32",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "keep this here, it initializes the viewModel.\nSee https://developer.android.com/topic/libraries/architecture/viewmodel",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 59
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80729979_8601a508",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "From what I understand, the viewModel is like an object containing every data you want that can survive through configuration changes (such as screen rotation for example). Because we don\u0027t put any data on it, I guess we don\u0027t need it.",
+      "parentUuid": "1657df38_22d92a32",
       "range": {
         "startLine": 53,
         "startChar": 8,
@@ -64,6 +106,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f609558a_7671d9d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/cards/AbstractCardPresenter.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "does it mean the function should be open ?\ndoing this, warning is removed :)\n\n\nFrom android.com: You are only allowed to inherit from abstract classes or classes that are marked with the open keyword.",
+      "parentUuid": "a5d21e22_a37ea6de",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 5
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5faf0728_d48a3fff",
@@ -77,6 +143,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "preserve valuable information that might be used later",
+      "range": {
+        "startLine": 462,
+        "startChar": 77,
+        "endLine": 462,
+        "endChar": 89
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbacccc7_da56de37",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Account.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5faf0728_d48a3fff",
       "range": {
         "startLine": 462,
         "startChar": 77,
@@ -110,6 +200,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b31a97e8_2037f989",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ebb95296_8c5c00f7",
+      "range": {
+        "startLine": 146,
+        "startChar": 31,
+        "endLine": 146,
+        "endChar": 49
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2782abaa_1d640aca",
@@ -123,6 +237,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "preserve code, even if not used for now",
+      "range": {
+        "startLine": 1011,
+        "startChar": 46,
+        "endLine": 1011,
+        "endChar": 52
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f236cdf_31c06473",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2782abaa_1d640aca",
       "range": {
         "startLine": 1011,
         "startChar": 46,
@@ -156,6 +294,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02e5abaa_664b2906",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3eb1fd58_bf2102c5",
+      "range": {
+        "startLine": 1154,
+        "startChar": 51,
+        "endLine": 1154,
+        "endChar": 71
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4db14f9e_bcf2fcde",
@@ -169,6 +331,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "valuable information to be preserved, even if not used for now",
+      "range": {
+        "startLine": 1467,
+        "startChar": 68,
+        "endLine": 1467,
+        "endChar": 88
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f24641eb_5dbe9fa7",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/AccountService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4db14f9e_bcf2fcde",
       "range": {
         "startLine": 1467,
         "startChar": 68,
@@ -202,6 +388,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3801e52f_93a7152b",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5443bcf1_fc14f32c",
+      "range": {
+        "startLine": 426,
+        "startChar": 31,
+        "endLine": 426,
+        "endChar": 50
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a4b2762_abc8ed3f",
@@ -215,6 +425,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "this is there for a good reason",
+      "range": {
+        "startLine": 474,
+        "startChar": 31,
+        "endLine": 474,
+        "endChar": 42
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "676fedec_90fd77e6",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8a4b2762_abc8ed3f",
       "range": {
         "startLine": 474,
         "startChar": 31,
@@ -248,6 +482,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeee138f_fb9a1b16",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "33c0c30a_182654f1",
+      "range": {
+        "startLine": 537,
+        "startChar": 45,
+        "endLine": 537,
+        "endChar": 60
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd37c473_e842f1f3",
@@ -261,6 +519,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "this is there for a good reason",
+      "range": {
+        "startLine": 560,
+        "startChar": 24,
+        "endLine": 560,
+        "endChar": 43
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b52e4aca_cc29a99e",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cd37c473_e842f1f3",
       "range": {
         "startLine": 560,
         "startChar": 24,
@@ -294,6 +576,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "246a0cb6_bc07729d",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/services/CallService.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9525e108_37d5433e",
+      "range": {
+        "startLine": 638,
+        "startChar": 26,
+        "endLine": 638,
+        "endChar": 45
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f64f0ac_f4e378e5",
@@ -317,6 +623,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd1fee8a_b9cbe673",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/utils/FileUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0f64f0ac_f4e378e5",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c433b8f_9f466221",
@@ -330,6 +660,30 @@
       "writtenOn": "2023-05-17T14:32:55Z",
       "side": 0,
       "message": "don\u0027t remove inline just because Kotlin puts a warning",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "0704494f4cf1a53af452ecffe1385074edddf461",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e00eebdd_024b09b1",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/utils/HashUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-23T18:25:50Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2c433b8f_9f466221",
       "range": {
         "startLine": 41,
         "startChar": 12,
