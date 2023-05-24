@@ -23,7 +23,6 @@ package net.jami.model
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import net.jami.call.CallPresenter
 import net.jami.model.Call.CallStatus
 import net.jami.model.Call.CallStatus.Companion.fromConferenceString
 import java.util.*
