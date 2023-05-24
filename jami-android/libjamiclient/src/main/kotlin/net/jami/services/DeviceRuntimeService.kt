@@ -62,4 +62,5 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     abstract fun hasGalleryPermission(): Boolean
     abstract val profileName: String?
     abstract fun hardLinkOrCopy(source: File, dest: File): Boolean
+
 }
