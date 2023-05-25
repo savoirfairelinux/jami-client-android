@@ -1132,6 +1132,16 @@ class AccountService(
         JamiService.setConversationPreferences(accountId, conversationId, StringMap.toSwig(info))
     }
 
+    /**
+     * Daemon interface to get conversation preferences (color, emoji, etc.)
+     * @param accountId account id
+     * @param conversationId conversation id
+     * @return map of preferences
+     */
+    fun getConversationPreferences(accountId: String, conversationId: String): Map<String, String> {
+        return JamiService.getConversationPreferences(accountId, conversationId)
+    }
+
     fun updateConversationInfo(accountId: String, conversationId: String, info: Map<String, String>) {
         JamiService.updateConversationInfos(accountId, conversationId, StringMap.toSwig(info))
     }
