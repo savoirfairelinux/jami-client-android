@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4028c204_8ee609f0",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-05-25T19:17:35Z",
+      "side": 1,
+      "message": "Please get a look on this, as I don\u0027t know if it\u0027s good or not :)",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 10
+      },
+      "revId": "410dfbff14283825eee2e1f8c52c1d0003b1c4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb4dfc43_87c82781",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
         "patchSetId": 6
