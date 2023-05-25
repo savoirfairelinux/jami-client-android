@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb4dfc43_87c82781",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-05-25T19:13:22Z",
+      "side": 1,
+      "message": "the presenter should get the value independently, by subscribing to the conversation color or symbol rx subject. Changing the preference should cause the rx flow to be updated, either through the daemon (already done in AccountService), or through the shared prefs (could be done here).",
+      "range": {
+        "startLine": 918,
+        "startChar": 12,
+        "endLine": 918,
+        "endChar": 42
+      },
+      "revId": "410dfbff14283825eee2e1f8c52c1d0003b1c4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
