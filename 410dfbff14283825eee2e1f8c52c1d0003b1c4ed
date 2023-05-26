@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef38333f_f2587dbe",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-05-26T13:50:02Z",
+      "side": 1,
+      "message": "actually, setConversationPreferences is taking the whole map of preferences (so that you can reset to default by not passing the keys)\n\nPassing only one key removes the other keys (e.g. if you have emoji+color, this will remove the preference set for the emoji)",
+      "range": {
+        "startLine": 113,
+        "startChar": 28,
+        "endLine": 113,
+        "endChar": 88
+      },
+      "revId": "410dfbff14283825eee2e1f8c52c1d0003b1c4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4028c204_8ee609f0",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationFragment.kt",
         "patchSetId": 6
