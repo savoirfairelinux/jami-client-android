@@ -16,13 +16,7 @@
  */
 package cx.ring.service
 
-import android.content.ContentProviderOperation
-import android.content.ContentResolver
-import android.content.OperationApplicationException
-import android.graphics.Bitmap
 import android.os.Build
-import android.os.RemoteException
-import android.provider.ContactsContract
 import android.telecom.Connection
 import android.telecom.ConnectionRequest
 import android.telecom.ConnectionService
@@ -31,7 +25,6 @@ import android.telecom.TelecomManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import cx.ring.services.CallServiceImpl
-import cx.ring.services.DeviceRuntimeServiceImpl
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.Uri
@@ -40,7 +33,6 @@ import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.services.DeviceRuntimeService
 import net.jami.services.NotificationService
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,7 +49,7 @@ class ConnectionService : ConnectionService() {
     @Inject
     lateinit var deviceRuntimeService: DeviceRuntimeService
 
-    private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection) -> Unit)? = null): CallConnection {
+    private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection {
         val connection = CallConnection(this, request, showIncomingCallUi).apply {
             val account = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID)
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
@@ -89,10 +81,9 @@ class ConnectionService : ConnectionService() {
 
     override fun onCreateIncomingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
         Log.w(TAG, "onCreateIncomingConnection $request")
-        val connection = buildConnection(request) {
-            (callService as CallServiceImpl).onIncomingCallResult(request.extras, it)
+        return buildConnection(request) { connection, result ->
+            (callService as CallServiceImpl).onIncomingCallResult(request.extras, connection, result)
         }
-        return connection
     }
 
     override fun onCreateIncomingConnectionFailed(account: PhoneAccountHandle?, request: ConnectionRequest?) {
