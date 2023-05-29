@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">In wacht zetten</string>
     <string name="call_human_state_unhold">Uit wacht halen</string>
     <string name="call_human_state_over">Over</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderator</string>
+    <string name="call_muted">Gevoelige</string>
+    <string name="call_handRaised">Hand omhoog</string>
+
+</resources>

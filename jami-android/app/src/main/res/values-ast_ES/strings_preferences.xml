@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">La rede</string>
+  <string name="pref_category_contacts">Contactos</string>
+  <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_category_privacy">La privacidá</string>
+  <string name="pref_category_diagnostic">Los diagnósticos</string>
+  <string name="pref_mobileData_title">Datu de movilidá</string>
+  <string name="pref_mobileData_summary">Permitir Jami en redes 3G/LTE amás de Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Notificaciones de empuxa</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Utiliza servidores de Google pa permitir la recepción de llamadas/mensaxes en fondu</string>
+  <string name="pref_unifiedPush_summary">Utiliza un serviciu UnifiedPush pa permitir la recepción d\'escuestes/mensaxes en fondu</string>
+  <string name="pref_video_advanced_title">La configuración avanzada de video</string>
+  <string name="pref_video_advanced_summary">Cambiar la tasa de bits del video, la resolución, y tamién les funciones experimentales d\'accesu</string>
+  <string name="pref_hd_summary">Activizar l\' envío de video HD</string>
+  <string name="pref_hwEncode_title">Activu la codificación acelerada</string>
+  <string name="pref_hwEncode_summary">El términu \"Colour\" ye un términu que se usa pa describir la superficie de la superficie.</string>
+  <string name="pref_videoBitrate_title">La tasa de bits de video</string>
+  <string name="pref_videoBitrate_summary">Seleccione la velocidá de bits de video saliente predeterminada (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolución de video</string>
+  <string name="pref_videoResolution_summary">Seleccione la resolución de video saliente predeterminada</string>
+  <string name="pref_systemContacts_title">Utiliza contactos del sistema</string>
+  <string name="pref_systemContacts_summary">Utiliza los contactos del sistema pa mostrar detalles de l\'anunciante.</string>
+  <string name="pref_systemDialer_title">Lugar de les llamadas del sistema usando Jami</string>
+  <string name="pref_systemDialer_summary">La so madre ye una de les muyeres más importantes del mundu.</string>
+  <string name="pref_startOnBoot_title">Iniciar Jami na puesta en marcha</string>
+  <string name="pref_startOnBoot_summary">La so carrera foi de la so carrera.</string>
+  <string name="pref_clearHistory_title">La hestoria clara</string>
+  <string name="pref_clearHistory_summary">La so primer apaición foi nel so papel nel papel de la actriz.</string>
+  <string name="pref_notification_title">La visibilidá de la notificación</string>
+  <string name="pref_notification_summary">Establecer la visibilidá de les notificaciones d\'aplicaciones na pantalla de bloqueo.</string>
+  <string name="pref_blackList_title">Lista de bloques</string>
+  <string name="pref_blackList_summary">Verificar la so llista de bloques.</string>
+  <string name="pref_delete_account_title">La cuenta ye borrada</string>
+  <string name="pref_delete_account_summary">La so cuenta ye borrada d\' este dispositivu</string>
+  <string name="pref_persistNotification_title">La carrera en fondu</string>
+  <string name="pref_persistNotification_summary">Permite correr en fondu pa recibir llamadas y mensaxes.</string>
+  <string name="pref_newGroup_title">Activu del grupu de charla</string>
+  <string name="pref_newGroup_summary">Permite crear grupos en Jami.</string>
+  <string name="pref_logs_title">Los rexistros de diagnósticu</string>
+  <string name="pref_logs_summary">Configuraciones abiertes del rexistru de diagnósticu</string>
+  <string name="pref_logs_start">Comienza la arquivada</string>
+  <string name="pref_logs_stop">Pa parar la tala</string>
+  <string name="pref_typing_title">Abilitar los indicadores de mecanografía</string>
+  <string name="pref_typing_summary">Enviar y recibir indicadores de mecanografía que muestren que se ta mecanografiando un mensaxe.</string>
+  <string name="pref_read_title">Activu de recibos de lectura</string>
+  <string name="pref_read_summary">Enviar y recibir recibos que indiquen que se ha mostrado un mensaxe.</string>
+  <string name="pref_block_record_title">Bloquear captura d\' pantalla y grabación</string>
+  <string name="pref_block_record_summary">Bloquear la toma de captura de pantalla o grabación de video.</string>
+  <string name="pref_link_preview_title">Mostrar previews de enllaces en conversaciones</string>
+  <string name="pref_link_preview_summary">Les previsiones requieren descargar conteníos de servidores de terceros.</string>
+  <!--Notifications Visibility-->
+  <string name="notification_public">Publicar notificaciones y el so conteníu na pantalla de bloqueo)</string>
+  <string name="notification_private">El so conteníu nun se ve en pantalla de bloqueo.</string>
+  <string name="notification_secret">Secretos \n(nun muestren notificaciones na pantalla de bloqueo)</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">Plugins</string>
+  <string name="pref_plugins_summary">Activu plugins y establez los sos parámetros</string>
+  <string name="fab_plugins_add">A añadir un nuevu plug-in</string>
+  <string name="plugin_uninstall_title">¿ Desinstalar el plugín?</string>
+  <string name="plugin_reset_preferences">Les preferencies de plugin de restablecimientu</string>
+  <string name="plugin_reset_preferences_summary">La configuración del plugín va ser defectu</string>
+  <string name="plugin_reset_preferences_ask">¿ Quiere restablecer les configuraciones xenerales del plug-in?</string>
+  <string name="plugin_reset_account_preferences_ask">¿ Quiere restablecer les configuraciones del plug-in de la cuenta?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> instaláu con ésitu</string>
+  <string name="plugin_install_failure">Faló en instalar el plugin: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Hai una versión más reciente de: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Hai la mesma versión de <b>%1$s</b> instalada</string>
+  <string name="plugin_force_install">La fuerza \n instalación</string>
+  <string name="plugin_path_image_add">Axega una imaxe nueva</string>
+</resources>

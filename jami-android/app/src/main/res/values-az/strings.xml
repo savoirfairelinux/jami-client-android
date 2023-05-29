@@ -1,47 +1,375 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">ردعمل</string>
+  <string name="report"><u>بئزه ایمیل گؤندر</u></string>
+  <string name="section_license">رخصت</string>
+  <string name="sponsor_section">جامی (جامی) بیر آزاد نرم افزار دیر که توسط</string>
+  <string name="copyright_section">حق اشغال</string>
+  <string name="contribute_section">بؤلوملر</string>
+  <string name="version_section">نسخه</string>
+  <string name="no_email_app_installed">ای میل ایپ تاپیلدی، بیرینی یاتماق اوچون یئتیشدیریر</string>
+  <string name="no_browser_app_installed">هیچ web browser app تاپیلدی، بو صفحه نی گؤرمک اوچون بیری سی نصب ائت</string>
+  <string name="email_chooser_title">پستي بفرستيد با استفاده از...</string>
+  <string name="website_chooser_title">سايتين سايتيني...</string>
+  <string name="license">بو نرم افزار هر نوع گارانتیسیز \"هماناً\" وئریلیر.</string>
+  <string name="description">جامی، آلیشمیش آلیشما اوچون آزاد بیر نرم افزار دیر کی، اؤز ایستیفاده چیلرینین آزادلیقلارینا و خصوصی لیکلرینه حؤرمت ائدیر.</string>
+  <string name="credits">اعتبارلار</string>
+  <string name="pip_title">جامي کنفرانس</string>
+  <string name="call_service_description">بو سرویس، تماسلارینیزی قاباقجا ساخلاماق اوچون لازیمدیر.</string>
+  <string name="data_transfer_service_description">بو سرویس فایللار یئرلشدیریلیش واختلارین داواملی خبرلرینی گؤسترمک اوچون لازیمدیر.</string>
   <!--About dialog-->
+  <string name="developed_by">بؤلوم:</string>
+  <string name="designed_by">طراحي</string>
+  <string name="ringtones_by">گوشي هاي صداي</string>
   <!--RingActivity-->
+  <string name="error_no_network">شبکه باغلیغی یوخدور</string>
+  <string name="error_account_offline">حساب آپلاين اولوب</string>
+  <string name="error_mobile_network_available_but_disabled">لطفاً تنظیمات صفحه سینده موبایل شبکه سینده دسترسی وئرین.</string>
   <!--AB menus-->
+  <string name="ab_action_chat">پیامکلر</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">تماس طلبی</string>
+  <string name="menu_item_accounts">حسابلارین ایداره سی</string>
+  <string name="menu_item_account">حسابین ایداره سی</string>
+  <string name="menu_item_settings">تنظیمات</string>
+  <string name="menu_item_advanced_settings">آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین آلنین</string>
+  <string name="menu_item_account_settings">حسابلارین تنظیماتلاری</string>
+  <string name="menu_item_plugin_list">پلگین سیتیجلار</string>
+  <string name="menu_item_share">حسابيمي بؤلوشدور</string>
+  <string name="menu_item_about">جامی حاقّيندا</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">بیر سایی چال</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d دانیشیق</item>
+    <item quantity="other">%d مکالمات</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">آدی یا تلفن نومره سی آختارین...</string>
+  <string name="choose_number">سئویرم</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">گئچن چاغداش چاغداشلار</string>
+  <string name="notif_missed_outgoing_call">گئدن زنگینلیک</string>
+  <string name="notif_incoming_call_title">%1$s-دن گلن زنگ</string>
+  <string name="notif_incoming_call">گئچن چاغ</string>
+  <string name="notif_outgoing_call_title">%1$s-ه چیخان چاغیرما</string>
+  <string name="notif_outgoing_call">گئدن چاغ</string>
+  <string name="notif_current_call_title">%1$s ایله داوام ائد ن چاغیرما</string>
+  <string name="notif_current_call">داوام ائد ن چاغیرما</string>
+  <string name="notif_channel_call_in_progress">تقدیمه دعوت ائدیر</string>
+  <string name="notif_channel_calls">تماس</string>
+  <string name="notif_channel_missed_calls">تلفونلار سيز قالمادي</string>
+  <string name="notif_channel_incoming_calls">گئدن تماسلار</string>
+  <string name="notif_channel_messages">پيام هاي</string>
+  <string name="notif_channel_requests">طلبلر</string>
+  <string name="notif_channel_file_transfer">فایل لیږد</string>
+  <string name="notif_channel_sync">داده لر هم زمانلاشماسی</string>
+  <string name="notif_channel_background_service">پس زمینه خدمات</string>
+  <string name="notif_channel_background_service_descr">هر واخت زنگ و پيغاملار آلماق ائدیر.</string>
+  <string name="notif_group_calls">تماس</string>
+  <string name="notif_background_service">جامي حال بو حالدا آرخادا قاچار</string>
+  <string name="notif_mark_as_read">اوخونان مارک</string>
+  <string name="notif_dismiss">رد</string>
+  <string name="notif_reply">جاواب</string>
+  <string name="notif_incoming_file_transfer_title">%1$s-دن گلن فایل</string>
+  <string name="notif_outgoing_file_transfer_title">%1$s-ه فایل گؤندرمک</string>
+  <string name="notif_incoming_picture">%1$s-دن عکس</string>
+  <string name="notif_sync_title">داده لرين هم زمانلاشماسي...</string>
+  <string name="notif_location_title">%1$s ایله یئرلشمه</string>
+  <string name="location_share_contact">%1$s یئرلشمه یه باخیش ائدیر</string>
+  <string name="notif_location_multi_title">%1$d تماسلاری ایله یئرلشمه</string>
+  <string name="notif_location_remaining">%1$d دقیقه قالدی</string>
+  <string name="notif_location_action_stop">یئر بؤلمه سینی دایاندیر</string>
+  <string name="location_share_action_start">اشتراکلاشما باشلا</string>
+  <string name="location_share_action_stop">اشتراکلاشماغی بوراخ</string>
+  <string name="location_share_about_title">نقشه یازی</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">سن:</string>
+  <string name="action_call_hangup">باغلا</string>
+  <string name="action_call_maximize">حددن آرتيق</string>
+  <string name="action_call_minimize">آزالت</string>
+  <string name="action_call_mute">ساکئت</string>
+  <string name="action_call_unmute">ساکئت اولما</string>
+  <string name="ongoing_call">داوام ائد ن چاغیرما</string>
+  <string name="hist_in_call">%1$s-ین گلیش زنگینی</string>
+  <string name="hist_out_call">%1$s-ین چیخان چاغیرماسی</string>
+  <string name="start_error_title">جمیو، گئتمه یه بیلمیرم!</string>
+  <string name="start_error_mic_required">جامی میکروفونون ائشلشدیرمه یه اجازه سی لازیمدیر.</string>
+  <string name="action_call_accept">تماس بگیرید</string>
+  <string name="action_call_accept_audio">آودیو جاواب</string>
+  <string name="action_call_accept_video">پاسخ در ویدیو</string>
+  <string name="action_call_hold_accept">تماس تلفنی توقیف و آل</string>
+  <string name="action_call_hold_accept_video">تماس تلفنی و ویدئو آلین</string>
   <string name="action_call_end_accept">Zəngi bitir və cavab ver</string>
+  <string name="action_call_decline">آشاغی صفحه</string>
   <string name="action_call_mic_mute">Mikrofonu səssiz et</string>
+  <string name="action_load_plugin">لوډ پلگ ان</string>
+  <string name="ab_action_speakerphone">اسپکر فعال ائدئ</string>
+  <string name="ab_action_contact_add">تماسلارا قوش</string>
+  <string name="ab_action_contact_add_question">تماس لری آرتیرماق؟</string>
+  <string name="ab_action_audio_call">صداي زنگ</string>
+  <string name="ab_action_video_call">ویدئو تماس</string>
+  <string name="ab_action_change_screen_orientation">صفحه نین یوللاندیریلماسینی دَییشدیر</string>
+  <string name="share_via">اشتراک</string>
+  <string name="write_a_message">بیر خبر یاز</string>
+  <string name="scan_qr">QR کد سکن</string>
+  <string name="qr_code">QR کد</string>
+  <string name="ab_action_flipcamera">فلپ کاميرا</string>
+  <string name="ab_action_hidepreview">اؤنروو اؤرت</string>
+  <string name="remote_recording">%s ضبط...</string>
   <!--Text messages-->
+  <string name="send_message">پيام ارسال کن</string>
+  <string name="message_sending">پيام ارسال...</string>
+  <string name="message_failed">شکست</string>
+  <string name="time_just_now">حالا</string>
   <string name="send_file">Fayl göndər</string>
+  <string name="select_media">گالری آچیق</string>
+  <string name="hist_file_sent">فایل گؤندریلیر</string>
+  <string name="hist_file_received">آلدیغی فایل</string>
+  <string name="conversation_send_audio">آدیو کلیپ ضبط ائتمک</string>
+  <string name="conversation_send_video">ویدئو کليپ ضبط ائتمک</string>
+  <string name="conversation_share_location">بؤلوم یئرلری</string>
+  <string name="in_reply_to">جاوابدا</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">دوربین ائجازه سی</string>
+  <string name="permission_dialog_camera_message">ویدئو مکالمه لری اوچون کامرا ائجازه سی لازیمدیر.</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">خطای</string>
+  <string name="ringtone_error_format_not_supported">بو فورمات دا معاون دئییل.</string>
+  <string name="ringtone_error_size_too_big">بو فایل چوخ بؤیوکدور. اعظمي اؤلچوسو %1$dkB دیر.</string>
+  <string name="ringtone_custom_prompt">اؤزل زنگ سوونو قور</string>
+  <string name="ringtone_custom_label">آدامی</string>
+  <string name="ringtone_jami_tones">جامی تونز</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">جامي بو خصوصيتي فعال اتمک اوچون \"رابطلاري اوخوي\" ائذنيني لازيمدير.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">جامي بو خصوصيتي فعال اتمک اوچون \"دغيسين يازما\" ائجازه سينا لازيمدير.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">قوشماق ایسته ییبسن حسابین QR کدینی سکن ائدیرسن.</string>
+  <string name="title_activity_qrcode">حسابيمي بؤلوشدور</string>
+  <string name="error_scan_no_camera_permissions">QR اسکنر کامرا ائجازه لرینی ایسته ییر</string>
+  <string name="tab_code">کدوم</string>
+  <string name="tab_scan">کد اسکن</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">صاف تاريخ؟</string>
+  <string name="clear_history_dialog_message">بو عملین ردّ اولونماسی اولماز.</string>
+  <string name="clear_history_completed">تاریخ پاک اولوب.</string>
+  <string name="clear_history">واضح</string>
   <!--Conversation-->
+  <string name="conversation_details">تماس کیمیا</string>
+  <string name="conversation_action_delete_this">بو مکالمه نی سئل</string>
+  <string name="conversation_action_delete_this_title">بو مکالمه نی سئلک؟</string>
+  <string name="conversation_action_delete_this_message">بو عملین ردّ اولونماسی اولماز.</string>
+  <string name="conversation_action_history_clear">واضح تاریخ</string>
+  <string name="conversation_action_history_clear_title">دانیشما تاریخینی پاک ائدیرسن؟</string>
+  <string name="conversation_action_history_clear_message">بو قطعن موباحئثه تاریخینی پاک ائد جک.</string>
+  <string name="conversation_action_remove_this">تماس لری سنده</string>
+  <string name="conversation_action_remove_this_title">بو تماسو سينديرماق؟</string>
+  <string name="conversation_action_remove_this_message">بو تماسو سينديرار و دانیشما تاريخيني قطعن پاک ائدر.</string>
+  <string name="conversation_action_copy_peer_number">نُمُرُ نُمُرُ نُمُرُ نُمُرُ نُمُرُ نُمُرُ نُمُرُ نُمُرُ نُمُرُ</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s کلیپبوردا کاپیلندی</string>
+  <string name="conversation_action_select_peer_number">ساییچ سئچیب</string>
+  <string name="conversation_action_block_this">بلاک کنتاکت</string>
+  <string name="conversation_action_unblock_this">تماس رو باز کن</string>
+  <string name="conversation_action_go_to_call">داواملي چاغيرماغا قاييت</string>
+  <string name="conversation_action_latest">آخیرینا قایغیش</string>
+  <string name="conversation_open_file_error">بو فایل تئلئپینی آچماغا قادیر اولان ایستیفاده نصب اولمامیش.</string>
+  <string name="clip_contact_uri">تماس آدرس</string>
+  <string name="block_contact_dialog_title">%1$s رو بلاک کنین؟</string>
+  <string name="block_contact_dialog_message">%1$s اونو باز ائتمهدن قاباق، سنئنله تماس آلا بیلمز.</string>
+  <string name="block_contact_completed">%1$s قفل ائدیلدی.</string>
+  <string name="unblock_contact_dialog_title">%1$s رو باز کنین؟</string>
+  <string name="unblock_contact_dialog_message">%1$s گئنه ده بیزه تماس آلاجاق.</string>
+  <string name="unblock_contact_completed">%1$s قفل اولماميشدي.</string>
+  <string name="conversation_contact_is_typing">تماس با تایپ کردن...</string>
+  <string name="conversation_info_contact_you">سن</string>
+  <string name="conversation_members">عضولری</string>
+  <string name="conversation_syncing">همتداشلاردان دانیشیق آلماق</string>
+  <string name="conversation_blocked">بو تماس قامتلی دیر.</string>
+  <string name="conversation_ended">مکالمه باشا چاتدي.</string>
+  <string name="conversation_message_deleted">(رساله لری حذف ائدیلدی)</string>
+  <string name="conversation_preference_color">دانیشیق رنگینه</string>
+  <string name="conversation_preference_emoji">مکالمات ایموجی</string>
+  <string name="conversation_type_contact">جمی تماس</string>
+  <string name="conversation_type_private">خصوصی سوْنرا</string>
+  <string name="conversation_type_group">گروه توپلو</string>
+  <string name="conversation_contact_invited">%1$s دعوت ائدیلدی</string>
+  <string name="conversation_contact_added">%1$s قوشولدو</string>
+  <string name="conversation_contact_left">%1$ سولدو</string>
+  <string name="conversation_contact_banned">%1$s قاییتدی</string>
+  <string name="conversation_search_hint">بحث آختارماق</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s قوشماق؟</string>
+  <string name="prompt_new_password">یئنی رمز</string>
+  <string name="prompt_new_password_optional">یئنی رمز (اختیاری)</string>
+  <string name="prompt_new_password_repeat">تزه رمزونو تکرار ائدیر</string>
+  <string name="account_create_title">Jami حسابي يارادين</string>
+  <string name="prompt_new_username">یئنی یئنی آد یئتیریر</string>
+  <string name="prompt_hint_username">ایستیفاده چی آد</string>
+  <string name="help_password_choose">جامی حسابینی قوروماق اوچون خاطیرلاداجاقینیز گوجلو رمز سئچیب.</string>
+  <string name="help_password_enter">اصلی جمی حسابین رمزونو دن دن.</string>
+  <string name="help_server_enter">مدیریت سرورین URL-ی دن یئریشدیر</string>
+  <string name="help_pin_enter">PIN-ي باشقا تشکیل اولونموش Jami حسابيندان دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن PIN آلماق اوچون \"Export Jami account\" فیچرینی دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن دن</string>
+  <string name="wizard_next">سونراسي</string>
+  <string name="wizard_back">گئری دؤن</string>
+  <string name="wizard_skip">سکیپ</string>
+  <string name="hist_contact_invited">تماس دعوت اولونور</string>
+  <string name="hist_contact_added">تماس قوشولدو</string>
+  <string name="hist_contact_left">تماس چپ</string>
+  <string name="hist_contact_banned">تماس ممنوع</string>
+  <string name="hist_invitation_received">دعوت آلدی</string>
   <!--Account Summary-->
+  <string name="profile">پروفایل</string>
+  <string name="profile_name">پروفایل آد</string>
+  <string name="profile_message_warning">پروفایلینیز آنجاق تماس لاریزا اشتراک اولونور</string>
+  <string name="open_the_gallery">گالری آچ</string>
+  <string name="take_a_photo">عکس آل</string>
+  <string name="profile_name_hint">آدینی واردات</string>
+  <string name="registered_name">ثبت اولونموش آد</string>
+  <string name="no_registered_name">آدلار ثبت اولمادی</string>
+  <string name="identity">هویت</string>
+  <string name="account">حساب</string>
+  <string name="link_new_device">یئنی آلتی باغلا</string>
+  <string name="devices">باغلانان سئلاحلار</string>
+  <string name="total_devices">کل آلاتلار: </string>
   <!--Share fragment-->
+  <string name="share_message">بو کودونو جمی ایله سکن ائدیر</string>
+  <string name="share_message_no_account">لطفا اشتراک اوچون حساب سئچیب.</string>
+  <string name="share_your_account_information">تماس اطلاعاتيمي بؤلوم</string>
+  <string name="share_label">بؤلوم</string>
+  <string name="generic_error_migration">خطای</string>
+  <string name="generic_error_migration_message">کؤچمه ایله بیر خطره دوچار اولدوق</string>
+  <string name="title_share_with">...تشارق ائله</string>
   <!--Pending contact requests-->
+  <string name="accept">قبول ائدیر</string>
+  <string name="refuse">رد</string>
+  <string name="block">بلوک</string>
+  <string name="contact_request_title">یئنی تماس طلبی</string>
+  <string name="contact_request_msg">%1$d تماس طلبلرینی آلدی</string>
+  <string name="contact_request_account">%1$s اوچون</string>
+  <string name="no_requests">تماس طلبی نداری</string>
+  <string name="message_contact_not_trusted_yet">%s حله تماسلارینیزدا یوخدور.\nبو تماس طلبینی قبول ائدیرسن یا رد ائدیرسن؟</string>
+  <string name="message_contact_not_trusted">%s تانریلارینیزدا یوخدور.\nتازه تانریلار یئنی دن یؤره سینیز؟</string>
   <!--Send contact requests-->
+  <string name="send_request_button">گؤنده ر</string>
+  <string name="send_request_title">تماس طلبی بفرستید</string>
+  <string name="send_request_msg">بو ایستیفاده چی ائله ارتباط برقرار اتمک اوچون ایستیفاده سیزله تماس طلبی گؤندرملی ییرسینیز. ایستیفاده سیزی قبول ائتمه دن بیر مودتده، ایستیفاده سیزله ایستیفاده ائتمک اوچون ایستیفاده سیزله ایستیفاده ائده بیلرسینیز، آمما او، جاواب ورمایاجاق.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">موغوط ائتمه دی</string>
   <!--Smartlist-->
+  <string name="no_contact_request">تماس طلبی گؤندریلمه دی</string>
+  <string name="conversation_placeholder">داها دانیشیقلارینیز یوخدور</string>
+  <string name="contact_request_sent">تماس طلبی ارسال شده</string>
+  <string name="start_conversation">مکالمه یه باشلا</string>
+  <string name="search_results">آختاریش نتیجه لری</string>
+  <string name="tv_contact_row_header">تماس</string>
+  <string name="gallery_error_title">گالری ایستیفاده سی تاپیلدی</string>
+  <string name="gallery_error_message">گالری آچیقلاماق اوچون آلینادا ایستیفاده تاپیلدی</string>
+  <string name="generic_error">نامعلوم خاتمه باش وئریر</string>
   <!--File Transfer-->
+  <string name="invalid_file">ساري ساري</string>
+  <string name="not_able_to_write_file">فایل یازماغا قادیر</string>
+  <string name="file_transfer_status_created">نقل اولدوقجا</string>
+  <string name="file_transfer_status_unsupported">معاون اولمایان</string>
+  <string name="file_transfer_status_wait_peer_acceptance">همتداشلارین قبول ائتمه سینی گؤزله ییب</string>
+  <string name="file_transfer_status_wait_host_acceptance">منتظر میزبان قبول</string>
+  <string name="file_transfer_status_ongoing">حال حال</string>
+  <string name="file_transfer_status_finished">قورتارمیش</string>
+  <string name="file_transfer_status_closed_by_host">کوره طرفیندن باغلانان</string>
+  <string name="file_transfer_status_closed_by_peer">قریبه لرین</string>
+  <string name="file_transfer_status_invalid_pathname">نام یول</string>
+  <string name="file_transfer_status_unjoinable_peer">بیر یاشا بیر یاشا</string>
   <string name="file_transfer_status_cancelled">ləğv edilib</string>
+  <string name="file_transfer_status_error">خطا ایله اوغورلاندی</string>
+  <string name="file_transfer_status_timed_out">واختلاشما</string>
+  <string name="file_saved_in">%s-ده ساقلانان فایل</string>
+  <string name="file_saved_successfully">فایل اوغورلا ساخلانیلیب</string>
+  <string name="file_download">دانلود</string>
+  <string name="no_space_left_on_device">آلینادا بوشلوق قالمامیش</string>
+  <string name="title_media_viewer">میدیالی باخار</string>
+  <string name="menu_file_open">آچیق فایل</string>
+  <string name="menu_file_download">فایل دانلود</string>
+  <string name="menu_file_save">فایل ساقلاما</string>
+  <string name="menu_file_delete">فایل لری سئل</string>
+  <string name="menu_file_share">فایل اشتراک</string>
+  <string name="menu_message_copy">نُسخ</string>
+  <string name="menu_message_edit">پیغام صوتی</string>
+  <string name="menu_message_delete">پيغامي حذف ائدن</string>
   <string name="menu_message_cancel">Mesajı ləğv edin</string>
+  <string name="menu_message_reply">جاواب</string>
+  <string name="menu_delete">حذف</string>
+  <string name="pref_darkTheme_title">قارانليق موضوعو</string>
+  <string name="pref_darkTheme_summary">همیشه سیستئم رفتارینی ایستیفاده ائتمه یه عوضنده قارانلیق موضوعونو فعال ائدیر</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">دانیشیقلار</string>
+  <string name="navigation_item_contact_request">دعوتلر</string>
+  <string name="navigation_item_account">حساب</string>
+  <string name="search_results_public_directory">عمومی دایرکتوری</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">سسلي پيغام گؤندهره جک؟</string>
+  <string name="tv_send_image_dialog_message">عکس گؤندرمک؟</string>
+  <string name="tv_send_video_dialog_message">ویدیو گؤندرمک؟</string>
+  <string name="tv_media_preview">پیش نمایش</string>
+  <string name="tv_audio_play">اوینایین</string>
+  <string name="tv_audio_pause">توقف</string>
+  <string name="tv_dialog_send">گؤنده ر</string>
+  <string name="tv_audio_recording">ضبط کردن...</string>
+  <string name="tv_send_text">یازیلار گؤندر</string>
+  <string name="tv_send_audio">آدیو گؤندر</string>
+  <string name="tv_send_video">میدیایا گؤندره</string>
+  <string name="tv_action_more">داها چوخ</string>
+  <string name="conversation_input_speech_hint">یه چیزی بگو</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">توصیه اولونور</string>
+  <string name="wizard_status_optional">اختیاری</string>
+  <string name="wizard_status_required">لازيمدير</string>
+  <string name="wizard_username_info">حساب اوچون ایستیفاده چی آدینی سئچیب</string>
+  <string name="wizard_username_button">Username سئچیب</string>
+  <string name="wizard_username_skip">ایستیفاده چی آدینی سئچیب سکیپ</string>
+  <string name="wizard_password_info">حساب پاسورلی</string>
+  <string name="wizard_password_placeholder">بو آلینادا حساب کیلی نین رمزلندیریلمه سی اوچون رمز گزیرمه سئچیب</string>
+  <string name="wizard_password_button">رمز سئچیب</string>
+  <string name="wizard_password_skip">حساب یارات</string>
+  <string name="wizard_password_switch">رمزلشدیرمه حساب و رمز</string>
+  <string name="wizard_password_warning">قید ائدک کی، رمز بازیافت اولماز</string>
+  <string name="wizard_profile_info">پروفایل فقط تماسلارلا اشتراک اولونور</string>
+  <string name="wizard_profile_button">پروفایل ساقلام</string>
+  <string name="wizard_profile_skip">رد و بعدش این کارو کن</string>
+  <string name="fab_path_choose">باشقا فایل سئچیب</string>
+  <string name="chat_plugins">چیت پلگینلر</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">بؤلوم</string>
   <string name="bottomSheet_dialpad_btn">Yığım klaviaturası</string>
+  <string name="bottomSheet_plugins_btn">پلگین</string>
+  <string name="bottomSheet_add_participants_btn">آرتیرماق</string>
+  <string name="bottomSheet_change_camera_btn">دَییشدیر</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">دوربین</string>
   <string name="bottomSheet_hangup_btn">Zəngi bitir</string>
   <string name="bottomSheet_mute_microphone_btn">Mikrofon</string>
   <string name="bottomSheet_sound_output_btn">Səslər</string>
+  <string name="bottomSheet_raiseHand_btn">ال قالديريب</string>
+  <string name="open_account_plugin_settings">حساب پلگین سیتیشمالاری آچیق</string>
+  <string name="open_general_plugin_settings">عمومی پلگین تنظیماتینی آچیب</string>
+  <string name="uninstall">نصب ائتمک</string>
+  <string name="reset">قاییتماق</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">تأکید ائدیر</string>
+  <string name="rename_error">بوش اولا بئلمز</string>
+  <string name="swarm_description">شرح قوش</string>
+  <string name="tab_about">حاقّيندا</string>
+  <string name="tab_members">عضولری</string>
+  <string name="tab_documetn">سندلر</string>
+  <string name="dialogtitle_title">ساواد آدینی یئنیله</string>
+  <string name="dialogtitle_description">Swarm description-ی دَییشدیر</string>
+  <string name="dialog_hint_title">آد</string>
+  <string name="dialog_hint_description">شرح</string>
+  <string name="picker_title">تماس لارین سئچیلماسی</string>
+  <string name="picker_btn">تماس لارین سئچیلماسی</string>
+  <string name="bottomsheet_contact">Jami\n%1$s ایله تماس</string>
+  <string name="bottomsheet_remove">سورومدن گؤتور</string>
 </resources>

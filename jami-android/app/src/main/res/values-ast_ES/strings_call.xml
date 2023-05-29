@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">La llamada foi cancelada, nun se detectó micrófono.</string>
+    <string name="call_error_no_camera_no_microphone">La llamada foi cancelada, nin cámara nin micrófono detectáu.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">La busca</string>
+    <string name="call_human_state_incoming">La entrada</string>
+    <string name="call_human_state_connecting">Conexión</string>
+    <string name="call_human_state_ringing">El soníu</string>
+    <string name="call_human_state_current">El so padre foi un fíu de la familia de la familia de los neños.</string>
+    <string name="call_human_state_hungup">El so nome ye \"Castor\".</string>
+    <string name="call_human_state_busy">Entrabosáu</string>
+    <string name="call_human_state_failure">Faló</string>
+    <string name="call_human_state_hold">El so nome ye John.</string>
+    <string name="call_human_state_unhold">La so parte más grande ye la de la so parte más grande.</string>
+    <string name="call_human_state_over">El so nome ye \"Castor\".</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderador</string>
+    <string name="call_muted">El so nome ye \"Castor\".</string>
+    <string name="call_handRaised">La mano alzada</string>
+
+</resources>

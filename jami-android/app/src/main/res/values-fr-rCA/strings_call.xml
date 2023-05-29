@@ -33,8 +33,8 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hungup">Terminé</string>
     <string name="call_human_state_busy">Occupé</string>
     <string name="call_human_state_failure">Échoué</string>
-    <string name="call_human_state_hold">Mettre en attente</string>
-    <string name="call_human_state_unhold">Reprendre</string>
+    <string name="call_human_state_hold">En attente</string>
+    <string name="call_human_state_unhold">Reprise</string>
     <string name="call_human_state_over">Terminé</string>
     <!-- Conferences -->
     <string name="call_moderator">Modérateur</string>

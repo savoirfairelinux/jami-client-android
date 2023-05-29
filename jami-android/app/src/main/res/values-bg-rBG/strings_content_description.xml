@@ -5,4 +5,5 @@
   <string name="contact_picture_description">Снимка на контакта</string>
   <string name="dial_numeric_pad">Цифрова клавиатура</string>
   <string name="contact_unblock">Отблокиране</string>
+  <string name="video_plugins">Видео вградите</string>
 </resources>

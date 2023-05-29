@@ -2,18 +2,44 @@
 <resources>
   <!--About-->
   <string name="feedback_section">משוב</string>
+  <string name="report"><u>שלח לנו דואר אלקטרוני</u></string>
   <string name="section_license">רישיון</string>
+  <string name="sponsor_section">ג\'מי הוא תוכנה חופשית שפותחה ותומכת על ידי</string>
+  <string name="copyright_section">זכויות יוצרים</string>
+  <string name="contribute_section">תרום</string>
   <string name="version_section">גרסה</string>
+  <string name="no_email_app_installed">לא מצאתי אפליקציה אימייל, תקין אחת כדי לשלוח לנו דיווח</string>
+  <string name="no_browser_app_installed">לא נמצא אפליקציה בלוחץ אינטרנט, תקין אחת כדי להציג את הדף הזה</string>
+  <string name="email_chooser_title">לשלוח דואר באמצעות...</string>
+  <string name="website_chooser_title">צפו באתר באמצעות...</string>
+  <string name="license">תוכנת זו מסופקת "כפי שהיא", ללא אחריות של כל סוג. לפרטים, ראה GNU General Public License גרסה 3 או מאוחר יותר&lt;/u&gt;</string>
+  <string name="description">ג\'אמי היא תוכנה חופשית לתקשורת אוניברסלית שמכבדת את החירות והפרטיות של המשתמשים שלה.</string>
   <string name="credits">שבחים</string>
+  <string name="pip_title">ימי</string>
+  <string name="call_service_description">שירות זה הכרחי כדי לשמור על השיחות שלך פועלות בקודם. הוא פועל רק במהלך השיחות.</string>
+  <string name="data_transfer_service_description">שירות זה הכרחי להציג הודעות מתמשכות במהלך העברת קבצים. הוא פועל רק במהלך העברת קבצים.</string>
   <!--About dialog-->
+  <string name="developed_by">פותחה על ידי</string>
+  <string name="designed_by">מעוצבת על ידי</string>
+  <string name="ringtones_by">שירים</string>
   <!--RingActivity-->
   <string name="error_no_network">אין חיבור לרשת</string>
+  <string name="error_account_offline">החשבון לא פועל.</string>
+  <string name="error_mobile_network_available_but_disabled">אנא הענק גישה לרשת סלולרית במסך ההגדרות.</string>
   <!--AB menus-->
+  <string name="ab_action_chat">הודעות טקסט</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">בקשות קשר</string>
   <string name="menu_item_accounts">ניהול חשבונות</string>
+  <string name="menu_item_account">מנהל חשבון</string>
   <string name="menu_item_settings">הגדרות</string>
+  <string name="menu_item_advanced_settings">הגדרות מתקדמות</string>
+  <string name="menu_item_account_settings">הגדרות החשבון</string>
+  <string name="menu_item_plugin_list">הגדרות הפלוגינים</string>
+  <string name="menu_item_share">לחלוק את החשבון שלי</string>
   <string name="menu_item_about">על אודות Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">צלקי מספר</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -22,23 +48,40 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">פספסתי שיחת כניסה</string>
+  <string name="notif_missed_outgoing_call">פספסתי שיחת פנויה</string>
   <string name="notif_incoming_call">שיחה נכנסת</string>
   <string name="notif_outgoing_call">שיחה יוצאת</string>
   <string name="notif_current_call">שיחה יוצאת</string>
   <string name="notif_channel_calls">שיחות</string>
+  <string name="notif_channel_messages">הודעות</string>
+  <string name="notif_channel_file_transfer">העברת קבצים</string>
   <string name="notif_group_calls">שיחות</string>
+  <string name="notif_dismiss">פטור</string>
+  <string name="notif_reply">תשובה</string>
+  <string name="location_share_action_stop">תפסיק לחלוק</string>
+  <string name="location_share_about_title">מידע על מפה</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">אני:</string>
   <string name="action_call_hangup">   ניתוק</string>
+  <string name="action_call_maximize">שימו את האפס</string>
+  <string name="action_call_minimize">להפחית</string>
+  <string name="action_call_mute">שקט</string>
+  <string name="action_call_unmute">לא נקט</string>
   <string name="ongoing_call">שיחה יוצאת</string>
   <string name="hist_in_call">שיחה נכנסת מ%1$s</string>
   <string name="hist_out_call">שיחה יוצאת אל %1$s</string>
+  <string name="action_call_decline">ירידה</string>
+  <string name="action_call_mic_mute">מיקרופון שקט</string>
+  <string name="ab_action_contact_add">הוסף לקשרים</string>
   <string name="ab_action_audio_call">שיחת שמע</string>
   <string name="ab_action_video_call">שיחת וידאו</string>
   <!--Text messages-->
   <string name="send_message">שליחת הודעה</string>
   <string name="message_failed">כשל</string>
   <string name="send_file">שלח קובץ</string>
+  <string name="conversation_share_location">מיקום שיתוף</string>
+  <string name="in_reply_to">בתשובה</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">שגיאה</string>
@@ -47,21 +90,34 @@
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">לחלוק את החשבון שלי</string>
   <!--Settings-->
   <string name="clear_history">ניקוי</string>
   <!--Conversation-->
+  <string name="conversation_details">פרטי קשר</string>
+  <string name="conversation_action_delete_this_message">פעולה זו לא יכולה להיבטל.</string>
+  <string name="conversation_action_history_clear">היסטוריה ברורה</string>
   <string name="conversation_action_copy_peer_number">העתקת מספר</string>
+  <string name="conversation_action_block_this">פגע בלוק</string>
   <string name="conversation_action_latest">גלול לקצה השיחה</string>
+  <string name="conversation_members">חברי</string>
   <!--Contacts-->
   <string name="account_create_title">יצירת חשבון Jami</string>
   <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
   <string name="wizard_back">חזרה</string>
   <string name="wizard_skip">דילוג</string>
+  <string name="hist_contact_added">הוספת קשר</string>
+  <string name="hist_invitation_received">הזמנה התקבלה</string>
   <!--Account Summary-->
   <string name="profile">פרופיל</string>
   <string name="profile_name">שם הפרופיל</string>
+  <string name="profile_message_warning">הפרופיל שלך משתף רק עם אנשי הקשר שלך</string>
+  <string name="profile_name_hint">הכנס את שמך</string>
+  <string name="identity">זהות</string>
   <string name="account">חשבון</string>
+  <string name="link_new_device">קישור מכשיר חדש</string>
+  <string name="devices">מכשירים מחוברים</string>
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>
   <string name="generic_error_migration">שגיאה</string>
@@ -72,7 +128,9 @@
   <!--Send contact requests-->
   <string name="send_request_button">שליחה</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">אין קשרים חסומים</string>
   <!--Smartlist-->
+  <string name="search_results">תוצאות החיפוש</string>
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
   <string name="invalid_file">קובץ לא חוקי</string>
@@ -81,18 +139,41 @@
   <string name="menu_file_save">שמירת קובץ</string>
   <string name="menu_file_share">שיתוף קובץ</string>
   <string name="menu_message_copy">העתקה</string>
+  <string name="menu_message_edit">עורך הודעה</string>
+  <string name="menu_message_delete">למחוק הודעה</string>
   <string name="menu_message_cancel">בטל הודעה</string>
+  <string name="menu_message_reply">תשובה</string>
   <string name="menu_delete">מחיקה</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">דיונים</string>
   <string name="navigation_item_contact_request">הזמנות</string>
   <string name="navigation_item_account">חשבון</string>
   <!--TV-->
+  <string name="tv_media_preview">תצוגה ראשונה</string>
   <string name="tv_dialog_send">שליחה</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">מומלץ</string>
+  <string name="wizard_status_optional">בחופשי</string>
+  <string name="wizard_status_required">דרישות</string>
+  <string name="wizard_username_info">בחר שם משתמש לחשבון שלך</string>
+  <string name="wizard_password_skip">ליצור חשבון</string>
+  <string name="wizard_password_switch">לחשוף חשבון עם סיסמה</string>
+  <string name="wizard_profile_info">פרופיל משתף רק עם אנשי קשר</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">שיתוף</string>
+  <string name="bottomSheet_plugins_btn">תוספים</string>
+  <string name="bottomSheet_add_participants_btn">הוסף</string>
+  <string name="bottomSheet_change_camera_btn">שינוי</string>
   <string name="bottomSheet_hangup_btn">סיום שיחה</string>
+  <string name="bottomSheet_raiseHand_btn">תרים את היד.</string>
+  <string name="uninstall">תורידו את ההתקנה</string>
+  <string name="reset">-הקמת מחדש</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">אישר</string>
+  <string name="swarm_description">הוסף תיאור</string>
   <string name="tab_about">על אודות</string>
+  <string name="tab_members">חברי</string>
+  <string name="tab_documetn">מסמכים</string>
+  <string name="dialog_hint_title">כותרת</string>
+  <string name="dialog_hint_description">תיאור</string>
 </resources>

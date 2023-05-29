@@ -130,11 +130,13 @@
   <string name="message_failed">Сбой</string>
   <string name="time_just_now">В данный момент</string>
   <string name="send_file">Отправить файл</string>
+  <string name="select_media">Открыть галерею</string>
   <string name="hist_file_sent">Файл отправлен</string>
   <string name="hist_file_received">Файл получен</string>
   <string name="conversation_send_audio">Записать аудиоклип</string>
   <string name="conversation_send_video">Записать видеоклип </string>
   <string name="conversation_share_location">Поделиться местоположением</string>
+  <string name="in_reply_to">В ответ на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
@@ -183,13 +185,26 @@
   <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
   <string name="block_contact_dialog_message">%1$sне сможет связаться с вами, пока вы его не разблокируете. </string>
   <string name="block_contact_completed">%1$sбыл заблокирован. </string>
+  <string name="unblock_contact_dialog_title">Разблокировать %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s снова может связаться с вами.</string>
+  <string name="unblock_contact_completed">%1$s разблокирован.</string>
   <string name="conversation_contact_is_typing">Собеседник печатает...</string>
   <string name="conversation_info_contact_you">Ты</string>
   <string name="conversation_members">Участники</string>
   <string name="conversation_syncing">Загрузка разговора с участником сети</string>
+  <string name="conversation_blocked">Этот контакт заблокирован.</string>
+  <string name="conversation_ended">Разговор закончился.</string>
+  <string name="conversation_message_deleted">(Сообщение удалено)</string>
   <string name="conversation_preference_color">Цвет беседы</string>
   <string name="conversation_preference_emoji">Эмоджи беседы</string>
   <string name="conversation_type_contact">Контакт Jami</string>
+  <string name="conversation_type_private">Личная беседа</string>
+  <string name="conversation_type_group">Групповая беседа</string>
+  <string name="conversation_contact_invited">%1$s приглашён</string>
+  <string name="conversation_contact_added">%1$s присоединился</string>
+  <string name="conversation_contact_left">%1$s вышел</string>
+  <string name="conversation_contact_banned">%1$s забанен</string>
+  <string name="conversation_search_hint">Найти беседу</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -285,6 +300,7 @@
   <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделится файлом</string>
   <string name="menu_message_copy">Копировать</string>
+  <string name="menu_message_edit">Изменить сообщение</string>
   <string name="menu_message_delete">Удалить сообщение</string>
   <string name="menu_message_cancel">Отменить сообщение</string>
   <string name="menu_message_reply">Ответить</string>
@@ -340,11 +356,22 @@
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Поднять руку</string>
   <string name="open_account_plugin_settings">Открыть настройки плагина аккаунта</string>
+  <string name="open_general_plugin_settings">Открыть основные настройки плагина</string>
   <string name="uninstall">Деинсталлировать</string>
   <string name="reset">Сброс</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Подтвердить</string>
+  <string name="rename_error">невозможно очистить</string>
+  <string name="swarm_description">Добавить описание</string>
   <string name="tab_about">О продукте</string>
   <string name="tab_members">Участники</string>
+  <string name="tab_documetn">Документы</string>
+  <string name="dialogtitle_title">Изменить заголовок беседы</string>
+  <string name="dialogtitle_description">Изменить описание беседы</string>
   <string name="dialog_hint_title">Заголовок</string>
+  <string name="dialog_hint_description">Описание</string>
+  <string name="picker_title">Выбрать контакты</string>
+  <string name="picker_btn">Выбрать контакты</string>
+  <string name="bottomsheet_contact">Контакт Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Удалить из беседы</string>
 </resources>

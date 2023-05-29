@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">شبکه</string>
+  <string name="pref_category_contacts">تماس</string>
+  <string name="pref_category_video">ویدئو</string>
   <string name="pref_category_system">Sistem</string>
+  <string name="pref_category_privacy">حریم خصوصی</string>
+  <string name="pref_category_diagnostic">دیآگنوستکس</string>
+  <string name="pref_mobileData_title">موبایل دیتاسی</string>
+  <string name="pref_mobileData_summary">جمی نین Wi-Fi-دن علاوه 3G/LTE شبکه لرینده یئرلشمه سینی ائجازه ور</string>
+  <string name="pref_pushNotifications_title">ایشلتمه خبرلری</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Google server لرینی ایستیفاده ائدیرمک اوچون فوندا چاغیرما/اتینتیشلر آلماق</string>
+  <string name="pref_unifiedPush_summary">بیرلیگینده یاتاقلار/بایرنلرده یاتاقلار آلماق اوچون UnifiedPush خدمتینی ایستیفاده ائدیر</string>
+  <string name="pref_video_advanced_title">گئنیش ویدئو تنظیماتلاری</string>
+  <string name="pref_video_advanced_summary">ویدئوی بیت ریت، رزولوشن و تکزاسین تکزاسینی دَییشدیر</string>
+  <string name="pref_hd_summary">HD ویدئو گؤندرمه یه ائجازه ور</string>
+  <string name="pref_hwEncode_title">سرعتلی کودلاشما ائدیر</string>
+  <string name="pref_hwEncode_summary">تجربات</string>
+  <string name="pref_videoBitrate_title">ویدئوی بیت ریت</string>
+  <string name="pref_videoBitrate_summary">آلتیماژ:</string>
+  <string name="pref_videoResolution_title">ویدئو وضعیتی</string>
+  <string name="pref_videoResolution_summary">آلتیماکی فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فئودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال فودال</string>
+  <string name="pref_systemContacts_title">سیستم تماسونو استفاده کنید</string>
+  <string name="pref_systemContacts_summary">تماس آلماق اوچون سیستم تماسلارینی ائشلَت.</string>
+  <string name="pref_systemDialer_title">Jami ایستیفاده ائدرک سیستم تماسونو یئرله ییر</string>
+  <string name="pref_systemDialer_summary">امکان اولاندا جامی-دن سیستم تماسونو آل.</string>
+  <string name="pref_startOnBoot_title">جمیو با شروع شروع کنید</string>
+  <string name="pref_startOnBoot_summary">سیستم باشلادیغی زامان جمیی آرخادا قوی.</string>
+  <string name="pref_clearHistory_title">واضح تاریخ</string>
+  <string name="pref_clearHistory_summary">بوتون موباحیثه لرین تاریخی نی پاک ائتمک.</string>
+  <string name="pref_notification_title">اطلاعیه لرین گؤرونوشو</string>
+  <string name="pref_notification_summary">قفل اِشیتمه سینده ایستیفاده ائدیرمه لرینین گؤرونوشونو تنظیم ائدیر.</string>
+  <string name="pref_blackList_title">بلاک لیستی</string>
+  <string name="pref_blackList_summary">بلاک لئستینی چک.</string>
+  <string name="pref_delete_account_title">حسابي سيندير</string>
+  <string name="pref_delete_account_summary">بو آلینادان حسابینیزین سئلینی</string>
+  <string name="pref_persistNotification_title">آرخادا چئوریل</string>
+  <string name="pref_persistNotification_summary">زنگلر و پيغاملار آلماق اوچون آرخادا قاچاراق چاليشماق ائجازه وئر.</string>
+  <string name="pref_newGroup_title">گروه چیتی فعال ائتمک</string>
+  <string name="pref_newGroup_summary">جامی دا گروهلار یاراتماق ائدک.</string>
+  <string name="pref_logs_title">دیآگنوستک یازیلار</string>
+  <string name="pref_logs_summary">آچیق دیآگنوستاتیک دوققلو قورولوشلار</string>
+  <string name="pref_logs_start">لوقونلاشما باشلا</string>
+  <string name="pref_logs_stop">چوبانليق اتمهيي</string>
+  <string name="pref_typing_title">تایپلاشما مؤشراتلرینی فعال ائتمک</string>
+  <string name="pref_typing_summary">بیر پیغامین تایپ اولونماسی ایفاده اولونان تایپ گؤستریجیلرینی گؤندرمک و آلماق.</string>
+  <string name="pref_read_title">اوخونما رسیدلرینی فعال ائتمک</string>
+  <string name="pref_read_summary">بیر خبرین گؤستریلدیغینی بیلدیریرکن رسیدلر گؤندرمک و آلماق.</string>
+  <string name="pref_block_record_title">سکرین شات و ضبطی بلاک</string>
+  <string name="pref_block_record_summary">سکرین عکس آلماغی یا ویدئو ضبط ائتمه یه مانع اول.</string>
+  <string name="pref_link_preview_title">دانیشیقلاردا لینک لرین اؤرنک لرینی گؤستریر</string>
+  <string name="pref_link_preview_summary">اؤتنلر اوچونجو طرفین سرورلاریندان محتوا آلینماسی لازیمدیر.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">عمومی \n(بایاندیرما لار و اونلارین محتواسی قفللی صفحه ده گؤرونتولور) \n</string>
+  <string name="notification_private">خصوصی \n(بایاندیرما گؤستریر، آنجاق محتواونو قفل صفحه سینده گئزلَتیر) \n</string>
+  <string name="notification_secret">سئرتی \n(بایغات لار قفل صفحه سینده گؤرونمز)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">پلگین</string>
+  <string name="pref_plugins_summary">پلگینلرین فعاللاییب پارامترلرینی تنظیم ائدیر</string>
+  <string name="fab_plugins_add">یئنی پلگین قوش</string>
+  <string name="plugin_uninstall_title">پلگینین یاشاییشینی آرادان آپارماق ؟</string>
+  <string name="plugin_reset_preferences">پلگین سئچیش لری</string>
+  <string name="plugin_reset_preferences_summary">آپلاين سايتلارينيز اؤنملي اولماز</string>
+  <string name="plugin_reset_preferences_ask">عمومی پلگین تنظیماتینی یئنی دن تنظیم ائتمک ایسته ییریک؟</string>
+  <string name="plugin_reset_account_preferences_ask">حساب پلگین سیتیشمالاری نی یئنی دن تنظیم ائتمک ایسته ییریک؟</string>
+  <string name="plugin_successfully_installed">پلگین <b>%1$s</b> اوغورلا نصب اولوب</string>
+  <string name="plugin_install_failure">پلگین نصب ائتمه دی: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception"><b>%1$s</b> نین داها یاخین ورژنونه sahibسن</string>
+  <string name="plugin_same_version_exception"><b>%1$s</b> نين همن نسلي وار</string>
+  <string name="plugin_force_install">قوهر نصب</string>
+  <string name="plugin_path_image_add">تزه بیر تصویر قوش</string>
 </resources>

@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Dane mobilne</string>
   <string name="pref_mobileData_summary">Pozwól Jami na korzystanie z sieci 3G/LTE dodatkowo oprócz Wi-Fi</string>
   <string name="pref_pushNotifications_title">Powiadomienia Push</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Używaj serwerów Google, by umożliwić odbieranie wiadomości i rozmów w tle</string>
+  <string name="pref_unifiedPush_summary">Użyj usługi UnifiedPush, aby umożliwić odbieranie połączeń/przesłanek w tle</string>
   <string name="pref_video_advanced_title">Zaawansowane ustawienia wideo</string>
   <string name="pref_video_advanced_summary">Zmień bitrate, rozdzielczość wideo, a także uzyskaj dostęp do eksperymentalnych funkcji</string>
   <string name="pref_hd_summary">Zezwól na wysyłane wideo w jakości HD</string>
@@ -35,6 +37,8 @@
   <string name="pref_delete_account_summary">Usuń swoje konto z tego urządzenia</string>
   <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
   <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
+  <string name="pref_newGroup_title">Włącz rozmowę grupową</string>
+  <string name="pref_newGroup_summary">Umożliwić tworzenie grup w Jami.</string>
   <string name="pref_logs_title">Logi diagnostyczne</string>
   <string name="pref_logs_summary">Otwórz ustawienia logów diagnostycznych</string>
   <string name="pref_logs_start">Start logowania</string>
@@ -58,6 +62,8 @@
   <string name="plugin_uninstall_title">Odinstaluj Wtyczkę ?</string>
   <string name="plugin_reset_preferences">Zresertuj preferencje wtyczki</string>
   <string name="plugin_reset_preferences_summary">Twoje ustawienia wtyczki zostaną przywrócone do domyślnych</string>
+  <string name="plugin_reset_preferences_ask">Chcesz resetować ogólne ustawienia wtyczki?</string>
+  <string name="plugin_reset_account_preferences_ask">Chcesz resetować ustawienia wtyczki konta?</string>
   <string name="plugin_successfully_installed">Wtyczka <b>%1$s</b> zainstalowana pomyślnie</string>
   <string name="plugin_install_failure">Nie udało się zainstalować wtyczki: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Masz nowszą wersję wtyczki: <b>%1$s</b></string>
