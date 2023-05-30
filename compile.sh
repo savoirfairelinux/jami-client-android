@@ -37,6 +37,10 @@ export DAEMON_DIR
 JNIDIR=$DAEMON_DIR/bin/jni
 ANDROID_TOPLEVEL_DIR="`pwd`"
 ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/jami-android"
+GRADLE_PROPERTIES=
+if [ ! -z "$ANDROID_ABI" ]; then
+    GRADLE_PROPERTIES="-Parchs=${ANDROID_ABI}"
+fi
 
 # Generate JNI interface
 cd $JNIDIR
@@ -46,7 +50,7 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
     if [ -z "$RING_BUILD_FIREBASE" ]; then
         echo "Building without Firebase support"
     else
-        GRADLE_PROPERTIES="-PbuildFirebase"
+        GRADLE_PROPERTIES="$GRADLE_PROPERTIES -PbuildFirebase"
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
