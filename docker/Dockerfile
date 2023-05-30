@@ -1,4 +1,4 @@
-FROM gradle:jdk11
+FROM gradle:jdk17
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
@@ -59,11 +59,11 @@ RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/comm
 	chown -R root:root ${ANDROID_HOME}
 ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin
 
-# Swig 4.0.2
-RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.2.tar.gz && \
+# Swig 4.1.1
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.1.1.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
-	cd /opt/swig-rel-4.0.2/ && ./autogen.sh && ./configure && make && make install && \
-	cd .. && rm -rf /opt/swig-rel-4.0.2 /tmp/swig.tar.gz
+	cd /opt/swig-rel-4.1.1/ && ./autogen.sh && ./configure && make && make install && \
+	cd .. && rm -rf /opt/swig-rel-4.1.1 /tmp/swig.tar.gz
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
