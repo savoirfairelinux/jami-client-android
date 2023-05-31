@@ -41,7 +41,7 @@ interface CallView {
     fun goToConversation(accountId: String, conversationId: Uri)
     fun goToAddContact(contact: Contact)
     fun startAddParticipant(conferenceId: String)
-    fun finish()
+    fun finish(hangupReason: CallPresenter.HangupReason = CallPresenter.HangupReason.LOCAL)
     fun onUserLeave()
     fun enterPipMode(accountId: String, callId: String?)
     fun prepareCall(acceptIncomingCall: Boolean)

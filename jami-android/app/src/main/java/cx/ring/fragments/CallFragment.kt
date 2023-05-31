@@ -1241,7 +1241,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun finish() {
+    override fun finish(hangupReason: CallPresenter.HangupReason) {
+        // Display a toast if the call was not allowed
+        if (hangupReason == CallPresenter.HangupReason.ERROR)
+            Toast.makeText(context, R.string.call_error, Toast.LENGTH_SHORT).show()
+
         activity?.let { activity ->
             activity.finishAndRemoveTask()
             if (mBackstackLost) {
