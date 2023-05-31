@@ -50,11 +50,14 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         mContext.getSystemService<TelecomManager>()?.let { telecomService ->
             val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
 
-            // Dismiss the call immediately if disallowed
+            // Disabled because of a bug on Lenovo Tab P12 Pro (Android 12) where
+            // isOutgoingCallPermitted() is always returning false. GitLab: #1288.
+            // Less optimal but still functional.
+            /* // Dismiss the call immediately if disallowed
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (!telecomService.isOutgoingCallPermitted(accountHandle))
                     return CALL_DISALLOWED
-            }
+            }*/
 
             // Build call parameters
             val params = Bundle().apply {
