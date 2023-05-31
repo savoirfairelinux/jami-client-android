@@ -1222,7 +1222,11 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
-    override fun finish() {
+    override fun finish(hangupReason: CallPresenter.HangupReason) {
+        // Display a toast if the call was not allowed
+        if (hangupReason == CallPresenter.HangupReason.OUTGOING_CALL_DISALLOWED)
+            Toast.makeText(context, "Impossible to launch call ...", Toast.LENGTH_SHORT).show()
+
         activity?.let { activity ->
             activity.finishAndRemoveTask()
             if (mBackstackLost) {
