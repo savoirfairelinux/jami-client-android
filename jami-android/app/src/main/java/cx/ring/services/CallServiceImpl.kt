@@ -1,6 +1,7 @@
 package cx.ring.services
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.telecom.TelecomManager
@@ -46,6 +47,11 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     }
 
     override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_TELECOM))
+                return CALL_ALLOWED
+        }
+
         // Use the Android Telecom API to implement requestPlaceCall if available
         mContext.getSystemService<TelecomManager>()?.let { telecomService ->
             val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle

@@ -1177,14 +1177,22 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         val hasVideo = presenter.wantVideo
         val permissionType =
             if (acceptIncomingCall) REQUEST_PERMISSION_INCOMING else REQUEST_PERMISSION_OUTGOING
-        val audioGranted = mDeviceRuntimeService.hasAudioPermission()
-        val videoGranted = !hasVideo || mDeviceRuntimeService.hasVideoPermission()
+        val audioGranted = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+        val videoGranted = !hasVideo ||  ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+        val callGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.MANAGE_OWN_CALLS) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+
         if (!audioGranted || !videoGranted) {
             val perms = ArrayList<String>()
             if (!videoGranted)
                 perms.add(Manifest.permission.CAMERA)
             if (!audioGranted)
                 perms.add(Manifest.permission.RECORD_AUDIO)
+            if (!callGranted)
+                perms.add(Manifest.permission.MANAGE_OWN_CALLS)
             requestPermissions(perms.toTypedArray(), permissionType)
         } else {
             initializeCall(acceptIncomingCall, hasVideo)
