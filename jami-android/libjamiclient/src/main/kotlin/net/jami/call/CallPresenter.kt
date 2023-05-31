@@ -110,7 +110,7 @@ class CallPresenter @Inject constructor(
             .subscribe({ conference ->
                 confUpdate(conference)
             }) { e: Throwable ->
-                hangupCall()
+                hangupCall(HangupReason.OUTGOING_CALL_DISALLOWED)
                 Log.e(TAG, "Error with initOutgoing: " + e.message, e)
             })
         showConference(callObservable)
@@ -266,7 +266,7 @@ class CallPresenter @Inject constructor(
         mConference?.let { mCallService.accept(it.accountId, it.id, hasVideo) }
     }
 
-    fun hangupCall() {
+    fun hangupCall(hangupReason: HangupReason = HangupReason.NORMAL) {
         // Hang up the conference call if it exists.
         mConference?.let { conference ->
             if (!conference.isSimpleCall)
@@ -280,8 +280,7 @@ class CallPresenter @Inject constructor(
             val call = participant.call ?: continue
             mCallService.hangUp(call.account!!, call.daemonIdString!!)
         }
-
-        finish()
+        finish(hangupReason)
     }
 
     fun refuseCall() {
@@ -367,7 +366,7 @@ class CallPresenter @Inject constructor(
         view?.displayHangupButton(mOnGoingCall && displayed)
     }
 
-    private fun finish() {
+    private fun finish(hangupReason: HangupReason = HangupReason.NORMAL) {
         timeUpdateTask?.let { task ->
             if (!task.isDisposed)
                 task.dispose()
@@ -375,7 +374,7 @@ class CallPresenter @Inject constructor(
         }
         mConference = null
         val view = view
-        view?.finish()
+        view?.finish(hangupReason)
     }
 
     /**
@@ -684,6 +683,11 @@ class CallPresenter @Inject constructor(
         } else if (option == ACCEPT_HOLD) {
             holdCurrentCall()
         }
+    }
+
+    enum class HangupReason {
+        OUTGOING_CALL_DISALLOWED,
+        NORMAL,
     }
 
     companion object {
