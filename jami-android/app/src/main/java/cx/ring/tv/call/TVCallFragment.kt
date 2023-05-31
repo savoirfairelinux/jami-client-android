@@ -546,7 +546,7 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
         prepareCall(true)
     }
 
-    override fun finish() {
+    override fun finish(hangupReason: CallPresenter.HangupReason) {
         mSession?.isActive = false
         activity?.let { activity ->
             if (mBackstackLost) {
