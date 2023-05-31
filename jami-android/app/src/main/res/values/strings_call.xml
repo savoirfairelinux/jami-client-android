@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- Call error -->
+    <string name="call_error">"Impossible to launch call ..."</string>
     <string name="call_error_no_microphone">Call canceled. No microphone detected.</string>
     <string name="call_error_no_camera_no_microphone">Call canceled. No camera or microphone detected.</string>
 
