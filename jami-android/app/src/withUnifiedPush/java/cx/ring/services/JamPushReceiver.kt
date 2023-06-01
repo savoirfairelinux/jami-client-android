@@ -29,11 +29,15 @@ import java.net.URI
 class JamiPushReceiver : MessagingReceiver() {
     override fun onMessage(context: Context, message: ByteArray, instance: String) {
         Log.w("JamiPushReceiver", "onMessage ${String(message)} $instance")
-        val obj = JSONObject(String(message))
-        val msg = HashMap<String, String>()
-        obj.keys().forEach { msg[it] = obj.getString(it) }
-        val app = JamiApplication.instance as JamiApplicationUnifiedPush?
-        app?.onMessage(msg)
+        try {
+            val obj = JSONObject(String(message))
+            val msg = HashMap<String, String>()
+            obj.keys().forEach { msg[it] = obj.getString(it) }
+            val app = JamiApplication.instance as JamiApplicationUnifiedPush?
+            app?.onMessage(msg)
+        } catch(e: Exception) {
+            Log.e("JamiPushReceiver", "onMessage", e)
+        }
     }
 
     override fun onNewEndpoint(context: Context, endpoint: String, instance: String) {
