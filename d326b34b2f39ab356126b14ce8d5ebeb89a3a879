@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f00820e_ed84b6ae",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/CallFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-01T18:10:22Z",
+      "side": 1,
+      "message": "should be translated",
+      "range": {
+        "startLine": 1228,
+        "startChar": 36,
+        "endLine": 1228,
+        "endChar": 67
+      },
+      "revId": "d326b34b2f39ab356126b14ce8d5ebeb89a3a879",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62f05e72_d48ca165",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/call/CallPresenter.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-01T18:10:22Z",
+      "side": 1,
+      "message": "We need at least:\nLOCAL (we hangup),\nREMOTE (the peer hangup),\nBUSY (the peer didn\u0027t answered)\nERROR (network error)",
+      "range": {
+        "startLine": 690,
+        "startChar": 8,
+        "endLine": 690,
+        "endChar": 14
+      },
+      "revId": "d326b34b2f39ab356126b14ce8d5ebeb89a3a879",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
