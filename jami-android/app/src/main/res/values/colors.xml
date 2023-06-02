@@ -46,6 +46,13 @@
     <color name="fab_background">#00273F</color>
     <color name="menu_icon">#0A84FF</color>
 
+    <!--  JamiIdCard colors  -->
+    <color name="jami_id_card_background">#FFFFFF</color>
+    <color name="jami_id_corner_image_taint">#FFF</color>
+    <color name="jami_id_corner_background_taint">#005699</color>
+    <color name="jami_id_card_text">#000000</color>
+    <color name="jami_id_card_button">#005699</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#f5f5f5</color>
     <color name="text_color">#414141</color>

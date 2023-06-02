@@ -19,6 +19,13 @@
     <color name="conversation_primary_background">@color/blue_600</color>
     <color name="conversation_secondary_background">@color/grey_700</color>
 
+    <!--  JamiIDCard colors  -->
+    <color name="jami_id_card_background">#202020</color>
+    <color name="jami_id_corner_background_taint">#03B9E9</color>
+    <color name="jami_id_corner_image_taint">#000</color>
+    <color name="jami_id_card_text">#FFFFFF</color>
+    <color name="jami_id_card_button">#03B9E9</color>
+
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#2e2e2e</color>
     <color name="text_color">@color/colorPrimary</color>
