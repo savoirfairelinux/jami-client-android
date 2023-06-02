@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_jami_id_corner"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/jami_id_horizontal_padding"
+        android:paddingTop="@dimen/jami_id_vertical_padding"
+        android:paddingEnd="@dimen/jami_id_horizontal_padding"
+        android:paddingBottom="@dimen/jami_id_vertical_padding"
+        android:src="@drawable/jami_id"
+        app:tint="@color/jami_id_corner_image_tint" />
+</LinearLayout>
