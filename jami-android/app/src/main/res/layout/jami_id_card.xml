@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_jami_id_card"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/jami_id_corner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|end"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="@dimen/jami_id_button_width_and_height"
+                android:layout_height="@dimen/jami_id_button_width_and_height"
+                android:layout_marginStart="@dimen/jami_id_button_margin"
+                android:background="@drawable/background_jami_id_button"
+                android:contentDescription="@string/jami_id_edit_button_description"
+                android:src="@drawable/pen_14dp"
+                app:tint="@color/selector_jami_id_button_icon_color" />
+
+            <ImageButton
+                android:id="@+id/copy_button"
+                android:layout_width="@dimen/jami_id_button_width_and_height"
+                android:layout_height="@dimen/jami_id_button_width_and_height"
+                android:layout_marginStart="@dimen/jami_id_button_margin"
+                android:background="@drawable/background_jami_id_button"
+                android:src="@drawable/copy_14dp"
+                app:tint="@color/selector_jami_id_button_icon_color"
+                android:contentDescription="@string/jami_id_copy_button_description" />
+
+
+            <ImageButton
+                android:id="@+id/share_button"
+                android:layout_width="@dimen/jami_id_button_width_and_height"
+                android:layout_height="@dimen/jami_id_button_width_and_height"
+                android:layout_marginStart="@dimen/jami_id_button_margin"
+                android:layout_marginEnd="@dimen/jami_id_card_margin"
+                android:background="@drawable/background_jami_id_button"
+                android:src="@drawable/share_14dp"
+                app:tint="@color/selector_jami_id_button_icon_color"
+                android:contentDescription="@string/jami_id_share_button_description" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/jami_id_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/jami_id_card_margin"
+        android:ellipsize="middle"
+        android:fontFamily="@font/ubuntu_regular"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/jami_id_card_text"
+        android:textSize="@dimen/jami_id_text"
+        tool:text="1f9f905f9b0d2cee8c9eedf525af8bf30df11c2a" />
+</LinearLayout>
+
+
