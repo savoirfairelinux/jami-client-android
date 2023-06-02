@@ -107,6 +107,15 @@ along with this program; if not, write to the Free Software
     <!--  ProgressDialog  -->
     <dimen name="progress_dialog_padding">32dp</dimen>
 
+    <!--  JamiIdCard dimensions  -->
+    <dimen name="jami_id_card_radius">20dp</dimen>
+    <dimen name="jami_id_vertical_padding">8dp</dimen>
+    <dimen name="jami_id_horizontal_padding">12dp</dimen>
+    <dimen name="jami_id_button_width_and_height">30dp</dimen>
+    <dimen name="jami_id_card_margin">12dp</dimen>
+    <dimen name="jami_id_button_margin">10dp</dimen>
+    <dimen name="jami_id_text">13sp</dimen>
+
     <!--  Switch Button  -->
     <dimen name="thumb_ripple_size">42dp</dimen>
     <dimen name="thumb_solid_inset">11dp</dimen>
