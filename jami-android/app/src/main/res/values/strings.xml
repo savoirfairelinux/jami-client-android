@@ -451,5 +451,10 @@ along with this program; if not, write to the Free Software
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
     <string name="bottomsheet_remove">Remove from the swarm</string>
 
+    <!-- JamiIdCard strings -->
+    <string name="jami_id_edit_button_description">Edit Jami ID</string>
+    <string name="jami_id_share_button_description">Share Jami ID</string>
+    <string name="jami_id_copy_button_description">Copy Jami ID</string>
+
 
 </resources>
