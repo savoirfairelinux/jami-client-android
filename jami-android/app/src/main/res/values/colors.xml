@@ -45,6 +45,9 @@
     <color name="online_indicator">#0B8271</color>
     <color name="menu_icon">#0A84FF</color>
 
+    <!--  WelcomeJamiCard colors  -->
+    <color name="welcome_jami_card_background">#E5EEF5</color>
+
     <!--  JamiIdCard colors  -->
     <color name="jami_id_card_background">#FFFFFF</color>
     <color name="jami_id_corner_image_tint">#FFF</color>
