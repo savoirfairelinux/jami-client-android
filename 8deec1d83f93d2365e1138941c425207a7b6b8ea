@@ -16,6 +16,24 @@
       "message": "Yep, as said, not reproducible in my case.\nEven though I tested and it works, width should automatically adapts from icon size and I don\u0027t get how it could be ok to set width\u003d0dp.",
       "revId": "8deec1d83f93d2365e1138941c425207a7b6b8ea",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9395dafb_3dca928e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-05T17:15:26Z",
+      "side": 1,
+      "message": "I can reproduce the error by repeatedly doing the following while in a video call:\n\n1. Pull up the and fully expand the button tray\n2. Press home button\n3. Rotate\n4. Tap the PiP window twice and return to the call\n\nThis is on an emulator on api 26.",
+      "parentUuid": "b32cbbc1_ba9eed48",
+      "revId": "8deec1d83f93d2365e1138941c425207a7b6b8ea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
