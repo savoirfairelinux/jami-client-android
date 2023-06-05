@@ -107,6 +107,14 @@ along with this program; if not, write to the Free Software
     <!--  ProgressDialog  -->
     <dimen name="progress_dialog_padding">32dp</dimen>
 
+    <!--  WelcomeJamiCard dimensions  -->
+    <dimen name="welcome_jami_card_padding">28dp</dimen>
+    <dimen name="welcome_jami_card_inside_margin">16dp</dimen>
+    <dimen name="welcome_jami_card_outside_margin">32dp</dimen>
+    <dimen name="welcome_jami_card_radius">30dp</dimen>
+    <dimen name="welcome_jami_title">22sp</dimen>
+    <dimen name="welcome_jami_body">13sp</dimen>
+
     <!--  JamiIdCard dimensions  -->
     <dimen name="jami_id_card_radius">20dp</dimen>
     <dimen name="jami_id_vertical_padding">8dp</dimen>
