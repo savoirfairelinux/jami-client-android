@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@drawable/background_welcome_jami_card"
+    android:orientation="vertical"
+    android:padding="@dimen/welcome_jami_card_padding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_regular"
+        android:text="@string/welcome_jami_title"
+        android:textColor="@color/jami_id_card_text"
+        android:textSize="@dimen/welcome_jami_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/welcome_jami_card_margin"
+        android:layout_marginBottom="@dimen/welcome_jami_card_margin"
+        android:fontFamily="@font/ubuntu_regular"
+        android:text="@string/welcome_jami_body"
+        android:textColor="@color/jami_id_card_text"
+        android:textSize="@dimen/welcome_jami_body" />
+
+    <include
+        android:id="@+id/jami_id_card"
+        layout="@layout/jami_id_card" />
+
+</LinearLayout>

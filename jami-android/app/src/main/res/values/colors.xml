@@ -46,6 +46,9 @@
     <color name="fab_background">#00273F</color>
     <color name="menu_icon">#0A84FF</color>
 
+    <!--  WelcomeJamiCard colors  -->
+    <color name="welcome_jami_card_background">#E5EEF5</color>
+
     <!--  JamiIdCard colors  -->
     <color name="jami_id_card_background">#FFFFFF</color>
     <color name="jami_id_corner_image_taint">#FFF</color>
