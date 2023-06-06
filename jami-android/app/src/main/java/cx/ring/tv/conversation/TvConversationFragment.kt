@@ -49,10 +49,14 @@ import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
+import cx.ring.client.CallActivity
+import cx.ring.client.ContactDetailsActivity
 import cx.ring.client.MediaViewerActivity
 import cx.ring.databinding.FragConversationTvBinding
+import cx.ring.fragments.CallFragment
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
+import cx.ring.tv.call.TVCallActivity
 import cx.ring.tv.camera.CustomCameraActivity
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUriHandler
@@ -68,6 +72,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.conversation.ConversationView
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
+import net.jami.services.NotificationService
 import net.jami.smartlist.ConversationItemViewModel
 import java.io.File
 import java.io.IOException
@@ -689,7 +694,28 @@ class TvConversationFragment : BaseSupportFragment<ConversationPresenter, Conver
         contactUri: net.jami.model.Uri,
         hasVideo: Boolean
     ) {
-        TODO("Not yet implemented")
+        // Try to find an existing call
+        val conf = conversation.currentCall
+
+        // If there is an existing call, go to it
+        if (conf != null
+            && conf.participants.isNotEmpty()
+            && conf.participants[0].callStatus != Call.CallStatus.INACTIVE
+            && conf.participants[0].callStatus != Call.CallStatus.FAILURE
+        ) {
+            startActivity(
+                Intent(Intent.ACTION_VIEW)
+                    .setClass(requireContext(), TVCallActivity::class.java)
+                    .putExtra(NotificationService.KEY_CALL_ID, conf.id)
+            )
+        } else { // Otherwise, start a new call
+            val intent = Intent(Intent.ACTION_CALL)
+                .setClass(requireContext(), TVCallActivity::class.java)
+                .putExtras(ConversationPath.toBundle(conversation))
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, contactUri.uri)
+                .putExtra(CallFragment.KEY_HAS_VIDEO, hasVideo)
+            startActivityForResult(intent, ContactDetailsActivity.REQUEST_CODE_CALL)
+        }
     }
 
     override fun refuseFile(accountId: String, conversationUri: net.jami.model.Uri, transfer: DataTransfer) {
