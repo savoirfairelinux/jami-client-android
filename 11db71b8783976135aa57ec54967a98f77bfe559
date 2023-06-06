@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfeef2c1_79fda581",
+        "filename": "jami-android/app/src/main/java/cx/ring/tv/conversation/TvConversationFragment.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-06T14:43:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure attacking this functionality is worth it here. Quite a bit of is missing from the TV version and even if this is implemented, the swarm calls may still not work.\n\nIn any case I\u0027ll create a followup patch so we can start testing it.",
+      "parentUuid": "77015e8b_ce53a737",
+      "range": {
+        "startLine": 687,
+        "startChar": 3,
+        "endLine": 693,
+        "endChar": 5
+      },
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2605e87e_d767cdc2",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-05-15T19:59:59Z",
       "side": 1,
       "message": "Not respecting design.",
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca50d70_031b160b",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-06T14:43:57Z",
+      "side": 1,
+      "message": "Not respecting which design?",
+      "parentUuid": "2605e87e_d767cdc2",
       "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -64,6 +106,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e386d793_37e15a9b",
+        "filename": "jami-android/app/src/main/res/layout/item_conv_group_call.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-06T14:43:57Z",
+      "side": 1,
+      "message": "This is just following convention of all the other item_conv views.",
+      "parentUuid": "0a98a86e_87794d0f",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6365bed8_491d69e3",
@@ -77,6 +143,24 @@
       "writtenOn": "2023-05-15T19:59:59Z",
       "side": 1,
       "message": "How to explain ?",
+      "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbe692e8_5e9c86cb",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/model/Conversation.kt",
+        "patchSetId": 19
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-06T14:43:57Z",
+      "side": 1,
+      "message": "Explanation seems correct to me. What was the concern with this?",
+      "parentUuid": "6365bed8_491d69e3",
       "revId": "11db71b8783976135aa57ec54967a98f77bfe559",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
