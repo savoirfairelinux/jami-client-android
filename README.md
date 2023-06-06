@@ -16,7 +16,7 @@ Or to download the daemon submodule from the existing project directory:
 
 Make sure to have autotools, autopoint, swig, yasm, m4, ninja-build and cmake available on your system:
 on Debian/Ubuntu:
-> apt install cmake build-essential swig yasm ninja-build m4
+> apt install cmake build-essential swig yasm ninja-build m4 autotools
 
 On macOS:
 > brew install cmake automake autotools libtool pkg-config yasm swig
