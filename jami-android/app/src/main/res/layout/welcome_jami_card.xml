@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/welcome_jami_card_inside_margin"
         android:fontFamily="@font/ubuntu_regular"
-        android:text="@string/welcome_jami_body"
+        android:text="@string/welcome_jami_jami_account_body"
         android:textColor="@color/jami_id_card_text"
         android:textSize="@dimen/welcome_jami_body" />
 

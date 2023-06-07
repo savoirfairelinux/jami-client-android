@@ -457,7 +457,9 @@ along with this program; if not, write to the Free Software
 
     <!-- WelcomeJamiCard strings -->
     <string name="welcome_jami_title">Welcome to Jami</string>
-    <string name="welcome_jami_body">Here is your Jami identifier, don\'t hesitate to share it in order to be contacted more easily!</string>
+    <string name="welcome_jami_jami_account_body">Here is your Jami identifier, don\'t hesitate to share it in order to be contacted more easily!</string>
+    <string name="welcome_jami_no_jami_account_body">"Jami is a universal communication platform, with privacy as its foundation that relies on a free distributed network for everyone."</string>
+
 
 
 </resources>
