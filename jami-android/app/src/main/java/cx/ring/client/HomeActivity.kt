@@ -45,6 +45,7 @@ import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
+import cx.ring.welcomejami.WelcomeJamiFragment
 import cx.ring.account.AccountWizardActivity
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
@@ -82,6 +83,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private var fConversation: ConversationFragment? = null
     private var mHomeFragment: HomeFragment? = null
     private var mOrientation = 0
+    private var restoreInstanceFlag:Boolean = false
 
     @Inject
     lateinit
@@ -116,13 +118,31 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                mBinding?.panel?.closePane()
+                // Two cases depending on if device supports sliding panel:
+                // - if it does, we close the panel
+                // - if it doesn't, we display the home fragment with welcome message
+                if (mBinding?.panel?.isSlideable == true) {
+                    mBinding?.panel?.closePane()
+                } else {
+                    mAccountService.currentAccountSubject
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .subscribe {
+                            showWelcomeFragment(it)
+                        }
+                }
+                // Next back press don't have to be handled by this callback.
+                isEnabled = false
             }
         }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon(this)
+
+        // In the case where we restore an instance, savedInstanceState will carry a non-null value
+        // for the rest of the program's execution. We only want to change the logic for the
+        // restoration and not for the rest. We must therefore use a flag.
+        restoreInstanceFlag = savedInstanceState != null
 
         // Switch to TV if appropriate (could happen with buggy launcher)
         if (DeviceUtils.isTv(this)) {
@@ -168,7 +188,28 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             mBinding!!.frame.isVisible = true
         }
 
-        fConversation = supportFragmentManager.findFragmentByTag(ConversationFragment::class.java.simpleName) as? ConversationFragment?
+        fConversation = supportFragmentManager
+            .findFragmentByTag(ConversationFragment::class.java.simpleName)
+                as? ConversationFragment?
+
+        // This code will be called when:
+        // - the activity is initially created
+        // - the activity is restored
+        // - the current account is changed
+        mDisposable.add(
+            mAccountService.currentAccountSubject
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe {
+                    // We don't want to display the welcome fragment if we are restoring the
+                    // instance (only if there is a conversation to display).
+                    if (restoreInstanceFlag and (fConversation != null)) {
+                        restoreInstanceFlag = false // Turn off the flag
+                        return@subscribe
+                    }
+                    showWelcomeFragment(it)
+                }
+        )
+
         if (fConversation != null) {
             Log.w(TAG, "Restore conversation fragment $fConversation")
             conversationBackPressedCallback.isEnabled = true
@@ -307,6 +348,24 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mDisposable.clear()
     }
 
+    /**
+     * Create the Welcome fragment and display it.
+     * @param account the account to display
+     */
+    fun showWelcomeFragment(account: Account){
+        val welcomeJamiFragment = WelcomeJamiFragment(
+            jamiId = account.displayUsername ?: "", isJamiAccount = account.isJami
+        )
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.conversation,
+                welcomeJamiFragment,
+                ConversationFragment::class.java.simpleName
+            )
+            .commit()
+        mBinding!!.conversation.isVisible = true
+    }
+
     fun toggleConversationVisibility(show: Boolean) {
         //mBinding!!.conversation.isVisible = show
         if (fConversation == null)
@@ -337,6 +396,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
         //mBinding!!.conversation.getFragment<>()
+
+        // If a conversation is already displayed, we replace it,
+        // else we add it
+        conversationBackPressedCallback.isEnabled = true
         if (fConversation == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
