@@ -45,6 +45,7 @@ import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
+import cx.ring.welcomejami.WelcomeJamiFragment
 import cx.ring.account.AccountWizardActivity
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
@@ -176,6 +177,23 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             mBinding!!.panel.openPane()
         } else {
             Log.w(TAG, "No conversation Restored")
+            Log.w("DEVDEBUG", mAccountService.currentAccount?.accountId ?: "")
+            var welcomeJamiFragment = WelcomeJamiFragment()
+            supportFragmentManager.beginTransaction()
+                .add(
+                    R.id.conversation,
+                    welcomeJamiFragment,
+                    ConversationFragment::class.java.simpleName
+                )
+                .commit()
+            mBinding!!.conversation.isVisible = true
+            mAccountService.currentAccountSubject.subscribe() {
+                welcomeJamiFragment.setJamiId(newJamiId = it?.uri ?:"")
+            }
+//            welcomeJamiFragment.setJamiId(jamiId = mAccountService.currentAccount?.accountId ?: "")
+
+//            mBinding!!.panel.openPane()
+
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
@@ -337,6 +355,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
         //mBinding!!.conversation.getFragment<>()
+
+        // If a conversation is already displayed, we replace it,
+        // else we add it
         if (fConversation == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
