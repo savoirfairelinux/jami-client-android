@@ -45,6 +45,7 @@ import cx.ring.BuildConfig
 import cx.ring.R
 import cx.ring.about.AboutFragment
 import cx.ring.account.AccountEditionFragment
+import cx.ring.welcomejami.WelcomeJamiFragment
 import cx.ring.account.AccountWizardActivity
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityHomeBinding
@@ -176,10 +177,32 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             mBinding!!.panel.openPane()
         } else {
             Log.w(TAG, "No conversation Restored")
+            Log.w("DEVDEBUG", mAccountService.currentAccount?.accountId ?: "")
+
+
+            mDisposable.add(
+                mAccountService.currentAccountSubject
+                    .observeOn(DeviceUtils.uiScheduler)
+                    .subscribe {
+
+                        val welcomeJamiFragment = WelcomeJamiFragment(
+                            jamiId = it.displayUsername?:"", isJamiAccount = it.isJami)
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.conversation,
+                                welcomeJamiFragment,
+                                ConversationFragment::class.java.simpleName
+                            )
+                            .commit()
+                        mBinding!!.conversation.isVisible = true
+                    }
+            )
         }
         onBackPressedDispatcher.addCallback(this, conversationBackPressedCallback)
         handleIntent(intent)
     }
+
+
 
     override fun onDestroy() {
         Log.d(TAG, "onDestroy")
@@ -337,6 +360,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
         //mBinding!!.conversation.getFragment<>()
+
+        // If a conversation is already displayed, we replace it,
+        // else we add it
         if (fConversation == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
