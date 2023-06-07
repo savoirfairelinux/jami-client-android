@@ -101,7 +101,8 @@ enum class ConfigKey(val key: String, val isBool: Boolean = false) {
     PROXY_PUSH_PLATFORM("proxyPushPlatform"),
     PROXY_PUSH_TOPIC("proxyPushTopic"),
     MANAGER_URI("Account.managerUri"),
-    MANAGER_USERNAME("Account.managerUsername");
+    MANAGER_USERNAME("Account.managerUsername"),
+    UI_CUSTOMIZATION("Account.uiCustomization");
 
     companion object {
         private val keyMap = values().associateByTo(HashMap(values().size)) { it.key }
