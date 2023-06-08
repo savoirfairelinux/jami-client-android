@@ -20,7 +20,10 @@
 package cx.ring.application
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Application
+import android.app.ApplicationExitInfo
+import android.app.ApplicationExitInfo.REASON_CRASH_NATIVE
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.*
@@ -50,6 +53,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import net.jami.daemon.JamiService
 import net.jami.services.*
 import java.io.File
+import java.io.InputStream
 import java.util.concurrent.ScheduledExecutorService
 import javax.inject.Inject
 import javax.inject.Named
@@ -219,6 +223,7 @@ abstract class JamiApplication : Application() {
             RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
         }
 
+        // Initialize the Android Telecom API if available
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getSystemService<TelecomManager>()?.let { telecomService ->
                 val componentName = ComponentName(this, ConnectionService::class.java)
@@ -236,6 +241,23 @@ abstract class JamiApplication : Application() {
                     .build())
             }
         }
+
+        // Check for previous crash reasons, if any.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            getSystemService<ActivityManager>()?.let {
+                val exitReasons: MutableList<ApplicationExitInfo> =
+                    it.getHistoricalProcessExitReasons(/* packageName = */ null, /* pid = */0, /* maxNum = */5)
+                for (aei: ApplicationExitInfo in exitReasons) {
+                    if (aei.reason == REASON_CRASH_NATIVE) {
+                        // Get the tombstone input stream.
+                        val trace: InputStream = aei.traceInputStream ?: continue
+                        // The tombstone parser built with protoc uses the tombstone schema, then parses the trace.
+                        //val tombstone: Tombstone = Tombstone.parseFrom(trace);
+                    }
+                }
+            }
+        }
+
 
         bootstrapDaemon()
         mPreferencesService.loadDarkMode()

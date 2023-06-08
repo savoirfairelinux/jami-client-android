@@ -8,6 +8,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.protobuf") version "0.9.3"
 }
 
 android {
@@ -38,7 +39,7 @@ android {
             }
             ndk {
                 debugSymbolLevel = "FULL"
-                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "x86_64", "armeabi-v7a")
+                abiFilters += properties["archs"]?.toString()?.split(",") ?: listOf("arm64-v8a", "armeabi-v7a", "x86_64")
                 println ("Building for ABIs $abiFilters")
             }
         }
@@ -46,6 +47,9 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
+            packaging {
+                jniLibs.keepDebugSymbols += "**/*.so"
+            }
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         release {
@@ -108,8 +112,8 @@ dependencies {
     implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("androidx.emoji2:emoji2:1.4.0-beta04")
-    implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0-beta04")
+    implementation ("androidx.emoji2:emoji2:1.4.0-beta05")
+    implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0-beta05")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation ("com.google.android.material:material:1.9.0")
@@ -117,6 +121,7 @@ dependencies {
     implementation ("org.osmdroid:osmdroid-android:6.1.16")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
+    implementation ("com.google.protobuf:protobuf-kotlin-lite:3.23.2")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
@@ -155,6 +160,13 @@ dependencies {
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
     "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.1.0")
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.6.1"
+    }
+
 }
 
 kapt {
