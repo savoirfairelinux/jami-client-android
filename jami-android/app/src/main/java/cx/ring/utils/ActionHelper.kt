@@ -20,7 +20,9 @@ package cx.ring.utils
 import android.content.*
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import net.jami.model.Contact
 import net.jami.model.Conversation.ConversationActionCallback
@@ -33,6 +35,52 @@ object ActionHelper {
     const val ACTION_CLEAR = 1
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
+
+    /**
+     * Share the given username with the system share intent.
+     * @param context the context
+     * @param username the username to share
+     */
+    fun shareAccount(context: Context, username: String?) {
+        if (!username.isNullOrEmpty()) {
+            val sharingIntent =
+                Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.account_contact_me))
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        context.getString(
+                            R.string.account_share_body,
+                            username,
+                            context.getString(R.string.app_website)
+                        )
+                    )
+                }
+            context.startActivity(
+                Intent.createChooser(
+                    sharingIntent, context.getString(R.string.share_via)
+                )
+            )
+        }
+    }
+
+    /**
+     * Copy the given string to the clipboard and show a snackbar to inform the user.
+     * @param context the context
+     * @param view the view to attach the snackbar to
+     * @param toCopy the string to copy
+     */
+    fun copyAndShow(context: Context, view: View, toCopy: String) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(
+            ClipData.newPlainText(context.getString(R.string.clip_contact_uri), toCopy)
+        )
+        Snackbar.make(
+            view,
+            context.getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy),
+            Snackbar.LENGTH_LONG
+        ).show()
+    }
 
     fun launchClearAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
         MaterialAlertDialogBuilder(context)
