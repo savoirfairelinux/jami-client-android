@@ -57,6 +57,7 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.databinding.DataBindingUtil
@@ -170,8 +171,42 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             .also { b ->
                 b.presenter = this
                 binding = b
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    //b.participantOverlayContainer.list
+                    b.participantOverlayContainer.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                        Log.w(TAG, "OnLayoutChange ${v}, ${left}, ${top}, ${right}, $bottom")
+                        updatePipParams()
+                    }
+                }
+
                 bottomSheetParams = binding?.callOptionsBottomSheet?.let { BottomSheetBehavior.from(it) }
             }.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun updatePipParams() {
+        binding?.let { b ->
+            try {
+                val bounds = b.participantOverlayContainer.getMainLocationInWindow()
+                if (!bounds.isEmpty) {
+                    activity?.setPictureInPictureParams(
+                        PictureInPictureParams.Builder()
+                            .setAutoEnterEnabled(true)
+                            .setSeamlessResizeEnabled(true)
+                            .setAspectRatio(Rational(bounds.width(), bounds.height()))
+                            .setSourceRectHint(bounds)
+                            .build())
+                } else {
+                    activity?.setPictureInPictureParams(
+                        PictureInPictureParams.Builder()
+                            .setAutoEnterEnabled(false)
+                            .build())
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Can't set PIP params", e)
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility", "RtlHardcoded", "WakelockTimeout")
@@ -410,15 +445,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             val binding = binding ?: return
             if (binding.participantOverlayContainer.visibility != View.VISIBLE)
                 return
-            val l = IntArray(2).apply { binding.participantOverlayContainer.getLocationInWindow(this) }
-            val x = l[0]
-            val y = l[1]
-            val w = binding.participantOverlayContainer.width
-            val h = binding.participantOverlayContainer.height
             try {
                 requireActivity().enterPictureInPictureMode(PictureInPictureParams.Builder()
-                    .setAspectRatio(Rational(w, h))
-                    .setSourceRectHint(Rect(x, y, x + w, y + h))
+                    .setAspectRatio(Rational(1, 1))
                     .setActions(listOf(RemoteAction(
                         Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                         getString(R.string.action_call_hangup),
@@ -441,35 +470,31 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
 
+    /**
+     * Called when the Picture-in-Picture (PIP) mode state is changed.
+     *
+     * @param isInPictureInPictureMode  Indicates whether the app is currently in PIP mode.
+     */
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
         isInPIP = isInPictureInPictureMode
         val binding = binding ?: return
 
+        binding.participantOverlayContainer.togglePipMode(isInPictureInPictureMode)
+
         if (isInPictureInPictureMode) {
-            binding.callCoordinatorOptionContainer.isVisible = false
             val callActivity = activity as CallActivity?
             callActivity?.hideSystemUI()
-            binding.pluginPreviewContainer.isVisible = false
-            binding.pluginPreviewSurface.isVisible = false
-            binding.previewContainer.isVisible = false
-            binding.previewSurface.isVisible = false
-
+            mBackstackLost = true
+            // Hide UI elements not related to PIP mode.
+            binding.callRelativeLayoutSurfaces.isVisible = false
+            binding.callRelativeLayoutButtons.isVisible = false
+            binding.callCoordinatorOptionContainer.isVisible = false
         } else {
-            if(binding.callSharescreenBtn.isChecked){
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.visibility = View.VISIBLE
-                binding.pluginPreviewContainer.isVisible = false
-                binding.pluginPreviewSurface.isVisible = false
-                binding.previewContainer.isVisible = false
-                binding.previewSurface.isVisible = false
-            } else {
-                mBackstackLost = true
-                binding.callCoordinatorOptionContainer.isVisible = true
-                binding.pluginPreviewContainer.isVisible = true
-                binding.pluginPreviewSurface.isVisible = true
-                binding.previewContainer.isVisible = true
-                binding.previewSurface.isVisible = true
-            }
+            mBackstackLost = true
+            // Show normal UI elements.
+            binding.callRelativeLayoutSurfaces.isVisible = true
+            binding.callRelativeLayoutButtons.isVisible = true
+            binding.callCoordinatorOptionContainer.isVisible = true
         }
     }
 
@@ -780,6 +805,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     @SuppressLint("RestrictedApi")
     override fun updateConfInfo(participantInfo: List<ParticipantInfo>) {
+        Log.w(TAG, "updateConfInfo -> $participantInfo")
+
         val binding = binding ?: return
         mConferenceMode = participantInfo.size > 1
 
@@ -894,6 +921,9 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
         overlayViewBinding.initialize()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            overlayViewBinding.post { updatePipParams() }
+        }
     }
 
     override fun updateParticipantRecording(contacts: List<ContactViewModel>) {

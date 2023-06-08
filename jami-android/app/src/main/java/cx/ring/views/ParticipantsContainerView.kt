@@ -1,7 +1,9 @@
 package cx.ring.views
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -25,6 +27,8 @@ class ParticipantsContainerView// adding name, mic etc..
     private val hscroll = HorizontalScrollView(context)
     private val vscroll = ScrollView(context)
     private val ll = FrameLayout(context)
+    private var pipMode = false
+    private var mainViews: List<View> = ArrayList()
 
     init {
         hscroll.tag = "scroll"
@@ -39,7 +43,9 @@ class ParticipantsContainerView// adding name, mic etc..
             removeAllViews()
             return
         }
+        Log.w("ParticipantsContainerView", "initialize() $participants")
 
+        // Used to know which participant to display in PiP mode.
         val inflater = LayoutInflater.from(context)
 
         val mainWidth = width.toFloat()
@@ -47,9 +53,14 @@ class ParticipantsContainerView// adding name, mic etc..
 
         val toRemove: MutableList<View> = ArrayList()
 
+        val pipFocusParticipant = getPipFocusParticipant()
+
         for (childView in children) {
             val tag = childView.tag  as String?
-            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.sinkId ?: it.contact.contact.uri.uri) == tag } == null && tag != "scroll")) toRemove.add(childView)
+            if (tag.isNullOrEmpty() || (participants.firstOrNull { (it.tag) == tag } == null && tag != "scroll"))
+                toRemove.add(childView)
+            else // Hide the view if it is not the focused participant in PiP mode.
+                childView.isVisible = !(pipMode && pipFocusParticipant?.tag != tag)
         }
         for (v in toRemove) removeView(v)
 
@@ -78,10 +89,10 @@ class ParticipantsContainerView// adding name, mic etc..
         val cornerRadius = if (participants.size < 2) 0f else context.resources.getDimension(
             R.dimen.call_participant_corner_radius)
 
-        var iActive = 0
         var iInactive = 0
         val addToMain: MutableList<View> = ArrayList()
         val addToScroll: MutableList<View> = ArrayList()
+        val activeViews = ArrayList<View>()
         for (i in participants) {
 
             val viewTag = i.sinkId ?: i.contact.contact.uri.uri
@@ -89,10 +100,16 @@ class ParticipantsContainerView// adding name, mic etc..
             // adding name, mic etc..
             val participantInfoOverlay = if (view != null) ItemParticipantLabelBinding.bind(view) else ItemParticipantLabelBinding.inflate(inflater).apply {
                 root.tag = viewTag
+                /*root.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                    Log.w("ParticipantsContainerView", "item OnLayoutChange $left $top $right $bottom")
+                }*/
             }
 
-            participantInfoOverlay.root.radius = cornerRadius
-            participantInfoOverlay.sink.setFitToContent(i.active)
+            val isPipFocus = pipFocusParticipant?.tag == i.tag
+            participantInfoOverlay.root.isVisible = !pipMode || isPipFocus
+            participantInfoOverlay.sink.setFitToContent(i.active && !pipMode)
+            participantInfoOverlay.root.radius = if(pipMode) 0f else cornerRadius
+
             participantInfoOverlay.sink.videoListener = { hasVideo ->
                 participantInfoOverlay.avatar.isVisible = !hasVideo
                 if (!hasVideo) {
@@ -126,7 +143,7 @@ class ParticipantsContainerView// adding name, mic etc..
 
             val scrollable = !grid && !i.active
 
-            val col = if (i.active) iActive.toFloat() else (if (grid) (iInactive % inactiveMaxCols).toFloat() else if (portrait) iInactive.toFloat() else 0f)
+            val col = if (i.active) activeViews.size.toFloat() else (if (grid) (iInactive % inactiveMaxCols).toFloat() else if (portrait) iInactive.toFloat() else 0f)
             val row = if (portrait) 0f else iInactive.toFloat()
             val x = if (i.active) col * activeWidth else inactiveOffsetX + col * inactiveWidth
             val y = if (i.active) activeSeparation else (if (grid) ((iInactive / inactiveMaxCols).toFloat()/gridRows) else inactiveOffsetY + row * inactiveHeight)
@@ -137,7 +154,15 @@ class ParticipantsContainerView// adding name, mic etc..
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                if (i.active) {
+                if(pipMode && isPipFocus) {
+                    leftMargin = 0
+                    rightMargin =  0
+                    topMargin = 0
+                    bottomMargin = 0
+                    width = mainWidth.toInt()
+                    height = mainHeight.toInt()
+                }
+                else if (i.active) {
                     leftMargin = if (portrait) (x * mainWidth).toInt() + margin else (inactiveWidth * mainWidth).toInt()
                     rightMargin = if (portrait) leftMargin else leftMargin / 2
                     topMargin = if (portrait) (inactiveHeight * mainHeight).toInt() else margin
@@ -171,14 +196,25 @@ class ParticipantsContainerView// adding name, mic etc..
                 }
             }
 
-            if (i.active)
-                iActive++
-            else
+            if (i.active) {
+                activeViews.add(participantInfoOverlay.root)
+            } else
                 iInactive++
         }
 
         for (v in addToMain) addView(v)
         for (v in addToScroll) ll.addView(v)
+        mainViews = activeViews
+    }
+
+    /** Get the main video location in window coordinates */
+    fun getMainLocationInWindow(): Rect {
+        val l = IntArray(2)
+        return mainViews.fold(Rect()) { r, v ->
+            v.getLocationInWindow(l)
+            r.union(l[0], l[1], l[0] + v.width, l[1] + v.height)
+            r
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -186,4 +222,15 @@ class ParticipantsContainerView// adding name, mic etc..
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
+    fun togglePipMode(isInPip: Boolean) {
+        pipMode = isInPip
+    }
+
+    /**
+     * Get the participant to focus in PiP mode.
+     * Usually the first active participant is chosen.
+     */
+    private fun getPipFocusParticipant() = participants
+        .sortedWith(compareBy({!it.active},{it.contact.contact.isUser}))
+        .firstOrNull()
 }
