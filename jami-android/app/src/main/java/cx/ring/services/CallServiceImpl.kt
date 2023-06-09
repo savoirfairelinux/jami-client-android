@@ -47,47 +47,50 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
         // Use the Android Telecom API to implement requestPlaceCall if available
-        mContext.getSystemService<TelecomManager>()?.let { telecomService ->
-            val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
 
-            // Disabled because of a bug on Lenovo Tab P12 Pro (Android 12) where
-            // isOutgoingCallPermitted() is always returning false. GitLab: #1288.
-            // Less optimal but still functional.
-            /* // Dismiss the call immediately if disallowed
+                // Disabled because of a bug on Lenovo Tab P12 Pro (Android 12) where
+                // isOutgoingCallPermitted() is always returning false. GitLab: #1288.
+                // Less optimal but still functional.
+                /* // Dismiss the call immediately if disallowed
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (!telecomService.isOutgoingCallPermitted(accountHandle))
                     return CALL_DISALLOWED
             }*/
 
-            // Build call parameters
-            val params = Bundle().apply {
-                putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, accountHandle)
-                putBundle(TelecomManager.EXTRA_OUTGOING_CALL_EXTRAS, Bundle().apply {
-                    putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
-                    putString(ConversationPath.KEY_CONVERSATION_URI, contactUri)
-                    if (conversationUri != null)
-                        putString(ConversationPath.KEY_CONVERSATION_URI, conversationUri.uri)
-                })
-                putInt(
-                    TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
-                    if (hasVideo) VideoProfile.STATE_BIDIRECTIONAL
-                    else VideoProfile.STATE_AUDIO_ONLY)
-            }
+                // Build call parameters
+                val params = Bundle().apply {
+                    putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, accountHandle)
+                    putBundle(TelecomManager.EXTRA_OUTGOING_CALL_EXTRAS, Bundle().apply {
+                        putString(ConversationPath.KEY_ACCOUNT_ID, accountId)
+                        putString(ConversationPath.KEY_CONVERSATION_URI, contactUri)
+                        if (conversationUri != null)
+                            putString(ConversationPath.KEY_CONVERSATION_URI, conversationUri.uri)
+                    })
+                    putInt(
+                        TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
+                        if (hasVideo) VideoProfile.STATE_BIDIRECTIONAL
+                        else VideoProfile.STATE_AUDIO_ONLY
+                    )
+                }
 
-            // Build contact' Android URI
-            val callUri = android.net.Uri.parse(contactUri)
-            val key = "$accountId/$callUri"
-            val subject = SingleSubject.create<SystemCall>()
+                // Build contact' Android URI
+                val callUri = android.net.Uri.parse(contactUri)
+                val key = "$accountId/$callUri"
+                val subject = SingleSubject.create<SystemCall>()
 
-            // Place call request
-            pendingCallRequests[key] = subject
-            try {
-                Log.w(TAG, "Telecom API: new outgoing call request for $callUri")
-                telecomService.placeCall(callUri, params)
-                return subject
-            } catch (e: SecurityException) {
-                pendingCallRequests.remove(key)
-                Log.e(TAG, "Can't use the Telecom API to place call", e)
+                // Place call request
+                pendingCallRequests[key] = subject
+                try {
+                    Log.w(TAG, "Telecom API: new outgoing call request for $callUri")
+                    telecomService.placeCall(callUri, params)
+                    return subject
+                } catch (e: SecurityException) {
+                    pendingCallRequests.remove(key)
+                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                }
             }
         }
         // Fallback to allowing the call
@@ -102,31 +105,39 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestIncomingCall(call: Call): Single<SystemCall> {
         // Use the Android Telecom API if available
-        mContext.getSystemService<TelecomManager>()?.let { telecomService ->
-            val extras = Bundle()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
-                    extras.putInt(
-                        TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
-                        VideoProfile.STATE_BIDIRECTIONAL
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+                val extras = Bundle()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
+                        extras.putInt(
+                            TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                            VideoProfile.STATE_BIDIRECTIONAL
+                        )
+                }
+                extras.putString(ConversationPath.KEY_ACCOUNT_ID, call.account)
+                extras.putString(NotificationService.KEY_CALL_ID, call.daemonIdString)
+                extras.putString(
+                    ConversationPath.KEY_CONVERSATION_URI,
+                    call.contact?.uri?.rawUriString
+                )
+
+                val key = call.daemonIdString!!
+                val subject = SingleSubject.create<SystemCall>()
+
+                // Place call request
+                incomingCallRequests[key] = Pair(call, subject)
+                try {
+                    Log.w(TAG, "Telecom API: new incoming call request for $key")
+                    telecomService.addNewIncomingCall(
+                        JamiApplication.instance!!.androidPhoneAccountHandle,
+                        extras
                     )
-            }
-            extras.putString(ConversationPath.KEY_ACCOUNT_ID, call.account)
-            extras.putString(NotificationService.KEY_CALL_ID, call.daemonIdString)
-            extras.putString(ConversationPath.KEY_CONVERSATION_URI, call.contact?.uri?.rawUriString)
-
-            val key = call.daemonIdString!!
-            val subject = SingleSubject.create<SystemCall>()
-
-            // Place call request
-            incomingCallRequests[key] = Pair(call, subject)
-            try {
-                Log.w(TAG, "Telecom API: new incoming call request for $key")
-                telecomService.addNewIncomingCall(JamiApplication.instance!!.androidPhoneAccountHandle, extras)
-                return subject
-            } catch (e: SecurityException) {
-                incomingCallRequests.remove(key)
-                Log.e(TAG, "Can't use the Telecom API to place call", e)
+                    return subject
+                } catch (e: SecurityException) {
+                    incomingCallRequests.remove(key)
+                    Log.e(TAG, "Can't use the Telecom API to place call", e)
+                }
             }
         }
         // Fallback to allowing the call
