@@ -34,7 +34,6 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.util.Log
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
 import cx.ring.BuildConfig
@@ -219,6 +218,7 @@ abstract class JamiApplication : Application() {
             RxJavaPlugins.setErrorHandler { e -> Log.e(TAG, "Unhandled RxJava error", e) }
         }
 
+        // Initialize the Android Telecom API if available
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getSystemService<TelecomManager>()?.let { telecomService ->
                 val componentName = ComponentName(this, ConnectionService::class.java)
