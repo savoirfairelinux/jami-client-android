@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c815fb63_30d87334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-06-09T13:30:22Z",
+      "side": 1,
+      "message": "Smooth transition changes look good to me.",
+      "revId": "1511d4aef45f7124905c77a023ab607e1989aebd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
