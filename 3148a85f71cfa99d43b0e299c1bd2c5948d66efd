@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "338f8cb2_4f0ca881",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "Couldn\u0027t be more readable to have?:\n\n// Only available on Android R and above.\nif (Build.VERSION.SDK_INT \u003c Build.VERSION_CODES.R) return",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 15
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a48ae6eb_3c9806fc",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "Couldn\u0027t be more readable to have?:\n\nsystemService \u003d getSystemService\u003cActivityManager\u003e() ?: return",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 7
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44de5bb3_6bae115d",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "stringStream ?",
+      "range": {
+        "startLine": 165,
+        "startChar": 20,
+        "endLine": 165,
+        "endChar": 32
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba7aaddc_fe189d3c",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "a-e-i...o-u-y lol\nApplicationExitInfo OK",
+      "range": {
+        "startLine": 166,
+        "startChar": 52,
+        "endLine": 166,
+        "endChar": 55
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaa3fb47_e55f5739",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/LogsActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "Needed ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 31
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec86901a_43f7e3a9",
+        "filename": "jami-android/app/src/main/res/drawable/explosion_48.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "Were is this image coming from ? I don\u0027t see it from our dataset ? :)",
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f37d8b88_95e59f39",
+        "filename": "jami-android/app/src/main/res/menu/logs_menu.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-09T20:23:05Z",
+      "side": 1,
+      "message": "Few things :)\n- Icon needs padding is not the same size than others\n- We don\u0027t understand what it is for",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "3148a85f71cfa99d43b0e299c1bd2c5948d66efd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
