@@ -66,8 +66,7 @@ class CallPresenter @Inject constructor(
     fun isSpeakerphoneOn(): Boolean = mHardwareService.isSpeakerphoneOn()
     var isMicrophoneMuted: Boolean = false
     var wantVideo = false
-    var videoIsMuted = false
-        private set
+    private var hardwareCameraVideoIsMuted = false
 
     fun isVideoActive(): Boolean = mConference?.hasActiveVideo() == true
 
@@ -214,7 +213,7 @@ class CallPresenter @Inject constructor(
         val canDial = mOnGoingCall
         val displayPluginsButton = view?.displayPluginsButton() == true
         val showPluginBtn = displayPluginsButton && mOnGoingCall
-        val hasActiveVideo = conference.hasActiveVideo()
+        val hasActiveVideo = conference.hasActiveNonScreenShareVideo()
         val hasMultipleCamera = mHardwareService.cameraCount() > 1 && mOnGoingCall && hasActiveVideo
         val isConference = conference.isConference
         view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
@@ -248,13 +247,14 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id)
+        val camId = mHardwareService.switchInput() ?: return
+        mCallService.replaceHardwareCameraSource(conference, camId)
     }
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
-        videoIsMuted = !videoIsMuted
-        mCallService.requestVideoMedia(conference, !videoIsMuted)
+        mCallService.toggleHardwareCamera(conference, !hardwareCameraVideoIsMuted)
+        hardwareCameraVideoIsMuted = !hardwareCameraVideoIsMuted
     }
 
     fun configurationChanged(rotation: Int) {
@@ -390,7 +390,8 @@ class CallPresenter @Inject constructor(
         val hasVideo = call.hasVideo()
         val hasActiveVideo = call.hasActiveVideo()
         val hasActiveScreenShare = call.hasActiveScreenSharing()
-        videoIsMuted = !hasActiveVideo
+        val hasActiveNonScreenShareVideo = call.hasActiveNonScreenShareVideo()
+        hardwareCameraVideoIsMuted = !hasActiveNonScreenShareVideo
         val view = view ?: return
         if (call.isOnGoing) {
             mOnGoingCall = true
@@ -403,7 +404,7 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 view.displayLocalVideo(hasActiveVideo && !hasActiveScreenShare && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
+                    mCallService.toggleHardwareCamera(call, false) // todo test?
                     permissionChanged = false
                 }
             }
@@ -634,27 +635,30 @@ class CallPresenter @Inject constructor(
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
         val conference = mConference ?: return false
-        mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+        val projection = mediaProjection ?: return false
+        mHardwareService.setScreenShareProjection(projection)
+        mCallService.toggleVideoMute(conference, "camera://desktop", false)
         return true
     }
 
     fun stopScreenShare() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id, true)
+        mHardwareService.setScreenShareProjection(null)
+        mCallService.toggleVideoMute(conference, "camera://desktop", true)
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
         return mConference?.maximizedParticipant == info.contact.contact
     }
 
-    fun startPlugin(mediaHandlerId: String) {
+    fun startPlugin(mediaHandlerId: String) { // todo
         mHardwareService.startMediaHandler(mediaHandlerId)
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        //mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
 
-    fun stopPlugin() {
+    fun stopPlugin() { // todo
         mHardwareService.stopMediaHandler()
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        //mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
     }
 
     fun getDeviceId(): String? {
