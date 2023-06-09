@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".client.HomeActivity">
+    <item
+        android:id="@+id/menu_log_crashes"
+        android:icon="@drawable/explosion_48"
+        android:title="Crashes"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_log_share"
@@ -13,7 +18,7 @@
     <item
         android:id="@+id/menu_log_save"
         android:icon="@drawable/baseline_file_download_24"
-        android:title="@string/dial_number"
+        android:title="@string/menu_file_save"
         app:showAsAction="always" />
 
 </menu>
