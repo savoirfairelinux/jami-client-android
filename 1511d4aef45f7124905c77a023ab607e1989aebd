@@ -16,6 +16,24 @@
       "message": "Smooth transition changes look good to me.",
       "revId": "1511d4aef45f7124905c77a023ab607e1989aebd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1841284_a2df6ea7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 943
+      },
+      "writtenOn": "2023-06-09T14:35:41Z",
+      "side": 1,
+      "message": "Will this patch also fix issues like https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1067 and https://git.jami.net/savoirfairelinux/jami-client-android/-/issues/1217?",
+      "parentUuid": "c815fb63_30d87334",
+      "revId": "1511d4aef45f7124905c77a023ab607e1989aebd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
