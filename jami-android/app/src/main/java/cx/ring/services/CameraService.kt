@@ -22,6 +22,8 @@ import android.graphics.ImageFormat
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback
 import android.hardware.camera2.CameraManager.AvailabilityCallback
+import android.hardware.camera2.params.OutputConfiguration
+import android.hardware.camera2.params.SessionConfiguration
 import android.hardware.display.DisplayManager
 import android.hardware.display.VirtualDisplay
 import android.media.*
@@ -38,7 +40,6 @@ import android.util.Size
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.TextureView
-import androidx.annotation.RequiresApi
 import cx.ring.utils.*
 import cx.ring.views.AutoFitTextureView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -53,6 +54,7 @@ import net.jami.daemon.StringMap
 import net.jami.daemon.UintVect
 import java.nio.ByteBuffer
 import java.util.*
+import java.util.concurrent.Executor
 import kotlin.math.abs
 
 class CameraService internal constructor(c: Context) {
@@ -63,6 +65,7 @@ class CameraService internal constructor(c: Context) {
     private val videoLooper: Looper
         get() = t.apply { if (state == Thread.State.NEW) start() }.looper
     private val videoHandler: Handler by lazy { Handler(videoLooper) }
+    private val videoExecutor: Executor = Executor { command -> videoHandler.post(command) }
 
     private val maxResolutionSubject: Subject<Pair<Int?, Int?>> = BehaviorSubject.createDefault(RESOLUTION_NONE)
     private var devices: VideoDevices? = null
@@ -380,8 +383,7 @@ class CameraService internal constructor(c: Context) {
             setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
             setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue)
             setInteger(MediaFormat.KEY_COLOR_FORMAT, CodecCapabilities.COLOR_FormatSurface)
-            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
-                setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
+            setInteger(MediaFormat.KEY_FRAME_RATE, frameRate)
             setInteger(MediaFormat.KEY_REPEAT_PREVIOUS_FRAME_AFTER, 1000000 / frameRate)
             setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1)
             setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5)
@@ -468,11 +470,7 @@ class CameraService internal constructor(c: Context) {
                     Log.e(TAG, "MediaCodec onOutputFormatChanged $format")
                 }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setCodecCallback(codec, callback, handler)
-            } else {
-                setCodecCallback(codec, callback)
-            }
+            codec.setCallback(callback, handler)
         } catch (e: Exception) {
             Log.e(TAG, "Can't open codec", e)
             if (codec != null) {
@@ -640,12 +638,12 @@ class CameraService internal constructor(c: Context) {
             Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: " + videoParams.rate)
             view.setAspectRatio(previewSize.height, previewSize.width)
             val texture = view.surfaceTexture ?: throw IllegalStateException()
-            val s = Surface(texture)
+            val previewSurface = Surface(texture)
             val codec = if (hw_accel)
                 openEncoder(videoParams, videoParams.getAndroidCodec(), handler, resolution, bitrate)
             else null
             val targets: MutableList<Surface> = ArrayList(2)
-            targets.add(s)
+            targets.add(previewSurface)
             var tmpReader: ImageReader? = null
             if (codec?.second != null) {
                 targets.add(codec.second!!)
@@ -670,7 +668,7 @@ class CameraService internal constructor(c: Context) {
                         videoParams.mediaCodec = codec?.first
                         texture.setDefaultBufferSize(previewSize.width, previewSize.height)
                         val request = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
-                            addTarget(s)
+                            addTarget(previewSurface)
                             if (codec?.second != null) {
                                 addTarget(codec.second!!)
                             } else if (reader != null) {
@@ -681,7 +679,8 @@ class CameraService internal constructor(c: Context) {
                             set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange)
                             set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
                         }.build()
-                        camera.createCaptureSession(targets, object : CameraCaptureSession.StateCallback() {
+
+                        val stateCallback = object : CameraCaptureSession.StateCallback() {
                             override fun onConfigured(session: CameraCaptureSession) {
                                 Log.w(TAG, "onConfigured")
                                 listener.onOpened()
@@ -719,7 +718,22 @@ class CameraService internal constructor(c: Context) {
                             override fun onClosed(session: CameraCaptureSession) {
                                 Log.w(TAG, "CameraCaptureSession onClosed")
                             }
-                        }, handler)
+                        }
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            val outputConfiguration = targets.map {
+                                OutputConfiguration(it).apply {
+                                    streamUseCase = if (this.surface == codec?.second || this.surface == reader?.surface)
+                                        CameraMetadata.SCALER_AVAILABLE_STREAM_USE_CASES_VIDEO_CALL.toLong()
+                                    else
+                                        CameraMetadata.SCALER_AVAILABLE_STREAM_USE_CASES_PREVIEW.toLong()
+                                }
+                            }
+                            val conf = SessionConfiguration(SessionConfiguration.SESSION_REGULAR, outputConfiguration, videoExecutor, stateCallback)
+                            camera.createCaptureSession(conf)
+                        } else {
+                            camera.createCaptureSession(targets, stateCallback, handler)
+                        }
                     } catch (e: Exception) {
                         Log.w(TAG, "onOpened error:", e)
                     }
@@ -749,7 +763,7 @@ class CameraService internal constructor(c: Context) {
                         }
                         codec?.second?.release()
                         reader?.close()
-                        s.release()
+                        previewSurface.release()
                     } catch (e: Exception) {
                         Log.w(TAG, "Error stopping codec", e)
                     }
@@ -905,15 +919,6 @@ class CameraService internal constructor(c: Context) {
             }
         }
 
-        private fun setCodecCallback(codec: MediaCodec, callback: MediaCodec.Callback) {
-            codec.setCallback(callback)
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        private fun setCodecCallback(codec: MediaCodec, callback: MediaCodec.Callback, handler: Handler) {
-            codec.setCallback(callback, handler)
-        }
-
         private fun chooseOptimalSize(
             choices: Array<Size>?,
             textureViewWidth: Int,
@@ -954,7 +959,7 @@ class CameraService internal constructor(c: Context) {
 
         private fun chooseOptimalFpsRange(ranges: Array<Range<Int>>?): Range<Int> {
             var range: Range<Int>? = null
-            if (ranges != null && ranges.isNotEmpty()) {
+            if (!ranges.isNullOrEmpty()) {
                 for (r in ranges) {
                     if (r.upper > FPS_MAX) continue
                     if (range != null) {
