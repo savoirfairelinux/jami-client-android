@@ -49,8 +49,8 @@ class SmartListPresenter @Inject constructor(
     override fun bindView(view: SmartListView) {
         super.bindView(view)
         view.setLoading(true)
-        mCompositeDisposable.add(conversationFacade.getFullConversationList(accountSubject, debouncedQuery)
-             .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
+        mCompositeDisposable.add(conversationFacade.getConversationList(accountSubject)
+            .throttleLatest(150, TimeUnit.MILLISECONDS, uiScheduler)
             .observeOn(uiScheduler)
             .subscribe { list ->
                 val v = this.view ?: return@subscribe
@@ -76,10 +76,6 @@ class SmartListPresenter @Inject constructor(
 
     fun conversationLongClicked(conversationItemViewModel: Conversation) {
         view?.displayConversationDialog(conversationItemViewModel)
-    }
-
-    fun fabButtonClicked() {
-        view?.displayMenuItem()
     }
 
     private fun startConversation(accountId: String, conversationUri: Uri?) {

@@ -43,7 +43,6 @@
     <color name="background_status_required">#fee4e9</color>
 
     <color name="online_indicator">#0B8271</color>
-    <color name="fab_background">#00273F</color>
     <color name="menu_icon">#0A84FF</color>
 
     <!--  TwoButton EditText  -->
@@ -58,5 +57,20 @@
     <color name="tv_contact_background">#00335C</color>
     <color name="tv_contact_row_background">#002B4E</color>
     <color name="tv_search_background">#0095EB</color>
+
+    <!--  Home  -->
+    <color name="appbar_gradient_color">#ccfdfdfd</color>
+    <color name="searchbar_color">#F0EFEF</color>
+    <color name="fab_background_color">#005699</color>
+    <color name="fab_text_color">#FFFFFF</color>
+
+    <!--  InvitationCard  -->
+    <color name="invitation_card_background_color">#00223C</color>
+    <color name="invitation_card_badge_color">#005699</color>
+    <color name="invitation_card_text_color">#FFFFFF</color>
+    <color name="invitation_card_on_surface_text_color">#FFFFFF</color>
+    <color name="invitation_card_on_badge_text_color">#FFFFFF</color>
+    <color name="invitation_drawable_p1_color">#fff</color>
+    <color name="invitation_drawable_p2_color">#03b9e9</color>
 
 </resources>

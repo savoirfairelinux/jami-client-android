@@ -15,83 +15,66 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
-    android:animateLayoutChanges="true">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:fitsSystemWindows="true"
+    >
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/list_coordinator"
+    <!-- Will be displayed when no accounts are available -->
+    <LinearLayout
+        android:id="@+id/placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/baseline_forum_24"
+            app:tint="@color/darker_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/conversation_placeholder" />
+
+    </LinearLayout>
+
+    <!-- Will be displayed when accounts are loading -->
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        tools:visibility="gone" />
+
+    <!-- Will display loaded accounts -->
+    <!-- paddingTop allows to have list items under searchbar and invitation received toolbar -->
+    <!-- TODO: Determine if layout_constraintTop_toBottomOf is still needed -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/confs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginStart="0dp"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:elevation="2dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
 
-        <LinearLayout
-            android:id="@+id/placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible"
-            tools:ignore="UseCompoundDrawables">
+        tools:listitem="@layout/item_smartlist"
+        tools:visibility="visible" />
 
-            <ImageView
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                app:tint="@color/darker_gray"
-                android:src="@drawable/baseline_forum_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:text="@string/conversation_placeholder" />
-
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            tools:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/confs_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/qr_code"
-            android:layout_marginStart="0dp"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:elevation="2dp"
-            android:paddingBottom="8dp"
-            tools:listitem="@layout/item_smartlist"
-            tools:visibility="visible"/>
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
-            android:id="@+id/newconv_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin_mini"
-            android:elevation="6dp"
-            android:text="@string/start_conversation"
-            app:elevation="6dp"
-            app:icon="@drawable/baseline_chat_24"
-            app:pressedTranslationZ="12dp"
-            android:textColor="@color/white"
-            app:iconTint="@color/white"
-            app:layout_anchorGravity="bottom|center_horizontal"
-            android:backgroundTint="@color/fab_background"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

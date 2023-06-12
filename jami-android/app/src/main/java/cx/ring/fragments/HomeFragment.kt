@@ -19,63 +19,79 @@ package cx.ring.fragments
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.view.*
-import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
-import android.widget.EditText
+import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.ChangeBounds
+import androidx.transition.Fade
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
-import cx.ring.client.AccountSpinnerAdapter
+import cx.ring.adapters.SmartListAdapter
+import cx.ring.client.AccountAdapter
 import cx.ring.client.HomeActivity
-import cx.ring.contactrequests.ContactRequestsFragment
-import cx.ring.databinding.FragHomeBinding
 import cx.ring.mvp.BaseSupportFragment
+import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils
+import cx.ring.viewholders.SmartListViewHolder
+import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.home.HomePresenter
 import net.jami.home.HomeView
+import net.jami.model.Conversation
 import net.jami.services.AccountService
 import net.jami.services.ConversationFacade
-import java.lang.IllegalArgumentException
+import net.jami.smartlist.ConversationItemViewModel
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-
-fun ViewPager2.findCurrentFragment(fragmentManager: FragmentManager): Fragment? =
-    fragmentManager.findFragmentByTag("f$currentItem")
-
-fun ViewPager2.findFragmentAtPosition(
-    fragmentManager: FragmentManager,
-    position: Int
-): Fragment? = fragmentManager.findFragmentByTag("f$position")
+import com.google.android.material.search.SearchView.TransitionState
+import com.google.android.material.shape.MaterialShapeDrawable
+import cx.ring.databinding.FragHomeBinding
 
 @AndroidEntryPoint
 class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
-        TabLayout.OnTabSelectedListener, SearchView.OnQueryTextListener, HomeView {
+    SearchView.OnQueryTextListener, HomeView {
 
     private var mBinding: FragHomeBinding? = null
     private var pagerContent: Fragment? = null
-    private var mPagerAdapter: ScreenSlidePagerAdapter? = null
     private var mHasConversationBadge = false
     private var mHasPendingBadge = false
-    private var mAccountAdapter: AccountSpinnerAdapter? = null
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
-    private var mSearchMenuItem: MenuItem? = null
-    private var mDialPadMenuItem: MenuItem? = null
+    private val searchDisposable = CompositeDisposable()
+    private var searchAdapter: SmartListAdapter? = null
+    private var pendingAdapter: SmartListAdapter? = null
+    private val querySubject = BehaviorSubject.createDefault("")
+    private val debouncedQuery = querySubject.debounce { item ->
+        if (item.isEmpty()) Observable.empty()
+        else Observable.timer(350, TimeUnit.MILLISECONDS)
+    }.distinctUntilChanged()
 
     @Inject
     lateinit
@@ -90,9 +106,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             collapseSearchActionView()
         }
     }
+
     private val conversationBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            setPagerPosition(TAB_CONVERSATIONS)
+            collapsePendingView()
         }
     }
 
@@ -104,114 +121,310 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View =
         FragHomeBinding.inflate(inflater, container, false).let { binding ->
-            mPagerAdapter = ScreenSlidePagerAdapter(this)
+
+            // Connect SearchView buttons:
+            // - QRCode
+            // - New Swarm
             binding.qrCode.setOnClickListener {
                 presenter.clickQRSearch()
             }
-            binding.newGroup.setOnClickListener{
-                presenter.clickNewGroup()
+            binding.newSwarm.setOnClickListener {
+                presenter.clickNewSwarm()
             }
-            binding.pager.adapter = mPagerAdapter
-            binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    binding.tabLayout.getTabAt(position)!!.select()
-                    pagerContent = binding.pager.findFragmentAtPosition(childFragmentManager, position)
-                    conversationBackPressedCallback.isEnabled = position != TAB_CONVERSATIONS
-                }
-            })
-            binding.tabLayout.addOnTabSelectedListener(this)
-            binding.spinnerToolbar.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val adapter = mAccountAdapter ?: return
-                    val type = adapter.getItemViewType(position)
-                    if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
-                        adapter.getItem(position)?.let { account ->
-                            mAccountService.currentAccount = account
-                        }
-                    } else {
-                        val intent = Intent(activity, AccountWizardActivity::class.java)
-                        startActivity(intent)
-                        mBinding!!.spinnerToolbar.setSelection(0)
+
+            //updateAppBarLayoutBottomPadding(false)
+
+            // SearchBar is composed of:
+            // - Account selection (navigation)
+            // - Search bar (search for swarms or for new contacts)
+            // - Menu (for settings, about jami)
+            binding.searchBar.setNavigationOnClickListener { // Account selection
+                val accounts = mAccountService.observableAccountList.blockingFirst()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Select Account")
+                    .setAdapter(
+                        AccountAdapter(
+                            requireContext(),
+                            accounts,
+                            mDisposable, mAccountService, mConversationFacade
+                        )
+                    ) { _, index ->
+                        if (index >= accounts.size)
+                            startActivity(Intent(activity, AccountWizardActivity::class.java))
+                        else
+                            mAccountService.currentAccount = accounts[index]
+                    }
+                    .show()
+            }
+            binding.searchView.editText.addTextChangedListener { // Search bar
+                querySubject.onNext(it.toString())
+            }
+            // Inflate Menu and connect it
+            binding.searchBar.inflateMenu(R.menu.smartlist_menu)
+            binding.searchBar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_account_settings -> {
+                        (requireActivity() as HomeActivity).goToAccountSettings()
+                    }
+
+                    R.id.menu_advanced_settings -> {
+                        (requireActivity() as HomeActivity).goToAdvancedSettings()
+                    }
+
+                    R.id.menu_about -> {
+                        (requireActivity() as HomeActivity).goToAbout()
                     }
                 }
-                override fun onNothingSelected(arg0: AdapterView<*>?) {}
+                true
             }
-            binding.toolbar.inflateMenu(R.menu.smartlist_menu)
+            // Update padding of the list depending on the AppBarLayout height
+            binding.appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
+                (pagerContent as SmartListFragment).getRecyclerView()
+                    ?.setPadding(
+                        0,
+                        binding.appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
+                        0, 0
+                    )
+            }
+            // Make the appBarLayout not going under the status bar.
+            binding.appBar.statusBarForeground =
+                MaterialShapeDrawable.createWithElevationOverlay(requireContext())
+
+            // Setup search result adapter
+            binding.searchResult.adapter =
+                SmartListAdapter(
+                    null,
+                    object : SmartListViewHolder.SmartListListeners {
+                        override fun onItemClick(item: Conversation) {
+                            collapseSearchActionView()
+                            (requireActivity() as HomeActivity).startConversation(
+                                item.accountId,
+                                item.uri
+                            )
+                        }
+
+                        override fun onItemLongClick(item: Conversation) {}
+                    },
+                    mConversationFacade,
+                    mDisposable
+                ).apply { searchAdapter = this }
+            // Setup search result list
+            binding.searchResult.setHasFixedSize(true)
+            binding.searchResult.layoutManager =
+                LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.VERTICAL }
+
+            binding.searchView.addTransitionListener { _, previousState, newState ->
+                // When using the SearchView, we have to :
+                // - Manage back press
+                // - Manage search results
+
+                if (newState === TransitionState.SHOWN) { // Shown
+                    // Hide AppBar and SmartList to avoid weird animation
+                    binding.fragmentContainer.isVisible = false
+                    binding.appBar.isVisible = false
+
+                    searchBackPressedCallback.isEnabled = true
+                } else if (previousState === TransitionState.SHOWN) { // Hiding
+                    // Make SmartList and appbar visible again
+                    binding.fragmentContainer.isVisible = true
+                    binding.appBar.isVisible = true
+
+                    searchBackPressedCallback.isEnabled = false
+                }
+
+                if (newState === TransitionState.HIDDEN) { // Hidden
+                    // Hide floating button to avoid weird animation
+                    binding.newSwarmFab.isVisible = true
+
+                    searchDisposable.clear()
+                } else if (previousState === TransitionState.HIDDEN) { // Showing
+                    // Make floating button visible again
+                    binding.newSwarmFab.isVisible = false
+
+                    searchDisposable.add(
+                        mConversationFacade.getSearchResults(
+                            mConversationFacade.currentAccountSubject, debouncedQuery
+                        )
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { searchAdapter?.update(it) }
+                    )
+                }
+            }
+
+            // Setup floating button.
+            binding.newSwarmFab.setOnClickListener { expandSearchActionView() }
+
+            // Setup invitation card adapter.
+            binding.invitationCard.pendingList.adapter =
+                SmartListAdapter(
+                    null,
+                    object : SmartListViewHolder.SmartListListeners {
+                        override fun onItemClick(item: Conversation) {
+                            (requireActivity() as HomeActivity).startConversation(
+                                item.accountId,
+                                item.uri
+                            )
+                            // Weird bug fixed by line below.
+                            // Without it, the appBarLayoutBottom is not displayed correctly
+                            // when collapsing the pendingList (no space between statusBar and
+                            // appBarLayout).
+                            //mBinding?.appBar?.fitsSystemWindows = true
+                        }
+
+                        override fun onItemLongClick(item: Conversation) {}
+                    },
+                    mConversationFacade,
+                    mDisposable
+                ).apply { pendingAdapter = this }
+            // Setup invitation card
+            binding.invitationCard.invitationGroup.setOnClickListener {
+                expandPendingView()
+            }
+            binding.invitationCard.pendingToolbar // Return to search
+                .setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+
             mBinding = binding
             binding.root
         }
 
+    /**
+     * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
+     */
+    private fun updateAppBarLayoutBottomPadding(hasInvites: Boolean) {
+        mBinding?.appBarContainer?.updatePadding(bottom = if (hasInvites)
+            context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
+    }
+
+    private fun expandPendingView() {
+        val binding = mBinding ?: return
+
+        // Transitions to animate the changes
+        // Make the search bar slide down
+        TransitionManager.beginDelayedTransition(binding.searchBar, Slide())
+        // Make the invitation card expand.
+        TransitionManager.beginDelayedTransition(
+            binding.invitationCard.invitationGroup,
+            ChangeBounds().setInterpolator(DecelerateInterpolator())
+        )
+        // Make the invitation card take all the height.
+        binding.appBar.updateLayoutParams {
+            height = ViewGroup.LayoutParams.MATCH_PARENT
+        }
+        binding.appBarContainer.updatePadding(bottom = 0)
+
+        // Disable possibility to scroll the appbar.
+        (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
+        // Adapt the margins of the invitation card.
+        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
+            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
+                .setMargins(it, it, it, it)
+        }
+        // Enable to possibility to scroll the invitation pending list.
+        (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
+
+        // Hide everything unneeded.
+        binding.searchBar.isVisible = false
+        binding.invitationCard.invitationSummary.isVisible = false
+        binding.fragmentContainer.isVisible = false
+        binding.newSwarmFab.isVisible = false
+
+        // Display pending list.
+        binding.invitationCard.pendingListGroup.isVisible = true
+
+        // Enable back press.
+        conversationBackPressedCallback.isEnabled = true
+    }
+
+    fun collapsePendingView() {
+        val binding = mBinding ?: return
+
+        // Animate back to search
+        // Make the search bar slide up
+        TransitionManager.beginDelayedTransition(
+            binding.searchBar,
+            Slide().setInterpolator(DecelerateInterpolator())
+        )
+        // Make the invitation card collapse.
+        TransitionManager.beginDelayedTransition(
+            binding.appBar,
+            ChangeBounds().setInterpolator(DecelerateInterpolator())
+        )
+        // Make the invitation card text fade in.
+        TransitionManager.beginDelayedTransition(
+            binding.invitationCard.invitationSummary,
+            Fade()
+        )
+
+        // Make the invitation card wrap content (not take all space available anymore).
+        binding.appBar.updateLayoutParams {
+            height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+
+        // Enable possibility to scroll the appbar.
+        (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
+            SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or
+                    SCROLL_FLAG_SNAP or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        // Adapt the margins of the invitation card.
+        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
+            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
+                .setMargins(it, 0, it, 0)
+        }
+        // Disable possibility to scroll the invitation pending list.
+        (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+            AppBarLayout.Behavior()
+
+        // Show everything needed.
+        binding.searchBar.isVisible = true
+        binding.invitationCard.invitationSummary.isVisible = true
+        binding.newSwarmFab.isVisible = true
+        binding.fragmentContainer.isVisible = true
+
+        // Hide pending list.
+        binding.invitationCard.pendingListGroup.isVisible = false
+
+        // Disable back press.
+        conversationBackPressedCallback.isEnabled = false
+    }
+
+    // Will hide the floating button when scrolling down and show it when scrolling up.
+    private val fabScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val canScrollUp =
+                recyclerView.canScrollVertically(-1)
+            val isExtended = mBinding!!.newSwarmFab.isExtended
+            if (dy > 0 && isExtended) { // Going down
+                mBinding!!.newSwarmFab.shrink()
+            } else if ((dy < 0 || !canScrollUp) && !isExtended) { // Going up
+                mBinding!!.newSwarmFab.extend()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val menu = mBinding!!.toolbar.menu
-        val searchMenuItem = menu.findItem(R.id.menu_contact_search)
-        val dialpadMenuItem = menu.findItem(R.id.menu_contact_dial)
-        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                dialpadMenuItem.isVisible = false
-                (pagerContent as? SmartListFragment?)?.showFab(true)
-                setOverflowMenuVisible(menu, true)
-                mBinding!!.qrCode.visibility = View.GONE
-                mBinding!!.newGroup.visibility = View.GONE
-                searchBackPressedCallback.isEnabled = false
-                return true
-            }
+        pagerContent = mBinding!!.fragmentContainer.getFragment()
 
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                dialpadMenuItem.isVisible = true
-                (pagerContent as? SmartListFragment?)?.showFab(false)
-                setOverflowMenuVisible(menu, false)
-                mBinding!!.qrCode.visibility = View.VISIBLE
-                mBinding!!.newGroup.visibility = View.VISIBLE
-                searchBackPressedCallback.isEnabled = true
-                return true
-            }
-        })
-        val searchView = searchMenuItem.actionView as SearchView
-        searchView.setOnQueryTextListener(this)
-        searchView.queryHint = getString(R.string.searchbar_hint)
-        searchView.layoutParams = Toolbar.LayoutParams(
-            Toolbar.LayoutParams.WRAP_CONTENT,
-            Toolbar.LayoutParams.MATCH_PARENT
-        )
-        searchView.imeOptions = EditorInfo.IME_ACTION_GO
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-                ?.setAutofillHints(View.AUTOFILL_HINT_USERNAME)
-        }
-        mSearchMenuItem = searchMenuItem
-        mDialPadMenuItem = dialpadMenuItem
-        mSearchView = searchView
-        mBinding!!.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_contact_search -> {
-                    mSearchView?.inputType = (EditorInfo.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
-                }
-                R.id.menu_contact_dial -> {
-                    val searchView = mSearchView
-                    if (searchView?.inputType == EditorInfo.TYPE_CLASS_PHONE) {
-                        searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
-                        mDialPadMenuItem?.setIcon(R.drawable.baseline_dialpad_24)
-                    } else {
-                        searchView?.inputType = EditorInfo.TYPE_CLASS_PHONE
-                        mDialPadMenuItem?.setIcon(R.drawable.baseline_keyboard_24)
+        // Subscribe on fragmentContainer to add scroll listener on the recycler view.
+        mBinding!!.fragmentContainer.getFragment<SmartListFragment>().viewLifecycleOwnerLiveData
+            .observe(viewLifecycleOwner) {
+                it.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
+                        (pagerContent as SmartListFragment).getRecyclerView()!!
+                            .addOnScrollListener(fabScrollListener)
                     }
-                }
-                R.id.menu_account_settings -> {
-                    (requireActivity() as HomeActivity).goToAccountSettings()
-                }
-                R.id.menu_advanced_settings -> {
-                    (requireActivity() as HomeActivity).goToAdvancedSettings()
-                }
-                R.id.menu_about -> {
-                    (requireActivity() as HomeActivity).goToAbout()
-                }
+
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        (pagerContent as SmartListFragment).getRecyclerView()!!
+                            .removeOnScrollListener(fabScrollListener)
+                    }
+                })
             }
-            true
-        }
     }
 
     override fun onDestroyView() {
@@ -223,61 +436,50 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onStart() {
         super.onStart()
+        mDisposable.add(searchDisposable)
         activity?.intent?.let { handleIntent(it) }
+
+        // Subscribe on invitation pending list to show a badge counter
         mDisposable.add(mAccountService
             .currentAccountSubject
-            .switchMap { obj -> obj.unreadPending }
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { count -> setBadge(TAB_INVITATIONS, count) })
-        mDisposable.add(mAccountService
-            .currentAccountSubject
-            .switchMap { obj -> obj.unreadConversations }
-            .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { count -> setBadge(TAB_CONVERSATIONS, count) })
-        mDisposable.add(
-            mAccountService.observableAccountList
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe({ accounts ->
-                    mAccountAdapter?.apply {
-                        clear()
-                        addAll(accounts)
-                        notifyDataSetChanged()
-                        if (accounts.isNotEmpty()) {
-                            mBinding!!.spinnerToolbar.setSelection(0)
-                        }
-                    } ?: run {
-                        AccountSpinnerAdapter(requireActivity(), ArrayList(accounts), mDisposable, mAccountService, mConversationFacade).apply {
-                            mAccountAdapter = this
-                            setNotifyOnChange(false)
-                            mBinding?.spinnerToolbar?.adapter = this
-                        }
+            .switchMap { account ->
+                account.getPendingSubject()
+                    .switchMap { list ->
+                        Log.w(TAG, "setBadge getPendingSubject ${list.size}")
+                        if (list.isEmpty()) Observable.just(Pair(emptyList(), emptyList()))
+                        else mConversationFacade.observeConversations(
+                            account, list.take(3), false
+                        ).map { Pair(it, list) }
                     }
-                }) { e -> Log.e(HomeActivity.TAG, "Error loading account list !", e) })
-
-        // Select first conversation in tablet mode
-        /*if (DeviceUtils.isTablet(requireActivity())) {
-            val intent = activity?.intent
-            val uri = intent?.data
-            if ((intent == null || uri == null) && fConversation == null) {
-                val smartList: Observable<List<Observable<ConversationItemViewModel>>> =
-                    if (mBinding?.pager!!.currentItem == TAB_CONVERSATIONS)
-                        mConversationFacade.getSmartList(false)
-                    else mConversationFacade.pendingList
-                mDisposable.add(smartList
-                    .filter { list -> list.isNotEmpty() }
-                    .map { list -> list[0].firstOrError() }
-                    .firstElement()
-                    .flatMapSingle { e -> e }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { element ->
-                        (activity as HomeActivity).startConversation(element.accountId, element.uri)
-                    })
             }
-        }*/
-    }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { count -> setBadge(TAB_INVITATIONS, count.second, count.first) }
+        )
 
-    private fun setOverflowMenuVisible(menu: Menu?, visible: Boolean) {
-        menu?.findItem(R.id.menu_overflow)?.isVisible = visible
+        // Subscribe on current account to display avatar on navigation (searchbar)
+        mDisposable.add(mAccountService
+            .currentAccountSubject
+            .switchMap { mAccountService.getObservableAccountProfile(it.accountId) }
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { profile ->
+                mBinding ?: return@subscribe
+                mBinding!!.searchBar.navigationIcon =
+                    BitmapUtils.withPadding(
+                        AvatarDrawable.build(
+                            mBinding!!.root.context,
+                            profile.first,
+                            profile.second,
+                            true,
+                            profile.first.isRegistered
+                        ),
+                        TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            6f,
+                            resources.displayMetrics
+                        ).toInt()
+                    )
+            }
+        )
     }
 
     override fun onStop() {
@@ -285,109 +487,87 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         mDisposable.clear()
     }
 
-    fun isInvitationTabOpen(): Boolean {
-        return mBinding!!.pager.visibility == View.VISIBLE && mBinding!!.pager.currentItem == TAB_INVITATIONS
-    }
-
-    fun setPagerPosition(position: Int) {
-        mBinding!!.pager.currentItem = position
-    }
-
-
-    fun goToHome() {
-        mBinding!!.tabLayout.getTabAt(TAB_CONVERSATIONS)!!.select()
-        pagerContent = mBinding!!.pager.findCurrentFragment(childFragmentManager)
-    }
-
-    private fun setBadge(menuId: Int, number: Int) {
+    /**
+     * Set a badge to display how many invitations are pending.
+     */
+    private fun setBadge(
+        menuId: Int,
+        conversations: List<Conversation>,
+        snip: List<ConversationItemViewModel>,
+    ) {
+        Log.w(TAG, "setBadge ${conversations.size}")
         val binding = mBinding ?: return
-        val tab = binding.tabLayout.getTabAt(menuId) ?: return
-        if (number == 0) {
-            tab.removeBadge()
-            if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = false else mHasPendingBadge = false
-            if (!mHasPendingBadge && pagerContent is ContactRequestsFragment) goToHome()
-        } else {
-            tab.orCreateBadge.number = number
-            if (menuId == TAB_CONVERSATIONS) mHasConversationBadge = true else mHasPendingBadge = true
+
+        binding.invitationCard.invitationBadge.text = conversations.size.toString()
+        binding.invitationCard.invitationGroup.isVisible = true
+        binding.invitationCard.invitationReceivedTxt.text =
+            snip.joinToString(", ") { it.title }
+
+        if (menuId == TAB_INVITATIONS) {
+            pendingAdapter?.update(conversations)
+            updateAppBarLayoutBottomPadding(conversations.isNotEmpty())
+            if (conversations.isEmpty()) { // No pending invitations = no badge
+                binding.invitationCard.invitationGroup.isVisible = false
+            } else {
+                binding.invitationCard.invitationBadge.text = conversations.size.toString()
+                binding.invitationCard.invitationGroup.isVisible = true
+                binding.invitationCard.invitationReceivedTxt.text =
+                    snip.joinToString(", ") { it.title }
+            }
         }
-        binding.tabLayout.isVisible = mHasPendingBadge
-        mPagerAdapter!!.enableRequests(mHasPendingBadge)
-        binding.pager.isUserInputEnabled = mHasPendingBadge
     }
 
     fun handleIntent(intent: Intent) {
         val searchView = mSearchView ?: return
         when (intent.action) {
             Intent.ACTION_CALL -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.dataString, true)
             }
+
             Intent.ACTION_DIAL -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.dataString, false)
             }
+
             Intent.ACTION_SEARCH -> {
-                mSearchMenuItem?.expandActionView()
+                expandSearchActionView()
                 searchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true)
             }
+
             else -> {}
         }
     }
-
-    override fun onTabSelected(tab: TabLayout.Tab) {
-        mBinding?.pager?.setCurrentItem(tab.position, true)
-    }
-
-    override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-    override fun onTabReselected(tab: TabLayout.Tab?) {}
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        (pagerContent as? SmartListFragment?)?.searchQueryTextChanged(newText)
+        querySubject.onNext(newText)
         return true
     }
 
     override fun goToQRFragment() {
         val qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN)
         qrCodeFragment.show(parentFragmentManager, QRCodeFragment.TAG)
-        mSearchMenuItem!!.collapseActionView()
+        collapseSearchActionView()
     }
 
-    override fun startNewGroup() {
+    override fun startNewSwarm() {
         ContactPickerFragment().show(parentFragmentManager, ContactPickerFragment.TAG)
-        mSearchMenuItem!!.collapseActionView()
+        collapseSearchActionView()
     }
 
-    fun expandSearchActionView(): Boolean {
-        return mSearchMenuItem!!.expandActionView()
+    private fun expandSearchActionView(): Boolean {
+        mBinding ?: return false
+        mBinding!!.searchView.show()
+        return true
     }
 
     fun collapseSearchActionView() {
-        mSearchMenuItem!!.collapseActionView()
-    }
-
-    private inner class ScreenSlidePagerAdapter(f: Fragment) : FragmentStateAdapter(f) {
-        var hasRequests = false
-        override fun getItemCount(): Int = if (hasRequests) 2 else 1
-
-        override fun createFragment(position: Int): Fragment = when(position) {
-            TAB_CONVERSATIONS -> SmartListFragment()
-            TAB_INVITATIONS -> ContactRequestsFragment()
-            else -> throw IllegalArgumentException()
-        }
-
-        fun enableRequests(enable: Boolean) {
-            if (enable == hasRequests) return
-            hasRequests = enable
-            if (enable)
-                notifyItemInserted(TAB_INVITATIONS)
-            else
-                notifyItemRemoved(TAB_INVITATIONS)
-        }
+        mBinding ?: return
+        mBinding!!.searchView.hide()
     }
 
     companion object {
@@ -395,5 +575,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         const val TAB_CONVERSATIONS = 0
         const val TAB_INVITATIONS = 1
     }
+
 
 }
