@@ -59,12 +59,12 @@ class Account(
     private var pendingsChanged = true
     private var historyLoaded = false
     private val conversationSubject: Subject<Conversation> = PublishSubject.create()
-    private val conversationsSubject: Subject<List<Conversation>> = BehaviorSubject.create()
     private val pendingSubject: Subject<List<Conversation>> = BehaviorSubject.create()
-    private val unreadConversationsSubject: Subject<Int> = BehaviorSubject.create()
-    private val unreadPendingSubject: Subject<Int> = BehaviorSubject.create()
-    val unreadConversations: Observable<Int> = unreadConversationsSubject.distinctUntilChanged()
-    val unreadPending: Observable<Int> = unreadPendingSubject.distinctUntilChanged()
+    private val conversationsSubject: Subject<List<Conversation>> = BehaviorSubject.create()
+    val unreadConversations: Observable<List<Conversation>> =
+        conversationsSubject.map { conversations ->
+            conversations.filter { it.lastEvent?.isRead == false }
+        }
     private val contactListSubject = BehaviorSubject.create<Collection<Contact>>()
     private val contactLocations: MutableMap<Contact, Observable<ContactLocation>> = HashMap()
     private val mLocationSubject: Subject<Map<Contact, Observable<ContactLocation>>> = BehaviorSubject.createDefault(contactLocations)
@@ -188,22 +188,15 @@ class Account(
         if (withBanned) conversationsSubject
         else conversationsSubject.map { list -> list.filter { it.isGroup() || it.contact?.isBanned != true } }
 
-    /*fun getConversationsViewModels(withPresence: Boolean): Observable<MutableList<SmartListViewModel>> {
-        return conversationsSubject
-            .map { conversations: List<Conversation> ->
-                val viewModel = ArrayList<SmartListViewModel>(conversations.size)
-                for (c in conversations) viewModel.add(SmartListViewModel(c, withPresence))
-                viewModel
-            }
-    }*/
+    /**
+     * Get conversation subject
+     */
+    fun getConversationSubject(): Observable<Conversation> = conversationSubject
 
-    fun getConversationSubject(): Observable<Conversation> {
-        return conversationSubject
-    }
-
-    fun getPendingSubject(): Observable<List<Conversation>> {
-        return pendingSubject
-    }
+    /**
+     * Get invitation subject
+     */
+    fun getPendingSubject(): Observable<List<Conversation>> = pendingSubject
 
     fun getConversations(): Collection<Conversation> {
         return conversations.values
@@ -216,7 +209,6 @@ class Account(
     private fun pendingRefreshed() {
         if (historyLoaded) {
             pendingSubject.onNext(getSortedPending())
-            updateUnreadPending()
         }
     }
 
@@ -239,7 +231,6 @@ class Account(
     private fun conversationRefreshed(conversation: Conversation) {
         if (historyLoaded) {
             conversationSubject.onNext(conversation)
-            updateUnreadConversations()
         }
     }
 
@@ -248,7 +239,6 @@ class Account(
             conversationsChanged = true
             if (historyLoaded) {
                 conversationsSubject.onNext(ArrayList(getSortedConversations()))
-                updateUnreadConversations()
             }
         }
     }
@@ -266,22 +256,7 @@ class Account(
             // TODO: remove next line when profile is updated through dedicated signal
             conversationSubject.onNext(conversation)
             conversationsSubject.onNext(ArrayList(sortedConversations))
-            updateUnreadConversations()
         }
-    }
-
-    private fun updateUnreadConversations() {
-        var unread = 0
-        for (model in sortedConversations) {
-            val last = model.lastEvent
-            if (last != null && !last.isRead) unread++
-        }
-        // Log.w(TAG, "updateUnreadConversations " + unread);
-        unreadConversationsSubject.onNext(unread)
-    }
-
-    private fun updateUnreadPending() {
-        unreadPendingSubject.onNext(sortedPending.size)
     }
 
     /**

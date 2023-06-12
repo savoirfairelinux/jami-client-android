@@ -527,6 +527,7 @@ object AndroidFileUtils {
                 putExtra(Intent.EXTRA_STREAM, uri)
             }, null))
         } catch (e: Exception) {
+            Log.w(TAG, "Error sharing file", e)
         }
     }
 

@@ -374,9 +374,16 @@ class AvatarDrawable : Drawable {
             isAntiAlias = true
             color = ContextCompat.getColor(context, PRESENCE_COLOR)
         }
+
+        val typedValue = TypedValue()
+        val presenceStrokeColor =
+            if (isTv(context)) ContextCompat.getColor(context, R.color.grey_900)
+            else if ( // Checks if the theme has a colorBackground attribute (false if not).
+                context.theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true)
+            ) typedValue.data
+            else ContextCompat.getColor(context, R.color.background)
         presenceStrokePaint = Paint().apply {
-            color = ContextCompat.getColor(context,
-                if (isTv(context)) R.color.grey_900 else R.color.background)
+            color = presenceStrokeColor
             style = Paint.Style.STROKE
             isAntiAlias = true
         }

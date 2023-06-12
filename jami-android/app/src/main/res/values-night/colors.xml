@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">@color/grey_950</color>
+    <color name="background">#202020</color>
     <color name="surface">@color/grey_700</color>
 
     <color name="colorPrimary">@color/white</color>
@@ -25,5 +25,20 @@
     <color name="text_hint">@color/colorPrimary</color>
     <color name="button_border">@color/colorPrimary</color>
     <color name="chip_background">#4dffffff</color>
+
+    <!--  Home  -->
+    <color name="appbar_gradient_color">#cc202020</color>
+    <color name="searchbar_color">#000000</color>
+    <color name="fab_background_color">#03B9E9</color>
+    <color name="fab_text_color">#000000</color>
+
+    <!--  InvitationCard  -->
+    <color name="invitation_card_background_color">#D6E4EF</color>
+    <color name="invitation_card_badge_color">#A3C2DA</color>
+    <color name="invitation_card_text_color">#000000</color>
+    <color name="invitation_card_on_surface_text_color">#000000</color>
+    <color name="invitation_card_on_badge_text_color">#005699</color>
+    <color name="invitation_drawable_p1_color">#00223c</color>
+    <color name="invitation_drawable_p2_color">#005699</color>
 
 </resources>

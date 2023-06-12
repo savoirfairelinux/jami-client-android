@@ -31,6 +31,12 @@ object DeviceUtils {
         context.getSystemService(UiModeManager::class.java)
             .currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
 
+    fun getStatusBarHeight(context: Context): Int {
+        val resourceId = context.resources
+            .getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) context.resources.getDimensionPixelSize(resourceId) else 0
+    }
+
     fun isTablet(context: Context): Boolean =
         context.resources.getBoolean(R.bool.isTablet)
 
