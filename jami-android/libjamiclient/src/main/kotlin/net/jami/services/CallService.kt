@@ -561,7 +561,7 @@ abstract class CallService(
         updateConnectionCount()
     }
 
-    fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) {
+    fun mediaChangeRequested(accountId: String, callId: String, mediaList: VectMap) { // todo?
         calls[callId]?.let { call ->
             if (!call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO)) {
                 for (e in mediaList) {
@@ -577,7 +577,7 @@ abstract class CallService(
         }
     }
 
-    fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) {
+    fun mediaNegotiationStatus(callId: String, event: String, ml: VectMap) { // todo?
         val media = ml.mapTo(ArrayList(ml.size)) { media -> Media(media) }
         val call = synchronized(calls) {
             calls[callId]?.apply {
@@ -587,17 +587,94 @@ abstract class CallService(
         callSubject.onNext(call ?: return)
     }
 
-    fun requestVideoMedia(conf: Conference, enable: Boolean) {
-        if (conf.isConference || conf.hasVideo()) {
-            JamiService.muteLocalMedia(conf.accountId, conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
-        } else if (enable) {
-            val call = conf.firstCall ?: return
-            val mediaList = call.mediaList ?: return
-            JamiService.requestMediaChange(call.account, call.daemonIdString, mediaList.mapTo(VectMap()
-                    .apply { reserve(mediaList.size.toLong() + 1L) }
-            ) { media -> media.toMap() }
-                .apply { add(Media.DEFAULT_VIDEO.toMap()) })
+    /**
+     * Request to change the source for the hardware camera that is currently being used to a provided one.
+     * @param conf The conference to request a video media change on.
+     * @param camId The new camera ID.
+     */
+    fun replaceHardwareCameraSource(conf: Conference, camId: String) {
+        val call = conf.firstCall ?: return
+        val mediaList = call.mediaList ?: return
+
+        val proposedMediaList = mediaList.map {
+            if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO && it.source != null && it.source != "camera://desktop") {
+                it.copy(source = "camera://$camId")
+            } else {
+                it
+            }
         }
+
+        JamiService.requestMediaChange(
+            call.account,
+            call.daemonIdString,
+            proposedMediaList.mapTo(VectMap().apply {
+                reserve(proposedMediaList.size.toLong())
+            }) { it.toMap() }
+        )
+    }
+
+    /**
+     * Toggle the current hardware camera source.
+     * Mutes / un-mutes the source if one exists.
+     * Creates the default source if no current hardware camera exists.
+     * @param conf The conference to request a video media change on.
+     * @param mute Whether to mute or un-mute the camera video.
+     */
+    fun toggleHardwareCamera(conf: Conference, mute: Boolean) {
+        val call = conf.firstCall ?: return
+        val mediaList = call.mediaList ?: return
+
+        var sourceExists = false
+        val proposedMediaList = mediaList.map {
+            if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO && it.source != null && it.source != "camera://desktop") {
+                sourceExists = true
+                it.copy(isMuted = mute)
+            } else {
+                it
+            }
+        } as MutableList<Media>
+
+        if(!sourceExists)
+            proposedMediaList.add(Media.DEFAULT_VIDEO.copy(source = "camera://1")) // todo retrieve default from cam serv?
+
+        JamiService.requestMediaChange(
+            call.account,
+            call.daemonIdString,
+            proposedMediaList.mapTo(VectMap().apply {
+                reserve(proposedMediaList.size.toLong())
+            }) { it.toMap() }
+        )
+    }
+
+    /**
+     * Mutes / un-mutes a video media source based on its URI.
+     * Adds the source if it doesn't exist.
+     * @param conf The conference to request a video media change on.
+     * @param uri The source URI of the video media source.
+     * @param mute Whether to mute or un-mute the video source.
+     */
+    fun toggleVideoMute(conf: Conference, uri: String, mute: Boolean) {
+        val call = conf.firstCall ?: return
+        val mediaList = call.mediaList ?: return
+
+        var sourceExists = false
+        val proposedMediaList = mediaList.map {
+            if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO && it.source == uri) {
+                sourceExists = true
+                it.copy(isMuted = mute)
+            } else
+                it
+        } as MutableList<Media>
+        if(!sourceExists)
+            proposedMediaList.add(Media.DEFAULT_VIDEO.copy(source = uri, isMuted = mute))
+
+        JamiService.requestMediaChange(
+            call.account,
+            call.daemonIdString,
+            proposedMediaList.mapTo(VectMap().apply {
+                reserve(proposedMediaList.size.toLong())
+            }) { it.toMap() }
+        )
     }
 
     fun incomingMessage(accountId: String, callId: String, from: String, messages: Map<String, String>) {
