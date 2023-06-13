@@ -86,7 +86,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
                 true
             }
 
-            compositeDisposable.add(conversation.currentStateSubject
+            compositeDisposable.add(conversation.currentStateObservable
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { state ->
                     val fade = !binding.convLastItem.isVisible || binding.convLastItem.text.isBlank()
