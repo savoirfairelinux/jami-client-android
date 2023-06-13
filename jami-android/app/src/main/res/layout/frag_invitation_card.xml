@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/invitation_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="16dp"
+    android:clickable="true"
+
+    android:focusable="true"
+    android:foreground="?selectableItemBackgroundBorderless"
+    android:theme="@style/NightCardView"
+    android:visibility="gone"
+    app:cardBackgroundColor="@color/color_secondary"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    tools:visibility="visible">
+
+    <RelativeLayout
+        android:id="@+id/invitation_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/invitation_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            android:src="@drawable/baseline_group_add_24"
+            app:tint="?attr/colorOnPrimary" />
+
+        <TextView
+            android:id="@+id/invitation_received_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toStartOf="@id/invitation_badge"
+            android:layout_toEndOf="@id/invitation_icon"
+            android:singleLine="true"
+            android:text="Invitations received"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/invitation_received_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/invitation_received_label"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toStartOf="@id/invitation_badge"
+            android:layout_toEndOf="@id/invitation_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="14sp"
+            tools:text="Emile, Linda, Damien" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/invitation_badge"
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            app:chipBackgroundColor="?attr/colorSecondary"
+            app:textEndPadding="4dp"
+            app:textStartPadding="4dp"
+            tools:text="4" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/pending_list_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/pending_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material"
+            app:title="Invitations" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pending_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_smartlist" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
