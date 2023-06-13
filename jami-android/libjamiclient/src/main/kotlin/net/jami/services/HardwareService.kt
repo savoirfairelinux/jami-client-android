@@ -88,7 +88,7 @@ abstract class HardwareService(
     abstract fun hasInput(id: String): Boolean
     abstract fun getCameraInfo(camId: String, formats: IntVect, sizes: UintVect, rates: UintVect)
     abstract fun setParameters(camId: String, format: Int, width: Int, height: Int, rate: Int)
-    abstract fun startCapture(camId: String?)
+    abstract fun startCapture(camId: String)
     abstract fun stopCapture(camId: String)
     abstract fun hasMicrophone(): Boolean
     abstract fun requestKeyFrame(camId: String)
@@ -99,7 +99,7 @@ abstract class HardwareService(
     abstract fun addPreviewVideoSurface(holder: Any, conference: Conference?)
     abstract fun updatePreviewVideoSurface(conference: Conference)
     abstract fun removePreviewVideoSurface()
-    abstract fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean = false, screenCaptureSession: Any? = null)
+    abstract fun switchInput(setDefaultCamera: Boolean = false): String?
     abstract fun setPreviewSettings()
     abstract fun hasCamera(): Boolean
     abstract fun cameraCount(): Int
@@ -109,6 +109,7 @@ abstract class HardwareService(
     abstract fun unregisterCameraDetectionCallback()
     abstract fun startMediaHandler(mediaHandlerId: String?)
     abstract fun stopMediaHandler()
+    abstract fun setScreenShareProjection(screenCaptureSession: Any?)
     fun connectivityChanged(isConnected: Boolean) {
         Log.i(TAG, "connectivityChange() $isConnected")
         connectivityEvents.onNext(isConnected)
