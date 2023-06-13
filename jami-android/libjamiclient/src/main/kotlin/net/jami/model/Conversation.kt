@@ -104,12 +104,15 @@ class Conversation : ConversationHistory {
         aggregateHistory
     }
     val lastEventSubject: Subject<Interaction> = BehaviorSubject.create()
-    val currentStateSubject: Observable<Pair<Interaction, Boolean>> = Observable.combineLatest(lastEventSubject, callsSubject.map { calls ->
-        for (call in calls)
-            if (call.isOnGoing)
-                return@map true
-        false
-    }) { event, hasCurrentCall -> Pair(event, hasCurrentCall) }
+    val currentStateObservable: Observable<Pair<Interaction, Boolean>> =
+        Observable.combineLatest(
+            lastEventSubject,
+            callsSubject.map { calls ->
+                for (call in calls)
+                    if (call.isOnGoing)
+                        return@map true
+                false
+            }) { event, hasCurrentCall -> Pair(event, hasCurrentCall) }
 
     val swarmRoot: Collection<String>
         get() = mRoots

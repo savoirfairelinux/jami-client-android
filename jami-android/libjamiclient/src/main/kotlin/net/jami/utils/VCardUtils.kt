@@ -160,8 +160,9 @@ object VCardUtils {
             // Log.d(TAG, "vcardPath not exist " + path);
             return null
         }
-        if (path.length() > VCARD_MAX_SIZE) {
-            Log.w(TAG, "vcardPath too big: " + path.length() / 1024 + " kB")
+        val length = path.length()
+        if (length > VCARD_MAX_SIZE) {
+            Log.w(TAG, "vcardPath too big: ${path.length() / 1024} kB")
             return null
         }
         return Ezvcard.parse(path).first()
