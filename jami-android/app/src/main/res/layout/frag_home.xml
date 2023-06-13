@@ -17,118 +17,131 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    tools:context=".client.HomeActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <!-- Container that will contains conversations -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:name="cx.ring.fragments.SmartListFragment"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-
-        <Spinner
-            android:id="@+id/spinner_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:dropDownWidth="260dp"
-            android:paddingStart="-60dp"
-            tools:listitem="@layout/item_toolbar_selected" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        android:layout_height="match_parent" />
 
     <LinearLayout
-        android:id="@+id/buttons"
+        android:id="@+id/search_layer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/qr_code"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+        <!-- Search bar -->
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/button_corner_radius"
-            tools:visibility="visible">
+            android:layout_marginBottom="0dp"
+            android:hint="@string/searchbar_hint"
+            android:textAppearance="@style/TextAppearance.Material3.SearchBar"
+            app:autoShowKeyboard="true"
+            app:navigationIcon="@android:color/transparent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableTint="@color/colorPrimary"
-                android:text="@string/qr_code"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/new_group"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/button_corner_radius"
-            tools:visibility="visible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:drawableStartCompat="@drawable/baseline_group_add_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/colorPrimary"
-                android:text="Start Swarm"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-        </com.google.android.material.card.MaterialCardView>
-
+        <!-- Invitations -->
+        <include
+            android:id="@+id/invitation_card"
+            layout="@layout/frag_invitation_card" />
     </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+    <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:hint="@string/searchbar_hint"
+        app:layout_anchor="@id/toolbar"
+        tools:visibility="gone">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorSecondary"
-            app:tabSelectedTextColor="@color/colorOnSurface"
-            app:tabTextColor="@color/textColorSecondary"
-            android:background="@null"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
+            <!-- Buttons (QR code and new swarm) -->
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/navigation_item_conversation"/>
+                android:orientation="horizontal">
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/navigation_item_contact_request"/>
+                <!-- QR Code button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/qr_code"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="@dimen/button_corner_radius"
+                    tools:visibility="visible">
 
-        </com.google.android.material.tabs.TabLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableTint="@color/colorPrimary"
+                        android:text="@string/qr_code"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+                </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout>
+                <!-- New swarm button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/new_group"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="@dimen/button_corner_radius"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:text="Start Swarm"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/baseline_group_add_24" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Search results -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:paddingBottom="8dp"
+                tools:listitem="@layout/item_smartlist" />
+
+        </LinearLayout>
+
+    </com.google.android.material.search.SearchView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,45 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_contact_search"
-        android:hint="@string/searchbar_hint"
-        android:icon="@drawable/baseline_search_24"
-        android:title="@string/searchbar_hint"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always" />
-
-    <item
-        android:id="@+id/menu_contact_dial"
-        android:icon="@drawable/baseline_dialpad_24"
-        android:title="@string/dial_number"
-        android:visible="false"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menu_overflow"
-        android:orderInCategory="101"
-        app:showAsAction="always"
-        android:title=""
         android:icon="@drawable/ic_baseline_more_vert"
-        app:iconTint="?attr/colorControlNormal">
+        android:orderInCategory="101"
+        android:title=""
+        app:iconTint="?attr/colorControlNormal"
+        app:showAsAction="always">
 
         <menu>
 
-            <item android:id="@+id/menu_account_settings"
-                app:showAsAction="ifRoom"
+            <item
+                android:id="@+id/menu_account_settings"
                 android:icon="@drawable/baseline_account_settings_24dp"
-                android:title="@string/menu_item_account_settings" />
+                android:title="@string/menu_item_account_settings"
+                app:showAsAction="ifRoom" />
 
-            <item android:id="@+id/menu_advanced_settings"
-                app:showAsAction="ifRoom"
+            <item
+                android:id="@+id/menu_advanced_settings"
                 android:icon="@drawable/baseline_advanced_settings_24dp"
-                android:title="@string/menu_item_advanced_settings" />
+                android:title="@string/menu_item_advanced_settings"
+                app:showAsAction="ifRoom" />
 
-            <item android:id="@+id/menu_about"
-                app:showAsAction="ifRoom"
-                android:iconTintMode="src_in"
+            <item
+                android:id="@+id/menu_about"
                 android:icon="@drawable/ic_jami_24"
-                android:title="@string/menu_item_about" />
+                android:iconTintMode="src_in"
+                android:title="@string/menu_item_about"
+                app:showAsAction="ifRoom" />
 
         </menu>
 
