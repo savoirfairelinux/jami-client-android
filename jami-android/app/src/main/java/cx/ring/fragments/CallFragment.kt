@@ -957,7 +957,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         canDial: Boolean,
         showPluginBtn: Boolean,
         onGoingCall: Boolean,
-        hasActiveVideo: Boolean
+        hasActiveVideo: Boolean,
+        hasActiveScreenShare: Boolean
     ) {
         binding?.apply {
             pluginsBtnContainer.isVisible = showPluginBtn
@@ -973,6 +974,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
                 isEnabled = !callVideocamBtn.isChecked
                 setImageResource(if (hasMultipleCamera && hasActiveVideo) R.drawable.baseline_flip_camera_24 else R.drawable.baseline_flip_camera_24_off)
             }
+            callSharescreenBtn.isChecked = hasActiveScreenShare
             callMicBtn.isChecked = isMicrophoneMuted
         }
     }
@@ -1277,7 +1279,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         }
     }
     
-    fun shareScreenClicked() {
+    fun shareScreenClicked() { // todo don't rely on UI state for call behavior
         val binding = binding ?: return
         if (!binding.callSharescreenBtn.isChecked) {
             presenter.stopScreenShare()
