@@ -18,9 +18,11 @@
  */
 package cx.ring.client
 
-import android.content.Context
+import android.app.ActivityManager
+import android.app.ApplicationExitInfo
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -30,6 +32,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.application.JamiApplication
@@ -42,10 +45,13 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.android.tombstone.TombstoneProtos.Tombstone
 import net.jami.services.HardwareService
-import net.jami.utils.StringUtils
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -80,6 +86,10 @@ class LogsActivity : AppCompatActivity() {
                     })
         }
         binding.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
+
+        // Check for previous crash reasons, if any.
+        showNativeCrashes()
+
         if (mHardwareService.isLogging) startLogging()
     }
 
@@ -137,8 +147,49 @@ class LogsActivity : AppCompatActivity() {
                 })
                 return true
             }
+            R.id.menu_log_crashes -> {
+                stopLogging()
+                showNativeCrashes()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showNativeCrashes() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        val activityManager = getSystemService<ActivityManager>() ?: return
+        val exitReasons: MutableList<ApplicationExitInfo> =
+            activityManager.getHistoricalProcessExitReasons(/* packageName = */ null, /* pid = */0, /* maxNum = */5)
+
+        val stringStream = StringBuilder()
+        exitReasons.forEachIndexed { index, aei ->
+            if (aei.reason == ApplicationExitInfo.REASON_CRASH_NATIVE) {
+                try {
+                    val trace: InputStream = aei.traceInputStream ?: return@forEachIndexed
+                    val time = Instant.ofEpochMilli(aei.timestamp)
+                    stringStream.append("Previous native crash #$index at ${time}: ${aei.description} ${aei.reason} ${aei.pid} ${aei.processName}\n")
+                    val tombstone: Tombstone = Tombstone.parseFrom(trace)
+                    stringStream.append("Tombstone ${tombstone.tid} ${tombstone.abortMessage}\n")
+                    tombstone.causesList.forEachIndexed { i, cause ->
+                        stringStream.append("Cause $i: ${cause.humanReadable}\n")
+                    }
+                    tombstone.threadsMap[tombstone.tid]?.currentBacktraceList?.forEachIndexed { index, frame ->
+                        stringStream.append("\t#$index ${frame.fileName} ${frame.functionName}+${frame.functionOffset}\n")
+                    }
+                    // Enable to print all threads backtrace
+                    /*tombstone.threadsMap.values.forEach { thread ->
+                        Log.w(TAG, "Backstack for thread ${thread.id} ${thread.name}:")
+                        thread.currentBacktraceOrBuilderList.forEachIndexed { index, frame ->
+                            Log.w(TAG, "#$index ${frame.fileName} ${frame.functionName}+${frame.functionOffset}")
+                        }
+                    }*/
+                } catch (e: IOException) {
+                    Log.e(TAG, "Failed to parse tombstone", e)
+                }
+            }
+        }
+        binding.logView.text = stringStream.toString()
     }
 
     private fun startLogging() {
@@ -146,7 +197,6 @@ class LogsActivity : AppCompatActivity() {
         mHardwareService.mPreferenceService.isLogActive = true
 
         binding.logView.text = ""
-        //disposable =
         compositeDisposable.add(mHardwareService.startLogs()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ message: String ->

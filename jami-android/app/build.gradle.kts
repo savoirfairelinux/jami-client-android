@@ -8,6 +8,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.protobuf") version "0.9.3"
 }
 
 android {
@@ -117,6 +118,7 @@ dependencies {
     implementation ("org.osmdroid:osmdroid-android:6.1.16")
     implementation ("io.noties.markwon:core:$markwon_version")
     implementation ("io.noties.markwon:linkify:$markwon_version")
+    implementation ("com.google.protobuf:protobuf-javalite:3.23.2")
 
     // ORM
     implementation ("com.j256.ormlite:ormlite-android:5.7")
@@ -155,6 +157,21 @@ dependencies {
         exclude(group= "com.google.firebase", module= "firebase-measurement-connector")
     }
     "withUnifiedPushImplementation"("com.github.UnifiedPush:android-connector:2.1.0")
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.23.2"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
 
 kapt {
