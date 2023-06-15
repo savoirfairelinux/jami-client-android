@@ -52,6 +52,23 @@
       "parentUuid": "b4002983_d549e7a1",
       "revId": "22a4c4037ea8872da09abe6a42743d300bba85be",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac878de_c695653d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-15T20:29:10Z",
+      "side": 1,
+      "message": "When oppening \"Diagnostic logs\", the button \"start logging\" is initially WHITE. When clicking on it, then clicking on \"stop logging\", \"start logging\" reappears BLUE.",
+      "revId": "22a4c4037ea8872da09abe6a42743d300bba85be",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
