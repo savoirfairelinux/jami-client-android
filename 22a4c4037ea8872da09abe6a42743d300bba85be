@@ -16,6 +16,24 @@
       "message": "Much nicer !\nEven though, it looks like a dev feature, I\u0027m a bit lost on what happens when clicking on this button (bug icon).",
       "revId": "22a4c4037ea8872da09abe6a42743d300bba85be",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4002983_d549e7a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-15T20:26:50Z",
+      "side": 1,
+      "message": "If I well understand, when clicking on this button, you reload last crash trace ? Am I right ? How to go back on normal log system ?",
+      "parentUuid": "878ae318_ef56698b",
+      "revId": "22a4c4037ea8872da09abe6a42743d300bba85be",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
