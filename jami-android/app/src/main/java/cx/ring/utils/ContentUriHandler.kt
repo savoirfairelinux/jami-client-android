@@ -73,24 +73,19 @@ object ContentUriHandler {
                 FileProvider.getUriForFile(context, authority, file, displayName)
         } catch (e: IllegalArgumentException) {
             if (HUAWEI_MANUFACTURER.equals(Build.MANUFACTURER, ignoreCase = true)) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    Log.w(TAG, "Returning Uri.fromFile to avoid Huawei 'external-files-path' bug for pre-N devices", e)
-                    Uri.fromFile(file)
-                } else {
-                    Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e)
-                    // Note: Periodically clear this cache
-                    val cacheFolder = File(context.cacheDir, HUAWEI_MANUFACTURER)
-                    val cacheLocation = File(cacheFolder, file.name)
-                    if (FileUtils.copyFile(file, cacheLocation)) {
-                        Log.i(TAG, "Completed Android N+ Huawei file copy. Attempting to return the cached file")
-                        return if (displayName == null)
-                            FileProvider.getUriForFile(context, authority, cacheLocation)
-                        else
-                            FileProvider.getUriForFile(context, authority, cacheLocation, displayName)
-                    }
-                    Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception")
-                    throw IllegalArgumentException("Huawei devices are unsupported for Android N")
+                Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e)
+                // Note: Periodically clear this cache
+                val cacheFolder = File(context.cacheDir, HUAWEI_MANUFACTURER)
+                val cacheLocation = File(cacheFolder, file.name)
+                if (FileUtils.copyFile(file, cacheLocation)) {
+                    Log.i(TAG, "Completed Android N+ Huawei file copy. Attempting to return the cached file")
+                    return if (displayName == null)
+                        FileProvider.getUriForFile(context, authority, cacheLocation)
+                    else
+                        FileProvider.getUriForFile(context, authority, cacheLocation, displayName)
                 }
+                Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception")
+                throw IllegalArgumentException("Huawei devices are unsupported for Android N")
             } else {
                 throw e
             }

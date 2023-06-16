@@ -34,6 +34,8 @@
             android:layout_height="match_parent"
             android:padding="@dimen/padding_medium"
             android:textIsSelectable="true"
+            android:breakStrategy="simple"
+            android:hyphenationFrequency="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:text="@tools:sample/lorem/random" />
     </androidx.core.widget.NestedScrollView>

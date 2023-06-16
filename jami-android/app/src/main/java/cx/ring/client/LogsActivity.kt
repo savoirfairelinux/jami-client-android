@@ -18,22 +18,29 @@
  */
 package cx.ring.client
 
-import android.content.Context
+import android.app.ActivityManager
+import android.app.ApplicationExitInfo
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.databinding.ActivityLogsBinding
+import cx.ring.databinding.CrashReportBinding
 import cx.ring.utils.AndroidFileUtils
 import cx.ring.utils.ContentUriHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,10 +49,13 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import net.jami.android.tombstone.TombstoneProtos.Tombstone
 import net.jami.services.HardwareService
-import net.jami.utils.StringUtils
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,7 +78,7 @@ class LogsActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        fileSaver = registerForActivityResult(ActivityResultContracts.CreateDocument()) { result: Uri? ->
+        fileSaver = registerForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { result: Uri? ->
             if (result != null)
                 compositeDisposable.add(AndroidFileUtils.copyFileToUri(contentResolver, mCurrentFile, result)
                         .observeOn(AndroidSchedulers.mainThread()).subscribe({
@@ -80,12 +90,39 @@ class LogsActivity : AppCompatActivity() {
                     })
         }
         binding.fab.setOnClickListener { if (disposable == null) startLogging() else stopLogging() }
+
+        // Check for previous crash reasons, if any.
+        if (savedInstanceState == null)
+            showNativeCrashes()
+
         if (mHardwareService.isLogging) startLogging()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.logs_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun shareLogs(uriMaybe: Maybe<Uri>) {
+        compositeDisposable.add(uriMaybe
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ uri: Uri ->
+                Log.w(TAG, "saved logs to $uri")
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    setDataAndType(uri, contentResolver.getType(uri))
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                }
+                startActivity(Intent.createChooser(sendIntent, null))
+            }) { e: Throwable ->
+                Snackbar.make(binding.root, "Error sharing logs: " + e.localizedMessage, Snackbar.LENGTH_SHORT).show()
+            })
+    }
+    fun saveFile(fileMaybe: Maybe<File>) {
+        compositeDisposable.add(fileMaybe.subscribe { file: File ->
+            mCurrentFile = file
+            fileSaver.launch(file.name)
+        })
     }
 
     private val log: Maybe<String>
@@ -116,28 +153,100 @@ class LogsActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_log_share -> {
-                compositeDisposable.add(logUri.observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ uri: Uri ->
-                            Log.w(TAG, "saved logs to $uri")
-                            val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                setDataAndType(uri, contentResolver.getType(uri))
-                                putExtra(Intent.EXTRA_STREAM, uri)
-                            }
-                            startActivity(Intent.createChooser(sendIntent, null))
-                        }) { e: Throwable ->
-                            Snackbar.make(binding.root, "Error sharing logs: " + e.localizedMessage, Snackbar.LENGTH_SHORT).show()
-                        })
+                shareLogs(logUri)
                 return true
             }
             R.id.menu_log_save -> {
-                compositeDisposable.add(logFile.subscribe { file: File ->
-                    mCurrentFile = file
-                    fileSaver.launch(file.name)
-                })
+                saveFile(logFile)
+                return true
+            }
+            R.id.menu_log_crashes -> {
+                showNativeCrashes(true)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    internal class CrashBottomSheet : BottomSheetDialogFragment() {
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = CrashReportBinding.inflate(inflater, container, false).apply {
+            crash.text = arguments?.getString("crash")
+            toolbar.menu.findItem(R.id.menu_log_crashes)?.isVisible = false
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_log_share -> {
+                        (activity as LogsActivity).shareLogs(crashUri)
+                        true
+                    }
+                    R.id.menu_log_save -> {
+                        (activity as LogsActivity).saveFile(crashFile)
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
+        }.root
+
+        private val crashFile: Maybe<File> by lazy {
+            val crashReport = arguments?.getString("crash")?.toByteArray() ?: return@lazy Maybe.empty()
+            val crashFile = AndroidFileUtils.createLogFile(requireContext())
+            FileOutputStream(crashFile).use { it.write(crashReport) }
+            return@lazy Maybe.just(crashFile)
+        }
+        private val crashUri: Maybe<Uri> by lazy {
+            crashFile.map { file: File ->
+                ContentUriHandler.getUriForFile(requireContext(), ContentUriHandler.AUTHORITY_FILES, file)
+            }
+        }
+
+        companion object {
+            const val TAG = "CrashBottomSheet"
+        }
+    }
+
+    private fun showNativeCrashes(userInitiated: Boolean = false) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        val activityManager = getSystemService<ActivityManager>() ?: return
+        val exitReasons: MutableList<ApplicationExitInfo> =
+            activityManager.getHistoricalProcessExitReasons(/* packageName = */ null, /* pid = */0, /* maxNum = */5)
+
+        val stringStream = StringBuilder()
+        exitReasons.forEachIndexed { index, aei ->
+            if (aei.reason == ApplicationExitInfo.REASON_CRASH_NATIVE) {
+                try {
+                    val trace: InputStream = aei.traceInputStream ?: return@forEachIndexed
+                    val time = Instant.ofEpochMilli(aei.timestamp)
+                    stringStream.append("Previous native crash #$index at ${time}: ${aei.description} ${aei.reason} ${aei.pid} ${aei.processName}\n")
+                    val tombstone: Tombstone = Tombstone.parseFrom(trace)
+                    stringStream.append("Tombstone ${tombstone.tid} ${tombstone.abortMessage}\n")
+                    tombstone.causesList.forEachIndexed { i, cause ->
+                        stringStream.append("Cause $i: ${cause.humanReadable}\n")
+                    }
+                    tombstone.threadsMap[tombstone.tid]?.currentBacktraceList?.forEachIndexed { index, frame ->
+                        stringStream.append("\t#$index ${frame.fileName} ${frame.functionName}+${frame.functionOffset}\n")
+                    }
+                    // Enable to print all threads backtrace
+                    /*tombstone.threadsMap.values.forEach { thread ->
+                        Log.w(TAG, "Backstack for thread ${thread.id} ${thread.name}:")
+                        thread.currentBacktraceOrBuilderList.forEachIndexed { index, frame ->
+                            Log.w(TAG, "#$index ${frame.fileName} ${frame.functionName}+${frame.functionOffset}")
+                        }
+                    }*/
+                } catch (e: IOException) {
+                    Log.e(TAG, "Failed to parse tombstone", e)
+                }
+            }
+        }
+        val crashText = stringStream.toString()
+        if (crashText.isNotEmpty()) {
+            CrashBottomSheet().apply {
+                arguments = Bundle().apply {
+                    putString("crash", stringStream.toString())
+                }
+            }.show(supportFragmentManager, CrashBottomSheet.TAG)
+        } else if (userInitiated) {
+            Snackbar.make(binding.root, "No recent native crash", Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -146,7 +255,6 @@ class LogsActivity : AppCompatActivity() {
         mHardwareService.mPreferenceService.isLogActive = true
 
         binding.logView.text = ""
-        //disposable =
         compositeDisposable.add(mHardwareService.startLogs()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ message: String ->
