@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce3af21_f9203545",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-16T16:00:52Z",
+      "side": 1,
+      "message": "Fragment, could also hold the WelcomeView",
+      "range": {
+        "startLine": 83,
+        "startChar": 31,
+        "endLine": 83,
+        "endChar": 51
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2347da5_b738b434",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-16T16:00:52Z",
+      "side": 1,
+      "message": "this would add a new subscription at every back press. The subscription is never disposed. On account change this could trigger many updates at the same time.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7193721d_c0185acd",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-16T16:00:52Z",
+      "side": 1,
+      "message": "Pass the value as argument",
+      "range": {
+        "startLine": 356,
+        "startChar": 34,
+        "endLine": 358,
+        "endChar": 9
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
