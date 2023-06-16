@@ -130,16 +130,7 @@ class DataTransfer : Interaction {
             val b = body
             return if (b == null) {
                 if (fileId.isNullOrEmpty()) { "Error" } else fileId!!
-            } else {
-                var ext = StringUtils.getFileExtension(b)
-                if (ext.length > 8) ext = ext.substring(0, 8)
-                val dId = daemonId
-                if (dId == null || dId == 0L) {
-                    id.toLong().toString() + '_' + HashUtils.sha1(b).toHex() + '.' + ext
-                } else {
-                    dId.toString() + '_' + HashUtils.sha1(b).toHex() + '.' + ext
-                }
-            }
+            } else return b
         }
 
     fun setSize(size: Long) {

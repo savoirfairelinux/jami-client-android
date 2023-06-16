@@ -168,7 +168,7 @@ class ConversationFacade(
             if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
                 mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
             } else {
-                val file = mDeviceRuntimeService.getConversationPath(conversation.uri.rawRingId, transfer.storagePath)
+                val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
                 if (conversation.isSwarm) {
                     mDisposableBag.add(Completable.fromAction { file.delete() }
                         .subscribeOn(Schedulers.io())

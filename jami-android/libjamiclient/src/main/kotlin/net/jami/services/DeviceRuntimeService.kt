@@ -28,11 +28,10 @@ abstract class DeviceRuntimeService : SystemInfoCallbacks {
     abstract fun provideFilesDir(): File
     abstract val cacheDir: File
     abstract fun getFilePath(name: String): File
-    abstract fun getConversationPath(conversationId: String, name: String): File
     abstract fun getConversationPath(accountId: String, conversationId: String, name: String): File
     fun getConversationPath(interaction: DataTransfer): File =
         if (interaction.conversationId == null)
-            getConversationPath(interaction.conversation!!.participant!!, interaction.storagePath)
+            getConversationPath(interaction.account!!, interaction.conversation!!.participant!!, interaction.storagePath)
         else interaction.publicPath!!
 
     fun getNewConversationPath(accountId: String, conversationId: String, name: String): File {

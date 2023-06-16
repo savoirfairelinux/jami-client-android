@@ -689,7 +689,7 @@ class NotificationServiceImpl(
                 .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentViewConversation, ContentUriHandler.immutable()))
                 .setAutoCancel(true)
             if (info.showPicture()) {
-                val filePath = mDeviceRuntimeService.getConversationPath(conversation.uri.rawRingId, info.storagePath)
+                val filePath = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, info.storagePath)
                 val img: Bitmap
                 try {
                     val d = Glide.with(mContext)

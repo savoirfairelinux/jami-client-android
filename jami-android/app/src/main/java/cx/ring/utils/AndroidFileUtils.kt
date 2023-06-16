@@ -340,16 +340,6 @@ object AndroidFileUtils {
             } }
     }.subscribeOn(Schedulers.io())
 
-    @Throws(IOException::class)
-    fun getConversationFile(context: Context, uri: Uri, conversationId: String, name: String): File {
-        val file = getConversationPath(context, conversationId, name)
-        context.contentResolver.openInputStream(uri)?.use { inputStream ->
-            FileOutputStream(file).use { output ->
-                FileUtils.copyFile(inputStream, output)
-            } }
-        return file
-    }
-
     fun getCachePath(context: Context, filename: String) = File(context.cacheDir, filename)
 
     fun getFilePath(context: Context, filename: String): File = context.getFileStreamPath(filename)
@@ -371,9 +361,6 @@ object AndroidFileUtils {
         if (!conversationDir.exists()) conversationDir.mkdir()
         return conversationDir
     }
-
-    fun getConversationPath(context: Context, conversationId: String, name: String) =
-        File(getConversationDir(context, conversationId), name)
 
     fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String) =
         File(getConversationDir(context, accountId, conversationId), name)
