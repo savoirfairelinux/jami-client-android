@@ -244,11 +244,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
     }
 
-    fun showFab(show: Boolean) {
-        val binding = binding ?: return
-        if (show) binding.newconvFab.show() else binding.newconvFab.hide()
-    }
-
     fun searchQueryTextChanged (query: String) {
         presenter.queryTextChanged(query)
     }

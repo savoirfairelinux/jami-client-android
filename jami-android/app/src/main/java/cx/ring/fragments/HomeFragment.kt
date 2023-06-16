@@ -74,7 +74,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         SearchView.OnQueryTextListener, HomeView {
 
     private var mBinding: FragHomeBinding? = null
-    private var pagerContent: Fragment? = null
     private var mHasConversationBadge = false
     private var mHasPendingBadge = false
     private val mDisposable = CompositeDisposable()
@@ -205,10 +204,8 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
                 // Manage search results
                 if (newState === TransitionState.HIDDEN) {
-                    (pagerContent as? SmartListFragment?)?.showFab(true)
                     searchDisposable.clear()
                 } else if (previousState === TransitionState.HIDDEN) {
-                    (pagerContent as? SmartListFragment?)?.showFab(false)
                     searchDisposable.add(
                         mConversationFacade.getSearchResults(
                             mConversationFacade.currentAccountSubject, debouncedQuery
@@ -276,12 +273,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pagerContent = mBinding!!.fragmentContainer.getFragment()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        pagerContent = null
         mDisposable.dispose()
         mBinding = null
     }
