@@ -76,10 +76,7 @@ class DeviceRuntimeServiceImpl(
 
     override fun getFilePath(filename: String) = AndroidFileUtils.getFilePath(mContext, filename)
 
-    override fun getConversationPath(conversationId: String, name: String): File =
-        AndroidFileUtils.getConversationPath(mContext, conversationId, name)
-
-    override fun getConversationPath(accountId: String, conversationId: String,name: String): File =
+    override fun getConversationPath(accountId: String, conversationId: String, name: String): File =
         AndroidFileUtils.getConversationPath(mContext, accountId, conversationId, name)
 
     override fun getTemporaryPath(conversationId: String, name: String): File =
