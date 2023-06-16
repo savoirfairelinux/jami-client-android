@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3afcd527_96cf3345",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ActionHelper.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-16T15:47:51Z",
+      "side": 1,
+      "message": "New Android versions already show a popup when text is copied. We should remove the snackbar.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 3
+      },
+      "revId": "77ffbb04ad325af4c4f4510cd1ddf56f735c947e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
