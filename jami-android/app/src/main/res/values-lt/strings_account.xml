@@ -46,6 +46,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
   <string name="account_password_change">Pakeisti slaptažodį</string>
   <string name="account_password_set">Nustatyti slaptažodį</string>
+  <string name="account_password_summary">Valdykite savo paskyros slaptažodį.</string>
   <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
@@ -58,6 +59,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_optionnal_category">Pasirinktini nustatymai</string>
   <string name="account_useragent_label">Naudotojo agentas</string>
   <string name="account_autoanswer_label">Automatinis atsiliepimas</string>
+  <string name="account_rendezvous_label">Susitikimo režimas</string>
+  <string name="account_rendezvous_summary">Rendezvous režimu į konferencijų kambarį pridedami įkeliami skambučiai.</string>
   <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Plugin Details-->
@@ -128,6 +131,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_tls_server_name_label">Serverio pavadinimas</string>
   <string name="account_tls_verify_server_label">Tikrinti serverį</string>
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
+  <string name="account_require_client_certificate_label">TLS reikalauja klientų pažymėjimo</string>
   <string name="account_tls_negotiation_timeout_sec">Derėjimuisi skirtas laikas (sek.)</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
@@ -138,12 +142,16 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
+  <string name="account_export_file">Paslauginė sąskaita</string>
+  <string name="account_export_file_summary">Paslauginkite savo paskyrą į įrenginį, kad vėliau jį atkurtumėte.</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_network_message">Nepavyko eksportuoti paskyrą tinkle. Patikrinkite savo tinklo ryšį.</string>
   <string name="account_export_end_error_title">Klaida</string>
   <string name="account_export_end_error_message">Nepavyko eksportuoti paskyros. Įvyko nežinoma klaida.</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
+  <string name="account_share_body">Susisiekite su manimi naudojant \"%1$s\" Džami platintoje ryšio platformėje: %2$s</string>
+  <string name="account_share_body_with_username">Susisiekite su manimi naudodami \"%1$s\" arba mano viešąjį naudotojo vardą \"%2$s\" Džami platintoje ryšio platformėje: %3$s</string>
   <string name="account_contact_me">Susisiekite su manimi, naudodami Jami!</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite savo slaptažodį.</string>
@@ -181,12 +189,14 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti naują įrenginį</string>
+  <string name="account_link_show_button">Parodykite daugiau susijusį įrenginį</string>
   <string name="account_link_hide_button">Slėpti susietą įrenginį</string>
   <string name="account_link_export_info">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
   <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
   <string name="account_link_export_info_light">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
+  <string name="account_export_title">Sąskaita su kitais įrenginiais</string>
   <string name="account_connect_server_button">Prisijunkite prie valdymo serverio</string>
   <string name="account_connect_button">Prisijungti</string>
   <string name="prompt_server">„Jami“ valdymo serverio URL</string>
@@ -195,7 +205,9 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
+  <string name="no_registered_name_for_account">Nėra registruoto pavadinimo</string>
   <string name="username_available">Naudotojo vardas prieinamas!</string>
+  <string name="register_name">Registro pavadinimas</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>

@@ -1,10 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Мрежа</string>
   <string name="pref_category_contacts">Kontakti</string>
   <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">Sistem</string>
+  <string name="pref_category_privacy">Приватност</string>
+  <string name="pref_category_diagnostic">Дијагностике</string>
+  <string name="pref_mobileData_title">Мобилни подаци</string>
+  <string name="pref_mobileData_summary">Дозволите Џамију на 3Г/ЛТЕ мрежама поред Wi-Fi-а</string>
+  <string name="pref_pushNotifications_title">Посоци за притискање</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Користећи сервере Google-а да дозволите пријем позива/послана у позадини</string>
+  <string name="pref_unifiedPush_summary">Користите услугу UnifiedPush да дозволите пријем позива/послана у позадини</string>
+  <string name="pref_video_advanced_title">Пронађени наметки видео</string>
+  <string name="pref_video_advanced_summary">Промените битовину видео, резолуцију, као и експерименталне карактеристике приступа</string>
+  <string name="pref_hd_summary">Омогућивање слања HD видео</string>
+  <string name="pref_hwEncode_title">Омогућити убрзано кодирање</string>
+  <string name="pref_hwEncode_summary">Експериментална карактеристика</string>
+  <string name="pref_videoBitrate_title">Битрат видео</string>
+  <string name="pref_videoBitrate_summary">Изаберете дефолтну битност исхода видео (КБ/с)</string>
+  <string name="pref_videoResolution_title">Резолуција видео снимака</string>
+  <string name="pref_videoResolution_summary">Изаберете дефолтну резолуцију исхода видео</string>
+  <string name="pref_systemContacts_title">Користе се системски контакти</string>
+  <string name="pref_systemContacts_summary">Користете системске контакте да бисте показали детаље позивача.</string>
+  <string name="pref_systemDialer_title">Постављајте системске позиве користећи Jami</string>
+  <string name="pref_systemDialer_summary">Користи Џами да позива систем када је могуће.</string>
+  <string name="pref_startOnBoot_title">Почнете Jami на покретању</string>
+  <string name="pref_startOnBoot_summary">Постави Џами у позадини када се систем почини.</string>
   <string name="pref_clearHistory_title">Izbriši istoriju</string>
+  <string name="pref_clearHistory_summary">Учистите историју разговора, не можете да га побрините.</string>
+  <string name="pref_notification_title">Видимост обавештења</string>
+  <string name="pref_notification_summary">Устави видљивост обавештења апликације на екрану за закључавање.</string>
+  <string name="pref_blackList_title">Список блокова</string>
+  <string name="pref_blackList_summary">Проверите свој блок листа.</string>
+  <string name="pref_delete_account_title">Убришајте рачун</string>
+  <string name="pref_delete_account_summary">Убришите свој рачун са овог уређаја</string>
+  <string name="pref_persistNotification_title">Победите у позадини</string>
+  <string name="pref_persistNotification_summary">Дозволите да се ради у позадини да би примили позиве и поруке.</string>
+  <string name="pref_newGroup_title">Омогућити групски чат</string>
+  <string name="pref_newGroup_summary">Омогућивање стварања група у Џамију.</string>
+  <string name="pref_logs_title">Дијагностички дневници</string>
+  <string name="pref_logs_summary">Очињени дијагностички дневник</string>
+  <string name="pref_logs_start">Почни са раседањем</string>
+  <string name="pref_logs_stop">Престани са дрвова</string>
+  <string name="pref_typing_title">Омогућивање индикатора за вађење</string>
+  <string name="pref_typing_summary">Пошаљи и прими индикатори за упис који показују да се порука уписва.</string>
+  <string name="pref_read_title">Омогућивање потврда за читање</string>
+  <string name="pref_read_summary">Пошаљи и прими квитанте који указују на приказану поруку.</string>
+  <string name="pref_block_record_title">Блокирање снимка екрана и снимања</string>
+  <string name="pref_block_record_summary">Блокирајте снимање екрана или снимање видео.</string>
+  <string name="pref_link_preview_title">Покажите прегледе линка у разговорима</string>
+  <string name="pref_link_preview_summary">Превизије захтевају преузимање садржаја са сервера трећих страна.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Публична \n(показање обавештења и њихово садржај на екрану за закључавање) \n</string>
+  <string name="notification_private">Приватна \n(показати обавештења али сакрити њихов садржај на екрану за закључавање)\n</string>
+  <string name="notification_secret">Секрет \n(не приказују обавештења на екрану за закључавање)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Dodaci</string>
+  <string name="pref_plugins_summary">Омогућити додаци и задати њихове параметри</string>
+  <string name="fab_plugins_add">Додајте нови додатак</string>
+  <string name="plugin_uninstall_title">Увођење уградника?</string>
+  <string name="plugin_reset_preferences">Ресетирање преференција уплејна</string>
+  <string name="plugin_reset_preferences_summary">Ваше подешавања уплена ће бити подешаване</string>
+  <string name="plugin_reset_preferences_ask">Да ли желите да ресетујете општа подешавања плагина?</string>
+  <string name="plugin_reset_account_preferences_ask">Да ли желите да ресетујете подешавања уплена рачуна?</string>
+  <string name="plugin_successfully_installed">Плугин <b>%1$s</b> успешно инсталиран</string>
+  <string name="plugin_install_failure">Не успео да се инсталира плагин: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Имате најновију верзију: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Уставили сте ту сличну верзију <b>%1$s</b></string>
+  <string name="plugin_force_install">присиљава \ n инсталирање</string>
+  <string name="plugin_path_image_add">Додајте нову слику</string>
 </resources>

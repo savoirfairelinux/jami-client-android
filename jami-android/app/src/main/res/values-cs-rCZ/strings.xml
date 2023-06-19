@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Zpětná vazba</string>
-  <string name="report"><u>Pošlete nám elektronický dopis</u></string>
+  <string name="report"><u>Pošlete nám email</u></string>
   <string name="section_license">Povolení</string>
   <string name="sponsor_section">Jami je svobodný software, jejž vyvíjí a podporuje</string>
   <string name="copyright_section">Copyright</string>
@@ -192,6 +192,9 @@
   <string name="conversation_info_contact_you">Vy</string>
   <string name="conversation_members">Členové</string>
   <string name="conversation_syncing">Stahování konverzace z peeru</string>
+  <string name="conversation_blocked">Tento kontakt je blokován</string>
+  <string name="conversation_ended">Konverzace skončila.</string>
+  <string name="conversation_message_deleted">(Zpráva smazána)</string>
   <string name="conversation_preference_color">Barva konverzace</string>
   <string name="conversation_preference_emoji">Emoji konverzace</string>
   <string name="conversation_type_contact">Kontakt na Jami</string>

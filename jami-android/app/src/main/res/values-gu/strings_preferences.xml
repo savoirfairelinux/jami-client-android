@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">નેટવર્ક</string>
+  <string name="pref_category_contacts">સંપર્કો</string>
+  <string name="pref_category_video">વિડિઓ</string>
   <string name="pref_category_system">સિસ્ટમ</string>
+  <string name="pref_category_privacy">ગોપનીયતા</string>
+  <string name="pref_category_diagnostic">નિદાન</string>
+  <string name="pref_mobileData_title">મોબાઇલ ડેટા</string>
+  <string name="pref_mobileData_summary">Wi-Fi ઉપરાંત 3G/LTE નેટવર્ક્સ પર જમીને પરવાનગી આપો</string>
+  <string name="pref_pushNotifications_title">દબાણ સૂચનાઓ</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">પૃષ્ઠભૂમિમાં કૉલ્સ / સંદેશાઓ પ્રાપ્ત કરવાની મંજૂરી આપવા માટે Google સર્વર્સનો ઉપયોગ કરો</string>
+  <string name="pref_unifiedPush_summary">પૃષ્ઠભૂમિમાં કૉલ્સ / સંદેશાઓ પ્રાપ્ત કરવા માટે યુનિફાઇડપુશ સેવાનો ઉપયોગ કરો</string>
+  <string name="pref_video_advanced_title">અદ્યતન વિડિઓ સેટિંગ્સ</string>
+  <string name="pref_video_advanced_summary">વિડિઓ બીટરેટ, રીઝોલ્યુશન, તેમજ ઍક્સેસ પ્રયોગ લક્ષણો બદલો</string>
+  <string name="pref_hd_summary">એચડી વિડિઓ મોકલવા સક્ષમ કરો</string>
+  <string name="pref_hwEncode_title">ઝડપી કોડિંગ સક્ષમ કરો</string>
+  <string name="pref_hwEncode_summary">પ્રયોગ લાક્ષણિકતા</string>
+  <string name="pref_videoBitrate_title">વિડિઓ બિટરેટ</string>
+  <string name="pref_videoBitrate_summary">ડિફૉલ્ટ આઉટગોઇંગ વિડિઓ બીટરેટ (KB/s) પસંદ કરો</string>
+  <string name="pref_videoResolution_title">વિડિઓ રીઝોલ્યુશન</string>
+  <string name="pref_videoResolution_summary">ડિફૉલ્ટ બહાર નીકળો વિડિઓ રીઝોલ્યુશન પસંદ કરો</string>
+  <string name="pref_systemContacts_title">સિસ્ટમ સંપર્કોનો ઉપયોગ કરો</string>
+  <string name="pref_systemContacts_summary">કોલરની વિગતો બતાવવા માટે સિસ્ટમ સંપર્કોનો ઉપયોગ કરો.</string>
+  <string name="pref_systemDialer_title">Jami નો ઉપયોગ કરીને સિસ્ટમ કૉલ્સ કરો</string>
+  <string name="pref_systemDialer_summary">શક્ય હોય ત્યારે સિસ્ટમ કોલ્સ કરવા માટે જેમીનો ઉપયોગ કરો.</string>
+  <string name="pref_startOnBoot_title">સ્ટાર્ટઅપ પર જમી શરૂ કરો</string>
+  <string name="pref_startOnBoot_summary">સિસ્ટમ શરૂ થાય ત્યારે પૃષ્ઠભૂમિમાં જમ્મી ચલાવો.</string>
+  <string name="pref_clearHistory_title">સ્પષ્ટ ઇતિહાસ</string>
+  <string name="pref_clearHistory_summary">આ ક્રિયાને રદ કરી શકાતી નથી.</string>
+  <string name="pref_notification_title">સૂચનાની દૃશ્યતા</string>
+  <string name="pref_notification_summary">લૉક સ્ક્રીન પર એપ્લિકેશન સૂચનાઓની દૃશ્યતા સેટ કરો.</string>
+  <string name="pref_blackList_title">બ્લોક યાદી</string>
+  <string name="pref_blackList_summary">તમારી બ્લોક સૂચિ તપાસો.</string>
+  <string name="pref_delete_account_title">એકાઉન્ટ કાઢી નાખો</string>
+  <string name="pref_delete_account_summary">આ ઉપકરણમાંથી તમારું એકાઉન્ટ કાઢી નાખો</string>
+  <string name="pref_persistNotification_title">પૃષ્ઠભૂમિ માં ચલાવો</string>
+  <string name="pref_persistNotification_summary">કૉલ્સ અને સંદેશાઓ પ્રાપ્ત કરવા માટે પૃષ્ઠભૂમિમાં ચાલી રહેલ પરવાનગી આપો.</string>
+  <string name="pref_newGroup_title">જૂથ ચેટ સક્ષમ કરો</string>
+  <string name="pref_newGroup_summary">જમીમાં જૂથો બનાવવાની મંજૂરી આપો.</string>
+  <string name="pref_logs_title">નિદાન લોગ</string>
+  <string name="pref_logs_summary">ઓપન ડાયગ્નોસ્ટિક લોગ સેટિંગ્સ</string>
+  <string name="pref_logs_start">લોગિંગ શરૂ કરો</string>
+  <string name="pref_logs_stop">લોગિંગ બંધ કરો</string>
+  <string name="pref_typing_title">ટાઇપિંગ સૂચકાંકોને સક્ષમ કરો</string>
+  <string name="pref_typing_summary">સંદેશ લખવામાં આવી રહ્યો છે તે દર્શાવતા ટાઇપિંગ સૂચકાંકો મોકલો અને પ્રાપ્ત કરો.</string>
+  <string name="pref_read_title">વાંચન રસીદો સક્ષમ કરો</string>
+  <string name="pref_read_summary">સંદેશ પ્રદર્શિત થયો છે તે સૂચિત રસીદ મોકલો અને પ્રાપ્ત કરો.</string>
+  <string name="pref_block_record_title">સ્ક્રીનશોટ અને રેકોર્ડિંગ બ્લોક</string>
+  <string name="pref_block_record_summary">સ્ક્રીનશૉટ લેવાનું અથવા વિડિઓ રેકોર્ડ કરવાનું અવરોધિત કરો.</string>
+  <string name="pref_link_preview_title">વાતચીતમાં લિંક પૂર્વાવલોકન બતાવો</string>
+  <string name="pref_link_preview_summary">પૂર્વાવલોકન માટે તૃતીય-પક્ષ સર્વર્સમાંથી સામગ્રી ડાઉનલોડ કરવાની જરૂર છે.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">જાહેર \n(લોક સ્ક્રીન પર સૂચનાઓ અને તેમની સામગ્રી બતાવો) \n</string>
+  <string name="notification_private">ખાનગી \n(સૂચિઓ બતાવો પરંતુ લૉક સ્ક્રીન પર તેમની સામગ્રી છુપાવો) \n</string>
+  <string name="notification_secret">ગુપ્ત \n(લૉક સ્ક્રીન પર સૂચનાઓ બતાવવા નથી)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">પ્લગિન્સ</string>
+  <string name="pref_plugins_summary">પ્લગઇન્સ સક્રિય કરો અને તેમના પરિમાણો સેટ કરો</string>
+  <string name="fab_plugins_add">એક નવું પ્લગઇન ઉમેરો</string>
+  <string name="plugin_uninstall_title">પ્લગઇન અનઇન્સ્ટોલ કરો?</string>
+  <string name="plugin_reset_preferences">પ્લગઇન પસંદગીઓ રીસેટ</string>
+  <string name="plugin_reset_preferences_summary">તમારા પ્લગઇન સેટિંગ્સ મૂળભૂત રીતે કરવામાં આવશે</string>
+  <string name="plugin_reset_preferences_ask">તમે સામાન્ય પ્લગઇન સેટિંગ્સ રીસેટ કરવા માંગો છો?</string>
+  <string name="plugin_reset_account_preferences_ask">તમે એકાઉન્ટ પ્લગઇન સેટિંગ્સ રીસેટ કરવા માંગો છો?</string>
+  <string name="plugin_successfully_installed">પ્લગઇન <b>%1$s</b> સફળતાપૂર્વક સ્થાપિત</string>
+  <string name="plugin_install_failure">પ્લગઇન ઇન્સ્ટોલ કરવામાં નિષ્ફળઃ <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">તમારી પાસે તાજેતરની આવૃત્તિ છેઃ <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">તમે <b>%1$s</b> ની સમાન આવૃત્તિ સ્થાપિત કરી છે</string>
+  <string name="plugin_force_install">બળ \ n સ્થાપિત</string>
+  <string name="plugin_path_image_add">નવી છબી ઉમેરો</string>
 </resources>

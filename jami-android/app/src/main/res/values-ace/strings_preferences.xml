@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">نيترڬ</string>
+  <string name="pref_category_contacts">ڤڠاجين</string>
+  <string name="pref_category_video">ڤيديو</string>
+  <string name="pref_category_system">سيستم</string>
+  <string name="pref_category_privacy">ڤريڤيسي</string>
+  <string name="pref_category_diagnostic">ڤڠاجرن</string>
+  <string name="pref_mobileData_title">داتا موبايل</string>
+  <string name="pref_mobileData_summary">ممبريكن Jami دڠن 3G/LTE نيتر برساتو Wi-Fi</string>
+  <string name="pref_pushNotifications_title">ڤمبلاجر ڤڠاجرن</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">مڠڬوناكن سرڤير Google اونتوق ممبريكن ڤرليندوڠن/ميسيج دالم ڤڠڬوناكن</string>
+  <string name="pref_unifiedPush_summary">مڠڬوناكن ڤڠڬونا UnifiedPush اونتوق ممبريكن ڤرلو مڠهادڤي ڤرساتوان/ميسيج دالم ڤڠڬونا</string>
+  <string name="pref_video_advanced_title">ڤڠاجرن ڤيديو ڤرنه</string>
+  <string name="pref_video_advanced_summary">ڤرچاي ڤرودوک ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن ڤمبلاجرن ڤد ڤمبلاجرن</string>
+  <string name="pref_hd_summary">ممبنتو ڤرسيفتن ڤيديو HD</string>
+  <string name="pref_hwEncode_title">ممبنتو ڤڠڬيلن ڤڠڬيلن</string>
+  <string name="pref_hwEncode_summary">خصوصيت تجريبيه</string>
+  <string name="pref_videoBitrate_title">ڤرودوک ڤرودوک ڤرودوک</string>
+  <string name="pref_videoBitrate_summary">مميليه ڤرچاي ڤمبلاجرن ڤد ڤمبلاجرن ڤد ڤمبلاجرن (KB/s)</string>
+  <string name="pref_videoResolution_title">ڤرودوک ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد ڤد</string>
+  <string name="pref_videoResolution_summary">ڤيليه ڤرودوک ڤمبلاجرن ڤد ڤمبلاجرن</string>
+  <string name="pref_systemContacts_title">مڠڬوناكن ڤڠڬونا سيستم</string>
+  <string name="pref_systemContacts_summary">مڠڬوناكن ڤڠاجرن سيستم اونتوق ممبنتو ديتيل ڤڠاجرن.</string>
+  <string name="pref_systemDialer_title">ممڤوپا?? ي ڤڠاجين سيستم دڠن مڠڬوناكن Jami</string>
+  <string name="pref_systemDialer_summary">مڠڬوناكن جامي اونتوق ممڤوپا?? ي ڤڠاجرن سيسيتيم كتيک ممڤوپا?? ي.</string>
+  <string name="pref_startOnBoot_title">ڤمبيلن Jami دالم ڤمبيلن</string>
+  <string name="pref_startOnBoot_summary">جادي جادي جادي دالم سبواه ڤرتنديڠن كتيک سيسيڠ.</string>
+  <string name="pref_clearHistory_title">تاريخ يڠ برڤنتيڠ</string>
+  <string name="pref_clearHistory_summary">كامي مڠهادڤي سموا تاريخ ڤمباچ.</string>
+  <string name="pref_notification_title">ڤرلو دڤرلوكن</string>
+  <string name="pref_notification_summary">ڤڠڬوناكن ڤمبلاجرن ڤرساتوان ڤرلو دڤرچايا?? ي دالم سكرين لاك.</string>
+  <string name="pref_blackList_title">ڤمباچ ڤڠوربان</string>
+  <string name="pref_blackList_summary">چيكل ڤمبلاجرن.</string>
+  <string name="pref_delete_account_title">مڠمبيل ڤڠاجرن</string>
+  <string name="pref_delete_account_summary">مڠحذف ايكون اتاو ڤرودوک اتاو ڤرودوک</string>
+  <string name="pref_persistNotification_title">ڤرچاي دالم ڤرتودوهن</string>
+  <string name="pref_persistNotification_summary">ممبريكن ڤرلو دالم ڤڠڬوناكن اونتوق مڠهادڤي ڤڠاجين دان ڤمبلاڬين.</string>
+  <string name="pref_newGroup_title">ممبنتو چيت ڤڠڬونا</string>
+  <string name="pref_newGroup_summary">ممبنتو ڤڠڬوناكن ڬروڤ د Jami.</string>
+  <string name="pref_logs_title">ڤڠاجرن ڤڠاجرن</string>
+  <string name="pref_logs_summary">ڤڠاجرن لوڬ دأڠڬڤ</string>
+  <string name="pref_logs_start">ڤرلو مڠهادڤي ڤڠاجين</string>
+  <string name="pref_logs_stop">ڤرنه مڠهادڤي</string>
+  <string name="pref_typing_title">ممبنتو ڤڠڬيلن ڤڠڬيلن</string>
+  <string name="pref_typing_summary">مڠهادڤي دان مڠهادڤي ڤڠوربانن ڤمباچ يڠ مڠمبيلكن ڤمباچ يڠ دڤرچايا?? ي.</string>
+  <string name="pref_read_title">ممبنتو ڤرليندوڠن ڤرليندوڠن</string>
+  <string name="pref_read_summary">مڠهادڤي دان مڠهادڤي كيسيت يڠ مڠهادڤي كاسيت يڠ دڤرچايا?? ي.</string>
+  <string name="pref_block_record_title">ڤڠهولوڠ ڤرسكوتوان دان ڤرڬي</string>
+  <string name="pref_block_record_summary">مڠهادڤكن ڤمبلاجرن سكرينوت اتاو ڤمبلاجرن ڤيديو.</string>
+  <string name="pref_link_preview_title">ممبينا ڤرليمن لنک دالم ڤمباچ</string>
+  <string name="pref_link_preview_summary">ڤرليندوڠ مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل ڤرلو مڠمبيل.</string>
+  <!--Notifications Visibility-->
+  <string name="notification_public">ڤرلاونن ڤرلاونن دان ڤمبنتوقڽ دالم سكرين لاك)</string>
+  <string name="notification_private">سڤرتي \n(مبيلي ڤمبلايهن تتاڤي مڠهادڤي ڤڠوربانڽ دالم سكرين لاك) \n</string>
+  <string name="notification_secret">سيكريت \n(مبليكن ڤمبليهيڠ دڤرچايا?? ي ڤرسكوتوان دڤرچايا?? ي)</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">ڤلاڬين</string>
+  <string name="pref_plugins_summary">ممبنتو ڤلاڬين دان ممبنتو ڤاراميتيرنڽ</string>
+  <string name="fab_plugins_add">مڠهادڤي ڤلاڬين بارو</string>
+  <string name="plugin_uninstall_title">ڤلاڬين دڤرچايا?? ي ؟</string>
+  <string name="plugin_reset_preferences">ڤرليڤورن ڤلاڬين</string>
+  <string name="plugin_reset_preferences_summary">ڤڠاجرن ڤلاڬين ايت برڤڠاجرن</string>
+  <string name="plugin_reset_preferences_ask">هل تريد إعادة إعدادات المكونات العامة ؟</string>
+  <string name="plugin_reset_account_preferences_ask">آيا مي خوايد تنظیمات افزونه حساب را بازيابي كنيد ؟</string>
+  <string name="plugin_successfully_installed">ڤلاڬين <b>%1$s</b> دڤرچايا?? ي</string>
+  <string name="plugin_install_failure">ڤڠاجرن ڤلاڬين: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">توڠڬوڤ ڤرسمڤڠن يڠ لبيه بارو: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">توڤي ڤرسي <b>%1$s</b> يڠ سام دڤرساتوان</string>
+  <string name="plugin_force_install">ڤڠڬيلن ڤڠڬيلن</string>
+  <string name="plugin_path_image_add">مڠهادڤي ڤرسمباڬن بارو</string>
+</resources>

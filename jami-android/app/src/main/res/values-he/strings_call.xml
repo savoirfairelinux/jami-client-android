@@ -30,7 +30,15 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">מתחבר</string>
     <string name="call_human_state_ringing">מצלצל</string>
     <string name="call_human_state_current">מדבר</string>
+    <string name="call_human_state_hungup">נגמר.</string>
     <string name="call_human_state_busy">עסוק</string>
     <string name="call_human_state_failure">של</string>
     <string name="call_human_state_hold">החזק</string>
-    </resources>
+    <string name="call_human_state_unhold">לא תדאג.</string>
+    <string name="call_human_state_over">נגמר.</string>
+    <!-- Conferences -->
+    <string name="call_moderator">מתווך</string>
+    <string name="call_muted">שקט</string>
+    <string name="call_handRaised">יד מעלה</string>
+
+</resources>

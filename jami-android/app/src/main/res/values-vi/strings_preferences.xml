@@ -1,7 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Mạng lưới</string>
+  <string name="pref_category_contacts">Liên hệ</string>
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Hệ thống</string>
+  <string name="pref_category_privacy">Sự riêng tư</string>
+  <string name="pref_category_diagnostic">Chẩn đoán</string>
+  <string name="pref_mobileData_title">Dữ liệu di động</string>
+  <string name="pref_mobileData_summary">Cho phép Jami trên mạng 3G / LTE ngoài Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Thông báo đẩy</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Sử dụng máy chủ Google để cho phép nhận cuộc gọi / tin nhắn trong nền</string>
+  <string name="pref_unifiedPush_summary">Sử dụng dịch vụ UnifiedPush để cho phép nhận cuộc gọi/tin nhắn trong nền</string>
+  <string name="pref_video_advanced_title">Thiết lập video nâng cao</string>
+  <string name="pref_video_advanced_summary">Thay đổi tốc độ bitrate, độ phân giải và tính năng thử nghiệm truy cập video</string>
+  <string name="pref_hd_summary">Khả năng gửi video HD</string>
+  <string name="pref_hwEncode_title">Khả năng mã hóa nhanh</string>
+  <string name="pref_hwEncode_summary">Tính năng thử nghiệm</string>
+  <string name="pref_videoBitrate_title">Tốc độ bit video</string>
+  <string name="pref_videoBitrate_summary">Chọn tốc độ bit bit video phát ra mặc định (KB/s)</string>
+  <string name="pref_videoResolution_title">Độ phân giải video</string>
+  <string name="pref_videoResolution_summary">Chọn độ phân giải video phát ra mặc định</string>
+  <string name="pref_systemContacts_title">Sử dụng các liên hệ hệ thống</string>
+  <string name="pref_systemContacts_summary">Sử dụng các liên hệ hệ thống để hiển thị chi tiết của người gọi.</string>
+  <string name="pref_systemDialer_title">Đặt cuộc gọi hệ thống bằng Jami</string>
+  <string name="pref_systemDialer_summary">Sử dụng Jami để đặt các cuộc gọi hệ thống khi có thể.</string>
+  <string name="pref_startOnBoot_title">Bắt đầu Jami khi khởi động</string>
+  <string name="pref_startOnBoot_summary">Đưa Jami vào hậu trường khi hệ thống khởi động.</string>
+  <string name="pref_clearHistory_title">Lịch sử rõ ràng</string>
+  <string name="pref_clearHistory_summary">Xóa tất cả lịch sử cuộc trò chuyện.</string>
+  <string name="pref_notification_title">Khả năng hiển thị thông báo</string>
+  <string name="pref_notification_summary">Đặt hiển thị thông báo ứng dụng trên màn hình khóa.</string>
+  <string name="pref_blackList_title">Danh sách khối</string>
+  <string name="pref_blackList_summary">Hãy kiểm tra danh sách các khối.</string>
+  <string name="pref_delete_account_title">xóa tài khoản</string>
+  <string name="pref_delete_account_summary">Xóa tài khoản của bạn từ thiết bị này</string>
+  <string name="pref_persistNotification_title">Đi ngược lại</string>
+  <string name="pref_persistNotification_summary">Cho phép chạy trong nền để nhận cuộc gọi và tin nhắn.</string>
+  <string name="pref_newGroup_title">Khả năng trò chuyện nhóm</string>
+  <string name="pref_newGroup_summary">Khả năng tạo nhóm ở Jami.</string>
+  <string name="pref_logs_title">Các nhật ký chẩn đoán</string>
+  <string name="pref_logs_summary">Mở cài đặt nhật ký chẩn đoán</string>
+  <string name="pref_logs_start">Bắt đầu ghi chép</string>
+  <string name="pref_logs_stop">Ngừng khai thác</string>
+  <string name="pref_typing_title">Khả năng đánh dấu</string>
+  <string name="pref_typing_summary">Gửi và nhận các chỉ số đánh dấu cho thấy một tin nhắn đang được đánh dấu.</string>
+  <string name="pref_read_title">Khả năng nhận đọc</string>
+  <string name="pref_read_summary">Gửi và nhận biên lai cho thấy một tin nhắn đã được hiển thị.</string>
+  <string name="pref_block_record_title">Blok chụp màn hình và ghi</string>
+  <string name="pref_block_record_summary">Blok chụp ảnh màn hình hoặc ghi video.</string>
+  <string name="pref_link_preview_title">Hình trước liên kết trong các cuộc trò chuyện</string>
+  <string name="pref_link_preview_summary">Xem trước yêu cầu tải nội dung từ các máy chủ bên thứ ba.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Công cộng \n(mở các thông báo và nội dung của chúng trên màn hình khóa) \n</string>
+  <string name="notification_private">Cảnh báo riêng tư nhưng ẩn nội dung của chúng trên màn hình khóa)</string>
+  <string name="notification_secret">Bí mật \n(không hiển thị thông báo trên màn hình khóa)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Plugins</string>
+  <string name="pref_plugins_summary">Khả năng plugin và đặt các tham số của chúng</string>
+  <string name="fab_plugins_add">Thêm thêm plugin mới</string>
+  <string name="plugin_uninstall_title">Tháo cài đặt Plugin?</string>
+  <string name="plugin_reset_preferences">Tái thiết lập plugin</string>
+  <string name="plugin_reset_preferences_summary">Các cài đặt plugin của bạn sẽ được mặc định</string>
+  <string name="plugin_reset_preferences_ask">Bạn muốn đặt lại cài đặt plugin chung?</string>
+  <string name="plugin_reset_account_preferences_ask">Bạn muốn đặt lại cài đặt plugin tài khoản?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> được cài đặt thành công</string>
+  <string name="plugin_install_failure">Không cài đặt plugin: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Bạn có phiên bản gần đây hơn của: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Bạn có cùng phiên bản của <b>%1$s</b> được cài đặt</string>
+  <string name="plugin_force_install">buộc \n cài đặt</string>
+  <string name="plugin_path_image_add">Thêm hình ảnh mới</string>
 </resources>

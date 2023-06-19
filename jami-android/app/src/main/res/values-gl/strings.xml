@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Gravar clip de audio</string>
   <string name="conversation_send_video">Gravar clip de vídeo</string>
   <string name="conversation_share_location">Compartir localización</string>
+  <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">As conversas con vídeo precisan poder acceder a cámara. Por favor, considera proporcionarllo.</string>
@@ -370,4 +371,5 @@
   <string name="picker_title">Elexir contactos</string>
   <string name="picker_btn">Elexir conctactos</string>
   <string name="bottomsheet_contact">Contacta con Jami\n %1$s</string>
+  <string name="bottomsheet_remove">Retira-los do enjambre</string>
 </resources>

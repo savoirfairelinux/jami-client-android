@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Қоңырау тоқтатылды. Ешқандай микрофон анықталмады.</string>
     <string name="call_error_no_camera_no_microphone">Қоңырау тоқтатылды. Ешқандай камера немесе микрофон анықталмады.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Іздеу</string>
+    <string name="call_human_state_incoming">Келесі</string>
+    <string name="call_human_state_connecting">Қосылу</string>
+    <string name="call_human_state_ringing">Ауырылыс</string>
+    <string name="call_human_state_current">Сөйлесу</string>
+    <string name="call_human_state_hungup">Өтірілді</string>
+    <string name="call_human_state_busy">Жұмыспен</string>
+    <string name="call_human_state_failure">Жеңіссіз</string>
+    <string name="call_human_state_hold">Күте тұрыңыз</string>
+    <string name="call_human_state_unhold">Алып жүр</string>
+    <string name="call_human_state_over">Өтірілді</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Модератор</string>
+    <string name="call_muted">Ауыздау</string>
+    <string name="call_handRaised">Қол көтеріліп</string>
+
+</resources>

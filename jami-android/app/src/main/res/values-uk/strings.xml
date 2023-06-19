@@ -61,6 +61,7 @@
   <string name="notif_incoming_call">Вхідний виклик</string>
   <string name="notif_outgoing_call_title">Вихідний виклик до %1$s</string>
   <string name="notif_outgoing_call">Вихідний виклик</string>
+  <string name="notif_current_call_title">Продовжений дзвін з %1$s</string>
   <string name="notif_current_call">Вихідний виклик</string>
   <string name="notif_channel_call_in_progress">Дзвінок у процесі</string>
   <string name="notif_channel_calls">Дзвінки</string>
@@ -81,21 +82,31 @@
   <string name="notif_outgoing_file_transfer_title">Надсилаємо файл до %1$s </string>
   <string name="notif_incoming_picture">Картинка від %1$s</string>
   <string name="notif_sync_title">Синхронізація даних в процесі...</string>
+  <string name="notif_location_title">Розділення місця з %1$s</string>
+  <string name="location_share_contact">%1$s ділиться з вами місцезнаходженням</string>
+  <string name="notif_location_multi_title">Розділення місця з %1$d контактів</string>
   <string name="notif_location_remaining">Залишилось %1$d хвилин</string>
   <string name="notif_location_action_stop">Зупинити обмін геоданними</string>
   <string name="location_share_action_start">Розпочати поширення</string>
   <string name="location_share_action_stop">Зупинити поширення</string>
+  <string name="location_share_about_title">Інформація з карти</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Зупинити</string>
   <string name="action_call_maximize">Збільшити</string>
   <string name="action_call_minimize">Зменшити</string>
+  <string name="action_call_mute">Немов</string>
+  <string name="action_call_unmute">Незамовлений</string>
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="start_error_title">Неможливо запустити Jami!</string>
   <string name="start_error_mic_required">Для роботи Jami потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
+  <string name="action_call_accept_audio">Відповідь аудіо</string>
+  <string name="action_call_accept_video">Відповідь на відео</string>
+  <string name="action_call_hold_accept">Затримуйте і приймайте аудіо званку</string>
+  <string name="action_call_hold_accept_video">Затримуйте і записуйте відеозванки</string>
   <string name="action_call_end_accept">Завершити дзвінок та відповісти</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
@@ -112,6 +123,7 @@
   <string name="qr_code">QR код</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <string name="ab_action_hidepreview">Сховати передогляд</string>
+  <string name="remote_recording">Запис %s...</string>
   <!--Text messages-->
   <string name="send_message">Відправити повідомлення</string>
   <string name="message_sending"> Повідомлення надсилається...</string>
@@ -124,6 +136,7 @@
   <string name="conversation_send_audio">Записати аудіо</string>
   <string name="conversation_send_video">Записати відео</string>
   <string name="conversation_share_location">Поділитися геоданними</string>
+  <string name="in_reply_to">Відповідно до</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
@@ -133,6 +146,7 @@
   <string name="ringtone_error_size_too_big">Цей файл надто великий. Максимальний розмір — %1$dкБ. </string>
   <string name="ringtone_custom_prompt">Встановити власний рингтон</string>
   <string name="ringtone_custom_label">Кастомізація</string>
+  <string name="ringtone_jami_tones">Тони Джані</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Для цього Jami потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
   <!--Write call log permission-->
@@ -163,17 +177,33 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <string name="conversation_action_block_this">Заблокувати контакт</string>
+  <string name="conversation_action_unblock_this">Відблокувати контакт</string>
   <string name="conversation_action_go_to_call">Повернутися до поточного дзвінка</string>
   <string name="conversation_action_latest">Прокрутити до кінця розмови</string>
+  <string name="conversation_open_file_error">Немає встановленої програми, здатної відкрити цей тип файлу.</string>
   <string name="clip_contact_uri">Адреса контакту</string>
   <string name="block_contact_dialog_title">Блокувати %1$s?</string>
   <string name="block_contact_dialog_message">%1$s не зможе зв\'язатися з вами, поки ви його не розблокуєте.</string>
   <string name="block_contact_completed">%1$s заблоковано.</string>
+  <string name="unblock_contact_dialog_title">Відблокувати %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s зможе знову зв\'язатися з вами.</string>
+  <string name="unblock_contact_completed">%1$s був розблокований.</string>
+  <string name="conversation_contact_is_typing">Контакт - це вписати...</string>
   <string name="conversation_info_contact_you">Ви</string>
   <string name="conversation_members">Учасники</string>
   <string name="conversation_syncing">Завантаження розмови з вузла</string>
+  <string name="conversation_blocked">Цей контакт заблокований.</string>
+  <string name="conversation_ended">Розмова закінчилася.</string>
+  <string name="conversation_message_deleted">(Сігнал видалений)</string>
   <string name="conversation_preference_color">Колір розмови</string>
+  <string name="conversation_preference_emoji">Емоджи розмови</string>
   <string name="conversation_type_contact">Контакт Jami</string>
+  <string name="conversation_type_private">Частна група</string>
+  <string name="conversation_type_group">Груповий скоп</string>
+  <string name="conversation_contact_invited">%1$s запрошений</string>
+  <string name="conversation_contact_added">%1$s приєднаний</string>
+  <string name="conversation_contact_left">%1$ залишився</string>
+  <string name="conversation_contact_banned">%1$s було заборонене</string>
   <string name="conversation_search_hint">Пошук розмов</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
@@ -185,12 +215,14 @@
   <string name="prompt_hint_username">Ім’я</string>
   <string name="help_password_choose">Оберіть сильний пароль, який ви запамʼятаєте, щоб захистити свій обліковий запис Jami.</string>
   <string name="help_password_enter">Уведіть свій основний пароль для облікового запису Jami.</string>
+  <string name="help_server_enter">Введіть URL сервера управління.</string>
   <string name="help_pin_enter">Уведіть PIN-код з іншого налаштованого облікового запису Jami. Скористайтеся можливістю «Вивантажити обліковий запис Jami», щоб отримати PIN-код.</string>
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустити</string>
   <string name="hist_contact_invited">Контакт запрошено</string>
   <string name="hist_contact_added">Контакт додано</string>
+  <string name="hist_contact_left">Контакт ліво</string>
   <string name="hist_contact_banned">Контакт забанено</string>
   <string name="hist_invitation_received">Отримано запрошення</string>
   <!--Account Summary-->
@@ -220,7 +252,9 @@
   <string name="refuse">Скидання</string>
   <string name="block">Заблокувати</string>
   <string name="contact_request_title">Новий запит контакту</string>
+  <string name="contact_request_msg">У вас є %1$d запити контактів</string>
   <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">У вас немає запитів на контакт</string>
   <string name="message_contact_not_trusted_yet">%s ще не серед ваших контактів.\nВи приймаєте чи відхиляєте цей запит контакту?</string>
   <string name="message_contact_not_trusted">%s немає серед ваших контактів.\nДодати новий контакт?</string>
   <!--Send contact requests-->
@@ -244,7 +278,14 @@
   <string name="not_able_to_write_file">Помилка при записі файлу</string>
   <string name="file_transfer_status_created">Розпочинаю трансфер</string>
   <string name="file_transfer_status_unsupported">не підтримується</string>
+  <string name="file_transfer_status_wait_peer_acceptance">чекає прийняття з однолітків</string>
+  <string name="file_transfer_status_wait_host_acceptance">чекаючий приймач</string>
+  <string name="file_transfer_status_ongoing">триває</string>
   <string name="file_transfer_status_finished">завершено</string>
+  <string name="file_transfer_status_closed_by_host">закритою хост</string>
+  <string name="file_transfer_status_closed_by_peer">Близький до однолітків</string>
+  <string name="file_transfer_status_invalid_pathname">Недійне ім\'я шляху</string>
+  <string name="file_transfer_status_unjoinable_peer">неполучається рівнім</string>
   <string name="file_transfer_status_cancelled">скасовано</string>
   <string name="file_transfer_status_error">не вдалося через помилку</string>
   <string name="file_transfer_status_timed_out">час вичерпано</string>
@@ -259,6 +300,7 @@
   <string name="menu_file_delete">Видалити файл</string>
   <string name="menu_file_share">Відправити файл</string>
   <string name="menu_message_copy">Копіювати</string>
+  <string name="menu_message_edit">Редагувати повідомлення</string>
   <string name="menu_message_delete">Видалити повідомлення</string>
   <string name="menu_message_cancel">Скасувати повідомлення</string>
   <string name="menu_message_reply">Відповісти</string>
@@ -267,6 +309,7 @@
   <string name="pref_darkTheme_summary">Завжди використовувати темну тему замість теми за замовчуванням</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Групові чати</string>
+  <string name="navigation_item_contact_request">Запрошення</string>
   <string name="navigation_item_account">Обліковий запис</string>
   <string name="search_results_public_directory">Публічний каталог</string>
   <!--TV-->
@@ -291,6 +334,7 @@
   <string name="wizard_username_button">Введіть ім\'я користувача</string>
   <string name="wizard_username_skip">Обрати ім\'я користувача пізніше</string>
   <string name="wizard_password_info">Пароль від облікового запису</string>
+  <string name="wizard_password_placeholder">Виберіть пароль для шифрування ключа рахунку на цьому пристрої</string>
   <string name="wizard_password_button">Введіть пароль</string>
   <string name="wizard_password_skip">Створити обліковий запис</string>
   <string name="wizard_password_switch">Зашифрувати мій профіль за допомогою пароля</string>
@@ -302,11 +346,13 @@
   <string name="chat_plugins">Втулки чату</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Поділитися</string>
+  <string name="bottomSheet_dialpad_btn">Диальпади</string>
   <string name="bottomSheet_plugins_btn">Втулки</string>
   <string name="bottomSheet_add_participants_btn">Додати</string>
   <string name="bottomSheet_change_camera_btn">Змінити</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
   <string name="bottomSheet_hangup_btn">Закінчити дзвінок</string>
+  <string name="bottomSheet_mute_microphone_btn">Микро</string>
   <string name="bottomSheet_sound_output_btn">Звуки</string>
   <string name="bottomSheet_raiseHand_btn">Підняти руку</string>
   <string name="open_account_plugin_settings">Відкрити налаштування втулки облікового запису</string>
@@ -314,9 +360,18 @@
   <string name="uninstall">Видалити</string>
   <string name="reset">Скинути</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Підтвердження</string>
+  <string name="rename_error">Не може бути порожнім.</string>
   <string name="swarm_description">Додати опис</string>
   <string name="tab_about">Про программу</string>
   <string name="tab_members">Учасники</string>
   <string name="tab_documetn">Документи</string>
+  <string name="dialogtitle_title">Редагуйте заголовок</string>
+  <string name="dialogtitle_description">Редагуйте опис натовпу</string>
   <string name="dialog_hint_title">Заголовок</string>
+  <string name="dialog_hint_description">Описание</string>
+  <string name="picker_title">Виберіть контакти</string>
+  <string name="picker_btn">Виберіть контакти</string>
+  <string name="bottomsheet_contact">Зверніться до Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Знесіть з рога</string>
 </resources>

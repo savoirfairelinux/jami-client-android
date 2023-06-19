@@ -2,48 +2,374 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Tilbakemelding</string>
+  <string name="report">Send oss ein e-post</string>
+  <string name="section_license">Licens</string>
+  <string name="sponsor_section">Jami er ein fri programvare utvikla og støttt av</string>
+  <string name="copyright_section">Opphavsrett</string>
+  <string name="contribute_section">Bidra til</string>
+  <string name="version_section">Versionen</string>
+  <string name="no_email_app_installed">Ingen e-postapp hittar, installar ein for å senda oss ein melding</string>
+  <string name="no_browser_app_installed">Ingen nettlesarapp finnast, installar ein for å sjå denne sida</string>
+  <string name="email_chooser_title">Send post ved hjelp av...</string>
+  <string name="website_chooser_title">Vis webside ved bruk av...</string>
+  <string name="license">Dette programvaren er levert "som det er", utan nokon garanti. For meir informasjon, sjå GNU General Public License versjon 3 eller seinare&lt;/u&gt;</string>
+  <string name="description">Jami er fri programvare for universell kommunikasjon som respekterer friheitene og privatlivet til brukarane sine.</string>
+  <string name="credits">Treningar</string>
+  <string name="pip_title">Jami-konferansen</string>
+  <string name="call_service_description">Denne tjenesten er nødvendig for å halde samtalene dine i foregånde. Han vert berre brukt under samtal.</string>
+  <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende meldingar under filoverføringar.</string>
   <!--About dialog-->
   <string name="developed_by">Utvikla av</string>
   <string name="designed_by">Utforma av</string>
+  <string name="ringtones_by">Ringar av</string>
   <!--RingActivity-->
+  <string name="error_no_network">Ingen nettverksanslutning</string>
   <string name="error_account_offline">Denne kontoen er avlogga</string>
+  <string name="error_mobile_network_available_but_disabled">Vennligst gje deg tilgang til mobilnettverket i innstillingsskjermen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmeldingar</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Kontaktbevis</string>
+  <string name="menu_item_accounts">Hantera kontoar</string>
+  <string name="menu_item_account">Ta styr på kontoen</string>
+  <string name="menu_item_settings">Innstillingar</string>
+  <string name="menu_item_advanced_settings">Forfråte innstillingar</string>
+  <string name="menu_item_account_settings">Settingar på konto</string>
+  <string name="menu_item_plugin_list">Innstillingar til plugins</string>
+  <string name="menu_item_share">Deila kontoen min</string>
+  <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Ring eit nummer</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d samtale</item>
+    <item quantity="other">%d Samtal</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Sjå etter namnet eller telefonnummeret...</string>
+  <string name="choose_number">Velg eit nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Miska innkomne samtal</string>
+  <string name="notif_missed_outgoing_call">Miska utgående samtale</string>
+  <string name="notif_incoming_call_title">Innkommende samtal frå %1$s</string>
+  <string name="notif_incoming_call">Innkommende samtal</string>
+  <string name="notif_outgoing_call_title">Utgående samtal til %1$s</string>
+  <string name="notif_outgoing_call">Utgående samtale</string>
+  <string name="notif_current_call_title">Fortsett samtale med %1$s</string>
+  <string name="notif_current_call">Forlopande samtale</string>
+  <string name="notif_channel_call_in_progress">Kalla fram mot framtida</string>
+  <string name="notif_channel_calls">Ringing</string>
+  <string name="notif_channel_missed_calls">Miska ring</string>
+  <string name="notif_channel_incoming_calls">Innkommende samtal</string>
+  <string name="notif_channel_messages">Meldingar</string>
+  <string name="notif_channel_requests">Foreldre</string>
+  <string name="notif_channel_file_transfer">File overføring</string>
+  <string name="notif_channel_sync">Data synkronisering</string>
+  <string name="notif_channel_background_service">Hygdeleg service</string>
+  <string name="notif_channel_background_service_descr">Tillat til å motta samtal og meldingar når som helst.</string>
+  <string name="notif_group_calls">Ringing</string>
+  <string name="notif_background_service">Jami held seg i bakgrunnen.</string>
+  <string name="notif_mark_as_read">Merk som lesing</string>
+  <string name="notif_dismiss">Kast bort</string>
+  <string name="notif_reply">Svar</string>
+  <string name="notif_incoming_file_transfer_title">Innkommende fil frå %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Skifte av fil til %1$s</string>
+  <string name="notif_incoming_picture">Bild frå %1$s</string>
+  <string name="notif_sync_title">Synkronisering av data...</string>
+  <string name="notif_location_title">Deling av plassering med %1$s</string>
+  <string name="location_share_contact">%1$s delar med deg av staden</string>
+  <string name="notif_location_multi_title">Deling av plassering med %1$d kontakt</string>
+  <string name="notif_location_remaining">%1$d minuttar som gjenstår</string>
+  <string name="notif_location_action_stop">Sluta å dela med ein plass</string>
+  <string name="location_share_action_start">Start med å dele</string>
+  <string name="location_share_action_stop">Sluta å dela</string>
+  <string name="location_share_about_title">Kartinformasjon</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Du:</string>
+  <string name="action_call_hangup">Henga opp</string>
+  <string name="action_call_maximize">Maksimalgjøre</string>
+  <string name="action_call_minimize">Reduksjon av</string>
+  <string name="action_call_mute">Stum</string>
+  <string name="action_call_unmute">Ustemmeleg</string>
+  <string name="ongoing_call">Forlopande samtale</string>
+  <string name="hist_in_call">Inkommande samtal av %1$s</string>
+  <string name="hist_out_call">Utgående samtale av %1$s</string>
+  <string name="start_error_title">Eg kan ikkje byrja Jami!</string>
+  <string name="start_error_mic_required">Jami treng mikrofonen til å arbeida.</string>
+  <string name="action_call_accept">Ta telefonen</string>
+  <string name="action_call_accept_audio">Svar i lyd</string>
+  <string name="action_call_accept_video">Svar på video</string>
+  <string name="action_call_hold_accept">Hold og ta opp samtal lyd</string>
+  <string name="action_call_hold_accept_video">Hold og ta opp video samtal</string>
+  <string name="action_call_end_accept">Sluta og ta opp samtal</string>
+  <string name="action_call_decline">Nedgang</string>
+  <string name="action_call_mic_mute">Stum mikrofon</string>
+  <string name="action_load_plugin">Ladd Plugin</string>
+  <string name="ab_action_speakerphone">Legg høyttaleren til</string>
+  <string name="ab_action_contact_add">Legg til kontakt</string>
+  <string name="ab_action_contact_add_question">Legg til kontakt?</string>
+  <string name="ab_action_audio_call">Lydsamtale</string>
+  <string name="ab_action_video_call">Video samtal</string>
+  <string name="ab_action_change_screen_orientation">Endra skjermorienteringa</string>
+  <string name="share_via">Del via</string>
+  <string name="write_a_message">Skriv ein melding</string>
+  <string name="scan_qr">Skanna QR-kode</string>
+  <string name="qr_code">QR-kode</string>
+  <string name="ab_action_flipcamera">Flip-kamera</string>
+  <string name="ab_action_hidepreview">Skjå ut forhandsvisning</string>
+  <string name="remote_recording">%s innspilling...</string>
   <!--Text messages-->
+  <string name="send_message">Send melding</string>
+  <string name="message_sending">Send ein melding...</string>
+  <string name="message_failed">Fjellet</string>
+  <string name="time_just_now">No, akkurat no</string>
   <string name="send_file">Sende fil</string>
+  <string name="select_media">Open gallery</string>
+  <string name="hist_file_sent">File sendt</string>
+  <string name="hist_file_received">Filen mottek</string>
+  <string name="conversation_send_audio">Ta opp lydklipp</string>
+  <string name="conversation_send_video">Ta opp videoen</string>
+  <string name="conversation_share_location">Del plassering</string>
+  <string name="in_reply_to">I svar på</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Filmtillating til kamera</string>
+  <string name="permission_dialog_camera_message">Video samtal krever kameraets tillating til å arbeida. Vennligst tenk på å aktivera det.</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">Feil</string>
+  <string name="ringtone_error_format_not_supported">Dette formatet er ikkje støtta.</string>
+  <string name="ringtone_error_size_too_big">Denne failen er for stor. Maksimal storlek er %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Set ein egnerk ringtone</string>
+  <string name="ringtone_custom_label">Kastum</string>
+  <string name="ringtone_jami_tones">Jami Tones</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami treng \"Les kontakt\" tillatelse for å aktivere denne funksjonen.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami treng tillatinga til \"Skriva samtallog\" for å aktivere denne funksjonen.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skanna QR-koden til kontoen du vil legge til.</string>
+  <string name="title_activity_qrcode">Deila kontoen min</string>
+  <string name="error_scan_no_camera_permissions">QR-skanneren krever kamerauttrekk for å fungere</string>
+  <string name="tab_code">Kodeen min</string>
+  <string name="tab_scan">Scankode</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Klart historie?</string>
+  <string name="clear_history_dialog_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
+  <string name="clear_history_completed">Historien er ryddid.</string>
+  <string name="clear_history">Åre klar</string>
   <!--Conversation-->
+  <string name="conversation_details">Kontaktinformasjon</string>
+  <string name="conversation_action_delete_this">Ta av denne samtalen</string>
+  <string name="conversation_action_delete_this_title">Vil du sletta samtalet?</string>
+  <string name="conversation_action_delete_this_message">Denne handlingen kan ikkje bli gjort til nytt.</string>
+  <string name="conversation_action_history_clear">Klare historie</string>
+  <string name="conversation_action_history_clear_title">Vil du fjerne dialogen?</string>
+  <string name="conversation_action_history_clear_message">Dette vil definitivt rens historia i samrøytane.</string>
+  <string name="conversation_action_remove_this">Ta bort kontakt</string>
+  <string name="conversation_action_remove_this_title">Vil du sletta denne kontakten?</string>
+  <string name="conversation_action_remove_this_message">Dette vil fjerne kontakta og definitivt fjerne samtalshistoria.</string>
+  <string name="conversation_action_copy_peer_number">Numre på kopien</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til klippbrett</string>
+  <string name="conversation_action_select_peer_number">Velg eit nummer</string>
+  <string name="conversation_action_block_this">Blockkontakt</string>
+  <string name="conversation_action_unblock_this">Avbløka kontakt</string>
+  <string name="conversation_action_go_to_call">Tilbake til pågående samtale</string>
   <string name="conversation_action_latest">Bla til slutten av samtalen</string>
+  <string name="conversation_open_file_error">Det finst ikkje ein installat applikasjon som kan opna denne filtypen.</string>
+  <string name="clip_contact_uri">Kontaktadress</string>
+  <string name="block_contact_dialog_title">Blockar %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s kan ikkje kontakte deg før du avbløkar den.</string>
+  <string name="block_contact_completed">%1$s var blokkert.</string>
+  <string name="unblock_contact_dialog_title">Unblocking %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s kan kontakte deg igjen.</string>
+  <string name="unblock_contact_completed">%1$s var avbloka.</string>
+  <string name="conversation_contact_is_typing">Kontakt er å skriva...</string>
+  <string name="conversation_info_contact_you">Du er det</string>
+  <string name="conversation_members">Medlemmar</string>
+  <string name="conversation_syncing">Ta ned samtal frå eige</string>
+  <string name="conversation_blocked">Denne kontakta er blokkert.</string>
+  <string name="conversation_ended">Samtalen endra seg.</string>
+  <string name="conversation_message_deleted">(Message slettet)</string>
+  <string name="conversation_preference_color">Farge for samtal</string>
+  <string name="conversation_preference_emoji">Samtal emoji</string>
+  <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_private">Privat svam</string>
+  <string name="conversation_type_group">Gruppsjæra</string>
+  <string name="conversation_contact_invited">%1$s vart invitert</string>
+  <string name="conversation_contact_added">%1$s er tilslutte</string>
+  <string name="conversation_contact_left">%1$ er til venstre</string>
+  <string name="conversation_contact_banned">%1$s var avbann</string>
+  <string name="conversation_search_hint">Søk samtale</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
+  <string name="prompt_new_password">Nøiv password</string>
+  <string name="prompt_new_password_optional">Nøiv password (valgleg)</string>
+  <string name="prompt_new_password_repeat">Gjev nytt passord</string>
+  <string name="account_create_title">Skapa ein Jami-konto</string>
+  <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
+  <string name="prompt_hint_username">Bruksnamn</string>
+  <string name="help_password_choose">Velg eit sterkt passord du vil huske for å verne kontoen din Jami.</string>
+  <string name="help_password_enter">Skriv inn password for kontoen din.</string>
+  <string name="help_server_enter">Skriv inn URL til styringsservern.</string>
+  <string name="help_pin_enter">Skriv inn PIN-koden frå ein annan konfigurert Jami-konto. Bruka funksjonen \"export Jami-konto\" for å få ein PIN.</string>
+  <string name="wizard_next">Neste</string>
+  <string name="wizard_back">Tilbaka</string>
+  <string name="wizard_skip">Skip</string>
+  <string name="hist_contact_invited">Kontakt invitert</string>
+  <string name="hist_contact_added">Legg til kontakt</string>
+  <string name="hist_contact_left">Kontakt til venstre</string>
+  <string name="hist_contact_banned">Kontakt er forbudt</string>
+  <string name="hist_invitation_received">Innbyding motteke</string>
   <!--Account Summary-->
+  <string name="profile">Profil</string>
+  <string name="profile_name">Profilnavn</string>
+  <string name="profile_message_warning">Profilen din blir berre delt med kontaktane dine</string>
+  <string name="open_the_gallery">Opna galleriet</string>
+  <string name="take_a_photo">Ta eit foto</string>
+  <string name="profile_name_hint">Skriv inn namnet ditt</string>
+  <string name="registered_name">Namn som er registrert</string>
+  <string name="no_registered_name">Ingen namn registrert</string>
+  <string name="identity">Identitet</string>
+  <string name="account">Konto</string>
+  <string name="link_new_device">Legg ein ny enhet til</string>
+  <string name="devices">Kopplande utstyr</string>
+  <string name="total_devices">Totalt utstyr: </string>
   <!--Share fragment-->
+  <string name="share_message">Skanna denne koden med Jami</string>
+  <string name="share_message_no_account">Velg ein konto du vil dele.</string>
+  <string name="share_your_account_information">Deila min kontaktinformasjon</string>
+  <string name="share_label">Deling</string>
+  <string name="generic_error_migration">Feil</string>
+  <string name="generic_error_migration_message">Feil kom opp under flyt</string>
+  <string name="title_share_with">Del med...</string>
   <!--Pending contact requests-->
+  <string name="accept">Ta imot</string>
+  <string name="refuse">Avviser</string>
+  <string name="block">Block</string>
+  <string name="contact_request_title">Ny kontaktforlang</string>
+  <string name="contact_request_msg">Du har %1$d kontaktforeldingar</string>
+  <string name="contact_request_account">For %1$s</string>
+  <string name="no_requests">Du har ikkje nokon kontaktforfrågingar</string>
+  <string name="message_contact_not_trusted_yet">%s er ikkje i kontaktane dine enda.\nKjenner du eller nektar denne kontaktforfrågan?</string>
+  <string name="message_contact_not_trusted">%s er ikkje i kontaktane dine.\n Legg til ein ny kontakt?</string>
   <!--Send contact requests-->
+  <string name="send_request_button">Send inn</string>
+  <string name="send_request_title">Send ein kontaktbevis</string>
+  <string name="send_request_msg">Du må senda ein kontaktbevis for å kommunisere med denne brukaren. Så lenge kontakten din ikkje har akseptert forespørselen, kan du sende meldingar men han vil ikkje kunne svara.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Ingen blokkade kontakt</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Ingen kontaktforeldring sendt</string>
+  <string name="conversation_placeholder">Du har ikkje samtal enda</string>
+  <string name="contact_request_sent">Kontaktforfrågan send</string>
+  <string name="start_conversation">Start samtale</string>
+  <string name="search_results">Søkresultatar</string>
+  <string name="tv_contact_row_header">Kontakt</string>
+  <string name="gallery_error_title">Ingen Gallery app finnast</string>
+  <string name="gallery_error_message">Ingen applikasjon finnast på einheten til å opna Gallery</string>
+  <string name="generic_error">Det kom ein ukjent feil</string>
   <!--File Transfer-->
+  <string name="invalid_file">Utilgrepeleg fil</string>
+  <string name="not_able_to_write_file">Ikkje kan skrive fil</string>
+  <string name="file_transfer_status_created">startar overføringa</string>
+  <string name="file_transfer_status_unsupported">ikkje støtta</string>
+  <string name="file_transfer_status_wait_peer_acceptance">ventande på å bli akseptert av eigne</string>
+  <string name="file_transfer_status_wait_host_acceptance">venande vert akseptert</string>
+  <string name="file_transfer_status_ongoing">pågående</string>
+  <string name="file_transfer_status_finished">ferdig</string>
+  <string name="file_transfer_status_closed_by_host">stengd av vert</string>
+  <string name="file_transfer_status_closed_by_peer">nær saman med eigne</string>
+  <string name="file_transfer_status_invalid_pathname">Utilgjengeleg vegnavn</string>
+  <string name="file_transfer_status_unjoinable_peer">uforenbare eige</string>
   <string name="file_transfer_status_cancelled">avbrutt</string>
+  <string name="file_transfer_status_error">ikkje var i stand på grunn av feil</string>
+  <string name="file_transfer_status_timed_out">tidleg ut</string>
+  <string name="file_saved_in">File lagd i %s</string>
+  <string name="file_saved_successfully">File lagd framgångsrikt</string>
+  <string name="file_download">Ta ned</string>
+  <string name="no_space_left_on_device">Ingen plass igjen på einheten</string>
+  <string name="title_media_viewer">Medievisjon</string>
+  <string name="menu_file_open">Åpne fil</string>
+  <string name="menu_file_download">Nedlasting av fil</string>
+  <string name="menu_file_save">Ta opp filen</string>
+  <string name="menu_file_delete">Ta bort filen</string>
+  <string name="menu_file_share">Del filen</string>
+  <string name="menu_message_copy">Kopiert</string>
+  <string name="menu_message_edit">Redigera melding</string>
+  <string name="menu_message_delete">Ta bort meldinga</string>
   <string name="menu_message_cancel">Avbryt melding</string>
+  <string name="menu_message_reply">Svar</string>
+  <string name="menu_delete">Ta bort</string>
+  <string name="pref_darkTheme_title">Dunkle tema</string>
+  <string name="pref_darkTheme_summary">Alltid aktivera mørk tema i staden for å bruke systemadferd</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Samtal</string>
+  <string name="navigation_item_contact_request">Invitasjonar</string>
+  <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Publikumskreds</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Skicka ein lydmelding?</string>
+  <string name="tv_send_image_dialog_message">Send bilden?</string>
+  <string name="tv_send_video_dialog_message">Send videoen?</string>
+  <string name="tv_media_preview">Forhandsvisning</string>
+  <string name="tv_audio_play">Spelar</string>
+  <string name="tv_audio_pause">Pause</string>
+  <string name="tv_dialog_send">Send inn</string>
+  <string name="tv_audio_recording">Filmane blir opptekna.</string>
+  <string name="tv_send_text">Send sms</string>
+  <string name="tv_send_audio">Send lyd</string>
+  <string name="tv_send_video">Send media</string>
+  <string name="tv_action_more">Mer om det</string>
+  <string name="conversation_input_speech_hint">Sei noko...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Tilrådeleg</string>
+  <string name="wizard_status_optional">Utval</string>
+  <string name="wizard_status_required">Trenger</string>
+  <string name="wizard_username_info">Velg ein brukernavn for kontoen din</string>
+  <string name="wizard_username_button">Velg brukernavn</string>
+  <string name="wizard_username_skip">Skip utval av brukernavn</string>
+  <string name="wizard_password_info">Passord til kontoen</string>
+  <string name="wizard_password_placeholder">Velg ein passord for å kryptera kontoen på denne enkla</string>
+  <string name="wizard_password_button">Velg password</string>
+  <string name="wizard_password_skip">Skapa konto</string>
+  <string name="wizard_password_switch">Kryptera konto med passord</string>
+  <string name="wizard_password_warning">Legg merke til at passordet ikkje kan gjenoppretta</string>
+  <string name="wizard_profile_info">Profil er berre delt med kontakt</string>
+  <string name="wizard_profile_button">Ta opp profilen</string>
+  <string name="wizard_profile_skip">Skip og gjer dette seinare</string>
+  <string name="fab_path_choose">Velg ein annan fil</string>
+  <string name="chat_plugins">Chat Plugins</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Deling</string>
+  <string name="bottomSheet_dialpad_btn">Dialpad</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Legg til</string>
+  <string name="bottomSheet_change_camera_btn">Endringar</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Avslutt samtale</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Det høyrast</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp handa</string>
+  <string name="open_account_plugin_settings">Åpne konto- plugininnstillingane</string>
+  <string name="open_general_plugin_settings">Åpne generelle plugininnstillingar</string>
+  <string name="uninstall">Uninstallere</string>
+  <string name="reset">Omsetning</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Bekreft</string>
+  <string name="rename_error">Kan ikkje vera tom</string>
+  <string name="swarm_description">Legg til ei beskriving</string>
+  <string name="tab_about">Om</string>
+  <string name="tab_members">Medlemmar</string>
+  <string name="tab_documetn">Dokumentar</string>
+  <string name="dialogtitle_title">Redigera Swarm-tittel</string>
+  <string name="dialogtitle_description">Redigera beskriving av swarm</string>
+  <string name="dialog_hint_title">Tittel</string>
+  <string name="dialog_hint_description">Beskriving</string>
+  <string name="picker_title">Velg kontakt</string>
+  <string name="picker_btn">Velg kontakt</string>
+  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Ta bort dei frå sjarmen</string>
 </resources>

@@ -52,7 +52,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundlegende Einstellungen</string>
   <string name="account_alias_label">Kontoname</string>
-  <string name="account_hostname_label">Rechnername</string>
+  <string name="account_hostname_label">Veranstalter-Name</string>
   <string name="account_bootstrap_label">Aktivierung</string>
   <string name="account_username_label">Benutzername</string>
   <string name="account_password_label">Passwort</string>

@@ -30,9 +30,12 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">Conectando</string>
     <string name="call_human_state_ringing">Chamando</string>
     <string name="call_human_state_current">Falando</string>
+    <string name="call_human_state_hungup">Acabo</string>
     <string name="call_human_state_busy">Ocupado</string>
     <string name="call_human_state_failure">Fallou</string>
     <string name="call_human_state_hold">Agardar</string>
+    <string name="call_human_state_unhold">Non aguanta</string>
+    <string name="call_human_state_over">Acabo</string>
     <!-- Conferences -->
     <string name="call_moderator">Moderadora</string>
     <string name="call_muted">Acalada</string>

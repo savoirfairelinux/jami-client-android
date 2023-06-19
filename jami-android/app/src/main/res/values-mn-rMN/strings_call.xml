@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Дуудлага цуцлагдсан. Микрофон илрээгүй.</string>
     <string name="call_error_no_camera_no_microphone">Дуудлага цуцлагдсан. Камер эсвэл микрофон илрээгүй.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Танд хайж байна</string>
+    <string name="call_human_state_incoming">Хөгжиж байна</string>
+    <string name="call_human_state_connecting">Харилцаа холбоо</string>
+    <string name="call_human_state_ringing">Хүлээн</string>
+    <string name="call_human_state_current">Хэлэлцэж байна</string>
+    <string name="call_human_state_hungup">Өдсөн</string>
+    <string name="call_human_state_busy">Хөгжилтэй</string>
+    <string name="call_human_state_failure">Үргэлжсэн</string>
+    <string name="call_human_state_hold">Хөрөөж байна</string>
+    <string name="call_human_state_unhold">Хөрөгдөлөө зогсоо</string>
+    <string name="call_human_state_over">Өдсөн</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Төвч</string>
+    <string name="call_muted">Үмээнгүй</string>
+    <string name="call_handRaised">Хөдөлмөрийг нь өргөж</string>
+
+</resources>

@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Date mobile</string>
   <string name="pref_mobileData_summary">Permite Jami pe rețelele 3G/LTE în plus față de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificări</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Utilizează serverele Google pentru a primi apeluri/mesaje cînd Jami e ascuns</string>
+  <string name="pref_unifiedPush_summary">Utilizează un serviciu UnifiedPush pentru a primi apeluri/mesaje cînd Jami e ascuns</string>
   <string name="pref_video_advanced_title">Reglări video avansate</string>
   <string name="pref_video_advanced_summary">Schimbă calitatea video, claritatea și accesul la caracteristicile experimentale</string>
   <string name="pref_hd_summary">Activează trimiterea de video HD</string>

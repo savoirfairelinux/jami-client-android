@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Түлжээ</string>
+  <string name="pref_category_contacts">Байлцаагч</string>
+  <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">Систем</string>
+  <string name="pref_category_privacy">Хувийн байдал</string>
+  <string name="pref_category_diagnostic">Хэвлэл</string>
+  <string name="pref_mobileData_title">Гар утасны мэдээлэл</string>
+  <string name="pref_mobileData_summary">Jami-г Wi-Fi-ээс гадна 3G/LTE сүлжээний хэрэгслийн ашиглалтанд оруулаарай</string>
+  <string name="pref_pushNotifications_title">Дашрамдсан мэдэгдэл</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Google сервер ашиглаж, хойноо дуудлага / мэдээ хүлээн авах боломжийг олгох</string>
+  <string name="pref_unifiedPush_summary">UnifiedPush үйлчилгээг ашиглан дуудлага / мэдээллийг хяналд хүлээн авах боломжийг олгоно</string>
+  <string name="pref_video_advanced_title">Видеоны дэвшилтэт тохируулалт</string>
+  <string name="pref_video_advanced_summary">Видеоны битрын хурд, тогтоол, мөн эксперименталын функц-ийг өөрчлөх</string>
+  <string name="pref_hd_summary">HD видеог дамжуулах боломжийг олгох</string>
+  <string name="pref_hwEncode_title">Давгайлан кодлохыг зөвшөөрөх</string>
+  <string name="pref_hwEncode_summary">Эксперименталь шинж чанар</string>
+  <string name="pref_videoBitrate_title">Видеоны битрэйд</string>
+  <string name="pref_videoBitrate_summary">Хажууд видеоны битрын түвшинг (KB/s) сонгох</string>
+  <string name="pref_videoResolution_title">Видеоны тодорхойлолт</string>
+  <string name="pref_videoResolution_summary">Хажуу видеоны тохируулалт сонго</string>
+  <string name="pref_systemContacts_title">Системийн холбоосыг ашиглах</string>
+  <string name="pref_systemContacts_summary">Зурагчдын мэдээллийг системээр дамжуулан үзнэ үү.</string>
+  <string name="pref_systemDialer_title">Jami-ийг ашиглан системт дуудлага хийх</string>
+  <string name="pref_systemDialer_summary">Магадгүй Джамиг системээр дуудлага хийхэд ашигла.</string>
+  <string name="pref_startOnBoot_title">Jami-ийг эхлүүлэхэд эхлүүлэх</string>
+  <string name="pref_startOnBoot_summary">Системийн эхлэх үед Джамиг дэргэд нь явуул.</string>
+  <string name="pref_clearHistory_title">Тарих нь тодорхой</string>
+  <string name="pref_clearHistory_summary">Энэ үйлдлийг сэргээж болохгүй.</string>
+  <string name="pref_notification_title">Хэвлэл мэдээллийн илрүүлэл</string>
+  <string name="pref_notification_summary">Хэрэглэлийн мэдэгдэлний илрэлтийг замбарааны дэлгэц дээр тохируулна.</string>
+  <string name="pref_blackList_title">Блок жагсаалт</string>
+  <string name="pref_blackList_summary">Таны жагсаалтыг шалгаарай.</string>
+  <string name="pref_delete_account_title">Хэтгэлээ устгах</string>
+  <string name="pref_delete_account_summary">Энэ төхөөрөмжээс дансыг устгах</string>
+  <string name="pref_persistNotification_title">Хөгжүүлэн яваарай</string>
+  <string name="pref_persistNotification_summary">Зудлага, мэдээллийг хүлээн авахын тулд хяналтын дутагдал руу явна.</string>
+  <string name="pref_newGroup_title">Товчдын ярилцлагаг идэвхжүүлнэ</string>
+  <string name="pref_newGroup_summary">Jami-д бүлэг байгуулах боломжийг олгох.</string>
+  <string name="pref_logs_title">Хэвлэлийн тэмдэглэл</string>
+  <string name="pref_logs_summary">Диагностикийн тэмдэглэлийн нээлттэй тохируулалт</string>
+  <string name="pref_logs_start">Хүрэлтийн ажлыг эхлүүлнэ</string>
+  <string name="pref_logs_stop">Хөдөөг зогсоо</string>
+  <string name="pref_typing_title">Тайплэрын үзүүлэлтүүдийг хүчин чадлаараа</string>
+  <string name="pref_typing_summary">Мэдээлэл бичиж байгаа эсэхийг харуулсан тэмдэглэлүүд илгээж хүлээн ав.</string>
+  <string name="pref_read_title">Хэлгээний хүлээн авах боломжийг хангах</string>
+  <string name="pref_read_summary">Мэдээлэл илрүүлсэн тухай хүлээн авах, хүлээн авах.</string>
+  <string name="pref_block_record_title">Скриншот, бичлэгд сэжиглэх</string>
+  <string name="pref_block_record_summary">Скриншот авах, видео бичлэг хийхэд саад.</string>
+  <string name="pref_link_preview_title">Хэлэлцүүлэгт холболтны урьдчилсан үзлэг үзүүлнэ</string>
+  <string name="pref_link_preview_summary">Анхны үзлэгт гуравдагч этгээдийн серверээс контентыг татаж авах шаардлагатай.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Олон нийтийн \n(сүрх мэдүүлэг болон тэдгээрийн агуулга нь гулгалтын дэлгэц дээр) \n</string>
+  <string name="notification_private">Хувийн \n(шинэлгээг үзээрэй, гэхдээ тэдгээрийн агуулгыг газартай дэлгэц дээр нууарай) \n</string>
+  <string name="notification_secret">нууц \n(Залтын дэлгэц дээр мэдэгдлийг үзэхгүй)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Плюгины</string>
+  <string name="pref_plugins_summary">Пулгинүүдийг идэвхжүүлэн, тэдгээрийн параметрүүдийг тохируулна</string>
+  <string name="fab_plugins_add">Шинэ плагин нэмнэ</string>
+  <string name="plugin_uninstall_title">Плюгинг татаж аваад байна уу?</string>
+  <string name="plugin_reset_preferences">Пулгин-ийн сонголт</string>
+  <string name="plugin_reset_preferences_summary">Таны плагин тохируулалтыг үл тохируулж болно</string>
+  <string name="plugin_reset_preferences_ask">Та бүхэлдээ плагин тохируулалтыг сэргээж байна уу?</string>
+  <string name="plugin_reset_account_preferences_ask">Та дансны плагин тохируулалтыг сэргээж байна уу?</string>
+  <string name="plugin_successfully_installed">Плугин <b>%1$s</b> амжилттай байрлуулсан</string>
+  <string name="plugin_install_failure">Пулгин орноогүй: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Та хамгийн сүүлийн хувилбартай: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Та <b>%1$s</b>-ийн ижил хувилбарыг байлгасан</string>
+  <string name="plugin_force_install">хүчирхэг \n тавих</string>
+  <string name="plugin_path_image_add">Шинэ зургийг нэмнэ</string>
 </resources>

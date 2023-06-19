@@ -26,6 +26,7 @@
 Moći ćete uspostavljati i primati samo direktne IP pozive.
 Moćete urediti vaš račun kasnije</string>
   <string name="account_type_ip2ip">IP račun</string>
+  <string name="help_ring">Ako imate račun u Jamiju, možete se sigurno javiti ljudima putem potpuno raspoređene mreže.</string>
   <string name="help_sip_title">Dodajte vaš SIP račun</string>
   <string name="help_sip">Konfigurirajte postojeći SIP račun.</string>
   <string name="create_sip_account">Dodajte SIP račun</string>
@@ -35,19 +36,31 @@ Moćete urediti vaš račun kasnije</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nema registriranih računa</string>
   <string name="normal_accounts_titles">Računi</string>
+  <string name="normal_devices_titles">Spojena uređaja</string>
+  <string name="account_device_revoke">Uređaj za ukidanje</string>
+  <string name="account_device_revocation_success_title">Uspjeh</string>
+  <string name="account_device_revocation_success">Uređaj je sada otkazan!</string>
+  <string name="account_device_revocation_error_title">Ne mogu povući uređaj</string>
   <string name="account_device_revocation_wrong_password">Pogrešna lozinka.</string>
   <string name="account_device_revocation_unknown_device">Nepoznati uređaj.</string>
   <string name="account_device_revocation_error_unknown">Nepoznata greška.</string>
   <string name="account_password_change">Promijeni lozinku</string>
+  <string name="account_password_set">Nastavljanje lozinke</string>
+  <string name="account_password_summary">Upravljaj lozinku računa.</string>
+  <string name="account_password_change_wait_message">Promjena lozinke računa</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Opće</string>
   <string name="account_basic_category">Osnovne postavke</string>
   <string name="account_alias_label">Ime računa</string>
   <string name="account_hostname_label">Ime poslužitelja</string>
+  <string name="account_bootstrap_label">Ugrađen</string>
   <string name="account_username_label">Korisničko ime</string>
   <string name="account_password_label">Lozinka</string>
   <string name="account_optionnal_category">Dodatne postavke</string>
+  <string name="account_useragent_label">Uloga korisnika</string>
   <string name="account_autoanswer_label">Automatski odgovor</string>
+  <string name="account_rendezvous_label">Režim sastanka</string>
+  <string name="account_rendezvous_summary">U režimu \"Rendezvous\" prihađani pozivi će se dodati u konferencijsku sobu.</string>
   <string name="account_upnp_label">Omogući UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Plugin Details-->
@@ -58,6 +71,7 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_ringtone_label">Melodije zvona</string>
   <string name="account_ringtone_enabled_label">Aktivirajte melodije zvona</string>
   <string name="account_ringtone_path_label">Putanja melodije zvona</string>
+  <string name="account_ringtone_custom_label">Koristite prilagođen zvon</string>
   <string name="account_ringtone_title">Odaberite zvuk zvona</string>
   <string name="account_ringtone_summary">Izaberite zvuk zvona ili odaberite vaš vlastiti</string>
   <!--Video Details-->
@@ -72,7 +86,9 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_local_port_label">Lokalni port</string>
   <string name="account_stun_enable_label">Koristi Stun</string>
   <string name="account_stun_server_label">Stun poslužitelj</string>
+  <string name="account_accept_files">Automatski prihvaćanje prihađenih datoteka</string>
   <string name="account_conversation_settings_title">Postavke razgovora</string>
+  <string name="account_accept_files_max_size">Maksimalna veličina datoteke za automatsko prihvaćanje</string>
   <string name="account_accept_files_never">Nikada ne prihvaćaj automatski</string>
   <string name="account_accept_files_always">Uvijek prihvati automatski</string>
   <string name="size_mb">%1$d MB</string>
@@ -80,53 +96,152 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_turn_server_label">TURN poslužitelj</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
   <string name="account_turn_password_label">TURN lozinka</string>
+  <string name="account_published_same_as_local_label">Izdan u isto vrijeme kao lokalni</string>
+  <string name="account_published_port_label">Izdatni port</string>
+  <string name="account_published_address_label">Izdat je naslov</string>
+  <string name="disabled">S invaliditetom</string>
   <string name="enabled">Uključeno</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Koristi DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
+  <string name="account_proxy_server_list_label">DHT proxy list URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
+  <string name="account_peer_discovery_label">Lokalno otkriće vršnjaka</string>
+  <string name="account_peer_discovery_enable_label">omogućiti lokalno otkrivanje vršnjaka</string>
+  <string name="account_peer_discovery_enable_summary">Povežite se s drugim DHT čvorovima koji oglašavaju na našoj lokalnoj mreži</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Potvrda</string>
+  <string name="account_credentials_edit">Redigirati poverenja</string>
+  <string name="account_credentials_add">Dodavanje poverenja</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sigurnost</string>
+  <string name="account_srtp_switch_label">Zašifriranje medijskih tokova (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Aktivirajte SDES kao protokol za razmjenu ključeva</string>
+  <string name="account_srtp_rtp_fallback">U slučaju neuspjeha SRTP-a, povrat na RTP-u</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Koristite TLS Transport</string>
+  <string name="account_tls_port_label">TLS slušač</string>
+  <string name="account_tls_certificate_list_label">Vlasti za osnivanje</string>
+  <string name="account_tls_certificate_file_label">Dosje potvrde</string>
   <string name="account_tls_private_key_file_label">Datoteka privatnog ključa</string>
   <string name="account_tls_password_label">Lozinka privatnog ključa</string>
   <string name="account_tls_method_label">TLS metoda</string>
+  <string name="account_tls_ciphers_label">TLS ciperi</string>
   <string name="account_tls_server_name_label">Ime poslužitelja</string>
   <string name="account_tls_verify_server_label">Provjeri poslužitelja</string>
   <string name="account_tls_verify_client_label">Provjeri klijent</string>
+  <string name="account_require_client_certificate_label">TLS zahtijeva potvrdu o klijentu</string>
+  <string name="account_tls_negotiation_timeout_sec">Prijedlogni rok (sek)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Audio RTP Port Range</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Ubaci glavnu lozinku za otključavanje računa</string>
   <string name="error_password_char_count">6 znakova minimum</string>
   <string name="error_passwords_not_equals">Lozinke se ne podudaraju</string>
   <string name="export_account_wait_title">Molim pričekajte...</string>
+  <string name="export_account_wait_message">Informacije o izvoznim računu</string>
+  <string name="account_export_file">Zaštita računa</string>
+  <string name="account_export_file_summary">Zaštita računa na uređaju da ga kasnije obnovite.</string>
+  <string name="account_export_end_decryption_message">Nisam mogao otključati račun pomoću upute.</string>
   <string name="account_export_end_network_title">Greška mreže</string>
+  <string name="account_export_end_network_message">Ne mogu izvoziti račun na mreži.</string>
   <string name="account_export_end_error_title">Greška</string>
+  <string name="account_export_end_error_message">Ne mogu izvoziti račun, došlo je do nepoznate greške.</string>
   <string name="account_enter_password">Unesite lozinku</string>
+  <string name="account_share_body">Kontaktirajte me pomoću \'%1$s\' na distribuiranoj komunikacijskoj platformi Jami: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktirajte me pomoću \'%1$s\' ili moje javno korisničko ime \'%2$s\' na distribuiranoj komunikacijskoj platformi Jami: %3$s</string>
+  <string name="account_contact_me">Kontaktirajte me na Jamiju!</string>
   <string name="update_account">Ažuriraj račun</string>
+  <string name="account_migration">Vaš Jami račun može biti ažuriran.</string>
+  <string name="ring_account">Jami račun</string>
+  <string name="ring_account_identity">Identifikacija</string>
+  <string name="account_migration_title_dialog">Migracija računa</string>
+  <string name="account_migration_message_dialog">Želite li otići na ekran upravljanja računarima kako biste izvršili ovu operaciju?</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
   <string name="account_cannot_be_found_title">ne mogu naći račun</string>
+  <string name="account_cannot_be_found_message">Račun nije pronađen na mreži Jamija.</string>
+  <string name="account_sip_cannot_be_registered_message">Možete nastaviti s procesom stvaranja računa ili uređivati svoje informacije ovdje.</string>
   <string name="account_no_network_title">Ne mogu se spojiti na mrežu</string>
+  <string name="account_no_network_message">Nisam mogao dodati račun jer se Jami nije mogao povezati s distribuiranom mrežom.</string>
+  <string name="account_device_added_title">Dodavanje računa</string>
+  <string name="account_device_added_message">Uspješno si uspostavio svoj račun na ovom uređaju.</string>
+  <string name="account_device_updated_title">Upgradiran račun</string>
+  <string name="account_device_updated_message">Uspješno si ažurirao svoj račun u Jamiju.</string>
+  <string name="account_cannot_be_updated_message">Račun uređaja nije mogao biti ažuriran.</string>
+  <string name="account_sip_success_title">Upravljeni račun</string>
+  <string name="account_sip_success_message">Uspješno ste registrirali svoj račun.</string>
+  <string name="account_sip_register_anyway">U svakom slučaju, prijavi se.</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Nastavljanje računa</string>
   <string name="account_tv_advance_settings_header">Napredne postavke</string>
+  <string name="account_tv_add_contact">Dodajte kontakt</string>
+  <string name="account_tv_advanced_settings">Promjena općih postavki</string>
   <string name="account_tv_about">O Jami-u</string>
   <string name="tv_about_version">Verzija</string>
   <string name="tv_about_license">Licenca</string>
+  <string name="tv_about_author">Prava autora</string>
   <string name="tv_about_credits">Zasluge</string>
+  <string name="account_link_device">Povezivanje s drugog uređaja</string>
+  <string name="account_link_button">Povezivanje s mreže</string>
+  <string name="account_link_archive_button">Povezivanje sa rezervom</string>
   <string name="account_link_prompt_pin">Unesite PIN</string>
   <string name="account_new_button">Napravite Jami račun</string>
+  <string name="account_link_export_button">Povežite novi uređaj</string>
+  <string name="account_link_show_button">Pokaži %d više povezanih uređaja</string>
+  <string name="account_link_hide_button">Skloni se priključeno uređaj</string>
+  <string name="account_link_export_info">Ako želite koristiti ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jamiju.</string>
+  <string name="account_start_export_button">Generira PIN</string>
+  <string name="account_end_export_button">U blizini</string>
+  <string name="account_end_export_infos">PIN je:\n\n%%\n\nDa biste završili proces, morate otvoriti Jami na novom uređaju. Stvorite novi račun sa \"Vidjeti ovaj uređaj na račun\". PIN je važan 10 minuta.</string>
+  <string name="account_link_export_info_light">Ako želite koristiti ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jamiju.</string>
+  <string name="account_export_title">Uloženje povezivanja s drugim uređajima</string>
+  <string name="account_connect_server_button">Povezivanje s upravnim serverom</string>
+  <string name="account_connect_button">Povezivanje</string>
+  <string name="prompt_server">URL-a za upravljanje serverom Jamija</string>
+  <string name="help_credentials_enter">Ubaci podatke o organizaciji</string>
+  <string name="help_connect_password_enter">Ubaci lozinku organizacije</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
   <!--Name registration-->
+  <string name="error_username_empty">Ubaci korisničko ime</string>
+  <string name="no_registered_name_for_account">Ne postoji registrirano ime</string>
+  <string name="username_available">Korisničko ime dostupno!</string>
+  <string name="register_name">Ime registra</string>
+  <string name="trying_to_register_name">Pokušavam registrirati ime</string>
+  <string name="registered_username">Registrirano korisničko ime</string>
+  <string name="register_username">Registracija javnog korisničkog imena</string>
+  <string name="register_recommended">Preporučeno</string>
+  <string name="username_already_taken">Korisničko ime već uzeto</string>
+  <string name="invalid_username">Nevaljan korisnički naziv</string>
+  <string name="unknown_error">Nepoznata greška.</string>
+  <string name="looking_for_username_availability">Tražim dostupnost korisničkog imena...</string>
   <string name="account_status_connecting">Spajanje</string>
+  <string name="account_status_connection_error">Pogreška povezivanja</string>
+  <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Nepoznato</string>
+  <string name="account_status_offline">Neprijavljeni</string>
   <string name="account_status_error">Greška</string>
   <!--Create account-->
   <string name="account_creation_home">Dobrodošli u Jami</string>
   <string name="account_creation_profile">Napravite vaš profil</string>
+  <string name="account_creation_ring">Stvorite svoj Jami račun</string>
+  <string name="account_link_title">Povežite ovaj uređaj</string>
+  <string name="account_sip_cannot_be_registered">Ne mogu registrirati račun.</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Redigirajte moj račun</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Ubaci lozinku za potvrdu</string>
   <string name="enter_password">Unesite lozinku</string>
+  <string name="revoke_device_title">Uređaj za ukidanje</string>
+  <string name="revoke_device_message">Jeste li sigurni da želite otkazati %1$s?</string>
   <string name="revoke_device_wait_title">Molim pričekajte...</string>
+  <string name="revoke_device_wait_message">Uređaj za otkaz</string>
+  <string name="rename_device_title">Preimenovati ovaj uređaj</string>
+  <string name="rename_device_message">Izaberite novo ime za identifikaciju ovog uređaja u svom računu Jami</string>
+  <string name="rename_device_button">Uređaj za preimenovanje</string>
+  <string name="account_rename_device_hint">Izberite ime uređaja</string>
+  <string name="account_device_name_empty">Ime uređaja ne može biti prazno.</string>
+  <string name="account_device_this_indicator">Ovaj uređaj</string>
+  <string name="account_disabled_indicator">invalid</string>
 </resources>

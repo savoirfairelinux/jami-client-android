@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_searching">در حال جستجو</string>
     <string name="call_human_state_incoming">ورودی</string>
     <string name="call_human_state_connecting">در حال اتصال</string>
-    <string name="call_human_state_ringing">در حال زنگ</string>
+    <string name="call_human_state_ringing">در حال زنگ زدن</string>
     <string name="call_human_state_current">در حال صحبت</string>
     <string name="call_human_state_hungup">پایان</string>
     <string name="call_human_state_busy">مشغول</string>
