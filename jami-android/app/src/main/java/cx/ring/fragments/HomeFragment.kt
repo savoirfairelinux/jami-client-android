@@ -25,32 +25,32 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
+import androidx.transition.Fade
+import androidx.transition.Slide
 import androidx.transition.TransitionManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.search.SearchView.TransitionState
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
 import cx.ring.adapters.SmartListAdapter
 import cx.ring.client.AccountAdapter
 import cx.ring.client.HomeActivity
-import cx.ring.contactrequests.ContactRequestsFragment
-import cx.ring.databinding.FragHomeBinding
+import cx.ring.databinding.Motion09CoordinatorlayoutBinding
 import cx.ring.mvp.BaseSupportFragment
 import cx.ring.utils.BitmapUtils
 import cx.ring.utils.DeviceUtils
@@ -69,11 +69,12 @@ import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         SearchView.OnQueryTextListener, HomeView {
 
-    private var mBinding: FragHomeBinding? = null
+    private var mBinding: Motion09CoordinatorlayoutBinding? = null
     private var mHasConversationBadge = false
     private var mHasPendingBadge = false
     private val mDisposable = CompositeDisposable()
@@ -120,7 +121,28 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View =
-        FragHomeBinding.inflate(inflater, container, false).let { binding ->
+        Motion09CoordinatorlayoutBinding.inflate(
+            inflater, container, false
+        ).let { binding->
+            // Setup search result adapter
+            binding.searchResult.adapter =
+                SmartListAdapter(
+                    null,
+                    object : SmartListViewHolder.SmartListListeners {
+                        override fun onItemClick(item: Conversation) {
+                            collapseSearchActionView()
+                            (requireActivity() as HomeActivity).startConversation(
+                                item.accountId,
+                                item.uri
+                            )
+                        }
+                        override fun onItemLongClick(item: Conversation) {}
+                    },
+                    mConversationFacade,
+                    mDisposable
+                ).apply { searchAdapter = this }
+            // Setup search result list
+
             // Connect buttons:
             // - QRCode
             // - New group
@@ -135,7 +157,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             // - Account selection (navigation)
             // - Search bar
             // - Menu (for settings, about jami)
-            binding.toolbar.setNavigationOnClickListener {
+            binding.toolbar2.setNavigationOnClickListener {
                 val accounts = mAccountService.observableAccountList.blockingFirst()
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Select Account")
@@ -156,8 +178,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             binding.searchView.editText.addTextChangedListener {
                 querySubject.onNext(it.toString())
             }
-            binding.toolbar.inflateMenu(R.menu.smartlist_menu)
-            binding.toolbar.setOnMenuItemClickListener {
+            binding.toolbar2.inflateMenu(R.menu.smartlist_menu)
+            binding.toolbar2.setOnMenuItemClickListener {
+                Log.w("DEVDEBUG", "toolbar2 menu clicked")
+
                 when (it.itemId) {
                     R.id.menu_account_settings -> {
                         (requireActivity() as HomeActivity).goToAccountSettings()
@@ -172,52 +196,42 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 true
             }
 
-            // Setup search result adapter
-            binding.searchResult.adapter =
-                SmartListAdapter(
-                    null,
-                    object : SmartListViewHolder.SmartListListeners {
-                        override fun onItemClick(item: Conversation) {
-                            collapseSearchActionView()
-                            (requireActivity() as HomeActivity).startConversation(
-                                item.accountId,
-                                item.uri
-                            )
-                        }
-                        override fun onItemLongClick(item: Conversation) {}
-                    },
-                    mConversationFacade,
-                    mDisposable
-                ).apply { searchAdapter = this }
-            // Setup search result list
+//            binding.toolbar2.inflateMenu(R.menu.smartlist_menu)
+
+
+            searchDisposable.add(
+                mConversationFacade.getConversationList(mConversationFacade.currentAccountSubject).observeOn(DeviceUtils.uiScheduler)
+                    .subscribe { searchAdapter?.update(it) }
+//                mConversationFacade.getSearchResults(
+//                    mConversationFacade.currentAccountSubject, debouncedQuery
+//                )
+//                    .observeOn(DeviceUtils.uiScheduler)
+//                    .subscribe { searchAdapter?.update(it) }
+            )
+
+            binding.invitationCard2.invitationSummary.isVisible = true
+
+            binding.searchLayer2
             binding.searchResult.setHasFixedSize(true)
             binding.searchResult.layoutManager =
                 LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.VERTICAL }
 
-            binding.searchView.addTransitionListener { _, previousState, newState ->
-                // Manage back press for search view
-                if (newState === TransitionState.SHOWN) {
-                    searchBackPressedCallback.isEnabled = true
-                } else if (previousState === TransitionState.SHOWN) {
-                    searchBackPressedCallback.isEnabled = false
+            binding.searchResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val canScrollUp =
+                        recyclerView.canScrollVertically(-1)
+                    val isExtended = binding.newconvFab2.isExtended
+                    if (dy > 0 && isExtended) {
+                        binding.newconvFab2.shrink()
+                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
+                        binding.newconvFab2.extend()
+                    }
+//                    (activity as HomeActivity?)?.setToolbarElevation(canScrollUp)
                 }
-
-                // Manage search results
-                if (newState === TransitionState.HIDDEN) {
-                    searchDisposable.clear()
-                } else if (previousState === TransitionState.HIDDEN) {
-                    searchDisposable.add(
-                        mConversationFacade.getSearchResults(
-                            mConversationFacade.currentAccountSubject, debouncedQuery
-                        )
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe { searchAdapter?.update(it) }
-                    )
-                }
-            }
+            })
 
             // Setup invitation card adapter.
-            binding.invitationCard.pendingList.adapter =
+            binding.invitationCard2.pendingList.adapter =
                 SmartListAdapter(
                     null,
                     object : SmartListViewHolder.SmartListListeners {
@@ -234,38 +248,255 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                     mDisposable
                 ).apply { pendingAdapter = this }
 
-            // Setup invitation card
-            binding.invitationCard.invitationGroup.setOnClickListener {
-                TransitionManager.beginDelayedTransition(binding.searchLayer, ChangeBounds())
-                binding.toolbar.isVisible = false
-                binding.invitationCard.invitationSummary.isVisible = false
-                binding.invitationCard.pendingListGroup.isVisible = true
 
-                it.updateLayoutParams {
+            binding.invitationCard2.invitationGroup.setOnClickListener {
+
+                TransitionManager.beginDelayedTransition(binding.toolbar2, Slide())
+                TransitionManager.beginDelayedTransition(binding.invitationCard2.invitationGroup, ChangeBounds())
+                TransitionManager.beginDelayedTransition(binding.searchResult, ChangeBounds())
+//                binding.appBar.setLiftable(false)
+//                binding.appBar.setLiftableOverrideEnabled(false)
+//                binding.appBar.isLifted
+
+                (binding.searchLayer2.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
+//                binding.searchResult.visibility = View.GONE
+//                binding.searchResult.isVisible = false
+
+                binding.toolbar2.isVisible = false
+                binding.invitationCard2.invitationSummary.isVisible = false
+                binding.invitationCard2.pendingListGroup.isVisible = true
+                binding.newconvFab2.isVisible = false
+
+                binding.appBar2.updateLayoutParams {
                     height = ViewGroup.LayoutParams.MATCH_PARENT
                 }
+
+
+//                "scroll|enterAlways|snap|exitUntilCollapsed"
+
+
+//                it.updateLayoutParams {
+//                    height = ViewGroup.LayoutParams.MATCH_PARENT
+//                }
                 conversationBackPressedCallback.isEnabled = true
             }
-            binding.invitationCard.pendingToolbar // Return to search
+
+            binding.invitationCard2.pendingToolbar // Return to search
                 .setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
 
+//            binding.searchView.editText.addTextChangedListener {
+//                querySubject.onNext(it.toString())
+//            }
+
+            binding.searchView.addTransitionListener { _, previousState, newState ->
+                // Manage back press for search view
+                if (newState === com.google.android.material.search.SearchView.TransitionState.SHOWN) {
+                    binding.fragmentContainer.isVisible = false
+                    binding.appBar2.isVisible = false
+                    searchBackPressedCallback.isEnabled = true
+//                    binding!!.newconvFab2.isVisible = false
+                } else if (previousState === com.google.android.material.search.SearchView.TransitionState.SHOWN) {
+                    binding.fragmentContainer.isVisible = true
+                    binding.appBar2.isVisible = true
+
+                    searchBackPressedCallback.isEnabled = false
+//                    binding!!.newconvFab2.isVisible = true
+                }
+
+                // Manage search results
+                if (newState === com.google.android.material.search.SearchView.TransitionState.HIDDEN) {
+                    searchDisposable.clear()
+                } else if (previousState === com.google.android.material.search.SearchView.TransitionState.HIDDEN) {
+                    searchDisposable.add(
+                        mConversationFacade.getSearchResults(
+                            mConversationFacade.currentAccountSubject, debouncedQuery
+                        )
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .subscribe { searchAdapter?.update(it) }
+                    )
+                }
+            }
+//            binding.searchView.setOnClickListener(object : View.OnClickListener {
+//                override fun onClick(v: View?) {
+//                    Log.w("DEVDEBUG", "searchView.setOnClickListener")
+//                }
+//            })
+
+//            binding.searchView.setOnClickListener{
+//                Log.w("DEVDEBUG", "searchView.setOnClickListener")
+//            }
+
             mBinding = binding
-            binding.root
-        }
+            binding.root }
+
+    
+//        FragHomeBinding.inflate(inflater, container, false).let { binding ->
+//            // Connect buttons:
+//            // - QRCode
+//            // - New group
+//            binding.qrCode.setOnClickListener {
+//                presenter.clickQRSearch()
+//            }
+//            binding.newGroup.setOnClickListener {
+//                presenter.clickNewGroup()
+//            }
+//
+//            // Toolbar is composed of:
+//            // - Account selection (navigation)
+//            // - Search bar
+//            // - Menu (for settings, about jami)
+//            binding.toolbar.setNavigationOnClickListener {
+//                val accounts = mAccountService.observableAccountList.blockingFirst()
+//                MaterialAlertDialogBuilder(requireContext())
+//                    .setTitle("Select Account")
+//                    .setAdapter(
+//                        AccountAdapter(
+//                            requireContext(),
+//                            accounts,
+//                            mDisposable, mAccountService, mConversationFacade
+//                        )
+//                    ) { _, index ->
+//                        if (index >= accounts.size)
+//                            startActivity(Intent(activity, AccountWizardActivity::class.java))
+//                        else
+//                            mAccountService.currentAccount = accounts[index]
+//                    }
+//                    .show()
+//            }
+//            binding.searchView.editText.addTextChangedListener {
+//                querySubject.onNext(it.toString())
+//            }
+//            binding.toolbar.inflateMenu(R.menu.smartlist_menu)
+//            binding.toolbar.setOnMenuItemClickListener {
+//                when (it.itemId) {
+//                    R.id.menu_account_settings -> {
+//                        (requireActivity() as HomeActivity).goToAccountSettings()
+//                    }
+//                    R.id.menu_advanced_settings -> {
+//                        (requireActivity() as HomeActivity).goToAdvancedSettings()
+//                    }
+//                    R.id.menu_about -> {
+//                        (requireActivity() as HomeActivity).goToAbout()
+//                    }
+//                }
+//                true
+//            }
+//
+//            // Setup search result adapter
+//            binding.searchResult.adapter =
+//                SmartListAdapter(
+//                    null,
+//                    object : SmartListViewHolder.SmartListListeners {
+//                        override fun onItemClick(item: Conversation) {
+//                            collapseSearchActionView()
+//                            (requireActivity() as HomeActivity).startConversation(
+//                                item.accountId,
+//                                item.uri
+//                            )
+//                        }
+//                        override fun onItemLongClick(item: Conversation) {}
+//                    },
+//                    mConversationFacade,
+//                    mDisposable
+//                ).apply { searchAdapter = this }
+//            // Setup search result list
+//            binding.searchResult.setHasFixedSize(true)
+//            binding.searchResult.layoutManager =
+//                LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.VERTICAL }
+//
+//            binding.searchView.addTransitionListener { _, previousState, newState ->
+//                // Manage back press for search view
+//                if (newState === TransitionState.SHOWN) {
+//                    searchBackPressedCallback.isEnabled = true
+//                } else if (previousState === TransitionState.SHOWN) {
+//                    searchBackPressedCallback.isEnabled = false
+//                }
+//
+//                // Manage search results
+//                if (newState === TransitionState.HIDDEN) {
+//                    searchDisposable.clear()
+//                } else if (previousState === TransitionState.HIDDEN) {
+//                    searchDisposable.add(
+//                        mConversationFacade.getSearchResults(
+//                            mConversationFacade.currentAccountSubject, debouncedQuery
+//                        )
+//                            .observeOn(DeviceUtils.uiScheduler)
+//                            .subscribe { searchAdapter?.update(it) }
+//                    )
+//                }
+//            }
+//
+//            // Setup invitation card adapter.
+//            binding.invitationCard.pendingList.adapter =
+//                SmartListAdapter(
+//                    null,
+//                    object : SmartListViewHolder.SmartListListeners {
+//                        override fun onItemClick(item: Conversation) {
+//                            collapsePendingView()
+//                            (requireActivity() as HomeActivity).startConversation(
+//                                item.accountId,
+//                                item.uri
+//                            )
+//                        }
+//                        override fun onItemLongClick(item: Conversation) {}
+//                    },
+//                    mConversationFacade,
+//                    mDisposable
+//                ).apply { pendingAdapter = this }
+//
+//            // Setup invitation card
+//            binding.invitationCard.invitationGroup.setOnClickListener {
+//                TransitionManager.beginDelayedTransition(binding.searchLayer, ChangeBounds())
+//                binding.toolbar.isVisible = false
+//                binding.invitationCard.invitationSummary.isVisible = false
+//                binding.invitationCard.pendingListGroup.isVisible = true
+//
+//                it.updateLayoutParams {
+//                    height = ViewGroup.LayoutParams.MATCH_PARENT
+//                }
+//                conversationBackPressedCallback.isEnabled = true
+//            }
+//            binding.invitationCard.pendingToolbar // Return to search
+//                .setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
+//
+//            mBinding = binding
+//            binding.root
+//        }
 
     fun collapsePendingView() {
+
         val binding = mBinding ?: return
 
         // Animate back to search
         TransitionManager.beginDelayedTransition(
-            binding.searchLayer,
-            AutoTransition().setInterpolator(DecelerateInterpolator())
+            binding.toolbar2,
+            Slide().setInterpolator(DecelerateInterpolator())
         )
+        TransitionManager.beginDelayedTransition(
+            binding.appBar2,
+            ChangeBounds().setInterpolator(DecelerateInterpolator())
+        )
+        TransitionManager.beginDelayedTransition(
+            binding.invitationCard2.invitationSummary,
+            Fade()
+        )
+//        ChangeBounds().setInterpolator(DecelerateInterpolator())
+//        TransitionManager.beginDelayedTransition(binding.searchResult, AutoTransition().setInterpolator(DecelerateInterpolator()))
+        TransitionManager.beginDelayedTransition(binding.fragmentContainer, Slide().setInterpolator(DecelerateInterpolator()))
 
-        binding.toolbar.isVisible = true
-        binding.invitationCard.invitationSummary.isVisible = true
-        binding.invitationCard.pendingListGroup.isVisible = false
-        binding.invitationCard.invitationGroup.updateLayoutParams {
+        (binding.searchLayer2.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
+            SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or SCROLL_FLAG_SNAP or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+
+//        binding.searchResult.isVisible = true
+        binding.toolbar2.isVisible = true
+        binding.invitationCard2.invitationSummary.isVisible = true
+        binding.invitationCard2.pendingListGroup.isVisible = false
+//        binding.searchResult.isVisible = true
+        binding.newconvFab2.isVisible = true
+//        binding.invitationCard.invitationGroup.updateLayoutParams {
+//            height = ViewGroup.LayoutParams.WRAP_CONTENT
+//        }
+        binding.appBar2.updateLayoutParams {
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
         conversationBackPressedCallback.isEnabled = false
@@ -309,7 +540,8 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 .switchMap { mAccountService.getObservableAccountProfile(it.accountId) }
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { profile ->
-                    mBinding!!.toolbar.navigationIcon =
+                    mBinding?:return@subscribe
+                    mBinding!!.toolbar2.navigationIcon =
                         BitmapUtils.withPadding(
                             AvatarDrawable.build(
                                 mBinding!!.root.context,
@@ -343,16 +575,22 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     ) {
         Log.w(TAG, "setBadge ${conversations.size}")
         val binding = mBinding ?: return
+
+        binding.invitationCard2.invitationBadge.text = conversations.size.toString()
+        binding.invitationCard2.invitationGroup.isVisible = true
+        binding.invitationCard2.invitationReceivedTxt.text =
+            snip.joinToString(", ") { it.title }
+
         if (menuId == TAB_INVITATIONS) {
             pendingAdapter?.update(conversations)
-            if (conversations.isEmpty()) { // No pending invitations = no badge
-                binding.invitationCard.invitationGroup.isVisible = false
-            } else {
-                binding.invitationCard.invitationBadge.text = conversations.size.toString()
-                binding.invitationCard.invitationGroup.isVisible = true
-                binding.invitationCard.invitationReceivedTxt.text =
-                    snip.joinToString(", ") { it.title }
-            }
+//            if (conversations.isEmpty()) { // No pending invitations = no badge
+//                binding.invitationCard.invitationGroup.isVisible = false
+//            } else {
+//                binding.invitationCard.invitationBadge.text = conversations.size.toString()
+//                binding.invitationCard.invitationGroup.isVisible = true
+//                binding.invitationCard.invitationReceivedTxt.text =
+//                    snip.joinToString(", ") { it.title }
+//            }
         }
     }
 
@@ -396,11 +634,13 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     fun expandSearchActionView(): Boolean {
+        mBinding?:return false
         mBinding!!.searchView.show()
         return true
     }
 
     fun collapseSearchActionView() {
+        mBinding?:return
         mBinding!!.searchView.hide()
      }
 

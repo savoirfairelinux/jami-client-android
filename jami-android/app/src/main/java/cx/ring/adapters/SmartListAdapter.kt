@@ -46,6 +46,8 @@ class SmartListAdapter(
     private var conversations = setItems(conversations ?: ConversationFacade.ConversationList())
 
     private fun setItems(list: ConversationFacade.ConversationList): ConversationFacade.ConversationList {
+        Log.d("DEVDEBUG", "setItems itemCount : $itemCount")
+
         itemCount = list.getCombinedSize()
         if (list.searchResult.result.isNotEmpty()) {
             searchHeaderIndex = 0
@@ -94,6 +96,8 @@ class SmartListAdapter(
     }
 
     fun update(viewModels: ConversationFacade.ConversationList) {
+        Log.d("DEVDEBUG", "update itemCount : $itemCount")
+
         val old: ConversationFacade.ConversationList = conversations
         conversations = setItems(viewModels)
         if (!viewModels.isEmpty()) {

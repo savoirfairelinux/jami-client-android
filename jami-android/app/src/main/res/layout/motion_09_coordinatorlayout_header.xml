@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2023 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/motionLayout"
+    android:layout_marginBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+    <!--    android:minHeight="50dp"-->
+
+    <!--    app:layoutDescription="@xml/scene_09"-->
+
+
+<!--    linearlayour wrapping -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+
+
+
+    <!-- Search bar -->
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/searchbar_hint"
+            android:textAppearance="@style/TextAppearance.Material3.SearchBar"
+            app:autoShowKeyboard="true"
+            app:navigationIcon="@android:color/transparent" />
+
+    <!--     Invitations -->
+        <include
+            android:id="@+id/invitation_card"
+            layout="@layout/frag_invitation_card" />
+    </LinearLayout>
+
+
+    <!--    app:layout_anchor="@id/toolbar"-->
+    <!--        android:fitsSystemWindows="false"-->
+
+
+</com.google.android.material.appbar.AppBarLayout>

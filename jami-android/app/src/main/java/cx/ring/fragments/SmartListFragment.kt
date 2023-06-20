@@ -75,16 +75,16 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
-            newconvFab.setOnClickListener { presenter.fabButtonClicked() }
+//            newconvFab.setOnClickListener { presenter.fabButtonClicked() }
             confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP)
-                    val isExtended = newconvFab.isExtended
-                    if (dy > 0 && isExtended) {
-                        newconvFab.shrink()
-                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
-                        newconvFab.extend()
-                    }
+//                    val isExtended = newconvFab.isExtended
+//                    if (dy > 0 && isExtended) {
+//                        newconvFab.shrink()
+//                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
+//                        newconvFab.extend()
+//                    }
                     (activity as HomeActivity?)?.setToolbarElevation(canScrollUp)
                 }
             })
