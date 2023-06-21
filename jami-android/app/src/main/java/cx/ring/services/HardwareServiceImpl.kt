@@ -42,9 +42,11 @@ import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import cx.ring.service.CallConnection
+import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.services.CameraService.CameraListener
 import cx.ring.utils.BluetoothWrapper
 import cx.ring.utils.BluetoothWrapper.BluetoothChangeListener
+import cx.ring.utils.Constants
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -170,7 +172,7 @@ class HardwareServiceImpl(
             add(OUTPUT_BLUETOOTH)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
     fun setAudioState(call: CallConnection, wantSpeaker: Boolean) {
         Log.w(TAG, "setAudioState Telecom API $wantSpeaker ${call.callAudioState}")
         call.setWantedAudioState(if (wantSpeaker) CallConnection.ROUTE_LIST_SPEAKER_IMPLICIT else CallConnection.ROUTE_LIST_DEFAULT)
