@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">నెట్వర్క్</string>
+  <string name="pref_category_contacts">పరిచయాలు</string>
+  <string name="pref_category_video">వీడియో</string>
   <string name="pref_category_system">సిస్టమ్</string>
+  <string name="pref_category_privacy">గోప్యత</string>
+  <string name="pref_category_diagnostic">రోగ నిర్ధారణ</string>
+  <string name="pref_mobileData_title">మొబైల్ డేటా</string>
+  <string name="pref_mobileData_summary">వై-ఫైతో పాటు 3జీ/ఎల్టీఇ నెట్వర్క్లలో జమీని అనుమతించండి</string>
+  <string name="pref_pushNotifications_title">పుష్ నోటిఫికేషన్లు</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">నేపథ్యంలో కాల్స్/సందేశాలు స్వీకరించడానికి గూగుల్ సర్వర్లను ఉపయోగించండి</string>
+  <string name="pref_unifiedPush_summary">నేపథ్యంలో కాల్స్/సందేశాలను స్వీకరించడానికి యూనిఫైడ్ పుష్ సేవను ఉపయోగించండి</string>
+  <string name="pref_video_advanced_title">ఆధునిక వీడియో సెట్టింగులు</string>
+  <string name="pref_video_advanced_summary">వీడియో బిట్ రేట్, రిజల్యూషన్, అలాగే యాక్సెస్ ప్రయోగాత్మక లక్షణాలను మార్చండి</string>
+  <string name="pref_hd_summary">HD వీడియోలను పంపడం ప్రారంభించండి</string>
+  <string name="pref_hwEncode_title">వేగవంతమైన కోడింగ్ను ప్రారంభించండి</string>
+  <string name="pref_hwEncode_summary">ప్రయోగ లక్షణం</string>
+  <string name="pref_videoBitrate_title">వీడియో బిట్ రేటు</string>
+  <string name="pref_videoBitrate_summary">డిఫాల్ట్ అవుట్గోయింగ్ వీడియో బిట్ రేట్ (KB/s) ఎంచుకోండి</string>
+  <string name="pref_videoResolution_title">వీడియో రిజల్యూషన్</string>
+  <string name="pref_videoResolution_summary">డిఫాల్ట్ అవుట్గోయింగ్ వీడియో రిజల్యూషన్ను ఎంచుకోండి</string>
+  <string name="pref_systemContacts_title">సిస్టమ్ పరిచయాలను ఉపయోగించు</string>
+  <string name="pref_systemContacts_summary">కాల్ వివరాలను చూపించడానికి సిస్టమ్ పరిచయాలను ఉపయోగించండి.</string>
+  <string name="pref_systemDialer_title">జమిని ఉపయోగించి సిస్టమ్ కాల్స్ చేయండి</string>
+  <string name="pref_systemDialer_summary">సాధ్యమైనప్పుడు వ్యవస్థ కాల్స్ ఉంచడానికి Jami ఉపయోగించండి.</string>
+  <string name="pref_startOnBoot_title">ప్రారంభంలో జామి ప్రారంభించండి</string>
+  <string name="pref_startOnBoot_summary">వ్యవస్థ ప్రారంభించినప్పుడు నేపథ్యంలో Jami అమలు.</string>
+  <string name="pref_clearHistory_title">స్పష్టమైన చరిత్ర</string>
+  <string name="pref_clearHistory_summary">అన్ని సంభాషణల చరిత్రను క్లియర్ చేయండి. ఈ చర్యను తిరస్కరించలేము.</string>
+  <string name="pref_notification_title">నోటిఫికేషన్ల దృశ్యమానత</string>
+  <string name="pref_notification_summary">లాక్ స్క్రీన్ లో అప్లికేషన్ నోటిఫికేషన్ల దృశ్యమానతను సెట్ చేయండి.</string>
+  <string name="pref_blackList_title">బ్లాక్ జాబితా</string>
+  <string name="pref_blackList_summary">మీ బ్లాక్ జాబితా తనిఖీ.</string>
+  <string name="pref_delete_account_title">ఖాతాను తొలగించు</string>
+  <string name="pref_delete_account_summary">ఈ పరికరము నుండి మీ ఖాతాను తొలగించు</string>
+  <string name="pref_persistNotification_title">నేపథ్యంలో అమలు</string>
+  <string name="pref_persistNotification_summary">కాల్స్ మరియు సందేశాలను స్వీకరించడానికి నేపథ్యంలో అమలు చేయడానికి అనుమతించండి.</string>
+  <string name="pref_newGroup_title">సమూహ చాట్ను ప్రారంభించండి</string>
+  <string name="pref_newGroup_summary">జమిలో సమూహాలను సృష్టించడం ప్రారంభించండి.</string>
+  <string name="pref_logs_title">రోగ నిర్ధారణ పత్రాలు</string>
+  <string name="pref_logs_summary">రోగ నిర్ధారణ లాగ్ సెట్టింగులను తెరవండి</string>
+  <string name="pref_logs_start">లాగింగ్ ప్రారంభించండి</string>
+  <string name="pref_logs_stop">చెక్కడం ఆపండి</string>
+  <string name="pref_typing_title">టైపింగ్ సూచికలను ప్రారంభించండి</string>
+  <string name="pref_typing_summary">సందేశాన్ని టైప్ చేస్తున్నట్లు చూపించే టైపింగ్ సూచికలను పంపండి మరియు స్వీకరించండి.</string>
+  <string name="pref_read_title">రీడ్ రిసీవ్లను ప్రారంభించండి</string>
+  <string name="pref_read_summary">సందేశం ప్రదర్శించబడిందని సూచించే రిసీవ్లను పంపండి మరియు స్వీకరించండి.</string>
+  <string name="pref_block_record_title">స్క్రీన్షాట్ మరియు రికార్డింగ్ను బ్లాక్ చేయండి</string>
+  <string name="pref_block_record_summary">స్క్రీన్షాట్ తీయడం లేదా వీడియో రికార్డింగ్ను నిరోధించండి.</string>
+  <string name="pref_link_preview_title">సంభాషణలలో లింక్ ప్రివ్యూలను చూపించు</string>
+  <string name="pref_link_preview_summary">ముందస్తు వీక్షణలు మూడవ పార్టీ సర్వర్ల నుండి కంటెంట్ను డౌన్లోడ్ చేసుకోవలసి ఉంటుంది.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">పబ్లిక్ \n(ప్రకటనలను లాక్ స్క్రీన్ లో చూపించు</string>
+  <string name="notification_private">ప్రైవేట్ \n(ప్రవేశం నోటిఫికేషన్లు కానీ లాక్ స్క్రీన్ లో వాటి కంటెంట్ దాచడానికి) \n</string>
+  <string name="notification_secret">రహస్యంగా \n(లాక్ స్క్రీన్ లో నోటిఫికేషన్లు చూపించవద్దు)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">ప్లగిన్లు</string>
+  <string name="pref_plugins_summary">ప్లగిన్లను ప్రారంభించండి మరియు వారి పారామితులను సెట్</string>
+  <string name="fab_plugins_add">కొత్త ప్లగ్ఇన్ జోడించండి</string>
+  <string name="plugin_uninstall_title">ప్లగ్ఇన్ అన్ఇన్స్టాల్?</string>
+  <string name="plugin_reset_preferences">ప్లగ్ఇన్ ప్రాధాన్యతలను రీసెట్ చేయండి</string>
+  <string name="plugin_reset_preferences_summary">మీ ప్లగ్ఇన్ సెట్టింగులు డిఫాల్ట్గా ఉంటాయి</string>
+  <string name="plugin_reset_preferences_ask">మీరు సాధారణ ప్లగ్ఇన్ సెట్టింగులను రీసెట్ చేయాలనుకుంటున్నారా?</string>
+  <string name="plugin_reset_account_preferences_ask">మీరు ఖాతా ప్లగ్ఇన్ సెట్టింగులను రీసెట్ చేయాలనుకుంటున్నారా?</string>
+  <string name="plugin_successfully_installed">ప్లగిన్ <b>%1$s</b> విజయవంతంగా ఇన్స్టాల్ చేయబడింది</string>
+  <string name="plugin_install_failure">ప్లగ్ఇన్ ఇన్స్టాల్ చేయడంలో విఫలమైందిః <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">మీకు ఇటీవలి సంస్కరణ ఉందిః <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">మీరు <b>%1$s</b> యొక్క అదే వెర్షన్ను ఇన్స్టాల్ చేసారు</string>
+  <string name="plugin_force_install">బలవంతంగా \ n ఇన్స్టాల్</string>
+  <string name="plugin_path_image_add">క్రొత్త చిత్రాన్ని జోడించండి</string>
 </resources>

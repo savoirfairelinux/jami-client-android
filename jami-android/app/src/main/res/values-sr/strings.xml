@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Upravljanjem nalogom</string>
   <string name="menu_item_account">Upravljanjem nalogom</string>
   <string name="menu_item_settings">Podešavanja</string>
+  <string name="menu_item_advanced_settings">Насочни настройки</string>
+  <string name="menu_item_account_settings">Постављања рачуна</string>
   <string name="menu_item_plugin_list">Podešavanja dodataka</string>
   <string name="menu_item_share">Podeli moj nalog</string>
   <string name="menu_item_about">O Jami</string>
@@ -127,6 +129,7 @@
   <string name="conversation_send_audio">Snimi audio snimak</string>
   <string name="conversation_send_video">Snimi video snimak</string>
   <string name="conversation_share_location">Podeli lokaciju</string>
+  <string name="in_reply_to">У одговору на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola za kameru</string>
   <string name="permission_dialog_camera_message">Video razgovori zahtevaju dozvolu kamere za rad. Molim Vas uključite je.</string>
@@ -276,6 +279,7 @@
   <string name="menu_file_delete">Izbrišite podatak</string>
   <string name="menu_file_share">Podeli podatak</string>
   <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_message_edit">Редактирајте поруку</string>
   <string name="menu_message_delete">Izbriši poruku</string>
   <string name="menu_message_cancel">Otkaži poruku</string>
   <string name="menu_message_reply">Odgovori</string>
@@ -284,6 +288,7 @@
   <string name="pref_darkTheme_summary">Uvek omogućite tamnu temu umesto da koristite sistemsko ponašanje</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konverzacija</string>
+  <string name="navigation_item_contact_request">Позивања</string>
   <string name="navigation_item_account">Nalog</string>
   <string name="search_results_public_directory">Javni direktorijum</string>
   <!--TV-->
@@ -329,6 +334,14 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Zvuci</string>
   <string name="bottomSheet_raiseHand_btn">Podignite ruku</string>
+  <string name="uninstall">Усаставите се</string>
+  <string name="reset">Ресет</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Потврди</string>
+  <string name="swarm_description">Додајте описа</string>
+  <string name="tab_about">О томе</string>
   <string name="tab_members">Članovi</string>
+  <string name="tab_documetn">Документи</string>
+  <string name="dialog_hint_title">Назва</string>
+  <string name="dialog_hint_description">Опис</string>
 </resources>

@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">कॉल रद्द. किसी माइक्रोफ़ोन का पता नहीं चला.</string>
     <string name="call_error_no_camera_no_microphone">कॉल रद्द. किसी कैमरे या माइक्रोफ़ोन का पता नहीं चला.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">खोज</string>
+    <string name="call_human_state_incoming">आने वाला</string>
+    <string name="call_human_state_connecting">कनेक्ट करना</string>
+    <string name="call_human_state_ringing">बज रहा है</string>
+    <string name="call_human_state_current">बात करना</string>
+    <string name="call_human_state_hungup">खत्म हो गया</string>
+    <string name="call_human_state_busy">व्यस्त</string>
+    <string name="call_human_state_failure">असफल</string>
+    <string name="call_human_state_hold">रखो</string>
+    <string name="call_human_state_unhold">रोकना</string>
+    <string name="call_human_state_over">खत्म हो गया</string>
+    <!-- Conferences -->
+    <string name="call_moderator">संयोजक</string>
+    <string name="call_muted">चुप</string>
+    <string name="call_handRaised">हाथ उठाया</string>
+
+</resources>

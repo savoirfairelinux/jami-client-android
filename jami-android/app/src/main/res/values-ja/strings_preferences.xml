@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">モバイル通信</string>
   <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をJamiに許可する</string>
   <string name="pref_pushNotifications_title">プッシュ通知</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Google のサーバーを使って通話とメッセージを受信します</string>
+  <string name="pref_unifiedPush_summary">UnifiedPush サービスを使って,背景で電話/メッセージを受け取ることができます</string>
   <string name="pref_video_advanced_title">ビデオの高度な設定</string>
   <string name="pref_video_advanced_summary">動画のビットレートと解像度の変更、実験的な機能を試す</string>
   <string name="pref_hd_summary">HDビデオの送信を有効にする</string>
@@ -35,6 +37,8 @@
   <string name="pref_delete_account_summary">この機器からアカウントを削除</string>
   <string name="pref_persistNotification_title">バックグラウンドで実行</string>
   <string name="pref_persistNotification_summary">通話とメッセージの受信をバックグラウンドでも許可する</string>
+  <string name="pref_newGroup_title">グループチャットを有効にする</string>
+  <string name="pref_newGroup_summary">ジュミでグループを作成する</string>
   <string name="pref_logs_title">診断記録</string>
   <string name="pref_logs_summary">診断記録設定を開く</string>
   <string name="pref_logs_start">記録を開始する</string>
@@ -58,6 +62,8 @@
   <string name="plugin_uninstall_title">追加機能を削除しますか？</string>
   <string name="plugin_reset_preferences">追加機能の設定を初期化する</string>
   <string name="plugin_reset_preferences_summary">追加機能の設定を初期化します</string>
+  <string name="plugin_reset_preferences_ask">プラグインの設定をリセットしたいですか?</string>
+  <string name="plugin_reset_account_preferences_ask">アカウントプラグインの設定をリセットしたいですか?</string>
   <string name="plugin_successfully_installed">追加機能 <b>%1$s</b> が正しく導入されました</string>
   <string name="plugin_install_failure">次の追加機能を導入できませんでした: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">新しい版次が導入済みです: <b>%1$s</b></string>

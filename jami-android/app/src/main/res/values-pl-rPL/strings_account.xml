@@ -99,13 +99,16 @@ Możesz edytować swoje konto później</string>
   <string name="account_published_same_as_local_label">Opublikowano tak samo jak lokalny</string>
   <string name="account_published_port_label">Opublikowany Port</string>
   <string name="account_published_address_label">Opublikowany Adres</string>
+  <string name="disabled">Niepełnosprawni</string>
   <string name="enabled">Włączone</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
   <string name="account_proxy_server_label">Adres proxy DHT</string>
+  <string name="account_proxy_server_list_label">URL listy proxy DHT</string>
   <string name="account_sip_proxy_label">Pełnomocnik</string>
   <string name="account_peer_discovery_label">Wyszukiwanie lokalnych partnerów</string>
   <string name="account_peer_discovery_enable_label">Aktywuj wyszukiwanie lokalnych partnerów</string>
+  <string name="account_peer_discovery_enable_summary">łączyć się z innymi węzłami DHT reklamującymi w naszej sieci lokalnej</string>
   <!--Security Details-->
   <string name="account_credentials_label">Detale</string>
   <string name="account_credentials_edit">Edytuj detale</string>
@@ -113,6 +116,8 @@ Możesz edytować swoje konto później</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpieczenia</string>
   <string name="account_srtp_switch_label">Szyfrowanie strumieni multimedialnych (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Włącz SDES jako protokół wymiany kluczowej</string>
+  <string name="account_srtp_rtp_fallback">Wracając do RTP, jeśli SRTP nie działa</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Korzystaj z transportu TLS</string>
@@ -126,6 +131,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_tls_server_name_label">Nazwa Serwera</string>
   <string name="account_tls_verify_server_label">Zweryfikuj Serwer</string>
   <string name="account_tls_verify_client_label">Zweryfikuj Klient</string>
+  <string name="account_require_client_certificate_label">TLS wymaga certyfikatu klienta</string>
   <string name="account_tls_negotiation_timeout_sec">Limit czasu do negocjacji (w sekundach)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
@@ -171,9 +177,11 @@ Możesz edytować swoje konto później</string>
   <string name="account_tv_settings_header">Ustawienia konta</string>
   <string name="account_tv_advance_settings_header">Ustawienia zaawansowane</string>
   <string name="account_tv_add_contact">Dodaj kontakt</string>
+  <string name="account_tv_advanced_settings">Zmiana ustawień ogólnych</string>
   <string name="account_tv_about">O Jami</string>
   <string name="tv_about_version">Wersja</string>
   <string name="tv_about_license">Licencja</string>
+  <string name="tv_about_author">Prawa autorskie</string>
   <string name="tv_about_credits">Podziękowania</string>
   <string name="account_link_device">Połącz z innego urządzenia</string>
   <string name="account_link_button">Połącz z sieci</string>
@@ -181,11 +189,15 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Utwórz konto Jami</string>
   <string name="account_link_export_button">Połącz nowe urządzenie</string>
+  <string name="account_link_show_button">Wyświetlać %d więcej urządzeń połączonych</string>
+  <string name="account_link_hide_button">Ukryj urządzenie połączone</string>
   <string name="account_link_export_info">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw udostępnić je w Jami. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby dodać konto. PIN jest ważny przez 10 minut. </string>
   <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_end_export_infos"> Twój PIN to:\n\n%%\n\nAby dokończyć proces, musisz otworzyć Jami na nowym urządzeniu. Stwórz nowe konto przez \"Połącz to urządzenie z kontem\". Twój PIN jest ważny przez 10 minut. </string>
   <string name="account_link_export_info_light">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw udostępnić je w Jami. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby dodać konto. PIN jest ważny przez 10 minut. </string>
+  <string name="account_export_title">Konty łączenia z innymi urządzeniami</string>
+  <string name="account_connect_server_button">Połączenie z serwerem zarządzania</string>
   <string name="account_connect_button">Połącz</string>
   <string name="prompt_server">Adres serwera zarządzającego Jami</string>
   <string name="help_credentials_enter">Wprowadź swoje poświadczenia organizacji</string>
@@ -217,6 +229,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Edytuj mój konto</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Wprowadź hasło aby potwierdzić</string>
   <string name="enter_password">Wprowadź hasło</string>

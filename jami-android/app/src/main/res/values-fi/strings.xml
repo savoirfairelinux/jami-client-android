@@ -128,11 +128,13 @@
   <string name="message_failed">Epäonnistui</string>
   <string name="time_just_now">Juuri nyt</string>
   <string name="send_file">Lähetä tiedosto</string>
+  <string name="select_media">Avoin galleri</string>
   <string name="hist_file_sent">Tiedosto lähetetty</string>
   <string name="hist_file_received">Tiedosto vastaanotettu</string>
   <string name="conversation_send_audio">Tallenna ääniviesti</string>
   <string name="conversation_send_video">Tallenna videoviesti</string>
   <string name="conversation_share_location">Jaa sijainti</string>
+  <string name="in_reply_to">Vastauksena</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
@@ -181,13 +183,26 @@
   <string name="block_contact_dialog_title">Estä %1$s?</string>
   <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä kunnes poistat hänen estonsa.</string>
   <string name="block_contact_completed">%1$s estettiin.</string>
+  <string name="unblock_contact_dialog_title">-Päästä irti %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s voi ottaa sinuun yhteyttä uudelleen.</string>
+  <string name="unblock_contact_completed">%1$s oli avattu.</string>
   <string name="conversation_contact_is_typing">Hän kirjoittaa...</string>
   <string name="conversation_info_contact_you">Sinä</string>
   <string name="conversation_members">Jäsenet</string>
   <string name="conversation_syncing">Ladataan keskustelua vertaisverkosta</string>
+  <string name="conversation_blocked">Tämä yhteys on estetty.</string>
+  <string name="conversation_ended">Keskustelu päättyi.</string>
+  <string name="conversation_message_deleted">(viesti poistetaan)</string>
   <string name="conversation_preference_color">Keskustelun väri</string>
   <string name="conversation_preference_emoji">Keskustelun hymiö</string>
   <string name="conversation_type_contact">Jami yhteystieto</string>
+  <string name="conversation_type_private">Yksityinen joukko</string>
+  <string name="conversation_type_group">Ryhmätyö</string>
+  <string name="conversation_contact_invited">%1$s kutsuttiin</string>
+  <string name="conversation_contact_added">%1$s liittyi</string>
+  <string name="conversation_contact_left">%1$ on vasemmisto</string>
+  <string name="conversation_contact_banned">%1$s kiellettiin</string>
+  <string name="conversation_search_hint">Etsintä keskustelu</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
@@ -283,6 +298,7 @@
   <string name="menu_file_delete">Poista tiedosto</string>
   <string name="menu_file_share">Jaa tiedosto</string>
   <string name="menu_message_copy">Kopioi</string>
+  <string name="menu_message_edit">Ääritä viestiä</string>
   <string name="menu_message_delete">Poista viesti</string>
   <string name="menu_message_cancel">Peruuta viesti</string>
   <string name="menu_message_reply">Vastaa</string>
@@ -337,11 +353,23 @@
   <string name="bottomSheet_mute_microphone_btn">Pieni</string>
   <string name="bottomSheet_sound_output_btn">Äänet</string>
   <string name="bottomSheet_raiseHand_btn">Käsi ylös</string>
+  <string name="open_account_plugin_settings">Avaa tili- plugin- asetukset</string>
+  <string name="open_general_plugin_settings">Avaa yleiset lisäosaston asetukset</string>
   <string name="uninstall">Poista asennus</string>
   <string name="reset">Nollaa</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Vahvista</string>
+  <string name="rename_error">- Ei voi olla tyhjä.</string>
+  <string name="swarm_description">Lisää kuvaus</string>
   <string name="tab_about">Tietoa</string>
   <string name="tab_members">Jäsenet</string>
+  <string name="tab_documetn">Asiakirjat</string>
+  <string name="dialogtitle_title">Muokkaa Swarm- otsikko</string>
+  <string name="dialogtitle_description">Muokkaa Swarm- kuvaus</string>
   <string name="dialog_hint_title">Otsikko</string>
+  <string name="dialog_hint_description">Kuvaus</string>
+  <string name="picker_title">Valitse yhteystiedot</string>
+  <string name="picker_btn">Valitse yhteystiedot</string>
+  <string name="bottomsheet_contact">Ota yhteyttä Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Viekää karja</string>
 </resources>

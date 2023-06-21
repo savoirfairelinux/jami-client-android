@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Званок скасаваны. Не выяўлены мікрафон.</string>
     <string name="call_error_no_camera_no_microphone">Званок скасаваны. Камера або мікрафон не выяўлены.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Пашука</string>
+    <string name="call_human_state_incoming">Паступленне</string>
+    <string name="call_human_state_connecting">Злучэнне</string>
+    <string name="call_human_state_ringing">Званочак</string>
+    <string name="call_human_state_current">Размова</string>
+    <string name="call_human_state_hungup">Скончалася</string>
+    <string name="call_human_state_busy">Заўзяты</string>
+    <string name="call_human_state_failure">Недасягнуты</string>
+    <string name="call_human_state_hold">Пачакайце</string>
+    <string name="call_human_state_unhold">Не ўтрымлівайце</string>
+    <string name="call_human_state_over">Скончалася</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Мадэратар</string>
+    <string name="call_muted">Зацішыўся</string>
+    <string name="call_handRaised">Рука паднятая</string>
+
+</resources>

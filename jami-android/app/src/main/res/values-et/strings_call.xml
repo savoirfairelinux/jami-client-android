@@ -24,7 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Kõne tühistati. Mikrofoni ei tuvastatud.</string>
     <string name="call_error_no_camera_no_microphone">Kõne tühistati. Kaamerat ega mikrofoni ei tuvastatud.</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Otsimine</string>
+    <string name="call_human_state_incoming">Sisenevad</string>
     <string name="call_human_state_connecting">Ühendab</string>
     <string name="call_human_state_ringing">Heliseb</string>
+    <string name="call_human_state_current">Rääkimine</string>
+    <string name="call_human_state_hungup">Lõpetatud</string>
     <string name="call_human_state_busy">Kinni</string>
-    </resources>
+    <string name="call_human_state_failure">Ebaõnnestunud</string>
+    <string name="call_human_state_hold">Hoia kinni.</string>
+    <string name="call_human_state_unhold">- Ei, ei.</string>
+    <string name="call_human_state_over">Lõpetatud</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderaator</string>
+    <string name="call_muted">Päris vaikne</string>
+    <string name="call_handRaised">Käe tõstetud</string>
+
+</resources>

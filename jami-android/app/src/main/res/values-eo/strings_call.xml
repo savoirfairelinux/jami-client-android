@@ -24,6 +24,10 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Voko nuligita. Neniu mikrofono detektita.</string>
     <string name="call_error_no_camera_no_microphone">Voko nuligita. Neniu fotilo aŭ mikrofono detektita.</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Serĉado</string>
+    <string name="call_human_state_incoming">Envenanta</string>
+    <string name="call_human_state_connecting">Konektiĝo</string>
     <string name="call_human_state_ringing">Sonoriĝanta</string>
     <string name="call_human_state_current">Parolanta</string>
     <string name="call_human_state_hungup">Finita</string>
@@ -32,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Deteni</string>
     <string name="call_human_state_unhold">Maldeteni</string>
     <string name="call_human_state_over">Finita</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderator</string>
+    <string name="call_muted">Silenta</string>
+    <string name="call_handRaised">Mano levita</string>
+
+</resources>

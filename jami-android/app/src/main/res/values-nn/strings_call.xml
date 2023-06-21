@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Samtale avbrutt. Fant ingen mikrofon.</string>
     <string name="call_error_no_camera_no_microphone">Samtale avbrutt. Fant ikke noe kamera eller mikrofon.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Søk etter</string>
+    <string name="call_human_state_incoming">Innkommande</string>
+    <string name="call_human_state_connecting">Kopplande</string>
+    <string name="call_human_state_ringing">Ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing ringing</string>
+    <string name="call_human_state_current">Talande</string>
+    <string name="call_human_state_hungup">Over</string>
+    <string name="call_human_state_busy">Eg har fullt ut</string>
+    <string name="call_human_state_failure">Fjellet</string>
+    <string name="call_human_state_hold">Ta vare på</string>
+    <string name="call_human_state_unhold">Ikkje tenk på det</string>
+    <string name="call_human_state_over">Over</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderatør</string>
+    <string name="call_muted">Stødd</string>
+    <string name="call_handRaised">Hande løypt</string>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Тез шақыру</string>
+  <string name="contact_picture_description">Байланыс кескін</string>
+  <string name="dial_numeric_pad">Сандық диалог</string>
+  <string name="contact_unblock">Блокадасын ашу</string>
+  <string name="video_plugins">Видео плагиндері</string>
+</resources>

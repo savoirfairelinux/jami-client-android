@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Kiire helistamine</string>
   <string name="contact_picture_description">Kontakti pilt</string>
   <string name="dial_numeric_pad">Valimisklahvistik</string>
+  <string name="contact_unblock">Lükka lahti.</string>
+  <string name="video_plugins">Videovähed</string>
 </resources>

@@ -1,18 +1,42 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Reago</string>
+  <string name="report"><u>Sendu al ni retpoŝton</u></string>
+  <string name="section_license">Licenco</string>
+  <string name="sponsor_section">Jami estas libera programaro evoluigita kaj apogita de</string>
+  <string name="copyright_section">Kopirajto</string>
   <string name="contribute_section">Kontribui</string>
   <string name="version_section">Eldono</string>
+  <string name="no_email_app_installed">Neniu retpoŝta programo trovita, instali unu por sendi al ni raporton</string>
+  <string name="no_browser_app_installed">Neniu retumilo apliko trovita, instali unu por rigardi ĉi tiun paĝon</string>
+  <string name="email_chooser_title">Sendu poŝton uzante...</string>
+  <string name="website_chooser_title">Vidu retejon uzante...</string>
+  <string name="license">Tiu programaro estas disponigita "kiel ĝi estas", sen garantio de iu speco. Por detaloj, vidu GNU General Public License version 3 aŭ pli posta&lt;/u&gt;</string>
+  <string name="description">Jami estas libera softvaro por universala komunikado, kiu respektas la liberecojn kaj privatecon de siaj uzantoj.</string>
   <string name="credits">Kredito</string>
+  <string name="pip_title">Jamia konferenco</string>
+  <string name="call_service_description">Tiu servo estas necesa por teni viajn alvokojn funkciantajn en la unua plano. Ĝi funkcias nur dum alvokoj.</string>
+  <string name="data_transfer_service_description">Tiu servo estas necesa por montri persistajn sciigojn dum dosiertransferoj. Ĝi nur funkcias dum dosiertransferoj.</string>
   <!--About dialog-->
+  <string name="developed_by">Developed by</string>
+  <string name="designed_by">Desegnita de</string>
+  <string name="ringtones_by">Ringtones de</string>
   <!--RingActivity-->
   <string name="error_no_network">Sen reta konekto</string>
+  <string name="error_account_offline">La konto estas forigita</string>
+  <string name="error_mobile_network_available_but_disabled">Bonvolu doni aliron al la poŝtelefona reto en la ekrano de agordoj.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Text messaging</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Kontaktaj petoj</string>
   <string name="menu_item_accounts">Administri kontojn</string>
   <string name="menu_item_account">Administri Konton</string>
   <string name="menu_item_settings">Agordoj</string>
+  <string name="menu_item_advanced_settings">Antaŭaj agordoj</string>
+  <string name="menu_item_account_settings">Konto-sekcioj</string>
+  <string name="menu_item_plugin_list">Plugins Settings</string>
+  <string name="menu_item_share">Dividi mian konton</string>
   <string name="menu_item_about">Pri Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Diski numeron</string>
@@ -24,108 +48,328 @@
     <item quantity="other">%d Konversacioj</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Serĉu nomon aŭ telefonnumeron...</string>
   <string name="choose_number">Elektu numeron</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Maltrafis envenantan telefonon</string>
+  <string name="notif_missed_outgoing_call">Maltrafis forirantan telefonon</string>
   <string name="notif_incoming_call_title">Eniranta voko de %1$s</string>
   <string name="notif_incoming_call">Eniranta voko</string>
   <string name="notif_outgoing_call_title">Eliranta voko al %1$s</string>
   <string name="notif_outgoing_call">Eliranta voko</string>
+  <string name="notif_current_call_title">Daŭra alvoko kun %1$s</string>
   <string name="notif_current_call">Aktiva voko</string>
+  <string name="notif_channel_call_in_progress">La posteno por progreso</string>
   <string name="notif_channel_calls">Vokoj</string>
+  <string name="notif_channel_missed_calls">Maltrafiitaj alvokoj</string>
+  <string name="notif_channel_incoming_calls">Envenantaj alvokoj</string>
+  <string name="notif_channel_messages">Mesaĝoj</string>
+  <string name="notif_channel_requests">Petoj</string>
+  <string name="notif_channel_file_transfer">Transdono de dosieroj</string>
+  <string name="notif_channel_sync">Datensinkronizado</string>
+  <string name="notif_channel_background_service">Servo de fono</string>
+  <string name="notif_channel_background_service_descr">Permesas ricevi vokojn kaj mesaĝojn iam ajn.</string>
   <string name="notif_group_calls">Vokoj</string>
+  <string name="notif_background_service">Jam estas nun en la fono.</string>
+  <string name="notif_mark_as_read">Marko laŭ legado</string>
+  <string name="notif_dismiss">Forĵetu</string>
   <string name="notif_reply">Respondo</string>
+  <string name="notif_incoming_file_transfer_title">Envenanta dosiero de %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Sendo de dosiero al %1$s</string>
+  <string name="notif_incoming_picture">Bildo de %1$s</string>
+  <string name="notif_sync_title">Sinkronigado de datumoj...</string>
+  <string name="notif_location_title">Kunhavado de loko kun %1$s</string>
+  <string name="location_share_contact">%1$s dividas lokon kun vi</string>
+  <string name="notif_location_multi_title">Kunhavado de loko kun %1$d kontaktoj</string>
+  <string name="notif_location_remaining">%1$d restas minutoj</string>
+  <string name="notif_location_action_stop">Ĉesu dividi lokon</string>
+  <string name="location_share_action_start">Komencu dividi</string>
+  <string name="location_share_action_stop">Ĉesu dividi</string>
+  <string name="location_share_about_title">Mapo informoj</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_hangup">Fini vokon</string>
+  <string name="action_call_maximize">Maksimumi</string>
+  <string name="action_call_minimize">Redukti</string>
+  <string name="action_call_mute">Mutaj</string>
+  <string name="action_call_unmute">Neŝanĝita</string>
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
   <string name="hist_out_call">Eliranta voko de %1$s</string>
+  <string name="start_error_title">Mi ne povas komenci Jami!</string>
+  <string name="start_error_mic_required">Jamj bezonas la permeson de la mikrofono por labori.</string>
   <string name="action_call_accept">Akcepti</string>
+  <string name="action_call_accept_audio">Respondo en aŭdio</string>
+  <string name="action_call_accept_video">Respondo en video</string>
+  <string name="action_call_hold_accept">Tenu kaj prenu la vokon aŭdio</string>
+  <string name="action_call_hold_accept_video">Atendu kaj prenu la telefonon video</string>
+  <string name="action_call_end_accept">Finigu kaj prenu la telefonon</string>
   <string name="action_call_decline">Rifuzi</string>
+  <string name="action_call_mic_mute">Muta mikrofono</string>
+  <string name="action_load_plugin">Ŝarĝaĵo</string>
   <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
   <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
+  <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj?</string>
   <string name="ab_action_audio_call">Sona voko</string>
   <string name="ab_action_video_call">Videa voko</string>
+  <string name="ab_action_change_screen_orientation">Ŝanĝu ekranorientadon</string>
   <string name="share_via">Kunhavi per</string>
   <string name="write_a_message">Skribi mesaĝon</string>
   <string name="scan_qr">Skani QR Kodon</string>
+  <string name="qr_code">QR-kodo</string>
   <string name="ab_action_flipcamera">Renversi kameraon</string>
+  <string name="ab_action_hidepreview">Kaŝu antaŭvidon</string>
+  <string name="remote_recording">%s-registrado...</string>
   <!--Text messages-->
   <string name="send_message">Sendi mesaĝon</string>
   <string name="message_sending">Sendanta mesaĝon…</string>
   <string name="message_failed">Fiaskinta</string>
   <string name="time_just_now">Ĵus</string>
+  <string name="send_file">Sendu dosieron</string>
+  <string name="select_media">Malferma galerio</string>
+  <string name="hist_file_sent">Sendo de dosiero</string>
+  <string name="hist_file_received">Alvenis dosiero</string>
+  <string name="conversation_send_audio">Surbendi aŭdoklipon</string>
+  <string name="conversation_send_video">Rekordo video clip</string>
+  <string name="conversation_share_location">Kunhavigu lokon</string>
+  <string name="in_reply_to">En respondo al</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Eraro</string>
+  <string name="ringtone_error_format_not_supported">Tiu formato ne estas subtenata.</string>
+  <string name="ringtone_error_size_too_big">Tiu dosiero estas tro granda. La maksimuma grandeco estas %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Setu laŭmokan sonorilringon</string>
   <string name="ringtone_custom_label">Propra</string>
+  <string name="ringtone_jami_tones">Jam Tones</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jamji bezonas la permeson \"Legu kontaktojn\" por aktivigi tiun funkcion. Bonvolu doni ĝin.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jam bezonas la permeson \"Kribi alvokan registron\" por aktivigi tiun funkcion. Bonvolu doni ĝin.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanu la QR Kodon de la konto, kiun vi volas aldoni.</string>
+  <string name="title_activity_qrcode">Dividi mian konton</string>
+  <string name="error_scan_no_camera_permissions">La QR-skanaĵo bezonas permesojn de la fotilo por funkcii</string>
   <string name="tab_code">Mia Kodo</string>
+  <string name="tab_scan">Skena kodo</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Ĉu klara historio?</string>
+  <string name="clear_history_dialog_message">Tiu ago ne povas esti inversigita.</string>
   <string name="clear_history_completed">Historio vakigita.</string>
+  <string name="clear_history">Malpezo</string>
   <!--Conversation-->
+  <string name="conversation_details">Kontakto</string>
   <string name="conversation_action_delete_this">Forigi tiu ĉi konversacion</string>
   <string name="conversation_action_delete_this_title">Ĉu forigi tiu ĉi konversacion ?</string>
   <string name="conversation_action_delete_this_message">Tiu ĉi ago ne povos malfariĝi.</string>
   <string name="conversation_action_history_clear">Vakigi historion</string>
+  <string name="conversation_action_history_clear_title">Ĉu vi forigis la konversacian historion?</string>
+  <string name="conversation_action_history_clear_message">Tio certe purigos la konversacian historion.</string>
   <string name="conversation_action_remove_this">Forigi kontakton</string>
+  <string name="conversation_action_remove_this_title">Forviŝi tiun kontakton?</string>
+  <string name="conversation_action_remove_this_message">Tio forviŝos la kontakton kaj definitive forviŝos la konversacian historion.</string>
   <string name="conversation_action_copy_peer_number">Kopii numeron</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiita en tondejon</string>
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
+  <string name="conversation_action_block_this">Kontakto blokita</string>
+  <string name="conversation_action_unblock_this">Malblokigu kontakton</string>
+  <string name="conversation_action_go_to_call">Reiri al daŭra alvoko</string>
+  <string name="conversation_action_latest">Saltu al la lasta</string>
+  <string name="conversation_open_file_error">Ne ekzistas instalita programo kapabla malfermi ĉi tiun dosiertypon.</string>
+  <string name="clip_contact_uri">Kontakta adreso</string>
+  <string name="block_contact_dialog_title">Ĉu blokas %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s ne povos kontakti vin ĝis vi malŝaltas ĝin.</string>
+  <string name="block_contact_completed">%1$s estis blokita.</string>
+  <string name="unblock_contact_dialog_title">Malblokigu %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s povos kontakti vin denove.</string>
+  <string name="unblock_contact_completed">%1$s estis malblokita.</string>
+  <string name="conversation_contact_is_typing">Kontakto estas tajpi...</string>
   <string name="conversation_info_contact_you">Vi</string>
   <string name="conversation_members">Anoj</string>
+  <string name="conversation_syncing">Elŝutu konversacion de samuloj</string>
+  <string name="conversation_blocked">Tiu kontakto estas blokita.</string>
+  <string name="conversation_ended">La konversacio finiĝis.</string>
+  <string name="conversation_message_deleted">(Mesaĝo forigita)</string>
+  <string name="conversation_preference_color">Koloro de konversacio</string>
+  <string name="conversation_preference_emoji">Konversacio emoji</string>
+  <string name="conversation_type_contact">Jam kontakto</string>
+  <string name="conversation_type_private">Privata amaskomunikilaro</string>
+  <string name="conversation_type_group">Grupo-Skarmo</string>
+  <string name="conversation_contact_invited">%1$s estis invitita</string>
+  <string name="conversation_contact_added">%1$s aliĝis</string>
+  <string name="conversation_contact_left">%1$ estas maldekstre</string>
+  <string name="conversation_contact_banned">%1$s estis malpermesita</string>
+  <string name="conversation_search_hint">Serĉu konversacion</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Ĉu aldoni %1$s?</string>
   <string name="prompt_new_password">Nova pasvorto</string>
+  <string name="prompt_new_password_optional">Nova pasvorto (favora)</string>
+  <string name="prompt_new_password_repeat">Ripetu novan pasvorton</string>
+  <string name="account_create_title">Krei konto en Jami</string>
+  <string name="prompt_new_username">Enigu novan uzantnomon</string>
   <string name="prompt_hint_username">Uzantnomo</string>
+  <string name="help_password_choose">Elektu fortan pasvorton, kiun vi memorigos por protekti vian konto Jami.</string>
+  <string name="help_password_enter">Enigu vian ĉefan pasvorton de la konto Jami.</string>
+  <string name="help_server_enter">Enigu la URL-adreson de administradservilo.</string>
+  <string name="help_pin_enter">Enmetu la PIN-kodon de alia konfigurita konto de Jami. Uzu la funkcion \"eksportu konto de Jami\" por akiri la PIN-kodon.</string>
   <string name="wizard_next">Sekva</string>
+  <string name="wizard_back">Reiri</string>
+  <string name="wizard_skip">Skip</string>
   <string name="hist_contact_invited">Invitita Kontakto</string>
+  <string name="hist_contact_added">Aldoni kontakton</string>
+  <string name="hist_contact_left">Kontakto maldekstre</string>
+  <string name="hist_contact_banned">Kontakto malpermesita</string>
+  <string name="hist_invitation_received">Invito ricevita</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
+  <string name="profile_name">Profilo nomo</string>
+  <string name="profile_message_warning">Via profilo estas nur dividita kun viaj kontaktoj</string>
+  <string name="open_the_gallery">Malfermu la galerion</string>
+  <string name="take_a_photo">Prenu foton.</string>
   <string name="profile_name_hint">Entajpu vian nomon</string>
+  <string name="registered_name">Registrita nomo</string>
+  <string name="no_registered_name">Neniu nomo registrita</string>
+  <string name="identity">Identigo</string>
   <string name="account">Konto</string>
+  <string name="link_new_device">Ligigu novan aparaton</string>
+  <string name="devices">Interligitaj aparatoj</string>
+  <string name="total_devices">Tutmondaj aparatoj: </string>
   <!--Share fragment-->
+  <string name="share_message">Skenu ĉi tiun kodon kun Jami</string>
+  <string name="share_message_no_account">Bonvolu elekti konton por dividi.</string>
+  <string name="share_your_account_information">Dividi mian kontaktinformon</string>
   <string name="share_label">Kunhavi</string>
   <string name="generic_error_migration">Eraro</string>
+  <string name="generic_error_migration_message">Eraro okazis dum migrado</string>
+  <string name="title_share_with">Dividu kun...</string>
   <!--Pending contact requests-->
   <string name="accept">Akcepti</string>
   <string name="refuse">Rifuzi</string>
+  <string name="block">Bloko</string>
+  <string name="contact_request_title">Nova kontakto peto</string>
+  <string name="contact_request_msg">Vi havas %1$d kontaktpetojn</string>
+  <string name="contact_request_account">Por %1$s</string>
+  <string name="no_requests">Vi ne havas kontaktpetojn</string>
+  <string name="message_contact_not_trusted_yet">%s ankoraŭ ne estas en viaj kontaktoj.\nĈu vi akceptas aŭ malakceptas ĉi tiun kontaktpeton?</string>
+  <string name="message_contact_not_trusted">%s ne estas en viaj kontaktoj.\nAĉetu novan kontakton?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Sendi</string>
+  <string name="send_request_title">Sendu kontaktan peton</string>
+  <string name="send_request_msg">Vi devas sendi kontaktpeton por komuniki kun tiu uzanto. Dum via kontakto ne akceptis la peton, vi povas sendi mesaĝojn sed li ne povos respondi.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Neniu blokita kontakto</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Neniu kontakto-peto sendita</string>
+  <string name="conversation_placeholder">Vi ankoraŭ ne konversaciis.</string>
+  <string name="contact_request_sent">Sendita kontakto-peto</string>
   <string name="start_conversation">Ekkonversaciu</string>
+  <string name="search_results">Rezultoj de serĉado</string>
   <string name="tv_contact_row_header">Kontaktoj</string>
+  <string name="gallery_error_title">Neniu Galerio-apliko trovita</string>
+  <string name="gallery_error_message">Neniu apliko trovita en la aparato por malfermi Galerion</string>
+  <string name="generic_error">Okazas nekonata eraro.</string>
   <!--File Transfer-->
+  <string name="invalid_file">Nelaŭdata dosiero</string>
+  <string name="not_able_to_write_file">Ne povas skribi dosieron</string>
+  <string name="file_transfer_status_created">iniciante translokigon</string>
+  <string name="file_transfer_status_unsupported">ne apogita</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Atendas akcepton de la samuloj</string>
+  <string name="file_transfer_status_wait_host_acceptance">atendo gastiganto akceptado</string>
+  <string name="file_transfer_status_ongoing">daŭra</string>
   <string name="file_transfer_status_finished">Finita</string>
+  <string name="file_transfer_status_closed_by_host">fermita de la gastiganto</string>
+  <string name="file_transfer_status_closed_by_peer">proksima al la samuloj</string>
+  <string name="file_transfer_status_invalid_pathname">Naloĝaj paĝaj nomoj</string>
+  <string name="file_transfer_status_unjoinable_peer">nealigebla samulo</string>
   <string name="file_transfer_status_cancelled">nuligita</string>
+  <string name="file_transfer_status_error">ne sukcesis pro eraro</string>
+  <string name="file_transfer_status_timed_out">tempo de la tempo</string>
+  <string name="file_saved_in">Fiilo savita en %s</string>
+  <string name="file_saved_successfully">Fiilo sukcesis</string>
+  <string name="file_download">Elŝutu</string>
+  <string name="no_space_left_on_device">Neniu spaco restas sur la aparato</string>
+  <string name="title_media_viewer">Amaskomunikila spektanto</string>
+  <string name="menu_file_open">Malfermu dosieron</string>
+  <string name="menu_file_download">Malŝarĝo</string>
+  <string name="menu_file_save">Konservu dosieron</string>
+  <string name="menu_file_delete">Forviŝi dosieron</string>
   <string name="menu_file_share">Kunhavigi dosieron</string>
   <string name="menu_message_copy">Kopii</string>
+  <string name="menu_message_edit">Redakti mesaĝon</string>
+  <string name="menu_message_delete">Forviŝi mesaĝon</string>
   <string name="menu_message_cancel">Nuligi mesaĝon</string>
   <string name="menu_message_reply">Respondo</string>
   <string name="menu_delete">Forigi</string>
+  <string name="pref_darkTheme_title">Malhela temo</string>
+  <string name="pref_darkTheme_summary">Ĉiam ebligi malhela temo anstataŭ uzi sistemo konduto</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konversacioj</string>
   <string name="navigation_item_contact_request">Invitoj</string>
   <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Publika adresaro</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Ĉu vi sendas aŭdajn mesaĝojn?</string>
+  <string name="tv_send_image_dialog_message">Ĉu vi sendas la bildon?</string>
+  <string name="tv_send_video_dialog_message">Ĉu vi sendis la filmeton?</string>
+  <string name="tv_media_preview">Antaŭvido</string>
   <string name="tv_audio_play">Ludi</string>
   <string name="tv_audio_pause">Paŭzi</string>
   <string name="tv_dialog_send">Sendi</string>
+  <string name="tv_audio_recording">Rekordo...</string>
+  <string name="tv_send_text">Sendu mesaĝon</string>
+  <string name="tv_send_audio">Sendu aŭdiojn</string>
+  <string name="tv_send_video">Sendu amaskomunikilaron</string>
+  <string name="tv_action_more">Pli</string>
+  <string name="conversation_input_speech_hint">Diru ion...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Recomandita</string>
+  <string name="wizard_status_optional">Elektebla</string>
+  <string name="wizard_status_required">Rezultoj</string>
+  <string name="wizard_username_info">Elektu uzantnomon por via konto</string>
+  <string name="wizard_username_button">Elektu uzantnomon</string>
+  <string name="wizard_username_skip">Ne elektu uzantnomon</string>
+  <string name="wizard_password_info">Pasvorton de konto</string>
+  <string name="wizard_password_placeholder">Elektu pasvorton por ĉifradi la ŝlosilon de la konto sur ĉi tiu aparato</string>
+  <string name="wizard_password_button">Elektu pasvorton</string>
+  <string name="wizard_password_skip">Kreu konton</string>
+  <string name="wizard_password_switch">Enkriptu konton kun pasvorto</string>
+  <string name="wizard_password_warning">Notu ke la pasvorto ne povas esti reakirita</string>
+  <string name="wizard_profile_info">Profilo estas dividita nur kun kontaktoj</string>
+  <string name="wizard_profile_button">Savu profilon</string>
+  <string name="wizard_profile_skip">Ne faru tion poste.</string>
+  <string name="fab_path_choose">Elektu alian dosieron</string>
+  <string name="chat_plugins">Ĉat Plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Kunhavi</string>
+  <string name="bottomSheet_dialpad_btn">Dialpad</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
   <string name="bottomSheet_add_participants_btn">Aldoni</string>
+  <string name="bottomSheet_change_camera_btn">Ŝanĝo</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamerao</string>
   <string name="bottomSheet_hangup_btn">Finigi vokon</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
+  <string name="bottomSheet_sound_output_btn">Sonas</string>
+  <string name="bottomSheet_raiseHand_btn">Levu la manon</string>
+  <string name="open_account_plugin_settings">Malfermu la kontojn</string>
+  <string name="open_general_plugin_settings">Malfermu ĝeneralajn Pluginsettings</string>
+  <string name="uninstall">Malinstaligi</string>
+  <string name="reset">Re-sekvi</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Konfirmu</string>
+  <string name="rename_error">Ne eblas esti malplena</string>
+  <string name="swarm_description">Aldonu priskribon</string>
   <string name="tab_about">Pri</string>
   <string name="tab_members">Anoj</string>
+  <string name="tab_documetn">Dokumentoj</string>
+  <string name="dialogtitle_title">Redakti Swarm titolon</string>
+  <string name="dialogtitle_description">Redakti Swarm priskribo</string>
   <string name="dialog_hint_title">Titolo</string>
+  <string name="dialog_hint_description">Desegno</string>
+  <string name="picker_title">Elektu kontaktojn</string>
+  <string name="picker_btn">Elektu kontaktojn</string>
+  <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Forigu ĝin el la sorbo</string>
 </resources>

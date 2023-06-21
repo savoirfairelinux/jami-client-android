@@ -15,6 +15,7 @@
   <string name="license">Software hau \"den moduan\" eskaintzen da, inolako bermeik gabe. Xehetasunetarako ikusi <u>General Public License lizentzia, 3. bertsioa edo berriagoa</u></string>
   <string name="description">Jami komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
   <string name="credits">Kredituak</string>
+  <string name="pip_title">Jami Konferentzia</string>
   <string name="call_service_description">Zerbitzu hau ezinbestekoa da zure deiak lehen planoan abian mantentzeko. Deietan zehar ari da soilik.</string>
   <string name="data_transfer_service_description">Zerbitzu hau ezinbestekoa da fitxategi transferentzien zehar jakinarazpen iraunkorrak bistaratzeko. Fitxategi transferentzietan zehar ari da soilik.</string>
   <!--About dialog-->
@@ -32,6 +33,8 @@
   <string name="menu_item_accounts">Kudeatu kontuak</string>
   <string name="menu_item_account">Kudeatu kontua</string>
   <string name="menu_item_settings">Ezarpenak</string>
+  <string name="menu_item_advanced_settings">Jarriera aurreratuak</string>
+  <string name="menu_item_account_settings">Kontuaren ezarpenak</string>
   <string name="menu_item_plugin_list">Pluginen konfigurazioa</string>
   <string name="menu_item_share">partekatu nire kontua</string>
   <string name="menu_item_about">Jamiri buruz</string>
@@ -84,6 +87,7 @@
   <string name="notif_location_action_stop">Utzi kokalekua partekatzeari</string>
   <string name="location_share_action_start">Hasi partekatzen</string>
   <string name="location_share_action_stop">Utzi partekatzeari</string>
+  <string name="location_share_about_title">Mapa informazioa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Zuk:</string>
   <string name="action_call_hangup">Eseki</string>
@@ -97,6 +101,10 @@
   <string name="start_error_title">Ezin da Jami abiatu !</string>
   <string name="start_error_mic_required">Jamik mikrofonoa erabiltzeko baimena behar du funtzionatzeko.</string>
   <string name="action_call_accept">Onartu deia</string>
+  <string name="action_call_accept_audio">Erantzun audioz</string>
+  <string name="action_call_accept_video">Erantzun bideoan</string>
+  <string name="action_call_hold_accept">Eutsi eta hartu deiaren audio-ahotsa</string>
+  <string name="action_call_hold_accept_video">Eutsi eta grabatu deiak bideoan.</string>
   <string name="action_call_end_accept">Amaitu eta deia hartu</string>
   <string name="action_call_decline">Ukatu</string>
   <string name="action_call_mic_mute">Mututu mikrofonoa</string>
@@ -120,11 +128,13 @@
   <string name="message_failed">Huts eginda</string>
   <string name="time_just_now">Oraintxe</string>
   <string name="send_file">Bidali fitxategia</string>
+  <string name="select_media">Galeria irekia</string>
   <string name="hist_file_sent">Fitxategia bidalita</string>
   <string name="hist_file_received">Fitxategia jasota</string>
   <string name="conversation_send_audio">Grabatu audioa</string>
   <string name="conversation_send_video">Grabatu bideoa</string>
   <string name="conversation_share_location">Partekatu kokalekua</string>
+  <string name="in_reply_to">Erantzun</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-baimena</string>
   <string name="permission_dialog_camera_message">Bideo elkarrizketek kamera baimena behar dute. Gaitzea komeni da.</string>
@@ -149,6 +159,7 @@
   <string name="clear_history_dialog_title">Garbitu historiala?</string>
   <string name="clear_history_dialog_message">Ekintza hau ezin da desegin.</string>
   <string name="clear_history_completed">Historiala garbitu da.</string>
+  <string name="clear_history">Garbi dago.</string>
   <!--Conversation-->
   <string name="conversation_details">Kontaktuaren xehetasunak</string>
   <string name="conversation_action_delete_this">Ezabatu elkarrizketa hau</string>
@@ -164,18 +175,34 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s arbelera kopiatuta</string>
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
+  <string name="conversation_action_unblock_this">Kontaktuak desblokeatu</string>
   <string name="conversation_action_go_to_call">Itzuli abioan den deira</string>
+  <string name="conversation_action_latest">Azkenera salto egin.</string>
   <string name="conversation_open_file_error">Ez dago fitxategi hau ireki dezakeen aplikaziorik instalatuta</string>
   <string name="clip_contact_uri">Kontaktuaren helbidea</string>
   <string name="block_contact_dialog_title">Blokeatu %1$s?</string>
   <string name="block_contact_dialog_message">%1$s erabiltzailea ezin izango da zurekin harremanetan jarri desblokeatzen ez baduzu.</string>
   <string name="block_contact_completed">%1$s blokeatu da.</string>
+  <string name="unblock_contact_dialog_title">%1$s desblokeatu?</string>
+  <string name="unblock_contact_dialog_message">%1$s-ek zurekin harremanetan jarri ahal izango da berriro.</string>
+  <string name="unblock_contact_completed">%1$s desblokeatu egin da.</string>
   <string name="conversation_contact_is_typing">Kontaktua idazten ari da…</string>
   <string name="conversation_info_contact_you">Zuk</string>
   <string name="conversation_members">Kideak</string>
+  <string name="conversation_syncing">Elkarrizketa bat deskargatzen</string>
+  <string name="conversation_blocked">Kontaktu hau blokeatuta dago.</string>
+  <string name="conversation_ended">Amaitu da elkarrizketa.</string>
+  <string name="conversation_message_deleted">(Mezuak ezabatu dira)</string>
   <string name="conversation_preference_color">Elkarrizketaren kolorea</string>
   <string name="conversation_preference_emoji">Elkarrizketaren emojia</string>
   <string name="conversation_type_contact">Jami kontaktua</string>
+  <string name="conversation_type_private">\"Gizon-taldea\"</string>
+  <string name="conversation_type_group">Talde-taldea</string>
+  <string name="conversation_contact_invited">%1$s gonbidatu dute</string>
+  <string name="conversation_contact_added">%1$s bat egin da</string>
+  <string name="conversation_contact_left">%1$ ezkerrera</string>
+  <string name="conversation_contact_banned">%1$s debekatuta dago</string>
+  <string name="conversation_search_hint">Bilaketa elkarrizketa</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Gehitu %1$s?</string>
   <string name="prompt_new_password">Pasahitz berria</string>
@@ -191,7 +218,10 @@
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
+  <string name="hist_contact_invited">Harremanetan jarri behar dugu.</string>
   <string name="hist_contact_added">Kontaktua gehituta</string>
+  <string name="hist_contact_left">Ezkerreko kontaktuak</string>
+  <string name="hist_contact_banned">Harremanetan jartzea debekatuta</string>
   <string name="hist_invitation_received">Gonbidapena jasota</string>
   <!--Account Summary-->
   <string name="profile">Profila</string>
@@ -220,7 +250,9 @@
   <string name="refuse">Ukatu</string>
   <string name="block">Bloketu</string>
   <string name="contact_request_title">Kontaktu-eskaera berria</string>
+  <string name="contact_request_msg">%1$d kontaktu-eskaerak dituzu</string>
   <string name="contact_request_account">%1$s(r)entzat</string>
+  <string name="no_requests">Ez duzu kontaktu-eskaerarik.</string>
   <string name="message_contact_not_trusted_yet">%s ez dago zure kontaktuen artean oraindik.\nKontaktu eskaera hau onartu ala ukatzen duzu?</string>
   <string name="message_contact_not_trusted">%s ez dago zure kontaktuen artean oraindik.\nGehitu kontaktua?</string>
   <!--Send contact requests-->
@@ -266,6 +298,7 @@
   <string name="menu_file_delete">Ezabatu fitxategia</string>
   <string name="menu_file_share">Partekatu fitxategia</string>
   <string name="menu_message_copy">Kopiatu</string>
+  <string name="menu_message_edit">Eusko Jaurlaritzaren laguntzarekin egindako azpitituluak</string>
   <string name="menu_message_delete">Ezabatu mezua</string>
   <string name="menu_message_cancel">Utzi mezua</string>
   <string name="menu_message_reply">Erantzun</string>
@@ -276,8 +309,11 @@
   <string name="navigation_item_conversation">Elkarrizketak</string>
   <string name="navigation_item_contact_request">Gonbidapenak</string>
   <string name="navigation_item_account">Kontua</string>
+  <string name="search_results_public_directory">Zerrenda publikoa</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Bidali audio mezua?</string>
+  <string name="tv_send_image_dialog_message">Bidali irudia?</string>
+  <string name="tv_send_video_dialog_message">Bidali bideoa?</string>
   <string name="tv_media_preview">Aurrebista</string>
   <string name="tv_audio_play">Jo</string>
   <string name="tv_audio_pause">Pausatu</string>
@@ -285,15 +321,55 @@
   <string name="tv_audio_recording">Grabatzen...</string>
   <string name="tv_send_text">Bidali testua</string>
   <string name="tv_send_audio">Bidali audioa</string>
+  <string name="tv_send_video">Bidali komunikabideak</string>
+  <string name="tv_action_more">Gehiago</string>
+  <string name="conversation_input_speech_hint">Esan zerbait.</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">gomendatzen da</string>
+  <string name="wizard_status_optional">Aukerazkoak</string>
+  <string name="wizard_status_required">Beharrezkoa</string>
+  <string name="wizard_username_info">Aukeratu zure kontuaren erabiltzaile izena</string>
+  <string name="wizard_username_button">Erabiltzaile izena aukeratu</string>
+  <string name="wizard_username_skip">Erabiltzaile izena ez erabiltzea</string>
+  <string name="wizard_password_info">Kontuaren pasahitza</string>
+  <string name="wizard_password_placeholder">Aukeratu pasahitza tresna honetan kontua enkriptatzeko</string>
+  <string name="wizard_password_button">Pasahitza aukeratu</string>
   <string name="wizard_password_skip">Sortu kontua</string>
+  <string name="wizard_password_switch">Kontua pasahitzarekin enkriptatu</string>
+  <string name="wizard_password_warning">Kontuan izan pasahitza ezin dela berreskuratu.</string>
+  <string name="wizard_profile_info">Perfil bat kontaktuekin soilik partekatzen da.</string>
+  <string name="wizard_profile_button">Aurreztu Profila</string>
+  <string name="wizard_profile_skip">Utzi eta gero egin.</string>
+  <string name="fab_path_choose">Beste fitxategi bat hautatu</string>
+  <string name="chat_plugins">Txateatzeko Plug-inak</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Partekatu</string>
+  <string name="bottomSheet_dialpad_btn">Dialpad bat</string>
+  <string name="bottomSheet_plugins_btn">Pluginsak</string>
   <string name="bottomSheet_add_participants_btn">Gehitu</string>
+  <string name="bottomSheet_change_camera_btn">Aldatu</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Amaitu deia</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro-ak</string>
+  <string name="bottomSheet_sound_output_btn">Soinuak</string>
+  <string name="bottomSheet_raiseHand_btn">Altxa eskua.</string>
+  <string name="open_account_plugin_settings">Ireki kontuaren sarrera-erreka</string>
+  <string name="open_general_plugin_settings">Zabaldu sarrera-aldaketa orokorrak</string>
+  <string name="uninstall">Desinstalatu</string>
+  <string name="reset">Berriz jartzea</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Baieztatu.</string>
+  <string name="rename_error">Ezin da hutsik egon.</string>
+  <string name="swarm_description">Deskribazioa gehitu</string>
   <string name="tab_about">Honi buruz</string>
   <string name="tab_members">Kideak</string>
+  <string name="tab_documetn">Dokumentuak</string>
+  <string name="dialogtitle_title">Editatu izpiaren izenburua</string>
+  <string name="dialogtitle_description">Editatu multzoaren deskribapena</string>
   <string name="dialog_hint_title">Izenburua</string>
+  <string name="dialog_hint_description">Deskripzioa</string>
+  <string name="picker_title">Kontaktua hautatu</string>
+  <string name="picker_btn">Kontaktua hautatu</string>
+  <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Kendu zabortegitik.</string>
 </resources>

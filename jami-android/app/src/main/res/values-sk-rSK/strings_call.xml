@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Podržať</string>
     <string name="call_human_state_unhold">Zrušiť podržanie</string>
     <string name="call_human_state_over">Cez</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderátor</string>
+    <string name="call_muted">Zmutuje</string>
+    <string name="call_handRaised">Roko zvednuté</string>
+
+</resources>

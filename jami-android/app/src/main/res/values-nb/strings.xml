@@ -134,6 +134,7 @@
   <string name="conversation_send_audio">Spill inn lydklipp</string>
   <string name="conversation_send_video">Spill inn videoklipp</string>
   <string name="conversation_share_location">Del lokasjon</string>
+  <string name="in_reply_to">I svar til</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
@@ -195,6 +196,13 @@
   <string name="conversation_preference_color">Samtalefarge</string>
   <string name="conversation_preference_emoji">Samtale-emoji</string>
   <string name="conversation_type_contact">Jami-kontakt</string>
+  <string name="conversation_type_private">Privat svam</string>
+  <string name="conversation_type_group">Gruppssparm</string>
+  <string name="conversation_contact_invited">%1$s ble invitert</string>
+  <string name="conversation_contact_added">%1$s er blitt lagt til</string>
+  <string name="conversation_contact_left">%1$ er venstre</string>
+  <string name="conversation_contact_banned">%1$s ble forbudt</string>
+  <string name="conversation_search_hint">Søk samtale</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
@@ -290,6 +298,7 @@
   <string name="menu_file_delete">Slett fil</string>
   <string name="menu_file_share">Del fil</string>
   <string name="menu_message_copy">Kopier</string>
+  <string name="menu_message_edit">Redigere melding</string>
   <string name="menu_message_delete">Slett melding</string>
   <string name="menu_message_cancel">Avbryt melding</string>
   <string name="menu_message_reply">Svar</string>
@@ -344,10 +353,23 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Lyder</string>
   <string name="bottomSheet_raiseHand_btn">Rekk opp hånden</string>
+  <string name="open_account_plugin_settings">Åpne konto- plugininnstillinger</string>
+  <string name="open_general_plugin_settings">Åpne generelle innstillinger</string>
   <string name="uninstall">Avinstaller</string>
   <string name="reset">Nullstill</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Bekreft</string>
+  <string name="rename_error">Kan ikke være tomt</string>
+  <string name="swarm_description">Legg til en beskrivelse</string>
   <string name="tab_about">Om</string>
   <string name="tab_members">Medlemmer</string>
+  <string name="tab_documetn">Dokumenter</string>
+  <string name="dialogtitle_title">Redigere Swarm-tittel</string>
+  <string name="dialogtitle_description">Redigere beskrivelse</string>
+  <string name="dialog_hint_title">Tittel</string>
+  <string name="dialog_hint_description">Beskrivelse</string>
+  <string name="picker_title">Velg kontakter</string>
+  <string name="picker_btn">Velg kontakter</string>
+  <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Fjern fra sjarmen</string>
 </resources>
