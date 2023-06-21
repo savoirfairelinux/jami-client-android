@@ -35,7 +35,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     class AndroidCall(val call: CallConnection?): SystemCall(call != null) {
         override fun setCall(call: Call) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
                 this.call?.call = call
                 call.setSystemConnection(this)
             } else {
@@ -47,7 +47,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
         // Use the Android Telecom API to implement requestPlaceCall if available
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
                 val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
 
@@ -105,16 +105,14 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestIncomingCall(call: Call): Single<SystemCall> {
         // Use the Android Telecom API if available
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
                 val extras = Bundle()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
-                        extras.putInt(
-                            TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
-                            VideoProfile.STATE_BIDIRECTIONAL
-                        )
-                }
+                if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
+                    extras.putInt(
+                        TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                        VideoProfile.STATE_BIDIRECTIONAL
+                    )
                 extras.putString(ConversationPath.KEY_ACCOUNT_ID, call.account)
                 extras.putString(NotificationService.KEY_CALL_ID, call.daemonIdString)
                 extras.putString(
@@ -158,4 +156,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
             accept(accountId, callId, result == CallRequestResult.ACCEPTED_VIDEO)
     }
 
+    companion object {
+        const val CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY : Int = Build.VERSION_CODES.P
+    }
 }

@@ -25,6 +25,7 @@ import android.telecom.TelecomManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import cx.ring.services.CallServiceImpl
+import cx.ring.services.CallServiceImpl.Companion.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY
 import cx.ring.utils.ConversationPath
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.model.Uri
@@ -35,7 +36,7 @@ import net.jami.services.DeviceRuntimeService
 import net.jami.services.NotificationService
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
 @AndroidEntryPoint
 class ConnectionService : ConnectionService() {
     @Inject
