@@ -1,11 +1,45 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Nhận phản hồi</string>
+  <string name="report"><u>Send us an email</u></string>
+  <string name="section_license">Giấy phép</string>
+  <string name="sponsor_section">Jami là một phần mềm miễn phí được phát triển và hỗ trợ bởi</string>
+  <string name="copyright_section">Bản quyền</string>
+  <string name="contribute_section">Tham gia</string>
+  <string name="version_section">Phiên bản</string>
+  <string name="no_email_app_installed">Không tìm thấy ứng dụng email, cài đặt một để gửi cho chúng tôi báo cáo</string>
+  <string name="no_browser_app_installed">Không tìm thấy ứng dụng trình duyệt web, cài đặt một để xem trang này</string>
+  <string name="email_chooser_title">Gửi thư bằng...</string>
+  <string name="website_chooser_title">Xem trang web bằng cách sử dụng...</string>
+  <string name="license">Phần mềm này được cung cấp "như hiện tại", không có bảo hành của bất kỳ loại nào. Để biết chi tiết, xem GNU General Public License phiên bản 3 hoặc sau đó&lt;/u&gt;</string>
+  <string name="description">Jami là phần mềm miễn phí cho truyền thông phổ quát tôn trọng quyền tự do và quyền riêng tư của người dùng.</string>
+  <string name="credits">Các khoản tín dụng</string>
+  <string name="pip_title">Hội nghị Jami</string>
+  <string name="call_service_description">Dịch vụ này là cần thiết để giữ cho cuộc gọi của bạn chạy trong tiền bối. Nó chỉ chạy trong các cuộc gọi.</string>
+  <string name="data_transfer_service_description">Dịch vụ này là cần thiết để hiển thị các thông báo liên tục trong quá trình chuyển giao tệp. Nó chỉ chạy trong quá trình chuyển giao tệp.</string>
   <!--About dialog-->
+  <string name="developed_by">Được phát triển bởi</string>
+  <string name="designed_by">Được thiết kế bởi</string>
+  <string name="ringtones_by">Nhạc tiếng</string>
   <!--RingActivity-->
+  <string name="error_no_network">Không có kết nối mạng</string>
+  <string name="error_account_offline">Tài khoản đã bị tắt</string>
+  <string name="error_mobile_network_available_but_disabled">Vui lòng cho phép truy cập vào mạng di động trong màn hình cài đặt.</string>
   <!--AB menus-->
+  <string name="ab_action_chat">Thông điệp văn bản</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Các yêu cầu liên lạc</string>
+  <string name="menu_item_accounts">Quản lý tài khoản</string>
+  <string name="menu_item_account">Quản lý tài khoản</string>
+  <string name="menu_item_settings">Cài đặt</string>
+  <string name="menu_item_advanced_settings">Thiết lập nâng cao</string>
+  <string name="menu_item_account_settings">Cài đặt tài khoản</string>
+  <string name="menu_item_plugin_list">Plugins Settings</string>
+  <string name="menu_item_share">Chia sẻ tài khoản của tôi</string>
+  <string name="menu_item_about">Về Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Đặt một số</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -13,38 +47,121 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Lỡ cuộc gọi tiếp nhận</string>
+  <string name="notif_missed_outgoing_call">Lỡ cuộc gọi ra ngoài</string>
+  <string name="notif_incoming_call">Tiếp tục gọi</string>
+  <string name="notif_outgoing_call">Tiếp tục gọi</string>
+  <string name="notif_channel_calls">- Các cuộc gọi</string>
+  <string name="notif_channel_messages">Thông điệp</string>
+  <string name="notif_channel_file_transfer">Chuyển tập tin</string>
+  <string name="notif_group_calls">- Các cuộc gọi</string>
+  <string name="notif_dismiss">Tháo dỡ</string>
+  <string name="notif_reply">Trả lời</string>
+  <string name="location_share_action_stop">Ngừng chia sẻ</string>
+  <string name="location_share_about_title">Thông tin bản đồ</string>
   <!--Call Fragment-->
+  <string name="action_call_maximize">Tăng tối đa</string>
+  <string name="action_call_minimize">Giảm</string>
+  <string name="action_call_mute">Ngô</string>
+  <string name="action_call_unmute">Không nói gì</string>
   <string name="action_call_end_accept">Kết thúc cuộc gọi và trả lời</string>
+  <string name="action_call_decline">Sự suy giảm</string>
   <string name="action_call_mic_mute">Tắt tiếng micrô</string>
+  <string name="ab_action_contact_add">Thêm vào các liên hệ</string>
   <!--Text messages-->
+  <string name="message_failed">Thất bại</string>
   <string name="send_file">Gửi tập tin</string>
+  <string name="conversation_share_location">Địa điểm chia sẻ</string>
+  <string name="in_reply_to">Trả lời</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">Trận lỗi</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="title_activity_qrcode">Chia sẻ tài khoản của tôi</string>
   <!--Settings-->
+  <string name="clear_history">Rõ ràng</string>
   <!--Conversation-->
+  <string name="conversation_details">Thông tin liên lạc</string>
+  <string name="conversation_action_delete_this_message">Hành động này không thể không được thực hiện.</string>
+  <string name="conversation_action_history_clear">Lịch sử rõ ràng</string>
+  <string name="conversation_action_block_this">Khác tiếp xúc</string>
   <string name="conversation_action_latest">Cuộn đến cuối cuộc hội thoại</string>
+  <string name="conversation_members">Các thành viên</string>
   <!--Contacts-->
+  <string name="account_create_title">Tạo tài khoản Jami</string>
   <string name="prompt_hint_username">Username</string>
+  <string name="wizard_next">Tiếp theo</string>
+  <string name="wizard_back">Trở lại</string>
+  <string name="wizard_skip">Tháo</string>
+  <string name="hist_contact_added">Liên hệ được thêm vào</string>
+  <string name="hist_invitation_received">Thỉnh cầu được nhận</string>
   <!--Account Summary-->
+  <string name="profile">Tương tự</string>
+  <string name="profile_message_warning">Profile của bạn chỉ được chia sẻ với các liên lạc của bạn</string>
+  <string name="profile_name_hint">Nhập tên của bạn</string>
+  <string name="identity">Định dạng</string>
+  <string name="account">Tài khoản</string>
+  <string name="link_new_device">Kết nối một thiết bị mới</string>
+  <string name="devices">Các thiết bị liên kết</string>
   <!--Share fragment-->
+  <string name="share_label">Chia sẻ</string>
+  <string name="generic_error_migration">Trận lỗi</string>
   <!--Pending contact requests-->
+  <string name="accept">Chấp nhận</string>
+  <string name="refuse">Nhận không</string>
+  <string name="block">Blok</string>
   <!--Send contact requests-->
+  <string name="send_request_button">Gửi đi</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Không có liên lạc bị chặn</string>
   <!--Smartlist-->
+  <string name="search_results">Kết quả tìm kiếm</string>
+  <string name="tv_contact_row_header">Liên hệ</string>
   <!--File Transfer-->
   <string name="file_transfer_status_cancelled">đã hủy bỏ</string>
+  <string name="menu_file_open">Mở file</string>
+  <string name="menu_file_save">Tự lưu tập tin</string>
+  <string name="menu_file_share">Chia sẻ file</string>
+  <string name="menu_message_copy">Tải</string>
+  <string name="menu_message_edit">chỉnh sửa thông điệp</string>
+  <string name="menu_message_delete">Xóa thông báo</string>
+  <string name="menu_message_reply">Trả lời</string>
+  <string name="menu_delete">Xóa</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Các cuộc trò chuyện</string>
+  <string name="navigation_item_contact_request">Thỉnh cầu</string>
+  <string name="navigation_item_account">Tài khoản</string>
   <!--TV-->
+  <string name="tv_media_preview">Xem trước</string>
   <string name="tv_audio_play">Phát</string>
+  <string name="tv_dialog_send">Gửi đi</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Ưu tiên</string>
+  <string name="wizard_status_optional">Tự chọn</string>
+  <string name="wizard_status_required">Cần</string>
+  <string name="wizard_username_info">Chọn tên người dùng cho tài khoản của bạn</string>
+  <string name="wizard_password_skip">Tạo tài khoản</string>
+  <string name="wizard_password_switch">Mã hóa tài khoản với mật khẩu</string>
+  <string name="wizard_profile_info">Profile chỉ được chia sẻ với các liên hệ</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Chia sẻ</string>
   <string name="bottomSheet_dialpad_btn">Bàn phím số</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Thêm thêm</string>
+  <string name="bottomSheet_change_camera_btn">Thay đổi</string>
   <string name="bottomSheet_hangup_btn">Kết thúc cuộc gọi</string>
   <string name="bottomSheet_mute_microphone_btn">Micrô</string>
   <string name="bottomSheet_raiseHand_btn">Giơ tay</string>
+  <string name="uninstall">Tháo cài đặt</string>
+  <string name="reset">Tái thiết</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Đảm nhận</string>
+  <string name="swarm_description">Thêm mô tả</string>
   <string name="tab_about">Thông tin phần mềm</string>
+  <string name="tab_members">Các thành viên</string>
+  <string name="tab_documetn">Tài liệu</string>
+  <string name="dialog_hint_title">Tiêu đề</string>
+  <string name="dialog_hint_description">Mô tả</string>
 </resources>

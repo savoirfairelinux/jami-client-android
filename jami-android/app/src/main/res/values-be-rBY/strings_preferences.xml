@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Мабільная сетка</string>
   <string name="pref_mobileData_summary">Дазволіць Jami працаваць на сетках 3G/LTE і так сама праз Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-Паведамленні</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Выкарыстоўваць серверы карпарацыі Google каб дазволіць атрыманне званкоў/паведамленняў як фанавы працэс</string>
+  <string name="pref_unifiedPush_summary">Выкарыстоўвайце сэрвіс UnifiedPush, каб дазволіць атрымліваць званкі / паведамленні ў фоне</string>
   <string name="pref_video_advanced_title">Пашыранныя налады відэа</string>
   <string name="pref_video_advanced_summary">Змяніць бітрэйі відэа, разрозненне, як доступ да эксперыментальных налад</string>
   <string name="pref_hd_summary">Адпраўляць HD(высакаякасныя) відэа</string>
@@ -18,6 +20,54 @@
   <string name="pref_videoBitrate_title">Бітрэйт відэа</string>
   <string name="pref_videoBitrate_summary">Выбраць звычайны выходны бітрэйт відэа (KB/с)</string>
   <string name="pref_videoResolution_title">Разрозненне відэа</string>
+  <string name="pref_videoResolution_summary">Выберыце папярэднюю выхадную відэа-развіццё</string>
+  <string name="pref_systemContacts_title">Выкарыстоўвайце кантакты сістэмы</string>
+  <string name="pref_systemContacts_summary">Выкарыстоўвайце кантакты сістэмы, каб паказаць дэталі кліента.</string>
+  <string name="pref_systemDialer_title">Звяртацца ў сістэму з дапамогай Jami</string>
+  <string name="pref_systemDialer_summary">Выкарыстоўвайце Джамі, каб размясціць сістэмныя званкі, калі гэта магчыма.</string>
+  <string name="pref_startOnBoot_title">Пачніце Jami на запуску</string>
+  <string name="pref_startOnBoot_summary">Запускай Джані ў фоне, калі сістэма пачне.</string>
+  <string name="pref_clearHistory_title">Ясная гісторыя</string>
+  <string name="pref_clearHistory_summary">Выправіць усе гісторыі размоў.</string>
+  <string name="pref_notification_title">Відавочнасць паведамленняў</string>
+  <string name="pref_notification_summary">Усталюйце бачнасць паведамленняў аб прыкладанні на замак экрана.</string>
+  <string name="pref_blackList_title">Спіс блокаў</string>
+  <string name="pref_blackList_summary">Праверце ваш спіс блокаў.</string>
+  <string name="pref_delete_account_title">Знішчыць рахунак</string>
+  <string name="pref_delete_account_summary">Знішчыць свой рахунак з гэтага прылады</string>
+  <string name="pref_persistNotification_title">Выконваць у фоне</string>
+  <string name="pref_persistNotification_summary">Дазвольце бегчы ў фоне, каб атрымаць званкі і паведамленні.</string>
+  <string name="pref_newGroup_title">Уключыць груповы чат</string>
+  <string name="pref_newGroup_summary">Дазвольце ствараць групы ў Jami.</string>
+  <string name="pref_logs_title">Дзякуючы дыягнасту</string>
+  <string name="pref_logs_summary">Адкрытыя налады дыягнастычнага часопіса</string>
+  <string name="pref_logs_start">Пачаць запіс</string>
+  <string name="pref_logs_stop">Спыніце лагаванне</string>
+  <string name="pref_typing_title">Дазволіць запіс паказчыкаў</string>
+  <string name="pref_typing_summary">Пашляць і атрымліваць паказчыкі накладу, якія паказваюць, што паведамленне накладзена.</string>
+  <string name="pref_read_title">Дазвольце чытаць квітанцыі</string>
+  <string name="pref_read_summary">Пашляць і атрымліваць квіты, якія паказваюць, што паведамленне было паказана.</string>
+  <string name="pref_block_record_title">Блокіраванне скрыншот і запіс</string>
+  <string name="pref_block_record_summary">Блокіруйце здымак экрана або запіс відэа.</string>
+  <string name="pref_link_preview_title">Паказаць перагляд спасылкі ў размовах</string>
+  <string name="pref_link_preview_summary">Перагляд патрабуе спампоўкі кантэнту з сервераў трэціх бакоў.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Грамадскае \n(паведамленні паказваюць і іх змест на замак экрана) \n</string>
+  <string name="notification_private">Прыватныя \n(пакажыце паведамленні, але схаваць іх змест на замак экрана) \n</string>
+  <string name="notification_secret">Сакраты \n(не паказваюць паведамленні на замак экрана)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Уключальнікі</string>
+  <string name="pref_plugins_summary">Абноўце ўбудовы і ўсталяваць іх параметры</string>
+  <string name="fab_plugins_add">Дадаць новы ўклад</string>
+  <string name="plugin_uninstall_title">Адмяніць ўбудовы?</string>
+  <string name="plugin_reset_preferences">Пераўстаноўка пераваг плагіна</string>
+  <string name="plugin_reset_preferences_summary">Пастаноўкі ўключэння будуць па-заўсёды</string>
+  <string name="plugin_reset_preferences_ask">Хочаце пераасэнсаваць агульныя налады ўбудовы?</string>
+  <string name="plugin_reset_account_preferences_ask">Хочаце адсочваць налады ўбудовы ўліковага запісу?</string>
+  <string name="plugin_successfully_installed">Плашч <b>%1$s</b> паспяхова ўсталяваны</string>
+  <string name="plugin_install_failure">Не ўсталявалі ўбудова: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">У вас ёсць больш апошні версія: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">У вас ёсць адна і тая ж версія <b>%1$s</b> ўстаноўлены</string>
+  <string name="plugin_force_install">прымусіць \n ўсталяваць</string>
+  <string name="plugin_path_image_add">Дадаць новае малюнка</string>
 </resources>

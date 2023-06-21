@@ -24,6 +24,9 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Panggilan dibatalkan. Tiada mikrofon dikesan.</string>
     <string name="call_error_no_camera_no_microphone">Panggilan dibatalkan. Tiada kamera atau mikrofon dikesan.</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">തിരയൽ</string>
+    <string name="call_human_state_incoming">വരാനിരിക്കുന്ന</string>
     <string name="call_human_state_connecting">Menyambung</string>
     <string name="call_human_state_ringing">Berdering</string>
     <string name="call_human_state_current">Bercakap</string>
@@ -33,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Tangguh</string>
     <string name="call_human_state_unhold">Nyahtangguh</string>
     <string name="call_human_state_over">Selesai</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">മോഡറേറ്റർ</string>
+    <string name="call_muted">നിശബ്ദത</string>
+    <string name="call_handRaised">കൈ ഉയര് ത്തുക</string>
+
+</resources>

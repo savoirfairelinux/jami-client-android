@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Akagbuola oku. Ọnweghị igwe okwu achọpụtara.</string>
     <string name="call_error_no_camera_no_microphone">Akagbuola oku. Ọnweghị igwefoto ma ọ bụ igwe okwu achọpụtara.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Ịchọgharị</string>
+    <string name="call_human_state_incoming">Ihe na-abata</string>
+    <string name="call_human_state_connecting">Njikọ</string>
+    <string name="call_human_state_ringing">Ịkpọ oku</string>
+    <string name="call_human_state_current">Ịgwa ha okwu</string>
+    <string name="call_human_state_hungup">Ọ ga - agwụ.</string>
+    <string name="call_human_state_busy">Ọrụ juru m anya</string>
+    <string name="call_human_state_failure">Ihe na-agaghị ekwe omume</string>
+    <string name="call_human_state_hold">Nọrọ na nche</string>
+    <string name="call_human_state_unhold">Kwụsị</string>
+    <string name="call_human_state_over">Ọ ga - agwụ.</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Onye na-eduzi</string>
+    <string name="call_muted">N\'enweghị isi</string>
+    <string name="call_handRaised">Aka e weliri elu</string>
+
+</resources>

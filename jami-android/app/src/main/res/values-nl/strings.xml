@@ -15,6 +15,7 @@
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
+  <string name="pip_title">Conferentie van Jami</string>
   <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Ze draait enkel tijdens oproepen.</string>
   <string name="data_transfer_service_description">Deze dienst is vereist om blijvende meldingen te kunnen tonen tijdens bestandsoverdrachten. Ze draait enkel tijdens bestandsoverdrachten.</string>
   <!--About dialog-->
@@ -32,6 +33,7 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_advanced_settings">Geavanceerde instellingen</string>
   <string name="menu_item_account_settings">Accountinstellingen</string>
   <string name="menu_item_plugin_list">Plugins instellingen</string>
   <string name="menu_item_share">Mijn account delen</string>
@@ -85,6 +87,7 @@
   <string name="notif_location_action_stop">Stop met het delen van uw locatie</string>
   <string name="location_share_action_start">Begin met delen</string>
   <string name="location_share_action_stop">Stop met delen</string>
+  <string name="location_share_about_title">Informatie over de kaart</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>
@@ -98,6 +101,10 @@
   <string name="start_error_title">Jami kan niet opgestart worden!</string>
   <string name="start_error_mic_required">Jami vereist toestemming om de microfoon te kunnen gebruiken.</string>
   <string name="action_call_accept">Oproep aannemen</string>
+  <string name="action_call_accept_audio">Antwoord in audio</string>
+  <string name="action_call_accept_video">Antwoord in video</string>
+  <string name="action_call_hold_accept">Hou op en neem audio oproep</string>
+  <string name="action_call_hold_accept_video">Hou en neem video oproep</string>
   <string name="action_call_end_accept">Ophangen en oproep opnemen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
@@ -121,11 +128,13 @@
   <string name="message_failed">Mislukt</string>
   <string name="time_just_now">Zonet</string>
   <string name="send_file">Bestand verzenden</string>
+  <string name="select_media">Open galerij</string>
   <string name="hist_file_sent">Bestand verstuurd</string>
   <string name="hist_file_received">Bestand ontvangen</string>
   <string name="conversation_send_audio">Geluidsbericht opnemen</string>
   <string name="conversation_send_video">Videobericht opnemen</string>
   <string name="conversation_share_location">Uw locatie delen</string>
+  <string name="in_reply_to">In antwoord op</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -174,7 +183,26 @@
   <string name="block_contact_dialog_title">%1$s blokkeren?</string>
   <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
   <string name="block_contact_completed">%1$s is geblokkeerd.</string>
+  <string name="unblock_contact_dialog_title">Unblock %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s zal weer contact met u kunnen opnemen.</string>
+  <string name="unblock_contact_completed">%1$s is ontblokkeerd.</string>
   <string name="conversation_contact_is_typing">Contact is aan het typen...</string>
+  <string name="conversation_info_contact_you">Jij?</string>
+  <string name="conversation_members">Lid-Staten</string>
+  <string name="conversation_syncing">Download van een gesprek van een peer</string>
+  <string name="conversation_blocked">Dit contact is geblokkeerd.</string>
+  <string name="conversation_ended">Het gesprek is voorbij.</string>
+  <string name="conversation_message_deleted">(Bericht verwijderd)</string>
+  <string name="conversation_preference_color">Kleur van het gesprek</string>
+  <string name="conversation_preference_emoji">Conversatie emoji</string>
+  <string name="conversation_type_contact">Jami contact</string>
+  <string name="conversation_type_private">Privé-schaam</string>
+  <string name="conversation_type_group">Groepzwerm</string>
+  <string name="conversation_contact_invited">%1$s is uitgenodigd</string>
+  <string name="conversation_contact_added">%1$s is aangesloten</string>
+  <string name="conversation_contact_left">%1$ is links</string>
+  <string name="conversation_contact_banned">%1$s is verboden</string>
+  <string name="conversation_search_hint">Zoek gesprek</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
@@ -190,7 +218,10 @@
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
+  <string name="hist_contact_invited">Contact wordt uitgenodigd</string>
   <string name="hist_contact_added">Contact toegevoegd</string>
+  <string name="hist_contact_left">Links contact</string>
+  <string name="hist_contact_banned">Contact verboden</string>
   <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <!--Account Summary-->
   <string name="profile">Profiel</string>
@@ -219,6 +250,7 @@
   <string name="refuse">Afwijzen</string>
   <string name="block">Blokkeren</string>
   <string name="contact_request_title">Nieuw contactverzoek</string>
+  <string name="contact_request_msg">U heeft %1$d contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">U heeft geen contactverzoeken</string>
   <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek accepteren of weigeren?</string>
@@ -257,6 +289,7 @@
   <string name="file_transfer_status_timed_out">Wachttijd verstreken</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="file_saved_successfully">Bestand opgeslagen</string>
+  <string name="file_download">Download</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
@@ -265,6 +298,7 @@
   <string name="menu_file_delete">Bestand verwijderen</string>
   <string name="menu_file_share">Bestand delen</string>
   <string name="menu_message_copy">Kopiëren</string>
+  <string name="menu_message_edit">Bewerk bericht</string>
   <string name="menu_message_delete">Bericht verwijderen</string>
   <string name="menu_message_cancel">Bericht annuleren</string>
   <string name="menu_message_reply">Beantwoorden</string>
@@ -288,6 +322,7 @@
   <string name="tv_send_text">Verstuur Tekst</string>
   <string name="tv_send_audio">Verstuur Audio</string>
   <string name="tv_send_video">Verstuur Media</string>
+  <string name="tv_action_more">Meer</string>
   <string name="conversation_input_speech_hint">Zeg iets...</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">Aanbevolen</string>
@@ -306,13 +341,35 @@
   <string name="wizard_profile_button">Profiel opslaan</string>
   <string name="wizard_profile_skip">Overslaan en dit later doen</string>
   <string name="fab_path_choose">Kies een ander bestand</string>
+  <string name="chat_plugins">Chat-plugins</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Delen</string>
+  <string name="bottomSheet_dialpad_btn">Dialpad</string>
+  <string name="bottomSheet_plugins_btn">Plugins</string>
+  <string name="bottomSheet_add_participants_btn">Voeg toe</string>
+  <string name="bottomSheet_change_camera_btn">Verandering</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Camera</string>
   <string name="bottomSheet_hangup_btn">Oproep beëindigen</string>
+  <string name="bottomSheet_mute_microphone_btn">Micro</string>
+  <string name="bottomSheet_sound_output_btn">Klinkt goed.</string>
   <string name="bottomSheet_raiseHand_btn">Hand opsteken</string>
+  <string name="open_account_plugin_settings">Open account-plugininstellingen</string>
+  <string name="open_general_plugin_settings">Open de algemene pluginsinstellingen</string>
+  <string name="uninstall">Oninstalleren</string>
+  <string name="reset">Herstellen</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Bevestigen</string>
+  <string name="rename_error">Kan niet leeg zijn.</string>
+  <string name="swarm_description">Voeg een beschrijving toe</string>
   <string name="tab_about">Over</string>
+  <string name="tab_members">Lid-Staten</string>
+  <string name="tab_documetn">Documenten</string>
+  <string name="dialogtitle_title">Bewerken van de titel</string>
+  <string name="dialogtitle_description">Bewerken van beschrijving</string>
   <string name="dialog_hint_title">Titel</string>
+  <string name="dialog_hint_description">Beschrijving</string>
+  <string name="picker_title">Selecteer contacten</string>
+  <string name="picker_btn">Selecteer contacten</string>
+  <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Verwijder uit de zwerm.</string>
 </resources>

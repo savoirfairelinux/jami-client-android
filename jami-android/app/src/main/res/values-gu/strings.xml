@@ -1,43 +1,375 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">પ્રતિસાદ</string>
+  <string name="report"><u>અમને એક ઇમેઇલ મોકલો</u></string>
+  <string name="section_license">લાઇસન્સ</string>
+  <string name="sponsor_section">જેમી એક મફત સોફ્ટવેર છે જે વિકાસ અને દ્વારા સમર્થિત છે</string>
+  <string name="copyright_section">કૉપિરાઇટ</string>
+  <string name="contribute_section">યોગદાન આપો</string>
+  <string name="version_section">આવૃત્તિ</string>
+  <string name="no_email_app_installed">કોઈ ઇમેઇલ એપ્લિકેશન મળી નથી, અમને રિપોર્ટ મોકલવા માટે એક ઇન્સ્ટોલ કરો</string>
+  <string name="no_browser_app_installed">કોઈ વેબ બ્રાઉઝર એપ્લિકેશન મળી નથી, આ પૃષ્ઠ જોવા માટે એક ઇન્સ્ટોલ કરો</string>
+  <string name="email_chooser_title">મેઇલ મોકલો.</string>
+  <string name="website_chooser_title">વેબસાઇટનો ઉપયોગ કરીને જુઓ.</string>
+  <string name="license">આ સોફ્ટવેર \"જેમ છે તેમ\" આપવામાં આવે છે, કોઈ પણ પ્રકારની ગેરંટી વિના. વિગતો માટે, જુઓ <u>GNU જનરલ પબ્લિક લાઇસન્સ આવૃત્તિ 3 અથવા પછીની</u></string>
+  <string name="description">જમી સાર્વત્રિક સંદેશાવ્યવહાર માટે મફત સોફ્ટવેર છે જે તેના વપરાશકર્તાઓની સ્વતંત્રતા અને ગોપનીયતાનું સન્માન કરે છે.</string>
+  <string name="credits">ક્રેડિટ્સ</string>
+  <string name="pip_title">જમી પરિષદ</string>
+  <string name="call_service_description">આ સેવા તમારા કૉલ્સને અગ્રધૂનમાં રાખવા માટે જરૂરી છે. તે ફક્ત કૉલ્સ દરમિયાન જ ચાલે છે.</string>
+  <string name="data_transfer_service_description">આ સેવા ફાઇલ ટ્રાન્સફર દરમિયાન સતત સૂચનાઓ પ્રદર્શિત કરવા માટે જરૂરી છે. તે ફક્ત ફાઇલ ટ્રાન્સફર દરમિયાન ચાલે છે.</string>
   <!--About dialog-->
+  <string name="developed_by">દ્વારા વિકસિત</string>
+  <string name="designed_by">દ્વારા ડિઝાઇન</string>
+  <string name="ringtones_by">રિંગ્સ દ્વારા</string>
   <!--RingActivity-->
+  <string name="error_no_network">નેટવર્ક કનેક્ટિવિટી નથી</string>
+  <string name="error_account_offline">એકાઉન્ટ ઑફલાઇન છે</string>
+  <string name="error_mobile_network_available_but_disabled">કૃપા કરીને સેલ નેટવર્કને સેટિંગ્સ સ્ક્રીન પર ઍક્સેસ આપો.</string>
   <!--AB menus-->
+  <string name="ab_action_chat">ટેક્સ્ટ મેસેજિંગ</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">સંપર્ક વિનંતીઓ</string>
+  <string name="menu_item_accounts">એકાઉન્ટ્સનું સંચાલન</string>
+  <string name="menu_item_account">એકાઉન્ટ મેનેજ કરો</string>
+  <string name="menu_item_settings">સેટિંગ્સ</string>
+  <string name="menu_item_advanced_settings">અદ્યતન સેટિંગ્સ</string>
+  <string name="menu_item_account_settings">એકાઉન્ટ સેટિંગ્સ</string>
+  <string name="menu_item_plugin_list">પ્લગઇન સેટિંગ્સ</string>
+  <string name="menu_item_share">મારા એકાઉન્ટ શેર કરો</string>
+  <string name="menu_item_about">જમી વિશે</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">નંબર ડાયલ કરો</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d વાતચીત</item>
+    <item quantity="other">%d વાતચીત</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">શોધ નામ અથવા ફોન નંબર...</string>
+  <string name="choose_number">એક નંબર પસંદ કરો</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">ઇનકમિંગ કૉલ ચૂકી</string>
+  <string name="notif_missed_outgoing_call">બહાર નીકળો કૉલ ચૂકી</string>
+  <string name="notif_incoming_call_title">%1$s માંથી આવનારી કૉલ</string>
+  <string name="notif_incoming_call">આવનારી કૉલ</string>
+  <string name="notif_outgoing_call_title">%1$s પર બહાર નીકળો કૉલ</string>
+  <string name="notif_outgoing_call">બહાર નીકળો કૉલ</string>
+  <string name="notif_current_call_title">%1$s સાથે ચાલુ કૉલ</string>
+  <string name="notif_current_call">ચાલુ કૉલ</string>
+  <string name="notif_channel_call_in_progress">પ્રગતિ માટે બોલાવ</string>
+  <string name="notif_channel_calls">કૉલ્સ</string>
+  <string name="notif_channel_missed_calls">ચૂકી ગયેલા કૉલ્સ</string>
+  <string name="notif_channel_incoming_calls">આવનારી કોલ્સ</string>
+  <string name="notif_channel_messages">સંદેશાઓ</string>
+  <string name="notif_channel_requests">વિનંતીઓ</string>
+  <string name="notif_channel_file_transfer">ફાઇલ ટ્રાન્સફર</string>
+  <string name="notif_channel_sync">ડેટા સમન્વય</string>
+  <string name="notif_channel_background_service">પૃષ્ઠભૂમિ સેવા</string>
+  <string name="notif_channel_background_service_descr">કોઈપણ સમયે કૉલ્સ અને સંદેશાઓ પ્રાપ્ત કરવાની મંજૂરી આપે છે.</string>
+  <string name="notif_group_calls">કૉલ્સ</string>
+  <string name="notif_background_service">જેમી હાલમાં પૃષ્ઠભૂમિમાં ચાલી રહી છે</string>
+  <string name="notif_mark_as_read">વાંચવામાં આવેલ માર્ક</string>
+  <string name="notif_dismiss">રદ</string>
+  <string name="notif_reply">જવાબ</string>
+  <string name="notif_incoming_file_transfer_title">%1$s માંથી આવનારી ફાઇલ</string>
+  <string name="notif_outgoing_file_transfer_title">%1$s પર ફાઇલ મોકલવી</string>
+  <string name="notif_incoming_picture">%1$s માંથી ચિત્ર</string>
+  <string name="notif_sync_title">ડેટા સિંક્રનાઇઝિંગ.</string>
+  <string name="notif_location_title">%1$s સાથે સ્થાન શેરિંગ</string>
+  <string name="location_share_contact">%1$s તમારી સાથે સ્થાન શેર કરી રહ્યું છે</string>
+  <string name="notif_location_multi_title">%1$d સંપર્કો સાથે સ્થાન શેરિંગ</string>
+  <string name="notif_location_remaining">%1$d મિનિટ બાકી</string>
+  <string name="notif_location_action_stop">સ્થાન શેર કરવાનું બંધ કરો</string>
+  <string name="location_share_action_start">શેર કરવાનું શરૂ કરો</string>
+  <string name="location_share_action_stop">શેર કરવાનું બંધ કરો</string>
+  <string name="location_share_about_title">નકશા માહિતી</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">તમે:</string>
+  <string name="action_call_hangup">બંધ કરો</string>
+  <string name="action_call_maximize">મહત્તમ કરો</string>
+  <string name="action_call_minimize">ઘટાડવું</string>
+  <string name="action_call_mute">મૌન</string>
+  <string name="action_call_unmute">અવિનાશી</string>
+  <string name="ongoing_call">ચાલુ કૉલ</string>
+  <string name="hist_in_call">%1$s માં આવનારી કૉલ</string>
+  <string name="hist_out_call">%1$s ની બહાર નીકળો કૉલ</string>
+  <string name="start_error_title">હું શરૂ કરી શકતો નથી Jami!</string>
+  <string name="start_error_mic_required">જેમીને કામ કરવા માટે માઇક્રોફોન પરવાનગીની જરૂર છે.</string>
+  <string name="action_call_accept">ફોન લો</string>
+  <string name="action_call_accept_audio">ઑડિઓ જવાબ</string>
+  <string name="action_call_accept_video">વિડીયોમાં જવાબ આપો</string>
+  <string name="action_call_hold_accept">hold અને કૉલ ઑડિઓ લેવા</string>
+  <string name="action_call_hold_accept_video">વિડિઓ કૉલ રાખો અને લો</string>
+  <string name="action_call_end_accept">અંત અને કૉલ લેવા</string>
+  <string name="action_call_decline">ઘટાડો</string>
+  <string name="action_call_mic_mute">મ્યૂટ માઇક્રોફોન</string>
+  <string name="action_load_plugin">લોડ પ્લગઇન</string>
+  <string name="ab_action_speakerphone">સ્પીકર સક્ષમ કરો</string>
+  <string name="ab_action_contact_add">સંપર્કો ઉમેરવા</string>
+  <string name="ab_action_contact_add_question">સંપર્કમાં ઉમેરો?</string>
+  <string name="ab_action_audio_call">ઑડિઓ કૉલ</string>
+  <string name="ab_action_video_call">વિડિયો કૉલ</string>
+  <string name="ab_action_change_screen_orientation">સ્ક્રીન દિશા બદલવા</string>
+  <string name="share_via">દ્વારા શેર કરો</string>
+  <string name="write_a_message">સંદેશ લખો</string>
+  <string name="scan_qr">QR કોડ સ્કેન કરો</string>
+  <string name="qr_code">ક્યૂઆર કોડ</string>
+  <string name="ab_action_flipcamera">ફ્લિપ કેમેરા</string>
+  <string name="ab_action_hidepreview">પૂર્વદર્શન છુપાવો</string>
+  <string name="remote_recording">%s રેકોર્ડિંગ...</string>
   <!--Text messages-->
+  <string name="send_message">સંદેશ મોકલો</string>
+  <string name="message_sending">સંદેશ મોકલવા.</string>
+  <string name="message_failed">નિષ્ફળ</string>
+  <string name="time_just_now">હમણાં જ</string>
   <string name="send_file">ફાઇલ મોકલો</string>
+  <string name="select_media">ખુલ્લી ગેલેરી</string>
+  <string name="hist_file_sent">ફાઇલ મોકલવામાં</string>
+  <string name="hist_file_received">પ્રાપ્ત ફાઇલ</string>
+  <string name="conversation_send_audio">ઑડિઓ ક્લિપ રેકોર્ડ</string>
+  <string name="conversation_send_video">વિડિઓ ક્લિપ રેકોર્ડ</string>
+  <string name="conversation_share_location">શેર સ્થાન</string>
+  <string name="in_reply_to">જવાબમાં</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">કેમેરા પરવાનગી</string>
+  <string name="permission_dialog_camera_message">વિડિઓ વાતચીત માટે કેમેરાની પરવાનગીની જરૂર છે. કૃપા કરીને તેને સક્ષમ કરવાનું વિચારો.</string>
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">ભૂલ</string>
+  <string name="ringtone_error_format_not_supported">આ ફોર્મેટને સપોર્ટેડ નથી.</string>
+  <string name="ringtone_error_size_too_big">આ ફાઇલ ખૂબ મોટી છે. મહત્તમ કદ %1$dkB છે.</string>
+  <string name="ringtone_custom_prompt">કસ્ટમ રિંગટોન સેટ કરો</string>
+  <string name="ringtone_custom_label">કસ્ટમ</string>
+  <string name="ringtone_jami_tones">જમી ટોન્સ</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">જમીને આ સુવિધાને સક્ષમ કરવા માટે \"સંપર્ક વાંચો\" પરવાનગીની જરૂર છે. કૃપા કરીને તેને આપો.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">જમીને આ સુવિધાને સક્ષમ કરવા માટે \"લૉગ લખો\" પરવાનગીની જરૂર છે. કૃપા કરીને તેને આપો.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">તમે ઉમેરવા માંગો છો તે એકાઉન્ટનો QR કોડ સ્કેન કરો.</string>
+  <string name="title_activity_qrcode">મારા એકાઉન્ટ શેર કરો</string>
+  <string name="error_scan_no_camera_permissions">QR સ્કેનર કામ કરવા માટે કેમેરા પરવાનગીઓ જરૂરી છે</string>
+  <string name="tab_code">મારો કોડ</string>
+  <string name="tab_scan">સ્કેન કોડ</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">સ્પષ્ટ ઇતિહાસ?</string>
+  <string name="clear_history_dialog_message">આ કાર્યવાહીને રદ કરી શકાતી નથી.</string>
+  <string name="clear_history_completed">ઇતિહાસ સાફ કરવામાં આવ્યો છે.</string>
+  <string name="clear_history">સ્પષ્ટ</string>
   <!--Conversation-->
+  <string name="conversation_details">સંપર્ક વિગતો</string>
+  <string name="conversation_action_delete_this">આ વાતચીત કાઢી નાખો</string>
+  <string name="conversation_action_delete_this_title">આ વાતચીત કાઢી નાખો?</string>
+  <string name="conversation_action_delete_this_message">આ કાર્યવાહીને રદ કરી શકાતી નથી.</string>
+  <string name="conversation_action_history_clear">સ્પષ્ટ ઇતિહાસ</string>
+  <string name="conversation_action_history_clear_title">વાતચીત ઇતિહાસ સાફ કરો?</string>
+  <string name="conversation_action_history_clear_message">આ ચોક્કસપણે વાતચીત ઇતિહાસ સાફ કરશે.</string>
+  <string name="conversation_action_remove_this">સંપર્કને કાઢી નાખો</string>
+  <string name="conversation_action_remove_this_title">આ સંપર્કને કાઢી નાખો?</string>
+  <string name="conversation_action_remove_this_message">આ સંપર્કને કાઢી નાખશે અને વાતચીત ઇતિહાસને ચોક્કસપણે સાફ કરશે.</string>
+  <string name="conversation_action_copy_peer_number">નકલ નંબર</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s ક્લિપબોર્ડ પર કૉપિ</string>
+  <string name="conversation_action_select_peer_number">એક નંબર પસંદ કરો</string>
+  <string name="conversation_action_block_this">બ્લોક સંપર્ક</string>
+  <string name="conversation_action_unblock_this">સંપર્કને અનબ્લોક કરો</string>
+  <string name="conversation_action_go_to_call">ચાલુ કૉલ પર પાછા</string>
   <string name="conversation_action_latest">વાતચીતના અંત સુધી સ્ક્રોલ કરો</string>
+  <string name="conversation_open_file_error">આ ફાઇલ પ્રકારને ખોલવા માટે સક્ષમ કોઈ ઇન્સ્ટોલ કરેલ એપ્લિકેશન નથી.</string>
+  <string name="clip_contact_uri">સંપર્ક સરનામું</string>
+  <string name="block_contact_dialog_title">%1$s ને અવરોધિત કરો?</string>
+  <string name="block_contact_dialog_message">%1$s તમે તેને અનબ્લોક કરો ત્યાં સુધી તમારો સંપર્ક કરી શકશે નહીં.</string>
+  <string name="block_contact_completed">%1$s અવરોધિત કરવામાં આવ્યું હતું.</string>
+  <string name="unblock_contact_dialog_title">%1$s ને અનબ્લોક કરો?</string>
+  <string name="unblock_contact_dialog_message">%1$s તમને ફરીથી સંપર્ક કરી શકશે.</string>
+  <string name="unblock_contact_completed">%1$s અનબ્લોક કરવામાં આવ્યું હતું.</string>
+  <string name="conversation_contact_is_typing">સંપર્ક ટાઈપિંગ છે.</string>
+  <string name="conversation_info_contact_you">તમે</string>
+  <string name="conversation_members">સભ્યો</string>
+  <string name="conversation_syncing">પીઅર પરથી વાતચીત ડાઉનલોડ કરી રહ્યું છે</string>
+  <string name="conversation_blocked">આ સંપર્ક અવરોધિત છે.</string>
+  <string name="conversation_ended">વાતચીત પૂરી થઈ.</string>
+  <string name="conversation_message_deleted">(સંદેશ કાઢી નાખવામાં આવ્યો)</string>
+  <string name="conversation_preference_color">વાતચીતનો રંગ</string>
+  <string name="conversation_preference_emoji">વાતચીત ઇમોજી</string>
+  <string name="conversation_type_contact">જમી સંપર્ક</string>
+  <string name="conversation_type_private">ખાનગી સમૂહ</string>
+  <string name="conversation_type_group">જૂથ સમૂહ</string>
+  <string name="conversation_contact_invited">%1$s આમંત્રિત કરવામાં આવી હતી</string>
+  <string name="conversation_contact_added">%1$s જોડાયા</string>
+  <string name="conversation_contact_left">%1$ ડાબી</string>
+  <string name="conversation_contact_banned">%1$s પર પ્રતિબંધ મૂકવામાં આવ્યો હતો</string>
+  <string name="conversation_search_hint">શોધ વાતચીત</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s ઉમેરવા?</string>
+  <string name="prompt_new_password">નવો પાસવર્ડ</string>
+  <string name="prompt_new_password_optional">નવો પાસવર્ડ (વૈકલ્પિક)</string>
+  <string name="prompt_new_password_repeat">નવો પાસવર્ડ પુનરાવર્તન કરો</string>
+  <string name="account_create_title">એક Jami એકાઉન્ટ બનાવો</string>
+  <string name="prompt_new_username">નવું વપરાશકર્તાનામ દાખલ કરો</string>
+  <string name="prompt_hint_username">વપરાશકર્તા નામ</string>
+  <string name="help_password_choose">તમારા જેમી એકાઉન્ટને સુરક્ષિત કરવા માટે તમે યાદ રાખશો તે મજબૂત પાસવર્ડ પસંદ કરો.</string>
+  <string name="help_password_enter">તમારું મુખ્ય જમી એકાઉન્ટ પાસવર્ડ દાખલ કરો.</string>
+  <string name="help_server_enter">મેનેજમેન્ટ સર્વરનું URL દાખલ કરો.</string>
+  <string name="help_pin_enter">અન્ય ગોઠવાયેલા જમી એકાઉન્ટમાંથી પિન દાખલ કરો. PIN મેળવવા માટે \"જમી એકાઉન્ટ નિકાસ\" સુવિધાનો ઉપયોગ કરો.</string>
+  <string name="wizard_next">આગળ</string>
+  <string name="wizard_back">પાછા</string>
+  <string name="wizard_skip">સ્કીપ</string>
+  <string name="hist_contact_invited">સંપર્ક આમંત્રિત</string>
+  <string name="hist_contact_added">સંપર્ક ઉમેરવામાં આવ્યો</string>
+  <string name="hist_contact_left">સંપર્ક ડાબી</string>
+  <string name="hist_contact_banned">સંપર્ક પ્રતિબંધિત</string>
+  <string name="hist_invitation_received">પ્રાપ્ત આમંત્રણ</string>
   <!--Account Summary-->
+  <string name="profile">પ્રોફાઇલ</string>
+  <string name="profile_name">પ્રોફાઇલ નામ</string>
+  <string name="profile_message_warning">તમારી પ્રોફાઇલ ફક્ત તમારા સંપર્કો સાથે શેર કરવામાં આવે છે</string>
+  <string name="open_the_gallery">ગેલેરી ખોલો</string>
+  <string name="take_a_photo">ફોટો લો</string>
+  <string name="profile_name_hint">તમારું નામ દાખલ કરો</string>
+  <string name="registered_name">રજિસ્ટર્ડ નામ</string>
+  <string name="no_registered_name">કોઈ નામ નોંધાયેલ નથી</string>
+  <string name="identity">ઓળખ</string>
+  <string name="account">ખાતું</string>
+  <string name="link_new_device">નવી ઉપકરણને લિંક કરો</string>
+  <string name="devices">જોડાયેલ ઉપકરણો</string>
+  <string name="total_devices">કુલ ઉપકરણો: </string>
   <!--Share fragment-->
+  <string name="share_message">જેમી સાથે આ કોડ સ્કેન કરો</string>
+  <string name="share_message_no_account">કૃપા કરીને શેર કરવા માટે એક એકાઉન્ટ પસંદ કરો.</string>
+  <string name="share_your_account_information">મારી સંપર્ક માહિતી શેર કરો</string>
+  <string name="share_label">શેર કરો</string>
+  <string name="generic_error_migration">ભૂલ</string>
+  <string name="generic_error_migration_message">સ્થળાંતર દરમિયાન ભૂલ આવી</string>
+  <string name="title_share_with">.. સાથે શેર કરો.</string>
   <!--Pending contact requests-->
+  <string name="accept">સ્વીકારો</string>
+  <string name="refuse">ઇનકાર</string>
+  <string name="block">બ્લોક</string>
+  <string name="contact_request_title">નવી સંપર્ક વિનંતી</string>
+  <string name="contact_request_msg">તમારી પાસે %1$d સંપર્ક વિનંતીઓ છે</string>
+  <string name="contact_request_account">%1$s માટે</string>
+  <string name="no_requests">તમારી પાસે કોઈ સંપર્ક વિનંતીઓ નથી</string>
+  <string name="message_contact_not_trusted_yet">%s તમારા સંપર્કોમાં હજુ સુધી નથી.\nશું તમે આ સંપર્ક વિનંતીને સ્વીકારો છો અથવા નકારી કાઢશો?</string>
+  <string name="message_contact_not_trusted">%s તમારા સંપર્કોમાં નથી. \nનવો સંપર્ક ઉમેરો?</string>
   <!--Send contact requests-->
+  <string name="send_request_button">મોકલો</string>
+  <string name="send_request_title">સંપર્ક વિનંતી મોકલો</string>
+  <string name="send_request_msg">આ વપરાશકર્તા સાથે વાતચીત કરવા માટે તમારે સંપર્ક વિનંતી મોકલવી આવશ્યક છે. જ્યાં સુધી તમારો સંપર્ક વિનંતીને સ્વીકારતો નથી, તમે સંદેશા મોકલી શકો છો પરંતુ તે જવાબ આપી શકશે નહીં.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">કોઈ અવરોધિત સંપર્કો નહીં</string>
   <!--Smartlist-->
+  <string name="no_contact_request">કોઈ સંપર્ક વિનંતી મોકલવામાં આવી નથી</string>
+  <string name="conversation_placeholder">તમે હજુ સુધી કોઈ વાતચીત નથી કરી</string>
+  <string name="contact_request_sent">સંપર્ક વિનંતી મોકલવામાં આવી</string>
+  <string name="start_conversation">વાતચીત શરૂ કરો</string>
+  <string name="search_results">શોધ પરિણામો</string>
+  <string name="tv_contact_row_header">સંપર્કો</string>
+  <string name="gallery_error_title">ગેલેરી એપ્લિકેશન મળી નથી</string>
+  <string name="gallery_error_message">ગેલેરી ખોલવા માટે ઉપકરણ પર કોઈ એપ્લિકેશન મળી નથી</string>
+  <string name="generic_error">અજ્ઞાત ભૂલ થઇ</string>
   <!--File Transfer-->
+  <string name="invalid_file">અમાન્ય ફાઇલ</string>
+  <string name="not_able_to_write_file">ફાઇલ લખી શકતો નથી</string>
+  <string name="file_transfer_status_created">ટ્રાન્સફર શરૂ</string>
+  <string name="file_transfer_status_unsupported">આધારભૂત નથી</string>
+  <string name="file_transfer_status_wait_peer_acceptance">સહકર્મીઓની સ્વીકૃતિની રાહ જોવી</string>
+  <string name="file_transfer_status_wait_host_acceptance">રાહ જોતા યજમાન સ્વીકૃતિ</string>
+  <string name="file_transfer_status_ongoing">ચાલુ</string>
+  <string name="file_transfer_status_finished">પૂર્ણ</string>
+  <string name="file_transfer_status_closed_by_host">યજમાન દ્વારા બંધ</string>
+  <string name="file_transfer_status_closed_by_peer">નજીકના સમકક્ષ</string>
+  <string name="file_transfer_status_invalid_pathname">અમાન્ય પાથ નામ</string>
+  <string name="file_transfer_status_unjoinable_peer">અયોગ્ય સમકક્ષ</string>
   <string name="file_transfer_status_cancelled">રદ થયેલ છે</string>
+  <string name="file_transfer_status_error">ભૂલને કારણે નિષ્ફળ</string>
+  <string name="file_transfer_status_timed_out">સમયસર</string>
+  <string name="file_saved_in">%s માં સાચવેલ ફાઇલ</string>
+  <string name="file_saved_successfully">ફાઇલ સફળતાપૂર્વક સાચવવામાં</string>
+  <string name="file_download">ડાઉનલોડ કરો</string>
+  <string name="no_space_left_on_device">ઉપકરણ પર કોઈ જગ્યા બાકી નથી</string>
+  <string name="title_media_viewer">મીડિયા દર્શક</string>
+  <string name="menu_file_open">ખુલ્લી ફાઇલ</string>
+  <string name="menu_file_download">ફાઇલ ડાઉનલોડ કરો</string>
+  <string name="menu_file_save">ફાઇલ સાચવો</string>
+  <string name="menu_file_delete">ફાઇલ કાઢી નાખો</string>
+  <string name="menu_file_share">ફાઈલ શેર કરો</string>
+  <string name="menu_message_copy">કૉપિ</string>
+  <string name="menu_message_edit">સંદેશ સંપાદિત કરો</string>
+  <string name="menu_message_delete">સંદેશ કાઢી નાખો</string>
   <string name="menu_message_cancel">સંદેશ રદ કરો</string>
+  <string name="menu_message_reply">જવાબ</string>
+  <string name="menu_delete">કાઢી નાખો</string>
+  <string name="pref_darkTheme_title">શ્યામ થીમ</string>
+  <string name="pref_darkTheme_summary">હંમેશા સિસ્ટમ વર્તન ઉપયોગ કરવાને બદલે શ્યામ થીમ સક્ષમ કરો</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">વાતચીત</string>
+  <string name="navigation_item_contact_request">આમંત્રણો</string>
+  <string name="navigation_item_account">ખાતું</string>
+  <string name="search_results_public_directory">જાહેર ડિરેક્ટરી</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">ઑડિઓ સંદેશ મોકલવા?</string>
+  <string name="tv_send_image_dialog_message">છબી મોકલો?</string>
+  <string name="tv_send_video_dialog_message">વીડિયો મોકલો?</string>
+  <string name="tv_media_preview">પૂર્વાવલોકન</string>
+  <string name="tv_audio_play">રમો</string>
+  <string name="tv_audio_pause">વિરામ</string>
+  <string name="tv_dialog_send">મોકલો</string>
+  <string name="tv_audio_recording">રેકોર્ડિંગ.</string>
+  <string name="tv_send_text">મેસેજ મોકલો</string>
+  <string name="tv_send_audio">ઑડિઓ મોકલો</string>
+  <string name="tv_send_video">મીડિયા મોકલો</string>
+  <string name="tv_action_more">વધુ</string>
+  <string name="conversation_input_speech_hint">કંઈક કહો.</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">ભલામણ</string>
+  <string name="wizard_status_optional">વૈકલ્પિક</string>
+  <string name="wizard_status_required">જરૂરી</string>
+  <string name="wizard_username_info">તમારા એકાઉન્ટ માટે વપરાશકર્તા નામ પસંદ કરો</string>
+  <string name="wizard_username_button">વપરાશકર્તા નામ પસંદ કરો</string>
+  <string name="wizard_username_skip">વપરાશકર્તા નામ પસંદ કરવાનું છોડી દો</string>
+  <string name="wizard_password_info">એકાઉન્ટ પાસવર્ડ</string>
+  <string name="wizard_password_placeholder">આ ઉપકરણ પર એકાઉન્ટ કી એન્ક્રિપ્ટ કરવા માટે પાસવર્ડ પસંદ કરો</string>
+  <string name="wizard_password_button">પાસવર્ડ પસંદ કરો</string>
+  <string name="wizard_password_skip">એકાઉન્ટ બનાવો</string>
+  <string name="wizard_password_switch">પાસવર્ડ સાથે એકાઉન્ટ એન્ક્રિપ્ટ</string>
+  <string name="wizard_password_warning">નોંધ કરો કે પાસવર્ડ પુનઃપ્રાપ્ત કરી શકાતું નથી</string>
+  <string name="wizard_profile_info">પ્રોફાઇલ માત્ર સંપર્કો સાથે શેર કરવામાં આવે છે</string>
+  <string name="wizard_profile_button">પ્રોફાઇલ સાચવો</string>
+  <string name="wizard_profile_skip">સ્કીપ અને આ પછીથી કરો</string>
+  <string name="fab_path_choose">અન્ય ફાઇલ પસંદ કરો</string>
+  <string name="chat_plugins">ચેટ પ્લગઇન્સ</string>
   <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">શેર કરો</string>
+  <string name="bottomSheet_dialpad_btn">ડાયલપેડ</string>
+  <string name="bottomSheet_plugins_btn">પ્લગિન્સ</string>
+  <string name="bottomSheet_add_participants_btn">ઉમેરો</string>
+  <string name="bottomSheet_change_camera_btn">પરિવર્તન</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">કેમેરા</string>
   <string name="bottomSheet_hangup_btn">કૉલ સમાપ્ત કરો</string>
+  <string name="bottomSheet_mute_microphone_btn">માઇક્રો</string>
+  <string name="bottomSheet_sound_output_btn">ધ્વનિ</string>
+  <string name="bottomSheet_raiseHand_btn">હાથ ઉઠાવો</string>
+  <string name="open_account_plugin_settings">એકાઉન્ટ પ્લગઇન સેટિંગ્સ ખોલો</string>
+  <string name="open_general_plugin_settings">જનરલ પ્લગઇન સેટિંગ્સ ખોલો</string>
+  <string name="uninstall">અનઇન્સ્ટોલ કરો</string>
+  <string name="reset">રીસેટ</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">પુષ્ટિ</string>
+  <string name="rename_error">ખાલી ન હોઈ શકે</string>
+  <string name="swarm_description">વર્ણન ઉમેરો</string>
+  <string name="tab_about">વિશે</string>
+  <string name="tab_members">સભ્યો</string>
+  <string name="tab_documetn">દસ્તાવેજો</string>
+  <string name="dialogtitle_title">સ્વેર્મ શીર્ષક સંપાદિત કરો</string>
+  <string name="dialogtitle_description">સ્કેમ વર્ણન સંપાદિત કરો</string>
+  <string name="dialog_hint_title">શીર્ષક</string>
+  <string name="dialog_hint_description">વર્ણન</string>
+  <string name="picker_title">સંપર્કો પસંદ કરો</string>
+  <string name="picker_btn">સંપર્કો પસંદ કરો</string>
+  <string name="bottomsheet_contact">જમી\n%1$s સાથે સંપર્ક કરો</string>
+  <string name="bottomsheet_remove">સમૂહમાંથી દૂર કરો</string>
 </resources>

@@ -59,10 +59,12 @@ U kunt uw account later bewerken</string>
   <string name="account_optionnal_category">Optionele instellingen</string>
   <string name="account_useragent_label">Gebruikersagent</string>
   <string name="account_autoanswer_label">Automatisch beantwoorden</string>
+  <string name="account_rendezvous_label">Rendezvous-modus</string>
   <string name="account_rendezvous_summary">In Rendezvous mode, worden inkomende oproepen aan een conferentie toegevoegd</string>
   <string name="account_upnp_label">UPnP inschakelen</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Plugins</string>
   <!--Audio Details-->
   <string name="account_audio_label">Geluid</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -89,6 +91,7 @@ U kunt uw account later bewerken</string>
   <string name="account_accept_files_max_size">Maximale bestandsgrootte wat automatisch geaccepteerd wordt</string>
   <string name="account_accept_files_never">Nooit automatisch accepteren</string>
   <string name="account_accept_files_always">Altijd automatisch accepteren</string>
+  <string name="size_mb">% 1$d MB</string>
   <string name="account_turn_enable_label">TURN gebruiken</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-gebruikersnaam</string>
@@ -96,10 +99,12 @@ U kunt uw account later bewerken</string>
   <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
   <string name="account_published_port_label">Gepubliceerde poort</string>
   <string name="account_published_address_label">Gepubliceerd adres</string>
+  <string name="disabled">Belemmeringen</string>
   <string name="enabled">Ingeschakeld</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
   <string name="account_proxy_server_label">DHT-proxyadres</string>
+  <string name="account_proxy_server_list_label">DHT proxy-lijst URL</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Lokale verwanten ontdekken</string>
   <string name="account_peer_discovery_enable_label">Lokale verwanten ontdekken inschakelen</string>
@@ -111,6 +116,8 @@ U kunt uw account later bewerken</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
   <string name="account_srtp_switch_label">Mediastreams versleutelen (SRTP)</string>
+  <string name="account_srtp_enable_sdes">SDES als sleutelruilprotocol in staat stellen</string>
+  <string name="account_srtp_rtp_fallback">Terugkeer naar RTP als SRTP mislukt</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-transport gebruiken</string>
@@ -124,6 +131,7 @@ U kunt uw account later bewerken</string>
   <string name="account_tls_server_name_label">Servernaam</string>
   <string name="account_tls_verify_server_label">Server verifiëren</string>
   <string name="account_tls_verify_client_label">Cliënt verifiëren</string>
+  <string name="account_require_client_certificate_label">TLS vereist een klantcertificaat</string>
   <string name="account_tls_negotiation_timeout_sec">Tijdslimiet onderhandeling (sec)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
@@ -134,6 +142,8 @@ U kunt uw account later bewerken</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
+  <string name="account_export_file">Backup account</string>
+  <string name="account_export_file_summary">Backup je account op je apparaat om het later te herstellen.</string>
   <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
   <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer uw netwerkverbinding.</string>
@@ -164,10 +174,14 @@ U kunt uw account later bewerken</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Accountinstellingen</string>
   <string name="account_tv_advance_settings_header">Geavanceerde instellingen</string>
+  <string name="account_tv_add_contact">Voeg contact toe</string>
+  <string name="account_tv_advanced_settings">Verander de algemene instellingen</string>
   <string name="account_tv_about">Over Jami</string>
   <string name="tv_about_version">Versie</string>
   <string name="tv_about_license">Licentie</string>
+  <string name="tv_about_author">Schrijverrechten</string>
   <string name="tv_about_credits">Met dank aan</string>
   <string name="account_link_device">Dit apparaat koppelen</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
@@ -182,6 +196,7 @@ U kunt uw account later bewerken</string>
   <string name="account_end_export_button">sluiten</string>
   <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Voeg een Jami-account toe met ‘Dit apparaat koppelen’. Uw pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om dit account op andere apparaten te gebruiken dient u deze eerst op Ring bloot te stellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat invoert om het account in te stellen. De pincode is 10 minuten geldig.</string>
+  <string name="account_export_title">Link account naar andere apparaten</string>
   <string name="account_connect_server_button">Verbinden met beheerserver</string>
   <string name="account_connect_button">Verbinden</string>
   <string name="prompt_server">Jami-beheerserver-URL</string>
@@ -190,7 +205,9 @@ U kunt uw account later bewerken</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
+  <string name="no_registered_name_for_account">Geen geregistreerde naam</string>
   <string name="username_available">Gebruikersnaam is beschikbaar!</string>
+  <string name="register_name">Naam van het register</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam</string>
@@ -212,6 +229,7 @@ U kunt uw account later bewerken</string>
   <string name="account_link_title">Dit apparaat koppelen</string>
   <string name="account_sip_cannot_be_registered">Account kan niet geregistreerd worden</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Bewerk mijn account</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
   <string name="enter_password">Voer wachtwoord in</string>
