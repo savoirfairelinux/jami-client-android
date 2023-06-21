@@ -24,6 +24,7 @@ import android.telecom.DisconnectCause
 import android.telecom.VideoProfile
 import android.util.Log
 import androidx.annotation.RequiresApi
+import cx.ring.utils.Constants
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -41,7 +42,7 @@ enum class CallRequestResult {
 /**
  * Implements a Connection from the Android Telecom API.
  */
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Constants.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
 class CallConnection(
     val service: ConnectionService,
     val request: ConnectionRequest,

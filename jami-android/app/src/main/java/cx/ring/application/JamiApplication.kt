@@ -42,6 +42,7 @@ import cx.ring.R
 import cx.ring.service.DRingService
 import cx.ring.service.JamiJobService
 import cx.ring.utils.AndroidFileUtils
+import cx.ring.utils.Constants
 import cx.ring.views.AvatarFactory
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
@@ -219,7 +220,7 @@ abstract class JamiApplication : Application() {
         }
 
         // Initialize the Android Telecom API if available
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Constants.CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             getSystemService<TelecomManager>()?.let { telecomService ->
                 val componentName = ComponentName(this, ConnectionService::class.java)
                 val handle = PhoneAccountHandle(componentName, ConnectionService.HANDLE_ID)
