@@ -128,11 +128,13 @@
   <string name="message_failed">Misslyckades</string>
   <string name="time_just_now">Just nu</string>
   <string name="send_file">Skicka fil</string>
+  <string name="select_media">Öppet galleri</string>
   <string name="hist_file_sent">Fil skickad</string>
   <string name="hist_file_received">Fil mottagen</string>
   <string name="conversation_send_audio">Spela in ljudklipp</string>
   <string name="conversation_send_video">Spela in videoklipp</string>
   <string name="conversation_share_location">Dela plats</string>
+  <string name="in_reply_to">I svar till</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -181,13 +183,26 @@
   <string name="block_contact_dialog_title">Blockera %1$s?</string>
   <string name="block_contact_dialog_message">%1$s kommer inte att kunna kontakta dig, innan du avblockerat.</string>
   <string name="block_contact_completed">%1$s blockerades.</string>
+  <string name="unblock_contact_dialog_title">Avblåsa %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s kommer att kunna kontakta dig igen.</string>
+  <string name="unblock_contact_completed">%1$s var avblåst.</string>
   <string name="conversation_contact_is_typing">Mottagaren skriver...</string>
   <string name="conversation_info_contact_you">Du</string>
   <string name="conversation_members">Medlemmar</string>
   <string name="conversation_syncing">Ladda ner konversationen från \"peer\"</string>
+  <string name="conversation_blocked">Kontakten är blockerad.</string>
+  <string name="conversation_ended">Samtalet är slut.</string>
+  <string name="conversation_message_deleted">(Meddelande raderat)</string>
   <string name="conversation_preference_color">Konversationsfärg</string>
   <string name="conversation_preference_emoji">Konversations emoji</string>
   <string name="conversation_type_contact">Jami kontakt</string>
+  <string name="conversation_type_private">Privat svärm</string>
+  <string name="conversation_type_group">Gruppssärm</string>
+  <string name="conversation_contact_invited">%1$s har blivit inbjuden</string>
+  <string name="conversation_contact_added">%1$s ansluten</string>
+  <string name="conversation_contact_left">%1$ är vänster</string>
+  <string name="conversation_contact_banned">%1$s förbjuds</string>
+  <string name="conversation_search_hint">Söksamtal</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
@@ -283,6 +298,7 @@
   <string name="menu_file_delete">Ta bort fil</string>
   <string name="menu_file_share">Dela fil</string>
   <string name="menu_message_copy">Kopiera</string>
+  <string name="menu_message_edit">Redigera meddelande</string>
   <string name="menu_message_delete">Ta bort meddelandet</string>
   <string name="menu_message_cancel">Avbryt meddelandet</string>
   <string name="menu_message_reply">Svara</string>
@@ -337,11 +353,23 @@
   <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Ljud</string>
   <string name="bottomSheet_raiseHand_btn">Räck upp handen</string>
+  <string name="open_account_plugin_settings">Öppna konton-plugininställningar</string>
+  <string name="open_general_plugin_settings">Öppna allmänna inställningar för plugin</string>
   <string name="uninstall">Avinstallera</string>
   <string name="reset">Återställ</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Bekräfta</string>
+  <string name="rename_error">Kan inte vara tomt.</string>
+  <string name="swarm_description">Lägg till en beskrivning</string>
   <string name="tab_about">Om</string>
   <string name="tab_members">Medlemmar</string>
+  <string name="tab_documetn">Dokument</string>
+  <string name="dialogtitle_title">Redigera Swarm titel</string>
+  <string name="dialogtitle_description">Redigera beskrivning</string>
   <string name="dialog_hint_title">Titel</string>
+  <string name="dialog_hint_description">Beskrivning</string>
+  <string name="picker_title">Välj kontakter</string>
+  <string name="picker_btn">Välj kontakter</string>
+  <string name="bottomsheet_contact">Kontakta Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Ta bort från swarmen.</string>
 </resources>

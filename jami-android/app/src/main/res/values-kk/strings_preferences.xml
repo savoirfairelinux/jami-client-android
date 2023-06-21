@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Желі</string>
+  <string name="pref_category_contacts">Байланыстар</string>
+  <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">жүйе</string>
+  <string name="pref_category_privacy">Жекешелік</string>
+  <string name="pref_category_diagnostic">Диагностика</string>
+  <string name="pref_mobileData_title">Мобильді деректер</string>
+  <string name="pref_mobileData_summary">Jami-ге Wi-Fi-ге қосымша 3G/LTE желілерінде рұқсат беру</string>
+  <string name="pref_pushNotifications_title">Көшіру хабарламалары</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Google серверлерін қолдана отырып, қоңыраулар/хабарларды қоңырау шалып алуға мүмкіндік береді</string>
+  <string name="pref_unifiedPush_summary">Бағытта шақыру/хабарларды қабылдау үшін UnifiedPush қызметін қолдану</string>
+  <string name="pref_video_advanced_title">Жедел бейне параметрлері</string>
+  <string name="pref_video_advanced_summary">Видеоның биттер жылдамдығын, бейіністі және эксперименталды мүмкіндіктерді өзгерту</string>
+  <string name="pref_hd_summary">HD бейне жіберуді рұқсат ету</string>
+  <string name="pref_hwEncode_title">Жедел кодтауды рұқсат ету</string>
+  <string name="pref_hwEncode_summary">Сынақ ерекшелігі</string>
+  <string name="pref_videoBitrate_title">Видео биттер</string>
+  <string name="pref_videoBitrate_summary">Әдетті шығыс бейне битті (KB/s) таңдаңыз</string>
+  <string name="pref_videoResolution_title">Видеолық бейініс</string>
+  <string name="pref_videoResolution_summary">Әдетті шығыс бейне қалыңдығын таңдау</string>
+  <string name="pref_systemContacts_title">Жүйелік байланыстарды қолдану</string>
+  <string name="pref_systemContacts_summary">Телефонды шақырушының мәліметтерін көрсету үшін жүйелік байланыс телефондарын пайдаланыңыз.</string>
+  <string name="pref_systemDialer_title">Jami арқылы жүйелік шақыруларды орындаңыз</string>
+  <string name="pref_systemDialer_summary">Мүмкін болса, Джами арқылы жүйелік шақырулар жасаңыз.</string>
+  <string name="pref_startOnBoot_title">Жамиді бастау кезінде бастаңыз</string>
+  <string name="pref_startOnBoot_summary">Жүйе басталған кезде Джамиге назар аударыңыз.</string>
+  <string name="pref_clearHistory_title">Тарихты анық</string>
+  <string name="pref_clearHistory_summary">Барлық әңгімелерді жою. Бұл әрекет қайталанбайды.</string>
+  <string name="pref_notification_title">Хабарламаның көрінісі</string>
+  <string name="pref_notification_summary">Қолданба хабарламаларын қалқандару экранында көріністі орнату.</string>
+  <string name="pref_blackList_title">Блоктар тізімі</string>
+  <string name="pref_blackList_summary">Блок тізіміңізді тексеріңіз.</string>
+  <string name="pref_delete_account_title">Тіркелгілерді өшіру</string>
+  <string name="pref_delete_account_summary">Бұл құрылғыдан тіркелгіңізді өшіру</string>
+  <string name="pref_persistNotification_title">Аядан өту</string>
+  <string name="pref_persistNotification_summary">Телефондар мен хаттарды алу үшін фонода жүруге рұқсат етіңіз.</string>
+  <string name="pref_newGroup_title">Топтық әңгімелесуді рұқсат ету</string>
+  <string name="pref_newGroup_summary">Jami-де топтарды құруға мүмкіндік береді.</string>
+  <string name="pref_logs_title">Диагностикалық журналдары</string>
+  <string name="pref_logs_summary">Диагностикалық журналды ашу параметрлері</string>
+  <string name="pref_logs_start">Жазбаларды жазуды бастаңыз</string>
+  <string name="pref_logs_stop">Ағаштарды кесуді тоқтату</string>
+  <string name="pref_typing_title">Түрлеу көрсеткіштерін рұқсат ету</string>
+  <string name="pref_typing_summary">Хатты жазатындығын көрсететін жазу индикаторларын жіберу және алу.</string>
+  <string name="pref_read_title">Оқыту квитанцияларын рұқсат ету</string>
+  <string name="pref_read_summary">Хат көрсетілді деген квитанцияларды жіберіп алыңыз.</string>
+  <string name="pref_block_record_title">Экран түсірілімін және жазуды бөлеңіз</string>
+  <string name="pref_block_record_summary">Скрийн түсіруді немесе бейне түсіруді тоқтату.</string>
+  <string name="pref_link_preview_title">Әңгімелерде сілтемелерді алдын ала қарау</string>
+  <string name="pref_link_preview_summary">Алдын ала қарау үшін үшінші тараптың серверлерінен мазмұн жүгірту қажет.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Қоғамдық \n(орындалған хабарламаларды және олардың мазмұнын құлыптау экранында көрсету) \n</string>
+  <string name="notification_private">Жеке \n(орындауларды көрсету, бірақ олардың мазмұнын құлыптау экранында жасыру) \n</string>
+  <string name="notification_secret">Құпия \n(бұлақтандыруларды құлыптау экранында көрсетпеу)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Қосылмалар</string>
+  <string name="pref_plugins_summary">Қосылмаларды қосу және олардың параметрлерін орнату</string>
+  <string name="fab_plugins_add">Жаңа плагинді қосу</string>
+  <string name="plugin_uninstall_title">Плагинді орнатпақсыз ба?</string>
+  <string name="plugin_reset_preferences">Плагинді қайта орнату</string>
+  <string name="plugin_reset_preferences_summary">Плагиннің параметрлері әдетті түрде орнатылады</string>
+  <string name="plugin_reset_preferences_ask">Жалпы плагин параметрлерін қайта орнатуды қалайсыз ба?</string>
+  <string name="plugin_reset_account_preferences_ask">Тіркелгі плагинінің параметрлерін қайта орнатуды қалайсыз ба?</string>
+  <string name="plugin_successfully_installed">%1$s&lt;/b&gt; плагины сәтті орнатылды</string>
+  <string name="plugin_install_failure">Плагин орнату жаңылысы: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Сізде: <b>%1$s</b> жаңа нұсқасы бар</string>
+  <string name="plugin_same_version_exception">Сізде <b>%1$s</b> нұсқасы орнатылған</string>
+  <string name="plugin_force_install">күшті орнату</string>
+  <string name="plugin_path_image_add">Жаңа суретті қосу</string>
 </resources>

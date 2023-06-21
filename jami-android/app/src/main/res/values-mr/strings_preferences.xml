@@ -1,7 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">नेटवर्क</string>
+  <string name="pref_category_contacts">संपर्क</string>
   <string name="pref_category_video">व्हिडिओ</string>
   <string name="pref_category_system">सिस्टम</string>
+  <string name="pref_category_privacy">गोपनीयता</string>
+  <string name="pref_category_diagnostic">निदान</string>
+  <string name="pref_mobileData_title">मोबाईल डेटा</string>
+  <string name="pref_mobileData_summary">जामीला वाय-फाय व्यतिरिक्त 3G/LTE नेटवर्कवर परवानगी द्या</string>
+  <string name="pref_pushNotifications_title">पुश सूचना</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">पार्श्वभूमीवर कॉल/संदेश प्राप्त करण्यास अनुमती देण्यासाठी Google सर्व्हरचा वापर करा</string>
+  <string name="pref_unifiedPush_summary">पार्श्वभूमीवर कॉल/संदेश प्राप्त करण्यास परवानगी देण्यासाठी युनिफाइडपुश सेवा वापरा</string>
+  <string name="pref_video_advanced_title">प्रगत व्हिडिओ सेटिंग्ज</string>
+  <string name="pref_video_advanced_summary">व्हिडिओ बिटरेट, रिझोल्यूशन तसेच एक्सेस प्रयोगात्मक वैशिष्ट्ये बदला</string>
+  <string name="pref_hd_summary">एचडी व्हिडिओ पाठवणे सक्षम करा</string>
+  <string name="pref_hwEncode_title">प्रवेगक एन्कोडिंग सक्षम करा</string>
+  <string name="pref_hwEncode_summary">प्रयोगात्मक वैशिष्ट्य</string>
+  <string name="pref_videoBitrate_title">व्हिडिओ बिटरेट</string>
+  <string name="pref_videoBitrate_summary">डीफॉल्ट आउटगोइंग व्हिडिओ बिटरेट (KB/s) निवडा</string>
+  <string name="pref_videoResolution_title">व्हिडिओ रेझोल्यूशन</string>
+  <string name="pref_videoResolution_summary">डीफॉल्ट आउटगोइंग व्हिडिओ रेझोल्यूशन निवडा</string>
+  <string name="pref_systemContacts_title">प्रणाली संपर्क वापरा</string>
+  <string name="pref_systemContacts_summary">कॉल करणाऱ्यांची माहिती दाखवण्यासाठी सिस्टम संपर्क वापरा.</string>
+  <string name="pref_systemDialer_title">Jami वापरून सिस्टम कॉल करा</string>
+  <string name="pref_systemDialer_summary">शक्य असेल तर जामीला फोनवर कॉल करायला सांगा.</string>
+  <string name="pref_startOnBoot_title">प्रारंभ करताना जमी सुरू करा</string>
+  <string name="pref_startOnBoot_summary">जेव्हा सिस्टम सुरू होते तेव्हा जामीला पार्श्वभूमीवर चालवा.</string>
+  <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
+  <string name="pref_clearHistory_summary">या क्रिया रद्द करता येणार नाहीत.</string>
+  <string name="pref_notification_title">अधिसूचना दृश्यमानता</string>
+  <string name="pref_notification_summary">लॉक स्क्रीनवर अॅप्लिकेशन सूचना दृश्यमानता सेट करा.</string>
+  <string name="pref_blackList_title">ब्लॉक यादी</string>
+  <string name="pref_blackList_summary">तुमच्या ब्लॉक लिस्टची तपासणी करा.</string>
+  <string name="pref_delete_account_title">खाते हटवा</string>
+  <string name="pref_delete_account_summary">या डिव्हाइसवरून आपले खाते हटवा</string>
+  <string name="pref_persistNotification_title">पार्श्वभूमीवर चालवा</string>
+  <string name="pref_persistNotification_summary">कॉल आणि मेसेज प्राप्त करण्यासाठी पार्श्वभूमीवर धावण्याची परवानगी द्या.</string>
+  <string name="pref_newGroup_title">गट चॅट सक्षम करा</string>
+  <string name="pref_newGroup_summary">Jami मध्ये गट तयार करण्यास सक्षम करा.</string>
+  <string name="pref_logs_title">निदान नोंदी</string>
+  <string name="pref_logs_summary">उघड डायग्नोस्टिक लॉग सेटिंग्ज</string>
+  <string name="pref_logs_start">लॉगिंग सुरू करा</string>
+  <string name="pref_logs_stop">कोळशाचे काम थांबवा</string>
+  <string name="pref_typing_title">टाइपिंग निर्देशक सक्षम करा</string>
+  <string name="pref_typing_summary">संदेश टाइप केला जात आहे हे दर्शविणारे टाइपिंग निर्देशक पाठवा आणि प्राप्त करा.</string>
+  <string name="pref_read_title">वाचन प्राप्ती सक्षम करा</string>
+  <string name="pref_read_summary">संदेश प्रदर्शित झाला आहे असे सूचित करणारे रसीद पाठवा आणि प्राप्त करा.</string>
+  <string name="pref_block_record_title">स्क्रीनशॉट आणि रेकॉर्डिंग ब्लॉक करा</string>
+  <string name="pref_block_record_summary">स्क्रीनशॉट किंवा व्हिडिओ रेकॉर्डिंग टाळा.</string>
+  <string name="pref_link_preview_title">संभाषणात लिंक पूर्वावलोकन दाखवा</string>
+  <string name="pref_link_preview_summary">पूर्वावलोकन तृतीय पक्षाच्या सर्व्हरवरून सामग्री डाउनलोड करणे आवश्यक आहे.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">सार्वजनिक सूचना आणि त्यातील सामग्री लॉक स्क्रीनवर दाखवा)</string>
+  <string name="notification_private">खासगी \n(जाहिरात सूचना दाखवा पण लॉक स्क्रीनवर त्यांची सामग्री लपवा) \n</string>
+  <string name="notification_secret">गुप्त \n(लॉक स्क्रीनवर सूचना दाखवत नाहीत)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">प्लगइन</string>
+  <string name="pref_plugins_summary">प्लगइन सक्षम करा आणि त्यांचे पॅरामीटर्स सेट करा</string>
+  <string name="fab_plugins_add">नवीन प्लगइन जोडा</string>
+  <string name="plugin_uninstall_title">प्लगइन अनइंस्टॉल करा?</string>
+  <string name="plugin_reset_preferences">प्लगइनची प्राधान्ये रीसेट करा</string>
+  <string name="plugin_reset_preferences_summary">प्लगइन सेटिंग्ज डिफॉल्ट आहेत</string>
+  <string name="plugin_reset_preferences_ask">तुम्हाला प्लगइनची सामान्य सेटिंग्ज रीसेट करायची आहेत का?</string>
+  <string name="plugin_reset_account_preferences_ask">तुम्हाला खाते प्लगइन सेटिंग्ज रीसेट करायच्या आहेत का?</string>
+  <string name="plugin_successfully_installed">प्लगइन <b>%1$s</b> यशस्वीपणे स्थापित</string>
+  <string name="plugin_install_failure">प्लगइन स्थापित करण्यात अपयश: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">तुमच्याकडे <b>%1$s</b> ची अधिक अलीकडील आवृत्ती आहे</string>
+  <string name="plugin_same_version_exception"><b>%1$s</b> ची हीच आवृत्ती स्थापित आहे</string>
+  <string name="plugin_force_install">सक्ती \n प्रतिष्ठापन</string>
+  <string name="plugin_path_image_add">नवीन प्रतिमा जोडा</string>
 </resources>

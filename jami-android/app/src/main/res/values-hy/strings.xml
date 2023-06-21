@@ -1,0 +1,375 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Վերադարձ կապ</string>
+  <string name="report"><u>Մեզ ուղարկեք էլ.փոստ</u></string>
+  <string name="section_license">Անվճար</string>
+  <string name="sponsor_section">Jami- ն ազատ ծրագրային ապահովում է, որը մշակվել եւ աջակցվում է</string>
+  <string name="copyright_section">Հեղինակային իրավունք</string>
+  <string name="contribute_section">Մասնակցեք</string>
+  <string name="version_section">Վարկած</string>
+  <string name="no_email_app_installed">Ոչ մի էլ.փոստային հավելված չի հայտնաբերվել, տեղադրեք մեկը, որպեսզի մեզ զեկույց ուղարկեք</string>
+  <string name="no_browser_app_installed">Ոչ մի վեբ զննարկիչի հավելված չի գտնվել, տեղադրեք այս էջը դիտելու համար</string>
+  <string name="email_chooser_title">Փոստ ուղարկեք օգտագործելով...</string>
+  <string name="website_chooser_title">Տեսնել կայքը օգտագործելով...</string>
+  <string name="license">Այս ծրագրային ապահովումը տրամադրվում է \"ինչպես կա\", առանց որեւէ երաշխիքի: Մասնավորապես, տես GNU General Public License տարբերակը 3 կամ ավելի ուշ</string>
+  <string name="description">Jami- ն ազատ ծրագրային ապահովում է համընդհանուր հաղորդակցության համար, որը հարգում է օգտատերերի ազատությունները եւ գաղտնիությունը:</string>
+  <string name="credits">Վարկեր</string>
+  <string name="pip_title">Ջամիի համաժողով</string>
+  <string name="call_service_description">Այս ծառայությունը անհրաժեշտ է ձեր զանգերի առաջատարում պահելու համար: Այն գործում է միայն զանգերի ժամանակ:</string>
+  <string name="data_transfer_service_description">Այս ծառայությունը անհրաժեշտ է ֆայլերի փոխանցումների ժամանակ մշտական ծանուցումներ ցուցադրելու համար: Այն գործում է միայն ֆայլերի փոխանցումների ժամանակ:</string>
+  <!--About dialog-->
+  <string name="developed_by">Կարգավորվել է</string>
+  <string name="designed_by">Նախագծված</string>
+  <string name="ringtones_by">Հնչյուններ</string>
+  <!--RingActivity-->
+  <string name="error_no_network">Ոչ մի ցանցային կապ</string>
+  <string name="error_account_offline">Հաշիվը անջատված է</string>
+  <string name="error_mobile_network_available_but_disabled">Խնդրում ենք մուտք գործել բջջային ցանցը \"Կարգավորումների\" էկրանում:</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Գրառական հաղորդագրություններ</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">Հաղորդումներ</string>
+  <string name="menu_item_accounts">Հաշվետքերի կառավարում</string>
+  <string name="menu_item_account">Հաշիվի կառավարում</string>
+  <string name="menu_item_settings">Կարգավորումներ</string>
+  <string name="menu_item_advanced_settings">Հրագաթնակետային կարգավորումներ</string>
+  <string name="menu_item_account_settings">Հաշվեի կարգավորումները</string>
+  <string name="menu_item_plugin_list">Plugins Կարգավորումները</string>
+  <string name="menu_item_share">Կիսվեք իմ հաշիվով</string>
+  <string name="menu_item_about">Ջամիի մասին</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Նշեք մի թիվ</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Խոսք</item>
+    <item quantity="other">%d Զրույցներ</item>
+  </plurals>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Փնտրեք անուն կամ հեռախոսահամար...</string>
+  <string name="choose_number">Ընտրեք մի թիվ</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Հեռացած ներկա զանգ</string>
+  <string name="notif_missed_outgoing_call">Հեռացվող զանգը բացակայում է</string>
+  <string name="notif_incoming_call_title">%1$s-ից ներկա զանգ</string>
+  <string name="notif_incoming_call">Հեռախոսազանգ</string>
+  <string name="notif_outgoing_call_title">%1$s հեռախոսահամար</string>
+  <string name="notif_outgoing_call">Արտաքին զանգ</string>
+  <string name="notif_current_call_title">%1$s-ի հետ ընթացիկ զանգ</string>
+  <string name="notif_current_call">Շարունակվող զանգ</string>
+  <string name="notif_channel_call_in_progress">Առաջադրանքներ</string>
+  <string name="notif_channel_calls">Զանգահարություններ</string>
+  <string name="notif_channel_missed_calls">Հեռացած զանգեր</string>
+  <string name="notif_channel_incoming_calls">Հեռախոսազանգեր</string>
+  <string name="notif_channel_messages">Հաղորդագրություններ</string>
+  <string name="notif_channel_requests">Հայցեր</string>
+  <string name="notif_channel_file_transfer">Ֆայլերի փոխանցում</string>
+  <string name="notif_channel_sync">Տվյալների համաժամեցում</string>
+  <string name="notif_channel_background_service">Դաշտային ծառայություն</string>
+  <string name="notif_channel_background_service_descr">Թույլ է տալիս ցանկացած պահի ստանալ զանգեր եւ հաղորդագրություններ:</string>
+  <string name="notif_group_calls">Զանգահարություններ</string>
+  <string name="notif_background_service">Ջամին այժմ վազում է ֆոնին:</string>
+  <string name="notif_mark_as_read">Նշում, ինչպես կարդացել է</string>
+  <string name="notif_dismiss">Բացառություն</string>
+  <string name="notif_reply">Պատասխանել</string>
+  <string name="notif_incoming_file_transfer_title">%1$s-ից ներկա ֆայլ</string>
+  <string name="notif_outgoing_file_transfer_title">Դateiը ուղարկել %1$s</string>
+  <string name="notif_incoming_picture">%1$s- ի նկար</string>
+  <string name="notif_sync_title">Տվյալների համաժամեցում...</string>
+  <string name="notif_location_title">%1$s-ի հետ տեղամասի բաժանում</string>
+  <string name="location_share_contact">%1$s-ը կիսում է ձեր տեղակայումը</string>
+  <string name="notif_location_multi_title">%1$d կոնտակտների հետ տեղակայման բաժանում</string>
+  <string name="notif_location_remaining">%1$d րոպե մնացել է</string>
+  <string name="notif_location_action_stop">Սահմանեք տեղամասը</string>
+  <string name="location_share_action_start">Սկսեք կիսվել</string>
+  <string name="location_share_action_stop">Սեղմեք կիսումը</string>
+  <string name="location_share_about_title">Քարտեզի տեղեկատվություն</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Դուք.</string>
+  <string name="action_call_hangup">Բացեք։</string>
+  <string name="action_call_maximize">Մաքսիմալացնել</string>
+  <string name="action_call_minimize">Կրկնել</string>
+  <string name="action_call_mute">Լռություն</string>
+  <string name="action_call_unmute">Անխոսություն</string>
+  <string name="ongoing_call">Շարունակվող զանգ</string>
+  <string name="hist_in_call">%1$s-ի մուտքագրվող զանգը</string>
+  <string name="hist_out_call">%1$s հեռախոսազանգ</string>
+  <string name="start_error_title">Չեմ կարող սկսել Ջամի!</string>
+  <string name="start_error_mic_required">Ջամին աշխատում է միկրոֆոնի թույլտվությամբ:</string>
+  <string name="action_call_accept">Հեռախոսազանգը վերցրեք</string>
+  <string name="action_call_accept_audio">Պատասխանը ձայնային</string>
+  <string name="action_call_accept_video">Պատասխանը տեսանյութում</string>
+  <string name="action_call_hold_accept">Հեռացրեք եւ ստացեք զանգի ձայնային ձայնը</string>
+  <string name="action_call_hold_accept_video">Հեռացրեք եւ տեսանյութեր</string>
+  <string name="action_call_end_accept">Վերջ եւ պատասխանել զանգի</string>
+  <string name="action_call_decline">Հասնում է</string>
+  <string name="action_call_mic_mute">Միկրոֆոն անջատ</string>
+  <string name="action_load_plugin">Լիցքավորման հավելված</string>
+  <string name="ab_action_speakerphone">Հեռախոսազանգի ակտիվացում</string>
+  <string name="ab_action_contact_add">Բարձրացնել շփումները</string>
+  <string name="ab_action_contact_add_question">Բարձրացնել կոնտակտներին:</string>
+  <string name="ab_action_audio_call">Ձայնային զանգ</string>
+  <string name="ab_action_video_call">Տեսագրական զանգ</string>
+  <string name="ab_action_change_screen_orientation">Փոխել էկրանի կողմնորոշումը</string>
+  <string name="share_via">Գործակցել</string>
+  <string name="write_a_message">Գրեք մի հաղորդագրություն</string>
+  <string name="scan_qr">QR կոդը ստուգել</string>
+  <string name="qr_code">QR կոդ</string>
+  <string name="ab_action_flipcamera">Կապակային տեսախցիկ</string>
+  <string name="ab_action_hidepreview">Գցեք նախադիտություն</string>
+  <string name="remote_recording">%s ձայնագրումը...</string>
+  <!--Text messages-->
+  <string name="send_message">Հաղորդագրություն ուղարկել</string>
+  <string name="message_sending">Հաղորդագրություն ուղարկելը...</string>
+  <string name="message_failed">Անհաջողություն</string>
+  <string name="time_just_now">Միանգամից</string>
+  <string name="send_file">Փաստաթուղթ ուղարկել</string>
+  <string name="select_media">Բաց պատկերասրահ</string>
+  <string name="hist_file_sent">Փաստաթուղթ ուղարկվել</string>
+  <string name="hist_file_received">Գրանցված ֆայլ</string>
+  <string name="conversation_send_audio">ձայնային ձայնագրություն</string>
+  <string name="conversation_send_video">Տեսանյութեր ձայնագրել</string>
+  <string name="conversation_share_location">Գործակցման վայր</string>
+  <string name="in_reply_to">Պատասխանելով</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Կամերայի թույլտվություն</string>
+  <string name="permission_dialog_camera_message">Տեսագրական զրույցները պահանջում են տեսախցիկի թույլտվությունը: Խնդրում ենք հաշվի առնել դրա հնարավորությունը:</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Սխալ</string>
+  <string name="ringtone_error_format_not_supported">Այս ձեւաչափը չի աջակցվում:</string>
+  <string name="ringtone_error_size_too_big">Այս ֆայլը չափազանց մեծ է: Մաքսմատիվ չափը %1$dkB է:</string>
+  <string name="ringtone_custom_prompt">Սահմանեք հարմարվողական զանգահարման ձայն</string>
+  <string name="ringtone_custom_label">Պարբերական</string>
+  <string name="ringtone_jami_tones">Ջամի Թոններ</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ջամիին անհրաժեշտ է \"Կարդալ կոնտակտները\" թույլտվությունը, որպեսզի կարողանա այս հատկությունը: Խնդրում ենք այն տրամադրել:</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ջամիին անհրաժեշտ է \"Գրեք զանգի օրագիր\" թույլտվությունը, որպեսզի կարողանա այս հատկությունը: Խնդրում ենք այն տրամադրել:</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Սկանիր հաշիվի QR կոդը, որը ցանկանում ես ավելացնել:</string>
+  <string name="title_activity_qrcode">Կիսվեք իմ հաշիվով</string>
+  <string name="error_scan_no_camera_permissions">QR սկաները պահանջում է տեսախցիկի թույլտվություններ, որպեսզի աշխատի</string>
+  <string name="tab_code">Իմ կոդը</string>
+  <string name="tab_scan">Սկանային կոդ</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Հստակ պատմություն:</string>
+  <string name="clear_history_dialog_message">Այս գործողությունը չի կարող չեղարկվել:</string>
+  <string name="clear_history_completed">Պատմությունը մաքուր է:</string>
+  <string name="clear_history">Հստակ</string>
+  <!--Conversation-->
+  <string name="conversation_details">Կապ տեղեկություններ</string>
+  <string name="conversation_action_delete_this">Սեղմեք այս զրույցը</string>
+  <string name="conversation_action_delete_this_title">Սեղմել այս զրույցը:</string>
+  <string name="conversation_action_delete_this_message">Այս գործողությունը չի կարող չեղարկվել:</string>
+  <string name="conversation_action_history_clear">Հստակ պատմություն</string>
+  <string name="conversation_action_history_clear_title">Բաց թողեք զրույցի պատմությունը:</string>
+  <string name="conversation_action_history_clear_message">Սա հաստատ կլուծի զրույցի պատմությունը:</string>
+  <string name="conversation_action_remove_this">Հեռացնել շփումը</string>
+  <string name="conversation_action_remove_this_title">Սրբել այս շփումը:</string>
+  <string name="conversation_action_remove_this_message">Սա կսահմանի կոնտակտը եւ հաստատ կսահմանի զրույցի պատմությունը:</string>
+  <string name="conversation_action_copy_peer_number">Կոպիային համար</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s-ը կփոխանցվել է կլիմբորդի վրա</string>
+  <string name="conversation_action_select_peer_number">Ընտրեք մի թիվ</string>
+  <string name="conversation_action_block_this">Բլոկային շփումը</string>
+  <string name="conversation_action_unblock_this">Բաց թողնել շփումը</string>
+  <string name="conversation_action_go_to_call">Վերադարձ դեպի Շարունակվող զանգը</string>
+  <string name="conversation_action_latest">Հագնացիր վերջին</string>
+  <string name="conversation_open_file_error">Այս ֆայլերի տեսակը բացելու համար տեղադրված ծրագիր չկա:</string>
+  <string name="clip_contact_uri">Հաղորդակցական հասցե</string>
+  <string name="block_contact_dialog_title">%1$s-ը արգելափակո՞ւմ է:</string>
+  <string name="block_contact_dialog_message">%1$-ը չի կարող կապ հաստատել ձեզ հետ, մինչեւ չբլոկեք այն:</string>
+  <string name="block_contact_completed">%1$s-ը արգելափակվել է:</string>
+  <string name="unblock_contact_dialog_title">Բաց թողնել %1$s- ը:</string>
+  <string name="unblock_contact_dialog_message">%1$s-ը կկարողանա կրկին կապ հաստատել ձեզ հետ:</string>
+  <string name="unblock_contact_completed">%1$s-ը բաց է թողել:</string>
+  <string name="conversation_contact_is_typing">Կոնտակտը տիպակավորում է...</string>
+  <string name="conversation_info_contact_you">Դուք</string>
+  <string name="conversation_members">Անդամներ</string>
+  <string name="conversation_syncing">Հեռացնել զրույցը զուգընկերներից</string>
+  <string name="conversation_blocked">Այս շփումը արգելափակված է:</string>
+  <string name="conversation_ended">Խոսքը ավարտվեց:</string>
+  <string name="conversation_message_deleted">(Խնդիրը ջնջվել է)</string>
+  <string name="conversation_preference_color">Զրույցի գույնը</string>
+  <string name="conversation_preference_emoji">Զրույցի էմոգի</string>
+  <string name="conversation_type_contact">Ջամիի շփումը</string>
+  <string name="conversation_type_private">Անձնական խումբ</string>
+  <string name="conversation_type_group">Խմբային խումբ</string>
+  <string name="conversation_contact_invited">%1$s-ը հրավիրվել է</string>
+  <string name="conversation_contact_added">%1$s-ը միացել է</string>
+  <string name="conversation_contact_left">%1$-ը ձախ է</string>
+  <string name="conversation_contact_banned">%1$s-ը արգելվել է</string>
+  <string name="conversation_search_hint">Հետազոտական զրույց</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s ավելացնել?</string>
+  <string name="prompt_new_password">Նոր գաղտնաբառ</string>
+  <string name="prompt_new_password_optional">Նոր գաղտնաբառ (ընտրանքային)</string>
+  <string name="prompt_new_password_repeat">Կրկնել նոր գաղտնաբառը</string>
+  <string name="account_create_title">Ստեղծեք Jami հաշիվ</string>
+  <string name="prompt_new_username">Նշեք նոր օգտատերու անուն</string>
+  <string name="prompt_hint_username">Օգտագործողի անունը</string>
+  <string name="help_password_choose">Ընտրեք ուժեղ գաղտնաբառ, որը կհիշեք ձեր Ջամի հաշիվը պաշտպանելու համար:</string>
+  <string name="help_password_enter">Տեղադրել ձեր հիմնական Ջամի հաշիվի գաղտնաբառը:</string>
+  <string name="help_server_enter">Գտեք կառավարման սերվերի URL- ը:</string>
+  <string name="help_pin_enter">Գտեք PIN-ը մեկ այլ կոմֆիգուրացված Jami հաշիվից: Օգտագործեք \"Export Jami հաշիվ\" հատկությունը PIN-ը ստանալու համար:</string>
+  <string name="wizard_next">Հաջորդը</string>
+  <string name="wizard_back">Վերադարձ</string>
+  <string name="wizard_skip">Հեռանալ</string>
+  <string name="hist_contact_invited">Հաղորդվում է կապ հաստատել</string>
+  <string name="hist_contact_added">Կապակցություն ավելացվել</string>
+  <string name="hist_contact_left">Կապը ձախ</string>
+  <string name="hist_contact_banned">Հաղորդակցություն արգելված</string>
+  <string name="hist_invitation_received">Հրավիրություն</string>
+  <!--Account Summary-->
+  <string name="profile">Պրոֆիլ</string>
+  <string name="profile_name">Պրոֆիլային անուն</string>
+  <string name="profile_message_warning">Ձեր պրոֆիլը միայն ձեր կոնտակտների հետ է կիսվում</string>
+  <string name="open_the_gallery">Բացե՛ք պատկերասրահը</string>
+  <string name="take_a_photo">Լուսանկար արեք</string>
+  <string name="profile_name_hint">Գտեք ձեր անունը</string>
+  <string name="registered_name">Գրանցված անուն</string>
+  <string name="no_registered_name">Անուններ չեն գրանցվել</string>
+  <string name="identity">Անձնագրություն</string>
+  <string name="account">Հաշվարկ</string>
+  <string name="link_new_device">Կապակցեք նոր սարք</string>
+  <string name="devices">Կապակցված սարքեր</string>
+  <string name="total_devices">Համակարգերի ընդհանուր թիվը. </string>
+  <!--Share fragment-->
+  <string name="share_message">Սկանիր այս կոդը Ջամիի հետ</string>
+  <string name="share_message_no_account">Խնդրում ենք ընտրել հաշիվ, որը ցանկանում եք կիսել:</string>
+  <string name="share_your_account_information">Համագործակցեք իմ կոնտակտային տեղեկություններով</string>
+  <string name="share_label">Մասնակից</string>
+  <string name="generic_error_migration">Սխալ</string>
+  <string name="generic_error_migration_message">Մաղթման ընթացքում սխալ է տեղի ունեցել</string>
+  <string name="title_share_with">Մասնակից եղեք...</string>
+  <!--Pending contact requests-->
+  <string name="accept">Ընդունիր</string>
+  <string name="refuse">Բացառություն</string>
+  <string name="block">Բլոկ</string>
+  <string name="contact_request_title">Նոր կապի խնդրանք</string>
+  <string name="contact_request_msg">Դուք ունեք %1$d կապի խնդրանքներ</string>
+  <string name="contact_request_account">%1$s- ի համար</string>
+  <string name="no_requests">Դուք չունեք կապի պահանջներ</string>
+  <string name="message_contact_not_trusted_yet">%s- ը դեռեւս ձեր շփումների մեջ չէ:\nԴուք ընդունո՞ւմ եք կամ մերժո՞ւմ եք այս շփման խնդրանքը:</string>
+  <string name="message_contact_not_trusted">%s- ը ձեր շփումների մեջ չկա:\nՆոր շփում ավելացրեք:</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Գտիր</string>
+  <string name="send_request_title">Հեռախոսազանգ ուղարկել</string>
+  <string name="send_request_msg">Դուք պետք է ուղարկեք կոնտակտային խնդրանք, որպեսզի կարողանաք շփվել այս օգտագործողի հետ: Քանի դեռ ձեր կոնտակտը չի ընդունել խնդրանքը, կարող եք ուղարկել հաղորդագրություններ, բայց նա չի կարող պատասխանել:</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">Ոչ մի արգելափակված շփումներ</string>
+  <!--Smartlist-->
+  <string name="no_contact_request">Ոչ մի կապի խնդրանք չի ուղարկվել</string>
+  <string name="conversation_placeholder">Դուք դեռեւս չեք զրուցել</string>
+  <string name="contact_request_sent">Հաղորդում ուղարկել</string>
+  <string name="start_conversation">Սկսեք զրույցը</string>
+  <string name="search_results">Հետազոտության արդյունքները</string>
+  <string name="tv_contact_row_header">Կոնտակտներ</string>
+  <string name="gallery_error_title">Գալերիային հավելված չի գտնվել</string>
+  <string name="gallery_error_message">Գալերիա բացելու սարքում չի գտնվել ծրագիր</string>
+  <string name="generic_error">Անհայտ սխալ է տեղի ունեցել</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Անավերժ ֆայլ</string>
+  <string name="not_able_to_write_file">Չի կարողանում ֆայլ գրել</string>
+  <string name="file_transfer_status_created">փոխանցման նախաձեռնող</string>
+  <string name="file_transfer_status_unsupported">չկատարված</string>
+  <string name="file_transfer_status_wait_peer_acceptance">սպասելով համակեցության</string>
+  <string name="file_transfer_status_wait_host_acceptance">սպասող հյուրընկալող ընդունելություն</string>
+  <string name="file_transfer_status_ongoing">շարունակվող</string>
+  <string name="file_transfer_status_finished">ավարտված</string>
+  <string name="file_transfer_status_closed_by_host">հյուրընկալող կողմից փակված</string>
+  <string name="file_transfer_status_closed_by_peer">հարակիցների մոտ</string>
+  <string name="file_transfer_status_invalid_pathname">անվավեր ուղու անուն</string>
+  <string name="file_transfer_status_unjoinable_peer">անընդունելի զուգընկեր</string>
+  <string name="file_transfer_status_cancelled">չեղյալ հայտարարվել</string>
+  <string name="file_transfer_status_error">սխալի պատճառով չկարողացավ</string>
+  <string name="file_transfer_status_timed_out">ժամանակավոր</string>
+  <string name="file_saved_in">%s- ում պահպանված ֆայլ</string>
+  <string name="file_saved_successfully">Փրկված ֆայլը հաջողությամբ</string>
+  <string name="file_download">Ներբեռնել</string>
+  <string name="no_space_left_on_device">սարքի վրա տեղ չկա</string>
+  <string name="title_media_viewer">ԶԼՄ-ների դիտող</string>
+  <string name="menu_file_open">Բաց ֆայլ</string>
+  <string name="menu_file_download">Հեռացնել ֆայլը</string>
+  <string name="menu_file_save">Փրկել ֆայլը</string>
+  <string name="menu_file_delete">Փոխել ֆայլը</string>
+  <string name="menu_file_share">Գործակցել ֆայլը</string>
+  <string name="menu_message_copy">Կոդավորվել</string>
+  <string name="menu_message_edit">Տարբերել հաղորդագրությունը</string>
+  <string name="menu_message_delete">Հաղորդագրությունը ջնջել</string>
+  <string name="menu_message_cancel">Արգելափակելու հաղորդագրություն</string>
+  <string name="menu_message_reply">Պատասխանել</string>
+  <string name="menu_delete">Հեռացնել</string>
+  <string name="pref_darkTheme_title">Սեւ թեման</string>
+  <string name="pref_darkTheme_summary">Միշտ ակտիվացնել մութ թեման փոխարեն օգտագործելով համակարգի վարքագիծը</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Զրույցներ</string>
+  <string name="navigation_item_contact_request">հրավիրումներ</string>
+  <string name="navigation_item_account">Հաշվարկ</string>
+  <string name="search_results_public_directory">Հանրային ցուցակ</string>
+  <!--TV-->
+  <string name="tv_send_audio_dialog_message">Աուդիո հաղորդագրություն ուղարկել:</string>
+  <string name="tv_send_image_dialog_message">Գրավիր նկարը:</string>
+  <string name="tv_send_video_dialog_message">Ուղարկել տեսանյութը:</string>
+  <string name="tv_media_preview">Նախագահական տեսանյութ</string>
+  <string name="tv_audio_play">Խաղալ</string>
+  <string name="tv_audio_pause">Պահանջ</string>
+  <string name="tv_dialog_send">Գտիր</string>
+  <string name="tv_audio_recording">Գրանցում...</string>
+  <string name="tv_send_text">Գրիր SMS</string>
+  <string name="tv_send_audio">Հեռացրեք ձայնագրություն</string>
+  <string name="tv_send_video">Լրատվամիջոցներ ուղարկել</string>
+  <string name="tv_action_more">Ավելի շատ</string>
+  <string name="conversation_input_speech_hint">Ասա մի բան...</string>
+  <!--Wizard-->
+  <string name="wizard_status_recommended">Հրჩევվում է</string>
+  <string name="wizard_status_optional">Անվճար</string>
+  <string name="wizard_status_required">Պահանջվում է</string>
+  <string name="wizard_username_info">Ընտրեք օգտատերու անուն ձեր հաշիվի համար</string>
+  <string name="wizard_username_button">Ընտրեք օգտատերու անունը</string>
+  <string name="wizard_username_skip">Սքոփել օգտատերու անունը</string>
+  <string name="wizard_password_info">Հաշվեի գաղտնաբառ</string>
+  <string name="wizard_password_placeholder">Ընտրեք գաղտնաբառը, որպեսզի կոդավորեք այս սարքի հաշիվի բանալին</string>
+  <string name="wizard_password_button">Ընտրեք գաղտնաբառ</string>
+  <string name="wizard_password_skip">Հաշիվ ստեղծեք</string>
+  <string name="wizard_password_switch">Գաղտնի հաշիվ գաղտնաբառով</string>
+  <string name="wizard_password_warning">Հիշեցնենք, որ գաղտնաբառը չի կարող վերականգնվել</string>
+  <string name="wizard_profile_info">Պրոֆիլը միայն բաժանվում է կոնտակտների հետ</string>
+  <string name="wizard_profile_button">Պահպանել պրոֆիլ</string>
+  <string name="wizard_profile_skip">Հեռացրեք եւ արեք դա ավելի ուշ</string>
+  <string name="fab_path_choose">Ընտրեք այլ ֆայլ</string>
+  <string name="chat_plugins">Չատի հավելվածներ</string>
+  <!--Bottom sheet-->
+  <string name="bottomSheet_share_btn">Մասնակից</string>
+  <string name="bottomSheet_dialpad_btn">Դիալպադ</string>
+  <string name="bottomSheet_plugins_btn">Պլագիններ</string>
+  <string name="bottomSheet_add_participants_btn">Բարձրացնել</string>
+  <string name="bottomSheet_change_camera_btn">Փոփոխություն</string>
+  <string name="bottomSheet_camera_onoff_switch_btn">Կամերան</string>
+  <string name="bottomSheet_hangup_btn">Վերջին զանգը</string>
+  <string name="bottomSheet_mute_microphone_btn">Միկրո</string>
+  <string name="bottomSheet_sound_output_btn">Անչում է</string>
+  <string name="bottomSheet_raiseHand_btn">Բարձրացրեք ձեռքը</string>
+  <string name="open_account_plugin_settings">Բաց հաշիվի հավելվածի կարգավորումները</string>
+  <string name="open_general_plugin_settings">Բացեցրեք ընդհանուր հավելվածի կարգավորումները</string>
+  <string name="uninstall">Անբեռահասել</string>
+  <string name="reset">Վերադարձ</string>
+  <!--Swarm Detail-->
+  <string name="rename_btn">Համոզվեք</string>
+  <string name="rename_error">չի կարող դատարկ լինել</string>
+  <string name="swarm_description">Բացատրություն ավելացնել</string>
+  <string name="tab_about">Մոտ</string>
+  <string name="tab_members">Անդամներ</string>
+  <string name="tab_documetn">Փաստաթղթեր</string>
+  <string name="dialogtitle_title">Դրսում Swarm անվանումը</string>
+  <string name="dialogtitle_description">Դրսում Սավիրի նկարագրությունը</string>
+  <string name="dialog_hint_title">Գլուխ</string>
+  <string name="dialog_hint_description">Բացատրություն</string>
+  <string name="picker_title">Ընտրեք կոնտակտները</string>
+  <string name="picker_btn">Ընտրեք կոնտակտները</string>
+  <string name="bottomsheet_contact">Հաղորդակցիր Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Բեռնել զավակից</string>
+</resources>

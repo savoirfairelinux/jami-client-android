@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Parkeret</string>
     <string name="call_human_state_unhold">Uparker</string>
     <string name="call_human_state_over">Ovre</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderator</string>
+    <string name="call_muted">Tæt</string>
+    <string name="call_handRaised">Hånd hævet</string>
+
+</resources>

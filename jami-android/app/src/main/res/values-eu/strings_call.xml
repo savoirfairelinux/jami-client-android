@@ -36,4 +36,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Esperoan</string>
     <string name="call_human_state_unhold">Jaso esperotik</string>
     <string name="call_human_state_over">Amaituta</string>
-    </resources>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderatzailea</string>
+    <string name="call_muted">Isiltasuna</string>
+    <string name="call_handRaised">Eskua altxatuta.</string>
+
+</resources>

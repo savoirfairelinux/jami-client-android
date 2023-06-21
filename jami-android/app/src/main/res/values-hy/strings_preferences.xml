@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Համացանց</string>
+  <string name="pref_category_contacts">Կոնտակտներ</string>
+  <string name="pref_category_video">Տեսանյութ</string>
+  <string name="pref_category_system">Համակարգ</string>
+  <string name="pref_category_privacy">Անձնական գաղտնիություն</string>
+  <string name="pref_category_diagnostic">Վիրահատականներ</string>
+  <string name="pref_mobileData_title">Մոբիլի տվյալներ</string>
+  <string name="pref_mobileData_summary">Թույլ տվեք Jami- ին 3G / LTE ցանցերում Wi-Fi- ի հետ միասին</string>
+  <string name="pref_pushNotifications_title">Հուշումներ</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Օգտագործեք Google սերվերներ ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
+  <string name="pref_unifiedPush_summary">Օգտագործեք UnifiedPush ծառայություն ՝ ֆոնում զանգեր / հաղորդագրություններ ստանալու համար</string>
+  <string name="pref_video_advanced_title">Հրատարակված տեսանյութի կարգավորումները</string>
+  <string name="pref_video_advanced_summary">Փոխել տեսանյութի բիթային արագությունը, լուծումը, ինչպես նաեւ մուտք գործել փորձնական հատկությունները</string>
+  <string name="pref_hd_summary">Հեռացնել HD տեսանյութ ուղարկելը</string>
+  <string name="pref_hwEncode_title">Արագացված կոդավորման հնարավորություն</string>
+  <string name="pref_hwEncode_summary">Փորձնական առանձնահատկություն</string>
+  <string name="pref_videoBitrate_title">Տեսանյութի բիթային արագությունը</string>
+  <string name="pref_videoBitrate_summary">Ընտրեք արտադրանքի բիթային արագությունը (KB/s)</string>
+  <string name="pref_videoResolution_title">Տեսանյութի լուծում</string>
+  <string name="pref_videoResolution_summary">Ընտրեք արտադրանքի տեսանյութի կանխարգելված կարգավորումը</string>
+  <string name="pref_systemContacts_title">Օգտագործել համակարգային կոնտակտներ</string>
+  <string name="pref_systemContacts_summary">Օգտագործեք համակարգի կոնտակտները զանգահարողի մանրամասները ցույց տալու համար:</string>
+  <string name="pref_systemDialer_title">Համակարգային զանգեր կատարեք Jami- ի միջոցով</string>
+  <string name="pref_systemDialer_summary">Օգտագործեք Ջամի\' հնարավորության դեպքում համակարգային զանգեր կատարելու համար:</string>
+  <string name="pref_startOnBoot_title">Սկսեք Jami- ն սկսելու համար</string>
+  <string name="pref_startOnBoot_summary">Ջամիին հուշում է համակարգի սկսման ժամանակ:</string>
+  <string name="pref_clearHistory_title">Հստակ պատմություն</string>
+  <string name="pref_clearHistory_summary">Բացրեք բոլոր զրույցների պատմությունը: Այս գործողությունը չի կարող չեղարկվել:</string>
+  <string name="pref_notification_title">Հրավերագրության տեսանելիություն</string>
+  <string name="pref_notification_summary">Սահմանեք հավելվածի ծանուցումների տեսանելիությունը փակման էկրանում:</string>
+  <string name="pref_blackList_title">Բլոկային ցուցակ</string>
+  <string name="pref_blackList_summary">Ստուգեք ձեր արգելափակման ցուցակը:</string>
+  <string name="pref_delete_account_title">Հաշիվը ջնջել</string>
+  <string name="pref_delete_account_summary">Սեղմեք ձեր հաշիվը այս սարքից</string>
+  <string name="pref_persistNotification_title">Գնալ ֆոնում</string>
+  <string name="pref_persistNotification_summary">Թույլ տվեք հեռախոսազանգեր եւ հաղորդագրություններ ստանալու համար վազել ֆոնում:</string>
+  <string name="pref_newGroup_title">Հավաքային զրույցը հնարավորացնել</string>
+  <string name="pref_newGroup_summary">Թույլ տվեք ստեղծել խմբեր Ջամիում:</string>
+  <string name="pref_logs_title">Դiagնոգոստային օրագրեր</string>
+  <string name="pref_logs_summary">Բաց ախտորոշման օրագրի կարգավորումները</string>
+  <string name="pref_logs_start">Սկսեք բեռնագրումը</string>
+  <string name="pref_logs_stop">Սեղմեք անտառային աշխատանքը</string>
+  <string name="pref_typing_title">Թիպման ցուցանիշները հնարավորացնել</string>
+  <string name="pref_typing_summary">Տեղադրել եւ ստանալ տիպման ցուցանիշներ, որոնք ցույց են տալիս, որ հաղորդագրություն է տիպվում:</string>
+  <string name="pref_read_title">Հեռախոսահամարներ</string>
+  <string name="pref_read_summary">Հեռացնել եւ ստանալ վիտամուտներ, որոնք ցույց են տալիս, որ հաղորդագրություն է ցուցադրվել:</string>
+  <string name="pref_block_record_title">Բլոկել էկրանային նկարը եւ ձայնագրումը</string>
+  <string name="pref_block_record_summary">Պակասեք էկրանային նկարահանումները կամ տեսանյութերը ձայնագրելը:</string>
+  <string name="pref_link_preview_title">Կապի նախադասություն ցուցադրեք զրույցներում</string>
+  <string name="pref_link_preview_summary">Նախագահական դիտումները պահանջում են բովանդակություն ներբեռնել երրորդ կողմի սերվերներից:</string>
+  <!--Notifications Visibility-->
+  <string name="notification_public">Հանրային \n(ցուցադրեք ծանուցումները եւ դրանց բովանդակությունը փակման էկրանում) \n</string>
+  <string name="notification_private">Անձնական \n(ցուցադրեք ծանուցումներ, բայց թաքցրեք դրանց բովանդակությունը փակման էկրանում) \n</string>
+  <string name="notification_secret">Գաղտնի \n(չցուցադրեք ծանուցումներ փակման էկրանում)</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">Պլագիններ</string>
+  <string name="pref_plugins_summary">Սեղմեք հավելվածները եւ սահմանեք դրանց պարամետրերը</string>
+  <string name="fab_plugins_add">Ավելացնել նոր հավելված</string>
+  <string name="plugin_uninstall_title">Անբեռնել Plugin- ը:</string>
+  <string name="plugin_reset_preferences">Վերաոճադրեք հավելվածի նախասիրությունները</string>
+  <string name="plugin_reset_preferences_summary">Ձեր հավելվածի կարգավորումները կկառուցվեն</string>
+  <string name="plugin_reset_preferences_ask">Ցանկանում եք վերափոխել ընդհանուր հավելվածի կարգավորումները:</string>
+  <string name="plugin_reset_account_preferences_ask">Ցանկանում եք վերափոխել հաշիվի հավելվածի կարգավորումները:</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> հաջողությամբ տեղադրված</string>
+  <string name="plugin_install_failure">Չկարողացա տեղադրել հավելվածը. <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Դուք ունեք ավելի նոր տարբերակ. <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Դուք տեղադրված եք <b>%1$s</b> նույն տարբերակը</string>
+  <string name="plugin_force_install">ուժ \n տեղադրել</string>
+  <string name="plugin_path_image_add">Լրացուցիչ նոր պատկեր</string>
+</resources>

@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">ಕರೆ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ. ಮೈಕ್ರೊಫೋನ್ ಪತ್ತೆಯಾಗಿಲ್ಲ.</string>
     <string name="call_error_no_camera_no_microphone">ಕರೆ ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ. ಯಾವುದೇ ಕ್ಯಾಮರಾ ಅಥವಾ ಮೈಕ್ರೊಫೋನ್ ಪತ್ತೆಯಾಗಿಲ್ಲ.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">ಹುಡುಕಾಟ</string>
+    <string name="call_human_state_incoming">ಒಳಬರುವ</string>
+    <string name="call_human_state_connecting">ಸಂಪರ್ಕ</string>
+    <string name="call_human_state_ringing">ರಿಂಗಿಂಗ್</string>
+    <string name="call_human_state_current">ಮಾತಾಡುವ</string>
+    <string name="call_human_state_hungup">ಮುಗಿದಿದೆ</string>
+    <string name="call_human_state_busy">ಕಾರ್ಯನಿರತ</string>
+    <string name="call_human_state_failure">ವಿಫಲ</string>
+    <string name="call_human_state_hold">ಕಾಯಿರಿ</string>
+    <string name="call_human_state_unhold">ನಿಂತುಕೊಳ್ಳಿ</string>
+    <string name="call_human_state_over">ಮುಗಿದಿದೆ</string>
+    <!-- Conferences -->
+    <string name="call_moderator">ಸಂರಚಕ</string>
+    <string name="call_muted">ಮೌನ</string>
+    <string name="call_handRaised">ಕೈ ಎತ್ತಿ</string>
+
+</resources>

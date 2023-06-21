@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">കോൾ റദ്ദാക്കി. മൈക്രോഫോണൊന്നും കണ്ടെത്തിയില്ല.</string>
     <string name="call_error_no_camera_no_microphone">കോൾ റദ്ദാക്കി. ക്യാമറയോ മൈക്രോഫോണോ കണ്ടെത്തിയില്ല.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">തിരയൽ</string>
+    <string name="call_human_state_incoming">വരാനിരിക്കുന്ന</string>
+    <string name="call_human_state_connecting">ബന്ധിപ്പിക്കൽ</string>
+    <string name="call_human_state_ringing">റിംഗിംഗ്</string>
+    <string name="call_human_state_current">സംസാരിക്കുന്നു</string>
+    <string name="call_human_state_hungup">അവസാനിച്ചു</string>
+    <string name="call_human_state_busy">തിരക്കുള്ള</string>
+    <string name="call_human_state_failure">പരാജയപ്പെട്ടു</string>
+    <string name="call_human_state_hold">കാത്തിരിക്കുക</string>
+    <string name="call_human_state_unhold">അഴിച്ചുവിടുക</string>
+    <string name="call_human_state_over">അവസാനിച്ചു</string>
+    <!-- Conferences -->
+    <string name="call_moderator">മോഡറേറ്റർ</string>
+    <string name="call_muted">നിശബ്ദത</string>
+    <string name="call_handRaised">കൈ ഉയര് ത്തുക</string>
+
+</resources>

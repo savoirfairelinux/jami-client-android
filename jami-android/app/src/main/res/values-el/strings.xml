@@ -17,6 +17,7 @@
   <string name="credits">Συντελεστές</string>
   <string name="pip_title">Συνδιάσκεψη Jami</string>
   <string name="call_service_description">Αυτή η υπηρεσία είναι απαραίτητη για να μπορείτε να δέχεστε κλήσεις. Εκτελείται μόνο κατά τη διάρκεια των κλήσεων.</string>
+  <string name="data_transfer_service_description">Αυτή η υπηρεσία είναι απαραίτητη για την προβολή διαρκών ειδοποιήσεων κατά τη μεταφορά αρχείων.</string>
   <!--About dialog-->
   <string name="developed_by">Ανάπτυξη από</string>
   <string name="designed_by">Σχεδιασμός από</string>
@@ -32,6 +33,8 @@
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_account">Διαχείριση Λογαριασμού</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
+  <string name="menu_item_advanced_settings">Προχωρημένες ρυθμίσεις</string>
+  <string name="menu_item_account_settings">Ρυθμίσεις λογαριασμού</string>
   <string name="menu_item_plugin_list">Ρυθμίσεις Προσθέτων</string>
   <string name="menu_item_share">Κοινοποίηση λογαριασμού</string>
   <string name="menu_item_about">Σχετικά με το Jami</string>
@@ -69,6 +72,7 @@
   <string name="notif_channel_background_service">Υπηρεσία Παρασκηνίου</string>
   <string name="notif_channel_background_service_descr">Επιτρέπει τη λήψη κλήσεων και μηνυμάτων οποτεδήποτε.</string>
   <string name="notif_group_calls">Κλήσεις</string>
+  <string name="notif_background_service">Η Τζάμι τρέχει στο φόντο.</string>
   <string name="notif_mark_as_read">Σημείωση ως αναγνωσμένο</string>
   <string name="notif_dismiss">Απόρριψη</string>
   <string name="notif_reply">Απάντηση</string>
@@ -77,7 +81,9 @@
   <string name="notif_incoming_picture">Εικόνα από %1$s</string>
   <string name="notif_sync_title">Συγχρονισμός δεδομένων</string>
   <string name="notif_location_title">Κοινοποίηση τοποθεσίας με %1$s</string>
+  <string name="location_share_contact">Το %1$s μοιράζεται τοποθεσία μαζί σας</string>
   <string name="notif_location_multi_title">Κοινοποίηση τοποθεσίας με %1$dεπαφές</string>
+  <string name="notif_location_remaining">%1$d λεπτά που έχουν απομείνει</string>
   <string name="notif_location_action_stop">Τερματισμός κοινοποίησης τοποθεσίας</string>
   <string name="location_share_action_start">Έναρξη κοινοποίησης</string>
   <string name="location_share_action_stop">Τερματισμός κοινοποίησης</string>
@@ -92,6 +98,8 @@
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
+  <string name="start_error_title">Δεν μπορώ να ξεκινήσω Jami!</string>
+  <string name="start_error_mic_required">Η Τζάμι χρειάζεται άδεια για να λειτουργήσει το μικρόφωνο.</string>
   <string name="action_call_accept">Κάνε μια κλήση</string>
   <string name="action_call_accept_audio">Απάντησε με φωνή</string>
   <string name="action_call_accept_video">Απάντησε με βίντεο</string>
@@ -100,6 +108,7 @@
   <string name="action_call_end_accept">Τερματισμός και λήψη κλήσης</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="action_call_mic_mute">Σίγαση μικροφώνου</string>
+  <string name="action_load_plugin">Εμπληρωματικό φόρτωσης</string>
   <string name="ab_action_speakerphone">Μεγάφωνο</string>
   <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
@@ -119,11 +128,13 @@
   <string name="message_failed">Απέτυχε</string>
   <string name="time_just_now">Μόλις τώρα</string>
   <string name="send_file">Αποστολή αρχείου</string>
+  <string name="select_media">Ανοιχτή γκαλερί</string>
   <string name="hist_file_sent">Το αρχείο στάλθηκε</string>
   <string name="hist_file_received">Το αρχείο ελήγθη</string>
   <string name="conversation_send_audio">Εγγραφή κλιπ ήχου</string>
   <string name="conversation_send_video">Εγγραφή κλιπ βίντεο</string>
   <string name="conversation_share_location">Κοινοποίηση τοποθεσίας</string>
+  <string name="in_reply_to">Απαντώντας</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
@@ -131,11 +142,19 @@
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος αρχείου είναι %1$d kb.</string>
+  <string name="ringtone_custom_prompt">Εγκαταστήστε έναν εξατομικευμένο χτυπήμα</string>
+  <string name="ringtone_custom_label">Προμηθευτές</string>
+  <string name="ringtone_jami_tones">Τζάμι Τόνους</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Η Τζάμι χρειάζεται την άδεια \"Διαβάστε επαφές\" για να ενεργοποιήσει αυτή τη δυνατότητα.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Η Τζάμι χρειάζεται την άδεια \"Γράψτε ημερολόγιο κλήσεων\" για να ενεργοποιήσει αυτή τη δυνατότητα.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
   <string name="title_activity_qrcode">Κοινοποίηση λογαριασμού</string>
+  <string name="error_scan_no_camera_permissions">Ο σκανέρος QR απαιτεί άδειες κάμερας για να λειτουργήσει</string>
+  <string name="tab_code">Ο Κώδικας μου</string>
+  <string name="tab_scan">Κώδικας σαρώσεως</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Διαγραφή ιστορικού;</string>
   <string name="clear_history_dialog_message">Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
@@ -156,21 +175,34 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
   <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
+  <string name="conversation_action_unblock_this">Ανοίξτε την επαφή</string>
   <string name="conversation_action_go_to_call">Επιστροφή στην κλήση σε εξέλιξη</string>
   <string name="conversation_action_latest">Κύλιση στο τέλος της συνομιλίας</string>
   <string name="conversation_open_file_error">Δεν υπάρχει εγκατεστημένη εφαρμογή για το άνοιγμα αυτού του τύπου αρχείου</string>
   <string name="clip_contact_uri">Διεύθυνση επαφής</string>
   <string name="block_contact_dialog_title">Μπλοκάρισμα %1$s;</string>
+  <string name="block_contact_dialog_message">Το %1$s δεν θα μπορεί να επικοινωνήσει μαζί σας μέχρι να το αποκλειστεί.</string>
+  <string name="block_contact_completed">Το %1$s είχε μπλοκαριστεί.</string>
+  <string name="unblock_contact_dialog_title">Ανοίξτε το %1$s;</string>
+  <string name="unblock_contact_dialog_message">Το %1$s θα είναι σε θέση να επικοινωνήσει μαζί σας ξανά.</string>
+  <string name="unblock_contact_completed">Το %1$s αφενεργοποιήθηκε.</string>
   <string name="conversation_contact_is_typing">Η επαφή πληκτρολογεί</string>
   <string name="conversation_info_contact_you">Εσύ</string>
   <string name="conversation_members">Μέλη</string>
   <string name="conversation_syncing">Λήψη συνομιλίας από χρήστη</string>
+  <string name="conversation_blocked">Η επαφή είναι μπλοκαρισμένη.</string>
+  <string name="conversation_ended">Η συζήτηση τελείωσε.</string>
+  <string name="conversation_message_deleted">(Μετάχυση διαγραφής)</string>
   <string name="conversation_preference_color">Χρώμα συνομιλίας</string>
   <string name="conversation_preference_emoji">Emoji συνομιλίας</string>
   <string name="conversation_type_contact">Επαφή Jami</string>
+  <string name="conversation_type_private">Ιδιωτικό Σπάρμ</string>
+  <string name="conversation_type_group">Ομαδική σμήνος</string>
   <string name="conversation_contact_invited">%1$s προσκλήθηκε</string>
   <string name="conversation_contact_added">%1$s μπήκε</string>
   <string name="conversation_contact_left">%1$s έφυγε</string>
+  <string name="conversation_contact_banned">Το %1$s απαγορεύτηκε</string>
+  <string name="conversation_search_hint">Ψάξτε για συζήτηση</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>
@@ -181,6 +213,8 @@
   <string name="prompt_hint_username">Όνομα χρήστη</string>
   <string name="help_password_choose">Επιλέξτε έναν κωδικό που θα θυμάστε για την προστασία του λογαριασμού σας στο Jami.</string>
   <string name="help_password_enter">Καταχώρησε το κωδικό του κύριου λογαριασμού σου Jami.</string>
+  <string name="help_server_enter">Εισάγετε το URL του διακομιστή διαχείρισης.</string>
+  <string name="help_pin_enter">Εισάγετε το PIN από άλλο λογαριασμό Jami που έχει ρυθμιστεί. Χρησιμοποιήστε τη λειτουργία \"εξαγωγή λογαριασμού Jami\" για να αποκτήσετε ένα PIN.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <string name="wizard_skip">Παράληψη</string>
@@ -219,6 +253,7 @@
   <string name="contact_request_msg">Έχεις %1$d αιτήματα επαφών</string>
   <string name="contact_request_account">Για %1$s</string>
   <string name="no_requests">Δεν έχεις αιτήματα επαφών</string>
+  <string name="message_contact_not_trusted_yet">Το %s δεν είναι ακόμα στα επαφές σας.\nΑποδέχεστε ή αρνούστε το αίτημα επαφής;</string>
   <string name="message_contact_not_trusted">%s δεν είναι στις επαφές σου. Να καταχωρηθεί νέα επαφή;</string>
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
@@ -263,6 +298,7 @@
   <string name="menu_file_delete">Διαγραφή αρχείου</string>
   <string name="menu_file_share">Μοίρασμα αρχείου</string>
   <string name="menu_message_copy">Αντιγραφή</string>
+  <string name="menu_message_edit">Τροποποίηση μηνύματος</string>
   <string name="menu_message_delete">Διαγραφή μηνύματος</string>
   <string name="menu_message_cancel">Ακύρωση μηνύματος</string>
   <string name="menu_message_reply">Απάντηση</string>
@@ -305,17 +341,35 @@
   <string name="wizard_profile_button">Αποθήκευση προφίλ</string>
   <string name="wizard_profile_skip">Παράλειψε και εκτέλεσε το αργότερα</string>
   <string name="fab_path_choose">Επιλογή άλλου αρχείου</string>
+  <string name="chat_plugins">Προσωπικά προστίγματα</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Κοινοποίηση</string>
   <string name="bottomSheet_dialpad_btn">Πληκτρολόγιο κλήσης</string>
+  <string name="bottomSheet_plugins_btn">Επενδύσεις</string>
   <string name="bottomSheet_add_participants_btn">Προσθήκη</string>
   <string name="bottomSheet_change_camera_btn">Αλλαγή</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Κάμερα</string>
   <string name="bottomSheet_hangup_btn">Τερματισμός κλήσης</string>
+  <string name="bottomSheet_mute_microphone_btn">Μικρο</string>
   <string name="bottomSheet_sound_output_btn">Ήχοι</string>
   <string name="bottomSheet_raiseHand_btn">Σηκώστε το χέρι σας</string>
+  <string name="open_account_plugin_settings">Άνοιξε ρυθμίσεις του Plugin λογαριασμού</string>
+  <string name="open_general_plugin_settings">Ανοίξτε τις γενικές ρυθμίσεις του Plugin</string>
+  <string name="uninstall">Απεγκατάσταση</string>
+  <string name="reset">Ανακατάσταση</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Επιβεβαίωση</string>
+  <string name="rename_error">Δεν μπορεί να είναι άδειο.</string>
+  <string name="swarm_description">Προσθήκη περιγραφής</string>
   <string name="tab_about">Περί</string>
   <string name="tab_members">Μέλη</string>
+  <string name="tab_documetn">Έγγραφα</string>
+  <string name="dialogtitle_title">Εξετάστε τίτλο Swarm</string>
+  <string name="dialogtitle_description">Εξετάστε περιγραφή του σμήνου</string>
   <string name="dialog_hint_title">Τίτλος</string>
+  <string name="dialog_hint_description">Περιγραφή</string>
+  <string name="picker_title">Επιλέξτε επαφές</string>
+  <string name="picker_btn">Επιλέξτε επαφές</string>
+  <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Απομακρύνσου από το σμήνος</string>
 </resources>

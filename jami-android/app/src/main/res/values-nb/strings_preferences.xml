@@ -9,7 +9,9 @@
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillat Jami på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-varsler</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">Bruk Google-tjenere for å tillate mottak av samtaler/meldinger i bakgrunnen</string>
+  <string name="pref_unifiedPush_summary">Bruk en UnifiedPush-tjeneste for å tillate mottak av samtaler/meldinger i bakgrunnen</string>
   <string name="pref_video_advanced_title">Avanserte video-innstillinger</string>
   <string name="pref_video_advanced_summary">Endre videobitrate og oppløsning, samt få tilgang til eksperimentelle funksjoner</string>
   <string name="pref_hd_summary">Aktiver sending av HD-video</string>
@@ -35,6 +37,8 @@
   <string name="pref_delete_account_summary">Slett din konto på denne enheten</string>
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
+  <string name="pref_newGroup_title">Aktiverer gruppechat</string>
+  <string name="pref_newGroup_summary">Oppmuntre til å opprette grupper i Jami.</string>
   <string name="pref_logs_title">Feilfinningslogger</string>
   <string name="pref_logs_summary">Åpne innstillinger for feilfinningsloggen</string>
   <string name="pref_logs_start">Sett i gang loggføring</string>
@@ -58,6 +62,8 @@
   <string name="plugin_uninstall_title">Avinstaller utvidelse ?</string>
   <string name="plugin_reset_preferences">Nullstill innstillinger for utvidelse</string>
   <string name="plugin_reset_preferences_summary">Innstillinger for utvidelse vil bli nullstilt</string>
+  <string name="plugin_reset_preferences_ask">Vil du tilbakestille de generelle plugin innstillingene?</string>
+  <string name="plugin_reset_account_preferences_ask">Vil du tilbakestille konto plugin innstillinger?</string>
   <string name="plugin_successfully_installed">Utvidelsen <b>%1$s</b> installert</string>
   <string name="plugin_install_failure">Installasjon av utvidelsen feilet: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Du har en nyere versjon av: <b>%1$s</b></string>

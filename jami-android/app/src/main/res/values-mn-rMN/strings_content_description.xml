@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Удахгүй дуудлага</string>
+  <string name="contact_picture_description">Холбоолын зураг</string>
+  <string name="dial_numeric_pad">Сангийн дуудлага</string>
+  <string name="contact_unblock">Блокийг нээж</string>
+  <string name="video_plugins">Видео хувилбар</string>
+</resources>

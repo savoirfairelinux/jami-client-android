@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">통화 취소됨. 감지된 마이크가 없습니다.</string>
     <string name="call_error_no_camera_no_microphone">통화 취소됨. 카메라나 마이크가 감지되지 않았습니다.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">검색</string>
+    <string name="call_human_state_incoming">들어오는</string>
+    <string name="call_human_state_connecting">연결</string>
+    <string name="call_human_state_ringing">울리는 소리</string>
+    <string name="call_human_state_current">대화</string>
+    <string name="call_human_state_hungup">끝이야</string>
+    <string name="call_human_state_busy">바쁜</string>
+    <string name="call_human_state_failure">실패</string>
+    <string name="call_human_state_hold">기다려</string>
+    <string name="call_human_state_unhold">어</string>
+    <string name="call_human_state_over">끝이야</string>
+    <!-- Conferences -->
+    <string name="call_moderator">조정자</string>
+    <string name="call_muted">무화</string>
+    <string name="call_handRaised">손을 들어</string>
+
+</resources>

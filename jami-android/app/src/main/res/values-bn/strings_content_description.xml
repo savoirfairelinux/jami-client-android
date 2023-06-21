@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">দ্রুত কল</string>
+  <string name="contact_picture_description">যোগাযোগের ছবি</string>
+  <string name="dial_numeric_pad">সংখ্যাসূচক ডায়ালপ্যাড</string>
+  <string name="contact_unblock">ব্লক খুলে দিন</string>
+  <string name="video_plugins">ভিডিও প্লাগইন</string>
+</resources>
