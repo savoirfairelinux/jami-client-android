@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66911b99_f8254c46",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/Constants.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-21T17:54:01Z",
+      "side": 1,
+      "message": "thanks for explanations :)",
+      "parentUuid": "88c95390_54a6af22",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 16
+      },
+      "revId": "3d94a27e63ecf5e9861d4311cc66af97dbb4b2cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f104e39_0015840b",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-21T17:44:17Z",
       "side": 1,
       "message": "move to CallServiceImpl",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 62
+      },
+      "revId": "3d94a27e63ecf5e9861d4311cc66af97dbb4b2cb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af0ee864_5f460d40",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/Constants.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-21T17:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f104e39_0015840b",
       "range": {
         "startLine": 6,
         "startChar": 14,
