@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Zəng ləğv edildi. Mikrofon aşkarlanmadı.</string>
     <string name="call_error_no_camera_no_microphone">Zəng ləğv edildi. Kamera və ya mikrofon aşkarlanmadı.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">آختارماق</string>
+    <string name="call_human_state_incoming">گئدن</string>
+    <string name="call_human_state_connecting">باغلاشما</string>
+    <string name="call_human_state_ringing">زنگ زدن</string>
+    <string name="call_human_state_current">دانيشماق</string>
+    <string name="call_human_state_hungup">قورتاردي</string>
+    <string name="call_human_state_busy">مشغول</string>
+    <string name="call_human_state_failure">شکست</string>
+    <string name="call_human_state_hold">صبر کن</string>
+    <string name="call_human_state_unhold">گئجه ییب</string>
+    <string name="call_human_state_over">قورتاردي</string>
+    <!-- Conferences -->
+    <string name="call_moderator">مودراتور</string>
+    <string name="call_muted">ساکئت</string>
+    <string name="call_handRaised">ال قالديريلميش</string>
+
+</resources>

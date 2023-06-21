@@ -1,27 +1,246 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">हटवा</string>
+  <string name="ic_advanced_menu">प्रगत सेटिंग्ज</string>
+  <string name="ic_blacklist_menu">अवरोधित संपर्क</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">खाते जोडा</string>
+  <string name="add_sip_account_title">SIP खाते जोडा</string>
+  <string name="ring_account_default_name">जामी खाते %1$s</string>
+  <string name="prompt_alias">इतर नाव</string>
+  <string name="prompt_hostname">यजमान नाव</string>
+  <string name="prompt_username">नाव</string>
+  <string name="prompt_password">पासवर्ड</string>
+  <string name="action_create">खाते तयार करा</string>
+  <string name="action_create_short">तयार करा</string>
+  <string name="action_register">नोंदणी</string>
+  <string name="action_settings">सेटिंग्ज</string>
+  <string name="error_field_required">या फील्डची आवश्यकता आहे</string>
+  <string name="dialog_wait_create">खाते जोडणे</string>
+  <string name="dialog_wait_create_details">कृपया तुमचे नवीन खाते जोडले जाण्याची प्रतीक्षा करा.</string>
+  <string name="dialog_wait_update">खाते अद्यतनित करणे</string>
+  <string name="dialog_wait_update_details">कृपया तुमचे नवीन खाते अपडेट होईपर्यंत प्रतीक्षा करा.</string>
+  <string name="dialog_warn_ip2ip_account_title">रिक्त SIP खाते तयार करा?</string>
+  <string name="dialog_warn_ip2ip_account_message">आपण एक वैध होस्टनाम नसलेले SIP खाते तयार करणार आहात. आपण फक्त थेट IP कॉल करू आणि प्राप्त करू शकाल. आपण नंतर आपले खाते संपादित करू शकता</string>
+  <string name="account_type_ip2ip">आयपी खाते</string>
+  <string name="help_ring">जेमी अकाऊंट तुम्हाला संपूर्णपणे वितरित नेटवर्कद्वारे सुरक्षितपणे लोकांशी संपर्क साधण्याची परवानगी देतो.</string>
+  <string name="help_sip_title">आपले SIP खाते जोडा</string>
+  <string name="help_sip">विद्यमान SIP खाते कॉन्फिगर करा.</string>
+  <string name="create_sip_account">SIP खाते जोडा</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">खाते हटवायचे?</string>
+  <string name="account_delete_dialog_message">या कारवाईला मागे टाकता येणार नाही.</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">नोंदणीकृत खाते नाही</string>
+  <string name="normal_accounts_titles">खाते</string>
+  <string name="normal_devices_titles">जोडलेले उपकरणे</string>
+  <string name="account_device_revoke">रद्द करण्याचे साधन</string>
+  <string name="account_device_revocation_success_title">यश</string>
+  <string name="account_device_revocation_success">यंत्र आता रद्द करण्यात आले आहे!</string>
+  <string name="account_device_revocation_error_title">डिव्हाइस रद्द करू शकत नाही</string>
+  <string name="account_device_revocation_wrong_password">चुकीचा पासवर्ड.</string>
+  <string name="account_device_revocation_unknown_device">अज्ञात यंत्र.</string>
+  <string name="account_device_revocation_error_unknown">अज्ञात त्रुटी.</string>
+  <string name="account_password_change">पासवर्ड बदला</string>
+  <string name="account_password_set">पासवर्ड सेट करा</string>
+  <string name="account_password_summary">तुमच्या खात्याचा पासवर्ड व्यवस्थापित करा.</string>
+  <string name="account_password_change_wait_message">खाते संकेतशब्द बदलणे</string>
   <!--Basic Details-->
+  <string name="account_preferences_basic_tab">जनरल</string>
+  <string name="account_basic_category">मूलभूत सेटिंग्ज</string>
+  <string name="account_alias_label">खाते नाव</string>
+  <string name="account_hostname_label">यजमान नाव</string>
+  <string name="account_bootstrap_label">बूटस्ट्रॅप</string>
+  <string name="account_username_label">नाव</string>
+  <string name="account_password_label">पासवर्ड</string>
+  <string name="account_optionnal_category">पर्यायी सेटिंग्ज</string>
+  <string name="account_useragent_label">वापरकर्ता एजंट</string>
+  <string name="account_autoanswer_label">ऑटो उत्तर</string>
+  <string name="account_rendezvous_label">भेटीचा मोड</string>
+  <string name="account_rendezvous_summary">भेटी मोडमध्ये, येणारे कॉल कॉन्फरन्स रूममध्ये जोडले जातील.</string>
+  <string name="account_upnp_label">UPnP सक्षम करा</string>
+  <string name="account_proxy_field">प्रॉक्सी</string>
   <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">प्लगइन</string>
   <!--Audio Details-->
   <string name="account_audio_label"> 
 ऑडिओ</string>
+  <string name="account_preferences_media_tab">माध्यमे</string>
   <string name="account_ringtone_label">रिंगतोन्स</string>
+  <string name="account_ringtone_enabled_label">रिंगटोन सक्रिय करा</string>
+  <string name="account_ringtone_path_label">रिंगटोन मार्ग</string>
+  <string name="account_ringtone_custom_label">कस्टम रिंगटोन वापरा</string>
+  <string name="account_ringtone_title">एक रिंगटोन निवडा</string>
+  <string name="account_ringtone_summary">एक रिंगटोन निवडा किंवा स्वतःचा निवडा</string>
   <!--Video Details-->
   <string name="account_video_label">व्हिडिओ</string>
+  <string name="account_video_enable">व्हिडिओ सक्षम करा</string>
   <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">प्रगत</string>
+  <string name="account_call_settings_title">कॉल सेटिंग्ज</string>
+  <string name="account_dht_public_in_calls_label">अज्ञात संपर्कांकडून येणाऱ्या कॉलला अनुमती द्या</string>
+  <string name="account_registration_exp_label">नोंदणी कालावधी संपतो</string>
+  <string name="account_local_interface_label">स्थानिक इंटरफेस</string>
+  <string name="account_local_port_label">स्थानिक बंदर</string>
+  <string name="account_stun_enable_label">Stun चा वापर करा</string>
+  <string name="account_stun_server_label">स्टन सर्व्हर</string>
+  <string name="account_accept_files">येणाऱ्या फायली स्वयंचलितपणे स्वीकारा</string>
+  <string name="account_conversation_settings_title">संभाषण सेटिंग्ज</string>
+  <string name="account_accept_files_max_size">स्वयंचलितपणे स्वीकारण्यासाठी कमाल फाइल आकार</string>
+  <string name="account_accept_files_never">कधीही स्वयंचलितपणे स्वीकारू नका</string>
+  <string name="account_accept_files_always">नेहमी स्वयंचलितपणे स्वीकारा</string>
+  <string name="size_mb">%1$d MB</string>
+  <string name="account_turn_enable_label">TURN वापरा</string>
+  <string name="account_turn_server_label">टर्न सर्व्हर</string>
+  <string name="account_turn_username_label">टर्न वापरकर्तानाव</string>
+  <string name="account_turn_password_label">टर्न संकेतशब्द</string>
+  <string name="account_published_same_as_local_label">स्थानिक सारखेच प्रकाशित</string>
+  <string name="account_published_port_label">प्रकाशित पोर्ट</string>
+  <string name="account_published_address_label">प्रकाशित पत्त्या</string>
+  <string name="disabled">अपंग</string>
+  <string name="enabled">सक्षम केले</string>
+  <string name="account_proxy_label">डीएचटी प्रॉक्सी</string>
+  <string name="account_proxy_enable_label">डीएचटी प्रॉक्सी वापरा</string>
+  <string name="account_proxy_server_label">डीएचटी प्रॉक्सी पत्ता</string>
+  <string name="account_proxy_server_list_label">DHT प्रॉक्सी लिस्ट URL</string>
+  <string name="account_sip_proxy_label">प्रॉक्सी</string>
+  <string name="account_peer_discovery_label">स्थानिक सहकारी शोध</string>
+  <string name="account_peer_discovery_enable_label">स्थानिक सहकारी शोध सक्षम करा</string>
+  <string name="account_peer_discovery_enable_summary">आमच्या स्थानिक नेटवर्कवर जाहिरात करणाऱ्या इतर डीएचटी नोड्सशी कनेक्ट व्हा</string>
   <!--Security Details-->
+  <string name="account_credentials_label">प्रमाणपत्रे</string>
+  <string name="account_credentials_edit">क्रेंडीटल संपादित करा</string>
+  <string name="account_credentials_add">क्रेडेंशियल जोडा</string>
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">सुरक्षा</string>
+  <string name="account_srtp_switch_label">एन्क्रिप्टेड मीडिया स्ट्रीम (SRTP)</string>
+  <string name="account_srtp_enable_sdes">SDES चा चाचणी प्रोटोकॉल म्हणून सक्षम करा</string>
+  <string name="account_srtp_rtp_fallback">आरटीपी अपयशाने आरटीपी परत</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">TLS Transport चा वापर करा</string>
+  <string name="account_tls_port_label">TLS सुनावणी पोर्ट</string>
+  <string name="account_tls_certificate_list_label">प्रमाणपत्र देणारी संस्था</string>
+  <string name="account_tls_certificate_file_label">प्रमाणपत्र फाइल</string>
+  <string name="account_tls_private_key_file_label">खाजगी की फाइल</string>
+  <string name="account_tls_password_label">खाजगी की पासवर्ड</string>
+  <string name="account_tls_method_label">टीएलएस पद्धत</string>
+  <string name="account_tls_ciphers_label">टीएलएस सिफर</string>
+  <string name="account_tls_server_name_label">सर्व्हर नाव</string>
+  <string name="account_tls_verify_server_label">सर्व्हर सत्यापित करा</string>
+  <string name="account_tls_verify_client_label">क्लायंटची पुष्टी करा</string>
+  <string name="account_require_client_certificate_label">TLS क्लायंट प्रमाणपत्र आवश्यक आहे</string>
+  <string name="account_tls_negotiation_timeout_sec">चर्चा कालावधी (सेक)</string>
+  <string name="account_rtp_max_port">जास्तीत जास्त</string>
+  <string name="account_rtp_min_port">किमान</string>
+  <string name="account_rtp_port_range">ऑडिओ आरटीपी पोर्ट श्रेणी</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">खाते उघडण्यासाठी मुख्य संकेतशब्द प्रविष्ट करा</string>
+  <string name="error_password_char_count">किमान 6 वर्ण</string>
+  <string name="error_passwords_not_equals">पासवर्ड जुळत नाहीत</string>
+  <string name="export_account_wait_title">कृपया प्रतीक्षा करा.</string>
+  <string name="export_account_wait_message">निर्यात खात्याची माहिती</string>
+  <string name="account_export_file">बॅकअप खाते</string>
+  <string name="account_export_file_summary">नंतर पुनर्संचयित करण्यासाठी आपल्या डिव्हाइसवर आपले खाते बॅकअप घ्या.</string>
+  <string name="account_export_end_decryption_message">दिलेला पासवर्ड वापरून तुमचे खाते उघडू शकले नाही.</string>
+  <string name="account_export_end_network_title">नेटवर्क त्रुटी</string>
+  <string name="account_export_end_network_message">नेटवर्कवरील खाते निर्यात करू शकले नाही.</string>
+  <string name="account_export_end_error_title">त्रुटी</string>
+  <string name="account_export_end_error_message">खाते निर्यात करता आले नाही. अज्ञात त्रुटी आली.</string>
+  <string name="account_enter_password">पासवर्ड प्रविष्ट करा</string>
+  <string name="account_share_body">जामीच्या वितरित संप्रेषण प्लॅटफॉर्मवर \'%1$s\' वापरून माझ्याशी संपर्क साधा: %2$s</string>
+  <string name="account_share_body_with_username">\'%1$s\' किंवा \'%2$s\' या सार्वजनिक वापरकर्तानावाने Jami वितरण संवाद प्लॅटफॉर्मवर माझ्याशी संपर्क साधा: %3$s</string>
+  <string name="account_contact_me">मला जामी वर संपर्क साधा!</string>
+  <string name="update_account">खाते अद्यतनित करा</string>
+  <string name="account_migration">तुमचे जेमी अकाऊंट अपडेट करता येईल. कृपया तुमचा पासवर्ड प्रविष्ट करा.</string>
+  <string name="ring_account">जेमी खाते</string>
+  <string name="ring_account_identity">ओळख</string>
+  <string name="account_migration_title_dialog">खाते स्थलांतर</string>
+  <string name="account_migration_message_dialog">तुमच्या खात्यांची अद्यतनित करणे आवश्यक आहे. हे ऑपरेशन करण्यासाठी तुम्हाला खाते व्यवस्थापन स्क्रीनवर जायचे आहे का?</string>
+  <string name="account_update_needed">अद्यतन आवश्यक</string>
+  <string name="account_cannot_be_found_title">मला खाते सापडत नाही</string>
+  <string name="account_cannot_be_found_message">जामी नेटवर्कवर खाते सापडले नाही. जामीवर विद्यमान डिव्हाइसवरून निर्यात करण्यात आले होते याची खात्री करा. आणि आपली ओळखपत्रे योग्य आहेत.</string>
+  <string name="account_sip_cannot_be_registered_message">आपण खाते तयार करण्याच्या प्रक्रियेस पुढे जाऊ शकता किंवा आपली माहिती येथे संपादित करू शकता. खाते सेटिंग्जमध्ये नंतर आवृत्ती अद्याप शक्य आहे.</string>
+  <string name="account_no_network_title">नेटवर्कशी कनेक्ट होऊ शकत नाही</string>
+  <string name="account_no_network_message">जेमीला नेटवर्कशी कनेक्ट करता येत नाही.</string>
+  <string name="account_device_added_title">खाते उपकरणे जोडली</string>
+  <string name="account_device_added_message">तुम्ही या डिव्हाइसवर तुमचे जेमी अकाऊंट यशस्वीरीत्या सेट केले आहे.</string>
+  <string name="account_device_updated_title">खाते यंत्र अद्यतनित</string>
+  <string name="account_device_updated_message">तुम्ही तुमच्या जामी अकाऊंटला यशस्वीरित्या अपडेट केले आहे.</string>
+  <string name="account_cannot_be_updated_message">खाते यंत्र अद्यतनित होऊ शकले नाही. कृपया तुमचा पासवर्ड तपासा.</string>
+  <string name="account_sip_success_title">नोंदणीकृत सिप खाते</string>
+  <string name="account_sip_success_message">तुम्ही तुमच्या सिप खात्याची नोंदणी यशस्वीरीत्या केली आहे.</string>
+  <string name="account_sip_register_anyway">तरी नोंदणी करा</string>
   <!--TV-->
+  <string name="account_tv_settings_header">खाते सेटिंग्ज</string>
+  <string name="account_tv_advance_settings_header">प्रगत सेटिंग्ज</string>
+  <string name="account_tv_add_contact">संपर्क जोडा</string>
+  <string name="account_tv_advanced_settings">सामान्य सेटिंग्ज बदला</string>
+  <string name="account_tv_about">जेमी बद्दल</string>
+  <string name="tv_about_version">आवृत्ती</string>
   <string name="tv_about_license">परवाना</string>
+  <string name="tv_about_author">लेखकाचे हक्क</string>
+  <string name="tv_about_credits">क्रेडिट</string>
+  <string name="account_link_device">दुसर्या डिव्हाइसवरून कनेक्ट करा</string>
+  <string name="account_link_button">नेटवर्कवरून कनेक्ट</string>
+  <string name="account_link_archive_button">बॅकअप पासून कनेक्ट</string>
+  <string name="account_link_prompt_pin">पिन प्रविष्ट करा</string>
+  <string name="account_new_button">जामी खाते तयार करा</string>
+  <string name="account_link_export_button">नवीन डिव्हाइस लिंक करा</string>
+  <string name="account_link_show_button">%d अधिक जोडलेले डिव्हाइस दाखवा</string>
+  <string name="account_link_hide_button">कनेक्ट केलेले डिव्हाइस लपवा</string>
+  <string name="account_link_export_info">या खात्याचा वापर इतर डिव्हाइसवर करण्यासाठी, आपण प्रथम ते Jami वर उघड करणे आवश्यक आहे. यामुळे एक पिन कोड तयार होईल जो आपण नवीन डिव्हाइसवर प्रविष्ट करणे आवश्यक आहे खाते सेट अप करण्यासाठी. पिन 10 मिनिटांसाठी वैध आहे.</string>
+  <string name="account_start_export_button">पिन तयार करा</string>
+  <string name="account_end_export_button">जवळ</string>
+  <string name="account_end_export_infos">तुमची पिन आहेः\n\n%%\n\nप्रक्रिया पूर्ण करण्यासाठी, तुम्हाला नवीन डिव्हाइसवर Jami उघडणे आवश्यक आहे. \"या डिव्हाइसला एका खात्याशी लिंक करा\" असे नवीन खाते तयार करा. तुमची पिन 10 मिनिटांसाठी वैध आहे.</string>
+  <string name="account_link_export_info_light">या खात्याचा वापर इतर डिव्हाइसवर करण्यासाठी, आपण प्रथम ते Jami वर उघड करणे आवश्यक आहे. यामुळे एक पिन कोड तयार होईल जो आपण नवीन डिव्हाइसवर प्रविष्ट करणे आवश्यक आहे खाते सेट अप करण्यासाठी. पिन 10 मिनिटांसाठी वैध आहे.</string>
+  <string name="account_export_title">इतर उपकरणांना लिंक खाते</string>
+  <string name="account_connect_server_button">व्यवस्थापन सर्व्हरशी कनेक्ट</string>
+  <string name="account_connect_button">कनेक्ट करा</string>
+  <string name="prompt_server">Jami व्यवस्थापन सर्व्हर URL</string>
+  <string name="help_credentials_enter">आपल्या संस्थेची माहिती प्रविष्ट करा</string>
+  <string name="help_connect_password_enter">आपला संचयी शब्द प्रविष्ट करा</string>
+  <string name="account_connect_prompt_username">नाव</string>
   <!--Name registration-->
+  <string name="error_username_empty">एक वापरकर्तानाव प्रविष्ट करा</string>
+  <string name="no_registered_name_for_account">नोंदणीकृत नाव नाही</string>
+  <string name="username_available">वापरकर्तानाव उपलब्ध!</string>
+  <string name="register_name">नोंदणी नाव</string>
+  <string name="trying_to_register_name">नाव नोंदवण्याचा प्रयत्न</string>
+  <string name="registered_username">नोंदणीकृत वापरकर्तानाव</string>
+  <string name="register_username">सार्वजनिक वापरकर्तानाव नोंदणी</string>
+  <string name="register_recommended">शिफारस केलेले</string>
+  <string name="username_already_taken">आधीच वापरकर्ता नाव</string>
+  <string name="invalid_username">अवैध वापरकर्तानाव</string>
+  <string name="unknown_error">अज्ञात त्रुटी. कृपया आपल्या नेटवर्क कनेक्शनची तपासणी करा!</string>
+  <string name="looking_for_username_availability">वापरकर्त्याच्या नावाची उपलब्धता शोधत आहे.</string>
+  <string name="account_status_connecting">जोडणी</string>
+  <string name="account_status_connection_error">कनेक्शन त्रुटी</string>
+  <string name="account_status_online">ऑनलाईन</string>
+  <string name="account_status_unknown">अज्ञात</string>
+  <string name="account_status_offline">ऑफलाइन</string>
+  <string name="account_status_error">त्रुटी</string>
   <!--Create account-->
+  <string name="account_creation_home">जामी येथे आपले स्वागत आहे</string>
+  <string name="account_creation_profile">आपला प्रोफाइल तयार करा</string>
+  <string name="account_creation_ring">आपले जेमी खाते तयार करा</string>
+  <string name="account_link_title">या उपकरणाला लिंक करा</string>
+  <string name="account_sip_cannot_be_registered">खाते नोंदणी करू शकत नाही</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">माझे खाते संपादित करा</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">पुष्टी करण्यासाठी पासवर्ड प्रविष्ट करा</string>
+  <string name="enter_password">पासवर्ड प्रविष्ट करा</string>
+  <string name="revoke_device_title">रद्द करण्याचे साधन</string>
+  <string name="revoke_device_message">तुम्हाला खात्री आहे की तुम्हाला %1$s रद्द करायचा आहे?</string>
+  <string name="revoke_device_wait_title">कृपया प्रतीक्षा करा.</string>
+  <string name="revoke_device_wait_message">रद्द करण्याचे साधन</string>
+  <string name="rename_device_title">या उपकरणाचे नाव बदलून</string>
+  <string name="rename_device_message">तुमच्या Jami खात्यात या डिव्हाइसची ओळख करण्यासाठी नवीन नाव निवडा</string>
+  <string name="rename_device_button">नाव बदलण्याची यंत्रणा</string>
+  <string name="account_rename_device_hint">नवीन डिव्हाइसचे नाव निवडा</string>
+  <string name="account_device_name_empty">डिव्हाइसचे नाव रिक्त असू शकत नाही</string>
+  <string name="account_device_this_indicator">हे यंत्र</string>
+  <string name="account_disabled_indicator">अपंग</string>
 </resources>

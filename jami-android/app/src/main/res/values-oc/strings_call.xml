@@ -20,7 +20,25 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">L\'intervencion anulada.</string>
+    <string name="call_error_no_camera_no_microphone">L\'intervencion es annulada, pas cap de camèra ni microfòn detectats.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Recèrca</string>
+    <string name="call_human_state_incoming">En arribant</string>
     <string name="call_human_state_connecting">Connexion</string>
-    </resources>
+    <string name="call_human_state_ringing">Sonar</string>
+    <string name="call_human_state_current">Parlant</string>
+    <string name="call_human_state_hungup">Finiguèt</string>
+    <string name="call_human_state_busy">Òc</string>
+    <string name="call_human_state_failure">Foguèt pas</string>
+    <string name="call_human_state_hold">Tenga</string>
+    <string name="call_human_state_unhold">S\'arrèsta</string>
+    <string name="call_human_state_over">Finiguèt</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Moderator</string>
+    <string name="call_muted">Foguèt silenciat.</string>
+    <string name="call_handRaised">Man levada</string>
+
+</resources>

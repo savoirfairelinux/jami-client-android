@@ -33,6 +33,8 @@
   <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_account">Administració del compte</string>
   <string name="menu_item_settings">Opcions</string>
+  <string name="menu_item_advanced_settings">Configuracions avançades</string>
+  <string name="menu_item_account_settings">Configuracions de comptes</string>
   <string name="menu_item_plugin_list">Opcions de complements</string>
   <string name="menu_item_share">Comparteix el meu compte</string>
   <string name="menu_item_about">Sobre Jami...</string>
@@ -132,6 +134,7 @@
   <string name="conversation_send_audio">Enregistra un clip d\'àudio</string>
   <string name="conversation_send_video">Enregistra un clip de vídeo</string>
   <string name="conversation_share_location">Comparteix localització</string>
+  <string name="in_reply_to">En resposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
   <string name="permission_dialog_camera_message">Habiliteu el permís de la càmera perquè funcionin les trucades de vídeo. </string>
@@ -174,22 +177,32 @@
   <string name="conversation_action_block_this">Bloqueja el contacte</string>
   <string name="conversation_action_unblock_this">Desbloca contacte</string>
   <string name="conversation_action_go_to_call">Torna a la trucada en curs</string>
+  <string name="conversation_action_latest">Salta a l\'última</string>
   <string name="conversation_open_file_error">No hi ha cap aplicació instaŀlada que pugui obrir aquest tipus de fitxer.</string>
   <string name="clip_contact_uri">Adreça de contacte</string>
   <string name="block_contact_dialog_title">Blocar %1$s?</string>
   <string name="block_contact_dialog_message">%1$s no podrà contactar amb tu fins que no el desbloquis.</string>
   <string name="block_contact_completed">%1$s va ser blocat.</string>
+  <string name="unblock_contact_dialog_title">Desbloquejar %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s podrà contactar amb vostè de nou.</string>
+  <string name="unblock_contact_completed">%1$s ha estat desblocat.</string>
   <string name="conversation_contact_is_typing">Contacte escrivint…</string>
   <string name="conversation_info_contact_you">Tu</string>
   <string name="conversation_members">Membres</string>
   <string name="conversation_syncing">Descarregant la conversa d\'un igual</string>
+  <string name="conversation_blocked">Aquest contacte està bloquejat.</string>
+  <string name="conversation_ended">La conversa ha acabat.</string>
+  <string name="conversation_message_deleted">(Messatge suprimit)</string>
   <string name="conversation_preference_color">Color de conversa</string>
   <string name="conversation_preference_emoji">Emoticona de conversa</string>
   <string name="conversation_type_contact">Contacte de Jami</string>
+  <string name="conversation_type_private">Un grup privat</string>
+  <string name="conversation_type_group">En grup</string>
   <string name="conversation_contact_invited">%1$s ha estat convidat</string>
   <string name="conversation_contact_added">%1$s s\'ha unit</string>
   <string name="conversation_contact_left">%1$s ha sortit</string>
   <string name="conversation_contact_banned">%1$s ha estat bloquejat</string>
+  <string name="conversation_search_hint">Conversació de cerca</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Afegir %1$s?</string>
   <string name="prompt_new_password">Contrasenya nova</string>
@@ -285,6 +298,7 @@
   <string name="menu_file_delete">Esborra fitxer</string>
   <string name="menu_file_share">Comparteix fitxer</string>
   <string name="menu_message_copy">Copia</string>
+  <string name="menu_message_edit">Modificar missatge</string>
   <string name="menu_message_delete">Esborra missatge</string>
   <string name="menu_message_cancel">Canceŀla missatge</string>
   <string name="menu_message_reply">Respon</string>
@@ -345,6 +359,17 @@
   <string name="reset">Reconfigura</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Confirma</string>
+  <string name="rename_error">No pot estar buit.</string>
+  <string name="swarm_description">Ajuda una descripció</string>
   <string name="tab_about">Quant a</string>
   <string name="tab_members">Membres</string>
+  <string name="tab_documetn">Documents</string>
+  <string name="dialogtitle_title">Modificar títol de col·loqui</string>
+  <string name="dialogtitle_description">Modificar Descripció de col·loc</string>
+  <string name="dialog_hint_title">Titulat</string>
+  <string name="dialog_hint_description">Descripció</string>
+  <string name="picker_title">Seleccionar els contactes</string>
+  <string name="picker_btn">Seleccionar els contactes</string>
+  <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Retirar de l\'esgarre</string>
 </resources>

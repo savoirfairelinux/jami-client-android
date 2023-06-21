@@ -4,4 +4,6 @@
   <string name="contact_quick_call_description">Rapida Voko</string>
   <string name="contact_picture_description">Kontakta Bildo</string>
   <string name="dial_numeric_pad">Ciferilo</string>
+  <string name="contact_unblock">Malŝalti la blokon</string>
+  <string name="video_plugins">Video Plugins</string>
 </resources>

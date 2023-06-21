@@ -15,11 +15,16 @@
   <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте <u>Общия публичен лиценз на GNU, версия 3 или по-нов</u></string>
   <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
   <string name="credits">Заслуги</string>
+  <string name="pip_title">Конференция на Джами</string>
+  <string name="call_service_description">Тази услуга е необходима, за да се поддържат обажданията ви в предната линия.</string>
+  <string name="data_transfer_service_description">Тази услуга е необходима за показване на постоянни уведомления по време на прехвърляне на файлове.</string>
   <!--About dialog-->
   <string name="developed_by">Разработен от</string>
   <string name="designed_by">Проектиран от</string>
+  <string name="ringtones_by">Звучи на рингтон</string>
   <!--RingActivity-->
   <string name="error_no_network">Няма връзка с мрежата</string>
+  <string name="error_account_offline">Счетоводното е изключено.</string>
   <string name="error_mobile_network_available_but_disabled">Моля, разрешете достъпа до мобилната мрежа от настройките.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстово съобщение</string>
@@ -28,6 +33,10 @@
   <string name="menu_item_accounts">Управление на профилите</string>
   <string name="menu_item_account">Управление на профила</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_advanced_settings">Разширени настройки</string>
+  <string name="menu_item_account_settings">Настройки на сметката</string>
+  <string name="menu_item_plugin_list">Настройки на встройките</string>
+  <string name="menu_item_share">Споделете ми профила.</string>
   <string name="menu_item_about">Относно Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>
@@ -39,6 +48,7 @@
     <item quantity="other">%d разговора</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Името или телефонния номер...</string>
   <string name="choose_number">Изберете номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -49,12 +59,16 @@
   <string name="notif_incoming_call">Входящо обаждане</string>
   <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
   <string name="notif_outgoing_call">Изходящо обаждане</string>
+  <string name="notif_current_call_title">Продължаващ разговор с %1$s</string>
   <string name="notif_current_call">Текущо обаждане</string>
+  <string name="notif_channel_call_in_progress">Призоваване към напредък</string>
   <string name="notif_channel_calls">Обаждания</string>
   <string name="notif_channel_missed_calls">Пропуснати обаждания</string>
+  <string name="notif_channel_incoming_calls">Пристъпващи обаждания</string>
   <string name="notif_channel_messages">Съобщения</string>
   <string name="notif_channel_requests">Заявки</string>
   <string name="notif_channel_file_transfer">Прехвърляне на файлове</string>
+  <string name="notif_channel_sync">Синхронизиране на данни</string>
   <string name="notif_channel_background_service">Фонов режим</string>
   <string name="notif_channel_background_service_descr">Позволява получаването на обаждания и съобщения по всяко време.</string>
   <string name="notif_group_calls">Обаждания</string>
@@ -65,17 +79,36 @@
   <string name="notif_incoming_file_transfer_title">Входящ файл от %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Изпращане на файл до %1$s</string>
   <string name="notif_incoming_picture">Снимка от %1$s</string>
+  <string name="notif_sync_title">Синхронизиране на данни...</string>
+  <string name="notif_location_title">Споделяне на местоположение с %1$s</string>
+  <string name="location_share_contact">%1$s споделя местоположението с вас</string>
+  <string name="notif_location_multi_title">Споделяне на местоположение с %1$d контакти</string>
+  <string name="notif_location_remaining">Остават % 1$d минути</string>
+  <string name="notif_location_action_stop">Престанете да споделяте местоположението</string>
+  <string name="location_share_action_start">Започнете споделянето</string>
+  <string name="location_share_action_stop">Спрете да споделяте</string>
+  <string name="location_share_about_title">Информация за картата</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>
   <string name="action_call_hangup">Затваряне</string>
+  <string name="action_call_maximize">Максимизирайте</string>
+  <string name="action_call_minimize">Намаляване</string>
+  <string name="action_call_mute">Мълчави</string>
+  <string name="action_call_unmute">Неизменен</string>
   <string name="ongoing_call">Текущо обаждане</string>
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
   <string name="hist_out_call">Изходящо обаждане до %1$s</string>
   <string name="start_error_title">Jami не успя да стартира!</string>
   <string name="start_error_mic_required">Ring се нуждае от правото за ползване на микрофона, за да работи.</string>
   <string name="action_call_accept">Приемане</string>
+  <string name="action_call_accept_audio">Отговорът е аудио.</string>
+  <string name="action_call_accept_video">Отговор в видео</string>
+  <string name="action_call_hold_accept">Задръж и приеми аудио обаждането</string>
+  <string name="action_call_hold_accept_video">Задръжте и запишете обажданията.</string>
+  <string name="action_call_end_accept">Завърши и вземи обаждането.</string>
   <string name="action_call_decline">Отказ</string>
   <string name="action_call_mic_mute">Заглушаване на микрофона</string>
+  <string name="action_load_plugin">Зареждане на плагин</string>
   <string name="ab_action_speakerphone">Активиране на високоговорител</string>
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
@@ -85,15 +118,23 @@
   <string name="share_via">Споделяне чрез</string>
   <string name="write_a_message">Напишете съобщение</string>
   <string name="scan_qr">Сканиране на QR-код</string>
+  <string name="qr_code">QR код</string>
   <string name="ab_action_flipcamera">Обръщане на камерата</string>
+  <string name="ab_action_hidepreview">Скрийте предварителното преглеждане</string>
+  <string name="remote_recording">Записване на %s...</string>
   <!--Text messages-->
   <string name="send_message">Изпращане на съобщение</string>
   <string name="message_sending">Изпращане на съобщение…</string>
   <string name="message_failed">Неуспешно</string>
   <string name="time_just_now">Току-що</string>
   <string name="send_file">Изпращане на файл</string>
+  <string name="select_media">Отворена галерия</string>
   <string name="hist_file_sent">Файлът е изпратен</string>
   <string name="hist_file_received">Файлът е получен</string>
+  <string name="conversation_send_audio">Запишете аудио клип</string>
+  <string name="conversation_send_video">Записване на видео клип</string>
+  <string name="conversation_share_location">Разподели местоположение</string>
+  <string name="in_reply_to">В отговор на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
@@ -101,17 +142,24 @@
   <string name="ringtone_error_title">Грешка</string>
   <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
   <string name="ringtone_error_size_too_big">Този файл е твърде голям. Максималният размер е %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Настройка на персонализиран рингтон</string>
   <string name="ringtone_custom_label">Персонализиран</string>
+  <string name="ringtone_jami_tones">Джами Тоунс</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami се нуждае от разрешението \"Четене на контакти\", за да активира тази функция. Моля, предоставете го.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami се нуждае от разрешението \"Запис на повиквания\", за да активира тази функция. Моля, предоставете го.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканирайте QR-кода на профила, който искате да добавите.</string>
+  <string name="title_activity_qrcode">Споделете ми профила.</string>
+  <string name="error_scan_no_camera_permissions">QR сканера изисква разрешенията на камерата, за да работи</string>
+  <string name="tab_code">Моят код</string>
+  <string name="tab_scan">Код за сканиране</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Изчистване на историята?</string>
   <string name="clear_history_dialog_message">Това действие е необратимо.</string>
   <string name="clear_history_completed">Историята беше изчистена.</string>
+  <string name="clear_history">Чисто</string>
   <!--Conversation-->
   <string name="conversation_details">Подробности за контакта</string>
   <string name="conversation_action_delete_this">Изтриване на този разговор</string>
@@ -129,10 +177,32 @@
   <string name="conversation_action_block_this">Блокиране на контакт</string>
   <string name="conversation_action_unblock_this">Деблокиране на контакта</string>
   <string name="conversation_action_go_to_call">Обратно към текущо обаждане</string>
+  <string name="conversation_action_latest">Прескочи до най-новото.</string>
+  <string name="conversation_open_file_error">Няма инсталирано приложение, което да може да отвори този тип файл.</string>
   <string name="clip_contact_uri">Адрес за контакт</string>
   <string name="block_contact_dialog_title">Блокиране на %1$s?</string>
   <string name="block_contact_dialog_message">%1$s няма да може да се свърже с вас, докато не го деблокирате.</string>
   <string name="block_contact_completed">%1$s бе блокиран.</string>
+  <string name="unblock_contact_dialog_title">Отблокирайте %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s ще може да се свърже с вас отново.</string>
+  <string name="unblock_contact_completed">%1$s е разблокиран.</string>
+  <string name="conversation_contact_is_typing">Контактът е вписване...</string>
+  <string name="conversation_info_contact_you">Ти си...</string>
+  <string name="conversation_members">Членове</string>
+  <string name="conversation_syncing">Скачане на разговор от връстник</string>
+  <string name="conversation_blocked">Контактът е блокиран.</string>
+  <string name="conversation_ended">Разговорът приключи.</string>
+  <string name="conversation_message_deleted">(Пъсът е изтрит)</string>
+  <string name="conversation_preference_color">Цвет на разговора</string>
+  <string name="conversation_preference_emoji">Разговорни емотики</string>
+  <string name="conversation_type_contact">Контакт с Джами</string>
+  <string name="conversation_type_private">Частни скоби</string>
+  <string name="conversation_type_group">Групи</string>
+  <string name="conversation_contact_invited">%1$s е поканен</string>
+  <string name="conversation_contact_added">%1$s е включен</string>
+  <string name="conversation_contact_left">%1$ е останал</string>
+  <string name="conversation_contact_banned">%1$s е забранен</string>
+  <string name="conversation_search_hint">Търсене на разговор</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
   <string name="prompt_new_password">Нова парола</string>
@@ -142,19 +212,31 @@
   <string name="prompt_new_username">Въведете ново потребителско име</string>
   <string name="prompt_hint_username">Потребителско име</string>
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
+  <string name="help_password_enter">Введете паролата за основната сметка на Джами.</string>
+  <string name="help_server_enter">Введете URL на сървъра за управление.</string>
   <string name="help_pin_enter">Въведете ПИН-кода на друг настроен профил за Jami. Използвайте функцията „Изнасяне на профила от Jami“, за да получите ПИН.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
+  <string name="hist_contact_invited">Контактът е показан</string>
   <string name="hist_contact_added">Контактът е добавен</string>
+  <string name="hist_contact_left">Контакт наляво</string>
+  <string name="hist_contact_banned">Забранено е контакт</string>
   <string name="hist_invitation_received">Поканата е приета</string>
   <!--Account Summary-->
   <string name="profile">Профил</string>
+  <string name="profile_name">Профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
+  <string name="profile_name_hint">Введете името си.</string>
   <string name="registered_name">Регистрирано име</string>
+  <string name="no_registered_name">Без регистрирано име</string>
+  <string name="identity">Идентичност</string>
   <string name="account">Профил</string>
+  <string name="link_new_device">Свържете ново устройство</string>
+  <string name="devices">Свързани устройства</string>
+  <string name="total_devices">Общо устройства: </string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този код с Jami</string>
   <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>
@@ -162,12 +244,15 @@
   <string name="share_label">Споделяне</string>
   <string name="generic_error_migration">Грешка</string>
   <string name="generic_error_migration_message">Възникна грешка при прехвърлянето</string>
+  <string name="title_share_with">Споделете с...</string>
   <!--Pending contact requests-->
   <string name="accept">Приемане</string>
   <string name="refuse">Отказ</string>
   <string name="block">Блокиране</string>
   <string name="contact_request_title">Заявка за свързване с нов контакт</string>
+  <string name="contact_request_msg">Имате %1$d заявки за контакт</string>
   <string name="contact_request_account">За %1$s</string>
+  <string name="no_requests">Нямате искания за контакт.</string>
   <string name="message_contact_not_trusted_yet">%sвсе още не е в контактите ви.\nПриемате ли или отказвате тази заявка за контакт? </string>
   <string name="message_contact_not_trusted">%s не е в контактите ви.\nДобавяне на контакт?</string>
   <!--Send contact requests-->
@@ -175,9 +260,12 @@
   <string name="send_request_title">Изпращане на заявка за свързване с нов контакт</string>
   <string name="send_request_msg">Трябва да изпратите заявка за контакт, за да комуникирате с този потребител. Докато вашият контакт не е приел заявката, можете да изпращате съобщения, но той няма да може да отговори.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Без блокирани контакти</string>
   <!--Smartlist-->
   <string name="no_contact_request">Няма изпратени заявки за свързване с нови контакти</string>
+  <string name="conversation_placeholder">Още не сте говорили.</string>
   <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
+  <string name="start_conversation">Започнете разговор.</string>
   <string name="search_results">Резултати от търсенето</string>
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не е намерено приложение на Галерия</string>
@@ -185,6 +273,7 @@
   <string name="generic_error">Възникна неизвестна грешка</string>
   <!--File Transfer-->
   <string name="invalid_file">Невалиден файл</string>
+  <string name="not_able_to_write_file">Не може да пише файл</string>
   <string name="file_transfer_status_created">инициализиране на трансфер</string>
   <string name="file_transfer_status_unsupported">неподдържан</string>
   <string name="file_transfer_status_wait_peer_acceptance">чакаме пиъра да приеме</string>
@@ -193,33 +282,94 @@
   <string name="file_transfer_status_finished">завършен</string>
   <string name="file_transfer_status_closed_by_host">затворен от хост</string>
   <string name="file_transfer_status_closed_by_peer">затворен от пиър</string>
+  <string name="file_transfer_status_invalid_pathname">Невалидно име на пътеката</string>
+  <string name="file_transfer_status_unjoinable_peer">несъвместими връстници</string>
   <string name="file_transfer_status_cancelled">отменено</string>
+  <string name="file_transfer_status_error">не е успял поради грешка</string>
+  <string name="file_transfer_status_timed_out">Изключен срок</string>
   <string name="file_saved_in">Файлът е запазен в %s</string>
+  <string name="file_saved_successfully">Спят файл</string>
+  <string name="file_download">Скачане</string>
   <string name="no_space_left_on_device">Няма повече свободно място на устройството</string>
+  <string name="title_media_viewer">Прегледник на медиите</string>
   <string name="menu_file_open">Отваряне на файл</string>
   <string name="menu_file_download">Теглене на файл</string>
+  <string name="menu_file_save">Запази файл</string>
   <string name="menu_file_delete">Изтриване на файл</string>
   <string name="menu_file_share">Споделяне на файл</string>
   <string name="menu_message_copy">Копиране</string>
+  <string name="menu_message_edit">Редактиране на съобщение</string>
+  <string name="menu_message_delete">Изтриване на съобщение</string>
   <string name="menu_message_cancel">Отмяна на съобщение</string>
   <string name="menu_message_reply">Отговор</string>
   <string name="menu_delete">Изтриване</string>
+  <string name="pref_darkTheme_title">Тъмна тема</string>
+  <string name="pref_darkTheme_summary">Винаги включете тъмна тема вместо да използвате поведение на системата</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Разговори</string>
   <string name="navigation_item_contact_request">Покани</string>
   <string name="navigation_item_account">Профил</string>
+  <string name="search_results_public_directory">Обществен каталог</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Изпращаш ли аудио съобщение?</string>
+  <string name="tv_send_image_dialog_message">Изпрати ли снимката?</string>
+  <string name="tv_send_video_dialog_message">Изпрати ли видеоклипа?</string>
+  <string name="tv_media_preview">Преглед</string>
   <string name="tv_audio_play">Пускане</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Изпращане</string>
+  <string name="tv_audio_recording">Записване...</string>
+  <string name="tv_send_text">Изпратете съобщение</string>
+  <string name="tv_send_audio">Изпратете аудио</string>
+  <string name="tv_send_video">Изпращане на медии</string>
+  <string name="tv_action_more">Повече</string>
+  <string name="conversation_input_speech_hint">Кажи нещо...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Препоръчително</string>
+  <string name="wizard_status_optional">Необходимо</string>
+  <string name="wizard_status_required">Необходимо</string>
+  <string name="wizard_username_info">Изберете потребителско име за профила си</string>
+  <string name="wizard_username_button">Изберете потребителско име</string>
+  <string name="wizard_username_skip">Прескочи избора на потребителско име</string>
+  <string name="wizard_password_info">Пароле на акаунта</string>
+  <string name="wizard_password_placeholder">Изберете парола, за да шифровате ключа на акаунта на това устройство</string>
+  <string name="wizard_password_button">Изберете парола</string>
   <string name="wizard_password_skip">Създаване на профил</string>
+  <string name="wizard_password_switch">Криптирайте профила с парола</string>
+  <string name="wizard_password_warning">Забележете, че паролата не може да бъде възстановена.</string>
+  <string name="wizard_profile_info">Профилът се споделя само с контактите</string>
+  <string name="wizard_profile_button">Запази профила</string>
+  <string name="wizard_profile_skip">Прескочи и направи това по-късно.</string>
+  <string name="fab_path_choose">Изберете друг файл</string>
+  <string name="chat_plugins">Чат плагини</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Споделяне</string>
+  <string name="bottomSheet_dialpad_btn">Диапад</string>
+  <string name="bottomSheet_plugins_btn">Включватели</string>
+  <string name="bottomSheet_add_participants_btn">Добавяне</string>
+  <string name="bottomSheet_change_camera_btn">Промяна</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Камера</string>
   <string name="bottomSheet_hangup_btn">Край на разговора</string>
+  <string name="bottomSheet_mute_microphone_btn">Микро</string>
+  <string name="bottomSheet_sound_output_btn">Звучи.</string>
   <string name="bottomSheet_raiseHand_btn">Вдигнете ръка</string>
+  <string name="open_account_plugin_settings">Отворете настройките на плагината за акаунт</string>
+  <string name="open_general_plugin_settings">Отворете общите настройки на плагината</string>
+  <string name="uninstall">Отключване на инсталирането</string>
+  <string name="reset">Презареждане</string>
   <!--Swarm Detail-->
+  <string name="rename_btn">Потвърди</string>
+  <string name="rename_error">Не може да е празно.</string>
+  <string name="swarm_description">Добавете описание</string>
   <string name="tab_about">Относно</string>
+  <string name="tab_members">Членове</string>
+  <string name="tab_documetn">Документи</string>
+  <string name="dialogtitle_title">Изменение на заглавието на \"Свара\"</string>
+  <string name="dialogtitle_description">Редактиране Описание на скоп</string>
   <string name="dialog_hint_title">Заглавие</string>
+  <string name="dialog_hint_description">Описание</string>
+  <string name="picker_title">Изберете контакти</string>
+  <string name="picker_btn">Изберете контакти</string>
+  <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Отдръпнете се от роя.</string>
 </resources>

@@ -182,16 +182,22 @@
   <string name="block_contact_dialog_title">封鎖 %1$s？</string>
   <string name="block_contact_dialog_message">直到您解除封鎖前，%1$s 都不能再聯絡您。</string>
   <string name="block_contact_completed">%1$s 已被封鎖。</string>
+  <string name="unblock_contact_dialog_title">解锁%1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s将能够再次联系您.</string>
+  <string name="unblock_contact_completed">没有阻止了%1$s.</string>
   <string name="conversation_contact_is_typing">聯絡人正在打字……</string>
   <string name="conversation_info_contact_you">您</string>
   <string name="conversation_members">成員</string>
   <string name="conversation_syncing">正在從 peer 下載對話</string>
+  <string name="conversation_blocked">这种联系是被封闭的.</string>
+  <string name="conversation_ended">我们的谈话结束了.</string>
+  <string name="conversation_message_deleted">(消息已删除)</string>
   <string name="conversation_preference_color">對話色彩</string>
   <string name="conversation_preference_emoji">對話表情符號</string>
   <string name="conversation_type_contact">Jami 聯絡人</string>
   <string name="conversation_type_private">私人群组</string>
   <string name="conversation_type_group">团队 Swarm</string>
-  <string name="conversation_contact_invited">%1$s 已被封鎖</string>
+  <string name="conversation_contact_invited">已邀請 %1$s</string>
   <string name="conversation_contact_added">%1$s 已加入</string>
   <string name="conversation_contact_left">%1$s 已離開</string>
   <string name="conversation_contact_banned">%1$s 已被封鎖</string>
@@ -291,6 +297,7 @@
   <string name="menu_file_delete">刪除檔案</string>
   <string name="menu_file_share">分享檔案</string>
   <string name="menu_message_copy">複製</string>
+  <string name="menu_message_edit">编辑消息</string>
   <string name="menu_message_delete">刪除訊息</string>
   <string name="menu_message_cancel">取消訊息</string>
   <string name="menu_message_reply">回覆</string>
@@ -362,4 +369,6 @@
   <string name="dialog_hint_description">描述</string>
   <string name="picker_title">选择联系人</string>
   <string name="picker_btn">选择联系人</string>
+  <string name="bottomsheet_contact">联系Jami\n%1$s</string>
+  <string name="bottomsheet_remove">离开群众</string>
 </resources>

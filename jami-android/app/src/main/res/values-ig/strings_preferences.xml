@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Ntanetị</string>
+  <string name="pref_category_contacts">Ndị a na-akpọtụrụ</string>
+  <string name="pref_category_video">Vidio</string>
   <string name="pref_category_system">Sịstèm</string>
+  <string name="pref_category_privacy">Ihe Ndị Na-eme Ka Mmadụ Nwee Onwe Ya</string>
+  <string name="pref_category_diagnostic">Ihe ndị e ji amata ọrịa</string>
+  <string name="pref_mobileData_title">Data mkpanaka</string>
+  <string name="pref_mobileData_summary">Hapụ Jami na netwọk 3G / LTE na mgbakwunye na Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Nkwupụta ịkwanye</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">Jiri ihe nkesa Google iji kwe ka ị nata oku / ozi na ndabere</string>
+  <string name="pref_unifiedPush_summary">Jiri ọrụ UnifiedPush iji nye ohere ịnweta oku / ozi na ndabere</string>
+  <string name="pref_video_advanced_title">Ntọala vidiyo dị elu</string>
+  <string name="pref_video_advanced_summary">Gbanwee bitrate video, mkpebi, nakwa dị ka ịnweta nnwale atụmatụ</string>
+  <string name="pref_hd_summary">Mee ka izipu HD video</string>
+  <string name="pref_hwEncode_title">Gbaa ọsọ na-agba ọsọ encoding</string>
+  <string name="pref_hwEncode_summary">Ihe a na-eme na-egosi na e nwere ihe ndị a na-eme.</string>
+  <string name="pref_videoBitrate_title">Bitrate vidiyo</string>
+  <string name="pref_videoBitrate_summary">Họrọ ndabara na-apụ apụ video bitrate (KB / s)</string>
+  <string name="pref_videoResolution_title">Nkọwapụta vidiyo</string>
+  <string name="pref_videoResolution_summary">Họrọ ndabara na-apụ apụ video mkpebi</string>
+  <string name="pref_systemContacts_title">Jiri kọntaktị sistemụ</string>
+  <string name="pref_systemContacts_summary">Jiri kọntaktị sistemụ iji gosi nkọwa nke onye kpọrọ oku.</string>
+  <string name="pref_systemDialer_title">Mee oku na sistemụ site na iji Jami</string>
+  <string name="pref_systemDialer_summary">Jiri Jami mee ka ndị ọrụ na-akpọ gị mgbe ọ bụla o kwere omume.</string>
+  <string name="pref_startOnBoot_title">Malite Jami na mmalite</string>
+  <string name="pref_startOnBoot_summary">Mee ka Jami nọrọ n\'azụ mgbe usoro ahụ malitere.</string>
+  <string name="pref_clearHistory_title">Akụkọ ihe mere eme doro anya</string>
+  <string name="pref_clearHistory_summary">Hichapụ akụkọ ihe mere eme nke mkparịta ụka niile.</string>
+  <string name="pref_notification_title">Nkwupụta nke ọkwa</string>
+  <string name="pref_notification_summary">Tinye ngwa ngosi ngosi na mkpọchi ihuenyo.</string>
+  <string name="pref_blackList_title">Ndepụta nke ndị na-emechi</string>
+  <string name="pref_blackList_summary">Lelee ndepụta ndị ị na-eme.</string>
+  <string name="pref_delete_account_title">Ihichapụ akaụntụ</string>
+  <string name="pref_delete_account_summary">Hichapụ akaụntụ gị site na ngwaọrụ a</string>
+  <string name="pref_persistNotification_title">Na-agba ọsọ na ndabere</string>
+  <string name="pref_persistNotification_summary">Kwe ka ọ na-agba ọsọ na ndabere iji nata oku na ozi.</string>
+  <string name="pref_newGroup_title">Gbaa nkata otu</string>
+  <string name="pref_newGroup_summary">Mee ka ndị otu na Jami nwee ike ịmepụta.</string>
+  <string name="pref_logs_title">Ihe ndekọ nchọpụta</string>
+  <string name="pref_logs_summary">Mbido ndekọ ndekọ nchọpụta na-emeghe</string>
+  <string name="pref_logs_start">Malite Ịkụ Ụgbọ</string>
+  <string name="pref_logs_stop">Kwụsị ịkwa osisi</string>
+  <string name="pref_typing_title">Gbaa mbọ hụ na e nwere ihe ndị a na-eme.</string>
+  <string name="pref_typing_summary">Ziga ma nata akara ederede nke na-egosi na a na-ede ozi.</string>
+  <string name="pref_read_title">Gbaa mbọ hụ na ị na-agụ akwụkwọ ndị e nyere gị</string>
+  <string name="pref_read_summary">Ziga ma nata akwụkwọ nnata nke na-egosi na e gosipụtara ozi.</string>
+  <string name="pref_block_record_title">Gbochie nseta ihuenyo na ndekọ</string>
+  <string name="pref_block_record_summary">Kwụsị iwere nseta ihuenyo ma ọ bụ idekọ vidiyo.</string>
+  <string name="pref_link_preview_title">Gosi njikọ nlele na mkparịta ụka</string>
+  <string name="pref_link_preview_summary">Nlele anya chọrọ ibudata ọdịnaya site na sava ndị ọzọ.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">Ọha \n(na-egosi ọkwa na ọdịnaya ha na ihuenyo mkpọchi) \n</string>
+  <string name="notification_private">Private \n(na-egosi ọkwa ma zoo ọdịnaya ha na mkpọchi ihuenyo) \n</string>
+  <string name="notification_secret">Nzuzo \n(adịghị egosi ọkwa na mkpọchi ihuenyo)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Ihe mgbakwunye</string>
+  <string name="pref_plugins_summary">Gbaa plugins na setịpụrụ ha parameters</string>
+  <string name="fab_plugins_add">Tinye ihe mgbakwunye ọhụrụ</string>
+  <string name="plugin_uninstall_title">Wepụ Plugin?</string>
+  <string name="plugin_reset_preferences">Tọgharịa ntọala plugins</string>
+  <string name="plugin_reset_preferences_summary">Ntọala mgbakwunye gị ga-abụ ndabara</string>
+  <string name="plugin_reset_preferences_ask">Ị̀ chọrọ ịtọgharịa ntọala mgbakwunye ahụ?</string>
+  <string name="plugin_reset_account_preferences_ask">Ị̀ chọrọ ịtọgharịa ntọala nke akaụntụ plugins?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> arụnyere nke ọma</string>
+  <string name="plugin_install_failure">Enweghi ike ịwụnye ngwa mgbakwunye: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Ị nwere nsụgharị ọhụrụ nke: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Ị nwere otu version nke <b>%1$s</b> arụnyere</string>
+  <string name="plugin_force_install">ike \ n wụnye</string>
+  <string name="plugin_path_image_add">Tinye ihe oyiyi ọhụrụ</string>
 </resources>

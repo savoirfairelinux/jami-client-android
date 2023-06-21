@@ -127,11 +127,13 @@
   <string name="message_failed">失敗しました</string>
   <string name="time_just_now">たった今</string>
   <string name="send_file">ファイルの送信</string>
+  <string name="select_media">ギャラリーを開放</string>
   <string name="hist_file_sent">ファイルを送信しました</string>
   <string name="hist_file_received">ファイルを受信しました</string>
   <string name="conversation_send_audio">音声の録音</string>
   <string name="conversation_send_video">ビデオの録画</string>
   <string name="conversation_share_location">現在地の共有</string>
+  <string name="in_reply_to">返答として</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>
   <string name="permission_dialog_camera_message">ビデオ会話ではカメラが動作するためにアクセス許可が必要です。 有効にすることを検討してください。</string>
@@ -180,13 +182,26 @@
   <string name="block_contact_dialog_title">%1$sをブロックしますか？</string>
   <string name="block_contact_dialog_message">%1$sはあなたがブロックを解除するまで連絡できません。</string>
   <string name="block_contact_completed">%1$sをブロックしました。</string>
+  <string name="unblock_contact_dialog_title">%1$sを解禁する?</string>
+  <string name="unblock_contact_dialog_message">%1$s は再び連絡することができます.</string>
+  <string name="unblock_contact_completed">%1$s は解禁されました.</string>
   <string name="conversation_contact_is_typing">相手が入力中…</string>
   <string name="conversation_info_contact_you">自分</string>
   <string name="conversation_members">要員</string>
   <string name="conversation_syncing">ピア接続先から会話をダウンロードしています</string>
+  <string name="conversation_blocked">この連絡は ブロックされています</string>
+  <string name="conversation_ended">話し合いが終わった</string>
+  <string name="conversation_message_deleted">(メッセージは削除)</string>
   <string name="conversation_preference_color">会話の色</string>
   <string name="conversation_preference_emoji">会話の絵文字</string>
   <string name="conversation_type_contact">Jamiの連絡先</string>
+  <string name="conversation_type_private">民間群れ</string>
+  <string name="conversation_type_group">群組群</string>
+  <string name="conversation_contact_invited">%1$s が招待されました</string>
+  <string name="conversation_contact_added">%1$s が加入</string>
+  <string name="conversation_contact_left">%1$ は左</string>
+  <string name="conversation_contact_banned">%1$s は禁止されました</string>
+  <string name="conversation_search_hint">検索会話</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>
   <string name="prompt_new_password">新しいパスワード</string>
@@ -204,6 +219,8 @@
   <string name="wizard_skip">スキップ</string>
   <string name="hist_contact_invited">招待された連絡先</string>
   <string name="hist_contact_added">連絡先を追加しました</string>
+  <string name="hist_contact_left">連絡先左</string>
+  <string name="hist_contact_banned">連絡禁止</string>
   <string name="hist_invitation_received">招待を受信しました</string>
   <!--Account Summary-->
   <string name="profile">プロフィール</string>
@@ -282,6 +299,7 @@
   <string name="menu_file_delete">ファイルを削除</string>
   <string name="menu_file_share">ファイルを共有</string>
   <string name="menu_message_copy">コピー</string>
+  <string name="menu_message_edit">メッセージ編集</string>
   <string name="menu_message_delete">メッセージを削除</string>
   <string name="menu_message_cancel">メッセージをキャンセル</string>
   <string name="menu_message_reply">返信</string>
@@ -305,6 +323,7 @@
   <string name="tv_send_text">テキストの送信</string>
   <string name="tv_send_audio">音声の送信</string>
   <string name="tv_send_video">メディアを送信</string>
+  <string name="tv_action_more">更に</string>
   <string name="conversation_input_speech_hint">何か話してください…</string>
   <!--Wizard-->
   <string name="wizard_status_recommended">推奨</string>
@@ -335,9 +354,23 @@
   <string name="bottomSheet_mute_microphone_btn">マイク</string>
   <string name="bottomSheet_sound_output_btn">スピーカー</string>
   <string name="bottomSheet_raiseHand_btn">手を挙げる</string>
+  <string name="open_account_plugin_settings">アカウントプラグイン設定を開く</string>
+  <string name="open_general_plugin_settings">一般プラグイン設定を開く</string>
+  <string name="uninstall">解除する</string>
+  <string name="reset">セット</string>
   <!--Swarm Detail-->
   <string name="rename_btn">確認</string>
+  <string name="rename_error">片隅に 片隅に</string>
+  <string name="swarm_description">記述を追加する</string>
   <string name="tab_about">アプリについて</string>
   <string name="tab_members">要員</string>
+  <string name="tab_documetn">文書</string>
+  <string name="dialogtitle_title">編集 スワームタイトル</string>
+  <string name="dialogtitle_description">群れの説明を編集する</string>
   <string name="dialog_hint_title">タイトル</string>
+  <string name="dialog_hint_description">記述</string>
+  <string name="picker_title">連絡先を選択</string>
+  <string name="picker_btn">連絡先を選択</string>
+  <string name="bottomsheet_contact">連絡先はJami\n%1$s</string>
+  <string name="bottomsheet_remove">群れから取り去れ</string>
 </resources>

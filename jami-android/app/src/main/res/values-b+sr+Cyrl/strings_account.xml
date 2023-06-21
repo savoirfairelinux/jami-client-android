@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Napredna podešavanja</string>
   <string name="ic_blacklist_menu">Blokirani kontakti</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Додајте рачун</string>
   <string name="add_sip_account_title">Dodaj SIP nalog</string>
   <string name="ring_account_default_name">Jami naloga %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -98,6 +99,8 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_published_same_as_local_label">Objavljeno isto kao u lokalu</string>
   <string name="account_published_port_label">Objavljeni Port</string>
   <string name="account_published_address_label">Objavljena adresa</string>
+  <string name="disabled">Дисакција</string>
+  <string name="enabled">Увођен</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Koristi DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
@@ -107,6 +110,9 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_peer_discovery_enable_label">Omogući otkrivanje lokalnih parnjaka</string>
   <string name="account_peer_discovery_enable_summary">Poveži se sa drugim DHT čvorovima koji se oglašavaju na našoj lokalnoj mreži</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Уверовања</string>
+  <string name="account_credentials_edit">Редактирање акредитација</string>
+  <string name="account_credentials_add">Додавање акредитива</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Bezbednost</string>
   <string name="account_srtp_switch_label">Šifruj medijski strim (SRTP)</string>
@@ -116,15 +122,20 @@ Kasnije možete da uredite svoj nalog</string>
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristi TLS prenos</string>
   <string name="account_tls_port_label">Port za TLS slušaoca</string>
+  <string name="account_tls_certificate_list_label">Учињеница сертификације</string>
   <string name="account_tls_certificate_file_label">Fajl sertifikata</string>
   <string name="account_tls_private_key_file_label">Fajl sa privatnim ključem</string>
   <string name="account_tls_password_label">Lozinka za privatni ključ</string>
   <string name="account_tls_method_label">TLS metod</string>
+  <string name="account_tls_ciphers_label">Цифрови TLS</string>
   <string name="account_tls_server_name_label">Ime servera</string>
   <string name="account_tls_verify_server_label">Proveri server</string>
   <string name="account_tls_verify_client_label">Proveri klijent</string>
+  <string name="account_require_client_certificate_label">ТЛС захтева сертификат клијента</string>
+  <string name="account_tls_negotiation_timeout_sec">Преговарачки временски период (сец)</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Аудио RTP порт Диапазон</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Unesi lozinku za otključavanje naloga</string>
   <string name="error_password_char_count">Minimalna dužina 6 karaktera</string>
@@ -154,8 +165,11 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_sip_cannot_be_registered_message">Možete nastaviti sa procesom pravljenja naloga ili možete uređivati svoje informacije ovde. Uređivanje će biti moguće i kasnije u podešavanju naloga.</string>
   <string name="account_no_network_title">Nije moguće povezati se na mrežu</string>
   <string name="account_no_network_message">Nije moguće dodati nalog jer se Jami nije mogao povezati na distribuiranu mrežu. Proverite da li je vaš uređaj povezan.</string>
+  <string name="account_device_added_title">Додато рачуново уређај</string>
   <string name="account_device_added_message">Uspešno ste podesili Vaš Jami nalog na ovom uređaju</string>
+  <string name="account_device_updated_title">Уредиште рачуна ажурирано</string>
   <string name="account_device_updated_message">Uspešno ste ažurirali Vaš Jami nalog.</string>
+  <string name="account_cannot_be_updated_message">Улазак рачуна није могао да се ажурише.</string>
   <string name="account_sip_success_title">Sip nalog registrovan</string>
   <string name="account_sip_success_message">Uspešno ste registrovali Vaš Sip nalog.</string>
   <string name="account_sip_register_anyway">Registruj se u svakom slučaju.</string>
@@ -183,7 +197,10 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_end_export_infos">Vaš PIN je:\n\n %%\n\nDa biste završili proces morate otvoriti Jami na novom uređaju. Napravite novi nalog sa \"Poveži ovaj uređaj sa nalogom\". Vaš PIN je validan sledećih 10 minuta.</string>
   <string name="account_link_export_info_light">Da bi ste koristili ovaj nalog na drugim uređajima, prvo ga morate izložiti na Jamiju. Ovo će generisati PIN kod koji morate uneti na novom uređju da biste podesili nalog. PIN kod je validan sledećih 10 minuta.</string>
   <string name="account_export_title">Poveži nalog sa drugim uređajima</string>
+  <string name="account_connect_server_button">Спрема на сервер управљања</string>
   <string name="account_connect_button">Poveži</string>
+  <string name="prompt_server">УРЛ сервера управљања Џами</string>
+  <string name="help_credentials_enter">Уведите идентификације своје организације</string>
   <string name="help_connect_password_enter">Unesi lozinku za vašu organizaciju</string>
   <string name="account_connect_prompt_username">Korisničko ime</string>
   <!--Name registration-->

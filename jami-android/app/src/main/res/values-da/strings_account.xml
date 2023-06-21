@@ -59,9 +59,12 @@ Du kan rette din konto senere</string>
   <string name="account_optionnal_category">Valgfrie Indstillinger</string>
   <string name="account_useragent_label">Brugerklient</string>
   <string name="account_autoanswer_label">Besvar automatisk</string>
+  <string name="account_rendezvous_label">Rendezvous Mode</string>
+  <string name="account_rendezvous_summary">I Rendezvous-tilstanden vil indkommende opkald blive tilføjet til et konferencerum.</string>
   <string name="account_upnp_label">Aktivér UPnP</string>
   <string name="account_proxy_field">Stedfortræder</string>
   <!--Plugin Details-->
+  <string name="account_preference_plugin_tab">Plugins</string>
   <!--Audio Details-->
   <string name="account_audio_label">Lyd</string>
   <string name="account_preferences_media_tab">Medier</string>
@@ -85,6 +88,7 @@ Du kan rette din konto senere</string>
   <string name="account_stun_server_label">STUN-server</string>
   <string name="account_accept_files">Acceptér filer automatisk</string>
   <string name="account_conversation_settings_title">Samtaleindstillinger</string>
+  <string name="account_accept_files_max_size">Maksimal filstørrelse til automatisk accept</string>
   <string name="account_accept_files_never">Acceptér aldrig automatisk</string>
   <string name="account_accept_files_always">Acceptér altid automatisk</string>
   <string name="size_mb">%1$d MB</string>
@@ -95,10 +99,16 @@ Du kan rette din konto senere</string>
   <string name="account_published_same_as_local_label">Publicer samme som lokale</string>
   <string name="account_published_port_label">Publiceret Port</string>
   <string name="account_published_address_label">Publiceret Adresse</string>
+  <string name="disabled">Behindret</string>
+  <string name="enabled">Aktiveret</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">Brug DHT-proxy</string>
   <string name="account_proxy_server_label">Adresse til DHT-proxy</string>
+  <string name="account_proxy_server_list_label">DHT-proxy-liste URL</string>
   <string name="account_sip_proxy_label">Stedfortræder</string>
+  <string name="account_peer_discovery_label">Lokal peer opdagelse</string>
+  <string name="account_peer_discovery_enable_label">Aktivere lokal peer-opdagelse</string>
+  <string name="account_peer_discovery_enable_summary">Køb til andre DHT-noder, der annoncerer på vores lokale netværk</string>
   <!--Security Details-->
   <string name="account_credentials_label">Legitimeringsoplysninger</string>
   <string name="account_credentials_edit">Rediger Legitimeringsoplysninger</string>
@@ -106,6 +116,8 @@ Du kan rette din konto senere</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sikkerhed</string>
   <string name="account_srtp_switch_label">Krypter mediestrømme (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Aktivere SDES som nøgleudvekslingsprotokoll</string>
+  <string name="account_srtp_rtp_fallback">Tilbage til RTP, hvis SRTP mislykkes</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Brug TLS-transport</string>
@@ -119,6 +131,7 @@ Du kan rette din konto senere</string>
   <string name="account_tls_server_name_label">Servernavn</string>
   <string name="account_tls_verify_server_label">Verificer Server</string>
   <string name="account_tls_verify_client_label">Verificer Klient</string>
+  <string name="account_require_client_certificate_label">TLS kræver kundesertifikaat</string>
   <string name="account_tls_negotiation_timeout_sec">Tidsgrænse for Forhandling</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
@@ -129,6 +142,8 @@ Du kan rette din konto senere</string>
   <string name="error_passwords_not_equals">Adgangskoderne er ikke ens</string>
   <string name="export_account_wait_title">Vent venligt...</string>
   <string name="export_account_wait_message">Eksporterer konto-information</string>
+  <string name="account_export_file">Backupkonto</string>
+  <string name="account_export_file_summary">Du kan sikkerhedskopiere din konto på din enhed for at genoprette den senere.</string>
   <string name="account_export_end_decryption_message">Kunne ikke låse din konto op med brug af den angivne adgangskode.</string>
   <string name="account_export_end_network_title">Netværksfejl</string>
   <string name="account_export_end_network_message">Kunne ikke eksportere kontoen til netværket. Kontroller forbindelsen.</string>
@@ -159,25 +174,39 @@ Du kan rette din konto senere</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
   <!--TV-->
+  <string name="account_tv_settings_header">Kontoindstillinger</string>
   <string name="account_tv_advance_settings_header">Avancerede indstillinger</string>
   <string name="account_tv_add_contact">Tilføj en kontakt</string>
+  <string name="account_tv_advanced_settings">Ændre de generelle indstillinger</string>
   <string name="account_tv_about">Om Jami</string>
   <string name="tv_about_version">Version</string>
   <string name="tv_about_license">Licens</string>
+  <string name="tv_about_author">Ophavsret</string>
   <string name="tv_about_credits">Krediteringer</string>
+  <string name="account_link_device">Forbindelse fra et andet udstyr</string>
   <string name="account_link_button">Opret forbindelse</string>
+  <string name="account_link_archive_button">Forbindelse fra backup</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_new_button">Opret en Jami-konto</string>
   <string name="account_link_export_button">Tilknyt en ny enhed</string>
+  <string name="account_link_show_button">Vis %d flere tilknyttede enheder</string>
+  <string name="account_link_hide_button">Skjul det tilkoblede anordning</string>
   <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Jami. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_start_export_button">Generer PIN</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at gennemføre processen, skal du åbne Jami på den nye enhed og oprette en ny konto med \"Tilkny denne enheds til en konto\". PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_link_export_info_light">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Jami. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
+  <string name="account_export_title">Link konto til andre enheder</string>
+  <string name="account_connect_server_button">Forbindelse til administrationsserveren</string>
+  <string name="account_connect_button">Køb</string>
+  <string name="prompt_server">Jami administrationsserver URL</string>
+  <string name="help_credentials_enter">Indtast din organisations legitimationsoplysninger</string>
+  <string name="help_connect_password_enter">Indtast dit organisations adgangskode</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn</string>
+  <string name="username_available">Brugernavn tilgængeligt!</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
@@ -185,6 +214,7 @@ Du kan rette din konto senere</string>
   <string name="register_recommended">Anbefalet</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
+  <string name="unknown_error">Ukendt fejl. Kontroller venligst din netforbindelse!</string>
   <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>
   <string name="account_status_connecting">Forbinder</string>
   <string name="account_status_connection_error">Forbindelsesfejl</string>
@@ -199,6 +229,7 @@ Du kan rette din konto senere</string>
   <string name="account_link_title">Tilknyt denne enhed</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Redigere min konto</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Indtast adgangskode for at bekræfte</string>
   <string name="enter_password">Indtast adgangskode</string>

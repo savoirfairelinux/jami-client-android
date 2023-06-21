@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">কল বাতিল করা হয়েছে। কোন মাইক্রোফোন সনাক্ত করা যায়নি.</string>
     <string name="call_error_no_camera_no_microphone">কল বাতিল করা হয়েছে। কোন ক্যামেরা বা মাইক্রোফোন সনাক্ত করা যায়নি.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">অনুসন্ধান</string>
+    <string name="call_human_state_incoming">আসছে</string>
+    <string name="call_human_state_connecting">সংযোগ</string>
+    <string name="call_human_state_ringing">রিং</string>
+    <string name="call_human_state_current">কথা বলা</string>
+    <string name="call_human_state_hungup">শেষ</string>
+    <string name="call_human_state_busy">ব্যস্ত</string>
+    <string name="call_human_state_failure">ব্যর্থ</string>
+    <string name="call_human_state_hold">থেকো</string>
+    <string name="call_human_state_unhold">থামো</string>
+    <string name="call_human_state_over">শেষ</string>
+    <!-- Conferences -->
+    <string name="call_moderator">মডারেটর</string>
+    <string name="call_muted">নিঃশব্দ</string>
+    <string name="call_handRaised">হাত বাড়িয়ে</string>
+
+</resources>

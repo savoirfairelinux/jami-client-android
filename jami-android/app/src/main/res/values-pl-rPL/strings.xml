@@ -130,11 +130,13 @@
   <string name="message_failed">Nie powiodła się</string>
   <string name="time_just_now">W tej chwili</string>
   <string name="send_file">Wyślij plik</string>
+  <string name="select_media">Otwarta galeria</string>
   <string name="hist_file_sent">Plik wysłany</string>
   <string name="hist_file_received">Otrzymano plik</string>
   <string name="conversation_send_audio">Nagraj klip dźwiękowy</string>
   <string name="conversation_send_video">Nagraj klip wideo</string>
   <string name="conversation_share_location">Udostępnij lokalizację</string>
+  <string name="in_reply_to">W odpowiedzi na</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Rozmowy wideo wymagają przyznania uprawnień dla aparatu. Proszę rozważyć udzielenie ich.</string>
@@ -183,13 +185,26 @@
   <string name="block_contact_dialog_title">Czy zablokować %1$s?</string>
   <string name="block_contact_dialog_message">%1$snie będzie w stanie się z tobą skontaktować, dopóki kontakt nie zostanie odblokowany.</string>
   <string name="block_contact_completed">Kontakt %1$s został zablokowany.</string>
+  <string name="unblock_contact_dialog_title">Odblokować %1$s?</string>
+  <string name="unblock_contact_dialog_message">%1$s będzie mógł ponownie skontaktować się z tobą.</string>
+  <string name="unblock_contact_completed">%1$s został odblokowany.</string>
   <string name="conversation_contact_is_typing">Kontakt pisze...</string>
   <string name="conversation_info_contact_you">Ty</string>
   <string name="conversation_members">Użytkownicy</string>
   <string name="conversation_syncing">Pobieranie rozmowy od peera</string>
+  <string name="conversation_blocked">Ten kontakt jest zablokowany.</string>
+  <string name="conversation_ended">Rozmowa się skończyła.</string>
+  <string name="conversation_message_deleted">(Zgłoszenie usunięte)</string>
   <string name="conversation_preference_color">Kolor rozmowy</string>
   <string name="conversation_preference_emoji">Emoji rozmowy</string>
   <string name="conversation_type_contact">Kontakty Jami</string>
+  <string name="conversation_type_private">Prywatne rzędy</string>
+  <string name="conversation_type_group">Grupa Swarm</string>
+  <string name="conversation_contact_invited">Zaproszono %1$s</string>
+  <string name="conversation_contact_added">%1$s dołączony</string>
+  <string name="conversation_contact_left">%1$ jest lewy</string>
+  <string name="conversation_contact_banned">%1$s został zakazany</string>
+  <string name="conversation_search_hint">Szukaj rozmowy</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
@@ -285,6 +300,7 @@
   <string name="menu_file_delete">Usuń plik</string>
   <string name="menu_file_share">Podziel się plikiem</string>
   <string name="menu_message_copy">Kopiuj</string>
+  <string name="menu_message_edit">Edycja wiadomości</string>
   <string name="menu_message_delete">Usuń wiadomość</string>
   <string name="menu_message_cancel">Anuluj wiadomość</string>
   <string name="menu_message_reply">Odpowiedz</string>
@@ -330,18 +346,32 @@
   <string name="chat_plugins">Wtyczki czatu</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Podziel się</string>
+  <string name="bottomSheet_dialpad_btn">Wykładnik</string>
   <string name="bottomSheet_plugins_btn">Dodatki</string>
   <string name="bottomSheet_add_participants_btn">Dodaj</string>
   <string name="bottomSheet_change_camera_btn">Zmień</string>
   <string name="bottomSheet_camera_onoff_switch_btn">Kamera</string>
   <string name="bottomSheet_hangup_btn">Skończ rozmowę</string>
+  <string name="bottomSheet_mute_microphone_btn">Mikro</string>
   <string name="bottomSheet_sound_output_btn">Dźwięk</string>
   <string name="bottomSheet_raiseHand_btn">Podnieś rękę</string>
+  <string name="open_account_plugin_settings">Otwórz ustawienia wtyczki konta</string>
+  <string name="open_general_plugin_settings">Otwórz ustawienia wtyczki</string>
   <string name="uninstall">Odinstaluj</string>
   <string name="reset">Zresetuj</string>
   <!--Swarm Detail-->
   <string name="rename_btn">Potwierdź</string>
+  <string name="rename_error">Nie może być puste.</string>
+  <string name="swarm_description">Dodaj opis</string>
   <string name="tab_about">O programie</string>
   <string name="tab_members">Użytkownicy</string>
+  <string name="tab_documetn">Dokumenty</string>
+  <string name="dialogtitle_title">Edytor Swarm tytuł</string>
+  <string name="dialogtitle_description">Wymienić opis plamy</string>
   <string name="dialog_hint_title">Tytuł</string>
+  <string name="dialog_hint_description">Opis</string>
+  <string name="picker_title">Wybierz kontakty</string>
+  <string name="picker_btn">Wybierz kontakty</string>
+  <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
+  <string name="bottomsheet_remove">Wyprowadź z rodu</string>
 </resources>

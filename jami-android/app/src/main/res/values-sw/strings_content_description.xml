@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Piga simu haraka</string>
+  <string name="contact_picture_description">Picha ya Mawasiliano</string>
+  <string name="dial_numeric_pad">Kibao cha namba</string>
+  <string name="contact_unblock">Kufungua kizuizi</string>
+  <string name="video_plugins">Vidokezo vya Video</string>
+</resources>

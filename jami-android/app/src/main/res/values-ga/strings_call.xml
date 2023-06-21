@@ -24,4 +24,21 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Glao curtha ar ceal. Níor braitheadh aon mhicreafón.</string>
     <string name="call_error_no_camera_no_microphone">Glao curtha ar ceal. Níor braitheadh ceamara ná micreafón.</string>
 
-    </resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Ag lorg</string>
+    <string name="call_human_state_incoming">Incoming</string>
+    <string name="call_human_state_connecting">Ceangal</string>
+    <string name="call_human_state_ringing">Ag an gcruinn</string>
+    <string name="call_human_state_current">Ag caint</string>
+    <string name="call_human_state_hungup">Ar deireadh</string>
+    <string name="call_human_state_busy">Ag obair</string>
+    <string name="call_human_state_failure">Fágadh</string>
+    <string name="call_human_state_hold">Fan le chéile</string>
+    <string name="call_human_state_unhold">Fág an t-airgead</string>
+    <string name="call_human_state_over">Ar deireadh</string>
+    <!-- Conferences -->
+    <string name="call_moderator">Modhálaí</string>
+    <string name="call_muted">Tá sé imithe</string>
+    <string name="call_handRaised">lámh ar airde</string>
+
+</resources>

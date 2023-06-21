@@ -1,6 +1,73 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">नेटवर्क</string>
+  <string name="pref_category_contacts">सम्पर्कहरू</string>
+  <string name="pref_category_video">भिडियो</string>
   <string name="pref_category_system">प्रणाली</string>
+  <string name="pref_category_privacy">गोपनीयता</string>
+  <string name="pref_category_diagnostic">निदान</string>
+  <string name="pref_mobileData_title">मोबाइल डाटा</string>
+  <string name="pref_mobileData_summary">वाइफाइको अतिरिक्त 3G/LTE नेटवर्कमा जामीलाई अनुमति दिनुहोस्</string>
+  <string name="pref_pushNotifications_title">पुश सूचनाहरू</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
+  <string name="pref_pushNotifications_summary">पृष्ठभूमिमा कल/संदेशहरू प्राप्त गर्न अनुमति दिन गुगल सर्भरहरू प्रयोग गर्नुहोस्</string>
+  <string name="pref_unifiedPush_summary">पृष्ठभूमिमा कल/संदेशहरू प्राप्त गर्न UnifiedPush सेवा प्रयोग गर्नुहोस्</string>
+  <string name="pref_video_advanced_title">उन्नत भिडियो सेटिंग्स</string>
+  <string name="pref_video_advanced_summary">भिडियो बिटरेट, रिजोलुसन, साथै पहुँच प्रयोगात्मक सुविधाहरू परिवर्तन गर्नुहोस्</string>
+  <string name="pref_hd_summary">HD भिडियो पठाउन सक्षम गर्नुहोस्</string>
+  <string name="pref_hwEncode_title">गतिशील एन्कोडिंग सक्षम गर्नुहोस्</string>
+  <string name="pref_hwEncode_summary">प्रयोगात्मक विशेषता</string>
+  <string name="pref_videoBitrate_title">भिडियो बिटरेट</string>
+  <string name="pref_videoBitrate_summary">पूर्वनिर्धारित आउटगोइंग भिडियो बिटरेट (KB/s) चयन गर्नुहोस्</string>
+  <string name="pref_videoResolution_title">भिडियो रिजोलुसन</string>
+  <string name="pref_videoResolution_summary">पूर्वनिर्धारित आउटगोइंग भिडियो रिजोलुसन चयन गर्नुहोस्</string>
+  <string name="pref_systemContacts_title">प्रणाली सम्पर्कहरू प्रयोग गर्नुहोस्</string>
+  <string name="pref_systemContacts_summary">फोन गर्ने व्यक्तिको विवरण देखाउन प्रणाली सम्पर्कहरू प्रयोग गर्नुहोस्।</string>
+  <string name="pref_systemDialer_title">Jami को प्रयोग गरेर प्रणाली कलहरू राख्नुहोस्</string>
+  <string name="pref_systemDialer_summary">सम्भव भएमा जेमीलाई फोन गर्न प्रयोग गर्नुहोस्।</string>
+  <string name="pref_startOnBoot_title">जमी स्टार्टअपमा सुरु गर्नुहोस्</string>
+  <string name="pref_startOnBoot_summary">प्रणाली सुरु हुँदा जामीलाई पृष्ठभूमिमा राख्नुहोस्।</string>
+  <string name="pref_clearHistory_title">स्पष्ट इतिहास</string>
+  <string name="pref_clearHistory_summary">सबै कुराकानी इतिहास खाली गर्नुहोस् यो कार्यलाई उल्टाउन सकिँदैन।</string>
+  <string name="pref_notification_title">सूचनाको दृश्यता</string>
+  <string name="pref_notification_summary">लक स्क्रिनमा अनुप्रयोग सूचनाहरू दृश्यता सेट गर्नुहोस्।</string>
+  <string name="pref_blackList_title">ब्लक सूची</string>
+  <string name="pref_blackList_summary">आफ्नो ब्लक सूची जाँच गर्नुहोस्।</string>
+  <string name="pref_delete_account_title">खाता मेटाउने</string>
+  <string name="pref_delete_account_summary">तपाईँको खाता यस यन्त्रबाट मेटाउनुहोस्</string>
+  <string name="pref_persistNotification_title">पृष्ठभूमिमा दौड</string>
+  <string name="pref_persistNotification_summary">फोन र सन्देशहरू प्राप्त गर्न पृष्ठभूमिमा दौडने अनुमति दिनुहोस्।</string>
+  <string name="pref_newGroup_title">समूह च्याट सक्षम गर्नुहोस्</string>
+  <string name="pref_newGroup_summary">Jami मा समूह सिर्जना गर्न सक्षम गर्नुहोस्।</string>
+  <string name="pref_logs_title">निदानको लागि अभिलेख</string>
+  <string name="pref_logs_summary">खुला डायग्नोस्टिक लॉग सेटिंग्स</string>
+  <string name="pref_logs_start">लकडाउन सुरु गर्नुहोस्</string>
+  <string name="pref_logs_stop">लकडाउन बन्द गर्नुहोस्</string>
+  <string name="pref_typing_title">टाइपिंग सूचक सक्षम गर्नुहोस्</string>
+  <string name="pref_typing_summary">सन्देश टाइप भइरहेको देखाउने टाइपिंग सूचकहरू पठाउनुहोस् र प्राप्त गर्नुहोस्।</string>
+  <string name="pref_read_title">पढ्ने रसिद सक्षम गर्नुहोस्</string>
+  <string name="pref_read_summary">सन्देश देखाइएको छ भनेर संकेत गर्ने र प्राप्त गर्ने रसिदहरू पठाउनुहोस्।</string>
+  <string name="pref_block_record_title">स्क्रीनशट र रेकर्डिङ रोक्नुहोस्</string>
+  <string name="pref_block_record_summary">स्क्रिनशट लिने वा भिडियो रेकर्ड गर्ने कार्य रोक्नुहोस्।</string>
+  <string name="pref_link_preview_title">वार्तालापमा लिंक पूर्वावलोकन देखाउनुहोस्</string>
+  <string name="pref_link_preview_summary">पूर्वावलोकनहरू तेस्रो पक्ष सर्भरहरूबाट सामग्री डाउनलोड गर्न आवश्यक छ।</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">सार्वजनिक सूचनाहरू र तिनीहरूको सामग्री लक स्क्रिनमा देखाउनुहोस्)</string>
+  <string name="notification_private">निजी \n(सन्देशहरू देखाउनुहोस् तर तिनीहरूको सामग्री लक स्क्रिनमा लुकाउनुहोस्) \n</string>
+  <string name="notification_secret">गुप्त \n(लक स्क्रीनमा सूचनाहरू देखाउँदैन)</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">प्लगइनहरू</string>
+  <string name="pref_plugins_summary">प्लगइन सक्षम गर्नुहोस् र तिनीहरूको प्यारामिटरहरू सेट गर्नुहोस्</string>
+  <string name="fab_plugins_add">नयाँ प्लगइन थप्नुहोस्</string>
+  <string name="plugin_uninstall_title">प्लगइन हटाउन?</string>
+  <string name="plugin_reset_preferences">प्लगइन प्राथमिकताहरू पुनःसेट गर्नुहोस्</string>
+  <string name="plugin_reset_preferences_summary">तपाईंको प्लगइन सेटिंग्स पूर्वनिर्धारित हुनेछ</string>
+  <string name="plugin_reset_preferences_ask">के तपाईँ सामान्य प्लगइन सेटिंग्स रिसेट गर्न चाहनुहुन्छ?</string>
+  <string name="plugin_reset_account_preferences_ask">के तपाईँ खाता प्लगइन सेटिंग्स रिसेट गर्न चाहनुहुन्छ?</string>
+  <string name="plugin_successfully_installed">प्लगइन <b>%1$s</b> सफलतापूर्वक स्थापना गरियो</string>
+  <string name="plugin_install_failure">प्लगइन स्थापना गर्न असफलः <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">तपाईंसँग हालको संस्करण छः <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">तपाईँको <b>%1$s</b> को संस्करण समान छ</string>
+  <string name="plugin_force_install">बलियो स्थापना</string>
+  <string name="plugin_path_image_add">नयाँ छवि थप्नुहोस्</string>
 </resources>

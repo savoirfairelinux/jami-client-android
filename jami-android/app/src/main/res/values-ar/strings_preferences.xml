@@ -5,10 +5,13 @@
   <string name="pref_category_video">فيديو</string>
   <string name="pref_category_system">نظام</string>
   <string name="pref_category_privacy">خصوصية</string>
+  <string name="pref_category_diagnostic">التشخيص</string>
   <string name="pref_mobileData_title">بيانات هاتف</string>
   <string name="pref_mobileData_summary">السماح لـ جامي باستخدام شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
   <string name="pref_pushNotifications_title">الإشعارات المنبثقة</string>
+  <string name="pref_pushNotif_summary" translatable="false"></string>
   <string name="pref_pushNotifications_summary">استخدام خدمات غوغل للسماح باستقبال المكالمات والرسائل في الخلفية</string>
+  <string name="pref_unifiedPush_summary">استخدام خدمة UnifiedPush للسماح باستقبال المكالمات/ الرسائل في الخلفية</string>
   <string name="pref_video_advanced_title">إعدادات فيديو متقدمة</string>
   <string name="pref_video_advanced_summary">تغيير معدل البت والدقة للفيديو والوصول إلى الميزات التجريبية</string>
   <string name="pref_hd_summary">تفعيل إرسال فيديو بدقة عالية HD</string>
@@ -26,17 +29,32 @@
   <string name="pref_startOnBoot_summary">تشغيل جامي في الخلفية عندما يبدأ النظام</string>
   <string name="pref_clearHistory_title">مسح المؤرخ</string>
   <string name="pref_clearHistory_summary">مسح كامل المحادثات المؤرخة. لا يمكن التراجع عن هذا الخيار فيما بعد.</string>
+  <string name="pref_notification_title">مرونة الإخطار</string>
+  <string name="pref_notification_summary">حدد رؤية إشعارات التطبيق على شاشة القفل.</string>
   <string name="pref_blackList_title">قائمة الحظر</string>
   <string name="pref_blackList_summary">تحقق من قائمة الحظر.</string>
   <string name="pref_delete_account_title">حذف الحساب</string>
   <string name="pref_delete_account_summary">حذف حسابك من هذا الجهاز</string>
   <string name="pref_persistNotification_title">التشغيل في الخلفية</string>
   <string name="pref_persistNotification_summary">السماح بالتشغيل في الخلفية لاستقبال المكالمات والرسائل.</string>
+  <string name="pref_newGroup_title">تمكين الدردشة الجماعية</string>
+  <string name="pref_newGroup_summary">تمكين إنشاء مجموعات في جامي.</string>
+  <string name="pref_logs_title">سجلات التشخيص</string>
+  <string name="pref_logs_summary">إعدادات سجل التشخيص المفتوحة</string>
+  <string name="pref_logs_start">ابدأ في التسجيل</string>
+  <string name="pref_logs_stop">توقف عن التقطيع</string>
   <string name="pref_typing_title">تمكين مؤشرات الكتابة</string>
   <string name="pref_typing_summary">إرسال مؤشرات الكتابة واستلامها إظهار أن الرسالة تتم كتابتها</string>
   <string name="pref_read_title">تمكين إيصالات القراءة</string>
   <string name="pref_read_summary">إرسال الإيصالات واستلامها للإشارة إلى عرض رسالة.</string>
+  <string name="pref_block_record_title">حظر التقاط الشاشة وتسجيل</string>
+  <string name="pref_block_record_summary">أمنع التقاط صور الشاشة أو تسجيل الفيديو</string>
+  <string name="pref_link_preview_title">أظهر مشاهد المراسلة في المحادثات</string>
+  <string name="pref_link_preview_summary">تطلب المشاهدة المسبقة تنزيل المحتوى من خوادم طرف ثالث.</string>
   <!--Notifications Visibility-->
+  <string name="notification_public">عام \ n (إظهار الإشعارات ومحتواها على شاشة التأمين) \ n</string>
+  <string name="notification_private">\n(تظهر إشعارات خاصة ولكن إخفاء محتوياتها على شاشة القفل) \n</string>
+  <string name="notification_secret">السر \n(لا تظهر الإخطارات على شاشة القفل)</string>
   <!--Plugin-->
   <string name="pref_plugins_title">الإضافات</string>
   <string name="pref_plugins_summary">تفعيل الإضافات وتعيين معاملاتها</string>
@@ -44,6 +62,8 @@
   <string name="plugin_uninstall_title">إلغاء تثبيت إضافة؟</string>
   <string name="plugin_reset_preferences">إعادة تعيين أذونات إضافة</string>
   <string name="plugin_reset_preferences_summary">إعدادت إضافتك ستكون إفتراضية</string>
+  <string name="plugin_reset_preferences_ask">هل تريد إعادة تعيين إعدادات المكونات العامة ؟</string>
+  <string name="plugin_reset_account_preferences_ask">هل تريد إعادة تعيين إعدادات مكونات الحساب ؟</string>
   <string name="plugin_successfully_installed">إضافة <b>%1$s</b> تم تثبيتها بنجاح</string>
   <string name="plugin_install_failure">فشل عند تثبيت إضافة: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">انت تملك اكثر من إصدار عن: <b>%1$s</b></string>
