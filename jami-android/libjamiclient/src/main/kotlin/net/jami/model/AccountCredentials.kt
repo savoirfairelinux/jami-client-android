@@ -1,9 +1,6 @@
 /*
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
- * <p>
- * Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- * Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- * <p>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or

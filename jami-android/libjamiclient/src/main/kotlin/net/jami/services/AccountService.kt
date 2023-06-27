@@ -1,10 +1,6 @@
 /*
  *  Copyright (C) 2004-2023 Savoir-faire Linux Inc.
  *
- *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *  Author: Raphaël Brulé <raphael.brule@savoirfairelinux.com>
- *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 3 of the License, or

@@ -2,11 +2,6 @@
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  * Copyright (C) 2004-2023 Savoir-faire Linux Inc.
  *
- * Author: Regis Montoya <r3gis.3R@gmail.com>
- * Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
- * Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- * Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
