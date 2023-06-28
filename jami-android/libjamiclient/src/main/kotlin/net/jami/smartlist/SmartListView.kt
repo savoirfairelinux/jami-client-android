@@ -30,7 +30,6 @@ interface SmartListView {
     fun displayDeleteDialog(accountId: String, conversationUri: Uri)
     fun copyNumber(uri: Uri)
     fun setLoading(loading: Boolean)
-    fun displayMenuItem()
     fun hideList()
     fun hideNoConversationMessage()
     fun updateList(conversations: ConversationFacade.ConversationList, conversationFacade: ConversationFacade, parentDisposable: CompositeDisposable)
