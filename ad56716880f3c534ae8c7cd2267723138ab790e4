@@ -47,6 +47,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db1dbcb_2f4c9b9b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-28T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503cec5f_1282731b",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 9
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f760e0a5_c4c37f42",
@@ -60,6 +84,30 @@
       "writtenOn": "2023-06-28T20:32:15Z",
       "side": 1,
       "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 120
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1babfca7_8241615f",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-28T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f760e0a5_c4c37f42",
       "range": {
         "startLine": 117,
         "startChar": 4,
@@ -106,6 +154,54 @@
       "writtenOn": "2023-06-28T20:32:15Z",
       "side": 1,
       "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 157
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2f3f95f_34964bc1",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-28T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7db59b6_180b8e74",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 4
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a88c5b01_f0841d00",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-06-28T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5cdbdf_e60a156f",
       "range": {
         "startLine": 197,
         "startChar": 8,
