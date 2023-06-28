@@ -41,6 +41,8 @@ import cx.ring.client.EmojiChooserBottomSheet
 import cx.ring.databinding.FragConversationActionsBinding
 import cx.ring.databinding.ItemContactActionBinding
 import cx.ring.interfaces.Colorable
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -120,22 +122,14 @@ class ConversationActionsFragment : Fragment(), Colorable {
             adapter.actions.add(symbolAction!!)
 
             // Update color on RX color signal.
-            mDisposableBag.add(
-                conversation
-                    .getColor()
-                    .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe {
-                        setColor(it) }
-            )
+            mDisposableBag.add(conversation.getColor()
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { setColor(getConversationColor(requireContext(), it)) })
 
             // Update symbol on RX color signal.
-            mDisposableBag.add(
-                conversation
-                    .getSymbol()
-                    .observeOn(DeviceUtils.uiScheduler)
-                    .subscribe {
-                        setSymbol(it.toString()) }
-            )
+            mDisposableBag.add(conversation.getSymbol()
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { setSymbol(getConversationSymbol(requireContext(), it)) })
 
             @StringRes val infoString = if (conversation.isSwarm)
                 if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
@@ -227,7 +221,7 @@ class ConversationActionsFragment : Fragment(), Colorable {
     /**
      * Set the symbol of the symbol action button.
      */
-    private fun setSymbol(symbol: String) {
+    private fun setSymbol(symbol: CharSequence) {
         symbolAction?.setSymbol(symbol) // Update emoji action icon
         adapter.notifyItemChanged(symbolActionPosition)
     }
@@ -236,18 +230,17 @@ class ConversationActionsFragment : Fragment(), Colorable {
      * Set the conversation preferences.
      * Always resend the color and emoji, even if they are not changed (to not reset).
      */
-    fun setConversationPreferences(
+    private fun setConversationPreferences(
         accountId: String,
         conversationUri: Uri,
         color: Int? = colorAction?.iconTint,
         emoji: String = symbolAction?.iconSymbol.toString(),
     ) {
         mConversationFacade.setConversationPreferences(
-            accountId,
-            conversationUri,
-            mapOf(
-                "symbol" to emoji,
-                "color" to if (color != null) String.format("#%06X", 0xFFFFFF and color) else ""
+            accountId, conversationUri, mapOf(
+                Conversation.KEY_PREFERENCE_CONVERSATION_SYMBOL to emoji,
+                Conversation.KEY_PREFERENCE_CONVERSATION_COLOR to if (color != null)
+                    String.format("#%06X", 0xFFFFFF and color) else ""
             )
         )
     }

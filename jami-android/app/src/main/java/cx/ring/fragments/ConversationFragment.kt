@@ -63,7 +63,9 @@ import cx.ring.mvp.BaseSupportFragment
 import cx.ring.service.DRingService
 import cx.ring.service.LocationSharingService
 import cx.ring.services.NotificationServiceImpl
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationPreferences
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationSymbol
 import cx.ring.utils.*
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
@@ -370,11 +372,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     override fun setConversationColor(@ColorInt color: Int) {
-        mAdapter?.setPrimaryColor(color)
+        mAdapter?.setPrimaryColor(getConversationColor(requireContext(), color))
     }
 
     override fun setConversationSymbol(symbol: CharSequence) {
-        binding?.emojiSend?.text = symbol
+        binding?.emojiSend?.text = getConversationSymbol(requireContext(), symbol)
     }
 
     override fun onDestroyView() {

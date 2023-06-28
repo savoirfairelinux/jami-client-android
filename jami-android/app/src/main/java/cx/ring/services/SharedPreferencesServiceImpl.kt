@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.text.TextUtils
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -111,7 +112,6 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
     ): Map<String, String> =
         getConversationPreferences(context, accountId, conversationUri)
             .all.mapValuesTo(HashMap()) { (_, v) -> v.toString() }
-
     /**
      * Save conversation preferences to the shared preferences.
      */
@@ -121,7 +121,7 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         preferences: Map<String, String>,
     ) =
         getConversationPreferences(context, accountId, conversationUri)
-        .edit { preferences.forEach { (k, v) -> putString(k, v) } }
+            .edit { preferences.forEach { (k, v) -> putString(k, v) } }
 
 
     override fun hasNetworkConnected(): Boolean = NetworkUtils.isConnectivityAllowed(context)
@@ -198,5 +198,13 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
 
         fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences =
             context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
+
+        /** Compute conversation color from preference value, fallback on default */
+        fun getConversationColor(context: Context, @ColorInt color: Int) =
+            if (color != 0) color else context.resources.getColor(R.color.color_primary_light)
+
+        /** Compute conversation symbol from preference value, fallback on default */
+        fun getConversationSymbol(context: Context, symbol: CharSequence) =
+            symbol.ifEmpty { context.resources.getText(R.string.conversation_default_emoji) }
     }
 }
