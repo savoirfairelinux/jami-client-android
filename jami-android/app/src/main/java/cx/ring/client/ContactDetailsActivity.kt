@@ -53,6 +53,7 @@ import cx.ring.fragments.ConversationActionsFragment
 import cx.ring.fragments.ConversationGalleryFragment
 import cx.ring.fragments.ConversationMembersFragment
 import cx.ring.interfaces.Colorable
+import cx.ring.services.SharedPreferencesServiceImpl.Companion.getConversationColor
 import cx.ring.utils.*
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
@@ -228,7 +229,7 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             conversation
                 .getColor()
                 .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { setColor(it) }
+                .subscribe { setColor(getConversationColor(this, it)) }
         )
 
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
