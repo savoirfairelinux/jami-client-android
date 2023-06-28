@@ -19,12 +19,7 @@
  */
 package net.jami.home
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import net.jami.model.Conversation
-import net.jami.model.Uri
-import net.jami.services.ConversationFacade
-
 interface HomeView {
     fun goToQRFragment()
-    fun startNewGroup()
+    fun startNewSwarm()
 }

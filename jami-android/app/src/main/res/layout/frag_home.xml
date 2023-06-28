@@ -1,67 +1,106 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
-                                                                    
-Author: Amirhossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
-                                                                    
-This program is distributed in the hope that it will be useful,     
-but WITHOUT ANY WARRANTY; without even the implied warranty of      
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
-GNU General Public License for more details.                        
-                                                                    
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
 You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
+
+<!--
+    In this fragment there is :
+    - an AppBarLayout that will hide and expand when scrolling
+        - a SearchBar to search for a swarm or for a new contact
+        - an invitation card to display received invitations
+    - a FragmentContainerView that will display all the swarms
+    - a SearchView that will display the search results
+        - a QRCode button to scan a QRCode and a new swarm button to start a new swarm.
+    - a FloatingButton to start a new swarm
+
+    The CoordinatorLayout is used to automatically manage expand and hide features to scrolling.
+  !-->
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/content"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.HomeActivity">
 
-    <!-- Container that will contains conversations -->
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:elevation="0dp"
+        app:liftOnScroll="false">
+
+        <LinearLayout
+            android:id="@+id/app_bar_container"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+            <!-- Search bar to search for a swarm or for new contacts -->
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/search_bar"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/searchbar_hint"
+                android:textAppearance="@style/TextAppearance.Material3.SearchBar"
+                app:autoShowKeyboard="true"
+                app:navigationIcon="@android:color/transparent" />
+
+            <!-- Received invitations -->
+            <include
+                android:id="@+id/invitation_card"
+                layout="@layout/frag_invitation_card" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Smartlist to display swarms -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
+
         android:name="cx.ring.fragments.SmartListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:id="@+id/search_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
 
-        <!-- Search bar -->
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:hint="@string/searchbar_hint"
-            android:textAppearance="@style/TextAppearance.Material3.SearchBar"
-            app:autoShowKeyboard="true"
-            app:navigationIcon="@android:color/transparent" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-        <!-- Invitations -->
-        <include
-            android:id="@+id/invitation_card"
-            layout="@layout/frag_invitation_card" />
-    </LinearLayout>
-
+    <!-- Search view to display search results -->
     <com.google.android.material.search.SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/search_view"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false"
+
+        android:fitsSystemWindows="true"
         android:hint="@string/searchbar_hint"
-        app:layout_anchor="@id/toolbar"
+        app:layout_anchor="@id/search_bar"
         tools:visibility="gone">
 
         <LinearLayout
@@ -72,6 +111,7 @@ along with this program; if not, write to the Free Software
             <!-- Buttons (QR code and new swarm) -->
             <LinearLayout
                 android:id="@+id/buttons"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -79,6 +119,7 @@ along with this program; if not, write to the Free Software
                 <!-- QR Code button -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/qr_code"
+
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -86,6 +127,7 @@ along with this program; if not, write to the Free Software
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/button_corner_radius"
                     tools:visibility="visible">
@@ -94,23 +136,26 @@ along with this program; if not, write to the Free Software
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:drawableTint="@color/colorPrimary"
+
                         android:text="@string/qr_code"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
-                        app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp" />
+                        app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp"
+                        app:drawableTint="@color/colorPrimary" />
 
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- New swarm button -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/new_group"
+                    android:id="@+id/new_swarm"
+
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/button_corner_radius"
                     tools:visibility="visible">
@@ -119,12 +164,13 @@ along with this program; if not, write to the Free Software
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+
                         android:drawablePadding="8dp"
-                        android:drawableTint="@color/colorPrimary"
-                        android:text="Start Swarm"
+                        android:text="@string/new_swarm"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
-                        app:drawableStartCompat="@drawable/baseline_group_add_24" />
+                        app:drawableStartCompat="@drawable/baseline_group_add_24"
+                        app:drawableTint="@color/colorPrimary" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -133,8 +179,10 @@ along with this program; if not, write to the Free Software
             <!-- Search results -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:clipToPadding="false"
                 android:divider="@null"
                 android:paddingBottom="8dp"
@@ -143,5 +191,25 @@ along with this program; if not, write to the Free Software
         </LinearLayout>
 
     </com.google.android.material.search.SearchView>
+
+    <!-- Floating button to start a new conversation -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/new_swarm_fab"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="8dp"
+
+        android:backgroundTint="@color/fab_background"
+        android:elevation="6dp"
+        android:text="@string/start_conversation"
+        android:textColor="@color/white"
+        app:elevation="6dp"
+        app:icon="@drawable/baseline_chat_24"
+        app:iconTint="@color/white"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        app:pressedTranslationZ="12dp"
+        app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

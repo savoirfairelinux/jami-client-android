@@ -19,7 +19,6 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-
     <!-- About -->
     <string name="app_name" translatable="false">Jami</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
@@ -170,6 +169,7 @@ along with this program; if not, write to the Free Software
     <string name="write_a_message">Write a message</string>
     <string name="scan_qr">Scan QR Code</string>
     <string name="qr_code">QR Code</string>
+    <string name="new_swarm">Start Swarm</string>
     <string name="ab_action_flipcamera">Flip camera</string>
     <string name="ab_action_hidepreview">Hide preview</string>
     <string name="remote_recording">%s recording…</string>

@@ -22,11 +22,7 @@ package net.jami.home
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import net.jami.model.Account
-import net.jami.model.Conversation
-import net.jami.model.Uri
 import net.jami.mvp.RootPresenter
 import net.jami.services.ConversationFacade
 import net.jami.services.PreferencesService
@@ -59,8 +55,8 @@ class HomePresenter @Inject constructor(
         view?.goToQRFragment()
     }
 
-    fun clickNewGroup() {
-        view?.startNewGroup()
+    fun clickNewSwarm() {
+        view?.startNewSwarm()
     }
 
     companion object {

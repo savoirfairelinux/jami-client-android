@@ -24,7 +24,8 @@ along with this program; if not, write to the Free Software
     android:id="@+id/list_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
     <!-- Will be displayed when no accounts are available -->
     <LinearLayout
@@ -72,29 +73,10 @@ along with this program; if not, write to the Free Software
         android:clipToPadding="false"
         android:divider="@null"
         android:elevation="2dp"
-        android:paddingTop="160dp"
         android:paddingBottom="8dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+
         tools:listitem="@layout/item_smartlist"
         tools:visibility="visible" />
-
-    <!-- Floating button to start a new conversation -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/newconv_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin_mini"
-        android:backgroundTint="@color/fab_background"
-        android:elevation="6dp"
-        android:text="@string/start_conversation"
-        android:textColor="@color/white"
-        app:elevation="6dp"
-        app:icon="@drawable/baseline_chat_24"
-        app:iconTint="@color/white"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        app:pressedTranslationZ="12dp"
-        app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

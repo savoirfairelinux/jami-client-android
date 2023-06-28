@@ -43,6 +43,7 @@ import cx.ring.utils.TextUtils
 import cx.ring.viewholders.SmartListViewHolder.SmartListListeners
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import net.jami.model.Conversation
 import net.jami.model.Conversation.ConversationActionCallback
 import net.jami.model.Uri
@@ -59,6 +60,7 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
     private var mHomeFragment: HomeFragment? = null
+    val listAvailable = BehaviorSubject.create<RecyclerView>()
 
     @Inject
     lateinit
@@ -75,19 +77,8 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
-            newconvFab.setOnClickListener { presenter.fabButtonClicked() }
-            confsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP)
-                    val isExtended = newconvFab.isExtended
-                    if (dy > 0 && isExtended) {
-                        newconvFab.shrink()
-                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
-                        newconvFab.extend()
-                    }
-                    (activity as HomeActivity?)?.setToolbarElevation(canScrollUp)
-                }
-            })
+            // TODO: need precise review on this
+            listAvailable.onNext(confsList) // Send list to allow to subscribe on scroll.
             (confsList.itemAnimator as DefaultItemAnimator?)?.supportsChangeAnimations = false
             binding = this
         }.root
@@ -184,10 +175,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         copyContactNumberToClipboard(uri.toString())
     }
 
-    override fun displayMenuItem() {
-        (mHomeFragment as HomeFragment).expandSearchActionView()
-    }
-
     override fun hideList() {
         binding!!.confsList.visibility = View.GONE
         mSmartListAdapter?.update(ConversationFacade.ConversationList())
@@ -242,11 +229,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             .putExtra(CallFragment.KEY_HAS_VIDEO, true)
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId)
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
-    }
-
-    fun showFab(show: Boolean) {
-        val binding = binding ?: return
-        if (show) binding.newconvFab.show() else binding.newconvFab.hide()
     }
 
     fun searchQueryTextChanged (query: String) {

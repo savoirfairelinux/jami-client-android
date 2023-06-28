@@ -81,10 +81,6 @@ class SmartListPresenter @Inject constructor(
         view?.displayConversationDialog(conversationItemViewModel)
     }
 
-    fun fabButtonClicked() {
-        view?.displayMenuItem()
-    }
-
     private fun startConversation(accountId: String, conversationUri: Uri?) {
         Log.w(TAG, "startConversation $accountId $conversationUri")
         val view = view
