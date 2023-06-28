@@ -648,13 +648,17 @@ class Conversation : ConversationHistory {
     fun getSymbol(): Observable<CharSequence> = symbol
 
     fun updatePreferences(preferences: Map<String, String>) {
-        preferences["color"]?.let {
+        val colorValue = preferences[KEY_PREFERENCE_CONVERSATION_COLOR]
+        if (colorValue != null) {
             // First, we remove the string first character (the #).
             // The color format is RRGGBB but we want AARRGGBB.
             // So we add FF in front of the color (full opacity).
-            color.onNext(it.substring(1).toInt(16) or 0xFF000000.toInt())
-        }
-        preferences["symbol"]?.let { symbol.onNext(it) }
+            color.onNext(colorValue.substring(1).toInt(16) or 0xFF000000.toInt())
+        } else color.onNext(0)
+        val symbolValue = preferences[KEY_PREFERENCE_CONVERSATION_SYMBOL]
+        if (symbolValue != null) {
+            symbol.onNext(symbolValue)
+        } else symbol.onNext("")
     }
 
     fun isGroup(): Boolean = isSwarm && contacts.size > 2
@@ -716,6 +720,9 @@ class Conversation : ConversationHistory {
 
     companion object {
         private val TAG = Conversation::class.simpleName!!
+        const val KEY_PREFERENCE_CONVERSATION_COLOR = "color"
+        const val KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol"
+
         private fun getTypedInteraction(interaction: Interaction) = when (interaction.type) {
             Interaction.InteractionType.TEXT -> TextMessage(interaction)
             Interaction.InteractionType.CALL -> Call(interaction)

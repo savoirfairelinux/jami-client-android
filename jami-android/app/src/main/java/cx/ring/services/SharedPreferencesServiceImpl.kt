@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.text.TextUtils
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -105,23 +106,17 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
     /**
      * Load conversation preferences from the shared preferences.
      */
-    override fun getConversationPreferences(
-        accountId: String,
-        conversationUri: Uri,
-    ): Map<String, String> =
-        getConversationPreferences(context, accountId, conversationUri)
-            .all.mapValuesTo(HashMap()) { (_, v) -> v.toString() }
+    override fun getConversationPreferences(accountId: String, conversationUri: Uri): Map<String, String> =
+        getConversationPreferences(context, accountId, conversationUri).all.mapValuesTo(HashMap()) { (_, v) ->
+            v.toString()
+        }
 
     /**
      * Save conversation preferences to the shared preferences.
      */
-    override fun setConversationPreferences(
-        accountId: String,
-        conversationUri: Uri,
-        preferences: Map<String, String>,
-    ) =
+    override fun setConversationPreferences(accountId: String, conversationUri: Uri, preferences: Map<String, String>) =
         getConversationPreferences(context, accountId, conversationUri)
-        .edit { preferences.forEach { (k, v) -> putString(k, v) } }
+            .edit { preferences.forEach { (k, v) -> putString(k, v) } }
 
 
     override fun hasNetworkConnected(): Boolean = NetworkUtils.isConnectivityAllowed(context)
@@ -198,5 +193,10 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
 
         fun getConversationPreferences(context: Context, accountId: String, conversationUri: Uri): SharedPreferences =
             context.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
+
+        fun getConversationColor(context: Context, @ColorInt color: Int) = if (color != 0) color else context.resources.getColor(R.color.color_primary_light)
+
+        fun getConversationSymbol(context: Context, symbol: CharSequence) =
+            symbol.ifEmpty { context.resources.getText(R.string.conversation_default_emoji) }
     }
 }
