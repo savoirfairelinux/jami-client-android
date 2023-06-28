@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f4eb5b_d4710dee",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/ConversationActionsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-28T20:32:15Z",
+      "side": 1,
+      "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 10
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503cec5f_1282731b",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-28T20:32:15Z",
+      "side": 1,
+      "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 9
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f760e0a5_c4c37f42",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-28T20:32:15Z",
+      "side": 1,
+      "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 120
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7db59b6_180b8e74",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-28T20:32:15Z",
+      "side": 1,
+      "message": "Can be detailed (comment) that 0 is for default value",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 4
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5cdbdf_e60a156f",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/SharedPreferencesServiceImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-06-28T20:32:15Z",
+      "side": 1,
+      "message": "Too long line (make it hard to read in splitted view)",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 157
+      },
+      "revId": "ad56716880f3c534ae8c7cd2267723138ab790e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
