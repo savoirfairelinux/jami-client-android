@@ -30,6 +30,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -289,6 +290,11 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
         // Disable possibility to scroll the appbar.
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
+        // Adapt the margins of the invitation card.
+        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
+            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
+                .setMargins(it, it, it, it)
+        }
         // Enable to possibility to scroll the invitation pending list.
         (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
 
@@ -333,6 +339,11 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
             SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or
                     SCROLL_FLAG_SNAP or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        // Adapt the margins of the invitation card.
+        requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
+            (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
+                .setMargins(it, 0, it, 0)
+        }
         // Disable possibility to scroll the invitation pending list.
         (binding.appBar.layoutParams as CoordinatorLayout.LayoutParams).behavior =
             AppBarLayout.Behavior()
