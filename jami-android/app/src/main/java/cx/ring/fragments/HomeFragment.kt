@@ -32,6 +32,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -134,6 +135,8 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             binding.newSwarm.setOnClickListener {
                 presenter.clickNewSwarm()
             }
+
+            updateAppBarLayoutBottomPadding()
 
             // SearchBar is composed of:
             // - Account selection (navigation)
@@ -271,6 +274,26 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             binding.root
         }
 
+    /**
+     * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
+     */
+    private fun updateAppBarLayoutBottomPadding(){
+        mBinding.let {
+        // If there is no pending invitations
+        if (mAccountService.currentAccount?.getPending()?.size == 0)
+            // Try to normalize padding on status bar height.
+            // The problem is searchbar already has margin that we can't remove.
+            // So let's just apply the difference.
+            mBinding?.appBarContainer?.updatePadding(
+                bottom = DeviceUtils.getStatusBarHeight(
+                    requireContext()
+                ) - context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius)
+            )
+        else mBinding?.appBarContainer
+            ?.updatePadding(bottom = DeviceUtils.getStatusBarHeight(requireContext()))
+        }
+    }
+
     private fun expandPendingView() {
         val binding = mBinding ?: return
 
@@ -287,6 +310,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
+        binding.appBarContainer.updatePadding(bottom = 0)
 
         // Disable possibility to scroll the appbar.
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
@@ -335,6 +359,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
 
+        updateAppBarLayoutBottomPadding()
         // Enable possibility to scroll the appbar.
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
             SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or
@@ -466,6 +491,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
         if (menuId == TAB_INVITATIONS) {
             pendingAdapter?.update(conversations)
+            updateAppBarLayoutBottomPadding()
             if (conversations.isEmpty()) { // No pending invitations = no badge
                 binding.invitationCard.invitationGroup.isVisible = false
             } else {
