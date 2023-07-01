@@ -1392,9 +1392,8 @@ class AccountService(
                     conversation.addContact(contact)
                 }
             }
-            if (conversation.lastElementLoaded == null)
-                conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }
-                    .cache()
+            if (!conversation.lastElementLoadedSubject.hasValue())
+                conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
             if (setMode)
                 conversation.setMode(mode)
         }

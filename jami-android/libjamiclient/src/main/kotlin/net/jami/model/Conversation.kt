@@ -44,7 +44,8 @@ class Conversation : ConversationHistory {
     private val symbol: Subject<CharSequence> = BehaviorSubject.create()
     private val mContactSubject: Subject<List<Contact>> = BehaviorSubject.create()
     var loaded: Single<Conversation>? = null
-    var lastElementLoaded: Completable? = null
+    val lastElementLoadedSubject = SingleSubject.create<Completable>()
+    val lastElementLoaded = lastElementLoadedSubject.flatMapCompletable { it }
     private val mRoots: MutableSet<String> = HashSet(2)
     private val mMessages: MutableMap<String, Interaction> = HashMap(16)
     private val mPendingMessages: MutableMap<String, SingleSubject<Interaction>> = HashMap(8)
