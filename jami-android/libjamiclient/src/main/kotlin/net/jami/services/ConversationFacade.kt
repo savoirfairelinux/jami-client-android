@@ -435,7 +435,7 @@ class ConversationFacade(
     private fun getSmartlist(account: Account): Single<Account> {
         val actions: MutableList<Completable> = ArrayList(account.getConversations().size + 1)
         for (c in account.getConversations()) {
-            if (c.isSwarm && c.lastElementLoaded != null) actions.add(c.lastElementLoaded!!)
+            if (c.isSwarm) actions.add(c.lastElementLoaded)
         }
         actions.add(mHistoryService.getSmartlist(account.accountId)
             .flatMapCompletable { conversationHistoryList: List<Interaction> ->
