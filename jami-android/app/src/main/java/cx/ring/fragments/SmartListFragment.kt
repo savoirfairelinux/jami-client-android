@@ -18,11 +18,13 @@
 package cx.ring.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,7 +59,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     private var mSmartListAdapter: SmartListAdapter? = null
     private var binding: FragSmartlistBinding? = null
     private var mHomeFragment: HomeFragment? = null
-    val listAvailable = BehaviorSubject.create<RecyclerView>()
 
     @Inject
     lateinit
@@ -74,11 +75,11 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSmartlistBinding.inflate(inflater, container, false).apply {
-            // TODO: need precise review on this
-            listAvailable.onNext(confsList) // Send list to allow to subscribe on scroll.
             (confsList.itemAnimator as DefaultItemAnimator?)?.supportsChangeAnimations = false
             binding = this
         }.root
+
+    fun getRecyclerView(): RecyclerView? = binding?.confsList
 
     override fun onDestroyView() {
         super.onDestroyView()

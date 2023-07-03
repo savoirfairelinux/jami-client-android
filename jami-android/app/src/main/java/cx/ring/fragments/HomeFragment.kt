@@ -35,6 +35,8 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
@@ -385,32 +387,39 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         conversationBackPressedCallback.isEnabled = false
     }
 
+    // Will hide the floating button when scrolling down and show it when scrolling up.
+    private val fabScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val canScrollUp =
+                recyclerView.canScrollVertically(-1)
+            val isExtended = mBinding!!.newSwarmFab.isExtended
+            if (dy > 0 && isExtended) { // Going down
+                mBinding!!.newSwarmFab.shrink()
+            } else if ((dy < 0 || !canScrollUp) && !isExtended) { // Going up
+                mBinding!!.newSwarmFab.extend()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pagerContent = mBinding!!.fragmentContainer.getFragment()
 
-        // FragmentContainer will contains the smartlist when it will be loaded.
-        // When it will be loaded, we subscribe to the list to override the scroll listener.
-        // Thanks to that, we can hide and expand the FAB when the user scroll the list.
-        mDisposable.add(
-            (pagerContent as SmartListFragment).listAvailable
-                .observeOn(DeviceUtils.uiScheduler)
-                .subscribe {
-                    it.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            val canScrollUp =
-                                recyclerView.canScrollVertically(-1)
-                            val isExtended = mBinding!!.newSwarmFab.isExtended
-                            if (dy > 0 && isExtended) { // Going down
-                                mBinding!!.newSwarmFab.shrink()
-                            } else if ((dy < 0 || !canScrollUp) && !isExtended) { // Going up
-                                mBinding!!.newSwarmFab.extend()
-                            }
-                        }
-                    })
-                }
-        )
+        // Subscribe on fragmentContainer to add scroll listener on the recycler view.
+        mBinding!!.fragmentContainer.getFragment<SmartListFragment>().viewLifecycleOwnerLiveData
+            .observe(viewLifecycleOwner) {
+                it.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                    override fun onCreate(owner: LifecycleOwner) {
+                        (pagerContent as SmartListFragment).getRecyclerView()!!
+                            .addOnScrollListener(fabScrollListener)
+                    }
+
+                    override fun onDestroy(owner: LifecycleOwner) {
+                        (pagerContent as SmartListFragment).getRecyclerView()!!
+                            .removeOnScrollListener(fabScrollListener)
+                    }
+                })
+            }
     }
 
     override fun onDestroyView() {
