@@ -315,7 +315,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             binding.invitationCard.invitationGroup,
             ChangeBounds().setInterpolator(DecelerateInterpolator())
         )
-
         // Make the invitation card take all the height.
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.MATCH_PARENT
@@ -338,6 +337,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         // Hide everything unneeded.
         binding.searchBar.isVisible = false
         binding.invitationCard.invitationSummary.isVisible = false
+        binding.fragmentContainer.isVisible = false
         binding.newSwarmFab.isVisible = false
 
         // Display pending list.
@@ -395,6 +395,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         binding.searchBar.isVisible = true
         binding.invitationCard.invitationSummary.isVisible = true
         binding.newSwarmFab.isVisible = true
+        binding.fragmentContainer.isVisible = true
 
         // Hide pending list.
         binding.invitationCard.pendingListGroup.isVisible = false
