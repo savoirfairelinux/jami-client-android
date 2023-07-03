@@ -30,7 +30,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -72,6 +71,7 @@ import net.jami.smartlist.ConversationItemViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
+import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
 
 @AndroidEntryPoint
@@ -183,6 +183,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                 }
                 true
             }
+            // Make the appBarLayout not going under the status bar.
+            binding.appBar.statusBarForeground =
+                MaterialShapeDrawable.createWithElevationOverlay(requireContext())
 
             // Setup search result adapter
             binding.searchResult.adapter =
@@ -313,6 +316,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
         binding.appBarContainer.updatePadding(bottom = 0)
+        binding.appBar.fitsSystemWindows = false
+        // Make the status bar disappear.
+        binding.appBar.statusBarForeground = null
 
         // Disable possibility to scroll the appbar.
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
@@ -360,8 +366,13 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
+        binding.appBar.fitsSystemWindows = true
+        // Make the status bar background appear again.
+        binding.appBar.statusBarForeground =
+            MaterialShapeDrawable.createWithElevationOverlay(requireContext())
 
         updateAppBarLayoutBottomPadding()
+
         // Enable possibility to scroll the appbar.
         (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
             SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or
