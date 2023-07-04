@@ -26,4 +26,7 @@
     <color name="button_border">@color/colorPrimary</color>
     <color name="chip_background">#4dffffff</color>
 
+    <!--  Home  -->
+    <color name="appbar_gradient_color">#cc202020</color>
+
 </resources>
