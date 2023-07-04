@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ebd118_14a23886",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-07-04T19:09:58Z",
+      "side": 1,
+      "message": "Done patch10",
+      "parentUuid": "9ce3af21_f9203545",
+      "range": {
+        "startLine": 83,
+        "startChar": 31,
+        "endLine": 83,
+        "endChar": 51
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2347da5_b738b434",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94ca4835_3fb73c0c",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-07-04T19:09:58Z",
+      "side": 1,
+      "message": "Done patch8",
+      "parentUuid": "d2347da5_b738b434",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7193721d_c0185acd",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-06-16T16:00:52Z",
       "side": 1,
       "message": "Pass the value as argument",
+      "range": {
+        "startLine": 356,
+        "startChar": 34,
+        "endLine": 358,
+        "endChar": 9
+      },
+      "revId": "e13a7312f70eae618332b67303cd01cc348646c1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "142c5af6_8573b9bf",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-07-04T19:09:58Z",
+      "side": 1,
+      "message": "Done patch9",
+      "parentUuid": "7193721d_c0185acd",
       "range": {
         "startLine": 356,
         "startChar": 34,
