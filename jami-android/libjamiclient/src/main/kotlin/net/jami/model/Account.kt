@@ -19,6 +19,7 @@ package net.jami.model
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.CompletableSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import net.jami.model.Interaction.InteractionStatus
@@ -51,6 +52,9 @@ class Account(
     private val sortedConversations: MutableList<Conversation> = ArrayList()
     private val sortedPending: MutableList<Conversation> = ArrayList()
     var registeringUsername = false
+    val loadedSubject = CompletableSubject.create()
+    val loaded: Completable
+        get() = loadedSubject
     private var conversationsChanged = true
     private var pendingsChanged = true
     private var historyLoaded = false
@@ -102,16 +106,20 @@ class Account(
             }
             conversations[conversation.uri.uri] = conversation
             if (conversation.isSwarm && conversation.mode.blockingFirst() === Conversation.Mode.OneToOne) {
-                val contact = conversation.contact!!
-                val key = contact.uri.uri
-                val removed = cache.remove(key)
-                conversations.remove(key)
-                //Conversation contactConversation = getByUri(contact.getPrimaryUri());
-                // Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
-                /*if (contactConversation != null) {
-                    conversations.remove(contactConversation.getUri().getUri());
-                }*/
-                contact.setConversationUri(conversation.uri)
+                try {
+                    val contact = conversation.contact!!
+                    val key = contact.uri.uri
+                    val removed = cache.remove(key)
+                    conversations.remove(key)
+                    //Conversation contactConversation = getByUri(contact.getPrimaryUri());
+                    // Log.w(TAG, "conversationStarted " + conversation.accountId + " contact " + key + " " + removed)
+                    /*if (contactConversation != null) {
+                        conversations.remove(contactConversation.getUri().getUri());
+                    }*/
+                    contact.setConversationUri(conversation.uri)
+                } catch (e: IllegalStateException) {
+                    Log.e(TAG, "conversationStarted ${conversation.accountId} ${conversation.uri} ${conversation.contacts} ${conversation.mode.blockingFirst()}", e)
+                }
             }
             conversationChanged()
         }
@@ -724,7 +732,7 @@ class Account(
     fun getByKey(key: String): Conversation =
         cache.getOrPut(key) { Conversation(accountId, getContactFromCache(key)) }
 
-    fun setHistoryLoaded(conversations: List<Conversation>) {
+    fun setHistoryLoaded(conversations: List<Conversation> = emptyList()) {
         synchronized(this.conversations) {
             if (historyLoaded) return
             //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());

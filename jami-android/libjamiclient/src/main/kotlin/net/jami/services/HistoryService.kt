@@ -121,7 +121,7 @@ abstract class HistoryService {
      * @return a list of the most recent interactions with each contact
      */
     fun getSmartlist(accountId: String): Single<List<Interaction>> = Single.fromCallable {
-        Log.d(TAG, "Loading smartlist")
+        Log.d(TAG, "Loading smartlist {$accountId}")
         // a raw query is done as MAX is not supported by ormlite without a raw query and a raw query cannot be combined with an orm query so a complete raw query is done
         // raw row mapper maps the sqlite result which is a list of strings, into the interactions object
         getInteractionDataDao(accountId).queryRaw("""

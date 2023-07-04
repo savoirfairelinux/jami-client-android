@@ -214,7 +214,7 @@ class ConversationFacade(
     private fun loadSmartlist(account: Account): Single<Account> {
         synchronized(account) {
             account.historyLoader.let { loader ->
-                return loader ?: getSmartlist(account).apply {
+                return loader ?: account.loaded.toSingleDefault(account).flatMap { getSmartlist(it) }.cache().apply {
                     account.historyLoader = this
                 }
             }
@@ -437,30 +437,31 @@ class ConversationFacade(
         for (c in account.getConversations()) {
             if (c.isSwarm) actions.add(c.lastElementLoaded)
         }
-        actions.add(mHistoryService.getSmartlist(account.accountId)
-            .flatMapCompletable { conversationHistoryList: List<Interaction> ->
-                Completable.fromAction {
-                    val conversations: MutableList<Conversation> = ArrayList()
-                    for (e in conversationHistoryList) {
-                        val conversation = account.getByUri(e.conversation!!.participant) ?: continue
-                        conversation.id = e.conversation!!.id
-                        conversation.addElement(e)
-                        conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
-                        // Update the conversation preferences.
-                        conversation.updatePreferences(
-                            mPreferencesService.getConversationPreferences(
-                                account.accountId,
-                                conversation.uri
+        if (!account.isJami)
+            actions.add(mHistoryService.getSmartlist(account.accountId)
+                .flatMapCompletable { conversationHistoryList: List<Interaction> ->
+                    Completable.fromAction {
+                        val conversations: MutableList<Conversation> = ArrayList()
+                        for (e in conversationHistoryList) {
+                            val conversation = account.getByUri(e.conversation!!.participant) ?: continue
+                            conversation.id = e.conversation!!.id
+                            conversation.addElement(e)
+                            conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
+                            // Update the conversation preferences.
+                            conversation.updatePreferences(
+                                mPreferencesService.getConversationPreferences(
+                                    account.accountId,
+                                    conversation.uri
+                                )
                             )
-                        )
-                        conversations.add(conversation)
+                            conversations.add(conversation)
+                        }
+                        account.setHistoryLoaded(conversations)
                     }
-                    account.setHistoryLoaded(conversations)
-                }
-            })
+                })
+
         return Completable.merge(actions)
             .andThen(Single.just(account))
-            .cache()
     }
 
     /**
