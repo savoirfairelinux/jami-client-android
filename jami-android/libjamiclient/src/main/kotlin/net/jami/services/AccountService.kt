@@ -18,7 +18,6 @@
 package net.jami.services
 
 import com.google.gson.JsonParser
-import ezvcard.Ezvcard
 import ezvcard.VCard
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
@@ -88,7 +87,7 @@ class AccountService(
     private var mHasRingAccount = false
     private var mStartingTransfer: DataTransfer? = null
     private val accountsSubject = BehaviorSubject.create<List<Account>>()
-    val observableAccounts: Subject<Account> = PublishSubject.create()
+    private val observableAccounts: Subject<Account> = PublishSubject.create()
     val currentAccountSubject: Observable<Account> = accountsSubject
         .filter { l -> l.isNotEmpty() }
         .map { l -> l[0] }
@@ -224,115 +223,106 @@ class AccountService(
      * @param isConnected sets the initial connection state of the accounts
      */
     fun loadAccountsFromDaemon(isConnected: Boolean) {
-        mExecutor.execute {
-            refreshAccountsCacheFromDaemon()
-            setAccountsActive(isConnected)
-        }
+        refreshAccountsCacheFromDaemon()
+        setAccountsActive(isConnected)
     }
 
     private fun refreshAccountsCacheFromDaemon() {
         val curList: List<Account> = mAccountList
-
         val newAccounts: List<Account> = JamiService.getAccountList().map { id ->
-            val details: Map<String, String> = JamiService.getAccountDetails(id)
-            val credentials: List<Map<String, String>> = JamiService.getCredentials(id)
-            val volatileAccountDetails: Map<String, String> = JamiService.getVolatileAccountDetails(id)
-            for (account in curList) if (account.accountId == id) {
-                account.setDetails(details)
-                account.setCredentials(credentials)
-                account.setVolatileDetails(volatileAccountDetails)
-                return@map account
-            }
-            Account(id, details, credentials, volatileAccountDetails)
+            val acc = curList.find { it.accountId == id }
+            if (acc == null) {
+                val a = Account(id, JamiService.getAccountDetails(id), JamiService.getCredentials(id), JamiService.getVolatileAccountDetails(id))
+                Schedulers.computation().createWorker().schedule {
+                    loadAccount(a)
+                    a.loadedSubject.onComplete()
+                }
+                a
+            } else acc
         }
-
+        mAccountList = newAccounts
         // Cleanup removed accounts
         for (acc in curList) if (!newAccounts.contains(acc)) acc.cleanup()
+        accountsSubject.onNext(newAccounts)
+    }
 
-        mAccountList = newAccounts
-        var hasSip = false
-        var hasJami = false
-        for (account in newAccounts) {
-            val accountId = account.accountId
-            if (account.isSip) {
-                hasSip = true
-            } else if (account.isJami) {
-                hasJami = true
-                account.devices = JamiService.getKnownRingDevices(accountId).toNative()
-                Log.w(TAG, "$accountId loading contacts")
-                account.setContacts(JamiService.getContacts(accountId).toNative())
-                val conversations: List<String> = JamiService.getConversations(account.accountId)
-                Log.w(TAG, "$accountId loading ${conversations.size} conversations: ")
-                for (conversationId in conversations) {
-                    try {
-                        val info: Map<String, String> = JamiService.conversationInfos(accountId, conversationId).toNativeFromUtf8()
-                        /*for (Map.Entry<String, String> i : info.entrySet()) {
-                            Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                        }*/
-                        val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
-                        val conversation = account.newSwarm(conversationId, mode)
-                        conversation.setProfile(mVCardService.loadConversationProfile(info))
+    private fun loadAccount(account: Account) {
+        if (!account.isJami) {
+            return
+        }
+        Log.w(TAG, "${account.accountId} loading devices")
+        account.devices = JamiService.getKnownRingDevices(account.accountId).toNative()
+        Log.w(TAG, "${account.accountId} loading contacts")
+        account.setContacts(JamiService.getContacts(account.accountId).toNative())
+        val conversations: List<String> = JamiService.getConversations(account.accountId)
+        Log.w(TAG, "${account.accountId} loading ${conversations.size} conversations: ")
+        for (conversationId in conversations) {
+            try {
+                val info: Map<String, String> = JamiService.conversationInfos(account.accountId, conversationId).toNativeFromUtf8()
+                /*for (Map.Entry<String, String> i : info.entrySet()) {
+                    Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
+                }*/
+                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
+                val conversation = account.newSwarm(conversationId, mode)
+                conversation.setProfile(mVCardService.loadConversationProfile(info))
 
-                        val preferences = // Load conversation preferences (color, symbol, etc.)
-                            JamiService.getConversationPreferences(accountId, conversationId)
-                        conversation.updatePreferences(preferences)
+                val preferences = // Load conversation preferences (color, symbol, etc.)
+                    JamiService.getConversationPreferences(account.accountId, conversationId)
+                conversation.updatePreferences(preferences)
 
-                        conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, conversation.uri))
-                        for (member in JamiService.getConversationMembers(accountId, conversationId)) {
-                            /*for (Map.Entry<String, String> i : member.entrySet()) {
-                                Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
-                            }*/
-                            val uri = Uri.fromId(member["uri"]!!)
-                            //String role = member.get("role");
-                            val lastDisplayed = member["lastDisplayed"]
-                            var contact = conversation.findContact(uri)
-                            if (contact == null) {
-                                contact = account.getContactFromCache(uri)
-                                conversation.addContact(contact)
-                            }
-                            if (!lastDisplayed.isNullOrEmpty()) {
-                                if (contact.isUser) {
-                                    conversation.setLastMessageRead(lastDisplayed)
-                                } else {
-                                    conversation.setLastMessageDisplayed(uri.host, lastDisplayed)
-                                }
-                            }
+                conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
+                for (member in JamiService.getConversationMembers(account.accountId, conversationId)) {
+                    /*for (Map.Entry<String, String> i : member.entrySet()) {
+                        Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
+                    }*/
+                    val uri = Uri.fromId(member["uri"]!!)
+                    //String role = member.get("role");
+                    val lastDisplayed = member["lastDisplayed"]
+                    var contact = conversation.findContact(uri)
+                    if (contact == null) {
+                        contact = account.getContactFromCache(uri)
+                        conversation.addContact(contact)
+                    }
+                    if (!lastDisplayed.isNullOrEmpty()) {
+                        if (contact.isUser) {
+                            conversation.setLastMessageRead(lastDisplayed)
+                        } else {
+                            conversation.setLastMessageDisplayed(uri.host, lastDisplayed)
                         }
-                        conversation.lastElementLoaded = Completable.defer { loadMore(conversation, 2).ignoreElement() }.cache()
-                        account.conversationStarted(conversation)
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Error loading conversation", e)
                     }
                 }
-                Log.w(TAG, "$accountId loading conversation requests")
-                for (requestData in JamiService.getConversationRequests(account.accountId).map { it.toNativeFromUtf8() }) {
-                    try {
-                        /* for ((key, value) in requestData.entries)
-                        Log.e(TAG, "Request: $key $value") */
-                        val from = Uri.fromString(requestData["from"]!!)
-                        val conversationId = requestData["id"]
-                        val conversationUri =
-                            if (conversationId.isNullOrEmpty()) null
-                            else Uri(Uri.SWARM_SCHEME, conversationId)
-                        val request = account.getRequest(conversationUri ?: from)
-                        if (request == null || conversationUri != request.from) {
-                            account.addRequest(TrustRequest(
-                                account.accountId,
-                                from,
-                                requestData["received"]!!.toLong() * 1000L,
-                                conversationUri,
-                                mVCardService.loadConversationProfile(requestData),
-                                requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
-                        }
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Error loading request", e)
-                    }
-                }
+                if (!conversation.lastElementLoadedSubject.hasValue())
+                    conversation.lastElementLoadedSubject.onSuccess(loadMore(conversation, 8).ignoreElement().cache())
+                account.conversationStarted(conversation)
+            } catch (e: Exception) {
+                Log.w(TAG, "Error loading conversation", e)
             }
         }
-        mHasSipAccount = hasSip
-        mHasRingAccount = hasJami
-        accountsSubject.onNext(newAccounts)
+        Log.w(TAG, "${account.accountId} loading conversation requests")
+        for (requestData in JamiService.getConversationRequests(account.accountId).map { it.toNativeFromUtf8() }) {
+            try {
+                /* for ((key, value) in requestData.entries)
+                Log.e(TAG, "Request: $key $value") */
+                val from = Uri.fromString(requestData["from"]!!)
+                val conversationId = requestData["id"]
+                val conversationUri =
+                    if (conversationId.isNullOrEmpty()) null
+                    else Uri(Uri.SWARM_SCHEME, conversationId)
+                val request = account.getRequest(conversationUri ?: from)
+                if (request == null || conversationUri != request.from) {
+                    account.addRequest(TrustRequest(
+                        account.accountId,
+                        from,
+                        requestData["received"]!!.toLong() * 1000L,
+                        conversationUri,
+                        mVCardService.loadConversationProfile(requestData),
+                        requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error loading request", e)
+            }
+        }
+        account.setHistoryLoaded()
     }
 
     fun getNewAccountName(prefix: String): String {
@@ -1010,6 +1000,12 @@ class AccountService(
             account.setVolatileDetails(JamiService.getVolatileAccountDetails(account.accountId).toNative())
         } else {
             account.setRegistrationState(state, code)
+            /*synchronized(account) {
+                if (!account.loadedSubject.hasValue()) {
+                    account.loadedSubject.onSuccess(Completable.fromAction { loadAccount(account) }
+                        .subscribeOn(Schedulers.computation()))
+                }
+            }*/
         }
         if (oldState != state) {
             observableAccounts.onNext(account)
@@ -1309,7 +1305,7 @@ class AccountService(
     fun conversationLoaded(id: Long, accountId: String, conversationId: String, messages: List<Map<String, String>>) {
         try {
             val task = loadingTasks.remove(id)
-            // Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
+            // Log.w(TAG, "ConversationCallback: conversationLoaded $accountId/$conversationId ${messages.size}")
             getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
                 val interactions: List<Interaction>
                 synchronized(conversation) {
