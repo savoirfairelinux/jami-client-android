@@ -266,6 +266,11 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                                 item.accountId,
                                 item.uri
                             )
+                            // Weird bug fixed by line below.
+                            // Without it, the appBarLayoutBottom is not displayed correctly
+                            // when collapsing the pendingList (no space between statusBar and
+                            // appBarLayout).
+                            mBinding?.appBar?.fitsSystemWindows = true
                         }
 
                         override fun onItemLongClick(item: Conversation) {}
