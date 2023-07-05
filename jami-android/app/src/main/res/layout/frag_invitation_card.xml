@@ -100,6 +100,7 @@
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/abc_ic_ab_back_material"
             app:title="@string/invitation_card_title"
+            app:titleTextAppearance= "@style/InvitationCardToolbarTitleStyle"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pending_list"

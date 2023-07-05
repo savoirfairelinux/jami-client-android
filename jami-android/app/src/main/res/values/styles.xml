@@ -167,6 +167,10 @@
     <style name="HomeFabButton" parent="Widget.AppTheme.MainActionButton">
         <item name="cornerSize">15dp</item>
     </style>
+    <style name="InvitationCardToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+
 
     <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textAllCaps">false</item>
