@@ -352,9 +352,10 @@ class CameraService internal constructor(c: Context) {
                 camera.close()
                 params.camera = null
             }
-            params.projection?.let { mediaProjection ->
-                mediaProjection.stop()
-                params.projection = null
+            params.projection?.let { mediaProjection -> // todo move this out of here. in a callback that isn't stopCapture?
+                Log.d("ASDF", "stopping media projection $camId")
+//                mediaProjection.stop()
+//                params.projection = null
             }
             params.isCapturing = false
         }
@@ -570,7 +571,7 @@ class CameraService internal constructor(c: Context) {
                 }, handler
             ))
         } catch (e: Exception) {
-            Log.e(TAG, "Exception creating virtual display", e)
+            Log.e("ASDF", "Exception creating virtual display", e)
             if (codec != null) {
                 codec.stop()
                 codec.release()
@@ -587,6 +588,7 @@ class CameraService internal constructor(c: Context) {
         metrics: DisplayMetrics
     ): Boolean {
         val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
+        Log.d("ASDF", "startScreenSharing ${r != null}")
         if (r != null) {
             mediaProjection.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {
