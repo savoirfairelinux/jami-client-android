@@ -61,5 +61,6 @@
 
     <!--  Home  -->
     <color name="appbar_gradient_color">#ccfdfdfd</color>
+    <color name="searchbar_color">#F0EFEF</color>
 
 </resources>

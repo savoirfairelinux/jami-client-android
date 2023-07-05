@@ -28,5 +28,6 @@
 
     <!--  Home  -->
     <color name="appbar_gradient_color">#cc202020</color>
+    <color name="searchbar_color">#000000</color>
 
 </resources>
