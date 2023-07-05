@@ -83,6 +83,7 @@ along with this program; if not, write to the Free Software
     <!-- DetailsHistory Fragment -->
 
     <!-- Home Fragment -->
+    <string name="invitation_card_title">Invitations received</string>
     <plurals name="home_conferences_title">
         <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>

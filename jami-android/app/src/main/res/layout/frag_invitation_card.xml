@@ -51,7 +51,7 @@
             android:layout_toStartOf="@id/invitation_badge"
             android:layout_toEndOf="@id/invitation_icon"
             android:singleLine="true"
-            android:text="Invitations received"
+            android:text="@string/invitation_card_title"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="16sp" />
 
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/abc_ic_ab_back_material"
-            app:title="Invitations" />
+            app:title="@string/invitation_card_title"
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pending_list"
