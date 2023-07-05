@@ -203,10 +203,9 @@ along with this program; if not, write to the Free Software
         android:layout_margin="8dp"
 
         android:backgroundTint="@color/fab_background"
-        android:elevation="6dp"
         android:text="@string/start_conversation"
+        android:outlineProvider="none"
         android:textColor="@color/white"
-        app:elevation="6dp"
         app:icon="@drawable/baseline_chat_24"
         app:iconTint="@color/white"
         app:layout_anchorGravity="bottom|center_horizontal"

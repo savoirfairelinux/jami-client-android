@@ -17,6 +17,7 @@
     app:cardBackgroundColor="@color/color_secondary"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
+    android:outlineProvider="none"
     tools:visibility="visible">
 
     <RelativeLayout
