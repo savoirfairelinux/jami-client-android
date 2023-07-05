@@ -160,7 +160,7 @@ class SmartListViewHolder : RecyclerView.ViewHolder {
             if (contactEvent.event == ContactEvent.Event.ADDED) {
                 return context.getString(R.string.hist_contact_added)
             } else if (contactEvent.event == ContactEvent.Event.INCOMING_REQUEST) {
-                return context.getString(R.string.hist_invitation_received)
+                return ""
             }
         } else if (e.type == Interaction.InteractionType.DATA_TRANSFER) {
             return if (e.status == Interaction.InteractionStatus.TRANSFER_FINISHED) {
