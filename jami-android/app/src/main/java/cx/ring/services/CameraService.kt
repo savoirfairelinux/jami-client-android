@@ -570,7 +570,7 @@ class CameraService internal constructor(c: Context) {
                 }, handler
             ))
         } catch (e: Exception) {
-            Log.e(TAG, "Exception creating virtual display", e)
+            Log.e("ASDF", "Exception creating virtual display", e)
             if (codec != null) {
                 codec.stop()
                 codec.release()
@@ -587,6 +587,7 @@ class CameraService internal constructor(c: Context) {
         metrics: DisplayMetrics
     ): Boolean {
         val r = createVirtualDisplay(params, mediaProjection, surface, metrics)
+        Log.d("ASDF", "startScreenSharing ${r != null}")
         if (r != null) {
             mediaProjection.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {

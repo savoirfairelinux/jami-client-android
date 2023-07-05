@@ -304,10 +304,12 @@ class DaemonService(
         }
 
         override fun startCapture(camId: String) {
+            Log.d("ASDF", "startCapture $camId")
             mHardwareService.startCapture(camId)
         }
 
         override fun stopCapture(camId: String) {
+            Log.d("ASDF", "stopCapture $camId")
             mHardwareService.stopCapture(camId)
         }
     }
