@@ -37,8 +37,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:padding="4dp"
-            android:src="@drawable/baseline_group_add_24"
-            app:tint="?attr/colorOnPrimary" />
+            android:src="@drawable/new_invitation"/>
 
         <TextView
             android:id="@+id/invitation_received_label"
