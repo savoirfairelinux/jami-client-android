@@ -93,6 +93,7 @@
 
     <style name="NightCardViewThemeOverlay" parent="@style/Theme.Material3.Dark">
         <item name="colorPrimary">@color/color_secondary</item>
+        <item name="android:colorBackground">@color/invitation_card_background_color</item>
         <item name="colorSecondary">#0097F5</item>
         <item name="colorSurface">@color/color_primary_dark</item>
         <item name="colorContainer">@color/color_secondary</item>
