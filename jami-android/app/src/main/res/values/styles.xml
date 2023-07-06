@@ -171,6 +171,7 @@
     <style name="InvitationCardToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/invitation_card_text_color</item>
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
     </style>
 
     <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
