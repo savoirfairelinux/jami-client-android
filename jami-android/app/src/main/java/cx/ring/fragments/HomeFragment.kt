@@ -292,20 +292,16 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     /**
      * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
      */
-    private fun updateAppBarLayoutBottomPadding(){
+    private fun updateAppBarLayoutBottomPadding() {
         mBinding.let {
-        // If there is no pending invitations
-        if (mAccountService.currentAccount?.getPending()?.size == 0)
-            // Try to normalize padding on status bar height.
-            // The problem is searchbar already has margin that we can't remove.
+            // If there is no pending invitations
+            if (mAccountService.currentAccount?.getPending()?.size == 0)
+            // Searchbar already has margin that we can't remove (approximately 16dp).
             // So let's just apply the difference.
-            mBinding?.appBarContainer?.updatePadding(
-                bottom = DeviceUtils.getStatusBarHeight(
-                    requireContext()
-                ) - context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius)
+                mBinding?.appBarContainer?.updatePadding(bottom = 0)
+            else mBinding?.appBarContainer?.updatePadding(
+                bottom = context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius)
             )
-        else mBinding?.appBarContainer
-            ?.updatePadding(bottom = DeviceUtils.getStatusBarHeight(requireContext()))
         }
     }
 
