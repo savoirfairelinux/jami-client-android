@@ -87,19 +87,19 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="NightCardView" parent="Widget.Material3.CardView.Elevated">
-        <item name="android:theme">@style/NightCardViewThemeOverlay</item>
+    <style name="InvitationCardTheme" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:theme">@style/InvitationCardThemeOverlay</item>
     </style>
 
-    <style name="NightCardViewThemeOverlay" parent="@style/Theme.Material3.Dark">
+    <style name="InvitationCardThemeOverlay" parent="@style/Theme.Material3.Dark">
+
         <item name="colorPrimary">@color/color_secondary</item>
         <item name="android:colorBackground">@color/invitation_card_background_color</item>
-        <item name="colorSecondary">#0097F5</item>
+        <item name="colorSecondary">@color/invitation_card_badge_color</item>
         <item name="colorSurface">@color/color_primary_dark</item>
         <item name="colorContainer">@color/color_secondary</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnContainer">@color/white</item>
+        <item name="colorOnPrimary">@color/invitation_card_text_color</item>
+        <item name="colorOnSurface">@color/invitation_card_on_surface_text_color</item>
     </style>
 
     <!-- Dialog -->
@@ -170,8 +170,8 @@
     </style>
     <style name="InvitationCardToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/invitation_card_text_color</item>
     </style>
-
 
     <style name="TextAppearance.AppTheme.MainActionButton" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textAllCaps">false</item>

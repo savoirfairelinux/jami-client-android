@@ -12,9 +12,9 @@
 
     android:focusable="true"
     android:foreground="?selectableItemBackgroundBorderless"
-    android:theme="@style/NightCardView"
+    android:theme="@style/InvitationCardTheme"
     android:visibility="gone"
-    app:cardBackgroundColor="@color/color_secondary"
+    app:cardBackgroundColor="@color/invitation_card_background_color"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
     android:outlineProvider="none"
@@ -84,6 +84,7 @@
             app:chipBackgroundColor="?attr/colorSecondary"
             app:textEndPadding="4dp"
             app:textStartPadding="4dp"
+            android:textColor="@color/invitation_card_on_badge_text_color"
             tools:text="4" />
     </RelativeLayout>
 
