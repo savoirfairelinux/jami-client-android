@@ -186,7 +186,11 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             // Update padding of the list depending on the AppBarLayout height
             binding.appBar.addOnLayoutChangeListener { _, _, top, _, bottom, _, _, _, _ ->
                 (pagerContent as SmartListFragment).getRecyclerView()
-                    ?.setPadding(0, bottom - top, 0, 0)
+                    ?.setPadding(
+                        0,
+                        binding.appBar.height - DeviceUtils.getStatusBarHeight(requireContext()),
+                        0, 0
+                    )
             }
             // Make the appBarLayout not going under the status bar.
             binding.appBar.statusBarForeground =
