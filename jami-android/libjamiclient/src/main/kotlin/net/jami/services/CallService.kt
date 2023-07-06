@@ -587,16 +587,40 @@ abstract class CallService(
         callSubject.onNext(call ?: return)
     }
 
-    fun requestVideoMedia(conf: Conference, enable: Boolean) {
-        if (conf.isConference || conf.hasVideo()) {
-            JamiService.muteLocalMedia(conf.accountId, conf.id,  Media.MediaType.MEDIA_TYPE_VIDEO.name, !enable)
-        } else if (enable) {
-            val call = conf.firstCall ?: return
-            val mediaList = call.mediaList ?: return
-            JamiService.requestMediaChange(call.account, call.daemonIdString, mediaList.mapTo(VectMap()
-                    .apply { reserve(mediaList.size.toLong() + 1L) }
-            ) { media -> media.toMap() }
-                .apply { add(Media.DEFAULT_VIDEO.toMap()) })
+    /**
+     * Replaces the current video media with a given source.
+     * Creates the video media if none exists.
+     * Removes all video media if the uri is null.
+     * @param conf The conference to request a video media change on.
+     * @param uri The uri for the source.
+     */
+    fun replaceVideoMedia(conf: Conference, uri: String?) {
+        val call = conf.firstCall ?: return
+        val mediaList = call.mediaList ?: return
+
+        var videoExists = false
+        val proposedMediaList = mediaList.mapNotNull {
+            if(it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO) {
+                videoExists = true
+                if(uri == null)
+                    null
+                else
+                    it.copy(source = uri)
+            } else {
+                it
+            }
+        } as MutableList
+        if(!videoExists && uri != null)
+            proposedMediaList.add(Media.DEFAULT_VIDEO.copy(source = uri))
+
+        mExecutor.execute {
+            JamiService.requestMediaChange(
+                call.account,
+                call.daemonIdString,
+                proposedMediaList.mapTo(VectMap().apply {
+                    reserve(proposedMediaList.size.toLong())
+                }) { it.toMap() }
+            )
         }
     }
 
