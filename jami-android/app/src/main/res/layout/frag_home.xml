@@ -202,12 +202,12 @@ along with this program; if not, write to the Free Software
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
 
-        android:backgroundTint="@color/fab_background"
+        android:backgroundTint="@color/fab_background_color"
         android:text="@string/start_conversation"
         android:outlineProvider="none"
-        android:textColor="@color/white"
+        android:textColor="@color/fab_text_color"
         app:icon="@drawable/baseline_chat_24"
-        app:iconTint="@color/white"
+        app:iconTint="@color/fab_text_color"
         app:layout_anchorGravity="bottom|center_horizontal"
         app:pressedTranslationZ="12dp"
         app:shapeAppearanceOverlay="@style/HomeFabButton" />

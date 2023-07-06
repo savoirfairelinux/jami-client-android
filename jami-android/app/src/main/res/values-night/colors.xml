@@ -29,6 +29,8 @@
     <!--  Home  -->
     <color name="appbar_gradient_color">#cc202020</color>
     <color name="searchbar_color">#000000</color>
+    <color name="fab_background_color">#03B9E9</color>
+    <color name="fab_text_color">#000000</color>
 
     <!--  InvitationCard  -->
     <color name="invitation_card_background_color">#D6E4EF</color>
