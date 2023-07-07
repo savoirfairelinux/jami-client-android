@@ -121,7 +121,7 @@ class CameraService internal constructor(c: Context) {
         var currentIndex = 0
         var cameraFront: String? = null
         var cameraBack: String? = null
-        fun switchInput(setDefaultCamera: Boolean): String? {
+        fun changeCamera(setDefaultCamera: Boolean): String? {
             if (setDefaultCamera && cameras.isNotEmpty()) {
                 currentId = cameras[0]
             } else if (cameras.isNotEmpty()) {
@@ -145,8 +145,8 @@ class CameraService internal constructor(c: Context) {
         }
     }
 
-    fun switchInput(setDefaultCamera: Boolean): String? {
-        return devices?.switchInput(setDefaultCamera)
+    fun changeCamera(setDefaultCamera: Boolean): String? {
+        return devices?.changeCamera(setDefaultCamera)
     }
 
     fun getParams(camId: String?): VideoParams? {

@@ -59,8 +59,6 @@ class CallPresenter @Inject constructor(
     fun isSpeakerphoneOn(): Boolean = mHardwareService.isSpeakerphoneOn()
     var isMicrophoneMuted: Boolean = false
     var wantVideo = false
-    var videoIsMuted = false
-        private set
 
     fun isVideoActive(): Boolean = mConference?.hasActiveVideo() == true
 
@@ -207,10 +205,11 @@ class CallPresenter @Inject constructor(
         val canDial = mOnGoingCall
         val displayPluginsButton = view?.displayPluginsButton() == true
         val showPluginBtn = displayPluginsButton && mOnGoingCall
-        val hasActiveVideo = conference.hasActiveVideo()
-        val hasMultipleCamera = mHardwareService.cameraCount() > 1 && mOnGoingCall && hasActiveVideo
+        val hasActiveCameraVideo = conference.hasActiveNonScreenShareVideo()
+        val hasActiveScreenShare = conference.hasActiveScreenSharing()
+        val hasMultipleCamera = mHardwareService.cameraCount() > 1 && mOnGoingCall && hasActiveCameraVideo
         val isConference = conference.isConference
-        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveVideo)
+        view?.updateBottomSheetButtonStatus(isConference, isSpeakerphoneOn(), conference.isAudioMuted, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall, hasActiveCameraVideo, hasActiveScreenShare)
     }
 
     fun chatClick() {
@@ -255,13 +254,21 @@ class CallPresenter @Inject constructor(
 
     fun switchVideoInputClick() {
         val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id)
+        if(conference.hasActiveNonScreenShareVideo()) {
+            val camId = mHardwareService.changeCamera() ?: return
+            mCallService.replaceVideoMedia(conference, "camera://$camId", false)
+        }
     }
 
     fun switchOnOffCamera() {
         val conference = mConference ?: return
-        videoIsMuted = !videoIsMuted
-        mCallService.requestVideoMedia(conference, !videoIsMuted)
+        val camId = mHardwareService.changeCamera(true)
+        if(!conference.hasActiveNonScreenShareVideo()) {
+            mCallService.replaceVideoMedia(conference, "camera://$camId", false)
+        }
+        else {
+            mCallService.replaceVideoMedia(conference, "camera://$camId", true)
+        }
     }
 
     fun configurationChanged(rotation: Int) {
@@ -399,22 +406,22 @@ class CallPresenter @Inject constructor(
             if (call.isSimpleCall) mCallService.unhold(call.accountId, call.id) else JamiService.addMainParticipant(call.accountId, call.id)
         }
         val hasVideo = call.hasVideo()
-        val hasActiveVideo = call.hasActiveVideo()
-        val hasActiveScreenShare = call.hasActiveScreenSharing()
-        videoIsMuted = !hasActiveVideo
+        val hasActiveCameraVideo = call.hasActiveNonScreenShareVideo()
         val view = view ?: return
         if (call.isOnGoing) {
             mOnGoingCall = true
             view.initNormalStateDisplay()
             prepareBottomSheetButtonsStatus()
+            view.displayLocalVideo(hasActiveCameraVideo && mDeviceRuntimeService.hasVideoPermission())
             if (hasVideo) {
                 mHardwareService.setPreviewSettings()
                 mHardwareService.updatePreviewVideoSurface(call)
                 videoSurfaceUpdateId(call.id)
                 pluginSurfaceUpdateId(call.pluginId)
-                view.displayLocalVideo(hasActiveVideo && !hasActiveScreenShare && mDeviceRuntimeService.hasVideoPermission())
                 if (permissionChanged) {
-                    mHardwareService.switchInput(call.accountId, call.id, permissionChanged)
+                    val camId = mHardwareService.changeCamera(true)
+                    mHardwareService.setPendingScreenShareProjection(null)
+                    mCallService.replaceVideoMedia(call, "camera://$camId", true)
                     permissionChanged = false
                 }
             }
@@ -641,18 +648,23 @@ class CallPresenter @Inject constructor(
         mCallService.raiseHand(call.accountId, call.id, mAccountService.getAccount(call.accountId)?.uri!!, state, getDeviceId())
     }
 
+    fun switchOnOffScreenShare() {
+        val conference = mConference ?: return
+        val camId = mHardwareService.changeCamera(true)
+        if(conference.hasActiveScreenSharing())
+            mCallService.replaceVideoMedia(conference, "camera://$camId", true)
+        else
+            view?.startScreenCapture()
+    }
+
     fun startScreenShare(resultCode: Int, data: Any): Boolean {
         val conference = mConference ?: return false
         mNotificationService.preparePendingScreenshare(conference) {
             val mediaProjection = view?.getMediaProjection(resultCode, data) ?: return@preparePendingScreenshare
-            mHardwareService.switchInput(conference.accountId, conference.id, false, mediaProjection)
+            mHardwareService.setPendingScreenShareProjection(mediaProjection)
+            mCallService.replaceVideoMedia(conference, "camera://desktop", false)
         }
         return true
-    }
-
-    fun stopScreenShare() {
-        val conference = mConference ?: return
-        mHardwareService.switchInput(conference.accountId, conference.id, true)
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
@@ -661,12 +673,32 @@ class CallPresenter @Inject constructor(
 
     fun startPlugin(mediaHandlerId: String) {
         mHardwareService.startMediaHandler(mediaHandlerId)
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        val conference = mConference ?: return
+        val media = conference.getMediaList() ?: return
+        val source = media.first {
+            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+            it.source != "camera://desktop"
+        }.source ?: return
+        mHardwareService.switchInput(
+            conference.accountId,
+            conference.id,
+            source
+        )
     }
 
     fun stopPlugin() {
         mHardwareService.stopMediaHandler()
-        mConference?.let { conference -> mHardwareService.switchInput(conference.accountId, conference.id, mHardwareService.isPreviewFromFrontCamera) }
+        val conference = mConference ?: return
+        val media = conference.getMediaList() ?: return
+        val source = media.first {
+            it.mediaType == Media.MediaType.MEDIA_TYPE_VIDEO &&
+                    it.source != "camera://desktop"
+        }.source ?: return
+        mHardwareService.switchInput(
+            conference.accountId,
+            conference.id,
+            source
+        )
     }
 
     fun getDeviceId(): String? {

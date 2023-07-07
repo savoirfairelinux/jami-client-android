@@ -466,7 +466,7 @@ class HardwareServiceImpl(
     }
 
     override fun startCapture(camId: String?) {
-        val cam = camId ?: cameraService.switchInput(true) ?: return
+        val cam = camId ?: cameraService.changeCamera(true) ?: return
         Log.i(TAG, "startCapture > camId: $camId, cam: $cam, mIsChoosePlugin: $mIsChoosePlugin")
         shouldCapture.add(cam)
         val videoParams = cameraService.getParams(cam) ?: return
@@ -632,16 +632,12 @@ class HardwareServiceImpl(
         mCameraPreviewSurface.clear()
     }
 
-    override fun switchInput(accountId:String, callId: String, setDefaultCamera: Boolean, screenCaptureSession: Any?) {
-        val camId = if (screenCaptureSession != null) {
-            pendingScreenSharingSession = screenCaptureSession as MediaProjection
-            CameraService.VideoDevices.SCREEN_SHARING
-        } else {
-            pendingScreenSharingSession = null
-            cameraService.switchInput(setDefaultCamera)
-        }
-        if (camId != null)
-            switchInput(accountId, callId, "camera://$camId")
+    override fun changeCamera(setDefaultCamera: Boolean): String? {
+        return cameraService.changeCamera(setDefaultCamera)
+    }
+
+    override fun setPendingScreenShareProjection(screenCaptureSession: Any?) {
+        pendingScreenSharingSession = screenCaptureSession as MediaProjection?
     }
 
     override fun setPreviewSettings() {
