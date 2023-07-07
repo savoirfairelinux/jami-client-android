@@ -207,7 +207,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                 }
             }
         }
-        conversationBackPressedCallback.isEnabled = fConversation != null
     }
 
     private fun handleIntent(intent: Intent) {
