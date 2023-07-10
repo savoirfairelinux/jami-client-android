@@ -489,9 +489,10 @@ class HardwareServiceImpl(
 
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
             val projection = pendingScreenSharingSession ?: return
-            pendingScreenSharingSession = null
-            if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
-                projection.stop()
+            if(videoParams.display == null) {
+                if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
+                    projection.stop()
+                }
             }
             return
         }
@@ -631,6 +632,10 @@ class HardwareServiceImpl(
 
     override fun setPendingScreenShareProjection(screenCaptureSession: Any?) {
         pendingScreenSharingSession = screenCaptureSession as MediaProjection?
+    }
+
+    override fun closeScreenShare() {
+        cameraService.closeScreenShare()
     }
 
     override fun setPreviewSettings() {

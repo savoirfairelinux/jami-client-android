@@ -406,7 +406,6 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mHardwareService.setPendingScreenShareProjection(null)
                     mCallService.replaceVideoMedia(call, "camera://$camId", true)
                     permissionChanged = false
                 }

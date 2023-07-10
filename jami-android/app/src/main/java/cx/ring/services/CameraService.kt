@@ -39,6 +39,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.TextureView
 import androidx.annotation.RequiresApi
+import cx.ring.services.CameraService.VideoDevices.Companion.SCREEN_SHARING
 import cx.ring.utils.*
 import cx.ring.views.AutoFitTextureView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -352,11 +353,17 @@ class CameraService internal constructor(c: Context) {
                 camera.close()
                 params.camera = null
             }
+            params.isCapturing = false
+        }
+    }
+
+    fun closeScreenShare() {
+        closeCamera(SCREEN_SHARING)
+        mParams[SCREEN_SHARING]?.let { params ->
             params.projection?.let { mediaProjection ->
                 mediaProjection.stop()
                 params.projection = null
             }
-            params.isCapturing = false
         }
     }
 
