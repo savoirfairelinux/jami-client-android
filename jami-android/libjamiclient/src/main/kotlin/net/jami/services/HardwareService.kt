@@ -110,6 +110,7 @@ abstract class HardwareService(
     abstract fun startMediaHandler(mediaHandlerId: String?)
     abstract fun stopMediaHandler()
     abstract fun setPendingScreenShareProjection(screenCaptureSession: Any?)
+    abstract fun closeScreenShare()
     fun connectivityChanged(isConnected: Boolean) {
         Log.i(TAG, "connectivityChange() $isConnected")
         connectivityEvents.onNext(isConnected)

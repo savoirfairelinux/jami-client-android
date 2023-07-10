@@ -406,7 +406,6 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mHardwareService.setPendingScreenShareProjection(null)
                     mCallService.replaceVideoMedia(call, "camera://$camId", true)
                     permissionChanged = false
                 }
@@ -639,10 +638,11 @@ class CallPresenter @Inject constructor(
     fun switchOnOffScreenShare() {
         val conference = mConference ?: return
         val camId = mHardwareService.changeCamera(true)
-        if(conference.hasActiveScreenSharing())
+        if(conference.hasActiveScreenSharing()) {
             mCallService.replaceVideoMedia(conference, "camera://$camId", true)
-        else
+        } else {
             view?.startScreenCapture()
+        }
     }
 
     fun startScreenShare(mediaProjection: Any?): Boolean {
