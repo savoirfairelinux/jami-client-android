@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bfc3e68_1ca21575",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T18:00:12Z",
+      "side": 1,
+      "message": "this may need to be placed in the onResume. It currently doesn\u0027t appear when we rotate the device.",
+      "revId": "b9e4e4e90aef3bed5f08f01819dde450e94f9680",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
