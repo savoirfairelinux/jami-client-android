@@ -420,7 +420,6 @@ class CallPresenter @Inject constructor(
                 pluginSurfaceUpdateId(call.pluginId)
                 if (permissionChanged) {
                     val camId = mHardwareService.changeCamera(true)
-                    mHardwareService.setPendingScreenShareProjection(null)
                     mCallService.replaceVideoMedia(call, "camera://$camId", true)
                     permissionChanged = false
                 }
@@ -653,18 +652,22 @@ class CallPresenter @Inject constructor(
         val camId = mHardwareService.changeCamera(true)
         if(conference.hasActiveScreenSharing())
             mCallService.replaceVideoMedia(conference, "camera://$camId", true)
-        else
-            view?.startScreenCapture()
+        else {
+            if (mHardwareService.isScreenShareSet())
+                mCallService.replaceVideoMedia(conference, "camera://desktop", false)
+            else
+                view?.startScreenCapture()
+        }
     }
 
     fun startScreenShare(resultCode: Int, data: Any): Boolean {
         val conference = mConference ?: return false
-        mNotificationService.preparePendingScreenshare(conference) {
-            val mediaProjection = view?.getMediaProjection(resultCode, data) ?: return@preparePendingScreenshare
-            mHardwareService.setPendingScreenShareProjection(mediaProjection)
+        return mNotificationService.preparePendingScreenshare(conference) {
+            if(!mHardwareService.setScreenShare(resultCode, data))
+                return@preparePendingScreenshare false
             mCallService.replaceVideoMedia(conference, "camera://desktop", false)
+            return@preparePendingScreenshare true
         }
-        return true
     }
 
     fun isMaximized(info: ParticipantInfo): Boolean {
