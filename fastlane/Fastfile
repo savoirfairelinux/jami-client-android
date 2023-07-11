@@ -23,7 +23,7 @@ platform :android do
   desc "Submit a new Build to the Google Play Store"
   lane :playstore do |options|
     gradle(
-      task: "assemble",
+      task: "bundle",
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
@@ -46,7 +46,7 @@ platform :android do
   desc "Submit a new Beta Build to the Play Store Beta channel"
   lane :beta do |options|
     gradle(
-      task: "assemble",
+      task: "bundle",
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
@@ -69,7 +69,7 @@ platform :android do
   desc "Submit a new Build to the Play Store"
   lane :production do |options|
     gradle(
-      task: "assemble",
+      task: "bundle",
       flavor: "withFirebase",
       build_type: "Release",
       print_command: false,
