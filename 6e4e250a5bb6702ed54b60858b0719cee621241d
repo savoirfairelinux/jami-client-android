@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e5c2a2_7fe4bca0",
+        "filename": "jami-android/app/src/main/res/layout/jami_id_card.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:43:50Z",
+      "side": 1,
+      "message": "Should this stay here or can it just be removed along with the other associated resources?",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "6e4e250a5bb6702ed54b60858b0719cee621241d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5907895a_348a5a75",
+        "filename": "jami-android/app/src/main/res/values-night/colors.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:43:50Z",
+      "side": 1,
+      "message": "tint",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "6e4e250a5bb6702ed54b60858b0719cee621241d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad24f9f2_c8f32ba9",
+        "filename": "jami-android/app/src/main/res/values-night/colors.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:43:50Z",
+      "side": 1,
+      "message": "tint",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "6e4e250a5bb6702ed54b60858b0719cee621241d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08eacacf_600b466d",
+        "filename": "jami-android/app/src/main/res/values/colors.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:43:50Z",
+      "side": 1,
+      "message": "tint",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "6e4e250a5bb6702ed54b60858b0719cee621241d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea7ec9e2_77a95fde",
+        "filename": "jami-android/app/src/main/res/values/colors.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:43:50Z",
+      "side": 1,
+      "message": "tint",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "6e4e250a5bb6702ed54b60858b0719cee621241d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
