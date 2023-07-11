@@ -728,11 +728,7 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
             REQUEST_CODE_SCREEN_SHARE -> {
                 Log.w(TAG, "[screenshare] onActivityResult ---> requestCode: $requestCode, resultCode: $resultCode")
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    try {
-                        startScreenShare(mProjectionManager.getMediaProjection(resultCode, data))
-                    } catch (e: Exception) {
-                        Log.w(TAG, "Error starting screen sharing", e)
-                    }
+                    startScreenShare(resultCode, data)
                 } else {
                     binding!!.callSharescreenBtn.isChecked = false
                 }
@@ -1263,8 +1259,8 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
         presenter.speakerClick(binding!!.callSpeakerBtn.isChecked)
     }
 
-    private fun startScreenShare(mediaProjection: MediaProjection?) {
-        if (presenter.startScreenShare(mediaProjection)) {
+    private fun startScreenShare(code: Int, intent: Intent) {
+        if (presenter.startScreenShare(code, intent)) {
             if (isChoosePluginMode) {
                 binding!!.pluginPreviewSurface.visibility = View.GONE
                 displayLocalVideo(false)
