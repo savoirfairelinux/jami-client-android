@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c8a36db_d89831cd",
+        "filename": "jami-android/app/src/main/java/cx/ring/welcomejami/WelcomeJamiFragment.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 930
+      },
+      "writtenOn": "2023-07-11T17:48:28Z",
+      "side": 1,
+      "message": "should be a string resource",
+      "range": {
+        "startLine": 34,
+        "startChar": 20,
+        "endLine": 34,
+        "endChar": 152
+      },
+      "revId": "26a39375abd4b6d2b9c64b43970d22c8e4f99b4f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
