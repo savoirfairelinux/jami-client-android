@@ -84,6 +84,7 @@ class SIPCreationPresenter @Inject constructor(
                 if (password != null)
                     accountDetails[ConfigKey.ACCOUNT_PASSWORD.key] = password
             }
+            accountDetails[ConfigKey.SRTP_KEY_EXCHANGE.key] = ""
             registerAccount(accountDetails)
         }
     }
