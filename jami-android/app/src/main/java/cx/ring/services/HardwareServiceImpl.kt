@@ -20,12 +20,14 @@ package cx.ring.services
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
+import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.telecom.CallAudioState
 import android.util.Log
@@ -71,13 +73,14 @@ class HardwareServiceImpl(
     private val mAudioManager: AudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private var mBluetoothWrapper: BluetoothWrapper? = null
     private var currentFocus: AudioFocusRequestCompat? = null
-    private var pendingScreenSharingSession: MediaProjection? = null
     private val shouldCapture = HashSet<String>()
     private var mShouldSpeakerphone = false
     private val mHasSpeakerPhone: Boolean = hasSpeakerphone()
     private var mIsChoosePlugin = false
     private var mMediaHandlerId: String? = null
     private var mPluginCallId: String? = null
+    private val mProjectionManager = context.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+    private var mediaProjectionResult: Pair<Int, Intent>? = null
 
     override fun initVideo(): Completable = cameraService.init()
 
@@ -488,8 +491,15 @@ class HardwareServiceImpl(
         videoParams.isCapturing = true
 
         if (videoParams.id == CameraService.VideoDevices.SCREEN_SHARING) {
-            val projection = pendingScreenSharingSession ?: return
-            pendingScreenSharingSession = null
+            val projectionResult = mediaProjectionResult ?: return
+            val projection: MediaProjection?
+            try {
+                projection = mProjectionManager.getMediaProjection(projectionResult.first, projectionResult.second)
+            } catch(e: Exception) {
+                Log.d(TAG, "Error getting media projection for screen capture", e)
+                mediaProjectionResult = null
+                return
+            }
             if (!cameraService.startScreenSharing(videoParams, projection, surface, context.resources.displayMetrics)) {
                 projection.stop()
             }
@@ -629,8 +639,14 @@ class HardwareServiceImpl(
         return cameraService.changeCamera(setDefaultCamera)
     }
 
-    override fun setPendingScreenShareProjection(screenCaptureSession: Any?) {
-        pendingScreenSharingSession = screenCaptureSession as MediaProjection?
+    override fun setScreenShare(code: Int, intent: Any): Boolean{
+        if(intent !is Intent) return false
+        mediaProjectionResult = Pair(code, intent)
+        return true
+    }
+
+    override fun isScreenShareSet(): Boolean {
+        return mediaProjectionResult != null
     }
 
     override fun setPreviewSettings() {
