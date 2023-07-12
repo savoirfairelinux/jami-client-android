@@ -1363,6 +1363,7 @@ class ConversationAdapter(
      * @return              the SequenceType of the analyzed interaction.
      */
     private fun getMsgSequencing(i: Int, isTimeShown: Boolean): SequenceType {
+        Log.w("Devdebug", "blablabla")
         val msg = mInteractions[i]
 
         // Manage specific interaction which are always single (ex : emoji).
@@ -1516,6 +1517,7 @@ class ConversationAdapter(
                     || first.type !== Interaction.InteractionType.TEXT
                     || second.type !== Interaction.InteractionType.TEXT
                     || second.replyTo != null
+                    || first.contact != second.contact
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
