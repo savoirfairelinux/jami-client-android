@@ -913,7 +913,6 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
 
     private fun generateParticipantOverlay(participantsInfo: List<ParticipantInfo>) {
         val overlayViewBinding = binding?.participantOverlayContainer ?: return
-        binding?.previewContainer?.isVisible = participantsInfo.size > 1
         overlayViewBinding.participants = if (participantsInfo.size == 1) participantsInfo else participantsInfo.filterNot {
             it.contact.contact.isUser && it.device == presenter.getDeviceId()
         }
