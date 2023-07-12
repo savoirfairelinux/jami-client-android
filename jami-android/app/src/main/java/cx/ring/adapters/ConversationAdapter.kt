@@ -71,7 +71,9 @@ import cx.ring.utils.*
 import cx.ring.utils.ContentUriHandler.getUriForFile
 import cx.ring.viewholders.ConversationViewHolder
 import cx.ring.views.AvatarDrawable
+import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonVisitor
 import io.noties.markwon.linkify.LinkifyPlugin
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
@@ -80,6 +82,7 @@ import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
 import net.jami.utils.StringUtils
+import org.commonmark.node.SoftLineBreak
 import java.io.File
 import java.text.DateFormat
 import java.util.*
@@ -110,9 +113,16 @@ class ConversationAdapter(
     private var isComposing = false
     private var mShowReadIndicator = true
     var showLinkPreviews = true
-    private val markwon: Markwon = Markwon.builder(conversationFragment.requireContext())
-        .usePlugin(LinkifyPlugin.create())
-        .build()
+    private val markwon: Markwon =
+        Markwon.builder(conversationFragment.requireContext())
+            .usePlugin(LinkifyPlugin.create())
+            // Plugin to add a new line when a soft break is used.
+            .usePlugin(object : AbstractMarkwonPlugin() {
+                override fun configureVisitor(builder: MarkwonVisitor.Builder) {
+                    builder.on(SoftLineBreak::class.java) { visitor, _ -> visitor.forceNewLine() }
+                }
+            })
+            .build()
 
     /**
      * Refreshes the data and notifies the changes
