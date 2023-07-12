@@ -1516,6 +1516,7 @@ class ConversationAdapter(
                     || first.type !== Interaction.InteractionType.TEXT
                     || second.type !== Interaction.InteractionType.TEXT
                     || second.replyTo != null
+                    || first.contact != second.contact
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
             (msg.type !== Interaction.InteractionType.TEXT
