@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 <action android:name="org.unifiedpush.android.connector.MESSAGE"/>
                 <action android:name="org.unifiedpush.android.connector.UNREGISTERED"/>
                 <action android:name="org.unifiedpush.android.connector.NEW_ENDPOINT"/>
-                <action android:name="org.unifiedpush.android.connector.REGISTRATION_REFUSED"/>
+                <action android:name="org.unifiedpush.android.connector.REGISTRATION_FAILED"/>
             </intent-filter>
         </receiver>
 
