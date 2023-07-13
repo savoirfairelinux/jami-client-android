@@ -35,12 +35,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_srtp_switch_label" />
 
         <SwitchPreference
-            android:key="SRTP.rtpFallback"
-            android:dependency="SRTP.keyExchange"
-            android:persistent="false"
-            android:title="@string/account_srtp_rtp_fallback" />
-
-        <SwitchPreference
             android:key="TLS.enable"
             android:persistent="false"
             android:title="@string/account_tls_transport_switch_label" />
