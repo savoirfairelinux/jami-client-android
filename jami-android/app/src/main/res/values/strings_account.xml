@@ -154,8 +154,6 @@ along with this program; if not, write to the Free Software
     <!-- SRTP Details -->
     <string name="account_preferences_security_tab">Security</string>
     <string name="account_srtp_switch_label">Encrypt media streams (SRTP)</string>
-    <string name="account_srtp_enable_sdes">Enable SDES as key exchange protocol</string>
-    <string name="account_srtp_rtp_fallback">Fallback to RTP if SRTP fails</string>
 
     <!-- SIP -->
     <string name="account_sip_dtmf_type_sipinfo" translatable="false">sipinfo</string>
