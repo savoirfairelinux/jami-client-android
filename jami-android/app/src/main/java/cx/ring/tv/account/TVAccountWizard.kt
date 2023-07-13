@@ -105,7 +105,7 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
 
     override fun displayProgress(display: Boolean) {
         if (display) {
-            mProgress = MaterialAlertDialogBuilder(applicationContext)
+            mProgress = MaterialAlertDialogBuilder(this)
                 .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
                 .setTitle(R.string.dialog_wait_create)
                 .setMessage(R.string.dialog_wait_create_details)
