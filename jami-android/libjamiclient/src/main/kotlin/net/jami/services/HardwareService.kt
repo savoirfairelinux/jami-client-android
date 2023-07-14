@@ -163,10 +163,14 @@ abstract class HardwareService(
     fun startLogs(): Observable<String> {
         return logs ?: Observable.create { emitter: ObservableEmitter<String> ->
             logEmitter = emitter
-            JamiService.monitor(true)
+            mExecutor.execute {
+                JamiService.monitor(true)
+            }
             emitter.setCancellable {
                 synchronized(this@HardwareService) {
-                    JamiService.monitor(false)
+                    mExecutor.execute {
+                        JamiService.monitor(false)
+                    }
                     logEmitter = null
                     logs = null
                 }
