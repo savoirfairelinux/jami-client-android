@@ -30,7 +30,6 @@ import android.text.style.StyleSpan
 import android.view.View
 import androidx.leanback.widget.GuidanceStylist.Guidance
 import androidx.leanback.widget.GuidedAction
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.databinding.ItemProgressDialogBinding
 import cx.ring.utils.AndroidFileUtils.getMimeType
@@ -43,7 +42,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, JamiAccountSummaryView>(), JamiAccountSummaryView {
-    private var mWaitDialog: androidx.appcompat.app.AlertDialog? = null
+    private var mWaitDialog: AlertDialog? = null
     private lateinit var mIdAccount: String
     private var mHasPassword = false
 
@@ -83,12 +82,12 @@ class TVAccountExport : JamiGuidedStepFragment<JamiAccountSummaryPresenter, Jami
     }
 
     override fun showExportingProgressDialog() {
-        mWaitDialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
-            .setTitle(R.string.export_account_wait_title)
-            .setMessage(R.string.export_account_wait_message)
-            .setCancelable(false)
-            .show()
+        mWaitDialog = AlertDialog.Builder(requireActivity())
+        .setView(ItemProgressDialogBinding.inflate(layoutInflater).root)
+        .setTitle(R.string.export_account_wait_title)
+        .setMessage(R.string.export_account_wait_message)
+        .setCancelable(false)
+        .show()
     }
 
     override fun showPasswordProgressDialog() {}
