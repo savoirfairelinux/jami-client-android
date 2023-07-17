@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Usalama</string>
   <string name="account_srtp_switch_label">Encrypt media mito (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Kuwezesha SDES kama muhimu kubadilishana itifaki</string>
-  <string name="account_srtp_rtp_fallback">Kuanguka nyuma kwa RTP ikiwa SRTP inashindwa</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Tumia TLS Usafiri</string>

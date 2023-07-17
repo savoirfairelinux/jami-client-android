@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Անվտանգություն</string>
   <string name="account_srtp_switch_label">ԶԼՄ-ների հոսքերը կոդավորեք (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Սեղմել SDES- ը որպես հիմնական փոխանակման արձանագրություն</string>
-  <string name="account_srtp_rtp_fallback">RTP- ի հետադարձ անկում, եթե SRTP- ը ձախողվում է</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Օգտագործեք TLS տրանսպորտ</string>

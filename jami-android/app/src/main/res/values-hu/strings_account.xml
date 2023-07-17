@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Biztonság</string>
   <string name="account_srtp_switch_label">Média-adatfolyamok titkosítása (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES-kulcscsere engedélyezése</string>
-  <string name="account_srtp_rtp_fallback">RTP visszatérése az SRTP meghibásodásakor</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS titkosítás használata</string>

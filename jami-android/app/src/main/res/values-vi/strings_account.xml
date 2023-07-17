@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">An ninh</string>
   <string name="account_srtp_switch_label">Các dòng truyền thông mã hóa (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Khả năng SDES như là giao thức trao đổi khóa</string>
-  <string name="account_srtp_rtp_fallback">Lại RTP nếu SRTP thất bại</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Sử dụng TLS Transport</string>

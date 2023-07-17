@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Güvenlik</string>
   <string name="account_srtp_switch_label">Ortam akışlarını şifrele (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Anahtar değiş tokuş iletişim kuralı olarak SDES\'i etkinleştir</string>
-  <string name="account_srtp_rtp_fallback">STRP başarısızsa RTP\'ye dön</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Taşıyıcı kullan</string>

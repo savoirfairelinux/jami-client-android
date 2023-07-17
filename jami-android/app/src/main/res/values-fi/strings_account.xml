@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Turvallisuus</string>
   <string name="account_srtp_switch_label">Salattu mediavirta (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Ota SDES käyttöön avaimien vaihdossa</string>
-  <string name="account_srtp_rtp_fallback">Varalla RTP jos SRTP epäonnistuu</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Käytä TLS:ää</string>

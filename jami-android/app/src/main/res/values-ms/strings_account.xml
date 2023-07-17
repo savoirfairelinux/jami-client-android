@@ -116,8 +116,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Penyulitan</string>
   <string name="account_srtp_switch_label">മീഡിയ സ്ട്രീമുകൾ എൻക്രിപ്റ്റ് ചെയ്യുക (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES കീ എക്സ്ചേഞ്ച് പ്രോട്ടോക്കോളായി പ്രവർത്തനക്ഷമമാക്കുക</string>
-  <string name="account_srtp_rtp_fallback">SRTP പരാജയപ്പെട്ടാൽ RTP ലേക്ക് മടങ്ങുക</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Guna TLS Transport</string>

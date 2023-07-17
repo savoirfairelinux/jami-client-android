@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Keamanan</string>
   <string name="account_srtp_switch_label">Enkripsi media stream (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktifkan SDES sebagai key exchange protokol</string>
-  <string name="account_srtp_rtp_fallback">Fallback ke RTP jika SRTP gagal</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Gunakan TLS Transport</string>

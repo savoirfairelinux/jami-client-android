@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Slándáil</string>
   <string name="account_srtp_switch_label">Criosadh srutháin meán (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Cumas SDES a chumasú mar phrótacal luachan clais</string>
-  <string name="account_srtp_rtp_fallback">Ath-tharraingthe ar RTP má tá SRTP ag téamh</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Úsáid TLS Transport</string>

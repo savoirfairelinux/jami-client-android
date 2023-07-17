@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">ความปลอดภัย</string>
   <string name="account_srtp_switch_label">รายการการเอกสาร (SRTP)</string>
-  <string name="account_srtp_enable_sdes">เปิด SDES เป็นโปรโตคอลการแลกเปลี่ยนกุญแจ</string>
-  <string name="account_srtp_rtp_fallback">การกลับไปที่ RTP หาก SRTPล้มเหลว</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">ใช้ TLS Transport</string>

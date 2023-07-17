@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Nchebe</string>
   <string name="account_srtp_switch_label">Encrypt media iyi (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Gbaa SDES dị ka isi mgbanwe protocol</string>
-  <string name="account_srtp_rtp_fallback">Nlaghachi azụ na RTP ma ọ bụrụ na SRTP adaa</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Jiri TLS Transport</string>

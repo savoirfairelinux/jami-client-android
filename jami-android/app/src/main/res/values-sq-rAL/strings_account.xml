@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Siguri</string>
   <string name="account_srtp_switch_label">Fshehtëzo rrjedha media (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktivizon SDES si protokoll shkëmbimi kyçesh</string>
-  <string name="account_srtp_rtp_fallback">Nëse SRTP dështon, përdor RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Përdor Bartje TLS</string>

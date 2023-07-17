@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
   <string name="account_srtp_switch_label">رمزگذاری جریان‌های مدیا (SRTP)</string>
-  <string name="account_srtp_enable_sdes">فعال‌سازی SDES به عنوان پروتکل تبادل کلید</string>
-  <string name="account_srtp_rtp_fallback">بازگشت به RTP، در صورت عدم موفقیت SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>

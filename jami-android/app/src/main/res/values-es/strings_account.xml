@@ -116,8 +116,6 @@ Puedes editar tu cuenta luego</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridad</string>
   <string name="account_srtp_switch_label">Flujo de medio cifrado (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Habilite SDES para el protocolo de intercambio de claves</string>
-  <string name="account_srtp_rtp_fallback">Retractarse a RTP si falla el cifrado</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar protocolo TLS</string>

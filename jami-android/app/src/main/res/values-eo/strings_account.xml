@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sekuro</string>
   <string name="account_srtp_switch_label">Ĉifri aŭdvidfuojn (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktivigu SDES kiel ŝlosilan interŝanĝprotokolon</string>
-  <string name="account_srtp_rtp_fallback">Reveni al RTP se SRTP malsukcesas</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Uzi TLS Transporton</string>

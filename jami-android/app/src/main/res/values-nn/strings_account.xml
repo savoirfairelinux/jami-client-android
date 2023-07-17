@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Tryggleik</string>
   <string name="account_srtp_switch_label">Kryptar mediastrøymer (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Å aktivera SDES som nøkkelutvekslingprotokoll</string>
-  <string name="account_srtp_rtp_fallback">Tilbake til RTP dersom SRTP mislykkes</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS Transport</string>

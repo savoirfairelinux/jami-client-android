@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">सुरक्षा</string>
   <string name="account_srtp_switch_label">मीडिया प्रवाह (SRTP) को एन्क्रिप्ट करें</string>
-  <string name="account_srtp_enable_sdes">SDES को कुंजी विनिमय प्रोटोकॉल के रूप में सक्षम करें</string>
-  <string name="account_srtp_rtp_fallback">आरटीपी में वापसी यदि एसआरटीपी विफल हो</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS परिवहन का उपयोग करें</string>

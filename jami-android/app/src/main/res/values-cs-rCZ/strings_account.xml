@@ -116,8 +116,6 @@ Svůj účet můžete upravit později</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpečení</string>
   <string name="account_srtp_switch_label">Šifrovat datový tok (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Povolit SDES jako protokol výměny klíčů</string>
-  <string name="account_srtp_rtp_fallback">Použít RTP v případě selhání SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Použít Transport TLS</string>

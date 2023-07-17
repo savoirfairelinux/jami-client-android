@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">セキュリティ</string>
   <string name="account_srtp_switch_label">メディアストリームを暗号化 (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDESを鍵交換プロトコルとして有効化</string>
-  <string name="account_srtp_rtp_fallback">SRTPが失敗した際にRTPを代替として使う</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transportを使用</string>

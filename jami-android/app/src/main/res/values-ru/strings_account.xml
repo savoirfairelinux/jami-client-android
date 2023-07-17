@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
   <string name="account_srtp_switch_label">Шифровать медиа потоки (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Включить SDES в качестве протокола обмена ключами</string>
-  <string name="account_srtp_rtp_fallback">Возврат к RTP в случае сбоя SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>

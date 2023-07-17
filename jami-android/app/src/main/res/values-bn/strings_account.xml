@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">নিরাপত্তা</string>
   <string name="account_srtp_switch_label">এনক্রিপ্ট মিডিয়া স্ট্রিম (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES কে কী এক্সচেঞ্জ প্রোটোকল হিসেবে সক্ষম করুন</string>
-  <string name="account_srtp_rtp_fallback">SRTP ব্যর্থ হলে RTP-এ ফেরত যান</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS পরিবহন ব্যবহার করুন</string>

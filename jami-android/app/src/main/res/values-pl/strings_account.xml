@@ -116,8 +116,6 @@ Możesz edytować swoje konto później</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpieczenia</string>
   <string name="account_srtp_switch_label">Szyfrowanie strumieni multimedialnych (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Włącz SDES jako protokół wymiany kluczowej</string>
-  <string name="account_srtp_rtp_fallback">Wracając do RTP, jeśli SRTP nie działa</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Korzystaj z transportu TLS</string>

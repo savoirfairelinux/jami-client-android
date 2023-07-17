@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">பாதுகாப்பு</string>
   <string name="account_srtp_switch_label">ஊடக ஓட்டங்களை (SRTP) குறியாக்குதல்</string>
-  <string name="account_srtp_enable_sdes">SDES ஐ முக்கிய பரிமாற்ற நெறிமுறையாக செயல்படுத்தவும்</string>
-  <string name="account_srtp_rtp_fallback">SRTP தோல்வியுற்றால் RTP க்கு திரும்புதல்</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS போக்குவரத்தை பயன்படுத்தவும்</string>

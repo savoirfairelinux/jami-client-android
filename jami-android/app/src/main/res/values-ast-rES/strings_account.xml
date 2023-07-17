@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridá</string>
   <string name="account_srtp_switch_label">Encripta los fluxos de medios (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Activu SDES como protocolu d\'intercambiu clave</string>
-  <string name="account_srtp_rtp_fallback">La caída a RTP si SRTP falla</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliza TLS Transport</string>

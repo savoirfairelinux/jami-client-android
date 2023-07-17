@@ -116,8 +116,6 @@ Podeu editar el vostre compte més endavant.</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguretat</string>
   <string name="account_srtp_switch_label">Xifra el flux de mitjans (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Habilita SDES com a protocol d\'intercanvi de claus</string>
-  <string name="account_srtp_rtp_fallback">Restableix a RTP si SRTP falla</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilitza transport TLS</string>
