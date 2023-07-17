@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">భద్రత</string>
   <string name="account_srtp_switch_label">మీడియా స్ట్రీమ్లను (SRTP) గుప్తీకరించండి</string>
-  <string name="account_srtp_enable_sdes">SDES ను కీ ఎక్స్ఛేంజ్ ప్రోటోకాల్ గా ఎనేబుల్ చేయండి</string>
-  <string name="account_srtp_rtp_fallback">SRTP విఫలమైతే RTP కి తిరిగి రావడం</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS రవాణాను ఉపయోగించు</string>

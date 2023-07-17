@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">安全性</string>
   <string name="account_srtp_switch_label">加密媒體串流 (SRTP)</string>
-  <string name="account_srtp_enable_sdes">啟用 SDES 作為金鑰交換協定</string>
-  <string name="account_srtp_rtp_fallback">如果 SRTP 失敗則汰退至 RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">使用 TLS 傳輸</string>

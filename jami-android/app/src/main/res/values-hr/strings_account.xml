@@ -116,8 +116,6 @@ Moćete urediti vaš račun kasnije</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sigurnost</string>
   <string name="account_srtp_switch_label">Zašifriranje medijskih tokova (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktivirajte SDES kao protokol za razmjenu ključeva</string>
-  <string name="account_srtp_rtp_fallback">U slučaju neuspjeha SRTP-a, povrat na RTP-u</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristite TLS Transport</string>

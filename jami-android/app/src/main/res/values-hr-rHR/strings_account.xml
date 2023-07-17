@@ -42,8 +42,6 @@
   <string name="account_credentials_add">Dodavanje poverenja</string>
   <!--SRTP Details-->
   <string name="account_srtp_switch_label">Zašifriranje medijskih tokova (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktivirajte SDES kao protokol za razmjenu ključeva</string>
-  <string name="account_srtp_rtp_fallback">U slučaju neuspjeha SRTP-a, povrat na RTP-u</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristite TLS Transport</string>

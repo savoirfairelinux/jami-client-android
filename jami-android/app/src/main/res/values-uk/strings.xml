@@ -194,7 +194,7 @@
   <string name="conversation_syncing">Завантаження розмови з вузла</string>
   <string name="conversation_blocked">Цей контакт заблокований.</string>
   <string name="conversation_ended">Розмова закінчилася.</string>
-  <string name="conversation_message_deleted">(Сігнал видалений)</string>
+  <string name="conversation_message_deleted">(Повідомлення видалено)</string>
   <string name="conversation_preference_color">Колір розмови</string>
   <string name="conversation_preference_emoji">Емоджи розмови</string>
   <string name="conversation_type_contact">Контакт Jami</string>

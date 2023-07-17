@@ -113,8 +113,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">ਸੁਰੱਖਿਆ</string>
   <string name="account_srtp_switch_label">ਮੀਡੀਆ ਦੇ ਵਹਿਣਾਂ (SRTP) ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
-  <string name="account_srtp_enable_sdes">ਕੁੰਜੀ ਵਟਾਉਣ ਦੀ ਮਰਯਾਦਾ ਵਜੋਂ SDES ਨੂੰ ਚਾਲੂ ਕਰੋ</string>
-  <string name="account_srtp_rtp_fallback"> SRTP ਦੇ ਨਾ ਚੱਲਣ \'ਤੇ RTP \'ਤੇ ਵਾਪਸ ਆਓ</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS ਸਾਧਨ ਵਰਤੋ</string>

@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">سيڠڬوڠ</string>
   <string name="account_srtp_switch_label">مڠمبيل ميديا سست (SRTP)</string>
-  <string name="account_srtp_enable_sdes">ممبنتو SDES سباڬاي ڤروتوكول ڤڠاجرن ڤڠاجرن</string>
-  <string name="account_srtp_rtp_fallback">ڤرودوک RTP ڤد SRTP مڠمبيل</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">مڠڬوناكن TLS Transport</string>

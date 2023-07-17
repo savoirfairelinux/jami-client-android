@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Protecție</string>
   <string name="account_srtp_switch_label">Cifrează fluxurile Media (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Activează SDES ca protocol pentru schimbul de chei</string>
-  <string name="account_srtp_rtp_fallback">Folosește RTP dacă SRTP eșuează</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Folosește transportul TLS</string>

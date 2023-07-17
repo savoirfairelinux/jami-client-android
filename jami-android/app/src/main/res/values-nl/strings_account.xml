@@ -116,8 +116,6 @@ U kunt uw account later bewerken</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
   <string name="account_srtp_switch_label">Mediastreams versleutelen (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES als sleutelruilprotocol in staat stellen</string>
-  <string name="account_srtp_rtp_fallback">Terugkeer naar RTP als SRTP mislukt</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-transport gebruiken</string>

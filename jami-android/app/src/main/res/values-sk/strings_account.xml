@@ -116,8 +116,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Bezpečnosť</string>
   <string name="account_srtp_switch_label">Zašifrovať mediálne streamy (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Aktivujte SDES ako protokol výmeny kľúčov</string>
-  <string name="account_srtp_rtp_fallback">Vrátenie na RTP, ak SRTP zlyhá</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Používať TLS prenos</string>

@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Аюулгүй байдал</string>
   <string name="account_srtp_switch_label">Хэвлэл мэдээллийн урсгалыг шифрлах (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES-ийг гол солилцооны протоколын хувьд ашиглах</string>
-  <string name="account_srtp_rtp_fallback">SRTP-ийн алдаатай бол RTP-д буцах</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS тээврийн хэрэгсэл</string>

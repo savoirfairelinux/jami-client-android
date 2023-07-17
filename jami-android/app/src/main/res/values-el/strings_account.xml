@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Ασφάλεια</string>
   <string name="account_srtp_switch_label">Κρυπτογράφηση ροών μέσων (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Ενεργοποιήστε το SDES ως πρωτόκολλο ανταλλαγής κλειδιών</string>
-  <string name="account_srtp_rtp_fallback">Αν η SRTP αποτύχει, αναδρομή στην RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Χρησιμοποιήστε TLS Transport</string>

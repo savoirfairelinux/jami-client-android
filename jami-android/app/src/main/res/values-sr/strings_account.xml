@@ -116,8 +116,6 @@ Kasnije možete da uredite svoj nalog</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Bezbednost</string>
   <string name="account_srtp_switch_label">Šifruj medijski strim (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Omogući SDES kao glavni protokol za razmenu</string>
-  <string name="account_srtp_rtp_fallback">Povuci se na RTP ukoliko SRTP ne uspe</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Koristi TLS prenos</string>

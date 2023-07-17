@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
   <string name="account_srtp_switch_label">رمزلشدیرمه میدیال جریانلاری (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES-ي کلید آچیقلاما پروتکل اولاراق فعال ائتمک</string>
-  <string name="account_srtp_rtp_fallback">SRTP اوغورلانسا RTP-ه گئری</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transport-ی یوللا</string>

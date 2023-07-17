@@ -115,8 +115,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">सुरक्षा</string>
   <string name="account_srtp_switch_label">एन्क्रिप्टेड मीडिया स्ट्रीम (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES चा चाचणी प्रोटोकॉल म्हणून सक्षम करा</string>
-  <string name="account_srtp_rtp_fallback">आरटीपी अपयशाने आरटीपी परत</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transport चा वापर करा</string>

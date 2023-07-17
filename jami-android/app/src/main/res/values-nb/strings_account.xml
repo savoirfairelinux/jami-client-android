@@ -116,8 +116,6 @@ Du kan endre kontoen din senere</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sikkerhet</string>
   <string name="account_srtp_switch_label">Krypter mediastrømmer (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Bruk SDES som nøkkelutvekslingsprotokoll</string>
-  <string name="account_srtp_rtp_fallback">Fall tilbake på RTP hvis SRTP feiler</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS-transport</string>

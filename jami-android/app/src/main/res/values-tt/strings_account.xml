@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Корылык</string>
   <string name="account_srtp_switch_label">Суркалар агымын шифрлау (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDESны ачкыч алмашу протоколы итеп кую</string>
-  <string name="account_srtp_rtp_fallback">SRTP уңышсыз булса, RTP-га кире кайту</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS транспортын куллан</string>

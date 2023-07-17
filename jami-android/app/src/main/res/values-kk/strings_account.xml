@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Қауіпсіздік</string>
   <string name="account_srtp_switch_label">Кіпшелеу медиа ағындары (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES-ті негізгі алмасу протоколы ретінде рұқсат ету</string>
-  <string name="account_srtp_rtp_fallback">SRTP сәтсіздікке ұшыраса, RTP-ге қайта оралады</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS көлігімен</string>

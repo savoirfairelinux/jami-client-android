@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">સુરક્ષા</string>
   <string name="account_srtp_switch_label">એન્ક્રિપ્ટ મીડિયા સ્ટ્રીમ્સ (એસઆરટીપી)</string>
-  <string name="account_srtp_enable_sdes">કી એક્સચેન્જ પ્રોટોકોલ તરીકે SDES સક્ષમ કરો</string>
-  <string name="account_srtp_rtp_fallback">આરટીપીમાં પાછા ફરો જો એસઆરટીપી નિષ્ફળ જાય</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS પરિવહનનો ઉપયોગ કરો</string>

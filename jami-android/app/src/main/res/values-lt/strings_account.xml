@@ -116,8 +116,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
   <string name="account_srtp_switch_label">Šifruoti medija srautus (SRTP)</string>
-  <string name="account_srtp_enable_sdes">Įgalinti SDES kaip raktų mainų protokolą</string>
-  <string name="account_srtp_rtp_fallback">Grįžimas į RTP, jei SRTP nepavyksta naudoti</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>

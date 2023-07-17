@@ -114,8 +114,6 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">보안</string>
   <string name="account_srtp_switch_label">미디어 스트림을 암호화 (SRTP)</string>
-  <string name="account_srtp_enable_sdes">SDES를 키 교환 프로토콜으로 활성화</string>
-  <string name="account_srtp_rtp_fallback">SRTP가 실패하면 RTP로 돌아갑니다</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS 운송을 사용</string>
