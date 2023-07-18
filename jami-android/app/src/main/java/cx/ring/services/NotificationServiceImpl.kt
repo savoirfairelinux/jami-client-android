@@ -470,7 +470,7 @@ class NotificationServiceImpl(
             cancelTextNotification(conversation.accountId, conversation.uri)
             return
         }
-        if (texts.lastEntry().value.isNotified) {
+        if (texts.lastEntry().value.isDismissed) {
             return
         }
         Log.w(TAG, "showTextNotification " + conversation.accountId + " " + conversation.uri)
