@@ -504,24 +504,22 @@ class ConversationFacade(
 
     private fun parseNewMessage(txt: TextMessage) {
         val accountId = txt.account!!
+        val uri = if (txt.messageId != null) Uri(Uri.SWARM_SCHEME, txt.conversationId!!) else Uri(Uri.JAMI_URI_SCHEME, txt.author!!)
+
         if (txt.isRead) {
             if (txt.messageId == null) {
                 mHistoryService.updateInteraction(txt, accountId).subscribe()
             }
             if (mPreferencesService.settings.enableReadIndicator) {
                 if (txt.messageId != null) {
-                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.SWARM_SCHEME, txt.conversationId!!), txt.messageId!!)
+                    mAccountService.setMessageDisplayed(txt.account, uri, txt.messageId!!)
                 } else {
-                    mAccountService.setMessageDisplayed(txt.account, Uri(Uri.JAMI_URI_SCHEME, txt.author!!), txt.daemonIdString!!)
+                    mAccountService.setMessageDisplayed(txt.account, uri, txt.daemonIdString!!)
                 }
             }
         }
-        getAccountSubject(accountId)
-            .flatMapObservable { account: Account -> account.getConversationsSubject() }
-            .firstOrError()
-            .subscribeOn(Schedulers.io())
-            .subscribe({ c: List<Conversation> -> updateTextNotifications(c) })
-            { e: Throwable -> Log.e(TAG, e.message!!) }
+
+        startConversation(accountId, uri).subscribe(mNotificationService::showTextNotification)
     }
 
     fun acceptRequest(accountId: String, contactUri: Uri) {
