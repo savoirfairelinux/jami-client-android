@@ -90,7 +90,8 @@ open class Interaction {
     @DatabaseField(columnName = COLUMN_EXTRA_FLAG)
     var mExtraFlag = JsonObject().toString()
 
-    var isNotified = false
+    var isDismissed = false
+
     val displayedContacts: MutableList<String> = ArrayList()
 
     // Swarm

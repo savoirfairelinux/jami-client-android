@@ -273,7 +273,7 @@ class AccountService(
                     JamiService.getConversationPreferences(account.accountId, conversationId)
                 conversation.updatePreferences(preferences)
 
-                conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
+                conversation.setLastMessageDismissed(mHistoryService.getLastMessageDismissed(account.accountId, conversation.uri))
                 for (member in JamiService.getConversationMembers(account.accountId, conversationId)) {
                     /*for (Map.Entry<String, String> i : member.entrySet()) {
                         Log.w(TAG, "conversation member: " + i.getKey() + " " + i.getValue());
@@ -1384,7 +1384,7 @@ class AccountService(
         var setMode = false
         if (c == null) {
             c = account.newSwarm(conversationId, mode).apply {
-                setLastMessageNotified(mHistoryService.getLastMessageNotified(accountId, uri))
+                setLastMessageDismissed(mHistoryService.getLastMessageDismissed(accountId, uri))
             }
         } else {
             c.loaded = null

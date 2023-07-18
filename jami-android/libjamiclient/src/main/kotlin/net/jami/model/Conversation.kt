@@ -53,7 +53,7 @@ class Conversation : ConversationHistory {
     private val mPendingEdits: MutableMap<String, MutableList<Interaction>> = HashMap(8)
     var lastRead: String? = null
         private set
-    var lastNotified: String? = null
+    var lastDismissed: String? = null
         private set
     private val mMode: Subject<Mode>
 
@@ -196,8 +196,8 @@ class Conversation : ConversationHistory {
         lastRead = lastMessageRead
     }
 
-    fun setLastMessageNotified(lastMessage: String?) {
-        lastNotified = lastMessage
+    fun setLastMessageDismissed(lastMessage: String?) {
+        lastDismissed = lastMessage
     }
 
     fun stopLoading(): Boolean {
@@ -437,14 +437,14 @@ class Conversation : ConversationHistory {
                 for (j in aggregateHistory.indices.reversed()) {
                     val i = aggregateHistory[j]
                     if (i !is TextMessage) continue
-                    if (i.isRead || i.isNotified) break
+                    if (i.isRead || i.isDismissed) break
                     texts[i.timestamp] = i
                 }
             } else {
                 for ((key, value) in rawHistory.descendingMap()) {
                     if (value.type == Interaction.InteractionType.TEXT) {
                         val message = value as TextMessage
-                        if (message.isRead || message.isNotified) break
+                        if (message.isRead || message.isDismissed) break
                         texts[key] = message
                     }
                 }
@@ -596,7 +596,8 @@ class Conversation : ConversationHistory {
             }
         }
         if (lastRead != null && lastRead == id) interaction.read()
-        if (lastNotified != null && lastNotified == id) interaction.isNotified = true
+        if (lastDismissed == id) interaction.isDismissed = true
+
         var newLeaf = false
         var added = false
         if (aggregateHistory.isEmpty() || aggregateHistory.last().messageId == interaction.parentId) {

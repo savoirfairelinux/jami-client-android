@@ -35,8 +35,8 @@ abstract class HistoryService {
     protected abstract fun getConversationDataDao(dbName: String): Dao<ConversationHistory, Int>
     protected abstract fun getHelper(dbName: String): Any?
 
-    abstract fun setMessageNotified(accountId: String, conversationUri: Uri, lastId: String)
-    abstract fun getLastMessageNotified(accountId: String, conversationUri: Uri): String?
+    abstract fun setMessageDismissed(accountId: String, conversationUri: Uri, lastId: String)
+    abstract fun getLastMessageDismissed(accountId: String, conversationUri: Uri): String?
 
     protected abstract fun deleteAccountHistory(accountId: String)
     fun clearHistory(accountId: String): Completable = Completable
