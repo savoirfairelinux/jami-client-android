@@ -83,13 +83,13 @@ class HistoryServiceImpl(private val mContext: Context) : HistoryService() {
         if (accountDir.exists()) deleteFolder(accountDir)
     }
 
-    override fun setMessageNotified(accountId: String, conversationUri: Uri, lastId: String) {
+    override fun setMessageDismissed(accountId: String, conversationUri: Uri, lastId: String) {
         val preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
         preferences.edit()
             .putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_LAST_READ, lastId).apply()
     }
 
-    override fun getLastMessageNotified(accountId: String, conversationUri: Uri): String? {
+    override fun getLastMessageDismissed(accountId: String, conversationUri: Uri): String? {
         val preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri.uri, Context.MODE_PRIVATE)
         return preferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_LAST_READ, null)
     }
