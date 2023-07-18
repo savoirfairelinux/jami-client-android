@@ -76,12 +76,10 @@ class ConversationFacade(
     fun getAccountSubject(accountId: String): Single<Account> = mAccountService.getAccountSingle(accountId)
         .flatMap { account: Account -> loadSmartlist(account) }
 
-    fun messageNotified(accountId: String, conversationUri: Uri, messageId: String) {
+    fun messageDismissed(accountId: String, conversationUri: Uri, messageId: String) {
         val conversation  = mAccountService.getAccount(accountId)?.getByUri(conversationUri) ?: return
-        conversation.getMessage(messageId)?.let { message ->
-            message.isNotified = true
-        }
-        mHistoryService.setMessageNotified(accountId, conversationUri, messageId)
+        conversation.getMessage(messageId)?.isDismissed = true
+        mHistoryService.setMessageDismissed(accountId, conversationUri, messageId)
     }
 
     fun readMessages(accountId: String, contact: Uri): String? {
@@ -107,7 +105,7 @@ class ConversationFacade(
         var lastRead: String? = null
         for (message in messages) {
             if (conversation.isSwarm) {
-                mHistoryService.setMessageNotified(conversation.accountId, conversation.uri, message.messageId!!)
+                mHistoryService.setMessageDismissed(conversation.accountId, conversation.uri, message.messageId!!)
                 lastRead = message.messageId
             } else {
                 val did = message.daemonId
@@ -446,7 +444,7 @@ class ConversationFacade(
                             val conversation = account.getByUri(e.conversation!!.participant) ?: continue
                             conversation.id = e.conversation!!.id
                             conversation.addElement(e)
-                            conversation.setLastMessageNotified(mHistoryService.getLastMessageNotified(account.accountId, conversation.uri))
+                            conversation.setLastMessageDismissed(mHistoryService.getLastMessageDismissed(account.accountId, conversation.uri))
                             // Update the conversation preferences.
                             conversation.updatePreferences(
                                 mPreferencesService.getConversationPreferences(

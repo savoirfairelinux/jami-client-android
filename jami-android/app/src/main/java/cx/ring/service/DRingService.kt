@@ -298,7 +298,7 @@ class DRingService : Service() {
             ACTION_CONV_READ -> mConversationFacade.readMessages(path.accountId, path.conversationUri)
             ACTION_CONV_DISMISS -> {
                 extras?.getString(KEY_MESSAGE_ID)?.let { messageId ->
-                    mConversationFacade.messageNotified(path.accountId, path.conversationUri, messageId)
+                    mConversationFacade.messageDismissed(path.accountId, path.conversationUri, messageId)
                 }
             }
             ACTION_CONV_REPLY_INLINE -> {
