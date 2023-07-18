@@ -542,60 +542,100 @@ class NotificationServiceImpl(
         texts: TreeMap<Long, TextMessage>,
         cvm: ConversationItemViewModel
     ) {
-        val cpath = ConversationPath(cvm.accountId, cvm.uri)
-        val path = cpath.toUri()
-        val key = cpath.toKey()
+        val conversationPath = ConversationPath(cvm.accountId, cvm.uri)
+        val uri = conversationPath.toUri()
+        val key = conversationPath.toKey()
         val conversationProfile = getProfile(cvm)
-        var notificationVisibility = mPreferencesService.settings.notificationVisibility
-        notificationVisibility = when (notificationVisibility) {
+        val last = texts.lastEntry()?.value
+
+        // Define visibility
+        val notificationVisibility = when (mPreferencesService.settings.notificationVisibility) {
             SettingsFragment.NOTIFICATION_PUBLIC -> Notification.VISIBILITY_PUBLIC
             SettingsFragment.NOTIFICATION_SECRET -> Notification.VISIBILITY_SECRET
             SettingsFragment.NOTIFICATION_PRIVATE -> Notification.VISIBILITY_PRIVATE
             else -> Notification.VISIBILITY_PRIVATE
         }
-        val last = texts.lastEntry()?.value
-        val intentConversation = Intent(Intent.ACTION_VIEW, path, mContext, HomeActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val intentDelete = Intent(DRingService.ACTION_CONV_DISMISS, path, mContext, DRingService::class.java)
-            .putExtra(DRingService.KEY_MESSAGE_ID, last?.messageId ?: last?.daemonIdString)
-        val messageNotificationBuilder = NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
-            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-            .setPriority(Notification.PRIORITY_HIGH)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setVisibility(notificationVisibility)
-            .setSmallIcon(R.drawable.ic_ring_logo_white)
-            .setContentTitle(conversationProfile.second)
-            .setContentText(last?.body)
-            .setLocusId(LocusIdCompat(key))
-            .setWhen(last?.timestamp ?: 0)
-            .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, ContentUriHandler.immutable()))
-            .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, ContentUriHandler.immutable()))
-            .setAutoCancel(true)
-            .setColor(ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null))
-        /*val conversationPerson = Person.Builder()
-            .setKey(key)
-            .setName(conversationProfile.second)
-            .setIcon(IconCompat.createWithBitmap(conversationProfile.first))
-            .build()*/
-        messageNotificationBuilder.setLargeIcon(conversationProfile.first)
-        val intentBubble = Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity::class.java)
-        intentBubble.putExtra(EXTRA_BUBBLE, true)
-        messageNotificationBuilder
-            .setBubbleMetadata(NotificationCompat.BubbleMetadata.Builder(
-                PendingIntent.getActivity(mContext, 0, intentBubble, ContentUriHandler.mutable(PendingIntent.FLAG_UPDATE_CURRENT)),
-                IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
+
+        // Define pending content intent
+        val pendingIntentConversation =
+            PendingIntent.getActivity(
+                mContext,
+                random.nextInt(),
+                Intent(Intent.ACTION_VIEW, uri, mContext, HomeActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                ContentUriHandler.immutable()
+            )
+
+        // Define delete intent
+        val pendingIntentDelete =
+            PendingIntent.getService(
+                mContext,
+                random.nextInt(),
+                Intent(DRingService.ACTION_CONV_DISMISS, uri, mContext, DRingService::class.java)
+                    .putExtra(DRingService.KEY_MESSAGE_ID, last?.messageId ?: last?.daemonIdString),
+                ContentUriHandler.immutable()
+            )
+
+        // Define notification color
+        val notificationColor =
+            ResourcesCompat.getColor(mContext.resources, R.color.color_primary_dark, null)
+
+        // Define bubble metadata
+        val pendingIntentBubbleMetadata =
+            PendingIntent.getActivity(
+                mContext,
+                0,
+                Intent(Intent.ACTION_VIEW, uri, mContext, ConversationActivity::class.java)
+                    .putExtra(EXTRA_BUBBLE, true),
+                ContentUriHandler.mutable(PendingIntent.FLAG_UPDATE_CURRENT)
+            )
+
+        val bubbleMetadata =
+            NotificationCompat.BubbleMetadata
+                .Builder(
+                    pendingIntentBubbleMetadata,
+                    IconCompat.createWithAdaptiveBitmap(conversationProfile.first)
+                )
                 .setDesiredHeight(600)
-                .build())
-            //.addPerson(conversationPerson)
-            .setShortcutId(key)
-        val account = mAccountService.getAccount(cpath.accountId)
-        val profile = if (account == null) null else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
-        val myPic = account?.let { getContactPicture(it) }
-        val userPerson = Person.Builder()
-            .setKey(cpath.accountId)
-            .setName(if (profile == null || TextUtils.isEmpty(profile.displayName)) "You" else profile.displayName)
-            .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
-            .build()
+                .build()
+
+        // Build notification
+        val messageNotificationBuilder =
+            NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setVisibility(notificationVisibility)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentTitle(conversationProfile.second)
+                .setContentText(last?.body)
+                .setLocusId(LocusIdCompat(key))
+                .setWhen(last?.timestamp ?: 0)
+                .setContentIntent(pendingIntentConversation)
+                .setDeleteIntent(pendingIntentDelete)
+                .setAutoCancel(true)
+                .setColor(notificationColor)
+                .setLargeIcon(conversationProfile.first)
+                .setShortcutId(key)
+                .setBubbleMetadata(bubbleMetadata)
+
+        val account = mAccountService.getAccount(conversationPath.accountId)
+        val profile =
+            if (account == null) null
+            else VCardServiceImpl.loadProfile(mContext, account).blockingFirst()
+        val contactPicture = account?.let { getContactPicture(it) }
+        val userPerson =
+            Person.Builder()
+                .setKey(conversationPath.accountId)
+                .setName(
+                    if (profile == null || TextUtils.isEmpty(profile.displayName)) "You"
+                    else profile.displayName
+                )
+                .setIcon(
+                    if (contactPicture == null) null
+                    else IconCompat.createWithBitmap(contactPicture)
+                )
+                .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
         history.isGroupConversation = cvm.isGroup()
         history.conversationTitle = conversationProfile.second
@@ -604,7 +644,7 @@ class NotificationServiceImpl(
             if (contact.contact.isUser) continue
             val contactPicture = getContactPicture(contact)
             val contactPerson = Person.Builder()
-                .setKey(ConversationPath.toKey(cpath.accountId, contact.contact.uri.uri))
+                .setKey(ConversationPath.toKey(conversationPath.accountId, contact.contact.uri.uri))
                 .setName(contact.displayName)
                 .setIcon(if (contactPicture == null) null else IconCompat.createWithBitmap(contactPicture))
                 .build()
@@ -621,7 +661,7 @@ class NotificationServiceImpl(
             ))
         }
         messageNotificationBuilder.setStyle(history)
-        val notificationId = getTextNotificationId(cpath.accountId, cvm.uri)
+        val notificationId = getTextNotificationId(conversationPath.accountId, cvm.uri)
         val replyId = notificationId + 1
         val markAsReadId = notificationId + 2
         val replyLabel = mContext.getText(R.string.notif_reply)
@@ -629,11 +669,11 @@ class NotificationServiceImpl(
             .setLabel(replyLabel)
             .build()
         val replyPendingIntent = PendingIntent.getService(mContext, replyId,
-            Intent(DRingService.ACTION_CONV_REPLY_INLINE, path, mContext, DRingService::class.java),
+            Intent(DRingService.ACTION_CONV_REPLY_INLINE, uri, mContext, DRingService::class.java),
             ContentUriHandler.mutable(PendingIntent.FLAG_UPDATE_CURRENT)
         )
         val readPendingIntent = PendingIntent.getService(mContext, markAsReadId,
-            Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService::class.java), ContentUriHandler.immutable())
+            Intent(DRingService.ACTION_CONV_READ, uri, mContext, DRingService::class.java), ContentUriHandler.immutable())
         messageNotificationBuilder
             .extend(CarAppExtender.Builder().build())
             .addAction(NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
