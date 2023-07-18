@@ -16,7 +16,6 @@
  */
 package cx.ring.service
 
-import android.os.Build
 import android.telecom.CallAudioState
 import android.telecom.Connection
 import android.telecom.ConnectionRequest
@@ -105,7 +104,8 @@ class CallConnection(
 
     override fun onAbort() {
         Log.w(TAG, "onAbort")
-        service.callService.hangUp(call!!.account!!, call!!.daemonIdString!!)
+        val call = call ?: return
+        service.callService.hangUp(call.account!!, call.daemonIdString!!)
     }
 
     override fun onAnswer(videoState: Int) {
@@ -120,12 +120,14 @@ class CallConnection(
 
     override fun onHold() {
         Log.w(TAG, "onHold")
-        service.callService.hold(call!!.account!!, call!!.daemonIdString!!)
+        val call = call ?: return
+        service.callService.hold(call.account!!, call.daemonIdString!!)
     }
 
     override fun onUnhold() {
         Log.w(TAG, "onUnhold")
-        service.callService.unhold(call!!.account!!, call!!.daemonIdString!!)
+        val call = call ?: return
+        service.callService.unhold(call.account!!, call.daemonIdString!!)
     }
 
     override fun onSilence() {
@@ -134,7 +136,8 @@ class CallConnection(
 
     override fun onDisconnect() {
         Log.w(TAG, "onDisconnect")
-        service.callService.hangUp(call!!.account!!, call!!.daemonIdString!!)
+        val call = call ?: return
+        service.callService.hangUp(call.account!!, call.daemonIdString!!)
     }
 
     override fun onPlayDtmfTone(c: Char) {
