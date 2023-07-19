@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f30edd3_b51541af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-07-19T14:53:50Z",
+      "side": 1,
+      "message": "English follows\n\nDans le code, on considère un message isNotified à partir du moment ou l\u0027utilisateur a dismiss sa notification. Ce patch visait à corriger la confusion mais le wording n\u0027est toujours pas satisfaisant. Ne pas merger.\n\nIn the code, we consider a message as \"isNotified\" from the moment the user dismiss its notification. This patch aimed to fix the confusion, but the wording is still unsatisfactory. Please do not merge.",
+      "revId": "3912b53c2e92bbb1870ec97025ea446dd80f7449",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
