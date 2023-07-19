@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bce3bf5_922a9868",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-19T14:59:35Z",
+      "side": 1,
+      "message": "adding 40 lines by splitting variables doesn\u0027t necessarily make the code clearer.",
+      "revId": "f641904a3f0c89bbae895d0bddf91087268c8da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45de439e_1cc363c3",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-19T14:59:35Z",
+      "side": 1,
+      "message": "unnecessary comment (\u0027val\u0027 always defines a variable and the comment doesn\u0027t add any information)",
+      "range": {
+        "startLine": 559,
+        "startChar": 8,
+        "endLine": 559,
+        "endChar": 40
+      },
+      "revId": "f641904a3f0c89bbae895d0bddf91087268c8da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baeb6f9d_73151830",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-19T14:59:35Z",
+      "side": 1,
+      "message": "unnecessary comment (\u0027val\u0027 always defines a variable and the comment doesn\u0027t add any information)",
+      "range": {
+        "startLine": 569,
+        "startChar": 8,
+        "endLine": 569,
+        "endChar": 31
+      },
+      "revId": "f641904a3f0c89bbae895d0bddf91087268c8da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c6704cf_b34379b4",
+        "filename": "jami-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-19T14:59:35Z",
+      "side": 1,
+      "message": "Was significantly clearer inline, IMHO. Splitting it makes the code more \"spagetti-like\" and requires to go back and forth in the code to understand what\u0027s going on.",
+      "range": {
+        "startLine": 579,
+        "startChar": 0,
+        "endLine": 581,
+        "endChar": 1
+      },
+      "revId": "f641904a3f0c89bbae895d0bddf91087268c8da3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
