@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52f27c40_1f280cd1",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-19T15:02:35Z",
+      "side": 1,
+      "message": "preserve string resources to avoid loosing existing translations",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 130
+      },
+      "revId": "14e3b8c4bf0be5d34a6840775bdf16645be7df3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
