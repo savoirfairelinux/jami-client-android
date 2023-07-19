@@ -110,6 +110,9 @@ along with this program; if not, write to the Free Software
 
     <!-- Advanced Details -->
     <string name="account_preferences_advanced_tab">Advanced</string>
+    <string name="account_chat_settings_title">Chat settings</string>
+    <string name="account_read_receipts_label">Enable read receipts</string>
+    <string name="account_read_receipts_summary">Send and receive receipts indicating that a message have been displayed.</string>
     <string name="account_call_settings_title">Call settings</string>
     <string name="account_dht_public_in_calls_label">Allow incoming calls from unknown contacts</string>
     <string name="account_registration_exp_label">Registration Expire</string>

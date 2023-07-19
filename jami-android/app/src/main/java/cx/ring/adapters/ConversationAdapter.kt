@@ -111,7 +111,6 @@ class ConversationAdapter(
         .startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
-    private var mShowReadIndicator = true
     var showLinkPreviews = true
     private val markwon: Markwon =
         Markwon.builder(conversationFragment.requireContext())
@@ -569,10 +568,6 @@ class ConversationAdapter(
                 mInteractions.size
             )
         }
-    }
-
-    fun setReadIndicatorStatus(show: Boolean) {
-        mShowReadIndicator = show
     }
 
     private class RecyclerViewContextMenuInfo(

@@ -50,7 +50,6 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             .putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.enablePermanentService)
             .putBoolean(PREF_ADD_GROUP, settings.enableAddGroup)
             .putBoolean(PREF_SHOW_TYPING, settings.enableTypingIndicator)
-            .putBoolean(PREF_SHOW_READ, settings.enableReadIndicator)
             .putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked)
             .putBoolean(PREF_LINK_PREVIEWS, settings.enableLinkPreviews)
             .putInt(PREF_NOTIFICATION_VISIBILITY, settings.notificationVisibility)
@@ -67,7 +66,6 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             enablePermanentService = appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false),
             enableAddGroup = appPrefs.getBoolean(PREF_ADD_GROUP, false),
             enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),
-            enableReadIndicator = appPrefs.getBoolean(PREF_SHOW_READ, true),
             isRecordingBlocked = appPrefs.getBoolean(PREF_BLOCK_RECORD, false),
             enableLinkPreviews = appPrefs.getBoolean(PREF_LINK_PREVIEWS, true),
             notificationVisibility = appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0)
@@ -182,7 +180,6 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         private const val PREF_PERSISTENT_NOTIFICATION = "persistent_notif"
         private const val PREF_ADD_GROUP = "add_group"
         private const val PREF_SHOW_TYPING = "persistent_typing"
-        private const val PREF_SHOW_READ = "persistent_read"
         private const val PREF_BLOCK_RECORD = "persistent_block_record"
         private const val PREF_LINK_PREVIEWS = "link_previews_enable"
         private const val PREF_NOTIFICATION_VISIBILITY = "persistent_notification"
