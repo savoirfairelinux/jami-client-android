@@ -509,14 +509,9 @@ class ConversationFacade(
         if (txt.isRead) {
             if (txt.messageId == null) {
                 mHistoryService.updateInteraction(txt, accountId).subscribe()
+                mAccountService.setMessageDisplayed(txt.account, uri, txt.daemonIdString!!)
             }
-            if (mPreferencesService.settings.enableReadIndicator) {
-                if (txt.messageId != null) {
-                    mAccountService.setMessageDisplayed(txt.account, uri, txt.messageId!!)
-                } else {
-                    mAccountService.setMessageDisplayed(txt.account, uri, txt.daemonIdString!!)
-                }
-            }
+            else mAccountService.setMessageDisplayed(txt.account, uri, txt.messageId!!)
         }
 
         startConversation(accountId, uri).subscribe(mNotificationService::showTextNotification)
