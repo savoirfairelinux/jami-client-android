@@ -25,7 +25,6 @@ data class Settings(
     val allowPlaceSystemCalls: Boolean,
     val runOnStartup: Boolean,
     val enableTypingIndicator: Boolean,
-    val enableReadIndicator: Boolean,
     val enableLinkPreviews: Boolean,
     val isRecordingBlocked: Boolean,
     //val enableHwEncoding: Boolean,

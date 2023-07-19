@@ -93,9 +93,10 @@ class ConversationFacade(
     fun readMessages(account: Account, conversation: Conversation, cancelNotification: Boolean): String? {
         val lastMessage = readMessages(conversation) ?: return null
         account.refreshed(conversation)
-        if (mPreferencesService.settings.enableReadIndicator) {
-            mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
-        }
+
+        // Mark the message as read (daemon will deal with "read receipt" parameter on his own).
+        mAccountService.setMessageDisplayed(account.accountId, conversation.uri, lastMessage)
+
         if (cancelNotification) {
             mNotificationService.cancelTextNotification(account.accountId, conversation.uri)
         }
@@ -502,14 +503,9 @@ class ConversationFacade(
         if (txt.isRead) {
             if (txt.messageId == null) {
                 mHistoryService.updateInteraction(txt, accountId).subscribe()
+                mAccountService.setMessageDisplayed(txt.account, uri, txt.daemonIdString!!)
             }
-            if (mPreferencesService.settings.enableReadIndicator) {
-                if (txt.messageId != null) {
-                    mAccountService.setMessageDisplayed(txt.account, uri, txt.messageId!!)
-                } else {
-                    mAccountService.setMessageDisplayed(txt.account, uri, txt.daemonIdString!!)
-                }
-            }
+            else mAccountService.setMessageDisplayed(txt.account, uri, txt.messageId!!)
         }
 
         startConversation(accountId, uri).subscribe(mNotificationService::showTextNotification)

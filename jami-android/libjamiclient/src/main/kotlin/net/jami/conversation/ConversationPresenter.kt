@@ -62,7 +62,7 @@ class ConversationPresenter @Inject constructor(
         if (conversationUri == mConversationUri) return
         Log.w(TAG, "init $conversationUri $accountId")
         val settings = preferencesService.settings
-        view?.setSettings(settings.enableReadIndicator, settings.enableLinkPreviews)
+        view?.setSettings(settings.enableLinkPreviews)
         mConversationUri = conversationUri
         mCompositeDisposable.add(conversationFacade.getAccountSubject(accountId)
             .flatMap { a: Account ->
@@ -456,9 +456,6 @@ class ConversationPresenter @Inject constructor(
         return preferencesService.settings.enableTypingIndicator
     }
 
-    private fun showReadIndicator(): Boolean {
-        return preferencesService.settings.enableReadIndicator
-    }
 
     fun setSearchQuery(query: String) {
         searchQuerySubject?.onNext(query)

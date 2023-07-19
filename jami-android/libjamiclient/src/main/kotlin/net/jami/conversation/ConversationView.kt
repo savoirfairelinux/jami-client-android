@@ -66,7 +66,7 @@ interface ConversationView {
     fun hideErrorPanel()
     fun displayNetworkErrorPanel()
     fun displayAccountOfflineErrorPanel()
-    fun setSettings(readIndicator: Boolean, linkPreviews: Boolean)
+    fun setSettings(linkPreviews: Boolean)
     fun addSearchResults(results: List<Interaction>)
     fun shareText(body: String)
     fun goToSearchMessage(messageId: String)

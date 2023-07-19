@@ -1273,9 +1273,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         }
     }
 
-    override fun setSettings(readIndicator: Boolean, linkPreviews: Boolean) {
+    override fun setSettings(linkPreviews: Boolean) {
         mAdapter?.apply {
-            setReadIndicatorStatus(readIndicator)
             showLinkPreviews = linkPreviews
         }
     }

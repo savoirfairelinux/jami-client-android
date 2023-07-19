@@ -92,7 +92,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsStartup.setOnCheckedChangeListener(save)
             settingsPersistNotification.setOnCheckedChangeListener(save)
             settingsTyping.setOnCheckedChangeListener(save)
-            settingsRead.setOnCheckedChangeListener(save)
             settingsBlockRecord.setOnCheckedChangeListener(save)
             settingsLinkPreview.setOnCheckedChangeListener(save)
             settingsVideoLayout.setOnClickListener {
@@ -209,7 +208,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             enablePushNotifications = binding.settingsPushNotifications.isChecked,
             enablePermanentService = binding.settingsPersistNotification.isChecked,
             enableTypingIndicator = binding.settingsTyping.isChecked,
-            enableReadIndicator = binding.settingsRead.isChecked,
             isRecordingBlocked = binding.settingsBlockRecord.isChecked,
             enableLinkPreviews = binding.settingsLinkPreview.isChecked,
             notificationVisibility = mNotificationVisibility
@@ -252,7 +250,6 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsPersistNotification.isChecked = viewModel.enablePermanentService
             settingsStartup.isChecked = viewModel.runOnStartup
             settingsTyping.isChecked = viewModel.enableTypingIndicator
-            settingsRead.isChecked = viewModel.enableReadIndicator
             settingsBlockRecord.isChecked = viewModel.isRecordingBlocked
             settingsLinkPreview.isChecked = viewModel.enableLinkPreviews
         }

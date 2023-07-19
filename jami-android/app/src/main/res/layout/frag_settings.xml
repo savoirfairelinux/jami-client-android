@@ -324,61 +324,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:padding="@dimen/padding_large">
 
                 <ImageView
-                    android:id="@+id/system_read_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="32dp"
-                    android:contentDescription="@string/pref_read_summary"
-                    android:src="@drawable/baseline_mark_chat_read_24dp"
-                    app:tint="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/settings_read"
-                    android:layout_toEndOf="@+id/system_read_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/pref_read_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_read_summary" />
-
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/settings_read"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:checked="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_large">
-
-                <ImageView
                     android:id="@+id/system_block_record_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/pref_read_summary"
                     android:src="@drawable/baseline_stop_screen_share_24dp"
                     android:layout_alignParentStart="true"
                     app:tint="@color/colorPrimary"
@@ -433,7 +381,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="32dp"
-                    android:contentDescription="@string/pref_read_summary"
                     android:src="@drawable/baseline_preview_24"
                     app:tint="@color/colorPrimary" />
 
