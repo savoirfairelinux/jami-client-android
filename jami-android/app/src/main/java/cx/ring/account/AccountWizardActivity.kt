@@ -20,6 +20,7 @@ package cx.ring.account
 import android.Manifest
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
@@ -54,6 +55,8 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
         JamiApplication.instance?.startDaemon(this)
         val model: AccountCreationViewModel by viewModels()
         setContentView(R.layout.activity_wizard)
