@@ -121,7 +121,7 @@ class ConversationPresenter @Inject constructor(
             } else if (c.mode == Conversation.Mode.Request) {
                 view.switchToIncomingTrustRequestView(c.uriTitle/*ConversationItemViewModel.getUriTitle(conversation.uri, contacts)*/)
             } else if (c.isSwarm || account.isContact(c.uri)) {
-                if (!c.isGroup() && c.getContact()?.contact?.isBanned == true) {
+                if ((c.mode == Conversation.Mode.OneToOne) && c.getContact()?.contact?.isBanned == true) {
                     view.switchToBannedView()
                 } else
                     view.switchToConversationView()
