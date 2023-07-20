@@ -68,6 +68,8 @@ class Conversation : ConversationHistory {
     private var mDirty = false
     private var mLoadingSubject: SingleSubject<Conversation>? = null
 
+    var request:TrustRequest? = null
+
     val mode: Observable<Mode>
         get() = mMode
     val isSwarm: Boolean

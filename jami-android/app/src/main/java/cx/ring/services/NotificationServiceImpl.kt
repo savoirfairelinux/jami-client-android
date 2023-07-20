@@ -597,7 +597,9 @@ class NotificationServiceImpl(
             .setIcon(if (myPic == null) null else IconCompat.createWithBitmap(myPic))
             .build()
         val history = NotificationCompat.MessagingStyle(userPerson)
-        history.isGroupConversation = cvm.isGroup()
+        // Even if it's a group conversation, if there is only two people in it,
+        // we don't want to display notification as a group (not necessary to surcharge).
+        history.isGroupConversation = cvm.isSwarm && cvm.contacts.size > 2
         history.conversationTitle = conversationProfile.second
         val persons = HashMap<String, Person>()
         for (contact in cvm.contacts) {
