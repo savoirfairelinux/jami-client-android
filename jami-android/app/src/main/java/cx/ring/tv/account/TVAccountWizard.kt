@@ -17,6 +17,7 @@
 package cx.ring.tv.account
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -48,6 +49,8 @@ class TVAccountWizard : BaseActivity<AccountWizardPresenter>(), AccountWizardVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
         JamiApplication.instance?.startDaemon(this)
         val model: AccountCreationViewModel by viewModels()
         val intent = intent

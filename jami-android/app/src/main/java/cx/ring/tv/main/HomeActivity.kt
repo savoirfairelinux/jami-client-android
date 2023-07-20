@@ -24,6 +24,7 @@ import android.hardware.Camera
 import android.hardware.Camera.ErrorCallback
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.AvailabilityCallback
+import android.os.Build
 import android.os.Bundle
 import android.renderscript.*
 import android.util.Log
@@ -126,6 +127,8 @@ class HomeActivity : FragmentActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(1) { onBackPressed() }
         JamiApplication.instance?.startDaemon(this)
         setContentView(R.layout.tv_activity_home)
         mBackgroundManager = BackgroundManager.getInstance(this).apply { attach(window) }
