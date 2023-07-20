@@ -138,12 +138,20 @@ class ConversationActionsFragment : Fragment(), Colorable {
             // Setup card with
             //  - conversation type (such as "Private swarm")
             //  - conversation id (such as swarm:1234)"
+            // The real conversation mode is hidden in TrustRequest when it's a request.
+            val conversationMode =
+                if (conversation.mode.blockingFirst() == Conversation.Mode.Request)
+                    conversation.request!!.mode
+                else conversation.mode.blockingFirst()
+
             @StringRes val infoString =
-                if (conversation.isSwarm)
-                    if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne)
+                if (conversation.isSwarm) {
+                    if (conversationMode == Conversation.Mode.OneToOne)
                         R.string.conversation_type_private
-                    else
+                    else {
                         R.string.conversation_type_group
+                    }
+                }
                 else R.string.conversation_type_contact
             conversationType.setText(infoString)
             val conversationUri = conversation.uri.toString()
@@ -153,7 +161,7 @@ class ConversationActionsFragment : Fragment(), Colorable {
 
             // Setup other actions depending on context
             val callUri: Uri?
-            if (conversation.mode.blockingFirst() == Conversation.Mode.OneToOne) {
+            if (conversationMode == Conversation.Mode.OneToOne) {
                 callUri = conversation.contact!!.uri
                 if (!conversation.contact!!.isBanned) {
                     // Setup block contact action

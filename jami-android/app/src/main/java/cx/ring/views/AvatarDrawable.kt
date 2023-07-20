@@ -270,9 +270,8 @@ class AvatarDrawable : Drawable {
             return this
         }
 
-        fun withViewModel(vm: ConversationItemViewModel): Builder {
-            val isSwarm = vm.uri.isSwarm && vm.mode != Conversation.Mode.OneToOne
-            return if (isSwarm)
+        fun withViewModel(vm: ConversationItemViewModel): Builder =
+            if (vm.isGroup())
                 withId(vm.uri.rawRingId)
                     .withContacts(vm.conversationProfile, vm.contacts)
                     .setGroup()
@@ -280,7 +279,6 @@ class AvatarDrawable : Drawable {
                 .withPresence(vm.showPresence)
                 .withOnlineState(vm.isOnline)
                 .withCheck(vm.isChecked)
-        }
 
         fun build(context: Context): AvatarDrawable =
             AvatarDrawable(context, photos, name, id, circleCrop, isGroup).also {

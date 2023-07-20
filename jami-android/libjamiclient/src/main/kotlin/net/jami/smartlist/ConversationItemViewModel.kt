@@ -37,6 +37,7 @@ class ConversationItemViewModel(
     var selected: Observable<Boolean>? = conversation.getVisible()
         private set
     val lastEvent: Interaction? = conversation.lastEvent
+    val request: TrustRequest? = conversation.request
 
     enum class Title {
         None, Conversations, PublicDirectory
@@ -67,7 +68,14 @@ class ConversationItemViewModel(
         return if (contacts.isNotEmpty()) contacts[0] else null
     }
 
-    fun isGroup(): Boolean = isSwarm && contacts.size > 2
+    fun isGroup(): Boolean =
+        // SwarmGroup is a conversation were there are multiple participants (not a 1:1
+        // conversation). To know this, we need to check the conversation mode.
+        // However, conversation mode can also be a request. In this case, we need to check the
+        // request mode to know if it is a 1:1 conversation or not (request attribute).
+        if (mode == Conversation.Mode.Request)
+            request?.mode != Conversation.Mode.OneToOne
+        else mode != Conversation.Mode.OneToOne
 
     override fun equals(other: Any?): Boolean {
         if (other !is ConversationItemViewModel) return false

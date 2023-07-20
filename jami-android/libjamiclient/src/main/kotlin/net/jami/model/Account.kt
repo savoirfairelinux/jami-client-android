@@ -674,6 +674,8 @@ class Account(
                     conversation.setProfile(p)
                 }
 
+                conversation.request = request
+
                 //Log.w(TAG, "pendingRequestAdded $key")
                 pending[key] = conversation
                 if (!conversation.isSwarm) {
