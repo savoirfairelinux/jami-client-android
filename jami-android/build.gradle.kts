@@ -5,8 +5,8 @@ buildscript {
         mavenCentral()
     }
 
-    val kotlin_version by extra { "1.8.20" }
-    val hilt_version by extra { "2.45" }
+    val kotlin_version by extra { "1.9.0" }
+    val hilt_version by extra { "2.47" }
 
     dependencies {
         classpath ("com.android.tools.build:gradle:7.4.2")

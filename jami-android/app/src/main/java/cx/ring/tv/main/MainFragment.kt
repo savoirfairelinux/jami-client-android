@@ -185,11 +185,11 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         val cr = context.contentResolver
         mHomeChannelDisposable.clear()
         mHomeChannelDisposable.add(Single.fromCallable { createHomeChannel(context) }
-            .doOnEvent { channelId: Long, error: Throwable? ->
+            .doOnEvent { channelId: Long?, error: Throwable? ->
                 if (error != null) {
                     Log.w(TAG, "Error creating home channel", error)
                 } else {
-                    cr.delete(TvContractCompat.buildPreviewProgramsUriForChannel(channelId), null, null)
+                    cr.delete(TvContractCompat.buildPreviewProgramsUriForChannel(channelId ?: 0), null, null)
                 }
             }
             .flatMapObservable { channelId -> Observable.fromIterable(contacts)
