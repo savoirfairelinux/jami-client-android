@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Ngừng khai thác</string>
   <string name="pref_typing_title">Khả năng đánh dấu</string>
   <string name="pref_typing_summary">Gửi và nhận các chỉ số đánh dấu cho thấy một tin nhắn đang được đánh dấu.</string>
-  <string name="pref_read_title">Khả năng nhận đọc</string>
-  <string name="pref_read_summary">Gửi và nhận biên lai cho thấy một tin nhắn đã được hiển thị.</string>
   <string name="pref_block_record_title">Blok chụp màn hình và ghi</string>
   <string name="pref_block_record_summary">Blok chụp ảnh màn hình hoặc ghi video.</string>
   <string name="pref_link_preview_title">Hình trước liên kết trong các cuộc trò chuyện</string>

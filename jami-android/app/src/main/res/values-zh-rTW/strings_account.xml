@@ -79,6 +79,8 @@
   <string name="account_video_enable">啟用視訊</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_read_receipts_label">啟用讀取回條</string>
+  <string name="account_read_receipts_summary">傳送與接收指示訊息已顯示的回條。</string>
   <string name="account_call_settings_title">通話設定</string>
   <string name="account_dht_public_in_calls_label">允許未知聯絡人的來電</string>
   <string name="account_registration_exp_label">註冊過期</string>

@@ -79,6 +79,8 @@ U kunt uw account later bewerken</string>
   <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
+  <string name="account_read_receipts_label">Ontvangst bevestigingen inschakelen</string>
+  <string name="account_read_receipts_summary">Verstuur en ontvang meldingen die aangeven dat een bericht getoond is</string>
   <string name="account_call_settings_title">Oproepinstellingen</string>
   <string name="account_dht_public_in_calls_label">Sta inkomende oproepen van onbekende contacten toe</string>
   <string name="account_registration_exp_label">Verval registratie</string>

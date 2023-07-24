@@ -79,6 +79,8 @@
   <string name="account_video_enable">Activar vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzado</string>
+  <string name="account_read_receipts_label">Activar notificación de lectura</string>
+  <string name="account_read_receipts_summary">Enviar e recibir notificación de que unha mensaxe foi mostrada.</string>
   <string name="account_call_settings_title">Axustes de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir chamadas entrantes de contactos descoñecidos</string>
   <string name="account_registration_exp_label">Caducidade do rexistro</string>

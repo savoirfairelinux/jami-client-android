@@ -77,6 +77,8 @@
   <string name="account_video_enable">Video aktiveerimine</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Eelseisv</string>
+  <string name="account_read_receipts_label">Võimalda lugemisrecepti.</string>
+  <string name="account_read_receipts_summary">Saada ja saada kviitid, mis näitavad, et sõnum on näidatud.</string>
   <string name="account_call_settings_title">Kõnesõnumite seaded</string>
   <string name="account_dht_public_in_calls_label">Lase sisselaskeid kõnesid tundmatutest kontaktidest</string>
   <string name="account_registration_exp_label">Registreerimine lõpeb</string>

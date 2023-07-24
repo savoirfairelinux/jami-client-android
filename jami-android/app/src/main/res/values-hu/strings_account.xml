@@ -79,6 +79,9 @@
   <string name="account_video_enable">Videó engedélyezése</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Haladó</string>
+  <string name="account_chat_settings_title">Csevegés beállításai</string>
+  <string name="account_read_receipts_label">Olvasási visszaigazolások küldése</string>
+  <string name="account_read_receipts_summary">Küldjön és fogadjon nyugtákat, jelezve, hogy üzenet jelenik meg.</string>
   <string name="account_call_settings_title">Hívás beállítások</string>
   <string name="account_dht_public_in_calls_label">Az ismeretlen kapcsolatoktól érkező bejövő hívások engedélyezése</string>
   <string name="account_registration_exp_label">Bejegyeztetés lejárata</string>

@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Спыніце лагаванне</string>
   <string name="pref_typing_title">Дазволіць запіс паказчыкаў</string>
   <string name="pref_typing_summary">Пашляць і атрымліваць паказчыкі накладу, якія паказваюць, што паведамленне накладзена.</string>
-  <string name="pref_read_title">Дазвольце чытаць квітанцыі</string>
-  <string name="pref_read_summary">Пашляць і атрымліваць квіты, якія паказваюць, што паведамленне было паказана.</string>
   <string name="pref_block_record_title">Блокіраванне скрыншот і запіс</string>
   <string name="pref_block_record_summary">Блокіруйце здымак экрана або запіс відэа.</string>
   <string name="pref_link_preview_title">Паказаць перагляд спасылкі ў размовах</string>

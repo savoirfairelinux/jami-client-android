@@ -77,6 +77,8 @@
   <string name="account_video_enable">Legg videoen til</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Utfordring</string>
+  <string name="account_read_receipts_label">Legg til å lese kvitteringar</string>
+  <string name="account_read_receipts_summary">Send og motta kvitteringar som tyder at ein melding er vist.</string>
   <string name="account_call_settings_title">Innstillingar på samtal</string>
   <string name="account_dht_public_in_calls_label">Tillate innkommende samtal frå ukjente kontakt</string>
   <string name="account_registration_exp_label">Registrering går ut</string>

@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">কাঠের কাঠ বন্ধ করুন</string>
   <string name="pref_typing_title">টাইপিং নির্দেশক সক্ষম করুন</string>
   <string name="pref_typing_summary">বার্তাটি টাইপ করা হচ্ছে তা দেখানোর জন্য টাইপিং নির্দেশক প্রেরণ এবং গ্রহণ করুন।</string>
-  <string name="pref_read_title">পাঠ প্রাপ্তি সক্ষম করুন</string>
-  <string name="pref_read_summary">একটি বার্তা প্রদর্শিত হয়েছে বলে প্রাপ্তি এবং প্রাপ্তি প্রাপ্তি।</string>
   <string name="pref_block_record_title">স্ক্রিনশট এবং রেকর্ডিং ব্লক করুন</string>
   <string name="pref_block_record_summary">স্ক্রিনশট বা ভিডিও রেকর্ডিং বন্ধ করুন।</string>
   <string name="pref_link_preview_title">কথোপকথনে লিঙ্ক প্রিভিউ দেখান</string>

@@ -79,6 +79,8 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_video_enable">Habilita el vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançat</string>
+  <string name="account_read_receipts_label">Habilita la confirmació de lectura</string>
+  <string name="account_read_receipts_summary">Envia i rep indicadors de confirmació de que un missatge s\'ha mostrat</string>
   <string name="account_call_settings_title">Preferències de trucada</string>
   <string name="account_dht_public_in_calls_label">Permet trucades entrants de contactes desconeguts</string>
   <string name="account_registration_exp_label">Expiració del registre</string>

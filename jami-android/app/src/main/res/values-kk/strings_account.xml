@@ -77,6 +77,8 @@
   <string name="account_video_enable">Видеоны қосу</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Жетісті</string>
+  <string name="account_read_receipts_label">Оқыту квитанцияларын рұқсат ету</string>
+  <string name="account_read_receipts_summary">Хат көрсетілді деген квитанцияларды жіберіп алыңыз.</string>
   <string name="account_call_settings_title">Ақырып алу параметрлері</string>
   <string name="account_dht_public_in_calls_label">Беймәлім байланыс желілерінен келетін шақыруларды рұқсат ету</string>
   <string name="account_registration_exp_label">Тіркеу мерзімі аяқталады</string>

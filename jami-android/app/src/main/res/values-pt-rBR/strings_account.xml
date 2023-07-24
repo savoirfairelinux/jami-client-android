@@ -79,6 +79,8 @@
   <string name="account_video_enable">Habilitar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_read_receipts_label">Ativar verificação de leitura</string>
+  <string name="account_read_receipts_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
   <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_dht_public_in_calls_label">Permitir chamadas de contatos desconhecidos</string>
   <string name="account_registration_exp_label">Registro expirou</string>

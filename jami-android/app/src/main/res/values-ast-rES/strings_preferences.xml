@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Pa parar la tala</string>
   <string name="pref_typing_title">Abilitar los indicadores de mecanografía</string>
   <string name="pref_typing_summary">Enviar y recibir indicadores de mecanografía que muestren que se ta mecanografiando un mensaxe.</string>
-  <string name="pref_read_title">Activu de recibos de lectura</string>
-  <string name="pref_read_summary">Enviar y recibir recibos que indiquen que se ha mostrado un mensaxe.</string>
   <string name="pref_block_record_title">Bloquear captura d\' pantalla y grabación</string>
   <string name="pref_block_record_summary">Bloquear la toma de captura de pantalla o grabación de video.</string>
   <string name="pref_link_preview_title">Mostrar previews de enllaces en conversaciones</string>

@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Prestaňte s vykladaním</string>
   <string name="pref_typing_title">Umožniť indikátory štítania</string>
   <string name="pref_typing_summary">Posielať a prijímať ukazovatele typu, ktoré ukazujú, že sa píše správa.</string>
-  <string name="pref_read_title">Aktivujte odčítanie potvrdení</string>
-  <string name="pref_read_summary">Posielať a prijímať potvrdenia o zobrazení správy.</string>
   <string name="pref_block_record_title">Zblokovanie snímačky obrazovky a nahrávania</string>
   <string name="pref_block_record_summary">Zabudni na snímanie obrazovky alebo nahrávanie videa.</string>
   <string name="pref_link_preview_title">Vystúpiť prehľad prepojenia v konverzáciách</string>

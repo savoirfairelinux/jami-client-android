@@ -79,6 +79,8 @@
   <string name="account_video_enable">Ŝalti Videon</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Specialaj</string>
+  <string name="account_read_receipts_label">Aktivigu legas kvitancojn</string>
+  <string name="account_read_receipts_summary">Sendu kaj ricevu kvitancojn indikantajn, ke mesaĝo estis montrita.</string>
   <string name="account_call_settings_title">Telefonoj</string>
   <string name="account_dht_public_in_calls_label">Permesu alveni alvokojn de nekonataj kontaktoj</string>
   <string name="account_registration_exp_label">Datlimo de registrado</string>

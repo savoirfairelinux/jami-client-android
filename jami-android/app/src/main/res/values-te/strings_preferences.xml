@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">చెక్కడం ఆపండి</string>
   <string name="pref_typing_title">టైపింగ్ సూచికలను ప్రారంభించండి</string>
   <string name="pref_typing_summary">సందేశాన్ని టైప్ చేస్తున్నట్లు చూపించే టైపింగ్ సూచికలను పంపండి మరియు స్వీకరించండి.</string>
-  <string name="pref_read_title">రీడ్ రిసీవ్లను ప్రారంభించండి</string>
-  <string name="pref_read_summary">సందేశం ప్రదర్శించబడిందని సూచించే రిసీవ్లను పంపండి మరియు స్వీకరించండి.</string>
   <string name="pref_block_record_title">స్క్రీన్షాట్ మరియు రికార్డింగ్ను బ్లాక్ చేయండి</string>
   <string name="pref_block_record_summary">స్క్రీన్షాట్ తీయడం లేదా వీడియో రికార్డింగ్ను నిరోధించండి.</string>
   <string name="pref_link_preview_title">సంభాషణలలో లింక్ ప్రివ్యూలను చూపించు</string>

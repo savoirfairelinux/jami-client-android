@@ -77,6 +77,8 @@
   <string name="account_video_enable">Видеог ашиглах</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Өргөн дэвшилтэт</string>
+  <string name="account_read_receipts_label">Хэлгээний хүлээн авах боломжийг хангах</string>
+  <string name="account_read_receipts_summary">Мэдээлэл илрүүлсэн тухай хүлээн авах, хүлээн авах.</string>
   <string name="account_call_settings_title">Зудлагын тохируулалт</string>
   <string name="account_dht_public_in_calls_label">Таны мэдэхгүй холбоотондоо орж ирж буй дуудлагаг зөвшөөрөх</string>
   <string name="account_registration_exp_label">бүртгэл дуусч байна</string>

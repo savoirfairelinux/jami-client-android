@@ -77,6 +77,8 @@
   <string name="account_video_enable">Уключыць відэа</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дасканалы</string>
+  <string name="account_read_receipts_label">Дазвольце чытаць квітанцыі</string>
+  <string name="account_read_receipts_summary">Пашляць і атрымліваць квіты, якія паказваюць, што паведамленне было паказана.</string>
   <string name="account_call_settings_title">Налады званка</string>
   <string name="account_dht_public_in_calls_label">Дазвольце прыступальныя званкі з невядомых кантактаў</string>
   <string name="account_registration_exp_label">Рэгістрацыя заканчваецца</string>

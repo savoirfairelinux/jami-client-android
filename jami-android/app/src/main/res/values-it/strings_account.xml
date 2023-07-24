@@ -79,6 +79,9 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_video_enable">Attiva Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzate</string>
+  <string name="account_chat_settings_title">Impostazioni chat</string>
+  <string name="account_read_receipts_label">Mostra conferma di lettura</string>
+  <string name="account_read_receipts_summary">Invia e ricevi conferme indicanti che un messaggio è stato visualizzato.</string>
   <string name="account_call_settings_title">Impostazioni di chiamata</string>
   <string name="account_dht_public_in_calls_label">Ricevi chiamate sconosciute</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>

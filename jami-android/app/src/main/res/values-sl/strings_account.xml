@@ -79,6 +79,9 @@
   <string name="account_video_enable">Omogoči video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
+  <string name="account_chat_settings_title">Nastavitve klepeta</string>
+  <string name="account_read_receipts_label">Omogoči potrditev branja</string>
+  <string name="account_read_receipts_summary">Pošilja in prejema obvestila, da je bilo sporočilo prikazano.</string>
   <string name="account_call_settings_title">Nastavitve klicev</string>
   <string name="account_dht_public_in_calls_label">Dovoli klice neznanih stikov</string>
   <string name="account_registration_exp_label">Registracija poteče</string>

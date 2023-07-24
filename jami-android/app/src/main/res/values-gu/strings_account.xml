@@ -77,6 +77,8 @@
   <string name="account_video_enable">વિડિઓ સક્ષમ કરો</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">અદ્યતન</string>
+  <string name="account_read_receipts_label">વાંચન રસીદો સક્ષમ કરો</string>
+  <string name="account_read_receipts_summary">સંદેશ પ્રદર્શિત થયો છે તે સૂચિત રસીદ મોકલો અને પ્રાપ્ત કરો.</string>
   <string name="account_call_settings_title">કૉલ સેટિંગ્સ</string>
   <string name="account_dht_public_in_calls_label">અજ્ઞાત સંપર્કોમાંથી આવનારા કૉલ્સને મંજૂરી આપો</string>
   <string name="account_registration_exp_label">નોંધણી સમાપ્ત થાય છે</string>

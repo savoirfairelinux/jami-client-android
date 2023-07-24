@@ -2,15 +2,15 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Tagasiside</string>
-  <string name="report"><u>Saadke meile e-kirja</u></string>
+  <string name="report"><u>Saatke meile e-kiri</u></string>
   <string name="section_license">Litsents</string>
   <string name="sponsor_section">Jami on vaba tarkvara, mida arendas ja toetab</string>
-  <string name="copyright_section">Õigusõigused</string>
-  <string name="contribute_section">Ainuüksi</string>
+  <string name="copyright_section">Õigused</string>
+  <string name="contribute_section">Kaastöö</string>
   <string name="version_section">Versioon</string>
-  <string name="no_email_app_installed">E-posti rakendust ei leitud, paigalda üks meile raportit saata</string>
-  <string name="no_browser_app_installed">Ei leitud veebilehitoru rakendust, paigalda seda lehekülge vaatamiseks</string>
-  <string name="email_chooser_title">Saada postit...</string>
+  <string name="no_email_app_installed">E-posti rakendust ei leitud, paigalda üks, et meile raporteerida</string>
+  <string name="no_browser_app_installed">Veebibrauserit ei leitud, paigaldage see lehe avamiseks</string>
+  <string name="email_chooser_title">Saada e-mail kasutades...</string>
   <string name="website_chooser_title">Vaata veebisaiti kasutades...</string>
   <string name="license">See tarkvara on pakutav \"nii nagu on\", ilma mingisuguse garantiideta.</string>
   <string name="description">Jami on universaalse suhtlemise vaba tarkvara, mis austab kasutajate vabadusi ja privaatsust.</string>
@@ -25,15 +25,15 @@
   <!--RingActivity-->
   <string name="error_no_network">Võrguühendus puudub</string>
   <string name="error_account_offline">Konto on välja lülitatud.</string>
-  <string name="error_mobile_network_available_but_disabled">Palun andke juurdepääsu mobiilvõrgule seaduste ekraanil.</string>
+  <string name="error_mobile_network_available_but_disabled">Palun andke juurdepääsu mobiilvõrgu kasutamisele sätetes</string>
   <!--AB menus-->
   <string name="ab_action_chat">Sms- sõnumid</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Kontakti taotlused</string>
   <string name="menu_item_accounts">Halduskonto</string>
   <string name="menu_item_account">Kontot juhtida</string>
-  <string name="menu_item_settings">Seadused</string>
-  <string name="menu_item_advanced_settings">Eduskunud seadmed</string>
+  <string name="menu_item_settings">Sätted</string>
+  <string name="menu_item_advanced_settings">Seaded edasijõudnutele</string>
   <string name="menu_item_account_settings">Kontode seaded</string>
   <string name="menu_item_plugin_list">Plugini seaded</string>
   <string name="menu_item_share">Jaa minu konto</string>
@@ -55,7 +55,7 @@
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Läbivõtuvõtt</string>
   <string name="notif_missed_outgoing_call">Lähtunud kõne jäi puudu</string>
-  <string name="notif_incoming_call_title">Sisuline kõne %1$s</string>
+  <string name="notif_incoming_call_title">Sissetulev kõne %1$s</string>
   <string name="notif_incoming_call">Sisseõnnestamine</string>
   <string name="notif_outgoing_call_title">Lähtuv kõne %1$s-ile</string>
   <string name="notif_outgoing_call">Lähtuv kõne</string>
@@ -72,8 +72,8 @@
   <string name="notif_channel_background_service">Taustateenus</string>
   <string name="notif_channel_background_service_descr">Võtab kõnet ja sõnumit igal ajal saada.</string>
   <string name="notif_group_calls">Helistused</string>
-  <string name="notif_background_service">Jami jooksis praegu taustal.</string>
-  <string name="notif_mark_as_read">Märk, mida lugutakse</string>
+  <string name="notif_background_service">Jami töötab praegu taustal.</string>
+  <string name="notif_mark_as_read">Märgi loetuks</string>
   <string name="notif_dismiss">Võtmine</string>
   <string name="notif_reply">Vastust</string>
   <string name="notif_incoming_file_transfer_title">Sisenev faili %1$s</string>
@@ -99,8 +99,8 @@
   <string name="hist_in_call">Sisuline kõnelus %1$s</string>
   <string name="hist_out_call">Lähtuv kõne %1$s</string>
   <string name="start_error_title">Ma ei saa Jami\'t alustada!</string>
-  <string name="start_error_mic_required">Jami vajab mikrofonil töötama luba.</string>
-  <string name="action_call_accept">Võta kõne.</string>
+  <string name="start_error_mic_required">Jami vajab luba mikrofoni kasutamiseks</string>
+  <string name="action_call_accept">Vasta kõnele.</string>
   <string name="action_call_accept_audio">Vastust audio teel</string>
   <string name="action_call_accept_video">Vastus videos</string>
   <string name="action_call_hold_accept">Hoia ja võta kõne hääl</string>
@@ -109,7 +109,7 @@
   <string name="action_call_decline">Eelmine aegumine</string>
   <string name="action_call_mic_mute">Vaigista mikrofon</string>
   <string name="action_load_plugin">Laadimis- Plugin</string>
-  <string name="ab_action_speakerphone">Kõrgeja aktiveerimine</string>
+  <string name="ab_action_speakerphone">Aktiveeri valjuhääldi</string>
   <string name="ab_action_contact_add">Lisada kontaktitele</string>
   <string name="ab_action_contact_add_question">Lisada kontaktis?</string>
   <string name="ab_action_audio_call">Kõneõnum</string>
@@ -137,7 +137,7 @@
   <string name="in_reply_to">Vastavalt</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kaamerate luba</string>
-  <string name="permission_dialog_camera_message">Videok konverentsid vajavad kaamera lubadust.</string>
+  <string name="permission_dialog_camera_message">Videok konverentsid vajavad kaamera luba</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Vastused</string>
   <string name="ringtone_error_format_not_supported">See formaat ei toeta.</string>
@@ -152,7 +152,7 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanneerida konto QR-kood, mida soovite lisada.</string>
   <string name="title_activity_qrcode">Jaa minu konto</string>
-  <string name="error_scan_no_camera_permissions">QR-skanner vajab kaamera lubadusi töötama</string>
+  <string name="error_scan_no_camera_permissions">QR-skanner vajab töötamiseks kaamera luba</string>
   <string name="tab_code">Minu kood</string>
   <string name="tab_scan">Skanne kood</string>
   <!--Settings-->
@@ -180,7 +180,7 @@
   <string name="conversation_action_latest">Liigu kerides vestluse lõppu</string>
   <string name="conversation_open_file_error">Seda faili tüüpi avamiseks ei ole paigaldatud rakendust.</string>
   <string name="clip_contact_uri">Kontakt aadress</string>
-  <string name="block_contact_dialog_title">Blokeer %1$s?</string>
+  <string name="block_contact_dialog_title">Blokeeri %1$s?</string>
   <string name="block_contact_dialog_message">%1$s ei saa sinuga ühendust võtta enne kui sa selle blokeerima ei saa.</string>
   <string name="block_contact_completed">%1$s oli blokeeritud.</string>
   <string name="unblock_contact_dialog_title">Kas %1$s on lahti blokeeritud?</string>
@@ -234,7 +234,7 @@
   <string name="no_registered_name">Nimed registreeritud</string>
   <string name="identity">Isiku tunnus</string>
   <string name="account">Kasum</string>
-  <string name="link_new_device">Sõlgke uus seadme</string>
+  <string name="link_new_device">Siduge uus seade</string>
   <string name="devices">Sisse ühendatud seadmed</string>
   <string name="total_devices">Kokku seadmed: </string>
   <!--Share fragment-->
@@ -330,7 +330,7 @@
   <string name="wizard_status_required">Nõutav</string>
   <string name="wizard_username_info">Vali oma konto kasutajanimi</string>
   <string name="wizard_username_button">Vali kasutajanimi</string>
-  <string name="wizard_username_skip">Kasutaja nime valimist väljendata</string>
+  <string name="wizard_username_skip">Jäta kasutajanine valik vahele</string>
   <string name="wizard_password_info">Kontoväline</string>
   <string name="wizard_password_placeholder">Valige parool, et salastatada konto võtme sellel seadmel</string>
   <string name="wizard_password_button">Valige salasõna</string>

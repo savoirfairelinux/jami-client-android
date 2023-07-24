@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Спрете да дървете</string>
   <string name="pref_typing_title">Осигуряване на индикатори за печатане</string>
   <string name="pref_typing_summary">Изпращане и получаване на индикатори за вписване, които показват, че се вписва съобщение.</string>
-  <string name="pref_read_title">Осигуряване на четенето на разписки</string>
-  <string name="pref_read_summary">Изпращане и получаване на квитанции, които показват, че е било показвано съобщение.</string>
   <string name="pref_block_record_title">Блокиране на екран и записване</string>
   <string name="pref_block_record_summary">Не снимайте екран или записвайте видео.</string>
   <string name="pref_link_preview_title">Покажете прегледи на връзките в разговорите</string>

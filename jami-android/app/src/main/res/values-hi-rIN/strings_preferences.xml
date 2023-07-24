@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">लकड़ी का काटना बंद करो</string>
   <string name="pref_typing_title">टाइपिंग संकेतकों को सक्षम करें</string>
   <string name="pref_typing_summary">संदेश टाइप किए जा रहे हैं, यह दिखाने वाले टाइपिंग संकेत भेजें और प्राप्त करें।</string>
-  <string name="pref_read_title">रीड रसीदें सक्षम करें</string>
-  <string name="pref_read_summary">संदेश प्रदर्शित किए गए हैं, इस बात की सूचना देने वाली रसीदें भेजें और प्राप्त करें।</string>
   <string name="pref_block_record_title">स्क्रीनशॉट और रिकॉर्डिंग को ब्लॉक करें</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट लेने या वीडियो रिकॉर्ड करने से रोकें।</string>
   <string name="pref_link_preview_title">वार्तालापों में लिंक पूर्वावलोकन दिखाएं</string>

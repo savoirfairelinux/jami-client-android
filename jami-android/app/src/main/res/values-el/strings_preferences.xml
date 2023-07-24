@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Τερματισμός καταγραφής</string>
   <string name="pref_typing_title">Ενεργοποιήστε δείκτες τυπογραφίας</string>
   <string name="pref_typing_summary">Στείλτε και λαμβάνετε δείκτες πληκτρολόγησης που δείχνουν ότι πληκτρολογείται ένα μήνυμα.</string>
-  <string name="pref_read_title">Ενεργοποιήστε τις αποδείξεις ανάγνωσης</string>
-  <string name="pref_read_summary">Στείλτε και λάβετε αποδείξεις που δείχνουν ότι έχει εμφανιστεί ένα μήνυμα.</string>
   <string name="pref_block_record_title">Κλείστε το screenshot και την εγγραφή</string>
   <string name="pref_block_record_summary">Αποτρέψτε την λήψη οθόνης ή την ηχογράφηση βίντεο.</string>
   <string name="pref_link_preview_title">Δείξτε προεπισκόπηση συνδέσμων στις συνομιλίες</string>

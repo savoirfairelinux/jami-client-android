@@ -77,6 +77,8 @@
   <string name="account_video_enable">Видеоны кую</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Алга таба</string>
+  <string name="account_read_receipts_label">Укырга кертүне кую</string>
+  <string name="account_read_receipts_summary">Хәбәр күрсәтелгән дип күрсәтелгән распискалар җибәрү һәм алу.</string>
   <string name="account_call_settings_title">Чакырулар өчен көйләүләр</string>
   <string name="account_dht_public_in_calls_label">Билгесез контактлардан керүче шалтыратуларга рөхсәт итү</string>
   <string name="account_registration_exp_label">Теркәлү вакыты тәмамлана</string>

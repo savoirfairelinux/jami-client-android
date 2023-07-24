@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Hentikan logging</string>
   <string name="pref_typing_title">Aktifkan indikator pengetikan</string>
   <string name="pref_typing_summary">Kirim dan terima indikator pengetikan yang menunjukkan bahwa pesan sedang diketik.</string>
-  <string name="pref_read_title">Aktifkan tanda terima telah dibaca</string>
-  <string name="pref_read_summary">Kirim dan terima tanda terima yang menunjukkan bahwa pesan telah ditampilkan.</string>
   <string name="pref_block_record_title">Cegah tangkapan layar dan rekaman</string>
   <string name="pref_block_record_summary">Cegah pengambilan tangkapan layar atau rekaman video.</string>
   <string name="pref_link_preview_title">Tampilkan tautan pratinjau di obrolan</string>

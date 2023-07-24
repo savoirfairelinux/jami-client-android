@@ -79,6 +79,8 @@
   <string name="account_video_enable">فعل الفيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
+  <string name="account_read_receipts_label">تمكين إيصالات القراءة</string>
+  <string name="account_read_receipts_summary">إرسال الإيصالات واستلامها للإشارة إلى عرض رسالة.</string>
   <string name="account_call_settings_title">إعدادات الاتصال</string>
   <string name="account_dht_public_in_calls_label">السماح بمكالمات واردة من جهات إتصال غير معروفة</string>
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>

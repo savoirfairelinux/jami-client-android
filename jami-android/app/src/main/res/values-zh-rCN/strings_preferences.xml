@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">停止记录</string>
   <string name="pref_typing_title">启用输入状态显示</string>
   <string name="pref_typing_summary">发送和接收表示正在编写消息的输入状态。</string>
-  <string name="pref_read_title">启用已读回执</string>
-  <string name="pref_read_summary">接收并发送显示一个消息已读的回执。</string>
   <string name="pref_block_record_title">阻止截屏和录屏</string>
   <string name="pref_block_record_summary">阻止截屏或录屏</string>
   <string name="pref_link_preview_title">在对话中显示链接预览</string>

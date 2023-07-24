@@ -77,6 +77,8 @@
   <string name="account_video_enable">వీడియోను ప్రారంభించండి</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ఆధునిక</string>
+  <string name="account_read_receipts_label">రీడ్ రిసీవ్లను ప్రారంభించండి</string>
+  <string name="account_read_receipts_summary">సందేశం ప్రదర్శించబడిందని సూచించే రిసీవ్లను పంపండి మరియు స్వీకరించండి.</string>
   <string name="account_call_settings_title">కాల్ సెట్టింగులు</string>
   <string name="account_dht_public_in_calls_label">తెలియని పరిచయాల నుండి ఇన్కమింగ్ కాల్స్ అనుమతించు</string>
   <string name="account_registration_exp_label">నమోదు గడువు ముగిసింది</string>

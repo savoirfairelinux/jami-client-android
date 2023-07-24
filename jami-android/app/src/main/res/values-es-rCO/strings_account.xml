@@ -79,6 +79,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_video_enable">Permitir video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzadas</string>
+  <string name="account_read_receipts_label">Habilitar confirmaciones de lectura</string>
+  <string name="account_read_receipts_summary">Enviar y recibir confirmaciones de lectura indicando que se ha visto un mensaje.</string>
   <string name="account_call_settings_title">Configuración de llamadas</string>
   <string name="account_dht_public_in_calls_label">Permitir llamadas entrantes de contactos desconocidos</string>
   <string name="account_registration_exp_label">Caducidad del registro</string>

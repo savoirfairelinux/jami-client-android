@@ -77,6 +77,8 @@
   <string name="account_video_enable">ವೀಡಿಯೊವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ಮುಂದುವರಿದ</string>
+  <string name="account_read_receipts_label">ಓದುವ ರಸೀದಿಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+  <string name="account_read_receipts_summary">ಸಂದೇಶವನ್ನು ತೋರಿಸಲಾಗಿದೆ ಎಂದು ಸೂಚಿಸುವ ರಸೀದಿಗಳನ್ನು ಕಳುಹಿಸಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ.</string>
   <string name="account_call_settings_title">ಕರೆ ಸೆಟ್ಟಿಂಗ್ಗಳು</string>
   <string name="account_dht_public_in_calls_label">ಅಪರಿಚಿತ ಸಂಪರ್ಕಗಳಿಂದ ಬರುವ ಕರೆಗಳನ್ನು ಅನುಮತಿಸಿ</string>
   <string name="account_registration_exp_label">ನೋಂದಣಿ ಅವಧಿ</string>

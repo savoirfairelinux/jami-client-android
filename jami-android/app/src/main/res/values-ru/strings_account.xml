@@ -79,6 +79,8 @@
   <string name="account_video_enable">Включить видео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
+  <string name="account_read_receipts_label">Включить подтверждения прочтения</string>
+  <string name="account_read_receipts_summary">Подтверждения прочтения показывают что сообщение было прочтено</string>
   <string name="account_call_settings_title">Настройки вызовов</string>
   <string name="account_dht_public_in_calls_label">Разрешить входящие звонки от неизвестных контактов</string>
   <string name="account_registration_exp_label">Срок регистрации истекает</string>

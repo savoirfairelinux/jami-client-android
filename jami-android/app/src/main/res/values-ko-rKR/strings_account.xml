@@ -77,6 +77,8 @@
   <string name="account_video_enable">비디오를 활성화</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">발전</string>
+  <string name="account_read_receipts_label">읽기 영수증을 활성화</string>
+  <string name="account_read_receipts_summary">메시지가 표시된 것을 나타내는 영수증을 보내거나 수신하십시오.</string>
   <string name="account_call_settings_title">전화 설정</string>
   <string name="account_dht_public_in_calls_label">알려지지 않은 연락처에서 수신 전화를 허용</string>
   <string name="account_registration_exp_label">등록 기간이 만료</string>

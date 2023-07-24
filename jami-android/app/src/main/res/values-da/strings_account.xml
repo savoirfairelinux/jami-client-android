@@ -79,6 +79,8 @@ Du kan rette din konto senere</string>
   <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanceret</string>
+  <string name="account_read_receipts_label">Aktivere indlæse kvitteringer</string>
+  <string name="account_read_receipts_summary">Send og modtage kvitteringer, der angiver, at der er vist en besked.</string>
   <string name="account_call_settings_title">Opkaldsindstillinger</string>
   <string name="account_dht_public_in_calls_label">Tillad indkomne opkald fra ukendte kontakter</string>
   <string name="account_registration_exp_label">Registreringsudløb</string>

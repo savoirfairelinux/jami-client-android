@@ -77,6 +77,8 @@
   <string name="account_video_enable">Ενεργοποίση βίνταο</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Για προχωρημένους</string>
+  <string name="account_read_receipts_label">Ενεργοποιήστε τις αποδείξεις ανάγνωσης</string>
+  <string name="account_read_receipts_summary">Στείλτε και λάβετε αποδείξεις που δείχνουν ότι έχει εμφανιστεί ένα μήνυμα.</string>
   <string name="account_call_settings_title">Ρυθμίσεις κλήσης</string>
   <string name="account_dht_public_in_calls_label">Να επιτρέπονται κλήσεις από άγνωστες επαφές</string>
   <string name="account_registration_exp_label">Η εγγραφή λήγει</string>

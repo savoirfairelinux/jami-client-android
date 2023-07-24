@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Arrêter la journalisation</string>
   <string name="pref_typing_title">Activer les indicateurs de frappe</string>
   <string name="pref_typing_summary">Envoyer et recevoir les indicateurs de frappe montrant qu\'un message est cours de rédaction.</string>
-  <string name="pref_read_title">Activer les accusés de réception de messages lus</string>
-  <string name="pref_read_summary">Envoyer et recevoir les indicateurs montrant qu\'un message a été affiché.</string>
   <string name="pref_block_record_title">Bloquer la capture d\'écran et l\'enregistrement</string>
   <string name="pref_block_record_summary">Bloquer la prise de capture d\'écran et l\'enregistrement de vidéo.</string>
   <string name="pref_link_preview_title">Afficher la prévisualisation des liens dans les conversations</string>

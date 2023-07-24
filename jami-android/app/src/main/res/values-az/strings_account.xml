@@ -77,6 +77,8 @@
   <string name="account_video_enable">ویدیو فعال ائتمک</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">تقدیملی</string>
+  <string name="account_read_receipts_label">اوخونما رسیدلرینی فعال ائتمک</string>
+  <string name="account_read_receipts_summary">بیر خبرین گؤستریلدیغینی بیلدیریرکن رسیدلر گؤندرمک و آلماق.</string>
   <string name="account_call_settings_title">تماس تنظیمات</string>
   <string name="account_dht_public_in_calls_label">نامعلوم شخصلردن گلن تماسلارا ائجازه ور</string>
   <string name="account_registration_exp_label">ثبت ائتمه لی دیر</string>

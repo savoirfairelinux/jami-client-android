@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Günlüklemeyi durdur</string>
   <string name="pref_typing_title">Yazım göstergelerini etkinleştir</string>
   <string name="pref_typing_summary">İleti yazıldığını gösteren yazım göstergelerini gönder ve al.</string>
-  <string name="pref_read_title">Okundu onaylarını etkinleştir</string>
-  <string name="pref_read_summary">İletinin görüldüğünü belirten onay bilgilerini gönder ve al.</string>
   <string name="pref_block_record_title">Ekran görüntüsünü ve kaydını engelle</string>
   <string name="pref_block_record_summary">Ekran görüntüsü ya da kaydını almayı engelle.</string>
   <string name="pref_link_preview_title">Konuşmalarda bağlantı ön izlemelerini göster</string>

@@ -79,6 +79,8 @@
   <string name="account_video_enable">動画を有効化</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">詳細</string>
+  <string name="account_read_receipts_label">既読表示を有効化</string>
+  <string name="account_read_receipts_summary">相手や自分がメッセージを表示したことを送受信する。</string>
   <string name="account_call_settings_title">通話設定</string>
   <string name="account_dht_public_in_calls_label">未知の連絡先からの着信を許可</string>
   <string name="account_registration_exp_label">登録の有効期限切れ</string>

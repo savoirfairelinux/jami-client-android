@@ -77,6 +77,8 @@
   <string name="account_video_enable">Céadú físeán</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Ardaithe</string>
+  <string name="account_read_receipts_label">Céadú iontuanna léitheoireachta</string>
+  <string name="account_read_receipts_summary">Cuir agus faigh iontu deontais a thugann le fios go bhfuil teachtaireacht taispeána.</string>
   <string name="account_call_settings_title">Cluiche Aistriúcháin</string>
   <string name="account_dht_public_in_calls_label">Ceadaigh glaonna a thagann isteach ó theagmhálacha neamhaithne</string>
   <string name="account_registration_exp_label">Críochnaíonn clárú</string>

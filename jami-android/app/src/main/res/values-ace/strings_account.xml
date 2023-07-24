@@ -77,6 +77,8 @@
   <string name="account_video_enable">ڤرلو ممڤوپا?? ي ڤيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ڤڠاجين</string>
+  <string name="account_read_receipts_label">ممبنتو ڤرليندوڠن ڤرليندوڠن</string>
+  <string name="account_read_receipts_summary">مڠهادڤي دان مڠهادڤي كيسيت يڠ مڠهادڤي كاسيت يڠ دڤرچايا?? ي.</string>
   <string name="account_call_settings_title">سيٽنگون تماس</string>
   <string name="account_dht_public_in_calls_label">ممبريکن ڤڠاجين يڠ دڤرچايا?? ي دري ڤڠاجين يڠ تيدق دڤرچايا?? ي</string>
   <string name="account_registration_exp_label">ڤرجالنن مڠمبيل</string>

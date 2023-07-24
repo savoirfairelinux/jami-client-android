@@ -77,6 +77,8 @@
   <string name="account_video_enable">Activu video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">El so nome ye \"Castor\"</string>
+  <string name="account_read_receipts_label">Activu de recibos de lectura</string>
+  <string name="account_read_receipts_summary">Enviar y recibir recibos que indiquen que se ha mostrado un mensaxe.</string>
   <string name="account_call_settings_title">Les configuraciones d\'escuestes</string>
   <string name="account_dht_public_in_calls_label">Permitir les llamadas entrantes de contactos desconocíos</string>
   <string name="account_registration_exp_label">El regresu va expirar</string>

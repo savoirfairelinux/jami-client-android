@@ -79,6 +79,8 @@
   <string name="account_video_enable">فعال کردن ویدیو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیشرفته</string>
+  <string name="account_read_receipts_label">فعال‌سازی رسیدهای خواندن</string>
+  <string name="account_read_receipts_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
   <string name="account_call_settings_title">تنظیمات تماس</string>
   <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبان ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>

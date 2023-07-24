@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Ndale regjistrimin</string>
   <string name="pref_typing_title">Aktivizo tregues shtypjeje</string>
   <string name="pref_typing_summary">Dërgoni dhe merrni shenja shtypjeje që tregojnë se po shtypet një mesazh.</string>
-  <string name="pref_read_title">Aktivizo dëshmi leximi</string>
-  <string name="pref_read_summary">Dërgoni dhe merrni dëshmi që tregojnë se po shfaqet një mesazh.</string>
   <string name="pref_block_record_title">Bllokoni foto ekrani dhe regjistrim</string>
   <string name="pref_block_record_summary">Blloko bërje fotosh ose regjistrim videosh.</string>
   <string name="pref_link_preview_title">Shfaq paraparje lidhjesh në biseda</string>

@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Սեղմեք անտառային աշխատանքը</string>
   <string name="pref_typing_title">Թիպման ցուցանիշները հնարավորացնել</string>
   <string name="pref_typing_summary">Տեղադրել եւ ստանալ տիպման ցուցանիշներ, որոնք ցույց են տալիս, որ հաղորդագրություն է տիպվում:</string>
-  <string name="pref_read_title">Հեռախոսահամարներ</string>
-  <string name="pref_read_summary">Հեռացնել եւ ստանալ վիտամուտներ, որոնք ցույց են տալիս, որ հաղորդագրություն է ցուցադրվել:</string>
   <string name="pref_block_record_title">Բլոկել էկրանային նկարը եւ ձայնագրումը</string>
   <string name="pref_block_record_summary">Պակասեք էկրանային նկարահանումները կամ տեսանյութերը ձայնագրելը:</string>
   <string name="pref_link_preview_title">Կապի նախադասություն ցուցադրեք զրույցներում</string>

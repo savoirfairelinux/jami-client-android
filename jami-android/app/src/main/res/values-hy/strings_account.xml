@@ -77,6 +77,8 @@
   <string name="account_video_enable">Հեռուստատեսություն</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Առաջադեմ</string>
+  <string name="account_read_receipts_label">Հեռախոսահամարներ</string>
+  <string name="account_read_receipts_summary">Հեռացնել եւ ստանալ վիտամուտներ, որոնք ցույց են տալիս, որ հաղորդագրություն է ցուցադրվել:</string>
   <string name="account_call_settings_title">Հեռախոսազանգի կարգավորումները</string>
   <string name="account_dht_public_in_calls_label">Թույլ տալ մուտքագրվող զանգերը անհայտ կոնտակտներից</string>
   <string name="account_registration_exp_label">Գրանցման ժամկետը լրանում է</string>

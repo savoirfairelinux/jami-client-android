@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">停止記錄</string>
   <string name="pref_typing_title">啟用輸入指示器</string>
   <string name="pref_typing_summary">傳送與接收輸入指示器，表明正在輸入訊息。</string>
-  <string name="pref_read_title">啟用讀取回條</string>
-  <string name="pref_read_summary">傳送與接收指示訊息已顯示的回條。</string>
   <string name="pref_block_record_title">封鎖螢幕截圖與錄製</string>
   <string name="pref_block_record_summary">靜止拍攝螢幕截圖或錄製影片。</string>
   <string name="pref_link_preview_title">在對話中顯示連結預覽</string>

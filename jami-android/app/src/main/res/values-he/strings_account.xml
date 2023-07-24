@@ -77,6 +77,8 @@
   <string name="account_video_enable">אפשר וידאו</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">מתקדם</string>
+  <string name="account_read_receipts_label">אפשרת קבלות קריאה</string>
+  <string name="account_read_receipts_summary">לשלוח ולקבל קוויטים המראים כי הודעה הוצגה.</string>
   <string name="account_call_settings_title">הגדרות שיחות</string>
   <string name="account_dht_public_in_calls_label">אפשרת שיחות נכנסות ממגעים לא ידועים</string>
   <string name="account_registration_exp_label">רישום פוקע</string>

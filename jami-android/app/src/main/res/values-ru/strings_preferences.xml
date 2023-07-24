@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Остановить логирование</string>
   <string name="pref_typing_title">Включить оповещения о наборе текста</string>
   <string name="pref_typing_summary">Оповещения о наборе текста показывают что пользователь набирает сообщение</string>
-  <string name="pref_read_title">Включить подтверждения прочтения</string>
-  <string name="pref_read_summary">Подтверждения прочтения показывают что сообщение было прочтено</string>
   <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
   <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
   <string name="pref_link_preview_title">Показывать предварительный просмотр ссылок в разговорах</string>

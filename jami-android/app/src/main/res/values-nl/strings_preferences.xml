@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Stop met het loggen</string>
   <string name="pref_typing_title">Typ indicator inschakelen</string>
   <string name="pref_typing_summary">Verstuur en ontvang meldingen die aangeven of een bericht wordt ingetypt</string>
-  <string name="pref_read_title">Ontvangst bevestigingen inschakelen</string>
-  <string name="pref_read_summary">Verstuur en ontvang meldingen die aangeven dat een bericht getoond is</string>
   <string name="pref_block_record_title">Blokkeer schermafdruk en -opname</string>
   <string name="pref_block_record_summary">Blokkeer het maken van een schermafdruk of scherm video-opnames</string>
   <string name="pref_link_preview_title">Vertoon linkvoorziening in gesprekken</string>

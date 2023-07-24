@@ -78,6 +78,8 @@
   <string name="account_video_enable">व्हिडिओ सक्षम करा</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">प्रगत</string>
+  <string name="account_read_receipts_label">वाचन प्राप्ती सक्षम करा</string>
+  <string name="account_read_receipts_summary">संदेश प्रदर्शित झाला आहे असे सूचित करणारे रसीद पाठवा आणि प्राप्त करा.</string>
   <string name="account_call_settings_title">कॉल सेटिंग्ज</string>
   <string name="account_dht_public_in_calls_label">अज्ञात संपर्कांकडून येणाऱ्या कॉलला अनुमती द्या</string>
   <string name="account_registration_exp_label">नोंदणी कालावधी संपतो</string>

@@ -79,6 +79,8 @@
   <string name="account_video_enable">Görüntüyü Etkinleştir</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Gelişmiş</string>
+  <string name="account_read_receipts_label">Okundu onaylarını etkinleştir</string>
+  <string name="account_read_receipts_summary">İletinin görüldüğünü belirten onay bilgilerini gönder ve al.</string>
   <string name="account_call_settings_title">Arama ayarları</string>
   <string name="account_dht_public_in_calls_label">Bilinmeyen kişilerden gelen çağrılara izin ver</string>
   <string name="account_registration_exp_label">Kaydolma Bitimi</string>

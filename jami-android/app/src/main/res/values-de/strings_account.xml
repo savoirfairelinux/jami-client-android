@@ -79,6 +79,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_video_enable">Video aktivieren</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
+  <string name="account_chat_settings_title">Chat-Einstellungen</string>
+  <string name="account_read_receipts_label">Lesebestätigungen aktivieren</string>
+  <string name="account_read_receipts_summary">Senden und Empfangen von Lesebestätigungen, die das Anzeigen einer Nachricht bestätigen.</string>
   <string name="account_call_settings_title">Anrufeinstellungen</string>
   <string name="account_dht_public_in_calls_label">Erlaube eingehende Anrufe von unbekannten Kontakten</string>
   <string name="account_registration_exp_label">Registrierung abgelaufen</string>

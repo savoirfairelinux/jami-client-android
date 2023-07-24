@@ -77,6 +77,8 @@
   <string name="account_video_enable">Gaitu bideoa</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Aurreratua</string>
+  <string name="account_read_receipts_label">Irakurketa ordainagiriak aktibatu</string>
+  <string name="account_read_receipts_summary">Bidali eta jaso mezu bat agertu dela adierazten duten kuotxak.</string>
   <string name="account_call_settings_title">Dei-ezarpenak</string>
   <string name="account_dht_public_in_calls_label">Ezagunik ez diren kontaktuetatik datozen deiak baimendu</string>
   <string name="account_registration_exp_label">Erregistroa amaitu da</string>

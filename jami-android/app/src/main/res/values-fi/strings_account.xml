@@ -77,6 +77,8 @@
   <string name="account_video_enable">Video päälle</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Edistyneet asetukset</string>
+  <string name="account_read_receipts_label">Lukukuittaukset käyttöön</string>
+  <string name="account_read_receipts_summary">Lähetä ja vastaanota kuittaus, jotka osoittaa, että viesti on nähty.</string>
   <string name="account_call_settings_title">Puheluasetukset</string>
   <string name="account_dht_public_in_calls_label">Salli tuntemattomien yhteyshenkilöiden saapuvat puhelut</string>
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>

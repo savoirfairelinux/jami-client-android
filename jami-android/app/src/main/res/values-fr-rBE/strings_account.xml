@@ -79,6 +79,9 @@ Vous pouvez modifier votre compte ultérieurement</string>
   <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
+  <string name="account_chat_settings_title">Paramètres de clavardage</string>
+  <string name="account_read_receipts_label">Activer les accusés de réception de messages lus</string>
+  <string name="account_read_receipts_summary">Envoyer et recevoir les indicateurs montrant qu\'un message a été affiché</string>
   <string name="account_call_settings_title">Paramètres appels</string>
   <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
   <string name="account_registration_exp_label">Expiration de l\'enregistrement</string>

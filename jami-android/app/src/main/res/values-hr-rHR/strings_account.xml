@@ -25,6 +25,8 @@
   <string name="account_ringtone_custom_label">Koristite prilagođen zvon</string>
   <!--Video Details-->
   <!--Advanced Details-->
+  <string name="account_read_receipts_label">Aktivirajte prijemni račune</string>
+  <string name="account_read_receipts_summary">Pošaljite i primijte potvrde o prikazu poruke.</string>
   <string name="account_accept_files">Automatski prihvaćanje prihađenih datoteka</string>
   <string name="account_accept_files_max_size">Maksimalna veličina datoteke za automatsko prihvaćanje</string>
   <string name="account_published_same_as_local_label">Izdan u isto vrijeme kao lokalni</string>

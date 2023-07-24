@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">कोळशाचे काम थांबवा</string>
   <string name="pref_typing_title">टाइपिंग निर्देशक सक्षम करा</string>
   <string name="pref_typing_summary">संदेश टाइप केला जात आहे हे दर्शविणारे टाइपिंग निर्देशक पाठवा आणि प्राप्त करा.</string>
-  <string name="pref_read_title">वाचन प्राप्ती सक्षम करा</string>
-  <string name="pref_read_summary">संदेश प्रदर्शित झाला आहे असे सूचित करणारे रसीद पाठवा आणि प्राप्त करा.</string>
   <string name="pref_block_record_title">स्क्रीनशॉट आणि रेकॉर्डिंग ब्लॉक करा</string>
   <string name="pref_block_record_summary">स्क्रीनशॉट किंवा व्हिडिओ रेकॉर्डिंग टाळा.</string>
   <string name="pref_link_preview_title">संभाषणात लिंक पूर्वावलोकन दाखवा</string>

@@ -77,6 +77,8 @@
   <string name="account_video_enable">भिडियो सक्षम गर्नुहोस्</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">उन्नत</string>
+  <string name="account_read_receipts_label">पढ्ने रसिद सक्षम गर्नुहोस्</string>
+  <string name="account_read_receipts_summary">सन्देश देखाइएको छ भनेर संकेत गर्ने र प्राप्त गर्ने रसिदहरू पठाउनुहोस्।</string>
   <string name="account_call_settings_title">कल सेटिंग्स</string>
   <string name="account_dht_public_in_calls_label">अज्ञात सम्पर्कबाट आउने कलहरू अनुमति दिनुहोस्</string>
   <string name="account_registration_exp_label">दर्ता समाप्त</string>

@@ -77,6 +77,8 @@
   <string name="account_video_enable">Activar la vidèo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançat</string>
+  <string name="account_read_receipts_label">Abilitar de recipas de lectura</string>
+  <string name="account_read_receipts_summary">Enviar e recebre de recipas que indican qu\'un messatge es estat visualizat.</string>
   <string name="account_call_settings_title">Paramètres sonada</string>
   <string name="account_dht_public_in_calls_label">Permetre las cridas entremesas d\'unes contactes desconeguts</string>
   <string name="account_registration_exp_label">L\'inscripcion expira</string>

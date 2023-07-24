@@ -77,6 +77,8 @@
   <string name="account_video_enable">Aktifkan Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Lanjutan</string>
+  <string name="account_read_receipts_label">Aktifkan tanda terima telah dibaca</string>
+  <string name="account_read_receipts_summary">Kirim dan terima tanda terima yang menunjukkan bahwa pesan telah ditampilkan.</string>
   <string name="account_call_settings_title">Pengaturan telepon</string>
   <string name="account_dht_public_in_calls_label">Izinkan panggilan dari kontak tak dikenal</string>
   <string name="account_registration_exp_label">Registrasi Kedaluarsa</string>

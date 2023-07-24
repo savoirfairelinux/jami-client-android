@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">תפסיקו לחתוך.</string>
   <string name="pref_typing_title">אפשרות של מדדים כתיבה</string>
   <string name="pref_typing_summary">לשלוח ולקבל אינדיקציות טייפציה המראות כי הודעה מתפרסמת.</string>
-  <string name="pref_read_title">אפשרת קבלות קריאה</string>
-  <string name="pref_read_summary">לשלוח ולקבל קוויטים המראים כי הודעה הוצגה.</string>
   <string name="pref_block_record_title">חוסם צילום מסך וזירת</string>
   <string name="pref_block_record_summary">חוסם צילום מסך או הקלטת וידאו.</string>
   <string name="pref_link_preview_title">הראה ראיות ראיות של קישורים בשיחות</string>

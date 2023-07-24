@@ -79,6 +79,8 @@
   <string name="account_video_enable">Увімкнути відео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Розширені</string>
+  <string name="account_read_receipts_label">Отримати квитанції з прочитання</string>
+  <string name="account_read_receipts_summary">Відправляйте і отримуйте квитанції, що вказують, що повідомлення відображено.</string>
   <string name="account_call_settings_title">Налаштування дзвінків</string>
   <string name="account_dht_public_in_calls_label">Дозвольте прийом покликів з невідомих контактів</string>
   <string name="account_registration_exp_label">Реєстрація спливла</string>

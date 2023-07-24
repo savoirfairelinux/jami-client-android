@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">மரக்கன்றுகளை நிறுத்து</string>
   <string name="pref_typing_title">வகைப்படுத்தல் குறிகாட்டிகளை இயக்குதல்</string>
   <string name="pref_typing_summary">ஒரு செய்தியை தட்டச்சு செய்கிறார்கள் என்பதைக் காட்டும் தட்டச்சு குறிகாட்டிகளை அனுப்புங்கள் மற்றும் பெறுங்கள்.</string>
-  <string name="pref_read_title">படிப்பு ரசீதுகளை இயக்கு</string>
-  <string name="pref_read_summary">ஒரு செய்தி காண்பிக்கப்பட்டுள்ளது என்பதைக் குறிக்கும் ரசீதுகளை அனுப்புங்கள் மற்றும் பெறுங்கள்.</string>
   <string name="pref_block_record_title">திரைப்படம் மற்றும் பதிவுகளை முடக்கு</string>
   <string name="pref_block_record_summary">திரைப்படம் எடுப்பதை அல்லது வீடியோவை பதிவு செய்வதைத் தடுக்கவும்.</string>
   <string name="pref_link_preview_title">உரையாடல்களில் இணைப்பு முன்னோட்டங்களை காண்பி</string>

@@ -79,6 +79,8 @@ Du kan endre kontoen din senere</string>
   <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansert</string>
+  <string name="account_read_receipts_label">Aktiver lesekvitteringer</string>
+  <string name="account_read_receipts_summary">Send og motta kvitteringer som indikerer at en melding er blitt vist.</string>
   <string name="account_call_settings_title">Samtale innstillinger</string>
   <string name="account_dht_public_in_calls_label">Tillat anrop fra ukjente kontakter</string>
   <string name="account_registration_exp_label">Tidsavbrudd registrering</string>

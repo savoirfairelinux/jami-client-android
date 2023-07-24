@@ -79,6 +79,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_video_enable">Włącz video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Zaawansowane</string>
+  <string name="account_read_receipts_label">Włącz potwierdzenia odczytu</string>
+  <string name="account_read_receipts_summary">Wysyłaj i odbieraj potwierdzenia odczytu pokazujące, że wiadomość została odczytana.</string>
   <string name="account_call_settings_title">Ustawienia rozmowy</string>
   <string name="account_dht_public_in_calls_label">Umożliwiaj rozmowy od nieznajomych</string>
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>

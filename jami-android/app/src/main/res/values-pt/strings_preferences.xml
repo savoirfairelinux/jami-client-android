@@ -45,8 +45,6 @@
   <string name="pref_logs_stop">Parar de logar</string>
   <string name="pref_typing_title">Habilitar indicadores de digitação</string>
   <string name="pref_typing_summary">Enviar e receber indicadores de escrita, mostrando que a mensagem está sendo escrita.</string>
-  <string name="pref_read_title">Ativar verificação de leitura</string>
-  <string name="pref_read_summary">Enviar e receber verificações indicando que a mensagem foi mostrada.</string>
   <string name="pref_block_record_title">Bloquear captura de tela e gravação</string>
   <string name="pref_block_record_summary">Bloquear captura de tela e gravação de vídeo</string>
   <string name="pref_link_preview_title">Mostrar uma pré-visualização dos links nas conversações</string>

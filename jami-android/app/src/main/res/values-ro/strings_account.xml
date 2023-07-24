@@ -79,6 +79,9 @@
   <string name="account_video_enable">Activează video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
+  <string name="account_chat_settings_title">Reglări discuții</string>
+  <string name="account_read_receipts_label">Arată confirmarea de citire</string>
+  <string name="account_read_receipts_summary">Trimite și primește confirmări de citire care arată că un mesaj a fost citit.</string>
   <string name="account_call_settings_title">Reglări apeluri</string>
   <string name="account_dht_public_in_calls_label">Primește apeluri necunoscute</string>
   <string name="account_registration_exp_label">Expirarea înscrierii</string>

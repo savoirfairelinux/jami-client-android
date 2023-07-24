@@ -77,6 +77,8 @@
   <string name="account_video_enable">വീഡിയോ പ്രവർത്തനക്ഷമമാക്കുക</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">പുരോഗമനം</string>
+  <string name="account_read_receipts_label">വായന രസീതുകൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
+  <string name="account_read_receipts_summary">ഒരു സന്ദേശം പ്രദർശിപ്പിച്ചതായി സൂചിപ്പിക്കുന്ന രസീതുകൾ അയയ്ക്കുകയും സ്വീകരിക്കുകയും ചെയ്യുക.</string>
   <string name="account_call_settings_title">കോൾ ക്രമീകരണങ്ങൾ</string>
   <string name="account_dht_public_in_calls_label">അജ്ഞാത കോൺടാക്റ്റുകളിൽ നിന്നും വരുന്ന കോളുകൾ അനുവദിക്കുക</string>
   <string name="account_registration_exp_label">രജിസ്ട്രേഷൻ കാലാവധി</string>

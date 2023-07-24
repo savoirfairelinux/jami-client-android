@@ -79,6 +79,8 @@
   <string name="account_video_enable">เปิดวีดีโอ</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">ขั้นสูง</string>
+  <string name="account_read_receipts_label">เปิดใช้งานใบตอบรับการอ่าน</string>
+  <string name="account_read_receipts_summary">ส่งและรับใบเสร็จที่ระบุว่ามีการแสดงข้อความ</string>
   <string name="account_call_settings_title">การตั้งค่าการโทร</string>
   <string name="account_dht_public_in_calls_label">อนุญาตสายเรียกเข้าจากผู้ติดต่อที่ไม่รู้จัก</string>
   <string name="account_registration_exp_label">การลงทะเบียนหมดอายุ</string>

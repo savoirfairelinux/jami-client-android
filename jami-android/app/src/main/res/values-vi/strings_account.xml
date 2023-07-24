@@ -77,6 +77,8 @@
   <string name="account_video_enable">Khả năng video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Tiến bộ</string>
+  <string name="account_read_receipts_label">Khả năng nhận đọc</string>
+  <string name="account_read_receipts_summary">Gửi và nhận biên lai cho thấy một tin nhắn đã được hiển thị.</string>
   <string name="account_call_settings_title">Cài đặt cuộc gọi</string>
   <string name="account_dht_public_in_calls_label">Cho phép cuộc gọi đến từ các liên lạc không rõ</string>
   <string name="account_registration_exp_label">Việc đăng ký hết hạn</string>

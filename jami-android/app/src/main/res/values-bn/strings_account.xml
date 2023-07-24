@@ -77,6 +77,8 @@
   <string name="account_video_enable">ভিডিও সক্ষম করুন</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">উন্নত</string>
+  <string name="account_read_receipts_label">পাঠ প্রাপ্তি সক্ষম করুন</string>
+  <string name="account_read_receipts_summary">একটি বার্তা প্রদর্শিত হয়েছে বলে প্রাপ্তি এবং প্রাপ্তি প্রাপ্তি।</string>
   <string name="account_call_settings_title">কল সেটিং</string>
   <string name="account_dht_public_in_calls_label">অজানা পরিচিতি থেকে ইনকামিং কলগুলিকে অনুমতি দিন</string>
   <string name="account_registration_exp_label">নিবন্ধন মেয়াদ শেষ</string>

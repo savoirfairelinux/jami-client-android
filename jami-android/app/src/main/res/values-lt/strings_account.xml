@@ -79,6 +79,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_read_receipts_label">Įjungti skaitymo kvitus</string>
+  <string name="account_read_receipts_summary">Siųskite ir gaukite kvitus, nurodančius, kad buvo rodoma žinia.</string>
   <string name="account_call_settings_title">Skambučio nustatymai</string>
   <string name="account_dht_public_in_calls_label">Leisti gaunamuosius skambučius nuo nežinomų adresatų</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>

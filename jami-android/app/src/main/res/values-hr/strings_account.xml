@@ -79,6 +79,8 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
+  <string name="account_read_receipts_label">Aktivirajte prijemni račune</string>
+  <string name="account_read_receipts_summary">Pošaljite i primijte potvrde o prikazu poruke.</string>
   <string name="account_call_settings_title">Postavke zvanja</string>
   <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija istjeće</string>

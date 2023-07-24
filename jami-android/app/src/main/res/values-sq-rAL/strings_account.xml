@@ -79,6 +79,9 @@
   <string name="account_video_enable">Aktivizo Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Të mëtejshme</string>
+  <string name="account_chat_settings_title">Rregullime fjalosjeje</string>
+  <string name="account_read_receipts_label">Aktivizo dëshmi leximi</string>
+  <string name="account_read_receipts_summary">Dërgoni dhe merrni dëshmi që tregojnë se po shfaqet një mesazh.</string>
   <string name="account_call_settings_title">Rregullime për thirrjet</string>
   <string name="account_dht_public_in_calls_label">Lejo thirrje ardhëse prej kontaktesh të panjohur</string>
   <string name="account_registration_exp_label">Skadim Regjistrimi</string>

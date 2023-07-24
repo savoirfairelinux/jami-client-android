@@ -79,6 +79,8 @@ Du kan ändra kontot senare.</string>
   <string name="account_video_enable">Aktivera video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancerat</string>
+  <string name="account_read_receipts_label">Visa läskvitto </string>
+  <string name="account_read_receipts_summary">Skicka och ta emot kvitto när ett meddelande har visats. </string>
   <string name="account_call_settings_title">Samtalsinställningar</string>
   <string name="account_dht_public_in_calls_label">Tillåt inkommande samtal från okända kontakter</string>
   <string name="account_registration_exp_label">Registreringen löper ut</string>

@@ -79,6 +79,8 @@ Svůj účet můžete upravit později</string>
   <string name="account_video_enable">Povolit video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Pokročilé</string>
+  <string name="account_read_receipts_label">Povolení potvrzení o přečtení</string>
+  <string name="account_read_receipts_summary">Odesílání a přijímání potvrzení o zobrazení zprávy.</string>
   <string name="account_call_settings_title">Nastavení volání</string>
   <string name="account_dht_public_in_calls_label">Povolit příchozí hovory od neznámých kontatků</string>
   <string name="account_registration_exp_label">Vypršení registrace</string>
