@@ -11,6 +11,7 @@ import cx.ring.application.JamiApplication
 import cx.ring.service.CallConnection
 import cx.ring.service.CallRequestResult
 import cx.ring.utils.ConversationPath
+import cx.ring.utils.DeviceUtils
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.SingleSubject
 import net.jami.model.Call
@@ -47,6 +48,10 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestPlaceCall(accountId: String, conversationUri: Uri?, contactUri: String, hasVideo: Boolean): Single<SystemCall> {
         // Use the Android Telecom API to implement requestPlaceCall if available
+
+        // Disabled because doesn't seem well integrated. GitLab: #1337.
+        if(DeviceUtils.isTv(mContext)) return CALL_ALLOWED
+
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
                 val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
@@ -105,6 +110,10 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
     override fun requestIncomingCall(call: Call): Single<SystemCall> {
         // Use the Android Telecom API if available
+
+        // Disabled because doesn't seem well integrated. GitLab: #1337.
+        if(DeviceUtils.isTv(mContext)) return CALL_ALLOWED
+
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
                 val extras = Bundle()
