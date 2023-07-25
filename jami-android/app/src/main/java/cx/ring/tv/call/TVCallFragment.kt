@@ -146,13 +146,13 @@ class TVCallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         Log.w(TAG, "onViewCreated");
         mSession = MediaSessionCompat(requireContext(), TAG).apply {
             setMetadata(MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, getString(R.string.pip_title))
                 .build())
         }
+        super.onViewCreated(view, savedInstanceState)
         val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE, "ring:callLock")
             .apply { setReferenceCounted(false) }
