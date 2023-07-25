@@ -174,7 +174,11 @@ class CameraService internal constructor(c: Context) {
             params.size = deviceParams.size
             params.rate = rate
         }
-        params.rotation = getCameraDisplayRotation(deviceParams, rotation)
+        params.rotation = if(camId == VideoDevices.SCREEN_SHARING) {
+            0
+        } else {
+            getCameraDisplayRotation(deviceParams, rotation)
+        }
         val r = params.rotation
         videoHandler.post { JamiService.setDeviceOrientation(camId, r) }
     }
