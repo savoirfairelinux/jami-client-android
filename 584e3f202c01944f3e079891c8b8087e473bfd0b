@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0bb4392_471f4762",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/AccountSpinnerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-07-26T13:49:09Z",
+      "side": 1,
+      "message": "preserve alias logic for SIP accounts ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 73
+      },
+      "revId": "584e3f202c01944f3e079891c8b8087e473bfd0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
