@@ -558,10 +558,6 @@ class Account(
     val displayUri: String?
         get() = getUri(true)
 
-    fun getDisplayUri(defaultNameSip: CharSequence): String {
-        return if (isIP2IP) defaultNameSip.toString() else displayUri!!
-    }
-
     fun needsMigration(): Boolean = AccountConfig.RegistrationState.ERROR_NEED_MIGRATION == registrationState
 
     val deviceId: String

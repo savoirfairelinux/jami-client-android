@@ -48,7 +48,6 @@ along with this program; if not, write to the Free Software
         You will only be able to make and receive direct ip calls.
         You can edit your account later</string>
 
-    <string name="account_type_ip2ip">IP account</string>
     <string name="help_ring">A Jami account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
     <string name="help_sip_title">Add your SIP account</string>
@@ -199,6 +198,7 @@ along with this program; if not, write to the Free Software
     <string name="update_account">Update account</string>
     <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
     <string name="ring_account">Jami account</string>
+    <string name="sip_account">SIP account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
     <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
