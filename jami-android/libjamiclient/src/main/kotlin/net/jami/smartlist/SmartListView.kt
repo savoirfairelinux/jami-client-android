@@ -27,7 +27,7 @@ interface SmartListView {
     fun displayNoConversationMessage()
     fun displayConversationDialog(conversationItemViewModel: Conversation)
     fun displayClearDialog(accountId: String, conversationUri: Uri)
-    fun displayDeleteDialog(accountId: String, conversationUri: Uri)
+    fun displayDeleteDialog(accountId: String, conversationUri: Uri, isGroup: Boolean)
     fun copyNumber(uri: Uri)
     fun setLoading(loading: Boolean)
     fun displayMenuItem()

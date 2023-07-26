@@ -701,7 +701,15 @@ class Conversation : ConversationHistory {
         } else symbol.onNext("")
     }
 
-    fun isGroup(): Boolean = isSwarm && contacts.size > 2
+    fun isGroup(): Boolean =
+    // SwarmGroup is a conversation were there are multiple participants (not a 1:1
+    // conversation). To know this, we need to check the conversation mode.
+    // However, conversation mode can also be a request. In this case, we need to check the
+        // request mode to know if it is a 1:1 conversation or not (request attribute).
+        mode.blockingFirst().let {
+            if (it == Mode.Request) request?.mode != Mode.OneToOne
+            else it != Mode.OneToOne
+        }
 
     @Synchronized
     fun loadMessage(id: String, load: () -> Unit): Single<Interaction> {

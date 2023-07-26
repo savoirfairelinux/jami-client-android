@@ -114,7 +114,7 @@ class SmartListPresenter @Inject constructor(
     }
 
     fun removeConversation(conversation: Conversation) {
-        view?.displayDeleteDialog(conversation.accountId, conversation.uri)
+        view?.displayDeleteDialog(conversation.accountId, conversation.uri, conversation.isGroup())
     }
 
     fun removeConversation(accountId: String, uri: Uri) {

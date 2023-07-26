@@ -145,16 +145,28 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     }
 
     override fun displayConversationDialog(conversationItemViewModel: Conversation) {
+
         if (conversationItemViewModel.isSwarm) {
-            MaterialAlertDialogBuilder(requireContext())
-                .setItems(R.array.swarm_actions) { dialog, which ->
-                    when (which) {
-                        0 -> presenter.copyNumber(conversationItemViewModel)
-                        1 -> presenter.removeConversation(conversationItemViewModel)
-                        2 -> presenter.banContact(conversationItemViewModel)
+            // Don't display same menu item if swarm group or if swarm one to one.
+            if (conversationItemViewModel.isGroup()) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.swarm_group_actions) { dialog, which ->
+                        when (which) {
+                            0 -> presenter.removeConversation(conversationItemViewModel)
+                        }
                     }
-                }
-                .show()
+                    .show()
+            } else {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setItems(R.array.swarm_one_to_one_actions) { dialog, which ->
+                        when (which) {
+                            0 -> presenter.copyNumber(conversationItemViewModel)
+                            1 -> presenter.removeConversation(conversationItemViewModel)
+                            2 -> presenter.banContact(conversationItemViewModel)
+                        }
+                    }
+                    .show()
+            }
         } else {
             MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.conversation_actions) { dialog, which ->
@@ -173,8 +185,21 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         ActionHelper.launchClearAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
     }
 
-    override fun displayDeleteDialog(accountId: String, conversationUri: Uri) {
-        ActionHelper.launchDeleteAction(requireContext(), accountId, conversationUri, this@SmartListFragment)
+    override fun displayDeleteDialog(accountId: String, conversationUri: Uri, isGroup: Boolean) {
+        if (isGroup)
+            ActionHelper.launchDeleteSwarmGroupAction(
+                context = requireContext(),
+                accountId = accountId,
+                uri = conversationUri,
+                callback = this@SmartListFragment
+            )
+        else
+            ActionHelper.launchDeleteSwarmOneToOneAction(
+                context = requireContext(),
+                accountId = accountId,
+                uri = conversationUri,
+                callback = this@SmartListFragment
+            )
     }
 
     override fun copyNumber(uri: Uri) {
