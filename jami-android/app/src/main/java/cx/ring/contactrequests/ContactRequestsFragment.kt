@@ -97,15 +97,26 @@ class ContactRequestsFragment :
     }
 
     override fun onItemLongClick(item: Conversation) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setItems(R.array.swarm_actions) { dialog, which ->
-                when (which) {
-                    0 -> presenter.copyNumber(item)
-                    1 -> presenter.removeConversation(item)
-                    2 -> presenter.banContact(item)
+        // Don't display same menu item if swarm group or if swarm one to one.
+        if (item.isGroup()) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setItems(R.array.swarm_request_group_actions) { dialog, which ->
+                    when (which) {
+                        0 -> presenter.removeConversation(item)
+                    }
                 }
-            }
-            .show()
+                .show()
+        } else {
+            MaterialAlertDialogBuilder(requireContext())
+                .setItems(R.array.swarm_request_one_to_one_actions) { dialog, which ->
+                    when (which) {
+                        0 -> presenter.copyNumber(item)
+                        1 -> presenter.removeConversation(item)
+                        2 -> presenter.banContact(item)
+                    }
+                }
+                .show()
+        }
     }
 
     companion object {
