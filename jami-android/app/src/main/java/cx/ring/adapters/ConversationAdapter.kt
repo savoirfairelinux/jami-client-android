@@ -775,8 +775,8 @@ class ConversationAdapter(
             // Configure what should be displayed
             convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
-            convActionCopyText.isVisible = !isDeleted
-            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming
+            convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
+            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
             convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
