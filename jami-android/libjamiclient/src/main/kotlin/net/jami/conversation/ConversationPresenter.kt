@@ -39,6 +39,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ConversationPresenter @Inject constructor(
+    val callService: CallService,
     val contactService: ContactService,
     private val accountService: AccountService,
     private val hardwareService: HardwareService,
@@ -198,7 +199,7 @@ class ConversationPresenter @Inject constructor(
                 .observeOn(uiScheduler)
                 .subscribe { composingStatus: ComposingStatus -> this.view?.setComposingStatus(composingStatus) })
         }
-        disposable.add(c.calls
+        disposable.add(callService.callsUpdates
             .observeOn(uiScheduler)
             .subscribe({ updateOngoingCallView(c) }) { e: Throwable ->
                 Log.e(TAG, "Can't update call view", e)
