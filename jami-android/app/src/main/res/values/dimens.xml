@@ -118,5 +118,10 @@ along with this program; if not, write to the Free Software
     <dimen name="dialog_radius">@dimen/bottom_sheet_radius</dimen>
     <dimen name="menu_icon_size">16dp</dimen>
 
+    <!--  JamiId  -->
+    <dimen name="jami_id_small_font_size">14px</dimen>
+    <dimen name="jami_id_regular_font_size">20px</dimen>
+    <dimen name="jami_id_edit_text_drawable_size">24dp</dimen>
+
 
 </resources>

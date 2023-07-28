@@ -451,5 +451,16 @@ along with this program; if not, write to the Free Software
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
     <string name="bottomsheet_remove">Remove from the swarm</string>
 
+    <!--  JamiId  -->
+    <string name="jami_id_copy">Copy JamiId</string>
+    <string name="jami_id_share">Share JamiId</string>
+    <string name="jami_id_validate">Validate this new JamiId</string>
+    <string name="jami_id_available">The username is available</string>
+    <string name="jami_id_not_available">The username is not available\n- 32 characters maximum \n- Special characters allowed: dash (-), underscore(_)</string>
+    <string name="jami_id_info">- 32 characters maximum \n- Allowed special characters : dash (-), underscore(_)</string>
+    <string name="jami_id_looking_for_availability">Looking for username availability...</string>
+    <string name="jami_id_choose_username">Choose a username</string>
+
+
 
 </resources>
