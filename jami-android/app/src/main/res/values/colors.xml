@@ -73,4 +73,8 @@
     <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
 
+    <!--  JamiId  -->
+    <color name="jami_id_background_color">#4CFFFFFF</color>
+    <color name="jami_id_surface_color">#005699</color>
+
 </resources>
