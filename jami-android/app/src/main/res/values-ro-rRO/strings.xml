@@ -73,6 +73,7 @@
   <string name="notif_channel_background_service">Serviciu ascuns</string>
   <string name="notif_channel_background_service_descr">Permite mereu primirea de apeluri și mesaje.</string>
   <string name="notif_group_calls">Apeluri</string>
+  <string name="notif_inprogress_group_call">Apelare în curs</string>
   <string name="notif_background_service">Acum Jami funcționează ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
@@ -135,6 +136,7 @@
   <string name="conversation_send_audio">Trimite mesaj vocal</string>
   <string name="conversation_send_video">Trimite mesaj video</string>
   <string name="conversation_share_location">Trimite poziția</string>
+  <string name="ongoing_group_call">Apel în curs</string>
   <string name="in_reply_to">Răspuns pentru</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Acces la fotocameră</string>

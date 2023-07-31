@@ -73,6 +73,7 @@
   <string name="notif_channel_background_service">Servizio in background</string>
   <string name="notif_channel_background_service_descr">Consenti sempre di ricevere chiamate e messaggi.</string>
   <string name="notif_group_calls">Chiamate</string>
+  <string name="notif_inprogress_group_call">Chiamata in corso</string>
   <string name="notif_background_service">Jami è attualmente in esecuzione in background</string>
   <string name="notif_mark_as_read">Segna come letto</string>
   <string name="notif_dismiss">Ignora</string>
@@ -135,6 +136,7 @@
   <string name="conversation_send_audio">Registra messaggio vocale</string>
   <string name="conversation_send_video">Registra videomessaggio</string>
   <string name="conversation_share_location">Condividi posizione</string>
+  <string name="ongoing_group_call">Chiamata in corso</string>
   <string name="in_reply_to">In risposta a</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso fotocamera</string>

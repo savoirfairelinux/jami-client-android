@@ -79,6 +79,7 @@
   <string name="account_video_enable">启用视频</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_chat_settings_title">聊天设置</string>
   <string name="account_read_receipts_label">启用已读回执</string>
   <string name="account_read_receipts_summary">接收并发送显示一个消息已读的回执。</string>
   <string name="account_call_settings_title">通話設定</string>
