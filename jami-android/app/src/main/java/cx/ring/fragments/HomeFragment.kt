@@ -297,7 +297,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
      * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
      */
     private fun updateAppBarLayoutBottomPadding(hasInvites: Boolean) {
-        mBinding?.appBarContainer?.updatePadding(bottom = if (hasInvites)
+        mBinding?.appBarContainer?.updatePadding(top = 0, bottom = if (hasInvites)
             context?.resources!!.getDimensionPixelSize(R.dimen.bottom_sheet_radius) else 0)
     }
 
@@ -312,11 +312,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             binding.invitationCard.invitationGroup,
             ChangeBounds().setInterpolator(DecelerateInterpolator())
         )
+
+        binding.appBarContainer.fitsSystemWindows = true
         // Make the invitation card take all the height.
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
         binding.appBarContainer.updatePadding(bottom = 0)
+
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
@@ -358,10 +361,22 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             Fade()
         )
 
+        binding.appBarContainer.fitsSystemWindows = false
+
+        // Update AppBarLayoutBottom padding.
+        mAccountService.currentAccountSubject
+            .switchMap { account ->
+                account.getPendingSubject()
+            }
+            .firstOrError().subscribe { list ->
+                updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
+            }
+
         // Make the invitation card wrap content (not take all space available anymore).
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
+
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
@@ -495,7 +510,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         val binding = mBinding ?: return
 
         binding.invitationCard.invitationBadge.text = conversations.size.toString()
-        binding.invitationCard.invitationGroup.isVisible = true
+        showInvitationCard()
         binding.invitationCard.invitationReceivedTxt.text =
             snip.joinToString(", ") { it.title }
 
@@ -503,10 +518,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             pendingAdapter?.update(conversations)
             updateAppBarLayoutBottomPadding(conversations.isNotEmpty())
             if (conversations.isEmpty()) { // No pending invitations = no badge
-                binding.invitationCard.invitationGroup.isVisible = false
+                showInvitationCard(false)
             } else {
                 binding.invitationCard.invitationBadge.text = conversations.size.toString()
-                binding.invitationCard.invitationGroup.isVisible = true
                 binding.invitationCard.invitationReceivedTxt.text =
                     snip.joinToString(", ") { it.title }
             }
@@ -564,6 +578,20 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     fun collapseSearchActionView() {
         mBinding ?: return
         mBinding!!.searchView.hide()
+    }
+
+    private fun showInvitationCard(isVisible: Boolean = true) {
+        mBinding ?: return
+        mBinding!!.invitationCard.invitationGroup.isVisible = isVisible
+
+        // Update padding AppBarLayoutBottom and conversation list.
+        mAccountService.currentAccountSubject
+            .switchMap { account ->
+                account.getPendingSubject()
+            }
+            .firstOrError().subscribe { list ->
+                updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
+            }
     }
 
     companion object {

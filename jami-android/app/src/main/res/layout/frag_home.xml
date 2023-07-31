@@ -42,7 +42,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:fitsSystemWindows="true"
             android:background="@drawable/background_appbar_gradient"
             app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
