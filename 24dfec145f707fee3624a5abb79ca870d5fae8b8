@@ -1,4 +1,28 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5db8cced_323ad16c",
+        "filename": "jami-android/app/src/main/res/xml/locales_config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-07-31T21:17:00Z",
+      "side": 1,
+      "message": "Should these be sorted alphabetically? Thank you",
+      "range": {
+        "startLine": 3,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "24dfec145f707fee3624a5abb79ca870d5fae8b8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ],
   "submitRequirementResults": []
 }
