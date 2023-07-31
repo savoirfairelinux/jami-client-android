@@ -453,7 +453,11 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                     }
             }
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe { count -> setBadge(TAB_INVITATIONS, count.second, count.first) }
+            .subscribe { count ->
+                // Collapse pending view if there is no more pending invitations
+                if(count.first.isEmpty()) collapsePendingView()
+
+                setBadge(TAB_INVITATIONS, count.second, count.first) }
         )
 
         // Subscribe on current account to display avatar on navigation (searchbar)
