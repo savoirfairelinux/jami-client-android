@@ -79,6 +79,7 @@
   <string name="account_video_enable">啟用視訊</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_chat_settings_title">聊天设置</string>
   <string name="account_read_receipts_label">啟用讀取回條</string>
   <string name="account_read_receipts_summary">傳送與接收指示訊息已顯示的回條。</string>
   <string name="account_call_settings_title">通話設定</string>

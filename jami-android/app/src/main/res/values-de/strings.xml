@@ -72,6 +72,7 @@
   <string name="notif_channel_background_service">Hintergrunddienst</string>
   <string name="notif_channel_background_service_descr">Ermöglicht den jederzeitigen Empfang von Anrufen und Nachrichten.</string>
   <string name="notif_group_calls">Anrufe</string>
+  <string name="notif_inprogress_group_call">Anruf läuft</string>
   <string name="notif_background_service">Jami läuft momentan im Hintergrund</string>
   <string name="notif_mark_as_read">Als gelesen markieren</string>
   <string name="notif_dismiss">Verwerfen</string>
@@ -134,6 +135,7 @@
   <string name="conversation_send_audio">Audioaufzeichnung starten</string>
   <string name="conversation_send_video">Videoaufzeichnung starten</string>
   <string name="conversation_share_location">Standort teilen</string>
+  <string name="ongoing_group_call">Laufender Anruf</string>
   <string name="in_reply_to">Als Antwort auf</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
