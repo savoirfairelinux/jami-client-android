@@ -317,9 +317,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             height = ViewGroup.LayoutParams.MATCH_PARENT
         }
         binding.appBarContainer.updatePadding(bottom = 0)
-
-        // Disable possibility to scroll the appbar.
-        (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags = 0
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
@@ -365,11 +362,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         binding.appBar.updateLayoutParams {
             height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
-
-        // Enable possibility to scroll the appbar.
-        (binding.appBarContainer.layoutParams as AppBarLayout.LayoutParams).scrollFlags =
-            SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS or
-                    SCROLL_FLAG_SNAP or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
         // Adapt the margins of the invitation card.
         requireContext().resources.getDimensionPixelSize(R.dimen.bottom_sheet_radius).let {
             (binding.invitationCard.invitationGroup.layoutParams as ViewGroup.MarginLayoutParams)
