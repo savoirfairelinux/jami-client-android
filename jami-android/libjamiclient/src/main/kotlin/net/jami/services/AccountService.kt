@@ -265,7 +265,7 @@ class AccountService(
                 /*for (Map.Entry<String, String> i : info.entrySet()) {
                     Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
                 }*/
-                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]!!.toInt()]
+                val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
 
