@@ -284,6 +284,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun acceptFile(transfer: DataTransfer) {
+        Log.w("devdebug", "ConversationPresenter acceptFile")
         view?.acceptFile(mConversation!!.accountId, mConversationUri!!, transfer)
     }
 
@@ -296,6 +297,7 @@ class ConversationPresenter @Inject constructor(
     }
 
     fun deleteConversationItem(element: Interaction) {
+        Log.w("devdebug", "ConversationPresenter deleteConversationItem")
         conversationFacade.deleteConversationItem(mConversation!!, element)
     }
 

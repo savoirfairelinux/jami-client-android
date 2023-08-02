@@ -154,21 +154,32 @@ class ConversationFacade(
         }
         if (conversation.isSwarm) {
             val destPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversation.uri.rawRingId, file.name)
+            Log.w("devdebug", "ConversationFacade sendFile: $destPath")
             moveFile(file, destPath)
+            Log.w("devdebug", "ConversationFacade sendFile path =${destPath.exists()}")
             mAccountService.sendFile(conversation, destPath)
         }
         return Completable.complete()
     }
 
     fun deleteConversationItem(conversation: Conversation, element: Interaction) {
+        Log.w("devdebug", "ConversationFacade deleteConversationItem")
         if (element.type === Interaction.InteractionType.DATA_TRANSFER) {
+            Log.w("devdebug", "ConversationFacade deleteConversationItem DATA_TRANSFER")
+
             val transfer = element as DataTransfer
             if (transfer.status === InteractionStatus.TRANSFER_ONGOING) {
                 mAccountService.cancelDataTransfer(conversation.accountId, conversation.uri.rawRingId, transfer.messageId, transfer.fileId!!)
             } else {
+                Log.w("devdebug", "ConversationFacade deleteConversationItem TRANSFER_NOT_ONGOING")
+
                 val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
                 if (conversation.isSwarm) {
-                    mDisposableBag.add(Completable.fromAction { file.delete() }
+                    Log.w("devdebug", "ConversationFacade deleteConversationItem IS_SWARM file=$file")
+
+                    mDisposableBag.add(Completable.fromAction {
+                        Log.w("devdebug", "ConversationFacade deleteConversationItem DELETING_FILE")
+                        file.delete() }
                         .subscribeOn(Schedulers.io())
                         .subscribe({
                             transfer.status = InteractionStatus.FILE_AVAILABLE
