@@ -343,11 +343,13 @@ object AndroidFileUtils {
 
 
     fun getConversationDir(context: Context, accountId: String, conversationId: String): File {
-        val conversationsDir = getFilePath(context, "conversation_data")
-        if (!conversationsDir.exists()) conversationsDir.mkdir()
-        val accountDir = File(conversationsDir, accountId)
+        val accountDir = getFilePath(context, accountId)
         if (!accountDir.exists()) accountDir.mkdir()
-        val conversationDir = File(accountDir, conversationId)
+
+        val conversationDataDir = File(accountDir, "conversation_data")
+        if (!conversationDataDir.exists()) conversationDataDir.mkdir()
+
+        val conversationDir = File(conversationDataDir, conversationId)
         if (!conversationDir.exists()) conversationDir.mkdir()
         return conversationDir
     }
