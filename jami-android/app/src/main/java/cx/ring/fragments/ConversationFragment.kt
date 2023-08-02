@@ -567,19 +567,27 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
     }
 
     private fun sendVideoMessage() {
+        Log.w("devdebug", "ConversationFragment sendVideoMessage p1")
         if (!presenter.deviceRuntimeService.hasVideoPermission()) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_CAPTURE_VIDEO)
         } else {
             try {
                 val context = requireContext()
+
                 val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
                     putExtra("android.intent.extras.CAMERA_FACING", 1)
                     putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     putExtra("android.intent.extra.USE_FRONT_CAMERA", true)
                     putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0)
-                    putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, AndroidFileUtils.createVideoFile(context).apply {
-                        mCurrentPhoto = this
-                    }))
+                    val file: File = AndroidFileUtils.createVideoFile(context)
+                    Log.w("devdebug", "ConversationFragment sendVideoMessage file: $file")
+                    putExtra(MediaStore.EXTRA_OUTPUT,
+                            ContentUriHandler.getUriForFile(
+                                    context = context,
+                                    authority = ContentUriHandler.AUTHORITY_FILES,
+                                    file = file.apply { mCurrentPhoto = this }
+                            )
+                    )
                 }
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO)
             } catch (ex: Exception) {
@@ -659,6 +667,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 }
             }
         } else if (requestCode == REQUEST_CODE_TAKE_PICTURE || requestCode == REQUEST_CODE_CAPTURE_AUDIO || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+            Log.w("devdebug", "ConversationFragment onActivityResult p1")
+
             if (resultCode != Activity.RESULT_OK) {
                 mCurrentPhoto = null
                 return
@@ -668,15 +678,20 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             if (currentPhoto == null || !currentPhoto.exists() || currentPhoto.length() == 0L) {
                 resultData?.data?.let { uri ->
                     file = AndroidFileUtils.getCacheFile(requireContext(), uri)
+                    Log.w("devdebug", "ConversationFragment onActivityResult p2")
                 }
             } else {
                 file = Single.just(currentPhoto)
+                Log.w("devdebug", "ConversationFragment onActivityResult p3")
             }
             mCurrentPhoto = null
             val sendingFile = file
-            if (sendingFile != null)
-                startFileSend(sendingFile.flatMapCompletable { f -> sendFile(f) })
-            else
+            if (sendingFile != null) {
+                Log.w("devdebug", "ConversationFragment onActivityResult p4")
+                startFileSend(sendingFile.flatMapCompletable { f ->
+                    Log.w("devdebug", "ConversationFragment onActivityResult file: $f")
+                    sendFile(f) })
+            } else
                 Toast.makeText(activity, "Can't find picture", Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_CODE_SAVE_FILE) {
             val uri = resultData?.data
@@ -709,8 +724,10 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 Manifest.permission.CAMERA -> {
                     presenter.cameraPermissionChanged(granted)
                     if (granted) {
-                        if (requestCode == REQUEST_CODE_CAPTURE_VIDEO)
+                        if (requestCode == REQUEST_CODE_CAPTURE_VIDEO){
+                            Log.w("devdebug", "ConversationFragment onRequestPermissionsResult")
                             sendVideoMessage()
+                        }
                         else if (requestCode == REQUEST_CODE_TAKE_PICTURE)
                             takePicture()
                     }

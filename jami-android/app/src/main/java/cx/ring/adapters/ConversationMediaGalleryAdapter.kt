@@ -138,6 +138,7 @@ class ConversationMediaGalleryAdapter(
     }
 
     private fun configureVideo(viewHolder: ConversationMediaViewHolder, path: File) {
+        Log.w("devdebug", "ConversationMediaGalleryAdapter configureVideo")
         val context = viewHolder.itemView.context
         viewHolder.player?.let {
             viewHolder.player = null
@@ -215,7 +216,7 @@ class ConversationMediaGalleryAdapter(
     }
 
     private fun configureForFileInfo(viewHolder: ConversationMediaViewHolder, file: DataTransfer, position: Int) {
-        Log.w(TAG, "configureForFileInfo $position")
+        Log.w(TAG, "ConversationMediaGalleryAdapter configureForFileInfo $position")
         val path = deviceRuntimeService.getConversationPath(file)
         if (file.isComplete) {
             when {

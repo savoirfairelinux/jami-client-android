@@ -154,7 +154,9 @@ class ConversationFacade(
         }
         if (conversation.isSwarm) {
             val destPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversation.uri.rawRingId, file.name)
+            Log.w("devdebug", "ConversationFacade sendFile: $destPath")
             moveFile(file, destPath)
+            Log.w("devdebug", "ConversationFacade sendFile path =${destPath.exists()}")
             mAccountService.sendFile(conversation, destPath)
         }
         return Completable.complete()

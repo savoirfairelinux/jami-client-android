@@ -671,6 +671,7 @@ class ConversationAdapter(
     }
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
+        Log.w("devdebug", "ConversationAdapter configureVideo p1")
         val context = viewHolder.itemView.context
         viewHolder.player?.let {
             viewHolder.player = null
@@ -678,7 +679,12 @@ class ConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val uri = try { getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path) } catch (e: Exception) {
+            Log.w("devdebug", "Error getting uri for file")
+            Log.e("devdebug", e.toString())
+            return }
+
+        val player = MediaPlayer.create(context, uri) ?: return
         viewHolder.player = player
         val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
@@ -948,6 +954,8 @@ class ConversationAdapter(
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
+
+        Log.w("devdebug", "ConversationAdapter.configureForFileInfo() file: ${file.body}")
         val path = presenter.deviceRuntimeService.getConversationPath(file)
         val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
