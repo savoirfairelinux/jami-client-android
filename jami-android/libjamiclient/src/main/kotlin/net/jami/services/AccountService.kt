@@ -1465,7 +1465,9 @@ class AccountService(
     }
 
     fun sendFile(conversation: Conversation, file: File) {
-        mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
+        mExecutor.execute {
+            Log.w("devdebug", "AccountService sendFile absolutePath=${file.absolutePath} name=${file.name}")
+            JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
     }
 
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {

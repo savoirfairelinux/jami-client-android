@@ -354,8 +354,12 @@ object AndroidFileUtils {
         return conversationDir
     }
 
-    fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String) =
-        File(getConversationDir(context, accountId, conversationId), name)
+    fun getConversationPath(context: Context, accountId: String, conversationId: String, name: String): File {
+        val f = File(getConversationDir(context, accountId, conversationId), name)
+        Log.w("devdebug" , "AndroidFileUtils getConversationPath f = $f")
+        return f
+
+    }
 
     fun getTempPath(context: Context, conversationId: String, name: String): File {
         val conversationsDir = getCachePath(context, "conversation_data")
