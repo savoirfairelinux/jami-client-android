@@ -584,6 +584,7 @@ class ConversationAdapter(
             return false
         }
         if (interaction.type == Interaction.InteractionType.CONTACT) return false
+        Log.w("devdebug", "ConversationAdapter.onContextItemSelected action=${item.itemId} interaction=$interaction")
         when (item.itemId) {
             R.id.conv_action_download -> presenter.saveFile(interaction)
             R.id.conv_action_share -> presenter.shareFile(interaction as DataTransfer)
@@ -671,14 +672,31 @@ class ConversationAdapter(
     }
 
     private fun configureVideo(viewHolder: ConversationViewHolder, path: File) {
+        Log.w("devdebug", "ConversationAdapter configureVideo p1")
         val context = viewHolder.itemView.context
         viewHolder.player?.let {
             viewHolder.player = null
             it.release()
         }
-        val video = viewHolder.video ?: return
+
+        val video = viewHolder.video
+        if(video == null) {
+            Log.w("devdebug", "ConversationAdapter configureVideo viewHolder.video == null")
+            return
+        }
+
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val uri = try { getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path) } catch (e: Exception) {
+            Log.w("devdebug", "Error getting uri for file")
+            Log.e("devdebug", e.toString())
+            return }
+
+        val player = MediaPlayer.create(context, uri)
+        if(player == null) {
+            Log.w("devdebug", "ConversationAdapter configureVideo player == null")
+            return
+        }
+
         viewHolder.player = player
         val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
@@ -948,6 +966,8 @@ class ConversationAdapter(
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
         val file = interaction as DataTransfer
+
+        Log.w("devdebug", "ConversationAdapter.configureForFileInfo() file: ${file.body}")
         val path = presenter.deviceRuntimeService.getConversationPath(file)
         val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
@@ -1002,17 +1022,20 @@ class ConversationAdapter(
         if (type == MessageType.TransferType.IMAGE) {
             configureImage(viewHolder, path, file.body)
         } else if (type == MessageType.TransferType.VIDEO) {
+            Log.w("devdebug", "ConversationAdapter configureForFileInfo() VIDEO")
             configureVideo(viewHolder, path)
         } else if (type == MessageType.TransferType.AUDIO) {
             configureAudio(viewHolder, path)
         } else {
+            Log.w("devdebug", "ConversationAdapter configureForFileInfo() FILE")
             val status = file.status
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
             viewHolder.mMsgTxt?.text = file.displayName
             if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.btnRefuse?.visibility = View.VISIBLE
                 viewHolder.mAnswerLayout?.visibility = View.VISIBLE
-                viewHolder.btnAccept?.setOnClickListener { presenter.acceptFile(file) }
+                viewHolder.btnAccept?.setOnClickListener {
+                    presenter.acceptFile(file) }
                 viewHolder.btnRefuse?.setOnClickListener { presenter.refuseFile(file) }
             } else if (status == InteractionStatus.FILE_AVAILABLE) {
                 viewHolder.btnRefuse?.visibility = View.GONE

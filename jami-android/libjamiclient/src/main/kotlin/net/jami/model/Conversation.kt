@@ -376,6 +376,7 @@ class Conversation : ConversationHistory {
 
     @Synchronized
     fun updateInteraction(element: Interaction) {
+        Log.w("devdebug", "Conversation updateInteraction")
         Log.e(TAG, "updateInteraction: ${element.messageId} ${element.status}")
         if (isSwarm) {
             val e = mMessages[element.messageId]

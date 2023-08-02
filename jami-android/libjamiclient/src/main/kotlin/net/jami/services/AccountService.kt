@@ -1465,10 +1465,13 @@ class AccountService(
     }
 
     fun sendFile(conversation: Conversation, file: File) {
-        mExecutor.execute { JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
+        mExecutor.execute {
+            Log.w("devdebug", "AccountService sendFile absolutePath=${file.absolutePath} name=${file.name}")
+            JamiService.sendFile(conversation.accountId, conversation.uri.rawRingId,file.absolutePath, file.name, "") }
     }
 
     fun acceptFileTransfer(accountId: String, conversationUri: Uri, messageId: String?, fileId: String) {
+        Log.w("devdebug", "AccountService acceptFileTransfer f1")
         getAccount(accountId)?.let { account -> account.getByUri(conversationUri)?.let { conversation ->
             val transfer = if (conversation.isSwarm)
                 conversation.getMessage(messageId!!) as DataTransfer?
@@ -1480,9 +1483,11 @@ class AccountService(
 
     fun acceptFileTransfer(conversation: Conversation, fileId: String, transfer: DataTransfer) {
         if (conversation.isSwarm) {
+            Log.w("devdebug", "AccountService acceptFileTransfer f2")
             val conversationId = conversation.uri.rawRingId
             val newPath = mDeviceRuntimeService.getNewConversationPath(conversation.accountId, conversationId, transfer.displayName)
             Log.i(TAG, "downloadFile() id=" + conversation.accountId + ", path=" + conversationId + " " + fileId + " to -> " + newPath.absolutePath)
+            Log.w("devdebug", "AccountService acceptFileTransfer downloading messageId=${transfer.messageId} fileId=$fileId absolutePath=${newPath.absolutePath}")
             JamiService.downloadFile(conversation.accountId, conversationId, transfer.messageId, fileId, newPath.absolutePath)
         }
     }

@@ -244,6 +244,7 @@ class DRingService : Service() {
         val id = extras.getString(KEY_TRANSFER_ID)!!
         val path = ConversationPath.fromUri(uri)!!
         if (action == ACTION_FILE_ACCEPT) {
+            Log.w("devdebug", "DRingService handleFileAction ACTION_FILE_ACCEPT")
             mNotificationService.removeTransferNotification(path.accountId, path.conversationUri, id)
             mAccountService.acceptFileTransfer(path.accountId, path.conversationUri, messageId, id)
         } else if (action == ACTION_FILE_CANCEL) {
