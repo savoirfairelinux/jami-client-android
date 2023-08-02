@@ -341,13 +341,6 @@ object AndroidFileUtils {
 
     fun getFilePath(context: Context, filename: String): File = context.getFileStreamPath(filename)
 
-    fun getConversationDir(context: Context, conversationId: String): File {
-        val conversationsDir = getFilePath(context, "conversation_data")
-        if (!conversationsDir.exists()) conversationsDir.mkdir()
-        val conversationDir = File(conversationsDir, conversationId)
-        if (!conversationDir.exists()) conversationDir.mkdir()
-        return conversationDir
-    }
 
     fun getConversationDir(context: Context, accountId: String, conversationId: String): File {
         val conversationsDir = getFilePath(context, "conversation_data")

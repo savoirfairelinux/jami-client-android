@@ -80,8 +80,6 @@ class DeviceRuntimeServiceImpl(
     override fun getTemporaryPath(conversationId: String, name: String): File =
         AndroidFileUtils.getTempPath(mContext, conversationId, name)
 
-    override fun getConversationDir(conversationId: String): File =
-        AndroidFileUtils.getConversationDir(mContext, conversationId)
 
     override val cacheDir: File
         get() = mContext.cacheDir
