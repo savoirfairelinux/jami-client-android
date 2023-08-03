@@ -678,14 +678,25 @@ class ConversationAdapter(
             viewHolder.player = null
             it.release()
         }
-        val video = viewHolder.video ?: return
+
+        val video = viewHolder.video
+        if(video == null) {
+            Log.w("devdebug", "ConversationAdapter configureVideo viewHolder.video == null")
+            return
+        }
+
         val cardLayout = viewHolder.mLayout as CardView
         val uri = try { getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path) } catch (e: Exception) {
             Log.w("devdebug", "Error getting uri for file")
             Log.e("devdebug", e.toString())
             return }
 
-        val player = MediaPlayer.create(context, uri) ?: return
+        val player = MediaPlayer.create(context, uri)
+        if(player == null) {
+            Log.w("devdebug", "ConversationAdapter configureVideo player == null")
+            return
+        }
+
         viewHolder.player = player
         val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
