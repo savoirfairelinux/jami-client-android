@@ -183,6 +183,7 @@ class ConversationFacade(
                         .subscribeOn(Schedulers.io())
                         .subscribe({
                             transfer.status = InteractionStatus.FILE_AVAILABLE
+                            // Todo: WHY DO WE JUST UPDATE HERE ?
                             conversation.updateInteraction(transfer)
                         })
                         { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })
