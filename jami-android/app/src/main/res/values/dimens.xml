@@ -122,5 +122,7 @@ along with this program; if not, write to the Free Software
     <dimen name="jami_id_small_font_size">14px</dimen>
     <dimen name="jami_id_regular_font_size">20px</dimen>
 
+    <!--  WelcomeJami  -->
+    <dimen name="welcome_jami_logo_default_size">85dp</dimen>
 
 </resources>
