@@ -50,4 +50,7 @@
     <color name="jami_id_validate_icon_enabled_color">@color/black</color>
     <color name="jami_id_validate_icon_disabled_color">#4D000000</color>
 
+    <!--  WelcomeJami  -->
+    <color name="welcome_jami_surface_color">#FFFFFF</color>
+
 </resources>
