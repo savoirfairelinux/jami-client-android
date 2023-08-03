@@ -455,6 +455,8 @@ along with this program; if not, write to the Free Software
     <string name="jami_id_copy">Copy JamiId</string>
     <string name="jami_id_share">Share JamiId</string>
 
-
+    <!--  WelcomeJami  -->
+    <string name="welcome_jami_title">Welcome to Jami</string>
+    <string name="welcome_jami_description">Share your Jami identifier in order to be contacted more easily!</string>
 
 </resources>

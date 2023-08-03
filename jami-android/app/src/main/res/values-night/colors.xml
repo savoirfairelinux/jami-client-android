@@ -45,4 +45,7 @@
     <color name="jami_id_background_color">#4C000000</color>
     <color name="jami_id_surface_color">#03B9E9</color>
 
+    <!--  WelcomeJami  -->
+    <color name="welcome_jami_surface_color">#FFFFFF</color>
+
 </resources>
