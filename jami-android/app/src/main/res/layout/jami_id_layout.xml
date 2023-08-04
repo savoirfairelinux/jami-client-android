@@ -4,77 +4,147 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/background_jami_id_left"
-        android:orientation="horizontal"
-        android:paddingStart="14dp"
-        android:paddingEnd="13dp">
+        android:layout_height="wrap_content">
 
-        <!-- Jami ID icon -->
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="7dp"
-            android:contentDescription="@null"
-            android:src="@drawable/jami_id"
-            app:tint="@color/jami_id_surface_color" />
-
-        <!-- Jami ID text -->
-        <TextView
-            android:id="@+id/jami_id_text_view"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="@font/ubuntu_regular"
-            android:textColor="@color/jami_id_surface_color"
-            tools:text="saperlipopette"
-            tools:textSize="22sp" />
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/background_jami_id_left"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="13dp">
+
+            <!-- Jami ID icon -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="7dp"
+                android:contentDescription="@null"
+                android:src="@drawable/jami_id"
+                app:tint="@color/jami_id_surface_color" />
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/textField"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center_vertical"-->
+            <!--                app:hintEnabled="false"-->
+            <!--                app:errorEnabled="false"-->
+            <!--                app:helperTextEnabled="false"-->
+            <!--                app:boxBackgroundMode="none">-->
+            <!-- Jami ID text -->
+            <EditText
+                android:id="@+id/jami_id_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:minWidth="200dp"
+                android:text="mure"
+                android:textColor="@color/jami_id_surface_color"
+
+
+                tools:text="saperlipopette"
+
+                />
+            <!--            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:id="@+id/jami_id_text_view"-->
+            <!--                android:minWidth="200dp"-->
+            <!--                android:padding="0dp"-->
+            <!--                android:textColor="@color/jami_id_surface_color"-->
+            <!--                android:text="mure"-->
+            <!--                android:fontFamily="@font/ubuntu_regular"-->
+            <!--                tools:text="saperlipopette"-->
+            <!--                android:textSize="22sp"-->
+            <!--                android:maxLines="1"-->
+            <!--                android:enabled="false"-->
+
+            <!--                android:inputType="textPersonName"-->
+
+            <!--                />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/jami_id_text_view"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center_vertical"-->
+            <!--                android:fontFamily="@font/ubuntu_regular"-->
+            <!--                android:textColor="@color/jami_id_surface_color"-->
+            <!--                tools:text="saperlipopette"-->
+            <!--                tools:textSize="22sp" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/background_jami_id_middle">
+
+            <!-- Copy jami ID button -->
+            <ImageButton
+                android:id="@+id/jami_id_copy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/jami_id_copy"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:src="@drawable/copy_24"
+
+                app:tint="@color/jami_id_surface_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_jami_id_right"
+            android:orientation="horizontal">
+
+            <!-- Share jami ID button -->
+            <ImageButton
+                android:id="@+id/jami_id_share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/jami_id_share"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:src="@drawable/share_24"
+                app:tint="@color/jami_id_surface_color" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView9"
+        android:paddingTop="5dp"
+        android:paddingStart="57dp"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/background_jami_id_middle">
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:text="TextView" />
 
-        <!-- Copy jami ID button -->
-        <ImageButton
-            android:id="@+id/jami_id_copy_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/jami_id_copy"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:src="@drawable/copy_24"
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
 
-            app:tint="@color/jami_id_surface_color" />
-    </LinearLayout>
+        />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_jami_id_right"
-        android:orientation="horizontal">
 
-        <!-- Share jami ID button -->
-        <ImageButton
-            android:id="@+id/jami_id_share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/jami_id_share"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:src="@drawable/share_24"
-            app:tint="@color/jami_id_surface_color" />
-    </LinearLayout>
 </LinearLayout>

@@ -454,6 +454,8 @@ along with this program; if not, write to the Free Software
     <!--  JamiId  -->
     <string name="jami_id_copy">Copy JamiId</string>
     <string name="jami_id_share">Share JamiId</string>
+    <string name="jami_id_available">The username is available</string>
+    <string name="jami_id_not_available">The username is not available</string>
 
     <!--  WelcomeJami  -->
     <string name="welcome_jami_title">Welcome to Jami</string>
