@@ -16,8 +16,10 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
+  <string name="notif_inprogress_group_call">Llamada en curso</string>
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="ongoing_group_call">Llamada en curso</string>
   <string name="in_reply_to">En respuesta a</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->

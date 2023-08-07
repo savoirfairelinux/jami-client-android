@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitații primite</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversație</item>
     <item quantity="few">%d Conversații</item>
@@ -121,6 +122,7 @@
   <string name="write_a_message">Scrie un mesaj</string>
   <string name="scan_qr">Scanează codul QR</string>
   <string name="qr_code">Cod QR</string>
+  <string name="new_swarm">Grup nou</string>
   <string name="ab_action_flipcamera">Schimbă camera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <string name="remote_recording">%s înregistrează…</string>

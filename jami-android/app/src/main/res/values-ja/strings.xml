@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">招待を受信しました</string>
   <plurals name="home_conferences_title">
     <item quantity="other">%d 件の会話</item>
   </plurals>
@@ -71,6 +72,7 @@
   <string name="notif_channel_background_service">バックグラウンドサービス</string>
   <string name="notif_channel_background_service_descr">着信とメッセージの受信を許可する</string>
   <string name="notif_group_calls">通話</string>
+  <string name="notif_inprogress_group_call">発信中</string>
   <string name="notif_background_service">Jamiはバックグラウンドで実行中</string>
   <string name="notif_mark_as_read">既読</string>
   <string name="notif_dismiss">退出</string>
@@ -118,6 +120,7 @@
   <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="qr_code">QRコード</string>
+  <string name="new_swarm">Swarmを動かす</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <string name="ab_action_hidepreview">プレビューを隠す</string>
   <string name="remote_recording">%s記録中…</string>
@@ -133,6 +136,7 @@
   <string name="conversation_send_audio">音声の録音</string>
   <string name="conversation_send_video">ビデオの録画</string>
   <string name="conversation_share_location">現在地の共有</string>
+  <string name="ongoing_group_call">通話中</string>
   <string name="in_reply_to">メッセージへの返信</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>

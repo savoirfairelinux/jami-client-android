@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Meghívások megérkeztek</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d beszélgetés</item>
     <item quantity="other">%dbeszélgetés</item>
@@ -120,6 +121,7 @@
   <string name="write_a_message">Üzenet írása következőknek:</string>
   <string name="scan_qr">QR-kód beolvasása</string>
   <string name="qr_code">QR-kód</string>
+  <string name="new_swarm">Rajcsoport indítása</string>
   <string name="ab_action_flipcamera">Fényképezőgép tükrözése</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
   <string name="remote_recording">%s felvétel folyamatban…</string>

@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Ftesat u morën</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Bisedë</item>
     <item quantity="other">%d Biseda</item>
@@ -72,6 +73,7 @@
   <string name="notif_channel_background_service">Shërbim në prapaskenë</string>
   <string name="notif_channel_background_service_descr">Lejon marrje thirrjesh dhe mesazhesh në çfarëdo kohe.</string>
   <string name="notif_group_calls">Thirrje</string>
+  <string name="notif_inprogress_group_call">Thirrje në ecuri e sipër</string>
   <string name="notif_background_service">Jami është duke xhiruar në prapaskenë</string>
   <string name="notif_mark_as_read">Vëri shenjë si të lexuar</string>
   <string name="notif_dismiss">Hidhe Tej</string>
@@ -119,6 +121,7 @@
   <string name="write_a_message">Shkruani një mesazh</string>
   <string name="scan_qr">Skanoni Kodin QR</string>
   <string name="qr_code">Kod QR</string>
+  <string name="new_swarm">Nisni Zgjua</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>
   <string name="remote_recording">%s po regjistron…</string>
@@ -134,6 +137,7 @@
   <string name="conversation_send_audio">Incizoni copëz zanore</string>
   <string name="conversation_send_video">Regjistroni copës video</string>
   <string name="conversation_share_location">Ndani vendndodhje</string>
+  <string name="ongoing_group_call">Thirrje Në Ecuri E Sipër</string>
   <string name="in_reply_to">Në përgjigje të</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>

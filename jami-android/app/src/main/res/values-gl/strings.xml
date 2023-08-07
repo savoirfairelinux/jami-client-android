@@ -341,7 +341,7 @@
   <string name="wizard_profile_button">Gardar perfil</string>
   <string name="wizard_profile_skip">Saltar e facer esto máis tarde</string>
   <string name="fab_path_choose">Escolle outro ficheiro</string>
-  <string name="chat_plugins">Complementos do chat</string>
+  <string name="chat_plugins">Complementos da parola</string>
   <!--Bottom sheet-->
   <string name="bottomSheet_share_btn">Compartir</string>
   <string name="bottomSheet_dialpad_btn">Teclado</string>
