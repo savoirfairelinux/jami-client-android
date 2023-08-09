@@ -1,27 +1,38 @@
 package cx.ring.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import cx.ring.R
 import cx.ring.databinding.JamiIdLayoutBinding
 import cx.ring.utils.ActionHelper.copyAndShow
 import cx.ring.utils.ActionHelper.shareAccount
+import cx.ring.utils.DrawableUtils.resizeDrawable
+import cx.ring.utils.KeyboardVisibilityManager.showKeyboard
+import cx.ring.viewmodel.JamiIdStatus
+import cx.ring.viewmodel.JamiIdViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import net.jami.utils.Log
 
+@AndroidEntryPoint
 class JamiIdFragment : Fragment() {
 
     private var binding: JamiIdLayoutBinding? = null
+    private val jamiIdViewModel: JamiIdViewModel by viewModels({ requireParentFragment() })
 
     companion object {
-        private const val ARG_JAMI_ID = "jami_id"
-
-        fun newInstance(jamiId: String) =
-            JamiIdFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_JAMI_ID, jamiId)
-                }
-            }
+        private val TAG = JamiIdFragment::class.simpleName!!
     }
 
     override fun onCreateView(
@@ -29,39 +40,309 @@ class JamiIdFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View =
         JamiIdLayoutBinding.inflate(inflater, container, false).apply {
-
-            val jamiId: String
-
-            // Get the jamiId from the arguments
-            requireArguments().let {
-                jamiId = it.getString(ARG_JAMI_ID, "")
-            }
-
-            // Set the jamiId
-            jamiIdTextView?.text = jamiId
-
-            // Adapt the size to the length of the jamiId
-            // If the jamiId is too long (more than 16 characters), use a smaller font size
-            jamiIdTextView?.textSize =
-                if (jamiId.length > 16) {
-                    context?.resources?.getDimensionPixelSize(
-                        cx.ring.R.dimen.jami_id_small_font_size
-                    )!!.toFloat()
-                } else {
-                    context?.resources?.getDimensionPixelSize(
-                        cx.ring.R.dimen.jami_id_regular_font_size
-                    )!!.toFloat()
-                }
-
-            // Connect the copy and share buttons
-            jamiIdCopyButton.setOnClickListener {
-                copyAndShow(requireContext(), binding!!.root, jamiId)
-            }
-            jamiIdShareButton.setOnClickListener {
-                shareAccount(requireContext(), jamiId)
-            }
-
             binding = this
-
         }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Observe the uiState and update the UI
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                jamiIdViewModel.uiState.collect { uiState ->
+
+                    when (uiState.JamiIdStatus) {
+                        JamiIdStatus.USERNAME_NOT_DEFINED ->
+                            setUsernameNotDefinedUiState(
+                                username = uiState.username
+                            )
+
+                        JamiIdStatus.EDITING_USERNAME_INITIAL ->
+                            setEditingUsernameInitialUiState(
+                                typingUsername = uiState.editedUsername
+                            )
+
+                        JamiIdStatus.EDITING_USERNAME_LOADING ->
+                            setEditingUsernameLoadingUiState(
+                                typingUsername = uiState.editedUsername
+                            )
+
+                        JamiIdStatus.EDITING_USERNAME_NOT_AVAILABLE ->
+                            setEditingUsernameNotAvailableUiState(
+                                typingUsername = uiState.editedUsername
+                            )
+
+                        JamiIdStatus.EDITING_USERNAME_AVAILABLE ->
+                            setEditingUsernameAvailableUiState(
+                                typingUsername = uiState.editedUsername
+                            )
+
+                        JamiIdStatus.USERNAME_DEFINED ->
+                            setUsernameDefinedUiState(
+                                username = uiState.username
+                            )
+
+                        else -> {
+                            Log.w(TAG, "Unknown JamiIdStatus: ${uiState.JamiIdStatus}")
+                            setUsernameDefinedUiState(
+                                username = uiState.username
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Set the jamiIdEditText to the given username.
+     * Adapt the size to the length of the jamiId.
+     */
+    private fun setEditTextUsername(username: String) {
+        // Adapt the size to the length of the jamiId
+        // If the jamiId is too long (more than 16 characters), use a smaller font size
+        binding?.jamiIdEditText?.textSize =
+            if (username.length > 16) {
+                context?.resources?.getDimensionPixelSize(
+                    R.dimen.jami_id_small_font_size
+                )!!.toFloat()
+            } else {
+                context?.resources?.getDimensionPixelSize(
+                    R.dimen.jami_id_regular_font_size
+                )!!.toFloat()
+            }
+
+        // Set the jamiId
+        if (binding?.jamiIdEditText?.text.toString() != username) {
+            binding?.jamiIdEditText?.setText(username)
+            binding?.jamiIdEditText?.setSelection(username.length)
+        }
+    }
+
+    /**
+     * Set the right drawable of the jamiIdEditText to the given drawable.
+     * Resize it to 24dp x 24dp.
+     */
+    private fun setEditTextRightDrawable(@DrawableRes id: Int? = null) {
+        binding?.jamiIdEditText?.setCompoundDrawables(
+            null, null,
+            id?.let {
+                resizeDrawable(
+                    context = requireContext(),
+                    drawable = AppCompatResources.getDrawable(requireContext(), id)!!,
+                    width = 24, height = 24
+                )
+            },
+            null
+        )
+    }
+
+    // Functions to define EditText
+    // Will be red if the username is not available
+    // Will be green if the username is available
+
+    private fun setEditTextUsernameDefinedOrUsernameNotDefinedUiState() {
+        binding?.jamiIdEditText
+            ?.setTextColor(requireContext().getColorStateList(R.color.jami_id_surface_color))
+        binding?.jamiIdEditText?.backgroundTintList =
+            requireContext().getColorStateList(R.color.transparent)
+        setEditTextRightDrawable()
+    }
+
+    private fun setEditTextEditingUsernameLoadingUiState() {
+        binding?.jamiIdEditText
+            ?.setTextColor(requireContext().getColorStateList(R.color.jami_id_surface_color))
+        binding?.jamiIdEditText?.backgroundTintList =
+            requireContext().getColorStateList(R.color.jami_id_edit_text_underline_color)
+        setEditTextRightDrawable()
+    }
+
+    private fun setEditTextEditingUsernameNotAvailableUiState() {
+        val redColorStateList = requireContext().getColorStateList(R.color.red_500)
+
+        binding?.jamiIdEditText?.setTextColor(redColorStateList)
+        binding?.jamiIdEditText?.backgroundTintList = redColorStateList
+        setEditTextRightDrawable(R.drawable.ic_error_red)
+    }
+
+    private fun setEditTextEditingUsernameAvailableUiState() {
+        val greenColorStateList = requireContext().getColorStateList(R.color.green_500)
+
+        binding?.jamiIdEditText?.setTextColor(greenColorStateList)
+        binding?.jamiIdEditText?.backgroundTintList = greenColorStateList
+        setEditTextRightDrawable(R.drawable.ic_good_green)
+    }
+
+    private fun setEditTextEditingUsernameInitialUiState() {
+        binding?.jamiIdEditText
+            ?.setTextColor(requireContext().getColorStateList(R.color.jami_id_surface_color))
+        binding?.jamiIdEditText?.backgroundTintList =
+            requireContext().getColorStateList(R.color.jami_id_edit_text_underline_color)
+        setEditTextRightDrawable()
+    }
+
+    // Functions to define EditText Status
+    // Helps the user to know what to do
+
+    private fun setEditTextStatusEditingUsernameLoadingUiState() {
+        binding?.jamiIdEditTextStatus?.setTextColor(requireContext().getColorStateList(R.color.jami_id_surface_color))
+        binding?.jamiIdEditTextStatus?.text =
+            context?.getString(R.string.jami_id_looking_for_availability)
+    }
+
+    private fun setEditTextStatusEditingUsernameNotAvailableUiState() {
+        binding?.jamiIdEditTextStatus?.setTextColor(requireContext().getColorStateList(R.color.red_500))
+        binding?.jamiIdEditTextStatus?.text = context?.getString(R.string.jami_id_not_available)
+    }
+
+    private fun setEditTextStatusEditingUsernameAvailableUiState() {
+        binding?.jamiIdEditTextStatus?.setTextColor(requireContext().getColorStateList(R.color.green_500))
+        binding?.jamiIdEditTextStatus?.text = context?.getString(R.string.jami_id_available)
+    }
+
+    private fun setEditTextStatusEditingUsernameInitialUiState() {
+        binding?.jamiIdEditTextStatus?.setTextColor(requireContext().getColorStateList(R.color.jami_id_surface_color))
+        binding?.jamiIdEditTextStatus?.text = context?.getString(R.string.jami_id_choose_username)
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            jamiIdViewModel.textChanged(s.toString())
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    }
+
+    // Functions to define UI
+    // Five states :
+    // - Username not defined
+    // - Editing username initial
+    // - Editing username loading
+    // - Editing username not available
+    // - Editing username available
+    // - Username defined
+
+    private fun setUsernameNotDefinedUiState(username: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = username)
+        setEditTextUsernameDefinedOrUsernameNotDefinedUiState()
+
+        // Connect the copy, share, choose username and validate buttons
+        binding?.jamiIdCopyButton?.setOnClickListener {
+            copyAndShow(requireContext(), binding!!.root, username)
+        }
+        binding?.jamiIdShareButton?.setOnClickListener {
+            shareAccount(requireContext(), username)
+        }
+        binding?.jamiIdChooseUsernameButton?.setOnClickListener {
+            jamiIdViewModel.onChooseUsernameClicked()
+        }
+        binding?.jamiIdValidateButton?.setOnClickListener {
+            jamiIdViewModel.onValidateClicked()
+        }
+
+        binding?.jamiIdEditText?.isEnabled = false
+
+        binding?.jamiIdChooseUsernameButton?.visibility = View.VISIBLE
+        binding?.jamiIdShareButtonWrapper?.visibility = View.VISIBLE
+        binding?.jamiIdCopyButtonWrapper?.visibility = View.VISIBLE
+        binding?.jamiIdEditTextStatus?.visibility = View.GONE
+        binding?.jamiIdValidateButtonWrapper?.visibility = View.GONE
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+    }
+
+    private fun setEditingUsernameInitialUiState(typingUsername: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = typingUsername)
+        setEditTextEditingUsernameInitialUiState()
+        setEditTextStatusEditingUsernameInitialUiState()
+
+        binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
+
+        binding?.jamiIdEditText?.isEnabled = true
+        binding?.jamiIdValidateButton?.isEnabled = false
+
+        binding?.jamiIdShareButtonWrapper?.visibility = View.GONE
+        binding?.jamiIdCopyButtonWrapper?.visibility = View.GONE
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+        binding?.jamiIdChooseUsernameButton?.visibility = View.INVISIBLE
+        binding?.jamiIdEditTextStatus?.visibility = View.VISIBLE
+        binding?.jamiIdValidateButtonWrapper?.visibility = View.VISIBLE
+
+        showKeyboard(binding?.jamiIdEditText!!)
+    }
+
+    private fun setEditingUsernameLoadingUiState(typingUsername: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = typingUsername)
+        setEditTextEditingUsernameLoadingUiState()
+        setEditTextStatusEditingUsernameLoadingUiState()
+
+        binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
+
+
+        binding?.jamiIdValidateButton?.isEnabled = false
+
+        binding?.jamiIdProgressBar?.visibility = View.VISIBLE
+    }
+
+    private fun setEditingUsernameNotAvailableUiState(typingUsername: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = typingUsername)
+        setEditTextEditingUsernameNotAvailableUiState()
+        setEditTextStatusEditingUsernameNotAvailableUiState()
+
+        binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
+
+        binding?.jamiIdValidateButton?.isEnabled = false
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+    }
+
+    private fun setEditingUsernameAvailableUiState(typingUsername: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = typingUsername)
+        setEditTextEditingUsernameAvailableUiState()
+        setEditTextStatusEditingUsernameAvailableUiState()
+
+        binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
+
+        binding?.jamiIdValidateButton?.isEnabled = true
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+    }
+
+    private fun setUsernameDefinedUiState(username: String) {
+
+        binding?.jamiIdEditText?.removeTextChangedListener(textWatcher)
+
+        setEditTextUsername(username = username)
+        setEditTextUsernameDefinedOrUsernameNotDefinedUiState()
+
+        // Update listeners on copy and share buttons
+        binding?.jamiIdCopyButton?.setOnClickListener {
+            copyAndShow(requireContext(), binding!!.root, username)
+        }
+        binding?.jamiIdShareButton?.setOnClickListener {
+            shareAccount(requireContext(), username)
+        }
+
+        binding?.jamiIdEditText?.isEnabled = false
+
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+        binding?.jamiIdEditTextStatus?.visibility = View.GONE
+        binding?.jamiIdValidateButtonWrapper?.visibility = View.GONE
+        binding?.jamiIdShareButtonWrapper?.visibility = View.VISIBLE
+        binding?.jamiIdCopyButtonWrapper?.visibility = View.VISIBLE
+    }
 }
