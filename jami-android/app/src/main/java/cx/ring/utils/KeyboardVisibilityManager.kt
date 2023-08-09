@@ -33,7 +33,7 @@ object KeyboardVisibilityManager {
         Log.d(TAG, "showKeyboard: showing keyboard")
         viewToFocus.requestFocus()
         val imm = viewToFocus.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        imm.showSoftInput(viewToFocus, InputMethodManager.SHOW_IMPLICIT)
     }
 
     fun hideKeyboard(activity: Activity?) {
