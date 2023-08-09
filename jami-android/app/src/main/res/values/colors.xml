@@ -76,6 +76,7 @@
     <!--  JamiId  -->
     <color name="jami_id_background_color">#4CFFFFFF</color>
     <color name="jami_id_surface_color">#005699</color>
+    <color name="jami_id_edit_text_underline_color">#02B9E9</color>
 
     <!--  WelcomeJami  -->
     <color name="welcome_jami_surface_color">#000000</color>
