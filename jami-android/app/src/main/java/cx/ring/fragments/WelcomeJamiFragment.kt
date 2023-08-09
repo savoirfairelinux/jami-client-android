@@ -1,16 +1,22 @@
 package cx.ring.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import cx.ring.R
 import cx.ring.databinding.WelcomeJamiLayoutBinding
+import cx.ring.viewmodel.JamiIdStatus
+import cx.ring.viewmodel.JamiIdViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WelcomeJamiFragment : Fragment() {
 
     private var binding: WelcomeJamiLayoutBinding? = null
+    private val viewModel by lazy { ViewModelProvider(this)[JamiIdViewModel::class.java] }
 
     companion object {
         private const val ARG_JAMI_ID = "jami_id"
@@ -28,7 +34,6 @@ class WelcomeJamiFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View =
         WelcomeJamiLayoutBinding.inflate(inflater, container, false).apply {
-
             val jamiId: String
 
             // Get the jamiId from the arguments
@@ -36,10 +41,11 @@ class WelcomeJamiFragment : Fragment() {
                 jamiId = it.getString(ARG_JAMI_ID, "")
             }
 
+            viewModel.init(jamiId, JamiIdStatus.USERNAME_NOT_DEFINED)
+
             // Create the JamiIdFragment
-            val fragment = JamiIdFragment.newInstance(jamiId)
             childFragmentManager.beginTransaction()
-                .replace(R.id.jamiIdFragmentContainerView, fragment)
+                .replace(R.id.jamiIdFragmentContainerView, JamiIdFragment())
                 .commit()
 
             binding = this
