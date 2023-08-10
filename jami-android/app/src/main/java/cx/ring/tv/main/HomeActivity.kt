@@ -250,24 +250,29 @@ class HomeActivity : FragmentActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ camera: Camera ->
-                Log.w(TAG, "setUpCamera()")
-                val params = camera.parameters
-                val selectSize = chooseOptimalSize(params.supportedPictureSizes, 1280, 720, 1920, 1080, Size(1280, 720))
-                Log.w(TAG, "setUpCamera() selectSize " + selectSize.width + "x" + selectSize.height)
-                params.setPictureSize(selectSize.width, selectSize.height)
-                params.setPreviewSize(selectSize.width, selectSize.height)
-                camera.parameters = params
-                mBlurImage.visibility = View.VISIBLE
-                if (mCameraManager == null) {
-                    mCameraManager = (getSystemService(CAMERA_SERVICE) as CameraManager).apply {
-                        registerAvailabilityCallback((mCameraAvailabilityCallback), null)
+                try {
+                    Log.w(TAG, "setUpCamera()")
+                    val params = camera.parameters
+                    val selectSize = chooseOptimalSize(params.supportedPictureSizes, 1280, 720, 1920, 1080, Size(1280, 720))
+                    Log.w(TAG, "setUpCamera() selectSize " + selectSize.width + "x" + selectSize.height)
+                    params.setPictureSize(selectSize.width, selectSize.height)
+                    params.setPreviewSize(selectSize.width, selectSize.height)
+                    camera.parameters = params
+                    mBlurImage.visibility = View.VISIBLE
+                    if (mCameraManager == null) {
+                        mCameraManager = (getSystemService(CAMERA_SERVICE) as CameraManager).apply {
+                            registerAvailabilityCallback((mCameraAvailabilityCallback), null)
+                        }
                     }
+                    mCameraPreview = CameraPreview(this, camera)
+                    mPreviewView.removeAllViews()
+                    mPreviewView.addView(mCameraPreview, 0)
+                    camera.setErrorCallback(mErrorCallback)
+                    camera.setPreviewCallback(mPreviewCallback)
+                } catch (e: Exception) {
+                    Log.e(TAG, "setUpCamera() error", e)
+                    mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
                 }
-                mCameraPreview = CameraPreview(this, camera)
-                mPreviewView.removeAllViews()
-                mPreviewView.addView(mCameraPreview, 0)
-                camera.setErrorCallback(mErrorCallback)
-                camera.setPreviewCallback(mPreviewCallback)
             }) {
                 mBackgroundManager.drawable = ContextCompat.getDrawable(this@HomeActivity, R.drawable.tv_background)
             })
