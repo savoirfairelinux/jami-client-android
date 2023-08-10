@@ -45,6 +45,8 @@ class JamiIdViewModel @Inject constructor(
 
     // Expose screen UI state
     private val _uiState = MutableStateFlow(JamiIdUiState())
+
+
     private val usernameIsAvailableDisposable = CompositeDisposable()
     val uiState: StateFlow<JamiIdUiState> = _uiState.asStateFlow()
 
@@ -66,22 +68,20 @@ class JamiIdViewModel @Inject constructor(
         }
     }
 
-    fun reset() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                JamiIdStatus = JamiIdStatus.USERNAME_NOT_DEFINED,
-                editedUsername = ""
-            )
-        }
-    }
-
     fun onChooseUsernameClicked() {
         Log.d(TAG, "'Choose a username' button clicked.")
-        changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
+        if (uiState.value.editedUsername != "") {
+            changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
+            textChanged(uiState.value.editedUsername)
+        } else changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
     }
 
     fun onValidateClicked() {
         Log.d(TAG, "'Validate' button clicked.")
+    }
+
+    fun onLooseFocus() {
+        changeJamiIdStatus(JamiIdStatus.USERNAME_NOT_DEFINED)
     }
 
     /**
