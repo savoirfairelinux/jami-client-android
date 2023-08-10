@@ -64,3 +64,28 @@
 -keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
   *** rewind();
 }
+
+-dontwarn com.google.firebase.analytics.connector.AnalyticsConnector
+-dontwarn javax.persistence.Basic
+-dontwarn javax.persistence.Column
+-dontwarn javax.persistence.Entity
+-dontwarn javax.persistence.EnumType
+-dontwarn javax.persistence.Enumerated
+-dontwarn javax.persistence.FetchType
+-dontwarn javax.persistence.GeneratedValue
+-dontwarn javax.persistence.Id
+-dontwarn javax.persistence.JoinColumn
+-dontwarn javax.persistence.ManyToOne
+-dontwarn javax.persistence.OneToMany
+-dontwarn javax.persistence.OneToOne
+-dontwarn javax.persistence.Table
+-dontwarn javax.persistence.Version
+-dontwarn org.apache.log4j.Level
+-dontwarn org.apache.log4j.Logger
+-dontwarn org.apache.log4j.Priority
+-dontwarn org.apache.logging.log4j.LogManager
+-dontwarn org.apache.logging.log4j.Logger
+-dontwarn org.slf4j.ILoggerFactory
+-dontwarn org.slf4j.Logger
+-dontwarn org.slf4j.LoggerFactory
+-dontwarn org.slf4j.impl.StaticLoggerBinder
