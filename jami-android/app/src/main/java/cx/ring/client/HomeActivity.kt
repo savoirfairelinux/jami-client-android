@@ -35,6 +35,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import androidx.slidingpanelayout.widget.SlidingPaneLayout.PanelSlideListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -55,6 +56,8 @@ import cx.ring.utils.BitmapUtils
 import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils
+import cx.ring.viewmodel.JamiIdViewModel
+import cx.ring.viewmodel.WelcomeJamiViewModel
 import cx.ring.views.AvatarDrawable
 import cx.ring.views.AvatarFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,12 +79,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicked {
+    private val welcomeJamiViewModel by lazy { ViewModelProvider(this)[WelcomeJamiViewModel::class.java] }
     private var frameContent: Fragment? = null
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
     private var mOrientation = 0
-    private var restoreInstanceFlag:Boolean = false
+    private var restoreInstanceFlag: Boolean = false
 
     @Inject
     lateinit
@@ -113,6 +117,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         super.onRestoreInstanceState(savedInstanceState)
         mOrientation = savedInstanceState.getInt("orientation")
     }
+
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
@@ -176,7 +181,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        mHomeFragment = supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
+        mHomeFragment =
+            supportFragmentManager.findFragmentById(R.id.home_fragment) as? HomeFragment?
         frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
         supportFragmentManager.addOnBackStackChangedListener {
             frameContent = supportFragmentManager.findFragmentById(fragmentContainerId)
@@ -254,9 +260,13 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         val action = intent.action
         when (action) {
             ACTION_PRESENT_TRUST_REQUEST_FRAGMENT ->
-                presentTrustRequestFragment(extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return)
+                presentTrustRequestFragment(
+                    extra?.getString(AccountEditionFragment.ACCOUNT_ID_KEY) ?: return
+                )
+
             Intent.ACTION_SEND,
-            Intent.ACTION_SEND_MULTIPLE -> {
+            Intent.ACTION_SEND_MULTIPLE,
+            -> {
                 val path = ConversationPath.fromBundle(extra)
                 if (path != null) {
                     startConversation(path)
@@ -265,8 +275,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     startActivity(intent)
                 }
             }
+
             Intent.ACTION_VIEW,
-            DRingService.ACTION_CONV_ACCEPT -> {
+            DRingService.ACTION_CONV_ACCEPT,
+            -> {
                 val path = ConversationPath.fromIntent(intent)
                 if (path != null)
                     startConversation(path)
@@ -315,7 +327,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             .currentAccountSubject
             .switchMap { obj -> obj.getConversationsSubject() }
             .debounce(10, TimeUnit.SECONDS, Schedulers.computation())
-            .map { conversations -> conversations.takeFirstWhile(maxShortcuts)
+            .map { conversations ->
+                conversations.takeFirstWhile(maxShortcuts)
                 { it.mode.blockingFirst() != Conversation.Mode.Syncing }
             }
             .switchMapSingle { conversations ->
@@ -323,13 +336,19 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                     Single.just(emptyArray<Any>())
                 else
                     Single.zip(conversations.mapTo(ArrayList(conversations.size))
-                    { c -> mContactService.getLoadedConversation(c)
-                        .observeOn(Schedulers.computation())
-                        .map { vm -> Pair(vm, BitmapUtils.drawableToBitmap(AvatarDrawable.Builder()
-                            .withViewModel(vm)
-                            .withCircleCrop(true)
-                            .build(this), targetSize))
-                        }
+                    { c ->
+                        mContactService.getLoadedConversation(c)
+                            .observeOn(Schedulers.computation())
+                            .map { vm ->
+                                Pair(
+                                    vm, BitmapUtils.drawableToBitmap(
+                                        AvatarDrawable.Builder()
+                                            .withViewModel(vm)
+                                            .withCircleCrop(true)
+                                            .build(this), targetSize
+                                    )
+                                )
+                            }
                     }) { obs -> obs }
             }
             .subscribe(this::setShareShortcuts)
@@ -359,9 +378,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
      * @param account the account to display
      */
     fun showWelcomeFragment(account: Account) {
-        val welcomeJamiFragment = WelcomeJamiFragment.newInstance(
-            jamiId = account.displayUsername ?: "",
-        )
+        Log.w("devdebug", "Hey :) registeredName: ${account.registeredName} accountId: ${account.username}")
+        welcomeJamiViewModel.init(false, account.registeredName, account.username?:"")
+        val welcomeJamiFragment = WelcomeJamiFragment()
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.conversation,
@@ -401,7 +420,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         val conversation = ConversationFragment().apply {
             arguments = path.toBundle()
         }
-        Log.w(TAG, "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}")
+        Log.w(
+            TAG,
+            "startConversation $path old:$fConversation ${supportFragmentManager.backStackEntryCount}"
+        )
         //mBinding!!.conversation.getFragment<>()
 
         // If a conversation is already displayed, we replace it,
@@ -414,7 +436,11 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             mBinding!!.conversation.isVisible = true
         } else
             supportFragmentManager.beginTransaction()
-                .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
+                .replace(
+                    R.id.conversation,
+                    conversation,
+                    ConversationFragment::class.java.simpleName
+                )
                 .commit()
         fConversation = conversation
         mBinding!!.panel.openPane()
@@ -463,7 +489,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             val intent = Intent()
                 .setClass(this, AccountWizardActivity::class.java)
                 .setData(
-                    android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId)
+                    android.net.Uri.withAppendedPath(
+                        ContentUriHandler.ACCOUNTS_CONTENT_URI,
+                        account.accountId
+                    )
                 )
             startActivityForResult(intent, 1)
         } else {
@@ -505,15 +534,24 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             ShortcutInfoCompat.Builder(this, key)
                 .setIsConversation()
                 .setShortLabel(title)
-                .setPerson(Person.Builder()
-                    .setName(title)
-                    .setKey(key)
-                    .build())
+                .setPerson(
+                    Person.Builder()
+                        .setName(title)
+                        .setKey(key)
+                        .build()
+                )
                 .setLongLived(true)
                 .setIcon(icon)
                 .setCategories(setOf(CONVERSATIONS_CATEGORY))
-                .setIntent(Intent(Intent.ACTION_SEND, android.net.Uri.EMPTY, this, HomeActivity::class.java)
-                        .putExtras(path.toBundle()))
+                .setIntent(
+                    Intent(
+                        Intent.ACTION_SEND,
+                        android.net.Uri.EMPTY,
+                        this,
+                        HomeActivity::class.java
+                    )
+                        .putExtras(path.toBundle())
+                )
                 .build()
         }
         try {

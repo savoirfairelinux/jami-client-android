@@ -5,28 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import cx.ring.R
 import cx.ring.databinding.WelcomeJamiLayoutBinding
 import cx.ring.viewmodel.JamiIdStatus
 import cx.ring.viewmodel.JamiIdViewModel
+import cx.ring.viewmodel.WelcomeJamiViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import net.jami.utils.Log
 
 @AndroidEntryPoint
 class WelcomeJamiFragment : Fragment() {
 
     private var binding: WelcomeJamiLayoutBinding? = null
-    private val viewModel by lazy { ViewModelProvider(this)[JamiIdViewModel::class.java] }
+    private val welcomeJamiViewModel: WelcomeJamiViewModel by viewModels({ requireActivity() })
+    private val jamiIdViewModel by lazy { ViewModelProvider(this)[JamiIdViewModel::class.java] }
 
     companion object {
-        private const val ARG_JAMI_ID = "jami_id"
-
-        fun newInstance(jamiId: String) =
-            WelcomeJamiFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_JAMI_ID, jamiId)
-                }
-            }
+        private val TAG = WelcomeJamiViewModel::class.simpleName!!
     }
 
     override fun onCreateView(
@@ -34,21 +31,35 @@ class WelcomeJamiFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View =
         WelcomeJamiLayoutBinding.inflate(inflater, container, false).apply {
-            val jamiId: String
 
-            // Get the jamiId from the arguments
-            requireArguments().let {
-                jamiId = it.getString(ARG_JAMI_ID, "")
+            val currentUiState = welcomeJamiViewModel.uiState.value
+            binding = this
+
+            if (!currentUiState.isJamiAccount){
+                Log.w("devedebug", "WelcomeJamiFragment: not a Jami account")
+                welcomeJamiDescription.visibility = View.GONE
+                return@apply
             }
 
-            viewModel.init(jamiId, JamiIdStatus.USERNAME_NOT_DEFINED)
+            // When defined, show the JamiId and block the possibility to modify it.
+            // Else show the JamiHash and let the user the possibility to define the JamiId.
+            if (currentUiState.jamiId != "") {
+                jamiIdViewModel.init(
+                    username = currentUiState.jamiId,
+                    jamiIdStatus = JamiIdStatus.USERNAME_DEFINED
+                )
+            } else {
+                jamiIdViewModel.init(
+                    username = currentUiState.jamiHash,
+                    jamiIdStatus = JamiIdStatus.USERNAME_NOT_DEFINED
+                )
+            }
 
             // Create the JamiIdFragment
             childFragmentManager.beginTransaction()
                 .replace(R.id.jamiIdFragmentContainerView, JamiIdFragment())
                 .commit()
 
-            binding = this
 
         }.root
 }
