@@ -13,12 +13,12 @@ plugins {
 
 android {
     namespace = "cx.ring"
-    compileSdk = 33
+    compileSdk = 34
     buildToolsVersion = "33.0.2"
     ndkVersion = "25.2.9519653"
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 376
         versionName = "20230810-01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -100,17 +100,17 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.cardview:cardview:1.0.0")
-    implementation ("androidx.preference:preference-ktx:1.2.0")
-    implementation ("androidx.recyclerview:recyclerview:1.3.0")
+    implementation ("androidx.preference:preference-ktx:1.2.1")
+    implementation ("androidx.recyclerview:recyclerview:1.3.1")
     implementation ("androidx.leanback:leanback:1.2.0-alpha02")
     implementation ("androidx.leanback:leanback-preference:1.2.0-alpha02")
-    implementation ("androidx.car.app:app:1.4.0-alpha01")
+    implementation ("androidx.car.app:app:1.4.0-beta01")
     implementation ("androidx.tvprovider:tvprovider:1.1.0-alpha01")
     implementation ("androidx.media:media:1.6.0")
     implementation ("androidx.sharetarget:sharetarget:1.2.0")
     implementation ("androidx.percentlayout:percentlayout:1.0.0")
-    implementation ("androidx.emoji2:emoji2:1.4.0-beta05")
-    implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0-beta05")
+    implementation ("androidx.emoji2:emoji2:1.4.0")
+    implementation ("androidx.emoji2:emoji2-emojipicker:1.4.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation ("com.google.android.material:material:1.9.0")
