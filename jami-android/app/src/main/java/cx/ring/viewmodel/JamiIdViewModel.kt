@@ -1,17 +1,12 @@
 package cx.ring.viewmodel
 
 import androidx.lifecycle.ViewModel
-import cx.ring.utils.DeviceUtils
-import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import net.jami.services.AccountService
 import net.jami.utils.Log
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 /**
  * The JamiIdFragment is a fragment that displays a JamiId.
@@ -38,50 +33,64 @@ enum class RegisteredState(val state: Int) {
     NOT_REGISTERED(2),
 }
 
-@HiltViewModel
-class JamiIdViewModel @Inject constructor(
-    private val accountService: AccountService,
-) : ViewModel() {
-
+class JamiIdViewModel : ViewModel() {
     // Expose screen UI state
     private val _uiState = MutableStateFlow(JamiIdUiState())
-    private val usernameIsAvailableDisposable = CompositeDisposable()
     val uiState: StateFlow<JamiIdUiState> = _uiState.asStateFlow()
+
+    lateinit var onCheckUsernameAvailability: (String) -> Unit
+    lateinit var onRegisterName: (String) -> Unit
 
     companion object {
         private val TAG = JamiIdViewModel::class.simpleName!!
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        usernameIsAvailableDisposable.dispose()
-    }
-
-    fun init(username: String, jamiIdStatus: JamiIdStatus) {
+    /**
+     * Initialize the JamiIdViewModel.
+     * @param username The username to display.
+     * @param jamiIdStatus The status of the JamiId.
+     * @param onCheckUsernameAvailability The function to call when the user is typing a new
+     * username. Should be debounced. Asynchronous.
+     * @param onRegisterName The function to call when the user click on the 'Validate' button.
+     * Synchronous.
+     */
+    fun init(
+        username: String,
+        jamiIdStatus: JamiIdStatus,
+        onCheckUsernameAvailability: (String) -> Unit,
+        onRegisterName: (String) -> Unit,
+    ) {
         _uiState.update { currentState ->
             currentState.copy(
                 JamiIdStatus = jamiIdStatus,
                 username = username
             )
         }
-    }
-
-    fun reset() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                JamiIdStatus = JamiIdStatus.USERNAME_NOT_DEFINED,
-                editedUsername = ""
-            )
-        }
+        this.onRegisterName = onRegisterName
+        this.onCheckUsernameAvailability = onCheckUsernameAvailability
     }
 
     fun onChooseUsernameClicked() {
         Log.d(TAG, "'Choose a username' button clicked.")
-        changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
+        if (uiState.value.editedUsername != "") {
+            changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
+            textChanged(uiState.value.editedUsername)
+        } else changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_INITIAL)
     }
 
     fun onValidateClicked() {
         Log.d(TAG, "'Validate' button clicked.")
+        onRegisterName(uiState.value.editedUsername)
+        _uiState.update { currentState ->
+            currentState.copy(
+                username = currentState.editedUsername,
+                JamiIdStatus = JamiIdStatus.USERNAME_DEFINED
+            )
+        }
+    }
+
+    fun onLooseFocus() {
+        changeJamiIdStatus(JamiIdStatus.USERNAME_NOT_DEFINED)
     }
 
     /**
@@ -119,28 +128,26 @@ class JamiIdViewModel @Inject constructor(
     }
 
     /**
+     * Asynchronous. Called when the result of the username availability is received.
+     */
+    fun checkIfUsernameIsAvailableResult(registeredName: AccountService.RegisteredName) {
+        if (uiState.value.JamiIdStatus != JamiIdStatus.EDITING_USERNAME_LOADING)
+            return
+
+        if (registeredName.state == RegisteredState.NOT_REGISTERED.state) {
+            Log.d(TAG, "Username '${registeredName.name}' is available.")
+            changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_AVAILABLE)
+        } else {
+            Log.d(TAG, "Username '${registeredName.name}' is not available.")
+            changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_NOT_AVAILABLE)
+        }
+    }
+
+    /**
      * Check if the username is available.
      */
     private fun checkIfUsernameIsAvailable(username: String) {
         Log.d(TAG, "Checking if '$username' is available as new username.")
-
-        usernameIsAvailableDisposable.clear() // Clear to avoid multiple requests
-        usernameIsAvailableDisposable.add(
-            accountService.findRegistrationByName("", "", username)
-                .observeOn(DeviceUtils.uiScheduler)
-                .delay(500, TimeUnit.MILLISECONDS)
-                .subscribe { it: AccountService.RegisteredName ->
-                    if (uiState.value.JamiIdStatus != JamiIdStatus.EDITING_USERNAME_LOADING)
-                        return@subscribe
-
-                    if (it.state == RegisteredState.NOT_REGISTERED.state) {
-                        Log.d(TAG, "Username '$username' is available.")
-                        changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_AVAILABLE)
-                    } else {
-                        Log.d(TAG, "Username '$username' is not available.")
-                        changeJamiIdStatus(JamiIdStatus.EDITING_USERNAME_NOT_AVAILABLE)
-                    }
-                }
-        )
+        onCheckUsernameAvailability(username)
     }
 }

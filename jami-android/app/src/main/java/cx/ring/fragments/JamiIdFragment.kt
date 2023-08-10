@@ -2,7 +2,9 @@ package cx.ring.fragments
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
+import android.text.method.KeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import cx.ring.utils.ActionHelper.copyAndShow
 import cx.ring.utils.ActionHelper.shareAccount
 import cx.ring.utils.DrawableUtils.resizeDrawable
 import cx.ring.utils.KeyboardVisibilityManager.showKeyboard
+import cx.ring.utils.RegisteredNameFilter
 import cx.ring.viewmodel.JamiIdStatus
 import cx.ring.viewmodel.JamiIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +34,9 @@ class JamiIdFragment : Fragment() {
     private var binding: JamiIdLayoutBinding? = null
     private val jamiIdViewModel: JamiIdViewModel by viewModels({ requireParentFragment() })
 
+    // This var is used in a trick to get ellipsize to work. Allows to EditText.setEnabled.
+    private lateinit var keyListener: KeyListener
+
     companion object {
         private val TAG = JamiIdFragment::class.simpleName!!
     }
@@ -41,6 +47,8 @@ class JamiIdFragment : Fragment() {
     ): View =
         JamiIdLayoutBinding.inflate(inflater, container, false).apply {
             binding = this
+            jamiIdEditText.filters = arrayOf<InputFilter>(RegisteredNameFilter())
+            keyListener = jamiIdEditText.keyListener!!
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,6 +142,19 @@ class JamiIdFragment : Fragment() {
                 )
             },
             null
+        )
+    }
+
+    private fun setValidateEnabled(enabled: Boolean) {
+        binding?.jamiIdValidateButton?.isEnabled = enabled
+        binding?.jamiIdValidateButtonWrapper?.backgroundTintList =
+            requireContext().getColorStateList(
+                if (enabled) R.color.jami_id_validate_background_enabled_color
+                else R.color.jami_id_validate_background_disabled_color
+            )
+        binding?.jamiIdValidateButton?.imageTintList = requireContext().getColorStateList(
+            if (enabled) R.color.jami_id_validate_icon_enabled_color
+            else R.color.jami_id_validate_icon_disabled_color
         )
     }
 
@@ -245,12 +266,14 @@ class JamiIdFragment : Fragment() {
             jamiIdViewModel.onValidateClicked()
         }
 
-        binding?.jamiIdEditText?.isEnabled = false
+        // Equivalent to setEnabled(false) but allows to trick a bug and get ellipsize to work.
+        binding?.jamiIdEditText?.keyListener = null
 
         binding?.jamiIdChooseUsernameButton?.visibility = View.VISIBLE
         binding?.jamiIdShareButtonWrapper?.visibility = View.VISIBLE
         binding?.jamiIdCopyButtonWrapper?.visibility = View.VISIBLE
-        binding?.jamiIdEditTextStatus?.visibility = View.GONE
+        binding?.jamiIdEditTextStatus?.visibility = View.INVISIBLE
+        binding?.jamiIdEditTextInfo?.visibility = View.INVISIBLE
         binding?.jamiIdValidateButtonWrapper?.visibility = View.GONE
         binding?.jamiIdProgressBar?.visibility = View.GONE
     }
@@ -262,16 +285,24 @@ class JamiIdFragment : Fragment() {
         setEditTextUsername(username = typingUsername)
         setEditTextEditingUsernameInitialUiState()
         setEditTextStatusEditingUsernameInitialUiState()
+        setValidateEnabled(false)
 
         binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
 
-        binding?.jamiIdEditText?.isEnabled = true
-        binding?.jamiIdValidateButton?.isEnabled = false
+        binding?.jamiIdEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                jamiIdViewModel.onLooseFocus()
+            }
+        }
+
+        // Equivalent to setEnabled(true) but allows to trick a bug and get ellipsize to work.
+        binding?.jamiIdEditText?.keyListener = keyListener
 
         binding?.jamiIdShareButtonWrapper?.visibility = View.GONE
         binding?.jamiIdCopyButtonWrapper?.visibility = View.GONE
         binding?.jamiIdProgressBar?.visibility = View.GONE
         binding?.jamiIdChooseUsernameButton?.visibility = View.INVISIBLE
+        binding?.jamiIdEditTextInfo?.visibility = View.INVISIBLE
         binding?.jamiIdEditTextStatus?.visibility = View.VISIBLE
         binding?.jamiIdValidateButtonWrapper?.visibility = View.VISIBLE
 
@@ -285,12 +316,11 @@ class JamiIdFragment : Fragment() {
         setEditTextUsername(username = typingUsername)
         setEditTextEditingUsernameLoadingUiState()
         setEditTextStatusEditingUsernameLoadingUiState()
+        setValidateEnabled(false)
 
         binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
 
-
-        binding?.jamiIdValidateButton?.isEnabled = false
-
+        binding?.jamiIdEditTextInfo?.visibility = View.INVISIBLE
         binding?.jamiIdProgressBar?.visibility = View.VISIBLE
     }
 
@@ -301,10 +331,11 @@ class JamiIdFragment : Fragment() {
         setEditTextUsername(username = typingUsername)
         setEditTextEditingUsernameNotAvailableUiState()
         setEditTextStatusEditingUsernameNotAvailableUiState()
+        setValidateEnabled(false)
 
         binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
 
-        binding?.jamiIdValidateButton?.isEnabled = false
+        binding?.jamiIdEditTextInfo?.visibility = View.VISIBLE
         binding?.jamiIdProgressBar?.visibility = View.GONE
     }
 
@@ -315,10 +346,11 @@ class JamiIdFragment : Fragment() {
         setEditTextUsername(username = typingUsername)
         setEditTextEditingUsernameAvailableUiState()
         setEditTextStatusEditingUsernameAvailableUiState()
+        setValidateEnabled(true)
 
         binding?.jamiIdEditText?.addTextChangedListener(textWatcher)
 
-        binding?.jamiIdValidateButton?.isEnabled = true
+        binding?.jamiIdEditTextInfo?.visibility = View.INVISIBLE
         binding?.jamiIdProgressBar?.visibility = View.GONE
     }
 
@@ -329,6 +361,8 @@ class JamiIdFragment : Fragment() {
         setEditTextUsername(username = username)
         setEditTextUsernameDefinedOrUsernameNotDefinedUiState()
 
+        binding?.jamiIdWrapper?.layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
+
         // Update listeners on copy and share buttons
         binding?.jamiIdCopyButton?.setOnClickListener {
             copyAndShow(requireContext(), binding!!.root, username)
@@ -337,10 +371,13 @@ class JamiIdFragment : Fragment() {
             shareAccount(requireContext(), username)
         }
 
-        binding?.jamiIdEditText?.isEnabled = false
+        // Equivalent to setEnabled(false) but allows to trick a bug and get ellipsize to work .
+        binding?.jamiIdEditText?.keyListener = null
 
-        binding?.jamiIdProgressBar?.visibility = View.GONE
+        binding?.jamiIdEditTextInfo?.visibility = View.GONE
         binding?.jamiIdEditTextStatus?.visibility = View.GONE
+        binding?.jamiIdProgressBar?.visibility = View.GONE
+        binding?.jamiIdChooseUsernameButton?.visibility = View.GONE
         binding?.jamiIdValidateButtonWrapper?.visibility = View.GONE
         binding?.jamiIdShareButtonWrapper?.visibility = View.VISIBLE
         binding?.jamiIdCopyButtonWrapper?.visibility = View.VISIBLE
