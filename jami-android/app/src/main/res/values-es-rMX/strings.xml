@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitaciones recibidas</string>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Buscar nombre o numero de teléfono</string>
   <string name="choose_number">Seleccionar un numero</string>
@@ -116,6 +117,7 @@
   <string name="write_a_message">Escribí un mensaje</string>
   <string name="scan_qr">Leer código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="new_swarm">Iniciar swarm</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
   <string name="ab_action_hidepreview">Ocultar previsualización</string>
   <string name="remote_recording">%s grabando...</string>

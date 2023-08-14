@@ -200,7 +200,7 @@
   <string name="conversation_type_group">समूह समूह</string>
   <string name="conversation_contact_invited">%1$s को आमंत्रित किया गया था</string>
   <string name="conversation_contact_added">%1$s जोड़ा गया</string>
-  <string name="conversation_contact_left">%1$ बाएं</string>
+  <string name="conversation_contact_left">%1$s बाएं</string>
   <string name="conversation_contact_banned">%1$s पर प्रतिबंध लगा दिया गया था</string>
   <string name="conversation_search_hint">खोज वार्तालाप</string>
   <!--Contacts-->

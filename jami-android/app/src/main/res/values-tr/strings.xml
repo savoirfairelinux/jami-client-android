@@ -36,13 +36,14 @@
   <string name="menu_item_advanced_settings">Gelişmiş Ayarlar</string>
   <string name="menu_item_account_settings">Hesap Ayarları</string>
   <string name="menu_item_plugin_list">Eklenti Ayarları</string>
-  <string name="menu_item_share">Hesabımı paylaş</string>
+  <string name="menu_item_share">Jami Hesabı </string>
   <string name="menu_item_about">Jami Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Numara çevir</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Alınan davetler</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konuşma</item>
     <item quantity="other">%d Konuşma</item>
@@ -53,8 +54,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Yanıtsız gelen arama</string>
-  <string name="notif_missed_outgoing_call">Yanıtsız giden arama</string>
+  <string name="notif_missed_incoming_call">Cevapsız gelen arama</string>
+  <string name="notif_missed_outgoing_call">Cevapsız giden arama</string>
   <string name="notif_incoming_call_title">%1$s\'dan gelen arama</string>
   <string name="notif_incoming_call">Gelen arama</string>
   <string name="notif_outgoing_call_title">%1$s\'a giden arama</string>
@@ -72,6 +73,7 @@
   <string name="notif_channel_background_service">Artalan hizmeti</string>
   <string name="notif_channel_background_service_descr">Her zaman arama ve ileti almaya izin verir.</string>
   <string name="notif_group_calls">Aramalar</string>
+  <string name="notif_inprogress_group_call">Süren arama</string>
   <string name="notif_background_service">Jami şu an artalanda çalışıyor</string>
   <string name="notif_mark_as_read">Okundu olarak işaretle</string>
   <string name="notif_dismiss">Reddet</string>
@@ -134,6 +136,7 @@
   <string name="conversation_send_audio">Ses klibi kaydet </string>
   <string name="conversation_send_video">Görüntü klibi kaydet</string>
   <string name="conversation_share_location">Konum paylaş</string>
+  <string name="ongoing_group_call">Devam eden arama</string>
   <string name="in_reply_to">Cevap olarak</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>

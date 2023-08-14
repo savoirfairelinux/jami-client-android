@@ -201,7 +201,7 @@
   <string name="conversation_type_group">Grupo de Enxames</string>
   <string name="conversation_contact_invited">%1$s foi convidado</string>
   <string name="conversation_contact_added">%1$s juntado</string>
-  <string name="conversation_contact_left">%1$ é deixado</string>
+  <string name="conversation_contact_left">%1$s esquerdo</string>
   <string name="conversation_contact_banned">%1$s foi proibido</string>
   <string name="conversation_search_hint">Conversa de busca</string>
   <!--Contacts-->

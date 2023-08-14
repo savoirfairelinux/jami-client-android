@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Invitaciones recibidas</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%dConversación</item>
     <item quantity="many">%dConversaciones</item>
@@ -121,6 +122,7 @@
   <string name="write_a_message">Escribí un mensaje</string>
   <string name="scan_qr">Leer código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="new_swarm">Iniciar swarm</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
   <string name="ab_action_hidepreview">Ocultar previsualización</string>
   <string name="remote_recording">%s grabando...</string>
