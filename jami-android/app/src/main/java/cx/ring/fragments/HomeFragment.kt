@@ -73,6 +73,7 @@ import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
+import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
 class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
@@ -84,7 +85,7 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     private var mHasPendingBadge = false
     private val mDisposable = CompositeDisposable()
     private var mSearchView: SearchView? = null
-    private val searchDisposable = CompositeDisposable()
+    private var searchDisposable: Disposable? = null
     private var searchAdapter: SmartListAdapter? = null
     private var pendingAdapter: SmartListAdapter? = null
     private val querySubject = BehaviorSubject.createDefault("")
@@ -242,18 +243,13 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                     // Hide floating button to avoid weird animation
                     binding.newSwarmFab.isVisible = true
 
-                    searchDisposable.clear()
+                    searchDisposable?.dispose()
+                    querySubject.onNext("")
+                    searchAdapter?.update(ConversationFacade.ConversationList())
+                    searchDisposable = null
                 } else if (previousState === TransitionState.HIDDEN) { // Showing
-                    // Make floating button visible again
                     binding.newSwarmFab.isVisible = false
-
-                    searchDisposable.add(
-                        mConversationFacade.getSearchResults(
-                            mConversationFacade.currentAccountSubject, debouncedQuery
-                        )
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .subscribe { searchAdapter?.update(it) }
-                    )
+                    startSearch()
                 }
             }
 
@@ -292,6 +288,15 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             mBinding = binding
             binding.root
         }
+
+    private fun startSearch() {
+        searchDisposable?.dispose()
+        val disposable = mConversationFacade.getSearchResults(debouncedQuery)
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { searchAdapter?.update(it) }
+        searchDisposable = disposable
+        mDisposable.add(disposable)
+    }
 
     /**
      * Expand the appBarLayoutBottom to give fixed space between it and fragmentList.
@@ -443,7 +448,6 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
     override fun onStart() {
         super.onStart()
-        mDisposable.add(searchDisposable)
         activity?.intent?.let { handleIntent(it) }
 
         // Subscribe on invitation pending list to show a badge counter
@@ -491,6 +495,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                     )
             }
         )
+
+        if (mBinding!!.searchView.isShowing)
+            startSearch()
     }
 
     override fun onStop() {

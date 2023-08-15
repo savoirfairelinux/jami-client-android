@@ -433,8 +433,7 @@ class ConversationFacade(
         }*/
 
     fun getSearchResults(
-        currentAccount: Observable<Account>,
-        query: Observable<String>,
+        query: Observable<String>, currentAccount: Observable<Account> = currentAccountSubject,
     ): Observable<ConversationList> =
         currentAccount.switchMap { account ->
             Observable.combineLatest(
