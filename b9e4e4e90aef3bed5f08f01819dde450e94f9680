@@ -34,6 +34,24 @@
       "parentUuid": "4bfc3e68_1ca21575",
       "revId": "b9e4e4e90aef3bed5f08f01819dde450e94f9680",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "199ca20b_d2f84884",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-08-17T20:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c32ede6_e125cab0",
+      "revId": "b9e4e4e90aef3bed5f08f01819dde450e94f9680",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
