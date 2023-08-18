@@ -359,6 +359,46 @@ class DaemonService(
         override fun messageReceived(accountId: String, conversationId: String, message: StringMap) {
             mAccountService.messageReceived(accountId, conversationId, message.toNative())
         }
+
+        // Conversation API
+
+        override fun swarmLoaded(
+            id: Long,
+            accountId: String,
+            conversationId: String,
+            messages: SwarmMessageVect,
+        ) {
+        }
+
+        override fun swarmMessageReceived(
+            accountId: String,
+            conversationId: String,
+            message: SwarmMessage,
+        ) {
+        }
+
+        override fun swarmMessageUpdated(
+            accountId: String,
+            conversationId: String,
+            message: SwarmMessage,
+        ) {
+        }
+
+        override fun reactionAdded(
+            accountId: String,
+            conversationId: String,
+            messageId: String,
+            reaction: StringMap,
+        ) {
+        }
+
+        override fun reactionRemoved(
+            accountId: String,
+            conversationId: String,
+            messageId: String,
+            reactionId: String,
+        ) {
+        }
     }
 
     companion object {
