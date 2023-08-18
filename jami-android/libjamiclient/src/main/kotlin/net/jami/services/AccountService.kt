@@ -1568,6 +1568,51 @@ class AccountService(
         }
     }
 
+    // Conversation API
+
+    fun swarmLoaded(
+        id: Int,
+        accountId: String,
+        conversationId: String,
+        messages: List<Map<String, String>>,
+    ) {
+        // Todo: load messages
+    }
+
+    fun swarmMessageReceived(
+        accountId: String,
+        conversationId: String,
+        message: Map<String, String>,
+    ) {
+        // Todo: add message to conversation
+    }
+
+    fun swarmMessageUpdated(
+        accountId: String,
+        conversationId: String,
+        message: Map<String, String>,
+    ) {
+        // Todo: update message
+    }
+
+    fun swarmReactionAdded(
+        accountId: String,
+        conversationId: String,
+        messageId: String,
+        reaction: Map<String, String>,
+    ) {
+        // Todo: add reaction to message
+    }
+
+    fun swarmReactionRemoved(
+        accountId: String,
+        conversationId: String,
+        messageId: String,
+        reactionId: String,
+    ) {
+        // Todo: remove reaction from message
+    }
+
     companion object {
         private val TAG = AccountService::class.java.simpleName
         private const val VCARD_CHUNK_SIZE = 1000
