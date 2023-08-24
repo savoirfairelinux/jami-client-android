@@ -295,6 +295,24 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             }
             .subscribe(this::setShareShortcuts)
             { e -> Log.e(TAG, "Error generating conversation shortcuts", e) })
+
+
+    }
+
+    fun test(){
+        mAccountService.currentAccountSubject
+            .firstElement()
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { account ->
+                Log.w("devdebug", "HomeActivity Test accountId:${account.registeredName}, conversationuri: ${account.getConversations().first().contact?.username?.blockingGet()}")
+
+                mAccountService.loadConversation(
+                    accountId =  account.accountId,
+                    conversationUri = account.getConversations().first().uri,
+                    fromMessage = "",
+                    size = 5)
+            }
+        // Todo: DO NOT COMMIT THIS SECTION
     }
 
     override fun onStop() {

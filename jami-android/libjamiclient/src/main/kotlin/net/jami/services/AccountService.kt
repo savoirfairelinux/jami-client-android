@@ -1447,6 +1447,7 @@ class AccountService(
         }
     }
 
+    // Todo: Remove
     fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
         Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size)
         getAccount(accountId)?.let { account -> account.getSwarm(conversationId)?.let { conversation ->
@@ -1590,6 +1591,7 @@ class AccountService(
         conversationId: String,
         messages: List<Map<String, String>>,
     ) {
+        Log.w("devdebug", "swarmLoaded $id $accountId $conversationId ${messages.size}")
         // Todo: load messages
     }
 
