@@ -577,8 +577,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     }
 
     private fun expandSearchActionView(): Boolean {
-        mBinding ?: return false
-        mBinding!!.searchView.show()
+        (requireActivity() as HomeActivity).test()
+//        mBinding ?: return false
+//        mBinding!!.searchView.show()
         return true
     }
 

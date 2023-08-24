@@ -356,6 +356,7 @@ class DaemonService(
             mAccountService.conversationPreferencesUpdated(accountId, conversationId, preferences)
         }
 
+        // Todo: Remove
         override fun messageReceived(accountId: String, conversationId: String, message: StringMap) {
             mAccountService.messageReceived(accountId, conversationId, message.toNative())
         }
@@ -368,6 +369,18 @@ class DaemonService(
             conversationId: String,
             messages: SwarmMessageVect,
         ) {
+            // iterate through messages
+            for (i in 0 until messages.size) {
+                val message: SwarmMessage = messages[i]
+                Log.w("devdebug", "" +
+                        "id=${message.id}" +
+                        "\ntype=${message.type}" +
+                        "\nlinearizedParent=${message.linearizedParent}" +
+                        "\nbody=${message.body}" +
+                        "\nreactions=${message.reactions}" +
+                        "\neditions=${message.editions}")
+
+            }
         }
 
         override fun swarmMessageReceived(
