@@ -1064,6 +1064,11 @@ class ConversationAdapter(
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
 
+                val history = interaction.historyObservable.blockingFirst()
+                val editedIcon = convViewHolder.mMsgEditedIcon ?: return@subscribe
+                val isEdited = !isDeleted && history.size > 1
+                editedIcon.isVisible = isEdited
+
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
