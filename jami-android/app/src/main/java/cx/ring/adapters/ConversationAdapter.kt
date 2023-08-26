@@ -1064,6 +1064,10 @@ class ConversationAdapter(
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
 
+                val history = interaction.historyObservable.blockingFirst()
+                val isEdited = history.size > 1
+                val editedIcon = convViewHolder.mMsgEditedIcon ?: return@subscribe
+
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
@@ -1075,6 +1079,10 @@ class ConversationAdapter(
                     msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
                     longPressView.setOnLongClickListener(null)
                     return@subscribe
+                }
+
+                if (isEdited) {
+                    editedIcon.visibility = View.VISIBLE
                 }
 
                 // Manage long press.

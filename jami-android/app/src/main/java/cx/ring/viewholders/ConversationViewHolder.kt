@@ -44,6 +44,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     var mMsgTxt: TextView? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
+    var mMsgEditedIcon: TextView? = null
     val mAvatar: ImageView? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
@@ -132,6 +133,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+                mMsgEditedIcon = v.findViewById(R.id.edited_icon)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
