@@ -131,6 +131,20 @@ along with this program; if not, write to the Free Software
             android:theme="@style/OutgoingTextView"
             tools:text="yo this is the test of a long long text can not be_found_message" />
 
+        <TextView
+            android:id="@+id/edited_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/msg_txt"
+            android:layout_alignTop="@id/msg_txt"
+            android:layout_marginStart="-21dp"
+            android:layout_marginTop="-10dp"
+            android:longClickable="false"
+            android:clickable="false"
+            android:text="✏️"
+            android:visibility="gone"
+            android:textSize="21sp" />
+
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="wrap_content"
