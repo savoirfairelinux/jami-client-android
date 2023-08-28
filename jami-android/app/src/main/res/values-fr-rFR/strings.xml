@@ -203,8 +203,8 @@
   <string name="conversation_type_contact">Contact Jami</string>
   <string name="conversation_type_private">Swarm privé</string>
   <string name="conversation_type_group">Swarm</string>
-  <string name="conversation_contact_invited">%1$sa été invité</string>
-  <string name="conversation_contact_added">%1$sa rejoint la discussion</string>
+  <string name="conversation_contact_invited">%1$s a été invité</string>
+  <string name="conversation_contact_added">%1$s a rejoint la discussion</string>
   <string name="conversation_contact_left">%1$s restant</string>
   <string name="conversation_contact_banned">%1$sa été banni</string>
   <string name="conversation_search_hint">Rechercher des conversations</string>
