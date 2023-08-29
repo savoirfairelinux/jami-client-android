@@ -25,6 +25,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
@@ -38,18 +39,20 @@ class ChangePasswordDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogSetPasswordBinding.inflate(requireActivity().layoutInflater)
         val hasPassword = arguments?.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true) ?: true
         val passwordMessage = if (hasPassword) R.string.account_password_change else R.string.account_password_set
-        binding!!.oldPasswordTxtBox.visibility = if (hasPassword) View.VISIBLE else View.GONE
-        binding!!.newPasswordRepeatTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (validate()) {
-                    dialog!!.dismiss()
-                    return@setOnEditorActionListener true
+
+        binding = DialogSetPasswordBinding.inflate(requireActivity().layoutInflater).apply {
+            oldPasswordTxtBox.isVisible = hasPassword
+            newPasswordRepeatTxt.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (validate()) {
+                        dialog!!.dismiss()
+                        return@setOnEditorActionListener true
+                    }
                 }
+                false
             }
-            false
         }
         val result = MaterialAlertDialogBuilder(requireContext())
             .setView(binding!!.root)
