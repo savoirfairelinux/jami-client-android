@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06edbaa1_04052544",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-08-29T14:23:03Z",
+      "side": 1,
+      "message": "Thx for the contribution!\n\nWe generally follow this format for commit messages:\n\n```\npart: short desc (80 char)\n\nlong description on multiple lines if needed\n\nGitLab: #Ticket (here GitLab: #1282)\n```",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "bfd1dcbf6a4080ad83e10e594a419a639c2b7fdc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
