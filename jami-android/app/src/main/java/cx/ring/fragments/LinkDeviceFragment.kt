@@ -18,6 +18,7 @@
 package cx.ring.fragments
 
 import android.app.Dialog
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Layout
@@ -41,12 +42,12 @@ import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseBottomSheetFragment
-import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
 import net.jami.account.LinkDeviceView
 import net.jami.model.Account
+import net.jami.utils.QRCodeUtils
 
 @AndroidEntryPoint
 class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkDeviceView {
@@ -55,11 +56,12 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragLinkDeviceBinding.inflate(inflater, container, false).apply {
-            btnStartExport.setOnClickListener { onClickStart() }
+            btnStartExport.setOnClickListener {onClickStart()}
             password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
                 onPasswordEditorAction(pwd, actionId, event)
             }
             mBinding = this
+            qrImage.visibility = View.GONE
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -110,6 +112,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     override fun showExportingProgress() {
         mBinding?.apply {
             progressBar.visibility = View.VISIBLE
+            qrImage.visibility = View.GONE
             accountLinkInfo.visibility = View.GONE
             btnStartExport.visibility = View.GONE
             passwordLayout.visibility = View.GONE
@@ -120,8 +123,9 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         mBinding?.apply {
             progressBar.visibility = View.GONE
             accountLinkInfo.visibility = View.VISIBLE
-            btnStartExport.visibility = View.VISIBLE
+            btnStartExport.visibility = View.INVISIBLE
             passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
+            qrImage.visibility = View.VISIBLE
         }
     }
 
@@ -164,6 +168,14 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
                 setSpan(RelativeSizeSpan(2.8f), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
             binding.accountLinkInfo.requestFocus()
+
+            val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(pin, resources.getColor(R.color.color_primary_dark, null), resources.getColor(R.color.transparent, null))
+            val bitmap = qrCodeData?.let { Bitmap.createBitmap(it.width, qrCodeData.height, Bitmap.Config.ARGB_8888) }
+            if (qrCodeData != null) {
+                bitmap?.setPixels(qrCodeData.data, 0, qrCodeData.width, 0, 0, qrCodeData.width, qrCodeData.height)
+            }
+            binding.qrImage.setImageBitmap(bitmap)
+
         }
         hideKeyboard(activity)
     }
@@ -174,7 +186,6 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             presenter.startAccountExport(binding.password.text.toString())
         }
     }
-
     private fun onPasswordEditorAction(pwd: TextView, actionId: Int, event: KeyEvent?): Boolean {
         Log.i(TAG, "onEditorAction " + actionId + " " + event?.toString())
         if (actionId == EditorInfo.IME_ACTION_DONE) {

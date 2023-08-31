@@ -19,6 +19,17 @@
             android:textSize="18sp"
             android:text="@string/account_link_export_button" />
 
+        <ImageView
+            android:id="@+id/qr_image"
+            android:layout_width="@dimen/qr_code_size"
+            android:layout_height="@dimen/qr_code_size"
+            android:layout_marginTop="16dp"
+            android:background="@color/design_default_color_background"
+            android:padding="@dimen/padding_small"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/baseline_qr_code_2_black_24dp"
+            tools:tint="@color/color_primary_dark" />
+
         <TextView
             android:id="@+id/account_link_info"
             android:layout_width="match_parent"
@@ -28,7 +39,7 @@
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
             android:text="@string/account_link_export_info"
-            android:textColor="@color/textColorSecondary"
+            android:textColor="@color/colorPrimary"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
