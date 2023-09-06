@@ -139,7 +139,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun updateUsernameAvailability(status: UsernameAvailabilityStatus) {
-        val actionCheck = findActionById(CHECK)
+        val actionCheck = findActionById(CHECK) ?: return
         when (status) {
             UsernameAvailabilityStatus.ERROR -> {
                 actionCheck.title = resources.getString(R.string.generic_error)
@@ -179,7 +179,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun showInvalidPasswordError(display: Boolean) {
-        val action = findActionById(CONTINUE)
+        val action = findActionById(CONTINUE) ?: return
         if (display) {
             displayErrorIconDescription(action, getString(R.string.error_password_char_count))
             mIsPasswordCorrect = false
@@ -193,7 +193,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
     }
 
     override fun showNonMatchingPasswordError(display: Boolean) {
-        val action = findActionById(CONTINUE)
+        val action = findActionById(CONTINUE) ?: return
         if (display) {
             displayErrorIconDescription(action, getString(R.string.error_passwords_not_equals))
             mIsPasswordCorrect = false
@@ -212,7 +212,7 @@ class TVJamiAccountCreationFragment : JamiGuidedStepFragment<JamiAccountCreation
         }
         val enabled = mIsPasswordCorrect && enabled
         Log.d(TAG, "enableNextButton: $enabled")
-        val actionContinue = findActionById(CONTINUE)
+        val actionContinue = findActionById(CONTINUE) ?: return
         if (enabled) actionContinue.icon = null
         actionContinue.isEnabled = enabled
         notifyActionChanged(findActionPositionById(CONTINUE))

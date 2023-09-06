@@ -45,7 +45,7 @@ class AboutDetailsFragment : DetailsSupportFragment() {
             cardType = Card.Type.values()[ordinal]
         }
         val context = requireContext()
-        val card = IconCardHelper.getAboutCardByType(context, cardType)
+        val card = IconCardHelper.getAboutCardByType(context, cardType)!!
         val selector = ClassPresenterSelector()
         val rowPresenter = object : FullWidthDetailsOverviewRowPresenter(AboutDetailsPresenter(context)) {
             override fun createRowViewHolder(parent: ViewGroup): RowPresenter.ViewHolder {

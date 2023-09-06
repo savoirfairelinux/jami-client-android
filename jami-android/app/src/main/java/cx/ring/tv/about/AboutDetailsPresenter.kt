@@ -33,8 +33,8 @@ class AboutDetailsPresenter(private val context: Context) : Presenter() {
             .root)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, itemData: Any) {
-        val card = itemData as IconCard
+    override fun onBindViewHolder(viewHolder: ViewHolder, itemData: Any?) {
+        val card = itemData as IconCard? ?: return
         binding?.apply {
             primaryText.text = card.title
             extraText.text = card.description

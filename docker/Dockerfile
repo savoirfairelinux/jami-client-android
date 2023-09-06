@@ -68,8 +68,8 @@ RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/v4.1.1.tar.gz 
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
-RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${ANDROID_HOME} 'build-tools;33.0.2' \
-	'platforms;android-33'\
+RUN (while sleep 1; do echo "y"; done) | sdkmanager --channel=1 --sdk_root=${ANDROID_HOME} 'build-tools;34.0.0' \
+	'platforms;android-34'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
 	'ndk;25.2.9519653'

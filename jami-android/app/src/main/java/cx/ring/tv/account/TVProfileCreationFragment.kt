@@ -120,7 +120,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
     }
 
     override fun displayProfileName(profileName: String) {
-        findActionById(USER_NAME).editDescription = profileName
+        findActionById(USER_NAME)?.editDescription = profileName
         notifyActionChanged(findActionPositionById(USER_NAME))
     }
 
@@ -158,7 +158,7 @@ class TVProfileCreationFragment : JamiGuidedStepFragment<ProfileCreationPresente
             .withCircleCrop(true)
             .build(requireContext())
         avatar.setInSize(iconSize)
-        guidanceStylist.iconView.setImageDrawable(avatar)
+        guidanceStylist.iconView?.setImageDrawable(avatar)
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction): Long {
