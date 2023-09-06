@@ -285,6 +285,7 @@ class NotificationServiceImpl(
             mCallService.requestIncomingCall(call).subscribe { result ->
                 Log.w(TAG, "Telecom API: requestIncomingCall result ${result.allowed}")
                 if (result.allowed) {
+                    result.setCall(call)
                     manageCallNotification(conference, remove)
                 }
             }
