@@ -187,7 +187,7 @@ class HardwareServiceImpl(
                 // Try using the Telecom API if available
                 setAudioState(systemCall, incomingCall || isOngoingVideo)
             }) { e ->
-                Log.w(TAG, "updateAudioState fallback", e)
+                Log.w(TAG, "updateAudioState fallback")
                 // Fallback on the AudioManager API
                 try {
                     val state = call.callStatus

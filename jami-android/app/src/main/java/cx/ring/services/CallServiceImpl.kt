@@ -155,7 +155,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
         Log.w(TAG, "Telecom API: incoming call request for $callId has result $connection")
         incomingCallRequests.remove(callId)?.let {
-            it.second.onSuccess(if (connection != null && result != CallRequestResult.REJECTED) AndroidCall(connection).apply { setCall(it.first) } else SystemCall(
+            it.second.onSuccess(if (connection != null && result != CallRequestResult.REJECTED) AndroidCall(connection) else SystemCall(
                 false
             ))
         }
