@@ -40,7 +40,7 @@ class TVJamiLinkAccountFragment : JamiGuidedStepFragment<JamiLinkAccountPresente
         val m = model.model
         presenter.init(m)
         if (m.photo != null) {
-            guidanceStylist.iconView.setImageBitmap(m.photo as Bitmap?)
+            guidanceStylist.iconView?.setImageBitmap(m.photo as Bitmap?)
         }
     }
 

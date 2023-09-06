@@ -120,7 +120,7 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
     }
 
     override fun showViewModel(viewModel: HomeNavigationViewModel) {
-        val action = actions?.let { if (it.isEmpty()) null else it[0] }
+        val action = actions.let { if (it.isEmpty()) null else it[0] }
         if (action != null && action.id == USER_NAME) {
             if (viewModel.profile.displayName.isNullOrEmpty()) {
                 action.editTitle = ""
@@ -132,9 +132,9 @@ class TVProfileEditingFragment : JamiGuidedStepFragment<HomeNavigationPresenter,
             notifyActionChanged(0)
         }
         if (viewModel.profile.displayName.isNullOrEmpty())
-            guidanceStylist.titleView.setText(R.string.profile)
-        else guidanceStylist.titleView.text = viewModel.profile.displayName
-        guidanceStylist.iconView.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
+            guidanceStylist.titleView?.setText(R.string.profile)
+        else guidanceStylist.titleView?.text = viewModel.profile.displayName
+        guidanceStylist.iconView?.setImageDrawable(AvatarDrawable.build(requireContext(), viewModel.account, viewModel.profile, true)
             .apply { setInSize(iconSize) })
     }
 

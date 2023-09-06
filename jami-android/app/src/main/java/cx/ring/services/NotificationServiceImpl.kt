@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Icon
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
@@ -720,7 +721,7 @@ class NotificationServiceImpl(
             }
             if (!newRequest) return
             builder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), requests.size))
-            builder.setLargeIcon(null)
+            builder.setLargeIcon(null as Icon?)
             notificationManager.notify(notificationId, builder.build())
         }
     }

@@ -35,8 +35,8 @@ abstract class AbstractCardPresenter<T : BaseCardView>(val context: Context) : P
         val disposable = CompositeDisposable()
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
-        val card = item as Card
+    override fun onBindViewHolder(viewHolder: ViewHolder, item: Any?) {
+        val card = item as Card? ?: return
         onBindViewHolder(card, viewHolder.view as T, (viewHolder as CardViewHolder<T>).disposable)
     }
 

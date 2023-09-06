@@ -25,7 +25,7 @@ import cx.ring.R
 class ShadowRowPresenterSelector : PresenterSelector() {
     private val mShadowEnabledRowPresenter = CustomListRowPresenter().apply { setNumRows(1) }
     private val mShadowDisabledRowPresenter = CustomDimListRowPresenter().apply { shadowEnabled = false }
-    override fun getPresenter(item: Any): Presenter {
+    override fun getPresenter(item: Any?): Presenter {
         if (item !is CardListRow) return mShadowDisabledRowPresenter
         val row = item.cardRow
         return if (row.shadow) mShadowEnabledRowPresenter else mShadowDisabledRowPresenter
@@ -46,7 +46,7 @@ class ShadowRowPresenterSelector : PresenterSelector() {
     }
 
     private class CustomRowHeaderPresenter : RowHeaderPresenter() {
-        override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
+        override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any?) {
             super.onBindViewHolder(viewHolder, item)
             val titleView: RowHeaderView = viewHolder.view.findViewById(androidx.leanback.R.id.row_header)
             titleView.typeface = ResourcesCompat.getFont(titleView.context, R.font.ubuntu_medium)
