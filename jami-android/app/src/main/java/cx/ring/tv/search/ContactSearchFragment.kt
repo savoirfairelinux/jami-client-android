@@ -84,16 +84,17 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
     override fun displayResults(contacts: ConversationFacade.ConversationList, conversationFacade: ConversationFacade) {
         var scrollToTop = false
         if (contacts.searchResult.result.isEmpty()) {
-            if (directoryRow != null) {
-                mRowsAdapter.remove(directoryRow)
+            directoryRow?.apply {
+                mRowsAdapter.remove(this)
                 directoryRow = null
             }
         } else {
             if (directoryRow == null) {
                 val adapter = ArrayObjectAdapter(CardPresenterSelector(requireContext(), conversationFacade))
                 adapter.addAll(0, contacts.searchResult.result.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) })
-                directoryRow = ListRow(HeaderItem(getString(R.string.search_results)), adapter)
-                mRowsAdapter.add(0, directoryRow)
+                directoryRow = ListRow(HeaderItem(getString(R.string.search_results)), adapter).apply {
+                    mRowsAdapter.add(0, this)
+                }
             } else {
                 (directoryRow!!.adapter as ArrayObjectAdapter).setItems(
                     contacts.searchResult.result.map { item -> ContactCard(item, Card.Type.SEARCH_RESULT) }, diff)
@@ -102,16 +103,17 @@ class ContactSearchFragment : BaseSearchFragment<ContactSearchPresenter>(),
         }
 
         if (contacts.conversations.isEmpty()) {
-            if (conversationsRow != null) {
-                mRowsAdapter.remove(conversationsRow)
+            conversationsRow?.apply {
+                mRowsAdapter.remove(this)
                 conversationsRow = null
             }
         } else {
             if (conversationsRow == null) {
                 val adapter = ArrayObjectAdapter(CardPresenterSelector(requireContext(), conversationFacade))
                 adapter.addAll(0, contacts.conversations.map { item -> ContactCard(item, Card.Type.CONTACT_ONLINE) })
-                conversationsRow = ListRow(HeaderItem(getString(R.string.navigation_item_conversation)), adapter)
-                mRowsAdapter.add(conversationsRow)
+                conversationsRow = ListRow(HeaderItem(getString(R.string.navigation_item_conversation)), adapter).apply {
+                    mRowsAdapter.add(this)
+                }
             } else {
                 (conversationsRow!!.adapter as ArrayObjectAdapter).setItems(
                     contacts.conversations.map { item -> ContactCard(item, Card.Type.CONTACT_ONLINE) }, diff)

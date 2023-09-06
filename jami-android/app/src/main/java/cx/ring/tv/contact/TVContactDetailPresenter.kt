@@ -32,7 +32,7 @@ class TVContactDetailPresenter : Presenter() {
     override fun onCreateViewHolder(viewGroup: ViewGroup): ViewHolder = CustomViewHolder(
         LayoutInflater.from(viewGroup.context).inflate(R.layout.tv, viewGroup, false))
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, item: Any?) {
         (viewHolder as CustomViewHolder).bind(item as ConversationItemViewModel)
     }
 

@@ -91,17 +91,19 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
         }
         onItemViewClickedListener = ItemViewClickedListener()
         setOnSearchClickedListener { startActivity(Intent(context, SearchActivity::class.java)) }
-        selector = CardPresenterSelector(requireContext(), presenter.conversationFacade)
-        cardRowAdapter = ArrayObjectAdapter(selector)
+        CardPresenterSelector(requireContext(), presenter.conversationFacade).apply {
+            selector = this
+            cardRowAdapter = ArrayObjectAdapter(this)
+        }
         val contactRow = CardRow(false, getString(R.string.tv_contact_row_header), ArrayList())
         val cardPresenterHeader = HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header))
         val contactListRow = CardListRow(cardPresenterHeader, cardRowAdapter, contactRow)
-        accountSettingsRow = createAccountSettingsRow(requireContext())
+        val settingsRow = createAccountSettingsRow(requireContext())
+        accountSettingsRow = settingsRow
         adapter = ArrayObjectAdapter(ShadowRowPresenterSelector()).apply {
             add(contactListRow)
-            add(accountSettingsRow)
+            add(settingsRow)
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -112,7 +114,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
 
     private fun createRow(titleSection: String, cards: List<Card>, shadow: Boolean): ListRow {
         val row = CardRow(shadow, titleSection, cards)
-        val listRowAdapter = ArrayObjectAdapter(selector)
+        val listRowAdapter = ArrayObjectAdapter(selector!!)
         for (card in cards) {
             listRowAdapter.add(card)
         }
@@ -130,7 +132,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
 
     private fun createContactRequestRow(): CardListRow {
         val contactRequestRow = CardRow(false, getString(R.string.menu_item_contact_request), ArrayList<ContactCard>())
-        contactRequestRowAdapter = ArrayObjectAdapter(selector)
+        contactRequestRowAdapter = ArrayObjectAdapter(selector!!)
         return CardListRow(HeaderItem(HEADER_MISC, getString(R.string.menu_item_contact_request)), contactRequestRowAdapter, contactRequestRow)
     }
 
@@ -216,7 +218,7 @@ class MainFragment : BaseBrowseFragment<MainPresenter>(), MainView {
                 requestsRow = createContactRequestRow()
             contactRequestRowAdapter!!.setItems(cards, diff)
             if (!isRowDisplayed)
-                adapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow)
+                adapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow!!)
         }
     }
 

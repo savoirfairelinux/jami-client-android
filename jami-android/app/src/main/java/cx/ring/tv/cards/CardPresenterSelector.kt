@@ -30,7 +30,7 @@ import java.util.HashMap
 class CardPresenterSelector(private val context: Context, private val conversationFacade: ConversationFacade) :
     PresenterSelector() {
     private val presenters = HashMap<Card.Type, Presenter>()
-    override fun getPresenter(item: Any): Presenter {
+    override fun getPresenter(item: Any?): Presenter {
         val type = (item as Card).type
         return presenters.getOrPut(type) {
             when (type) {
