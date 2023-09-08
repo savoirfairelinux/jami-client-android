@@ -145,7 +145,7 @@ class HardwareServiceImpl(
     @SuppressLint("NewApi")
     override fun getAudioState(conf: Conference): Observable<AudioState> =
         conf.call!!.systemConnection
-            .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).call!!.audioState }
+            .flatMapObservable { a -> (a as CallServiceImpl.AndroidCall).connection!!.audioState }
             .map { a -> AudioState(routeToType(a.route), maskToList(a.supportedRouteMask)) }
             .onErrorResumeWith { audioState }
 
@@ -181,7 +181,7 @@ class HardwareServiceImpl(
     override fun updateAudioState(conf: Conference?, call: Call, incomingCall: Boolean, isOngoingVideo: Boolean) {
         Log.d(TAG, "updateAudioState $conf: Call state updated to ${call.callStatus} Call is incoming: $incomingCall Call is video: $isOngoingVideo")
         disposables.add(call.systemConnection.map {
-                (it as CallServiceImpl.AndroidCall).call!!
+                (it as CallServiceImpl.AndroidCall).connection!!
             }
             .subscribe({ systemCall ->
                 // Try using the Telecom API if available
@@ -328,7 +328,7 @@ class HardwareServiceImpl(
         disposables.add(conf.call!!.systemConnection
             .map {
                 // Map before subscribe to fallback to the error path if no Telecom API
-                (it as CallServiceImpl.AndroidCall).call!!
+                (it as CallServiceImpl.AndroidCall).connection!!
             }
             .subscribe({
                 // Using the Telecom API

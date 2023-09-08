@@ -34,10 +34,10 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
     private val pendingCallRequests = ConcurrentHashMap<String, SingleSubject<SystemCall>>()
     private val incomingCallRequests = ConcurrentHashMap<String, Pair<Call, SingleSubject<SystemCall>>>()
 
-    class AndroidCall(val call: CallConnection?): SystemCall(call != null) {
+    class AndroidCall(val connection: CallConnection?): SystemCall(connection != null) {
         override fun setCall(call: Call) {
             if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
-                this.call?.call = call
+                this.connection?.call = call
                 call.setSystemConnection(this)
             } else {
                 call.setSystemConnection(null)
