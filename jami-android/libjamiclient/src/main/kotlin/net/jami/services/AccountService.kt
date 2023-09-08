@@ -450,7 +450,9 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
+        Schedulers.io().run {
+            JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
+        }
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
