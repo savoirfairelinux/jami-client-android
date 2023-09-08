@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61fd645b_46bf7a89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-08T19:31:34Z",
+      "side": 1,
+      "message": "On smartphone, the welcome screen always shows up after a call instead of the smartlist.",
+      "revId": "60a3762a5e0c43258d19356fca17fdaabe775675",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
