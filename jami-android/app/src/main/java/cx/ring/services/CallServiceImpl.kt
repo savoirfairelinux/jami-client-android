@@ -54,7 +54,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
-                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle
+                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle ?: return CALL_ALLOWED
 
                 // Disabled because of a bug on Lenovo Tab P12 Pro (Android 12) where
                 // isOutgoingCallPermitted() is always returning false. GitLab: #1288.
@@ -116,6 +116,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
 
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             mContext.getSystemService<TelecomManager>()?.let { telecomService ->
+                val accountHandle = JamiApplication.instance!!.androidPhoneAccountHandle ?: return CALL_ALLOWED
                 val extras = Bundle()
                 if (call.hasActiveMedia(Media.MediaType.MEDIA_TYPE_VIDEO))
                     extras.putInt(
@@ -136,10 +137,7 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
                 incomingCallRequests[key] = Pair(call, subject)
                 try {
                     Log.w(TAG, "Telecom API: new incoming call request for $key")
-                    telecomService.addNewIncomingCall(
-                        JamiApplication.instance!!.androidPhoneAccountHandle,
-                        extras
-                    )
+                    telecomService.addNewIncomingCall(accountHandle, extras)
                     return subject
                 } catch (e: SecurityException) {
                     incomingCallRequests.remove(key)

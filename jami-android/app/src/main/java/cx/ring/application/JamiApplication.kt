@@ -101,7 +101,7 @@ abstract class JamiApplication : Application() {
     abstract val pushToken: String
     abstract val pushPlatform: String
 
-    lateinit var androidPhoneAccountHandle: PhoneAccountHandle
+    var androidPhoneAccountHandle: PhoneAccountHandle? = null
 
     open fun activityInit(activityContext: Context) {}
 
@@ -220,19 +220,24 @@ abstract class JamiApplication : Application() {
         // Initialize the Android Telecom API if available
         if (Build.VERSION.SDK_INT >= CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY) {
             getSystemService<TelecomManager>()?.let { telecomService ->
-                val componentName = ComponentName(this, ConnectionService::class.java)
-                val handle = PhoneAccountHandle(componentName, ConnectionService.HANDLE_ID)
-                androidPhoneAccountHandle = handle
-                //telecomService.unregisterPhoneAccount(handle)
-                telecomService.registerPhoneAccount(PhoneAccount.Builder(handle, getString(R.string.app_name))
-                    .setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED)
-                    //.setCapabilities(PhoneAccount.CAPABILITY_SUPPORTS_VIDEO_CALLING)
-                    .setHighlightColor(getColor(R.color.color_primary_dark))
-                    .addSupportedUriScheme("ring")
-                    .addSupportedUriScheme("jami")
-                    .addSupportedUriScheme("swarm")
-                    .addSupportedUriScheme(PhoneAccount.SCHEME_SIP)
-                    .build())
+                try {
+                    val componentName = ComponentName(this, ConnectionService::class.java)
+                    val handle = PhoneAccountHandle(componentName, ConnectionService.HANDLE_ID)
+                    //telecomService.unregisterPhoneAccount(handle)
+                    telecomService.registerPhoneAccount(
+                        PhoneAccount.Builder(handle, getString(R.string.app_name))
+                            .setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED)
+                            //.setCapabilities(PhoneAccount.CAPABILITY_SUPPORTS_VIDEO_CALLING)
+                            .setHighlightColor(getColor(R.color.color_primary_dark))
+                            .addSupportedUriScheme("ring")
+                            .addSupportedUriScheme("jami")
+                            .addSupportedUriScheme("swarm")
+                            .addSupportedUriScheme(PhoneAccount.SCHEME_SIP)
+                            .build())
+                    androidPhoneAccountHandle = handle
+                } catch (e: SecurityException) {
+                    Log.e(TAG, "Can't register the Telecom API", e)
+                }
             }
         }
 
