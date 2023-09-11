@@ -43,6 +43,7 @@
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Приглашения получены</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d диалог</item>
     <item quantity="few">%d диалога</item>
@@ -74,6 +75,7 @@
   <string name="notif_channel_background_service">Фоновая служба</string>
   <string name="notif_channel_background_service_descr">Позволяет принимать звонки и сообщения в любое время.</string>
   <string name="notif_group_calls">Звонки</string>
+  <string name="notif_inprogress_group_call">Идёт вызов</string>
   <string name="notif_background_service">Jami сейчас работает в фоновом режиме</string>
   <string name="notif_mark_as_read">Отметить как прочитанное</string>
   <string name="notif_dismiss">Отклонить</string>
@@ -136,6 +138,7 @@
   <string name="conversation_send_audio">Запись аудиоклипа</string>
   <string name="conversation_send_video">Запись видиоклипа</string>
   <string name="conversation_share_location">Транслировать геопозицию</string>
+  <string name="ongoing_group_call">Текущий вызов</string>
   <string name="in_reply_to">В ответ на</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
