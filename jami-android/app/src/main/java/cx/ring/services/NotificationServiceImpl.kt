@@ -831,14 +831,30 @@ class NotificationServiceImpl(
                         .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId), ContentUriHandler.immutable(PendingIntent.FLAG_ONE_SHOT)))
         }
         dataTransferNotifications[notificationId] = messageNotificationBuilder.build()
-        try {
-            ContextCompat.startForegroundService(mContext,
-                Intent(DataTransferService.ACTION_START, path, mContext, DataTransferService::class.java)
-                    .putExtra(NotificationService.KEY_NOTIFICATION_ID, notificationId))
-        } catch (e: Exception) {
-            Log.w(TAG, "Error starting file transfer service " + e.message)
+
+        val start = {
+            ContextCompat.startForegroundService(
+                mContext,
+                Intent(
+                    DataTransferService.ACTION_START, path, mContext,
+                    DataTransferService::class.java
+                ).putExtra(NotificationService.KEY_NOTIFICATION_ID, notificationId))
         }
-        //startForegroundService(notificationId, DataTransferService.class);
+
+        try {
+            start()
+        }
+        catch (e: Exception) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (e is ForegroundServiceStartNotAllowedException) {
+                    pingPush(conversation.accountId, start)
+                } else {
+                    Log.w(TAG, "Error starting file transfer service " + e.message)
+                }
+            } else {
+                Log.w(TAG, "Error starting file transfer service " + e.message)
+            }
+        }
     }
 
     override fun showMissedCallNotification(call: Call) {
