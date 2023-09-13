@@ -18,14 +18,10 @@
 package cx.ring.fragments
 
 import android.app.Dialog
-import android.graphics.Typeface
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.text.Layout
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.AlignmentSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
+import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -41,25 +37,40 @@ import cx.ring.R
 import cx.ring.account.AccountEditionFragment
 import cx.ring.databinding.FragLinkDeviceBinding
 import cx.ring.mvp.BaseBottomSheetFragment
-import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.KeyboardVisibilityManager.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.LinkDevicePresenter
 import net.jami.account.LinkDeviceView
 import net.jami.model.Account
+import net.jami.utils.QRCodeUtils
 
 @AndroidEntryPoint
 class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkDeviceView {
     private var mBinding: FragLinkDeviceBinding? = null
     private var mAccountHasPassword = true
+    private var counter:CountDownTimer? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
         FragLinkDeviceBinding.inflate(inflater, container, false).apply {
             btnStartExport.setOnClickListener { onClickStart() }
             password.setOnEditorActionListener { pwd: TextView, actionId: Int, event: KeyEvent? ->
                 onPasswordEditorAction(pwd, actionId, event)
             }
             mBinding = this
+            qrBorder.visibility = View.GONE
+            qrImage.visibility = View.GONE
+            title.visibility = View.GONE
+            subtitle.visibility = View.GONE
+            pin.visibility = View.GONE
+            pinTimeValid.visibility = View.GONE
+            subtitle.visibility = View.GONE
+            info1.visibility = View.GONE
+            info2.visibility = View.GONE
+
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,9 +80,8 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
                 presenter.setAccountId(accountId)
             }
         }
-        mBinding?.apply {
-            passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
-        }
+        // go directly to the qr and pin page if there is no account password
+        if (!mAccountHasPassword) onClickStart()
     }
 
     /**
@@ -94,7 +104,17 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     override fun onResume() {
         super.onResume()
         view?.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+            override fun onLayoutChange(
+                v: View,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
                 bottomSheetBehaviour?.peekHeight = v.measuredHeight
                 v.removeOnLayoutChangeListener(this)
             }
@@ -103,12 +123,14 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     private val bottomSheetBehaviour: BottomSheetBehavior<*>?
         get() {
-            val layoutParams = (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
+            val layoutParams =
+                (requireView().parent as View).layoutParams as CoordinatorLayout.LayoutParams
             return layoutParams.behavior as BottomSheetBehavior<*>?
         }
 
     override fun showExportingProgress() {
         mBinding?.apply {
+            mBinding = this
             progressBar.visibility = View.VISIBLE
             accountLinkInfo.visibility = View.GONE
             btnStartExport.visibility = View.GONE
@@ -118,10 +140,24 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
 
     override fun dismissExportingProgress() {
         mBinding?.apply {
+            mBinding = this
             progressBar.visibility = View.GONE
-            accountLinkInfo.visibility = View.VISIBLE
+            accountLinkInfo.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
             btnStartExport.visibility = View.VISIBLE
             passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
+        }
+    }
+
+    fun regeneratePin() {
+        mBinding?.apply {
+            mBinding = this
+            progressBar.visibility = View.GONE
+            btnStartExport.visibility = View.VISIBLE
+            passwordLayout.visibility = if (mAccountHasPassword) View.VISIBLE else View.GONE
+            if (!mAccountHasPassword) {
+                mBinding!!.accountLinkInfo.text = getString(R.string.account_end_export_unvalid_two)
+            }
+            accountLinkInfo.visibility = View.VISIBLE
         }
     }
 
@@ -140,6 +176,15 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
     override fun showPasswordError() {
         mBinding!!.passwordLayout.error = getString(R.string.account_export_end_decryption_message)
         mBinding!!.password.setText("")
+        mBinding!!.qrBorder.visibility = View.GONE
+        mBinding!!.qrImage.visibility = View.GONE
+        mBinding!!.title.visibility = View.GONE
+        mBinding!!.subtitle.visibility = View.GONE
+        mBinding!!.pin.visibility = View.GONE
+        mBinding!!.pinTimeValid.visibility = View.GONE
+        mBinding!!.subtitle.visibility = View.GONE
+        mBinding!!.info1.visibility = View.GONE
+        mBinding!!.info2.visibility = View.GONE
     }
 
     override fun showGenericError() {
@@ -150,22 +195,85 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             .show()
     }
 
+    override fun onStop() {
+        super.onStop()
+        counter?.cancel()
+    }
     override fun showPIN(pin: String) {
+        val binding = mBinding ?: return
         dismissExportingProgress()
-        val pined = getString(R.string.account_end_export_infos).replace("%%", pin)
-        mBinding?.let { binding ->
-            binding.password.setText("")
-            binding.passwordLayout.visibility = View.GONE
-            binding.btnStartExport.visibility = View.GONE
-            binding.accountLinkInfo.text = SpannableString(pined).apply {
-                val pos = pined.lastIndexOf(pin)
-                setSpan(AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setSpan(StyleSpan(Typeface.BOLD), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                setSpan(RelativeSizeSpan(2.8f), pos, pos + pin.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        // encode the qr code with the pin generated
+        val qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(
+            pin,
+            resources.getColor(R.color.qr_code_color, null),
+            resources.getColor(R.color.transparent, null)
+        )
+        var bitmap = qrCodeData?.let {
+            Bitmap.createBitmap(it.width,qrCodeData.height,Bitmap.Config.ARGB_8888)
+        }
+        if (qrCodeData != null) {
+            bitmap?.setPixels(qrCodeData.data,0,qrCodeData.width,0,0,qrCodeData.width,qrCodeData.height)
+        }
+        binding.qrImage.setImageBitmap(bitmap)
+        // show the pin generated in the interface
+        binding.pin.text = pin
+        val start = System.currentTimeMillis()
+        // to have the count down of 10 min
+        val duration = 10 * DateUtils.MINUTE_IN_MILLIS
+        counter = object: CountDownTimer(duration, DateUtils.MINUTE_IN_MILLIS) {
+            override fun onTick(millisUntilFinished: Long) {
+                val expIn = DateUtils.getRelativeTimeSpanString(
+                    start + duration,
+                    System.currentTimeMillis(),
+                    0L
+                )
+                binding.pinTimeValid.text = getString(R.string.account_end_export_valid, expIn)
             }
-            binding.accountLinkInfo.requestFocus()
+
+            override fun onFinish() {
+                // return to the generate pin page
+                hideKeyboard(activity)
+                // change the text because the pin is now invalid
+                if (!mAccountHasPassword) mBinding!!.accountLinkInfo.text =
+                    R.string.account_end_export_unvalid.toString()
+                if (mAccountHasPassword) {
+                    val infoText = getString(R.string.account_end_export_unvalid)
+                    mBinding!!.accountLinkInfo.text = infoText
+                }
+                mBinding!!.qrBorder.visibility = View.GONE
+                mBinding!!.qrImage.visibility = View.GONE
+                mBinding!!.title.visibility = View.GONE
+                mBinding!!.subtitle.visibility = View.GONE
+                mBinding!!.pin.visibility = View.GONE
+                mBinding!!.pinTimeValid.visibility = View.GONE
+                mBinding!!.subtitle.visibility = View.GONE
+                mBinding!!.info1.visibility = View.GONE
+                mBinding!!.info2.visibility = View.GONE
+                regeneratePin()
+                // liberate the memory
+                bitmap?.recycle()
+                bitmap = null
+            }
+        }.start()
+        mBinding!!.pin.visibility = View.VISIBLE
+        mBinding?.apply {
+            mBinding = this
+            title.visibility = View.VISIBLE
+            subtitle.visibility = View.VISIBLE
+            qrImage.visibility = View.VISIBLE
+            qrBorder.visibility = View.VISIBLE
+            pinTimeValid.visibility = View.VISIBLE
+            subtitle.visibility = View.VISIBLE
+            info1.visibility = View.VISIBLE
+            info2.visibility = View.VISIBLE
+            accountLinkInfo.visibility = View.GONE
+            btnStartExport.visibility = View.GONE
+            passwordLayout.visibility = View.GONE
+            accountLinkInfo.visibility = View.GONE
+            password.text = null
         }
         hideKeyboard(activity)
+
     }
 
     private fun onClickStart() {

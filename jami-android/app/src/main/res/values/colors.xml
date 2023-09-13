@@ -83,4 +83,6 @@
     <color name="jami_id_info_color">#4D4D4D</color>
     <color name="jami_id_edit_text_underline_color">#02B9E9</color>
 
+    <!--  QrCode  -->
+    <color name="qr_code_color">#000000</color>
 </resources>
