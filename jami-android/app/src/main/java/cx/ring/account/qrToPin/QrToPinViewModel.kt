@@ -1,20 +1,20 @@
-package cx.ring.account.QrToPin
+package cx.ring.account.qrToPin
 
-import com.journeyapps.barcodescanner.BarcodeCallback
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.journeyapps.barcodescanner.BarcodeCallback
 import net.jami.utils.Log
 
 // the different states of the QR code scanner
-enum class View {
+enum class QrResultState {
     INIT, VALID, ERROR
 }
 
 class QrToPinViewModel : ViewModel() {
 
-    private val _event = MutableLiveData<View>()
-    val event: LiveData<View> = _event
+    private val _event = MutableLiveData<QrResultState>()
+    val event: LiveData<QrResultState> = _event
 
     companion object {
         private val TAG = QrToPinViewModel::class.simpleName!!
@@ -26,9 +26,9 @@ class QrToPinViewModel : ViewModel() {
         if (result.text != null) {
             val regex = Regex("^.{8}-.{8}$")
             if (regex.matches(result.text)) {
-                _event.value = View.VALID
+                _event.value = QrResultState.VALID
             } else {
-                _event.value = View.ERROR
+                _event.value = QrResultState.ERROR
             }
         }
     }
