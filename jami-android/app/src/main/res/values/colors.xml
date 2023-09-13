@@ -73,4 +73,6 @@
     <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
 
+    <!--  QrCode  -->
+    <color name="qr_code_color">#000000</color>
 </resources>
