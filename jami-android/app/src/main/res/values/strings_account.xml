@@ -295,4 +295,9 @@ along with this program; if not, write to the Free Software
     <string name="account_device_this_indicator">This device</string>
     <string name="account_disabled_indicator">disabled</string>
 
+    <!-- Link a new device -->
+    <string name="account_link_prompt_pin_manually">Enter PIN manually</string>
+    <string name="qr_invalid">Not a Jami Authentication QR code</string>
+    <string name="content_description_checkbox">Your Qr Code is valid</string>
+    <string name="error_format_not_supported">This format is not supported.</string>
 </resources>
