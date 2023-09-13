@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/text_invalid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Qr_invalid"
+        android:textColor="#E02020"
+        android:layout_marginTop="220dp"
+        android:layout_marginBottom="230dp"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        />
+<RelativeLayout
+    android:id="@+id/qr_code_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="invisible"
+    android:background="#272727">
+
+    <ImageView
+        android:id="@+id/qr_code"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
+        android:src="@drawable/qr_code_24px"
+        android:visibility="invisible"/>
+    <ImageView
+        android:id="@+id/checkbox_valid"
+        android:layout_alignBottom="@+id/qr_code"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/baseline_check_circle_24"
+        android:background="#00AF6C"
+        android:layout_alignEnd="@+id/qr_code"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/text_valid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/qr_code"
+        android:layout_marginTop="20dp"
+        android:text="@string/Qr_valid"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+</RelativeLayout>
+
+</RelativeLayout>
