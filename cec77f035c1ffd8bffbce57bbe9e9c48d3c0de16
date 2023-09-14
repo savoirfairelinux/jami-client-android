@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d2282e_72eb82f7",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-14T20:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e02d55_ed250eba",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "cec77f035c1ffd8bffbce57bbe9e9c48d3c0de16",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc21832b_b4b20385",
@@ -47,6 +71,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "412e120d_1d9f2fd5",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-14T20:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc21832b_b4b20385",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 1
+      },
+      "revId": "cec77f035c1ffd8bffbce57bbe9e9c48d3c0de16",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d315dff_4f16c01c",
@@ -60,6 +108,24 @@
       "writtenOn": "2023-09-14T15:53:34Z",
       "side": 1,
       "message": "same problem",
+      "revId": "cec77f035c1ffd8bffbce57bbe9e9c48d3c0de16",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e95df251_cc471791",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-14T20:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d315dff_4f16c01c",
       "revId": "cec77f035c1ffd8bffbce57bbe9e9c48d3c0de16",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
