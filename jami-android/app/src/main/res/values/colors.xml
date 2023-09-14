@@ -92,5 +92,6 @@
     <!--  Donation Card  -->
     <color name="donation_card_background_color">#D5E4EF</color>
     <color name="donation_card_button_color">#005699</color>
+    <color name="donation_card_favorite_color">#FF0045</color>
 
 </resources>
