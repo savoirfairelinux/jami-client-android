@@ -373,13 +373,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         binding.appBarContainer.fitsSystemWindows = false
 
         // Update AppBarLayoutBottom padding.
-        mAccountService.currentAccountSubject
+        mDisposable.add(mAccountService.currentAccountSubject
             .switchMap { account ->
                 account.getPendingSubject()
             }
             .firstOrError().subscribe { list ->
                 updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
             }
+        )
 
         // Make the invitation card wrap content (not take all space available anymore).
         binding.appBar.updateLayoutParams {
@@ -606,13 +607,14 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
         mBinding!!.invitationCard.invitationGroup.isVisible = isVisible
 
         // Update padding AppBarLayoutBottom and conversation list.
-        mAccountService.currentAccountSubject
+        mDisposable.add(mAccountService.currentAccountSubject
             .switchMap { account ->
                 account.getPendingSubject()
             }
             .firstOrError().subscribe { list ->
                 updateAppBarLayoutBottomPadding(hasInvites = list.isNotEmpty())
             }
+        )
     }
 
     companion object {
