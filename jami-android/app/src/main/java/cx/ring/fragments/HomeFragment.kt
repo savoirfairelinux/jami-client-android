@@ -19,6 +19,7 @@ package cx.ring.fragments
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -180,6 +181,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
                     R.id.menu_about -> {
                         (requireActivity() as HomeActivity).goToAbout()
+                    }
+
+                    R.id.menu_donate -> {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.jami.net")))
                     }
                 }
                 true
