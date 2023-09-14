@@ -98,7 +98,7 @@ class Account(
     fun isContact(uri: Uri): Boolean = getContact(uri) != null
 
     fun conversationStarted(conversation: Conversation) {
-        //Log.w(TAG, "conversationStarted " + conversation.accountId + " " + conversation.uri + " " + conversation.isSwarm + " " + conversation.contacts.size + " " + conversation.mode.blockingFirst())
+        //Log.w(TAG, "conversationStarted ${conversation.accountId} ${conversation.uri} ${conversation.isSwarm} ${conversation.contacts.size} ${conversation.mode.blockingFirst()}")
         synchronized(conversations) {
             if (conversation.isSwarm) {
                 removeRequest(conversation.uri)
@@ -712,10 +712,10 @@ class Account(
     fun setHistoryLoaded(conversations: List<Conversation> = emptyList()) {
         synchronized(this.conversations) {
             if (historyLoaded) return
-            //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());
+            //Log.w(TAG, "setHistoryLoaded $accountId ${conversations.size}")
             for (c in conversations) {
                 val contact = c.contact
-                if (!c.isSwarm && contact != null && contact.conversationUri.blockingFirst().equals(c.uri))
+                if (!c.isSwarm && contact != null && contact.conversationUri.blockingFirst() == c.uri)
                     updated(c)
             }
             historyLoaded = true
