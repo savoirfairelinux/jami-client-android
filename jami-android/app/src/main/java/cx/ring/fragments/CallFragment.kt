@@ -74,9 +74,11 @@ import cx.ring.utils.ContentUriHandler
 import cx.ring.utils.ConversationPath
 import cx.ring.utils.DeviceUtils.isTablet
 import cx.ring.utils.DeviceUtils.isTv
+import cx.ring.utils.DeviceUtils.uiScheduler
 import cx.ring.utils.MediaButtonsHelper.MediaButtonsHelperCallback
 import cx.ring.views.AvatarDrawable
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import net.jami.call.CallPresenter
 import net.jami.call.CallView
@@ -91,6 +93,7 @@ import net.jami.services.HardwareService
 import net.jami.services.HardwareService.AudioState
 import net.jami.services.NotificationService
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
@@ -163,6 +166,14 @@ class CallFragment : BaseSupportFragment<CallPresenter, CallView>(), CallView,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        mCompositeDisposable.add(Observable.interval(5, TimeUnit.SECONDS)
+            .subscribeOn(uiScheduler)
+            .subscribe {
+                val a = binding?.pluginPreviewSurface ?: return@subscribe
+                Log.d(TAG, "updateSurface: w:${a.width} h:${a.height} v:${a.visibility}")
+            }
+        )
+
         previewMargin = inflater.context.resources.getDimension(R.dimen.call_preview_margin)
         return (DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false) as FragCallBinding)
             .also { b ->
