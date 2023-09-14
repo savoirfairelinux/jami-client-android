@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c48867ac_a46a19b5",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/SmartListFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-14T13:49:38Z",
+      "side": 1,
+      "message": "this too also no?",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "d7cc370fa33b71a0d2b72a1d824d360e8aa05abd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
