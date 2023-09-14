@@ -88,4 +88,9 @@
 
     <!--  QrCode  -->
     <color name="qr_code_color">#000000</color>
+
+    <!--  Donation Card  -->
+    <color name="donation_card_background_color">#D5E4EF</color>
+    <color name="donation_card_button_color">#005699</color>
+
 </resources>
