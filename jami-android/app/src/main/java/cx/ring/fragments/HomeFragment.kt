@@ -72,6 +72,7 @@ import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
 import cx.ring.utils.TextUtils
+import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
@@ -181,6 +182,10 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
                     R.id.menu_about -> {
                         (requireActivity() as HomeActivity).goToAbout()
+                    }
+
+                    R.id.menu_donate -> {
+                        openJamiDonateWebPage(requireContext())
                     }
                 }
                 true
