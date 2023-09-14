@@ -37,10 +37,6 @@ class SmartListPresenter @Inject constructor(
     private val preferencesService: PreferencesService,
     @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<SmartListView>() {
-    private val querySubject = BehaviorSubject.createDefault("")
-    private val debouncedQuery = querySubject.debounce{ item ->
-        if (item.isEmpty()) Observable.empty() else Observable.timer(350, TimeUnit.MILLISECONDS)
-    }.distinctUntilChanged()
     private val accountSubject: Observable<Account> = conversationFacade
         .currentAccountSubject
         .doOnNext { a: Account -> currentAccountId = a.accountId }
@@ -63,11 +59,6 @@ class SmartListPresenter @Inject constructor(
                     v.updateList(list, conversationFacade, mCompositeDisposable)
                 }
             })
-    }
-
-    fun queryTextChanged(query: String) {
-        Log.w(TAG, "queryTextChanged $query")
-        querySubject.onNext(query)
     }
 
     fun conversationClicked(viewModel: Conversation) {

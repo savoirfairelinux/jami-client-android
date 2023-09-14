@@ -229,10 +229,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
     }
 
-    fun searchQueryTextChanged (query: String) {
-        presenter.queryTextChanged(query)
-    }
-
     override fun scrollToTop() {
         binding?.apply { confsList.scrollToPosition(0) }
     }
