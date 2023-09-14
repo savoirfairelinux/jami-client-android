@@ -26,6 +26,13 @@
                 app:showAsAction="ifRoom" />
 
             <item
+                android:id="@+id/menu_donate"
+                android:icon="@drawable/baseline_favorite_24"
+                app:iconTint="@color/donation_card_favorite_color"
+                android:title="@string/donation_donate"
+                app:showAsAction="ifRoom" />
+
+            <item
                 android:id="@+id/menu_about"
                 android:icon="@drawable/ic_jami_24"
                 android:iconTintMode="src_in"
