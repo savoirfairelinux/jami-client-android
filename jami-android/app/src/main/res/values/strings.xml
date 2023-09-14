@@ -451,5 +451,10 @@ along with this program; if not, write to the Free Software
     <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
     <string name="bottomsheet_remove">Remove from the swarm</string>
 
+    <!-- Donation -->
+    <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation ?</string>
+    <string name="donation_card_not_now">Not now</string>
+    <string name="donation_donate">Donate</string>
+
 
 </resources>

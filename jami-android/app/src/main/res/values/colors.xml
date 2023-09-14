@@ -73,4 +73,8 @@
     <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
 
+    <!--  Donation Card  -->
+    <color name="donation_card_background_color">#D5E4EF</color>
+    <color name="donation_card_button_color">#005699</color>
+
 </resources>
