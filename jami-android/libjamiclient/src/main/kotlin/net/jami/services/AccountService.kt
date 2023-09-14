@@ -232,18 +232,20 @@ class AccountService(
 
     private fun refreshAccountsCacheFromDaemon() {
         val curList: List<Account> = mAccountList
+        val toLoad: MutableList<Account> = ArrayList()
         val newAccounts: List<Account> = JamiService.getAccountList().map { id ->
-            val acc = curList.find { it.accountId == id }
-            if (acc == null) {
-                val a = Account(id, JamiService.getAccountDetails(id), JamiService.getCredentials(id), JamiService.getVolatileAccountDetails(id))
-                Schedulers.computation().createWorker().schedule {
-                    loadAccount(a)
-                    a.loadedSubject.onComplete()
-                }
-                a
-            } else acc
+            curList.find { it.accountId == id } ?: Account(id, JamiService.getAccountDetails(id), JamiService.getCredentials(id), JamiService.getVolatileAccountDetails(id)).apply {
+                toLoad.add(this)
+            }
         }
         mAccountList = newAccounts
+        val scheduler = Schedulers.computation()
+        toLoad.forEach {
+            scheduler.createWorker().schedule {
+                loadAccount(it)
+                it.loadedSubject.onComplete()
+            }
+        }
         // Cleanup removed accounts
         for (acc in curList) if (!newAccounts.contains(acc)) acc.cleanup()
         accountsSubject.onNext(newAccounts)
@@ -262,9 +264,7 @@ class AccountService(
         for (conversationId in conversations) {
             try {
                 val info: Map<String, String> = JamiService.conversationInfos(account.accountId, conversationId).toNativeFromUtf8()
-                /*for (Map.Entry<String, String> i : info.entrySet()) {
-                    Log.w(TAG, "conversation info: " + i.getKey() + " " + i.getValue());
-                }*/
+                //info.forEach { (key, value) -> Log.w(TAG, "conversation info: $key $value") }
                 val mode = if ("true" == info["syncing"]) Conversation.Mode.Syncing else Conversation.Mode.values()[info["mode"]?.toInt() ?: Conversation.Mode.Syncing.ordinal]
                 val conversation = account.newSwarm(conversationId, mode)
                 conversation.setProfile(mVCardService.loadConversationProfile(info))
@@ -450,9 +450,7 @@ class AccountService(
             .subscribeOn(Schedulers.from(mExecutor))
 
     private fun loadConversationHistory(accountId: String, conversationUri: Uri, root: String, n: Long) =
-        Schedulers.io().run {
-            JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
-        }
+        JamiService.loadConversationMessages(accountId, conversationUri.rawRingId, root, n)
 
     fun loadMore(conversation: Conversation, n: Int = 32): Single<Conversation> {
         synchronized(conversation) {
@@ -468,7 +466,7 @@ class AccountService(
             conversation.loading?.let { return it }
             val ret = SingleSubject.create<Conversation>()
             val roots = conversation.swarmRoot
-            //Log.w(TAG, "loadMore " + conversation.uri + " " + roots)
+            // Log.w(TAG, "${conversation.accountId} loadMore ${conversation.uri} $mode $roots")
             conversation.loading = ret
             if (roots.isEmpty())
                 loadConversationHistory(conversation.accountId, conversation.uri, "", n.toLong())
@@ -1064,14 +1062,14 @@ class AccountService(
     fun accountMessageStatusChanged(accountId: String, conversationId: String, messageId: String, contactId: String, status: Int) {
         val newStatus = InteractionStatus.fromIntTextMessage(status)
         Log.d(TAG, "accountMessageStatusChanged: $accountId, $conversationId, $messageId, $contactId, $newStatus")
-        if (conversationId.isEmpty()) {
+        val account = getAccount(accountId) ?: return
+        if (conversationId.isEmpty() && !account.isJami) {
             mHistoryService
                 .accountMessageStatusChanged(accountId, messageId, contactId, newStatus)
                 .subscribe({ t: TextMessage -> messageSubject.onNext(t) }) { e: Throwable ->
                     Log.e(TAG, "Error updating message: " + e.localizedMessage) }
         } else {
-            getAccount(accountId)
-                ?.getSwarm(conversationId)
+            account.getSwarm(conversationId)
                 ?.updateSwarmInteraction(messageId, Uri.fromId(contactId), newStatus)
         }
     }
@@ -1429,7 +1427,7 @@ class AccountService(
     }
 
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
-        Log.w(TAG, "ConversationCallback: conversationRequestReceived " + accountId + "/" + conversationId + " " + metadata.size)
+        Log.w(TAG, "ConversationCallback: conversationRequestReceived $accountId/$conversationId ${metadata.size}")
         val account = getAccount(accountId)
         if (account == null) {
             Log.w(TAG, "conversationRequestReceived: can't find account")
