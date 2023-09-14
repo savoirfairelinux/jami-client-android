@@ -748,11 +748,11 @@ class Account(
         return sortedPending
     }
 
-    private fun contactAdded(contact: Contact?) {
-        val uri = contact!!.uri
+    private fun contactAdded(contact: Contact) {
+        val uri = contact.uri
         val key = uri.uri
         //Log.w(TAG, "contactAdded " + accountId + " " + uri + " " + contact.conversationUri.blockingFirst())
-        if (!contact.conversationUri.blockingFirst().equals(uri)) {
+        if (contact.conversationUri.blockingFirst() != uri) {
             //Log.w(TAG, "contactAdded Don't add conversation if we have a swarm conversation")
             // Don't add conversation if we have a swarm conversation
             return
