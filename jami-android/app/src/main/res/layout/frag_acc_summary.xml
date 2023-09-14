@@ -302,6 +302,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </ScrollView>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/donate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="10dp"
+        android:outlineProvider="none"
+        android:text="@string/donation_card_donate"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:backgroundTint="@color/donation_card_background_color"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/baseline_favorite_24"
+        app:iconPadding="16dp"
+        app:iconTint="@color/donation_card_favorite_color" />
+
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"

@@ -114,6 +114,9 @@ class JamiAccountSummaryFragment :
         FragAccSummaryBinding.inflate(inflater, container, false).apply {
             scrollview.viewTreeObserver.addOnScrollChangedListener(this@JamiAccountSummaryFragment)
             linkNewDevice.setOnClickListener { showWizard(mAccountId!!) }
+            donateButton.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.jami.net")))
+            }
             linkedDevices.setRightDrawableOnClickListener { onDeviceRename() }
             registerName.setOnClickListener { showUsernameRegistrationPopup() }
             chipMore.setOnClickListener {
