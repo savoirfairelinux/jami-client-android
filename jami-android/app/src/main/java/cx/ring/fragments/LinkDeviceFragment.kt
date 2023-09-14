@@ -48,6 +48,7 @@ import net.jami.utils.QRCodeUtils
 class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkDeviceView {
     private var mBinding: FragLinkDeviceBinding? = null
     private var mAccountHasPassword = true
+    private lateinit var counter:CountDownTimer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -194,6 +195,10 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
             .show()
     }
 
+    override fun onStop() {
+        super.onStop()
+        counter.cancel()
+    }
     override fun showPIN(pin: String) {
         val binding = mBinding ?: return
         dismissExportingProgress()
@@ -227,7 +232,7 @@ class LinkDeviceFragment : BaseBottomSheetFragment<LinkDevicePresenter>(), LinkD
         val start = System.currentTimeMillis()
         // to have the count down of 10 min
         val duration = 10 * DateUtils.MINUTE_IN_MILLIS
-        object : CountDownTimer(duration, DateUtils.SECOND_IN_MILLIS) {
+        counter = object: CountDownTimer(duration, DateUtils.SECOND_IN_MILLIS) {
             override fun onTick(millisUntilFinished: Long) {
                 val expIn = DateUtils.getRelativeTimeSpanString(
                     start + duration,
