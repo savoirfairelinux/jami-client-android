@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03db9c83_ef09451b",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-09-14T20:29:20Z",
+      "side": 1,
+      "message": "1. Remove space ` ` before the question mark `?`?\n\n2. `Our mission is to provide an open source email app that is secure, private and free for users around the world. Your donations support this work. Will you give today?`\n\nhttps://www.thunderbird.net/en-US/?form\u003dsupport\n\n3. Suggested string:\n\n`Our mission is to provide an open source communications platform that is secure, private and free for users around the world. Your donations support this work. Will you give today?`\n\nPlease advise if the string is too long?\n\nThank you",
+      "range": {
+        "startLine": 455,
+        "startChar": 45,
+        "endLine": 455,
+        "endChar": 124
+      },
+      "revId": "f92a60b1a211051dda3fa6b6f4db192df6eed7c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d553e2a_9117df02",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2023-09-14T20:29:20Z",
+      "side": 1,
+      "message": "1. Remove space before `?`?\n\n2. `Our mission is to provide an open source email app that is secure, private and free for users around the world. Your donations support this work. Will you give today?`\n\nhttps://www.thunderbird.net/en-US/?form\u003dsupport\n\n3. Suggested string:\n\n`Our mission is to provide an open source communications platform that is secure, private and free for users around the world. Your donations support this work. Will you give today?`\n\nPlease advise if the string is too long?\n\nThank you",
+      "range": {
+        "startLine": 455,
+        "startChar": 45,
+        "endLine": 455,
+        "endChar": 124
+      },
+      "revId": "f92a60b1a211051dda3fa6b6f4db192df6eed7c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
