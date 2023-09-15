@@ -19,6 +19,7 @@ package net.jami.account
 
 import net.jami.model.AccountCreationModel
 import net.jami.mvp.RootPresenter
+import net.jami.utils.Log
 import javax.inject.Inject
 
 class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAccountView>() {
@@ -45,6 +46,11 @@ class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAcc
 
     fun pinChanged(pin: String) {
         mAccountCreationModel?.pin = pin
+        showHideLinkButton()
+    }
+
+    fun resetPin() {
+        mAccountCreationModel?.pin = ""
         showHideLinkButton()
     }
 
