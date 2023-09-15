@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47e5f8b_9683b586",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-15T13:47:00Z",
+      "side": 1,
+      "message": "must be added to mDisposable",
+      "range": {
+        "startLine": 385,
+        "startChar": 8,
+        "endLine": 385,
+        "endChar": 45
+      },
+      "revId": "f0476dcdee1b18e3c4abb365d8d1fdedfd4000b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cab5167_153da728",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-15T13:47:00Z",
+      "side": 1,
+      "message": "avoid personal questions in the code",
+      "range": {
+        "startLine": 389,
+        "startChar": 16,
+        "endLine": 389,
+        "endChar": 73
+      },
+      "revId": "f0476dcdee1b18e3c4abb365d8d1fdedfd4000b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bfa6031_48db4c87",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-15T13:47:00Z",
+      "side": 1,
+      "message": "too verbose comments. A single short comment for the whole block is enough",
+      "range": {
+        "startLine": 404,
+        "startChar": 20,
+        "endLine": 404,
+        "endChar": 86
+      },
+      "revId": "f0476dcdee1b18e3c4abb365d8d1fdedfd4000b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e41519d2_508bd3fe",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-15T13:47:00Z",
+      "side": 1,
+      "message": "The line is just \u0027isVisible \u003d true\u0027\nThe comment is unneeded.",
+      "range": {
+        "startLine": 419,
+        "startChar": 53,
+        "endLine": 419,
+        "endChar": 72
+      },
+      "revId": "f0476dcdee1b18e3c4abb365d8d1fdedfd4000b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
