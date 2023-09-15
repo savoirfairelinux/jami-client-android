@@ -60,14 +60,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
     private var binding: FragSmartlistBinding? = null
     private var mHomeFragment: HomeFragment? = null
 
-    @Inject
-    lateinit
-    var mAccountService: AccountService
-
-    @Inject
-    lateinit
-    var mConversationFacade: ConversationFacade
-
     override fun onSaveInstanceState(outState: Bundle) {
         binding?.apply { outState.putBoolean(STATE_LOADING, loadingIndicator.isShown) }
         super.onSaveInstanceState(outState)
@@ -227,10 +219,6 @@ class SmartListFragment : BaseSupportFragment<SmartListPresenter, SmartListView>
             .putExtra(CallFragment.KEY_HAS_VIDEO, true)
             .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId)
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL)
-    }
-
-    fun searchQueryTextChanged (query: String) {
-        presenter.queryTextChanged(query)
     }
 
     override fun scrollToTop() {
