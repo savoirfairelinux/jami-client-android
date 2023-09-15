@@ -17,7 +17,9 @@
  */
 package net.jami.settings
 
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
+import net.jami.model.DonationSettings
 import net.jami.model.Settings
 import net.jami.mvp.GenericView
 import net.jami.mvp.RootPresenter
@@ -25,15 +27,27 @@ import net.jami.services.PreferencesService
 import javax.inject.Inject
 import javax.inject.Named
 
+data class SettingsViewModel(
+    val settings: Settings,
+    val donationSettings: DonationSettings
+)
+
 class SettingsPresenter @Inject constructor(
     private val mPreferencesService: PreferencesService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
-) : RootPresenter<GenericView<Settings>>() {
-    override fun bindView(view: GenericView<Settings>) {
+) : RootPresenter<GenericView<SettingsViewModel>>() {
+
+    override fun bindView(view: GenericView<SettingsViewModel>) {
         super.bindView(view)
-        mCompositeDisposable.add(mPreferencesService.settingsSubject
-            .subscribeOn(mUiScheduler)
-            .subscribe { settings: Settings -> this.view?.showViewModel(settings) })
+        mCompositeDisposable.add(
+            Observable.combineLatest(
+                mPreferencesService.settingsSubject,
+                mPreferencesService.donationSettings()
+            ) { settings, donationSettings ->
+                SettingsViewModel(settings, donationSettings)
+            }
+                .subscribeOn(mUiScheduler)
+                .subscribe { vm -> this.view?.showViewModel(vm) })
     }
 
     fun loadSettings() {
@@ -42,6 +56,10 @@ class SettingsPresenter @Inject constructor(
 
     fun saveSettings(settings: Settings) {
         mPreferencesService.settings = settings
+    }
+
+    fun saveDonationSettings(donationSettings: DonationSettings) {
+        mPreferencesService.setDonationSettings(donationSettings)
     }
 
     var darkMode: Boolean

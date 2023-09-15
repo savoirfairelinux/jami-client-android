@@ -46,15 +46,20 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
 import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.daemon.JamiService
+import net.jami.model.DonationSettings
 import net.jami.model.Settings
 import net.jami.mvp.GenericView
 import net.jami.settings.SettingsPresenter
+import net.jami.settings.SettingsViewModel
 
 @AndroidEntryPoint
-class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Settings>>(), GenericView<Settings>,
+class SettingsFragment :
+    BaseSupportFragment<SettingsPresenter, GenericView<SettingsViewModel>>(),
+    GenericView<SettingsViewModel>,
     OnScrollChangedListener {
     private var binding: FragSettingsBinding? = null
     private var currentSettings: Settings? = null
+    private var currentDonationSettings: DonationSettings? = null
     private var mIsRefreshingViewFromPresenter = true
     private var mNotificationVisibility = NOTIFICATION_PRIVATE
     private var fragment: Fragment? = null
@@ -100,6 +105,9 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
             settingsLinkPreview.setOnCheckedChangeListener(save)
             settingsVideoLayout.setOnClickListener {
                 goToVideoSettings()
+            }
+            settingsDonateSwitch.setOnCheckedChangeListener { _, _ ->
+                saveDonationSettings(binding!!)
             }
 
             val singleItems = arrayOf(
@@ -205,17 +213,30 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         presenter.loadSettings()
     }
 
+    private fun saveDonationSettings(binding: FragSettingsBinding) {
+        presenter.saveDonationSettings(
+            currentDonationSettings!!.copy(
+                donationReminderVisibility = binding.settingsDonateSwitch.isChecked,
+                lastDismissed =
+                if (!binding.settingsDonateSwitch.isChecked)
+                    currentDonationSettings!!.lastDismissed else 0
+            )
+        )
+    }
+
     private fun saveSettings(binding: FragSettingsBinding) {
         // save settings according to UI inputs
-        presenter.saveSettings(currentSettings!!.copy(
-            runOnStartup = binding.settingsStartup.isChecked,
-            enablePushNotifications = binding.settingsPushNotifications.isChecked,
-            enablePermanentService = binding.settingsPersistNotification.isChecked,
-            enableTypingIndicator = binding.settingsTyping.isChecked,
-            isRecordingBlocked = binding.settingsBlockRecord.isChecked,
-            enableLinkPreviews = binding.settingsLinkPreview.isChecked,
-            notificationVisibility = mNotificationVisibility
-        ))
+        presenter.saveSettings(
+            currentSettings!!.copy(
+                runOnStartup = binding.settingsStartup.isChecked,
+                enablePushNotifications = binding.settingsPushNotifications.isChecked,
+                enablePermanentService = binding.settingsPersistNotification.isChecked,
+                enableTypingIndicator = binding.settingsTyping.isChecked,
+                isRecordingBlocked = binding.settingsBlockRecord.isChecked,
+                enableLinkPreviews = binding.settingsLinkPreview.isChecked,
+                notificationVisibility = mNotificationVisibility,
+            )
+        )
     }
 
     fun setToolbarTitle(@StringRes resId: Int) {
@@ -246,19 +267,24 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
         }
     }
 
-    override fun showViewModel(viewModel: Settings) {
-        currentSettings = viewModel
+    override fun showViewModel(viewModel: SettingsViewModel) {
+        val settings = viewModel.settings
+        val donationSettings = viewModel.donationSettings
+        currentDonationSettings = donationSettings
+        currentSettings = settings
         mIsRefreshingViewFromPresenter = true
+
         binding?.apply {
-            settingsPushNotifications.isChecked = viewModel.enablePushNotifications
-            settingsPersistNotification.isChecked = viewModel.enablePermanentService
-            settingsStartup.isChecked = viewModel.runOnStartup
-            settingsTyping.isChecked = viewModel.enableTypingIndicator
-            settingsBlockRecord.isChecked = viewModel.isRecordingBlocked
-            settingsLinkPreview.isChecked = viewModel.enableLinkPreviews
+            settingsPushNotifications.isChecked = settings.enablePushNotifications
+            settingsPersistNotification.isChecked = settings.enablePermanentService
+            settingsStartup.isChecked = settings.runOnStartup
+            settingsTyping.isChecked = settings.enableTypingIndicator
+            settingsBlockRecord.isChecked = settings.isRecordingBlocked
+            settingsLinkPreview.isChecked = settings.enableLinkPreviews
+            settingsDonateSwitch.isChecked = donationSettings.donationReminderVisibility
         }
         mIsRefreshingViewFromPresenter = false
-        mNotificationVisibility = viewModel.notificationVisibility
+        mNotificationVisibility = settings.notificationVisibility
     }
 
     override fun onScrollChanged() {
