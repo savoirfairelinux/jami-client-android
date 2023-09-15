@@ -311,4 +311,8 @@ along with this program; if not, write to the Free Software
     <string name="content_description_qr_generated">Your Qr Code</string>
     <string name="account_generate_export_invalid">The PIN is no longer valid.\n Enter the password and generate another one to link the new device.</string>
     <string name="account_generate_export_invalid_two">The PIN is no longer valid.\n Generate another one to link the new device.</string>
+    <string name="help_pin_info">Fill if the account is password-encrypted</string>
+    <string name="connect_device_scanqr">Scan QR</string>
+    <string name="connect_device_enterPIN">Or enter PIN</string>
+    <string name="account_link_device_button">Connect</string>
 </resources>
