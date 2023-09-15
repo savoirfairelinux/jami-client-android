@@ -21,15 +21,22 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.tabs.TabLayout
 import cx.ring.R
+import cx.ring.account.pinInput.EditTextPinInputFragment
+import cx.ring.account.pinInput.EditTextPinInputViewModel
+import cx.ring.account.pinInput.QrCodePinInputFragment
+import cx.ring.account.pinInput.QrCodePinInputViewModel
 import cx.ring.databinding.FragAccJamiLinkPasswordBinding
 import cx.ring.mvp.BaseSupportFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,29 +44,56 @@ import net.jami.account.JamiLinkAccountPresenter
 import net.jami.account.JamiLinkAccountView
 
 @AndroidEntryPoint
-class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
+class JamiLinkAccountPasswordFragment :
+    BaseSupportFragment<JamiLinkAccountPresenter, JamiLinkAccountView>(),
     JamiLinkAccountView {
     private val model: AccountCreationViewModel by activityViewModels()
     private var binding: FragAccJamiLinkPasswordBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+    // the 2 view models connected to this fragment
+    private val qrCodePinInputViewModel by lazy {
+        ViewModelProvider(this)[QrCodePinInputViewModel::class.java]
+    }
+    private val editTextPinInputViewModel by lazy {
+        ViewModelProvider(this)[EditTextPinInputViewModel::class.java]
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
         FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
-            linkButton.setOnClickListener { presenter.linkClicked() }
-            ringAddPin.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    presenter.linkClicked()
+            viewPager.adapter = SectionsPagerAdapter(
+                root.context,
+                childFragmentManager
+            )
+            tabs.setupWithViewPager(viewPager)
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    presenter.resetPin()
+                    // emit the pin again when switching tabs
+                    if (tab?.position == 0) {
+                        qrCodePinInputViewModel.emitPinAgain()
+                    } else {
+                        editTextPinInputViewModel.emitPinAgain()
+                    }
                 }
-                false
-            }
-            ringAddPin.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable) {
-                    presenter.pinChanged(s.toString())
-                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
+            linkButton.setOnClickListener { presenter.linkClicked() }
             ringExistingPassword.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     presenter.passwordChanged(s.toString())
@@ -67,6 +101,17 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
             })
             binding = this
         }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // init the 2 view models
+        qrCodePinInputViewModel.init({
+            presenter.pinChanged(it)
+        }, { presenter.resetPin() })
+        editTextPinInputViewModel.init({
+            presenter.pinChanged(it)
+        }, { presenter.resetPin() })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -83,14 +128,14 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
 
     override fun showPin(show: Boolean) {
         val binding = binding ?: return
-        binding.pinBox.visibility = if (show) View.VISIBLE else View.GONE
-        binding.pinHelpMessage.visibility = if (show) View.VISIBLE else View.GONE
-        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
+        binding.passwordBox.visibility = if (show) View.VISIBLE else View.GONE
+        binding.linkButton.setText(if (show) R.string.account_link_device_button else R.string.account_link_archive_button)
     }
 
     override fun createAccount() {
         (activity as AccountWizardActivity?)?.createAccount()
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(binding!!.ringExistingPassword.windowToken, 0)
     }
 
@@ -100,5 +145,28 @@ class JamiLinkAccountPasswordFragment : BaseSupportFragment<JamiLinkAccountPrese
 
     companion object {
         val TAG = JamiLinkAccountPasswordFragment::class.simpleName!!
+    }
+
+    internal class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
+        FragmentPagerAdapter(fm) {
+        @StringRes
+        private val TAB_TITLES =
+            intArrayOf(R.string.connect_device_scanqr, R.string.connect_device_enterPIN)
+
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> QrCodePinInputFragment() // scan qr code
+                1 -> EditTextPinInputFragment()  // or enter pin
+                else -> throw IllegalArgumentException()
+            }
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            return mContext.resources.getString(TAB_TITLES[position])
+        }
+
+        override fun getCount(): Int {
+            return TAB_TITLES.size
+        }
     }
 }
