@@ -37,6 +37,12 @@ object ActionHelper {
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
 
+    fun openJamiDonateWebPage(context: Context) {
+        context.startActivity(
+            Intent(Intent.ACTION_VIEW, android.net.Uri.parse("http://www.jami.net"))
+        )
+    }
+
     /**
      * Share the given username with the system share intent.
      * @param context the context
