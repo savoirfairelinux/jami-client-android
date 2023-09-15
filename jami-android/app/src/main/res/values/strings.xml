@@ -470,5 +470,7 @@ along with this program; if not, write to the Free Software
     <string name="donation_card_description">If you enjoy using Jami and believe in our mission, would you make a donation?</string>
     <string name="donation_card_not_now">Not now</string>
     <string name="donation_donate">Donate</string>
+    <string name="donation_setting_title">Donation reminder</string>
+    <string name="donation_setting_description">Enable the donation reminder</string>
 
 </resources>
