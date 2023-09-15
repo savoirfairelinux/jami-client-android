@@ -43,6 +43,7 @@ import cx.ring.settings.pluginssettings.PluginDetails
 import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment
 import cx.ring.settings.pluginssettings.PluginSettingsFragment
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment
+import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.daemon.JamiService
 import net.jami.model.Settings
@@ -73,6 +74,9 @@ class SettingsFragment : BaseSupportFragment<SettingsPresenter, GenericView<Sett
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSettingsBinding.inflate(inflater, container, false).apply {
+            donateButton.setOnClickListener {
+                openJamiDonateWebPage(requireContext())
+            }
             settingsPluginsLayout.setOnClickListener {
                 if (JamiService.getPluginsEnabled()) {
                     goToPluginsListSettings()
