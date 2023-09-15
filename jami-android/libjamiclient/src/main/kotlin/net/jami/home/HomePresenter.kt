@@ -29,23 +29,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class HomePresenter @Inject constructor(
-    private val conversationFacade: ConversationFacade,
-    private val preferencesService: PreferencesService,
-    @param:Named("UiScheduler") private val uiScheduler: Scheduler
 ) : RootPresenter<HomeView>() {
-    private val querySubject = BehaviorSubject.createDefault("")
-    private val debouncedQury = querySubject.debounce{ item ->
-        if (item.isEmpty()) Observable.empty() else Observable.timer(350, TimeUnit.MILLISECONDS)
-    }.distinctUntilChanged()
-
-
     override fun bindView(view: HomeView) {
         super.bindView(view)
-    }
-
-    fun queryTextChanged(query: String) {
-        Log.w(TAG, "queryTextChanged $query")
-        querySubject.onNext(query)
     }
 
     fun clickQRSearch() {
