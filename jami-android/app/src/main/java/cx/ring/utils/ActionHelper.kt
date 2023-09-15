@@ -34,6 +34,12 @@ object ActionHelper {
     const val ACTION_DELETE = 2
     const val ACTION_BLOCK = 3
 
+    fun openJamiDonateWebPage(context: Context) {
+        context.startActivity(
+            Intent(Intent.ACTION_VIEW, android.net.Uri.parse("http://www.jami.net"))
+        )
+    }
+
     fun launchClearAction(context: Context, accountId: String, uri: Uri, callback: ConversationActionCallback) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.conversation_action_history_clear_title)
