@@ -157,6 +157,10 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                             mDisposable, mAccountService, mConversationFacade
                         )
                     ) { _, index ->
+                        // Disable account settings menu option when account is loading
+                        binding.searchBar.menu.findItem(R.id.menu_account_settings)
+                            .isEnabled = false
+
                         if (index >= accounts.size)
                             startActivity(Intent(activity, AccountWizardActivity::class.java))
                         else
@@ -454,6 +458,16 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
     override fun onStart() {
         super.onStart()
         activity?.intent?.let { handleIntent(it) }
+
+        // Enable account settings menu option when an account is loaded
+        mDisposable.add(mAccountService.currentAccountSubject
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe {
+                mBinding?.let {
+                    it.searchBar.menu.findItem(R.id.menu_account_settings).isEnabled = true
+                }
+            }
+        )
 
         // Subscribe on invitation pending list to show a badge counter
         mDisposable.add(mAccountService

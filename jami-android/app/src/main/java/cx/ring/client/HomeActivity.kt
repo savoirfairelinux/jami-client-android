@@ -381,33 +381,52 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             .commit()
     }
 
+    /**
+     * Go to "account settings" parameters.
+     * Should be called only if an account is loaded.
+     */
     fun goToAccountSettings() {
         val account = mAccountService.currentAccount
-        val bundle = Bundle()
-        if (account!!.needsMigration()) {
+
+        if (account == null) {
+            Log.e(TAG, "No account loaded, cannot open \"Account settings\"")
+            return
+        }
+
+        if (account.needsMigration()) {
             Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
             val intent = Intent()
                 .setClass(this, AccountWizardActivity::class.java)
                 .setData(
-                    android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId)
+                    android.net.Uri.withAppendedPath(
+                        ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId
+                    )
                 )
             startActivityForResult(intent, 1)
         } else {
-            Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
-            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
-            if (frameContent !is AccountEditionFragment) {
-                val content = AccountEditionFragment()
-                content.arguments = bundle
-                frameContent = content
-                supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(fragmentContainerId, content, ACCOUNTS_TAG)
-                    .addToBackStack(ACCOUNTS_TAG)
-                    .commit()
-                mBinding!!.frame.isVisible = true
-            }
+            // If already on account settings, do nothing
+            if (frameContent is AccountEditionFragment) return
+
+            // Create the fragment
+            val accountEditionFragment = AccountEditionFragment()
+            accountEditionFragment.arguments =
+                Bundle().apply {
+                    putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
+                }
+
+            // Place it into the frame
+            frameContent = accountEditionFragment
+            supportFragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(fragmentContainerId, accountEditionFragment, ACCOUNTS_TAG)
+                .addToBackStack(ACCOUNTS_TAG)
+                .commit()
+
+            mBinding!!.frame.isVisible = true
         }
     }
+
+
 
     fun setToolbarElevation(enable: Boolean) {
 //        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
