@@ -28,5 +28,10 @@ data class Settings(
     val enableLinkPreviews: Boolean,
     val isRecordingBlocked: Boolean,
     //val enableHwEncoding: Boolean,
-    val notificationVisibility: Int = 0
+    val notificationVisibility: Int = 0,
+)
+
+data class DonationSettings(
+    val donationReminderVisibility: Boolean = true,
+    val lastDismissed: Long = 0,
 )

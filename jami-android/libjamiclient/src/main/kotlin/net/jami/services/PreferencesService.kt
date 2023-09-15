@@ -20,6 +20,7 @@ package net.jami.services
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import net.jami.model.DonationSettings
 import net.jami.model.Settings
 import net.jami.model.Uri
 
@@ -50,6 +51,10 @@ abstract class PreferencesService(
         }
     val settingsSubject: Observable<Settings>
         get() = mSettingsSubject
+
+    abstract fun donationSettings(): Observable<DonationSettings>
+
+    abstract fun setDonationSettings(settings: DonationSettings)
 
     /**
      * Get the preferences for a given account
