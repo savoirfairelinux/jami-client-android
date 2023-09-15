@@ -48,6 +48,11 @@ class JamiLinkAccountPresenter @Inject constructor() : RootPresenter<JamiLinkAcc
         showHideLinkButton()
     }
 
+    fun resetPin() {
+        mAccountCreationModel?.pin = ""
+        showHideLinkButton()
+    }
+
     fun linkClicked() {
         if (isFormValid) {
             view?.createAccount()
