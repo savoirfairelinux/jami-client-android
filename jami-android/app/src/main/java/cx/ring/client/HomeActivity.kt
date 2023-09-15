@@ -382,32 +382,46 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     }
 
     fun goToAccountSettings() {
-        val account = mAccountService.currentAccount
-        val bundle = Bundle()
-        if (account!!.needsMigration()) {
-            Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
-            val intent = Intent()
-                .setClass(this, AccountWizardActivity::class.java)
-                .setData(
-                    android.net.Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId)
-                )
-            startActivityForResult(intent, 1)
-        } else {
-            Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment")
-            bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
-            if (frameContent !is AccountEditionFragment) {
-                val content = AccountEditionFragment()
-                content.arguments = bundle
-                frameContent = content
-                supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(fragmentContainerId, content, ACCOUNTS_TAG)
-                    .addToBackStack(ACCOUNTS_TAG)
-                    .commit()
-                mBinding!!.frame.isVisible = true
+        mAccountService.currentAccountSubject
+            .firstOrError()
+            .observeOn(DeviceUtils.uiScheduler)
+            .subscribe { account ->
+                // Todo: @aberaud, do we still need this migration check?
+                if (account!!.needsMigration()) {
+                    Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity")
+                    val intent = Intent()
+                        .setClass(this, AccountWizardActivity::class.java)
+                        .setData(
+                            android.net.Uri.withAppendedPath(
+                                ContentUriHandler.ACCOUNTS_CONTENT_URI, account.accountId
+                            )
+                        )
+                    startActivityForResult(intent, 1)
+                } else {
+                    // If already on account settings, do nothing
+                    if (frameContent is AccountEditionFragment) return@subscribe
+
+                    // Create the fragment (with the bundle containing the account ID)
+                    val accountEditionFragment = AccountEditionFragment()
+                    accountEditionFragment.arguments =
+                        Bundle().apply {
+                            putString(AccountEditionFragment.ACCOUNT_ID_KEY, account.accountId)
+                        }
+
+                    // Replace the current fragment with new one
+                    frameContent = accountEditionFragment
+                    supportFragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(fragmentContainerId, accountEditionFragment, ACCOUNTS_TAG)
+                        .addToBackStack(ACCOUNTS_TAG)
+                        .commit()
+
+                    mBinding!!.frame.isVisible = true // Make it visible
+                }
             }
-        }
     }
+
+
 
     fun setToolbarElevation(enable: Boolean) {
 //        if (mBinding != null) mBinding!!.appBar.elevation = if (enable) resources.getDimension(R.dimen.toolbar_elevation) else 0f
