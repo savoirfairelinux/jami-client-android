@@ -29,6 +29,10 @@ import cx.ring.R
 import cx.ring.application.JamiApplication
 import cx.ring.utils.DeviceUtils
 import cx.ring.utils.NetworkUtils
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
+import net.jami.model.DonationSettings
 import net.jami.model.Settings
 import net.jami.model.Uri
 import net.jami.services.AccountService
@@ -40,6 +44,15 @@ import kotlin.collections.HashMap
 class SharedPreferencesServiceImpl(private val context: Context, accountService: AccountService, deviceService: DeviceRuntimeService)
     : PreferencesService(accountService, deviceService) {
     private val mNotifiedRequests: MutableMap<String, MutableSet<String>> = HashMap()
+    private val mDonationSettingsSubject: Subject<DonationSettings> by lazy {
+        val appPrefs = donationPreferences
+        BehaviorSubject.createDefault(
+            DonationSettings(
+                appPrefs.getBoolean(PREF_DONATION_REMINDER_VISIBILITY, true),
+                appPrefs.getLong(PREF_DONATION_REMINDER_LAST_DISMISSED, 0)
+            )
+        )
+    }
 
     override fun saveSettings(settings: Settings) {
         preferences.edit()
@@ -68,8 +81,18 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
             enableTypingIndicator = appPrefs.getBoolean(PREF_SHOW_TYPING, true),
             isRecordingBlocked = appPrefs.getBoolean(PREF_BLOCK_RECORD, false),
             enableLinkPreviews = appPrefs.getBoolean(PREF_LINK_PREVIEWS, true),
-            notificationVisibility = appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0)
+            notificationVisibility = appPrefs.getInt(PREF_NOTIFICATION_VISIBILITY, 0),
         )
+    }
+
+    override fun donationSettings(): Observable<DonationSettings> = mDonationSettingsSubject
+
+    override fun setDonationSettings(settings: DonationSettings) {
+        donationPreferences.edit()
+            .putBoolean(PREF_DONATION_REMINDER_VISIBILITY, settings.donationReminderVisibility)
+            .putLong(PREF_DONATION_REMINDER_LAST_DISMISSED, settings.lastDismissed)
+            .commit()
+        mDonationSettingsSubject.onNext(settings)
     }
 
     private fun saveRequests(accountId: String, requests: Set<String>) {
@@ -169,10 +192,12 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
     private val preferences: SharedPreferences = context.getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE)
     private val videoPreferences: SharedPreferences = context.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE)
     private val themePreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val donationPreferences: SharedPreferences = context.getSharedPreferences(PREFS_DONATION, Context.MODE_PRIVATE)
 
     companion object {
         const val PREFS_SETTINGS = "ring_settings"
         private const val PREFS_REQUESTS = "ring_requests"
+        const val PREFS_DONATION = "donation_settings"
         const val PREFS_THEME = "theme"
         const val PREFS_VIDEO = "videoPrefs"
         const val PREFS_ACCOUNT = "account_"
@@ -183,6 +208,8 @@ class SharedPreferencesServiceImpl(private val context: Context, accountService:
         private const val PREF_BLOCK_RECORD = "persistent_block_record"
         private const val PREF_LINK_PREVIEWS = "link_previews_enable"
         private const val PREF_NOTIFICATION_VISIBILITY = "persistent_notification"
+        private const val PREF_DONATION_REMINDER_VISIBILITY = "reminder_visibility"
+        private const val PREF_DONATION_REMINDER_LAST_DISMISSED = "reminder_last_dismissed"
         private const val PREF_HW_ENCODING = "video_hwenc"
         const val PREF_BITRATE = "video_bitrate"
         const val PREF_RESOLUTION = "video_resolution"
