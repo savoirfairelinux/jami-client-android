@@ -56,6 +56,17 @@ along with this program; if not, write to the Free Software
                 app:autoShowKeyboard="true"
                 app:navigationIcon="@android:color/transparent" />
 
+            <!-- Donation card -->
+            <include
+                android:id="@+id/donation_card"
+                layout="@layout/frag_donation_card"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:visibility="gone"/>
+
             <!-- Received invitations -->
             <include
                 android:id="@+id/invitation_card"

@@ -20,4 +20,5 @@ package net.jami.home
 interface HomeView {
     fun goToQRFragment()
     fun startNewSwarm()
+    fun showDonationReminder(show: Boolean = true)
 }
