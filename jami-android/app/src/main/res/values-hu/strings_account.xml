@@ -202,7 +202,7 @@
   <string name="account_connect_button">Kapcsolódás</string>
   <string name="prompt_server">A Jami felügyeleti kiszolgáló URL-je</string>
   <string name="help_credentials_enter">Adja meg a szervezet hitelesítő adatait</string>
-  <string name="help_connect_password_enter">Adja meg a szervezet jelszavát</string>
+  <string name="help_connect_password_enter">Szervezet jelszavának megadása</string>
   <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
   <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
