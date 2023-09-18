@@ -38,15 +38,12 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
 import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import cx.ring.R
 import cx.ring.account.AccountWizardActivity
@@ -265,6 +262,18 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
             // Setup floating button.
             binding.newSwarmFab.setOnClickListener { expandSearchActionView() }
+
+            // Setup donation card
+            binding.donationCard.donationCard.visibility = View.GONE
+            binding.donationCard.donationCard.setOnClickListener {
+                openJamiDonateWebPage(requireContext())
+            }
+            binding.donationCard.donationCardDonateButton.setOnClickListener {
+                openJamiDonateWebPage(requireContext())
+            }
+            binding.donationCard.donationCardNotNowButton.setOnClickListener {
+                presenter.setDonationReminderDismissed()
+            }
 
             // Setup invitation card adapter.
             binding.invitationCard.pendingList.adapter =
@@ -589,6 +598,16 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
 
             else -> {}
         }
+    }
+
+    override fun showDonationReminder(show: Boolean) {
+        mBinding?.appBar?.let {
+            TransitionManager.beginDelayedTransition(
+                it, AutoTransition()
+            )
+        }
+        mBinding?.donationCard?.donationCard?.isVisible = show
+        mBinding?.fragmentContainer?.getFragment<SmartListFragment>()?.scrollToTop()
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
