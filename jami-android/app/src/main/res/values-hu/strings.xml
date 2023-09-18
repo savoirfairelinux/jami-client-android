@@ -216,7 +216,7 @@
   <string name="prompt_new_username">Új felhasználónév megadása</string>
   <string name="prompt_hint_username">Felhasználónév</string>
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami-fiókját.</string>
-  <string name="help_password_enter">Adja meg a fő Jami-fiókja jelszót.</string>
+  <string name="help_password_enter">Fő Jami-fiók jelszavának megadása.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Fiók exportálása a Jami-n” működést a PIN-kod eléréséhez.</string>
   <string name="wizard_next">Tovább</string>
