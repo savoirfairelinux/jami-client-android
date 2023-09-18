@@ -16,21 +16,35 @@
  */
 package net.jami.home
 
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import net.jami.model.DonationSettings
 import net.jami.mvp.RootPresenter
-import net.jami.services.ConversationFacade
 import net.jami.services.PreferencesService
-import net.jami.utils.Log
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import javax.inject.Named
 
 class HomePresenter @Inject constructor(
+    private val mPreferencesService: PreferencesService,
 ) : RootPresenter<HomeView>() {
     override fun bindView(view: HomeView) {
         super.bindView(view)
+        mCompositeDisposable.add(mPreferencesService.donationSettings().subscribe { settings ->
+            // No need to show the reminder if user specified not to display it anymore
+            if (!settings.donationReminderVisibility) {
+                view.showDonationReminder(false)
+                return@subscribe
+            }
+
+            // Show the reminder if it's been more than 7 days since the last time it was dismissed
+            val lastDismissed = settings.lastDismissed
+            val elapsedDay = (System.currentTimeMillis() - lastDismissed) / 1000 / 60 / 60 / 24
+
+            view.showDonationReminder(elapsedDay >= 7)
+        })
+    }
+
+    fun setDonationReminderDismissed() {
+        mPreferencesService.setDonationSettings(
+            DonationSettings(lastDismissed = System.currentTimeMillis())
+        )
     }
 
     fun clickQRSearch() {
