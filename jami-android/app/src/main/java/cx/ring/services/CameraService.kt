@@ -720,7 +720,8 @@ class CameraService internal constructor(c: Context) {
                             }
                         }
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        // TODO Handle unsupported use case on some devices
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             val outputConfiguration = targets.map {
                                 OutputConfiguration(it).apply {
                                     streamUseCase = if (this.surface == codec?.second || this.surface == reader?.surface)
@@ -731,9 +732,8 @@ class CameraService internal constructor(c: Context) {
                             }
                             val conf = SessionConfiguration(SessionConfiguration.SESSION_REGULAR, outputConfiguration, videoExecutor, stateCallback)
                             camera.createCaptureSession(conf)
-                        } else {
-                            camera.createCaptureSession(targets, stateCallback, handler)
-                        }
+                        } else */
+                        camera.createCaptureSession(targets, stateCallback, handler)
                     } catch (e: Exception) {
                         Log.w(TAG, "onOpened error:", e)
                     }
