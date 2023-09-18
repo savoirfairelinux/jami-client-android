@@ -40,6 +40,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
 import androidx.transition.ChangeBounds
 import androidx.transition.Fade
 import androidx.transition.Slide
@@ -261,6 +262,18 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
             // Setup floating button.
             binding.newSwarmFab.setOnClickListener { expandSearchActionView() }
+
+            // Setup donation card
+            binding.donationCard.donationCard.visibility = View.GONE
+            binding.donationCard.donationCard.setOnClickListener {
+                openJamiDonateWebPage(requireContext())
+            }
+            binding.donationCard.donationCardDonateButton.setOnClickListener {
+                openJamiDonateWebPage(requireContext())
+            }
+            binding.donationCard.donationCardNotNowButton.setOnClickListener {
+                presenter.setDonationReminderDismissed()
+            }
 
             // Setup invitation card adapter.
             binding.invitationCard.pendingList.adapter =
@@ -561,6 +574,16 @@ class HomeFragment: BaseSupportFragment<HomePresenter, HomeView>(),
 
             else -> {}
         }
+    }
+
+    override fun showDonationReminder(show: Boolean) {
+        mBinding?.appBar?.let {
+            TransitionManager.beginDelayedTransition(
+                it, AutoTransition()
+            )
+        }
+        mBinding?.donationCard?.donationCard?.isVisible = show
+        mBinding?.fragmentContainer?.getFragment<SmartListFragment>()?.scrollToTop()
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
