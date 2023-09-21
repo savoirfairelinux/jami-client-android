@@ -22,7 +22,7 @@
     <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
 
     <color name="conversation_primary_background">@color/blue_600</color>
-    <color name="conversation_secondary_background">@color/grey_200</color>
+    <color name="conversation_secondary_background">#E5E5E5</color>
     <color name="conversation_primary_selection">@color/grey_700</color>
     <color name="conversation_primary_selection_handles">@color/blue_grey_500</color>
 
@@ -72,5 +72,9 @@
     <color name="invitation_card_on_badge_text_color">#FFFFFF</color>
     <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
+
+    <!--  ChatView  -->
+    <color name="icon_background_color">#FFFFFF</color>
+    <color name="border_color">#E5E5E5</color>
 
 </resources>
