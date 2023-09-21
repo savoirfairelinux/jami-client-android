@@ -429,7 +429,7 @@ class ConversationAdapter(
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
-            conversationViewHolder.mReplyTxt?.isVisible = false
+            conversationViewHolder.mReplyContainer?.isVisible = false
             conversationViewHolder.mInReplyTo?.isVisible = false
             return
         }
@@ -449,7 +449,7 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName!!.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt?.background?.setTint(
+                        conversationViewHolder.mReplyContainer?.background?.setTint(
                             if (i.first.isIncoming)
                                 conversationViewHolder.itemView.context.getColor(
                                     R.color.conversation_secondary_background
@@ -476,7 +476,7 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
 
                         replyView.isVisible = true
-                        conversationViewHolder.mReplyTxt!!.isVisible = true
+                        conversationViewHolder.mReplyContainer!!.isVisible = true
                         conversationViewHolder.mInReplyTo!!.isVisible = true
 
                         // User can click on mReplyTxt (replied message),
@@ -490,12 +490,12 @@ class ConversationAdapter(
                         }
                     }) {
                         replyView.isVisible = false
-                        conversationViewHolder.mReplyTxt!!.isVisible = false
+                        conversationViewHolder.mReplyContainer!!.isVisible = false
                         conversationViewHolder.mInReplyTo!!.isVisible = false
                     })
             } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
-                conversationViewHolder.mReplyTxt?.isVisible = false
+                conversationViewHolder.mReplyContainer?.isVisible = false
                 conversationViewHolder.mInReplyTo?.isVisible = false
             }
         }
@@ -558,7 +558,7 @@ class ConversationAdapter(
             player.release()
             holder.player = null
         }
-        holder.mMsgTxt?.setOnLongClickListener(null)
+        holder.mMsgTxtContainer?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
         if (expandedItemPosition == holder.layoutPosition) {
             holder.mMsgDetailTxt?.visibility = View.GONE
@@ -1082,20 +1082,21 @@ class ConversationAdapter(
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                val longPressView = convViewHolder.mMsgTxt!!
+                val longPressView = convViewHolder.mMsgTxtContainer!!
                 longPressView.background?.setTintList(null)
+                val msgTxtContainer = convViewHolder.mMsgTxtContainer ?: return@subscribe
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
 
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
-                    msgTxt.background.alpha = 255
+                    msgTxtContainer.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                        msgTxtContainer.background.setTint(convColor)
                     }
                     msgTxt.textSize = 14f
-                    msgTxt.setPadding(textMessagePadding)
+                    msgTxtContainer.setPadding(textMessagePadding)
                     longPressView.setOnLongClickListener(null)
                     return@subscribe
                 }
@@ -1121,9 +1122,9 @@ class ConversationAdapter(
 
                 if (StringUtils.isOnlyEmoji(message)) {
                     // Manage layout if message is emoji.
-                    msgTxt.background.alpha = 0
+                    msgTxtContainer.background.alpha = 0
                     msgTxt.textSize = 32.0f
-                    msgTxt.setPadding(emojiMessagePadding)
+                    msgTxtContainer.setPadding(emojiMessagePadding)
                 } else {
                     // Manage layout for standard message. Index refers to msgBGLayouts array.
                     val resIndex =
@@ -1136,13 +1137,13 @@ class ConversationAdapter(
                         // Standard message, incoming or outgoing and first, single or last.
                         else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
-                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    msgTxtContainer.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                        msgTxtContainer.background.setTint(convColor)
                     }
-                    msgTxt.background.alpha = 255
+                    msgTxtContainer.background.alpha = 255
                     msgTxt.textSize = 16f
-                    msgTxt.setPadding(textMessagePadding)
+                    msgTxtContainer.setPadding(textMessagePadding)
 
                     // Manage layout for message with a link inside.
                     if (showLinkPreviews) {

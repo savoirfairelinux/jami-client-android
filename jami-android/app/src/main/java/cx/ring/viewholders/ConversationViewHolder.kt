@@ -40,6 +40,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.txt_entry)
         else -> null
     }
+    var mMsgTxtContainer : ViewGroup? = null
     var mMsgTxt: TextView? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
@@ -69,6 +70,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     }
     val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
     val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
+    var mReplyContainer: ViewGroup? = v.findViewById(R.id.msg_reply_container)
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
     val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
@@ -131,6 +133,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {
+                mMsgTxtContainer = v.findViewById(R.id.msg_txt_container)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
