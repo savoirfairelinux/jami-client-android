@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_entry"
     android:layout_width="match_parent"
@@ -24,8 +25,9 @@ along with this program; if not, write to the Free Software
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="2dp">
+    android:paddingBottom="5dp">
 
+    <!--    (message date +) time -->
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
@@ -34,121 +36,152 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        tools:text="@string/time_just_now" />
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/msg_details_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="2dp"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/conversation_timestamp_textsize"
-        android:visibility="gone"
-        tools:text="@string/time_just_now" />
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_large"
-        android:paddingEnd="36dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/msg_reply_txt"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/two"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_name"
-            android:layout_alignStart="@id/msg_txt"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="-8dp"
-            android:background="@drawable/textmsg_bg_in"
-            android:focusable="true"
-            android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:singleLine="true"
-            android:textColor="@color/colorOnSurface"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textColorLink="@color/text_color_primary_dark"
-            android:textSize="16sp"
-            android:visibility="gone"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
-            tools:visibility="visible" />
+            app:layout_constraintHorizontal_weight="5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/one"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="@dimen/conversation_avatar_size"
-            android:layout_height="@dimen/conversation_avatar_size"
-            android:layout_alignBottom="@id/msg_txt"
-            android:layout_alignParentStart="true"
-            tools:srcCompat="@tools:sample/avatars" />
+            <TextView
+                android:id="@+id/msg_reply_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/msg_txt_container1"
+                android:drawablePadding="4dp"
+                android:ellipsize="middle"
+                android:maxWidth="200dp"
+                android:maxLines="1"
+                android:padding="4dp"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                android:textStyle="bold"
+                tools:drawableStart="@drawable/baseline_delete_16"
+                tools:text="Bob" />
 
-        <TextView
-            android:id="@+id/msg_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/link_preview"
-            android:layout_marginStart="@dimen/padding_medium"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/photo"
-            android:background="@drawable/textmsg_bg_in"
-            android:focusable="true"
-            android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:textColor="@color/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="16sp"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+            <TextView
+                android:id="@+id/msg_in_reply_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/msg_reply_name"
+                android:layout_toEndOf="@id/msg_reply_name"
+                android:maxLines="1"
+                android:text="@string/in_reply_to"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/conversation_timestamp_textsize"
+                android:textStyle="bold" />
 
-        <include
-            layout="@layout/msg_link_preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_txt"
-            android:layout_alignStart="@id/msg_txt"
-            android:layout_marginEnd="20dp" />
+            <RelativeLayout
+                android:id="@+id/msg_txt_container1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msg_reply_name"
+                android:layout_marginEnd="72dp"
+                android:layout_toEndOf="@+id/photo"
+                android:background="@drawable/textmsg_bg_in"
+                android:focusable="true"
+                android:minWidth="@dimen/conversation_avatar_size"
+                android:minHeight="@dimen/conversation_avatar_size">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/reaction_chip"
-            style="@style/Widget.Material3.Chip.Suggestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_txt"
-            android:layout_alignStart="@id/msg_txt"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="-16dp"
-            android:elevation="4dp"
-            android:focusable="false"
-            android:text="👍😍 3" />
+                <TextView
+                    android:id="@+id/msg_reply_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:padding="10dp"
+                    android:textColor="@color/colorOnSurface"
+                    android:textColorHighlight="@color/conversation_primary_selection"
+                    android:textColorLink="@color/text_color_primary_dark"
+                    android:textSize="@dimen/text_size_small"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+                    tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/msg_in_reply_to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/msg_reply_name"
-            android:layout_alignStart="@id/msg_reply_txt"
-            android:maxLines="1"
-            android:text="@string/in_reply_to"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:textStyle="bold" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/msg_reply_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/msg_in_reply_to"
-            android:drawablePadding="4dp"
-            android:ellipsize="middle"
-            android:maxWidth="200dp"
-            android:maxLines="1"
-            android:padding="4dp"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/conversation_timestamp_textsize"
-            android:textStyle="bold"
-            tools:drawableStart="@drawable/baseline_delete_16"
-            tools:text="Bob" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/msg_txt_container2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msg_txt_container1"
+                android:layout_toEndOf="@+id/photo"
+                android:background="@drawable/textmsg_bg_in"
+                android:focusable="true"
+                android:minWidth="@dimen/conversation_avatar_size"
+                android:minHeight="@dimen/conversation_avatar_size">
+                <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
+                <TextView
+                    android:id="@+id/msg_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:textColor="@color/colorOnSurface"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/text_size_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \n dhejhfjw" />
 
-    </RelativeLayout>
+                <include
+                    layout="@layout/msg_link_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/msg_txt" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="34dp"
+                android:layout_height="@dimen/conversation_avatar_size"
+                android:layout_alignBaseline="@id/msg_txt_container2"
+                android:layout_alignBottom="@id/msg_txt_container2"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/content_avatar"
+                tools:srcCompat="@tools:sample/avatars"
+                tools:visibility="visible" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/reaction_chip"
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msg_txt_container2"
+                android:layout_alignEnd="@id/msg_txt_container2"
+                android:layout_marginTop="-16dp"
+                android:layout_marginEnd="8dp"
+                android:elevation="4dp"
+                android:text="👍😍 3"
+                app:chipBackgroundColor="@color/icon_background_color"
+                app:chipCornerRadius="5dp"
+                app:chipEndPadding="0dp"
+                app:chipStartPadding="0dp"
+                app:chipStrokeColor="@color/border_color"
+                app:textEndPadding="5dp"
+                app:textStartPadding="5dp" />
+
+        </RelativeLayout>
+
+        <Space
+            android:id="@+id/one"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/two"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
