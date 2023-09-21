@@ -261,10 +261,10 @@ along with this program; if not, write to the Free Software
     <string name="conversation_type_contact">Jami contact</string>
     <string name="conversation_type_private">Private Swarm</string>
     <string name="conversation_type_group">Group Swarm</string>
-    <string name="conversation_contact_invited">%1$s was invited</string>
-    <string name="conversation_contact_added">%1$s joined</string>
-    <string name="conversation_contact_left">%1$s left</string>
-    <string name="conversation_contact_banned">%1$s was banned</string>
+    <string name="conversation_contact_invited">%1$s was invited, </string>
+    <string name="conversation_contact_added">%1$s joined, </string>
+    <string name="conversation_contact_left">%1$s left, </string>
+    <string name="conversation_contact_banned">%1$s was banned, </string>
     <string name="conversation_search_hint">Search conversation</string>
 
     <!-- Contacts -->
@@ -465,5 +465,9 @@ along with this program; if not, write to the Free Software
     <!--  WelcomeJami  -->
     <string name="welcome_jami_title">Welcome to Jami</string>
     <string name="welcome_jami_description">Share your Jami identifier in order to be contacted more easily!</string>
+
+    <!-- ChatView-->
+    <string name="edited_message">Edited</string>
+    <string name="content_avatar">Your avatar</string>
 
 </resources>
