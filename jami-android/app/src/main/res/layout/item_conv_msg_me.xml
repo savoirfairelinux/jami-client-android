@@ -25,8 +25,9 @@ along with this program; if not, write to the Free Software
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="2dp">
+    android:paddingBottom="5dp">
 
+    <!--    (message date +) time -->
     <TextView
         android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
@@ -35,7 +36,8 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        tools:text="@string/time_just_now" />
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/msg_details_txt"
@@ -46,19 +48,22 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/conversation_timestamp_textsize"
         android:visibility="gone"
-        tools:text="@string/time_just_now" />
+        tools:text="@string/time_just_now"
+        tools:visibility="visible" />
+    <!--    message time when you click it to delete -->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_large"
         android:paddingEnd="2dp">
+        <!--        prob padding ou margin-->
 
         <TextView
             android:id="@+id/msg_reply_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/msg_reply_txt"
+            android:layout_alignEnd="@id/msg_txt_container1"
             android:drawablePadding="4dp"
             android:ellipsize="middle"
             android:maxWidth="200dp"
@@ -69,6 +74,8 @@ along with this program; if not, write to the Free Software
             android:textStyle="bold"
             tools:drawableStart="@drawable/baseline_delete_16"
             tools:text="Bob" />
+        <!--si le nom est long que faire ?
+        incrustation par textview puis bitmap-->
 
         <TextView
             android:id="@+id/msg_in_reply_to"
@@ -82,60 +89,99 @@ along with this program; if not, write to the Free Software
             android:textSize="@dimen/conversation_timestamp_textsize"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/msg_reply_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_name"
-            android:layout_alignEnd="@id/msg_txt"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="-8dp"
-            android:background="@drawable/textmsg_bg_out"
-            android:focusable="true"
-            android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:singleLine="true"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textColorLink="@color/text_color_primary_dark"
-            android:textSize="16sp"
-            android:theme="@style/OutgoingTextView"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
-
-        <include
-            layout="@layout/msg_link_preview"
+        <RelativeLayout
+            android:id="@+id/msg_txt_container1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_reply_txt"
+            android:layout_below="@id/msg_reply_name"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="72dp"
-            android:layout_marginEnd="24dp" />
+            android:layout_marginEnd="24dp"
+            android:focusable="true"
+            android:minWidth="@dimen/conversation_avatar_size"
+            android:minHeight="@dimen/conversation_avatar_size">
 
-        <TextView
-            android:id="@+id/msg_txt"
+            <TextView
+                android:id="@+id/msg_reply_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="72dp"
+                android:background="@drawable/textmsg_bg_out"
+                android:focusable="true"
+                android:maxLines="2"
+                android:padding="10dp"
+                android:textColor="@color/text_color_primary_dark"
+                android:textColorHighlight="@color/conversation_primary_selection"
+                android:textColorLink="@color/text_color_primary_dark"
+                android:textSize="12sp"
+                android:theme="@style/OutgoingTextView"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+
+               </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/msg_txt_container2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/link_preview"
+            android:layout_below="@id/msg_txt_container1"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/textmsg_bg_out"
             android:focusable="true"
             android:minWidth="@dimen/conversation_avatar_size"
-            android:minHeight="@dimen/conversation_avatar_size"
-            android:textColor="@color/text_color_primary_dark"
-            android:textColorHighlight="@color/conversation_primary_selection"
-            android:textColorLink="@color/text_color_primary_dark"
-            android:textIsSelectable="true"
-            android:textSize="16sp"
-            android:theme="@style/OutgoingTextView"
-            tools:text="yo this is the test of a long long text can not be_found_message" />
+            android:minHeight="@dimen/conversation_avatar_size">
+
+            <TextView
+                android:id="@+id/msg_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:textColor="@color/text_color_primary_dark"
+                android:textColorHighlight="@color/conversation_primary_selection"
+                android:textColorLink="@color/text_color_primary_dark"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+                tools:text="yo this is the test of a long long text can not be_found_message" />
+
+            <include
+                layout="@layout/msg_link_preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msg_txt"/>
+
+        </RelativeLayout>
+        <!--        ajouter l'heure-->
+
+<!--        <include-->
+<!--            layout="@layout/edited_chat"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/msg_reply_txt"-->
+<!--            android:layout_alignEnd="@id/msg_reply_txt" />-->
+        <!-- ajouter icone editer dans les bulles mais aussi en dessous du chip reaction : -->
+        <!--        <TextView-->
+        <!--            android:id="@+id/edited_icon"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignStart="@id/msg_txt"-->
+        <!--            android:layout_alignTop="@id/msg_txt"-->
+        <!--            android:layout_marginStart="-21dp"-->
+        <!--            android:layout_marginTop="-10dp"-->
+        <!--            android:longClickable="false"-->
+        <!--            android:clickable="false"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:textSize="21sp"-->
+        <!--            android:text="@string/edited_message"-->
+        <!--            app:drawableStartCompat="@drawable/baseline_edit_24" />-->
 
         <cx.ring.views.MessageStatusView
             android:id="@+id/status_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_txt"
+            android:layout_below="@id/msg_txt_container2"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp" />
 
@@ -144,12 +190,21 @@ along with this program; if not, write to the Free Software
             style="@style/Widget.Material3.Chip.Suggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/msg_txt"
-            android:layout_alignEnd="@id/msg_txt"
+            android:layout_below="@id/msg_txt_container2"
+            android:layout_alignEnd="@id/msg_txt_container2"
             android:layout_marginTop="-16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:elevation="4dp"
-            android:text="👍😍 3" />
+            android:text="👍 😍 3"
+            app:chipBackgroundColor="@color/icon_background_color"
+            app:chipCornerRadius="5dp"
+            app:chipEndPadding="0dp"
+            app:chipStartPadding="0dp"
+            app:chipStrokeColor="@color/border_color"
+            app:textEndPadding="5dp"
+            app:textStartPadding="5dp" />
+        <!--        comment mettre 7 dp d'espace entre les icons-->
+        <!--        ajouter l'heure et édité-->
 
     </RelativeLayout>
 
