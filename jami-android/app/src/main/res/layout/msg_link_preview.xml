@@ -3,18 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/link_preview"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/textmsg_bg_ripple"
     android:visibility="gone"
-    tools:visibility="visible"
-    tools:showIn="@layout/item_conv_msg_me">
+    tools:visibility="visible">
 
     <ImageView
         android:id="@+id/link_preview_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -22,10 +20,11 @@
         android:id="@+id/link_preview_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/link_preview_img"
+        android:layout_below="@id/link_preview_img"
         android:maxLines="4"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
+        android:textSize="@dimen/text_size_small"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorOnSurface"
         android:visibility="visible"
@@ -33,13 +32,13 @@
 
     <TextView
         android:id="@+id/link_preview_description"
+        android:textSize="@dimen/text_size_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/link_preview_title"
-        android:layout_toEndOf="@id/link_preview_img"
         android:maxLines="4"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="4dp"
+        android:paddingHorizontal="10dp"
+        android:layout_alignStart="@+id/link_preview_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:textColor="@color/colorOnSurface"
         android:visibility="visible"
@@ -49,13 +48,14 @@
         android:id="@+id/link_preview_domain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/link_preview_title"
         android:layout_below="@id/link_preview_description"
-        android:layout_toEndOf="@id/link_preview_img"
+        android:textSize="@dimen/text_size_small"
         android:maxLines="1"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="4dp"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="5dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        android:textColor="@color/textColorSecondary"
+        android:textColor="@color/fab_background_color"
         android:visibility="visible"
         tools:text="jami.net" />
 </RelativeLayout>
