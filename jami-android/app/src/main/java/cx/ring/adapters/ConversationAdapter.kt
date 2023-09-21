@@ -97,11 +97,7 @@ class ConversationAdapter(
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
-    private val hPadding = res.getDimensionPixelSize(R.dimen.padding_medium)
-    private val vPadding = res.getDimensionPixelSize(R.dimen.padding_small)
     private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
-    private val mPreviewMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, res.displayMetrics).toInt()
-    private var currentSelectionId: String? = null
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
     @ColorInt private var convColor = 0
     @ColorInt private var convColorTint = 0
@@ -416,7 +412,7 @@ class ConversationAdapter(
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mReplyName?.isVisible = false
-            conversationViewHolder.mReplyTxt?.isVisible = false
+            conversationViewHolder.mMsgReplyContainer?.isVisible = false
             conversationViewHolder.mInReplyTo?.isVisible = false
             return
         }
@@ -436,7 +432,7 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName!!.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
-                        conversationViewHolder.mReplyTxt?.background?.setTint(
+                        conversationViewHolder.mMsgReplyContainer?.background?.setTint(
                             if (i.first.isIncoming)
                                 conversationViewHolder.itemView.context.getColor(
                                     R.color.conversation_secondary_background
@@ -463,12 +459,12 @@ class ConversationAdapter(
                         conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
 
                         replyView.isVisible = true
-                        conversationViewHolder.mReplyTxt!!.isVisible = true
+                        conversationViewHolder.mMsgReplyContainer!!.isVisible = true
                         conversationViewHolder.mInReplyTo!!.isVisible = true
 
                         // User can click on mReplyTxt (replied message),
                         // mInReplyTo or mReplyName (text above the message) to go to it.
-                        listOf(conversationViewHolder.mReplyTxt,
+                        listOf(conversationViewHolder.mMsgReplyContainer,
                             conversationViewHolder.mInReplyTo,
                             replyView).forEach{
                             it.setOnClickListener{
@@ -477,12 +473,12 @@ class ConversationAdapter(
                         }
                     }) {
                         replyView.isVisible = false
-                        conversationViewHolder.mReplyTxt!!.isVisible = false
+                        conversationViewHolder.mMsgReplyContainer!!.isVisible = false
                         conversationViewHolder.mInReplyTo!!.isVisible = false
                     })
             } else { // Not replying to another message, we can hide reply Textview.
                 replyView.isVisible = false
-                conversationViewHolder.mReplyTxt?.isVisible = false
+                conversationViewHolder.mMsgReplyContainer?.isVisible = false
                 conversationViewHolder.mInReplyTo?.isVisible = false
             }
         }
@@ -546,6 +542,7 @@ class ConversationAdapter(
             holder.player = null
         }
         holder.mMsgTxt?.setOnLongClickListener(null)
+        holder.mMsgTxtContainer?.setOnLongClickListener(null)
         holder.mItem?.setOnClickListener(null)
         if (expandedItemPosition == holder.layoutPosition) {
             holder.mMsgDetailTxt?.visibility = View.GONE
@@ -955,25 +952,26 @@ class ConversationAdapter(
 
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+        val context = viewHolder.itemView.context
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        val timeString = TextUtils.timestampToDetailString(context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
+                    Formatter.formatFileSize(context, file.totalSize))
                 InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    Formatter.formatFileSize(context, file.bytesProgress),
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
                 else -> String.format("%s - %s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    Formatter.formatFileSize(context, file.totalSize),
+                    TextUtils.getReadableFileTransferStatus(context, status))
             }
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(context, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -1001,7 +999,7 @@ class ConversationAdapter(
         longPressView.setOnLongClickListener { v: View ->
             if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
-                longPressView.background.setTint(res.getColor(R.color.grey_500))
+                longPressView.background.setTint(context.getColor(R.color.grey_500))
             }
             openItemMenu(viewHolder,v, file)
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
@@ -1069,46 +1067,48 @@ class ConversationAdapter(
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
-                val longPressView = convViewHolder.mMsgTxt!!
-                longPressView.background?.setTintList(null)
+                val msgTxtContainer = convViewHolder.mMsgTxtContainer ?: return@subscribe
+                msgTxtContainer.background.setTintList(null)
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
-
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
-                    msgTxt.background.alpha = 255
+                    msgTxtContainer.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                        msgTxtContainer.background?.setTint(convColor)
                     }
                     msgTxt.textSize = 14f
-                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding)
-                    longPressView.setOnLongClickListener(null)
+                    msgTxtContainer.setOnLongClickListener(null)
+                    msgTxt.setOnLongClickListener(null)
+
                     return@subscribe
                 }
 
                 // Manage long press.
-                longPressView.setOnLongClickListener { v: View ->
-                    openItemMenu(convViewHolder, v, interaction)
+                { v: View ->
+                    openItemMenu(convViewHolder, msgTxtContainer, interaction)
                     if (expandedItemPosition == position) {
                         expandedItemPosition = -1
                     }
                     conversationFragment.updatePosition(convViewHolder.bindingAdapterPosition)
                     if (textMessage.isIncoming) {
-                        longPressView.background.setTint(res.getColor(R.color.grey_500))
+                        msgTxtContainer.background.setTint(context.getColor(R.color.grey_500))
                     } else {
-                        longPressView.background.setTint(convColorTint)
+                        msgTxtContainer.background.setTint(convColorTint)
                     }
                     mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
                     true
-                }
+                }.let {
+                    msgTxt.setOnLongClickListener(it)
+                    msgTxtContainer.setOnLongClickListener(it) }
 
                 val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
 
                 if (StringUtils.isOnlyEmoji(message)) {
                     // Manage layout if message is emoji.
-                    msgTxt.background.alpha = 0
+                    msgTxtContainer.background?.alpha = 0
                     msgTxt.textSize = 32.0f
                     msgTxt.setPadding(0, 0, 0, 0)
                 } else {
@@ -1123,13 +1123,12 @@ class ConversationAdapter(
                         // Standard message, incoming or outgoing and first, single or last.
                         else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
-                    msgTxt.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    msgTxtContainer.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxt.background.setTint(convColor)
+                        msgTxtContainer.background.setTint(convColor)
                     }
-                    msgTxt.background.alpha = 255
+                    msgTxtContainer.background.alpha = 255
                     msgTxt.textSize = 16f
-                    msgTxt.setPadding(hPadding, vPadding, hPadding, vPadding) // Space between text and case border.
 
                     // Manage layout for message with a link inside.
                     if (showLinkPreviews) {
@@ -1171,6 +1170,7 @@ class ConversationAdapter(
                 }
                 msgTxt.movementMethod = LinkMovementMethod.getInstance()
                 msgTxt.text = markwon.toMarkdown(message)
+
                 val endOfSeq =
                     msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE
 
@@ -1234,7 +1234,6 @@ class ConversationAdapter(
                 }
             })
     }
-
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
@@ -1321,7 +1320,7 @@ class ConversationAdapter(
                 }
                 // When long clicked...
                 setOnLongClickListener { v: View ->
-                    background.setTint(res.getColor(R.color.grey_500))
+                    background.setTint(context.getColor(R.color.grey_500))
                     // Open Context Menu
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
                     mCurrentLongItem =
