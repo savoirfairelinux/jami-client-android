@@ -113,6 +113,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     /* called before activity is killed, e.g. rotation */
     override fun onSaveInstanceState(bundle: Bundle) {
         super.onSaveInstanceState(bundle)
+        restoreInstanceFlag = true
         bundle.putInt("orientation", mOrientation)
     }
 
@@ -124,21 +125,21 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                // Two cases depending on if device supports sliding panel:
-                // - if it does, we close the panel
-                // - if it doesn't, we display the home fragment with welcome message
                 if (mBinding?.panel?.isSlideable == true) {
                     mBinding?.panel?.closePane()
-                } else {
-                    mDisposable.add(
-                        mAccountService.currentAccountSubject
-                            .observeOn(DeviceUtils.uiScheduler)
-                            .firstOrError()
-                            .subscribe { account ->
-                                showWelcomeFragment(account)
-                            }
-                    )
+                    removeFragment(fConversation)
+                    fConversation = null
                 }
+
+                mDisposable.add(
+                    mAccountService.currentAccountSubject
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .firstOrError()
+                        .subscribe { account ->
+                            showWelcomeFragment(account)
+                        }
+                )
+
                 // Next back press don't have to be handled by this callback.
                 isEnabled = false
             }
@@ -177,8 +178,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
                 override fun onPanelClosed(panel: View) {
                     conversationBackPressedCallback.isEnabled = false
-                    removeFragment(fConversation)
-                    removeFragment(fWelcomeJami)
                 }
             })
         }
@@ -231,9 +230,17 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
         mBinding!!.panel.doOnNextLayout {
             it as SlidingPaneLayout
-            if (it.isSlideable && !it.isOpen) {
-                removeFragment(fWelcomeJami)
-                removeFragment(fConversation)
+
+            when (Pair(it.isSlideable, it.isOpen)) {
+                Pair(true, true) -> { // Going to be right pane only
+                    if (fConversation == null) it.closePane()
+                }
+
+                Pair(true, false) -> { // Going to be left pane only
+                    if (fConversation != null) it.openPane()
+                }
+
+                Pair(false, true), Pair(false, false) -> {} // Going to be double pane (horizontal)
             }
         }
     }
@@ -409,6 +416,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             )
             .commit()
         fWelcomeJami = welcomeJamiFragment
+        fConversation = null
         mBinding!!.conversation.isVisible = true
     }
 
@@ -450,6 +458,8 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             supportFragmentManager.beginTransaction()
                 .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
                 .commit()
+            fWelcomeJami = null
+            fConversation = conversation
             mBinding!!.conversation.isVisible = true
         } else
             supportFragmentManager.beginTransaction()
