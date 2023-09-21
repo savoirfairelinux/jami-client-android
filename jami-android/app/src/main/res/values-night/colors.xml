@@ -53,4 +53,8 @@
     <!--  WelcomeJami  -->
     <color name="welcome_jami_surface_color">#FFFFFF</color>
 
+    <!--  ChatView  -->
+    <color name="icon_background_color">#202020</color>
+    <color name="border_color">#515151</color>
+
 </resources>
