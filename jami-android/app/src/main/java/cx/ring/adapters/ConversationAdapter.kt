@@ -1235,7 +1235,6 @@ class ConversationAdapter(
             })
     }
 
-
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
         val event = interaction as ContactEvent
         Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
@@ -1246,46 +1245,25 @@ class ConversationAdapter(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)
                 .subscribe { vm ->
-                    viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
-                        .withContact(vm)
-                        .withCircleCrop(true)
-                        .build(viewHolder.itemView.context))
-                    viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(when (event.event) {
+                    val eventString = viewHolder.itemView.context.getString(when (event.event) {
                         ContactEvent.Event.ADDED -> R.string.conversation_contact_added
                         ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
                         ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
                         ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
                         else -> R.string.hist_contact_added
                     }, vm.displayName)
+                    viewHolder.mMsgTxt?.text = "$eventString, "
                 })
-            /*viewHolder.compositeDisposable.add(Observable.combineLatest(
-                presenter.contactService.observeContact(event.account!!, event.contact!!, false),
-                presenter.contactService.observeContact(event.account!!, Uri(null, event.author!!), false)
-            ) { target, author -> Pair(target, author) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { vm ->
-                    viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
-                        .withContact(vm.first)
-                        .withCircleCrop(true)
-                        .build(viewHolder.itemView.context))
-                    viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(when (event.event) {
-                        ContactEvent.Event.ADDED -> R.string.conversation_contact_added
-                        ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
-                        ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
-                        ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
-                        else -> R.string.hist_contact_added
-                    }, vm.first.displayName)
-                })*/
         } else {
-            viewHolder.mImage?.setImageResource(R.drawable.baseline_person_24)
-            viewHolder.mMsgTxt?.setText(when (event.event) {
+            val eventString = when (event.event) {
                 ContactEvent.Event.ADDED -> R.string.hist_contact_added
                 ContactEvent.Event.INVITED -> R.string.hist_contact_invited
                 ContactEvent.Event.REMOVED -> R.string.hist_contact_left
                 ContactEvent.Event.BANNED -> R.string.hist_contact_banned
                 ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
                 else -> R.string.hist_contact_added
-            })
+            }
+            viewHolder.mMsgTxt?.text = "$eventString, "
         }
     }
 
