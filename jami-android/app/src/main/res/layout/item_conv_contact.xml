@@ -21,57 +21,42 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    app:layout_anchorGravity="center_horizontal"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
     android:descendantFocusability="blocksDescendants"
-    android:focusable="false"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:focusable="false">
 
     <RelativeLayout
-        android:background="@drawable/background_item_conv_contact"
         android:id="@+id/contactDetailsGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
-            android:padding="4dp"
-            app:srcCompat="@drawable/baseline_person_24"
-            tools:src="@tools:sample/avatars"/>
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/contact_event_txt"
-            android:layout_toEndOf="@id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="false"
-            android:textColor="@color/colorOnSurface"
-            android:textSize="14sp"
-            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="12sp"
             android:ellipsize="middle"
             android:maxLines="1"
             tools:text="ring:4a7d62c3f3332f1307a9cfd363c3b49832670c44 was invited" />
 
         <TextView
-            android:layout_marginHorizontal="8dp"
-            android:layout_toEndOf="@id/imageView"
-            android:layout_below="@id/contact_event_txt"
+            android:layout_toEndOf="@id/contact_event_txt"
             android:id="@+id/contact_event_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:textColor="@color/textColorSecondary"
             android:textSize="12sp"
-            tools:text="Adrien - 12 mars" />
+            tools:text="Adrien - 12 mars"/>
 
     </RelativeLayout>
 
