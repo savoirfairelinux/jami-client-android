@@ -17,7 +17,7 @@
     <color name="text_color_secondary_dark">@color/abc_primary_text_material_light</color>
 
     <color name="conversation_primary_background">@color/blue_600</color>
-    <color name="conversation_secondary_background">@color/grey_700</color>
+    <color name="conversation_secondary_background">#515151</color>
 
     <!--  TwoButton EditText  -->
     <color name="edit_text_background">#2e2e2e</color>
@@ -40,5 +40,9 @@
     <color name="invitation_card_on_badge_text_color">#005699</color>
     <color name="invitation_drawable_p1_color">#00223c</color>
     <color name="invitation_drawable_p2_color">#005699</color>
+
+    <!--  ChatView  -->
+    <color name="icon_background_color">#202020</color>
+    <color name="border_color">#515151</color>
 
 </resources>
