@@ -29,6 +29,7 @@ import android.view.Surface
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -42,8 +43,10 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mMsgTxt: TextView? = null
+    var mMsgTxtContainer2: RelativeLayout? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
+//    var mMsgEditedIcon: TextView? = null
     val mAvatar: ImageView? = when (type) {
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.INCOMING_FILE,
@@ -57,7 +60,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         MessageType.OUTGOING_IMAGE -> v.findViewById(R.id.image)
         MessageType.INCOMING_TEXT_MESSAGE,
         MessageType.OUTGOING_TEXT_MESSAGE -> v.findViewById(R.id.link_preview_img)
-        MessageType.CONTACT_EVENT -> v.findViewById(R.id.imageView)
+//        MessageType.CONTACT_EVENT -> v.findViewById(R.id.imageView)
         else -> null
     }
     val mStatusIcon: MessageStatusView? = when (type) {
@@ -71,6 +74,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
     val mReplyName: TextView? = v.findViewById(R.id.msg_reply_name)
     val mReplyTxt: TextView? = v.findViewById(R.id.msg_reply_txt)
     val mInReplyTo: TextView? = v.findViewById(R.id.msg_in_reply_to)
+    val mMsgTxtContainer1: RelativeLayout? = v.findViewById(R.id.msg_txt_container1)
     val reactionChip: Chip? = v.findViewById(R.id.reaction_chip)
     val mIcon: ImageView? = when (type) {
         MessageType.CALL_INFORMATION -> v.findViewById(R.id.call_icon)
@@ -129,9 +133,12 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.INCOMING_TEXT_MESSAGE,
             MessageType.OUTGOING_TEXT_MESSAGE -> {
+
+                mMsgTxtContainer2= v.findViewById(R.id.msg_txt_container2)
                 mMsgTxt = v.findViewById(R.id.msg_txt)
                 mMsgDetailTxt = v.findViewById(R.id.msg_details_txt)
                 mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm)
+//                mMsgEditedIcon = v.findViewById(R.id.edited_icon)
                 mAnswerLayout = v.findViewById(R.id.link_preview)
                 mHistTxt = v.findViewById(R.id.link_preview_title)
                 mHistDetailTxt = v.findViewById(R.id.link_preview_description)
