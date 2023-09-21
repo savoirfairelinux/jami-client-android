@@ -45,6 +45,54 @@
       },
       "revId": "f92a60b1a211051dda3fa6b6f4db192df6eed7c7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a6d648_93d23fd4",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-21T15:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03db9c83_ef09451b",
+      "range": {
+        "startLine": 455,
+        "startChar": 45,
+        "endLine": 455,
+        "endChar": 124
+      },
+      "revId": "f92a60b1a211051dda3fa6b6f4db192df6eed7c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfda956f_aa400da1",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-21T15:38:20Z",
+      "side": 1,
+      "message": "Thank you for the feedback. I\u0027ve shared it with the communication team, who was responsible for creating the description. They prefer to keep this message concise to ensure it\u0027s not overloading, especially considering it may be displayed on small Android screens.",
+      "parentUuid": "9d553e2a_9117df02",
+      "range": {
+        "startLine": 455,
+        "startChar": 45,
+        "endLine": 455,
+        "endChar": 124
+      },
+      "revId": "f92a60b1a211051dda3fa6b6f4db192df6eed7c7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
