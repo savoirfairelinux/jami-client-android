@@ -49,6 +49,7 @@
             android:outlineProvider="none"
             android:text="@string/donation_donate"
             android:textColor="@color/black"
+            android:visibility="gone"
             app:backgroundTint="@color/donation_card_background_color"
             app:cornerRadius="16dp"
             app:icon="@drawable/baseline_favorite_24"
