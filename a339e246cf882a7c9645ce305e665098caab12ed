@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f03e6687_acedbcbb",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-22T19:03:12Z",
+      "side": 1,
+      "message": "text in english no translatable",
+      "range": {
+        "startLine": 554,
+        "startChar": 0,
+        "endLine": 554,
+        "endChar": 9
+      },
+      "revId": "a339e246cf882a7c9645ce305e665098caab12ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
