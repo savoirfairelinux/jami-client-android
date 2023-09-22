@@ -44,11 +44,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:paddingEnd="2dp">
+        android:paddingEnd="2dp"
+        tools:ignore="RtlSymmetry">
 
         <LinearLayout
             android:id="@+id/fileInfoLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
