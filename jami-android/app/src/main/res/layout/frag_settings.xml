@@ -54,6 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:outlineProvider="none"
             android:text="@string/donation_donate"
             android:textColor="@color/black"
+            android:visibility="gone"
             app:backgroundTint="@color/donation_card_background_color"
             app:cornerRadius="16dp"
             app:icon="@drawable/baseline_favorite_24"
@@ -225,6 +226,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/settings_donate_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:padding="@dimen/padding_large">
 
                 <ImageView

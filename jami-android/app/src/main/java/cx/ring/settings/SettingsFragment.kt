@@ -51,6 +51,8 @@ import net.jami.model.Settings
 import net.jami.mvp.GenericView
 import net.jami.settings.SettingsPresenter
 import net.jami.settings.SettingsViewModel
+import net.jami.utils.DonationUtils.endDonationTimeMillis
+import net.jami.utils.DonationUtils.startDonationTimeMillis
 
 @AndroidEntryPoint
 class SettingsFragment :
@@ -79,9 +81,18 @@ class SettingsFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragSettingsBinding.inflate(inflater, container, false).apply {
-            donateButton.setOnClickListener {
-                openJamiDonateWebPage(requireContext())
+
+            if (System.currentTimeMillis() in startDonationTimeMillis until endDonationTimeMillis) {
+                donateButton.visibility= View.VISIBLE
+                settingsDonateLayout.visibility = View.VISIBLE
+                donateButton.setOnClickListener {
+                    openJamiDonateWebPage(requireContext())
+                }
+                settingsDonateSwitch.setOnCheckedChangeListener { _, _ ->
+                    saveDonationSettings(binding!!)
+                }
             }
+
             settingsPluginsLayout.setOnClickListener {
                 if (JamiService.getPluginsEnabled()) {
                     goToPluginsListSettings()
@@ -105,9 +116,6 @@ class SettingsFragment :
             settingsLinkPreview.setOnCheckedChangeListener(save)
             settingsVideoLayout.setOnClickListener {
                 goToVideoSettings()
-            }
-            settingsDonateSwitch.setOnCheckedChangeListener { _, _ ->
-                saveDonationSettings(binding!!)
             }
 
             val singleItems = arrayOf(
