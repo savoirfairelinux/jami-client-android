@@ -39,6 +39,7 @@ import cx.ring.utils.ActionHelper.openJamiDonateWebPage
 import dagger.hilt.android.AndroidEntryPoint
 import net.jami.account.AccountEditionPresenter
 import net.jami.account.AccountEditionView
+import net.jami.utils.DonationUtils
 
 @AndroidEntryPoint
 class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, AccountEditionView>(),
@@ -50,9 +51,14 @@ class AccountEditionFragment : BaseSupportFragment<AccountEditionPresenter, Acco
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccountSettingsBinding.inflate(inflater, container, false).apply {
             toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
-            donateButton.setOnClickListener {
-                openJamiDonateWebPage(requireContext())
+
+            if (DonationUtils.isDonationPeriod()) {
+                donateButton.visibility = View.VISIBLE
+                donateButton.setOnClickListener {
+                    openJamiDonateWebPage(requireContext())
+                }
             }
+
             mBinding = this
         }.root
 
