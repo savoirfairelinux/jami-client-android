@@ -40,9 +40,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_medium"
-        android:paddingTop="8dp"
-        android:paddingEnd="@dimen/padding_large">
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/photo"
