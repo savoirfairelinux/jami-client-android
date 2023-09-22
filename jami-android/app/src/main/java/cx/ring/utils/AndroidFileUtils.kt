@@ -35,6 +35,7 @@ import android.system.Os
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.MimeTypeMap
+import android.widget.Toast
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -544,14 +545,13 @@ object AndroidFileUtils {
 
     fun openFile(c: Context, uri: Uri, displayName: String) {
         try {
-            //startActivity(Intent.createChooser(sendIntent, null));
             c.startActivity(Intent(Intent.ACTION_VIEW).apply {
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 setDataAndType(uri, c.contentResolver.getType(uri.buildUpon().appendPath(displayName).build()))
                 putExtra(Intent.EXTRA_STREAM, uri)
             })
         } catch (e: Exception) {
-            Log.e(TAG, "File of unknown type, could not open: $displayName")
+            Toast.makeText(c, "No app found to open: $displayName", Toast.LENGTH_SHORT).show()
         }
     }
 
