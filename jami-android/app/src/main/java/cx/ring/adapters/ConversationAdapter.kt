@@ -1009,6 +1009,7 @@ class ConversationAdapter(
             val status = file.status
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
             viewHolder.mMsgTxt?.text = file.displayName
+            viewHolder.mFileInfoLayout?.setOnClickListener(null)
             if (status == InteractionStatus.TRANSFER_AWAITING_HOST) {
                 viewHolder.btnRefuse?.visibility = View.VISIBLE
                 viewHolder.mAnswerLayout?.visibility = View.VISIBLE
@@ -1027,6 +1028,7 @@ class ConversationAdapter(
                 } else {
                     viewHolder.progress?.hide()
                 }
+                viewHolder.mFileInfoLayout?.setOnClickListener { presenter.openFile(file) }
             }
         }
     }
