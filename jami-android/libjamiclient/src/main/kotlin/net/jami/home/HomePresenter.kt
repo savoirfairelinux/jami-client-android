@@ -19,6 +19,7 @@ package net.jami.home
 import net.jami.model.DonationSettings
 import net.jami.mvp.RootPresenter
 import net.jami.services.PreferencesService
+import net.jami.utils.DonationUtils
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(
@@ -26,6 +27,10 @@ class HomePresenter @Inject constructor(
 ) : RootPresenter<HomeView>() {
     override fun bindView(view: HomeView) {
         super.bindView(view)
+
+        if (!DonationUtils.isDonationPeriod())
+            return
+
         mCompositeDisposable.add(mPreferencesService.donationSettings().subscribe { settings ->
             // No need to show the reminder if user specified not to display it anymore
             if (!settings.donationReminderVisibility) {
