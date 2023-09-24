@@ -50,8 +50,8 @@ class ConnectionService : ConnectionService() {
     @Inject
     lateinit var deviceRuntimeService: DeviceRuntimeService
 
-    private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection {
-        val connection = CallConnection(this, request, showIncomingCallUi).apply {
+    private fun buildConnection(request: ConnectionRequest, showIncomingCallUi: ((CallConnection, CallRequestResult) -> Unit)? = null): CallConnection =
+        CallConnection(this, request, showIncomingCallUi).apply {
             val account = request.extras.getString(ConversationPath.KEY_ACCOUNT_ID)
             val contactId = request.extras.getString(ConversationPath.KEY_CONVERSATION_URI)
             if (account != null && contactId != null) {
@@ -66,8 +66,6 @@ class ConnectionService : ConnectionService() {
             connectionCapabilities = getCapabilities()
             connectionProperties = getProperties()
         }
-        return connection
-    }
 
     override fun onCreateOutgoingConnection(account: PhoneAccountHandle?, request: ConnectionRequest): Connection {
         val connection = buildConnection(request)

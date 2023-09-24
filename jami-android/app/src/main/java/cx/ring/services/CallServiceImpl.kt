@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.telecom.TelecomManager
 import android.telecom.VideoProfile
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import cx.ring.application.JamiApplication
 import cx.ring.service.CallConnection
@@ -102,10 +103,14 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         return CALL_ALLOWED
     }
 
+    @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
     fun onPlaceCallResult(uri: android.net.Uri, extras: Bundle, result: CallConnection?) {
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
         Log.w(TAG, "Telecom API: outgoing call request for $uri has result $result")
-        pendingCallRequests.remove("$accountId/$uri")?.onSuccess(AndroidCall(result))
+        val call = pendingCallRequests.remove("$accountId/$uri")
+        if (call != null)
+            call.onSuccess(AndroidCall(result))
+        else result?.dispose()
     }
 
     override fun requestIncomingCall(call: Call): Single<SystemCall> {
@@ -148,19 +153,29 @@ class CallServiceImpl(val mContext: Context, executor: ScheduledExecutorService,
         // Fallback to allowing the call
         return CALL_ALLOWED
     }
+
+    @RequiresApi(CONNECTION_SERVICE_TELECOM_API_SDK_COMPATIBILITY)
     fun onIncomingCallResult(extras: Bundle, connection: CallConnection?, result: CallRequestResult = CallRequestResult.REJECTED) {
         val accountId = extras.getString(ConversationPath.KEY_ACCOUNT_ID) ?: return
         val callId = extras.getString(NotificationService.KEY_CALL_ID) ?: return
         Log.w(TAG, "Telecom API: incoming call request for $callId has result $connection")
-        incomingCallRequests.remove(callId)?.let {
-            it.second.onSuccess(if (connection != null && result != CallRequestResult.REJECTED) AndroidCall(connection) else SystemCall(
-                false
-            ))
+        val call = incomingCallRequests.remove(callId)?.second
+        if (call == null) {
+            Log.e(TAG, "Telecom API: incoming call request for $callId has no pending request")
+            connection?.dispose()
+            return
         }
+        call.onSuccess(if (connection != null && result != CallRequestResult.REJECTED)
+            AndroidCall(connection)
+        else
+            SystemCall(false))
+
         if (connection == null || result == CallRequestResult.REJECTED)
             refuse(accountId, callId)
         else if (result == CallRequestResult.ACCEPTED || result == CallRequestResult.ACCEPTED_VIDEO)
             accept(accountId, callId, result == CallRequestResult.ACCEPTED_VIDEO)
+        if (result == CallRequestResult.REJECTED)
+            connection?.dispose()
     }
 
     companion object {
