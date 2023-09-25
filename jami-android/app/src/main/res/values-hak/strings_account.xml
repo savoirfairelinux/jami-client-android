@@ -20,6 +20,7 @@
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
+  <string name="account_creation_home">欢迎使用 Jami</string>
   <!--Edit profile-->
   <!--Devices-->
 </resources>

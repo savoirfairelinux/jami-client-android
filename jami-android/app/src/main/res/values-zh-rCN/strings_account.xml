@@ -224,7 +224,7 @@
   <string name="account_status_offline">离线</string>
   <string name="account_status_error">错误</string>
   <!--Create account-->
-  <string name="account_creation_home">欢迎来到 Jami</string>
+  <string name="account_creation_home">欢迎使用 Jami</string>
   <string name="account_creation_profile">创建您的账户资料</string>
   <string name="account_creation_ring">创建您的 Jami 账户</string>
   <string name="account_link_title">关联此设备</string>
