@@ -73,4 +73,14 @@
     <color name="invitation_drawable_p1_color">#fff</color>
     <color name="invitation_drawable_p2_color">#03b9e9</color>
 
+    <!--  JamiId  -->
+    <color name="jami_id_background_color">#4CFFFFFF</color>
+    <color name="jami_id_surface_color">#005699</color>
+    <color name="jami_id_validate_background_disabled_color">#4C005699</color>
+    <color name="jami_id_validate_background_enabled_color">#CC005699</color>
+    <color name="jami_id_validate_icon_enabled_color">@color/white</color>
+    <color name="jami_id_validate_icon_disabled_color">#4DFFFFFF</color>
+    <color name="jami_id_info_color">#4D4D4D</color>
+    <color name="jami_id_edit_text_underline_color">#02B9E9</color>
+
 </resources>
