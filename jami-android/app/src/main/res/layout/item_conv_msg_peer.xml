@@ -100,7 +100,7 @@ along with this program; if not, write to the Free Software
                     android:textColor="@color/colorOnSurface"
                     android:textColorHighlight="@color/conversation_primary_selection"
                     android:textColorLink="@color/text_color_primary_dark"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_size_small"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
                     tools:visibility="visible" />
 
@@ -124,7 +124,7 @@ along with this program; if not, write to the Free Software
                     android:focusable="true"
                     android:textColor="@color/colorOnSurface"
                     android:textIsSelectable="true"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
