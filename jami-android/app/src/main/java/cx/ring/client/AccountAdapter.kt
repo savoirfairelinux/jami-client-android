@@ -46,7 +46,6 @@ class AccountAdapter(
 ) : ArrayAdapter<Account>(context, R.layout.item_toolbar_spinner, accounts) {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val ip2ipString = context.getString(R.string.account_type_ip2ip)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -86,7 +85,7 @@ class AccountAdapter(
             holder.loader.add(mAccountService.getObservableAccountProfile(account.accountId)
                 .observeOn(DeviceUtils.uiScheduler)
                 .subscribe({ profile ->
-                    val subtitle = getUri(account, ip2ipString)
+                    val subtitle = getUri(account)
                     holder.binding.logo.setImageDrawable(
                         AvatarDrawable.build(
                             holder.binding.root.context,
@@ -133,9 +132,8 @@ class AccountAdapter(
     private fun getTitle(account: Account, profile: Profile): String =
         profile.displayName.orEmpty().ifEmpty {
             account.registeredName.ifEmpty {
-                account.alias.orEmpty().ifEmpty {
-                    context.getString(R.string.ring_account)
-                }
+                if (account.isSip) context.getString(R.string.sip_account)
+                else account.alias.orEmpty().ifEmpty { context.getString(R.string.ring_account) }
             }
         }
 
@@ -143,8 +141,8 @@ class AccountAdapter(
         val loader = CompositeDisposable().apply { parentDisposable.add(this) }
     }
 
-    private fun getUri(account: Account, defaultNameSip: CharSequence): String =
-        if (account.isIP2IP) defaultNameSip.toString() else account.displayUri!!
+    private fun getUri(account: Account): String =
+        if (!account.isIP2IP) account.displayUri!! else ""
 
     companion object {
         private val TAG = AccountAdapter::class.simpleName!!
