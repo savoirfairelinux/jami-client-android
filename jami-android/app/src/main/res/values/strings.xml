@@ -461,4 +461,8 @@ along with this program; if not, write to the Free Software
     <string name="jami_id_info">• 32 characters maximum\n• Allowed special characters: dash (-), underscore (_)</string>
     <string name="jami_id_looking_for_availability">Looking for username availability…</string>
     <string name="jami_id_choose_username">Choose a username</string>
+
+    <!--  WelcomeJami  -->
+    <string name="welcome_jami_title">Welcome to Jami</string>
+    <string name="welcome_jami_description">Share your Jami identifier in order to be contacted more easily!</string>
 </resources>
