@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_marginBottom="16dp"
                     android:layout_alignParentStart="true"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/text_size_xlarge"
                     android:textStyle="bold"
                     tools:text="@string/profile" />
 
@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_gravity="end"
                     android:layout_marginEnd="12dp"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/text_size_small"
                     app:showText="true"
                     app:status="@string/account_status_offline" />
 
@@ -125,7 +125,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:singleLine="true"
                     android:maxLines="1"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/text_size_xlarge"
                     android:textStyle="bold" />
 
                 <com.google.android.material.chip.Chip
@@ -289,7 +289,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:gravity="center_vertical"
                 android:text="@string/menu_item_settings"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_size_xlarge"
                 android:textStyle="bold" />
 
             <ListView
