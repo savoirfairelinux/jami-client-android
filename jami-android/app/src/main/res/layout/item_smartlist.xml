@@ -56,7 +56,7 @@ along with this program; if not, write to the Free Software
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
             tools:text="Person Name" />
 
@@ -73,7 +73,7 @@ along with this program; if not, write to the Free Software
             android:maxLines="1"
             android:textAlignment="viewStart"
             android:textColor="@color/textColorSecondary"
-            android:textSize="13sp"
+            android:textSize="@dimen/text_size_small"
             tools:text="Ongoing call of 56 secs" />
 
         <TextView
@@ -83,7 +83,7 @@ along with this program; if not, write to the Free Software
             android:layout_below="@+id/conv_participant"
             android:fontFamily="@font/ubuntu_regular"
             android:textColor="?attr/colorOnSurface"
-            android:textSize="13sp"
+            android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
             tools:text="2 days ago" />
 
