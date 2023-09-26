@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311fb388_8a964a2a",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "validPinCallback",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed73ee9d_6468d0d9",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "Need a comment to explain a little bit",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece3d1a1_8c8f444f",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "resetPinCallback",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4161c90_02719040",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "Need a comment to explain a little bit",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cb6029a_7399b5f2",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "Good practice is to explain each of your function (what it does and how it works)\n\n    /**\n     * Will be called by the view when the pin is entered.\n     * If the pin is valid, outputCallback will be called with the pin as parameter.\n     * else resetPin will be called.\n     * @param pinToVerify the pin to verify\n     * @return the validity of the pin\n     */",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 12
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb11c754_645fc3d6",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "You can directly call outputCallback(pin)",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b8671c5_d1e34c89",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "I think pin should be reset ? pin \u003d \"\"",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "972a11ce_7bbf976b",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "940d5278_1bd93231",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/PinInputViewModel.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T14:26:32Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "e30d3d968beb3c92864aa3819060475eb568fa0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
