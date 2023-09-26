@@ -110,7 +110,7 @@ along with this program; if not, write to the Free Software
 
                         android:text="@string/qr_code"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_size_large"
                         app:drawableStartCompat="@drawable/baseline_qr_code_2_black_24dp"
                         app:drawableTint="@color/colorPrimary" />
 
@@ -136,7 +136,7 @@ along with this program; if not, write to the Free Software
                         android:drawablePadding="8dp"
                         android:text="@string/new_swarm"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_size_large"
                         app:drawableStartCompat="@drawable/baseline_group_add_24"
                         app:drawableTint="@color/colorPrimary" />
 
