@@ -22,6 +22,30 @@
       },
       "revId": "584e3f202c01944f3e079891c8b8087e473bfd0b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c88255_71f09311",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/AccountSpinnerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-26T13:31:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bb4392_471f4762",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 73
+      },
+      "revId": "584e3f202c01944f3e079891c8b8087e473bfd0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
