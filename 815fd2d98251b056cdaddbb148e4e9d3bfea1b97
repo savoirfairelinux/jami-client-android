@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f953c82c_251d8e21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-26T14:00:00Z",
+      "side": 1,
+      "message": "To rebase",
+      "revId": "815fd2d98251b056cdaddbb148e4e9d3bfea1b97",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23626e0f_19c66216",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-26T14:00:00Z",
+      "side": 1,
+      "message": "Register username",
+      "range": {
+        "startLine": 457,
+        "startChar": 36,
+        "endLine": 457,
+        "endChar": 60
+      },
+      "revId": "815fd2d98251b056cdaddbb148e4e9d3bfea1b97",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04cc0010_fcacdfc3",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-26T14:00:00Z",
+      "side": 1,
+      "message": "Use dots",
+      "range": {
+        "startLine": 460,
+        "startChar": 32,
+        "endLine": 460,
+        "endChar": 33
+      },
+      "revId": "815fd2d98251b056cdaddbb148e4e9d3bfea1b97",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25defa52_9ae5de58",
+        "filename": "jami-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-26T14:00:00Z",
+      "side": 1,
+      "message": "use consistent formatting (space before ())",
+      "range": {
+        "startLine": 460,
+        "startChar": 109,
+        "endLine": 460,
+        "endChar": 112
+      },
+      "revId": "815fd2d98251b056cdaddbb148e4e9d3bfea1b97",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
