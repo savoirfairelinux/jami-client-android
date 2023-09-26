@@ -132,4 +132,10 @@ along with this program; if not, write to the Free Software
     <dimen name="message_details_margin">18dp</dimen>
     <dimen name="message_display_name_textsize">12sp</dimen>
 
+    <!--Text size-->
+    <dimen name="text_size_small">13sp</dimen>
+    <dimen name="text_size_medium">15sp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_xlarge">18sp</dimen>
+
 </resources>

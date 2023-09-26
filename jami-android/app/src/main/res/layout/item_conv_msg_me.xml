@@ -99,7 +99,7 @@ along with this program; if not, write to the Free Software
             android:textColor="@color/text_color_primary_dark"
             android:textColorHighlight="@color/conversation_primary_selection"
             android:textColorLink="@color/text_color_primary_dark"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_large"
             android:theme="@style/OutgoingTextView"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
 
@@ -127,7 +127,7 @@ along with this program; if not, write to the Free Software
             android:textColorHighlight="@color/conversation_primary_selection"
             android:textColorLink="@color/text_color_primary_dark"
             android:textIsSelectable="true"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_large"
             android:theme="@style/OutgoingTextView"
             tools:text="yo this is the test of a long long text can not be_found_message" />
 
