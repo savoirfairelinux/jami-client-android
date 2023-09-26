@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e9eb3ea_f893850b",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ImageViewUtils.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-09-26T19:25:54Z",
+      "side": 1,
+      "message": "Would prevent supporting other image types, like webp or others.\nOtherwise, this would force Jami to maintain a restricted list of supported image types on the long term, but we don\u0027t want to do that.\nThis restriction is not justified by the requirements of displaying SVGs.\n\nThe recommended course of action would be to have a special behaviour for SVG only, and fallback to the normal image loading path otherwise without restriction.",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "773ac4f2ac489aeedd462872d2c5aa12ed264694",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
