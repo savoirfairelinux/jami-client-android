@@ -134,7 +134,8 @@ class AccountAdapter(
         profile.displayName.orEmpty().ifEmpty {
             account.registeredName.ifEmpty {
                 account.alias.orEmpty().ifEmpty {
-                    context.getString(R.string.ring_account)
+                    if (account.isSip) context.getString(R.string.sip_account)
+                    else context.getString(R.string.ring_account)
                 }
             }
         }
