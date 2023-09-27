@@ -1,5 +1,6 @@
 package cx.ring.linkpreview
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.core.util.PatternsCompat
 import io.reactivex.rxjava3.core.Maybe

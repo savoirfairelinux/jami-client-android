@@ -30,6 +30,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
 import cx.ring.R
 import cx.ring.adapters.MessageType
@@ -43,7 +44,7 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
         else -> null
     }
     var mMsgTxt: TextView? = null
-    var mMsgTxtContainer2: RelativeLayout? = null
+    var mMsgTxtContainer2: ConstraintLayout? = null
     var mMsgDetailTxt: TextView? = null
     var mMsgDetailTxtPerm: TextView? = null
 //    var mMsgEditedIcon: TextView? = null

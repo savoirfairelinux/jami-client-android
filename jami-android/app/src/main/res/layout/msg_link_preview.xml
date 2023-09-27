@@ -11,20 +11,20 @@
 
     <ImageView
         android:id="@+id/link_preview_img"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/link_preview_title"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/link_preview_img"
         android:maxLines="4"
         android:paddingHorizontal="10dp"
         android:paddingTop="10dp"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_small"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorOnSurface"
         android:visibility="visible"
@@ -32,8 +32,8 @@
 
     <TextView
         android:id="@+id/link_preview_description"
-        android:textSize="12sp"
-        android:layout_width="380dp"
+        android:textSize="@dimen/text_size_small"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/link_preview_title"
         android:maxLines="4"
@@ -46,11 +46,11 @@
 
     <TextView
         android:id="@+id/link_preview_domain"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/link_preview_title"
         android:layout_below="@id/link_preview_description"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_small"
         android:maxLines="1"
         android:paddingHorizontal="10dp"
         android:paddingBottom="5dp"
