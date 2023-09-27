@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "196a8afb_d27d6d5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-27T18:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6957fbe_ee9f9c7d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "8dc763f48fb20ee9ed52948b747e4fdebe7c6cb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb034a24_2ca5efdb",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-09-27T15:34:50Z",
       "side": 1,
       "message": "tools? what for ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 1
+      },
+      "revId": "8dc763f48fb20ee9ed52948b747e4fdebe7c6cb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24311989_d0088116",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-27T18:02:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb034a24_2ca5efdb",
       "range": {
         "startLine": 76,
         "startChar": 0,
