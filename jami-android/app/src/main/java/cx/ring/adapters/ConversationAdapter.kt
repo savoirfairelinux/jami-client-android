@@ -97,14 +97,18 @@ class ConversationAdapter(
 ) : RecyclerView.Adapter<ConversationViewHolder>() {
     private val mInteractions = ArrayList<Interaction>()
     private val res = conversationFragment.resources
-    private val mPictureMaxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
+    private val mPictureMaxSize =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, res.displayMetrics).toInt()
     private var mCurrentLongItem: RecyclerViewContextMenuInfo? = null
-    @ColorInt private var convColor = 0
-    @ColorInt private var convColorTint = 0
+    @ColorInt
+    private var convColor = 0
+    @ColorInt
+    private var convColorTint = 0
     private var expandedItemPosition = -1
     private var lastDeliveredPosition = -1
-    private val timestampUpdateTimer: Observable<Long> = Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
-        .startWithItem(0L)
+    private val timestampUpdateTimer: Observable<Long> =
+        Observable.interval(10, TimeUnit.SECONDS, DeviceUtils.uiScheduler)
+            .startWithItem(0L)
     private var lastMsgPos = -1
     private var isComposing = false
     var showLinkPreviews = true
@@ -132,11 +136,13 @@ class ConversationAdapter(
                 mInteractions.addAll(list)
                 notifyDataSetChanged()
             }
+
             list.size > mInteractions.size -> {
                 val oldSize = mInteractions.size
                 mInteractions.addAll(list.subList(oldSize, list.size))
                 notifyItemRangeInserted(oldSize, list.size)
             }
+
             else -> {
                 mInteractions.clear()
                 mInteractions.addAll(list)
@@ -267,12 +273,14 @@ class ConversationAdapter(
                 } else {
                     MessageType.CALL_INFORMATION.ordinal
                 }
+
             Interaction.InteractionType.TEXT ->
                 if (interaction.isIncoming) {
                     MessageType.INCOMING_TEXT_MESSAGE.ordinal
                 } else {
                     MessageType.OUTGOING_TEXT_MESSAGE.ordinal
                 }
+
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
@@ -285,6 +293,7 @@ class ConversationAdapter(
                 }
                 out
             }
+
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
     }
@@ -296,18 +305,29 @@ class ConversationAdapter(
         return ConversationViewHolder(v, type)
     }
 
-    private fun configureDisplayIndicator(conversationViewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureDisplayIndicator(
+        conversationViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
             conversationViewHolder.mStatusIcon?.isVisible = false
             return
         }
         conversationViewHolder.compositeDisposable.add(presenter.conversationFacade
-            .getLoadedContact(interaction.account!!, conversation, interaction.displayedContacts)
+            .getLoadedContact(
+                interaction.account!!,
+                conversation,
+                interaction.displayedContacts
+            )
             .observeOn(DeviceUtils.uiScheduler)
             .subscribe { contacts ->
                 conversationViewHolder.mStatusIcon?.isVisible = contacts.isNotEmpty()
-                conversationViewHolder.mStatusIcon?.update(contacts, interaction.status, conversationViewHolder.mMsgTxt?.id ?: View.NO_ID)
+                conversationViewHolder.mStatusIcon?.update(
+                    contacts,
+                    interaction.status,
+                    conversationViewHolder.mMsgTxt?.id ?: View.NO_ID
+                )
             })
     }
 
@@ -406,8 +426,10 @@ class ConversationAdapter(
      * @param conversationViewHolder    the view layout.
      * @param interaction               the interaction (contains the message data).
      */
-    private fun configureReplyIndicator(conversationViewHolder: ConversationViewHolder,
-                                        interaction: Interaction) {
+    private fun configureReplyIndicator(
+        conversationViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
 
         val conversation = interaction.conversation
         if (conversation == null || conversation !is Conversation) {
@@ -421,11 +443,13 @@ class ConversationAdapter(
             val replyTo = interaction.replyTo
 
             // If currently replying to another message :
-            if (replyTo != null)  {
+            if (replyTo != null) {
                 conversationViewHolder.compositeDisposable.add(replyTo
-                    .flatMapObservable { reply -> presenter.contactService
-                        .observeContact(interaction.account!!, reply.contact!!, false)
-                        .map { contact -> Pair(reply, contact) }}
+                    .flatMapObservable { reply ->
+                        presenter.contactService
+                            .observeContact(interaction.account!!, reply.contact!!, false)
+                            .map { contact -> Pair(reply, contact) }
+                    }
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
                         conversationViewHolder.mReplyTxt!!.text = i.first.body
@@ -448,15 +472,28 @@ class ConversationAdapter(
                                 R.color.text_color_primary_dark
                             )
                         )
+                        // set the reply text to max 2 lines
+                        conversationViewHolder.mReplyTxt.maxLines = 2
+//                        update mReplyTxt maxWidth to have the wrap the two lines width of text
+//                        conversationViewHolder.mReplyTxt.width =
 
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(i.second)
                             .withCircleCrop(true)
                             .build(conversationViewHolder.itemView.context)
-                            .setInSize(conversationViewHolder.itemView.context.resources.getDimensionPixelSize(R.dimen.conversation_avatar_size_small))
+                            .setInSize(
+                                conversationViewHolder.itemView.context.resources.getDimensionPixelSize(
+                                    R.dimen.conversation_avatar_size_small
+                                )
+                            )
                         // Update the view.
-                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(smallAvatarDrawable, null, null, null)
+                        conversationViewHolder.mReplyName!!.setCompoundDrawablesWithIntrinsicBounds(
+                            smallAvatarDrawable,
+                            null,
+                            null,
+                            null
+                        )
 
                         replyView.isVisible = true
                         conversationViewHolder.mMsgTxtContainer1!!.isVisible = true
@@ -464,10 +501,12 @@ class ConversationAdapter(
 
                         // User can click on mReplyTxt (replied message),
                         // mInReplyTo or mReplyName (text above the message) to go to it.
-                        listOf(conversationViewHolder.mMsgTxtContainer1,
+                        listOf(
+                            conversationViewHolder.mMsgTxtContainer1,
                             conversationViewHolder.mInReplyTo,
-                            replyView).forEach{
-                            it.setOnClickListener{
+                            replyView
+                        ).forEach {
+                            it.setOnClickListener {
                                 i.first.messageId?.let { presenter.scrollToMessage(it) }
                             }
                         }
@@ -498,9 +537,24 @@ class ConversationAdapter(
             conversationViewHolder.itemView.startAnimation(animation)
         }*/
 
-        conversationViewHolder.mStatusIcon?.let { configureDisplayIndicator(conversationViewHolder, interaction) }
-        conversationViewHolder.mReplyName?.let { configureReplyIndicator(conversationViewHolder, interaction) }
-        conversationViewHolder.reactionChip?.let { configureReactions(conversationViewHolder, interaction) }
+        conversationViewHolder.mStatusIcon?.let {
+            configureDisplayIndicator(
+                conversationViewHolder,
+                interaction
+            )
+        }
+        conversationViewHolder.mReplyName?.let {
+            configureReplyIndicator(
+                conversationViewHolder,
+                interaction
+            )
+        }
+        conversationViewHolder.reactionChip?.let {
+            configureReactions(
+                conversationViewHolder,
+                interaction
+            )
+        }
 
         val type = interaction.type
         //Log.w(TAG, "onBindViewHolder $type $interaction");
@@ -509,14 +563,32 @@ class ConversationAdapter(
         } else {
             conversationViewHolder.itemView.visibility = View.VISIBLE
             when (type) {
-                Interaction.InteractionType.TEXT -> configureForTextMessage(conversationViewHolder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfo(conversationViewHolder, interaction)
-                Interaction.InteractionType.CONTACT -> configureForContactEvent(conversationViewHolder, interaction)
-                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(conversationViewHolder, interaction, position)
+                Interaction.InteractionType.TEXT -> configureForTextMessage(
+                    conversationViewHolder,
+                    interaction,
+                    position
+                )
+
+                Interaction.InteractionType.CALL -> configureForCallInfo(
+                    conversationViewHolder,
+                    interaction
+                )
+
+                Interaction.InteractionType.CONTACT -> configureForContactEvent(
+                    conversationViewHolder,
+                    interaction
+                )
+
+                Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(
+                    conversationViewHolder,
+                    interaction,
+                    position
+                )
+
                 else -> {}
             }
         }
-        if(isSearch)
+        if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
     }
 
@@ -553,7 +625,8 @@ class ConversationAdapter(
 
     fun setPrimaryColor(@ColorInt color: Int) {
         convColor = color
-        convColorTint = MaterialColors.compositeARGBWithAlpha(color, (MaterialColors.ALPHA_LOW * 255).toInt())
+        convColorTint =
+            MaterialColors.compositeARGBWithAlpha(color, (MaterialColors.ALPHA_LOW * 255).toInt())
         notifyDataSetChanged()
     }
 
@@ -600,7 +673,11 @@ class ConversationAdapter(
         clipboard.setPrimaryClip(ClipData.newPlainText("Copied Message", text))
     }
 
-    private fun configureImage(viewHolder: ConversationViewHolder, path: File, displayName: String?) {
+    private fun configureImage(
+        viewHolder: ConversationViewHolder,
+        path: File,
+        displayName: String?
+    ) {
         val context = viewHolder.itemView.context
         val image = viewHolder.mImage ?: return
         image.clipToOutline = true
@@ -610,12 +687,17 @@ class ConversationAdapter(
             .into(image)
         image.setOnClickListener { v: View ->
             try {
-                val contentUri = getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
+                val contentUri =
+                    getUriForFile(v.context, ContentUriHandler.AUTHORITY_FILES, path, displayName)
                 val i = Intent(context, MediaViewerActivity::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .setDataAndType(contentUri, "image/*")
                     .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), viewHolder.mImage, "picture")
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    conversationFragment.requireActivity(),
+                    viewHolder.mImage,
+                    "picture"
+                )
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle())
             } catch (e: Exception) {
                 Log.w(TAG, "Can't open picture", e)
@@ -629,7 +711,10 @@ class ConversationAdapter(
             val acceptBtn = viewHolder.btnAccept as ImageView
             val refuseBtn = viewHolder.btnRefuse!!
             acceptBtn.setImageResource(R.drawable.baseline_play_arrow_24)
-            val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path))
+            val player = MediaPlayer.create(
+                context,
+                getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+            )
             viewHolder.player = player
             if (player != null) {
                 player.setOnCompletionListener { mp: MediaPlayer ->
@@ -656,7 +741,14 @@ class ConversationAdapter(
                         .subscribe {
                             val pS = player.currentPosition / 1000
                             val dS = player.duration / 1000
-                            viewHolder.mMsgTxt?.text = String.format(Locale.getDefault(), "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60)
+                            viewHolder.mMsgTxt?.text = String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d / %02d:%02d",
+                                pS / 60,
+                                pS % 60,
+                                dS / 60,
+                                dS % 60
+                            )
                         })
             } else {
                 acceptBtn.setOnClickListener(null)
@@ -675,9 +767,14 @@ class ConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        val player = MediaPlayer.create(
+            context,
+            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+        ) ?: return
         viewHolder.player = player
-        val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
+        val playBtn =
+            ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!
+                .mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
         cardLayout.foreground = playBtn
         player.setOnCompletionListener { mp: MediaPlayer ->
@@ -706,7 +803,11 @@ class ConversationAdapter(
             player.setSurface(viewHolder.surface)
         }
         video.surfaceTextureListener = object : SurfaceTextureListener {
-            override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureAvailable(
+                surfaceTexture: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
                 if (viewHolder.surface == null) {
                     viewHolder.surface = Surface(surfaceTexture).also { surface ->
                         try {
@@ -718,7 +819,11 @@ class ConversationAdapter(
                 }
             }
 
-            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+            override fun onSurfaceTextureSizeChanged(
+                surface: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
             }
 
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
@@ -773,7 +878,8 @@ class ConversationAdapter(
             convActionOpenText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionDownloadText.isVisible = interaction is DataTransfer && interaction.isComplete
             convActionCopyText.isVisible = !isDeleted && interaction !is DataTransfer
-            convActionEdit.isVisible = !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
+            convActionEdit.isVisible =
+                !isDeleted && !interaction.isIncoming && interaction !is DataTransfer
             convActionDelete.isVisible = !isDeleted && !interaction.isIncoming
             convActionHistory.isVisible = !isDeleted && history.size > 1
             root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
@@ -817,8 +923,7 @@ class ConversationAdapter(
                     && !interaction.isIncoming
                 ) {
                     view.background?.setTint(convColor)
-                }
-                else view.background?.setTintList(null)
+                } else view.background?.setTintList(null)
                 // Remove disposable.
                 conversationViewHolder.compositeDisposable.remove(disposable)
             }
@@ -891,11 +996,29 @@ class ConversationAdapter(
                 convActionEdit.setOnClickListener {
                     try {
                         val i = Intent(it.context, MessageEditActivity::class.java)
-                            .setData(Uri.withAppendedPath(ConversationPath.toUri(interaction.account!!, interaction.conversationId!!), interaction.messageId))
+                            .setData(
+                                Uri.withAppendedPath(
+                                    ConversationPath.toUri(
+                                        interaction.account!!,
+                                        interaction.conversationId!!
+                                    ), interaction.messageId
+                                )
+                            )
                             .setAction(Intent.ACTION_EDIT)
-                            .putExtra(Intent.EXTRA_TEXT, conversationViewHolder.mMsgTxt!!.text.toString())
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.requireActivity(), conversationViewHolder.mMsgTxt!!, "messageEdit")
-                        conversationFragment.startActivityForResult(i, ConversationFragment.REQUEST_CODE_EDIT_MESSAGE, options.toBundle())
+                            .putExtra(
+                                Intent.EXTRA_TEXT,
+                                conversationViewHolder.mMsgTxt!!.text.toString()
+                            )
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            conversationFragment.requireActivity(),
+                            conversationViewHolder.mMsgTxt!!,
+                            "messageEdit"
+                        )
+                        conversationFragment.startActivityForResult(
+                            i,
+                            ConversationFragment.REQUEST_CODE_EDIT_MESSAGE,
+                            options.toBundle()
+                        )
                     } catch (e: Exception) {
                         Log.w(TAG, "Can't open picture", e)
                     }
@@ -945,26 +1068,40 @@ class ConversationAdapter(
     }
 
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
-    private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForFileInfo(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val file = interaction as DataTransfer
         val path = presenter.deviceRuntimeService.getConversationPath(file)
-        val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        val timeString =
+            TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
-                InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
-                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize))
-                InteractionStatus.TRANSFER_ONGOING -> String.format("%s / %s - %s",
+                InteractionStatus.TRANSFER_FINISHED -> String.format(
+                    "%s - %s", timeString,
+                    Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize)
+                )
+
+                InteractionStatus.TRANSFER_ONGOING -> String.format(
+                    "%s / %s - %s",
                     Formatter.formatFileSize(viewHolder.itemView.context, file.bytesProgress),
                     Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
-                else -> String.format("%s - %s - %s", timeString,
+                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status)
+                )
+
+                else -> String.format(
+                    "%s - %s - %s", timeString,
                     Formatter.formatFileSize(viewHolder.itemView.context, file.totalSize),
-                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status))
+                    TextUtils.getReadableFileTransferStatus(viewHolder.itemView.context, status)
+                )
             }
         })
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
-                viewHolder.mMsgDetailTxtPerm?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+                viewHolder.mMsgDetailTxtPerm?.text =
+                    TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
             })
             viewHolder.mMsgDetailTxtPerm?.visibility = View.VISIBLE
         } else {
@@ -994,8 +1131,9 @@ class ConversationAdapter(
                 conversationFragment.updatePosition(viewHolder.bindingAdapterPosition)
                 longPressView.background?.setTint(res.getColor(R.color.grey_500))
             }
-            openItemMenu(viewHolder,v, file)
-            mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
+            openItemMenu(viewHolder, v, file)
+            mCurrentLongItem =
+                RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
         if (type == MessageType.TransferType.IMAGE) {
@@ -1033,7 +1171,10 @@ class ConversationAdapter(
     }
 
     private fun configureForTypingIndicator(viewHolder: ConversationViewHolder) {
-        AnimatedVectorDrawableCompat.create(viewHolder.itemView.context, R.drawable.typing_indicator_animation)?.let { anim ->
+        AnimatedVectorDrawableCompat.create(
+            viewHolder.itemView.context,
+            R.drawable.typing_indicator_animation
+        )?.let { anim ->
             viewHolder.mIcon?.setImageDrawable(anim)
             anim.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
                 override fun onAnimationEnd(drawable: Drawable) {
@@ -1051,11 +1192,15 @@ class ConversationAdapter(
      * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private fun configureForTextMessage(convViewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+    private fun configureForTextMessage(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction,
+        position: Int
+    ) {
         val context = convViewHolder.itemView.context
         convViewHolder.compositeDisposable.add(interaction.lastElement
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe ({ lastElement ->
+            .subscribe({ lastElement ->
 
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
@@ -1102,11 +1247,15 @@ class ConversationAdapter(
                     } else {
                         msgTxtContainer2.background?.setTint(convColorTint)
                     }
-                    mCurrentLongItem = RecyclerViewContextMenuInfo(convViewHolder.bindingAdapterPosition, v.id.toLong())
+                    mCurrentLongItem = RecyclerViewContextMenuInfo(
+                        convViewHolder.bindingAdapterPosition,
+                        v.id.toLong()
+                    )
                     true
                 }.let {
                     msgTxt.setOnLongClickListener(it)
-                    msgTxtContainer2.setOnLongClickListener(it) }
+                    msgTxtContainer2.setOnLongClickListener(it)
+                }
 
                 val message = textMessage.body?.trim() ?: ""
                 convViewHolder.mAnswerLayout?.visibility = View.GONE
@@ -1130,16 +1279,20 @@ class ConversationAdapter(
 
                     msgTxtContainer2.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        Log.w("devdebug","P1")
                         msgTxtContainer2.background?.setTint(convColor)
                     }
                     msgTxtContainer2.background.alpha = 255
                     msgTxt.textSize = 16f
 
+
+
+
                     // Manage layout for message with a link inside.
                     if (showLinkPreviews) {
                         val cachedPreview =
-                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(message)
+                            textMessage.preview as? Maybe<PreviewData>? ?: LinkPreview.getFirstUrl(
+                                message
+                            )
                                 .flatMap { url -> LinkPreview.load(url) }
                                 .cache()
                                 .apply { interaction.preview = this }
@@ -1184,21 +1337,26 @@ class ConversationAdapter(
                 if (textMessage.isIncoming) {
                     val avatar = convViewHolder.mAvatar ?: return@subscribe
                     if (endOfSeq) {
-                        avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
+                        avatar.setImageDrawable(
+                            conversationFragment.getConversationAvatar(
+                                contact.primaryNumber
+                            )
+                        )
                         avatar.visibility = View.VISIBLE
                     } else {
                         if (position == lastMsgPos - 1) {
                             avatar.startAnimation(
-                                AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out).apply {
-                                    setAnimationListener(object : Animation.AnimationListener {
-                                        override fun onAnimationStart(arg0: Animation) {}
-                                        override fun onAnimationRepeat(arg0: Animation) {}
-                                        override fun onAnimationEnd(arg0: Animation) {
-                                            avatar.setImageBitmap(null)
-                                            avatar.visibility = View.INVISIBLE
-                                        }
+                                AnimationUtils.loadAnimation(avatar.context, R.anim.fade_out)
+                                    .apply {
+                                        setAnimationListener(object : Animation.AnimationListener {
+                                            override fun onAnimationStart(arg0: Animation) {}
+                                            override fun onAnimationRepeat(arg0: Animation) {}
+                                            override fun onAnimationEnd(arg0: Animation) {
+                                                avatar.setImageBitmap(null)
+                                                avatar.visibility = View.INVISIBLE
+                                            }
+                                        })
                                     })
-                                })
                         } else {
                             avatar.setImageBitmap(null)
                             avatar.visibility = View.INVISIBLE
@@ -1222,7 +1380,10 @@ class ConversationAdapter(
                     if (isExpanded) {
                         convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
                             convViewHolder.mMsgDetailTxt?.text =
-                                TextUtils.timestampToDetailString(context, textMessage.timestamp)
+                                TextUtils.timestampToDetailString(
+                                    context,
+                                    textMessage.timestamp
+                                )
                         })
                     }
                     setItemViewExpansionState(convViewHolder, isExpanded)
@@ -1238,31 +1399,43 @@ class ConversationAdapter(
                         notifyItemChanged(expandedItemPosition)
                     }
                 }
-            }, {throwable -> Log.w("BUG45", "Throwable ", throwable)}))
+            }, { throwable -> Log.w("BUG45", "Throwable ", throwable) })
+        )
     }
 
-    private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureForContactEvent(
+        viewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         val event = interaction as ContactEvent
-        Log.w(TAG, "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} ")
-        viewHolder.mMsgDetailTxt?.text = TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
+        Log.w(
+            TAG,
+            "configureForContactEvent ${event.account} ${event.event} ${event.contact} ${event.author} "
+        )
+        viewHolder.mMsgDetailTxt?.text =
+            TextUtils.timestampToDetailString(viewHolder.itemView.context, event.timestamp)
 
         if (interaction.isSwarm) {
             viewHolder.compositeDisposable.add(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false)
                     .observeOn(DeviceUtils.uiScheduler)
-                .subscribe { vm ->
-                    viewHolder.mImage?.setImageDrawable(AvatarDrawable.Builder()
-                        .withContact(vm)
-                        .withCircleCrop(true)
-                        .build(viewHolder.itemView.context))
-                    viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(when (event.event) {
-                        ContactEvent.Event.ADDED -> R.string.conversation_contact_added
-                        ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
-                        ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
-                        ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
-                        else -> R.string.hist_contact_added
-                    }, vm.displayName)
-                })
+                    .subscribe { vm ->
+                        viewHolder.mImage?.setImageDrawable(
+                            AvatarDrawable.Builder()
+                                .withContact(vm)
+                                .withCircleCrop(true)
+                                .build(viewHolder.itemView.context)
+                        )
+                        viewHolder.mMsgTxt?.text = viewHolder.itemView.context.getString(
+                            when (event.event) {
+                                ContactEvent.Event.ADDED -> R.string.conversation_contact_added
+                                ContactEvent.Event.INVITED -> R.string.conversation_contact_invited
+                                ContactEvent.Event.REMOVED -> R.string.conversation_contact_left
+                                ContactEvent.Event.BANNED -> R.string.conversation_contact_banned
+                                else -> R.string.hist_contact_added
+                            }, vm.displayName
+                        )
+                    })
             /*viewHolder.compositeDisposable.add(Observable.combineLatest(
                 presenter.contactService.observeContact(event.account!!, event.contact!!, false),
                 presenter.contactService.observeContact(event.account!!, Uri(null, event.author!!), false)
@@ -1283,14 +1456,16 @@ class ConversationAdapter(
                 })*/
         } else {
             viewHolder.mImage?.setImageResource(R.drawable.baseline_person_24)
-            viewHolder.mMsgTxt?.setText(when (event.event) {
-                ContactEvent.Event.ADDED -> R.string.hist_contact_added
-                ContactEvent.Event.INVITED -> R.string.hist_contact_invited
-                ContactEvent.Event.REMOVED -> R.string.hist_contact_left
-                ContactEvent.Event.BANNED -> R.string.hist_contact_banned
-                ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
-                else -> R.string.hist_contact_added
-            })
+            viewHolder.mMsgTxt?.setText(
+                when (event.event) {
+                    ContactEvent.Event.ADDED -> R.string.hist_contact_added
+                    ContactEvent.Event.INVITED -> R.string.hist_contact_invited
+                    ContactEvent.Event.REMOVED -> R.string.hist_contact_left
+                    ContactEvent.Event.BANNED -> R.string.hist_contact_banned
+                    ContactEvent.Event.INCOMING_REQUEST -> R.string.hist_invitation_received
+                    else -> R.string.hist_contact_added
+                }
+            )
         }
     }
 
@@ -1315,7 +1490,7 @@ class ConversationAdapter(
                 background?.setTintList(null) // Remove the tint
                 // Define Context Menu, call when long pressed (see definition below)
                 setOnCreateContextMenuListener { menu: ContextMenu, v: View, menuInfo:
-                                                 ContextMenuInfo? ->
+                ContextMenuInfo? ->
                     conversationFragment.onCreateContextMenu(menu, v, menuInfo)
                     // Inflate the view and set it up
                     val inflater = conversationFragment.requireActivity().menuInflater
@@ -1381,7 +1556,10 @@ class ConversationAdapter(
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
-    private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
+    private fun configureSearchResult(
+        convViewHolder: ConversationViewHolder,
+        interaction: Interaction
+    ) {
         disableClicking(convViewHolder.itemView)
         val messageId = interaction.messageId ?: return
         val clickView = convViewHolder.primaryClickableView ?: convViewHolder.itemView
@@ -1553,7 +1731,9 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_out_reply,
             R.drawable.textmsg_bg_out_reply_first,
             R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first
+            R.drawable.textmsg_bg_in_reply_first,
+            R.drawable.textmsg_bg_ripple,
+            R.drawable.textmsg_bg_ripple_first
         )
 
         /**
