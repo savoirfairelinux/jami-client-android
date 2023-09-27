@@ -175,6 +175,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "827cc48d_c00e258b",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:55:15Z",
+      "side": 1,
+      "message": "var bitmap \u003d qrCodeData?.let {\n        Bitmap.createBitmap(it.width,qrCodeData.height,Bitmap.Config.ARGB_8888).apply { \n                setPixels(qrCodeData.data,0,qrCodeData.width,0,0,qrCodeData.width,qrCodeData.height)\n            }\n        }",
+      "range": {
+        "startLine": 211,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 9
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c22cca3_8e5cb3f8",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
         "patchSetId": 14
@@ -192,6 +215,23 @@
         "endLine": 260,
         "endChar": 1
       },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c53f669_9b054a09",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:55:15Z",
+      "side": 1,
+      "message": "you know",
       "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
