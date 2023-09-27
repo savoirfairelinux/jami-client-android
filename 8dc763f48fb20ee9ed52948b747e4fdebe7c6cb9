@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6957fbe_ee9f9c7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T15:39:47Z",
+      "side": 1,
+      "message": "not a correct commit name as you  always update something on a file\n\nshould specify what you did and why",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "8dc763f48fb20ee9ed52948b747e4fdebe7c6cb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb034a24_2ca5efdb",
         "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link.xml",
         "patchSetId": 5
