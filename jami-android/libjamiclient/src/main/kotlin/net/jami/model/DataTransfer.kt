@@ -153,7 +153,7 @@ class DataTransfer : Interaction {
         }
 
     companion object {
-        private val IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "gif")
+        private val IMAGE_EXTENSIONS = setOf("jpg", "jpeg", "png", "gif", "webp", "svg", "bmp", "heic", "heif")
         private val AUDIO_EXTENSIONS = setOf("ogg", "mp3", "aac", "flac", "m4a")
         private val VIDEO_EXTENSIONS = setOf("webm", "mp4", "mkv")
         private const val MAX_SIZE = 32 * 1024 * 1024
