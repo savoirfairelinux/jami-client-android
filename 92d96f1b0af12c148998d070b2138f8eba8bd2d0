@@ -1,0 +1,394 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "977be887_55eaf52d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "place a wrapper around and hide/show in a single shot",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c64347_094761dd",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "can you propose labels more understandable ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91a98fc_9933ca89",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "not related to this patch",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 15
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c056beeb_52cf0ddd",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "not related to this patch",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb59af7d_2d05dc80",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "absolutely not!",
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1e57dcc_8e4a27e3",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "absolutely not!",
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0e070b_a3e9ee6d",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "absolutely not! x)",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 4
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "552e810d_e2d67c7a",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "just place a line return :)",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 5
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c22cca3_8e5cb3f8",
+        "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "Still not",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49b16ef2_bff3682e",
+        "filename": "jami-android/app/src/main/res/drawable/rounded_border.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "background_qrcode.xml ?",
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0c190e3_cb0702f7",
+        "filename": "jami-android/app/src/main/res/drawable/rounded_border.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "ctrl+alt+l",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 7
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69cbdb8_d16e34b5",
+        "filename": "jami-android/app/src/main/res/drawable/textview_background.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "background_pin_code.xml ?",
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2cd2bcf_d9f08fd0",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "wrap everything into linearlayout\n    \u003cLinearLayout\n        android:id\u003d\"@+id/salut\"\n        android:layout_width\u003d\"wrap_content\"\n        android:layout_height\u003d\"wrap_content\"\n        android:gravity\u003d\"center_horizontal\"\n        android:orientation\u003d\"vertical\"\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfc8711f_bd2132c5",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af0b677f_a8623751",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f2f8c78_39a56115",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26aa0503_891c7ffd",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11bc84d9_02f1b895",
+        "filename": "jami-android/app/src/main/res/layout/frag_link_device.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:57Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 1
+      },
+      "revId": "92d96f1b0af12c148998d070b2138f8eba8bd2d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
