@@ -41,6 +41,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef2f878_6256d86f",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link_password.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-27T18:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd61910d_1d4ada77",
+      "revId": "86f6524909ac8a3e2b86fa1dc3fad62e1004d8e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5ce2896_e5f416d6",
@@ -54,6 +72,24 @@
       "writtenOn": "2023-09-27T15:39:30Z",
       "side": 1,
       "message": "empty line",
+      "revId": "86f6524909ac8a3e2b86fa1dc3fad62e1004d8e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc40deda_853f8d79",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link_password.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-27T18:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ce2896_e5f416d6",
       "revId": "86f6524909ac8a3e2b86fa1dc3fad62e1004d8e4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
