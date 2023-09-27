@@ -22,6 +22,30 @@
       },
       "revId": "773ac4f2ac489aeedd462872d2c5aa12ed264694",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0871078a_8190e156",
+        "filename": "jami-android/app/src/main/java/cx/ring/utils/ImageViewUtils.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e9eb3ea_f893850b",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "773ac4f2ac489aeedd462872d2c5aa12ed264694",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
