@@ -669,6 +669,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1aee1f5_45bc4915",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T13:38:36Z",
+      "side": 1,
+      "message": "space?",
+      "range": {
+        "startLine": 303,
+        "startChar": 129,
+        "endLine": 303,
+        "endChar": 130
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ec940cb_0c0a5635",
         "filename": "jami-android/app/src/main/res/values/strings_account.xml",
         "patchSetId": 17
