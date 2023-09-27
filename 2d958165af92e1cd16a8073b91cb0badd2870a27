@@ -16,6 +16,24 @@
       "message": "IP2IP accounts would have an empty Uri string for the hostname instead of being labelled \"IP Account\". This removes a feature, and is not related to bug #1301.",
       "revId": "2d958165af92e1cd16a8073b91cb0badd2870a27",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4e719da_66685b90",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/AccountAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-27T12:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10831e80_5a3af472",
+      "revId": "2d958165af92e1cd16a8073b91cb0badd2870a27",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
