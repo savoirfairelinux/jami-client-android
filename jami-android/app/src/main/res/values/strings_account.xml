@@ -300,4 +300,15 @@ along with this program; if not, write to the Free Software
     <string name="qr_invalid">Not a Jami Authentication QR code</string>
     <string name="content_description_checkbox">Your Qr Code is valid</string>
     <string name="error_format_not_supported">This format is not supported.</string>
+    <string name="account_link_info">On the new Jami app, scan the QR code or enter manually the PIN.</string>
+    <string name="account_link_device_title">Link a new device</string>
+    <string name="account_link_password">This account is password-encrypted, enter the password to generate the PIN code.</string>
+    <string name="account_link_generate_button">Generate</string>
+    <string name="account_link_time_valid">The PIN code will be invalid: %1$s.</string>
+    <string name="account_link_device_info">Choose \"Link a new device\" from the other Jami app to show the QR code or PIN</string>
+    <string name="account_generate_export_device">On the other device</string>
+    <string name="account_generate_export_info">Install and launch Jami, select \"Import from an other device\" and scan the QR code.</string>
+    <string name="content_description_qr_generated">Your Qr Code</string>
+    <string name="account_generate_export_invalid">The PIN is no longer valid.\n Enter the password and generate another one to link the new device.</string>
+    <string name="account_generate_export_invalid_two">The PIN is no longer valid.\n Generate another one to link the new device.</string>
 </resources>
