@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24428953_3f7da2b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-28T18:12:20Z",
+      "side": 1,
+      "message": "create pinInput components",
+      "revId": "cf17a69b416e3a1b0c4aaed0303b307cde31e376",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4f5bfc2_bffa444f",
