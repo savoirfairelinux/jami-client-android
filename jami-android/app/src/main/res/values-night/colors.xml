@@ -53,4 +53,7 @@
     <!--  WelcomeJami  -->
     <color name="welcome_jami_surface_color">#FFFFFF</color>
 
+    <!--  QrCode  -->
+    <color name="qr_code_color">#FFF</color>
+
 </resources>
