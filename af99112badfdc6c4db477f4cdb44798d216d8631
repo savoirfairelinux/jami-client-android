@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab004641_c964d0b1",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/EditTextPinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2497b75d_41105d59",
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98b2a3d3_f6ffbc39",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "overriding functions first (oncreate and onviewcreated)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c1300d0_a6f6739a",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/EditTextPinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b2a3d3_f6ffbc39",
       "range": {
         "startLine": 27,
         "startChar": 0,
@@ -64,6 +106,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d324c733_452e4b53",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/EditTextPinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a532378_23c44574",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8907311_ece439b7",
@@ -77,6 +143,24 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "to delete",
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0415573_4f2e295f",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/EditTextPinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8907311_ece439b7",
       "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -104,6 +188,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19ed8252_2d7297c0",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/EditTextPinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929f9c5b_f161e462",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72df72f9_6045e8b8",
@@ -117,6 +225,24 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "empty line",
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11a83771_aa091ef2",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72df72f9_6045e8b8",
       "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -138,6 +264,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45d1f09d_984c5774",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a19d57_34993721",
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2dca33fc_7ff3471f",
@@ -151,6 +295,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "is it wanted that this line is not the first called ?\nshould be the first called",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e18fb4a_dbd2e5b6",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dca33fc_7ff3471f",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -184,6 +352,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94449c4b_1def6538",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "840f5090_7d6845eb",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6174f3a8_d47e3cb3",
@@ -197,6 +389,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "to delete",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b97787_519d7ee1",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6174f3a8_d47e3cb3",
       "range": {
         "startLine": 87,
         "startChar": 0,
@@ -230,6 +446,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bf721f3_23e50b44",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ca4134_28ed8195",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 10
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "179c4e49_41bc28bf",
@@ -243,6 +483,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "show and hide can be merged together using a boolean\n\nshowErrorPanel(isError:Boolean \u003d True)\n{ if(isError{\n...}\nelse {\n...\n}}",
+      "range": {
+        "startLine": 105,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 5
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4387e5_e136f6be",
+        "filename": "jami-android/app/src/main/java/cx/ring/account/pinInput/QrCodePinInputFragment.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179c4e49_41bc28bf",
       "range": {
         "startLine": 105,
         "startChar": 3,
@@ -276,6 +540,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93b15277_85cb2074",
+        "filename": "jami-android/app/src/main/res/layout/edit_text_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c4dedf_68c3fdb0",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 41
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1acd0a05_29806201",
@@ -289,6 +577,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "should disappear when removing unecessary constraintlayout",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c449383e_b181d6e7",
+        "filename": "jami-android/app/src/main/res/layout/edit_text_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acd0a05_29806201",
       "range": {
         "startLine": 24,
         "startChar": 0,
@@ -322,6 +634,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a3526a4_55e05a44",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae2a9e1_ed41d6d2",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f72124ae_6ac42969",
@@ -335,6 +671,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "I think it\u0027s already visible by default",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aec936ca_37d355a8",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f72124ae_6ac42969",
       "range": {
         "startLine": 31,
         "startChar": 8,
@@ -368,6 +728,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d4ed56a_4a889ffd",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63873eac_e8c100ae",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 7
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c726659f_a6b8ea72",
@@ -381,6 +765,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "is this really needed ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b638ab16_9fa07ef1",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c726659f_a6b8ea72",
       "range": {
         "startLine": 47,
         "startChar": 29,
@@ -414,6 +822,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b0fc8f9_44c3e9d0",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "350f70ee_da233709",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f16aa27_a0bc1edf",
@@ -427,6 +859,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "\u003d\"@null\" would be better as you already described the checkbox :)",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87645979_a9274183",
+        "filename": "jami-android/app/src/main/res/layout/qr_code_pin_input.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f16aa27_a0bc1edf",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -460,6 +916,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0e7910_d7a1f65d",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad3eda4_7c4bef8a",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 12
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de06f0b2_95f0fe76",
@@ -473,6 +953,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "not related to this commit feature",
+      "range": {
+        "startLine": 240,
+        "startChar": 18,
+        "endLine": 240,
+        "endChar": 45
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1f4488d_b8d46f9f",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de06f0b2_95f0fe76",
       "range": {
         "startLine": 240,
         "startChar": 18,
@@ -506,6 +1010,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c92efa_e48ce08f",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aceb45c2_ba1a2a5c",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 23
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a534fa4_f29a5815",
@@ -519,6 +1047,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "not related to this commit feature",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 38
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83ca7e76_27774ae3",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a534fa4_f29a5815",
       "range": {
         "startLine": 297,
         "startChar": 0,
@@ -552,6 +1104,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d009b236_fe7ddae2",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbd840e_e95ae707",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 12
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c53b1a91_ef2f9e7e",
@@ -565,6 +1141,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "not related to this commit feature",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 27
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f99e4ca_f815078b",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53b1a91_ef2f9e7e",
       "range": {
         "startLine": 299,
         "startChar": 0,
@@ -598,6 +1198,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "075954b5_baf8053e",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cbd66c7_e9c1b655",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 50
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11eae2ea_a286d0c1",
@@ -621,6 +1245,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0bfe17b_cd56b2e3",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11eae2ea_a286d0c1",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 43
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84d70ead_7d0d753b",
@@ -634,6 +1282,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "not related to this commit feature",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 18
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81c47369_e3dccb4f",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d70ead_7d0d753b",
       "range": {
         "startLine": 302,
         "startChar": 0,
@@ -690,6 +1362,54 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "013fcd3d_131ebac3",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55073e3_ccc6c927",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 43
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bef765e5_642b53e6",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1aee1f5_45bc4915",
+      "range": {
+        "startLine": 303,
+        "startChar": 129,
+        "endLine": 303,
+        "endChar": 130
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ec940cb_0c0a5635",
@@ -703,6 +1423,30 @@
       "writtenOn": "2023-09-26T15:27:06Z",
       "side": 1,
       "message": "not related to this commit feature",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 16
+      },
+      "revId": "af99112badfdc6c4db477f4cdb44798d216d8631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26bca5db_9997541e",
+        "filename": "jami-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-09-28T15:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec940cb_0c0a5635",
       "range": {
         "startLine": 310,
         "startChar": 0,
