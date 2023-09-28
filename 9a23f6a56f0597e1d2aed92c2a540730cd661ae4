@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72993474_fa0c4e60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-28T18:18:57Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "a27df54a_837a462a",
+      "revId": "9a23f6a56f0597e1d2aed92c2a540730cd661ae4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28690a40_c2d3836e",
         "filename": "jami-android/app/src/main/java/cx/ring/fragments/LinkDeviceFragment.kt",
         "patchSetId": 19
