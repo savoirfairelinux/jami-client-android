@@ -16,6 +16,24 @@
       "message": "should be merged with linkdevice: added tab layout for qrcode and pin input",
       "revId": "18aa855dd5f4a1f2539552d1edb7410713e8daa1",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8369dd2_b3b795ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-09-28T18:17:11Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "c06c50c5_5953a041",
+      "revId": "18aa855dd5f4a1f2539552d1edb7410713e8daa1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
