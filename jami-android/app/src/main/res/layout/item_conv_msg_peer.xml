@@ -40,17 +40,17 @@ along with this program; if not, write to the Free Software
         tools:visibility="visible" />
 
     <!--    message time when you click it, to delete -->
-     <TextView
-        android:id="@+id/msg_details_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="2dp"
-        android:textColor="@color/textColorSecondary"
-        android:textSize="@dimen/conversation_timestamp_textsize"
-        android:visibility="gone"
-        tools:text="@string/time_just_now"
-        tools:visibility="visible" />
+<!--     <TextView-->
+<!--        android:id="@+id/msg_details_txt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="4dp"-->
+<!--        android:paddingBottom="2dp"-->
+<!--        android:textColor="@color/textColorSecondary"-->
+<!--        android:textSize="@dimen/conversation_timestamp_textsize"-->
+<!--        android:visibility="gone"-->
+<!--        tools:text="@string/time_just_now"-->
+<!--        tools:visibility="visible" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,8 +60,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/two"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_weight="3"
-
+            app:layout_constraintHorizontal_weight="5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/one"
             app:layout_constraintTop_toTopOf="parent">
@@ -131,12 +130,12 @@ along with this program; if not, write to the Free Software
                 android:minWidth="@dimen/conversation_avatar_size"
                 android:minHeight="@dimen/conversation_avatar_size">
 <!--mettre les liens de la bonne couleur dans msg_txt-->
+                <!-- padding of the msg_txt is added in ConversationAdapter.kt-->
                 <TextView
                     android:id="@+id/msg_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"
-                    android:padding="10dp"
                     android:textColor="@color/colorOnSurface"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_size_medium"
@@ -149,7 +148,9 @@ along with this program; if not, write to the Free Software
                     layout="@layout/msg_link_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/msg_txt" />
+                    app:layout_constraintTop_toBottomOf="@id/msg_txt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -159,8 +160,8 @@ along with this program; if not, write to the Free Software
                 android:layout_width="34dp"
                 android:layout_height="@dimen/conversation_avatar_size"
                 android:layout_alignBottom="@id/msg_txt_container2"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="-10dp"
+                android:layout_alignBaseline="@id/msg_txt_container2"
+                android:layout_marginEnd="10dp"
                 android:contentDescription="@string/content_avatar"
                 tools:srcCompat="@tools:sample/avatars"
                 tools:visibility="visible" />
@@ -191,7 +192,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintHorizontal_weight="1"
-
             app:layout_constraintLeft_toRightOf="@id/two"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
