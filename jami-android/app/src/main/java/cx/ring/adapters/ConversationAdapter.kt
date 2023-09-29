@@ -575,27 +575,6 @@ class ConversationAdapter(
         val id: Long
     ) : ContextMenuInfo
 
-    fun onContextItemSelected(item: MenuItem): Boolean {
-        val info = mCurrentLongItem ?: return false
-        val interaction = try {
-            mInteractions[info.position]
-        } catch (e: IndexOutOfBoundsException) {
-            Log.e(TAG, "Interaction array may be empty or null", e)
-            return false
-        }
-        if (interaction.type == Interaction.InteractionType.CONTACT) return false
-        when (item.itemId) {
-            R.id.conv_action_download -> presenter.saveFile(interaction)
-            R.id.conv_action_share -> presenter.shareFile(interaction as DataTransfer)
-            R.id.conv_action_open -> presenter.openFile(interaction)
-            R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
-            R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
-            R.id.conv_action_reply -> presenter.startReplyTo(interaction)
-            R.id.conv_action_copy_text -> addToClipboard(interaction.body)
-        }
-        return true
-    }
-
     private fun addToClipboard(text: String?) {
         if (text.isNullOrEmpty()) return
         val clipboard = conversationFragment.requireActivity()
