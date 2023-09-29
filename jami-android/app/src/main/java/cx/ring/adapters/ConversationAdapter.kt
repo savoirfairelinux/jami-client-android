@@ -421,15 +421,24 @@ class ConversationAdapter(
             val replyTo = interaction.replyTo
 
             // If currently replying to another message :
-            if (replyTo != null)  {
+            if (replyTo != null) {
                 conversationViewHolder.compositeDisposable.add(replyTo
                     .flatMapObservable { reply -> presenter.contactService
                         .observeContact(interaction.account!!, reply.contact!!, false)
                         .map { contact -> Pair(reply, contact) }}
                     .observeOn(DeviceUtils.uiScheduler)
                     .subscribe({ i ->
-                        conversationViewHolder.mReplyTxt!!.text = i.first.body
-                        conversationViewHolder.mReplyName!!.text = i.second.displayName
+                        // i.first.body is the text in the reply text message
+                        val replyText = i.first.body
+                        // Set the reply text to max 2 lines and crop the width
+                        val lines = replyText?.split("\n") ?: emptyList()
+                        val replyMessage = if (lines.size > 2) {
+                            "${lines[0]}\n${lines[1]} ..."
+                        } else {
+                            replyText
+                        }
+                        conversationViewHolder.mReplyTxt!!.text = replyMessage
+                        conversationViewHolder.mReplyName.text = i.second.displayName
 
                         // Apply correct color depending if message is incoming or not.
                         conversationViewHolder.mMsgReplyContainer?.background?.setTint(
@@ -448,7 +457,6 @@ class ConversationAdapter(
                                 R.color.text_color_primary_dark
                             )
                         )
-
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
                             .withContact(i.second)
@@ -516,7 +524,7 @@ class ConversationAdapter(
                 else -> {}
             }
         }
-        if(isSearch)
+        if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
     }
 
