@@ -132,11 +132,13 @@ class ConversationAdapter(
                 mInteractions.addAll(list)
                 notifyDataSetChanged()
             }
+
             list.size > mInteractions.size -> {
                 val oldSize = mInteractions.size
                 mInteractions.addAll(list.subList(oldSize, list.size))
                 notifyItemRangeInserted(oldSize, list.size)
             }
+
             else -> {
                 mInteractions.clear()
                 mInteractions.addAll(list)
@@ -267,12 +269,14 @@ class ConversationAdapter(
                 } else {
                     MessageType.CALL_INFORMATION.ordinal
                 }
+
             Interaction.InteractionType.TEXT ->
                 if (interaction.isIncoming) {
                     MessageType.INCOMING_TEXT_MESSAGE.ordinal
                 } else {
                     MessageType.OUTGOING_TEXT_MESSAGE.ordinal
                 }
+
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
@@ -285,6 +289,7 @@ class ConversationAdapter(
                 }
                 out
             }
+
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
     }
@@ -421,7 +426,7 @@ class ConversationAdapter(
             val replyTo = interaction.replyTo
 
             // If currently replying to another message :
-            if (replyTo != null)  {
+            if (replyTo != null) {
                 conversationViewHolder.compositeDisposable.add(replyTo
                     .flatMapObservable { reply -> presenter.contactService
                         .observeContact(interaction.account!!, reply.contact!!, false)
@@ -448,6 +453,10 @@ class ConversationAdapter(
                                 R.color.text_color_primary_dark
                             )
                         )
+                        // set the reply text to max 2 lines
+                        conversationViewHolder.mReplyTxt.maxLines = 2
+//                        update mReplyTxt maxWidth to have the wrap the two lines width of text
+//                        conversationViewHolder.mReplyTxt.width =
 
                         // Load avatar drawable from contact.
                         val smallAvatarDrawable = AvatarDrawable.Builder()
@@ -516,7 +525,7 @@ class ConversationAdapter(
                 else -> {}
             }
         }
-        if(isSearch)
+        if (isSearch)
             configureSearchResult(conversationViewHolder, interaction)
     }
 
@@ -1553,7 +1562,9 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_out_reply,
             R.drawable.textmsg_bg_out_reply_first,
             R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first
+            R.drawable.textmsg_bg_in_reply_first,
+            R.drawable.textmsg_bg_ripple,
+            R.drawable.textmsg_bg_ripple_first
         )
 
         /**
