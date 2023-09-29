@@ -412,10 +412,6 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding = null
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean =
-        if (mAdapter!!.onContextItemSelected(item)) true
-        else super.onContextItemSelected(item)
-
     fun updateAdapterItem() {
         if (mSelectedPosition != -1) {
             mAdapter?.notifyItemChanged(mSelectedPosition)
