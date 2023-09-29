@@ -168,7 +168,10 @@ class ConversationFacade(
             } else {
                 val file = mDeviceRuntimeService.getConversationPath(conversation.accountId, conversation.uri.rawRingId, transfer.storagePath)
                 if (conversation.isSwarm) {
-                    mDisposableBag.add(Completable.fromAction { file.delete() }
+                    mDisposableBag.add(Completable.fromAction {
+                        file.delete()
+                        transfer.bytesProgress = 0
+                    }
                         .subscribeOn(Schedulers.io())
                         .subscribe({
                             transfer.status = InteractionStatus.FILE_AVAILABLE
