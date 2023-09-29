@@ -33,7 +33,6 @@ import android.net.Uri
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
@@ -81,6 +80,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
+import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
@@ -184,6 +184,8 @@ class ConversationAdapter(
 
     fun update(e: Interaction) {
         Log.w(TAG, "update " + e.messageId)
+        // modify message type of the view holder
+
         if (!e.isIncoming && e.status == InteractionStatus.SUCCESS) {
             notifyItemChanged(lastDeliveredPosition)
         }
@@ -294,6 +296,7 @@ class ConversationAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationViewHolder {
+        Log.w("devdebug", "salut oncreateviewholder")
         val type = MessageType.values()[viewType]
         val v = if (type == MessageType.INVALID) FrameLayout(parent.context)
         else (LayoutInflater.from(parent.context).inflate(type.layout, parent, false) as ViewGroup)
@@ -575,26 +578,27 @@ class ConversationAdapter(
         val id: Long
     ) : ContextMenuInfo
 
-    fun onContextItemSelected(item: MenuItem): Boolean {
-        val info = mCurrentLongItem ?: return false
-        val interaction = try {
-            mInteractions[info.position]
-        } catch (e: IndexOutOfBoundsException) {
-            Log.e(TAG, "Interaction array may be empty or null", e)
-            return false
-        }
-        if (interaction.type == Interaction.InteractionType.CONTACT) return false
-        when (item.itemId) {
-            R.id.conv_action_download -> presenter.saveFile(interaction)
-            R.id.conv_action_share -> presenter.shareFile(interaction as DataTransfer)
-            R.id.conv_action_open -> presenter.openFile(interaction)
-            R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
-            R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
-            R.id.conv_action_reply -> presenter.startReplyTo(interaction)
-            R.id.conv_action_copy_text -> addToClipboard(interaction.body)
-        }
-        return true
-    }
+//    fun onContextItemSelected(item: MenuItem): Boolean {
+//        Log.w("devdebug", "onContextItemSelected")
+//        val info = mCurrentLongItem ?: return false
+//        val interaction = try {
+//            mInteractions[info.position]
+//        } catch (e: IndexOutOfBoundsException) {
+//            Log.e(TAG, "Interaction array may be empty or null", e)
+//            return false
+//        }
+//        if (interaction.type == Interaction.InteractionType.CONTACT) return false
+//        when (item.itemId) {
+//            R.id.conv_action_download -> presenter.saveFile(interaction)
+//            R.id.conv_action_share -> presenter.shareFile(interaction as DataTransfer)
+//            R.id.conv_action_open -> presenter.openFile(interaction)
+//            R.id.conv_action_delete -> presenter.deleteConversationItem(interaction)
+//            R.id.conv_action_cancel_message -> presenter.cancelMessage(interaction)
+//            R.id.conv_action_reply -> presenter.startReplyTo(interaction)
+//            R.id.conv_action_copy_text -> addToClipboard(interaction.body)
+//        }
+//        return true
+//    }
 
     private fun addToClipboard(text: String?) {
         if (text.isNullOrEmpty()) return
@@ -678,7 +682,14 @@ class ConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        lateinit var player: MediaPlayer
+        try{
+            player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+        }
+        catch (e: Exception) {
+            Log.e(TAG, "Error initializing player", e)
+            return
+        }
         viewHolder.player = player
         val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
@@ -901,10 +912,12 @@ class ConversationAdapter(
                         Log.w(TAG, "Can't open picture", e)
                     }
                     popupWindow.dismiss()
+
                 }
 
                 // Delete
                 convActionDelete.setOnClickListener {
+                    Log.w("devdebug", "delete")
                     presenter.deleteConversationItem(interaction)
                     popupWindow.dismiss()
                 }
@@ -947,9 +960,17 @@ class ConversationAdapter(
 
     @SuppressLint("RestrictedApi", "ClickableViewAccessibility")
     private fun configureForFileInfo(viewHolder: ConversationViewHolder, interaction: Interaction, position: Int) {
+        Log.w("devdebug", "position= $position sur $itemCount")
+
         val file = interaction as DataTransfer
+
+        val status5 = file.status
+
+
+
         val path = presenter.deviceRuntimeService.getConversationPath(file)
         val timeString = TextUtils.timestampToDetailString(viewHolder.itemView.context, file.timestamp)
+        Log.w("devdebug", "status = ${file.status}")
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe {
             viewHolder.mMsgDetailTxt?.text = when (val status = file.status) {
                 InteractionStatus.TRANSFER_FINISHED -> String.format("%s - %s", timeString,
@@ -980,13 +1001,24 @@ class ConversationAdapter(
                     avatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.primaryNumber))
             }
         }
-        val type = viewHolder.type.transferType
+        val type =  if(status5!= InteractionStatus.FILE_AVAILABLE)  viewHolder.type.transferType else MessageType.TransferType.FILE
+        Log.w("devdebug", "type = $type")
+
         val longPressView = when (type) {
-            MessageType.TransferType.IMAGE -> viewHolder.mImage
-            MessageType.TransferType.VIDEO -> viewHolder.video
+            MessageType.TransferType.IMAGE -> {
+                Log.w("devdebug", "viewHolder.mImage ")
+                viewHolder.mImage}
+            MessageType.TransferType.VIDEO -> {
+                Log.w("devdebug", "viewHolder.mvideo ")
+                viewHolder.video}
             MessageType.TransferType.AUDIO -> viewHolder.mAudioInfoLayout
-            else -> viewHolder.mFileInfoLayout
+            else -> {
+                Log.w("devdebug", "viewHolder.mfile")
+                viewHolder.mFileInfoLayout
+            }
         } ?: return
+
+
         if (type == MessageType.TransferType.AUDIO || type == MessageType.TransferType.FILE) {
             longPressView.background?.setTintList(null)
         }
@@ -999,13 +1031,15 @@ class ConversationAdapter(
             mCurrentLongItem = RecyclerViewContextMenuInfo(viewHolder.bindingAdapterPosition, v.id.toLong())
             true
         }
-        if (type == MessageType.TransferType.IMAGE) {
+        if (type == MessageType.TransferType.IMAGE && status5!= InteractionStatus.FILE_AVAILABLE) {
             configureImage(viewHolder, path, file.body)
-        } else if (type == MessageType.TransferType.VIDEO) {
+        } else if (type == MessageType.TransferType.VIDEO && status5!= InteractionStatus.FILE_AVAILABLE) {
+            Log.w("devdebug", "got video")
             configureVideo(viewHolder, path)
-        } else if (type == MessageType.TransferType.AUDIO) {
+        } else if (type == MessageType.TransferType.AUDIO && status5!= InteractionStatus.FILE_AVAILABLE) {
             configureAudio(viewHolder, path)
         } else {
+            Log.w("devdebug", "configureForFileInfo - else type = $type filename= ${file.displayName}")
             val status = file.status
             viewHolder.mIcon?.setImageResource(if (status.isError) R.drawable.baseline_warning_24 else R.drawable.baseline_attach_file_24)
             viewHolder.mMsgTxt?.text = file.displayName

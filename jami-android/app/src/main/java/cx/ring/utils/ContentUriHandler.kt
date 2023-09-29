@@ -70,6 +70,7 @@ object ContentUriHandler {
             else
                 FileProvider.getUriForFile(context, authority, file, displayName)
         } catch (e: IllegalArgumentException) {
+            Log.w("devdebug", "hello")
             if (HUAWEI_MANUFACTURER.equals(Build.MANUFACTURER, ignoreCase = true)) {
                 Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e)
                 // Note: Periodically clear this cache
@@ -83,8 +84,10 @@ object ContentUriHandler {
                         FileProvider.getUriForFile(context, authority, cacheLocation, displayName)
                 }
                 Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception")
+                Log.w("devdebug", "hello2")
                 throw IllegalArgumentException("Huawei devices are unsupported for Android N")
             } else {
+                Log.w("devdebug", "hello3")
                 throw e
             }
         }

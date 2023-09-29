@@ -172,6 +172,9 @@ class ConversationFacade(
                         .subscribeOn(Schedulers.io())
                         .subscribe({
                             transfer.status = InteractionStatus.FILE_AVAILABLE
+
+//                            transfer.tran = Interaction.InteractionType.DATA_TRANSFER
+                            Log.w("devdebug", "delete file transfer")
                             conversation.updateInteraction(transfer)
                         })
                         { e: Throwable -> Log.e(TAG, "Can't delete file transfer", e) })

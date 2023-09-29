@@ -149,11 +149,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         val histList = binding?.histList ?: return
         mAdapter?.let { adapter ->
             val position = adapter.getMessagePosition(messageId)
-            if(position == -1)
+            if (position == -1)
                 return
             binding!!.histList.scrollToPosition(position)
 
-            if(highlight) {
+            if (highlight) {
                 histList.doOnNextLayout {
                     histList.layoutManager?.findViewByPosition(position)
                         ?.setBackgroundColor(resources.getColor(R.color.surface))
@@ -202,7 +202,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         activity?.onBackPressedDispatcher?.addCallback(this, onBackPressedCallback)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val res = resources
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin)
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width)
@@ -212,7 +216,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
             this@ConversationFragment.binding = binding
             binding.presenter = this@ConversationFragment
             animation.duration = 150
-            animation.addUpdateListener { valueAnimator: ValueAnimator -> binding.histList.updatePadding(bottom = valueAnimator.animatedValue as Int) }
+            animation.addUpdateListener { valueAnimator: ValueAnimator ->
+                binding.histList.updatePadding(
+                    bottom = valueAnimator.animatedValue as Int
+                )
+            }
 
             (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
 
@@ -224,7 +232,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                         override fun onPrepare(animation: WindowInsetsAnimationCompat) {
                             animating++
                         }
-                        override fun onProgress(insets: WindowInsetsCompat, runningAnimations: List<WindowInsetsAnimationCompat>): WindowInsetsCompat {
+
+                        override fun onProgress(
+                            insets: WindowInsetsCompat,
+                            runningAnimations: List<WindowInsetsAnimationCompat>
+                        ): WindowInsetsCompat {
                             layoutToAnimate.updatePadding(bottom = insets.systemWindowInsetBottom)
                             return insets
                         }
@@ -270,14 +282,26 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 remaining
             }
 
-            binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ -> actionSendMsgText(actionId) }
-            binding.msgInputTxt.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus: Boolean ->
-                if (hasFocus) {
-                    (childFragmentManager.findFragmentById(R.id.mapLayout) as LocationSharingFragment?)?.hideControls()
-                }
+            binding.msgInputTxt.setOnEditorActionListener { _, actionId: Int, _ ->
+                actionSendMsgText(
+                    actionId
+                )
             }
+            binding.msgInputTxt.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus: Boolean ->
+                    if (hasFocus) {
+                        (childFragmentManager.findFragmentById(R.id.mapLayout) as LocationSharingFragment?)?.hideControls()
+                    }
+                }
             binding.msgInputTxt.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     val message = s.toString()
@@ -292,7 +316,8 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                     }
                     mPreferences?.let { preferences ->
                         if (hasMessage)
-                            preferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply()
+                            preferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message)
+                                .apply()
                         else
                             preferences.edit().remove(KEY_PREFERENCE_PENDING_MESSAGE).apply()
                     }
@@ -340,6 +365,7 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
                 // The minimum amount of items to have below current scroll position
                 // before loading more.
                 val visibleLoadThreshold = 3
+
                 // The amount of items to have below the current scroll position to display
                 // the scroll to latest button.
                 val visibleLatestThreshold = 8
@@ -395,10 +421,11 @@ class ConversationFragment : BaseSupportFragment<ConversationPresenter, Conversa
         binding = null
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean =
-        if (mAdapter!!.onContextItemSelected(item)) true
-        else super.onContextItemSelected(item)
-
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        Log.w("devdebug", "onContextItemSelected2")
+//        return if (mAdapter!!.onContextItemSelected(item)) true
+//        else super.onContextItemSelected(item)
+//    }
     fun updateAdapterItem() {
         if (mSelectedPosition != -1) {
             mAdapter?.notifyItemChanged(mSelectedPosition)
