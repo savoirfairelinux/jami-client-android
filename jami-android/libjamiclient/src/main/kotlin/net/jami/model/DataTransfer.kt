@@ -118,7 +118,7 @@ class DataTransfer : Interaction {
     val isVideo: Boolean
         get() = VIDEO_EXTENSIONS.contains(extension)
     val isComplete: Boolean
-        get() = (conversationId == null && isOutgoing) || (totalSize > 0 && bytesProgress == totalSize) || InteractionStatus.TRANSFER_FINISHED.toString() == mStatus
+        get() = InteractionStatus.TRANSFER_FINISHED.toString() == mStatus
 
     fun showPicture(): Boolean = isPicture && isComplete
 
@@ -129,10 +129,6 @@ class DataTransfer : Interaction {
                 if (fileId.isNullOrEmpty()) { "Error" } else fileId!!
             } else return b
         }
-
-    fun setSize(size: Long) {
-        totalSize = size
-    }
 
     val displayName: String
         get() = body!!
