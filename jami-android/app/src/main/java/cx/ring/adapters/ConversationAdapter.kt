@@ -33,7 +33,6 @@ import android.net.Uri
 import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
@@ -81,6 +80,7 @@ import net.jami.conversation.ConversationPresenter
 import net.jami.model.*
 import net.jami.model.Account.ComposingStatus
 import net.jami.model.Interaction.InteractionStatus
+import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
@@ -678,7 +678,15 @@ class ConversationAdapter(
         }
         val video = viewHolder.video ?: return
         val cardLayout = viewHolder.mLayout as CardView
-        val player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)) ?: return
+
+        val contentUri = try {
+            getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path)
+        } catch (e: Exception) {
+            Log.w(TAG, "Can't open video", e)
+            return
+        }
+        val player = MediaPlayer.create(context, contentUri) ?: return
+
         viewHolder.player = player
         val playBtn = ContextCompat.getDrawable(cardLayout.context, R.drawable.baseline_play_arrow_24)!!.mutate()
         DrawableCompat.setTint(playBtn, Color.WHITE)
