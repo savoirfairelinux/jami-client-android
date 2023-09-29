@@ -1082,6 +1082,15 @@ class ConversationAdapter(
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    // Manage layout for deleted message. Index refers to msgBGLayouts array.
+                    // Standard deleted message, incoming or outgoing and first, single or last.
+                    val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
+                    // Manage padding and background.
+                    msgTxtContainer.background =
+                        ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
+                        msgTxt.setPadding(it, it, it, it)
+                    }
                     msgTxtContainer.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer.background?.setTint(convColor)
@@ -1132,6 +1141,9 @@ class ConversationAdapter(
                         else msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
 
                     msgTxtContainer.background = ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    context.resources.getDimensionPixelSize(R.dimen.padding_medium).let {
+                        msgTxt.setPadding(it, it, it, it)
+                    }
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxtContainer.background.setTint(convColor)
                     }
@@ -1154,7 +1166,6 @@ class ConversationAdapter(
                                 if (data.imageUrl.isNotEmpty()) {
                                     Glide.with(context)
                                         .load(data.imageUrl)
-                                        .centerCrop()
                                         .into(image)
                                     image.visibility = View.VISIBLE
                                 } else {
