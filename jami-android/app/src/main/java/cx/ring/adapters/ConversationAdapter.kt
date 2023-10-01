@@ -1363,7 +1363,12 @@ class ConversationAdapter(
         }
         // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
-        convViewHolder.mHistTxt?.text = historyTxt
+        convViewHolder.mHistTxt?.text =
+            if (call.duration != 0L)
+                historyTxt + String.format(
+                    context.getString(R.string.call_duration), call.shortDurationString
+                )
+            else historyTxt
         convViewHolder.mHistDetailTxt?.text =
             DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
