@@ -231,7 +231,7 @@ class LogsActivity : AppCompatActivity() {
                             Log.w(TAG, "#$index ${frame.fileName} ${frame.functionName}+${frame.functionOffset}")
                         }
                     }*/
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     Log.e(TAG, "Failed to parse tombstone", e)
                 }
             }
