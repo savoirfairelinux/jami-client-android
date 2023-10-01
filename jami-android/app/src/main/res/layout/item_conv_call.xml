@@ -49,7 +49,7 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/call_hist_txt"
@@ -60,7 +60,15 @@ along with this program; if not, write to the Free Software
                 android:singleLine="false"
                 android:textColor="@color/colorOnSurface"
                 android:textSize="@dimen/text_size_small"
-                tools:text="Appel manqué" />
+                tools:text="Appel manqué " />
+
+            <TextView
+                android:id="@+id/call_details_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorOnSurface"
+                android:textSize="@dimen/text_size_small"
+                tools:text="- Lasted 17:26" />
 
         </LinearLayout>
     </LinearLayout>
