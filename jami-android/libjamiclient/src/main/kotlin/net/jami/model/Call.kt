@@ -26,6 +26,7 @@ import net.jami.utils.ProfileChunk
 import net.jami.utils.VCardUtils
 import java.lang.UnsupportedOperationException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Call : Interaction {
     override val daemonIdString: String?
@@ -180,6 +181,19 @@ class Call : Interaction {
                 String.format(Locale.getDefault(), "%02d mins %02d secs", mDuration % 3600 / 60, mDuration % 60)
             else
                 String.format(Locale.getDefault(), "%d h %02d mins %02d secs", mDuration / 3600, mDuration % 3600 / 60, mDuration % 60)
+        }
+
+    val shortDurationString: String
+        get() {
+            val mDuration = duration!!
+            val unit = TimeUnit.MILLISECONDS
+            val h = unit.toHours(mDuration)
+            val m = unit.toMinutes(mDuration) % 60
+            val s = unit.toSeconds(mDuration) % 60
+            return if (mDuration < 3600000L)
+                String.format("%02d:%02d", m, s)
+            else
+                String.format("%02d:%02d:%02d", h, m, s)
         }
 
     fun setCallState(callStatus: CallStatus) {
