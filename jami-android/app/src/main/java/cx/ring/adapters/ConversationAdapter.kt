@@ -85,6 +85,7 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
+import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -1407,31 +1408,33 @@ class ConversationAdapter(
                     callInfoLayout.background.setTintList(null)
                     val callIcon = convViewHolder.mIcon ?: return@subscribe
                     callIcon.drawable.setTintList(null)
-                    val histTxt = convViewHolder.mHistTxt ?: return@subscribe
+                    val typeCall = convViewHolder.mHistTxt ?: return@subscribe
+                    val detailCall = convViewHolder.mHistDetailTxt ?: return@subscribe
                     val resIndex: Int
+                    val typeCallTxt : String
                     // After call, a message is displayed in conversation to inform the user about the call.
                     // Manage the call message layout.
                     if (call.isIncoming) {
                         if (call.isMissed) { // Call incoming missed.
                             resIndex = msgSequenceType.ordinal + 12
                             // Set the call message color.
-                            histTxt.setTextColor(
+                            typeCall.setTextColor(
                                 convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_call_missed_24)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                            histTxt.text = context.getString(R.string.notif_missed_incoming_call)
+                            typeCallTxt = context.getString(R.string.notif_missed_incoming_call)
                         } else { // Call incoming not missed.
                             resIndex = msgSequenceType.ordinal + 4
                             // Set the call message color.
-                            histTxt.setTextColor(
+                            typeCall.setTextColor(
                                 convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
                             )
                             callIcon.setImageResource(R.drawable.baseline_call_received_24)
                             // Set the drawable color to colorOnSurface because it is not missed.
                             callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
-                            histTxt.text = context.getString(R.string.notif_incoming_call)
+                            typeCallTxt = context.getString(R.string.notif_incoming_call)
                         }
                         // Put the message to the left because it is incoming.
                         convViewHolder.mCallLayout?.gravity = Gravity.START
@@ -1439,25 +1442,25 @@ class ConversationAdapter(
                         if (call.isMissed) { // Outgoing call missed.
                             resIndex = msgSequenceType.ordinal + 16
                             // Set the call message color .
-                            histTxt.setTextColor(
+                            typeCall.setTextColor(
                                 convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_call_missed_outgoing_24)
                             // Set the drawable color to red because it is missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_missed))
-                            histTxt.text = context.getString(R.string.notif_missed_outgoing_call)
+                            typeCallTxt = context.getString(R.string.notif_missed_outgoing_call)
                             // Flip the photo upside down to show a "missed outgoing call".
                             callIcon.scaleY = -1f
                         } else { // Outgoing call not missed.
                             resIndex = msgSequenceType.ordinal
                             // Set the call message color.
-                            histTxt.setTextColor(
+                            typeCall.setTextColor(
                                 convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
                             )
                             callIcon.setImageResource(R.drawable.baseline_call_made_24)
                             // Set the drawable color to call_drawable_color because it is not missed.
                             callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
-                            histTxt.text = context.getString(R.string.notif_outgoing_call)
+                            typeCallTxt = context.getString(R.string.notif_outgoing_call)
                         }
                         // Put the message to the right because it is outgoing.
                         convViewHolder.mCallLayout?.gravity = Gravity.END
@@ -1469,6 +1472,14 @@ class ConversationAdapter(
                     if (convColor != 0 && !call.isIncoming && !call.isMissed) {
                         callInfoLayout.background.setTint(convColor)
                     }
+                    // Add the call duration if not null.
+                    // Otherwise, add only the call type.
+                    typeCall.text =
+                        if (call.duration != 0L) {
+                            String.format(
+                                context.getString(R.string.call_duration), call.shortDurationString
+                            ).let { "$typeCallTxt - $it" }
+                        } else typeCallTxt
                 })
     }
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
