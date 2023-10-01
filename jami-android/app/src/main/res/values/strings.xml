@@ -147,6 +147,7 @@ along with this program; if not, write to the Free Software
     <string name="ongoing_call">Ongoing call</string>
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>
+    <string name="call_duration">Lasted %s</string>
     <string name="start_error_title">Can\'t start Jami !</string>
     <string name="start_error_mic_required">Jami requires the microphone permission to work.</string>
     <string name="action_call_accept">Take call</string>
