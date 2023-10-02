@@ -1,14 +1,15 @@
 package cx.ring.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.text.method.KeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,6 +22,7 @@ import cx.ring.utils.ActionHelper.shareAccount
 import cx.ring.utils.KeyboardVisibilityManager.showKeyboard
 import cx.ring.utils.RegisteredNameFilter
 import cx.ring.viewmodel.JamiIdStatus
+import cx.ring.viewmodel.JamiIdUiState
 import cx.ring.viewmodel.JamiIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,6 +33,15 @@ class JamiIdFragment : Fragment() {
 
     private lateinit var binding: JamiIdLayoutBinding
     private val jamiIdViewModel: JamiIdViewModel by viewModels({ requireParentFragment() })
+
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) =
+            jamiIdViewModel.textChanged(text?.toString()!!)
+    }
 
     // This var is used in a trick to get ellipsize to work. Allows to EditText.setEnabled.
     private lateinit var keyListener: KeyListener
@@ -47,9 +58,6 @@ class JamiIdFragment : Fragment() {
             binding = this
             jamiIdEditText.filters = arrayOf<InputFilter>(RegisteredNameFilter())
             keyListener = jamiIdEditText.keyListener!!
-            jamiIdEditText.doOnTextChanged { text, _, _, _ ->
-                jamiIdViewModel.textChanged(text.toString())
-            }
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +66,12 @@ class JamiIdFragment : Fragment() {
         // Observe the uiState and update the UI
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                var prevState: JamiIdUiState? = null
+
                 jamiIdViewModel.uiState.collect { uiState ->
+
+                    if (uiState.jamiIdStatus == prevState?.jamiIdStatus) return@collect
+                    prevState = uiState
 
                     when (uiState.jamiIdStatus) {
                         JamiIdStatus.USERNAME_NOT_DEFINED ->
@@ -66,10 +79,12 @@ class JamiIdFragment : Fragment() {
                                 username = uiState.username
                             )
 
-                        JamiIdStatus.EDITING_USERNAME_INITIAL ->
+                        JamiIdStatus.EDITING_USERNAME_INITIAL -> {
+                            binding.jamiIdEditText.addTextChangedListener(textWatcher)
                             setEditingUsernameInitialUiState(
                                 typingUsername = uiState.editedUsername
                             )
+                        }
 
                         JamiIdStatus.EDITING_USERNAME_LOADING ->
                             setEditingUsernameLoadingUiState(
@@ -86,10 +101,12 @@ class JamiIdFragment : Fragment() {
                                 typingUsername = uiState.editedUsername
                             )
 
-                        JamiIdStatus.USERNAME_DEFINED ->
+                        JamiIdStatus.USERNAME_DEFINED -> {
+                            binding.jamiIdEditText.removeTextChangedListener(textWatcher)
                             setUsernameDefinedUiState(
                                 username = uiState.username
                             )
+                        }
 
                         else -> {
                             Log.w(TAG, "Unknown JamiIdStatus: ${uiState.jamiIdStatus}")
