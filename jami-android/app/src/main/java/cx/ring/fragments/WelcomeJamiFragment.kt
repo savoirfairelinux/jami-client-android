@@ -31,7 +31,7 @@ class WelcomeJamiFragment : Fragment() {
     private val jamiIdViewModel by lazy { ViewModelProvider(this)[JamiIdViewModel::class.java] }
 
     companion object {
-        private val TAG = WelcomeJamiViewModel::class.simpleName!!
+        private val TAG = WelcomeJamiFragment::class.simpleName!!
     }
 
     override fun onCreateView(
