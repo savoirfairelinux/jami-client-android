@@ -267,6 +267,7 @@ class Conversation : ConversationHistory {
             return null
         }
 
+    @Synchronized
     fun addCall(call: Call) {
         if (!isSwarm && callHistory.contains(call)) {
             return
@@ -400,27 +401,25 @@ class Conversation : ConversationHistory {
         }
     }
 
+    @Synchronized
     fun sortHistory() {
         if (mDirty) {
             //Log.w(TAG, "sortHistory()")
-            synchronized(aggregateHistory) {
-                aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
-                for (i in aggregateHistory.asReversed())
-                    if (i.type != Interaction.InteractionType.INVALID) {
-                        lastEventSubject.onNext(aggregateHistory.last())
-                        break
-                    }
-            }
+            aggregateHistory.sortWith { c1, c2 -> c1.timestamp.compareTo(c2.timestamp) }
+            for (i in aggregateHistory.asReversed())
+                if (i.type != Interaction.InteractionType.INVALID) {
+                    lastEventSubject.onNext(aggregateHistory.last())
+                    break
+                }
             mDirty = false
         }
     }
 
     val lastEvent: Interaction?
+        @Synchronized
         get() {
-            synchronized(aggregateHistory) {
-                sortHistory()
-                return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
-            }
+            sortHistory()
+            return aggregateHistory.lastOrNull { it.type != Interaction.InteractionType.INVALID }
         }
 
     val currentCall: Conference?
@@ -439,11 +438,13 @@ class Conversation : ConversationHistory {
         get() {
             val texts = TreeMap<Long, TextMessage>()
             if (isSwarm) {
-                for (j in aggregateHistory.indices.reversed()) {
-                    val i = aggregateHistory[j]
-                    if (i !is TextMessage) continue
-                    if (i.isRead || i.isNotified) break
-                    texts[i.timestamp] = i
+                synchronized(this) {
+                    for (j in aggregateHistory.indices.reversed()) {
+                        val i = aggregateHistory[j]
+                        if (i !is TextMessage) continue
+                        if (i.isRead || i.isNotified) break
+                        texts[i.timestamp] = i
+                    }
                 }
             } else {
                 for ((key, value) in rawHistory.descendingMap()) {
@@ -493,6 +494,7 @@ class Conversation : ConversationHistory {
      * Clears the conversation cache.
      * @param delete true if you do not want to re-add contact events
      */
+    @Synchronized
     fun clearHistory(delete: Boolean) {
         aggregateHistory.clear()
         rawHistory.clear()
@@ -502,6 +504,7 @@ class Conversation : ConversationHistory {
         clearedSubject.onNext(aggregateHistory)
     }
 
+    @Synchronized
     fun setHistory(loadedConversation: List<Interaction>) {
         aggregateHistory.ensureCapacity(loadedConversation.size)
         for (i in loadedConversation) {
@@ -514,6 +517,7 @@ class Conversation : ConversationHistory {
         mDirty = false
     }
 
+    @Synchronized
     fun addElement(interaction: Interaction) {
         setInteractionProperties(interaction)
         when (interaction.type) {

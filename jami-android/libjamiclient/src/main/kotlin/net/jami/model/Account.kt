@@ -346,11 +346,13 @@ class Account(
         Log.d(TAG, "Account onDataTransferEvent " + transfer.messageId)
         val conversation = transfer.conversation as Conversation
         val transferEventCode = transfer.status
-        if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
-            conversation.addFileTransfer(transfer)
-            updated(conversation)
-        } else {
-            conversation.updateFileTransfer(transfer, transferEventCode)
+        synchronized(conversation) {
+            if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
+                conversation.addFileTransfer(transfer)
+                updated(conversation)
+            } else {
+                conversation.updateFileTransfer(transfer, transferEventCode)
+            }
         }
         return conversation
     }
