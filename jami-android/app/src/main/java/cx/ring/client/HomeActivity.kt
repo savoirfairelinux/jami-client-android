@@ -125,20 +125,22 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
-                if (mBinding?.panel?.isSlideable == true) {
-                    mBinding?.panel?.closePane()
-                    removeFragment(fConversation)
-                    fConversation = null
-                }
+                removeFragment(fConversation)
+                fConversation = null
 
-                mDisposable.add(
-                    mAccountService.currentAccountSubject
-                        .observeOn(DeviceUtils.uiScheduler)
-                        .firstOrError()
-                        .subscribe { account ->
-                            showWelcomeFragment(account)
-                        }
-                )
+                // Hiding the conversation
+                if (mBinding?.panel?.isSlideable == true) { // No place to keep the pane open
+                    mBinding?.panel?.closePane()
+                } else { // Place to show the welcome fragment
+                    mDisposable.add(
+                        mAccountService.currentAccountSubject
+                            .observeOn(DeviceUtils.uiScheduler)
+                            .firstOrError()
+                            .subscribe { account ->
+                                showWelcomeFragment(account)
+                            }
+                    )
+                }
 
                 // Next back press don't have to be handled by this callback.
                 isEnabled = false
@@ -169,8 +171,7 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             //supportActionBar?.title = ""
             binding.panel.lockMode = SlidingPaneLayout.LOCK_MODE_LOCKED
             binding.panel.addPanelSlideListener(object : PanelSlideListener {
-                override fun onPanelSlide(panel: View, slideOffset: Float) {
-                }
+                override fun onPanelSlide(panel: View, slideOffset: Float) {}
 
                 override fun onPanelOpened(panel: View) {
                     conversationBackPressedCallback.isEnabled = true
@@ -178,6 +179,10 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
 
                 override fun onPanelClosed(panel: View) {
                     conversationBackPressedCallback.isEnabled = false
+                    removeFragment(fConversation)
+                    removeFragment(fWelcomeJami)
+                    fConversation = null
+                    fWelcomeJami = null
                 }
             })
         }
@@ -231,16 +236,24 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         mBinding!!.panel.doOnNextLayout {
             it as SlidingPaneLayout
 
-            when (Pair(it.isSlideable, it.isOpen)) {
-                Pair(true, true) -> { // Going to be right pane only
-                    if (fConversation == null) it.closePane()
+            if (it.isSlideable) {
+                // Force the pane to be open to show the conversation
+                if (fConversation != null) {
+                    it.openPane()
+                    return@doOnNextLayout
                 }
-
-                Pair(true, false) -> { // Going to be left pane only
-                    if (fConversation != null) it.openPane()
-                }
-
-                Pair(false, true), Pair(false, false) -> {} // Going to be double pane (horizontal)
+                it.closePane()
+            } else {
+                if (fConversation != null) return@doOnNextLayout
+                mDisposable.add(
+                    mAccountService.currentAccountSubject
+                        .observeOn(DeviceUtils.uiScheduler)
+                        .firstOrError()
+                        .subscribe { account ->
+                            showWelcomeFragment(account)
+                        }
+                )
+                it.openPane()
             }
         }
     }
@@ -307,7 +320,9 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
                         restoreInstanceFlag = false // Turn off the flag
                         return@subscribe
                     }
-                    showWelcomeFragment(it)
+                    if (mBinding?.panel?.isSlideable == false) {
+                        showWelcomeFragment(it)
+                    }
                 }
         )
 
@@ -454,17 +469,11 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         // If a conversation is already displayed, we replace it,
         // else we add it
         conversationBackPressedCallback.isEnabled = true
-        if (fConversation == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
-                .commit()
-            fWelcomeJami = null
-            fConversation = conversation
-            mBinding!!.conversation.isVisible = true
-        } else
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
-                .commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
+            .commit()
+        mBinding!!.conversation.isVisible = true
+
         fConversation = conversation
         mBinding!!.panel.openPane()
     }
