@@ -67,7 +67,8 @@ class HomeAccountCreationFragment :
         model.model = AccountCreationModelImpl().apply {
             isLink = true
         }
-        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
+        //isBackup = false set the title of the page to "Connect From another device"
+        replaceFragmentWithSlide(JamiLinkAccountFragment(false), R.id.wizard_container)
     }
 
     override fun goToAccountConnect() {
@@ -104,7 +105,8 @@ class HomeAccountCreationFragment :
                             isLink = true
                             archive = file
                         }
-                        replaceFragmentWithSlide(JamiLinkAccountFragment(), R.id.wizard_container)
+                        //isBackup = true set the title of the page to " Connect from backup"
+                        replaceFragmentWithSlide(JamiLinkAccountFragment(true), R.id.wizard_container)
                     }) { e: Throwable ->
                         view?.let { v ->
                             Snackbar.make(v, "Can't import archive: " + e.message, Snackbar.LENGTH_LONG).show() }
