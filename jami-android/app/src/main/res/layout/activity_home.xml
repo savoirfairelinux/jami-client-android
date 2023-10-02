@@ -37,8 +37,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/conversation"
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="gone" />
+            android:layout_weight="1" />
 
     </androidx.slidingpanelayout.widget.SlidingPaneLayout>
 
