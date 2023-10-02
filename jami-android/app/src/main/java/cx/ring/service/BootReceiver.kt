@@ -40,7 +40,7 @@ class BootReceiver : BroadcastReceiver() {
                     try {
                         ContextCompat.startForegroundService(context, Intent(SyncService.ACTION_START)
                                 .setClass(context, SyncService::class.java)
-                                .putExtra(SyncService.EXTRA_TIMEOUT, 5 * DateUtils.SECOND_IN_MILLIS))
+                                .putExtra(SyncService.EXTRA_TIMEOUT, 7 * DateUtils.SECOND_IN_MILLIS))
                     } catch (e: IllegalStateException) {
                         Log.e(TAG, "Error starting service", e)
                     }
