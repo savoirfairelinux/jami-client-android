@@ -195,7 +195,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         if (fConversation != null) {
             Log.w(TAG, "Restore conversation fragment $fConversation")
             conversationBackPressedCallback.isEnabled = true
-            mBinding!!.conversation.isVisible = true
             mBinding!!.panel.openPane()
         } else {
             Log.w(TAG, "No conversation Restored")
@@ -405,18 +404,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
             .commit()
         fWelcomeJami = welcomeJamiFragment
         fConversation = null
-        mBinding!!.conversation.isVisible = true
-    }
-
-    fun toggleConversationVisibility(show: Boolean) {
-        //mBinding!!.conversation.isVisible = show
-        if (fConversation == null)
-            return
-        val binding = mBinding ?: return
-        if (show)
-            binding.panel.openPane()
-        else
-            binding.panel.closePane()
     }
 
     fun startConversation(conversationId: String) {
@@ -445,8 +432,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
         supportFragmentManager.beginTransaction()
             .replace(R.id.conversation, conversation, ConversationFragment::class.java.simpleName)
             .commit()
-        mBinding!!.conversation.isVisible = true
-
         fConversation = conversation
         mBinding!!.panel.openPane()
     }
