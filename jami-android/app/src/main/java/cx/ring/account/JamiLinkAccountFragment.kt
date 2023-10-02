@@ -29,9 +29,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import cx.ring.R
 import cx.ring.databinding.FragAccJamiLinkBinding
 
-class JamiLinkAccountFragment : Fragment() {
+class JamiLinkAccountFragment(private val isBackup:Boolean) : Fragment() {
+    // isBackup changes the title of the page
     private val model: AccountCreationViewModel by activityViewModels()
     private var mBinding: FragAccJamiLinkBinding? = null
     private var mCurrentFragment: Fragment? = null
@@ -50,6 +52,8 @@ class JamiLinkAccountFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
+            // change the title of the page depending on the isBackup parameter
+            title.setText(if (isBackup) R.string.account_link_archive_button else R.string.account_link_device)
             val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
             pager.apply {
                 disableScroll(true)
