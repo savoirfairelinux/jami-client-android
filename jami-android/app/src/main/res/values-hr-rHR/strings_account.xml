@@ -67,6 +67,7 @@
   <string name="account_contact_me">Kontaktirajte me na Jamiju!</string>
   <string name="account_migration">Vaš Jami račun može biti ažuriran.</string>
   <string name="ring_account">Jami račun</string>
+  <string name="sip_account">SIP račun</string>
   <string name="ring_account_identity">Identifikacija</string>
   <string name="account_migration_title_dialog">Migracija računa</string>
   <string name="account_migration_message_dialog">Želite li otići na ekran upravljanja računarima kako biste izvršili ovu operaciju?</string>
@@ -137,4 +138,8 @@
   <string name="account_device_name_empty">Ime uređaja ne može biti prazno.</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">invalid</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Ovaj format nije podržan.</string>
+  <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="account_link_device_button">Povezivanje</string>
 </resources>

@@ -377,4 +377,7 @@
   <string name="picker_btn">Elegir contactos</string>
   <string name="bottomsheet_contact">Contacta con Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirada del enjambre</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <string name="welcome_jami_description">¡Comparta su identificador Jami para contactar más fácilmente!</string>
 </resources>

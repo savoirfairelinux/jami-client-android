@@ -371,4 +371,10 @@
   <string name="picker_btn">연락처를 선택</string>
   <string name="bottomsheet_contact">Jami\n%1$s에 연락하세요</string>
   <string name="bottomsheet_remove">무더기에서 제거</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">사용자 이름을 등록</string>
+  <string name="jami_id_looking_for_availability">사용자 이름 사용 가능성에 대해 찾고 있습니다.</string>
+  <string name="jami_id_choose_username">사용자 이름을 선택</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">자미에 오신 것을 환영합니다</string>
 </resources>

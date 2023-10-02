@@ -376,4 +376,11 @@
   <string name="picker_btn">Përzgjidhni kontake</string>
   <string name="bottomsheet_contact">Lidhuni me Jami-n\n%1$s</string>
   <string name="bottomsheet_remove">Hiqe prej zgjoi</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Regjistroni emër përdoruesi</string>
+  <string name="jami_id_looking_for_availability">Po shihet nëse emri i përdoruesit është i pazënë…</string>
+  <string name="jami_id_choose_username">Zgjidhni emër përdoruesi</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Mirë se vini te Jami</string>
+  <string name="welcome_jami_description">Jepuani të tjerëve identifikuesin tuaj Jami, që të lidhen më lehtësisht me ju!</string>
 </resources>

@@ -159,4 +159,10 @@
   <string name="tab_documetn">Документлар</string>
   <string name="dialog_hint_title">Исем</string>
   <string name="dialog_hint_description">Тәрҗемәсе</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Кулланучы исемен теркәгез</string>
+  <string name="jami_id_looking_for_availability">Исемнәр эзлибез...</string>
+  <string name="jami_id_choose_username">Кулланучы исемен сайлагыз</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Җәмигә рәхим итегез.</string>
 </resources>

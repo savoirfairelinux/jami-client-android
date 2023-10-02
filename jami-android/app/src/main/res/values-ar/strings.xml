@@ -376,4 +376,6 @@
   <string name="picker_btn">إختيار جهات الاتصال</string>
   <string name="bottomsheet_contact">الاتصال مع Jami\n%1$s</string>
   <string name="bottomsheet_remove">إبتعد عن السحابة</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

@@ -154,6 +154,7 @@
   <string name="update_account">Cunntas nuashonrú</string>
   <string name="account_migration">Is féidir do chuntas Jami a nuashonrú.\nLe do thoil cuir isteach do phasfhocal.</string>
   <string name="ring_account">Cunntas Jami</string>
+  <string name="sip_account">Cuntas SIP</string>
   <string name="ring_account_identity">Úinéir</string>
   <string name="account_migration_title_dialog">Imirce cuntas</string>
   <string name="account_migration_message_dialog">Ba chóir do chuntais a nuashonrú. An bhfuil tú ag iarraidh dul chuig an scáileán bainistiú Cuntais chun an oibríocht seo a dhéanamh?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">Ní féidir ainm an gléas a bheith folamh</string>
   <string name="account_device_this_indicator">An t-ordú seo</string>
   <string name="account_disabled_indicator">mí-úsáidte</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">Déan nasc a dhéanamh ar ghléas nua</string>
+  <string name="account_link_device_button">Déan nasc</string>
 </resources>

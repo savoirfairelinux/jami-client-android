@@ -156,6 +156,7 @@
   <string name="update_account">アカウントを更新</string>
   <string name="account_migration">Jamiアカウントが更新可能です。\nあなたのパスワードを入力してください。</string>
   <string name="ring_account">Jamiアカウント</string>
+  <string name="sip_account">SIPアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
   <string name="account_migration_message_dialog">アカウントを更新する必要があります。 アカウント管理画面に移動して、この操作を実行しますか？</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">機器名は空にできません</string>
   <string name="account_device_this_indicator">この機器</string>
   <string name="account_disabled_indicator">無効</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">この形式はサポートされていません。</string>
+  <string name="account_link_device_title">新しいデバイスをリンク</string>
+  <string name="account_link_device_button">接続</string>
 </resources>

@@ -377,4 +377,11 @@
   <string name="picker_btn">Alege contacte</string>
   <string name="bottomsheet_contact">Contactează Jami\n%1$s</string>
   <string name="bottomsheet_remove">Scoate din grup</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Înscrie numele de utilizator</string>
+  <string name="jami_id_looking_for_availability">Caut disponibilitatea numelui de utilizator...</string>
+  <string name="jami_id_choose_username">Alege un nume de utilizator</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Bine ai venit pe Jami</string>
+  <string name="welcome_jami_description">Împărtășește identificatorul tău Jami pentru a fi contactat mai ușor!</string>
 </resources>

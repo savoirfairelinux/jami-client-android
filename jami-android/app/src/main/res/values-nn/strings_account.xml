@@ -154,6 +154,7 @@
   <string name="update_account">Aktualisering av kontoen</string>
   <string name="account_migration">Konta på Jami kan oppdaterast. Vennligst skriv inn passordet ditt.</string>
   <string name="ring_account">Jami-kontoen</string>
+  <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrasjon til konto</string>
   <string name="account_migration_message_dialog">Du må oppdatera kontoane dine. Vil du gå til kontoforvaltarskjermen for å gjera denne operasjonen?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Namnet på einheten kan ikkje vera tom.</string>
   <string name="account_device_this_indicator">Denne einheten</string>
   <string name="account_disabled_indicator">funksjonshemma</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Dette formatet er ikkje støtta.</string>
+  <string name="account_link_device_title">Legg ein ny enhet til</string>
+  <string name="account_link_device_button">Knytta</string>
 </resources>

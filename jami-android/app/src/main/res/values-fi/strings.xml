@@ -372,4 +372,8 @@
   <string name="picker_btn">Valitse yhteystiedot</string>
   <string name="bottomsheet_contact">Ota yhteyttä Jami\n%1$s</string>
   <string name="bottomsheet_remove">Viekää karja</string>
+  <!--JamiId-->
+  <string name="jami_id_choose_username">Valitse käyttäjätunnus</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Tervetuloa Jamiin</string>
 </resources>

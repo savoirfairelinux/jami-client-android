@@ -156,6 +156,7 @@ Du kan ändra kontot senare.</string>
   <string name="update_account">Uppdatera konto</string>
   <string name="account_migration">Ditt Jami-konto kan uppdateras.\nAnge ditt lösenord.</string>
   <string name="ring_account">Jami-konto</string>
+  <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Kontodelning</string>
   <string name="account_migration_message_dialog">Dina konton behöver uppdateras. Vill du gå till kontohanteringsfönstret för att uppdatera?</string>
@@ -244,4 +245,8 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_name_empty">Enhetsnamnet kan inte lämnas tomt</string>
   <string name="account_device_this_indicator">Denna enhet</string>
   <string name="account_disabled_indicator">inaktiverad</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Detta format saknar stöd.</string>
+  <string name="account_link_device_title">Koppla en ny enhet</string>
+  <string name="account_link_device_button">Anslut</string>
 </resources>

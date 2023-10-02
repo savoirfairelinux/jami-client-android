@@ -154,6 +154,7 @@
   <string name="update_account">கணக்கை புதுப்பிக்கவும்</string>
   <string name="account_migration">உங்கள் ஜாமி கணக்கை புதுப்பிக்க முடியும். தயவுசெய்து உங்கள் கடவுச்சொல்லை உள்ளிடவும்.</string>
   <string name="ring_account">ஜாமி கணக்கு</string>
+  <string name="sip_account">SIP கணக்கு</string>
   <string name="ring_account_identity">அடையாளம்</string>
   <string name="account_migration_title_dialog">கணக்கு இடம்பெயர்வு</string>
   <string name="account_migration_message_dialog">உங்கள் கணக்குகள் புதுப்பிக்கப்பட வேண்டும். இந்த செயல்பாட்டைச் செய்ய கணக்கு நிர்வாகம் திரைக்குச் செல்ல விரும்புகிறீர்களா?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">சாதனத்தின் பெயர் காலியாக இருக்க முடியாது</string>
   <string name="account_device_this_indicator">இந்த சாதனம்</string>
   <string name="account_disabled_indicator">இயலாமை</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">இந்த வடிவம் ஆதரிக்கப்படவில்லை.</string>
+  <string name="account_link_device_title">புதிய சாதனத்தை இணைக்கவும்</string>
+  <string name="account_link_device_button">இணைக்கவும்</string>
 </resources>

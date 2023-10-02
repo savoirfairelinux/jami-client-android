@@ -157,6 +157,7 @@
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Jami-fiókja frissíthető.\nAdja meg a jelszavát.</string>
   <string name="ring_account">Jami-fiók</string>
+  <string name="sip_account">SIP-fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiók áttelepítése</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiókkezelési lapra ugrani a művelet elvégzéséhez?</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">Az eszköz neve nem lehet üres</string>
   <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Ez a formátum nem támogatott</string>
+  <string name="account_link_device_title">Eszköz összekapcsolása fiókhoz</string>
+  <string name="account_link_device_button">Kapcsolódás</string>
 </resources>

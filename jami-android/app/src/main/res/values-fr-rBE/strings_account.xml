@@ -157,6 +157,7 @@ Vous pouvez modifier votre compte ultérieurement</string>
   <string name="update_account">Mettre à jour le compte</string>
   <string name="account_migration">Votre compte Jami va être mis à jour.\nVeuillez entrer votre mot de passe.</string>
   <string name="ring_account">Compte Jami</string>
+  <string name="sip_account">Compte SIP</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_migration_message_dialog">Vos comptes ont besoin d\'être mis à jour. Souhaitez-vous aller au panneau des comptes pour effectuer cet opération ?</string>
@@ -245,4 +246,8 @@ Vous pouvez modifier votre compte ultérieurement</string>
   <string name="account_device_name_empty">Le champ \"nom de l\'appareil\" ne peut être vide</string>
   <string name="account_device_this_indicator">Cet appareil</string>
   <string name="account_disabled_indicator">désactivé</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Ce format n\'est pas supporté.</string>
+  <string name="account_link_device_title">Associer un nouvel appareil</string>
+  <string name="account_link_device_button">Se connecter</string>
 </resources>

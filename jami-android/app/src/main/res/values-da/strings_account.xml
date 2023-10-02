@@ -156,6 +156,7 @@ Du kan rette din konto senere</string>
   <string name="update_account">Opdater konto</string>
   <string name="account_migration">Din Jami-konto kan opdateres.\nSkriv venligst din adgangskode.</string>
   <string name="ring_account">Jami-konto</string>
+  <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Konto-migrering</string>
   <string name="account_migration_message_dialog">Dine konti kræver at blive opdateret. Vil du gå til Konto-indstillingerne for at foretage denne handling?</string>
@@ -244,4 +245,8 @@ Du kan rette din konto senere</string>
   <string name="account_device_name_empty">Enhedsnavn kan ikke være tom</string>
   <string name="account_device_this_indicator">Denne enhed</string>
   <string name="account_disabled_indicator">deaktiveret</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Dette format understøttes ikke.</string>
+  <string name="account_link_device_title">Tilknyt en ny enhed</string>
+  <string name="account_link_device_button">Køb</string>
 </resources>

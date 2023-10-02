@@ -376,4 +376,7 @@
   <string name="picker_btn">Kontakte auswählen</string>
   <string name="bottomsheet_contact">Kontakt Jami\n%1$s</string>
   <string name="bottomsheet_remove">Aus dem Schwarm entfernen</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <string name="welcome_jami_description">Teilen Sie Ihren Jami-Identifikator mit, um einfacher kontaktiert zu werden!</string>
 </resources>

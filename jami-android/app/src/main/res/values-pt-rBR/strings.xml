@@ -44,6 +44,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <string name="invitation_card_title">Convites recebidos</string>
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="many">%d Conversas</item>
@@ -74,6 +75,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="notif_channel_background_service">Serviço de segundo-plano</string>
   <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens a qualquer hora.</string>
   <string name="notif_group_calls">Chamadas</string>
+  <string name="notif_inprogress_group_call">Chamada em andamento</string>
   <string name="notif_background_service">Jami está ativo em segundo-plano.</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
   <string name="notif_dismiss">Dispensar</string>
@@ -121,6 +123,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="write_a_message">Escreva uma mensagem</string>
   <string name="scan_qr">Escanear Código QR</string>
   <string name="qr_code">Código QR</string>
+  <string name="new_swarm">Iniciar Enxame</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
   <string name="ab_action_hidepreview">Oculta visualização</string>
   <string name="remote_recording">%sgravando...</string>
@@ -136,6 +139,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_send_audio">Gravar áudio</string>
   <string name="conversation_send_video">Gravar vídeo</string>
   <string name="conversation_share_location">Compartilhar localização</string>
+  <string name="ongoing_group_call">Chamada em andamento</string>
   <string name="in_reply_to">Em resposta à</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
@@ -374,4 +378,10 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="picker_btn">Selecionar os contatos</string>
   <string name="bottomsheet_contact">Contacte Jami\n%1$s</string>
   <string name="bottomsheet_remove">Remova-se do enxame</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registrar nome de usuário</string>
+  <string name="jami_id_looking_for_availability">Buscando disponibilidade de usuário...</string>
+  <string name="jami_id_choose_username">Escolha um nome de usuário</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Bem-vindo ao Jami</string>
 </resources>

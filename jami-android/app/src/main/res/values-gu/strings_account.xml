@@ -154,6 +154,7 @@
   <string name="update_account">એકાઉન્ટ અપડેટ કરો</string>
   <string name="account_migration">તમારું જમ્મી એકાઉન્ટ અપડેટ કરી શકાય છે. કૃપા કરીને તમારો પાસવર્ડ દાખલ કરો.</string>
   <string name="ring_account">જમી એકાઉન્ટ</string>
+  <string name="sip_account">એસઆઈપી ખાતું</string>
   <string name="ring_account_identity">ઓળખ</string>
   <string name="account_migration_title_dialog">એકાઉન્ટ સ્થળાંતર</string>
   <string name="account_migration_message_dialog">તમારા એકાઉન્ટ્સને અપડેટ કરવાની જરૂર છે. શું તમે આ ઓપરેશન કરવા માટે એકાઉન્ટ મેનેજમેન્ટ સ્ક્રીન પર જાઓ છો?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">ઉપકરણ નામ ખાલી ન હોઈ શકે</string>
   <string name="account_device_this_indicator">આ ઉપકરણ</string>
   <string name="account_disabled_indicator">અપંગ</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">આ ફોર્મેટને સપોર્ટેડ નથી.</string>
+  <string name="account_link_device_title">નવી ઉપકરણને લિંક કરો</string>
+  <string name="account_link_device_button">કનેક્ટ કરો</string>
 </resources>

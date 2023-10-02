@@ -154,6 +154,7 @@
   <string name="update_account">खाता अद्यतन</string>
   <string name="account_migration">आपका जेमी खाता अपडेट किया जा सकता है. कृपया अपना पासवर्ड दर्ज करें.</string>
   <string name="ring_account">जमी खाता</string>
+  <string name="sip_account">एसआईपी खाता</string>
   <string name="ring_account_identity">पहचान</string>
   <string name="account_migration_title_dialog">खाता माइग्रेशन</string>
   <string name="account_migration_message_dialog">क्या आप इस ऑपरेशन को करने के लिए खाता प्रबंधन स्क्रीन पर जाना चाहते हैं?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">डिवाइस का नाम खाली नहीं हो सकता है</string>
   <string name="account_device_this_indicator">यह उपकरण</string>
   <string name="account_disabled_indicator">विकलांग</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">यह प्रारूप समर्थित नहीं है।</string>
+  <string name="account_link_device_title">एक नई डिवाइस को लिंक करें</string>
+  <string name="account_link_device_button">कनेक्ट करें</string>
 </resources>

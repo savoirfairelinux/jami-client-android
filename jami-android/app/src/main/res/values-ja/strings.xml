@@ -377,4 +377,9 @@
   <string name="picker_btn">連絡先を選択</string>
   <string name="bottomsheet_contact">Jamiに連絡をする\n%1$s</string>
   <string name="bottomsheet_remove">Swarmから外す</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">ユーザー名を登録</string>
+  <string name="jami_id_choose_username">ユーザー名を選択する</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Jamiへようこそ</string>
 </resources>

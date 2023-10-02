@@ -157,6 +157,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_migration">Váš účet Jami lze aktualizovat.
 Zadejte, prosím, své heslo.</string>
   <string name="ring_account">Účet Jami</string>
+  <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
   <string name="account_migration_message_dialog">Vaše účty je potřeba aktualizovat. Chcete jít na obrazovku se správou účtů pro provedení této činnosti?</string>
@@ -246,4 +247,8 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_device_name_empty">Název zařízení nemůže být prázdný</string>
   <string name="account_device_this_indicator">Toto zařízení</string>
   <string name="account_disabled_indicator">zakázáno</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Tento formát je nepodporovaný.</string>
+  <string name="account_link_device_title">Připojit nové zařízení</string>
+  <string name="account_link_device_button">Připojit</string>
 </resources>

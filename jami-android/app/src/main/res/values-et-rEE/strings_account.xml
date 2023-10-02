@@ -154,6 +154,7 @@
   <string name="update_account">Päevendamise konto</string>
   <string name="account_migration">Teie Jami konto saab ajakohastada. Palun kirjutage oma parool.</string>
   <string name="ring_account">Jami konto</string>
+  <string name="sip_account">SIP konto</string>
   <string name="ring_account_identity">Isiku tunnus</string>
   <string name="account_migration_title_dialog">Kontodeni rände</string>
   <string name="account_migration_message_dialog">Kas soovite seda operatsiooni teha konto juhtimise ekraanil?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">seadme nimi ei saa olla tühi.</string>
   <string name="account_device_this_indicator">See seadme</string>
   <string name="account_disabled_indicator">puudega</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">See formaat ei toeta.</string>
+  <string name="account_link_device_title">Sõlgke uus seadme</string>
+  <string name="account_link_device_button">Sõltuv</string>
 </resources>

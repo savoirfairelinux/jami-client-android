@@ -232,4 +232,8 @@
   <string name="account_rename_device_hint">ਨਵਾਂ ਡੀਵਾਈਸ ਨਾਂ ਚੁਣੋ</string>
   <string name="account_device_name_empty">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਲਿਖਣਾ ਲਾਜ਼ਮੀ ਹੈ</string>
   <string name="account_disabled_indicator">ਬੰਦ ਕੀਤਾ ਗਿਆ</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">ਇਸ ਵੰਨਗੀ ਵਿੱਚ ਨਹੀਂ ਵਰਤ ਸਕਦੇ।</string>
+  <string name="account_link_device_title">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
+  <string name="account_link_device_button">ਜੋੜੋ</string>
 </resources>

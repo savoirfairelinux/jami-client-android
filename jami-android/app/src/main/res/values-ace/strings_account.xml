@@ -154,6 +154,7 @@
   <string name="update_account">ڤڠاجرن حساب</string>
   <string name="account_migration">حساب جامي تو ميتوان دتموكن.\\nتوسوق ممبريكن ڤرسود.</string>
   <string name="ring_account">حساب جامي</string>
+  <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">ادينتيتي</string>
   <string name="account_migration_title_dialog">ڤمباچ ڤرچاي</string>
   <string name="account_migration_message_dialog">اكوڠت اكوڠ ڤرلو دأدوڤت. اكو بوكن مڠهادڤي سكرين مڠڬوناكن اكوڠت اونتوق ممبنتو ڤرڬي اين؟</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">اسم ڤڠڬوناڽ تيدق بوليه برتاهن</string>
   <string name="account_device_this_indicator">اين دستگاه</string>
   <string name="account_disabled_indicator">ڤڠاجين</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">منچيلكن ڤڠڬونا?? ن بارو</string>
+  <string name="account_link_device_button">وصلكن</string>
 </resources>

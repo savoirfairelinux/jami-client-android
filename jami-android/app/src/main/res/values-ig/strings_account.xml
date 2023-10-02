@@ -154,6 +154,7 @@
   <string name="update_account">Akụkọ mmelite</string>
   <string name="account_migration">Enwere ike imelite akaụntụ Jami gị. Biko tinye paswọọdụ gị.</string>
   <string name="ring_account">Akaụntụ Jami</string>
+  <string name="sip_account">Akụ̀ SIP</string>
   <string name="ring_account_identity">Ihe Ndị A Kpọrọ Mmadụ</string>
   <string name="account_migration_title_dialog">Mbugharị akaụntụ</string>
   <string name="account_migration_message_dialog">Ị chọrọ ịga na ihuenyo njikwa akaụntụ iji rụọ ọrụ a?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">Aha ngwaọrụ apụghị ịbụ efu</string>
   <string name="account_device_this_indicator">Ngwaọrụ a</string>
   <string name="account_disabled_indicator">ndị nwere nkwarụ</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">Jikọọ ngwaọrụ ọhụrụ</string>
+  <string name="account_link_device_button">Jikọọ</string>
 </resources>

@@ -156,6 +156,7 @@
   <string name="update_account">การอัพเดทบัญชี</string>
   <string name="account_migration">บัญชีของจามิของคุณสามารถปรับปรุงได้ครับ กรุณาใส่รหัสผ่านของคุณ</string>
   <string name="ring_account">รายการของจามิ</string>
+  <string name="sip_account">บัญชี SIP</string>
   <string name="ring_account_identity">ตัวตน</string>
   <string name="account_migration_title_dialog">การย้ายบัญชี</string>
   <string name="account_migration_message_dialog">การทําบัญชีของคุณต้องมีการปรับปรุง คุณต้องการที่จะไปหน้าจอการจัดการบัญชีเพื่อทําการนี้หรือไม่</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">ชื่ออุปกรณ์ไม่สามารถว่าง</string>
   <string name="account_device_this_indicator">เครื่องนี้</string>
   <string name="account_disabled_indicator">คนพิการ</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">ไม่รองรับรูปแบบนี้</string>
+  <string name="account_link_device_title">เชื่อมโยงอุปกรณ์ใหม่</string>
+  <string name="account_link_device_button">เชื่อมต่อ</string>
 </resources>

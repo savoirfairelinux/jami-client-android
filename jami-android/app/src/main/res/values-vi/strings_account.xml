@@ -154,6 +154,7 @@
   <string name="update_account">Tải đổi tài khoản</string>
   <string name="account_migration">Tài khoản Jami của bạn có thể được cập nhật. Xin hãy nhập mật khẩu của bạn.</string>
   <string name="ring_account">Tài khoản Jami</string>
+  <string name="sip_account">Tài khoản SIP</string>
   <string name="ring_account_identity">Định dạng</string>
   <string name="account_migration_title_dialog">Di chuyển tài khoản</string>
   <string name="account_migration_message_dialog">Tài khoản của bạn cần phải được cập nhật. Bạn có muốn đi vào màn hình quản lý tài khoản để thực hiện hoạt động này không?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">Tên thiết bị không thể trống</string>
   <string name="account_device_this_indicator">Thiết bị này</string>
   <string name="account_disabled_indicator">người khuyết tật</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">Kết nối một thiết bị mới</string>
+  <string name="account_link_device_button">Kết nối</string>
 </resources>

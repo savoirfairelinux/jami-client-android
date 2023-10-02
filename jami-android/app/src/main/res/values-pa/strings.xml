@@ -314,4 +314,8 @@
   <!--Swarm Detail-->
   <string name="tab_members">ਸਾਥੀ</string>
   <string name="dialog_hint_title">ਸਿਰਲੇਖ</string>
+  <!--JamiId-->
+  <string name="jami_id_looking_for_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
 </resources>

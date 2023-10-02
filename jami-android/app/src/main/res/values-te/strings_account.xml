@@ -154,6 +154,7 @@
   <string name="update_account">ఖాతా నవీకరణ</string>
   <string name="account_migration">మీ జమీ ఖాతా నవీకరించబడుతుంది. దయచేసి మీ పాస్వర్డ్ను నమోదు చేయండి.</string>
   <string name="ring_account">జామి ఖాతా</string>
+  <string name="sip_account">SIP ఖాతా</string>
   <string name="ring_account_identity">గుర్తింపు</string>
   <string name="account_migration_title_dialog">ఖాతా వలస</string>
   <string name="account_migration_message_dialog">మీ ఖాతాలను నవీకరించాలి. ఈ ఆపరేషన్ను నిర్వహించడానికి మీరు ఖాతా నిర్వహణ స్క్రీన్కు వెళ్లాలనుకుంటున్నారా?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">పరికరం పేరు ఖాళీగా ఉండకూడదు</string>
   <string name="account_device_this_indicator">ఈ పరికరం</string>
   <string name="account_disabled_indicator">వికలాంగులు</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">ఈ ఫార్మాట్కు మద్దతు లేదు.</string>
+  <string name="account_link_device_title">కొత్త పరికరాన్ని లింక్ చేయండి</string>
+  <string name="account_link_device_button">కనెక్ట్</string>
 </resources>

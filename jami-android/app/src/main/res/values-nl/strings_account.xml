@@ -156,6 +156,7 @@ U kunt uw account later bewerken</string>
   <string name="update_account">Account bijwerken</string>
   <string name="account_migration">Uw Jami-account kan worden bijgewerkt.\nVoer uw wachtwoord in.</string>
   <string name="ring_account">Jami-account</string>
+  <string name="sip_account">SIP-rekening</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
   <string name="account_migration_message_dialog">Uw account moet worden bijgewerkt. Wilt u naar het accountbeheerscherm gaan om deze handeling uit te voeren?</string>
@@ -244,4 +245,8 @@ U kunt uw account later bewerken</string>
   <string name="account_device_name_empty">Apparaatnaam kan niet leeg zijn</string>
   <string name="account_device_this_indicator">Dit apparaat</string>
   <string name="account_disabled_indicator">uitgeschakeld</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
+  <string name="account_link_device_title">Een nieuw apparaat koppelen</string>
+  <string name="account_link_device_button">Verbinden</string>
 </resources>

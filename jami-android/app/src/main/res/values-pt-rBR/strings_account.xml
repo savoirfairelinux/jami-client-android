@@ -156,6 +156,7 @@
   <string name="update_account">Atualize a conta</string>
   <string name="account_migration">Sua conta no Jami pode ser atualizada.\nPor favor insira sua senha.</string>
   <string name="ring_account">Conta Jami</string>
+  <string name="sip_account">Conta SIP</string>
   <string name="ring_account_identity">Identificação</string>
   <string name="account_migration_title_dialog">Migração de conta</string>
   <string name="account_migration_message_dialog">Sua conta precisa ser atualizada. Você deseja ir na tela de administração da conta para fazer isto?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">Nome do dispositivo não pode estar vazio</string>
   <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desabilitado</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Este formato não é suportado.</string>
+  <string name="account_link_device_title">Associar um novo dispositivo</string>
+  <string name="account_link_device_button">Conectar</string>
 </resources>

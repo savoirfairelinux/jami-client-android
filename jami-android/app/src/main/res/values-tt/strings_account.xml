@@ -154,6 +154,7 @@
   <string name="update_account">Аккаунтны яңарту</string>
   <string name="account_migration">Сезнең Jami хисабыгыз яңартыла ала.</string>
   <string name="ring_account">Җәми хисабы</string>
+  <string name="sip_account">СИП хисабы</string>
   <string name="ring_account_identity">Идентификация</string>
   <string name="account_migration_title_dialog">Хисапны күчерү</string>
   <string name="account_migration_message_dialog">Бу операцияне башкару өчен, сез хисапны идарә итү экраннарына кереп, бу операцияне башкарырга телисезме?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">Кушымта исеме буш була алмый</string>
   <string name="account_device_this_indicator">Бу корал</string>
   <string name="account_disabled_indicator">инвалид</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">Яңа җайланманы тоташтыру</string>
+  <string name="account_link_device_button">Бәйләнешкә кертү</string>
 </resources>

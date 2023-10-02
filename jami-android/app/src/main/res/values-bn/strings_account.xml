@@ -154,6 +154,7 @@
   <string name="update_account">অ্যাকাউন্ট আপডেট</string>
   <string name="account_migration">আপনার জামি অ্যাকাউন্ট আপডেট করা যাবে। অনুগ্রহ করে আপনার পাসওয়ার্ড লিখুন।</string>
   <string name="ring_account">জামি অ্যাকাউন্ট</string>
+  <string name="sip_account">এসআইপি অ্যাকাউন্ট</string>
   <string name="ring_account_identity">পরিচয়</string>
   <string name="account_migration_title_dialog">অ্যাকাউন্ট মাইগ্রেশন</string>
   <string name="account_migration_message_dialog">আপনার অ্যাকাউন্ট আপডেট করা দরকার। আপনি কি এই অপারেশনটি সম্পাদন করতে অ্যাকাউন্ট ম্যানেজমেন্ট স্ক্রিনে যেতে চান?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">ডিভাইসের নামটি খালি থাকতে পারে না</string>
   <string name="account_device_this_indicator">এই ডিভাইস</string>
   <string name="account_disabled_indicator">অক্ষম</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">এই ফরম্যাট সমর্থিত নয়।</string>
+  <string name="account_link_device_title">একটি নতুন ডিভাইস লিঙ্ক</string>
+  <string name="account_link_device_button">সংযুক্ত করুন</string>
 </resources>

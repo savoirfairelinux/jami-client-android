@@ -154,6 +154,7 @@
   <string name="update_account">Абноўленне рахунку</string>
   <string name="account_migration">Ваш рахунак Jami можа быць абнаўлена.\nДайце пароль.</string>
   <string name="ring_account">Рахунак Джэмі</string>
+  <string name="sip_account">Спі-акаўнт</string>
   <string name="ring_account_identity">Пазначэнне</string>
   <string name="account_migration_title_dialog">Міграцыя рахунку</string>
   <string name="account_migration_message_dialog">Твае рахункі павінны быць абнаўляюцца. Вы хочаце пайсці на экран кіравання рахункам для выканання гэтай аперацыі?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">Назва прылады не можа быць пустым</string>
   <string name="account_device_this_indicator">Гэта прылада</string>
   <string name="account_disabled_indicator">інвалід</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">Злучыць новае прылада</string>
+  <string name="account_link_device_button">Злучэнне</string>
 </resources>

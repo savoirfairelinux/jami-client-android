@@ -154,6 +154,7 @@
   <string name="update_account">Päivitä tili</string>
   <string name="account_migration">Jami-tilisi voidaan päivittää.\nAnna salasanasi.</string>
   <string name="ring_account">Jami-tili</string>
+  <string name="sip_account">SIP-tilin</string>
   <string name="ring_account_identity">Tunnistetiedot</string>
   <string name="account_migration_title_dialog">Tilin siirto</string>
   <string name="account_migration_message_dialog">Tilisi on päivitettävä. Haluatko siirtyä käyttäjäasetuksiin tämän toiminnon suorittamiseksi?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä</string>
   <string name="account_device_this_indicator">Tämä laite</string>
   <string name="account_disabled_indicator">poistettu</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
+  <string name="account_link_device_title">Linkitä uusi laite</string>
+  <string name="account_link_device_button">Yhdistä</string>
 </resources>

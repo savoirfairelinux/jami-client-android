@@ -373,4 +373,9 @@
   <string name="picker_btn">Izbor kontaktova</string>
   <string name="bottomsheet_contact">Kontakt s Jami\n%1$s</string>
   <string name="bottomsheet_remove">Odvedite iz skupa</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Upis korisničkog imena</string>
+  <string name="jami_id_choose_username">Izaberite korisničko ime</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Dobrodošli u Jami</string>
 </resources>

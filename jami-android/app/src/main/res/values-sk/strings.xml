@@ -368,4 +368,10 @@
   <string name="picker_btn">Vyberte kontakty</string>
   <string name="bottomsheet_contact">Kontaktujte Jami\n%1$s</string>
   <string name="bottomsheet_remove">Odveďte z hŕňa</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registrovať používateľské meno</string>
+  <string name="jami_id_looking_for_availability">Kontrolujeme dostupnosť používateľského mena...</string>
+  <string name="jami_id_choose_username">Vyberte používateľské meno</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Vitajte v Jami</string>
 </resources>

@@ -164,4 +164,10 @@
   <string name="tab_documetn">Tài liệu</string>
   <string name="dialog_hint_title">Tiêu đề</string>
   <string name="dialog_hint_description">Mô tả</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Đăng ký tên người dùng</string>
+  <string name="jami_id_looking_for_availability">Tìm kiếm tên người dùng sẵn có...</string>
+  <string name="jami_id_choose_username">Chọn tên người dùng</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Chào mừng đến với Jami.</string>
 </resources>

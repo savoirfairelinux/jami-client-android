@@ -374,4 +374,6 @@
   <string name="picker_btn">Vybrat kontakt</string>
   <string name="bottomsheet_contact">Kontaktovat Jami\n %1$s</string>
   <string name="bottomsheet_remove">Odstranit ze swarmu</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

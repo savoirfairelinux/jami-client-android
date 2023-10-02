@@ -374,4 +374,10 @@
   <string name="picker_btn">Izberite stike</string>
   <string name="bottomsheet_contact">Stop v stik z Jamijem\n%1$s</string>
   <string name="bottomsheet_remove">Odstrani iz roja</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registriraj uporabniško ime</string>
+  <string name="jami_id_looking_for_availability">Poteka preverjanje, ali je uporabniško ime na voljo ...</string>
+  <string name="jami_id_choose_username">Izberite uporabniško ime</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Dobrodošli v Jami</string>
 </resources>

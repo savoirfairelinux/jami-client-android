@@ -154,6 +154,7 @@
   <string name="update_account">ಖಾತೆಯನ್ನು ನವೀಕರಿಸಿ</string>
   <string name="account_migration">ನಿಮ್ಮ ಜಾಮಿ ಖಾತೆಯನ್ನು ನವೀಕರಿಸಬಹುದು. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ನಮೂದಿಸಿ.</string>
   <string name="ring_account">ಜಾಮಿ ಖಾತೆ</string>
+  <string name="sip_account">ಎಸ್ಐಪಿ ಖಾತೆ</string>
   <string name="ring_account_identity">ಗುರುತಿನ</string>
   <string name="account_migration_title_dialog">ಖಾತೆ ವಲಸೆ</string>
   <string name="account_migration_message_dialog">ನಿಮ್ಮ ಖಾತೆಗಳನ್ನು ನವೀಕರಿಸಬೇಕಾಗಿದೆ. ಈ ಕಾರ್ಯಾಚರಣೆಯನ್ನು ನಿರ್ವಹಿಸಲು ನೀವು ಖಾತೆ ನಿರ್ವಹಣೆ ಸ್ಕ್ರೀನ್ಗೆ ಹೋಗಲು ಬಯಸುವಿರಾ?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">ಸಾಧನ ಹೆಸರು ಖಾಲಿ ಇರಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
   <string name="account_device_this_indicator">ಈ ಸಾಧನ</string>
   <string name="account_disabled_indicator">ಅಂಗವಿಕಲ</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">ಈ ಸ್ವರೂಪವನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
+  <string name="account_link_device_title">ಹೊಸ ಸಾಧನವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
+  <string name="account_link_device_button">ಸಂಪರ್ಕ</string>
 </resources>

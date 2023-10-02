@@ -154,6 +154,7 @@
   <string name="update_account">Тіркелгілерді жаңарту</string>
   <string name="account_migration">Сіздің Jami тіркелгіңіз жаңартылуы мүмкін.</string>
   <string name="ring_account">Jami шоты</string>
+  <string name="sip_account">СИП шоты</string>
   <string name="ring_account_identity">Жеке басын анықтау</string>
   <string name="account_migration_title_dialog">Есепшот көшіру</string>
   <string name="account_migration_message_dialog">Бұл операцияны орындау үшін Сіз \"Актуттарды басқару\" терезесіне өтуіңіз керек пе?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Құрылғының атауы бос бола алмайды</string>
   <string name="account_device_this_indicator">Бұл құрылғы</string>
   <string name="account_disabled_indicator">мүгедек</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Бұл форматты қолдамайды.</string>
+  <string name="account_link_device_title">Жаңа құрылғыны қосу</string>
+  <string name="account_link_device_button">Қосылыңыз</string>
 </resources>

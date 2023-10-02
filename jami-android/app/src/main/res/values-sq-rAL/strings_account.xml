@@ -157,6 +157,7 @@
   <string name="update_account">Përditësoje llogarinë</string>
   <string name="account_migration">Llogaria juaj Jami mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
   <string name="ring_account">Llogari Jami</string>
+  <string name="sip_account">Llogari SIP</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrim llogarie</string>
   <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
   <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">e çaktivizuar</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Ky format nuk mbulohet.</string>
+  <string name="account_link_device_title">Lidhni një pajisje të re</string>
+  <string name="account_link_device_button">Lidhu</string>
 </resources>

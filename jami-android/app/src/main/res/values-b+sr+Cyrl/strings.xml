@@ -344,4 +344,10 @@
   <string name="tab_documetn">Документи</string>
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Опис</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Регистрирајте корисничко име</string>
+  <string name="jami_id_looking_for_availability">Proveravam dostupnost korisničkog imena...</string>
+  <string name="jami_id_choose_username">Изаберите корисничко име</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Dobrodošli na Jami</string>
 </resources>

@@ -377,4 +377,11 @@
   <string name="picker_btn">Выбрать контакты</string>
   <string name="bottomsheet_contact">Контакт Jami\n%1$s</string>
   <string name="bottomsheet_remove">Удалить из беседы</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Зарегистрировать имя пользователя</string>
+  <string name="jami_id_looking_for_availability">Проверка на доступность имени пользователя...</string>
+  <string name="jami_id_choose_username">Выберите имя пользователя</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Добро пожаловать в Jami</string>
+  <string name="welcome_jami_description">Поделитесь своим идентификатором Jami, чтобы с вами было проще связаться!</string>
 </resources>

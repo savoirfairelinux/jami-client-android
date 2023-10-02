@@ -17,10 +17,15 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="sip_account">SIP 账户</string>
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
   <string name="account_creation_home">欢迎使用 Jami</string>
   <!--Edit profile-->
   <!--Devices-->
+  <!--Link a new device-->
+  <string name="error_format_not_supported">不支援此格式。</string>
+  <string name="account_link_device_title">关联新设备</string>
+  <string name="account_link_device_button">连接</string>
 </resources>

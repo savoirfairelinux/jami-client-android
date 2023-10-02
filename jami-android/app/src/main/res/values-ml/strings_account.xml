@@ -154,6 +154,7 @@
   <string name="update_account">അക്കൌണ്ട് അപ്ഡേറ്റ് ചെയ്യുക</string>
   <string name="account_migration">നിങ്ങളുടെ ജാമി അക്കൌണ്ട് അപ്ഡേറ്റ് ചെയ്യാം. ദയവായി നിങ്ങളുടെ പാസ്വേഡ് നൽകുക.</string>
   <string name="ring_account">ജാമി അക്കൌണ്ട്</string>
+  <string name="sip_account">എസ്ഐപി അക്കൌണ്ട്</string>
   <string name="ring_account_identity">ഐഡന്റിറ്റി</string>
   <string name="account_migration_title_dialog">അക്കൌണ്ട് മൈഗ്രേഷൻ</string>
   <string name="account_migration_message_dialog">നിങ്ങളുടെ അക്കൌണ്ടുകള് അപ്ഡേറ്റ് ചെയ്യേണ്ടതുണ്ട്. ഈ പ്രവർത്തനം നടത്താന് അക്കൌണ്ട് മാനേജ്മെന്റ് സ്ക്രീനിലേക്ക് പോകണോ?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">ഉപകരണത്തിന്റെ പേര് ശൂന്യമായിരിക്കരുത്</string>
   <string name="account_device_this_indicator">ഈ ഉപകരണം</string>
   <string name="account_disabled_indicator">വൈകല്യമുള്ളവർ</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">ഈ ഫോർമാറ്റിന് പിന്തുണയില്ല.</string>
+  <string name="account_link_device_title">പുതിയ ഉപകരണം ബന്ധിപ്പിക്കുക</string>
+  <string name="account_link_device_button">ബന്ധിപ്പിക്കുക</string>
 </resources>

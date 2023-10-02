@@ -156,6 +156,7 @@
   <string name="update_account">Hesabı güncelle</string>
   <string name="account_migration">Jami hesabınız güncellenebilir.\nParolanızı girin.</string>
   <string name="ring_account">Jami hesabı </string>
+  <string name="sip_account">SIP hesabı</string>
   <string name="ring_account_identity">Kimlik</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
   <string name="account_migration_message_dialog">Hesaplarınızın güncellenmesi gerekli. Hesap yönetim ekranından bu süreci yürütmek ister misiniz?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">Aygıt adı boş bırakılamaz</string>
   <string name="account_device_this_indicator">Bu aygıt</string>
   <string name="account_disabled_indicator">devre dışı</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Bu biçim desteklenmiyor.</string>
+  <string name="account_link_device_title">Yeni aygıt bağla</string>
+  <string name="account_link_device_button">Bağlan</string>
 </resources>

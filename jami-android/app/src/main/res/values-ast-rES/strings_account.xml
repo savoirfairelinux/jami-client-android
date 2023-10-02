@@ -154,6 +154,7 @@
   <string name="update_account">Actualización de cuenta</string>
   <string name="account_migration">La so cuenta Jami puede ser actualizada.</string>
   <string name="ring_account">La cuenta de Jami</string>
+  <string name="sip_account">Cuenta SIP</string>
   <string name="ring_account_identity">Identidá</string>
   <string name="account_migration_title_dialog">Migración de cuentas</string>
   <string name="account_migration_message_dialog">La so cuenta tien que ser actualizada. ¿Quieres pasar a la pantalla de xestión de cuenta pa realizar esta operación?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">El nome del dispositivu nun puede ser vacíu.</string>
   <string name="account_device_this_indicator">Esta máquina</string>
   <string name="account_disabled_indicator">les persones con discapacidá</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Esta versión nun ye compatible.</string>
+  <string name="account_link_device_title">Enlazar un nuevu dispositivu</string>
+  <string name="account_link_device_button">Conectar</string>
 </resources>

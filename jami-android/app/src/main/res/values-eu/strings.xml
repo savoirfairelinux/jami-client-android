@@ -372,4 +372,7 @@
   <string name="picker_btn">Kontaktua hautatu</string>
   <string name="bottomsheet_contact">Jarri harremanetan Jami\n%1$s</string>
   <string name="bottomsheet_remove">Kendu zabortegitik.</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Ongi etorri Jamira</string>
 </resources>

@@ -157,6 +157,7 @@
   <string name="update_account">Posodobi račun</string>
   <string name="account_migration">Vaš Jami račun je mogoče posodobiti.\nVnesite geslo.</string>
   <string name="ring_account">Jami račun</string>
+  <string name="sip_account">Račun SIP</string>
   <string name="ring_account_identity">Identiteta</string>
   <string name="account_migration_title_dialog">Selitev računa</string>
   <string name="account_migration_message_dialog">Vaši računi morajo biti posodobljeni. Želite na zaslon za urejanje računa, da to izvedete?</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">Ime naprave ne more biti prazno</string>
   <string name="account_device_this_indicator">Ta naprava</string>
   <string name="account_disabled_indicator">onemogočeno</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Format ni podprt.</string>
+  <string name="account_link_device_title">Poveži novo napravo</string>
+  <string name="account_link_device_button">Poveži</string>
 </resources>

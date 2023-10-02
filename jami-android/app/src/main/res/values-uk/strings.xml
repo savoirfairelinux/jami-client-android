@@ -374,4 +374,10 @@
   <string name="picker_btn">Виберіть контакти</string>
   <string name="bottomsheet_contact">Зверніться до Jami\n%1$s</string>
   <string name="bottomsheet_remove">Знесіть з рога</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Зареєструйте ім\'я користувача</string>
+  <string name="jami_id_looking_for_availability">Перевіряю доступність імені користувача…</string>
+  <string name="jami_id_choose_username">Виберіть ім\'я користувача</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Вітаємо в Jami</string>
 </resources>

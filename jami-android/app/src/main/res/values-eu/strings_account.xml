@@ -154,6 +154,7 @@
   <string name="update_account">Eguneratu kontua</string>
   <string name="account_migration">Zure Jami kontua eguneratu daiteke. Mesedez sartu pasahitza.</string>
   <string name="ring_account">Jami kontua</string>
+  <string name="sip_account">SIP kontuak</string>
   <string name="ring_account_identity">Identitatea</string>
   <string name="account_migration_title_dialog">Kontuaren migrazioa</string>
   <string name="account_migration_message_dialog">Kontuak eguneratu behar dira.</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Gailuaren izena ezin da hutsik laga</string>
   <string name="account_device_this_indicator">Gailu hau</string>
   <string name="account_disabled_indicator">desgaituta</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Formatu hau ez da onartzen.</string>
+  <string name="account_link_device_title">Estekatu gailu berria</string>
+  <string name="account_link_device_button">Konektatu</string>
 </resources>

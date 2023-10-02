@@ -376,4 +376,10 @@
   <string name="picker_btn">Kapcsolatok kijelölése</string>
   <string name="bottomsheet_contact">Forduljon a Jamihez\n%1$s</string>
   <string name="bottomsheet_remove">Eltávolítás a rajcsoportból</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Felhasználónév bejegyeztetése</string>
+  <string name="jami_id_choose_username">Felhasználónév kiválasztása</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Üdvözli a Jami</string>
+  <string name="welcome_jami_description">Oszd meg ennek a fióknak a Jami-azonosítóját, hogy mások könnyebben kapcsolatba léphessenek Önnel!</string>
 </resources>

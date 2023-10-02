@@ -372,4 +372,6 @@
   <string name="picker_btn">Επιλέξτε επαφές</string>
   <string name="bottomsheet_contact">Επικοινωνήστε με Jami\n%1$s</string>
   <string name="bottomsheet_remove">Απομακρύνσου από το σμήνος</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

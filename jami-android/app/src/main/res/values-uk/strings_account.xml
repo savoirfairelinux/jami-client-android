@@ -156,6 +156,7 @@
   <string name="update_account">Оновити обліковий запис</string>
   <string name="account_migration">Ваш обліковий запис Джамі можна оновити.\nБудь ласка, введіть пароль.</string>
   <string name="ring_account">Обліковий запис Jami</string>
+  <string name="sip_account">Спільний рахунок</string>
   <string name="ring_account_identity">Особа</string>
   <string name="account_migration_title_dialog">Переведення облікового запису</string>
   <string name="account_migration_message_dialog">Ваш обліковий запис необхідно оновити. Чи ви бажаєте перейти до екрану управління обліковим записом, щоб виконати цю операцію?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">Назва пристрою не може бути порожньою</string>
   <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">вимкнено</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Цей формат не підтримується</string>
+  <string name="account_link_device_title">Прив\'язати новий пристрій</string>
+  <string name="account_link_device_button">З\'єднати</string>
 </resources>

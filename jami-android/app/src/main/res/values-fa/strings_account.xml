@@ -156,6 +156,7 @@
   <string name="update_account">به‌روز‌رسانی حساب</string>
   <string name="account_migration">حساب جمیتان می‌تواند به‌روز شود.\nلطفاً گذرواژه خود را وارد کنید.</string>
   <string name="ring_account">حساب جمی</string>
+  <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">انتقال حساب</string>
   <string name="account_migration_message_dialog">حساب‌های شما باید به‌روز شوند. می‌خواهید برای انجام این عمل، به صفحه مدیریت حساب بروید؟</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">نام دستگاه نمی‌تواند خالی باشد</string>
   <string name="account_device_this_indicator">این دستگاه</string>
   <string name="account_disabled_indicator">غیرفعال</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
+  <string name="account_link_device_title">پیوند یک دستگاه جدید</string>
+  <string name="account_link_device_button">اتصال</string>
 </resources>

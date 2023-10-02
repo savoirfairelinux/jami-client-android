@@ -17,9 +17,14 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="sip_account">Cuenta SIP</string>
   <!--TV-->
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Formato no soportado.</string>
+  <string name="account_link_device_title">Vincular un nuevo dispositivo</string>
+  <string name="account_link_device_button">Conectarse</string>
 </resources>

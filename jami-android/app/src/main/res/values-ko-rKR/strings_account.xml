@@ -154,6 +154,7 @@
   <string name="update_account">계정 업데이트</string>
   <string name="account_migration">자미 계정 업데이트가 가능합니다. 비밀번호를 입력하세요.</string>
   <string name="ring_account">자미 계정</string>
+  <string name="sip_account">SIP 계좌</string>
   <string name="ring_account_identity">신분</string>
   <string name="account_migration_title_dialog">계정 마이그레이션</string>
   <string name="account_migration_message_dialog">계정 관리 스크린으로 이동하여 이 작업을 수행하려면 계정 관리 스크린을 클릭하고</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">장치 이름은 빈 게 될 수 없습니다</string>
   <string name="account_device_this_indicator">이 장치</string>
   <string name="account_disabled_indicator">장애인</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">이 형식은 지원되지 않습니다.</string>
+  <string name="account_link_device_title">새로운 장치를 연결</string>
+  <string name="account_link_device_button">연결</string>
 </resources>

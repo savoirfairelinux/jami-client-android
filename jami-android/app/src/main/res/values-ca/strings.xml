@@ -372,4 +372,6 @@
   <string name="picker_btn">Seleccionar els contactes</string>
   <string name="bottomsheet_contact">Contacte amb Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirar de l\'esgarre</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

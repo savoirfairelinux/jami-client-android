@@ -377,4 +377,10 @@
   <string name="picker_btn">Seleziona contatti</string>
   <string name="bottomsheet_contact">Contatta Jami\n%1$s</string>
   <string name="bottomsheet_remove">Rimuovi dal gruppo</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registra il nome utente</string>
+  <string name="jami_id_choose_username">Scegli un nome utente</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Benvenuto in Jami</string>
+  <string name="welcome_jami_description">Condividi il tuo identificatore Jami per essere contattato più facilmente!</string>
 </resources>

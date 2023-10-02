@@ -372,4 +372,6 @@
   <string name="picker_btn">Изберете контакти</string>
   <string name="bottomsheet_contact">Свържете се с Jami\n%1$s</string>
   <string name="bottomsheet_remove">Отдръпнете се от роя.</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

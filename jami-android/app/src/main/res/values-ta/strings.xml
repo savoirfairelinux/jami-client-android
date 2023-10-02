@@ -372,4 +372,10 @@
   <string name="picker_btn">தொடர்புகளைத் தேர்ந்தெடுக்கவும்</string>
   <string name="bottomsheet_contact">Jami\n%1$s உடன் தொடர்பு கொள்ளவும்</string>
   <string name="bottomsheet_remove">கும்பலில் இருந்து அகற்றவும்</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">பயனர்பெயரை பதிவு செய்யவும்</string>
+  <string name="jami_id_looking_for_availability">பயனர் பெயர் கிடைக்கும் தேடும்...</string>
+  <string name="jami_id_choose_username">ஒரு பயனர்பெயரைத் தேர்ந்தெடுக்கவும்</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">ஜாமிக்கு வரவேற்கிறோம்</string>
 </resources>

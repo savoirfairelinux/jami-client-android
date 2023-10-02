@@ -374,4 +374,10 @@
   <string name="picker_btn">Pasirink kontaktus</string>
   <string name="bottomsheet_contact">Susisiekite su Jami\n%1$s</string>
   <string name="bottomsheet_remove">Išimk iš juostos</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registruoti naudotojo vardą</string>
+  <string name="jami_id_looking_for_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
+  <string name="jami_id_choose_username">Pasirinkite naudotojo vardą</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Sveiki atvykę į Jami</string>
 </resources>

@@ -160,4 +160,9 @@
   <string name="tab_documetn">Dhomhnaill</string>
   <string name="dialog_hint_title">Teideal</string>
   <string name="dialog_hint_description">Tuairisc</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Ainm úsáideora a chlárú</string>
+  <string name="jami_id_choose_username">Roghnaigh ainm úsáideora</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Fáilte go Jami</string>
 </resources>

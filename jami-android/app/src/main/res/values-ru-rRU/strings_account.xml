@@ -157,6 +157,7 @@
   <string name="update_account">Обновление аккаунта</string>
   <string name="account_migration">Ваш аккаунт Jami может быть обновлен.\nПожалуйста, введите свой пароль</string>
   <string name="ring_account">Jami аккаунт</string>
+  <string name="sip_account">SIP-аккаунт</string>
   <string name="ring_account_identity">Идентичность</string>
   <string name="account_migration_title_dialog">Миграция аккаунта</string>
   <string name="account_migration_message_dialog">Ваши аккаунты должны быть обновлены. Вы хотите перейти на экран управления аккаунтов для выполнения этой операции ?</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">В имени устройства должно быть не пусто</string>
   <string name="account_device_this_indicator">Это устройство</string>
   <string name="account_disabled_indicator">отключено</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Этот формат не поддерживается.</string>
+  <string name="account_link_device_title">Привязать новое устройство</string>
+  <string name="account_link_device_button">Соединение...</string>
 </resources>

@@ -372,4 +372,9 @@
   <string name="picker_btn">Ընտրեք կոնտակտները</string>
   <string name="bottomsheet_contact">Հաղորդակցիր Jami\n%1$s</string>
   <string name="bottomsheet_remove">Բեռնել զավակից</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Գրանցել օգտվողի անունը</string>
+  <string name="jami_id_choose_username">Ընտրեք օգտատերու անուն</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Բարի գալուստ Ջամի:</string>
 </resources>

@@ -372,4 +372,6 @@
   <string name="picker_btn">Elektu kontaktojn</string>
   <string name="bottomsheet_contact">Kontaktu Jami\n%1$s</string>
   <string name="bottomsheet_remove">Forigu ĝin el la sorbo</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

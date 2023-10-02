@@ -156,6 +156,7 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="update_account">Ažuriraj nalog</string>
   <string name="account_migration">Vaš Jami nalog može biti ažuriran.\nMolim Vas unesite lozinku.</string>
   <string name="ring_account">Jami nalog</string>
+  <string name="sip_account">СИП рачуна</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Selidba naloga</string>
   <string name="account_migration_message_dialog">Vaši nalozi se trebaju ažurirati. Da li želite da odete na ekran za upravljanje nalozima da obavite ovu operaciju?</string>
@@ -244,4 +245,8 @@ Kasnije možete da uredite svoj nalog</string>
   <string name="account_device_name_empty">Ime uređaja ne može biti prazno</string>
   <string name="account_device_this_indicator">Ovaj uređaj</string>
   <string name="account_disabled_indicator">onesposobljen</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Format nije podržan</string>
+  <string name="account_link_device_title">Povežite novi uređaj</string>
+  <string name="account_link_device_button">Poveži</string>
 </resources>

@@ -372,4 +372,10 @@
   <string name="picker_btn">കോൺടാക്റ്റുകൾ തിരഞ്ഞെടുക്കുക</string>
   <string name="bottomsheet_contact">ജാമി %1$s നെ ബന്ധപ്പെടുക</string>
   <string name="bottomsheet_remove">കൂട്ടത്തിൽ നിന്ന് അകറ്റുക</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">ഉപയോക്തൃനാമം രജിസ്റ്റർ ചെയ്യുക</string>
+  <string name="jami_id_looking_for_availability">ഉപയോക്തൃനാമം ലഭ്യമാക്കാൻ നോക്കുന്നത്...</string>
+  <string name="jami_id_choose_username">ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">ജാമിയിൽ സ്വാഗതം</string>
 </resources>

@@ -372,4 +372,10 @@
   <string name="picker_btn">Välj kontakter</string>
   <string name="bottomsheet_contact">Kontakta Jami\n%1$s</string>
   <string name="bottomsheet_remove">Ta bort från swarmen.</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registrera användarnamn</string>
+  <string name="jami_id_looking_for_availability">Söker efter användarnamnets tillgänglighet...</string>
+  <string name="jami_id_choose_username">Välj ett användarnamn</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Välkommen till Jami!</string>
 </resources>

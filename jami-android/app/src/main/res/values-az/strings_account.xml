@@ -154,6 +154,7 @@
   <string name="update_account">حساب یئنیلشدیر</string>
   <string name="account_migration">جمی حسابینیزی یئنیله ییرم.\\nلطفا رمزونو دن یات.</string>
   <string name="ring_account">حساب جامی</string>
+  <string name="sip_account">SIP حساب</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">حساب کؤچمه سی</string>
   <string name="account_migration_message_dialog">حسابلارینیز یئنیلندیریلیر. بو عملیات اوچون حسابلار ایداره سی صفحه سینه گئده بیلرسئنئز؟</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">آدی بوش اولماز</string>
   <string name="account_device_this_indicator">بو آلین</string>
   <string name="account_disabled_indicator">معلول</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">بو فورمات دا معاون دئییل.</string>
+  <string name="account_link_device_title">یئنی آلتی باغلا</string>
+  <string name="account_link_device_button">باغلا</string>
 </resources>

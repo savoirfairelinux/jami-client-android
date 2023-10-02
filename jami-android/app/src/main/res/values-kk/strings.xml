@@ -372,4 +372,9 @@
   <string name="picker_btn">Байланыстарды таңдау</string>
   <string name="bottomsheet_contact">Jami\n%1$s-мен байланыс</string>
   <string name="bottomsheet_remove">Қалыңдықтан алыңыз</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Пайдаланушы атауын тіркеу</string>
+  <string name="jami_id_choose_username">Пайдаланушы атауын таңдау</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Жамиге қош келдіңіздер</string>
 </resources>

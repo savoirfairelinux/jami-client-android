@@ -372,4 +372,10 @@
   <string name="picker_btn">选择联系人</string>
   <string name="bottomsheet_contact">联系Jami\n%1$s</string>
   <string name="bottomsheet_remove">离开群众</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">註冊使用者名稱</string>
+  <string name="jami_id_looking_for_availability">正在尋找使用者名稱的可用性…</string>
+  <string name="jami_id_choose_username">选择一个用户名</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">歡迎來到 Jami</string>
 </resources>

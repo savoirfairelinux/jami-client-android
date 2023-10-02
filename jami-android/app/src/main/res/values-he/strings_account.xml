@@ -154,6 +154,7 @@
   <string name="update_account">עדכון חשבון</string>
   <string name="account_migration">חשבון ג\'מי שלך יכול להיות מעודכן. אנא הכניסי את הסיסמה שלך.</string>
   <string name="ring_account">חשבון ג\'מי</string>
+  <string name="sip_account">חשבון SIP</string>
   <string name="ring_account_identity">זהות</string>
   <string name="account_migration_title_dialog">מיגרת חשבונות</string>
   <string name="account_migration_message_dialog">החשבונות שלך צריכים להיות מעודכנים. האם אתה רוצה ללכת אל מסך ניהול החשבונות לבצע את המבצע הזה?</string>
@@ -242,4 +243,7 @@
   <string name="account_device_name_empty">שם המכשיר לא יכול להיות ריק</string>
   <string name="account_device_this_indicator">המכשיר הזה</string>
   <string name="account_disabled_indicator">פצועים</string>
+  <!--Link a new device-->
+  <string name="account_link_device_title">קישור מכשיר חדש</string>
+  <string name="account_link_device_button">חיבור</string>
 </resources>

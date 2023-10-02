@@ -373,4 +373,8 @@
   <string name="picker_btn">انتخاب مخاطب</string>
   <string name="bottomsheet_contact">با Jami\n%1$s تماس بگیرید</string>
   <string name="bottomsheet_remove">اخراج از گروه</string>
+  <!--JamiId-->
+  <string name="jami_id_choose_username">یک نام کاربری را انتخاب کنید</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">به جمی خوش آمدید</string>
 </resources>

@@ -372,4 +372,6 @@
   <string name="picker_btn">Vali kontaktid</string>
   <string name="bottomsheet_contact">Võta ühendust Jami\n%1$s</string>
   <string name="bottomsheet_remove">Võta ta roost välja.</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

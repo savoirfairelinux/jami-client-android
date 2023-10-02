@@ -154,6 +154,7 @@
   <string name="update_account">Ενημερώστε λογαριασμό</string>
   <string name="account_migration">Το λογαριασμό σας στο Τζάμι μπορεί να ενημερωθεί. Παρακαλώ εισάγετε το κωδικό πρόσβασης σας.</string>
   <string name="ring_account">Λογαριασμός Τζάμι</string>
+  <string name="sip_account">Λογαριασμός SIP</string>
   <string name="ring_account_identity">Ταυτότητα</string>
   <string name="account_migration_title_dialog">Μεταφορά λογαριασμού</string>
   <string name="account_migration_message_dialog">Θέλετε να πάτε στην οθόνη διαχείρισης λογαριασμών για να εκτελέσετε αυτή την πράξη;</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Το όνομα της συσκευής δεν μπορεί να είναι άδειο.</string>
   <string name="account_device_this_indicator">Αυτή η συσκευή</string>
   <string name="account_disabled_indicator">αναπηρία</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
+  <string name="account_link_device_title">Σύνδεση νέας συσκευής</string>
+  <string name="account_link_device_button">Σύνδεση</string>
 </resources>

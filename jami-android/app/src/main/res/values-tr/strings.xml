@@ -375,4 +375,10 @@
   <string name="picker_btn">Kişi seç</string>
   <string name="bottomsheet_contact">Jami\'ye Ulaş\n%1$s</string>
   <string name="bottomsheet_remove">Sığırdan uzaklaştır</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Kullanıcı adını kaydet</string>
+  <string name="jami_id_looking_for_availability">Kullanıcı adının uygunluğuna bakılıyor...</string>
+  <string name="jami_id_choose_username">Kullanıcı Adı Seç</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Jami\'ye Hoşgeldiniz</string>
 </resources>

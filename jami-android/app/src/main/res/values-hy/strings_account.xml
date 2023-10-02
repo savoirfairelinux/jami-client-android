@@ -154,6 +154,7 @@
   <string name="update_account">Հաշիվի թարմացում</string>
   <string name="account_migration">Ձեր Ջամի հաշիվը կարող է թարմացվել: Խնդրում ենք մուտքագրել գաղտնաբառը:</string>
   <string name="ring_account">Ջամի հաշիվը</string>
+  <string name="sip_account">SIP հաշիվ</string>
   <string name="ring_account_identity">Անձնագրություն</string>
   <string name="account_migration_title_dialog">Հաշվետու միգրացիա</string>
   <string name="account_migration_message_dialog">Ձեր հաշիվները պետք է թարմացվեն: Ցանկանում եք գնալ հաշիվների կառավարման էկրանը, որպեսզի կատարեք այս գործողությունը:</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">սարքի անունը չի կարող դատարկ լինել</string>
   <string name="account_device_this_indicator">Այս սարքը</string>
   <string name="account_disabled_indicator">հաշմանդամություն ունեցող</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Այս ձեւաչափը չի աջակցվում:</string>
+  <string name="account_link_device_title">Կապակցեք նոր սարք</string>
+  <string name="account_link_device_button">Կապակցել</string>
 </resources>

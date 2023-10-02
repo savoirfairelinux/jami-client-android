@@ -156,6 +156,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite savo slaptažodį.</string>
   <string name="ring_account">Jami paskyra</string>
+  <string name="sip_account">SIP paskyra</string>
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
   <string name="account_migration_message_dialog">Jūsų paskyros turi būti atnaujintos. Ar norite pereiti į paskyros tvarkymo ekraną, kad atliktumėte šį veiksmą?</string>
@@ -244,4 +245,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias</string>
   <string name="account_device_this_indicator">Šis įrenginys</string>
   <string name="account_disabled_indicator">išjungta</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Šis formatas yra nepalaikomas.</string>
+  <string name="account_link_device_title">Susieti naują įrenginį</string>
+  <string name="account_link_device_button">Prisijungti</string>
 </resources>

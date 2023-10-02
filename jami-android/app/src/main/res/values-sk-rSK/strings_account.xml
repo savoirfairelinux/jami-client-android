@@ -156,6 +156,7 @@
   <string name="update_account">Aktualizovať účet</string>
   <string name="account_migration">Váš Jami účet môže byť aktualizovaný.\nZadajte vaše heslo.</string>
   <string name="ring_account">Jami účet</string>
+  <string name="sip_account">Účet SIP</string>
   <string name="ring_account_identity">Identita</string>
   <string name="account_migration_title_dialog">Migrácia účtu</string>
   <string name="account_migration_message_dialog">Váš účet musí byť aktualizovaný. Chcete prejsť na obrazovku Nastavenia účtu a vykonať túto akciu?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">Názov zariadenia nesmie byť prázdny </string>
   <string name="account_device_this_indicator">Toto zariadenie</string>
   <string name="account_disabled_indicator">vypnuté</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Tento formát nie je podporovaný.</string>
+  <string name="account_link_device_title">Prepojiť nové zariadenie</string>
+  <string name="account_link_device_button">Pripojiť</string>
 </resources>

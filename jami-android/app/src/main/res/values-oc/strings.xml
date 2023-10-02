@@ -372,4 +372,10 @@
   <string name="picker_btn">Seleccionar los contactes</string>
   <string name="bottomsheet_contact">Contactar Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirar de l\'esvair</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Registrar nom d\' utilizaire</string>
+  <string name="jami_id_looking_for_availability">Cercant la disponibilitat del nom d\'utilizaire...</string>
+  <string name="jami_id_choose_username">Escotar un nom d\' utilizaire</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Benvenguts a Jami</string>
 </resources>

@@ -372,4 +372,10 @@
   <string name="picker_btn">Selecteer contacten</string>
   <string name="bottomsheet_contact">Neem contact op met Jami\n%1$s</string>
   <string name="bottomsheet_remove">Verwijder uit de zwerm.</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Gebruikersnaam registreren</string>
+  <string name="jami_id_looking_for_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
+  <string name="jami_id_choose_username">Kies een gebruikersnaam</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Welkom bij Jami</string>
 </resources>

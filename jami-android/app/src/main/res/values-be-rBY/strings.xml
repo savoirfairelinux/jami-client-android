@@ -160,4 +160,6 @@
   <string name="tab_documetn">Дакументы</string>
   <string name="dialog_hint_title">Назва</string>
   <string name="dialog_hint_description">Апісанне</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

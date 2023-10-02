@@ -156,6 +156,7 @@
   <string name="update_account">Обновяване на профила</string>
   <string name="account_migration">Сметката ви в Jami може да бъде актуализирана. Моля въведете паролата си.</string>
   <string name="ring_account">Jami профил</string>
+  <string name="sip_account">Сметка за СИП</string>
   <string name="ring_account_identity">Идентичност</string>
   <string name="account_migration_title_dialog">Пренасяне на профил</string>
   <string name="account_migration_message_dialog">Профилът Ви трябва да бъдат обновени. Искате ли да преминете към екрана за управление на профили, за да направите това?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">Името на устройството не може да бъде празно</string>
   <string name="account_device_this_indicator">Това устройство</string>
   <string name="account_disabled_indicator">изключено</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Този формат не се поддържа.</string>
+  <string name="account_link_device_title">Свържете ново устройство</string>
+  <string name="account_link_device_button">Свържете се</string>
 </resources>

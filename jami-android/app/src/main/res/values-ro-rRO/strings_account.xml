@@ -157,6 +157,7 @@
   <string name="update_account">Actualizează contul</string>
   <string name="account_migration">Contul tău Jami poate fi actualizat.\nIntrodu parola ta.</string>
   <string name="ring_account">Cont Jami</string>
+  <string name="sip_account">Cont SIP</string>
   <string name="ring_account_identity">Identitate</string>
   <string name="account_migration_title_dialog">Transferul contului</string>
   <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la „Gestionează contul” pentru a face acest lucru?</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">Numele aparatului trebuie pus</string>
   <string name="account_device_this_indicator">Acest aparat</string>
   <string name="account_disabled_indicator">dezactivat</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Acest format nu este acceptat.</string>
+  <string name="account_link_device_title">Asociază alt aparat</string>
+  <string name="account_link_device_button">Conectează</string>
 </resources>

@@ -156,6 +156,7 @@
   <string name="update_account">تحديث الحساب&lt;br&gt;</string>
   <string name="account_migration">هناك تحديث لحساب جامي. \n يرجى إدخال كلمة المرور.</string>
   <string name="ring_account">حساب جامي</string>
+  <string name="sip_account">حساب SIP</string>
   <string name="ring_account_identity">الهوية</string>
   <string name="account_migration_title_dialog">هجرة الحساب</string>
   <string name="account_migration_message_dialog">يجب تحديث حساباتك. هل تريد الانتقال إلى شاشة إدارة الحساب لتنفيذ ذلك⸮</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">لا يمكن أن يكون اسم الجهاز فارغًا</string>
   <string name="account_device_this_indicator">هذا الجهاز</string>
   <string name="account_disabled_indicator">تحرير حسابي</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">هذا التنسيق غير مدعوم.</string>
+  <string name="account_link_device_title">ربط جهاز جديد</string>
+  <string name="account_link_device_button">إتصال</string>
 </resources>

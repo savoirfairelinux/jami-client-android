@@ -372,4 +372,9 @@
   <string name="picker_btn">Elexir conctactos</string>
   <string name="bottomsheet_contact">Contacta con Jami\n %1$s</string>
   <string name="bottomsheet_remove">Retira-los do enjambre</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Rexistrar o nome de usuario/a</string>
+  <string name="jami_id_choose_username">Escoller un nome de usuario</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Benvida/o a Jami</string>
 </resources>

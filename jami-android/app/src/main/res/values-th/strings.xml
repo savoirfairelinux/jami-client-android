@@ -371,4 +371,10 @@
   <string name="picker_btn">เลือกติดต่อ</string>
   <string name="bottomsheet_contact">ติดต่อ Jami\n%1$s</string>
   <string name="bottomsheet_remove">ออกจากกลุ่ม</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">จดทะเบียนชื่อผู้ใช้</string>
+  <string name="jami_id_looking_for_availability">กําลังค้นหาชื่อผู้ใช้ได้</string>
+  <string name="jami_id_choose_username">เลือกชื่อผู้ใช้งาน</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">ยินดีต้อนรับสู่ Jami</string>
 </resources>

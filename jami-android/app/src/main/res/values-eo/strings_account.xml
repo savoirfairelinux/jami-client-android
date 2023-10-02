@@ -156,6 +156,7 @@
   <string name="update_account">Aktualigo de konto</string>
   <string name="account_migration">Via konto de Jami povas esti ĝisdatigita. Bonvolu enmeti vian pasvorton.</string>
   <string name="ring_account">La konto de Jami</string>
+  <string name="sip_account">SIP-konto</string>
   <string name="ring_account_identity">Identigo</string>
   <string name="account_migration_title_dialog">Migrado de konto</string>
   <string name="account_migration_message_dialog">Viaj kontoj devas esti ĝisdatigitaj. Ĉu vi volas iri al la ekrano de administrado de konto por fari tiun operacion?</string>
@@ -244,4 +245,8 @@
   <string name="account_device_name_empty">La nomo de la aparato ne povas esti malplena</string>
   <string name="account_device_this_indicator">Tiu aparato</string>
   <string name="account_disabled_indicator">malfunkcia</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Tiu formato ne estas subtenata.</string>
+  <string name="account_link_device_title">Ligigu novan aparaton</string>
+  <string name="account_link_device_button">Konekti</string>
 </resources>

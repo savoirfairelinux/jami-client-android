@@ -372,4 +372,6 @@
   <string name="picker_btn">পরিচিতি নির্বাচন করুন</string>
   <string name="bottomsheet_contact">জ্যামি % 1$s এর সাথে যোগাযোগ করুন</string>
   <string name="bottomsheet_remove">ঘোড়ার থেকে সরিয়ে ফেলুন</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

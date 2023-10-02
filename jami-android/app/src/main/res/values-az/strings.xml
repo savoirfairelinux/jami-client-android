@@ -372,4 +372,6 @@
   <string name="picker_btn">تماس لارین سئچیلماسی</string>
   <string name="bottomsheet_contact">Jami\n%1$s ایله تماس</string>
   <string name="bottomsheet_remove">سورومدن گؤتور</string>
+  <!--JamiId-->
+  <!--WelcomeJami-->
 </resources>

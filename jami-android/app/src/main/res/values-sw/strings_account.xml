@@ -154,6 +154,7 @@
   <string name="update_account">Rekodi ya sasisho</string>
   <string name="account_migration">Akaunti yako ya Jami inaweza kusasishwa. Tafadhali ingiza nenosiri lako.</string>
   <string name="ring_account">Akaunti ya Jami</string>
+  <string name="sip_account">Akaunti ya SIP</string>
   <string name="ring_account_identity">Utambulisho</string>
   <string name="account_migration_title_dialog">Uhamiaji wa akaunti</string>
   <string name="account_migration_message_dialog">Je, unataka kwenda kwenye skrini ya usimamizi wa Akaunti kufanya operesheni hii?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Jina la kifaa haiwezi kuwa tupu</string>
   <string name="account_device_this_indicator">Kifaa hiki</string>
   <string name="account_disabled_indicator">wenye ulemavu</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Umbizo hili halitegemewi.</string>
+  <string name="account_link_device_title">Unganisha kifaa kipya</string>
+  <string name="account_link_device_button">Unganisha</string>
 </resources>

@@ -374,4 +374,10 @@
   <string name="picker_btn">Wybierz kontakty</string>
   <string name="bottomsheet_contact">Skontaktuj się z Jami\n%1$s</string>
   <string name="bottomsheet_remove">Wyprowadź z rodu</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">Zarejestruj nazwę użytkownika</string>
+  <string name="jami_id_looking_for_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
+  <string name="jami_id_choose_username">Wybierz nazwę użytkownika</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Witaj w Jami</string>
 </resources>

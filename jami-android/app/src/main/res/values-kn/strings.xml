@@ -372,4 +372,9 @@
   <string name="picker_btn">ಸಂಪರ್ಕಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
   <string name="bottomsheet_contact">ಜಾಮಿ % 1$ ಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
   <string name="bottomsheet_remove">ದಣಿದಿಂದ ಹೊರಹಾಕಿ</string>
+  <!--JamiId-->
+  <string name="jami_id_validate">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನೋಂದಾಯಿಸಿ</string>
+  <string name="jami_id_choose_username">ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆರಿಸಿ</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">ಜಾಮಿಗೆ ಸ್ವಾಗತ</string>
 </resources>

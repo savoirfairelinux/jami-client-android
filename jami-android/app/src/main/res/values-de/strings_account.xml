@@ -157,6 +157,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="update_account">Konto aktualisieren</string>
   <string name="account_migration">Ihr Jami-Konto kann aktualisiert werden.\nBitte geben Sie Ihr Passwort ein.</string>
   <string name="ring_account">Jami-Konto</string>
+  <string name="sip_account">SIP-Konto</string>
   <string name="ring_account_identity">Identität</string>
   <string name="account_migration_title_dialog">Konto-Migration</string>
   <string name="account_migration_message_dialog">Ihre Konten müssen aktualisiert werden. Möchten Sie zum Kontoverwaltungsfenster gehen, um diesen Vorgang auszuführen?</string>
@@ -245,4 +246,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_name_empty">Geräte darf nicht leer sein</string>
   <string name="account_device_this_indicator">Dieses Gerät</string>
   <string name="account_disabled_indicator">deaktiviert</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
+  <string name="account_link_device_title">Verbinde ein neues Gerät</string>
+  <string name="account_link_device_button">Verbinden</string>
 </resources>

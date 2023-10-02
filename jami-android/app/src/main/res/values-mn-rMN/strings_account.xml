@@ -154,6 +154,7 @@
   <string name="update_account">Хэтгэлэгт хангах</string>
   <string name="account_migration">Таны Jami-ийн дансыг шинэчлэх боломжтой.</string>
   <string name="ring_account">Жэмигийн данс</string>
+  <string name="sip_account">СИП-ийн данс</string>
   <string name="ring_account_identity">Хууль зүйн</string>
   <string name="account_migration_title_dialog">Хэтгэлийн шилжилт</string>
   <string name="account_migration_message_dialog">Танай дансны бүртгэл шинэчлэх хэрэгтэй. Та энэ үйлдлийг хийхэд дансны удирдлагын дэлгэц рүү явмаар байна уу?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Тухайн төхөөрөмжийн нэр нь хол байж болохгүй</string>
   <string name="account_device_this_indicator">Энэ төхөөрөмж</string>
   <string name="account_disabled_indicator">хөгжлийн бэрхшээлтэй</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Энэ форматг дэмжихгүй.</string>
+  <string name="account_link_device_title">Шинэ төхөөрөмжийг холбох</string>
+  <string name="account_link_device_button">Харилцаа холбоо</string>
 </resources>

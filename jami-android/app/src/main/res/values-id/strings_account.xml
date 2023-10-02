@@ -154,6 +154,7 @@
   <string name="update_account">Perbarui akun</string>
   <string name="account_migration">Akun Jami anda dapat diperbarui. \nSilakan masukkan kata sandi anda.</string>
   <string name="ring_account">Akun Jami</string>
+  <string name="sip_account">Akun SIP</string>
   <string name="ring_account_identity">Identitas</string>
   <string name="account_migration_title_dialog">Migrasi akun</string>
   <string name="account_migration_message_dialog">Akun Anda perlu diperbarui. Apakah Anda ingin membuka layar Manajemen akun untuk melakukan operasi ini?</string>
@@ -242,4 +243,8 @@
   <string name="account_device_name_empty">Nama perangkat tidak boleh kosong</string>
   <string name="account_device_this_indicator">Perangkat ini</string>
   <string name="account_disabled_indicator">nonaktif</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">Format tidak didukung.</string>
+  <string name="account_link_device_title">Hubungkan perangkat baru</string>
+  <string name="account_link_device_button">Hubungkan</string>
 </resources>

@@ -157,6 +157,7 @@
   <string name="update_account">更新账户</string>
   <string name="account_migration">您的 Jami 账户可以被更新。\n请输入您的密码。</string>
   <string name="ring_account">Jami 账户</string>
+  <string name="sip_account">SIP 账户</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">账户迁移</string>
   <string name="account_migration_message_dialog">您的账户需要被更新。您想前往账户管理界面进行该操作吗？</string>
@@ -245,4 +246,8 @@
   <string name="account_device_name_empty">裝置名稱不能為空</string>
   <string name="account_device_this_indicator">本设备</string>
   <string name="account_disabled_indicator">已停用</string>
+  <!--Link a new device-->
+  <string name="error_format_not_supported">不支援此格式。</string>
+  <string name="account_link_device_title">关联新设备</string>
+  <string name="account_link_device_button">连接</string>
 </resources>

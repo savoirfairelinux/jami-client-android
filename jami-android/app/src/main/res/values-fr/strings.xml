@@ -377,4 +377,9 @@
   <string name="picker_btn">Choisissez vos contacts</string>
   <string name="bottomsheet_contact">Contact Jami\n%1$s</string>
   <string name="bottomsheet_remove">Retirer du Swarm</string>
+  <!--JamiId-->
+  <string name="jami_id_choose_username">Choisir un nom d\'utilisateur</string>
+  <!--WelcomeJami-->
+  <string name="welcome_jami_title">Bienvenue sur Jami</string>
+  <string name="welcome_jami_description">Partagez votre identifiant Jami afin d\'être contacter plus facilement !</string>
 </resources>
