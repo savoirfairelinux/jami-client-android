@@ -96,6 +96,7 @@ class QrCodePinInputFragment : Fragment() {
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
+                viewModel.cameraPermissionChanged(true)
                 showErrorPanel(isError = false)
                 initializeBarcode()
             } else {

@@ -27,9 +27,9 @@ import net.jami.model.Account
 import net.jami.mvp.RootPresenter
 import net.jami.services.AccountService
 import net.jami.services.DeviceRuntimeService
+import net.jami.services.HardwareService
 import net.jami.services.VCardService
 import net.jami.utils.Log
-import net.jami.utils.StringUtils
 import net.jami.utils.VCardUtils
 import java.io.File
 import java.net.SocketException
@@ -39,6 +39,7 @@ import javax.inject.Named
 class JamiAccountSummaryPresenter @Inject constructor(
     private val mAccountService: AccountService,
     private val mDeviceRuntimeService: DeviceRuntimeService,
+    private val mHardwareService: HardwareService,
     private val mVcardService: VCardService,
     @param:Named("UiScheduler") private val mUiScheduler: Scheduler
 ) : RootPresenter<JamiAccountSummaryView>() {
@@ -199,6 +200,14 @@ class JamiAccountSummaryPresenter @Inject constructor(
 
     fun renameDevice(newName: String) {
         mAccountService.renameDevice(mAccountID!!, newName)
+    }
+
+    fun cameraPermissionChanged(isGranted: Boolean) {
+        if (isGranted && mHardwareService.isVideoAvailable) {
+            mHardwareService.initVideo()
+                .onErrorComplete()
+                .blockingAwait()
+        }
     }
 
     val account: Account?
