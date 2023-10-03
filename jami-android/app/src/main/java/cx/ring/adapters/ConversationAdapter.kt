@@ -1077,6 +1077,9 @@ class ConversationAdapter(
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val msgTxtContainer = convViewHolder.mMsgTxtContainer ?: return@subscribe
                 msgTxtContainer.background.setTintList(null)
+                val msgTxtContainer2 = convViewHolder.mMsgTxtContainer2 ?: return@subscribe
+                msgTxtContainer2.background?.setTintList(null)
+                val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 // Manage deleted message.
@@ -1183,6 +1186,18 @@ class ConversationAdapter(
                                 convViewHolder.mPreviewDomain?.text = url.host
                                 convViewHolder.mAnswerLayout?.setOnClickListener {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                                }
+                                if (url != null) {
+                                    // only when a message is sent by me (not received because it works already)
+                                    if (!textMessage.isIncoming) {
+                                        answerLayout?.background = ContextCompat.getDrawable(
+                                            context,
+                                            msgBGLayouts[resIndex]
+                                        )
+                                        // set the tint color because the background is convColor (don't know why)
+                                        answerLayout?.background?.setTint(
+                                            ContextCompat.getColor(context, R.color.conversation_secondary_background))
+                                    }
                                 }
                             }) { e -> Log.e(TAG, "Can't load preview", e) })
                     }
