@@ -1083,8 +1083,8 @@ class ConversationAdapter(
                 val isDeleted = textMessage.body.isNullOrEmpty()
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val msgTxtContainer2 = convViewHolder.mMsgTxtContainer2 ?: return@subscribe
-                val longPressView = convViewHolder.mMsgTxt!!
                 msgTxtContainer2.background?.setTintList(null)
+                val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 // edited function in the chatview
@@ -1163,7 +1163,6 @@ class ConversationAdapter(
                         msgTxt.setPadding(it, it, it, it)
                     }
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        Log.w("devdebug","P1")
                         msgTxtContainer2.background?.setTint(convColor)
                     }
                     msgTxtContainer2.background.alpha = 255
@@ -1202,6 +1201,18 @@ class ConversationAdapter(
                                 convViewHolder.mPreviewDomain?.text = url.host
                                 convViewHolder.mAnswerLayout?.setOnClickListener {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                                }
+                                if (url != null) {
+                                    // only when a message is sent by me (not received because it works already)
+                                    if (!textMessage.isIncoming) {
+                                        answerLayout?.background = ContextCompat.getDrawable(
+                                            context,
+                                            msgBGLayouts[resIndex]
+                                        )
+                                        // set the tint color because the background is convColor (don't know why)
+                                        answerLayout?.background?.setTint(
+                                            ContextCompat.getColor(context, R.color.conversation_secondary_background))
+                                    }
                                 }
                             }) { e -> Log.e(TAG, "Can't load preview", e) })
                     }
@@ -1585,9 +1596,7 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_out_reply,
             R.drawable.textmsg_bg_out_reply_first,
             R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first,
-            R.drawable.textmsg_bg_ripple,
-            R.drawable.textmsg_bg_ripple_first
+            R.drawable.textmsg_bg_in_reply_first
         )
 
         /**
