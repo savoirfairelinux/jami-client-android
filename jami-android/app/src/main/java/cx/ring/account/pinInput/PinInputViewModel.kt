@@ -1,8 +1,22 @@
 package cx.ring.account.pinInput
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import net.jami.services.HardwareService
+import javax.inject.Inject
 
-class QrCodePinInputViewModel : PinInputViewModel()
+@HiltViewModel
+class QrCodePinInputViewModel @Inject constructor(
+    private val mHardwareService: HardwareService
+) : PinInputViewModel() {
+    fun cameraPermissionChanged(isGranted: Boolean) {
+        if (isGranted && mHardwareService.isVideoAvailable) {
+            mHardwareService.initVideo()
+                .onErrorComplete()
+                .blockingAwait()
+        }
+    }
+}
 
 class EditTextPinInputViewModel : PinInputViewModel()
 

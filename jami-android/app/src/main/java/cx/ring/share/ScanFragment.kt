@@ -36,15 +36,22 @@ import com.google.zxing.ResultPoint
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import cx.ring.client.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScanFragment : Fragment() {
+    private val viewModel: ScanViewModel by lazy {
+        ViewModelProvider(this)[ScanViewModel::class.java]
+    }
     private var barcodeView: DecoratedBarcodeView? = null
     private var mErrorMessageTextView: TextView? = null
 
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
+                viewModel.cameraPermissionChanged(true)
                 hideErrorPanel()
                 initializeBarcode()
             } else {

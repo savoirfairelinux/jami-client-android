@@ -75,7 +75,6 @@ import net.jami.account.JamiAccountSummaryView
 import net.jami.model.Account
 import net.jami.model.Profile
 import net.jami.services.AccountService
-import net.jami.utils.StringUtils
 import java.io.File
 import javax.inject.Inject
 
@@ -481,6 +480,7 @@ class JamiAccountSummaryFragment :
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             HomeActivity.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                presenter.cameraPermissionChanged(true)
                 presenter.cameraClicked()
             }
             HomeActivity.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

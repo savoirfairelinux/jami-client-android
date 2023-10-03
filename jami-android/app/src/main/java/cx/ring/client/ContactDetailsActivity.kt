@@ -20,6 +20,7 @@ package cx.ring.client
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -68,6 +69,7 @@ import net.jami.services.AccountService
 import net.jami.services.ContactService
 import net.jami.services.ConversationFacade
 import net.jami.services.DeviceRuntimeService
+import net.jami.services.HardwareService
 import net.jami.services.NotificationService
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -90,6 +92,9 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
     @Inject
     @Singleton lateinit
     var mDeviceRuntimeService: DeviceRuntimeService
+
+    @Inject lateinit
+    var hardwareService: HardwareService
 
     private var binding: ActivityContactDetailsBinding? = null
     private var path: ConversationPath? = null
@@ -309,6 +314,21 @@ class ContactDetailsActivity : AppCompatActivity(), TabLayout.OnTabSelectedListe
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ), HomeActivity.REQUEST_PERMISSION_CAMERA)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            HomeActivity.REQUEST_PERMISSION_CAMERA -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                hardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe()
+                gotToImageCapture()
+            }
+            HomeActivity.REQUEST_PERMISSION_READ_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                goToGallery()
+            }
+        }
     }
 
     private fun goToGallery() {
