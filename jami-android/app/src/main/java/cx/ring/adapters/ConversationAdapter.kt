@@ -1077,6 +1077,7 @@ class ConversationAdapter(
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val msgTxtContainer = convViewHolder.mMsgTxtContainer ?: return@subscribe
                 msgTxtContainer.background.setTintList(null)
+                val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
                 // Manage deleted message.
@@ -1093,7 +1094,7 @@ class ConversationAdapter(
                     }
                     msgTxtContainer.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
-                        msgTxtContainer.background?.setTint(convColor)
+                        msgTxtContainer.background.setTint(convColor)
                     }
                     msgTxt.textSize = 14f
                     msgTxtContainer.setOnLongClickListener(null)
@@ -1183,6 +1184,17 @@ class ConversationAdapter(
                                 convViewHolder.mPreviewDomain?.text = url.host
                                 convViewHolder.mAnswerLayout?.setOnClickListener {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, url))
+                                }
+                                if (url != null) {
+                                    // Standardize the shape of the link preview to match that of
+                                    // the bubble.
+                                    answerLayout?.background = ContextCompat.getDrawable(
+                                        context,
+                                        msgBGLayouts[resIndex]
+                                    )
+                                    // set the tint color because the background is convColor
+                                    answerLayout?.background?.setTint(
+                                        ContextCompat.getColor(context, R.color.conversation_secondary_background))
                                 }
                             }) { e -> Log.e(TAG, "Can't load preview", e) })
                     }
