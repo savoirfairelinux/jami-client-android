@@ -88,4 +88,5 @@
 
     <!--  QrCode  -->
     <color name="qr_code_color">#000000</color>
+
 </resources>
