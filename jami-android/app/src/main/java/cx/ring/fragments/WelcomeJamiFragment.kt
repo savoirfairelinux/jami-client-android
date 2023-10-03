@@ -63,7 +63,10 @@ class WelcomeJamiFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 welcomeJamiViewModel.uiState.collect { uiState ->
                     uiState.uiCustomization?.apply {
-                        title?.let { binding.welcomeJamiTitle.text = it }
+                        title?.let {
+                            binding.welcomeJamiTitle.visibility = View.VISIBLE
+                            binding.welcomeJamiTitle.text = it
+                        }
                         description?.let { binding.welcomeJamiDescription.text = it }
                         when (backgroundType) {
                             BackgroundType.COLOR -> {
