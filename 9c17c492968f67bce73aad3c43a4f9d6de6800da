@@ -16,6 +16,24 @@
       "message": "@aberaud what about the logo ? I know it is already imported, however I need to change the color of the text which I can\u0027t do using setTint (which will no only change the text color but also the left drawable)",
       "revId": "9c17c492968f67bce73aad3c43a4f9d6de6800da",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2925e96b_6a3a32eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-03T21:58:13Z",
+      "side": 1,
+      "message": "unresolved",
+      "parentUuid": "a5f302ec_a329d679",
+      "revId": "9c17c492968f67bce73aad3c43a4f9d6de6800da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
