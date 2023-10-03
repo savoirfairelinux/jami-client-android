@@ -124,6 +124,6 @@ along with this program; if not, write to the Free Software
     <dimen name="jami_id_edit_text_drawable_size">24dp</dimen>
 
     <!--  WelcomeJami  -->
-    <dimen name="welcome_jami_logo_default_size">85dp</dimen>
+    <dimen name="welcome_jami_logo_default_size">60dp</dimen>
 
 </resources>
