@@ -87,8 +87,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private var fConversation: ConversationFragment? = null
     private var fWelcomeJami: WelcomeJamiFragment? = null
     private var mHomeFragment: HomeFragment? = null
-    private var mOrientation = 0
-    private var restoreInstanceFlag:Boolean = false
 
     @Inject
     lateinit
@@ -110,18 +108,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     private var mMigrationDialog: AlertDialog? = null
     private val mDisposable = CompositeDisposable()
 
-    /* called before activity is killed, e.g. rotation */
-    override fun onSaveInstanceState(bundle: Bundle) {
-        super.onSaveInstanceState(bundle)
-        restoreInstanceFlag = true
-        bundle.putInt("orientation", mOrientation)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        mOrientation = savedInstanceState.getInt("orientation")
-    }
-
     private val conversationBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
@@ -141,11 +127,6 @@ class HomeActivity : AppCompatActivity(), ContactPickerFragment.OnContactedPicke
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JamiApplication.instance?.startDaemon(this)
-
-        // In the case where we restore an instance, savedInstanceState will carry a non-null value
-        // for the rest of the program's execution. We only want to change the logic for the
-        // restoration and not for the rest. We must therefore use a flag.
-        restoreInstanceFlag = savedInstanceState != null
 
         // Switch to TV if appropriate (could happen with buggy launcher)
         if (DeviceUtils.isTv(this)) {
