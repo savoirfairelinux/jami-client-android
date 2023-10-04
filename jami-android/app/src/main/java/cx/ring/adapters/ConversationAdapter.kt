@@ -1383,7 +1383,10 @@ class ConversationAdapter(
         val historyTxt: String
         // After call, a message is displayed in conversation to inform the user about the call.
         if (call.isMissed) { // When call is missed
-            // Personalize the text and the icon depending if call is incoming or outgoing
+            // The background when call is missed is just a stroke
+            convViewHolder.mCallInfoLayout?.background =
+                ContextCompat.getDrawable(context, R.drawable.textmsg_call_stroke)
+            // Personalize the icon and the text whether the call is incoming or outgoing
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
                 historyTxt = context.getString(R.string.notif_missed_incoming_call)
@@ -1394,6 +1397,9 @@ class ConversationAdapter(
                 convViewHolder.mIcon?.scaleY = -1f
             }
         } else { // Call is not missed
+            // The background when call is not missed is filled with conversation_secondary_background color
+            convViewHolder.mCallInfoLayout?.background =
+                ContextCompat.getDrawable(context, R.drawable.textmsg_call_background)
             pictureResID =
                 if (call.isIncoming) R.drawable.baseline_call_received_24
                 else R.drawable.baseline_call_made_24
@@ -1404,8 +1410,6 @@ class ConversationAdapter(
         // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
         convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text =
-            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {

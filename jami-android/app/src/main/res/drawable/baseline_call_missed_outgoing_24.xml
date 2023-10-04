@@ -3,7 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="?attr/colorControlNormal">
+    android:tint="@color/call_missed">
   <group>
     <clip-path android:pathData="M24,24H0V0h24v24z M 0,0"/>
     <path

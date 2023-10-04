@@ -88,4 +88,10 @@
 
     <!--  QrCode  -->
     <color name="qr_code_color">#000000</color>
+
+    <!--  ChatView  -->
+    <color name="icon_background_color">#FFFFFF</color>
+    <color name="border_color">#E5E5E5</color>
+    <color name="call_missed">#CC0022</color>
+
 </resources>
