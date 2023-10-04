@@ -124,6 +124,7 @@ along with this program; if not, write to the Free Software
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:textColor="@color/colorOnSurface"
+                    android:textColorLink="@color/link_peer_color"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_size_medium"
                     app:layout_constraintEnd_toEndOf="parent"
