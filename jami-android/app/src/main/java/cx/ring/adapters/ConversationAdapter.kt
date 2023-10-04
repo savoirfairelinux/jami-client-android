@@ -1084,12 +1084,15 @@ class ConversationAdapter(
                 val msgTxt = convViewHolder.mMsgTxt ?: return@subscribe
                 val longPressView = convViewHolder.mMsgTxt!!
                 longPressView.background?.setTintList(null)
+                val answerLayout = convViewHolder.mAnswerLayout
                 val isTimeShown = hasPermanentTimeString(textMessage, position)
                 val msgSequenceType = getMsgSequencing(position, isTimeShown)
 
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    // delete the link also if there is one
+                    answerLayout?.visibility = View.GONE
                     msgTxt.background.alpha = 255
                     if (convColor != 0 && !textMessage.isIncoming) {
                         msgTxt.background.setTint(convColor)
