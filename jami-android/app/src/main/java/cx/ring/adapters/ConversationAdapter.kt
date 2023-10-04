@@ -132,13 +132,11 @@ class ConversationAdapter(
                 mInteractions.addAll(list)
                 notifyDataSetChanged()
             }
-
             list.size > mInteractions.size -> {
                 val oldSize = mInteractions.size
                 mInteractions.addAll(list.subList(oldSize, list.size))
                 notifyItemRangeInserted(oldSize, list.size)
             }
-
             else -> {
                 mInteractions.clear()
                 mInteractions.addAll(list)
@@ -269,14 +267,12 @@ class ConversationAdapter(
                 } else {
                     MessageType.CALL_INFORMATION.ordinal
                 }
-
             Interaction.InteractionType.TEXT ->
                 if (interaction.isIncoming) {
                     MessageType.INCOMING_TEXT_MESSAGE.ordinal
                 } else {
                     MessageType.OUTGOING_TEXT_MESSAGE.ordinal
                 }
-
             Interaction.InteractionType.DATA_TRANSFER -> {
                 val file = interaction as DataTransfer
                 val out = if (interaction.isIncoming) 0 else 4
@@ -289,7 +285,6 @@ class ConversationAdapter(
                 }
                 out
             }
-
             Interaction.InteractionType.INVALID -> MessageType.INVALID.ordinal
         }
     }
@@ -1076,8 +1071,7 @@ class ConversationAdapter(
         val context = convViewHolder.itemView.context
         convViewHolder.compositeDisposable.add(interaction.lastElement
             .observeOn(DeviceUtils.uiScheduler)
-            .subscribe ({ lastElement ->
-
+            .subscribe { lastElement ->
                 val textMessage = lastElement as TextMessage
                 val contact = textMessage.contact ?: return@subscribe
                 val isDeleted = textMessage.body.isNullOrEmpty()
@@ -1281,7 +1275,7 @@ class ConversationAdapter(
                         notifyItemChanged(expandedItemPosition)
                     }
                 }
-            }, {throwable -> Log.w("BUG45", "Throwable ", throwable)}))
+            })
     }
 
     private fun configureForContactEvent(viewHolder: ConversationViewHolder, interaction: Interaction) {
@@ -1369,7 +1363,7 @@ class ConversationAdapter(
                 }
                 // When long clicked...
                 setOnLongClickListener { v: View ->
-                    background?.setTint(res.getColor(R.color.grey_500))
+                    background?.setTint(ContextCompat.getColor(context, R.color.grey_500))
                     // Open Context Menu
                     conversationFragment.updatePosition(convViewHolder.adapterPosition)
                     mCurrentLongItem =
@@ -1399,7 +1393,10 @@ class ConversationAdapter(
         val historyTxt: String
         // After call, a message is displayed in conversation to inform the user about the call.
         if (call.isMissed) { // When call is missed
-            // Personalize the text and the icon depending if call is incoming or outgoing
+            // The background when call is missed is just a stroke
+            convViewHolder.mCallInfoLayout?.background =
+                ContextCompat.getDrawable(context, R.drawable.textmsg_call_stroke)
+            // Personalize the icon and the text whether the call is incoming or outgoing
             if (call.isIncoming) {
                 pictureResID = R.drawable.baseline_call_missed_24
                 historyTxt = context.getString(R.string.notif_missed_incoming_call)
@@ -1410,6 +1407,9 @@ class ConversationAdapter(
                 convViewHolder.mIcon?.scaleY = -1f
             }
         } else { // Call is not missed
+            // The background when call is not missed is filled with conversation_secondary_background color
+            convViewHolder.mCallInfoLayout?.background =
+                ContextCompat.getDrawable(context, R.drawable.textmsg_call_background)
             pictureResID =
                 if (call.isIncoming) R.drawable.baseline_call_received_24
                 else R.drawable.baseline_call_made_24
@@ -1420,8 +1420,6 @@ class ConversationAdapter(
         // Update icon, text and date
         convViewHolder.mIcon?.setImageResource(pictureResID)
         convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text =
-            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
     }
 
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
