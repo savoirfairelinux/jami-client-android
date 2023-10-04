@@ -59,5 +59,6 @@
     <!--  ChatView  -->
     <color name="icon_background_color">#202020</color>
     <color name="border_color">#515151</color>
+    <color name="link_peer_color">#03B9E9</color>
 
 </resources>
