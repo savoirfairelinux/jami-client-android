@@ -198,21 +198,21 @@
             </androidx.cardview.widget.CardView>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
-                android:backgroundTint="@color/fab_background_color"
                 android:id="@+id/fabLatest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/cvMessageInputGroup"
                 android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/conversation_secondary_background"
                 android:contentDescription="@string/conversation_action_latest"
                 android:scaleType="center"
-                android:visibility="gone"
-                android:layout_margin="8dp"
-                app:fabCustomSize="40dp"
-                app:srcCompat="@drawable/baseline_arrow_down_24dp"
-                app:tint="@color/fab_text_color"
                 android:textColor="@color/fab_text_color"
+                android:visibility="gone"
+                app:fabCustomSize="40dp"
+                app:shapeAppearanceOverlay="@style/Widget.AppTheme.MainActionButton"
+                app:srcCompat="@drawable/baseline_arrow_down_24dp"
+                app:tint="@color/colorOnSurface"
                 tools:visibility="visible" />
 
             <LinearLayout

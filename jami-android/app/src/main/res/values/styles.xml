@@ -161,13 +161,9 @@
 <!--        <item name="android:textStyle">normal</item>-->
 <!--        <item name="iconPadding">8dp</item>-->
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">6dp</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
-    <!-- Home fragment style -->
-    <style name="HomeFabButton" parent="Widget.AppTheme.MainActionButton">
-        <item name="cornerSize">15dp</item>
-    </style>
     <style name="InvitationCardToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/invitation_card_text_color</item>
