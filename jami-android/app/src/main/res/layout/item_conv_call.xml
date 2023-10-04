@@ -30,9 +30,9 @@ along with this program; if not, write to the Free Software
 
     <LinearLayout
         android:id="@+id/callInfoLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/textmsg_call_background"
+        android:background="@drawable/textmsg_call_stroke"
         android:orientation="horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
@@ -49,7 +49,7 @@ along with this program; if not, write to the Free Software
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="12dp"
             android:orientation="vertical">
 
             <TextView
@@ -60,16 +60,9 @@ along with this program; if not, write to the Free Software
                 android:scrollHorizontally="true"
                 android:singleLine="false"
                 android:textColor="@color/colorOnSurface"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_size_small"
                 tools:text="Appel manqué" />
 
-            <TextView
-                android:id="@+id/call_details_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="12sp"
-                tools:text="Adrien - 12 mars" />
         </LinearLayout>
     </LinearLayout>
 
