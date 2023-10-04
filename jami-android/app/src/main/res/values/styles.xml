@@ -161,7 +161,7 @@
 <!--        <item name="android:textStyle">normal</item>-->
 <!--        <item name="iconPadding">8dp</item>-->
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">6dp</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
     <!-- Home fragment style -->
