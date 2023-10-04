@@ -1082,6 +1082,8 @@ class ConversationAdapter(
                 // Manage deleted message.
                 if (isDeleted) {
                     msgTxt.text = context.getString(R.string.conversation_message_deleted)
+                    // delete the link also if there is one
+                    answerLayout?.visibility = View.GONE
                     // Manage layout for deleted message. Index refers to msgBGLayouts array.
                     // Standard deleted message, incoming or outgoing and first, single or last.
                     val resIndex = msgSequenceType.ordinal + (if (textMessage.isIncoming) 1 else 0) * 4
