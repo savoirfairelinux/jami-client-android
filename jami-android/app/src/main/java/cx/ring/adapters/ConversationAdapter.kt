@@ -84,7 +84,6 @@ import net.jami.utils.Log
 import net.jami.utils.StringUtils
 import org.commonmark.node.SoftLineBreak
 import java.io.File
-import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -518,7 +517,7 @@ class ConversationAdapter(
             conversationViewHolder.itemView.visibility = View.VISIBLE
             when (type) {
                 Interaction.InteractionType.TEXT -> configureForTextMessage(conversationViewHolder, interaction, position)
-                Interaction.InteractionType.CALL -> configureForCallInfo(conversationViewHolder, interaction)
+                Interaction.InteractionType.CALL -> configureForCallInfo(conversationViewHolder, interaction, position)
                 Interaction.InteractionType.CONTACT -> configureForContactEvent(conversationViewHolder, interaction)
                 Interaction.InteractionType.DATA_TRANSFER -> configureForFileInfo(conversationViewHolder, interaction, position)
                 else -> {}
@@ -1329,7 +1328,8 @@ class ConversationAdapter(
      */
     private fun configureForCallInfo(
         convViewHolder: ConversationViewHolder,
-        interaction: Interaction
+        interaction: Interaction,
+        position: Int
     ) {
         val context = convViewHolder.itemView.context
 
@@ -1378,36 +1378,81 @@ class ConversationAdapter(
                 }
             }
         }
-
-        val pictureResID: Int
-        val historyTxt: String
-        // After call, a message is displayed in conversation to inform the user about the call.
-        if (call.isMissed) { // When call is missed
-            // Personalize the text and the icon depending if call is incoming or outgoing
-            if (call.isIncoming) {
-                pictureResID = R.drawable.baseline_call_missed_24
-                historyTxt = context.getString(R.string.notif_missed_incoming_call)
-            } else {
-                pictureResID = R.drawable.baseline_call_missed_outgoing_24
-                historyTxt = context.getString(R.string.notif_missed_outgoing_call)
-                // Flip the photo upside down to show a "missed outgoing call"
-                convViewHolder.mIcon?.scaleY = -1f
-            }
-        } else { // Call is not missed
-            pictureResID =
-                if (call.isIncoming) R.drawable.baseline_call_received_24
-                else R.drawable.baseline_call_made_24
-            historyTxt =
-                if (call.isIncoming) context.getString(R.string.notif_incoming_call)
-                else context.getString(R.string.notif_outgoing_call)
-        }
-        // Update icon, text and date
-        convViewHolder.mIcon?.setImageResource(pictureResID)
-        convViewHolder.mHistTxt?.text = historyTxt
-        convViewHolder.mHistDetailTxt?.text =
-            DateFormat.getDateTimeInstance().format(call.timestamp) // Start date of the call.
+        convViewHolder.compositeDisposable.add(
+            interaction.lastElement
+                .observeOn(DeviceUtils.uiScheduler)
+                .subscribe { lastElement ->
+                    val textMessage = lastElement as Call
+                    val isTimeShown = hasPermanentTimeString(textMessage, position)
+                    val msgSequenceType = getMsgSequencing(position, isTimeShown)
+                    val callInfoLayout = convViewHolder.mCallInfoLayout ?: return@subscribe
+                    callInfoLayout.background.setTintList(null)
+                    val callIcon = convViewHolder.mIcon ?: return@subscribe
+                    callIcon.drawable.setTintList(null)
+                    val histTxt = convViewHolder.mHistTxt ?: return@subscribe
+                    val resIndex: Int
+                    // After call, a message is displayed in conversation to inform the user about the call.
+                    // Manage the call message layout.
+                    if (call.isIncoming) {
+                        if (call.isMissed) { // Call incoming missed.
+                            resIndex = msgSequenceType.ordinal + 12
+                            // Set the call message color.
+                            histTxt.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
+                            )
+                            callIcon.setImageResource(R.drawable.baseline_call_missed_24)
+                            // Set the drawable color to red because it is missed.
+                            callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                            histTxt.text = context.getString(R.string.notif_missed_incoming_call)
+                        } else { // Call incoming not missed.
+                            resIndex = msgSequenceType.ordinal + 4
+                            // Set the call message color.
+                            histTxt.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.colorOnSurface)
+                            )
+                            callIcon.setImageResource(R.drawable.baseline_call_received_24)
+                            // Set the drawable color to colorOnSurface because it is not missed.
+                            callIcon.drawable.setTint(context.getColor(R.color.colorOnSurface))
+                            histTxt.text = context.getString(R.string.notif_incoming_call)
+                        }
+                        // Put the message to the left because it is incoming.
+                        convViewHolder.mCallLayout?.gravity = Gravity.START
+                    } else {
+                        if (call.isMissed) { // Outgoing call missed.
+                            resIndex = msgSequenceType.ordinal + 16
+                            // Set the call message color .
+                            histTxt.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_missed_text_message)
+                            )
+                            callIcon.setImageResource(R.drawable.baseline_call_missed_outgoing_24)
+                            // Set the drawable color to red because it is missed.
+                            callIcon.drawable.setTint(context.getColor(R.color.call_missed))
+                            histTxt.text = context.getString(R.string.notif_missed_outgoing_call)
+                            // Flip the photo upside down to show a "missed outgoing call".
+                            callIcon.scaleY = -1f
+                        } else { // Outgoing call not missed.
+                            resIndex = msgSequenceType.ordinal
+                            // Set the call message color.
+                            histTxt.setTextColor(
+                                convViewHolder.itemView.context.getColor(R.color.call_text_outgoing_message)
+                            )
+                            callIcon.setImageResource(R.drawable.baseline_call_made_24)
+                            // Set the drawable color to call_drawable_color because it is not missed.
+                            callIcon.drawable.setTint(context.getColor(R.color.call_drawable_color))
+                            histTxt.text = context.getString(R.string.notif_outgoing_call)
+                        }
+                        // Put the message to the right because it is outgoing.
+                        convViewHolder.mCallLayout?.gravity = Gravity.END
+                    }
+                   callInfoLayout.background =
+                        ContextCompat.getDrawable(context, msgBGLayouts[resIndex])
+                    callInfoLayout.background.alpha = 255
+                    // Manage background to convColor if it is outgoing and not missed.
+                    if (convColor != 0 && !call.isIncoming && !call.isMissed) {
+                        callInfoLayout.background.setTint(convColor)
+                    }
+                })
     }
-
     private fun configureSearchResult(convViewHolder: ConversationViewHolder, interaction: Interaction) {
         disableClicking(convViewHolder.itemView)
         val messageId = interaction.messageId ?: return
@@ -1580,7 +1625,15 @@ class ConversationAdapter(
             R.drawable.textmsg_bg_out_reply,
             R.drawable.textmsg_bg_out_reply_first,
             R.drawable.textmsg_bg_in_reply,
-            R.drawable.textmsg_bg_in_reply_first
+            R.drawable.textmsg_bg_in_reply_first,
+            R.drawable.textmsg_call_missed_in_first,
+            R.drawable.textmsg_call_missed_in_middle,
+            R.drawable.textmsg_call_missed_in_last,
+            R.drawable.textmsg_call_missed,
+            R.drawable.textmsg_call_missed_out_first,
+            R.drawable.textmsg_call_missed_out_middle,
+            R.drawable.textmsg_call_missed_out_last,
+            R.drawable.textmsg_call_missed
         )
 
         /**
@@ -1605,13 +1658,13 @@ class ConversationAdapter(
         private fun isSeqBreak(first: Interaction, second: Interaction): Boolean =
             StringUtils.isOnlyEmoji(first.body) != StringUtils.isOnlyEmoji(second.body)
                     || first.isIncoming != second.isIncoming
-                    || first.type !== Interaction.InteractionType.TEXT
-                    || second.type !== Interaction.InteractionType.TEXT
+                    || ((first.type !== Interaction.InteractionType.TEXT) && (first.type !== Interaction.InteractionType.CALL))
+                    || ((second.type !== Interaction.InteractionType.TEXT) && (second.type !== Interaction.InteractionType.CALL))
                     || second.replyTo != null
                     || first.contact != second.contact
 
         private fun isAlwaysSingleMsg(msg: Interaction): Boolean =
-            (msg.type !== Interaction.InteractionType.TEXT
+            ((msg.type !== Interaction.InteractionType.TEXT && msg.type !== Interaction.InteractionType.CALL)
                     || StringUtils.isOnlyEmoji(msg.body))
     }
 
