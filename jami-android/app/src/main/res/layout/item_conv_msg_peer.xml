@@ -97,6 +97,7 @@ along with this program; if not, write to the Free Software
             android:minWidth="@dimen/conversation_avatar_size"
             android:minHeight="@dimen/conversation_avatar_size"
             android:textColor="@color/colorOnSurface"
+            android:textColorLink="@color/link_peer_color"
             android:textIsSelectable="true"
             android:textSize="16sp"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
@@ -116,8 +117,8 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_below="@id/msg_txt"
             android:layout_alignStart="@id/msg_txt"
-            android:layout_marginTop="-16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="-16dp"
             android:backgroundTint="@color/icon_background_color"
             android:elevation="4dp"
             android:text="👍😍 3"
