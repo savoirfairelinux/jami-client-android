@@ -22,6 +22,30 @@
       },
       "revId": "b8b17ad6a443bcc87aa0591cc644783a2c74ca63",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4260cf_cf65b3ba",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 989
+      },
+      "writtenOn": "2023-10-04T13:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66994fd1_717d41ff",
+      "range": {
+        "startLine": 1368,
+        "startChar": 15,
+        "endLine": 1370,
+        "endChar": 17
+      },
+      "revId": "b8b17ad6a443bcc87aa0591cc644783a2c74ca63",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
