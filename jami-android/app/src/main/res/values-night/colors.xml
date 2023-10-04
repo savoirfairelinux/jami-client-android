@@ -56,4 +56,7 @@
     <!--  QrCode  -->
     <color name="qr_code_color">#FFF</color>
 
+    <!--  ChatView  -->
+    <color name="call_missed">#CC0022</color> // a changer
+
 </resources>
