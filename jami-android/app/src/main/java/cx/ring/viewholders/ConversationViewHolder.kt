@@ -123,7 +123,6 @@ class ConversationViewHolder(v: ViewGroup, val type: MessageType) : RecyclerView
             }
             MessageType.CALL_INFORMATION -> {
                 mHistTxt = v.findViewById(R.id.call_hist_txt)
-                mHistDetailTxt = v.findViewById(R.id.call_details_txt)
                 mCallInfoLayout = v.findViewById(R.id.callInfoLayout)
                 primaryClickableView = mCallInfoLayout
             }
