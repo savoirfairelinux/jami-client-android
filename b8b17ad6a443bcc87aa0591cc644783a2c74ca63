@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66994fd1_717d41ff",
+        "filename": "jami-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-04T13:52:20Z",
+      "side": 1,
+      "message": "a space is missing and the dash to have \" Outgoing call - Lasted 00:31\"",
+      "range": {
+        "startLine": 1368,
+        "startChar": 15,
+        "endLine": 1370,
+        "endChar": 17
+      },
+      "revId": "b8b17ad6a443bcc87aa0591cc644783a2c74ca63",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
