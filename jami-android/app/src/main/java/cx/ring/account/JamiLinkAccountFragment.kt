@@ -27,12 +27,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import cx.ring.databinding.FragAccJamiLinkBinding
 
 class JamiLinkAccountFragment : Fragment() {
-    private val model: AccountCreationViewModel by activityViewModels()
     private var mBinding: FragAccJamiLinkBinding? = null
     private var mCurrentFragment: Fragment? = null
 
@@ -95,7 +93,6 @@ class JamiLinkAccountFragment : Fragment() {
 
     private class ScreenSlidePagerAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm) {
-        //var ringAccountViewModel: AccountCreationModelImpl = model as AccountCreationModelImpl
         var mRegisteredFragments = SparseArray<Fragment>()
         override fun getItem(position: Int): Fragment =
             when (position) {
