@@ -92,7 +92,7 @@ along with this program; if not, write to the Free Software
     <dimen name="wizard_button_padding">@dimen/button_padding</dimen>
     <dimen name="wizard_card_width">330dp</dimen>
     <dimen name="wizard_card_height">420dp</dimen>
-    <dimen name="wizard_image_background">300dp</dimen>
+    <dimen name="wizard_image_background">180dp</dimen>
     <dimen name="wizard_card_radius">@dimen/button_corner_radius</dimen>
     <dimen name="wizard_card_padding">22dp</dimen>
     <dimen name="wizard_text_size">14sp</dimen>
