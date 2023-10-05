@@ -54,6 +54,7 @@ class JamiLinkAccountFragment(private val isBackup:Boolean) : Fragment() {
         FragAccJamiLinkBinding.inflate(inflater, container, false).apply {
             // change the title of the page depending on the isBackup parameter
             title.setText(if (isBackup) R.string.account_link_archive_button else R.string.account_link_device)
+            info.visibility = if (!isBackup) View.VISIBLE else View.GONE
             val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
             pager.apply {
                 disableScroll(true)

@@ -25,13 +25,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import cx.ring.R
 import cx.ring.account.pinInput.EditTextPinInputFragment
 import cx.ring.account.pinInput.EditTextPinInputViewModel
@@ -64,12 +63,23 @@ class JamiLinkAccountPasswordFragment :
         savedInstanceState: Bundle?
     ): View =
         FragAccJamiLinkPasswordBinding.inflate(inflater, container, false).apply {
-            viewPager.adapter = SectionsPagerAdapter(
-                root.context,
-                childFragmentManager
+
+            val adapter = SectionsPagerAdapter(this@JamiLinkAccountPasswordFragment)
+            adapter.addFragment(
+                QrCodePinInputFragment(),
+                getString(R.string.connect_device_scanqr)
             )
-            tabs.setupWithViewPager(viewPager)
-            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            adapter.addFragment(
+                EditTextPinInputFragment(),
+                getString(R.string.connect_device_enterPIN)
+            )
+            pager.adapter = adapter
+            pager.currentItem = 0
+            TabLayoutMediator(tabLayout, pager) { tab, position ->
+                tab.text = adapter.getTabTitle(position)
+            }.attach()
+
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     presenter.resetPin()
                     // emit the pin again when switching tabs
@@ -84,6 +94,7 @@ class JamiLinkAccountPasswordFragment :
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
+
             linkButton.setOnClickListener { presenter.linkClicked() }
             ringExistingPassword.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -105,12 +116,8 @@ class JamiLinkAccountPasswordFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // init the 2 view models
-        qrCodePinInputViewModel.init({
-            presenter.pinChanged(it)
-        }, { presenter.resetPin() })
-        editTextPinInputViewModel.init({
-            presenter.pinChanged(it)
-        }, { presenter.resetPin() })
+        qrCodePinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
+        editTextPinInputViewModel.init({ presenter.pinChanged(it) }, { presenter.resetPin() })
     }
 
     override fun onDestroyView() {
@@ -128,8 +135,9 @@ class JamiLinkAccountPasswordFragment :
 
     override fun showPin(show: Boolean) {
         val binding = binding ?: return
-        binding.passwordBox.visibility = if (show) View.VISIBLE else View.GONE
-        binding.linkButton.setText(if (show) R.string.account_link_device_button else R.string.account_link_archive_button)
+        binding.pager.visibility = if (show) View.VISIBLE else View.GONE
+        binding.tabLayout.visibility = if (show) View.VISIBLE else View.GONE
+        binding.linkButton.setText(if (show) R.string.account_link_device else R.string.account_link_archive_button)
     }
 
     override fun createAccount() {
@@ -143,30 +151,30 @@ class JamiLinkAccountPasswordFragment :
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
+
+    internal class SectionsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+        private val mFragmentList: MutableList<Fragment> = ArrayList()
+        private val mFragmentTitleList: MutableList<String> = ArrayList()
+
+        fun getTabTitle(position: Int): String {
+            return mFragmentTitleList[position]
+        }
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+
+        override fun getItemCount(): Int {
+            return mFragmentList.size
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            return mFragmentList[position]
+        }
+
+    }
     companion object {
         val TAG = JamiLinkAccountPasswordFragment::class.simpleName!!
-    }
-
-    internal class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
-        @StringRes
-        private val TAB_TITLES =
-            intArrayOf(R.string.connect_device_scanqr, R.string.connect_device_enterPIN)
-
-        override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> QrCodePinInputFragment() // scan qr code
-                1 -> EditTextPinInputFragment()  // or enter pin
-                else -> throw IllegalArgumentException()
-            }
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mContext.resources.getString(TAB_TITLES[position])
-        }
-
-        override fun getCount(): Int {
-            return TAB_TITLES.size
-        }
     }
 }
