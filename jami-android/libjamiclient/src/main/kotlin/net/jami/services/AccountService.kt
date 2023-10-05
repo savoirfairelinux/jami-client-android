@@ -307,20 +307,14 @@ class AccountService(
                 /* for ((key, value) in requestData.entries)
                 Log.e(TAG, "Request: $key $value") */
                 val from = Uri.fromString(requestData["from"]!!)
-                val conversationId = requestData["id"]
-                val conversationUri =
-                    if (conversationId.isNullOrEmpty()) null
-                    else Uri(Uri.SWARM_SCHEME, conversationId)
-                val request = account.getRequest(conversationUri ?: from)
-                if (request == null || conversationUri != request.from) {
-                    account.addRequest(TrustRequest(
-                        account.accountId,
-                        from,
-                        requestData["received"]!!.toLong() * 1000L,
-                        conversationUri,
-                        mVCardService.loadConversationProfile(requestData),
-                        requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
-                }
+                val conversationId = requestData["id"] ?: continue
+                account.addRequest(TrustRequest(
+                    account.accountId,
+                    from,
+                    requestData["received"]!!.toLong() * 1000L,
+                    Uri(Uri.SWARM_SCHEME, conversationId),
+                    mVCardService.loadConversationProfile(requestData),
+                    requestData["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
             } catch (e: Exception) {
                 Log.w(TAG, "Error loading request", e)
             }
@@ -1429,22 +1423,18 @@ class AccountService(
     fun conversationRequestReceived(accountId: String, conversationId: String, metadata: Map<String, String>) {
         Log.w(TAG, "ConversationCallback: conversationRequestReceived $accountId/$conversationId ${metadata.size}")
         val account = getAccount(accountId)
-        if (account == null) {
+        if (account == null || conversationId.isEmpty()) {
             Log.w(TAG, "conversationRequestReceived: can't find account")
             return
         }
-        val conversationUri = if (conversationId.isEmpty()) null else Uri(Uri.SWARM_SCHEME, conversationId)
         val from = Uri.fromId(metadata["from"]!!)
-        val request = account.getRequest(from)
-        if (request == null || conversationUri != request.conversationUri) {
-            account.addRequest(TrustRequest(
-                account.accountId,
-                from,
-                metadata["received"]!!.toLong() * 1000L,
-                conversationUri,
-                mVCardService.loadConversationProfile(metadata),
-                metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
-        }
+        account.addRequest(TrustRequest(
+            account.accountId,
+            from,
+            metadata["received"]!!.toLong() * 1000L,
+            Uri(Uri.SWARM_SCHEME, conversationId),
+            mVCardService.loadConversationProfile(metadata),
+            metadata["mode"]?.let { m -> Conversation.Mode.values()[m.toInt()] } ?: Conversation.Mode.OneToOne))
     }
 
     fun messageReceived(accountId: String, conversationId: String, message: Map<String, String>) {
