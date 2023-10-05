@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24333afb_40d74959",
+        "filename": "jami-android/libjamiclient/src/main/kotlin/net/jami/account/AccountWizardPresenter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-05T13:36:06Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "980e41152e2d5b94597f7f9e212aa277b5bfd74c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
