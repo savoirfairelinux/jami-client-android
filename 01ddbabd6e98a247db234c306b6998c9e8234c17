@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baf4f560_768ef9a3",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-05T20:06:33Z",
+      "side": 1,
+      "message": "too much, we can\u0027t see the background",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "01ddbabd6e98a247db234c306b6998c9e8234c17",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9580385e_540c4a21",
+        "filename": "jami-android/app/src/main/res/layout/frag_acc_jami_link.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1005
+      },
+      "writtenOn": "2023-10-05T20:06:33Z",
+      "side": 1,
+      "message": "in connect from backup, in the creation view we can\u0027t see the title of the page (pager is too high)",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "01ddbabd6e98a247db234c306b6998c9e8234c17",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
