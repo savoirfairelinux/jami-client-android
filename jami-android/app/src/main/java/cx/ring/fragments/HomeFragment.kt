@@ -73,6 +73,7 @@ import javax.inject.Inject
 import com.google.android.material.search.SearchView.TransitionState
 import com.google.android.material.shape.MaterialShapeDrawable
 import cx.ring.databinding.FragHomeBinding
+import cx.ring.utils.TextUtils
 import io.reactivex.rxjava3.disposables.Disposable
 
 @AndroidEntryPoint
@@ -277,7 +278,9 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
                             //mBinding?.appBar?.fitsSystemWindows = true
                         }
 
-                        override fun onItemLongClick(item: Conversation) {}
+                        override fun onItemLongClick(item: Conversation) {
+                            displayConversationRequestDialog(item)
+                        }
                     },
                     mConversationFacade,
                     mDisposable
@@ -292,6 +295,18 @@ class HomeFragment : BaseSupportFragment<HomePresenter, HomeView>(),
             mBinding = binding
             binding.root
         }
+
+    fun displayConversationRequestDialog(conversation: Conversation) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setItems(R.array.swarm_actions) { dialog, which ->
+                when (which) {
+                    0 -> TextUtils.copyToClipboard(requireContext(), (conversation.contact?.uri ?: conversation.uri).toString())
+                    1 -> mConversationFacade.discardRequest(conversation.accountId, conversation.uri)
+                    2 -> mConversationFacade.banConversation(conversation.accountId, conversation.uri)
+                }
+            }
+            .show()
+    }
 
     private fun startSearch() {
         searchDisposable?.dispose()
