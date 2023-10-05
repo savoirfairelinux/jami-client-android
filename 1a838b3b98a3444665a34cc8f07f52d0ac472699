@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1508cdc8_9df70a3c",
+        "filename": "jami-android/app/src/main/java/cx/ring/client/HomeActivity.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2023-10-05T18:15:11Z",
+      "side": 0,
+      "message": "not used, can be removed",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "1a838b3b98a3444665a34cc8f07f52d0ac472699",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
