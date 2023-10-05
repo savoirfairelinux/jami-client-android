@@ -127,7 +127,7 @@ class ConversationPresenter @Inject constructor(
                 } else
                     view.switchToConversationView()
             } else {
-                val req = account.getRequest(c.uri)
+                val req = c.request
                 if (req == null) {
                     view.switchToUnknownView(c.uriTitle)
                 } else {

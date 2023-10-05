@@ -42,7 +42,6 @@ class Account(
     val credentials = credentials.mapTo(ArrayList()) { AccountCredentials(it) }
     var devices: Map<String, String> = HashMap()
     private val mContacts: MutableMap<String, Contact> = HashMap()
-    private val mRequests: MutableMap<String, TrustRequest> = HashMap()
     private val mContactCache: MutableMap<String, Contact> = HashMap()
     private val swarmConversations: MutableMap<String, Conversation> = HashMap()
     private val mDataTransfers = HashMap<String, DataTransfer>()
@@ -562,7 +561,6 @@ class Account(
         val contact = mContacts.getOrPut(id) { getContactFromCache(Uri.fromId(id)) }
         contact.addedDate = Date()
         contact.status = if (confirmed) Contact.Status.CONFIRMED else Contact.Status.REQUEST_SENT
-        mRequests.remove(id)
         contactAdded(contact)
         contactListSubject.onNext(mContacts.values)
     }
@@ -578,10 +576,6 @@ class Account(
             contact.status = Contact.Status.BANNED
         } else {
             mContacts.remove(id)
-        }
-        val req = mRequests[id]
-        if (req != null) {
-            mRequests.remove(id)
         }
         if (contact != null) {
             contactRemoved(contact.uri, contact.conversationUri.blockingFirst())
@@ -619,16 +613,11 @@ class Account(
         contactListSubject.onNext(mContacts.values)
     }
 
-    fun getRequest(uri: Uri): TrustRequest? {
-        return mRequests[uri.uri]
-    }
-
     fun addRequest(request: TrustRequest) {
         synchronized(pending) {
-            val key = request.conversationUri?.uri ?: request.from.uri
-            mRequests[key] = request
+            val key = request.conversationUri.uri
             if (pending[key] == null) {
-                val conversation = if (request.conversationUri?.isSwarm == true)
+                val conversation = if (request.conversationUri.isSwarm)
                     Conversation(accountId, request.conversationUri, Conversation.Mode.Request).apply {
                         val contact = getContactFromCache(request.from).apply {
                             if (request.mode == Conversation.Mode.OneToOne && !conversationUri.blockingFirst().isSwarm)
@@ -663,19 +652,18 @@ class Account(
     fun removeRequest(conversationUri: Uri): TrustRequest? {
         synchronized(pending) {
             val uri = conversationUri.uri
-            val request = mRequests.remove(uri)
-
-            // When receiving a request, we point the contact to its conversation.
-            // When we refuse it, we should reset this link (to the contact uri).
-            request?.from?.let {
-                val contact = getContactFromCache(it)
-                // Make sure the contact conversation uri was pointing to request uri before
-                // deleting the link.
-                if (contact.conversationUri.blockingFirst() == request.conversationUri)
-                    contact.setConversationUri(contact.uri)
-            }
-
-            if (pending.remove(uri) != null) {
+            val conversation = pending.remove(uri)
+            val request = conversation?.request
+            if (request != null) {
+                // When receiving a request, we point the contact to its conversation.
+                // When we refuse it, we should reset this link (to the contact uri).
+                request.from.let {
+                    val contact = getContactFromCache(it)
+                    // Make sure the contact conversation uri was pointing to request uri before
+                    // deleting the link.
+                    if (contact.conversationUri.blockingFirst() == request.conversationUri)
+                        contact.setConversationUri(contact.uri)
+                }
                 pendingChanged()
             }
             return request
