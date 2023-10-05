@@ -22,7 +22,7 @@ class TrustRequest(
     val accountId: String,
     val from: Uri,
     val timestamp: Long,
-    val conversationUri: Uri?,
+    val conversationUri: Uri,
     val profile: Single<Profile>? = null,
     val mode: Conversation.Mode
 )
