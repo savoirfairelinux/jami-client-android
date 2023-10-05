@@ -45,8 +45,11 @@ class AccountWizardPresenter @Inject constructor(
     private var mAccountType: String? = null
     private var newAccount: Observable<Account>? = null
 
-    fun init(accountType: String) {
+    fun init(accountType: String, restoredInstance: Boolean = false) {
         mAccountType = accountType
+        
+        if (restoredInstance) return
+
         if (AccountConfig.ACCOUNT_TYPE_SIP == mAccountType) {
             view?.goToSipCreation()
         } else {

@@ -85,6 +85,9 @@ class AccountWizardActivity : BaseActivity<AccountWizardPresenter>(), AccountWiz
                 presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI)
             }
         }
+        else{
+            presenter.init(getIntent().action ?: AccountConfig.ACCOUNT_TYPE_JAMI, true)
+        }
     }
 
     override fun onDestroy() {
