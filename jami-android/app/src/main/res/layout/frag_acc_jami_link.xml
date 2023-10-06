@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_primary_dark"
-    tools:context="cx.ring.account.AccountWizardActivity">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <cx.ring.views.BoundedRelativeLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:bounded_height="650dp"
-        app:bounded_width="560dp">
+        android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/text_margin"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/color_primary_light"
-            android:gravity="center"
-            android:text="@string/account_link_device"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="@string/account_link_device"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@color/color_primary_light"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/background"
             android:layout_width="@dimen/wizard_image_background"
             android:layout_height="@dimen/wizard_image_background"
             android:layout_centerHorizontal="true"
-            android:layout_alignTop="@id/pager"
-            android:layout_marginTop="-30dp"
             android:alpha="0.1"
-            android:tint="@color/white"
-            android:src="@drawable/baseline_devices_24"/>
+            android:contentDescription="@null"
+            android:src="@drawable/baseline_devices_24"
+            app:tint="@color/white" />
+    </RelativeLayout>
 
-        <cx.ring.views.WizardViewPager
-            android:id="@+id/pager"
-            android:layout_width="@dimen/wizard_card_width"
-            android:layout_margin="16dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            tools:background="@color/grey_400"/>
+    <cx.ring.views.WizardViewPager
+        android:id="@+id/pager"
+        android:layout_width="@dimen/wizard_card_width"
+        android:layout_height="500dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="22dp"
+        tools:background="@color/grey_400"
+        tools:layout_height="500dp" />
 
-    </cx.ring.views.BoundedRelativeLayout>
+</LinearLayout>
 
-</FrameLayout>
